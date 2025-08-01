@@ -472,7 +472,7 @@ export const CompleteHomepage = () => {
           <section className="py-24">
             <div className="container mx-auto px-4">
               <div className="text-center max-w-4xl mx-auto">
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground leading-tight" style={{ lineHeight: 'calc(1.25em + 1px)' }}>
                   Ready to think about AI in your property business but unsure how?
                 </h2>
                 <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
