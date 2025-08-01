@@ -41,7 +41,11 @@ export const CompleteHomepage = () => {
         <link rel="preload" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
         <link rel="prefetch" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
         <link rel="dns-prefetch" href="//player.vimeo.com" />
+        <link rel="dns-prefetch" href="//vimeo.com" />
+        <link rel="dns-prefetch" href="//f.vimeocdn.com" />
         <link rel="preconnect" href="https://player.vimeo.com" />
+        <link rel="preconnect" href="https://vimeo.com" />
+        <link rel="preconnect" href="https://f.vimeocdn.com" />
       </Helmet>
 
       <div className="min-h-screen bg-background overflow-x-hidden">
@@ -185,11 +189,12 @@ export const CompleteHomepage = () => {
                        <div className="relative aspect-video">
                           <iframe
                             className="w-full h-full rounded-lg"
-                            src="https://player.vimeo.com/video/1106432593?autoplay=1"
+                            src="https://player.vimeo.com/video/1106432593?autoplay=1&preload=metadata"
                             title="Meet Georgia - Property AI Assistant"
                             frameBorder="0"
                             allow="autoplay; fullscreen; picture-in-picture"
                             allowFullScreen
+                            loading="eager"
                           ></iframe>
                        </div>
                     </DialogContent>
