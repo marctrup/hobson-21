@@ -76,7 +76,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
             <p className="text-muted-foreground mb-2 text-sm line-clamp-1">{post.excerpt}</p>
             
             {post.categories.length > 0 && (
-              <div className="flex flex-wrap gap-1 mb-3">
+              <div className="flex flex-wrap gap-1 mb-3 -mt-1">
                 {post.categories.slice(0, 2).map((category) => (
                   <Badge key={category.slug} variant="outline" className="text-xs">
                     {category.name}

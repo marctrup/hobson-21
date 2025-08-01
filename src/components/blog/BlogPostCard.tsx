@@ -79,7 +79,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
           </div>
           
           {post.categories.length > 0 && (
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1 -mt-1">
               {post.categories.slice(0, 2).map((category) => (
                 <Badge key={category.slug} variant="outline" className="text-xs">
                   {category.name}
