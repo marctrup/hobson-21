@@ -49,10 +49,10 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
                 src={post.featured_image_url}
                 alt={post.title}
                 className="w-full h-full object-cover"
-                width={300}
-                height={225}
+                width={270}
+                height={203}
                 priority={true}
-                sizes="(max-width: 768px) 100vw, 400px"
+                sizes="(max-width: 768px) 100vw, 360px"
               />
             ) : (
               <div className="w-full h-full bg-muted flex items-center justify-center">
