@@ -38,9 +38,10 @@ export const CompleteHomepage = () => {
         
         {/* Preload critical assets */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
+        <link rel="preload" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
         <link rel="prefetch" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
-        <link rel="dns-prefetch" href="//www.youtube.com" />
-        <link rel="dns-prefetch" href="//i.ytimg.com" />
+        <link rel="dns-prefetch" href="//player.vimeo.com" />
+        <link rel="preconnect" href="https://player.vimeo.com" />
       </Helmet>
 
       <div className="min-h-screen bg-background overflow-x-hidden">
@@ -165,8 +166,8 @@ export const CompleteHomepage = () => {
                               src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
                               alt="Georgia from Hobson AI explaining new AI property management software - the features and benefits"
                               className="w-full h-auto rounded-xl object-cover aspect-[3/2]"
-                              width={240}
-                              height={160}
+                              width={200}
+                              height={133}
                               loading="lazy"
                             />
                          </div>
@@ -197,14 +198,15 @@ export const CompleteHomepage = () => {
                 
                 {/* Right side - Document visualization */}
                 <div className="relative flex flex-col items-center">
-                  <div className="transform scale-[2.025] origin-center">
+                  <div className="transform scale-[1.5] md:scale-[2.025] origin-center">
                      <OptimizedImage
                        src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
                        alt="a tenancy document"
                        className="max-w-full h-auto object-contain"
-                       width={400}
-                       height={400}
-                       loading="lazy"
+                       width={300}
+                       height={300}
+                       priority={true}
+                       fetchPriority="high"
                      />
                   </div>
                   
