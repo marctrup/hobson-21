@@ -64,7 +64,7 @@ const Blog = () => {
   const loadData = async () => {
     setLoading(true);
     try {
-      const limit = isMobile ? 2 : 20;
+      const limit = isMobile ? 10 : 20;
       
       // Single optimized query for posts with categories
       const postsPromise = deduplicateRequest(
