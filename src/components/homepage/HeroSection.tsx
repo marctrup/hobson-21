@@ -122,19 +122,6 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
           </div>
         </div>
         
-        {/* Centered CTA Button */}
-        <div className="w-full flex justify-center mt-16">
-          <Button 
-            size="lg" 
-            variant="outline"
-            className="text-lg px-8 py-6 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-            onClick={() => document.getElementById('solutions')?.scrollIntoView({ behavior: 'smooth' })}
-            title="Who Benefits from Property Management AI - Discover which property professionals use our AI solutions"
-          >
-            Who benefits?
-            <ArrowRight className="ml-2 w-5 h-5" />
-          </Button>
-        </div>
       </div>
     </section>
   );
