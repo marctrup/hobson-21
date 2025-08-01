@@ -233,13 +233,11 @@ export const CompleteHomepage = () => {
                 
                 {/* Right side - Document visualization */}
                 <div className="relative flex flex-col items-center">
-                  <div 
-                    className="transform scale-[1.91] md:scale-[2.58] origin-center w-[573px] h-[573px] md:w-[774px] md:h-[774px]"
-                  >
+                  <div className="transform scale-[1.91] md:scale-[2.58] origin-center">
                      <OptimizedImage
                        src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
                        alt="a tenancy document"
-                       className="max-w-full h-auto object-contain w-[300px] h-[300px]"
+                       className="max-w-full h-auto object-contain"
                        width={300}
                        height={300}
                        priority={true}
