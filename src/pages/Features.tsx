@@ -10,7 +10,7 @@ const Features = () => {
   return (
     <>
       <Helmet>
-        <title>AI Property Management Features | Meet Hobson | Real Estate AI</title>
+        <title>Real Estate AI</title>
         <meta name="description" content="Meet Hobson - your intelligent property management assistant. Chat interface, portfolio mapping, document analysis and predictive analytics for real estate professionals." />
         <meta name="keywords" content="property management features, AI chat interface, property mapping, document analysis, predictive analytics, real estate AI tools" />
         <meta property="og:title" content="AI Property Management Features | Meet Hobson" />
