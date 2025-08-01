@@ -169,7 +169,7 @@ const Blog = () => {
         <Header />
         <BlogHero />
         
-        <div className="container mx-auto px-4 -mt-12">
+        <div className="container mx-auto px-4 -mt-16">
           <CategoryFilter 
             categories={categories} 
             selectedCategory={selectedCategory}
