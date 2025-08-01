@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
-import { OptimizedImage } from "@/components/OptimizedImage";
+import { LazyImage } from "@/components/LazyImage";
 
 interface BlogPost {
   id: string;
@@ -45,14 +45,13 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
         <div className="grid md:grid-cols-3 gap-0">
           <div className="aspect-[4/3] md:aspect-[3/2]">
             {post.featured_image_url ? (
-              <OptimizedImage
+              <LazyImage
                 src={post.featured_image_url}
                 alt={post.title}
                 className="w-full h-full object-cover"
                 width={300}
                 height={225}
                 priority={true}
-                fetchPriority="high"
                 sizes="(max-width: 768px) 100vw, 400px"
               />
             ) : (
