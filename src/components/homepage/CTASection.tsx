@@ -28,9 +28,6 @@ export const CTASection = () => {
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
             </Button>
-            <p className="text-muted-foreground text-center">
-              Connect with us to talk about our favorite subject - AI and the property industry
-            </p>
           </div>
 
           <div className="mt-16 pt-16 border-t">

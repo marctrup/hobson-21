@@ -487,9 +487,6 @@ export const CompleteHomepage = () => {
                     <Link to="/contact">Contact Us →</Link>
                   </SimpleButton>
                 </div>
-                <p className="text-muted-foreground text-lg">
-                  Connect with us to talk about our favorite subject - AI and the property industry
-                </p>
               </div>
             </div>
           </section>
