@@ -72,8 +72,8 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
                 {post.reading_time}min
               </div>
             </div>
-            <h2 className="text-xl font-bold mb-2 line-clamp-1">{post.title}</h2>
-            <p className="text-muted-foreground mb-3 text-sm line-clamp-1">{post.excerpt}</p>
+            <h2 className="text-xl font-bold mb-1 line-clamp-1">{post.title}</h2>
+            <p className="text-muted-foreground mb-2 text-sm line-clamp-1">{post.excerpt}</p>
             
             {post.categories.length > 0 && (
               <div className="flex flex-wrap gap-1 mb-3">

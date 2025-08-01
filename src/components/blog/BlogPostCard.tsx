@@ -66,8 +66,8 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
             {post.reading_time}m
           </div>
           
-          <h3 className="text-lg font-semibold mb-2 line-clamp-2 leading-tight">{post.title}</h3>
-          <p className="text-muted-foreground mb-4 text-sm line-clamp-2">{post.excerpt}</p>
+          <h3 className="text-lg font-semibold mb-1 line-clamp-2 leading-tight">{post.title}</h3>
+          <p className="text-muted-foreground mb-2 text-sm line-clamp-2">{post.excerpt}</p>
           
           <div className="flex items-center justify-end mb-3">
             <button
