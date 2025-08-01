@@ -184,12 +184,11 @@ export const CompleteHomepage = () => {
                        <div className="relative aspect-video">
                           <iframe
                             className="w-full h-full rounded-lg"
-                            src="https://www.youtube.com/embed/52sNQMTudHg?autoplay=1&rel=0&modestbranding=1&playsinline=1"
-                           title="Meet Georgia - Property AI Assistant"
-                           frameBorder="0"
-                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                           allowFullScreen
-                           referrerPolicy="strict-origin-when-cross-origin"
+                            src="https://player.vimeo.com/video/1106432593?autoplay=1"
+                            title="Meet Georgia - Property AI Assistant"
+                            frameBorder="0"
+                            allow="autoplay; fullscreen; picture-in-picture"
+                            allowFullScreen
                           ></iframe>
                        </div>
                     </DialogContent>
