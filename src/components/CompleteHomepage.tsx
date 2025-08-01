@@ -217,10 +217,10 @@ export const CompleteHomepage = () => {
                              frameBorder="0"
                              allow="autoplay; fullscreen; picture-in-picture"
                              allowFullScreen
-                             onLoad={() => {
-                               // Only hide spinner once video content is actually loaded
-                               setTimeout(() => setVideoLoaded(true), 3000);
-                             }}
+                              onLoad={() => {
+                                // Only hide spinner once video content is actually loaded
+                                setTimeout(() => setVideoLoaded(true), 2000);
+                              }}
                            ></iframe>
                           {/* Spinner overlay covers everything */}
                           <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center z-20 transition-opacity duration-500 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
