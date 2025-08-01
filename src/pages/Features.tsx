@@ -197,59 +197,6 @@ const Features = () => {
             </div>
           </section>
 
-          {/* Core Capabilities Section - Exact match with proper icons */}
-          <section className="mb-16">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">Core Capabilities</h2>
-              <p className="text-xl text-muted-foreground">
-                Built on a foundation of reliability and performance that property professionals demand.
-              </p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="flex items-center gap-4 p-6 bg-card rounded-lg border">
-                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                  <Search className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <span className="font-medium">Instant property search and filtering</span>
-              </div>
-              
-              <div className="flex items-center gap-4 p-6 bg-card rounded-lg border">
-                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <span className="font-medium">Automated calendar management</span>
-              </div>
-              
-              <div className="flex items-center gap-4 p-6 bg-card rounded-lg border">
-                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                  <BarChart className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <span className="font-medium">Real-time performance analytics</span>
-              </div>
-              
-              <div className="flex items-center gap-4 p-6 bg-card rounded-lg border">
-                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                  <Shield className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <span className="font-medium">Enterprise-grade security</span>
-              </div>
-              
-              <div className="flex items-center gap-4 p-6 bg-card rounded-lg border">
-                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <span className="font-medium">Lightning-fast response times</span>
-              </div>
-              
-              <div className="flex items-center gap-4 p-6 bg-card rounded-lg border">
-                <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
-                  <CheckCircle className="w-6 h-6 text-primary-foreground" />
-                </div>
-                <span className="font-medium">99.9% uptime guarantee</span>
-              </div>
-            </div>
-          </section>
 
           {/* Contact CTA - Exact match */}
           <div className="text-center py-16">
