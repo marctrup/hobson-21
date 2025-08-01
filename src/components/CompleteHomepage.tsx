@@ -219,7 +219,7 @@ export const CompleteHomepage = () => {
                              allowFullScreen
                               onLoad={() => {
                                 // Only hide spinner once video content is actually loaded
-                                setTimeout(() => setVideoLoaded(true), 2000);
+                                setTimeout(() => setVideoLoaded(true), 1500);
                               }}
                            ></iframe>
                           {/* Spinner overlay covers everything */}
