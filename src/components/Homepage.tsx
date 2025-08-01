@@ -118,26 +118,6 @@ const Homepage = () => {
           <HowItWorksSection />
         </div>
         
-        {/* Features Link */}
-        <section className="py-8 text-center">
-          <div className="container mx-auto px-4">
-            <Button 
-              variant="outline"
-              size="lg"
-              className="text-lg px-8 py-4 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-              asChild
-            >
-              <Link 
-                to="/features"
-                onClick={() => window.scrollTo(0, 0)}
-                title="Property Management AI Features - Explore our intelligent automation and document analysis capabilities"
-              >
-                Features
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
-            </Button>
-          </div>
-        </section>
 
         <div className="content-section">
           <CTASection />
