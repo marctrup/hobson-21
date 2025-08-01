@@ -11,6 +11,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } 
 
 export const CompleteHomepage = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoDialogOpen, setVideoDialogOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const toggleMobileMenu = () => {
@@ -163,11 +164,15 @@ export const CompleteHomepage = () => {
                   </div>
 
                   {/* Georgia Video - Exact match to public site */}
-                  <Dialog onOpenChange={(open) => {
-                    if (!open) {
-                      setVideoLoaded(false); // Reset video state when dialog closes
-                    }
-                  }}>
+                  <Dialog 
+                    open={videoDialogOpen} 
+                    onOpenChange={(open) => {
+                      setVideoDialogOpen(open);
+                      if (!open) {
+                        setVideoLoaded(false); // Reset video state when dialog closes
+                      }
+                    }}
+                  >
                     <DialogTrigger asChild>
                        <div className="max-w-[280px] cursor-pointer group transform scale-[1.08]">
                          <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl">
@@ -188,14 +193,15 @@ export const CompleteHomepage = () => {
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl w-full p-2 overflow-hidden" style={{ zIndex: 50 }}>
                       {/* Custom close button with higher z-index */}
-                      <button 
-                        onClick={() => {
-                          console.log("Close button clicked!");
-                          setVideoLoaded(false);
-                        }}
-                        className="absolute right-4 top-4 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
-                        aria-label="Close video"
-                      >
+                       <button 
+                         onClick={() => {
+                           console.log("Close button clicked!");
+                           setVideoDialogOpen(false);
+                           setVideoLoaded(false);
+                         }}
+                         className="absolute right-4 top-4 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
+                         aria-label="Close video"
+                       >
                         <X className="h-4 w-4" />
                       </button>
                       <DialogTitle className="sr-only">Meet Georgia - Property AI Assistant</DialogTitle>
