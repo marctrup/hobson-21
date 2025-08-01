@@ -169,7 +169,7 @@ export const CompleteHomepage = () => {
                         </div>
                       </div>
                     </DialogTrigger>
-                    <DialogContent className="max-w-4xl w-full">
+                    <DialogContent className="max-w-2xl w-full">
                       <DialogTitle className="sr-only">Meet Georgia - Property AI Assistant</DialogTitle>
                       <DialogDescription className="sr-only">
                         Watch Georgia explain how Hobson's AI can transform your property management workflow
