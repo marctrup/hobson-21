@@ -193,7 +193,7 @@ export const CompleteHomepage = () => {
                   <div className="transform scale-[2.025] origin-center">
                     <OptimizedImage
                       src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
-                      alt="Intelligent tenancy document processing with automated insights and answers"
+                      alt="a tenancy document"
                       className="max-w-full h-auto object-contain"
                       width={500}
                       height={500}
