@@ -233,21 +233,17 @@ export const CompleteHomepage = () => {
                 
                 {/* Right side - Document visualization */}
                 <div className="relative flex flex-col items-center">
-                  <div className="transform scale-[1.91] md:scale-[2.58] origin-center" 
-                       style={{ 
-                         width: '300px', 
-                         height: '300px',
-                         minWidth: '300px',
-                         minHeight: '300px'
-                       }}>
-                     <OptimizedImage
+                  <div className="relative w-[573px] h-[573px] md:w-[774px] md:h-[774px]">
+                     <img
                        src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
                        alt="a tenancy document"
-                       className="max-w-full h-auto object-contain"
-                       width={300}
-                       height={300}
-                       priority={true}
-                       fetchPriority="high"
+                       className="w-full h-full object-contain opacity-0 transition-opacity duration-300"
+                       width={573}
+                       height={573}
+                       loading="eager"
+                       onLoad={(e) => {
+                         e.currentTarget.style.opacity = '1';
+                       }}
                      />
                   </div>
                   
