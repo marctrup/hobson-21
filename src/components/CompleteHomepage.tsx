@@ -188,13 +188,17 @@ export const CompleteHomepage = () => {
                       </DialogDescription>
                        <div className="relative aspect-video bg-muted rounded-lg">
                           <iframe
-                            className="w-full h-full rounded-lg"
+                            className="w-full h-full rounded-lg opacity-0 animate-fade-in animation-delay-300"
                             src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
                             title="Meet Georgia - Property AI Assistant"
                             frameBorder="0"
                             allow="autoplay; fullscreen; picture-in-picture"
                             allowFullScreen
+                            style={{ animationDelay: '300ms' }}
                           ></iframe>
+                          <div className="absolute inset-0 bg-muted rounded-lg flex items-center justify-center animate-fade-out animation-delay-200 pointer-events-none">
+                            <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                          </div>
                        </div>
                     </DialogContent>
                   </Dialog>
