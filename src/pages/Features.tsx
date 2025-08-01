@@ -24,10 +24,10 @@ const Features = () => {
         <link rel="canonical" href="https://hobsonschoice.ai/features/real_estate_ai" />
       </Helmet>
       
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background overflow-x-hidden">
         <Header />
         
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 overflow-x-hidden max-w-full">
           {/* Skip to main content anchor */}
           <div id="main-content"></div>
           
