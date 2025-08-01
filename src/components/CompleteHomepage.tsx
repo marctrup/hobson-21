@@ -5,7 +5,6 @@ import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import { WebPImage } from "@/components/WebPImage";
 import { Helmet } from "react-helmet-async";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 // Lazy load video only when needed
@@ -199,12 +198,12 @@ export const CompleteHomepage = () => {
                 {/* Right side - Document visualization */}
                 <div className="relative flex flex-col items-center">
                   <div className="transform scale-[2.025] origin-center">
-                     <WebPImage
+                     <OptimizedImage
                        src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
                        alt="a tenancy document"
                        className="max-w-full h-auto object-contain"
-                       width={300}
-                       height={300}
+                       width={400}
+                       height={400}
                        loading="lazy"
                      />
                   </div>

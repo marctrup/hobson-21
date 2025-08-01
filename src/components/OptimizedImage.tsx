@@ -29,7 +29,7 @@ export const OptimizedImage = memo<OptimizedImageProps>(({
       alt={alt}
       className={className}
       loading={loading || (priority ? 'eager' : 'lazy')}
-      {...(fetchPriority && { fetchPriority })}
+      {...(fetchPriority !== 'auto' && { fetchpriority: fetchPriority })}
       decoding="async"
       width={width}
       height={height}
