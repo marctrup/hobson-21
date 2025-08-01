@@ -50,7 +50,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
               className="w-full h-full object-cover"
               width={243}
               height={162}
-              sizes="(max-width: 768px) 90vw, 243px"
+              sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, 243px"
             />
           ) : (
             <div className="w-full h-full bg-muted flex items-center justify-center">

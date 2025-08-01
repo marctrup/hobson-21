@@ -52,7 +52,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
                 width={243}
                 height={183}
                 priority={true}
-                sizes="(max-width: 768px) 100vw, 324px"
+                sizes="(max-width: 640px) 200px, (max-width: 768px) 300px, 324px"
               />
             ) : (
               <div className="w-full h-full bg-muted flex items-center justify-center">

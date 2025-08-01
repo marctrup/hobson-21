@@ -164,6 +164,13 @@ const Blog = () => {
           <meta name="twitter:description" content="Latest insights and tips for property management professionals using AI." />
           <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" />
           <link rel="canonical" href="https://hobsonschoice.ai/blog" />
+          
+          {/* Performance optimizations */}
+          <link rel="dns-prefetch" href="//hobsonschoice.ai" />
+          <link rel="preconnect" href="https://hobsonschoice.ai" />
+          {featuredPost?.featured_image_url && (
+            <link rel="preload" as="image" href={featuredPost.featured_image_url} />
+          )}
         </Helmet>
         
         <Header />
