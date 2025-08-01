@@ -95,16 +95,19 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                   
                   {/* Main document */}
                   <div className="relative z-10 w-full mx-auto scale-[1.53]">
-                    <OptimizedImage
-                      src={documentAiIcon} 
-                      alt="Intelligent tenancy document processing with automated insights and answers" 
-                      className="w-full h-auto object-cover rounded-2xl shadow-sm"
-                      width={400}
-                      height={300}
-                      priority={true}
-                      fetchPriority="high"
-                      sizes="(max-width: 768px) 100vw, 400px"
-                    />
+                    {/* Image container with fixed aspect ratio to prevent layout shift */}
+                    <div className="w-full" style={{ aspectRatio: '4/3' }}>
+                      <OptimizedImage
+                        src={documentAiIcon} 
+                        alt="Intelligent tenancy document processing with automated insights and answers" 
+                        className="w-full h-full object-cover rounded-2xl shadow-sm"
+                        width={400}
+                        height={300}
+                        priority={true}
+                        fetchPriority="high"
+                        sizes="(max-width: 768px) 100vw, 400px"
+                      />
+                    </div>
                   </div>
                 </div>
                 
