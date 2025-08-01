@@ -204,19 +204,18 @@ export const CompleteHomepage = () => {
                       </DialogDescription>
                        <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
                           {/* Video loads but stays hidden until ready */}
-                          <iframe
-                            className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                            src={videoLoaded ? "https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0" : "about:blank"}
-                            title="Meet Georgia - Property AI Assistant"
-                            frameBorder="0"
-                            allow="autoplay; fullscreen; picture-in-picture"
-                            allowFullScreen
-                            onLoad={() => {
-                              if (!videoLoaded) {
-                                setTimeout(() => setVideoLoaded(true), 2000);
-                              }
-                            }}
-                          ></iframe>
+                           <iframe
+                             className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                             src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
+                             title="Meet Georgia - Property AI Assistant"
+                             frameBorder="0"
+                             allow="autoplay; fullscreen; picture-in-picture"
+                             allowFullScreen
+                             onLoad={() => {
+                               // Only hide spinner once video content is actually loaded
+                               setTimeout(() => setVideoLoaded(true), 3000);
+                             }}
+                           ></iframe>
                           {/* Spinner overlay covers everything */}
                           <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center z-20 transition-opacity duration-500 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                             <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
