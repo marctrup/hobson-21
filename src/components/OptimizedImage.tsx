@@ -1,0 +1,44 @@
+import { memo } from 'react';
+
+interface OptimizedImageProps {
+  src: string;
+  alt: string;
+  className?: string;
+  width?: number;
+  height?: number;
+  priority?: boolean;
+  sizes?: string;
+  fetchPriority?: 'high' | 'low' | 'auto';
+}
+
+export const OptimizedImage = memo<OptimizedImageProps>(({
+  src,
+  alt,
+  className = '',
+  width,
+  height,
+  priority = false,
+  sizes = '100vw',
+  fetchPriority = 'auto'
+}) => {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={className}
+      loading={priority ? 'eager' : 'lazy'}
+      {...(fetchPriority && { fetchPriority })}
+      decoding="async"
+      width={width}
+      height={height}
+      sizes={sizes}
+      style={{
+        aspectRatio: width && height ? `${width}/${height}` : undefined,
+        contentVisibility: 'auto',
+        containIntrinsicSize: width && height ? `${width}px ${height}px` : '300px 200px'
+      }}
+    />
+  );
+});
+
+OptimizedImage.displayName = 'OptimizedImage';
