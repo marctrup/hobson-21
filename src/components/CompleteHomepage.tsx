@@ -163,7 +163,11 @@ export const CompleteHomepage = () => {
                   </div>
 
                   {/* Georgia Video - Exact match to public site */}
-                  <Dialog>
+                  <Dialog onOpenChange={(open) => {
+                    if (!open) {
+                      setVideoLoaded(false); // Reset video state when dialog closes
+                    }
+                  }}>
                     <DialogTrigger asChild>
                        <div className="max-w-[280px] cursor-pointer group transform scale-[1.08]">
                          <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl">
