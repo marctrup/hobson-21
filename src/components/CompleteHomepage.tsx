@@ -188,22 +188,23 @@ export const CompleteHomepage = () => {
                         Watch Georgia explain how Hobson's AI can transform your property management workflow
                       </DialogDescription>
                        <div className="relative aspect-video bg-muted rounded-lg">
+                          {/* Spinner overlay - shows until video is ready */}
+                          <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center transition-opacity duration-500 z-10 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                            <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                          </div>
+                          {/* Video loads behind spinner */}
                           <iframe
-                            className={`w-full h-full rounded-lg transition-opacity duration-300 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                            className="w-full h-full rounded-lg"
                             src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
                             title="Meet Georgia - Property AI Assistant"
                             frameBorder="0"
                             allow="autoplay; fullscreen; picture-in-picture"
                             allowFullScreen
                             onLoad={() => {
-                              setTimeout(() => setVideoLoaded(true), 500);
+                              // Give video content time to be ready after iframe loads
+                              setTimeout(() => setVideoLoaded(true), 1200);
                             }}
                           ></iframe>
-                          {!videoLoaded && (
-                            <div className="absolute inset-0 bg-muted rounded-lg flex items-center justify-center">
-                              <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                            </div>
-                          )}
                        </div>
                     </DialogContent>
                   </Dialog>
