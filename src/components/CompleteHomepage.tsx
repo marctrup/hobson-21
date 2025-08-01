@@ -186,25 +186,14 @@ export const CompleteHomepage = () => {
                       <DialogDescription className="sr-only">
                         Watch Georgia explain how Hobson's AI can transform your property management workflow
                       </DialogDescription>
-                       <div className="relative aspect-video bg-muted rounded-lg flex items-center justify-center">
-                          <div className="absolute inset-0 flex items-center justify-center bg-muted rounded-lg">
-                            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                          </div>
+                       <div className="relative aspect-video bg-muted rounded-lg">
                           <iframe
-                            className="w-full h-full rounded-lg relative z-10"
-                            src="https://player.vimeo.com/video/1106432593?autoplay=1&controls=0&transparent=0&background=1"
+                            className="w-full h-full rounded-lg"
+                            src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&autopause=0"
                             title="Meet Georgia - Property AI Assistant"
                             frameBorder="0"
                             allow="autoplay; fullscreen; picture-in-picture"
                             allowFullScreen
-                            loading="eager"
-                            onLoad={(e) => {
-                              // Show controls after video loads
-                              const iframe = e.target as HTMLIFrameElement;
-                              setTimeout(() => {
-                                iframe.src = iframe.src.replace('controls=0', 'controls=1');
-                              }, 1000);
-                            }}
                           ></iframe>
                        </div>
                     </DialogContent>
