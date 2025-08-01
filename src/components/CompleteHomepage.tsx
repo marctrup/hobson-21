@@ -209,16 +209,6 @@ export const CompleteHomepage = () => {
                 </div>
               </div>
               
-              {/* Who benefits button - Purple styling */}
-              <div className="mt-16 text-center">
-                <SimpleButton 
-                  variant="outline" 
-                  size="lg" 
-                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3 text-lg font-medium"
-                >
-                  Who benefits? →
-                </SimpleButton>
-              </div>
             </div>
           </section>
 
