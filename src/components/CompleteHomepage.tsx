@@ -5,9 +5,10 @@ import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { WebPImage } from "@/components/WebPImage";
 import { Helmet } from "react-helmet-async";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import explainerVideo from "@/assets/avitar-hobson-explainer.mp4";
+// Lazy load video only when needed
 
 export const CompleteHomepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -35,6 +36,12 @@ export const CompleteHomepage = () => {
         <meta name="twitter:description" content="Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions." />
         <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
         <link rel="canonical" href="https://hobsonschoice.ai/property-management-software" />
+        
+        {/* Preload critical assets */}
+        <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
+        <link rel="prefetch" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
+        <link rel="dns-prefetch" href="//www.youtube.com" />
+        <link rel="dns-prefetch" href="//i.ytimg.com" />
       </Helmet>
 
       <div className="min-h-screen bg-background">
@@ -155,13 +162,14 @@ export const CompleteHomepage = () => {
                     <DialogTrigger asChild>
                        <div className="max-w-[280px] cursor-pointer group transform scale-[1.08]">
                          <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl">
-                           <OptimizedImage
-                             src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
-                             alt="Georgia from Hobson AI explaining new AI property management software - the features and benefits"
-                             className="w-full h-auto rounded-xl object-cover aspect-[3/2]"
-                             width={240}
-                             height={160}
-                           />
+                            <OptimizedImage
+                              src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
+                              alt="Georgia from Hobson AI explaining new AI property management software - the features and benefits"
+                              className="w-full h-auto rounded-xl object-cover aspect-[3/2]"
+                              width={240}
+                              height={160}
+                              loading="lazy"
+                            />
                          </div>
                         <div className="mt-6">
                           <h3 className="text-sm font-semibold mb-2 text-foreground">"Would it help if I explained a bit more?"</h3>
@@ -177,12 +185,12 @@ export const CompleteHomepage = () => {
                        <div className="relative aspect-video">
                           <iframe
                             className="w-full h-full rounded-lg"
-                            src="https://player.vimeo.com/video/1106432593?autoplay=1&title=0&byline=0&portrait=0"
+                            src="https://www.youtube.com/embed/52sNQMTudHg?autoplay=1"
                            title="Meet Georgia - Property AI Assistant"
                            frameBorder="0"
                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                            allowFullScreen
-                         ></iframe>
+                          ></iframe>
                        </div>
                     </DialogContent>
                   </Dialog>
@@ -191,14 +199,14 @@ export const CompleteHomepage = () => {
                 {/* Right side - Document visualization */}
                 <div className="relative flex flex-col items-center">
                   <div className="transform scale-[2.025] origin-center">
-                    <OptimizedImage
-                      src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
-                      alt="a tenancy document"
-                      className="max-w-full h-auto object-contain"
-                      width={500}
-                      height={500}
-                      priority
-                    />
+                     <WebPImage
+                       src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
+                       alt="a tenancy document"
+                       className="max-w-full h-auto object-contain"
+                       width={300}
+                       height={300}
+                       loading="lazy"
+                     />
                   </div>
                   
                   {/* Text below the image */}

@@ -9,6 +9,7 @@ interface OptimizedImageProps {
   priority?: boolean;
   sizes?: string;
   fetchPriority?: 'high' | 'low' | 'auto';
+  loading?: 'eager' | 'lazy';
 }
 
 export const OptimizedImage = memo<OptimizedImageProps>(({
@@ -19,14 +20,15 @@ export const OptimizedImage = memo<OptimizedImageProps>(({
   height,
   priority = false,
   sizes = '100vw',
-  fetchPriority = 'auto'
+  fetchPriority = 'auto',
+  loading
 }) => {
   return (
     <img
       src={src}
       alt={alt}
       className={className}
-      loading={priority ? 'eager' : 'lazy'}
+      loading={loading || (priority ? 'eager' : 'lazy')}
       {...(fetchPriority && { fetchPriority })}
       decoding="async"
       width={width}

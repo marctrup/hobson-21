@@ -1,12 +1,11 @@
 // Service Worker for caching and performance
-const CACHE_NAME = 'hobson-ai-v2';
+const CACHE_NAME = 'hobson-ai-v3';
 const urlsToCache = [
   '/',
   '/src/main.tsx',
   '/src/index.css',
-  '/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png',
-  '/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png',
-  '/lovable-uploads/4351fb54-1d77-416e-9474-3c80e483a83c.png',
+  // Critical images only
+  '/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png', // Logo
 ];
 
 // Install Service Worker
