@@ -186,7 +186,7 @@ export const CompleteHomepage = () => {
                         </div>
                       </div>
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl w-full p-2">
+                    <DialogContent className="max-w-2xl w-full p-2 overflow-hidden">
                       <DialogTitle className="sr-only">Meet Georgia - Property AI Assistant</DialogTitle>
                       <DialogDescription className="sr-only">
                         Watch Georgia explain how Hobson's AI can transform your property management workflow
@@ -195,13 +195,15 @@ export const CompleteHomepage = () => {
                           {/* Video loads but stays hidden until ready */}
                           <iframe
                             className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                            src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
+                            src={videoLoaded ? "https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0" : "about:blank"}
                             title="Meet Georgia - Property AI Assistant"
                             frameBorder="0"
                             allow="autoplay; fullscreen; picture-in-picture"
                             allowFullScreen
                             onLoad={() => {
-                              setTimeout(() => setVideoLoaded(true), 2000);
+                              if (!videoLoaded) {
+                                setTimeout(() => setVideoLoaded(true), 2000);
+                              }
                             }}
                           ></iframe>
                           {/* Spinner overlay covers everything */}
