@@ -423,19 +423,6 @@ export const CompleteHomepage = () => {
             </div>
           </section>
 
-          {/* Features Link Section */}
-          <section className="py-8">
-            <div className="container mx-auto px-4 text-center">
-              <SimpleButton 
-                variant="outline" 
-                size="lg" 
-                className="border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-3 text-lg font-medium"
-                asChild
-              >
-                <Link to="/features">Features →</Link>
-              </SimpleButton>
-            </div>
-          </section>
 
           {/* CTA Section - Clean layout without card */}
           <section className="py-24">
