@@ -186,7 +186,18 @@ export const CompleteHomepage = () => {
                         </div>
                       </div>
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl w-full p-2 overflow-hidden">
+                    <DialogContent className="max-w-2xl w-full p-2 overflow-hidden" style={{ zIndex: 50 }}>
+                      {/* Custom close button with higher z-index */}
+                      <button 
+                        onClick={() => {
+                          console.log("Close button clicked!");
+                          setVideoLoaded(false);
+                        }}
+                        className="absolute right-4 top-4 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
+                        aria-label="Close video"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
                       <DialogTitle className="sr-only">Meet Georgia - Property AI Assistant</DialogTitle>
                       <DialogDescription className="sr-only">
                         Watch Georgia explain how Hobson's AI can transform your property management workflow
