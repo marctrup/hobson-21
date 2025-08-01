@@ -49,13 +49,6 @@ const Features = () => {
             </p>
           </div>
 
-          {/* Simple. Powerful. Intuitive Section */}
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Simple. Powerful. Intuitive.</h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Chat with Hobson on the left, visualize your portfolio on the right. Everything you need in one seamless interface.
-            </p>
-          </div>
 
           {/* Angled Feature Showcase with Grid Map */}
           <FeatureShowcase />
