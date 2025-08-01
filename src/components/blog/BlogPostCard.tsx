@@ -48,9 +48,9 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
               src={post.featured_image_url}
               alt={post.title}
               className="w-full h-full object-cover"
-              width={270}
-              height={180}
-              sizes="(max-width: 768px) 90vw, 270px"
+              width={243}
+              height={162}
+              sizes="(max-width: 768px) 90vw, 243px"
             />
           ) : (
             <div className="w-full h-full bg-muted flex items-center justify-center">
