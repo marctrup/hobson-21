@@ -1,6 +1,6 @@
 export const BlogHero = () => {
   return (
-    <section className="blog-hero bg-gradient-to-br from-primary/5 via-background to-accent/5 py-4 md:py-12 pb-4 md:pb-16">
+    <section className="blog-hero bg-gradient-to-br from-primary/5 via-background to-accent/5 py-2 md:py-8 pb-4 md:pb-16">
       <div className="container mx-auto px-4 text-center">
         <h1 className="text-3xl md:text-6xl font-bold text-foreground mb-4 md:mb-6">
           Industry Insights
