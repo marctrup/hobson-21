@@ -385,6 +385,21 @@ const BlogEditor = () => {
       }
     }
     
+    // Get the highest sort_order for new posts
+    let sort_order = 1;
+    if (!isEditing) {
+      const { data: maxPost } = await supabase
+        .from('blog_posts')
+        .select('sort_order')
+        .order('sort_order', { ascending: false })
+        .limit(1)
+        .single();
+      
+      if (maxPost?.sort_order) {
+        sort_order = maxPost.sort_order + 1;
+      }
+    }
+    
     const postData = {
       title: post.title,
       slug: finalSlug,
@@ -397,7 +412,8 @@ const BlogEditor = () => {
       meta_description: post.meta_description || null,
       reading_time: post.reading_time,
       author_id: user.id,
-      ...(shouldSetPublishedAt ? { published_at: new Date().toISOString() } : {})
+      ...(shouldSetPublishedAt ? { published_at: new Date().toISOString() } : {}),
+      ...(!isEditing ? { sort_order } : {})
     };
 
     try {

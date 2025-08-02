@@ -31,8 +31,34 @@ const BlogManagement = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    fetchPosts();
+    const loadData = async () => {
+      await fixSortOrders();
+      await fetchPosts();
+    };
+    loadData();
   }, []);
+
+  const fixSortOrders = async () => {
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('id, sort_order')
+      .order('created_at', { ascending: false });
+      
+    if (error || !data) return;
+    
+    // Fix any posts without sort_order or with duplicate values
+    const updates = data.map((post, index) => ({
+      id: post.id,
+      sort_order: data.length - index
+    }));
+    
+    for (const update of updates) {
+      await supabase
+        .from('blog_posts')
+        .update({ sort_order: update.sort_order })
+        .eq('id', update.id);
+    }
+  };
 
   const fetchPosts = async () => {
     const { data, error } = await supabase
@@ -136,47 +162,95 @@ const BlogManagement = () => {
     }
   };
 
-  const handleMoveUp = async (id: string, currentSortOrder: number) => {
-    const { error } = await supabase
-      .from('blog_posts')
-      .update({ sort_order: currentSortOrder + 1 })
-      .eq('id', id);
+  const handleMoveUp = async (id: string, currentIndex: number) => {
+    if (currentIndex === 0) return;
+    
+    // Swap positions with the post above
+    const newPosts = [...posts];
+    const temp = newPosts[currentIndex - 1];
+    newPosts[currentIndex - 1] = newPosts[currentIndex];
+    newPosts[currentIndex] = temp;
+    
+    // Update sort_order for both posts
+    const updates = [
+      {
+        id: newPosts[currentIndex - 1].id,
+        sort_order: posts.length - (currentIndex - 1)
+      },
+      {
+        id: newPosts[currentIndex].id,
+        sort_order: posts.length - currentIndex
+      }
+    ];
 
-    if (error) {
+    try {
+      for (const update of updates) {
+        const { error } = await supabase
+          .from('blog_posts')
+          .update({ sort_order: update.sort_order })
+          .eq('id', update.id);
+          
+        if (error) throw error;
+      }
+      
+      toast({
+        title: "Success",
+        description: "Post moved up",
+      });
+      fetchPosts();
+    } catch (error) {
       console.error('Error moving post up:', error);
       toast({
         title: "Error",
         description: "Failed to reorder post",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Success",
-        description: "Post moved up",
-      });
-      fetchPosts();
     }
   };
 
-  const handleMoveDown = async (id: string, currentSortOrder: number) => {
-    const { error } = await supabase
-      .from('blog_posts')
-      .update({ sort_order: Math.max(0, currentSortOrder - 1) })
-      .eq('id', id);
+  const handleMoveDown = async (id: string, currentIndex: number) => {
+    if (currentIndex === posts.length - 1) return;
+    
+    // Swap positions with the post below
+    const newPosts = [...posts];
+    const temp = newPosts[currentIndex + 1];
+    newPosts[currentIndex + 1] = newPosts[currentIndex];
+    newPosts[currentIndex] = temp;
+    
+    // Update sort_order for both posts
+    const updates = [
+      {
+        id: newPosts[currentIndex].id,
+        sort_order: posts.length - currentIndex
+      },
+      {
+        id: newPosts[currentIndex + 1].id,
+        sort_order: posts.length - (currentIndex + 1)
+      }
+    ];
 
-    if (error) {
+    try {
+      for (const update of updates) {
+        const { error } = await supabase
+          .from('blog_posts')
+          .update({ sort_order: update.sort_order })
+          .eq('id', update.id);
+          
+        if (error) throw error;
+      }
+      
+      toast({
+        title: "Success",
+        description: "Post moved down",
+      });
+      fetchPosts();
+    } catch (error) {
       console.error('Error moving post down:', error);
       toast({
         title: "Error",
         description: "Failed to reorder post",
         variant: "destructive",
       });
-    } else {
-      toast({
-        title: "Success",
-        description: "Post moved down",
-      });
-      fetchPosts();
     }
   };
 
@@ -230,7 +304,7 @@ const BlogManagement = () => {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleMoveUp(post.id, post.sort_order)}
+                          onClick={() => handleMoveUp(post.id, index)}
                           disabled={index === 0}
                           className="h-6 w-6 p-0"
                         >
@@ -239,7 +313,7 @@ const BlogManagement = () => {
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleMoveDown(post.id, post.sort_order)}
+                          onClick={() => handleMoveDown(post.id, index)}
                           disabled={index === posts.length - 1}
                           className="h-6 w-6 p-0"
                         >
