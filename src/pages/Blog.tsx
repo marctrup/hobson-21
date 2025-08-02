@@ -5,6 +5,7 @@ import { Header } from "@/components/Header";
 import { BlogHero } from "@/components/blog/BlogHero";
 import { BlogGrid } from "@/components/blog/BlogGrid";
 import { FeaturedPost } from "@/components/blog/FeaturedPost";
+import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { CategoryFilter } from "@/components/blog/CategoryFilter";
 import { LoadingSkeleton } from "@/components/LoadingSkeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -184,17 +185,19 @@ const Blog = () => {
           />
           
           {posts.length > 0 ? (
-            <>
+            <div className="grid grid-cols-1 gap-3">
               {featuredPost && (
-                <div className="mb-6">
-                  <FeaturedPost post={featuredPost} />
-                </div>
+                <FeaturedPost post={featuredPost} />
               )}
               
               {remainingPosts.length > 0 && (
-                <BlogGrid posts={remainingPosts} />
+                <>
+                  {remainingPosts.map((post) => (
+                    <BlogPostCard key={post.id} post={post} />
+                  ))}
+                </>
               )}
-            </>
+            </div>
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground text-lg">

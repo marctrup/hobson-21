@@ -39,7 +39,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
   };
 
   return (
-    <div className="mb-6 md:mb-8">
+    <div>
       <Card className="overflow-hidden">
         <div className="grid md:grid-cols-5 gap-0">
           <div className="aspect-[4/3] md:aspect-[3/2]">
