@@ -94,18 +94,18 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                   <div className="absolute top-1 left-1 w-[90%] h-full bg-muted/60 rounded-2xl shadow-lg transform -rotate-0.5"></div>
                   
                   {/* Main document */}
-                  <div className="relative z-10 w-full mx-auto scale-[1.53]">
-                    {/* Image container with reserved space to prevent layout shift */}
-                    <div className="w-full min-h-[300px] flex items-center justify-center">
+                  <div className="relative z-10 w-full mx-auto">
+                    {/* Fixed container to prevent layout shift and contain image */}
+                    <div className="w-[400px] h-[300px] mx-auto overflow-hidden rounded-2xl shadow-sm">
                       <OptimizedImage
                         src={documentAiIcon} 
                         alt="Intelligent tenancy document processing with automated insights and answers" 
-                        className="w-full h-auto object-cover rounded-2xl shadow-sm"
+                        className="w-full h-full object-cover"
                         width={400}
                         height={300}
                         priority={true}
                         fetchPriority="high"
-                        sizes="(max-width: 768px) 100vw, 400px"
+                        sizes="400px"
                       />
                     </div>
                   </div>
