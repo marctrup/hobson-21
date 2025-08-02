@@ -41,7 +41,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
   return (
     <div className="mb-6 md:mb-8">
       <Card className="overflow-hidden">
-        <div className="grid md:grid-cols-3 gap-0">
+        <div className="grid md:grid-cols-5 gap-0">
           <div className="aspect-[4/3] md:aspect-[3/2]">
             {post.featured_image_url ? (
               <LazyImage
@@ -59,7 +59,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
               </div>
             )}
           </div>
-          <CardContent className="md:col-span-2 p-4 flex flex-col justify-center">
+          <CardContent className="md:col-span-4 p-4 flex flex-col justify-center">
             <div className="flex items-center gap-3 mb-2">
               <Badge variant="secondary" className="text-xs">Featured</Badge>
               <div className="flex items-center gap-1 text-xs text-muted-foreground">

@@ -40,7 +40,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
 
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
-      <div className="grid md:grid-cols-3 gap-0">
+      <div className="grid md:grid-cols-4 gap-0">
         <div className="aspect-[3/2]">
           {post.featured_image_url ? (
             <LazyImage
@@ -57,7 +57,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
             </div>
           )}
         </div>
-        <CardContent className="md:col-span-2 p-4 flex flex-col justify-center">
+        <div className="md:col-span-3 p-4 flex flex-col justify-center">
           <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground">
             <Calendar className="w-4 h-4" />
             {format(new Date(post.published_at), 'MMM dd')}
@@ -86,7 +86,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
               ))}
             </div>
           )}
-        </CardContent>
+        </div>
       </div>
     </Card>
   );
