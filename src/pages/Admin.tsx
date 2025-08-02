@@ -103,6 +103,48 @@ export default function Admin() {
     navigate("/");
   };
 
+  const exportToCSV = () => {
+    const headers = [
+      "Name",
+      "Company", 
+      "Role",
+      "Email",
+      "Phone",
+      "Preferred Contact",
+      "Website",
+      "Business Types",
+      "Help Needed",
+      "Submitted Date"
+    ];
+
+    const csvData = applications.map(app => [
+      app.name,
+      app.company,
+      app.role,
+      app.email,
+      app.phone || "",
+      app.preferred_contact || "",
+      app.website || "",
+      app.business_types?.join("; ") || "",
+      app.help || "",
+      new Date(app.created_at).toLocaleDateString()
+    ]);
+
+    const csvContent = [headers, ...csvData]
+      .map(row => row.map(cell => `"${cell}"`).join(","))
+      .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `pilot-applications-${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   if (isLoading || !isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -133,7 +175,14 @@ export default function Admin() {
       <main className="container mx-auto px-4 py-8">
         <Card>
           <CardHeader>
-            <CardTitle>Pilot Applications ({applications.length})</CardTitle>
+            <div className="flex justify-between items-center">
+              <CardTitle>Pilot Applications ({applications.length})</CardTitle>
+              {applications.length > 0 && (
+                <Button onClick={exportToCSV} variant="outline">
+                  Export to CSV
+                </Button>
+              )}
+            </div>
           </CardHeader>
           <CardContent>
             {loadingApplications ? (
