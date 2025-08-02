@@ -89,7 +89,6 @@ const Blog = () => {
             `)
             .eq('status', 'published')
             .order('sort_order', { ascending: false })
-            .order('updated_at', { ascending: false })
             .limit(limit);
 
           if (selectedCategory) {
