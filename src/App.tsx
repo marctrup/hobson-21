@@ -12,6 +12,7 @@ const CompleteHomepage = lazy(() => import("./components/CompleteHomepage").then
 const SimpleHomepage = lazy(() => import("./components/SimpleHomepage").then(module => ({ default: module.SimpleHomepage })));
 const LandingPageA = lazy(() => import("./pages/LandingPageA"));
 const LandingPageB = lazy(() => import("./pages/LandingPageB"));
+const LandingPageC = lazy(() => import("./pages/LandingPageC"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -91,6 +92,7 @@ const App = () => {
                   {/* Temporary routes for testing landing pages in Lovable */}
                   <Route path="/landing-a" element={<LandingPageA />} />
                   <Route path="/landing-b" element={<LandingPageB />} />
+                  <Route path="/landing-c" element={<LandingPageC />} />
                   {/* Remove the AI-driven-property-management-software route from main domain */}
                   <Route path="*" element={<NotFound />} />
                 </>
