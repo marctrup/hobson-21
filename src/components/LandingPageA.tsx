@@ -213,7 +213,7 @@ const LandingPageA = () => {
               <div className="aspect-square flex items-center justify-center">
                 <img 
                   src="/lovable-uploads/d7b9dc02-8d5c-4362-8105-30f1cbe9cebf.png" 
-                  alt="AI Document Processing" 
+                  alt="A tenancy document that can now talk" 
                   className="w-full h-full object-contain scale-110"
                   loading="eager"
                   fetchPriority="high"
