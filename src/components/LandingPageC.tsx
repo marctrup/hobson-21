@@ -75,24 +75,24 @@ const LandingPageC = () => {
             </div>
 
             {/* Person with Play Button - Right Side - Exact HeyGen reproduction */}
-            <div className="relative flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-lg">
+            <div className="relative flex justify-center lg:justify-end h-full">
+              <div className="relative w-full h-full min-h-[600px]">
                 {/* Background decorative frames */}
                 <div className="absolute inset-0">
                   {/* Large background frame */}
-                  <div className="absolute top-8 right-0 w-80 h-96 bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20"></div>
+                  <div className="absolute top-8 right-0 w-[480px] h-[600px] bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20"></div>
                   {/* Secondary frame */}
-                  <div className="absolute top-0 left-8 w-72 h-80 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"></div>
+                  <div className="absolute top-0 left-8 w-[420px] h-[520px] bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"></div>
                 </div>
                 
                 {/* Person image container */}
-                <div className="relative z-10 w-full">
-                  <div className="relative">
+                <div className="relative z-10 w-full h-full">
+                  <div className="relative h-full">
                     {/* Person image - using the uploaded image */}
                     <img 
                       src="/lovable-uploads/9134dbfd-4f1b-4aa2-b873-22cc634732e8.png"
                       alt="Person presenting"
-                      className="w-full h-auto object-cover rounded-2xl"
+                      className="w-full h-full object-cover rounded-2xl"
                     />
                     
                     {/* Play button overlay - positioned exactly like HeyGen */}
