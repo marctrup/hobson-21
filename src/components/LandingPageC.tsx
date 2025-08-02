@@ -43,9 +43,9 @@ const LandingPageC = () => {
         {/* Background with gradient - exact HeyGen purple gradient */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-purple-600 to-indigo-600"></div>
         
-        <div className="relative container mx-auto px-4 max-w-7xl">
+        <div className="relative container mx-auto px-4 max-w-7xl h-screen flex flex-col">
           {/* Breadcrumb - exact HeyGen style */}
-          <nav className="text-white/80 text-sm mb-8">
+          <nav className="text-white/80 text-sm mb-8 pt-8">
             <span>Home</span>
             <span className="mx-2">{'>'}</span>
             <span>Playbook</span>
@@ -53,7 +53,7 @@ const LandingPageC = () => {
             <span className="text-white">HeyGen for Marketers: The Ultimate AI Video Jumpstart Guide</span>
           </nav>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="flex-1 grid lg:grid-cols-2 gap-16 items-center">
             {/* Text Content - Left Side */}
             <div className="text-white space-y-6">
               {/* Tag - exact HeyGen style */}
@@ -74,29 +74,30 @@ const LandingPageC = () => {
               </div>
             </div>
 
-            {/* Person with Play Button - Right Side - Exact HeyGen reproduction */}
-            <div className="relative flex justify-center lg:justify-end h-screen">
-              <div className="relative w-full h-full">
-                {/* Background decorative frames */}
+            {/* Person with Play Button - Right Side - Completely embedded */}
+            <div className="relative h-full flex items-center justify-end">
+              {/* Main container that fills the available space */}
+              <div className="relative w-full h-[80vh] max-w-2xl">
+                {/* Background decorative elements */}
                 <div className="absolute inset-0">
-                  {/* Large background frame */}
-                  <div className="absolute top-8 right-0 w-[480px] h-[calc(100vh-4rem)] bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20"></div>
-                  {/* Secondary frame */}
-                  <div className="absolute top-0 left-8 w-[420px] h-[calc(100vh-6rem)] bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"></div>
+                  {/* Primary background frame */}
+                  <div className="absolute top-0 right-0 w-full h-full bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10"></div>
+                  {/* Secondary subtle frame */}
+                  <div className="absolute top-8 left-8 w-[calc(100%-2rem)] h-[calc(100%-2rem)] bg-white/3 backdrop-blur-sm rounded-2xl border border-white/5"></div>
                 </div>
                 
-                {/* Person image container */}
-                <div className="relative z-10 w-full h-full">
-                  <div className="relative h-full">
-                    {/* Person image - using the uploaded image */}
+                {/* Person image container - completely fills the frame */}
+                <div className="relative z-10 w-full h-full p-4">
+                  <div className="relative h-full w-full">
+                    {/* Person image - fills entire container */}
                     <img 
                       src="/lovable-uploads/9134dbfd-4f1b-4aa2-b873-22cc634732e8.png"
                       alt="Person presenting"
                       className="w-full h-full object-cover rounded-2xl"
                     />
                     
-                    {/* Play button overlay - positioned exactly like HeyGen */}
-                    <div className="absolute bottom-16 left-12">
+                    {/* Play button overlay - positioned within the frame */}
+                    <div className="absolute bottom-8 left-8">
                       <button 
                         onClick={() => setIsMuted(!isMuted)}
                         className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
