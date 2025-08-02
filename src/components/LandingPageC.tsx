@@ -39,75 +39,117 @@ const LandingPageC = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-4 py-12 md:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Text Content - Left Side on Desktop */}
-          <div className="order-2 lg:order-1 space-y-6">
-            <div className="inline-block rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
-              Limited Time Beta Access
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-              Join Our{" "}
-              <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                Pilot Scheme
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              Transform your property documents with AI-powered intelligence and get early access to revolutionary document analysis.
-            </p>
+      <section className="relative overflow-hidden">
+        {/* Background with gradient and decorative elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800">
+          {/* Decorative grid pattern */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute inset-0" style={{
+              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                               linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+              backgroundSize: '50px 50px'
+            }}></div>
           </div>
+          {/* Decorative shapes */}
+          <div className="absolute top-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 right-20 w-48 h-48 bg-white/5 rounded-full blur-3xl"></div>
+        </div>
 
-          {/* Video - Right Side on Desktop */}
-          <div className="order-1 lg:order-2 relative">
-            <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 to-primary/10 p-8">
-              <video
-                className="w-full h-auto rounded-xl shadow-2xl"
-                autoPlay
-                muted={isMuted}
-                loop
-                playsInline
-              >
-                <source src={avatarVideo} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
+        <div className="relative container mx-auto px-4 py-20 md:py-32">
+          {/* Breadcrumb */}
+          <nav className="text-white/80 text-sm mb-8">
+            <span>Home</span>
+            <span className="mx-2">›</span>
+            <span>Pilot Program</span>
+            <span className="mx-2">›</span>
+            <span className="text-white">Hobson's Choice AI: The Ultimate Property Intelligence Guide</span>
+          </nav>
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Text Content - Left Side */}
+            <div className="text-white space-y-8">
+              <div className="inline-block rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-white/30">
+                Pilot Program
+              </div>
               
-              {/* Video Controls */}
-              <button
-                onClick={() => setIsMuted(!isMuted)}
-                className="absolute bottom-4 right-4 bg-white/90 hover:bg-white text-primary rounded-full p-3 shadow-lg transition-all duration-200"
-                aria-label={isMuted ? "Unmute video" : "Mute video"}
-              >
-                {isMuted ? (
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.785L4.764 13.5H3a1 1 0 01-1-1v-5a1 1 0 011-1h1.764l3.619-3.285a1 1 0 011.617.785zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.785L4.764 13.5H3a1 1 0 01-1-1v-5a1 1 0 011-1h1.764l3.619-3.285a1 1 0 011.617.785zM12 9H4v2h8V9z" clipRule="evenodd" />
-                  </svg>
-                )}
-              </button>
+              <div className="space-y-6">
+                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                  Hobson's Choice AI:
+                </h1>
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                  The Ultimate Property
+                  <br />
+                  <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
+                    Intelligence Guide
+                  </span>
+                </h2>
+              </div>
+            </div>
+
+            {/* Video Container - Right Side */}
+            <div className="relative">
+              <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
+                {/* Video with play button overlay */}
+                <div className="relative rounded-2xl overflow-hidden bg-black">
+                  <video
+                    className="w-full h-auto"
+                    autoPlay
+                    muted={isMuted}
+                    loop
+                    playsInline
+                    poster="/lovable-uploads/b5265bc4-b41d-4891-8c70-ab934835d300.png"
+                  >
+                    <source src={avatarVideo} type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  
+                  {/* Play/Mute button overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button
+                      onClick={() => setIsMuted(!isMuted)}
+                      className="bg-white/90 hover:bg-white text-gray-800 rounded-full p-4 shadow-2xl transition-all duration-300 hover:scale-110"
+                      aria-label={isMuted ? "Unmute video" : "Mute video"}
+                    >
+                      {isMuted ? (
+                        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
+                      ) : (
+                        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                        </svg>
+                      )}
+                    </button>
+                  </div>
+                </div>
+                
+                {/* Decorative elements */}
+                <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full opacity-20 blur-xl"></div>
+                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full opacity-20 blur-xl"></div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Intro Text Section */}
-      <section className="container mx-auto px-4 py-12">
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <h2 className="text-3xl md:text-4xl font-bold">
-            Welcome to Our Pilot Scheme
-          </h2>
-          <div className="text-lg text-muted-foreground space-y-4 max-w-3xl mx-auto">
-            <p>
-              Our AI-powered property document intelligence platform is designed for forward-thinking property professionals ready to revolutionize their document workflows.
-            </p>
-            <p>
-              Join our exclusive pilot program and be among the first to experience instant document analysis, intelligent property insights, and automated compliance checks that save hours of manual work.
-            </p>
-            <p>
-              Limited spaces available for our beta launch. Apply now to secure your early access and help shape the future of property technology.
-            </p>
+      {/* Welcome Section */}
+      <section className="bg-white py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
+              Welcome to Your Property Intelligence Pilot Guide
+            </h2>
+            <div className="text-xl text-gray-600 space-y-6 max-w-4xl mx-auto leading-relaxed">
+              <p>
+                Want to revolutionize your property workflows but feel held back by time-consuming document analysis, manual compliance checks, or inefficient data extraction? You're not alone.
+              </p>
+              <p>
+                Here's the good news: with Hobson's Choice AI, you can transform property documents into intelligent insights that drive better decisions, faster processes, and superior outcomes at a fraction of the traditional cost and time.
+              </p>
+              <p>
+                This pilot program is built for property professionals ready to elevate their operations with AI-powered intelligence. You'll learn how to go from manual document processing to automated insights, creating high-quality, scalable workflows without requiring extensive technical expertise.
+              </p>
+            </div>
           </div>
         </div>
       </section>
