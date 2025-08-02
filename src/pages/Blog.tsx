@@ -186,7 +186,7 @@ const Blog = () => {
           {posts.length > 0 ? (
             <>
               {featuredPost && (
-                <div className="mb-12">
+                <div className="mb-6">
                   <FeaturedPost post={featuredPost} />
                 </div>
               )}
