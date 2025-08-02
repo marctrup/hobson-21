@@ -367,9 +367,23 @@ const BlogEditor = () => {
     const statusToSave = newStatus || post.status;
     const shouldSetPublishedAt = statusToSave === 'published' && (!post.id || post.status !== 'published');
     
-    // Always append timestamp to slug for uniqueness and SEO
-    const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:]/g, '').replace('T', '-');
-    const finalSlug = `${post.slug}-${timestamp}`;
+    // Check for slug conflicts only when creating new posts or if slug has changed
+    let finalSlug = post.slug;
+    if (!isEditing || (isEditing && originalPost && post.slug !== originalPost.slug)) {
+      // Check if slug already exists
+      const { data: existingPost } = await supabase
+        .from('blog_posts')
+        .select('id')
+        .eq('slug', post.slug)
+        .neq('id', id || '')
+        .single();
+      
+      if (existingPost) {
+        // Only append timestamp if there's a conflict
+        const timestamp = new Date().toISOString().slice(0, 19).replace(/[-:]/g, '').replace('T', '-');
+        finalSlug = `${post.slug}-${timestamp}`;
+      }
+    }
     
     const postData = {
       title: post.title,
