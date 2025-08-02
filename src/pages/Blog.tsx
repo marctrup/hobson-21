@@ -92,7 +92,19 @@ const Blog = () => {
             .limit(limit);
 
           if (selectedCategory) {
-            query = query.eq('blog_post_categories.blog_categories.slug', selectedCategory);
+            // Get post IDs for the selected category first
+            const { data: categoryPostIds } = await supabase
+              .from('blog_post_categories')
+              .select('post_id, blog_categories!inner(slug)')
+              .eq('blog_categories.slug', selectedCategory);
+            
+            const postIds = categoryPostIds?.map(item => item.post_id) || [];
+            if (postIds.length > 0) {
+              query = query.in('id', postIds);
+            } else {
+              // No posts in this category, return empty result
+              return { data: [], error: null };
+            }
           }
 
           const { data, error } = await query;
