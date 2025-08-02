@@ -74,34 +74,37 @@ const LandingPageC = () => {
               </div>
             </div>
 
-            {/* Person with Play Button - Right Side */}
+            {/* Person with Play Button - Right Side - Exact HeyGen reproduction */}
             <div className="relative flex justify-center lg:justify-end">
-              <div className="relative">
-                {/* Person container - matching HeyGen layout */}
-                <div className="relative w-80 h-80 lg:w-96 lg:h-96">
-                  {/* Background for person */}
-                  <div className="w-full h-full bg-gradient-to-br from-purple-400/20 to-transparent rounded-3xl overflow-hidden backdrop-blur-sm border border-white/10">
-                    {/* Person image placeholder - you can replace with actual image */}
-                    <div className="w-full h-full flex items-end justify-center">
-                      {/* Simplified person silhouette matching the style */}
-                      <div className="w-48 h-64 bg-gradient-to-t from-blue-600 to-blue-500 rounded-t-[100px] relative">
-                        {/* Head */}
-                        <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></div>
-                        {/* Shirt collar suggestion */}
-                        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-blue-700 rounded-t-full"></div>
-                      </div>
+              <div className="relative w-full max-w-lg">
+                {/* Background decorative frames */}
+                <div className="absolute inset-0">
+                  {/* Large background frame */}
+                  <div className="absolute top-8 right-0 w-80 h-96 bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20"></div>
+                  {/* Secondary frame */}
+                  <div className="absolute top-0 left-8 w-72 h-80 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"></div>
+                </div>
+                
+                {/* Person image container */}
+                <div className="relative z-10 w-full">
+                  <div className="relative">
+                    {/* Person image - using the uploaded image */}
+                    <img 
+                      src="/lovable-uploads/9134dbfd-4f1b-4aa2-b873-22cc634732e8.png"
+                      alt="Person presenting"
+                      className="w-full h-auto object-cover rounded-2xl"
+                    />
+                    
+                    {/* Play button overlay - positioned exactly like HeyGen */}
+                    <div className="absolute bottom-16 left-12">
+                      <button 
+                        onClick={() => setIsMuted(!isMuted)}
+                        className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
+                        aria-label="Play video"
+                      >
+                        <div className="w-0 h-0 border-l-[16px] border-l-purple-600 border-y-[12px] border-y-transparent ml-1"></div>
+                      </button>
                     </div>
-                  </div>
-                  
-                  {/* Play button overlay - exact HeyGen style */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <button 
-                      onClick={() => setIsMuted(!isMuted)}
-                      className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
-                      aria-label="Play video"
-                    >
-                      <div className="w-0 h-0 border-l-[20px] border-l-purple-600 border-y-[15px] border-y-transparent ml-1"></div>
-                    </button>
                   </div>
                 </div>
               </div>
