@@ -75,14 +75,14 @@ const LandingPageC = () => {
             </div>
 
             {/* Person with Play Button - Right Side - Exact HeyGen reproduction */}
-            <div className="relative flex justify-center lg:justify-end h-full">
-              <div className="relative w-full h-full min-h-[600px]">
+            <div className="relative flex justify-center lg:justify-end h-screen">
+              <div className="relative w-full h-full">
                 {/* Background decorative frames */}
                 <div className="absolute inset-0">
                   {/* Large background frame */}
-                  <div className="absolute top-8 right-0 w-[480px] h-[600px] bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20"></div>
+                  <div className="absolute top-8 right-0 w-[480px] h-[calc(100vh-4rem)] bg-white/10 backdrop-blur-sm rounded-3xl border border-white/20"></div>
                   {/* Secondary frame */}
-                  <div className="absolute top-0 left-8 w-[420px] h-[520px] bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"></div>
+                  <div className="absolute top-0 left-8 w-[420px] h-[calc(100vh-6rem)] bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10"></div>
                 </div>
                 
                 {/* Person image container */}
