@@ -7,7 +7,7 @@ export const CONTENT_VARIANT = {
 
   // Header
   header: {
-    logoAlt: "Hobson",
+    logoAlt: "Hobson AI - intelligent insights from your documents",
   },
 
   // Hero Section
