@@ -55,6 +55,7 @@ const BlogEditor = () => {
     categories: []
   });
 
+  const [originalPost, setOriginalPost] = useState<BlogPost | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -120,7 +121,7 @@ const BlogEditor = () => {
         variant: "destructive",
       });
     } else if (data) {
-      setPost({
+      const postData = {
         id: data.id,
         title: data.title,
         slug: data.slug,
@@ -133,7 +134,9 @@ const BlogEditor = () => {
         meta_description: data.meta_description || '',
         reading_time: data.reading_time,
         categories: data.blog_post_categories?.map(bpc => bpc.category_id) || []
-      });
+      };
+      setPost(postData);
+      setOriginalPost(postData);
     }
     setLoading(false);
   };
@@ -364,9 +367,26 @@ const BlogEditor = () => {
     const statusToSave = newStatus || post.status;
     const shouldSetPublishedAt = statusToSave === 'published' && (!post.id || post.status !== 'published');
     
+    // Check for slug conflicts when creating new posts or if slug has changed
+    let finalSlug = post.slug;
+    if (!isEditing || (isEditing && post.slug !== originalPost?.slug)) {
+      // Check if slug already exists
+      const { data: existingPost } = await supabase
+        .from('blog_posts')
+        .select('id')
+        .eq('slug', post.slug)
+        .neq('id', id || '')
+        .single();
+      
+      if (existingPost) {
+        // Generate unique slug by appending timestamp
+        finalSlug = `${post.slug}-${Date.now()}`;
+      }
+    }
+    
     const postData = {
       title: post.title,
-      slug: post.slug,
+      slug: finalSlug,
       excerpt: post.excerpt,
       content: processContentForSave(post.content),
       featured_image_url: post.featured_image_url || null,
