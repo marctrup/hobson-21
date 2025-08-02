@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Calendar, Clock, Tag, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -28,6 +28,8 @@ interface BlogPostCardProps {
 }
 
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
+  const navigate = useNavigate();
+  
   // Sanitize slug to ensure it's URL-safe
   const sanitizedSlug = post.slug
     .toLowerCase()
@@ -36,7 +38,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
     .replace(/^-|-$/g, '');
     
   const handleReadMore = () => {
-    window.location.href = `/blog/${sanitizedSlug}`;
+    navigate(`/blog/${sanitizedSlug}`);
   };
 
   return (
