@@ -177,11 +177,9 @@ export default function Admin() {
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>Pilot Applications ({applications.length})</CardTitle>
-              {applications.length > 0 && (
-                <Button onClick={exportToCSV} variant="outline">
-                  Export to CSV
-                </Button>
-              )}
+              <Button onClick={exportToCSV} variant="outline">
+                Export to CSV
+              </Button>
             </div>
           </CardHeader>
           <CardContent>
