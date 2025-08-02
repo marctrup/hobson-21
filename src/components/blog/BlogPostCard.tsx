@@ -30,15 +30,12 @@ interface BlogPostCardProps {
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   const navigate = useNavigate();
   
-  // Sanitize slug to ensure it's URL-safe
-  const sanitizedSlug = post.slug
-    .toLowerCase()
-    .replace(/[^a-z0-9\-]/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '');
+  // Use original slug without aggressive sanitization
+  const finalSlug = post.slug || '';
     
   const handleReadMore = () => {
-    navigate(`/blog/${sanitizedSlug}`);
+    console.log('Navigating to:', `/blog/${finalSlug}`);
+    navigate(`/blog/${finalSlug}`);
   };
 
   return (
