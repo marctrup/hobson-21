@@ -38,7 +38,7 @@ const BlogEditor = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user } = useAuth();
+  const { user, isLoading } = useAuth();
   const isEditing = Boolean(id && id !== 'new');
 
   const [post, setPost] = useState<BlogPost>({
@@ -58,6 +58,14 @@ const BlogEditor = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+
+  // Redirect to auth if not logged in
+  useEffect(() => {
+    if (!user && !isLoading) {
+      navigate('/auth');
+      return;
+    }
+  }, [user, isLoading, navigate]);
 
   useEffect(() => {
     fetchCategories();
