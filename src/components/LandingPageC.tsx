@@ -39,93 +39,71 @@ const LandingPageC = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        {/* Background with gradient and decorative elements */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-blue-800">
-          {/* Decorative grid pattern */}
-          <div className="absolute inset-0 opacity-20">
-            <div className="absolute inset-0" style={{
-              backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-                               linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-              backgroundSize: '50px 50px'
-            }}></div>
-          </div>
-          {/* Decorative shapes */}
-          <div className="absolute top-20 left-20 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 right-20 w-48 h-48 bg-white/5 rounded-full blur-3xl"></div>
-        </div>
-
-        <div className="relative container mx-auto px-4 py-20 md:py-32">
-          {/* Breadcrumb */}
+      <section className="relative min-h-screen flex items-center overflow-hidden">
+        {/* Background with gradient - exact HeyGen purple gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-purple-600 to-indigo-600"></div>
+        
+        <div className="relative container mx-auto px-4 max-w-7xl">
+          {/* Breadcrumb - exact HeyGen style */}
           <nav className="text-white/80 text-sm mb-8">
             <span>Home</span>
-            <span className="mx-2">›</span>
-            <span>Pilot Program</span>
-            <span className="mx-2">›</span>
-            <span className="text-white">Hobson's Choice AI: The Ultimate Property Intelligence Guide</span>
+            <span className="mx-2">{'>'}</span>
+            <span>Playbook</span>
+            <span className="mx-2">{'>'}</span>
+            <span className="text-white">HeyGen for Marketers: The Ultimate AI Video Jumpstart Guide</span>
           </nav>
 
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Text Content - Left Side */}
-            <div className="text-white space-y-8">
+            <div className="text-white space-y-6">
+              {/* Tag - exact HeyGen style */}
               <div className="inline-block rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-white/30">
-                Pilot Program
+                Playbook
               </div>
               
-              <div className="space-y-6">
+              {/* Main Heading - exact HeyGen typography */}
+              <div className="space-y-4">
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                  Hobson's Choice AI:
+                  HeyGen for Marketers:
                 </h1>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                  The Ultimate Property
+                <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight opacity-90">
+                  The Ultimate AI Video
                   <br />
-                  <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                    Intelligence Guide
-                  </span>
+                  Jumpstart Guide
                 </h2>
               </div>
             </div>
 
-            {/* Video Container - Right Side */}
-            <div className="relative">
-              <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
-                {/* Video with play button overlay */}
-                <div className="relative rounded-2xl overflow-hidden bg-black">
-                  <video
-                    className="w-full h-auto"
-                    autoPlay
-                    muted={isMuted}
-                    loop
-                    playsInline
-                    poster="/lovable-uploads/b5265bc4-b41d-4891-8c70-ab934835d300.png"
-                  >
-                    <source src={avatarVideo} type="video/mp4" />
-                    Your browser does not support the video tag.
-                  </video>
+            {/* Person with Play Button - Right Side */}
+            <div className="relative flex justify-center lg:justify-end">
+              <div className="relative">
+                {/* Person container - matching HeyGen layout */}
+                <div className="relative w-80 h-80 lg:w-96 lg:h-96">
+                  {/* Background for person */}
+                  <div className="w-full h-full bg-gradient-to-br from-purple-400/20 to-transparent rounded-3xl overflow-hidden backdrop-blur-sm border border-white/10">
+                    {/* Person image placeholder - you can replace with actual image */}
+                    <div className="w-full h-full flex items-end justify-center">
+                      {/* Simplified person silhouette matching the style */}
+                      <div className="w-48 h-64 bg-gradient-to-t from-blue-600 to-blue-500 rounded-t-[100px] relative">
+                        {/* Head */}
+                        <div className="absolute -top-16 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></div>
+                        {/* Shirt collar suggestion */}
+                        <div className="absolute top-8 left-1/2 transform -translate-x-1/2 w-32 h-8 bg-blue-700 rounded-t-full"></div>
+                      </div>
+                    </div>
+                  </div>
                   
-                  {/* Play/Mute button overlay */}
+                  {/* Play button overlay - exact HeyGen style */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <button
+                    <button 
                       onClick={() => setIsMuted(!isMuted)}
-                      className="bg-white/90 hover:bg-white text-gray-800 rounded-full p-4 shadow-2xl transition-all duration-300 hover:scale-110"
-                      aria-label={isMuted ? "Unmute video" : "Mute video"}
+                      className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
+                      aria-label="Play video"
                     >
-                      {isMuted ? (
-                        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
-                        </svg>
-                      ) : (
-                        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
-                        </svg>
-                      )}
+                      <div className="w-0 h-0 border-l-[20px] border-l-purple-600 border-y-[15px] border-y-transparent ml-1"></div>
                     </button>
                   </div>
                 </div>
-                
-                {/* Decorative elements */}
-                <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-full opacity-20 blur-xl"></div>
-                <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-blue-400 to-purple-400 rounded-full opacity-20 blur-xl"></div>
               </div>
             </div>
           </div>
