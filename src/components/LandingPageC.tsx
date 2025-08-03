@@ -87,7 +87,7 @@ const LandingPageC = () => {
                 </div>
                 
                 {/* Person image container - completely fills the frame */}
-                <div className="relative z-10 w-full h-full border-4 border-red-500 -mt-[30px]">
+                <div className="relative z-10 w-full h-full border-4 border-red-500 -mt-[40px]">
                   <div className="relative h-full w-full">
                     {/* Person image - fills entire container */}
                     <img 
