@@ -85,7 +85,7 @@ const LandingPageC = () => {
                     <img 
                       src="/lovable-uploads/64efa07b-ef20-4503-bc1c-abda554fa40d.png"
                       alt="Person presenting"
-                      className="w-3/4 h-3/4 object-cover rounded-2xl mx-auto mt-auto"
+                      className="w-full h-full object-cover rounded-2xl"
                     />
                     
                     {/* Play button overlay - positioned within the frame */}
