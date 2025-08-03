@@ -75,19 +75,19 @@ const LandingPageC = () => {
             </div>
 
             {/* Person with Play Button - Right Side - Completely embedded */}
-            <div className="relative h-full flex items-center justify-end">
+            <div className="relative h-full flex items-stretch justify-end">
               {/* Main container that fills the available space */}
-              <div className="relative w-full h-[80vh] max-w-2xl">
+              <div className="relative w-full h-full">
                 {/* Background decorative elements */}
                 <div className="absolute inset-0">
                   {/* Primary background frame */}
-                  <div className="absolute top-0 right-0 w-full h-full bg-white/5 backdrop-blur-sm rounded-3xl border border-white/10"></div>
+                  <div className="absolute top-0 right-0 w-full h-full bg-white/5 backdrop-blur-sm border border-white/10"></div>
                   {/* Secondary subtle frame */}
-                  <div className="absolute top-8 left-8 w-[calc(100%-2rem)] h-[calc(100%-2rem)] bg-white/3 backdrop-blur-sm rounded-2xl border border-white/5"></div>
+                  <div className="absolute top-8 left-8 w-[calc(100%-2rem)] h-[calc(100%-2rem)] bg-white/3 backdrop-blur-sm border border-white/5"></div>
                 </div>
                 
                 {/* Person image container - completely fills the frame */}
-                <div className="relative z-10 w-full h-full p-4">
+                <div className="relative z-10 w-full h-full">
                   <div className="relative h-full w-full">
                     {/* Person image - fills entire container */}
                     <img 
