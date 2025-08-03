@@ -41,7 +41,7 @@ const LandingPageC = () => {
       {/* Hero Section */}
       <section className="relative min-h-[60vh] flex items-center overflow-hidden">
         {/* Background with gradient - exact HeyGen purple gradient */}
-        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-purple-600 to-indigo-600"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-purple-400/80 to-purple-300/40"></div>
         
         <div className="relative container mx-auto pl-4 pr-0 max-w-7xl h-[60vh] flex flex-col">
           {/* Breadcrumb - exact HeyGen style */}
