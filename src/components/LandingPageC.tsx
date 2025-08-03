@@ -43,7 +43,7 @@ const LandingPageC = () => {
         {/* Background with gradient - exact HeyGen purple gradient */}
         <div className="absolute inset-0 bg-gradient-to-r from-purple-500 via-purple-600 to-indigo-600"></div>
         
-        <div className="relative container mx-auto px-4 max-w-7xl h-screen flex flex-col">
+        <div className="relative container mx-auto pl-4 pr-0 max-w-7xl h-screen flex flex-col">
           {/* Breadcrumb - exact HeyGen style */}
           <nav className="text-white/80 text-sm mb-8 pt-8">
             <span>Home</span>
