@@ -83,7 +83,7 @@ const LandingPageC = () => {
                   <div className="relative h-full w-full">
                     {/* Person image - fills entire container */}
                     <img 
-                      src="/lovable-uploads/9134dbfd-4f1b-4aa2-b873-22cc634732e8.png"
+                      src="/lovable-uploads/64efa07b-ef20-4503-bc1c-abda554fa40d.png"
                       alt="Person presenting"
                       className="w-full h-full object-cover rounded-2xl"
                     />
