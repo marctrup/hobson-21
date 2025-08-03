@@ -77,8 +77,14 @@ const LandingPageC = () => {
             {/* Person with Play Button - Right Side - Completely embedded */}
             <div className="relative h-full flex items-start justify-end" style={{ marginRight: '-19px' }}>
               {/* Main container that fills the available space */}
-              <div className="relative w-full h-[120%]">
-                {/* Background decorative elements - removed for cleaner look */}
+              <div className="relative w-full h-full">
+                {/* Background decorative elements */}
+                <div className="absolute inset-0">
+                  {/* Primary background frame */}
+                  <div className="absolute top-0 right-0 w-full h-full bg-white/5 backdrop-blur-sm border border-white/10"></div>
+                  {/* Secondary subtle frame */}
+                  <div className="absolute top-8 left-8 w-[calc(100%-2rem)] h-[calc(100%-2rem)] bg-white/3 backdrop-blur-sm border border-white/5"></div>
+                </div>
                 
                 {/* Person image container - completely fills the frame */}
                 <div className="relative z-10 w-full h-full">
@@ -87,7 +93,7 @@ const LandingPageC = () => {
                     <img 
                       src="/lovable-uploads/9134dbfd-4f1b-4aa2-b873-22cc634732e8.png"
                       alt="Person presenting"
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover rounded-2xl"
                     />
                     
                     {/* Play button overlay - positioned within the frame */}
