@@ -75,7 +75,7 @@ const LandingPageC = () => {
             </div>
 
             {/* Person with Play Button - Right Side - Completely embedded */}
-            <div className="relative h-full flex items-start justify-end" style={{ marginRight: '-19px' }}>
+            <div className="relative h-[60vh] flex items-start justify-end" style={{ marginRight: '-19px' }}>
               {/* Main container that fills the available space */}
               <div className="relative w-full h-full">
                 {/* Background decorative elements */}
