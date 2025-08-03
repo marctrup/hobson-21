@@ -53,7 +53,7 @@ const LandingPageC = () => {
             <span className="text-white">HeyGen for Marketers: The Ultimate AI Video Jumpstart Guide</span>
           </nav>
 
-          <div className="flex-1 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="flex-1 grid lg:grid-cols-2 gap-16 items-start">
             {/* Text Content - Left Side */}
             <div className="text-white space-y-6">
               {/* Tag - exact HeyGen style */}
@@ -75,7 +75,7 @@ const LandingPageC = () => {
             </div>
 
             {/* Person with Play Button - Right Side - Completely embedded */}
-            <div className="relative h-full flex items-stretch justify-end" style={{ marginRight: '-19px' }}>
+            <div className="relative h-full flex items-start justify-end" style={{ marginRight: '-19px' }}>
               {/* Main container that fills the available space */}
               <div className="relative w-full h-full">
                 {/* Background decorative elements */}
