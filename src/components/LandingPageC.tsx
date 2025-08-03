@@ -45,7 +45,7 @@ const LandingPageC = () => {
         
         <div className="relative container mx-auto pl-4 pr-0 max-w-7xl h-[60vh] flex flex-col">
           {/* Breadcrumb - exact HeyGen style */}
-          <nav className="text-white/80 text-sm mb-8 pt-8">
+          <nav className="text-white/80 text-sm mb-8">
             <span>Home</span>
             <span className="mx-2">{'>'}</span>
             <span>Playbook</span>
