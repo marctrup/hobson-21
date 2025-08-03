@@ -82,11 +82,6 @@ const LandingPageC = () => {
                 <div className="relative z-10 w-full h-full -mt-[52px]">
                   <div className="relative h-full w-full">
                     {/* Person image - fills entire container */}
-                    <img 
-                      src="/lovable-uploads/64efa07b-ef20-4503-bc1c-abda554fa40d.png"
-                      alt="Person presenting"
-                      className="w-full h-full object-contain rounded-2xl"
-                    />
                     
                     {/* Play button overlay - positioned within the frame */}
                     <div className="absolute bottom-8 left-8">
