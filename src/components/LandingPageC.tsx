@@ -78,13 +78,6 @@ const LandingPageC = () => {
             <div className="relative h-[60vh] flex items-start justify-end" style={{ marginRight: '-19px' }}>
               {/* Main container that fills the available space */}
               <div className="relative w-full h-full">
-                {/* Background decorative elements */}
-                <div className="absolute inset-0">
-                  {/* Primary background frame */}
-                  <div className="absolute top-0 right-0 w-full h-full bg-white/5 backdrop-blur-sm border border-white/10"></div>
-                  {/* Secondary subtle frame */}
-                  <div className="absolute top-8 left-8 w-[calc(100%-2rem)] h-[calc(100%-2rem)] bg-white/3 backdrop-blur-sm border border-white/5"></div>
-                </div>
                 
                 {/* Person image container - completely fills the frame */}
                 <div className="relative z-10 w-full h-full -mt-[52px]">
