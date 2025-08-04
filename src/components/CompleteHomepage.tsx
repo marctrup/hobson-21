@@ -56,7 +56,7 @@ export const CompleteHomepage = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
               {/* Logo */}
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col">
                 <Link to="/" onClick={closeMobileMenu}>
                   <OptimizedImage
                     src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
@@ -65,6 +65,12 @@ export const CompleteHomepage = () => {
                     priority
                   />
                 </Link>
+                {/* Beta Badge - Below the logo */}
+                <div className="mt-2">
+                  <Badge variant="outline" className="text-primary border-primary/20 text-xs">
+                    🚀 Now in Beta
+                  </Badge>
+                </div>
               </div>
 
               {/* Desktop Navigation */}
@@ -147,12 +153,6 @@ export const CompleteHomepage = () => {
                   <div className="relative flex flex-col items-center justify-center">
                     <div className="transform">
                       <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] pb-5 pt-14">
-                        {/* Beta Badge - Inside white frame */}
-                        <div className="absolute top-2 left-2">
-                          <Badge variant="outline" className="text-primary border-primary/20">
-                            🚀 Now in Beta
-                          </Badge>
-                        </div>
                         <OptimizedImage
                           src="/lovable-uploads/6f770d15-465f-4629-acba-a2d48d983c67.png"
                           alt="Smart document with glasses - AI capabilities"
