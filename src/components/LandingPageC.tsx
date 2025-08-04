@@ -114,7 +114,7 @@ const LandingPageC = () => {
                   const formSection = document.querySelector('[data-form-section]');
                   formSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-4 text-lg rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
+                className="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-4 text-lg rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
               >
                 Apply for the Free Pilot
               </Button>
