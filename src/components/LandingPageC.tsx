@@ -60,15 +60,13 @@ const LandingPageC = () => {
                 Playbook
               </div>
               
-              {/* Main Heading - exact HeyGen typography */}
+              {/* Main Heading */}
               <div className="space-y-4">
                 <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
-                  HeyGen for Marketers:
+                  Your AI Assistant, Built for Property — Free to Try
                 </h1>
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight opacity-90">
-                  The Ultimate AI Video
-                  <br />
-                  Jumpstart Guide
+                  We tailor AI to your documents, processes, and goals — no cost, no strings attached.
                 </h2>
               </div>
             </div>
