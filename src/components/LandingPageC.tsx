@@ -100,7 +100,7 @@ const LandingPageC = () => {
                   AI is changing the way property companies work — from handling documents in seconds to answering tenant queries instantly. But too many teams hesitate because they're unsure if it's worth the investment.
                 </p>
                 <p>
-                  That's why we've launched a pilot scheme: to prove the value before you commit a single pound.
+                  That's why we've launched a pilot scheme: to prove the value before you commit a single penny.
                 </p>
               </div>
               
