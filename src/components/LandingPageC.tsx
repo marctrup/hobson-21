@@ -49,10 +49,10 @@ const LandingPageC = () => {
               
               {/* Main Heading */}
               <div className="space-y-4">
-                <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
                   Your AI Assistant, Built for Property — Free to Try
                 </h1>
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-normal leading-tight opacity-90">
+                <h2 className="text-xl md:text-2xl lg:text-3xl font-normal leading-tight opacity-90">
                   We tailor AI to your documents, processes, and goals — no cost, no strings attached.
                 </h2>
               </div>
