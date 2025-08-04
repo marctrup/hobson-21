@@ -166,9 +166,6 @@ export const CompleteHomepage = () => {
                             loading="lazy"
                             fetchPriority="low"
                           />
-                          <div className="absolute" style={{ bottom: '45%', left: '42%' }}>
-                            <Heart className="w-2 h-2 text-red-500 fill-red-500" />
-                          </div>
                         </div>
                         {/* Text below the image */}
                         <div className="text-center p-4 -mt-10">
