@@ -93,10 +93,10 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                   <div className="absolute top-2 left-2 w-[90%] h-full bg-muted/40 rounded-2xl shadow-md transform rotate-1"></div>
                   <div className="absolute top-1 left-1 w-[90%] h-full bg-muted/60 rounded-2xl shadow-lg transform -rotate-0.5"></div>
                   
-                  {/* Main document with enhanced framing */}
+                  {/* Main document */}
                   <div className="relative z-10 w-full mx-auto">
-                    {/* Enhanced container with LandingPageC-style framing */}
-                    <div className="w-[400px] h-[300px] mx-auto overflow-hidden rounded-2xl border-4 border-purple-200 shadow-2xl">
+                    {/* Fixed container to prevent layout shift and contain image */}
+                    <div className="w-[400px] h-[300px] mx-auto overflow-hidden rounded-2xl shadow-sm">
                       <OptimizedImage
                         src={documentAiIcon} 
                         alt="Intelligent tenancy document processing with automated insights and answers" 
