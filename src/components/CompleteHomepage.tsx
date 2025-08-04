@@ -176,7 +176,7 @@ export const CompleteHomepage = () => {
                 </div>
 
                 {/* Right side container */}
-                <div className="relative pt-10 mt-10 border-4 border-red-500 bg-red-100/20">
+                <div className="relative pt-10 mt-20 border-4 border-red-500 bg-red-100/20">
                   <div className="space-y-8">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
