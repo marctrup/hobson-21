@@ -5,13 +5,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { usePilotApplication } from "@/hooks/usePilotApplication";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import hobsonLogo from "/lovable-uploads/6f92c6e9-3e74-495f-a6a5-c8cdab8d6b29.png";
-import avatarVideo from "@/assets/avitar-hobson-explainer.mp4";
 
 const LandingPageC = () => {
-  const [isMuted, setIsMuted] = useState(true);
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
   const {
     form,
     emailExists,
@@ -79,7 +79,7 @@ const LandingPageC = () => {
                     {/* Play button overlay - positioned within the frame */}
                     <div className="absolute bottom-8 left-[182px]">
                       <button 
-                        onClick={() => setIsMuted(!isMuted)}
+                        onClick={() => setIsVideoOpen(true)}
                         className="w-16 h-16 bg-purple-200 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
                         aria-label="Play video"
                       >
@@ -358,6 +358,26 @@ const LandingPageC = () => {
           </p>
         </div>
       </footer>
+
+      {/* Video Modal */}
+      <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
+        <DialogContent className="max-w-4xl w-full">
+          <DialogHeader>
+            <DialogTitle>Hobson AI Demo</DialogTitle>
+          </DialogHeader>
+          <div className="aspect-video">
+            <iframe
+              width="100%"
+              height="100%"
+              src="https://www.youtube.com/embed/52sNQMTudHg"
+              title="Hobson AI Demo Video"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
