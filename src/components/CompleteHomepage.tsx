@@ -66,7 +66,7 @@ export const CompleteHomepage = () => {
                   />
                 </Link>
                 {/* Beta Badge - Positioned under the last 'n' */}
-                <div className="absolute -bottom-1 -right-[30px]">
+                <div className="absolute -bottom-1 -right-[60px]">
                   <Badge variant="outline" className="text-primary border-primary/20 text-xs">
                     🚀 Now in Beta
                   </Badge>
