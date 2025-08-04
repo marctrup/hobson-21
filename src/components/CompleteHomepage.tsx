@@ -232,20 +232,8 @@ export const CompleteHomepage = () => {
                   </Dialog>
                 </div>
                 
-                {/* Right side - Document visualization */}
-                 <div className="relative flex flex-col items-center border-4 border-red-500 p-4 bg-red-100/20">
-                   <div className="transform scale-[1.91] md:scale-[2.58] origin-center">
-                      <OptimizedImage
-                        src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
-                        alt="a tenancy document"
-                        className="max-w-full h-auto object-contain"
-                        width={300}
-                        height={300}
-                        loading="lazy"
-                        fetchPriority="low"
-                      />
-                   </div>
-                  
+                {/* Right side - Content removed */}
+                <div className="relative flex flex-col items-center">
                   {/* Text below the image */}
                   <div className="text-center mt-8">
                     <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-3">Your Documents now have a voice</h3>
