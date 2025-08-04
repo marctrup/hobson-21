@@ -152,7 +152,7 @@ export const CompleteHomepage = () => {
                 <div className="relative mt-0" style={{ marginTop: '10px' }}>
                   <div className="relative flex flex-col items-center justify-center">
                     <div className="transform">
-                      <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-5 pt-14">
+                      <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-2 md:pb-5 pt-4 md:pt-14">
                         <div className="relative" style={{ 
                           transform: 'perspective(1000px) rotateY(15deg)',
                           filter: 'drop-shadow(20px 15px 30px rgba(0, 0, 0, 0.25)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.18))'
@@ -168,8 +168,8 @@ export const CompleteHomepage = () => {
                           />
                         </div>
                         {/* Text below the image */}
-                        <div className="text-center p-4 -mt-10" style={{ marginTop: '-50px' }}>
-                          <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-3">Your Documents now have a voice</h3>
+                        <div className="text-center p-2 md:p-4 -mt-6 md:-mt-10" style={{ marginTop: '-25px' }}>
+                          <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-1 md:mb-3">Your Documents now have a voice</h3>
                           <p className="text-primary font-semibold text-xl md:text-2xl">Are you ready to listen?</p>
                         </div>
                         {/* Enhanced 3D Shadow base for white background */}
@@ -182,7 +182,7 @@ export const CompleteHomepage = () => {
 
                 {/* Right side container */}
                 <div className="relative pt-2 md:pt-10 mt-2 md:mt-20">
-                  <div className="space-y-4 md:space-y-8">
+                  <div className="space-y-2 md:space-y-4">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 leading-tight">
                       <span className="text-foreground">AI-Document Intelligence for the </span>
