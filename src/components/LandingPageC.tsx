@@ -38,11 +38,11 @@ const LandingPageC = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative min-h-[60vh] flex items-center overflow-hidden">
+      <section className="relative min-h-[48vh] flex items-center overflow-hidden">
         {/* Background with gradient - exact HeyGen purple gradient */}
         <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-200"></div>
         
-        <div className="relative container mx-auto pl-4 pr-0 max-w-7xl h-[60vh] flex flex-col">
+        <div className="relative container mx-auto pl-4 pr-0 max-w-7xl h-[48vh] flex flex-col">
           <div className="flex-1 grid lg:grid-cols-2 gap-16 items-start">
             {/* Text Content - Left Side */}
             <div className="text-white space-y-6 mt-[120px] ml-5">
@@ -59,7 +59,7 @@ const LandingPageC = () => {
             </div>
 
             {/* Person with Play Button - Right Side - Completely embedded */}
-            <div className="relative h-[60vh] flex items-start justify-end" style={{ marginRight: '-19px' }}>
+            <div className="relative h-[48vh] flex items-start justify-end" style={{ marginRight: '-19px' }}>
               {/* Main container that fills the available space */}
               <div className="relative w-full h-full">
                 
