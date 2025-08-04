@@ -345,18 +345,14 @@ const LandingPageC = () => {
               >
                 Join the Pilot Program
               </Button>
+              
+              {/* Limited Places Notice */}
+              <div className="bg-gray-100 rounded-lg p-4 text-center mt-4">
+                <p className="text-gray-700 font-medium">
+                  Places are limited.
+                </p>
+              </div>
             </form>
-          </div>
-        </div>
-      </section>
-
-      {/* Limited Places Notice */}
-      <section className="container mx-auto px-4 pb-12">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gray-100 rounded-lg p-6 text-center">
-            <p className="text-gray-700 font-medium">
-              Places are limited.
-            </p>
           </div>
         </div>
       </section>
