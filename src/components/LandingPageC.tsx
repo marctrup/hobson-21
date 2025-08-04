@@ -113,7 +113,7 @@ const LandingPageC = () => {
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">What You Get</h3>
+                <h3 className="text-2xl font-bold text-purple-600 mb-4">What You Get</h3>
                 <p>We do the heavy lifting so you don't have to:</p>
                 <ul className="list-disc list-inside space-y-2 mt-4">
                   <li>One-on-one discovery to understand your processes</li>
@@ -125,12 +125,12 @@ const LandingPageC = () => {
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">What It Costs</h3>
+                <h3 className="text-2xl font-bold text-purple-600 mb-4">What It Costs</h3>
                 <p>Absolutely nothing. No fees, no hidden charges, no long contracts.</p>
               </div>
               
               <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Why Now</h3>
+                <h3 className="text-2xl font-bold text-purple-600 mb-4">Why Now</h3>
                 <p>
                   Every property company that's said yes so far is already seeing results — faster admin, fewer manual tasks, and happier teams.
                 </p>
