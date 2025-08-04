@@ -149,7 +149,28 @@ export const CompleteHomepage = () => {
               </div>
               
               <div className="grid lg:grid-cols-2 gap-16 items-start">
-                {/* Left side - Text and Georgia video */}
+                {/* Left side - 3D Document Icon */}
+                <div className="relative flex flex-col items-center justify-center">
+                  <div className="transform hover:scale-110 transition-transform duration-500">
+                    <div className="relative transform rotate-3 hover:rotate-6 transition-transform duration-300">
+                      <OptimizedImage
+                        src="/lovable-uploads/46708f7e-809a-4f0c-ad10-6676cdf1c90f.png"
+                        alt="Happy document with AI capabilities"
+                        className="w-full h-auto object-contain filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.15)] drop-shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
+                        width={320}
+                        height={320}
+                        loading="lazy"
+                        fetchPriority="low"
+                      />
+                      {/* 3D Shadow base */}
+                      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-48 h-12 bg-black/10 rounded-full blur-xl opacity-60"></div>
+                      {/* Additional depth shadow */}
+                      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-40 h-8 bg-black/5 rounded-full blur-lg opacity-80"></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right side - Text and Georgia video */}
                 <div className="space-y-8">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
@@ -230,27 +251,6 @@ export const CompleteHomepage = () => {
                        </div>
                     </DialogContent>
                   </Dialog>
-                </div>
-                
-                {/* Right side - 3D Document Icon */}
-                <div className="relative flex flex-col items-center justify-center">
-                  <div className="transform hover:scale-110 transition-transform duration-500">
-                    <div className="relative transform rotate-3 hover:rotate-6 transition-transform duration-300">
-                      <OptimizedImage
-                        src="/lovable-uploads/46708f7e-809a-4f0c-ad10-6676cdf1c90f.png"
-                        alt="Happy document with AI capabilities"
-                        className="w-full h-auto object-contain filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.15)] drop-shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
-                        width={320}
-                        height={320}
-                        loading="lazy"
-                        fetchPriority="low"
-                      />
-                      {/* 3D Shadow base */}
-                      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-48 h-12 bg-black/10 rounded-full blur-xl opacity-60"></div>
-                      {/* Additional depth shadow */}
-                      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-40 h-8 bg-black/5 rounded-full blur-lg opacity-80"></div>
-                    </div>
-                  </div>
                 </div>
               </div>
               
