@@ -232,12 +232,24 @@ export const CompleteHomepage = () => {
                   </Dialog>
                 </div>
                 
-                {/* Right side - Content removed */}
-                <div className="relative flex flex-col items-center">
-                  {/* Text below the image */}
-                  <div className="text-center mt-8">
-                    <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-3">Your Documents now have a voice</h3>
-                    <p className="text-primary font-semibold text-xl md:text-2xl">Are you ready to listen?</p>
+                {/* Right side - 3D Document Icon */}
+                <div className="relative flex flex-col items-center justify-center">
+                  <div className="transform hover:scale-110 transition-transform duration-500">
+                    <div className="relative transform rotate-3 hover:rotate-6 transition-transform duration-300">
+                      <OptimizedImage
+                        src="/lovable-uploads/46708f7e-809a-4f0c-ad10-6676cdf1c90f.png"
+                        alt="Happy document with AI capabilities"
+                        className="w-64 h-64 md:w-80 md:h-80 object-contain filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.15)] drop-shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
+                        width={320}
+                        height={320}
+                        loading="lazy"
+                        fetchPriority="low"
+                      />
+                      {/* 3D Shadow base */}
+                      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-48 h-12 bg-black/10 rounded-full blur-xl opacity-60"></div>
+                      {/* Additional depth shadow */}
+                      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-40 h-8 bg-black/5 rounded-full blur-lg opacity-80"></div>
+                    </div>
                   </div>
                 </div>
               </div>
