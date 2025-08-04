@@ -45,10 +45,9 @@ export const CompleteHomepage = () => {
         <link rel="dns-prefetch" href="//player.vimeo.com" />
         <link rel="dns-prefetch" href="//vimeo.com" />
         <link rel="dns-prefetch" href="//f.vimeocdn.com" />
-        <link rel="dns-prefetch" href="//images.unsplash.com" />
-        <link rel="preconnect" href="https://player.vimeo.com" crossOrigin="" />
-        <link rel="preconnect" href="https://vimeo.com" crossOrigin="" />
-        <link rel="preconnect" href="https://f.vimeocdn.com" crossOrigin="" />
+        <link rel="preconnect" href="https://player.vimeo.com" />
+        <link rel="preconnect" href="https://vimeo.com" />
+        <link rel="preconnect" href="https://f.vimeocdn.com" />
       </Helmet>
 
       <div className="min-h-screen bg-background overflow-x-hidden">
@@ -63,8 +62,6 @@ export const CompleteHomepage = () => {
                     src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
                     alt="Hobson's Choice AI - AI-powered property management software company logo"
                     className="h-12 md:h-16 w-auto"
-                    width={120}
-                    height={40}
                     priority
                   />
                 </Link>
@@ -525,9 +522,6 @@ export const CompleteHomepage = () => {
                     src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
                     alt="Hobson's Choice AI logo"
                     className="h-12 w-auto"
-                    width={120}
-                    height={40}
-                    loading="lazy"
                   />
                 </div>
                 
