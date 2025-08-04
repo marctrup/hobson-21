@@ -181,16 +181,16 @@ export const CompleteHomepage = () => {
                 </div>
 
                 {/* Right side container */}
-                <div className="relative pt-10 mt-20">
+                <div className="relative pt-4 md:pt-10 mt-8 md:mt-20">
                   <div className="space-y-4 md:space-y-8">
                   <div>
-                    <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 leading-tight">
                       <span className="text-foreground">AI-Document Intelligence for the </span>
                       <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                         Property Industry
                       </span>
                     </h1>
-                    <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mb-8">
+                    <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mb-4 md:mb-8">
                       Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions.
                     </p>
                   </div>
@@ -218,7 +218,7 @@ export const CompleteHomepage = () => {
                              fetchPriority="low"
                            />
                          </div>
-                        <div className="mt-6">
+                        <div className="mt-3 md:mt-6">
                           <h3 className="text-sm font-semibold mb-2 text-foreground">"Would it help if I explained a bit more?"</h3>
                           <p className="text-muted-foreground text-sm">Click to hear from Georgia</p>
                         </div>
@@ -280,62 +280,62 @@ export const CompleteHomepage = () => {
 
               <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
                 {/* Top Row */}
-                <div className="text-center bg-white rounded-xl p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Brain className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">Intelligent Analysis</h3>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Intelligent Analysis</h3>
                   <p className="text-muted-foreground">
                     Advanced AI understands context and extracts meaningful insights from complex property documents.
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Zap className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">Lightning Fast</h3>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Lightning Fast</h3>
                   <p className="text-muted-foreground">
                     Get instant answers to complex questions that would take hours of manual research.
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Search className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">Smart Search</h3>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Smart Search</h3>
                   <p className="text-muted-foreground">
                     Find exactly what you need across thousands of documents with natural language queries.
                   </p>
                 </div>
                 
                 {/* Bottom Row */}
-                <div className="text-center bg-white rounded-xl p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Shield className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">Enterprise Security</h3>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Enterprise Security</h3>
                   <p className="text-muted-foreground">
                     Bank-level security ensures your sensitive property data is always protected.
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Users className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">Team Collaboration</h3>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Team Collaboration</h3>
                   <p className="text-muted-foreground">
                     Share insights and work together seamlessly across your entire organization.
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Globe className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-4">Always Available</h3>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Always Available</h3>
                   <p className="text-muted-foreground">
                     Access your AI assistant 24/7 from anywhere in the world on any device.
                   </p>
