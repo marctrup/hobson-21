@@ -73,7 +73,9 @@ const LandingPageC = () => {
                       className="w-full h-full object-cover object-center"
                       width={600}
                       height={800}
-                      priority
+                      priority={true}
+                      loading="eager"
+                      fetchPriority="high"
                     />
                     
                     {/* Play button overlay - positioned within the frame */}
