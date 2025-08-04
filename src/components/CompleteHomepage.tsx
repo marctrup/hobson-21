@@ -152,20 +152,19 @@ export const CompleteHomepage = () => {
                 {/* Left side - 3D Document Icon */}
                 <div className="relative flex flex-col items-center justify-center">
                   <div className="transform">
-                    <div className="relative">
+                    <div className="relative bg-white rounded-2xl p-8 shadow-2xl">
                       <OptimizedImage
                         src="/lovable-uploads/46708f7e-809a-4f0c-ad10-6676cdf1c90f.png"
                         alt="Happy document with AI capabilities"
-                        className="w-full h-auto object-contain filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.15)] drop-shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
+                        className="w-full h-auto object-contain"
                         width={320}
                         height={320}
                         loading="lazy"
                         fetchPriority="low"
                       />
-                      {/* 3D Shadow base */}
-                      <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-48 h-12 bg-black/10 rounded-full blur-xl opacity-60"></div>
-                      {/* Additional depth shadow */}
-                      <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-40 h-8 bg-black/5 rounded-full blur-lg opacity-80"></div>
+                      {/* Enhanced 3D Shadow base for white background */}
+                      <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-64 h-8 bg-black/20 rounded-full blur-2xl opacity-70"></div>
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-56 h-6 bg-black/10 rounded-full blur-xl opacity-80"></div>
                     </div>
                   </div>
                 </div>
