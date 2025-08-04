@@ -152,7 +152,7 @@ export const CompleteHomepage = () => {
                 <div className="relative mt-0" style={{ marginTop: '20px' }}>
                   <div className="relative flex flex-col items-center justify-center">
                     <div className="transform">
-                      <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-2 md:pb-5 pt-4 md:pt-14" style={{ marginTop: '10px' }}>
+                      <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-2 md:pb-5 pt-4 md:pt-14" style={{ marginTop: '20px' }}>
                         <div className="relative" style={{ 
                           transform: 'perspective(1000px) rotateY(15deg)',
                           filter: 'drop-shadow(20px 15px 30px rgba(0, 0, 0, 0.25)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.18))'
