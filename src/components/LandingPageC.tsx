@@ -355,7 +355,7 @@ const LandingPageC = () => {
         <div className="max-w-4xl mx-auto">
           <div className="bg-gray-100 rounded-lg p-6 text-center">
             <p className="text-gray-700 font-medium">
-              Places are limited. We hope to accommodate everyone in time
+              Places are limited.
             </p>
           </div>
         </div>
