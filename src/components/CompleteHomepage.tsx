@@ -239,7 +239,7 @@ export const CompleteHomepage = () => {
                       <OptimizedImage
                         src="/lovable-uploads/46708f7e-809a-4f0c-ad10-6676cdf1c90f.png"
                         alt="Happy document with AI capabilities"
-                        className="w-[512px] h-[512px] md:w-[640px] md:h-[640px] object-contain filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.15)] drop-shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
+                        className="w-full h-auto object-contain filter drop-shadow-[0_25px_50px_rgba(0,0,0,0.15)] drop-shadow-[0_10px_20px_rgba(0,0,0,0.1)]"
                         width={320}
                         height={320}
                         loading="lazy"
