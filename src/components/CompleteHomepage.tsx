@@ -153,15 +153,17 @@ export const CompleteHomepage = () => {
                   <div className="relative flex flex-col items-center justify-center">
                     <div className="transform">
                       <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] pb-5 pt-14">
-                        <OptimizedImage
-                          src="/lovable-uploads/6f770d15-465f-4629-acba-a2d48d983c67.png"
-                          alt="Smart document with glasses - AI capabilities"
-                          className="w-full h-auto object-contain transform scale-[1.375] -rotate-12 block"
-                          width={320}
-                          height={320}
-                          loading="lazy"
-                          fetchPriority="low"
-                        />
+                        <div style={{ transform: 'perspective(1000px) rotateY(-15deg)' }}>
+                          <OptimizedImage
+                            src="/lovable-uploads/6f770d15-465f-4629-acba-a2d48d983c67.png"
+                            alt="Smart document with glasses - AI capabilities"
+                            className="w-full h-auto object-contain transform scale-[1.375] block"
+                            width={320}
+                            height={320}
+                            loading="lazy"
+                            fetchPriority="low"
+                          />
+                        </div>
                         {/* Text below the image */}
                         <div className="text-center p-4 -mt-10">
                           <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-3">Your Documents now have a voice</h3>
