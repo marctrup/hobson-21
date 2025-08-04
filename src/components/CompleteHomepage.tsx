@@ -151,8 +151,8 @@ export const CompleteHomepage = () => {
               <div className="grid lg:grid-cols-2 gap-16 items-start">
                 {/* Left side - 3D Document Icon */}
                 <div className="relative flex flex-col items-center justify-center">
-                  <div className="transform hover:scale-110 transition-transform duration-500 scale-[2]">
-                    <div className="relative transform hover:rotate-6 transition-transform duration-300">
+                  <div className="transform scale-[2]">
+                    <div className="relative">
                       <OptimizedImage
                         src="/lovable-uploads/46708f7e-809a-4f0c-ad10-6676cdf1c90f.png"
                         alt="Happy document with AI capabilities"
