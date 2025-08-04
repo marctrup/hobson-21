@@ -91,7 +91,7 @@ const LandingPageC = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
-              Welcome to Your Property Intelligence Pilot Guide
+              When the Bleeding Obvious Gets Overlooked — Grab the Advantage
             </h2>
             <div className="text-xl text-gray-600 space-y-6 max-w-4xl mx-auto leading-relaxed">
               <p>
