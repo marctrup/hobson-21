@@ -141,41 +141,43 @@ export const CompleteHomepage = () => {
           {/* Hero Section with left-aligned beta badge */}
           <section className="py-25" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
-              <div className="relative mt-20">
-                <div className="grid lg:grid-cols-2 gap-16 items-start">
-                {/* Left side - 3D Document Icon */}
-                <div className="relative flex flex-col items-center justify-center">
-                  <div className="transform">
-                    <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] pb-5 pt-14">
-                      {/* Beta Badge - Inside white frame */}
-                      <div className="absolute top-2 left-2">
-                        <Badge variant="outline" className="text-primary border-primary/20">
-                          🚀 Now in Beta
-                        </Badge>
+              <div className="grid lg:grid-cols-2 gap-16 items-start">
+                {/* Left side container */}
+                <div className="relative mt-0">
+                  <div className="relative flex flex-col items-center justify-center">
+                    <div className="transform">
+                      <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] pb-5 pt-14">
+                        {/* Beta Badge - Inside white frame */}
+                        <div className="absolute top-2 left-2">
+                          <Badge variant="outline" className="text-primary border-primary/20">
+                            🚀 Now in Beta
+                          </Badge>
+                        </div>
+                        <OptimizedImage
+                          src="/lovable-uploads/7d7a65aa-cb3f-4d76-9e96-18e48319f0e7.png"
+                          alt="Happy document with AI capabilities"
+                          className="w-full h-auto object-contain transform scale-[1.375] block"
+                          width={320}
+                          height={320}
+                          loading="lazy"
+                          fetchPriority="low"
+                        />
+                        {/* Text below the image */}
+                        <div className="text-center p-4 -mt-10">
+                          <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-3">Your Documents now have a voice</h3>
+                          <p className="text-primary font-semibold text-xl md:text-2xl">Are you ready to listen?</p>
+                        </div>
+                        {/* Enhanced 3D Shadow base for white background */}
+                        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-64 h-8 bg-black/20 rounded-full blur-2xl opacity-70"></div>
+                        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-56 h-6 bg-black/10 rounded-full blur-xl opacity-80"></div>
                       </div>
-                      <OptimizedImage
-                        src="/lovable-uploads/7d7a65aa-cb3f-4d76-9e96-18e48319f0e7.png"
-                        alt="Happy document with AI capabilities"
-                        className="w-full h-auto object-contain transform scale-[1.375] block"
-                        width={320}
-                        height={320}
-                        loading="lazy"
-                        fetchPriority="low"
-                      />
-                      {/* Text below the image */}
-                      <div className="text-center p-4 -mt-10">
-                        <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-3">Your Documents now have a voice</h3>
-                        <p className="text-primary font-semibold text-xl md:text-2xl">Are you ready to listen?</p>
-                      </div>
-                      {/* Enhanced 3D Shadow base for white background */}
-                      <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-64 h-8 bg-black/20 rounded-full blur-2xl opacity-70"></div>
-                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-56 h-6 bg-black/10 rounded-full blur-xl opacity-80"></div>
                     </div>
                   </div>
                 </div>
 
-                {/* Right side - Text and Georgia video */}
-                <div className="space-y-8">
+                {/* Right side container */}
+                <div className="relative mt-0">
+                  <div className="space-y-8">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                       <span className="text-foreground">AI-Document Intelligence for the </span>
