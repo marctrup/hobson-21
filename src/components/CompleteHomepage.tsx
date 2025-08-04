@@ -56,7 +56,7 @@ export const CompleteHomepage = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
               {/* Logo */}
-              <div className="flex flex-col">
+              <div className="relative">
                 <Link to="/" onClick={closeMobileMenu}>
                   <OptimizedImage
                     src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
@@ -65,8 +65,8 @@ export const CompleteHomepage = () => {
                     priority
                   />
                 </Link>
-                {/* Beta Badge - Below the logo */}
-                <div className="mt-2">
+                {/* Beta Badge - Positioned under the last 'n' */}
+                <div className="absolute -bottom-1 right-8">
                   <Badge variant="outline" className="text-primary border-primary/20 text-xs">
                     🚀 Now in Beta
                   </Badge>
