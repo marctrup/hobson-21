@@ -66,11 +66,11 @@ export const CompleteHomepage = () => {
                   />
                 </Link>
                 {/* Beta Badge - Positioned under the last 'n' */}
-                <div className="absolute -bottom-1 -right-[60px]">
-                  <Badge variant="outline" className="text-gray-400 border-gray-200 text-xs">
-                    🚀 Now in Beta
-                  </Badge>
-                </div>
+                 <div className="absolute -bottom-1 -right-[60px]">
+                   <Badge variant="outline" className="text-gray-400 border-gray-200 text-xs">
+                     🚀 Beta
+                   </Badge>
+                 </div>
               </div>
 
               {/* Desktop Navigation */}
