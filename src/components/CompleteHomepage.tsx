@@ -152,7 +152,7 @@ export const CompleteHomepage = () => {
                 {/* Left side - 3D Document Icon */}
                 <div className="relative flex flex-col items-center justify-center">
                   <div className="transform">
-                    <div className="relative bg-white rounded-2xl p-2.5 shadow-2xl">
+                    <div className="relative bg-white rounded-2xl p-0.5 shadow-2xl">
                       <OptimizedImage
                         src="/lovable-uploads/46708f7e-809a-4f0c-ad10-6676cdf1c90f.png"
                         alt="Happy document with AI capabilities"
