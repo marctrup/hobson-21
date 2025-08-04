@@ -139,7 +139,7 @@ export const CompleteHomepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background" role="main">
           {/* Hero Section with left-aligned beta badge */}
-          <section className="py-16" aria-labelledby="hero-heading">
+          <section className="py-12" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
               {/* Beta Badge - Left aligned */}
               <div className="mb-8">
@@ -152,7 +152,7 @@ export const CompleteHomepage = () => {
                 {/* Left side - 3D Document Icon */}
                 <div className="relative flex flex-col items-center justify-center">
                   <div className="transform">
-                    <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] -mt-10 pb-5 pt-14">
+                    <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] -mt-15 pb-5 pt-14">
                       <OptimizedImage
                         src="/lovable-uploads/7d7a65aa-cb3f-4d76-9e96-18e48319f0e7.png"
                         alt="Happy document with AI capabilities"
