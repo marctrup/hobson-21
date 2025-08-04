@@ -77,7 +77,7 @@ const LandingPageC = () => {
                     />
                     
                     {/* Play button overlay - positioned within the frame */}
-                    <div className="absolute bottom-8 left-8">
+                    <div className="absolute bottom-8 left-[82px]">
                       <button 
                         onClick={() => setIsMuted(!isMuted)}
                         className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-transform"
