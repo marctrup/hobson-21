@@ -168,7 +168,7 @@ export const CompleteHomepage = () => {
                           />
                         </div>
                         {/* Text below the image */}
-                        <div className="text-center p-2 md:p-4 -mt-6 md:-mt-10" style={{ marginTop: '-25px' }}>
+                        <div className="text-center p-2 md:p-4 -mt-6 md:-mt-10" style={{ marginTop: '-30px' }}>
                           <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-1 md:mb-3">Your Documents now have a voice</h3>
                           <p className="text-primary font-semibold text-xl md:text-2xl">Are you ready to listen?</p>
                         </div>
