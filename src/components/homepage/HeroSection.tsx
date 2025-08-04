@@ -83,23 +83,34 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
           </div>
 
           <div className="relative flex justify-center lg:justify-end lg:pr-8">
-            {/* Document AI Visualization - Using Landing-A Style */}
-            <div className="relative">
-              <div className="aspect-[4/5] overflow-hidden rounded-lg bg-gray-50 shadow-2xl max-w-md mx-auto">
-                <OptimizedImage
-                  src={documentAiIcon} 
-                  alt="Intelligent tenancy document processing with automated insights and answers" 
-                  className="w-full h-full object-cover"
-                  width={320}
-                  height={400}
-                  priority={true}
-                  fetchPriority="high"
-                  sizes="320px"
-                />
+            {/* Document AI Visualization - Enhanced 3D Effect */}
+            <div className="relative group perspective-1000">
+              {/* 3D Document Stack with Enhanced Shadows */}
+              <div className="relative transform-gpu">
+                {/* Background shadow layer */}
+                <div className="absolute top-6 left-6 w-full h-full bg-gradient-to-br from-gray-400/30 to-gray-600/30 rounded-xl blur-xl transform rotate-2"></div>
+                <div className="absolute top-4 left-4 w-full h-full bg-gradient-to-br from-gray-300/40 to-gray-500/40 rounded-xl blur-lg transform rotate-1"></div>
+                <div className="absolute top-2 left-2 w-full h-full bg-gradient-to-br from-muted/60 to-muted/80 rounded-xl shadow-xl transform rotate-0.5"></div>
+                
+                {/* Main document with enhanced styling */}
+                <div className="relative z-10 aspect-[4/5] overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.5)] max-w-md mx-auto transform hover:scale-105 transition-all duration-300 hover:shadow-[0_35px_60px_-12px_rgba(0,0,0,0.3)]">
+                  <OptimizedImage
+                    src={documentAiIcon} 
+                    alt="Intelligent tenancy document processing with automated insights and answers" 
+                    className="w-full h-full object-cover"
+                    width={320}
+                    height={400}
+                    priority={true}
+                    fetchPriority="high"
+                    sizes="320px"
+                  />
+                  {/* Subtle inner shadow for depth */}
+                  <div className="absolute inset-0 shadow-inner rounded-xl"></div>
+                </div>
               </div>
               
               {/* Text under document */}
-              <div className="mt-[4.25rem] text-center space-y-2">
+              <div className="mt-8 text-center space-y-2">
                 <h3 className="text-xl font-bold text-muted-foreground leading-relaxed">
                   Your Documents now have a voice
                 </h3>
