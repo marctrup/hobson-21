@@ -28,12 +28,10 @@ export const OptimizedImage = memo<OptimizedImageProps>(({
       src={src}
       alt={alt}
       className={className}
-      loading={loading || (priority ? 'eager' : 'lazy')}
-      {...(fetchPriority !== 'auto' && { fetchpriority: fetchPriority })}
+      loading={priority ? 'eager' : (loading || 'lazy')}
       decoding="async"
       width={width}
       height={height}
-      sizes={sizes}
       style={{
         aspectRatio: width && height ? `${width}/${height}` : undefined,
       }}
