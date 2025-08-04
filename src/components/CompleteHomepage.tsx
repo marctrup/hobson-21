@@ -154,7 +154,7 @@ export const CompleteHomepage = () => {
                   <div className="transform">
                     <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)]">
                       <OptimizedImage
-                        src="/lovable-uploads/46708f7e-809a-4f0c-ad10-6676cdf1c90f.png"
+                        src="/lovable-uploads/7d7a65aa-cb3f-4d76-9e96-18e48319f0e7.png"
                         alt="Happy document with AI capabilities"
                         className="w-full h-auto object-contain transform scale-125 block"
                         width={320}
