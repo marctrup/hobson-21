@@ -365,13 +365,13 @@ const LandingPageC = () => {
         </div>
       </footer>
 
-      {/* Video Modal */}
+      {/* Video Modal - Positioned over person image */}
       <Dialog open={isVideoOpen} onOpenChange={setIsVideoOpen}>
-        <DialogContent className="max-w-4xl w-full">
+        <DialogContent className="max-w-2xl w-[90vw] fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[60] border-4 border-purple-200 shadow-2xl">
           <DialogHeader>
-            <DialogTitle>Hobson AI Demo</DialogTitle>
+            <DialogTitle className="text-center text-purple-600">Watch Hobson AI in Action</DialogTitle>
           </DialogHeader>
-          <div className="aspect-video">
+          <div className="aspect-video rounded-lg overflow-hidden">
             <iframe
               width="100%"
               height="100%"
@@ -380,6 +380,7 @@ const LandingPageC = () => {
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
+              className="rounded-lg"
             ></iframe>
           </div>
         </DialogContent>
