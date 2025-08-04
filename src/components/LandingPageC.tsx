@@ -107,6 +107,19 @@ const LandingPageC = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
               When the Bleeding Obvious Gets Overlooked — Grab the Advantage
             </h2>
+            
+            <div className="mb-12">
+              <Button 
+                onClick={() => {
+                  const formSection = document.querySelector('[data-form-section]');
+                  formSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-4 text-lg rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
+              >
+                Apply for the Free Pilot
+              </Button>
+            </div>
+            
             <div className="text-xl text-gray-600 space-y-6 max-w-4xl mx-auto leading-relaxed">
               <div>
                 <h3 className="text-2xl font-bold text-purple-600 mb-4">Why We're Doing This</h3>
@@ -150,7 +163,7 @@ const LandingPageC = () => {
       </section>
 
       {/* Pilot Application Form */}
-      <section className="container mx-auto px-4 py-12">
+      <section className="container mx-auto px-4 py-12" data-form-section>
         <div className="max-w-4xl mx-auto">
           <div className="bg-card rounded-2xl shadow-lg p-8 md:p-12 border border-border/50">
             <div className="text-center mb-8">
