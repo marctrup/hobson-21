@@ -67,6 +67,9 @@ const App = () => {
               {window.location.hostname === 'pilot.hobsonschoice.ai' ? (
                 <>
                   <Route path="/" element={<LandingPageA />} />
+                  <Route path="/landing-a" element={<LandingPageA />} />
+                  <Route path="/landing-b" element={<LandingPageB />} />
+                  <Route path="/landing-c" element={<LandingPageC />} />
                   <Route path="/variant" element={<LandingPageB />} />
                   <Route path="*" element={<LandingPageA />} />
                 </>
