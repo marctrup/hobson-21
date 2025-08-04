@@ -64,7 +64,7 @@ const LandingPageC = () => {
               <div className="relative w-full h-full">
                 
                 {/* Person image container - completely fills the frame */}
-                <div className="relative z-10 w-full h-full -mt-[52px]">
+                <div className="relative z-10 w-full h-full -mt-[32px]">
                   <div className="relative h-full w-full">
                     {/* Person image - fills entire container */}
                     <OptimizedImage
