@@ -126,7 +126,7 @@ const LandingPageC = () => {
               
               <div>
                 <h3 className="text-2xl font-bold text-purple-600 mb-4">What It Costs</h3>
-                <p>Absolutely nothing. No fees, no hidden charges, no long contracts.</p>
+                <p>Absolutely nothing. No fees, no hidden charges, no contracts.</p>
               </div>
               
               <div>
