@@ -21,14 +21,14 @@ export const Header = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <Link to="/" onClick={closeMobileMenu}>
+            <a href="https://www.hobsonschoice.ai" onClick={closeMobileMenu}>
               <img 
                 src={hobsonLogo} 
                 alt="Hobson's Choice AI - AI-powered property management software company logo" 
                 className="h-12 md:h-16" 
                 loading="eager"
               />
-            </Link>
+            </a>
           </div>
 
           {/* Desktop Navigation */}
