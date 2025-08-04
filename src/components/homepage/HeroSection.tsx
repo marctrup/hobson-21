@@ -83,17 +83,25 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
           </div>
 
           <div className="relative flex justify-center lg:justify-end lg:pr-8">
-            {/* Document AI Visualization - Enhanced 3D Effect */}
-            <div className="relative group perspective-1000">
-              {/* 3D Document Stack with Enhanced Shadows */}
+            {/* Document AI Visualization - Floating 3D Effect */}
+            <div className="relative group" style={{ perspective: '1000px' }}>
+              {/* Enhanced 3D Document with Floating Effect */}
               <div className="relative transform-gpu">
-                {/* Background shadow layer */}
-                <div className="absolute top-6 left-6 w-full h-full bg-gradient-to-br from-gray-400/30 to-gray-600/30 rounded-xl blur-xl transform rotate-2"></div>
-                <div className="absolute top-4 left-4 w-full h-full bg-gradient-to-br from-gray-300/40 to-gray-500/40 rounded-xl blur-lg transform rotate-1"></div>
-                <div className="absolute top-2 left-2 w-full h-full bg-gradient-to-br from-muted/60 to-muted/80 rounded-xl shadow-xl transform rotate-0.5"></div>
+                {/* Deep shadow layers for floating effect */}
+                <div className="absolute top-12 left-8 w-full h-full bg-gradient-to-br from-black/20 to-black/40 rounded-xl blur-2xl transform rotate-2 scale-95"></div>
+                <div className="absolute top-8 left-6 w-full h-full bg-gradient-to-br from-gray-600/30 to-gray-800/30 rounded-xl blur-xl transform rotate-1 scale-97"></div>
+                <div className="absolute top-4 left-3 w-full h-full bg-gradient-to-br from-muted/50 to-muted/70 rounded-xl shadow-2xl transform rotate-0.5 scale-98"></div>
                 
-                {/* Main document with enhanced styling */}
-                <div className="relative z-10 aspect-[4/5] overflow-hidden rounded-xl bg-white shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25),0_0_0_1px_rgba(255,255,255,0.5)] max-w-md mx-auto transform hover:scale-105 transition-all duration-300 hover:shadow-[0_35px_60px_-12px_rgba(0,0,0,0.3)]">
+                {/* Main document with pronounced 3D transform */}
+                <div className="relative z-10 aspect-[4/5] overflow-hidden rounded-xl bg-white max-w-md mx-auto transform 
+                               hover:scale-105 transition-all duration-500 ease-out
+                               shadow-[0_40px_80px_-12px_rgba(0,0,0,0.4),0_10px_30px_-5px_rgba(0,0,0,0.3)]
+                               hover:shadow-[0_50px_100px_-12px_rgba(0,0,0,0.5),0_20px_40px_-5px_rgba(0,0,0,0.4)]
+                               hover:-translate-y-2 hover:rotate-y-3 hover:rotate-x-2"
+                     style={{ 
+                       transformStyle: 'preserve-3d',
+                       transform: 'rotateX(5deg) rotateY(-8deg) translateZ(20px)'
+                     }}>
                   <OptimizedImage
                     src={documentAiIcon} 
                     alt="Intelligent tenancy document processing with automated insights and answers" 
@@ -104,7 +112,9 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                     fetchPriority="high"
                     sizes="320px"
                   />
-                  {/* Subtle inner shadow for depth */}
+                  {/* Glossy overlay for depth */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-black/5 rounded-xl"></div>
+                  {/* Inner shadow for realism */}
                   <div className="absolute inset-0 shadow-inner rounded-xl"></div>
                 </div>
               </div>
