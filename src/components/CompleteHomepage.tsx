@@ -141,11 +141,12 @@ export const CompleteHomepage = () => {
           {/* Hero Section with left-aligned beta badge */}
           <section className="py-25" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-16 items-start mt-15">
+              <div className="relative mt-20">
+                <div className="grid lg:grid-cols-2 gap-16 items-start">
                 {/* Left side - 3D Document Icon */}
                 <div className="relative flex flex-col items-center justify-center">
                   <div className="transform">
-                    <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] mt-10 pb-5 pt-14">
+                    <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] pb-5 pt-14">
                       {/* Beta Badge - Inside white frame */}
                       <div className="absolute top-2 left-2">
                         <Badge variant="outline" className="text-primary border-primary/20">
@@ -174,7 +175,7 @@ export const CompleteHomepage = () => {
                 </div>
 
                 {/* Right side - Text and Georgia video */}
-                <div className="space-y-8 mt-30">
+                <div className="space-y-8">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                       <span className="text-foreground">AI-Document Intelligence for the </span>
@@ -255,8 +256,8 @@ export const CompleteHomepage = () => {
                     </DialogContent>
                   </Dialog>
                 </div>
+                </div>
               </div>
-              
             </div>
           </section>
 
