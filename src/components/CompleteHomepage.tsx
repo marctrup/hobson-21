@@ -145,7 +145,7 @@ export const CompleteHomepage = () => {
                 {/* Left side - 3D Document Icon */}
                 <div className="relative flex flex-col items-center justify-center">
                   <div className="transform">
-                    <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] -mt-20 pb-5 pt-14">
+                    <div className="relative bg-white rounded-2xl shadow-2xl transform scale-[0.81] w-[calc(100%-20px)] -mt-10 pb-5 pt-14">
                       {/* Beta Badge - Inside white frame */}
                       <div className="absolute top-2 left-2">
                         <Badge variant="outline" className="text-primary border-primary/20">
