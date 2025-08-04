@@ -234,7 +234,7 @@ export const CompleteHomepage = () => {
                 
                 {/* Right side - Document visualization */}
                  <div className="relative flex flex-col items-center">
-                   <div className="transform scale-[2.31] md:scale-[3.12] origin-center border-4 border-red-500 p-4 bg-red-100/20 rounded-lg">
+                   <div className="transform scale-[2.31] md:scale-[3.12] origin-center border-4 border-red-500 bg-red-100/20 rounded-lg overflow-hidden">
                         <OptimizedImage
                           src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
                           alt="a tenancy document"
