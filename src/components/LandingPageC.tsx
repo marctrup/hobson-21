@@ -71,11 +71,12 @@ const LandingPageC = () => {
                       src="/lovable-uploads/58a76963-aa6c-41eb-bf3d-527c52c7557b.png"
                       alt="AI for a tenancy document"
                       className="w-full h-full object-contain"
-                      width={600}
-                      height={800}
+                      width={532}
+                      height={709}
                       priority={true}
                       loading="eager"
                       fetchPriority="high"
+                      sizes="(max-width: 768px) 100vw, 532px"
                     />
                     
                     {/* Play button overlay - positioned within the frame */}
