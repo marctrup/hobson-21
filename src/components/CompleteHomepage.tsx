@@ -182,7 +182,7 @@ export const CompleteHomepage = () => {
 
                 {/* Right side container */}
                 <div className="relative pt-10 mt-20">
-                  <div className="space-y-8">
+                  <div className="space-y-4 md:space-y-8">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                       <span className="text-foreground">AI-Document Intelligence for the </span>
@@ -271,14 +271,14 @@ export const CompleteHomepage = () => {
           {/* Why Choose Hobson AI Section - White cards with hover pop effects */}
           <section className="py-5 md:py-16">
             <div className="container mx-auto px-4">
-              <div className="text-center mb-16">
+              <div className="text-center mb-6 md:mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">Why Choose Hobson AI?</h2>
                 <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
                   Our AI-powered platform that revolutionises how property professionals work with documents and data.
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
                 {/* Top Row */}
                 <div className="text-center bg-white rounded-xl p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -347,7 +347,7 @@ export const CompleteHomepage = () => {
           {/* Property Intelligence Section - Clean layout with large icons */}
           <section className="py-5 md:py-16 bg-muted/30">
             <div className="container mx-auto px-4">
-              <div className="text-center mb-20">
+              <div className="text-center mb-8 md:mb-20">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
                   Property Intelligence for the Industry
                 </h2>
@@ -356,7 +356,7 @@ export const CompleteHomepage = () => {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-16 max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 max-w-6xl mx-auto">
                 {/* Top Row */}
                 <div className="text-center">
                   <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
@@ -425,7 +425,7 @@ export const CompleteHomepage = () => {
           {/* How It Works Section - Connected steps with lines */}
           <section className="py-5 md:py-16">
             <div className="container mx-auto px-4">
-              <div className="text-center mb-16">
+              <div className="text-center mb-8 md:mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">How It Works</h2>
                 <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
               </div>
@@ -443,7 +443,7 @@ export const CompleteHomepage = () => {
                   </div>
 
                   {/* Steps */}
-                  <div className="grid md:grid-cols-3 gap-12">
+                  <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                     <div className="text-center">
                       <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-8 relative z-10">
                         1
@@ -526,7 +526,7 @@ export const CompleteHomepage = () => {
           {/* Footer */}
           <footer className="py-5 md:py-16 border-t">
             <div className="container mx-auto px-4">
-              <div className="grid md:grid-cols-3 gap-12">
+              <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
                 <div>
                   <OptimizedImage
