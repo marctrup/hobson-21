@@ -222,8 +222,6 @@ const LandingPageA = () => {
                     priority={true}
                   />
                 </div>
-                <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full shadow-lg"></div>
-                <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-secondary rounded-full shadow-lg"></div>
               </div>
             </div>
             <div className="space-y-8">
