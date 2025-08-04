@@ -65,7 +65,7 @@ const LandingPageC = () => {
                 
                 {/* Person image container - invisible frame to maintain aspect ratio */}
                 <div className="relative z-10 w-full h-full -mt-[2px] flex items-center justify-center">
-                  <div className="relative max-w-[484px] max-h-full aspect-[3/4] w-full">
+                  <div className="relative max-w-[532px] max-h-full aspect-[3/4] w-full">
                     {/* Person image - maintains natural proportions within frame */}
                     <OptimizedImage
                       src="/lovable-uploads/58a76963-aa6c-41eb-bf3d-527c52c7557b.png"
