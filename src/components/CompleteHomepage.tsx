@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard } from "lucide-react";
+import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
@@ -153,7 +153,7 @@ export const CompleteHomepage = () => {
                   <div className="relative flex flex-col items-center justify-center">
                     <div className="transform">
                       <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-5 pt-14">
-                        <div style={{ 
+                        <div className="relative" style={{ 
                           transform: 'perspective(1000px) rotateY(15deg)',
                           filter: 'drop-shadow(20px 15px 30px rgba(0, 0, 0, 0.25)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.18))'
                         }}>
@@ -166,6 +166,9 @@ export const CompleteHomepage = () => {
                             loading="lazy"
                             fetchPriority="low"
                           />
+                          <div className="absolute bottom-2 left-2">
+                            <Heart className="w-6 h-6 text-red-500 fill-red-500" />
+                          </div>
                         </div>
                         {/* Text below the image */}
                         <div className="text-center p-4 -mt-10">
