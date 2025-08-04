@@ -83,43 +83,29 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
           </div>
 
           <div className="relative flex justify-center lg:justify-end lg:pr-8">
-            {/* Document AI Visualization */}
-            <div className="relative group w-full max-w-lg">
-              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-3xl transform rotate-1 blur-sm opacity-70 group-hover:opacity-100 transition-opacity duration-300"></div>
-              <div className="relative p-6">
-                
-                <div className="relative">
-                  {/* Background document layer */}
-                  <div className="absolute top-2 left-2 w-[90%] h-full bg-muted/40 rounded-2xl shadow-md transform rotate-1"></div>
-                  <div className="absolute top-1 left-1 w-[90%] h-full bg-muted/60 rounded-2xl shadow-lg transform -rotate-0.5"></div>
-                  
-                  {/* Main document */}
-                  <div className="relative z-10 w-full mx-auto">
-                    {/* Fixed container to prevent layout shift and contain image */}
-                    <div className="w-[400px] h-[300px] mx-auto overflow-hidden rounded-2xl shadow-sm">
-                      <OptimizedImage
-                        src={documentAiIcon} 
-                        alt="Intelligent tenancy document processing with automated insights and answers" 
-                        className="w-full h-full object-cover"
-                        width={400}
-                        height={300}
-                        priority={true}
-                        fetchPriority="high"
-                        sizes="400px"
-                      />
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Text under document */}
-                <div className="mt-[4.25rem] text-center space-y-2">
-                  <h3 className="text-xl font-bold text-muted-foreground leading-relaxed">
-                    Your Documents now have a voice
-                  </h3>
-                  <p className="text-xl font-bold text-primary">
-                    Are you ready to listen?
-                  </p>
-                </div>
+            {/* Document AI Visualization - Using Landing-A Style */}
+            <div className="relative">
+              <div className="aspect-[4/5] overflow-hidden rounded-lg bg-gray-50 shadow-2xl max-w-md mx-auto">
+                <OptimizedImage
+                  src={documentAiIcon} 
+                  alt="Intelligent tenancy document processing with automated insights and answers" 
+                  className="w-full h-full object-cover"
+                  width={320}
+                  height={400}
+                  priority={true}
+                  fetchPriority="high"
+                  sizes="320px"
+                />
+              </div>
+              
+              {/* Text under document */}
+              <div className="mt-[4.25rem] text-center space-y-2">
+                <h3 className="text-xl font-bold text-muted-foreground leading-relaxed">
+                  Your Documents now have a voice
+                </h3>
+                <p className="text-xl font-bold text-primary">
+                  Are you ready to listen?
+                </p>
               </div>
             </div>
           </div>
