@@ -43,22 +43,9 @@ const LandingPageC = () => {
         <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-indigo-200"></div>
         
         <div className="relative container mx-auto pl-4 pr-0 max-w-7xl h-[60vh] flex flex-col">
-          {/* Breadcrumb - exact HeyGen style */}
-          <nav className="text-white/80 text-sm mb-8">
-            <span>Home</span>
-            <span className="mx-2">{'>'}</span>
-            <span>Playbook</span>
-            <span className="mx-2">{'>'}</span>
-            <span className="text-white">HeyGen for Marketers: The Ultimate AI Video Jumpstart Guide</span>
-          </nav>
-
           <div className="flex-1 grid lg:grid-cols-2 gap-16 items-start">
             {/* Text Content - Left Side */}
             <div className="text-white space-y-6">
-              {/* Tag - exact HeyGen style */}
-              <div className="inline-block rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm font-medium border border-white/30">
-                Playbook
-              </div>
               
               {/* Main Heading */}
               <div className="space-y-4">
