@@ -114,7 +114,7 @@ const LandingPageC = () => {
               
               <div>
                 <h3 className="text-2xl font-bold text-purple-600 mb-4">What You Get</h3>
-                <p>We do the heavy lifting so you don't have to:</p>
+                
                 <ul className="list-disc list-inside space-y-2 mt-4">
                   <li>One-on-one discovery to understand your processes</li>
                   <li>Tailored AI buildout that fits your workflow</li>
