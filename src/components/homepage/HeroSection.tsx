@@ -97,7 +97,8 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                                hover:scale-105 transition-all duration-500 ease-out
                                shadow-[0_40px_80px_-12px_rgba(0,0,0,0.4),0_10px_30px_-5px_rgba(0,0,0,0.3)]
                                hover:shadow-[0_50px_100px_-12px_rgba(0,0,0,0.5),0_20px_40px_-5px_rgba(0,0,0,0.4)]
-                               hover:-translate-y-2 hover:rotate-y-3 hover:rotate-x-2"
+                               hover:-translate-y-2 hover:rotate-y-3 hover:rotate-x-2
+                               border-4 border-red-500"
                      style={{ 
                        transformStyle: 'preserve-3d',
                        transform: 'rotateX(5deg) rotateY(-8deg) translateZ(20px)'
