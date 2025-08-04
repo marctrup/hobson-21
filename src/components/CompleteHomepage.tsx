@@ -156,7 +156,7 @@ export const CompleteHomepage = () => {
                         <OptimizedImage
                           src="/lovable-uploads/6f770d15-465f-4629-acba-a2d48d983c67.png"
                           alt="Smart document with glasses - AI capabilities"
-                          className="w-full h-auto object-contain transform scale-[1.375] block"
+                          className="w-full h-auto object-contain transform scale-[1.375] rotate-12 block"
                           width={320}
                           height={320}
                           loading="lazy"
