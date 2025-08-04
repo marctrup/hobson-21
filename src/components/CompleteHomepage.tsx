@@ -153,7 +153,10 @@ export const CompleteHomepage = () => {
                   <div className="relative flex flex-col items-center justify-center">
                     <div className="transform">
                       <div className="relative transform scale-[0.81] w-[calc(100%-20px)] pb-5 pt-14">
-                        <div style={{ transform: 'perspective(1000px) rotateY(15deg)' }}>
+                        <div style={{ 
+                          transform: 'perspective(1000px) rotateY(15deg)',
+                          filter: 'drop-shadow(20px 15px 30px rgba(0, 0, 0, 0.3)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.2))'
+                        }}>
                           <OptimizedImage
                             src="/lovable-uploads/6f770d15-465f-4629-acba-a2d48d983c67.png"
                             alt="Smart document with glasses - AI capabilities"
