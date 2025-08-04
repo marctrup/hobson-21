@@ -145,7 +145,7 @@ export const CompleteHomepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background" role="main">
           {/* Hero Section with left-aligned beta badge */}
-          <section className="py-25" aria-labelledby="hero-heading">
+          <section className="py-8 md:py-25" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
               <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-16 items-start">
                 {/* Left side container */}
@@ -269,7 +269,7 @@ export const CompleteHomepage = () => {
           </section>
 
           {/* Why Choose Hobson AI Section - White cards with hover pop effects */}
-          <section className="py-16">
+          <section className="py-8 md:py-16">
             <div className="container mx-auto px-4">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">Why Choose Hobson AI?</h2>
@@ -345,7 +345,7 @@ export const CompleteHomepage = () => {
           </section>
 
           {/* Property Intelligence Section - Clean layout with large icons */}
-          <section className="py-16 bg-muted/30">
+          <section className="py-8 md:py-16 bg-muted/30">
             <div className="container mx-auto px-4">
               <div className="text-center mb-20">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
@@ -423,7 +423,7 @@ export const CompleteHomepage = () => {
           </section>
 
           {/* How It Works Section - Connected steps with lines */}
-          <section className="py-16">
+          <section className="py-8 md:py-16">
             <div className="container mx-auto px-4">
               <div className="text-center mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">How It Works</h2>
@@ -481,7 +481,7 @@ export const CompleteHomepage = () => {
 
 
           {/* CTA Section - Clean layout without card */}
-          <section className="py-24">
+          <section className="py-12 md:py-24">
             <div className="container mx-auto px-4">
               <div className="text-center max-w-4xl mx-auto">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
@@ -504,7 +504,7 @@ export const CompleteHomepage = () => {
           </section>
 
           {/* Security Badges */}
-          <section className="py-12">
+          <section className="py-6 md:py-12">
             <div className="container mx-auto px-4">
               <div className="flex justify-center items-center gap-16 max-w-2xl mx-auto">
                 <div className="flex items-center gap-3">
@@ -524,7 +524,7 @@ export const CompleteHomepage = () => {
           </section>
 
           {/* Footer */}
-          <footer className="py-16 border-t">
+          <footer className="py-8 md:py-16 border-t">
             <div className="container mx-auto px-4">
               <div className="grid md:grid-cols-3 gap-12">
                 {/* Logo */}
