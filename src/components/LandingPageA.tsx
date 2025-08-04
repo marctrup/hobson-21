@@ -211,17 +211,15 @@ const LandingPageA = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
-              <div className="relative bg-white rounded-2xl shadow-2xl p-6 border border-gray-100 max-w-md mx-auto">
-                <div className="aspect-[4/5] overflow-hidden rounded-lg bg-gray-50">
-                  <OptimizedImage 
-                    src="/lovable-uploads/d7b9dc02-8d5c-4362-8105-30f1cbe9cebf.png" 
-                    alt="A tenancy document that can now talk" 
-                    width={320}
-                    height={400}
-                    className="w-full h-full object-cover"
-                    priority={true}
-                  />
-                </div>
+              <div className="aspect-[4/5] overflow-hidden rounded-lg bg-gray-50 shadow-2xl max-w-md mx-auto">
+                <OptimizedImage 
+                  src="/lovable-uploads/d7b9dc02-8d5c-4362-8105-30f1cbe9cebf.png" 
+                  alt="A tenancy document that can now talk" 
+                  width={320}
+                  height={400}
+                  className="w-full h-full object-cover"
+                  priority={true}
+                />
               </div>
             </div>
             <div className="space-y-8">
