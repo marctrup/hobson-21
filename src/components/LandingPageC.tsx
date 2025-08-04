@@ -105,7 +105,7 @@ const LandingPageC = () => {
               <div>
                 <h3 className="text-2xl font-bold text-purple-600 mb-4">Why We're Doing This</h3>
                 <p>
-                  AI is changing the way property companies work — from handling documents in seconds to answering tenant queries instantly. But too many teams hesitate because they're unsure if it's worth the investment.
+                  AI is changing the way people work, but too many companies are unsure how to integrate AI into their working environment.
                 </p>
                 <p>
                   That's why we've launched a pilot scheme: to prove the value before you commit a single penny.
