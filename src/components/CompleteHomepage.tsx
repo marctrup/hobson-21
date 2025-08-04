@@ -157,7 +157,15 @@ export const CompleteHomepage = () => {
                           transform: 'perspective(1000px) rotateY(15deg)',
                           filter: 'drop-shadow(20px 15px 30px rgba(0, 0, 0, 0.25)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.18))'
                         }}>
-                          {/* Image removed */}
+                          <OptimizedImage
+                            src="/lovable-uploads/smart-document-final.png"
+                            alt="Smart document with glasses - AI capabilities"
+                            className="w-full h-auto object-contain transform scale-[1.375] block"
+                            width={320}
+                            height={320}
+                            loading="lazy"
+                            fetchPriority="low"
+                          />
                         </div>
                         {/* Text below the image */}
                         <div className="text-center p-4 -mt-10" style={{ marginTop: '-50px' }}>
