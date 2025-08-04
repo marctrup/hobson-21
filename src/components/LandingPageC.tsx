@@ -98,7 +98,7 @@ const LandingPageC = () => {
       </section>
 
       {/* Welcome Section */}
-      <section className="bg-white py-20">
+      <section className="bg-white pt-[75px] pb-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900">
