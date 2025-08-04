@@ -147,7 +147,7 @@ export const CompleteHomepage = () => {
           {/* Hero Section with left-aligned beta badge */}
           <section className="py-2 md:py-25" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-16 items-start">
+              <div className="grid lg:grid-cols-[45%_55%] gap-2 sm:gap-4 lg:gap-16 items-start">
                 {/* Left side container */}
                 <div className="relative mt-0" style={{ marginTop: '10px' }}>
                   <div className="relative flex flex-col items-center justify-center">
