@@ -108,7 +108,7 @@ const LandingPageC = () => {
                   AI is changing the way people work, but too many companies are unsure how to integrate AI into their working environment.
                 </p>
                 <p>
-                  That's why we've launched a pilot scheme: to prove the value before you commit a single penny.
+                  That's why we've launched a pilot scheme: to prove the value and ensure it delivers what the company needs.
                 </p>
               </div>
               
