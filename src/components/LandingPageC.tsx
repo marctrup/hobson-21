@@ -45,7 +45,7 @@ const LandingPageC = () => {
         <div className="relative container mx-auto pl-4 pr-0 max-w-7xl h-[43vh] flex flex-col">
           <div className="flex-1 grid lg:grid-cols-2 gap-16 items-start">
             {/* Text Content - Left Side */}
-            <div className="text-white space-y-6 mt-[70px] ml-5">
+            <div className="text-white space-y-6 mt-[60px] ml-5">
               
               {/* Main Heading */}
               <div className="space-y-4">
