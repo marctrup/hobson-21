@@ -57,20 +57,19 @@ export const CompleteHomepage = () => {
             <div className="flex justify-between items-center">
               {/* Logo */}
               <div className="relative">
-                <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage
-                    src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
-                    alt="Hobson's Choice AI - AI-powered property management software company logo"
-                    className="h-12 md:h-16 w-auto"
-                    priority
-                  />
-                </Link>
-                {/* Beta Badge - Positioned under the last 'n' */}
-                 <div className="absolute -bottom-1 -right-[60px]">
-                   <Badge variant="secondary" className="text-gray-400 text-xs border-0 bg-transparent">
-                     Beta
-                   </Badge>
-                 </div>
+                <div className="flex flex-col items-start">
+                  <Badge variant="secondary" className="text-gray-400 text-xs border-0 bg-transparent mb-1">
+                    Beta
+                  </Badge>
+                  <Link to="/" onClick={closeMobileMenu}>
+                    <OptimizedImage
+                      src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
+                      alt="Hobson's Choice AI - AI-powered property management software company logo"
+                      className="h-12 md:h-16 w-auto"
+                      priority
+                    />
+                  </Link>
+                </div>
               </div>
 
               {/* Desktop Navigation */}
