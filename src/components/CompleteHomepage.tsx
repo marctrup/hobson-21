@@ -158,7 +158,7 @@ export const CompleteHomepage = () => {
                           filter: 'drop-shadow(20px 15px 30px rgba(0, 0, 0, 0.25)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.18))'
                         }}>
                           <OptimizedImage
-                            src="/lovable-uploads/exact-smart-document-glasses.png"
+                            src="/lovable-uploads/user-document-with-glasses.png"
                             alt="Smart document with glasses - AI capabilities"
                             className="w-full h-auto object-contain transform scale-[1.375] block"
                             width={320}
