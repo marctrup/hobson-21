@@ -139,7 +139,7 @@ export const CompleteHomepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background" role="main">
           {/* Hero Section with left-aligned beta badge */}
-          <section className="py-12" aria-labelledby="hero-heading">
+          <section className="py-25" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
               {/* Beta Badge - Left aligned */}
               <div className="mb-8">
