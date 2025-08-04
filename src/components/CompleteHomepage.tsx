@@ -162,6 +162,11 @@ export const CompleteHomepage = () => {
                         loading="lazy"
                         fetchPriority="low"
                       />
+                      {/* Text below the image */}
+                      <div className="text-center p-4">
+                        <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-3">Your Documents now have a voice</h3>
+                        <p className="text-primary font-semibold text-xl md:text-2xl">Are you ready to listen?</p>
+                      </div>
                       {/* Enhanced 3D Shadow base for white background */}
                       <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-64 h-8 bg-black/20 rounded-full blur-2xl opacity-70"></div>
                       <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-56 h-6 bg-black/10 rounded-full blur-xl opacity-80"></div>
