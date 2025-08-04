@@ -69,7 +69,7 @@ const LandingPageC = () => {
                     {/* Person image - fills entire container */}
                     <OptimizedImage
                       src="/lovable-uploads/58a76963-aa6c-41eb-bf3d-527c52c7557b.png"
-                      alt="Professional woman"
+                      alt="AI for a tenancy document"
                       className="w-full h-full object-cover object-center"
                       width={600}
                       height={800}
