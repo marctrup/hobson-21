@@ -40,7 +40,7 @@ export const CompleteHomepage = () => {
         
         {/* Preload critical assets */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
-        <link rel="preload" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
+        <link rel="prefetch" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
         <link rel="prefetch" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
         <link rel="dns-prefetch" href="//player.vimeo.com" />
         <link rel="dns-prefetch" href="//vimeo.com" />
@@ -176,14 +176,15 @@ export const CompleteHomepage = () => {
                     <DialogTrigger asChild>
                        <div className="max-w-[280px] cursor-pointer group transform scale-[1.08]">
                          <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl">
-                            <OptimizedImage
-                              src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
-                              alt="Georgia from Hobson AI explaining new AI property management software - the features and benefits"
-                              className="w-full h-auto rounded-xl object-cover aspect-[3/2]"
-                              width={200}
-                              height={133}
-                              loading="lazy"
-                            />
+                           <OptimizedImage
+                             src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
+                             alt="Georgia from Hobson AI explaining new AI property management software - the features and benefits"
+                             className="w-full h-auto rounded-xl object-cover aspect-[3/2]"
+                             width={200}
+                             height={133}
+                             loading="lazy"
+                             fetchPriority="low"
+                           />
                          </div>
                         <div className="mt-6">
                           <h3 className="text-sm font-semibold mb-2 text-foreground">"Would it help if I explained a bit more?"</h3>
@@ -232,18 +233,18 @@ export const CompleteHomepage = () => {
                 </div>
                 
                 {/* Right side - Document visualization */}
-                <div className="relative flex flex-col items-center">
-                  <div className="transform scale-[1.91] md:scale-[2.58] origin-center">
-                     <OptimizedImage
-                       src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
-                       alt="a tenancy document"
-                       className="max-w-full h-auto object-contain"
-                       width={300}
-                       height={300}
-                       priority={true}
-                       fetchPriority="high"
-                     />
-                  </div>
+                 <div className="relative flex flex-col items-center">
+                   <div className="transform scale-[1.91] md:scale-[2.58] origin-center">
+                      <OptimizedImage
+                        src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
+                        alt="a tenancy document"
+                        className="max-w-full h-auto object-contain"
+                        width={300}
+                        height={300}
+                        loading="lazy"
+                        fetchPriority="low"
+                      />
+                   </div>
                   
                   {/* Text below the image */}
                   <div className="text-center mt-8">
