@@ -149,7 +149,7 @@ export const CompleteHomepage = () => {
             <div className="container mx-auto px-4">
               <div className="grid lg:grid-cols-[40%_60%] gap-2 sm:gap-4 lg:gap-16 items-start">
                 {/* Left side container */}
-                <div className="relative mt-0" style={{ marginTop: '10px' }}>
+                <div className="relative mt-0" style={{ marginTop: '20px' }}>
                   <div className="relative flex flex-col items-center justify-center">
                     <div className="transform">
                       <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-2 md:pb-5 pt-4 md:pt-14">
