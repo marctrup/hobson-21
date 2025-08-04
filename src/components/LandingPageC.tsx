@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -26,13 +27,15 @@ const LandingPageC = () => {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <OptimizedImage
-              src={hobsonLogo}
-              alt="Hobson AI"
-              width={120}
-              height={40}
-              className="h-14 w-auto"
-            />
+            <a href="https://hobsonschoice.ai/" target="_blank" rel="noopener noreferrer">
+              <OptimizedImage
+                src={hobsonLogo}
+                alt="Hobson AI"
+                width={120}
+                height={40}
+                className="h-14 w-auto"
+              />
+            </a>
           </div>
         </div>
       </header>
