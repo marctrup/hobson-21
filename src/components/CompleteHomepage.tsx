@@ -145,11 +145,11 @@ export const CompleteHomepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background" role="main">
           {/* Hero Section with left-aligned beta badge */}
-          <section className="py-5 md:py-25" aria-labelledby="hero-heading">
+          <section className="py-2 md:py-25" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-4 sm:gap-6 lg:gap-16 items-start">
+              <div className="grid lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-16 items-start">
                 {/* Left side container */}
-                <div className="relative mt-0" style={{ marginTop: '30px' }}>
+                <div className="relative mt-0" style={{ marginTop: '10px' }}>
                   <div className="relative flex flex-col items-center justify-center">
                     <div className="transform">
                       <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-5 pt-14">
@@ -181,7 +181,7 @@ export const CompleteHomepage = () => {
                 </div>
 
                 {/* Right side container */}
-                <div className="relative pt-4 md:pt-10 mt-8 md:mt-20">
+                <div className="relative pt-2 md:pt-10 mt-2 md:mt-20">
                   <div className="space-y-4 md:space-y-8">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 leading-tight">
