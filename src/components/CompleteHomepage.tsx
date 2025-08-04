@@ -174,7 +174,7 @@ export const CompleteHomepage = () => {
                 </div>
 
                 {/* Right side - Text and Georgia video */}
-                <div className="space-y-8 mt-30">
+                <div className="space-y-8 mt-10">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
                       <span className="text-foreground">AI-Document Intelligence for the </span>
