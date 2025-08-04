@@ -15,6 +15,7 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Building2, TrendingUp, MapPin, PenTool, CreditCard, Shield } from "lucide-react";
 import { CONTENT_VARIANT as CONTENT } from "@/config/content-variant";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 
 // Form schema using the variant content
@@ -210,17 +211,19 @@ const LandingPageA = () => {
         <div className="container mx-auto px-4 relative z-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center max-w-7xl mx-auto">
             <div className="relative">
-              <div className="aspect-square flex items-center justify-center">
-                <img 
-                  src="/lovable-uploads/d7b9dc02-8d5c-4362-8105-30f1cbe9cebf.png" 
-                  alt="A tenancy document that can now talk" 
-                  className="w-full h-full object-contain scale-110"
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                  width="400"
-                  height="400"
-                />
+              <div className="relative bg-white rounded-2xl shadow-2xl p-6 border border-gray-100 max-w-md mx-auto">
+                <div className="aspect-[4/5] overflow-hidden rounded-lg bg-gray-50">
+                  <OptimizedImage 
+                    src="/lovable-uploads/d7b9dc02-8d5c-4362-8105-30f1cbe9cebf.png" 
+                    alt="A tenancy document that can now talk" 
+                    width={320}
+                    height={400}
+                    className="w-full h-full object-cover"
+                    priority={true}
+                  />
+                </div>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-primary rounded-full shadow-lg"></div>
+                <div className="absolute -bottom-2 -left-2 w-4 h-4 bg-secondary rounded-full shadow-lg"></div>
               </div>
             </div>
             <div className="space-y-8">
