@@ -132,7 +132,7 @@ const LandingPageC = () => {
               <div>
                 <h3 className="text-2xl font-bold text-purple-600 mb-4">Why Now</h3>
                 <p>
-                  Every property company that's said yes so far is already seeing results — faster admin, fewer manual tasks, and happier teams.
+                  Every property company that has agreed so far has embraced the scheme and seen the potential.
                 </p>
                 <p>
                   If you've been thinking about AI but haven't acted, this is your sign to take the first step.
