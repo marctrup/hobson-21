@@ -350,6 +350,17 @@ const LandingPageC = () => {
         </div>
       </section>
 
+      {/* Limited Places Notice */}
+      <section className="container mx-auto px-4 pb-12">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gray-100 rounded-lg p-6 text-center">
+            <p className="text-gray-700 font-medium">
+              Places are limited. We hope to accommodate everyone in time
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="border-t bg-muted/50 py-8">
         <div className="container mx-auto px-4 text-center">
