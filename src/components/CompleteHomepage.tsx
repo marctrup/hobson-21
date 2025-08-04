@@ -233,7 +233,7 @@ export const CompleteHomepage = () => {
                 </div>
                 
                 {/* Right side - Document visualization */}
-                 <div className="relative flex flex-col items-center">
+                 <div className="relative flex flex-col items-center border-4 border-red-500 p-4 bg-red-100/20">
                    <div className="transform scale-[1.91] md:scale-[2.58] origin-center">
                       <OptimizedImage
                         src="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png"
