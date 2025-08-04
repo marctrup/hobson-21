@@ -141,7 +141,7 @@ export const CompleteHomepage = () => {
           {/* Hero Section with left-aligned beta badge */}
           <section className="py-25" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-16 items-stretch">
+              <div className="grid lg:grid-cols-2 gap-16 items-start">
                 {/* Left side container */}
                 <div className="relative mt-0">
                   <div className="relative flex flex-col items-center justify-center">
@@ -176,7 +176,7 @@ export const CompleteHomepage = () => {
                 </div>
 
                 {/* Right side container */}
-                <div className="relative transform translate-y-10 border-4 border-red-500 bg-red-100/20">
+                <div className="relative pt-10 border-4 border-red-500 bg-red-100/20">
                   <div className="space-y-8">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
