@@ -50,7 +50,7 @@ const LandingPageC = () => {
               {/* Main Heading */}
               <div className="space-y-4">
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
-                  Your AI Assistant, Built for Property documents— Free to Try
+                  Your AI Assistant, Built for Property documents— <span className="text-yellow-300">Free to Try</span>
                 </h1>
                 <h2 className="text-xl md:text-2xl lg:text-3xl font-normal leading-tight opacity-90">
                   We tailor AI to your documents, processes, and goals — no cost, no strings attached.
