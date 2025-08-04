@@ -82,7 +82,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
             </div>
           </div>
 
-          <div className="relative flex justify-center lg:justify-end lg:pr-8">
+          <div className="relative flex justify-center lg:justify-end lg:pr-8 border-2 border-red-500">
             {/* Document AI Visualization - Floating 3D Effect */}
             <div className="relative group" style={{ perspective: '1000px' }}>
               {/* Enhanced 3D Document with Floating Effect */}
