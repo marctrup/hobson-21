@@ -63,14 +63,14 @@ const LandingPageC = () => {
               {/* Main container that fills the available space */}
               <div className="relative w-full h-full">
                 
-                {/* Person image container - completely fills the frame */}
-                <div className="relative z-10 w-full h-full -mt-[2px]">
-                  <div className="relative h-full w-full">
-                    {/* Person image - fills entire container */}
+                {/* Person image container - invisible frame to maintain aspect ratio */}
+                <div className="relative z-10 w-full h-full -mt-[2px] flex items-center justify-center">
+                  <div className="relative max-w-[400px] max-h-full aspect-[3/4] w-full">
+                    {/* Person image - maintains natural proportions within frame */}
                     <OptimizedImage
                       src="/lovable-uploads/58a76963-aa6c-41eb-bf3d-527c52c7557b.png"
                       alt="AI for a tenancy document"
-                      className="w-full h-full object-cover object-center"
+                      className="w-full h-full object-contain"
                       width={600}
                       height={800}
                       priority={true}
