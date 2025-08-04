@@ -166,8 +166,8 @@ export const CompleteHomepage = () => {
                             loading="lazy"
                             fetchPriority="low"
                           />
-                          <div className="absolute bottom-8 left-8">
-                            <Heart className="w-4 h-4 text-red-500 fill-red-500" />
+                          <div className="absolute bottom-4 left-4">
+                            <Heart className="w-3 h-3 text-red-500 fill-red-500" />
                           </div>
                         </div>
                         {/* Text below the image */}
