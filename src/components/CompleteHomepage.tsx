@@ -145,14 +145,14 @@ export const CompleteHomepage = () => {
 
         <main id="main-content" className="min-h-screen bg-background" role="main">
           {/* Hero Section with left-aligned beta badge */}
-          <section className="py-2 md:py-25" aria-labelledby="hero-heading">
-            <div className="container mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-16 items-start">
+          <section className="py-2 md:py-25 border-2 border-red-500 md:border-transparent" aria-labelledby="hero-heading">
+            <div className="container mx-auto px-4 border-2 border-blue-500 md:border-transparent">
+              <div className="grid lg:grid-cols-2 gap-2 sm:gap-4 lg:gap-16 items-start border-2 border-green-500 md:border-transparent">
                 {/* Left side container */}
-                <div className="relative mt-0" style={{ marginTop: '10px' }}>
-                  <div className="relative flex flex-col items-center justify-center">
+                <div className="relative mt-0 border-2 border-yellow-500 md:border-transparent" style={{ marginTop: '10px' }}>
+                  <div className="relative flex flex-col items-center justify-center border-2 border-orange-500 md:border-transparent">
                     <div className="transform">
-                      <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-2 md:pb-5 pt-4 md:pt-14">
+                      <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-2 md:pb-5 pt-4 md:pt-14 border-2 border-pink-500 md:border-transparent">
                         <div className="relative" style={{ 
                           transform: 'perspective(1000px) rotateY(15deg)',
                           filter: 'drop-shadow(20px 15px 30px rgba(0, 0, 0, 0.25)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.18))'
@@ -181,7 +181,7 @@ export const CompleteHomepage = () => {
                 </div>
 
                 {/* Right side container */}
-                <div className="relative pt-2 md:pt-10 mt-2 md:mt-20">
+                <div className="relative pt-2 md:pt-10 mt-2 md:mt-20 border-2 border-purple-500 md:border-transparent">
                   <div className="space-y-2 md:space-y-4">
                   <div>
                     <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 leading-tight">
