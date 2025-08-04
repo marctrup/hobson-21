@@ -70,7 +70,6 @@ const App = () => {
                   <Route path="/landing-a" element={<LandingPageA />} />
                   <Route path="/landing-b" element={<LandingPageB />} />
                   <Route path="/landing-c" element={<LandingPageC />} />
-                  <Route path="/variant" element={<LandingPageB />} />
                   <Route path="*" element={<LandingPageA />} />
                 </>
               ) : (
