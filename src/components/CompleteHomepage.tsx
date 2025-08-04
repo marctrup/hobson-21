@@ -141,7 +141,7 @@ export const CompleteHomepage = () => {
           {/* Hero Section with left-aligned beta badge */}
           <section className="py-25" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
-              <div className="grid lg:grid-cols-2 gap-16 items-start mt-5">
+              <div className="grid lg:grid-cols-2 gap-16 items-start mt-15">
                 {/* Left side - 3D Document Icon */}
                 <div className="relative flex flex-col items-center justify-center">
                   <div className="transform">
