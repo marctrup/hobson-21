@@ -66,7 +66,7 @@ export const CompleteHomepage = () => {
                   />
                 </Link>
                 {/* Beta Badge - Positioned above the 'n' in Hobson */}
-                <div className="absolute top-[3px] right-[5px] md:right-[10px]">
+                <div className="absolute top-[3px] right-[-5px] md:right-[0px]">
                   <Badge variant="secondary" className="text-gray-400 text-xs border-0 bg-transparent">
                     Beta
                   </Badge>
