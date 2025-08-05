@@ -3,8 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Play } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
-// Using direct public path instead of import
-const documentAiIcon = "/lovable-uploads/folder-with-glasses.png";
+import documentAiIcon from "/lovable-uploads/folder-with-glasses.png";
 
 interface HeroSectionProps {
   onShowExplainerVideo: () => void;
