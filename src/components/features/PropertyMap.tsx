@@ -109,9 +109,9 @@ const PropertyMap = memo(() => {
         
         {/* Property Markers */}
         {[
-          { top: 32, left: 25, name: "Marylebone Office", delay: 0 },
-          { top: 48, left: 60, name: "City Tower", delay: 300 },
-          { top: 28, left: 20, name: "Mayfair Retail", delay: 700 },
+          { top: 32, left: 25, name: "Pure Gym", delay: 0 },
+          { top: 48, left: 60, name: "Sainsburys", delay: 300 },
+          { top: 28, left: 20, name: "Stanley House", delay: 700 },
           { top: 68, left: 45, name: "Southwark Units", delay: 1000 },
           { top: 38, left: 72, name: "Shoreditch Space", delay: 1500 }
         ].map((marker, i) => (
