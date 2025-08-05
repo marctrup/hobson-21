@@ -14,6 +14,7 @@ const LandingPageA = lazy(() => import("./pages/LandingPageA"));
 const LandingPageB = lazy(() => import("./pages/LandingPageB"));
 const LandingPageC = lazy(() => import("./pages/LandingPageC"));
 const EmailPreview = lazy(() => import("./pages/EmailPreview"));
+const BackgroundRemovalDemo = lazy(() => import("./pages/BackgroundRemovalDemo"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
@@ -97,6 +98,7 @@ const App = () => {
                   <Route path="/landing-b" element={<LandingPageB />} />
                   <Route path="/landing-c" element={<LandingPageC />} />
                   <Route path="/email-preview" element={<EmailPreview />} />
+                  <Route path="/background-removal" element={<BackgroundRemovalDemo />} />
                   {/* Remove the AI-driven-property-management-software route from main domain */}
                   <Route path="*" element={<NotFound />} />
                 </>
