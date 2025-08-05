@@ -98,7 +98,7 @@ const App = () => {
                   <Route path="/landing-a" element={<LandingPageA />} />
                   <Route path="/landing-b" element={<LandingPageB />} />
                   <Route path="/landing-c" element={<LandingPageC />} />
-                  <Route path="/email-preview" element={<EmailPreview />} />
+                  <Route path="/email-1" element={<EmailPreview />} />
                   <Route path="/background-removal" element={<BackgroundRemovalDemo />} />
                   <Route path="/pilot_form" element={<PilotForm />} />
                   {/* Remove the AI-driven-property-management-software route from main domain */}
