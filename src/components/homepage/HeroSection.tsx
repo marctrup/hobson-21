@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Play } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import documentAiIcon from "/lovable-uploads/4351fb54-1d77-416e-9474-3c80e483a83c.png";
+import documentAiIcon from "/lovable-uploads/folder-with-glasses.png";
 
 interface HeroSectionProps {
   onShowExplainerVideo: () => void;
