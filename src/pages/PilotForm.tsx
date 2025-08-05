@@ -203,7 +203,7 @@ const PilotForm = () => {
       </section>
 
       {/* Application Form */}
-      <section className="py-8 pt-4">
+      <section className="py-8 -mt-5">
         <div className="container mx-auto px-4">
           <div className="max-w-2xl mx-auto">
             <Card className="border-2">
