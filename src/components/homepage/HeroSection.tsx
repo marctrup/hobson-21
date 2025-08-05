@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Play } from "lucide-react";
 import { OptimizedImage } from "@/components/OptimizedImage";
-const documentAiIcon = "/lovable-uploads/folder%20with%20glasses.png";
 
 interface HeroSectionProps {
   onShowExplainerVideo: () => void;
@@ -104,7 +103,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                        transform: 'rotateX(5deg) rotateY(-8deg) translateZ(20px)'
                      }}>
                   <OptimizedImage
-                    src={documentAiIcon} 
+                    src="/lovable-uploads/folder-with-glasses.png" 
                     alt="Intelligent tenancy document processing with automated insights and answers" 
                     className="w-full h-full object-cover"
                     width={320}
