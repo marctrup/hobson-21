@@ -144,69 +144,33 @@ export const CompleteHomepage = () => {
         </header>
 
         <main id="main-content" className="min-h-screen bg-background" role="main">
-          {/* Hero Section with left-aligned beta badge */}
-          <section className="py-2 md:py-25" aria-labelledby="hero-heading">
+          {/* Hero Section - Centered Design */}
+          <section className="py-16" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
-              <div className="grid lg:grid-cols-[40%_60%] gap-2 sm:gap-4 lg:gap-16 items-start">
-                {/* Left side container */}
-                <div className="relative mt-0" style={{ marginTop: '20px' }}>
-                  <div className="relative flex flex-col items-center justify-center">
-                    <div className="transform">
-                      <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-2 md:pb-5 pt-4 md:pt-14" style={{ marginTop: '20px' }}>
-                        <div className="relative" style={{ 
-                          transform: 'perspective(1000px) rotateY(15deg)',
-                          filter: 'drop-shadow(20px 15px 30px rgba(0, 0, 0, 0.25)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.18))'
-                        }}>
-                          <OptimizedImage
-                            src="/lovable-uploads/folder-with-glasses.png"
-                            alt="Smart document with glasses - AI capabilities"
-                            className="w-full h-auto object-contain transform scale-[1.375] block"
-                            width={320}
-                            height={320}
-                            loading="lazy"
-                            fetchPriority="low"
-                          />
-                        </div>
-                        {/* Text below the image */}
-                        <div className="text-center p-2 md:p-4 -mt-6 md:-mt-10" style={{ marginTop: '-30px' }}>
-                          <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-1 md:mb-3">Your Documents now have a voice</h3>
-                          <p className="text-primary font-semibold text-xl md:text-2xl">Are you ready to listen?</p>
-                        </div>
-                        {/* Enhanced 3D Shadow base for white background */}
-                        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-64 h-8 bg-black/20 rounded-full blur-2xl opacity-70"></div>
-                        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-56 h-6 bg-black/10 rounded-full blur-xl opacity-80"></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+              <div className="flex justify-center items-center py-12">
+                <div className="text-center space-y-6 max-w-4xl">
+                  <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                    <span className="text-foreground">AI-Document Intelligence for the </span>
+                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                      Property Industry
+                    </span>
+                  </h1>
+                  <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                    Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions.
+                  </p>
 
-                {/* Right side container */}
-                <div className="relative pt-2 md:pt-10 mt-2 md:mt-20">
-                  <div className="space-y-2 md:space-y-4">
-                  <div>
-                    <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-6 leading-tight">
-                      <span className="text-foreground">AI-Document Intelligence for the </span>
-                      <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                        Property Industry
-                      </span>
-                    </h1>
-                    <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mb-4 md:mb-8">
-                      Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions.
-                    </p>
-                  </div>
-
-                  {/* Georgia Video - Exact match to public site */}
+                  {/* Georgia Video */}
                   <Dialog 
                     open={videoDialogOpen} 
                     onOpenChange={(open) => {
                       setVideoDialogOpen(open);
                       if (!open) {
-                        setVideoLoaded(false); // Reset video state when dialog closes
+                        setVideoLoaded(false);
                       }
                     }}
                   >
                     <DialogTrigger asChild>
-                       <div className="max-w-[280px] cursor-pointer group transform scale-[1.08]">
+                       <div className="max-w-[280px] cursor-pointer group mx-auto mt-8">
                          <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl">
                            <OptimizedImage
                              src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
@@ -225,49 +189,44 @@ export const CompleteHomepage = () => {
                       </div>
                     </DialogTrigger>
                     <DialogContent className="max-w-2xl w-full p-2 overflow-hidden" style={{ zIndex: 50 }}>
-                      {/* Custom close button with higher z-index */}
-                       <button 
-                         onClick={() => {
-                           console.log("Close button clicked!");
-                           setVideoDialogOpen(false);
-                           setVideoLoaded(false);
-                         }}
-                         className="absolute right-4 top-4 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
-                         aria-label="Close video"
-                       >
-                        <X className="h-4 w-4" />
-                      </button>
-                      <DialogTitle className="sr-only">Meet Georgia - Property AI Assistant</DialogTitle>
-                      <DialogDescription className="sr-only">
-                        Watch Georgia explain how Hobson's AI can transform your property management workflow
-                      </DialogDescription>
-                       <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
-                          {/* Video loads but stays hidden until ready */}
-                           <iframe
-                             className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                             src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
-                             title="Meet Georgia - Property AI Assistant"
-                             frameBorder="0"
-                             allow="autoplay; fullscreen; picture-in-picture"
-                             allowFullScreen
-                              onLoad={() => {
-                                // Only hide spinner once video content is actually loaded
-                                setTimeout(() => setVideoLoaded(true), 1500);
-                              }}
-                           ></iframe>
-                          {/* Spinner overlay covers everything */}
-                          <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center z-20 transition-opacity duration-500 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-                            <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                          </div>
-                       </div>
-                    </DialogContent>
+                      <button 
+                        onClick={() => {
+                          setVideoDialogOpen(false);
+                          setVideoLoaded(false);
+                        }}
+                        className="absolute right-4 top-4 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
+                        aria-label="Close video"
+                      >
+                       <X className="h-4 w-4" />
+                     </button>
+                     <DialogTitle className="sr-only">Meet Georgia - Property AI Assistant</DialogTitle>
+                     <DialogDescription className="sr-only">
+                       Watch Georgia explain how Hobson's AI can transform your property management workflow
+                     </DialogDescription>
+                      <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
+                         <iframe
+                           className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                           src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
+                           title="Meet Georgia - Property AI Assistant"
+                           frameBorder="0"
+                           allow="autoplay; fullscreen; picture-in-picture"
+                           allowFullScreen
+                            onLoad={() => {
+                              setTimeout(() => setVideoLoaded(true), 1500);
+                            }}
+                         ></iframe>
+                        <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center z-20 transition-opacity duration-500 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                          <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                     </div>
+                  </DialogContent>
                   </Dialog>
-                </div>
                 </div>
               </div>
             </div>
           </section>
 
+          
           {/* Why Choose Hobson AI Section - White cards with hover pop effects */}
           <section className="py-5 md:py-16">
             <div className="container mx-auto px-4">
@@ -315,9 +274,9 @@ export const CompleteHomepage = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Shield className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Enterprise Security</h3>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Bank-Grade Security</h3>
                   <p className="text-muted-foreground">
-                    Bank-level security ensures your sensitive property data is always protected.
+                    Your sensitive property data is protected with enterprise-level security measures.
                   </p>
                 </div>
                 
@@ -327,7 +286,7 @@ export const CompleteHomepage = () => {
                   </div>
                   <h3 className="text-xl font-semibold mb-2 md:mb-4">Team Collaboration</h3>
                   <p className="text-muted-foreground">
-                    Share insights and work together seamlessly across your entire organization.
+                    Share insights and collaborate seamlessly across your entire property team.
                   </p>
                 </div>
                 
@@ -335,9 +294,9 @@ export const CompleteHomepage = () => {
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Globe className="w-8 h-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Always Available</h3>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Cloud-Based</h3>
                   <p className="text-muted-foreground">
-                    Access your AI assistant 24/7 from anywhere in the world on any device.
+                    Access your property intelligence from anywhere, on any device, at any time.
                   </p>
                 </div>
               </div>
