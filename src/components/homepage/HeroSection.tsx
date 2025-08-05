@@ -120,6 +120,15 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                 </div>
               </div>
               
+              {/* Text under document */}
+              <div className="mt-8 text-center space-y-2">
+                <h3 className="text-xl font-bold text-muted-foreground leading-relaxed">
+                  Your Documents now have a voice
+                </h3>
+                <p className="text-xl font-bold text-primary">
+                  Are you ready to listen?
+                </p>
+              </div>
             </div>
           </div>
         </div>

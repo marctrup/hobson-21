@@ -148,9 +148,36 @@ export const CompleteHomepage = () => {
           <section className="py-2 md:py-25" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
               <div className="grid lg:grid-cols-[40%_60%] gap-2 sm:gap-4 lg:gap-16 items-start">
-                {/* Left side container - removed image and text */}
+                {/* Left side container */}
                 <div className="relative mt-0" style={{ marginTop: '20px' }}>
-                  {/* Content removed as requested */}
+                  <div className="relative flex flex-col items-center justify-center">
+                    <div className="transform">
+                      <div className="relative transform scale-[0.93] w-[calc(100%-20px)] pb-2 md:pb-5 pt-4 md:pt-14" style={{ marginTop: '20px' }}>
+                        <div className="relative" style={{ 
+                          transform: 'perspective(1000px) rotateY(15deg)',
+                          filter: 'drop-shadow(20px 15px 30px rgba(0, 0, 0, 0.25)) drop-shadow(0px 5px 15px rgba(0, 0, 0, 0.18))'
+                        }}>
+                          <OptimizedImage
+                            src="/lovable-uploads/folder-with-glasses.png"
+                            alt="Smart document with glasses - AI capabilities"
+                            className="w-full h-auto object-contain transform scale-[1.375] block"
+                            width={320}
+                            height={320}
+                            loading="lazy"
+                            fetchPriority="low"
+                          />
+                        </div>
+                        {/* Text below the image */}
+                        <div className="text-center p-2 md:p-4 -mt-6 md:-mt-10" style={{ marginTop: '-30px' }}>
+                          <h3 className="text-2xl md:text-3xl font-semibold text-muted-foreground mb-1 md:mb-3">Your Documents now have a voice</h3>
+                          <p className="text-primary font-semibold text-xl md:text-2xl">Are you ready to listen?</p>
+                        </div>
+                        {/* Enhanced 3D Shadow base for white background */}
+                        <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-64 h-8 bg-black/20 rounded-full blur-2xl opacity-70"></div>
+                        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-56 h-6 bg-black/10 rounded-full blur-xl opacity-80"></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Right side container */}
