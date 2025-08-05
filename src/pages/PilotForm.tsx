@@ -35,7 +35,6 @@ import {
 } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { CONTENT } from "@/config/content";
-import hobsonLogo from "@/assets/hobson-logo.png";
 
 // Form schema
 const formSchema = z.object({
@@ -179,7 +178,7 @@ const PilotForm = () => {
           <div className="flex justify-start items-center">
             <a href="/" className="bg-white p-2 rounded-lg">
               <img 
-                src={hobsonLogo} 
+                src="/lovable-uploads/4d207bde-4254-49b7-83e1-ac7325218f41.png" 
                 alt="Hobson AI - AI-powered document intelligence" 
                 className="h-12 md:h-16" 
                 loading="eager"
