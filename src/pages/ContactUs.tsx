@@ -3,7 +3,7 @@ import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, lazy, Suspense, FormEvent } from "react";
 import { toast } from "@/hooks/use-toast";
 
@@ -11,6 +11,7 @@ import { toast } from "@/hooks/use-toast";
 const Header = lazy(() => import("@/components/homepage/Header").then(module => ({ default: module.Header })));
 
 const ContactUs = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -104,6 +105,11 @@ const ContactUs = () => {
         setFormData({ name: "", phone: "", email: "", confirmEmail: "", reason: "" });
         setShowAntiBotDialog(false);
         setPendingFormData(null);
+        
+        // Redirect to home page after success
+        setTimeout(() => {
+          navigate('/');
+        }, 2000); // Wait 2 seconds to let user see the success message
       } else {
         throw new Error(result.error || 'Failed to send message');
       }
