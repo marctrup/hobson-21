@@ -75,7 +75,7 @@ export const PilotEmail = ({
         <Hr style={hr} />
         
         <Text style={text}>
-          Feel free to email us at <Link href="mailto:info@hobsonschoice.ai" style={link}>info@hobsonschoice.ai</Link>
+          Feel free to email <Link href="mailto:info@hobsonschoice.ai" style={link}>info@hobsonschoice.ai</Link> or explore our platform:
         </Text>
         
         <Link
