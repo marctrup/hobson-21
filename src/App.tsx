@@ -1,39 +1,40 @@
-import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Suspense, lazy } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { HelmetProvider } from "react-helmet-async";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
-// Lazy load page components for better performance
-const Homepage = lazy(() => import("@/components/Homepage").then(module => ({ default: module.Homepage })));
-const Features = lazy(() => import("@/pages/Features"));
-const AboutUs = lazy(() => import("@/pages/AboutUs"));
-const ContactUs = lazy(() => import("@/pages/ContactUs"));
-const Auth = lazy(() => import("@/pages/Auth"));
-const Admin = lazy(() => import("@/pages/Admin"));
-const BlogManagement = lazy(() => import("@/pages/admin/BlogManagement"));
-const BlogEditor = lazy(() => import("@/pages/admin/BlogEditor"));
-const Blog = lazy(() => import("@/pages/Blog"));
-const BlogPost = lazy(() => import("@/pages/BlogPost"));
-const LandingPageA = lazy(() => import("@/pages/LandingPageA"));
-const LandingPageB = lazy(() => import("@/pages/LandingPageB"));
-const LandingPageC = lazy(() => import("@/pages/LandingPageC"));
-const PilotForm = lazy(() => import("@/pages/PilotForm"));
-const EmailPreview = lazy(() => import("@/pages/EmailPreview"));
-const BackgroundRemovalDemo = lazy(() => import("@/pages/BackgroundRemovalDemo"));
-const NotFound = lazy(() => import("@/pages/NotFound"));
+// Lazy load all pages for optimal bundle splitting
+const Homepage = lazy(() => import("./components/Homepage").then(module => ({ default: module.Homepage })));
+const SimpleHomepage = lazy(() => import("./components/SimpleHomepage").then(module => ({ default: module.SimpleHomepage })));
+const LandingPageA = lazy(() => import("./pages/LandingPageA"));
+const LandingPageB = lazy(() => import("./pages/LandingPageB"));
+const LandingPageC = lazy(() => import("./pages/LandingPageC"));
+const EmailPreview = lazy(() => import("./pages/EmailPreview"));
+const BackgroundRemovalDemo = lazy(() => import("./pages/BackgroundRemovalDemo"));
+const PilotForm = lazy(() => import("./pages/PilotForm"));
+const Auth = lazy(() => import("./pages/Auth"));
+const Admin = lazy(() => import("./pages/Admin"));
+const NotFound = lazy(() => import("./pages/NotFound"));
+const AboutUs = lazy(() => import("./pages/AboutUs"));
+const ContactUs = lazy(() => import("./pages/ContactUs"));
+const Features = lazy(() => import("./pages/Features"));
+const Blog = lazy(() => import("./pages/Blog"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
+const BlogManagement = lazy(() => import("./pages/admin/BlogManagement"));
+const BlogEditor = lazy(() => import("./pages/admin/BlogEditor"));
 
-// Page loader component
+// Loading component
 const PageLoader = () => (
-  <div className="flex items-center justify-center min-h-screen">
-    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
   </div>
 );
 
-// Query client with optimized defaults
+// Create a simple query client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
