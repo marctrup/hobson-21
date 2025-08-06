@@ -19,58 +19,45 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY')!
     const supabase = createClient(supabaseUrl, supabaseKey)
     
-    console.log('Checking for existing email:', email)
+    console.log('Processing contact message for:', email)
     
-    // Check if email already exists in pilot_applications
-    const { data: existingApplication, error: checkError } = await supabase
+    // Check if email already exists in pilot_applications (for cross-reference)
+    const { data: existingPilotApp, error: pilotCheckError } = await supabase
       .from('pilot_applications')
       .select('email')
       .eq('email', email)
       .maybeSingle()
 
-    console.log('Existing application check result:', { existingApplication, checkError })
+    console.log('Pilot application check result:', { existingPilotApp, pilotCheckError })
 
     let emailExistsMessage = ''
-    let shouldInsert = true
-
-    if (existingApplication) {
+    if (existingPilotApp) {
       emailExistsMessage = '\n\nNote: This email has previously submitted a pilot application.'
-      shouldInsert = false
-      console.log('Email already exists in database, skipping insert but sending notification')
-    } else {
-      console.log('Email not found in database, will insert new record')
     }
 
-    // Only save to database if email doesn't already exist
-    if (shouldInsert) {
-      console.log('Attempting to insert new record for:', email)
-      const { error: dbError } = await supabase
-        .from('pilot_applications')
-        .insert({
-          name,
-          company: 'Contact Form Submission',
-          role: 'Contact Inquiry',  
-          email,
-          phone: phone || null,
-          preferred_contact: 'email',
-          help: reason
-        })
+    // Insert into contact_messages table
+    console.log('Attempting to insert contact message for:', email)
+    const { error: dbError } = await supabase
+      .from('contact_messages')
+      .insert({
+        name,
+        email,
+        phone: phone || null,
+        message: reason
+      })
 
-      if (dbError) {
-        console.error('Database insert error:', dbError)
-        // If it's a unique constraint violation, handle it gracefully
-        if (dbError.code === '23505') {
-          console.log('Unique constraint violation detected, treating as duplicate')
-          emailExistsMessage = '\n\nNote: This email has previously submitted a pilot application.'
-          shouldInsert = false
-        } else {
-          throw new Error(`Database error: ${dbError.message}`)
-        }
+    let isDuplicate = false;
+    if (dbError) {
+      console.error('Database insert error:', dbError)
+      // If it's a unique constraint violation, handle it gracefully
+      if (dbError.code === '23505') {
+        console.log('Unique constraint violation detected - duplicate contact message')
+        isDuplicate = true;
       } else {
-        console.log('New contact form submission saved to database')
+        throw new Error(`Database error: ${dbError.message}`)
       }
     } else {
-      console.log('Skipping database insert due to existing email')
+      console.log('New contact message saved to database')
     }
 
     const emailContent = `
@@ -115,8 +102,8 @@ Submitted at: ${new Date().toISOString()}
       JSON.stringify({ 
         success: true, 
         message: 'Message sent successfully',
-        emailExists: !!existingApplication,
-        isDuplicate: !!existingApplication && !shouldInsert
+        emailExists: !!existingPilotApp,
+        isDuplicate: isDuplicate
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
