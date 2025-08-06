@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -56,6 +57,7 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const PilotForm = () => {
+  const navigate = useNavigate();
   const [showAntiBotDialog, setShowAntiBotDialog] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState(false);
   const [mathProblem, setMathProblem] = useState({ question: "", answer: 0 });
@@ -516,7 +518,10 @@ const PilotForm = () => {
       </Dialog>
 
       {/* Success Dialog */}
-      <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+      <Dialog open={showSuccessDialog} onOpenChange={(open) => {
+        setShowSuccessDialog(open);
+        if (!open) navigate('/property-management-software');
+      }}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle className="text-center text-green-600">
@@ -525,7 +530,10 @@ const PilotForm = () => {
           </DialogHeader>
           <div className="text-center space-y-4">
             <p>{CONTENT.dialogs.success.message}</p>
-            <Button onClick={() => setShowSuccessDialog(false)}>
+            <Button onClick={() => {
+              setShowSuccessDialog(false);
+              navigate('/property-management-software');
+            }}>
               {CONTENT.dialogs.success.closeButton}
             </Button>
           </div>
