@@ -173,7 +173,7 @@ export const Homepage = () => {
                     }}
                   >
                     <DialogTrigger asChild>
-                       <div className="max-w-[420px] cursor-pointer group">
+                       <div className="max-w-[462px] cursor-pointer group">
                          <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl -ml-[10px]">
                            <OptimizedImage
                              src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
