@@ -146,7 +146,7 @@ export const Homepage = () => {
         <main id="main-content" className="min-h-screen bg-background" role="main">
           {/* Hero Section - Two Column Layout */}
           <section className="py-16" aria-labelledby="hero-heading">
-            <div className="container mx-auto px-4">
+            <div className="container mx-auto px-4 -mt-[10px]">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-center py-12">
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-6">
