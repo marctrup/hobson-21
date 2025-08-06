@@ -1,7 +1,1 @@
 project_id = "awfyhgeflakjhxtntokd"
-
-[functions.send-pilot-application]
-verify_jwt = false
-
-[functions.send-contact-message]
-verify_jwt = false
