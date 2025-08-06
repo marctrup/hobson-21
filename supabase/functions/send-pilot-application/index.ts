@@ -1,10 +1,16 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { Resend } from "npm:resend@4.0.0";
+import React from 'npm:react@18.3.1';
+import { renderAsync } from 'npm:@react-email/components@0.0.22';
+import { PilotEmail } from './_templates/pilot-email.tsx';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
+
+const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -58,6 +64,30 @@ serve(async (req) => {
       throw new Error(`Database error: ${dbError.message}`)
     }
 
+    // Parse name for React Email template
+    const nameParts = name.split(' ');
+    const firstName = nameParts[0];
+    const lastName = nameParts.slice(1).join(' ');
+
+    // Render the React Email template for confirmation
+    const confirmationEmailHtml = await renderAsync(
+      React.createElement(PilotEmail, {
+        firstName,
+        lastName,
+        company,
+      })
+    );
+
+    // Send confirmation email to the applicant
+    const confirmationResponse = await resend.emails.send({
+      from: "Hobson AI <noreply@hobsonschoice.ai>",
+      to: [email],
+      subject: "Welcome to the Hobson AI Pilot Program!",
+      html: confirmationEmailHtml,
+    });
+
+    console.log("Confirmation email sent successfully:", confirmationResponse);
+
     const emailContent = `
 New Hobson AI Pilot Application
 
@@ -75,31 +105,15 @@ ${help ? `\nWhat they'd like help with:\n${help}` : ''}
 Submitted at: ${new Date().toISOString()}
     `.trim()
 
-    // Send email using Resend
-    const resendApiKey = Deno.env.get('RESEND_API_KEY')
-    
-    if (!resendApiKey) {
-      throw new Error('RESEND_API_KEY not found')
-    }
+    // Send notification email to team
+    const notificationResponse = await resend.emails.send({
+      from: 'Hobson AI <noreply@hobsonschoice.ai>',
+      to: ['info@hobsonschoice.ai'],
+      subject: `New Pilot Application - ${name} from ${company}`,
+      text: emailContent,
+    });
 
-    const emailResponse = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${resendApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: 'Hobson AI <noreply@hobsonschoice.ai>',
-        to: ['info@hobsonschoice.ai'],
-        subject: `New Pilot Application - ${name} from ${company}`,
-        text: emailContent,
-      }),
-    })
-
-    if (!emailResponse.ok) {
-      const errorText = await emailResponse.text()
-      throw new Error(`Failed to send email: ${errorText}`)
-    }
+    console.log("Notification email sent successfully:", notificationResponse);
 
     return new Response(
       JSON.stringify({ success: true, message: 'Application submitted successfully' }),
