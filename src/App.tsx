@@ -50,14 +50,20 @@ const App = () => {
   console.log('🌐 Current hostname:', window.location.hostname);
   console.log('📍 Current pathname:', window.location.pathname);
   
-  // Simplified version to test if basic React works
   return (
-    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
-      <h1>🔧 DEBUG MODE: App is Loading</h1>
-      <p>Current URL: {window.location.href}</p>
-      <p>If you can see this, React is working!</p>
-      <button onClick={() => alert('React is working!')}>Test Button</button>
-    </div>
+    <HelmetProvider>
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <div style={{ padding: '20px', fontFamily: 'Arial' }}>
+              <h1>🔧 STEP 1: Basic Providers Working</h1>
+              <p>Current URL: {window.location.href}</p>
+              <p>Helmet, ErrorBoundary, QueryClient, and Router are working!</p>
+            </div>
+          </BrowserRouter>
+        </QueryClientProvider>
+      </ErrorBoundary>
+    </HelmetProvider>
   );
 };
 
