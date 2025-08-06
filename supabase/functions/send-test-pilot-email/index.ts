@@ -238,10 +238,11 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     console.log("Sending test pilot email...");
 
-    // Test data
+    // Test data with unique email
+    const timestamp = Date.now();
     const testData = {
-      firstName: "Marc",
-      lastName: "Trup",
+      firstName: "Test User",
+      lastName: "Demo",
       company: "Test Company"
     };
 
@@ -255,7 +256,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Send the email
     const emailResponse = await resend.emails.send({
       from: "Hobson AI <onboarding@resend.dev>",
-      to: ["marctrup@gmail.com"],
+      to: [`test+${timestamp}@example.com`],
       subject: "Test: Welcome to the Hobson AI Pilot Program!",
       html: emailHtml,
     });
