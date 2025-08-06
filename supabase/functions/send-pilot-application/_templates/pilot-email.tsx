@@ -37,12 +37,11 @@ export const PilotEmail = ({
         <Heading style={h1}>Welcome to the Hobson AI Pilot Program!</Heading>
         
         <Text style={welcomeText}>
-          Hi {firstName},
+          {firstName}, Thank you for your interest in our exclusive pilot program at {company}! We're excited that you want to be part of the future of AI-powered property intelligence.
         </Text>
         
         <Text style={text}>
-          🎉 Congratulations! You've been accepted into our exclusive pilot program at <strong>{company}</strong>. 
-          You're now among the first to experience the future of AI-powered property intelligence.
+          A member of our team will be in touch soon to chat. As places are limited, we may not be able to offer you a spot right away. If we can't accommodate you this time, don't worry — we'll make sure you're first in line for the next round.
         </Text>
         
         <Container style={highlightBox}>
