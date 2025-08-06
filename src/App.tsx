@@ -50,71 +50,14 @@ const App = () => {
   console.log('🌐 Current hostname:', window.location.hostname);
   console.log('📍 Current pathname:', window.location.pathname);
   
+  // Simplified version to test if basic React works
   return (
-  <HelmetProvider>
-    <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          {/* Skip Navigation Links for Accessibility */}
-          <a 
-            href="#main-content" 
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-          >
-            Skip to main content
-          </a>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* Check if we're on pilot subdomain */}
-              {window.location.hostname === 'pilot.hobsonschoice.ai' ? (
-                <>
-                  <Route path="/" element={<LandingPageA />} />
-                  <Route path="/landing-a" element={<LandingPageA />} />
-                  <Route path="/landing-b" element={<LandingPageB />} />
-                  <Route path="/landing-c" element={<LandingPageC />} />
-                  <Route path="/pilot_form" element={<PilotForm />} />
-                  <Route path="/email-1" element={<EmailPreview />} />
-                  <Route path="*" element={<LandingPageA />} />
-                </>
-              ) : (
-                <>
-                  {/* Main website routes */}
-                  <Route path="/" element={<Navigate to="/property-management-software" replace />} />
-                  <Route path="/property-management-software" element={<Homepage />} />
-                  <Route path="/home/property-management-software" element={<Navigate to="/" replace />} />
-                  <Route path="/real-estate-ai" element={<Navigate to="/" replace />} />
-                  <Route path="/features" element={<Navigate to="/features/real_estate_ai" replace />} />
-                  <Route path="/features/real_estate_ai" element={<Features />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/blog/:slug" element={<BlogPost />} />
-                  <Route path="/about" element={<AboutUs />} />
-                  <Route path="/about/property-ai" element={<AboutUs />} />
-                  <Route path="/contact" element={<ContactUs />} />
-                  <Route path="/auth" element={<Auth />} />
-                  <Route path="/admin" element={<Admin />} />
-                  <Route path="/admin/blog" element={<BlogManagement />} />
-                  <Route path="/admin/blog/new" element={<BlogEditor />} />
-                  <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
-                  {/* Temporary routes for testing landing pages in Lovable */}
-                  <Route path="/landing-a" element={<LandingPageA />} />
-                  <Route path="/landing-b" element={<LandingPageB />} />
-                  <Route path="/landing-c" element={<LandingPageC />} />
-                  <Route path="/pilot_form" element={<PilotForm />} />
-                  <Route path="/email-1" element={<EmailPreview />} />
-                  <Route path="/background-removal" element={<BackgroundRemovalDemo />} />
-                  {/* Remove the AI-driven-property-management-software route from main domain */}
-                  <Route path="*" element={<NotFound />} />
-                </>
-              )}
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </AuthProvider>
-    </QueryClientProvider>
-    </ErrorBoundary>
-  </HelmetProvider>
+    <div style={{ padding: '20px', fontFamily: 'Arial' }}>
+      <h1>🔧 DEBUG MODE: App is Loading</h1>
+      <p>Current URL: {window.location.href}</p>
+      <p>If you can see this, React is working!</p>
+      <button onClick={() => alert('React is working!')}>Test Button</button>
+    </div>
   );
 };
 
