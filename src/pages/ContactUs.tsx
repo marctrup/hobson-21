@@ -90,14 +90,9 @@ const ContactUs = () => {
             description: "Thank you for your enquiry. We'll get back to you soon.",
           });
         } else {
-          let successMessage = "Thank you for your enquiry. We'll get back to you soon.";
-          if (result.emailExists) {
-            successMessage += " We notice you've previously submitted a pilot application.";
-          }
-          
           toast({
             title: "Message Sent!",
-            description: successMessage,
+            description: "Thank you for your enquiry. We'll get back to you soon.",
           });
         }
         
