@@ -1,12 +1,28 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-// import './index.css' - TEMPORARILY REMOVED TO TEST
 
-console.log('🔄 Starting React application...');
-console.log('📦 Main.tsx loaded successfully');
+console.log('🔄 ABSOLUTE MINIMAL TEST - Starting...');
+
+// Inline component to avoid any imports
+const MinimalApp = () => {
+  console.log('🎯 MinimalApp rendering...');
+  return (
+    <div style={{ 
+      padding: '20px', 
+      fontFamily: 'Arial', 
+      backgroundColor: 'red',
+      color: 'white',
+      minHeight: '100vh'
+    }}>
+      <h1>🔧 ABSOLUTE MINIMAL TEST</h1>
+      <p>If you see this RED screen, React core is working!</p>
+      <p>URL: {window.location.href}</p>
+    </div>
+  );
+};
 
 try {
+  console.log('🎯 Looking for root element...');
   const rootElement = document.getElementById("root");
   console.log('🎯 Root element found:', !!rootElement);
   
@@ -14,29 +30,17 @@ try {
     throw new Error('Root element not found!');
   }
   
-  console.log('🚀 About to create React root...');
+  console.log('🚀 Creating React root...');
   const root = createRoot(rootElement);
   
-  console.log('🎨 About to render App...');
+  console.log('🎨 Rendering MinimalApp...');
   root.render(
     <StrictMode>
-      <App />
+      <MinimalApp />
     </StrictMode>
   );
   
-  console.log('✅ React app rendered successfully!');
+  console.log('✅ SUCCESS: React rendered!');
 } catch (error) {
-  console.error('❌ Error mounting React app:', error);
-  
-  // Show error in the root element
-  const rootElement = document.getElementById("root");
-  if (rootElement) {
-    rootElement.innerHTML = `
-      <div style="padding: 20px; background: red; color: white; font-family: Arial;">
-        <h1>React Mount Error</h1>
-        <p>Error: ${error}</p>
-        <p>Check console for details</p>
-      </div>
-    `;
-  }
+  console.error('❌ FAILED:', error);
 }
