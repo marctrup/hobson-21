@@ -86,8 +86,8 @@ const ContactUs = () => {
       if (result.success) {
         if (result.isDuplicate) {
           toast({
-            title: "Email Already Used",
-            description: "This email address has already been used. We've sent your message but won't create a duplicate entry.",
+            title: "Message Sent!",
+            description: "Thank you for your enquiry. We'll get back to you soon.",
           });
         } else {
           let successMessage = "Thank you for your enquiry. We'll get back to you soon.";
