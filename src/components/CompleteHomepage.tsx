@@ -458,7 +458,7 @@ export const CompleteHomepage = () => {
                     className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium"
                     asChild
                   >
-                    <Link to="/contact">Contact Us →</Link>
+                    <Link to="/contact">Join our free pilot →</Link>
                   </SimpleButton>
                 </div>
               </div>
