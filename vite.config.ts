@@ -24,31 +24,56 @@ export default defineConfig(({ mode }) => ({
     minify: 'esbuild',
     cssMinify: true,
     sourcemap: false,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks: {
+        manualChunks: (id) => {
           // Core React chunks
-          'react-vendor': ['react', 'react-dom'],
-          'react-router': ['react-router-dom'],
+          if (id.includes('react') || id.includes('react-dom')) {
+            return 'react-vendor';
+          }
+          if (id.includes('react-router')) {
+            return 'react-router';
+          }
           
-          // UI components (smaller chunks)
-          'ui-base': ['@radix-ui/react-slot', '@radix-ui/react-toast'],
-          'ui-forms': ['@radix-ui/react-dialog', '@radix-ui/react-checkbox', '@radix-ui/react-select', '@radix-ui/react-label'],
+          // Heavy form libraries
+          if (id.includes('react-hook-form') || id.includes('zod') || id.includes('@hookform')) {
+            return 'forms';
+          }
           
-          // Forms and validation
-          'forms': ['react-hook-form', '@hookform/resolvers', 'zod'],
+          // UI libraries (split further)
+          if (id.includes('@radix-ui/react-dialog') || id.includes('@radix-ui/react-select')) {
+            return 'ui-heavy';
+          }
+          if (id.includes('@radix-ui')) {
+            return 'ui-base';
+          }
           
-          // Backend and data
-          'supabase': ['@supabase/supabase-js'],
-          'query': ['@tanstack/react-query'],
+          // Backend
+          if (id.includes('supabase')) {
+            return 'supabase';
+          }
+          if (id.includes('@tanstack/react-query')) {
+            return 'query';
+          }
           
-          // Utilities (separate from heavy libraries)
-          'icons': ['lucide-react'],
-          'utils': ['clsx', 'tailwind-merge'],
-          'cva': ['class-variance-authority'],
+          // Icons and utilities
+          if (id.includes('lucide-react')) {
+            return 'icons';
+          }
+          if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
+            return 'utils';
+          }
           
-          // Helmet and async
-          'meta': ['react-helmet-async'],
+          // Helmet for SEO
+          if (id.includes('react-helmet-async')) {
+            return 'meta';
+          }
+          
+          // Landing pages (lazy load these)
+          if (id.includes('LandingPage')) {
+            return 'landing-pages';
+          }
         },
         assetFileNames: (assetInfo) => {
           const info = assetInfo.name?.split('.') || [];

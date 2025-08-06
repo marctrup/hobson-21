@@ -32,8 +32,12 @@ export const OptimizedImage = memo<OptimizedImageProps>(({
       decoding="async"
       width={width}
       height={height}
+      fetchPriority={fetchPriority}
+      sizes={sizes}
       style={{
         aspectRatio: width && height ? `${width}/${height}` : undefined,
+        contentVisibility: 'auto',
+        containIntrinsicSize: width && height ? `${width}px ${height}px` : '400px 300px'
       }}
     />
   );
