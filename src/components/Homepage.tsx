@@ -245,7 +245,7 @@ export const Homepage = () => {
 
               <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-7xl mx-auto">
                 {/* Top Row */}
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Brain className="w-8 h-8 text-primary" />
                   </div>
@@ -255,7 +255,7 @@ export const Homepage = () => {
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Zap className="w-8 h-8 text-primary" />
                   </div>
@@ -265,7 +265,7 @@ export const Homepage = () => {
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Search className="w-8 h-8 text-primary" />
                   </div>
@@ -276,7 +276,7 @@ export const Homepage = () => {
                 </div>
                 
                 {/* Bottom Row */}
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Shield className="w-8 h-8 text-primary" />
                   </div>
@@ -286,7 +286,7 @@ export const Homepage = () => {
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Users className="w-8 h-8 text-primary" />
                   </div>
@@ -296,7 +296,7 @@ export const Homepage = () => {
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Globe className="w-8 h-8 text-primary" />
                   </div>
