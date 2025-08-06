@@ -40,8 +40,8 @@ export const Homepage = () => {
         
         {/* Preload critical assets */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
+        <link rel="preload" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
         <link rel="prefetch" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
-        <link rel="prefetch" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
         <link rel="dns-prefetch" href="//player.vimeo.com" />
         <link rel="dns-prefetch" href="//vimeo.com" />
         <link rel="dns-prefetch" href="//f.vimeocdn.com" />
@@ -175,15 +175,16 @@ export const Homepage = () => {
                     <DialogTrigger asChild>
                        <div className="max-w-[462px] cursor-pointer group">
                          <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl -ml-[10px]">
-                           <OptimizedImage
-                             src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
-                             alt="Georgia from Hobson AI explaining new AI property management software - the features and benefits"
-                             className="w-full h-auto rounded-xl object-cover aspect-[3/2]"
-                             width={200}
-                             height={133}
-                             loading="lazy"
-                             fetchPriority="low"
-                           />
+                            <OptimizedImage
+                              src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
+                              alt="Georgia from Hobson AI explaining new AI property management software - the features and benefits"
+                              className="w-full h-auto rounded-xl object-cover aspect-[3/2]"
+                              width={462}
+                              height={308}
+                              loading="eager"
+                              fetchPriority="high"
+                              priority={true}
+                            />
                          </div>
                         <div className="mt-3 md:mt-6 text-center">
                           <h3 className="text-sm font-semibold mb-2 text-foreground">"Would it help if I explained a bit more?"</h3>
@@ -207,17 +208,19 @@ export const Homepage = () => {
                        Watch Georgia explain how Hobson's AI can transform your property management workflow
                      </DialogDescription>
                       <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
-                         <iframe
-                           className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                           src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
-                           title="Meet Georgia - Property AI Assistant"
-                           frameBorder="0"
-                           allow="autoplay; fullscreen; picture-in-picture"
-                           allowFullScreen
-                            onLoad={() => {
-                              setTimeout(() => setVideoLoaded(true), 1500);
-                            }}
-                         ></iframe>
+                          {videoDialogOpen && (
+                            <iframe
+                              className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                              src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
+                              title="Meet Georgia - Property AI Assistant"
+                              frameBorder="0"
+                              allow="autoplay; fullscreen; picture-in-picture"
+                              allowFullScreen
+                              onLoad={() => {
+                                setTimeout(() => setVideoLoaded(true), 1500);
+                              }}
+                            />
+                          )}
                         <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center z-20 transition-opacity duration-500 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
                           <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
                         </div>
