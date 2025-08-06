@@ -9,7 +9,7 @@ import { Helmet } from "react-helmet-async";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 // Lazy load video only when needed
 
-export const CompleteHomepage = () => {
+export const PropertyManagementHomepage = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoDialogOpen, setVideoDialogOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

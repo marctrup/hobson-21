@@ -8,7 +8,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 // Lazy load all pages for optimal bundle splitting
-const CompleteHomepage = lazy(() => import("./components/CompleteHomepage").then(module => ({ default: module.CompleteHomepage })));
+const PropertyManagementHomepage = lazy(() => import("./components/PropertyManagementHomepage").then(module => ({ default: module.PropertyManagementHomepage })));
 const SimpleHomepage = lazy(() => import("./components/SimpleHomepage").then(module => ({ default: module.SimpleHomepage })));
 const LandingPageA = lazy(() => import("./pages/LandingPageA"));
 const LandingPageB = lazy(() => import("./pages/LandingPageB"));
@@ -81,7 +81,7 @@ const App = () => {
                 <>
                   {/* Main website routes */}
                   <Route path="/" element={<Navigate to="/property-management-software" replace />} />
-                  <Route path="/property-management-software" element={<CompleteHomepage />} />
+                  <Route path="/property-management-software" element={<PropertyManagementHomepage />} />
                   <Route path="/home/property-management-software" element={<Navigate to="/" replace />} />
                   <Route path="/real-estate-ai" element={<Navigate to="/" replace />} />
                   <Route path="/features" element={<Navigate to="/features/real_estate_ai" replace />} />
