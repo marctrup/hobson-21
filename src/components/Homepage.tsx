@@ -324,8 +324,8 @@ export const Homepage = () => {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 max-w-7xl mx-auto">
                 {/* Top Row */}
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                    <Building2 className="w-12 h-12 text-primary" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <Building2 className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-foreground">Property Management</h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -334,8 +334,8 @@ export const Homepage = () => {
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                    <TrendingUp className="w-12 h-12 text-primary" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <TrendingUp className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-foreground">Property Sales</h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -344,8 +344,8 @@ export const Homepage = () => {
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                    <MapPin className="w-12 h-12 text-primary" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <MapPin className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-foreground">Surveying</h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -355,8 +355,8 @@ export const Homepage = () => {
                 
                 {/* Bottom Row */}
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                    <PenTool className="w-12 h-12 text-primary" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <PenTool className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-foreground">Planning</h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -365,8 +365,8 @@ export const Homepage = () => {
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                    <CreditCard className="w-12 h-12 text-primary" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <CreditCard className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-foreground">Lending</h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -375,8 +375,8 @@ export const Homepage = () => {
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
-                    <Shield className="w-12 h-12 text-primary" />
+                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                    <Shield className="w-8 h-8 text-primary" />
                   </div>
                   <h3 className="text-2xl font-bold mb-4 text-foreground">Compliance</h3>
                   <p className="text-muted-foreground leading-relaxed">
