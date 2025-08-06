@@ -240,7 +240,7 @@ export const Homepage = () => {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-7xl mx-auto">
                 {/* Top Row */}
                 <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
@@ -318,7 +318,7 @@ export const Homepage = () => {
                 </p>
               </div>
 
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 max-w-6xl mx-auto">
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 max-w-7xl mx-auto">
                 {/* Top Row */}
                 <div className="text-center">
                   <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
