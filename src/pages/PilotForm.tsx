@@ -129,7 +129,7 @@ const PilotForm = () => {
   };
 
   const onSubmit = (data: FormData) => {
-    if (emailExists) return;
+    if (emailExists || isSubmitting) return; // Prevent double submission
     
     setFormData(data);
     const problem = generateMathProblem();
@@ -170,6 +170,7 @@ const PilotForm = () => {
   };
 
   const handleAntiBotSubmit = () => {
+    if (isSubmitting) return; // Prevent double submission
     const userAnswerNum = parseInt(userAnswer);
     if (userAnswerNum === mathProblem.answer && formData) {
       setShowAntiBotDialog(false);
@@ -476,9 +477,9 @@ const PilotForm = () => {
                       type="submit" 
                       className="w-full" 
                       size="lg"
-                      disabled={emailExists || isCheckingEmail}
+                      disabled={emailExists || isCheckingEmail || isSubmitting}
                     >
-                      {CONTENT.form.submitButton}
+                      {isSubmitting ? "Submitting..." : CONTENT.form.submitButton}
                     </Button>
                   </form>
                 </Form>

@@ -23,6 +23,7 @@ const ContactUs = () => {
   const [mathProblem, setMathProblem] = useState({ question: "", answer: 0 });
   const [userAnswer, setUserAnswer] = useState("");
   const [pendingFormData, setPendingFormData] = useState<typeof formData | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const generateMathProblem = () => {
     const num1 = Math.floor(Math.random() * 10) + 1;
@@ -35,6 +36,8 @@ const ContactUs = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    
+    if (isSubmitting) return; // Prevent double submission
     
     // Basic validation
     if (!formData.name || !formData.email || !formData.confirmEmail || !formData.reason) {
@@ -65,7 +68,9 @@ const ContactUs = () => {
   };
 
   const submitForm = async () => {
-    if (!pendingFormData) return;
+    if (!pendingFormData || isSubmitting) return;
+
+    setIsSubmitting(true);
 
     try {
       const response = await fetch('https://awfyhgeflakjhxtntokd.supabase.co/functions/v1/send-contact-message', {
@@ -115,10 +120,13 @@ const ContactUs = () => {
         description: "There was an error sending your message. Please try again.",
         variant: "destructive",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleAntiBotSubmit = () => {
+    if (isSubmitting) return; // Prevent double submission
     if (parseInt(userAnswer) === mathProblem.answer) {
       submitForm();
     } else {
@@ -213,8 +221,12 @@ const ContactUs = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <SimpleButton type="submit" className="w-full text-lg px-8 py-3">
-                    Send Message
+                  <SimpleButton 
+                    type="submit" 
+                    className="w-full text-lg px-8 py-3"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Sending..." : "Send Message"}
                   </SimpleButton>
                 </div>
               </form>
@@ -256,8 +268,9 @@ const ContactUs = () => {
                 <SimpleButton 
                   onClick={handleAntiBotSubmit}
                   className="flex-1"
+                  disabled={isSubmitting}
                 >
-                  Submit Message
+                  {isSubmitting ? "Submitting..." : "Submit Message"}
                 </SimpleButton>
               </div>
             </div>
