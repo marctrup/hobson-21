@@ -74,17 +74,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
             <h2 className="text-xl font-bold mb-1 line-clamp-1">{post.title}</h2>
             <p className="text-muted-foreground mb-2 text-sm line-clamp-1">{post.excerpt}</p>
             
-            {post.categories.length > 0 && (
-              <div className="flex flex-wrap gap-1 mb-3 -mt-1">
-                {post.categories.slice(0, 2).map((category) => (
-                  <Badge key={category.slug} variant="outline" className="text-xs">
-                    {category.name}
-                  </Badge>
-                ))}
-              </div>
-            )}
-            
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-end mb-3">
               <button
                 onClick={handleReadMore}
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
@@ -92,6 +82,16 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
                 Read More <ArrowRight className="w-3 h-3" />
               </button>
             </div>
+            
+            {post.categories.length > 0 && (
+              <div className="flex flex-wrap gap-1 -mt-1">
+                {post.categories.slice(0, 2).map((category) => (
+                  <Badge key={category.slug} variant="outline" className="text-xs">
+                    {category.name}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </CardContent>
         </div>
       </Card>
