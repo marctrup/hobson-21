@@ -37,7 +37,7 @@ export const PilotEmail = ({
         <Heading style={h1}>Welcome to the Hobson AI Pilot Program!</Heading>
         
         <Text style={welcomeText}>
-          Dear {firstName}, Thank you for your interest in our exclusive pilot program at {company}! We're excited that you want to be part of the future of AI-powered property intelligence.
+          Hi {firstName}, Thank you for your interest in our exclusive pilot program at {company}! We're excited that you want to be part of the future of AI-powered property intelligence.
         </Text>
         
         <Text style={text}>
