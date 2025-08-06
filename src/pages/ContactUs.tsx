@@ -140,11 +140,20 @@ const ContactUs = () => {
       </Suspense>
       <div className="container mx-auto px-4 py-8">        
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
+          <h1 className="text-4xl font-bold mb-8 text-center">Join our pilot for free</h1>
+          
+          <div className="text-center mb-8">
+            <SimpleButton asChild className="text-lg px-8 py-3">
+              <Link to="https://pilot.hobsonschoice.ai/pilot-form">
+                Get Started with Pilot
+              </Link>
+            </SimpleButton>
+          </div>
           
           <SimpleCard>
             <div className="p-6">
               <div className="text-center mb-6">
+                <h2 className="text-2xl font-semibold mb-4">Or Contact Us</h2>
                 <p className="text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto">
                   We would be delighted to talk to you!
                 </p>
