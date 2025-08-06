@@ -147,7 +147,7 @@ export const CompleteHomepage = () => {
           {/* Hero Section - Two Column Layout */}
           <section className="py-16" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-12">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-center py-12">
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-6">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
@@ -173,7 +173,7 @@ export const CompleteHomepage = () => {
                     }}
                   >
                     <DialogTrigger asChild>
-                       <div className="max-w-[280px] cursor-pointer group">
+                       <div className="max-w-[420px] cursor-pointer group">
                          <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl">
                            <OptimizedImage
                              src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
