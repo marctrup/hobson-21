@@ -20,13 +20,13 @@ export const CTASection = () => {
               className="text-lg px-8 py-6 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
               asChild
             >
-              <Link 
-                to="/contact"
-                title="Get in touch to start your real estate ai journey"
-              >
-                Contact Us
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Link>
+                <Link 
+                  to="/contact"
+                  title="Get in touch to start your real estate ai journey"
+                >
+                  Join our free pilot
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Link>
             </Button>
           </div>
 
