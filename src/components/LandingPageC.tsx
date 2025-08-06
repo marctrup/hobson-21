@@ -12,6 +12,8 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import hobsonLogo from "/lovable-uploads/6f92c6e9-3e74-495f-a6a5-c8cdab8d6b29.png";
 
 const LandingPageC = () => {
+  console.log('🎯 LandingPageC component is loading...');
+  
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const {
     form,
@@ -20,6 +22,8 @@ const LandingPageC = () => {
     handleEmailChange,
     onSubmit,
   } = usePilotApplication();
+  
+  console.log('📋 LandingPageC form state:', { emailExists, isCheckingEmail });
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary/10 via-background to-primary/5">

@@ -46,6 +46,10 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  console.log('🚀 App component is loading...');
+  console.log('🌐 Current hostname:', window.location.hostname);
+  console.log('📍 Current pathname:', window.location.pathname);
+  
   return (
   <HelmetProvider>
     <ErrorBoundary>
