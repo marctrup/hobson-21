@@ -63,6 +63,8 @@ const PilotForm = () => {
   const [formData, setFormData] = useState<FormData | null>(null);
   const [emailExists, setEmailExists] = useState(false);
   const [isCheckingEmail, setIsCheckingEmail] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionStatus, setSubmissionStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
@@ -134,8 +136,11 @@ const PilotForm = () => {
   };
 
   const submitForm = async (data: FormData) => {
+    setIsSubmitting(true);
+    setSubmissionStatus('idle');
+    
     try {
-      const response = await fetch('/api/send-pilot-application', {
+      const response = await fetch('https://awfyhgeflakjhxtntokd.supabase.co/functions/v1/send-pilot-application', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -143,14 +148,22 @@ const PilotForm = () => {
         body: JSON.stringify(data),
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit application');
-      }
+      const result = await response.json();
 
-      setShowSuccessDialog(true);
-      form.reset();
+      if (result.success) {
+        setSubmissionStatus('success');
+        setShowSuccessDialog(true);
+        form.reset();
+        setFormData(null);
+      } else {
+        throw new Error(result.error || 'Failed to submit application');
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
+      setSubmissionStatus('error');
+      alert('There was an error submitting your application. Please try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -491,8 +504,12 @@ const PilotForm = () => {
                 className="mt-2"
               />
             </div>
-            <Button onClick={handleAntiBotSubmit} className="w-full">
-              {CONTENT.dialogs.antiBot.submitButton}
+            <Button 
+              onClick={handleAntiBotSubmit} 
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : CONTENT.dialogs.antiBot.submitButton}
             </Button>
           </div>
         </DialogContent>
