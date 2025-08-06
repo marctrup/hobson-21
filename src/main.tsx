@@ -1,7 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
-import './index.css'
+// import './index.css' - TEMPORARILY REMOVED TO TEST
 
 console.log('🔄 Starting React application...');
 console.log('📦 Main.tsx loaded successfully');
