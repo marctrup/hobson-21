@@ -63,16 +63,13 @@ export const PilotEmail = ({
         
         <Container style={featureBox}>
           <Text style={featureTitle}>🧠 Intelligent Document Analysis</Text>
-          <Text style={featureDesc}>AI that understands property documents like an expert</Text>
+          <Text style={featureDesc}>AI that understands your property documents</Text>
           
           <Text style={featureTitle}>⚡ Lightning-Fast Insights</Text>
           <Text style={featureDesc}>Get answers to complex questions in seconds</Text>
           
-          <Text style={featureTitle}>🔒 Enterprise Security</Text>
-          <Text style={featureDesc}>Bank-grade protection for your sensitive data</Text>
-          
           <Text style={featureTitle}>👥 Dedicated Support</Text>
-          <Text style={featureDesc}>Direct access to our development team</Text>
+          <Text style={featureDesc}>Direct access to our team</Text>
         </Container>
         
         <Hr style={hr} />
