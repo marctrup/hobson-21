@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Direct Test</title>
+</head>
+<body>
+    <div id="test">
+        <h1 style="color: red; font-family: Arial;">🔧 DIRECT HTML TEST</h1>
+        <p>If you see this red text, basic HTML is working</p>
+        <div id="js-test" style="color: blue;">JavaScript NOT loaded yet...</div>
+    </div>
+    
+    <script>
+        console.log('🔧 Direct JavaScript test starting...');
+        
+        // Test basic JavaScript
+        document.getElementById('js-test').innerHTML = '✅ JavaScript IS working!';
+        document.getElementById('js-test').style.color = 'green';
+        
+        // Test React CDN
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/react@18/umd/react.development.js';
+        script.onload = () => {
+            console.log('✅ React CDN loaded');
+            document.body.innerHTML += '<p style="color: purple;">React CDN loaded successfully!</p>';
+        };
+        script.onerror = () => {
+            console.log('❌ React CDN failed');
+            document.body.innerHTML += '<p style="color: red;">React CDN failed to load!</p>';
+        };
+        document.head.appendChild(script);
+        
+        console.log('🔧 Direct test complete');
+    </script>
+</body>
+</html>
