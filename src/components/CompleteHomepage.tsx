@@ -144,22 +144,25 @@ export const CompleteHomepage = () => {
         </header>
 
         <main id="main-content" className="min-h-screen bg-background" role="main">
-          {/* Hero Section - Centered Design */}
+          {/* Hero Section - Two Column Layout */}
           <section className="py-16" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
-              <div className="flex justify-center items-center py-12">
-                <div className="text-center space-y-6 max-w-4xl">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-12">
+                {/* Left Container - H1 and Strap Line */}
+                <div className="space-y-6">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="text-foreground">AI-Document Intelligence for the </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                       Property Industry
                     </span>
                   </h1>
-                  <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  <p className="text-xl text-muted-foreground leading-relaxed">
                     Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions.
                   </p>
+                </div>
 
-                  {/* Georgia Video */}
+                {/* Right Container - Video and Text */}
+                <div className="flex justify-center lg:justify-end">
                   <Dialog 
                     open={videoDialogOpen} 
                     onOpenChange={(open) => {
@@ -170,7 +173,7 @@ export const CompleteHomepage = () => {
                     }}
                   >
                     <DialogTrigger asChild>
-                       <div className="max-w-[280px] cursor-pointer group mx-auto mt-8">
+                       <div className="max-w-[280px] cursor-pointer group">
                          <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl">
                            <OptimizedImage
                              src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
@@ -182,7 +185,7 @@ export const CompleteHomepage = () => {
                              fetchPriority="low"
                            />
                          </div>
-                        <div className="mt-3 md:mt-6">
+                        <div className="mt-3 md:mt-6 text-center">
                           <h3 className="text-sm font-semibold mb-2 text-foreground">"Would it help if I explained a bit more?"</h3>
                           <p className="text-muted-foreground text-sm">Click to hear from Georgia</p>
                         </div>
