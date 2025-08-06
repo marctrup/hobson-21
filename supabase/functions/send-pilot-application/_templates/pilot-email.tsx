@@ -52,7 +52,7 @@ export const PilotEmail = ({
             Our team will be in touch within 2 business days to:
           </Text>
           <Text style={listItem}>✓ Learn more about your business</Text>
-          <Text style={listItem}>✓ Schedule a detailed discovery call to learn about your workflows and your pain points. (if we can accommodate you in this cycle)</Text>
+          <Text style={listItem}>✓ Schedule a detailed discovery call.</Text>
           <Text style={listItem}>✓ Set up document processing tailored to you</Text>
           <Text style={listItem}>✓ Share exclusive resources from the pilot program</Text>
         </Container>
