@@ -1,192 +1,536 @@
-import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowRight, CheckCircle } from "lucide-react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import explainerVideo from "@/assets/avitar-hobson.mp4";
-import { useState, useEffect, useRef, Suspense, lazy } from "react";
+import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart } from "lucide-react";
+import { SimpleButton } from "@/components/ui/simple-button";
+import { Badge } from "@/components/ui/badge";
+import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
-import { usePilotApplication } from "@/hooks/usePilotApplication";
-import { getHomepageStructuredData } from "@/utils/seo-data";
-import { LoadingSkeleton } from "@/components/LoadingSkeleton";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+// Lazy load video only when needed
 
-// Lazy load heavy components
-const PilotApplicationForm = lazy(() => import("./homepage/PilotApplicationForm").then(module => ({ default: module.PilotApplicationForm })));
-const FormDialogs = lazy(() => import("./homepage/FormDialogs").then(module => ({ default: module.FormDialogs })));
-const HomepageFooter = lazy(() => import("./homepage/HomepageFooter").then(module => ({ default: module.HomepageFooter })));
+export const Homepage = () => {
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [videoDialogOpen, setVideoDialogOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-// Component imports for better organization
-import { Header } from "./homepage/Header";
-import { HeroSection } from "./homepage/HeroSection";
-import { FeaturesSection } from "./homepage/FeaturesSection";
-import { SolutionsSection } from "./homepage/SolutionsSection";
-import { HowItWorksSection } from "./homepage/HowItWorksSection";
-import { CTASection } from "./homepage/CTASection";
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
 
-const Homepage = () => {
-  const [showForm, setShowForm] = useState(false);
-  const [showExplainerVideo, setShowExplainerVideo] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-  
-  const {
-    showSuccessDialog,
-    setShowSuccessDialog,
-    showAntiBotDialog,
-    setShowAntiBotDialog,
-    mathProblem,
-    userAnswer,
-    setUserAnswer,
-    handleAntiBotSubmit,
-  } = usePilotApplication();
-
-  // Effect to ensure video is ready when dialog opens
-  useEffect(() => {
-    if (showExplainerVideo && videoRef.current) {
-      const video = videoRef.current;
-      console.log('Dialog opened, video element:', video);
-      console.log('Video src:', video.src);
-      
-      // Force load the video
-      video.load();
-      
-      const handleCanPlay = () => {
-        console.log('Video can play');
-        video.play().catch(error => {
-          console.error('Autoplay failed:', error);
-        });
-      };
-      
-      video.addEventListener('canplay', handleCanPlay);
-      
-      return () => {
-        video.removeEventListener('canplay', handleCanPlay);
-      };
-    }
-  }, [showExplainerVideo]);
-
-  // Structured data for SEO
-  const structuredData = getHomepageStructuredData();
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
 
   return (
     <>
       <Helmet>
-        {/* Primary Meta Tags */}
-        <title>Property Management AI Software | Automate Document Analysis | Hobson AI</title>
-        <meta name="title" content="Property Management AI Software | Automate Document Analysis | Hobson AI" />
-        <meta name="description" content="Get instant answers from lease agreements & property documents with AI. Free pilot program. 99.9% accuracy. Try Hobson AI today." />
-        <meta name="keywords" content="property management AI, real estate automation, lease analysis, document intelligence, property AI software, real estate AI" />
-        <meta name="robots" content="index, follow" />
-        <meta name="language" content="English" />
-        <meta name="author" content="Hobson AI" />
+        <title>AI Property Management Software | Document Intelligence | Hobson AI</title>
+        <meta name="description" content="Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions. AI-Document Intelligence for the Property Industry." />
+        <meta name="keywords" content="AI property management, document intelligence, property AI software, real estate automation, property document analysis" />
+        <meta property="og:title" content="AI-Document Intelligence for the Property Industry | Hobson AI" />
+        <meta property="og:description" content="Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions." />
+        <meta property="og:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@HobsonAI" />
+        <meta name="twitter:title" content="AI-Document Intelligence for the Property Industry" />
+        <meta name="twitter:description" content="Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions." />
+        <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
+        <link rel="canonical" href="https://hobsonschoice.ai/property-management-software" />
         
-        {/* Open Graph / Facebook */}
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://hobsonschoice.ai/" />
-        <meta property="og:title" content="Property Management AI Software | Hobson AI" />
-        <meta property="og:description" content="Get instant answers from lease agreements & property documents with AI. Free pilot program. 99.9% accuracy. Try Hobson AI today." />
-        <meta property="og:image" content="https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" />
-        <meta property="og:site_name" content="Hobson AI" />
-        
-        {/* Twitter */}
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://hobsonschoice.ai/property-management-software" />
-        <meta property="twitter:title" content="AI Property Management Software | Hobson's Choice AI" />
-        <meta property="twitter:description" content="Transform your property business with AI-powered document intelligence. Get instant answers from leases, contracts & property documents." />
-        <meta property="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" />
-        
-        {/* Additional SEO Tags */}
-        <meta name="geo.region" content="GB" />
-        <meta name="geo.placename" content="United Kingdom" />
-        <meta name="distribution" content="global" />
-        <meta name="rating" content="general" />
-        
-        {/* Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData)}
-        </script>
+        {/* Preload critical assets */}
+        <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
+        <link rel="prefetch" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
+        <link rel="prefetch" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
+        <link rel="dns-prefetch" href="//player.vimeo.com" />
+        <link rel="dns-prefetch" href="//vimeo.com" />
+        <link rel="dns-prefetch" href="//f.vimeocdn.com" />
+        <link rel="preconnect" href="https://player.vimeo.com" />
+        <link rel="preconnect" href="https://vimeo.com" />
+        <link rel="preconnect" href="https://f.vimeocdn.com" />
       </Helmet>
-      
-      <main id="main-content" className="min-h-screen bg-background" role="main">
-        <Header />
-        <HeroSection onShowExplainerVideo={() => setShowExplainerVideo(true)} />
-        <div className="content-section">
-          <FeaturesSection />
-        </div>
-        <div className="content-section">
-          <SolutionsSection />
-        </div>
-        <div className="content-section">
-          <HowItWorksSection />
-        </div>
-        
 
-        <div className="content-section">
-          <CTASection />
-        </div>
+      <div className="min-h-screen bg-background overflow-x-hidden">
+        {/* Header */}
+        <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50" role="banner">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex justify-between items-center">
+              {/* Logo */}
+              <div className="relative">
+                <Link to="/" onClick={closeMobileMenu}>
+                  <OptimizedImage
+                    src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
+                    alt="Hobson's Choice AI - AI-powered property management software company logo"
+                    className="h-12 md:h-16 w-auto"
+                    priority
+                  />
+                </Link>
+                {/* Beta Badge - Positioned above the 'n' in Hobson */}
+                <div className="absolute top-[4px] right-[-32px] md:right-[-27px]">
+                  <Badge variant="secondary" className="text-gray-400 text-xs border-0 bg-transparent">
+                    Beta
+                  </Badge>
+                </div>
+              </div>
 
-        {/* Footer - Lazy Loaded */}
-        <Suspense fallback={<LoadingSkeleton />}>
-          <HomepageFooter />
-        </Suspense>
-      </main>
+              {/* Desktop Navigation */}
+              <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
+                <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  Features
+                </Link>
+                <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  Blog
+                </Link>
+                <Link to="/about" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  About
+                </Link>
+                <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  Contact
+                </Link>
+              </nav>
 
-      {/* Pilot Application Form Modal - Lazy Loaded */}
-      <Suspense fallback={<LoadingSkeleton />}>
-        <PilotApplicationForm showForm={showForm} setShowForm={setShowForm} />
-      </Suspense>
+              {/* Mobile Menu Button */}
+              <SimpleButton
+                variant="ghost"
+                size="icon"
+                className="md:hidden bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-md"
+                onClick={toggleMobileMenu}
+                aria-label="Toggle mobile menu"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-6 w-6 text-purple-500" strokeWidth={1.5} />
+                ) : (
+                  <Menu className="h-6 w-6 text-purple-500" strokeWidth={1.5} />
+                )}
+              </SimpleButton>
+            </div>
 
-      {/* Form Dialogs - Lazy Loaded */}
-      <Suspense fallback={<LoadingSkeleton />}>
-        <FormDialogs
-          showSuccessDialog={showSuccessDialog}
-          setShowSuccessDialog={setShowSuccessDialog}
-          showAntiBotDialog={showAntiBotDialog}
-          setShowAntiBotDialog={setShowAntiBotDialog}
-          mathProblem={mathProblem}
-          userAnswer={userAnswer}
-          setUserAnswer={setUserAnswer}
-          handleAntiBotSubmit={handleAntiBotSubmit}
-        />
-      </Suspense>
-
-      {/* Explainer Video Dialog */}
-      <Dialog open={showExplainerVideo} onOpenChange={setShowExplainerVideo}>
-        <DialogContent className="max-w-4xl">
-          <DialogHeader>
-            <DialogTitle className="text-center">
-              Meet Georgia
-            </DialogTitle>
-          </DialogHeader>
-          <div className="aspect-video">
-            <video 
-              ref={videoRef}
-              className="w-full h-full rounded-lg"
-              controls
-              playsInline
-              disablePictureInPicture
-              preload="metadata"
-              aria-label="how AI is changing real estate software"
-              onLoadedData={(e) => {
-                console.log('Video loaded successfully');
-                const video = e.target as HTMLVideoElement;
-                video.play().catch(error => {
-                  console.error('Video play failed:', error);
-                });
-              }}
-              onError={(e) => {
-                console.error('Video error:', e);
-              }}
-              onLoadStart={() => {
-                console.log('Video load started');
-              }}
-            >
-              <source src={explainerVideo} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            {/* Mobile Navigation Menu */}
+            {isMobileMenuOpen && (
+              <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
+                <div className="flex flex-col gap-4">
+                  <Link 
+                    to="/features" 
+                    className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                    onClick={closeMobileMenu}
+                  >
+                    Features
+                  </Link>
+                  <Link 
+                    to="/blog" 
+                    className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                    onClick={closeMobileMenu}
+                  >
+                    Blog
+                  </Link>
+                  <Link 
+                    to="/about" 
+                    className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                    onClick={closeMobileMenu}
+                  >
+                    About
+                  </Link>
+                  <Link 
+                    to="/contact" 
+                    className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                    onClick={closeMobileMenu}
+                  >
+                    Contact
+                  </Link>
+                </div>
+              </nav>
+            )}
           </div>
-        </DialogContent>
-      </Dialog>
+        </header>
+
+        <main id="main-content" className="min-h-screen bg-background" role="main">
+          {/* Hero Section - Two Column Layout */}
+          <section className="py-16" aria-labelledby="hero-heading">
+            <div className="container mx-auto px-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-center py-12">
+                {/* Left Container - H1 and Strap Line */}
+                <div className="space-y-6">
+                  <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                    <span className="text-foreground">AI-Document Intelligence for the </span>
+                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                      Property Industry
+                    </span>
+                  </h1>
+                  <p className="text-xl text-muted-foreground leading-relaxed">
+                    Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions.
+                  </p>
+                </div>
+
+                {/* Right Container - Video and Text */}
+                <div className="flex justify-center lg:justify-end">
+                  <Dialog 
+                    open={videoDialogOpen} 
+                    onOpenChange={(open) => {
+                      setVideoDialogOpen(open);
+                      if (!open) {
+                        setVideoLoaded(false);
+                      }
+                    }}
+                  >
+                    <DialogTrigger asChild>
+                       <div className="max-w-[420px] cursor-pointer group">
+                         <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl">
+                           <OptimizedImage
+                             src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
+                             alt="Georgia from Hobson AI explaining new AI property management software - the features and benefits"
+                             className="w-full h-auto rounded-xl object-cover aspect-[3/2]"
+                             width={200}
+                             height={133}
+                             loading="lazy"
+                             fetchPriority="low"
+                           />
+                         </div>
+                        <div className="mt-3 md:mt-6 text-center">
+                          <h3 className="text-sm font-semibold mb-2 text-foreground">"Would it help if I explained a bit more?"</h3>
+                          <p className="text-muted-foreground text-sm">Click to hear from Georgia</p>
+                        </div>
+                      </div>
+                    </DialogTrigger>
+                    <DialogContent className="max-w-2xl w-full p-2 overflow-hidden" style={{ zIndex: 50 }}>
+                      <button 
+                        onClick={() => {
+                          setVideoDialogOpen(false);
+                          setVideoLoaded(false);
+                        }}
+                        className="absolute right-4 top-4 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
+                        aria-label="Close video"
+                      >
+                       <X className="h-4 w-4" />
+                     </button>
+                     <DialogTitle className="sr-only">Meet Georgia - Property AI Assistant</DialogTitle>
+                     <DialogDescription className="sr-only">
+                       Watch Georgia explain how Hobson's AI can transform your property management workflow
+                     </DialogDescription>
+                      <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
+                         <iframe
+                           className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                           src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
+                           title="Meet Georgia - Property AI Assistant"
+                           frameBorder="0"
+                           allow="autoplay; fullscreen; picture-in-picture"
+                           allowFullScreen
+                            onLoad={() => {
+                              setTimeout(() => setVideoLoaded(true), 1500);
+                            }}
+                         ></iframe>
+                        <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center z-20 transition-opacity duration-500 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                          <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                        </div>
+                     </div>
+                  </DialogContent>
+                  </Dialog>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          
+          {/* Why Choose Hobson AI Section - White cards with hover pop effects */}
+          <section className="pt-0 pb-5 md:pt-6 md:pb-16">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-6 md:mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-4">Why Choose Hobson AI?</h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                  Our AI-powered platform that revolutionises how property professionals work with documents and data.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-6xl mx-auto">
+                {/* Top Row */}
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
+                    <Brain className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Intelligent Analysis</h3>
+                  <p className="text-muted-foreground">
+                    Advanced AI understands context and extracts meaningful insights from complex property documents.
+                  </p>
+                </div>
+                
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
+                    <Zap className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Lightning Fast</h3>
+                  <p className="text-muted-foreground">
+                    Get instant answers to complex questions that would take hours of manual research.
+                  </p>
+                </div>
+                
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
+                    <Search className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Smart Search</h3>
+                  <p className="text-muted-foreground">
+                    Find exactly what you need across thousands of documents with natural language queries.
+                  </p>
+                </div>
+                
+                {/* Bottom Row */}
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
+                    <Shield className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Bank-Grade Security</h3>
+                  <p className="text-muted-foreground">
+                    Your sensitive property data is protected with enterprise-level security measures.
+                  </p>
+                </div>
+                
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
+                    <Users className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Team Collaboration</h3>
+                  <p className="text-muted-foreground">
+                    Share insights and collaborate seamlessly across your entire property team.
+                  </p>
+                </div>
+                
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer">
+                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
+                    <Globe className="w-8 h-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2 md:mb-4">Cloud-Based</h3>
+                  <p className="text-muted-foreground">
+                    Access your property intelligence from anywhere, on any device, at any time.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Property Intelligence Section - Clean layout with large icons */}
+          <section className="py-5 md:py-16 bg-muted/30">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-8 md:mb-20">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+                  Property Intelligence for the Industry
+                </h2>
+                <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                  One AI assistant for all your property documentation needs
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 max-w-6xl mx-auto">
+                {/* Top Row */}
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                    <Building2 className="w-12 h-12 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">Property Management</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Streamline tenant documentation and lease analysis
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                    <TrendingUp className="w-12 h-12 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">Property Sales</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Accelerate deal analysis and due diligence
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                    <MapPin className="w-12 h-12 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">Surveying</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Automate report generation and data extraction
+                  </p>
+                </div>
+                
+                {/* Bottom Row */}
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                    <PenTool className="w-12 h-12 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">Planning</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Process planning documents and regulatory requirements
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                    <CreditCard className="w-12 h-12 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">Lending</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Speed up loan documentation and risk assessment
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-8">
+                    <Shield className="w-12 h-12 text-primary" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-4 text-foreground">Compliance</h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Keep on top of repeat visits and documentation updates
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* How It Works Section - Connected steps with lines */}
+          <section className="py-5 md:py-16">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-8 md:mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">How It Works</h2>
+                <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
+              </div>
+
+              <div className="max-w-6xl mx-auto">
+                {/* Connected Steps */}
+                <div className="relative">
+                  {/* Connection Line */}
+                  <div className="hidden md:block absolute top-8 left-1/2 transform -translate-x-1/2 w-full max-w-4xl">
+                    <div className="flex justify-between items-center px-16">
+                      <div className="flex-1 h-0.5 bg-primary/20"></div>
+                      <div className="w-16"></div>
+                      <div className="flex-1 h-0.5 bg-primary/20"></div>
+                    </div>
+                  </div>
+
+                  {/* Steps */}
+                  <div className="grid md:grid-cols-3 gap-6 md:gap-12">
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-8 relative z-10">
+                        1
+                      </div>
+                      <h3 className="text-2xl font-bold mb-4 text-foreground">Upload & Connect</h3>
+                      <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto">
+                        Upload your documents or connect your existing systems. Our AI instantly begins processing and indexing your content.
+                      </p>
+                    </div>
+                    
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-8 relative z-10">
+                        2
+                      </div>
+                      <h3 className="text-2xl font-bold mb-4 text-foreground">Ask Questions</h3>
+                      <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto">
+                        Ask natural language questions about your properties, leases, contracts, or any document content.
+                      </p>
+                    </div>
+                    
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-8 relative z-10">
+                        3
+                      </div>
+                      <h3 className="text-2xl font-bold mb-4 text-foreground">Get Insights</h3>
+                      <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto">
+                        Receive instant, accurate answers with full source citations and actionable recommendations.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          {/* CTA Section - Clean layout without card */}
+          <section className="py-8 md:py-24">
+            <div className="container mx-auto px-4">
+              <div className="text-center max-w-4xl mx-auto">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
+                  Ready to think about AI in your property business but unsure how?
+                </h2>
+                <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
+                  Join our exclusive pilot program and be among the first to experience the future of property intelligence.
+                </p>
+                <div className="mb-8">
+                  <SimpleButton 
+                    size="lg" 
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium"
+                    asChild
+                  >
+                    <Link to="/contact">Join our free pilot →</Link>
+                  </SimpleButton>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Security Badges */}
+          <section className="py-4 md:py-12">
+            <div className="container mx-auto px-4">
+              <div className="flex justify-center items-center gap-16 max-w-2xl mx-auto">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Shield className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-muted-foreground">Enterprise-grade security</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                    <Users className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="text-muted-foreground">Trusted by industry leaders</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Footer */}
+          <footer className="py-5 md:py-16 border-t">
+            <div className="container mx-auto px-4">
+              <div className="grid md:grid-cols-3 gap-6 md:gap-12">
+                {/* Logo */}
+                <div>
+                  <OptimizedImage
+                    src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
+                    alt="Hobson's Choice AI logo"
+                    className="h-12 w-auto"
+                  />
+                </div>
+                
+                {/* Product Column */}
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 text-foreground">Product</h4>
+                  <div className="space-y-3">
+                    <Link to="/features" className="block text-muted-foreground hover:text-foreground transition-colors">
+                      Features
+                    </Link>
+                    <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">
+                      Join our pilot programme
+                    </Link>
+                  </div>
+                </div>
+                
+                {/* Company Column */}
+                <div>
+                  <h4 className="text-lg font-semibold mb-4 text-foreground">Company</h4>
+                  <div className="space-y-3">
+                    <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors">
+                      Blog
+                    </Link>
+                    <Link to="/about" className="block text-muted-foreground hover:text-foreground transition-colors">
+                      About
+                    </Link>
+                    <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">
+                      Contact
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </main>
+      </div>
     </>
   );
 };
-
-export default Homepage;
