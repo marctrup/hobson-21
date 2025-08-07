@@ -36,7 +36,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
             {/* Expert Guide Video */}
             <div className="mt-12 flex justify-center">
               <div 
-                className="relative group cursor-pointer"
+                className="cursor-pointer"
                 onClick={onShowExplainerVideo}
                 role="button"
                 tabIndex={0}
@@ -48,21 +48,21 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                   }
                 }}
               >
-                {/* Video Thumbnail */}
-                <div className="relative w-80 h-52 rounded-2xl overflow-hidden shadow-xl border-4 border-white/20">
+                {/* Video Thumbnail - Fixed Size */}
+                <div className="w-80 h-52 rounded-2xl overflow-hidden shadow-xl border-4 border-white/20 relative">
                   <OptimizedImage
                     src="/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png"
                     alt="Georgia from Hobson's Choice AI explaining property management AI software features and benefits"
-                    className="w-full h-full object-cover relative z-10"
+                    className="w-full h-full object-cover"
                     width={320}
                     height={208}
                     priority={true}
-                    sizes="(max-width: 768px) 100vw, 320px"
+                    sizes="320px"
                   />
                   
                   {/* Play Button Overlay */}
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center group-hover:bg-black/40 transition-colors">
-                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform" aria-hidden="true">
+                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center hover:bg-black/40 transition-colors duration-200">
+                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg" aria-hidden="true">
                       <Play className="w-8 h-8 text-primary ml-1" aria-hidden="true" />
                     </div>
                   </div>
