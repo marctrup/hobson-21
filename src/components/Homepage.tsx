@@ -225,7 +225,7 @@ export const Homepage = () => {
                           {videoDialogOpen && (
                             <iframe
                               className="absolute inset-0 rounded-lg"
-                              src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0&responsive=0"
+                              src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0&responsive=0"
                               title="Meet Georgia - Property AI Assistant"
                               frameBorder="0"
                               allow="autoplay; fullscreen; picture-in-picture"
