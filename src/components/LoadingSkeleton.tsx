@@ -16,7 +16,7 @@ export const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
       {Array.from({ length: rows }).map((_, index) => (
         <div 
           key={index}
-          className={`bg-gradient-to-r from-muted via-muted/50 to-muted bg-[length:200%_100%] animate-[shimmer_1.5s_infinite] ${height} rounded mb-2`}
+          className={`bg-gradient-to-r from-muted via-muted/50 to-muted bg-[length:200%_100%] animate-[shimmer_2s_infinite] ${height} rounded mb-2 will-change-transform`}
         />
       ))}
     </div>

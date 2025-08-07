@@ -34,7 +34,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
   const finalSlug = post.slug || '';
     
   const handleReadMore = () => {
-    console.log('Navigating to:', `/blog/${finalSlug}`);
+    
     navigate(`/blog/${finalSlug}`);
   };
 

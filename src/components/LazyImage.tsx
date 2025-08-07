@@ -36,12 +36,10 @@ export const LazyImage = memo<LazyImageProps>(({
         setIsError(true);
       };
       
-      // Add a small delay to prevent jarring immediate loads
-      const timer = setTimeout(() => {
-        img.src = src;
-      }, 100);
+      // Load image immediately for better performance
+      img.src = src;
       
-      return () => clearTimeout(timer);
+      
     }
   }, [src, priority, isLoaded]);
 
