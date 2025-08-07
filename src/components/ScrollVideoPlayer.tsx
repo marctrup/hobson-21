@@ -68,8 +68,8 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
               style={{
                 width: '100%',
                 height: '100%',
-                minWidth: '400px',
-                minHeight: '225px'
+                minWidth: '800px',
+                minHeight: '450px'
               }}
             />
           )}
