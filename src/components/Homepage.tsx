@@ -192,7 +192,7 @@ export const Homepage = () => {
                         </div>
                       </div>
                     </DialogTrigger>
-                    <DialogContent className="p-0 overflow-hidden border-0 bg-transparent" style={{ zIndex: 50, width: '800px', height: '450px', maxWidth: '800px', maxHeight: '450px', minWidth: '800px', minHeight: '450px' }}>
+                    <DialogContent className="!p-0 !gap-0 !w-auto !max-w-none !border-0 !bg-transparent !shadow-none !duration-0 !animate-none" style={{ zIndex: 50, width: '800px', height: '450px', maxWidth: '800px', maxHeight: '450px', minWidth: '800px', minHeight: '450px' }}>
                       <button 
                         onClick={() => {
                           setVideoDialogOpen(false);
