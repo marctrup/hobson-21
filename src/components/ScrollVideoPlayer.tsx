@@ -7,7 +7,6 @@ interface ScrollVideoPlayerProps {
 }
 
 export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Watch video" }: ScrollVideoPlayerProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [isInView, setIsInView] = useState(false);
   const videoRef = useRef<HTMLDivElement>(null);
 
@@ -15,14 +14,11 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting && !isPlaying) {
-            setIsInView(true);
-            setIsPlaying(true);
-          }
+          setIsInView(entry.isIntersecting);
         });
       },
       {
-        threshold: 0.5, // Trigger when 50% of the video is visible
+        threshold: 0.3, // Trigger when 30% of the video is visible
         rootMargin: '0px'
       }
     );
@@ -36,7 +32,7 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
         observer.unobserve(videoRef.current);
       }
     };
-  }, [isPlaying]);
+  }, []);
 
   return (
     <div className="flex justify-center">
