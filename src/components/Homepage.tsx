@@ -192,13 +192,13 @@ export const Homepage = () => {
                         </div>
                       </div>
                     </DialogTrigger>
-                    <DialogContent className="p-2 overflow-hidden border-0" style={{ zIndex: 50, width: '824px', height: '474px', maxWidth: '824px', maxHeight: '474px' }}>
+                    <DialogContent className="p-0 overflow-hidden border-0 bg-transparent" style={{ zIndex: 50, width: '800px', height: '450px', maxWidth: '800px', maxHeight: '450px', minWidth: '800px', minHeight: '450px' }}>
                       <button 
                         onClick={() => {
                           setVideoDialogOpen(false);
                           setVideoLoaded(false);
                         }}
-                        className="absolute right-4 top-4 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
+                        className="absolute right-2 top-2 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
                         aria-label="Close video"
                       >
                        <X className="h-4 w-4" />
@@ -207,10 +207,10 @@ export const Homepage = () => {
                      <DialogDescription className="sr-only">
                        Watch Georgia explain how Hobson's AI can transform your property management workflow
                      </DialogDescription>
-                        <div className="bg-muted rounded-lg overflow-hidden" style={{ width: '800px', height: '450px' }}>
+                        <div className="bg-black rounded-lg" style={{ width: '800px', height: '450px', position: 'relative' }}>
                             <iframe
                               className="rounded-lg"
-                              src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0"
+                              src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0&responsive=0"
                               title="Meet Georgia - Property AI Assistant"
                               frameBorder="0"
                               allow="autoplay; fullscreen; picture-in-picture"
@@ -218,21 +218,25 @@ export const Homepage = () => {
                               width="800"
                               height="450"
                               style={{ 
-                                opacity: videoLoaded ? 1 : 0, 
-                                transition: 'opacity 0.3s ease-in-out',
                                 width: '800px',
                                 height: '450px',
+                                position: 'absolute',
+                                top: 0,
+                                left: 0,
+                                border: 'none',
                                 display: 'block'
                               }}
                               onLoad={() => {
-                                setTimeout(() => setVideoLoaded(true), 300);
+                                setTimeout(() => setVideoLoaded(true), 100);
                               }}
                             />
-                          <div className={`absolute top-0 left-0 bg-muted rounded-lg flex items-center justify-center transition-opacity duration-300 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} style={{ width: '800px', height: '450px' }}>
-                            <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                          </div>
-                       </div>
-                  </DialogContent>
+                           {!videoLoaded && (
+                             <div className="absolute top-0 left-0 bg-muted rounded-lg flex items-center justify-center" style={{ width: '800px', height: '450px' }}>
+                               <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                             </div>
+                           )}
+                        </div>
+                    </DialogContent>
                   </Dialog>
                 </div>
               </div>
@@ -544,3 +548,5 @@ export const Homepage = () => {
     </>
   );
 };
+
+export default Homepage;
