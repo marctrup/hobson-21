@@ -50,7 +50,6 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                   height: '208px',
                   borderRadius: '16px',
                   overflow: 'hidden',
-                  border: '4px solid rgba(255, 255, 255, 0.2)',
                   boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
                   cursor: 'pointer',
                   position: 'relative'
