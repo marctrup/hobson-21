@@ -7,6 +7,7 @@ import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { ScrollVideoPlayer } from "@/components/ScrollVideoPlayer";
 // Lazy load video only when needed
 
 export const Homepage = () => {
@@ -482,6 +483,25 @@ export const Homepage = () => {
                   </SimpleButton>
                 </div>
               </div>
+            </div>
+          </section>
+
+          {/* Scroll Video Section */}
+          <section className="py-16 bg-muted/30">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-8">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+                  See It In Action
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Watch how our AI transforms property document management
+                </p>
+              </div>
+              <ScrollVideoPlayer 
+                videoId="1108094387"
+                title="Hobson AI in Action"
+                description="Loading demonstration video..."
+              />
             </div>
           </section>
 
