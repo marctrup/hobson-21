@@ -165,20 +165,13 @@ export const Homepage = () => {
                 {/* Right Container - Clean Video Section */}
                 <div className="flex justify-center lg:justify-end">
                   <div>
-                    <div className="w-[506px] h-[338px] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative border-[5px] border-white"
+                    <div className="w-[506px] h-[338px] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative border-[5px] border-white transition-transform duration-300 hover:scale-105"
                          onClick={() => setVideoDialogOpen(true)}>
                       <img 
                         src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
                         alt="Georgia - Hobson AI Assistant"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-opacity duration-300 hover:opacity-90"
                       />
-                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                        <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                          <svg className="w-8 h-8 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                          </svg>
-                        </div>
-                      </div>
                     </div>
                     
                     {/* Text under video */}
