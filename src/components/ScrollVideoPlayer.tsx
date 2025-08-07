@@ -60,16 +60,16 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
           {videoDialogOpen && (
             <iframe
               className="rounded-lg"
-              src={`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&byline=0&portrait=0&responsive=1`}
+              src={`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&byline=0&portrait=0`}
               title={title}
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
+              width="480"
+              height="640"
               style={{
-                width: '100%',
-                height: '100%',
-                minWidth: '400px',
-                minHeight: '225px'
+                maxWidth: '90vw',
+                maxHeight: '90vh'
               }}
             />
           )}
