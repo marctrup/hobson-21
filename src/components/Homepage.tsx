@@ -207,24 +207,25 @@ export const Homepage = () => {
                      <DialogDescription className="sr-only">
                        Watch Georgia explain how Hobson's AI can transform your property management workflow
                      </DialogDescription>
-                      <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
-                          {videoDialogOpen && (
-                            <iframe
-                              className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
-                              src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0"
-                              title="Meet Georgia - Property AI Assistant"
-                              frameBorder="0"
-                              allow="autoplay; fullscreen; picture-in-picture"
-                              allowFullScreen
-                              onLoad={() => {
-                                setTimeout(() => setVideoLoaded(true), 1500);
-                              }}
-                            />
-                          )}
-                        <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center z-20 transition-opacity duration-500 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-                          <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                        </div>
-                     </div>
+                       <div className="relative aspect-video bg-muted rounded-lg overflow-hidden min-h-[400px]">
+                           {videoDialogOpen && (
+                             <iframe
+                               className="w-full h-full rounded-lg absolute inset-0"
+                               src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0"
+                               title="Meet Georgia - Property AI Assistant"
+                               frameBorder="0"
+                               allow="autoplay; fullscreen; picture-in-picture"
+                               allowFullScreen
+                               style={{ opacity: videoLoaded ? 1 : 0, transition: 'opacity 0.3s ease-in-out' }}
+                               onLoad={() => {
+                                 setTimeout(() => setVideoLoaded(true), 300);
+                               }}
+                             />
+                           )}
+                         <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center transition-opacity duration-300 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                           <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+                         </div>
+                      </div>
                   </DialogContent>
                   </Dialog>
                 </div>
