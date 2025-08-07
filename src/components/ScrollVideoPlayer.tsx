@@ -20,7 +20,7 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
       >
         <DialogTrigger asChild>
           <div
-            className={`cursor-pointer relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg border-[14px] border-white transition-all duration-700 transform ${
+            className={`cursor-pointer relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg border-[12px] border-white transition-all duration-700 transform ${
               isHovered ? 'scale-110 shadow-2xl' : 'scale-100 opacity-100'
             }`}
             onMouseEnter={() => setIsHovered(true)}
