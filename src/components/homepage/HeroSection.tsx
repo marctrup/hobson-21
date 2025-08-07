@@ -33,40 +33,68 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
               </p>
             </div>
 
-            {/* Expert Guide Video */}
+            {/* Expert Guide Video - Fixed Container */}
             <div className="mt-12 flex justify-center">
-              <div 
-                className="cursor-pointer"
-                onClick={onShowExplainerVideo}
-                role="button"
-                tabIndex={0}
-                aria-label="Play explainer video about Hobson AI property management software"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    onShowExplainerVideo();
-                  }
-                }}
-                style={{ width: '320px', height: '208px' }}
-              >
-                {/* Video Thumbnail - Fixed Size */}
+              {/* Fixed Size Video Container */}
+              <div style={{ width: '320px', height: '208px', position: 'relative' }}>
                 <div 
-                  className="rounded-2xl overflow-hidden shadow-xl border-4 border-white/20 relative"
-                  style={{ width: '320px', height: '208px' }}
+                  onClick={onShowExplainerVideo}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Play explainer video about Hobson AI property management software"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      onShowExplainerVideo();
+                    }
+                  }}
+                  style={{ 
+                    width: '320px', 
+                    height: '208px',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    border: '4px solid rgba(255, 255, 255, 0.2)',
+                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                    cursor: 'pointer',
+                    position: 'relative'
+                  }}
                 >
                   <img
                     src="/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png"
                     alt="Georgia from Hobson's Choice AI explaining property management AI software features and benefits"
-                    className="object-cover"
-                    style={{ width: '320px', height: '208px' }}
-                    width={320}
-                    height={208}
+                    style={{ 
+                      width: '320px', 
+                      height: '208px', 
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                    width="320"
+                    height="208"
                   />
                   
-                  {/* Play Button Overlay */}
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                    <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg" aria-hidden="true">
-                      <Play className="w-8 h-8 text-primary ml-1" aria-hidden="true" />
+                  {/* Play Button */}
+                  <div style={{
+                    position: 'absolute',
+                    top: '0',
+                    left: '0',
+                    right: '0',
+                    bottom: '0',
+                    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}>
+                    <div style={{
+                      width: '64px',
+                      height: '64px',
+                      backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)'
+                    }}>
+                      <Play className="w-8 h-8 text-primary ml-1" />
                     </div>
                   </div>
                 </div>
