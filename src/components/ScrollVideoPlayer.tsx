@@ -14,12 +14,16 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          setIsInView(entry.isIntersecting);
+          if (entry.isIntersecting) {
+            setIsInView(true);
+          } else {
+            setIsInView(false);
+          }
         });
       },
       {
-        threshold: 0.3, // Trigger when 30% of the video is visible
-        rootMargin: '0px'
+        threshold: 0.4, // Trigger when 40% of the video is visible
+        rootMargin: '-50px 0px -50px 0px'
       }
     );
 
