@@ -164,19 +164,26 @@ export const Homepage = () => {
 
                 {/* Right Container - Clean Video Section */}
                 <div className="flex justify-center lg:justify-end">
-                  <div className="w-[506px] h-[338px] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative border-[5px] border-white"
-                       onClick={() => setVideoDialogOpen(true)}>
-                    <img 
-                      src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
-                      alt="Georgia - Hobson AI Assistant"
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-                      <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
-                        <svg className="w-8 h-8 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M8 5v14l11-7z"/>
-                        </svg>
+                  <div>
+                    <div className="w-[506px] h-[338px] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative border-[5px] border-white"
+                         onClick={() => setVideoDialogOpen(true)}>
+                      <img 
+                        src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
+                        alt="Georgia - Hobson AI Assistant"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                        <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
+                          <svg className="w-8 h-8 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M8 5v14l11-7z"/>
+                          </svg>
+                        </div>
                       </div>
+                    </div>
+                    
+                    {/* Text under video */}
+                    <div className="mt-4 text-center">
+                      <p className="text-lg text-muted-foreground">If you want to know more, Georgia can help</p>
                     </div>
                   </div>
                   
