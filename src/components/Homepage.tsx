@@ -182,11 +182,7 @@ export const Homepage = () => {
                   
                   {/* Video Dialog */}
                   <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
-                    <DialogContent className="max-w-4xl">
-                      <DialogTitle>Meet Georgia - AI Property Assistant</DialogTitle>
-                      <DialogDescription>
-                        Watch Georgia explain how Hobson's AI can transform your property management
-                      </DialogDescription>
+                    <DialogContent className="max-w-4xl p-0 border-0">
                       <div className="aspect-video">
                         <iframe
                           className="w-full h-full rounded-lg"
