@@ -49,7 +49,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                 }}
               >
                 {/* Video Thumbnail */}
-                <div className="relative w-80 h-52 rounded-2xl overflow-hidden shadow-xl border-4 border-white/20 group-hover:scale-105 transition-transform duration-300">
+                <div className="relative w-[336px] h-[218px] rounded-2xl overflow-hidden shadow-xl border-4 border-white/20 group-hover:scale-105 transition-transform duration-300">
                   <OptimizedImage
                     src="/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png"
                     alt="Georgia from Hobson's Choice AI explaining property management AI software features and benefits"
