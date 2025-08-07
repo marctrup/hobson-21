@@ -493,6 +493,9 @@ export const Homepage = () => {
               title="Hobson AI in Action"
               description="Loading demonstration video..."
             />
+            <div className="text-center mt-4">
+              <p className="text-lg text-muted-foreground">Want to know more about the pilot?</p>
+            </div>
           </div>
 
           {/* Security Badges */}
