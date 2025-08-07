@@ -162,88 +162,39 @@ export const Homepage = () => {
                   </p>
                 </div>
 
-                {/* Right Container - Video and Text */}
+                {/* Right Container - Clean Video Section */}
                 <div className="flex justify-center lg:justify-end">
-                  <Dialog 
-                    open={videoDialogOpen} 
-                    onOpenChange={(open) => {
-                      setVideoDialogOpen(open);
-                      if (!open) {
-                        setVideoLoaded(false);
-                      }
-                    }}
-                  >
-                    <DialogTrigger asChild>
-                       <div className="max-w-[462px] cursor-pointer group">
-                         <div className="relative transform transition-transform duration-300 group-hover:scale-105 bg-white p-4 rounded-2xl shadow-lg group-hover:shadow-xl -ml-[10px]">
-                            <OptimizedImage
-                              src="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png"
-                              alt="Georgia from Hobson AI explaining new AI property management software - the features and benefits"
-                              className="w-full h-auto rounded-xl object-cover aspect-[3/2]"
-                              width={462}
-                              height={308}
-                              loading="eager"
-                              fetchPriority="high"
-                              priority={true}
-                            />
-                         </div>
-                        <div className="mt-3 md:mt-6 text-center">
-                          <h3 className="text-sm font-semibold mb-2 text-foreground">"Would it help if I explained a bit more?"</h3>
-                          <p className="text-muted-foreground text-sm">Click to hear from Georgia</p>
-                        </div>
+                  <div className="w-[400px] h-[267px] bg-gray-100 rounded-xl flex items-center justify-center cursor-pointer"
+                       onClick={() => setVideoDialogOpen(true)}>
+                    <div className="text-center">
+                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg className="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M8 5v14l11-7z"/>
+                        </svg>
                       </div>
-                    </DialogTrigger>
-                    <DialogContent 
-                      className="!p-0 !max-w-none !w-auto !h-auto !border-0 !bg-transparent !shadow-none !duration-0 !animate-none" 
-                      style={{ 
-                        zIndex: 50,
-                        width: '800px',
-                        height: '450px',
-                        position: 'fixed',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)'
-                      }}
-                    >
-                      <button 
-                        onClick={() => {
-                          setVideoDialogOpen(false);
-                          setVideoLoaded(false);
-                        }}
-                        className="absolute right-4 top-4 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
-                        aria-label="Close video"
-                      >
-                       <X className="h-4 w-4" />
-                     </button>
-                     <DialogTitle className="sr-only">Meet Georgia - Property AI Assistant</DialogTitle>
-                     <DialogDescription className="sr-only">
-                       Watch Georgia explain how Hobson's AI can transform your property management workflow
-                     </DialogDescription>
-                      <div 
-                        className="relative bg-black rounded-lg overflow-hidden"
-                        style={{ width: '800px', height: '450px' }}
-                      >
-                          {videoDialogOpen && (
-                            <iframe
-                              className="absolute inset-0 rounded-lg"
-                              src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0&responsive=0"
-                              title="Meet Georgia - Property AI Assistant"
-                              frameBorder="0"
-                              allow="autoplay; fullscreen; picture-in-picture"
-                              allowFullScreen
-                              width="800"
-                              height="450"
-                              style={{ width: '800px', height: '450px' }}
-                              onLoad={() => {
-                                setTimeout(() => setVideoLoaded(true), 1500);
-                              }}
-                            />
-                          )}
-                        <div className={`absolute inset-0 bg-black rounded-lg flex items-center justify-center transition-opacity duration-500 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-                          <div className="w-12 h-12 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        </div>
-                     </div>
-                  </DialogContent>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Meet Georgia</h3>
+                      <p className="text-muted-foreground text-sm">Click to watch our AI assistant explain how it works</p>
+                    </div>
+                  </div>
+                  
+                  {/* Video Dialog */}
+                  <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
+                    <DialogContent className="max-w-4xl">
+                      <DialogTitle>Meet Georgia - AI Property Assistant</DialogTitle>
+                      <DialogDescription>
+                        Watch Georgia explain how Hobson's AI can transform your property management
+                      </DialogDescription>
+                      <div className="aspect-video">
+                        <iframe
+                          className="w-full h-full rounded-lg"
+                          src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1"
+                          title="Meet Georgia - Property AI Assistant"
+                          frameBorder="0"
+                          allow="autoplay; fullscreen; picture-in-picture"
+                          allowFullScreen
+                        />
+                      </div>
+                    </DialogContent>
                   </Dialog>
                 </div>
               </div>
