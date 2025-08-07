@@ -68,10 +68,11 @@
     <!-- Enhanced cache control and performance headers -->
     <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable" />
     <meta http-equiv="Expires" content="Thu, 31 Dec 2025 23:59:59 GMT" />
+    <meta http-equiv="Pragma" content="public" />
     
-    <!-- Asset-specific cache headers -->
-    <meta http-equiv="Cache-Control" content="public, max-age=31536000" data-assets="images,fonts,js,css" />
-    <meta name="cache-control" content="public, max-age=604800" data-assets="html" />
+    <!-- Asset-specific cache headers for better cache efficiency -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable" data-assets="images,fonts,js,css" />
+    <meta name="cache-control" content="public, max-age=86400, s-maxage=604800" data-assets="html" />
     
     <!-- Optimized DNS prefetch and preconnect -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />

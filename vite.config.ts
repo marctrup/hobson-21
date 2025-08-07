@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => ({
     cssMinify: true,
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
+    assetsInlineLimit: 8192,
     rollupOptions: {
       treeshake: {
         moduleSideEffects: false,
@@ -86,18 +87,18 @@ export default defineConfig(({ mode }) => ({
           const info = assetInfo.name?.split('.') || [];
           const ext = info[info.length - 1];
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
-            return `assets/images/[name]-[hash][extname]`;
+            return `assets/images/[name]-[hash:8][extname]`;
           }
           if (/css/i.test(ext)) {
-            return `assets/css/[name]-[hash][extname]`;
+            return `assets/css/[name]-[hash:8][extname]`;
           }
           if (/woff2?|ttf|eot/i.test(ext)) {
-            return `assets/fonts/[name]-[hash][extname]`;
+            return `assets/fonts/[name]-[hash:8][extname]`;
           }
-          return `assets/[name]-[hash][extname]`;
+          return `assets/[name]-[hash:8][extname]`;
         },
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
+        chunkFileNames: 'assets/js/[name]-[hash:8].js',
+        entryFileNames: 'assets/js/[name]-[hash:8].js',
       },
       external: (id) => {
         // Externalize large libraries that can be loaded from CDN
@@ -107,7 +108,10 @@ export default defineConfig(({ mode }) => ({
     esbuild: {
       drop: mode === 'production' ? ['console', 'debugger'] : [],
       legalComments: 'none',
-      treeShaking: true
+      treeShaking: true,
+      minifyIdentifiers: true,
+      minifySyntax: true,
+      minifyWhitespace: true
     }
   },
   esbuild: {
