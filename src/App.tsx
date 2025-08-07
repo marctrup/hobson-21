@@ -77,8 +77,8 @@ const App = () => {
               ) : (
                 <>
                   {/* Main website routes */}
-                  <Route path="/" element={<Navigate to="/property-management-software" replace />} />
-                  <Route path="/property-management-software" element={<Homepage />} />
+                  <Route path="/" element={<Homepage />} />
+                  <Route path="/property-management-software" element={<Navigate to="/" replace />} />
                   <Route path="/home/property-management-software" element={<Navigate to="/" replace />} />
                   <Route path="/real-estate-ai" element={<Navigate to="/" replace />} />
                   <Route path="/features" element={<Navigate to="/features/real_estate_ai" replace />} />

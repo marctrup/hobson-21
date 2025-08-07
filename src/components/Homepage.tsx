@@ -37,7 +37,7 @@ export const Homepage = () => {
         <meta name="twitter:title" content="AI-Document Intelligence for the Property Industry" />
         <meta name="twitter:description" content="Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions." />
         <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
-        <link rel="canonical" href="https://hobsonschoice.ai/property-management-software" />
+        <link rel="canonical" href="https://hobsonschoice.ai/" />
         
         {/* Preload critical assets */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />

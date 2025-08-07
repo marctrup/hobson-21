@@ -25,6 +25,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://hobsonschoice.ai/blog</loc>
+    <lastmod>2025-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://pilot.hobsonschoice.ai/</loc>
     <lastmod>2025-01-28</lastmod>
     <changefreq>weekly</changefreq>
