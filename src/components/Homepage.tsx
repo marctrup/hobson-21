@@ -167,7 +167,7 @@ export const Homepage = () => {
                   <div className="w-[506px] h-[338px] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative border-[5px] border-white"
                        onClick={() => setVideoDialogOpen(true)}>
                     <img 
-                      src="/lovable-uploads/30e812c0-bfd0-45a3-9503-46e12246ce4e.png"
+                      src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
                       alt="Georgia - Hobson AI Assistant"
                       className="w-full h-full object-cover"
                     />
