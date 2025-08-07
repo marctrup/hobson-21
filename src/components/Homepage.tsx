@@ -163,7 +163,7 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Clean Video Section */}
-                <div className="flex justify-center lg:justify-end mt-2.5 lg:mt-0">
+                <div className="flex justify-center lg:justify-end mt-8 lg:mt-0">
                   <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
                     <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative border-[3px] sm:border-[5px] border-white transition-transform duration-300 hover:scale-105"
                          onClick={() => setVideoDialogOpen(true)}>
