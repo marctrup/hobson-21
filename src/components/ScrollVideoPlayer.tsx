@@ -30,7 +30,7 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
             <img
               src="/lovable-uploads/771865ab-9a5c-4d60-b7bf-f3e3be574261.png"
               alt={title}
-              className="w-full h-full object-cover"
+              className="w-4/5 h-4/5 object-contain m-auto"
             />
           </div>
         </DialogTrigger>
