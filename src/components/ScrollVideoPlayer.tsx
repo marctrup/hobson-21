@@ -7,36 +7,7 @@ interface ScrollVideoPlayerProps {
 }
 
 export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Watch video" }: ScrollVideoPlayerProps) => {
-  const [isInView, setIsInView] = useState(false);
-  const videoRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsInView(true);
-          } else {
-            setIsInView(false);
-          }
-        });
-      },
-      {
-        threshold: 0.4, // Trigger when 40% of the video is visible
-        rootMargin: '-50px 0px -50px 0px'
-      }
-    );
-
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
-    }
-
-    return () => {
-      if (videoRef.current) {
-        observer.unobserve(videoRef.current);
-      }
-    };
-  }, []);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
     <div className="flex justify-center">
@@ -45,11 +16,12 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
         target="_blank"
         rel="noopener noreferrer"
         className="cursor-pointer"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <div
-          ref={videoRef}
           className={`relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg border-[14px] border-white transition-all duration-700 transform ${
-            isInView ? 'scale-110 shadow-2xl' : 'scale-95 opacity-70'
+            isHovered ? 'scale-110 shadow-2xl' : 'scale-100 opacity-100'
           }`}
         >
           <img
