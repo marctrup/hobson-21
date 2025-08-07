@@ -42,8 +42,8 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
     <div className="flex justify-center">
       <div
         ref={videoRef}
-        className={`relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg border-[14px] border-white transition-all duration-500 ${
-          isInView ? 'animate-scale-in' : ''
+        className={`relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg border-[14px] border-white transition-all duration-700 transform ${
+          isInView ? 'scale-110 shadow-2xl' : 'scale-95 opacity-70'
         }`}
       >
         <img
