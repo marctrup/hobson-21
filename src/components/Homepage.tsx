@@ -173,7 +173,6 @@ export const Homepage = () => {
                         </svg>
                       </div>
                       <h3 className="text-lg font-semibold text-foreground mb-2">Meet Georgia</h3>
-                      <p className="text-muted-foreground text-sm">Click to watch our AI assistant explain how it works</p>
                     </div>
                   </div>
                   
