@@ -47,21 +47,24 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                     onShowExplainerVideo();
                   }
                 }}
+                style={{ width: '320px', height: '208px' }}
               >
                 {/* Video Thumbnail - Fixed Size */}
-                <div className="w-80 h-52 rounded-2xl overflow-hidden shadow-xl border-4 border-white/20 relative">
-                  <OptimizedImage
+                <div 
+                  className="rounded-2xl overflow-hidden shadow-xl border-4 border-white/20 relative"
+                  style={{ width: '320px', height: '208px' }}
+                >
+                  <img
                     src="/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png"
                     alt="Georgia from Hobson's Choice AI explaining property management AI software features and benefits"
-                    className="w-full h-full object-cover"
+                    className="object-cover"
+                    style={{ width: '320px', height: '208px' }}
                     width={320}
                     height={208}
-                    priority={true}
-                    sizes="320px"
                   />
                   
                   {/* Play Button Overlay */}
-                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center hover:bg-black/40 transition-colors duration-200">
+                  <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                     <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center shadow-lg" aria-hidden="true">
                       <Play className="w-8 h-8 text-primary ml-1" aria-hidden="true" />
                     </div>
