@@ -164,7 +164,7 @@ export const Homepage = () => {
 
                 {/* Right Container - Clean Video Section */}
                 <div className="flex justify-center lg:justify-end">
-                  <div className="w-[460px] h-[307px] bg-gray-100 rounded-xl flex items-center justify-center cursor-pointer"
+                  <div className="w-[506px] h-[338px] bg-gray-100 rounded-xl flex items-center justify-center cursor-pointer"
                        onClick={() => setVideoDialogOpen(true)}>
                     <div className="text-center">
                       <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
