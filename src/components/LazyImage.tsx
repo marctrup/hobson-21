@@ -73,8 +73,9 @@ export const LazyImage = memo<LazyImageProps>(({
         aspectRatio: width && height ? `${width}/${height}` : undefined,
         contentVisibility: 'auto',
         containIntrinsicSize: width && height ? `${width}px ${height}px` : '300px 200px',
-        filter: isLoaded ? 'none' : 'blur(2px)',
-        transform: isLoaded ? 'scale(1)' : 'scale(1.05)',
+        filter: isLoaded ? 'none' : 'blur(1px)',
+        transform: isLoaded ? 'scale(1)' : 'scale(1.02)',
+        willChange: isLoaded ? 'auto' : 'transform, filter',
       }}
       onLoad={() => {
         if (priority) setIsLoaded(true);
