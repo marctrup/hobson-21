@@ -235,7 +235,7 @@ export const Homepage = () => {
 
           
           {/* Why Choose Hobson AI Section - White cards with hover pop effects */}
-          <section className="pt-0 pb-5 md:pt-6 md:pb-16">
+          <section className="pt-0 pb-5 md:pt-0 md:pb-16 -mt-2">
             <div className="container mx-auto px-4">
               <div className="text-center mb-6 md:mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">Why Choose Hobson AI?</h2>
