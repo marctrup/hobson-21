@@ -69,7 +69,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                 </div>
                 
                 {/* Call to Action Text */}
-                <div className="mt-6 space-y-2 text-center">
+                <div className="mt-4 space-y-2 text-center">
                   <h3 className="text-xl font-semibold text-foreground">
                     "Would it help if I explained a bit more?"
                   </h3>
