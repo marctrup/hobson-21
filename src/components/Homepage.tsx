@@ -192,7 +192,7 @@ export const Homepage = () => {
                         </div>
                       </div>
                     </DialogTrigger>
-                    <DialogContent className="max-w-2xl w-full p-2 overflow-hidden" style={{ zIndex: 50 }}>
+                    <DialogContent className="p-2 overflow-hidden border-0" style={{ zIndex: 50, width: '824px', height: '474px', maxWidth: '824px', maxHeight: '474px' }}>
                       <button 
                         onClick={() => {
                           setVideoDialogOpen(false);
@@ -207,33 +207,28 @@ export const Homepage = () => {
                      <DialogDescription className="sr-only">
                        Watch Georgia explain how Hobson's AI can transform your property management workflow
                      </DialogDescription>
-                        <div className="relative bg-muted rounded-lg overflow-hidden" style={{ width: '800px', height: '450px', minWidth: '800px', minHeight: '450px', maxWidth: '800px', maxHeight: '450px' }}>
-                            {videoDialogOpen && (
-                              <iframe
-                                className="absolute inset-0 rounded-lg"
-                                src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0"
-                                title="Meet Georgia - Property AI Assistant"
-                                frameBorder="0"
-                                allow="autoplay; fullscreen; picture-in-picture"
-                                allowFullScreen
-                                width="800"
-                                height="450"
-                                style={{ 
-                                  opacity: videoLoaded ? 1 : 0, 
-                                  transition: 'opacity 0.3s ease-in-out',
-                                  width: '800px',
-                                  height: '450px',
-                                  minWidth: '800px',
-                                  minHeight: '450px',
-                                  maxWidth: '800px',
-                                  maxHeight: '450px'
-                                }}
-                                onLoad={() => {
-                                  setTimeout(() => setVideoLoaded(true), 300);
-                                }}
-                              />
-                            )}
-                          <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center transition-opacity duration-300 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                        <div className="bg-muted rounded-lg overflow-hidden" style={{ width: '800px', height: '450px' }}>
+                            <iframe
+                              className="rounded-lg"
+                              src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0"
+                              title="Meet Georgia - Property AI Assistant"
+                              frameBorder="0"
+                              allow="autoplay; fullscreen; picture-in-picture"
+                              allowFullScreen
+                              width="800"
+                              height="450"
+                              style={{ 
+                                opacity: videoLoaded ? 1 : 0, 
+                                transition: 'opacity 0.3s ease-in-out',
+                                width: '800px',
+                                height: '450px',
+                                display: 'block'
+                              }}
+                              onLoad={() => {
+                                setTimeout(() => setVideoLoaded(true), 300);
+                              }}
+                            />
+                          <div className={`absolute top-0 left-0 bg-muted rounded-lg flex items-center justify-center transition-opacity duration-300 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`} style={{ width: '800px', height: '450px' }}>
                             <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
                           </div>
                        </div>
