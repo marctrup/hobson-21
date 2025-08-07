@@ -164,15 +164,19 @@ export const Homepage = () => {
 
                 {/* Right Container - Clean Video Section */}
                 <div className="flex justify-center lg:justify-end">
-                  <div className="w-[506px] h-[338px] bg-gray-100 rounded-xl flex items-center justify-center cursor-pointer"
+                  <div className="w-[506px] h-[338px] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative"
                        onClick={() => setVideoDialogOpen(true)}>
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg className="w-8 h-8 text-primary" fill="currentColor" viewBox="0 0 24 24">
+                    <img 
+                      src="/lovable-uploads/30e812c0-bfd0-45a3-9503-46e12246ce4e.png"
+                      alt="Georgia - Hobson AI Assistant"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                      <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center">
+                        <svg className="w-8 h-8 text-primary ml-1" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M8 5v14l11-7z"/>
                         </svg>
                       </div>
-                      <h3 className="text-lg font-semibold text-foreground mb-2">Meet Georgia</h3>
                     </div>
                   </div>
                   
