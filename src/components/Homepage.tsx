@@ -207,10 +207,10 @@ export const Homepage = () => {
                      <DialogDescription className="sr-only">
                        Watch Georgia explain how Hobson's AI can transform your property management workflow
                      </DialogDescription>
-                        <div className="relative bg-muted rounded-lg overflow-hidden" style={{ width: '800px', height: '450px', aspectRatio: '16/9' }}>
+                        <div className="relative bg-muted rounded-lg overflow-hidden" style={{ width: '800px', height: '450px', minWidth: '800px', minHeight: '450px', maxWidth: '800px', maxHeight: '450px' }}>
                             {videoDialogOpen && (
                               <iframe
-                                className="w-full h-full rounded-lg absolute inset-0"
+                                className="absolute inset-0 rounded-lg"
                                 src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0"
                                 title="Meet Georgia - Property AI Assistant"
                                 frameBorder="0"
@@ -218,7 +218,16 @@ export const Homepage = () => {
                                 allowFullScreen
                                 width="800"
                                 height="450"
-                                style={{ opacity: videoLoaded ? 1 : 0, transition: 'opacity 0.3s ease-in-out' }}
+                                style={{ 
+                                  opacity: videoLoaded ? 1 : 0, 
+                                  transition: 'opacity 0.3s ease-in-out',
+                                  width: '800px',
+                                  height: '450px',
+                                  minWidth: '800px',
+                                  minHeight: '450px',
+                                  maxWidth: '800px',
+                                  maxHeight: '450px'
+                                }}
                                 onLoad={() => {
                                   setTimeout(() => setVideoLoaded(true), 300);
                                 }}
