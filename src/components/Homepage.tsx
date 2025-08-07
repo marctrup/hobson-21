@@ -170,7 +170,7 @@ export const Homepage = () => {
                       <img 
                         src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
                         alt="Georgia - Hobson AI Assistant"
-                        className="w-full h-full object-cover transition-opacity duration-300 hover:opacity-90"
+                        className="w-full h-full object-center object-none transition-opacity duration-300 hover:opacity-90"
                       />
                     </div>
                     
