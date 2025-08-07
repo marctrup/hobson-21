@@ -22,7 +22,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                 </Badge>
                  <h1 
                    id="hero-heading" 
-                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1]"
+                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] -mt-1"
                  >
                     AI-Document Intelligence for the <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Property Industry</span>
                   </h1>
