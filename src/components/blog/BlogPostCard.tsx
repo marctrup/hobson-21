@@ -40,8 +40,8 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
 
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
-       <div className="grid md:grid-cols-4 gap-0 min-h-[180px]">
-         <div className="aspect-[3/2] md:min-h-[180px]">
+      <div className="grid md:grid-cols-4 gap-0">
+        <div className="aspect-[3/2]">
           {post.featured_image_url ? (
              <LazyImage
                src={post.featured_image_url}

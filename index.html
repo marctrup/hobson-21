@@ -68,11 +68,10 @@
     <!-- Enhanced cache control and performance headers -->
     <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable" />
     <meta http-equiv="Expires" content="Thu, 31 Dec 2025 23:59:59 GMT" />
-    <meta http-equiv="Pragma" content="public" />
     
-    <!-- Asset-specific cache headers for better cache efficiency -->
-    <meta http-equiv="Cache-Control" content="public, max-age=31536000, immutable" data-assets="images,fonts,js,css" />
-    <meta name="cache-control" content="public, max-age=86400, s-maxage=604800" data-assets="html" />
+    <!-- Asset-specific cache headers -->
+    <meta http-equiv="Cache-Control" content="public, max-age=31536000" data-assets="images,fonts,js,css" />
+    <meta name="cache-control" content="public, max-age=604800" data-assets="html" />
     
     <!-- Optimized DNS prefetch and preconnect -->
     <link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -101,13 +100,6 @@
     <link rel="modulepreload" href="/src/pages/Blog.tsx" />
     <link rel="modulepreload" href="/src/components/blog/BlogHero.tsx" />
     
-    <!-- Font display swap to prevent layout shift -->
-    <style>
-      @font-face {
-        font-family: 'Inter';
-        font-display: swap;
-      }
-    </style>
     <!-- Font optimization - inline critical font CSS -->
     <style>
       @font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+2000-206F,U+2074,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}

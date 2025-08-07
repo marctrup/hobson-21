@@ -14,11 +14,10 @@ export const LoadingSkeleton: FC<LoadingSkeletonProps> = ({
   return (
     <div className={`animate-pulse ${className}`}>
       {Array.from({ length: rows }).map((_, index) => (
-         <div 
-           key={index}
-           className={`bg-gradient-to-r from-muted via-muted/50 to-muted bg-[length:200%_100%] animate-[shimmer_2s_infinite] ${height} rounded mb-2 will-change-transform`}
-           style={{ minHeight: height === 'h-4' ? '16px' : height === 'h-6' ? '24px' : height === 'h-8' ? '32px' : '48px' }}
-         />
+        <div 
+          key={index}
+          className={`bg-gradient-to-r from-muted via-muted/50 to-muted bg-[length:200%_100%] animate-[shimmer_2s_infinite] ${height} rounded mb-2 will-change-transform`}
+        />
       ))}
     </div>
   );

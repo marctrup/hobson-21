@@ -25,13 +25,7 @@ export default defineConfig(({ mode }) => ({
     cssMinify: true,
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
-    assetsInlineLimit: 8192,
     rollupOptions: {
-      treeshake: {
-        moduleSideEffects: false,
-        propertyReadSideEffects: false,
-        unknownGlobalSideEffects: false
-      },
       output: {
         manualChunks: (id) => {
           // Core React chunks
@@ -55,11 +49,6 @@ export default defineConfig(({ mode }) => ({
             return 'ui-base';
           }
           
-          // Lucide icons - separate chunk for better caching
-          if (id.includes('lucide-react')) {
-            return 'icons';
-          }
-          
           // Backend
           if (id.includes('supabase')) {
             return 'supabase';
@@ -68,7 +57,10 @@ export default defineConfig(({ mode }) => ({
             return 'query';
           }
           
-          // Utils
+          // Icons and utilities
+          if (id.includes('lucide-react')) {
+            return 'icons';
+          }
           if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
             return 'utils';
           }
@@ -87,34 +79,26 @@ export default defineConfig(({ mode }) => ({
           const info = assetInfo.name?.split('.') || [];
           const ext = info[info.length - 1];
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
-            return `assets/images/[name]-[hash:8][extname]`;
+            return `assets/images/[name]-[hash][extname]`;
           }
           if (/css/i.test(ext)) {
-            return `assets/css/[name]-[hash:8][extname]`;
+            return `assets/css/[name]-[hash][extname]`;
           }
           if (/woff2?|ttf|eot/i.test(ext)) {
-            return `assets/fonts/[name]-[hash:8][extname]`;
+            return `assets/fonts/[name]-[hash][extname]`;
           }
-          return `assets/[name]-[hash:8][extname]`;
+          return `assets/[name]-[hash][extname]`;
         },
-        chunkFileNames: 'assets/js/[name]-[hash:8].js',
-        entryFileNames: 'assets/js/[name]-[hash:8].js',
+        chunkFileNames: 'assets/js/[name]-[hash].js',
+        entryFileNames: 'assets/js/[name]-[hash].js',
       },
       external: (id) => {
         // Externalize large libraries that can be loaded from CDN
         return false; // Keep everything bundled for now for better caching
       },
     },
-    esbuild: {
-      drop: mode === 'production' ? ['console', 'debugger'] : [],
-      legalComments: 'none',
-      treeShaking: true,
-      minifyIdentifiers: true,
-      minifySyntax: true,
-      minifyWhitespace: true
-    }
   },
   esbuild: {
-    drop: mode === 'production' ? ['console', 'debugger'] : []
-  }
+    drop: mode === 'production' ? ['console', 'debugger'] : [],
+  },
 }));

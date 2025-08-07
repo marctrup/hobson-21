@@ -195,7 +195,7 @@ export const SimpleHomepage = () => {
             <video 
               className="w-full h-full rounded-lg"
               controls
-              src="https://player.vimeo.com/video/1108094387"
+              src="/src/assets/avitar-hobson.mp4"
             >
               Your browser does not support the video tag.
             </video>
