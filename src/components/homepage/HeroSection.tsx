@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Play } from "lucide-react";
@@ -33,7 +32,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
               </p>
             </div>
 
-            {/* Expert Guide Video - Fixed Container */}
+            {/* Expert Guide Video - Single Container */}
             <div className="mt-12 flex justify-center">
               <div>
                 <div 
