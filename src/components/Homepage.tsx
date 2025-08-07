@@ -486,24 +486,14 @@ export const Homepage = () => {
             </div>
           </section>
 
-          {/* Scroll Video Section */}
-          <section className="py-16 bg-muted/30">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-                  See It In Action
-                </h2>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                  Watch how our AI transforms property document management
-                </p>
-              </div>
-              <ScrollVideoPlayer 
-                videoId="1108094387"
-                title="Hobson AI in Action"
-                description="Loading demonstration video..."
-              />
-            </div>
-          </section>
+          {/* Scroll Video */}
+          <div className="container mx-auto px-4 py-8">
+            <ScrollVideoPlayer 
+              videoId="1108094387"
+              title="Hobson AI in Action"
+              description="Loading demonstration video..."
+            />
+          </div>
 
           {/* Security Badges */}
           <section className="py-4 md:py-12">
