@@ -35,8 +35,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
 
             {/* Expert Guide Video - Fixed Container */}
             <div className="mt-12 flex justify-center">
-              {/* Fixed Size Video Container */}
-              <div style={{ width: '320px', height: '208px', position: 'relative' }}>
+              <div>
                 <div 
                   onClick={onShowExplainerVideo}
                   role="button"
