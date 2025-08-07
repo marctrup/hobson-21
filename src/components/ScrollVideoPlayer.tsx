@@ -36,18 +36,25 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
 
   return (
     <div className="flex justify-center">
-      <div
-        ref={videoRef}
-        className={`relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg border-[14px] border-white transition-all duration-700 transform ${
-          isInView ? 'scale-110 shadow-2xl' : 'scale-95 opacity-70'
-        }`}
+      <a 
+        href="https://vimeo.com/1108110494?share=copy#t=0"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="cursor-pointer"
       >
-        <img
-          src="/lovable-uploads/a813c202-a3e2-4e51-9f8d-c2731329b446.png"
-          alt={title}
-          className="w-full h-full object-cover"
-        />
-      </div>
+        <div
+          ref={videoRef}
+          className={`relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg border-[14px] border-white transition-all duration-700 transform ${
+            isInView ? 'scale-110 shadow-2xl' : 'scale-95 opacity-70'
+          }`}
+        >
+          <img
+            src="/lovable-uploads/a813c202-a3e2-4e51-9f8d-c2731329b446.png"
+            alt={title}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </a>
     </div>
   );
 };
