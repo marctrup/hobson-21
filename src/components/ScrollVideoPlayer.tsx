@@ -38,8 +38,8 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
           className="!p-0 !max-w-none !w-auto !h-auto !border-0 !bg-transparent !shadow-none !duration-0 !animate-none" 
           style={{ 
             zIndex: 50,
-            width: '800px',
-            height: '450px',
+            maxWidth: '90vw',
+            maxHeight: '90vh',
             position: 'fixed',
             top: '50%',
             left: '50%',
@@ -58,20 +58,17 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
             {description}
           </DialogDescription>
           <div 
-            className="relative bg-black rounded-lg overflow-hidden"
-            style={{ width: '800px', height: '450px' }}
+            className="relative bg-black rounded-lg overflow-hidden aspect-video max-w-4xl w-full"
+            style={{ minHeight: '400px' }}
           >
             {videoDialogOpen && (
               <iframe
-                className="absolute inset-0 rounded-lg"
-                src={`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&byline=0&portrait=0&responsive=0`}
+                className="absolute inset-0 w-full h-full rounded-lg"
+                src={`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&byline=0&portrait=0&responsive=1`}
                 title={title}
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
                 allowFullScreen
-                width="800"
-                height="450"
-                style={{ width: '800px', height: '450px' }}
               />
             )}
           </div>
