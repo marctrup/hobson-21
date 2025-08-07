@@ -42,27 +42,15 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
     <div className="flex justify-center">
       <div
         ref={videoRef}
-        className={`relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg transition-all duration-500 ${
+        className={`relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg border-4 border-white transition-all duration-500 ${
           isInView ? 'animate-scale-in' : ''
         }`}
       >
-        {isPlaying ? (
-          <iframe
-            className="w-full h-full"
-            src={`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&byline=0&portrait=0&responsive=0&background=1`}
-            title={title}
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-          />
-        ) : (
-          <div className="w-full h-full bg-gray-900 flex items-center justify-center">
-            <div className="text-center text-white">
-              <div className="w-12 h-12 border-2 border-white border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
-              <p className="text-sm">{description}</p>
-            </div>
-          </div>
-        )}
+        <img
+          src="/lovable-uploads/a813c202-a3e2-4e51-9f8d-c2731329b446.png"
+          alt={title}
+          className="w-full h-full object-cover"
+        />
       </div>
     </div>
   );
