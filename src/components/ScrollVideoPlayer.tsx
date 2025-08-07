@@ -23,7 +23,7 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
             className={`cursor-pointer relative w-80 h-52 bg-black rounded-lg overflow-hidden shadow-lg transition-all duration-700 transform ${
               isHovered ? 'scale-110 shadow-2xl' : 'scale-100 opacity-100'
             }`}
-            style={{ border: '11px solid white' }}
+            style={{ border: '5px solid white' }}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
