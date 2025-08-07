@@ -192,13 +192,13 @@ export const Homepage = () => {
                         </div>
                       </div>
                     </DialogTrigger>
-                    <DialogContent className="!p-0 !gap-0 !w-auto !max-w-none !border-0 !bg-transparent !shadow-none !duration-0 !animate-none" style={{ zIndex: 50, width: '800px', height: '450px', maxWidth: '800px', maxHeight: '450px', minWidth: '800px', minHeight: '450px' }}>
+                    <DialogContent className="max-w-2xl w-full p-2 overflow-hidden" style={{ zIndex: 50 }}>
                       <button 
                         onClick={() => {
                           setVideoDialogOpen(false);
                           setVideoLoaded(false);
                         }}
-                        className="absolute right-2 top-2 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
+                        className="absolute right-4 top-4 z-[60] rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 bg-background border border-border p-1"
                         aria-label="Close video"
                       >
                        <X className="h-4 w-4" />
@@ -207,36 +207,25 @@ export const Homepage = () => {
                      <DialogDescription className="sr-only">
                        Watch Georgia explain how Hobson's AI can transform your property management workflow
                      </DialogDescription>
-                        <div className="bg-black rounded-lg" style={{ width: '800px', height: '450px', position: 'relative' }}>
+                      <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
+                          {videoDialogOpen && (
                             <iframe
-                              className="rounded-lg"
-                              src="https://player.vimeo.com/video/1108094387?autoplay=1&muted=1&byline=0&portrait=0&responsive=0"
+                              className={`w-full h-full rounded-lg absolute inset-0 transition-opacity duration-500 ${videoLoaded ? 'opacity-100 z-10' : 'opacity-0 z-0'}`}
+                              src="https://player.vimeo.com/video/1106432593?autoplay=1&muted=1&byline=0&portrait=0"
                               title="Meet Georgia - Property AI Assistant"
                               frameBorder="0"
                               allow="autoplay; fullscreen; picture-in-picture"
                               allowFullScreen
-                              width="800"
-                              height="450"
-                              style={{ 
-                                width: '800px',
-                                height: '450px',
-                                position: 'absolute',
-                                top: 0,
-                                left: 0,
-                                border: 'none',
-                                display: 'block'
-                              }}
                               onLoad={() => {
-                                setTimeout(() => setVideoLoaded(true), 100);
+                                setTimeout(() => setVideoLoaded(true), 1500);
                               }}
                             />
-                           {!videoLoaded && (
-                             <div className="absolute top-0 left-0 bg-muted rounded-lg flex items-center justify-center" style={{ width: '800px', height: '450px' }}>
-                               <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-                             </div>
-                           )}
+                          )}
+                        <div className={`absolute inset-0 bg-muted rounded-lg flex items-center justify-center z-20 transition-opacity duration-500 ${videoLoaded ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+                          <div className="w-12 h-12 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
                         </div>
-                    </DialogContent>
+                     </div>
+                  </DialogContent>
                   </Dialog>
                 </div>
               </div>
@@ -245,7 +234,7 @@ export const Homepage = () => {
 
           
           {/* Why Choose Hobson AI Section - White cards with hover pop effects */}
-          <section className="pt-0 pb-5 md:pt-0 md:pb-16 -mt-2">
+          <section className="pt-0 pb-5 md:pt-6 md:pb-16">
             <div className="container mx-auto px-4">
               <div className="text-center mb-6 md:mb-16">
                 <h2 className="text-4xl md:text-5xl font-bold mb-4">Why Choose Hobson AI?</h2>
@@ -548,5 +537,3 @@ export const Homepage = () => {
     </>
   );
 };
-
-export default Homepage;

@@ -22,7 +22,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                 </Badge>
                  <h1 
                    id="hero-heading" 
-                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1] -mt-[9px]"
+                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1]"
                  >
                     AI-Document Intelligence for the <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Property Industry</span>
                   </h1>
@@ -49,7 +49,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                 }}
               >
                 {/* Video Thumbnail */}
-                <div className="relative w-[336px] h-[218px] rounded-2xl overflow-hidden shadow-xl border-4 border-white/20 group-hover:scale-105 transition-transform duration-300">
+                <div className="relative w-80 h-52 rounded-2xl overflow-hidden shadow-xl border-4 border-white/20 group-hover:scale-105 transition-transform duration-300">
                   <OptimizedImage
                     src="/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png"
                     alt="Georgia from Hobson's Choice AI explaining property management AI software features and benefits"
@@ -69,7 +69,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                 </div>
                 
                 {/* Call to Action Text */}
-                <div className="mt-4 space-y-2 text-center">
+                <div className="mt-6 space-y-2 text-center">
                   <h3 className="text-xl font-semibold text-foreground">
                     "Would it help if I explained a bit more?"
                   </h3>
