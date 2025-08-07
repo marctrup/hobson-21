@@ -26,6 +26,11 @@ export default defineConfig(({ mode }) => ({
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
     rollupOptions: {
+      treeshake: {
+        moduleSideEffects: false,
+        propertyReadSideEffects: false,
+        unknownGlobalSideEffects: false
+      },
       output: {
         manualChunks: (id) => {
           // Core React chunks
@@ -49,6 +54,11 @@ export default defineConfig(({ mode }) => ({
             return 'ui-base';
           }
           
+          // Lucide icons - separate chunk for better caching
+          if (id.includes('lucide-react')) {
+            return 'icons';
+          }
+          
           // Backend
           if (id.includes('supabase')) {
             return 'supabase';
@@ -57,10 +67,7 @@ export default defineConfig(({ mode }) => ({
             return 'query';
           }
           
-          // Icons and utilities
-          if (id.includes('lucide-react')) {
-            return 'icons';
-          }
+          // Utils
           if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
             return 'utils';
           }
@@ -97,8 +104,13 @@ export default defineConfig(({ mode }) => ({
         return false; // Keep everything bundled for now for better caching
       },
     },
+    esbuild: {
+      drop: mode === 'production' ? ['console', 'debugger'] : [],
+      legalComments: 'none',
+      treeShaking: true
+    }
   },
   esbuild: {
-    drop: mode === 'production' ? ['console', 'debugger'] : [],
-  },
+    drop: mode === 'production' ? ['console', 'debugger'] : []
+  }
 }));
