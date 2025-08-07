@@ -27,7 +27,7 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
             onMouseLeave={() => setIsHovered(false)}
           >
             <img
-              src="/lovable-uploads/7c51637e-db02-4c17-9808-bf84b03492b6.png"
+              src="/lovable-uploads/771865ab-9a5c-4d60-b7bf-f3e3be574261.png"
               alt={title}
               className="w-full h-full object-cover"
             />
