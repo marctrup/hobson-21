@@ -93,6 +93,8 @@ const App = () => {
                   <Route path="/admin/blog" element={<BlogManagement />} />
                   <Route path="/admin/blog/new" element={<BlogEditor />} />
                   <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
+                  {/* Partnership route redirect */}
+                  <Route path="/partnership" element={<Navigate to="/landing-a" replace />} />
                   {/* Temporary routes for testing landing pages in Lovable */}
                   <Route path="/landing-a" element={<LandingPageA />} />
                   <Route path="/landing-b" element={<LandingPageB />} />
