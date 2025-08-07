@@ -44,14 +44,14 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
         <div className="grid md:grid-cols-4 gap-0">
           <div className="aspect-[3/2]">
             {post.featured_image_url ? (
-              <LazyImage
+               <LazyImage
                 src={post.featured_image_url}
                 alt={post.title}
                 className="w-full h-full object-cover"
-                width={243}
-                height={162}
+                width={400}
+                height={267}
                 priority={true}
-                sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, 243px"
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
               />
             ) : (
               <div className="w-full h-full bg-muted flex items-center justify-center">

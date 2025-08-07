@@ -32,7 +32,7 @@ export const OptimizedImage = memo<OptimizedImageProps>(({
       decoding="async"
       width={width}
       height={height}
-      fetchPriority={fetchPriority}
+      {...(fetchPriority !== 'auto' && { fetchpriority: fetchPriority })}
       sizes={sizes}
       style={{
         aspectRatio: width && height ? `${width}/${height}` : undefined,

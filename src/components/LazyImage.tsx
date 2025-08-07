@@ -66,7 +66,7 @@ export const LazyImage = memo<LazyImageProps>(({
       alt={alt}
       className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-70'} transition-all duration-500 ease-out`}
       loading={priority ? 'eager' : 'lazy'}
-      fetchPriority={priority ? 'high' : 'low'}
+      {...(priority && { fetchpriority: 'high' })}
       decoding="async"
       width={width}
       height={height}
