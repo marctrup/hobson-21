@@ -58,17 +58,24 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
             {description}
           </DialogDescription>
           <div 
-            className="relative bg-black rounded-lg overflow-hidden aspect-video max-w-4xl w-full"
-            style={{ minHeight: '400px' }}
+            className="relative bg-black rounded-lg overflow-hidden"
+            style={{ 
+              width: 'fit-content',
+              height: 'fit-content',
+              maxWidth: '90vw',
+              maxHeight: '90vh'
+            }}
           >
             {videoDialogOpen && (
               <iframe
-                className="absolute inset-0 w-full h-full rounded-lg"
+                className="block rounded-lg"
                 src={`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&byline=0&portrait=0&responsive=1`}
                 title={title}
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
                 allowFullScreen
+                width="640"
+                height="360"
               />
             )}
           </div>
