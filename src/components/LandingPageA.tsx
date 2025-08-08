@@ -196,7 +196,7 @@ const LandingPageA = () => {
             <a href="https://hobsonschoice.ai" className="bg-white p-2 rounded-lg">
               <img 
                 src={hobsonLogo} 
-                alt="Hobson's Choice AI - AI-powered property management software company logo" 
+                alt="Hobson AI - AI-powered property management software company logo" 
                 className="h-12 md:h-16" 
                 loading="eager"
               />
