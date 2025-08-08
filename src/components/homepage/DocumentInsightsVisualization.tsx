@@ -26,7 +26,7 @@ export const DocumentInsightsVisualization = () => {
         <div className="bg-white/80 rounded-lg p-4 border border-primary/20 shadow-sm">
           <div className="flex items-center gap-2 mb-2">
             <FileText className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-foreground">Property Report</span>
+            <span className="text-sm font-medium text-foreground">Deed of Variation</span>
           </div>
           <div className="text-xs text-muted-foreground space-y-1">
             <div className="h-2 bg-primary/20 rounded w-full"></div>
