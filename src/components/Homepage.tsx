@@ -178,7 +178,7 @@ export const Homepage = () => {
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
                           <p className="text-foreground font-medium leading-relaxed">
-                            Lower costs than traditional property software — more capability, less spend.
+                            Significantly less cost than traditional property software — easier to use, too.
                           </p>
                         </div>
                       </div>
