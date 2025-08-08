@@ -270,6 +270,8 @@ export const Homepage = () => {
                     />
                   </div>
                   
+                  <p className="text-center text-lg text-muted-foreground mt-4">Need more information? Meet Georgia</p>
+                  
                   {/* Video Dialog */}
                   <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
                     <DialogContent className="max-w-4xl p-0 border-0">
