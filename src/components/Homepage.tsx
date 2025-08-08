@@ -279,18 +279,16 @@ export const Homepage = () => {
 
                 {/* Right Content - Georgia Video */}
                 <div>
-                  <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
-                    <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
-                      border: '10px solid #f0f0f0'
-                    }} onClick={() => setVideoDialogOpen(true)}>
-                      <OptimizedImage 
-                        src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" 
-                        alt="Georgia - Hobson AI Assistant" 
-                        className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
-                        width={506} 
-                        height={338}
-                      />
-                    </div>
+                  <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
+                    border: '10px solid #f0f0f0'
+                  }} onClick={() => setVideoDialogOpen(true)}>
+                    <OptimizedImage 
+                      src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" 
+                      alt="Georgia - Hobson AI Assistant" 
+                      className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
+                      width={506} 
+                      height={338}
+                    />
                   </div>
                   
                   {/* Video Dialog */}
