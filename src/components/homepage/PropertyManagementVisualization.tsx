@@ -223,10 +223,14 @@ export const PropertyManagementVisualization = () => {
             
             {/* Chat-like bottom icons */}
             <div className="absolute bottom-3 left-3">
-              <Plus className="w-4 h-4 text-muted-foreground/60 hover:text-muted-foreground cursor-pointer" />
+              <div className="w-6 h-6 rounded-full border border-muted-foreground/40 flex items-center justify-center hover:border-muted-foreground cursor-pointer">
+                <Plus className="w-3 h-3 text-muted-foreground/60 hover:text-muted-foreground" />
+              </div>
             </div>
             <div className="absolute bottom-3 right-3">
-              <ArrowUp className="w-4 h-4 text-muted-foreground/60 hover:text-muted-foreground cursor-pointer" />
+              <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 cursor-pointer">
+                <ArrowUp className="w-3 h-3 text-white" />
+              </div>
             </div>
           </div>
           
