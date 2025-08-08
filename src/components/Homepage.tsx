@@ -136,10 +136,7 @@ export const Homepage = () => {
                         alt="Georgia - Hobson AI Assistant" 
                         className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
                         width={506} 
-                        height={338} 
-                        priority={true}
-                        fetchPriority="high"
-                        loading="eager"
+                        height={338}
                       />
                     </div>
                     
