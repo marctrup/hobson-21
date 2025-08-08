@@ -138,6 +138,39 @@ export const PropertyManagementVisualization = () => {
                 <div className="w-1/2 h-1 bg-red-400 rounded"></div>
               </div>
             </div>
+
+            {/* Additional document types */}
+            <div className="absolute top-20 left-16 bg-yellow-100 border border-yellow-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-yellow-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-yellow-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-yellow-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-12 center bg-indigo-100 border border-indigo-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '50%', transform: 'translateX(-50%)' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-indigo-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-indigo-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-indigo-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute top-12 left-20 bg-pink-100 border border-pink-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-pink-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-pink-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-pink-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-20 right-16 bg-teal-100 border border-teal-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-teal-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-teal-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-teal-400 rounded"></div>
+              </div>
+            </div>
           </div>
           
           <div className="text-xs text-muted-foreground font-bold mt-3 space-y-1">
