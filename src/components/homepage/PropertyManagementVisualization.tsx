@@ -62,7 +62,7 @@ export const PropertyManagementVisualization = () => {
         </div>
 
         {/* Center: The Challenge */}
-        <div className="text-center" style={{ marginTop: '2px' }}>
+        <div className="text-center" style={{ marginTop: '-8px' }}>
           <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">The Challenge</h4>
           
           {/* Scattered Documents */}
