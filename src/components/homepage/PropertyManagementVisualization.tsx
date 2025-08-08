@@ -205,13 +205,8 @@ export const PropertyManagementVisualization = () => {
           
           {/* Clean Answer Card */}
           <div className="bg-white rounded-lg p-4 border border-primary/20 shadow-lg">
-            <div className="text-sm font-semibold text-foreground mb-3">
-              Next rent review:
-            </div>
             <div className="text-sm font-normal text-foreground mb-3">
-              Is on the 14/09/26 for<br />
-              Knight Frank of<br />
-              23 Hampstead High Street NW3
+              The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to list all future reviews?
             </div>
             
             <div className="text-left space-y-2">
