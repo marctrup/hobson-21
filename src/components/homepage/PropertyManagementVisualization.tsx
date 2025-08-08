@@ -234,7 +234,7 @@ export const PropertyManagementVisualization = () => {
         {/* Connection Arrows - Hidden on mobile, visible on large screens */}
         <div className="hidden lg:block">
           {/* Arrow from Challenge to Today's Process folder */}
-          <div className="absolute left-1/4 top-1/2 transform -translate-x-1/2 -translate-y-2">
+          <div className="absolute left-1/4 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <ArrowRight className="w-8 h-8 text-purple-400 rotate-180" />
           </div>
           
