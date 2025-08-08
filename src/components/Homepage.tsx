@@ -137,7 +137,7 @@ export const Homepage = () => {
                     <div className="space-y-6">
                       {/* Item 1 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
+                         <div className="relative z-10 w-6 h-6 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
                           <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
@@ -149,7 +149,7 @@ export const Homepage = () => {
                       
                       {/* Item 2 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
+                         <div className="relative z-10 w-6 h-6 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
                           <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
@@ -161,7 +161,7 @@ export const Homepage = () => {
                       
                       {/* Item 3 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
+                         <div className="relative z-10 w-6 h-6 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
                           <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
@@ -173,7 +173,7 @@ export const Homepage = () => {
                       
                       {/* Item 4 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
+                         <div className="relative z-10 w-6 h-6 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
                           <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
@@ -185,7 +185,7 @@ export const Homepage = () => {
                       
                       {/* Item 5 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
+                        <div className="relative z-10 w-6 h-6 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
                           <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
