@@ -1,4 +1,4 @@
-import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, Laptop } from "lucide-react";
+import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck } from "lucide-react";
 
 export const PropertyManagementVisualization = () => {
   return (
@@ -20,7 +20,7 @@ export const PropertyManagementVisualization = () => {
             {/* Process Icons */}
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
               <div className="bg-background border border-border rounded-full p-2">
-                <Laptop className="w-4 h-4 text-muted-foreground" />
+                <UserCheck className="w-4 h-4 text-muted-foreground" />
               </div>
             </div>
             
