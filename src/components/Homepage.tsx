@@ -128,10 +128,9 @@ export const Homepage = () => {
                   <div className="mt-6">
                     <a 
                       href="#pilot-section" 
-                      className="inline-flex items-center gap-2 text-purple-800 hover:text-purple-900 transition-colors text-lg font-medium group"
+                      className="inline-flex items-center gap-2 text-purple-800 hover:text-purple-900 transition-colors text-lg font-medium"
                     >
                       Interested in joining our pilot scheme?
-                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
                     </a>
                   </div>
                 </div>
