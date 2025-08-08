@@ -212,7 +212,7 @@ export const Homepage = () => {
           </section>
 
           {/* How It Works & Video Section - Separated Headers and Content */}
-          <section className="py-8 md:py-16">
+          <section className="py-8 md:py-16 bg-muted/30">
             <div className="container mx-auto px-4">
               
               {/* Headers Row */}
@@ -356,7 +356,7 @@ export const Homepage = () => {
           </section>
 
           {/* Footer */}
-          <footer className="py-5 md:py-16 border-t">
+          <footer className="py-5 md:py-16 border-t bg-muted/20">
             <div className="container mx-auto px-4">
               <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
