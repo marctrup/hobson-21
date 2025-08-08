@@ -1,4 +1,4 @@
-import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck } from "lucide-react";
+import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck, Plus, ArrowUp } from "lucide-react";
 
 export const PropertyManagementVisualization = () => {
   return (
@@ -204,12 +204,12 @@ export const PropertyManagementVisualization = () => {
           <h4 className="text-sm font-bold text-purple-600 mb-3 uppercase tracking-wide">Hobson AI</h4>
           
           {/* Clean Answer Card */}
-          <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg p-3 sm:p-4 lg:p-5" style={{ padding: 'clamp(12px, 4vw, 19px)' }}>
+          <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg p-3 sm:p-4 lg:p-5 relative" style={{ padding: 'clamp(12px, 4vw, 19px)' }}>
             <div className="text-sm font-normal text-foreground mb-3 font-sans text-left">
               The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to list all future reviews?
             </div>
             
-            <div className="text-left space-y-2">
+            <div className="text-left space-y-2 mb-8">
               <div className="text-xs text-muted-foreground font-bold mb-2">Sources:</div>
               <div className="flex items-start gap-2 text-xs text-muted-foreground">
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
@@ -219,6 +219,14 @@ export const PropertyManagementVisualization = () => {
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
                 <span>Deed of Variation<br />(Page 2, Clause 1.1)</span>
               </div>
+            </div>
+            
+            {/* Chat-like bottom icons */}
+            <div className="absolute bottom-3 left-3">
+              <Plus className="w-4 h-4 text-muted-foreground/60 hover:text-muted-foreground cursor-pointer" />
+            </div>
+            <div className="absolute bottom-3 right-3">
+              <ArrowUp className="w-4 h-4 text-muted-foreground/60 hover:text-muted-foreground cursor-pointer" />
             </div>
           </div>
           
