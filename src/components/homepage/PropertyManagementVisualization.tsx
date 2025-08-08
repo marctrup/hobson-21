@@ -5,7 +5,7 @@ export const PropertyManagementVisualization = () => {
     <div className="relative bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 shadow-xl shadow-primary/15">
       {/* Question Header */}
       <div className="text-center mb-8">
-        <h3 className="text-2xl font-bold text-foreground mb-2">When is my next rent review?</h3>
+        <h3 className="text-2xl font-bold text-foreground mb-2">When is the next rent review?</h3>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
