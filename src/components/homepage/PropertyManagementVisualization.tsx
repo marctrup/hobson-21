@@ -8,7 +8,7 @@ export const PropertyManagementVisualization = () => {
         <h3 className="text-2xl font-normal text-purple-600 mb-2">When is the next rent review?</h3>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative">
         {/* Left: The Pain (Today's World) */}
         <div className="text-center">
           <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
@@ -228,6 +228,19 @@ export const PropertyManagementVisualization = () => {
             <div className="font-bold">Reads every document.</div>
             <div className="font-bold">Extracts what matters.</div>
             <div className="font-medium text-primary">Answers instantly and with citations.</div>
+          </div>
+        </div>
+
+        {/* Connection Arrows - Hidden on mobile, visible on large screens */}
+        <div className="hidden lg:block">
+          {/* Arrow from Challenge to Today's Process */}
+          <div className="absolute left-1/4 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <ArrowRight className="w-8 h-8 text-purple-400 rotate-180" />
+          </div>
+          
+          {/* Arrow from Challenge to Hobson AI */}
+          <div className="absolute right-1/4 top-1/2 transform translate-x-1/2 -translate-y-1/2">
+            <ArrowRight className="w-8 h-8 text-purple-400" />
           </div>
         </div>
       </div>
