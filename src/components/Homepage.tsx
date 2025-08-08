@@ -8,6 +8,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ScrollVideoPlayer } from "@/components/ScrollVideoPlayer";
+import { DocumentInsightsVisualization } from "@/components/homepage/DocumentInsightsVisualization";
 // Lazy load video only when needed
 
 export const Homepage = () => {
@@ -126,76 +127,9 @@ export const Homepage = () => {
                   
                 </div>
 
-                {/* Right Container - Hobson Delivers */}
+                {/* Right Container - Document to Insights Visualization */}
                 <div className="relative mt-[5px]">
-                  
-                  {/* Timeline Container */}
-                  <div className="relative">
-                    {/* Vertical Timeline Line */}
-                    <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-fuchsia-400 via-fuchsia-300 to-fuchsia-200"></div>
-                    
-                    <div className="space-y-6">
-                      {/* Item 1 */}
-                      <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
-                          <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
-                        </div>
-                        <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
-                          <p className="text-foreground font-medium leading-relaxed">
-                            Instant answers from your property portfolio data — no digging, just clarity.
-                          </p>
-                        </div>
-                      </div>
-                      
-                      {/* Item 2 */}
-                      <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
-                          <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
-                        </div>
-                        <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
-                          <p className="text-foreground font-medium leading-relaxed">
-                            Real-time insights on your properties — make confident decisions as situations change.
-                          </p>
-                        </div>
-                      </div>
-                      
-                      {/* Item 3 */}
-                      <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
-                          <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
-                        </div>
-                        <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
-                          <p className="text-foreground font-medium leading-relaxed">
-                            Smarter analysis using all your property documents and market data — complete context in every answer.
-                          </p>
-                        </div>
-                      </div>
-                      
-                      {/* Item 4 */}
-                      <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
-                          <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
-                        </div>
-                        <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
-                          <p className="text-foreground font-medium leading-relaxed">
-                            Significantly less cost than traditional property software — easier to use, too.
-                          </p>
-                        </div>
-                      </div>
-                      
-                      {/* Item 5 */}
-                      <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-fuchsia-100 rounded-full flex items-center justify-center group-hover:bg-fuchsia-200 transition-colors duration-300 shadow-lg border border-fuchsia-300">
-                          <div className="w-2 h-2 bg-fuchsia-600 rounded-full"></div>
-                        </div>
-                        <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
-                          <p className="text-foreground font-medium leading-relaxed">
-                            A proactive and reactive property colleague — prompting action and responding instantly, 24/7.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <DocumentInsightsVisualization />
                 </div>
 
               </div>
