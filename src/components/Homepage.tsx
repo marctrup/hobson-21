@@ -38,13 +38,7 @@ export const Homepage = () => {
         {/* Preload critical assets */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
         <link rel="preload" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
-        <link rel="preload" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" as="image" />
         <link rel="prefetch" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
-        <link rel="preload" href="/lovable-uploads/91a70bf6-ddc6-4a0c-a69e-7e01a2ded605.png" as="image" />
-        {/* Video optimization */}
-        <link rel="preconnect" href="https://player.vimeo.com" />
-        <link rel="preconnect" href="https://vimeo.com" />
-        <link rel="dns-prefetch" href="https://player.vimeo.com" />
         <link rel="dns-prefetch" href="//player.vimeo.com" />
         <link rel="dns-prefetch" href="//vimeo.com" />
         <link rel="dns-prefetch" href="//f.vimeocdn.com" />
@@ -137,24 +131,14 @@ export const Homepage = () => {
                     <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
                     border: '10px solid #f0f0f0'
                   }} onClick={() => setVideoDialogOpen(true)}>
-                      <link rel="preload" as="image" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" />
-                      <img 
-                        src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" 
-                        alt="Georgia - Hobson AI Assistant" 
-                        className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
-                        style={{
-                          objectPosition: 'center 20%'
-                        }} 
-                        width="506" 
-                        height="338" 
-                        loading="eager"
-                        decoding="async"
-                      />
+                      <img src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" alt="Georgia - Hobson AI Assistant" className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" style={{
+                      objectPosition: 'center 20%'
+                    }} width="506" height="338" loading="eager" />
                     </div>
                     
                     {/* Text under video */}
                     <div className="mt-4 text-center">
-                      <p className="text-lg text-muted-foreground">Would you like Georgia to explain Hobson in more detail?</p>
+                      <p className="text-lg text-muted-foreground">Would you like Georgia to explain Hobson more detail?</p>
                     </div>
                   </div>
                   
@@ -162,15 +146,7 @@ export const Homepage = () => {
                   <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
                     <DialogContent className="max-w-4xl p-0 border-0">
                       <div className="aspect-video">
-                        <iframe 
-                          className="w-full h-full rounded-lg" 
-                          src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1&quality=auto&background=1&speed=1&dnt=1" 
-                          title="Meet Georgia - Property AI Assistant" 
-                          frameBorder="0" 
-                          allow="autoplay; fullscreen; picture-in-picture" 
-                          allowFullScreen 
-                          loading="lazy"
-                        />
+                        <iframe className="w-full h-full rounded-lg" src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1" title="Meet Georgia - Property AI Assistant" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
                       </div>
                     </DialogContent>
                   </Dialog>
