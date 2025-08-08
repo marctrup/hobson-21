@@ -154,7 +154,7 @@ export const Homepage = () => {
                     
                     <div className="space-y-6">
                       {/* Item 1 */}
-                      <div className="relative flex items-start gap-4 group">
+                      <div className="relative flex items-center gap-4 group">
                         <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
                           <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
@@ -166,7 +166,7 @@ export const Homepage = () => {
                       </div>
                       
                       {/* Item 2 */}
-                      <div className="relative flex items-start gap-4 group">
+                      <div className="relative flex items-center gap-4 group">
                         <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
                           <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
@@ -178,7 +178,7 @@ export const Homepage = () => {
                       </div>
                       
                       {/* Item 3 */}
-                      <div className="relative flex items-start gap-4 group">
+                      <div className="relative flex items-center gap-4 group">
                         <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
                           <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
@@ -190,7 +190,7 @@ export const Homepage = () => {
                       </div>
                       
                       {/* Item 4 */}
-                      <div className="relative flex items-start gap-4 group">
+                      <div className="relative flex items-center gap-4 group">
                         <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
                           <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
@@ -202,7 +202,7 @@ export const Homepage = () => {
                       </div>
                       
                       {/* Item 5 */}
-                      <div className="relative flex items-start gap-4 group">
+                      <div className="relative flex items-center gap-4 group">
                         <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
                           <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
