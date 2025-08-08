@@ -136,7 +136,7 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Hobson Delivers */}
-                <div className="relative">
+                <div className="relative mt-[10px]">
                   <div className="text-center mb-8">
                     <h2 className="text-3xl lg:text-4xl font-bold mb-2">
                       <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
