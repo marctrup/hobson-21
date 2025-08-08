@@ -2,7 +2,7 @@ import { FileText, ArrowRight, Brain, CheckCircle } from "lucide-react";
 
 export const DocumentInsightsVisualization = () => {
   return (
-    <div className="relative bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10">
+    <div className="relative bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 shadow-lg shadow-primary/10">
       {/* Header */}
       <div className="text-center mb-6">
         <h3 className="text-lg font-semibold text-foreground mb-2">From Documents to Instant Insights</h3>
