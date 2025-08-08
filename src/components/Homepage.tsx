@@ -128,15 +128,6 @@ export const Homepage = () => {
 
                 {/* Right Container - Hobson Delivers */}
                 <div className="relative mt-[5px]">
-                  {/* Header */}
-                  <div className="mb-8">
-                    <h2 className="text-3xl lg:text-4xl font-bold mb-2">
-                      <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                        Hobson Delivers
-                      </span>
-                    </h2>
-                    <p className="text-muted-foreground">Real results, right away</p>
-                  </div>
                   
                   {/* Timeline Container */}
                   <div className="relative">
