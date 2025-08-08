@@ -121,7 +121,7 @@ export const Homepage = () => {
                     </span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    AI-powered assistant that answers property questions with precise citations from your documents — delivering accuracy you can trust.
+                    AI-powered assistant that answers property questions and shows exactly where the answer came from — delivering accuracy you can trust.
                   </p>
                   
                 </div>
