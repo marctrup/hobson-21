@@ -38,6 +38,7 @@ export const Homepage = () => {
         {/* Preload critical assets */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
         <link rel="preload" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
+        <link rel="preload" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" as="image" fetchPriority="high" />
         <link rel="prefetch" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
         <link rel="dns-prefetch" href="//player.vimeo.com" />
         <link rel="dns-prefetch" href="//vimeo.com" />
@@ -131,9 +132,20 @@ export const Homepage = () => {
                     <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
                     border: '10px solid #f0f0f0'
                   }} onClick={() => setVideoDialogOpen(true)}>
-                      <img src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" alt="Georgia - Hobson AI Assistant" className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" style={{
-                      objectPosition: 'center 20%'
-                    }} width="506" height="338" loading="eager" />
+                      <link rel="preload" as="image" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" />
+                      <img 
+                        src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" 
+                        alt="Georgia - Hobson AI Assistant" 
+                        className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
+                        style={{
+                          objectPosition: 'center 20%'
+                        }} 
+                        width="506" 
+                        height="338" 
+                        loading="eager"
+                        decoding="async"
+                        fetchPriority="high"
+                      />
                     </div>
                     
                     {/* Text under video */}
