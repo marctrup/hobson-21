@@ -225,7 +225,7 @@ export const PropertyManagementVisualization = () => {
           <h4 className="text-sm font-bold text-purple-600 mb-3 uppercase tracking-wide">Hobson AI</h4>
           
           {/* Clean Answer Card */}
-          <div className="bg-white rounded-lg p-4 border border-primary/20 shadow-lg">
+          <div className="bg-gray-50 rounded-lg p-4 border border-primary/20 shadow-lg">
             <div className="text-sm font-normal text-foreground mb-3 font-sans min-h-[3rem]">
               {displayedText}
               {showCursor && <span className="inline-block w-0.5 h-4 bg-purple-600 ml-1 animate-pulse"></span>}
