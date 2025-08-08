@@ -121,7 +121,7 @@ export const Homepage = () => {
                     </span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    Hobson your AI property colleague that makes the important obvious — and the obvious obvious — instantly.
+                    Hobson — your AI property colleague making the important obvious, and the obvious effortless.
                   </p>
                   
                 </div>
