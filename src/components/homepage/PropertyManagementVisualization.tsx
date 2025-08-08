@@ -222,18 +222,15 @@ export const PropertyManagementVisualization = () => {
             </div>
             
             {/* Chat input area */}
-            <div className="flex items-center gap-2 mt-4 p-2 bg-white border border-border rounded-lg">
-              <div className="w-6 h-6 rounded-full border border-muted-foreground/40 flex items-center justify-center hover:border-muted-foreground cursor-pointer flex-shrink-0">
-                <Plus className="w-3 h-3 text-muted-foreground/60 hover:text-muted-foreground" />
+            <div className="flex items-center gap-2 mt-4 p-2 bg-amber-50 border border-border rounded-lg">
+              <div className="w-4 h-4 rounded-full border border-muted-foreground/40 flex items-center justify-center hover:border-muted-foreground cursor-pointer flex-shrink-0">
+                <Plus className="w-2 h-2 text-muted-foreground/60 hover:text-muted-foreground" />
               </div>
               <textarea 
                 placeholder="Ask another question..." 
                 className="flex-1 resize-none bg-transparent text-sm placeholder:text-muted-foreground border-none outline-none min-h-[24px] max-h-[100px]"
                 rows={1}
               />
-              <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 cursor-pointer flex-shrink-0">
-                <ArrowUp className="w-3 h-3 text-white" />
-              </div>
             </div>
           </div>
           
