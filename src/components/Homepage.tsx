@@ -132,15 +132,15 @@ export const Homepage = () => {
                   {/* Timeline Container */}
                   <div className="relative">
                     {/* Vertical Timeline Line */}
-                    <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-300 via-blue-200 to-blue-100"></div>
+                    <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-emerald-400 via-emerald-300 to-emerald-200"></div>
                     
                     <div className="space-y-6">
                       {/* Item 1 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300 shadow-sm border border-blue-200">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <div className="relative z-10 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center group-hover:bg-emerald-200 transition-colors duration-300 shadow-lg border border-emerald-300">
+                          <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
                         </div>
-                        <div className="flex-1 bg-gradient-to-r from-blue-50/80 to-transparent p-4 rounded-r-lg border-l-4 border-blue-300">
+                        <div className="flex-1 bg-gradient-to-r from-emerald-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-emerald-400">
                           <p className="text-foreground font-medium leading-relaxed">
                             Instant answers from your property portfolio data — no digging, just clarity.
                           </p>
@@ -149,10 +149,10 @@ export const Homepage = () => {
                       
                       {/* Item 2 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300 shadow-sm border border-blue-200">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <div className="relative z-10 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center group-hover:bg-emerald-200 transition-colors duration-300 shadow-lg border border-emerald-300">
+                          <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
                         </div>
-                        <div className="flex-1 bg-gradient-to-r from-blue-50/80 to-transparent p-4 rounded-r-lg border-l-4 border-blue-300">
+                        <div className="flex-1 bg-gradient-to-r from-emerald-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-emerald-400">
                           <p className="text-foreground font-medium leading-relaxed">
                             Real-time insights on your properties — make confident decisions as situations change.
                           </p>
@@ -161,10 +161,10 @@ export const Homepage = () => {
                       
                       {/* Item 3 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300 shadow-sm border border-blue-200">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <div className="relative z-10 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center group-hover:bg-emerald-200 transition-colors duration-300 shadow-lg border border-emerald-300">
+                          <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
                         </div>
-                        <div className="flex-1 bg-gradient-to-r from-blue-50/80 to-transparent p-4 rounded-r-lg border-l-4 border-blue-300">
+                        <div className="flex-1 bg-gradient-to-r from-emerald-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-emerald-400">
                           <p className="text-foreground font-medium leading-relaxed">
                             Smarter analysis using all your property documents and market data — complete context in every answer.
                           </p>
@@ -173,10 +173,10 @@ export const Homepage = () => {
                       
                       {/* Item 4 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300 shadow-sm border border-blue-200">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <div className="relative z-10 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center group-hover:bg-emerald-200 transition-colors duration-300 shadow-lg border border-emerald-300">
+                          <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
                         </div>
-                        <div className="flex-1 bg-gradient-to-r from-blue-50/80 to-transparent p-4 rounded-r-lg border-l-4 border-blue-300">
+                        <div className="flex-1 bg-gradient-to-r from-emerald-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-emerald-400">
                           <p className="text-foreground font-medium leading-relaxed">
                             Lower costs than traditional property software — more capability, less spend.
                           </p>
@@ -185,10 +185,10 @@ export const Homepage = () => {
                       
                       {/* Item 5 */}
                       <div className="relative flex items-center gap-4 group">
-                        <div className="relative z-10 w-8 h-8 bg-blue-50 rounded-full flex items-center justify-center group-hover:bg-blue-100 transition-colors duration-300 shadow-sm border border-blue-200">
-                          <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
+                        <div className="relative z-10 w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center group-hover:bg-emerald-200 transition-colors duration-300 shadow-lg border border-emerald-300">
+                          <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
                         </div>
-                        <div className="flex-1 bg-gradient-to-r from-blue-50/80 to-transparent p-4 rounded-r-lg border-l-4 border-blue-300">
+                        <div className="flex-1 bg-gradient-to-r from-emerald-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-emerald-400">
                           <p className="text-foreground font-medium leading-relaxed">
                             A virtual property colleague who&apos;s always informed — expert knowledge at your fingertips, 24/7.
                           </p>
