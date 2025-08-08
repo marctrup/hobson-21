@@ -165,9 +165,10 @@ export const Homepage = () => {
                 {/* Right Container - Clean Video Section */}
                 <div className="flex justify-center lg:justify-end mt-8 lg:mt-0">
                   <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
-                    <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative border-[8px] sm:border-[10px] border-white transition-transform duration-300 hover:scale-105"
+                    <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105"
+                         style={{ border: '5px solid white' }}
                          onClick={() => setVideoDialogOpen(true)}>
-                      <img 
+                      <img
                         src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
                         alt="Georgia - Hobson AI Assistant"
                         className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90"
