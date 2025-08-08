@@ -45,14 +45,14 @@ export const PropertyManagementVisualization = () => {
 
           <div className="space-y-1 text-xs text-muted-foreground">
             <div className="flex items-center justify-center gap-1">
-              <span>Manual extraction</span>
+              <span className="font-bold">Manual extraction</span>
               <ArrowRight className="w-3 h-3" />
-              <span>Store in system</span>
+              <span className="font-bold">Store in system</span>
             </div>
             <div className="flex items-center justify-center gap-1">
-              <span>Search</span>
+              <span className="font-bold">Search</span>
               <ArrowRight className="w-3 h-3" />
-              <span>Repeat</span>
+              <span className="font-bold">Repeat</span>
             </div>
           </div>
           
