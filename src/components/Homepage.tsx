@@ -121,7 +121,7 @@ export const Homepage = () => {
                     </span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    Meet Hobson - the AI assistant that simply knows what needs doing in your property business.
+                    The AI colleague that makes the important obvious — and the obvious obvious — instantly.
                   </p>
                   
                   {/* Pilot Scheme Link */}
