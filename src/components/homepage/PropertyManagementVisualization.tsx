@@ -20,25 +20,25 @@ export const PropertyManagementVisualization = () => {
             {/* Process Icons */}
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
               <div className="bg-background border border-border rounded-full p-2">
-                <UserCheck className="w-4 h-4 text-muted-foreground" />
+                <UserCheck className="w-4 h-4 text-blue-600" />
               </div>
             </div>
             
             <div className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2">
               <div className="bg-background border border-border rounded-full p-2">
-                <FolderOpen className="w-4 h-4 text-yellow-600" />
+                <FolderOpen className="w-4 h-4 text-orange-600" />
               </div>
             </div>
             
             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2">
               <div className="bg-background border border-border rounded-full p-2">
-                <Search className="w-4 h-4 text-muted-foreground" />
+                <Search className="w-4 h-4 text-green-600" />
               </div>
             </div>
             
             <div className="absolute left-0 top-1/2 transform -translate-x-2 -translate-y-1/2">
               <div className="bg-background border border-border rounded-full p-2">
-                <RotateCcw className="w-4 h-4 text-muted-foreground" />
+                <RotateCcw className="w-4 h-4 text-purple-600" />
               </div>
             </div>
           </div>
