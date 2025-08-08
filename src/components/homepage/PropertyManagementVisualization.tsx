@@ -15,7 +15,7 @@ export const PropertyManagementVisualization = () => {
           
           {/* Circular Process */}
           <div className="relative w-32 h-32 mx-auto mb-4">
-            <div className="absolute inset-0 border-2 border-dashed border-muted-foreground/30 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
+            <div className="absolute inset-0 border-2 border-dashed border-purple-300 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
             
             {/* Process Icons */}
             <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
