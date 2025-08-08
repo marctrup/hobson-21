@@ -14,17 +14,13 @@ export const Homepage = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [videoDialogOpen, setVideoDialogOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
-
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>AI Property Management Software | Document Intelligence | Hobson AI</title>
         <meta name="description" content="Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions. AI-Document Intelligence for the Property Industry." />
@@ -59,12 +55,7 @@ export const Homepage = () => {
               {/* Logo */}
               <div className="relative">
                 <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage
-                    src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
-                    alt="Hobson's Choice AI - AI-powered property management software company logo"
-                    className="h-12 md:h-16 w-auto"
-                    priority
-                  />
+                  <OptimizedImage src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" alt="Hobson's Choice AI - AI-powered property management software company logo" className="h-12 md:h-16 w-auto" priority />
                 </Link>
                 {/* Beta Badge - Positioned above the 'n' in Hobson */}
                 <div className="absolute top-[4px] right-[-32px] md:right-[-27px]">
@@ -91,56 +82,28 @@ export const Homepage = () => {
               </nav>
 
               {/* Mobile Menu Button */}
-              <SimpleButton
-                variant="ghost"
-                size="icon"
-                className="md:hidden bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-md"
-                onClick={toggleMobileMenu}
-                aria-label="Toggle mobile menu"
-              >
-                {isMobileMenuOpen ? (
-                  <X className="h-6 w-6 text-purple-500" strokeWidth={1.5} />
-                ) : (
-                  <Menu className="h-6 w-6 text-purple-500" strokeWidth={1.5} />
-                )}
+              <SimpleButton variant="ghost" size="icon" className="md:hidden bg-gray-100 hover:bg-gray-200 border border-gray-200 rounded-md" onClick={toggleMobileMenu} aria-label="Toggle mobile menu">
+                {isMobileMenuOpen ? <X className="h-6 w-6 text-purple-500" strokeWidth={1.5} /> : <Menu className="h-6 w-6 text-purple-500" strokeWidth={1.5} />}
               </SimpleButton>
             </div>
 
             {/* Mobile Navigation Menu */}
-            {isMobileMenuOpen && (
-              <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
+            {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
-                  <Link 
-                    to="/features" 
-                    className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                    onClick={closeMobileMenu}
-                  >
+                  <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Features
                   </Link>
-                  <Link 
-                    to="/blog" 
-                    className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                    onClick={closeMobileMenu}
-                  >
+                  <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Blog
                   </Link>
-                  <Link 
-                    to="/about" 
-                    className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                    onClick={closeMobileMenu}
-                  >
+                  <Link to="/about" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     About
                   </Link>
-                  <Link 
-                    to="/contact" 
-                    className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                    onClick={closeMobileMenu}
-                  >
+                  <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Contact
                   </Link>
                 </div>
-              </nav>
-            )}
+              </nav>}
           </div>
         </header>
 
@@ -165,23 +128,17 @@ export const Homepage = () => {
                 {/* Right Container - Clean Video Section */}
                 <div className="flex justify-center lg:justify-end mt-8 lg:mt-0">
                   <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
-                    <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105"
-                         style={{ border: '10px solid #f0f0f0' }}
-                         onClick={() => setVideoDialogOpen(true)}>
-                      <img
-                        src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
-                        alt="Georgia - Hobson AI Assistant"
-                        className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90"
-                        style={{ objectPosition: 'center 20%' }}
-                        width="506"
-                        height="338"
-                        loading="eager"
-                      />
+                    <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
+                    border: '10px solid #f0f0f0'
+                  }} onClick={() => setVideoDialogOpen(true)}>
+                      <img src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" alt="Georgia - Hobson AI Assistant" className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" style={{
+                      objectPosition: 'center 20%'
+                    }} width="506" height="338" loading="eager" />
                     </div>
                     
                     {/* Text under video */}
                     <div className="mt-4 text-center">
-                      <p className="text-lg text-muted-foreground">Would like Georgia to explain?</p>
+                      <p className="text-lg text-muted-foreground">Would you like Georgia to explain Hobson more detail?</p>
                     </div>
                   </div>
                   
@@ -189,14 +146,7 @@ export const Homepage = () => {
                   <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
                     <DialogContent className="max-w-4xl p-0 border-0">
                       <div className="aspect-video">
-                        <iframe
-                          className="w-full h-full rounded-lg"
-                          src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1"
-                          title="Meet Georgia - Property AI Assistant"
-                          frameBorder="0"
-                          allow="autoplay; fullscreen; picture-in-picture"
-                          allowFullScreen
-                        />
+                        <iframe className="w-full h-full rounded-lg" src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1" title="Meet Georgia - Property AI Assistant" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
                       </div>
                     </DialogContent>
                   </Dialog>
@@ -218,7 +168,10 @@ export const Homepage = () => {
 
               <div className="grid md:grid-cols-3 gap-4 md:gap-8 max-w-7xl mx-auto">
                 {/* Top Row */}
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{
+                contentVisibility: 'auto',
+                containIntrinsicSize: '300px'
+              }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Brain className="w-8 h-8 text-primary" />
                   </div>
@@ -228,7 +181,10 @@ export const Homepage = () => {
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{
+                contentVisibility: 'auto',
+                containIntrinsicSize: '300px'
+              }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Zap className="w-8 h-8 text-primary" />
                   </div>
@@ -238,7 +194,10 @@ export const Homepage = () => {
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{
+                contentVisibility: 'auto',
+                containIntrinsicSize: '300px'
+              }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Search className="w-8 h-8 text-primary" />
                   </div>
@@ -249,7 +208,10 @@ export const Homepage = () => {
                 </div>
                 
                 {/* Bottom Row */}
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{
+                contentVisibility: 'auto',
+                containIntrinsicSize: '300px'
+              }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Shield className="w-8 h-8 text-primary" />
                   </div>
@@ -259,7 +221,10 @@ export const Homepage = () => {
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{
+                contentVisibility: 'auto',
+                containIntrinsicSize: '300px'
+              }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Users className="w-8 h-8 text-primary" />
                   </div>
@@ -269,7 +234,10 @@ export const Homepage = () => {
                   </p>
                 </div>
                 
-                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}>
+                <div className="text-center bg-white rounded-xl p-4 md:p-8 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer" style={{
+                contentVisibility: 'auto',
+                containIntrinsicSize: '300px'
+              }}>
                   <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
                     <Globe className="w-8 h-8 text-primary" />
                   </div>
@@ -429,11 +397,7 @@ export const Homepage = () => {
                   Join our exclusive pilot program and be among the first to experience the future of property intelligence.
                 </p>
                 <div className="mb-8">
-                  <SimpleButton 
-                    size="lg" 
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium"
-                    asChild
-                  >
+                  <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
                     <Link to="/pilot_form">Join our free pilot →</Link>
                   </SimpleButton>
                 </div>
@@ -442,12 +406,10 @@ export const Homepage = () => {
           </section>
 
           {/* Scroll Video */}
-          <div className="container mx-auto px-4 mb-5" style={{ marginTop: '-40px' }}>
-            <ScrollVideoPlayer 
-              videoId="1108176938"
-              title="Hobson AI Pilot Program"
-              description="Learn more about our pilot program"
-            />
+          <div className="container mx-auto px-4 mb-5" style={{
+          marginTop: '-40px'
+        }}>
+            <ScrollVideoPlayer videoId="1108176938" title="Hobson AI Pilot Program" description="Learn more about our pilot program" />
             <div className="text-center mt-4">
               <p className="text-lg text-muted-foreground">Want to know more about the pilot?</p>
             </div>
@@ -479,11 +441,7 @@ export const Homepage = () => {
               <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
                 <div>
-                  <OptimizedImage
-                    src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
-                    alt="Hobson's Choice AI logo"
-                    className="h-12 w-auto"
-                  />
+                  <OptimizedImage src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" alt="Hobson's Choice AI logo" className="h-12 w-auto" />
                 </div>
                 
                 {/* Product Column */}
@@ -519,6 +477,5 @@ export const Homepage = () => {
           </footer>
         </main>
       </div>
-    </>
-  );
+    </>;
 };
