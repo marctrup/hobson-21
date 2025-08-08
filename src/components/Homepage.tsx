@@ -190,7 +190,7 @@ export const Homepage = () => {
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-fuchsia-50/90 to-transparent p-4 rounded-r-lg border-l-4 border-fuchsia-400">
                           <p className="text-foreground font-medium leading-relaxed">
-                            A proactive and reactive virtual property colleague — alerting you when action is needed and responding instantly to your requests, 24/7.
+                            A proactive and reactive virtual property colleague — telling you what to do and acting on it instantly, 24/7.
                           </p>
                         </div>
                       </div>
