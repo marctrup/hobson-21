@@ -20,18 +20,18 @@ export const FeaturesSection = () => {
     },
     {
       icon: Shield,
-      title: "Enterprise Security",
-      description: "Bank-level security ensures your sensitive property data is always protected."
+      title: "Bank-Grade Security",
+      description: "Your sensitive property data is protected with enterprise-level security measures."
     },
     {
       icon: Users,
       title: "Team Collaboration",
-      description: "Share insights and work together seamlessly across your entire organization."
+      description: "Share insights and collaborate seamlessly across your entire property team."
     },
     {
       icon: Globe,
-      title: "Always Available",
-      description: "Access your AI assistant 24/7 from anywhere in the world on any device."
+      title: "Cloud-Based",
+      description: "Access your property intelligence from anywhere, on any device, at any time."
     }
   ];
 
@@ -42,9 +42,6 @@ export const FeaturesSection = () => {
           <h2 id="features-heading" className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
             Why Choose Hobson AI?
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Our AI-powered platform that revolutionises how property professionals work with documents and data.
-          </p>
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
