@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight } from "lucide-react";
+import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight, MessageCircle } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
@@ -111,7 +111,7 @@ export const Homepage = () => {
           {/* Hero Section - Two Column Layout */}
           <section className="pt-16 pb-4" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4 -mt-[10px]">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 items-center py-4 lg:py-12 -mt-[5px]">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-4 lg:py-12 -mt-[5px]">
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-6">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
@@ -132,6 +132,74 @@ export const Homepage = () => {
                     >
                       Want to know more about our free pilot scheme?
                     </a>
+                  </div>
+                </div>
+
+                {/* Right Container - Feature Interface Preview */}
+                <div className="flex justify-center lg:justify-end mt-8 lg:mt-0">
+                  <div className="w-full max-w-[600px]">
+                    <div className="relative">
+                      {/* Floating elements for depth */}
+                      <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full blur-xl animate-pulse"></div>
+                      <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+                      
+                      {/* Interface Preview */}
+                      <div className="bg-background/90 backdrop-blur-xl rounded-xl border border-primary/20 shadow-xl shadow-primary/10 overflow-hidden transform hover:scale-105 transition-all duration-300">
+                        <div className="flex flex-row h-[300px] sm:h-[400px]">
+                          
+                          {/* Left Chat Panel Preview */}
+                          <div className="w-1/2 bg-background/50 border-r border-primary/10 p-3 sm:p-4 flex flex-col">
+                            {/* Chat Header */}
+                            <div className="flex items-center gap-2 mb-4 pb-3 border-b border-primary/10">
+                              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-primary to-primary/70 rounded-full flex items-center justify-center">
+                                <MessageCircle className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                              </div>
+                              <div>
+                                <h3 className="font-semibold text-foreground text-xs sm:text-sm">Chat with Hobson</h3>
+                                <div className="flex items-center gap-1">
+                                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                                  <span className="text-xs text-muted-foreground">Online</span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Chat Messages Preview */}
+                            <div className="flex-1 space-y-2 mb-3">
+                              <div className="bg-primary/10 rounded-lg p-2 sm:p-3 animate-fade-in">
+                                <p className="text-xs">👋 Hi there!</p>
+                                <p className="text-xs">Ready to streamline your workload?</p>
+                              </div>
+                              
+                              <div className="space-y-1">
+                                <p className="text-xs font-medium text-muted-foreground">Suggested actions:</p>
+                                <div className="bg-muted/30 rounded p-2 text-xs">
+                                  List key dates for Unit 2...
+                                </div>
+                                <div className="bg-muted/30 rounded p-2 text-xs">
+                                  Which leases have breaks...
+                                </div>
+                              </div>
+                            </div>
+                            
+                            {/* Chat Input Preview */}
+                            <div className="border border-primary/20 rounded p-2 bg-muted/20">
+                              <p className="text-xs text-muted-foreground">Ask Hobson...</p>
+                            </div>
+                          </div>
+                          
+                          {/* Right Map Panel Preview */}
+                          <div className="w-1/2 bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center">
+                            <div className="text-center p-2 sm:p-4">
+                              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary/10 rounded-lg flex items-center justify-center mx-auto mb-2 sm:mb-3">
+                                <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
+                              </div>
+                              <p className="text-xs sm:text-sm font-medium text-foreground">Interactive Map</p>
+                              <p className="text-xs text-muted-foreground">Portfolio Visualization</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
