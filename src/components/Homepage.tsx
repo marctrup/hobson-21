@@ -119,7 +119,7 @@ export const Homepage = () => {
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Accurate property answers, straight from the original documents.</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    Accurate property answers, straight from the original documents.
+                    AI-powered assistant that answers property questions with citations from your documents — delivering accuracy you can trust.
                   </p>
                   
                 </div>
