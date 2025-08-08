@@ -234,7 +234,7 @@ export const PropertyManagementVisualization = () => {
         </div>
 
         {/* Right: The Future (Hobson) */}
-        <div className="text-center">
+        <div className="text-center transform perspective-1000 rotate-y-3 scale-98 shadow-2xl shadow-primary/25">
           <h4 className="text-sm font-bold text-purple-600 mb-3 uppercase tracking-wide">Hobson AI</h4>
           
           {/* Clean Answer Card */}
