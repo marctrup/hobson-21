@@ -124,7 +124,9 @@ export const PropertyManagementVisualization = () => {
               Next rent review:
             </div>
             <div className="text-lg font-bold text-primary mb-3">
-              14 September 2026
+              14/09/26<br />
+              Knight Frank<br />
+              23 Hampstead High Street NW3
             </div>
             
             <div className="text-left space-y-2">
