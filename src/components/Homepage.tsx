@@ -228,7 +228,7 @@ export const Homepage = () => {
                 {/* Left Container - How It Works */}
                 <div className="border-2 border-red-500">
                   <div className="mb-8">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-2 text-foreground">How It Works</h2>
+                    <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
                     <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
                   </div>
 
@@ -278,7 +278,7 @@ export const Homepage = () => {
                 <div className="border-2 border-blue-500">
                   <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
                     <div className="mb-8">
-                      <h2 className="text-3xl md:text-4xl font-bold mb-2 text-foreground">Meet Georgia</h2>
+                      <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">Meet Georgia</h2>
                       <p className="text-xl text-muted-foreground">Want more information?</p>
                     </div>
                     <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
