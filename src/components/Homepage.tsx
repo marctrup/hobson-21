@@ -38,8 +38,12 @@ export const Homepage = () => {
         {/* Preload critical assets */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
         <link rel="preload" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
-        <link rel="preload" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" as="image" fetchPriority="high" />
+        <link rel="preload" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" as="image" />
         <link rel="prefetch" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
+        {/* Video optimization */}
+        <link rel="preconnect" href="https://player.vimeo.com" />
+        <link rel="preconnect" href="https://vimeo.com" />
+        <link rel="dns-prefetch" href="https://player.vimeo.com" />
         <link rel="dns-prefetch" href="//player.vimeo.com" />
         <link rel="dns-prefetch" href="//vimeo.com" />
         <link rel="dns-prefetch" href="//f.vimeocdn.com" />
@@ -144,7 +148,6 @@ export const Homepage = () => {
                         height="338" 
                         loading="eager"
                         decoding="async"
-                        fetchPriority="high"
                       />
                     </div>
                     
@@ -158,7 +161,15 @@ export const Homepage = () => {
                   <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
                     <DialogContent className="max-w-4xl p-0 border-0">
                       <div className="aspect-video">
-                        <iframe className="w-full h-full rounded-lg" src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1" title="Meet Georgia - Property AI Assistant" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
+                        <iframe 
+                          className="w-full h-full rounded-lg" 
+                          src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1&quality=auto&background=1&speed=1&dnt=1" 
+                          title="Meet Georgia - Property AI Assistant" 
+                          frameBorder="0" 
+                          allow="autoplay; fullscreen; picture-in-picture" 
+                          allowFullScreen 
+                          loading="lazy"
+                        />
                       </div>
                     </DialogContent>
                   </Dialog>
