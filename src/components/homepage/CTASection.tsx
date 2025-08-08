@@ -24,7 +24,7 @@ export const CTASection = () => {
                   to="/contact"
                   title="Get in touch to start your real estate ai journey"
                 >
-                  Join our free pilot
+                  Join our pilot
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
             </Button>
