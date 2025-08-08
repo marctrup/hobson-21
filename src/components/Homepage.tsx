@@ -223,7 +223,7 @@ export const Homepage = () => {
           {/* How It Works & Video Section - Two Column Layout */}
           <section className="py-8 md:py-16">
             <div className="container mx-auto px-4">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                 
                 {/* Left Container - How It Works */}
                 <div>
@@ -275,7 +275,7 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Georgia Video */}
-                <div className="flex justify-center lg:justify-end">
+                <div>
                   <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
                     <div className="mb-8">
                       <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">Meet Georgia</h2>
