@@ -24,7 +24,7 @@ export const Header = () => {
             <Link to="/property-management-software" onClick={closeMobileMenu}>
               <img 
                 src={hobsonLogo} 
-                alt="Hobson's Choice AI - AI-powered property management software company logo" 
+                alt="Hobson's AI - AI-powered property management software company logo" 
                 className="h-12 md:h-16" 
                 loading="eager"
               />

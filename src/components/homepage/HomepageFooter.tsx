@@ -8,7 +8,7 @@ export const HomepageFooter = () => {
         <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
           <div className="col-span-2">
             <div className="mb-4">
-              <img src={hobsonLogo} alt="Hobson's Choice AI" className="h-16" loading="lazy" decoding="async" />
+              <img src={hobsonLogo} alt="Hobson's AI" className="h-16" loading="lazy" decoding="async" />
             </div>
           </div>
           
