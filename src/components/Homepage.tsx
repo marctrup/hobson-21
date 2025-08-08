@@ -137,64 +137,81 @@ export const Homepage = () => {
 
                 {/* Right Container - Hobson Delivers */}
                 <div className="relative mt-[5px]">
-                  <div className="text-center mb-8">
+                  {/* Header */}
+                  <div className="mb-8">
                     <h2 className="text-3xl lg:text-4xl font-bold mb-2">
                       <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                         Hobson Delivers
                       </span>
                     </h2>
-                    <div className="w-16 h-1 bg-gradient-to-r from-primary to-primary/70 mx-auto rounded-full"></div>
+                    <p className="text-muted-foreground">Real results, right away</p>
                   </div>
                   
-                  <div className="space-y-6">
-                    {/* Benefit 1 */}
-                    <div className="flex items-center gap-4 group">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                        <Zap className="w-6 h-6 text-white" />
-                      </div>
-                      <p className="text-foreground leading-relaxed group-hover:text-primary transition-colors duration-300">
-                        Instant answers from your portfolio data — no digging, just clarity.
-                      </p>
-                    </div>
+                  {/* Timeline Container */}
+                  <div className="relative">
+                    {/* Vertical Timeline Line */}
+                    <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-primary/20"></div>
                     
-                    {/* Benefit 2 */}
-                    <div className="flex items-center gap-4 group">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                        <TrendingUp className="w-6 h-6 text-white" />
+                    <div className="space-y-6">
+                      {/* Item 1 */}
+                      <div className="relative flex items-start gap-6 group">
+                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                        </div>
+                        <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
+                          <p className="text-foreground font-medium leading-relaxed">
+                            Instant answers from your portfolio data — no digging, just clarity.
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-foreground leading-relaxed group-hover:text-primary transition-colors duration-300">
-                        Real-time insights for confident decisions — see what matters as it happens.
-                      </p>
-                    </div>
-                    
-                    {/* Benefit 3 */}
-                    <div className="flex items-center gap-4 group">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                        <Brain className="w-6 h-6 text-white" />
+                      
+                      {/* Item 2 */}
+                      <div className="relative flex items-start gap-6 group">
+                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                        </div>
+                        <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
+                          <p className="text-foreground font-medium leading-relaxed">
+                            Real-time insights for confident decisions — see what matters as it happens.
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-foreground leading-relaxed group-hover:text-primary transition-colors duration-300">
-                        Smarter analysis using all your documents and external data — complete context in every answer.
-                      </p>
-                    </div>
-                    
-                    {/* Benefit 4 */}
-                    <div className="flex items-center gap-4 group">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                        <CreditCard className="w-6 h-6 text-white" />
+                      
+                      {/* Item 3 */}
+                      <div className="relative flex items-start gap-6 group">
+                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                        </div>
+                        <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
+                          <p className="text-foreground font-medium leading-relaxed">
+                            Smarter analysis using all your documents and external data — complete context in every answer.
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-foreground leading-relaxed group-hover:text-primary transition-colors duration-300">
-                        Lower costs than traditional software — more capability, less spend.
-                      </p>
-                    </div>
-                    
-                    {/* Benefit 5 */}
-                    <div className="flex items-center gap-4 group">
-                      <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
-                        <Users className="w-6 h-6 text-white" />
+                      
+                      {/* Item 4 */}
+                      <div className="relative flex items-start gap-6 group">
+                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                        </div>
+                        <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
+                          <p className="text-foreground font-medium leading-relaxed">
+                            Lower costs than traditional software — more capability, less spend.
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-foreground leading-relaxed group-hover:text-primary transition-colors duration-300">
-                        A virtual colleague who&apos;s always informed — knowledge at your fingertips, 24/7.
-                      </p>
+                      
+                      {/* Item 5 */}
+                      <div className="relative flex items-start gap-6 group">
+                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
+                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                        </div>
+                        <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
+                          <p className="text-foreground font-medium leading-relaxed">
+                            A virtual colleague who&apos;s always informed — knowledge at your fingertips, 24/7.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
