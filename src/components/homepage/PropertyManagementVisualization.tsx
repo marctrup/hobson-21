@@ -11,7 +11,7 @@ export const PropertyManagementVisualization = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
         {/* Left: The Pain (Today's World) */}
         <div className="text-center">
-          <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
+          <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
           
           {/* Circular Process */}
           <div className="relative w-32 h-32 mx-auto mb-4">
