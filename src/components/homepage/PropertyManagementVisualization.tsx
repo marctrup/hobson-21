@@ -10,8 +10,8 @@ export const PropertyManagementVisualization = () => {
   const floatingDocuments = useMemo(() => {
     return Array.from({ length: 16 }).map((_, i) => ({
       id: i,
-      left: Math.random() * 80 + 5,
-      top: Math.random() * 70 + 10,
+      left: Math.random() * 160 + 10, // Fixed pixel positions instead of percentages
+      top: Math.random() * 140 + 20,
       rotation: Math.random() * 40 - 20,
       zIndex: Math.floor(Math.random() * 3),
       duration: 3 + Math.random() * 4,
@@ -109,8 +109,8 @@ export const PropertyManagementVisualization = () => {
                 style={{
                   width: '20px',
                   height: '24px',
-                  left: `${doc.left}%`,
-                  top: `${doc.top}%`,
+                  left: `${doc.left}px`,
+                  top: `${doc.top}px`,
                   transform: `rotate(${doc.rotation}deg)`,
                   zIndex: doc.zIndex,
                   animation: `float-${doc.id % 4 + 1} ${doc.duration}s ease-in-out infinite`,
