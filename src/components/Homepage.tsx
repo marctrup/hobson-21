@@ -150,13 +150,13 @@ export const Homepage = () => {
                   {/* Timeline Container */}
                   <div className="relative">
                     {/* Vertical Timeline Line */}
-                    <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-primary/50 to-primary/20"></div>
+                    <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary/30 via-primary/20 to-primary/10"></div>
                     
                     <div className="space-y-6">
                       {/* Item 1 */}
-                      <div className="relative flex items-start gap-6 group">
-                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="relative flex items-start gap-4 group">
+                        <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
+                          <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
@@ -166,9 +166,9 @@ export const Homepage = () => {
                       </div>
                       
                       {/* Item 2 */}
-                      <div className="relative flex items-start gap-6 group">
-                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="relative flex items-start gap-4 group">
+                        <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
+                          <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
@@ -178,9 +178,9 @@ export const Homepage = () => {
                       </div>
                       
                       {/* Item 3 */}
-                      <div className="relative flex items-start gap-6 group">
-                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="relative flex items-start gap-4 group">
+                        <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
+                          <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
@@ -190,9 +190,9 @@ export const Homepage = () => {
                       </div>
                       
                       {/* Item 4 */}
-                      <div className="relative flex items-start gap-6 group">
-                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="relative flex items-start gap-4 group">
+                        <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
+                          <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
@@ -202,9 +202,9 @@ export const Homepage = () => {
                       </div>
                       
                       {/* Item 5 */}
-                      <div className="relative flex items-start gap-6 group">
-                        <div className="relative z-10 w-12 h-12 bg-gradient-to-br from-primary to-primary/80 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                          <div className="w-3 h-3 bg-white rounded-full"></div>
+                      <div className="relative flex items-start gap-4 group">
+                        <div className="relative z-10 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center group-hover:bg-primary/30 transition-colors duration-300">
+                          <div className="w-2 h-2 bg-primary/60 rounded-full"></div>
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
