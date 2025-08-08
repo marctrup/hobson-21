@@ -29,7 +29,7 @@ export const PropertyManagementVisualization = () => {
         <h3 className="text-2xl font-normal text-foreground mb-2">When is the next rent review?</h3>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1.05fr] gap-8 items-center relative">
         {/* Left: The Pain (Today's World) */}
         <div className="text-center">
           <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
