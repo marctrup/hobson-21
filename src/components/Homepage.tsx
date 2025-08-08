@@ -130,7 +130,7 @@ export const Homepage = () => {
                       href="#pilot-section" 
                       className="inline-flex items-center gap-2 text-purple-800 hover:text-purple-900 hover:underline transition-colors text-lg font-medium cursor-pointer"
                     >
-                      Interested in joining our pilot scheme?
+                      Interested in knowing more about our pilot scheme?
                     </a>
                   </div>
                 </div>
