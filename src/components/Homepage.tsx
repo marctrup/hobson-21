@@ -111,8 +111,9 @@ export const Homepage = () => {
           {/* Hero Section - Two Column Layout */}
           <section className="pt-16 pb-4" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4 -mt-[10px]">
-              <div className="flex justify-center items-center">
-                <div className="space-y-6 text-center max-w-4xl">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-4 lg:py-12 -mt-[5px]">
+                {/* Left Container - H1 and Strap Line */}
+                <div className="space-y-6">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="text-foreground">When does the bleeding obvious become the </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
@@ -131,6 +132,63 @@ export const Homepage = () => {
                     >
                       Want to know more about our free pilot scheme?
                     </a>
+                  </div>
+                </div>
+
+                {/* Right Container - Hobson Delivers */}
+                <div className="relative">
+                  {/* Background decorations */}
+                  <div className="absolute -top-8 -right-8 w-32 h-32 bg-gradient-to-br from-primary/10 to-primary/5 rounded-full blur-2xl"></div>
+                  <div className="absolute -bottom-8 -left-8 w-24 h-24 bg-gradient-to-br from-secondary/10 to-secondary/5 rounded-full blur-xl"></div>
+                  
+                  <div className="relative bg-gradient-to-br from-background/95 to-background/80 backdrop-blur-sm border border-primary/10 rounded-2xl p-6 lg:p-8 shadow-xl">
+                    <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-6 text-center">
+                      <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                        Hobson Delivers
+                      </span>
+                    </h2>
+                    
+                    <div className="space-y-4">
+                      {/* Benefit 1 */}
+                      <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10 hover:bg-primary/10 transition-colors">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
+                        <p className="text-sm lg:text-base text-foreground leading-relaxed">
+                          Instant answers from your portfolio data — no digging, just clarity.
+                        </p>
+                      </div>
+                      
+                      {/* Benefit 2 */}
+                      <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10 hover:bg-primary/10 transition-colors">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
+                        <p className="text-sm lg:text-base text-foreground leading-relaxed">
+                          Real-time insights for confident decisions — see what matters as it happens.
+                        </p>
+                      </div>
+                      
+                      {/* Benefit 3 */}
+                      <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10 hover:bg-primary/10 transition-colors">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
+                        <p className="text-sm lg:text-base text-foreground leading-relaxed">
+                          Smarter analysis using all your documents and external data — complete context in every answer.
+                        </p>
+                      </div>
+                      
+                      {/* Benefit 4 */}
+                      <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10 hover:bg-primary/10 transition-colors">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
+                        <p className="text-sm lg:text-base text-foreground leading-relaxed">
+                          Lower costs than traditional software — more capability, less spend.
+                        </p>
+                      </div>
+                      
+                      {/* Benefit 5 */}
+                      <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5 border border-primary/10 hover:bg-primary/10 transition-colors">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-3 flex-shrink-0"></div>
+                        <p className="text-sm lg:text-base text-foreground leading-relaxed">
+                          A virtual colleague who&apos;s always informed — knowledge at your fingertips, 24/7.
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
