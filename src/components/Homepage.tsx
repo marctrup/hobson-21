@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart } from "lucide-react";
+import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
@@ -123,6 +123,17 @@ export const Homepage = () => {
                   <p className="text-xl text-muted-foreground leading-relaxed">
                     Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions.
                   </p>
+                  
+                  {/* Pilot Scheme Link */}
+                  <div className="mt-6">
+                    <a 
+                      href="#pilot-section" 
+                      className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 transition-colors text-lg font-medium group"
+                    >
+                      Interested in joining our pilot scheme?
+                      <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+                    </a>
+                  </div>
                 </div>
 
                 {/* Right Container - Clean Video Section */}
@@ -391,7 +402,7 @@ export const Homepage = () => {
 
 
           {/* CTA Section - Clean layout without card */}
-          <section className="py-8 md:py-24">
+          <section id="pilot-section" className="py-8 md:py-24">
             <div className="container mx-auto px-4">
               <div className="text-center max-w-4xl mx-auto">
                 <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground leading-tight">
