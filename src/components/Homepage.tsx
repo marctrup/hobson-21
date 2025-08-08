@@ -203,172 +203,91 @@ export const Homepage = () => {
             </div>
           </section>
 
-          {/* Video Section */}
+          {/* How It Works & Video Section - Two Column Layout */}
           <section className="py-8 md:py-16">
             <div className="container mx-auto px-4">
-              <div className="flex justify-center">
-                <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
-                  <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
-                    border: '10px solid #f0f0f0'
-                  }} onClick={() => setVideoDialogOpen(true)}>
-                    <OptimizedImage 
-                      src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" 
-                      alt="Georgia - Hobson AI Assistant" 
-                      className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
-                      width={506} 
-                      height={338}
-                    />
-                  </div>
-                  
-                  {/* Text under video */}
-                  <div className="mt-4 text-center">
-                    <p className="text-lg text-muted-foreground">Would you like Georgia to explain Hobson in more detail?</p>
-                  </div>
-                </div>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 
-                {/* Video Dialog */}
-                <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
-                  <DialogContent className="max-w-4xl p-0 border-0">
-                    <div className="aspect-video">
-                      <iframe className="w-full h-full rounded-lg" src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1" title="Meet Georgia - Property AI Assistant" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-            </div>
-          </section>
-
-          {/* Property Intelligence Section - Clean layout with large icons */}
-          <section className="py-5 md:py-16 bg-muted/30">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-8 md:mb-20">
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-                  Property Intelligence for the Industry
-                </h2>
-                <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                  One AI assistant for all your property documentation needs
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16 max-w-7xl mx-auto">
-                {/* Top Row */}
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <Building2 className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">Property Management</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Streamline tenant documentation and lease analysis
-                  </p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <TrendingUp className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">Property Sales</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Accelerate deal analysis and due diligence
-                  </p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <MapPin className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">Surveying</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Automate report generation and data extraction
-                  </p>
-                </div>
-                
-                {/* Bottom Row */}
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <PenTool className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">Planning</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Process planning documents and regulatory requirements
-                  </p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <CreditCard className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">Lending</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Speed up loan documentation and risk assessment
-                  </p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <Shield className="w-8 h-8 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">Compliance</h3>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Keep on top of repeat visits and documentation updates
-                  </p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          {/* How It Works Section - Connected steps with lines */}
-          <section className="py-5 md:py-16">
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-8 md:mb-16">
-                <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">How It Works</h2>
-                <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
-              </div>
-
-              <div className="max-w-6xl mx-auto">
-                {/* Connected Steps */}
-                <div className="relative">
-                  {/* Connection Line */}
-                  <div className="hidden md:block absolute top-8 left-1/2 transform -translate-x-1/2 w-full max-w-4xl">
-                    <div className="flex justify-between items-center px-16">
-                      <div className="flex-1 h-0.5 bg-primary/20"></div>
-                      <div className="w-16"></div>
-                      <div className="flex-1 h-0.5 bg-primary/20"></div>
-                    </div>
+                {/* Left Container - How It Works */}
+                <div>
+                  <div className="mb-8">
+                    <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">How It Works</h2>
+                    <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
                   </div>
 
-                  {/* Steps */}
-                  <div className="grid md:grid-cols-3 gap-6 md:gap-12">
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-8 relative z-10">
+                  <div className="space-y-8">
+                    {/* Step 1 */}
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg font-bold flex-shrink-0">
                         1
                       </div>
-                      <h3 className="text-2xl font-bold mb-4 text-foreground">Upload & Connect</h3>
-                      <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto">
-                        Upload your documents or connect your existing systems. Our AI instantly begins processing and indexing your content.
-                      </p>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2 text-foreground">Upload & Connect</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          Upload your documents or connect your existing systems. Our AI instantly begins processing and indexing your content.
+                        </p>
+                      </div>
                     </div>
                     
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-8 relative z-10">
+                    {/* Step 2 */}
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg font-bold flex-shrink-0">
                         2
                       </div>
-                      <h3 className="text-2xl font-bold mb-4 text-foreground">Ask Questions</h3>
-                      <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto">
-                        Ask natural language questions about your properties, leases, contracts, or any document content.
-                      </p>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2 text-foreground">Ask Questions</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          Ask natural language questions about your properties, leases, contracts, or any document content.
+                        </p>
+                      </div>
                     </div>
                     
-                    <div className="text-center">
-                      <div className="w-16 h-16 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-8 relative z-10">
+                    {/* Step 3 */}
+                    <div className="flex items-start gap-4">
+                      <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg font-bold flex-shrink-0">
                         3
                       </div>
-                      <h3 className="text-2xl font-bold mb-4 text-foreground">Get Insights</h3>
-                      <p className="text-muted-foreground leading-relaxed max-w-sm mx-auto">
-                        Receive instant, accurate answers with full source citations and actionable recommendations.
-                      </p>
+                      <div>
+                        <h3 className="text-xl font-bold mb-2 text-foreground">Get Insights</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          Receive instant, accurate answers with full source citations and actionable recommendations.
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
+
+                {/* Right Container - Georgia Video */}
+                <div className="flex justify-center lg:justify-end">
+                  <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
+                    <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
+                      border: '10px solid #f0f0f0'
+                    }} onClick={() => setVideoDialogOpen(true)}>
+                      <OptimizedImage 
+                        src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" 
+                        alt="Georgia - Hobson AI Assistant" 
+                        className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
+                        width={506} 
+                        height={338}
+                      />
+                    </div>
+                    
+                    {/* Text under video */}
+                    <div className="mt-4 text-center">
+                      <p className="text-lg text-muted-foreground">Would you like Georgia to explain Hobson in more detail?</p>
+                    </div>
+                  </div>
+                  
+                  {/* Video Dialog */}
+                  <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
+                    <DialogContent className="max-w-4xl p-0 border-0">
+                      <div className="aspect-video">
+                        <iframe className="w-full h-full rounded-lg" src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1" title="Meet Georgia - Property AI Assistant" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                </div>
+
               </div>
             </div>
           </section>
