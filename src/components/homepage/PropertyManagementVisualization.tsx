@@ -123,7 +123,7 @@ export const PropertyManagementVisualization = () => {
             <div className="text-sm font-semibold text-foreground mb-3">
               Next rent review:
             </div>
-            <div className="text-sm font-normal text-primary mb-3">
+            <div className="text-sm font-normal text-foreground mb-3">
               14/09/26<br />
               Knight Frank<br />
               23 Hampstead High Street NW3
