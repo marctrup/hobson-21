@@ -56,7 +56,7 @@ export const PropertyManagementVisualization = () => {
             </div>
           </div>
           
-          <p className="text-xs text-purple-600 font-medium mt-3">
+          <p className="text-xs text-purple-600 font-bold mt-3">
             Time-consuming, error-prone, out-of-date
           </p>
         </div>
