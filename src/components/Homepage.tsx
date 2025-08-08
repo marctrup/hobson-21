@@ -299,7 +299,7 @@ export const Homepage = () => {
                 </p>
                 <div className="mb-8">
                   <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                    <Link to="/pilot_form">Join our free pilot →</Link>
+                    <Link to="/pilot_form">Apply to join our Pilot →</Link>
                   </SimpleButton>
                 </div>
               </div>
