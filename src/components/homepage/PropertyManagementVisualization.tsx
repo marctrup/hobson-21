@@ -229,6 +229,7 @@ export const PropertyManagementVisualization = () => {
               <textarea 
                 placeholder="Ask Hobson" 
                 className="flex-1 resize-none bg-transparent text-xs placeholder:text-muted-foreground border-none outline-none min-h-[24px] max-h-[100px]"
+                style={{ marginTop: '2px' }}
                 rows={1}
               />
               <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 cursor-pointer flex-shrink-0">
