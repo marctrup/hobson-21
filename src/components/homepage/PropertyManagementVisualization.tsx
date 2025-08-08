@@ -107,7 +107,7 @@ export const PropertyManagementVisualization = () => {
             </div>
           </div>
           
-          <div className="text-xs text-muted-foreground mt-3 space-y-1">
+          <div className="text-xs text-purple-600 mt-3 space-y-1">
             <div>20 × Lease Agreements</div>
             <div>12 × Deeds of Variation</div>
             <div>3 × Reversionary Leases</div>
