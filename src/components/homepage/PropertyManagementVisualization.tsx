@@ -68,7 +68,7 @@ export const PropertyManagementVisualization = () => {
           {/* Scattered Documents */}
           <div className="relative h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-4 overflow-hidden">
             {/* Document Scatter - representing overwhelming amount */}
-            {Array.from({ length: 12 }).map((_, i) => (
+            {Array.from({ length: 16 }).map((_, i) => (
               <div
                 key={i}
                 className="absolute bg-white border border-border rounded shadow-sm"
@@ -136,6 +136,55 @@ export const PropertyManagementVisualization = () => {
                 <div className="w-full h-1 bg-red-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-red-400 rounded"></div>
                 <div className="w-1/2 h-1 bg-red-400 rounded"></div>
+              </div>
+            </div>
+
+            {/* More colored document types */}
+            <div className="absolute top-6 left-16 bg-yellow-100 border border-yellow-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-yellow-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-yellow-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-yellow-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-12 right-16 bg-indigo-100 border border-indigo-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-indigo-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-indigo-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-indigo-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute top-12 left-12 bg-pink-100 border border-pink-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-pink-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-pink-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-pink-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-6 left-20 bg-teal-100 border border-teal-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-teal-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-teal-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-teal-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute top-20 right-6 bg-rose-100 border border-rose-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-rose-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-rose-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-rose-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-4 left-1/2 bg-cyan-100 border border-cyan-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-cyan-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-cyan-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-cyan-400 rounded"></div>
               </div>
             </div>
           </div>
