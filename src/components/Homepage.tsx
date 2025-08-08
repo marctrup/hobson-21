@@ -211,7 +211,7 @@ export const Homepage = () => {
                 {/* Left Header - How It Works */}
                 <div className="flex flex-col">
                   <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
-                  <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
+                  <p className="text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
                 </div>
                 
                 {/* Right Header - Meet Georgia */}
