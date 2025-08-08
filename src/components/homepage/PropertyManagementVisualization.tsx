@@ -130,7 +130,7 @@ export const PropertyManagementVisualization = () => {
             </div>
             
             <div className="text-left space-y-2">
-              <div className="text-xs text-muted-foreground font-medium mb-2">Sources:</div>
+              <div className="text-xs text-muted-foreground font-bold mb-2">Sources:</div>
               <div className="flex items-start gap-2 text-xs text-muted-foreground">
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
                 <span>Lease Agreement<br />(Page 5, Clause 3.2)</span>
