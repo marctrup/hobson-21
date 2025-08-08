@@ -209,15 +209,15 @@ export const Homepage = () => {
               {/* Headers Row */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-8 items-start">
                 {/* Left Header - How It Works */}
-                <div className="flex flex-col">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
-                  <p className="text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
+                <div className="flex flex-col min-h-[120px]">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground leading-tight">How It Works</h2>
+                  <p className="text-xl text-muted-foreground leading-relaxed">Gaining insight and information couldn't be easier</p>
                 </div>
                 
                 {/* Right Header - Meet Georgia */}
-                <div className="flex flex-col">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">Meet Georgia</h2>
-                  <p className="text-xl text-muted-foreground">Want more information?</p>
+                <div className="flex flex-col min-h-[120px]">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground leading-tight">Meet Georgia</h2>
+                  <p className="text-xl text-muted-foreground leading-relaxed">Want more information?</p>
                 </div>
               </div>
 
