@@ -115,13 +115,13 @@ export const Homepage = () => {
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-6">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                    <span className="text-foreground">AI-Document Intelligence for the </span>
+                    <span className="text-foreground">When does the bleeding obvious become the </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-                      Property Industry
+                      bleeding obvious?
                     </span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    Transform your property documents with intelligent analysis, automated insights, and instant answers to complex property questions.
+                    Meet Hobson - the AI assistant that simply knows what needs doing in your property business.
                   </p>
                   
                   {/* Pilot Scheme Link */}
