@@ -14,7 +14,7 @@ export const PropertyManagementVisualization = () => {
           <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
           
           {/* Circular Process */}
-          <div className="relative w-36 h-36 mx-auto mb-4">
+          <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 mx-auto mb-4">
             <div className="absolute inset-0 border-2 border-dashed border-purple-300 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
             
             {/* Process Icons */}
@@ -66,7 +66,7 @@ export const PropertyManagementVisualization = () => {
           <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">The Challenge</h4>
           
           {/* Scattered Documents */}
-          <div className="relative h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-4 overflow-hidden border-2 border-red-500">
+          <div className="relative h-32 sm:h-40 lg:h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-2 sm:p-3 lg:p-4 overflow-hidden border-2 border-red-500">
             {/* Document Scatter - representing overwhelming amount */}
             {Array.from({ length: 16 }).map((_, i) => (
               <div
@@ -204,7 +204,7 @@ export const PropertyManagementVisualization = () => {
           <h4 className="text-sm font-bold text-purple-600 mb-3 uppercase tracking-wide">Hobson AI</h4>
           
           {/* Clean Answer Card */}
-          <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg" style={{ padding: '19px' }}>
+          <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg p-3 sm:p-4 lg:p-5" style={{ padding: 'clamp(12px, 4vw, 19px)' }}>
             <div className="text-sm font-normal text-foreground mb-3 font-sans text-left">
               The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to list all future reviews?
             </div>
