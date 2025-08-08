@@ -14,7 +14,7 @@ export const PropertyManagementVisualization = () => {
           <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
           
           {/* Circular Process */}
-          <div className="relative w-32 h-32 mx-auto mb-4">
+          <div className="relative w-36 h-36 mx-auto mb-4">
             <div className="absolute inset-0 border-2 border-dashed border-purple-300 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
             
             {/* Process Icons */}
