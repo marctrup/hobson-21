@@ -71,14 +71,16 @@ export const PropertyManagementVisualization = () => {
             {Array.from({ length: 16 }).map((_, i) => (
               <div
                 key={i}
-                className="absolute bg-white border border-border rounded shadow-sm"
+                className="absolute bg-white border border-border rounded shadow-sm animate-pulse"
                 style={{
                   width: '20px',
                   height: '24px',
                   left: `${Math.random() * 80 + 5}%`,
                   top: `${Math.random() * 70 + 10}%`,
                   transform: `rotate(${Math.random() * 40 - 20}deg)`,
-                  zIndex: Math.floor(Math.random() * 3)
+                  zIndex: Math.floor(Math.random() * 3),
+                  animation: `float-${i % 4 + 1} ${3 + Math.random() * 4}s ease-in-out infinite`,
+                  animationDelay: `${Math.random() * 2}s`
                 }}
               >
                 <div className="p-1">

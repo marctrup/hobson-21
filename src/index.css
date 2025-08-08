@@ -155,6 +155,33 @@ img {
   contain-intrinsic-size: 400px 300px;
 }
 
+/* Document floating animations */
+@keyframes float-1 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  25% { transform: translateY(-10px) translateX(5px) rotate(2deg); }
+  50% { transform: translateY(-5px) translateX(-3px) rotate(-1deg); }
+  75% { transform: translateY(-15px) translateX(8px) rotate(3deg); }
+}
+
+@keyframes float-2 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  33% { transform: translateY(-8px) translateX(-6px) rotate(-2deg); }
+  66% { transform: translateY(-12px) translateX(4px) rotate(1deg); }
+}
+
+@keyframes float-3 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  50% { transform: translateY(-18px) translateX(-2px) rotate(-3deg); }
+}
+
+@keyframes float-4 {
+  0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  20% { transform: translateY(-6px) translateX(7px) rotate(1deg); }
+  40% { transform: translateY(-14px) translateX(-5px) rotate(-2deg); }
+  60% { transform: translateY(-9px) translateX(3px) rotate(2deg); }
+  80% { transform: translateY(-16px) translateX(-8px) rotate(-1deg); }
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
