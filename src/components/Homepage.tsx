@@ -279,7 +279,7 @@ export const Homepage = () => {
                   <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
                     <div className="mb-8">
                       <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">Meet Georgia</h2>
-                      <p className="text-xl text-muted-foreground">Your AI assistant demonstration</p>
+                      <p className="text-xl text-muted-foreground">Want more information?</p>
                     </div>
                     <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
                       border: '10px solid #f0f0f0'
