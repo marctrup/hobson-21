@@ -209,13 +209,13 @@ export const Homepage = () => {
               {/* Headers Row */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-8 items-start">
                 {/* Left Header - How It Works */}
-                <div>
+                <div className="flex flex-col">
                   <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
                   <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
                 </div>
                 
                 {/* Right Header - Meet Georgia */}
-                <div>
+                <div className="flex flex-col">
                   <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">Meet Georgia</h2>
                   <p className="text-xl text-muted-foreground">Want more information?</p>
                 </div>
