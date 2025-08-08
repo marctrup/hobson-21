@@ -205,27 +205,15 @@ export const Homepage = () => {
           {/* How It Works & Video Section - Separated Headers and Content */}
           <section className="py-8 md:py-16 bg-muted/30">
             <div className="container mx-auto px-4">
-              
-              {/* Headers Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-6 items-start">
-                {/* Left Header - How It Works */}
-                <div className="flex flex-col min-h-[120px]">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground leading-tight">How It Works</h2>
-                  <p className="text-xl text-muted-foreground leading-relaxed">Gaining insight and information couldn't be easier</p>
-                </div>
-                
-                {/* Right Header - Meet Georgia */}
-                <div className="flex flex-col min-h-[120px]">
-                  <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground leading-tight">Meet Georgia</h2>
-                  <p className="text-xl text-muted-foreground leading-relaxed">Want more information?</p>
-                </div>
-              </div>
-
               {/* Content Row */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                 
                 {/* Left Content - How It Works Steps */}
                 <div>
+                  <div className="mb-8">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
+                    <p className="text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
+                  </div>
                   <div className="space-y-8">
                     {/* Step 1 */}
                     <div className="flex items-start gap-4">
@@ -270,6 +258,10 @@ export const Homepage = () => {
 
                 {/* Right Content - Georgia Video */}
                 <div>
+                  <div className="mb-8">
+                    <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">Meet Georgia</h2>
+                    <p className="text-xl text-muted-foreground">Want more information?</p>
+                  </div>
                   <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
                     border: '10px solid #f0f0f0'
                   }} onClick={() => setVideoDialogOpen(true)}>
