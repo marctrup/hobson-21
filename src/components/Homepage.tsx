@@ -220,18 +220,30 @@ export const Homepage = () => {
             </div>
           </section>
 
-          {/* How It Works & Video Section - Two Column Layout */}
+          {/* How It Works & Video Section - Separated Headers and Content */}
           <section className="py-8 md:py-16">
             <div className="container mx-auto px-4">
+              
+              {/* Headers Row */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-8">
+                {/* Left Header - How It Works */}
+                <div className="border-2 border-red-500">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
+                  <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
+                </div>
+                
+                {/* Right Header - Meet Georgia */}
+                <div className="border-2 border-blue-500">
+                  <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">Meet Georgia</h2>
+                  <p className="text-xl text-muted-foreground">Want more information?</p>
+                </div>
+              </div>
+
+              {/* Content Row */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                 
-                {/* Left Container - How It Works */}
+                {/* Left Content - How It Works Steps */}
                 <div className="border-2 border-red-500">
-                  <div className="mb-8">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
-                    <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
-                  </div>
-
                   <div className="space-y-8">
                     {/* Step 1 */}
                     <div className="flex items-start gap-4">
@@ -274,12 +286,8 @@ export const Homepage = () => {
                   </div>
                 </div>
 
-                {/* Right Container - Georgia Video */}
+                {/* Right Content - Georgia Video */}
                 <div className="border-2 border-blue-500">
-                  <div className="mb-8">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">Meet Georgia</h2>
-                    <p className="text-xl text-muted-foreground">Want more information?</p>
-                  </div>
                   <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
                     <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
                       border: '10px solid #f0f0f0'
