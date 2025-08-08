@@ -135,41 +135,44 @@ export const Homepage = () => {
                   </div>
                 </div>
 
-                {/* Right Container - Clean Video Section */}
-                <div className="flex justify-center lg:justify-end mt-8 lg:mt-0">
-                  <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
-                    <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
-                    border: '10px solid #f0f0f0'
-                  }} onClick={() => setVideoDialogOpen(true)}>
-                      <OptimizedImage 
-                        src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" 
-                        alt="Georgia - Hobson AI Assistant" 
-                        className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
-                        width={506} 
-                        height={338}
-                      />
-                    </div>
-                    
-                    {/* Text under video */}
-                    <div className="mt-4 text-center">
-                      <p className="text-lg text-muted-foreground">Would you like Georgia to explain Hobson in more detail?</p>
-                    </div>
-                  </div>
-                  
-                  {/* Video Dialog */}
-                  <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
-                    <DialogContent className="max-w-4xl p-0 border-0">
-                      <div className="aspect-video">
-                        <iframe className="w-full h-full rounded-lg" src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1" title="Meet Georgia - Property AI Assistant" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
-                      </div>
-                    </DialogContent>
-                  </Dialog>
-                </div>
               </div>
             </div>
           </section>
 
-          
+          {/* Video Section */}
+          <section className="py-8 md:py-16">
+            <div className="container mx-auto px-4">
+              <div className="flex justify-center">
+                <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
+                  <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
+                    border: '10px solid #f0f0f0'
+                  }} onClick={() => setVideoDialogOpen(true)}>
+                    <OptimizedImage 
+                      src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" 
+                      alt="Georgia - Hobson AI Assistant" 
+                      className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
+                      width={506} 
+                      height={338}
+                    />
+                  </div>
+                  
+                  {/* Text under video */}
+                  <div className="mt-4 text-center">
+                    <p className="text-lg text-muted-foreground">Would you like Georgia to explain Hobson in more detail?</p>
+                  </div>
+                </div>
+                
+                {/* Video Dialog */}
+                <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
+                  <DialogContent className="max-w-4xl p-0 border-0">
+                    <div className="aspect-video">
+                      <iframe className="w-full h-full rounded-lg" src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1" title="Meet Georgia - Property AI Assistant" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </div>
+          </section>
 
           {/* Property Intelligence Section - Clean layout with large icons */}
           <section className="py-5 md:py-16 bg-muted/30">
