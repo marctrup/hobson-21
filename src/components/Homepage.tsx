@@ -8,7 +8,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { ScrollVideoPlayer } from "@/components/ScrollVideoPlayer";
-import { DocumentInsightsVisualization } from "@/components/homepage/DocumentInsightsVisualization";
+import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
 // Lazy load video only when needed
 
 export const Homepage = () => {
@@ -127,7 +127,7 @@ export const Homepage = () => {
 
                 {/* Right Container - Document to Insights Visualization */}
                 <div className="relative mt-[5px]">
-                  <DocumentInsightsVisualization />
+                  <PropertyManagementVisualization />
                 </div>
 
               </div>

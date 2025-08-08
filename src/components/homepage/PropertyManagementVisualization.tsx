@@ -1,0 +1,159 @@
+import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw } from "lucide-react";
+
+export const PropertyManagementVisualization = () => {
+  return (
+    <div className="relative bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 shadow-xl shadow-primary/15">
+      {/* Question Header */}
+      <div className="text-center mb-8">
+        <h3 className="text-2xl font-bold text-foreground mb-2">When is my next rent review?</h3>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+        {/* Left: The Pain (Today's World) */}
+        <div className="text-center">
+          <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
+          
+          {/* Circular Process */}
+          <div className="relative w-32 h-32 mx-auto mb-4">
+            <div className="absolute inset-0 border-2 border-dashed border-muted-foreground/30 rounded-full animate-spin" style={{ animationDuration: '8s' }}></div>
+            
+            {/* Process Icons */}
+            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
+              <div className="bg-background border border-border rounded-full p-2">
+                <Users className="w-4 h-4 text-muted-foreground" />
+              </div>
+            </div>
+            
+            <div className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2">
+              <div className="bg-background border border-border rounded-full p-2">
+                <FolderOpen className="w-4 h-4 text-yellow-600" />
+              </div>
+            </div>
+            
+            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2">
+              <div className="bg-background border border-border rounded-full p-2">
+                <Search className="w-4 h-4 text-muted-foreground" />
+              </div>
+            </div>
+            
+            <div className="absolute left-0 top-1/2 transform -translate-x-2 -translate-y-1/2">
+              <div className="bg-background border border-border rounded-full p-2">
+                <RotateCcw className="w-4 h-4 text-muted-foreground" />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-1 text-xs text-muted-foreground">
+            <div className="flex items-center justify-center gap-1">
+              <span>Manual extraction</span>
+              <ArrowRight className="w-3 h-3" />
+              <span>Store in system</span>
+            </div>
+            <div className="flex items-center justify-center gap-1">
+              <span>Search</span>
+              <ArrowRight className="w-3 h-3" />
+              <span>Repeat</span>
+            </div>
+          </div>
+          
+          <p className="text-xs text-red-600 font-medium mt-3">
+            Time-consuming, error-prone, out-of-date
+          </p>
+        </div>
+
+        {/* Center: The Challenge */}
+        <div className="text-center">
+          <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">The Challenge</h4>
+          
+          {/* Scattered Documents */}
+          <div className="relative h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-4 overflow-hidden">
+            {/* Document Scatter - representing overwhelming amount */}
+            {Array.from({ length: 12 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute bg-white border border-border rounded shadow-sm"
+                style={{
+                  width: '20px',
+                  height: '24px',
+                  left: `${Math.random() * 80 + 5}%`,
+                  top: `${Math.random() * 70 + 10}%`,
+                  transform: `rotate(${Math.random() * 40 - 20}deg)`,
+                  zIndex: Math.floor(Math.random() * 3)
+                }}
+              >
+                <div className="p-1">
+                  <div className="w-full h-1 bg-primary/20 rounded mb-0.5"></div>
+                  <div className="w-3/4 h-1 bg-primary/20 rounded mb-0.5"></div>
+                  <div className="w-1/2 h-1 bg-primary/20 rounded"></div>
+                </div>
+              </div>
+            ))}
+            
+            {/* Highlighted documents */}
+            <div className="absolute bottom-2 left-2 bg-purple-100 border border-purple-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-purple-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-purple-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-purple-400 rounded"></div>
+              </div>
+            </div>
+            
+            <div className="absolute top-4 right-4 bg-purple-100 border border-purple-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-purple-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-purple-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-purple-400 rounded"></div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-xs text-muted-foreground mt-3 space-y-1">
+            <div>20 × Lease Agreements</div>
+            <div>12 × Deeds of Variation</div>
+            <div>3 × Reversionary Leases</div>
+          </div>
+        </div>
+
+        {/* Right: The Future (Hobson) */}
+        <div className="text-center">
+          <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">Hobson AI</h4>
+          
+          {/* AI Processing */}
+          <div className="flex items-center justify-center mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center shadow-lg">
+              <Brain className="w-6 h-6 text-white" />
+            </div>
+          </div>
+
+          {/* Clean Answer Card */}
+          <div className="bg-white rounded-lg p-4 border border-primary/20 shadow-lg">
+            <div className="text-sm font-semibold text-foreground mb-3">
+              Next rent review:
+            </div>
+            <div className="text-lg font-bold text-primary mb-3">
+              14 September 2026
+            </div>
+            
+            <div className="text-left space-y-2">
+              <div className="text-xs text-muted-foreground font-medium mb-2">Sources:</div>
+              <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
+                <span>Lease Agreement<br />(Page 5, Clause 3.2)</span>
+              </div>
+              <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
+                <span>Deed of Variation<br />(Page 2, Clause 1.1)</span>
+              </div>
+            </div>
+          </div>
+          
+          <div className="text-xs text-center text-muted-foreground mt-4 space-y-1">
+            <div className="font-medium">Reads every document.</div>
+            <div className="font-medium">Extracts what matters.</div>
+            <div className="font-medium text-primary">Answers instantly.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
