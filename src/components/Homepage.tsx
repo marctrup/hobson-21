@@ -120,7 +120,7 @@ export const Homepage = () => {
                     <span className="text-foreground">once Hobson surfaces them from your property documents.</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    AI-powered assistant that answers property questions and shows exactly where the answer came from — delivering accuracy you can trust.
+                    AI-powered assistant that answers property questions with citations from your documents — delivering accuracy you can trust.
                   </p>
                   
                 </div>
