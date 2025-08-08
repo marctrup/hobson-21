@@ -2,7 +2,7 @@ import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, Ro
 
 export const PropertyManagementVisualization = () => {
   return (
-    <div className="relative bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 shadow-xl shadow-primary/15">
+    <div className="relative bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 shadow-2xl shadow-primary/20 drop-shadow-2xl" style={{ boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(139, 92, 246, 0.1), 0 8px 32px rgba(139, 92, 246, 0.15)' }}>
       {/* Question Header */}
       <div className="text-center mb-8">
         <h3 className="text-xl text-muted-foreground leading-relaxed font-bold mb-2">When is the next rent review?</h3>
