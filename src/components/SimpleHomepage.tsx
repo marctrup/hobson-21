@@ -19,7 +19,7 @@ export const SimpleHomepage = () => {
               <Link to="/">
                 <img 
                   src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
-                  alt="Hobson's Choice AI Logo" 
+                  alt="Hobson AI Logo" 
                   className="h-12 md:h-16" 
                 />
               </Link>

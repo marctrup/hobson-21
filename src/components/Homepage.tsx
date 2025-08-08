@@ -56,7 +56,7 @@ export const Homepage = () => {
               {/* Logo */}
               <div className="relative">
                 <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" alt="Hobson's AI - AI-powered property management software company logo" className="h-12 md:h-16 w-auto" priority />
+                  <OptimizedImage src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" alt="Hobson AI - AI-powered property management software company logo" className="h-12 md:h-16 w-auto" priority />
                 </Link>
                 {/* Beta Badge - Positioned above the 'n' in Hobson */}
                 <div className="absolute top-[4px] right-[-32px] md:right-[-27px]">
