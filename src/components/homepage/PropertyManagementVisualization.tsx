@@ -204,12 +204,12 @@ export const PropertyManagementVisualization = () => {
           <h4 className="text-sm font-bold text-purple-600 mb-3 uppercase tracking-wide">Hobson AI</h4>
           
           {/* Clean Answer Card */}
-          <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg p-3 sm:p-4 lg:p-5 relative" style={{ padding: 'clamp(12px, 4vw, 19px)' }}>
+          <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg relative" style={{ padding: 'clamp(12px, 4vw, 19px)' }}>
             <div className="text-sm font-normal text-foreground mb-3 font-sans text-left">
               The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to list all future reviews?
             </div>
             
-            <div className="text-left space-y-2 mb-8">
+            <div className="text-left space-y-2 mb-4">
               <div className="text-xs text-muted-foreground font-bold mb-2">Sources:</div>
               <div className="flex items-start gap-2 text-xs text-muted-foreground">
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
@@ -221,14 +221,17 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            {/* Chat-like bottom icons */}
-            <div className="absolute bottom-3 left-3">
-              <div className="w-6 h-6 rounded-full border border-muted-foreground/40 flex items-center justify-center hover:border-muted-foreground cursor-pointer">
+            {/* Chat input area */}
+            <div className="flex items-center gap-2 mt-4 p-2 bg-white border border-border rounded-lg">
+              <div className="w-6 h-6 rounded-full border border-muted-foreground/40 flex items-center justify-center hover:border-muted-foreground cursor-pointer flex-shrink-0">
                 <Plus className="w-3 h-3 text-muted-foreground/60 hover:text-muted-foreground" />
               </div>
-            </div>
-            <div className="absolute bottom-3 right-3">
-              <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 cursor-pointer">
+              <textarea 
+                placeholder="Ask another question..." 
+                className="flex-1 resize-none bg-transparent text-sm placeholder:text-muted-foreground border-none outline-none min-h-[24px] max-h-[100px]"
+                rows={1}
+              />
+              <div className="w-6 h-6 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 cursor-pointer flex-shrink-0">
                 <ArrowUp className="w-3 h-3 text-white" />
               </div>
             </div>
