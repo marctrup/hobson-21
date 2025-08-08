@@ -1,9 +1,7 @@
 import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck } from "lucide-react";
-import { useState, useEffect, useMemo } from "react";
+import { useMemo } from "react";
 
 export const PropertyManagementVisualization = () => {
-  const [displayedText, setDisplayedText] = useState("");
-  const [showCursor, setShowCursor] = useState(true);
   const fullText = "The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to see the next break clause?";
 
   // Memoize floating document properties to prevent re-generation on each render
@@ -17,22 +15,6 @@ export const PropertyManagementVisualization = () => {
       duration: 3 + Math.random() * 4,
       delay: Math.random() * 2
     }));
-  }, []);
-
-  useEffect(() => {
-    let currentIndex = 0;
-    const typingInterval = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setDisplayedText(fullText.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        clearInterval(typingInterval);
-        // Blink cursor for a bit then hide it
-        setTimeout(() => setShowCursor(false), 2000);
-      }
-    }, 50); // 50ms between characters for natural typing speed
-
-    return () => clearInterval(typingInterval);
   }, []);
 
   return (
@@ -239,9 +221,8 @@ export const PropertyManagementVisualization = () => {
           
           {/* Clean Answer Card */}
           <div className="bg-gray-50 rounded-lg p-4 border border-primary/20 shadow-lg">
-            <div className="text-sm font-normal text-foreground mb-3 font-sans min-h-[3rem]">
-              {displayedText}
-              {showCursor && <span className="inline-block w-0.5 h-4 bg-purple-600 ml-1 animate-pulse"></span>}
+            <div className="text-sm font-normal text-foreground mb-3 font-sans">
+              {fullText}
             </div>
             
             <div className="text-left space-y-2">
