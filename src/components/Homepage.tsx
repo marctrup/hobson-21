@@ -114,7 +114,7 @@ export const Homepage = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-4 lg:py-12 -mt-[5px]">
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-6 -mt-[20px]">
-                  <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                  <h1 id="hero-heading" className="text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
                     <span className="text-foreground">It's in there… </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
                       Hobson finds it — citations and all
