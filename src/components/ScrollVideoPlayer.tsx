@@ -31,6 +31,10 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
               src="/lovable-uploads/91a70bf6-ddc6-4a0c-a69e-7e01a2ded605.png"
               alt={title}
               className="w-full h-full object-cover"
+              loading="eager"
+              decoding="async"
+              width="320"
+              height="208"
             />
           </div>
         </DialogTrigger>
@@ -60,11 +64,12 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
           {videoDialogOpen && (
             <iframe
               className="rounded-lg"
-              src={`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&byline=0&portrait=0&responsive=1`}
+              src={`https://player.vimeo.com/video/${videoId}?autoplay=1&muted=1&byline=0&portrait=0&responsive=1&quality=auto&background=1&speed=1&dnt=1`}
               title={title}
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture"
               allowFullScreen
+              loading="lazy"
               style={{
                 width: '100%',
                 height: '100%',

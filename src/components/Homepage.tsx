@@ -40,6 +40,7 @@ export const Homepage = () => {
         <link rel="preload" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
         <link rel="preload" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" as="image" />
         <link rel="prefetch" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
+        <link rel="preload" href="/lovable-uploads/91a70bf6-ddc6-4a0c-a69e-7e01a2ded605.png" as="image" />
         {/* Video optimization */}
         <link rel="preconnect" href="https://player.vimeo.com" />
         <link rel="preconnect" href="https://vimeo.com" />
