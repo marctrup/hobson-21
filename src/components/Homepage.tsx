@@ -207,7 +207,7 @@ export const Homepage = () => {
             <div className="container mx-auto px-4">
               
               {/* Headers Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-8">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 mb-8 items-start">
                 {/* Left Header - How It Works */}
                 <div>
                   <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
