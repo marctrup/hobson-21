@@ -138,7 +138,7 @@ export const Homepage = () => {
                     
                     {/* Text under video */}
                     <div className="mt-4 text-center">
-                      <p className="text-lg text-muted-foreground">Would you like Georgia to explain Hobson more detail?</p>
+                      <p className="text-lg text-muted-foreground">Would you like Georgia to explain Hobson in more detail?</p>
                     </div>
                   </div>
                   
