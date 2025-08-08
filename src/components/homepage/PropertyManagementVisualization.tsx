@@ -145,7 +145,7 @@ export const PropertyManagementVisualization = () => {
           <div className="text-xs text-center text-muted-foreground mt-4 space-y-1">
             <div className="font-bold">Reads every document.</div>
             <div className="font-bold">Extracts what matters.</div>
-            <div className="font-medium text-primary">Answers instantly.</div>
+            <div className="font-medium text-primary">Answers instantly and with citations.</div>
           </div>
         </div>
       </div>
