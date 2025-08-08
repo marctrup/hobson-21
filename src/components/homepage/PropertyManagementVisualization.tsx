@@ -204,7 +204,7 @@ export const PropertyManagementVisualization = () => {
           <h4 className="text-sm font-bold text-purple-600 mb-3 uppercase tracking-wide">Hobson AI</h4>
           
           {/* Clean Answer Card */}
-          <div className="bg-gray-50 rounded-lg p-4 border border-primary/20 shadow-lg">
+          <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg" style={{ padding: '19px' }}>
             <div className="text-sm font-normal text-foreground mb-3 font-sans">
               The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to list all future reviews?
             </div>
