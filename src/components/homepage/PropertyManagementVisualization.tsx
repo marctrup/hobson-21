@@ -89,7 +89,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             ))}
             
-            {/* Highlighted documents */}
+            {/* Highlighted documents - different types with different colors */}
             <div className="absolute bottom-2 left-2 bg-purple-100 border border-purple-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-purple-400 rounded"></div>
@@ -103,6 +103,39 @@ export const PropertyManagementVisualization = () => {
                 <div className="w-full h-1 bg-purple-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-purple-400 rounded"></div>
                 <div className="w-1/2 h-1 bg-purple-400 rounded"></div>
+              </div>
+            </div>
+
+            {/* Additional document types with different colors */}
+            <div className="absolute top-8 left-8 bg-blue-100 border border-blue-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-blue-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-blue-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-blue-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-8 right-8 bg-green-100 border border-green-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-green-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-green-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-green-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute top-16 right-12 bg-orange-100 border border-orange-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-orange-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-orange-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-orange-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-16 left-8 bg-red-100 border border-red-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-red-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-red-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-red-400 rounded"></div>
               </div>
             </div>
           </div>
