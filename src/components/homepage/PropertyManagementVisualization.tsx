@@ -65,29 +65,36 @@ export const PropertyManagementVisualization = () => {
         <div className="text-center" style={{ marginTop: '2px' }}>
           <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">The Challenge</h4>
           
-          {/* Scattered Documents */}
+          {/* Document Trail - flowing from floor upward */}
           <div className="relative h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-4 overflow-hidden">
-            {/* Document Scatter - representing overwhelming amount */}
-            {Array.from({ length: 12 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute bg-white border border-border rounded shadow-sm"
-                style={{
-                  width: '20px',
-                  height: '24px',
-                  left: `${Math.random() * 80 + 5}%`,
-                  top: `${Math.random() * 70 + 10}%`,
-                  transform: `rotate(${Math.random() * 40 - 20}deg)`,
-                  zIndex: Math.floor(Math.random() * 3)
-                }}
-              >
-                <div className="p-1">
-                  <div className="w-full h-1 bg-primary/20 rounded mb-0.5"></div>
-                  <div className="w-3/4 h-1 bg-primary/20 rounded mb-0.5"></div>
-                  <div className="w-1/2 h-1 bg-primary/20 rounded"></div>
+            {/* Document Trail - representing overwhelming amount flowing upward */}
+            {Array.from({ length: 12 }).map((_, i) => {
+              const trailPosition = i / 11; // 0 to 1
+              const baseLeft = 20 + (trailPosition * 40); // 20% to 60% spread
+              const baseTop = 90 - (trailPosition * 70); // Start from bottom (90%) to top (20%)
+              const wobble = (Math.sin(i * 0.8) * 15); // Side-to-side wobble
+              
+              return (
+                <div
+                  key={i}
+                  className="absolute bg-white border border-border rounded shadow-sm"
+                  style={{
+                    width: '20px',
+                    height: '24px',
+                    left: `${baseLeft + wobble}%`,
+                    top: `${baseTop}%`,
+                    transform: `rotate(${Math.sin(i * 0.5) * 25}deg)`,
+                    zIndex: i
+                  }}
+                >
+                  <div className="p-1">
+                    <div className="w-full h-1 bg-primary/20 rounded mb-0.5"></div>
+                    <div className="w-3/4 h-1 bg-primary/20 rounded mb-0.5"></div>
+                    <div className="w-1/2 h-1 bg-primary/20 rounded"></div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
             
             {/* Highlighted documents - different types with different colors */}
             <div className="absolute bottom-2 left-2 bg-purple-100 border border-purple-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
