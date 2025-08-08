@@ -166,7 +166,7 @@ export const Homepage = () => {
                 <div className="flex justify-center lg:justify-end mt-8 lg:mt-0">
                   <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
                     <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105"
-                         style={{ border: '10px solid white' }}
+                         style={{ border: '20px solid white' }}
                          onClick={() => setVideoDialogOpen(true)}>
                       <img
                         src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
