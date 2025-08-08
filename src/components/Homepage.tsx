@@ -160,7 +160,7 @@ export const Homepage = () => {
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
-                            Instant answers from your portfolio data — no digging, just clarity.
+                            Instant answers from your property portfolio data — no digging, just clarity.
                           </p>
                         </div>
                       </div>
@@ -172,7 +172,7 @@ export const Homepage = () => {
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
-                            Real-time insights for confident decisions — see what matters as it happens.
+                            Real-time insights on your properties — make confident decisions as situations change.
                           </p>
                         </div>
                       </div>
@@ -184,7 +184,7 @@ export const Homepage = () => {
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
-                            Smarter analysis using all your documents and external data — complete context in every answer.
+                            Smarter analysis using all your property documents and market data — complete context in every answer.
                           </p>
                         </div>
                       </div>
@@ -196,7 +196,7 @@ export const Homepage = () => {
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
-                            Lower costs than traditional software — more capability, less spend.
+                            Lower costs than traditional property software — more capability, less spend.
                           </p>
                         </div>
                       </div>
@@ -208,7 +208,7 @@ export const Homepage = () => {
                         </div>
                         <div className="flex-1 bg-gradient-to-r from-primary/5 to-transparent p-4 rounded-r-lg border-l-4 border-primary/30">
                           <p className="text-foreground font-medium leading-relaxed">
-                            A virtual colleague who&apos;s always informed — knowledge at your fingertips, 24/7.
+                            A virtual property colleague who&apos;s always informed — expert knowledge at your fingertips, 24/7.
                           </p>
                         </div>
                       </div>
