@@ -118,13 +118,6 @@ export const PropertyManagementVisualization = () => {
         <div className="text-center">
           <h4 className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">Hobson AI</h4>
           
-          {/* AI Processing */}
-          <div className="flex items-center justify-center mb-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center shadow-lg">
-              <Brain className="w-6 h-6 text-white" />
-            </div>
-          </div>
-
           {/* Clean Answer Card */}
           <div className="bg-white rounded-lg p-4 border border-primary/20 shadow-lg">
             <div className="text-sm font-semibold text-foreground mb-3">
