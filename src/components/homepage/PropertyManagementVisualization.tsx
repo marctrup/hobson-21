@@ -68,7 +68,7 @@ export const PropertyManagementVisualization = () => {
           {/* Scattered Documents */}
           <div className="relative h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-4 overflow-hidden">
             {/* Document Scatter - representing overwhelming amount */}
-            {Array.from({ length: 12 }).map((_, i) => (
+            {Array.from({ length: 28 }).map((_, i) => (
               <div
                 key={i}
                 className="absolute bg-white border border-border rounded shadow-sm"
