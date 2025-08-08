@@ -226,7 +226,7 @@ export const Homepage = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
                 
                 {/* Left Container - How It Works */}
-                <div>
+                <div className="border-2 border-red-500">
                   <div className="mb-8">
                     <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">How It Works</h2>
                     <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
@@ -275,7 +275,7 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Georgia Video */}
-                <div>
+                <div className="border-2 border-blue-500">
                   <div className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-[506px]">
                     <div className="mb-8">
                       <h2 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">Meet Georgia</h2>
