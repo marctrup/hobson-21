@@ -222,7 +222,7 @@ export const PropertyManagementVisualization = () => {
             </div>
             
             {/* Chat input area */}
-            <div className="flex items-center gap-2 mt-4 p-2 bg-amber-50 border border-border rounded-lg">
+            <div className="flex items-center gap-2 mt-4 p-2 bg-amber-50 border border-border rounded-lg -mx-2">
               <div className="w-4 h-4 rounded-full border border-muted-foreground/40 flex items-center justify-center hover:border-muted-foreground cursor-pointer flex-shrink-0">
                 <Plus className="w-2 h-2 text-muted-foreground/60 hover:text-muted-foreground" />
               </div>
