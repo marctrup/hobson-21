@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 export const PropertyManagementVisualization = () => {
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
-  const fullText = "The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to list all future reviews?";
+  const fullText = "The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to see the next break clause?";
 
   useEffect(() => {
     let currentIndex = 0;
