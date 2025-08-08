@@ -1,30 +1,14 @@
 import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck } from "lucide-react";
-import { useMemo } from "react";
 
 export const PropertyManagementVisualization = () => {
-  const fullText = "The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to see the next break clause?";
-
-  // Memoize floating document properties to prevent re-generation on each render
-  const floatingDocuments = useMemo(() => {
-    return Array.from({ length: 16 }).map((_, i) => ({
-      id: i,
-      left: Math.random() * 160 + 10, // Fixed pixel positions instead of percentages
-      top: Math.random() * 140 + 20,
-      rotation: Math.random() * 40 - 20,
-      zIndex: Math.floor(Math.random() * 3),
-      duration: 3 + Math.random() * 4,
-      delay: Math.random() * 2
-    }));
-  }, []);
-
   return (
     <div className="relative bg-gradient-to-br from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 shadow-xl shadow-primary/15">
       {/* Question Header */}
       <div className="text-center mb-8">
-        <h3 className="text-lg font-bold text-muted-foreground mb-2">When is the next rent review?</h3>
+        <h3 className="text-2xl font-normal text-foreground mb-2">When is the next rent review?</h3>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_1.03fr] gap-8 items-center relative">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative">
         {/* Left: The Pain (Today's World) */}
         <div className="text-center">
           <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
@@ -84,19 +68,19 @@ export const PropertyManagementVisualization = () => {
           {/* Scattered Documents */}
           <div className="relative h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-4 overflow-hidden">
             {/* Document Scatter - representing overwhelming amount */}
-            {floatingDocuments.map((doc) => (
+            {Array.from({ length: 16 }).map((_, i) => (
               <div
-                key={doc.id}
+                key={i}
                 className="absolute bg-white border border-border rounded shadow-sm animate-pulse"
                 style={{
                   width: '20px',
                   height: '24px',
-                  left: `${doc.left}px`,
-                  top: `${doc.top}px`,
-                  transform: `rotate(${doc.rotation}deg)`,
-                  zIndex: doc.zIndex,
-                  animation: `float-${doc.id % 4 + 1} ${doc.duration}s ease-in-out infinite`,
-                  animationDelay: `${doc.delay}s`
+                  left: `${Math.random() * 80 + 5}%`,
+                  top: `${Math.random() * 70 + 10}%`,
+                  transform: `rotate(${Math.random() * 40 - 20}deg)`,
+                  zIndex: Math.floor(Math.random() * 3),
+                  animation: `float-${i % 4 + 1} ${3 + Math.random() * 4}s ease-in-out infinite`,
+                  animationDelay: `${Math.random() * 2}s`
                 }}
               >
                 <div className="p-1">
@@ -216,13 +200,13 @@ export const PropertyManagementVisualization = () => {
         </div>
 
         {/* Right: The Future (Hobson) */}
-        <div className="text-center transform perspective-1000 rotate-y-3 scale-98 shadow-2xl shadow-primary/25">
+        <div className="text-center">
           <h4 className="text-sm font-bold text-purple-600 mb-3 uppercase tracking-wide">Hobson AI</h4>
           
           {/* Clean Answer Card */}
-          <div className="bg-gray-50 rounded-lg p-4 border border-primary/20 shadow-lg">
+          <div className="bg-white rounded-lg p-4 border border-primary/20 shadow-lg">
             <div className="text-sm font-normal text-foreground mb-3 font-sans">
-              {fullText}
+              The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to list all future reviews?
             </div>
             
             <div className="text-left space-y-2">
