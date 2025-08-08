@@ -1,10 +1,23 @@
 import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 
 export const PropertyManagementVisualization = () => {
   const [displayedText, setDisplayedText] = useState("");
   const [showCursor, setShowCursor] = useState(true);
   const fullText = "The next rent review is on the 14/09/26 for Knight Frank of 23 Hampstead High Street NW3: Would you like me to see the next break clause?";
+
+  // Memoize floating document properties to prevent re-generation on each render
+  const floatingDocuments = useMemo(() => {
+    return Array.from({ length: 16 }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 80 + 5,
+      top: Math.random() * 70 + 10,
+      rotation: Math.random() * 40 - 20,
+      zIndex: Math.floor(Math.random() * 3),
+      duration: 3 + Math.random() * 4,
+      delay: Math.random() * 2
+    }));
+  }, []);
 
   useEffect(() => {
     let currentIndex = 0;
@@ -89,19 +102,19 @@ export const PropertyManagementVisualization = () => {
           {/* Scattered Documents */}
           <div className="relative h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-4 overflow-hidden">
             {/* Document Scatter - representing overwhelming amount */}
-            {Array.from({ length: 16 }).map((_, i) => (
+            {floatingDocuments.map((doc) => (
               <div
-                key={i}
+                key={doc.id}
                 className="absolute bg-white border border-border rounded shadow-sm animate-pulse"
                 style={{
                   width: '20px',
                   height: '24px',
-                  left: `${Math.random() * 80 + 5}%`,
-                  top: `${Math.random() * 70 + 10}%`,
-                  transform: `rotate(${Math.random() * 40 - 20}deg)`,
-                  zIndex: Math.floor(Math.random() * 3),
-                  animation: `float-${i % 4 + 1} ${3 + Math.random() * 4}s ease-in-out infinite`,
-                  animationDelay: `${Math.random() * 2}s`
+                  left: `${doc.left}%`,
+                  top: `${doc.top}%`,
+                  transform: `rotate(${doc.rotation}deg)`,
+                  zIndex: doc.zIndex,
+                  animation: `float-${doc.id % 4 + 1} ${doc.duration}s ease-in-out infinite`,
+                  animationDelay: `${doc.delay}s`
                 }}
               >
                 <div className="p-1">
