@@ -67,29 +67,54 @@ export const PropertyManagementVisualization = () => {
           
           {/* Scattered Documents */}
           <div className="relative h-32 sm:h-40 lg:h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-2 sm:p-3 lg:p-4 overflow-hidden">
-            {/* Document Scatter - representing overwhelming amount */}
-            {Array.from({ length: 16 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute bg-white border border-border rounded shadow-sm animate-pulse"
-                style={{
-                  width: '20px',
-                  height: '24px',
-                  left: `${Math.random() * 80 + 5}%`,
-                  top: `${Math.random() * 70 + 10}%`,
-                  transform: `rotate(${Math.random() * 40 - 20}deg)`,
-                  zIndex: Math.floor(Math.random() * 3),
-                  animation: `float-${i % 4 + 1} ${3 + Math.random() * 4}s ease-in-out infinite`,
-                  animationDelay: `${Math.random() * 2}s`
-                }}
-              >
-                <div className="p-1">
-                  <div className="w-full h-1 bg-primary/20 rounded mb-0.5"></div>
-                  <div className="w-3/4 h-1 bg-primary/20 rounded mb-0.5"></div>
-                  <div className="w-1/2 h-1 bg-primary/20 rounded"></div>
-                </div>
+            {/* Static Document Scatter - representing overwhelming amount */}
+            <div className="absolute bg-gray-100 border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '15%', top: '25%', transform: 'rotate(-8deg)' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-gray-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
               </div>
-            ))}
+            </div>
+            
+            <div className="absolute bg-gray-100 border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '65%', top: '15%', transform: 'rotate(12deg)' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-gray-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+              </div>
+            </div>
+            
+            <div className="absolute bg-gray-100 border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '35%', top: '55%', transform: 'rotate(-15deg)' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-gray-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+              </div>
+            </div>
+            
+            <div className="absolute bg-gray-100 border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '75%', top: '45%', transform: 'rotate(6deg)' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-gray-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+              </div>
+            </div>
+            
+            <div className="absolute bg-gray-100 border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '25%', top: '35%', transform: 'rotate(-5deg)' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-gray-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+              </div>
+            </div>
+            
+            <div className="absolute bg-gray-100 border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '55%', top: '65%', transform: 'rotate(18deg)' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-gray-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
+              </div>
+            </div>
             
             {/* Highlighted documents - different types with different colors */}
             <div className="absolute bottom-2 left-2 bg-purple-100 border border-purple-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
