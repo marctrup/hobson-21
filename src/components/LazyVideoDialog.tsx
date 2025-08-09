@@ -50,8 +50,8 @@ export const LazyVideoDialog = ({
           className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
           width={506} 
           height={338}
-          loading="lazy"
-          fetchPriority="low"
+          loading="eager"
+          fetchPriority="high"
         />
       </div>
       

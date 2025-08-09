@@ -16,33 +16,11 @@ export const LazyScrollVideo = ({
   className = "",
   style = {}
 }: LazyScrollVideoProps) => {
-  const [shouldLoad, setShouldLoad] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (entry.isIntersecting) {
-          setShouldLoad(true);
-          observer.disconnect();
-        }
-      },
-      {
-        rootMargin: '100px', // Start loading 100px before element comes into view
-        threshold: 0.1
-      }
-    );
-
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  // Load immediately instead of lazy loading
+  const shouldLoad = true;
 
   return (
-    <div ref={containerRef} className={className} style={style}>
+    <div className={className} style={style}>
       {shouldLoad ? (
         <ScrollVideoPlayer 
           videoId={videoId} 
