@@ -1,7 +1,7 @@
 import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { Header } from "@/components/homepage/Header";
+import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 import { Helmet } from "react-helmet-async";
 import { MessageCircle, Map, FileText, TrendingUp, Search, Calendar, BarChart, Shield, Zap, CheckCircle } from "lucide-react";
 import FeatureShowcase from "@/components/features/FeatureShowcase";
@@ -25,7 +25,7 @@ const Features = () => {
       </Helmet>
       
       <div className="min-h-screen bg-background overflow-x-hidden">
-        <Header />
+        <HomepageHeader />
         
         <main className="container mx-auto px-4 py-8 overflow-x-hidden max-w-full">
           {/* Skip to main content anchor */}

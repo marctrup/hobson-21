@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Helmet, HelmetProvider } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
-import { Header } from "@/components/Header";
+import { GlobalHeader } from "@/components/GlobalHeader";
 import { BlogHero } from "@/components/blog/BlogHero";
 import { BlogGrid } from "@/components/blog/BlogGrid";
 import { FeaturedPost } from "@/components/blog/FeaturedPost";
@@ -185,7 +185,7 @@ const Blog = () => {
           )}
         </Helmet>
         
-        <Header />
+        <GlobalHeader />
         <BlogHero />
         
         <div className="container mx-auto px-4 py-4 md:-mt-20">

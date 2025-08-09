@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Helmet } from "react-helmet-async";
-import { Header } from "@/components/homepage/Header";
+import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { format } from "date-fns";
 
@@ -204,7 +204,7 @@ const BlogPost = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
-        <Header />
+        <HomepageHeader />
         <div className="container mx-auto px-4 py-8 md:py-16 max-w-4xl">
           <div className="animate-pulse">
             <div className="h-4 md:h-6 bg-muted rounded-md w-16 md:w-24 mb-4 md:mb-8"></div>
@@ -290,7 +290,7 @@ const BlogPost = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
-        <Header />
+        <HomepageHeader />
         
         <article className="container mx-auto px-4 py-8 max-w-4xl">
           {/* Back Button */}

@@ -8,7 +8,7 @@ import { useState, lazy, Suspense, FormEvent } from "react";
 import { toast } from "@/hooks/use-toast";
 
 // Lazy load the Header to reduce initial bundle size for contact page
-const Header = lazy(() => import("@/components/homepage/Header").then(module => ({ default: module.Header })));
+const HomepageHeader = lazy(() => import("@/components/homepage/HomepageHeader").then(module => ({ default: module.HomepageHeader })));
 
 const ContactUs = () => {
   const navigate = useNavigate();
@@ -145,7 +145,7 @@ const ContactUs = () => {
   return (
     <div className="min-h-screen bg-background">
       <Suspense fallback={<div className="h-16 bg-background border-b"></div>}>
-        <Header />
+        <HomepageHeader />
       </Suspense>
       <div className="container mx-auto px-4 py-8">        
         <div className="max-w-2xl mx-auto">

@@ -1,11 +1,11 @@
 import { SimpleButton } from "@/components/ui/simple-button";
 import { Link } from "react-router-dom";
-import { Header } from "@/components/homepage/Header";
+import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <HomepageHeader />
       <div className="container mx-auto px-4 py-8">        
         <div className="max-w-4xl mx-auto">
           {/* Purple frame container */}
