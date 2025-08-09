@@ -598,9 +598,9 @@ export const PropertyManagementVisualization = () => {
           <h4 className="text-sm font-bold text-purple-600 mb-3 uppercase tracking-wide">Hobson AI</h4>
           
           {/* Clean Answer Card */}
-          <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg relative" style={{
+          <div style={{
           padding: 'clamp(15px, 4vw, 22px)'
-        }}>
+        }} className="rounded-lg border border-primary/20 shadow-lg relative bg-slate-50">
             <div className="text-sm font-normal text-muted-foreground mb-3 font-sans text-left">
               When is the next rent review date?
             </div>
