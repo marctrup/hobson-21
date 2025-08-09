@@ -602,7 +602,7 @@ export const PropertyManagementVisualization = () => {
           padding: 'clamp(15px, 4vw, 22px)'
         }}>
             <div className="text-sm font-normal text-muted-foreground mb-3 font-sans text-left">
-              The next rent review date is 26/06/26 for Knight Frank 23 Hapstaed High Street NW3
+              The next rent review date is 26/06/26 for Knight Frank 23 Hampstead High Street NW3
             </div>
             
             <div className="text-left space-y-2 mb-4">
