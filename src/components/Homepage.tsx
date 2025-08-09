@@ -118,7 +118,7 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-[5px] bg-gray-50 p-6 rounded-lg">
+                <div className="relative mt-[5px] bg-gray-100 p-8 rounded-xl border border-gray-200">
                   <PropertyManagementVisualization />
                 </div>
 
