@@ -7,13 +7,12 @@ import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { ScrollVideoPlayer } from "@/components/ScrollVideoPlayer";
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
+import { LazyVideoDialog } from "@/components/LazyVideoDialog";
+import { LazyScrollVideo } from "@/components/LazyScrollVideo";
 // Lazy load video only when needed
 
 export const Homepage = () => {
-  const [videoLoaded, setVideoLoaded] = useState(false);
-  const [videoDialogOpen, setVideoDialogOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -39,13 +38,6 @@ export const Homepage = () => {
         {/* Preload critical assets */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
         <link rel="preload" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
-        <link rel="prefetch" href="/lovable-uploads/8aff0aa2-12fe-473e-85a2-63855803ec66.png" as="image" />
-        <link rel="dns-prefetch" href="//player.vimeo.com" />
-        <link rel="dns-prefetch" href="//vimeo.com" />
-        <link rel="dns-prefetch" href="//f.vimeocdn.com" />
-        <link rel="preconnect" href="https://player.vimeo.com" />
-        <link rel="preconnect" href="https://vimeo.com" />
-        <link rel="preconnect" href="https://f.vimeocdn.com" />
       </Helmet>
 
       <div className="min-h-screen bg-background overflow-x-hidden">
@@ -190,28 +182,17 @@ export const Homepage = () => {
 
                 {/* Right Content - Georgia Video */}
                 <div>
-                  <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden cursor-pointer relative transition-transform duration-300 hover:scale-105" style={{
+                  <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden relative" style={{
                     border: '10px solid #f0f0f0'
-                  }} onClick={() => setVideoDialogOpen(true)}>
-                    <OptimizedImage 
-                      src="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" 
-                      alt="Georgia - Hobson AI Assistant" 
-                      className="w-full h-full object-cover object-center transition-opacity duration-300 hover:opacity-90" 
-                      width={506} 
-                      height={338}
+                  }}>
+                    <LazyVideoDialog
+                      thumbnailSrc="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
+                      thumbnailAlt="Georgia - Hobson AI Assistant"
+                      videoId="1108183128"
+                      title="Meet Georgia - Property AI Assistant"
+                      description="Need more information? Meet Georgia"
                     />
                   </div>
-                  
-                  <p className="text-center text-lg text-muted-foreground mt-4">Need more information? Meet Georgia</p>
-                  
-                  {/* Video Dialog */}
-                  <Dialog open={videoDialogOpen} onOpenChange={setVideoDialogOpen}>
-                    <DialogContent className="max-w-4xl p-0 border-0">
-                      <div className="aspect-video">
-                        <iframe className="w-full h-full rounded-lg" src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1" title="Meet Georgia - Property AI Assistant" frameBorder="0" allow="autoplay; fullscreen; picture-in-picture" allowFullScreen />
-                      </div>
-                    </DialogContent>
-                  </Dialog>
                 </div>
 
               </div>
@@ -239,10 +220,14 @@ export const Homepage = () => {
           </section>
 
           {/* Scroll Video */}
-          <div className="container mx-auto px-4 mb-5" style={{
-          marginTop: '-40px'
-        }}>
-            <ScrollVideoPlayer videoId="1108176938" title="Hobson AI Pilot Program" description="Learn more about our pilot program" />
+          <LazyScrollVideo 
+            videoId="1108176938" 
+            title="Hobson AI Pilot Program" 
+            description="Learn more about our pilot program"
+            className="container mx-auto px-4 mb-5"
+            style={{ marginTop: '-40px' }}
+          />
+          <div className="container mx-auto px-4">
             <div className="text-center mt-4">
               <p className="text-lg text-muted-foreground">Want to know more about the pilot?</p>
             </div>
