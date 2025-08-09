@@ -118,7 +118,7 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-[5px]">
+                <div className="relative mt-[5px] font-space">
                   <PropertyManagementVisualization />
                 </div>
 
