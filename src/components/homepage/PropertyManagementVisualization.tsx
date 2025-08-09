@@ -1,11 +1,10 @@
 import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck, Plus, ArrowUp } from "lucide-react";
 export const PropertyManagementVisualization = () => {
-  return <div className="relative from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 shadow-xl shadow-primary/15 bg-gray-50 bg-[gray-30]">
+  return <div className="relative from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 shadow-xl shadow-primary/15 bg-gray-50">
       {/* Main Header */}
       <div className="text-center mb-8">
         <h1 className="text-2xl leading-relaxed font-bold mb-2">
           <span className="text-gray-500 font-semibold">What is the next rent review date?</span>
-          <span className="text-foreground"></span>
         </h1>
       </div>
 
