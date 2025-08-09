@@ -172,8 +172,8 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            {/* Highlighted documents - different types with different colors */}
-            <div className="absolute bottom-2 left-2 bg-purple-100 border border-purple-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            {/* Highlighted documents - different types with different colored content */}
+            <div className="absolute bottom-2 left-2 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-purple-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-purple-400 rounded"></div>
@@ -181,16 +181,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute top-4 right-4 bg-purple-100 border border-purple-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
-              <div className="space-y-0.5">
-                <div className="w-full h-1 bg-purple-400 rounded"></div>
-                <div className="w-3/4 h-1 bg-purple-400 rounded"></div>
-                <div className="w-1/2 h-1 bg-purple-400 rounded"></div>
-              </div>
-            </div>
-
-            {/* Additional document types with different colors */}
-            <div className="absolute top-8 left-8 bg-blue-100 border border-blue-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            <div className="absolute top-4 right-4 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-blue-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-blue-400 rounded"></div>
@@ -198,7 +189,8 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
 
-            <div className="absolute bottom-8 right-8 bg-green-100 border border-green-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            {/* Additional document types with different colored content */}
+            <div className="absolute top-8 left-8 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-green-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-green-400 rounded"></div>
@@ -206,7 +198,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
 
-            <div className="absolute top-16 right-12 bg-orange-100 border border-orange-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            <div className="absolute bottom-8 right-8 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-orange-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-orange-400 rounded"></div>
@@ -214,7 +206,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
 
-            <div className="absolute bottom-16 left-8 bg-red-100 border border-red-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            <div className="absolute top-16 right-12 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-red-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-red-400 rounded"></div>
@@ -222,8 +214,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
 
-            {/* More colored document types */}
-            <div className="absolute top-6 left-16 bg-yellow-100 border border-yellow-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            <div className="absolute bottom-16 left-8 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-yellow-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-yellow-400 rounded"></div>
@@ -231,7 +222,8 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
 
-            <div className="absolute bottom-12 right-16 bg-indigo-100 border border-indigo-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            {/* More colored document content types */}
+            <div className="absolute top-6 left-16 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-indigo-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-indigo-400 rounded"></div>
@@ -239,7 +231,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
 
-            <div className="absolute top-12 left-12 bg-pink-100 border border-pink-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            <div className="absolute bottom-12 right-16 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-pink-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-pink-400 rounded"></div>
@@ -247,7 +239,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
 
-            <div className="absolute bottom-6 left-20 bg-teal-100 border border-teal-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            <div className="absolute top-12 left-12 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-teal-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-teal-400 rounded"></div>
@@ -255,7 +247,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
 
-            <div className="absolute top-20 right-6 bg-rose-100 border border-rose-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            <div className="absolute bottom-6 left-20 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-rose-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-rose-400 rounded"></div>
@@ -263,11 +255,19 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
 
-            <div className="absolute bottom-4 left-1/2 bg-cyan-100 border border-cyan-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+            <div className="absolute top-20 right-6 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-cyan-400 rounded"></div>
                 <div className="w-3/4 h-1 bg-cyan-400 rounded"></div>
                 <div className="w-1/2 h-1 bg-cyan-400 rounded"></div>
+              </div>
+            </div>
+
+            <div className="absolute bottom-4 left-1/2 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
+              <div className="space-y-0.5">
+                <div className="w-full h-1 bg-emerald-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-emerald-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-emerald-400 rounded"></div>
               </div>
             </div>
           </div>
