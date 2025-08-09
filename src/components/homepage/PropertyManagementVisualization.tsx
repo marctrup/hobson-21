@@ -192,9 +192,9 @@ export const PropertyManagementVisualization = () => {
             {/* Additional document types with different colored content */}
             <div className="absolute top-8 left-8 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-500 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-500 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-500 rounded"></div>
+                <div className="w-full h-1 bg-gray-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
               </div>
             </div>
 
@@ -208,9 +208,9 @@ export const PropertyManagementVisualization = () => {
 
             <div className="absolute top-16 right-12 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-500 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-500 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-500 rounded"></div>
+                <div className="w-full h-1 bg-gray-400 rounded"></div>
+                <div className="w-3/4 h-1 bg-gray-400 rounded"></div>
+                <div className="w-1/2 h-1 bg-gray-400 rounded"></div>
               </div>
             </div>
 
@@ -257,9 +257,9 @@ export const PropertyManagementVisualization = () => {
 
             <div className="absolute top-20 right-6 bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px' }}>
               <div className="space-y-0.5">
-                <div className="w-full h-1 bg-gray-500 rounded"></div>
-                <div className="w-3/4 h-1 bg-gray-500 rounded"></div>
-                <div className="w-1/2 h-1 bg-gray-500 rounded"></div>
+                <div className="w-full h-1 bg-gray-300 rounded"></div>
+                <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
+                <div className="w-1/2 h-1 bg-gray-300 rounded"></div>
               </div>
             </div>
 
