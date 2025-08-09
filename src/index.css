@@ -7,6 +7,24 @@ All colors MUST be HSL.
 */
 
 @layer base {
+  /* Document floating animations */
+  @keyframes float1 {
+    0%, 100% { transform: translateY(0px) rotate(var(--rotate, 0deg)); }
+    50% { transform: translateY(-6px) rotate(var(--rotate, 0deg)); }
+  }
+  
+  @keyframes float2 {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(var(--rotate, 0deg)); }
+    25% { transform: translateY(-4px) translateX(2px) rotate(var(--rotate, 0deg)); }
+    75% { transform: translateY(-2px) translateX(-2px) rotate(var(--rotate, 0deg)); }
+  }
+  
+  @keyframes float3 {
+    0%, 100% { transform: translateY(0px) translateX(0px) rotate(var(--rotate, 0deg)); }
+    33% { transform: translateY(-5px) translateX(-3px) rotate(var(--rotate, 0deg)); }
+    66% { transform: translateY(-2px) translateX(3px) rotate(var(--rotate, 0deg)); }
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;

@@ -67,8 +67,8 @@ export const PropertyManagementVisualization = () => {
           
           {/* Scattered Documents */}
           <div className="relative h-32 sm:h-40 lg:h-48 bg-gradient-to-br from-muted/10 to-muted/20 rounded-lg p-2 sm:p-3 lg:p-4 overflow-hidden">
-            {/* Static Document Scatter - representing overwhelming amount */}
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '15%', top: '25%', transform: 'rotate(-8deg)' }}>
+            {/* Animated Document Scatter - representing overwhelming amount */}
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1 animate-pulse" style={{ width: '24px', height: '28px', left: '15%', top: '25%', transform: 'rotate(-8deg)', animation: 'float1 4s ease-in-out infinite' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -76,7 +76,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '65%', top: '15%', transform: 'rotate(12deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '65%', top: '15%', transform: 'rotate(12deg)', animation: 'float2 5s ease-in-out infinite 0.5s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -84,7 +84,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '35%', top: '55%', transform: 'rotate(-15deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '35%', top: '55%', transform: 'rotate(-15deg)', animation: 'float3 3.5s ease-in-out infinite 1s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -92,7 +92,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '75%', top: '45%', transform: 'rotate(6deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '75%', top: '45%', transform: 'rotate(6deg)', animation: 'float1 4.5s ease-in-out infinite 1.5s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -100,7 +100,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '25%', top: '35%', transform: 'rotate(-5deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '25%', top: '35%', transform: 'rotate(-5deg)', animation: 'float2 3.8s ease-in-out infinite 0.8s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -108,7 +108,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '55%', top: '65%', transform: 'rotate(18deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '55%', top: '65%', transform: 'rotate(18deg)', animation: 'float3 4.2s ease-in-out infinite 2s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -116,7 +116,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '45%', top: '20%', transform: 'rotate(-12deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '45%', top: '20%', transform: 'rotate(-12deg)', animation: 'float1 5.2s ease-in-out infinite 0.3s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -124,7 +124,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '80%', top: '25%', transform: 'rotate(9deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '80%', top: '25%', transform: 'rotate(9deg)', animation: 'float2 4.8s ease-in-out infinite 1.2s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -132,7 +132,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '20%', top: '60%', transform: 'rotate(-7deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '20%', top: '60%', transform: 'rotate(-7deg)', animation: 'float3 3.7s ease-in-out infinite 0.7s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -140,7 +140,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '70%', top: '70%', transform: 'rotate(14deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '70%', top: '70%', transform: 'rotate(14deg)', animation: 'float1 4.3s ease-in-out infinite 1.8s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -148,7 +148,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '50%', top: '40%', transform: 'rotate(-3deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '50%', top: '40%', transform: 'rotate(-3deg)', animation: 'float2 5.5s ease-in-out infinite 0.2s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -156,7 +156,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '12%', top: '45%', transform: 'rotate(11deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '12%', top: '45%', transform: 'rotate(11deg)', animation: 'float3 4.1s ease-in-out infinite 1.3s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
@@ -164,7 +164,7 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
             
-            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '85%', top: '55%', transform: 'rotate(-10deg)' }}>
+            <div className="absolute bg-white border border-gray-300 rounded shadow-sm p-1" style={{ width: '24px', height: '28px', left: '85%', top: '55%', transform: 'rotate(-10deg)', animation: 'float1 3.9s ease-in-out infinite 0.9s' }}>
               <div className="space-y-0.5">
                 <div className="w-full h-1 bg-gray-300 rounded"></div>
                 <div className="w-3/4 h-1 bg-gray-300 rounded"></div>
