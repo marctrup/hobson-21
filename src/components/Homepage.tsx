@@ -106,7 +106,7 @@ export const Homepage = () => {
                     <span className="text-foreground">backed by your own documents.</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    AI-powered assistant that answers property questions with citations from your documents — delivering accuracy and insights you can trust.
+                    A 24/7 assistant that answers property questions with citations from your documents — delivering accuracy and insights you can trust.
                   </p>
                   
                 </div>
