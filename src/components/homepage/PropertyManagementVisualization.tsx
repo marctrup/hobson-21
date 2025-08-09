@@ -4,7 +4,7 @@ export const PropertyManagementVisualization = () => {
       {/* Main Header */}
       <div className="text-center mb-8">
         <h1 className="text-2xl leading-relaxed font-bold mb-2">
-          <span className="text-primary">When is the next rent review date?</span>
+          <span className="text-gray-500 font-semibold">When is the next rent review date?</span>
           <span className="text-foreground"></span>
         </h1>
       </div>
