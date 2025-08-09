@@ -21,7 +21,7 @@ export const HomepageHeader = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <Link to="/property-management-software" onClick={closeMobileMenu}>
+            <Link to="/" onClick={closeMobileMenu}>
               <img 
                 src={hobsonLogo} 
                 alt="Hobson AI - AI-powered property management software company logo" 

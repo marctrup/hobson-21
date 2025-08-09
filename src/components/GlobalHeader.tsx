@@ -21,7 +21,7 @@ export const GlobalHeader = () => {
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            <Link to="/home/property-management-software" onClick={closeMobileMenu}>
+            <Link to="/" onClick={closeMobileMenu}>
               <img 
                 src={hobsonLogo} 
                 alt="Hobson AI property management software logo" 
