@@ -108,8 +108,8 @@ export const Homepage = () => {
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-6 -mt-[20px]">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Accurate answers, </span>
-                    <span className="text-foreground">from the original property documents.</span>
+                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">AI-powered property insights, </span>
+                    <span className="text-foreground">backed by your own documents.</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
                     AI-powered assistant that answers property questions with citations from your documents — delivering accuracy and insights you can trust.
