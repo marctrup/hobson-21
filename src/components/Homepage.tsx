@@ -110,15 +110,15 @@ export const Homepage = () => {
                     A 24/7 assistant that answers property questions with citations from your documents — delivering accuracy and insights you can trust.
                   </p>
                   
-                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block">
-                    <a 
-                      href="#pilot-section" 
-                      className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 transition-colors duration-200 font-medium text-lg group"
-                    >
+                  <a 
+                    href="#pilot-section" 
+                    className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group"
+                  >
+                    <div className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-lg">
                       Want to know about our pilot program?
                       <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
-                    </a>
-                  </div>
+                    </div>
+                  </a>
                   
                 </div>
 
