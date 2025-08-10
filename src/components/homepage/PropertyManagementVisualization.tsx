@@ -616,7 +616,18 @@ export const PropertyManagementVisualization = () => {
 
         {/* Right: The Future (Hobson) */}
         <div className="text-center">
-          <h4 className="text-sm font-bold text-purple-600 mb-3 uppercase tracking-wide">Hobson AI</h4>
+          <div className="mb-3">
+            <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
+              <span className="bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 bg-clip-text text-transparent drop-shadow-sm">
+                Hobson AI
+              </span>
+              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full"></div>
+              <div className="absolute -top-1 -right-2 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+            </h4>
+            <div className="text-xs text-emerald-600 font-semibold uppercase tracking-wide opacity-80">
+              Instant • Accurate • Intelligent
+            </div>
+          </div>
           
           {/* Clean Answer Card */}
           <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg relative" style={{
