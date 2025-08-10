@@ -11,7 +11,18 @@ export const PropertyManagementVisualization = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative">
         {/* Left: The Pain (Today's World) */}
         <div className="text-center">
-          <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
+          <div className="mb-4">
+            <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
+              <span className="bg-gradient-to-r from-red-600 via-orange-600 to-red-700 bg-clip-text text-transparent drop-shadow-sm">
+                Today's Process
+              </span>
+              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-full"></div>
+              <div className="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+            </h4>
+            <div className="text-xs text-red-600 font-semibold uppercase tracking-wide opacity-80">
+              Manual • Slow • Error-Prone
+            </div>
+          </div>
           
           {/* Circular Process */}
           <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 mx-auto mb-4">
