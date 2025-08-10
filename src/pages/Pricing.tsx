@@ -203,11 +203,11 @@ const Pricing = () => {
                   
                   <div className="border-t border-destructive/20 pt-4 space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Small agency</span>
+                      <span className="text-sm text-muted-foreground">Small Business (1-9 employees)</span>
                       <span className="font-bold text-destructive text-lg">£140/month</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Larger portfolio</span>
+                      <span className="text-sm text-muted-foreground">Medium Business (10-49 employees)</span>
                       <span className="font-bold text-destructive text-lg">£500/month</span>
                     </div>
                   </div>
@@ -255,7 +255,7 @@ const Pricing = () => {
                       <span className="font-bold text-primary text-lg">£18.50/month</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Larger portfolio</span>
+                      <span className="text-sm text-muted-foreground">Medium Business (10-49 employees</span>
                       <span className="font-bold text-primary text-lg">£28.50/month</span>
                     </div>
                   </div>
