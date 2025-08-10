@@ -12,10 +12,10 @@ const Pricing = () => {
         <meta name="keywords" content="AI pricing, property management pricing, per-task billing, CRM alternative" />
       </Helmet>
 
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen" style={{ backgroundColor: '#ffffff', backgroundImage: 'none' }}>
         {/* Hero Section - 2 Column */}
-        <section className="relative overflow-hidden bg-white py-24 lg:py-32 min-h-[80vh]">
-          <div className="container relative mx-auto px-4 h-full flex items-center">
+        <section className="relative overflow-hidden py-24 lg:py-32 min-h-[80vh]" style={{ backgroundColor: '#ffffff', backgroundImage: 'none', background: '#ffffff' }}>
+          <div className="container relative mx-auto px-4 h-full flex items-center" style={{ backgroundColor: '#ffffff', backgroundImage: 'none' }}>
              <div className="grid lg:grid-cols-1 gap-12 items-center max-w-4xl mx-auto text-center">
                {/* Content */}
                <div>
