@@ -10,7 +10,7 @@ export const PropertyManagementVisualization = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative">
         {/* Left: The Pain (Today's World) */}
-        <div className="text-center">
+        <div className="text-center lg:mt-[5px]">
           <div className="mb-4">
             <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
               <span className="text-gray-500 drop-shadow-sm">
