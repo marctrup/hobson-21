@@ -13,13 +13,13 @@ export const PropertyManagementVisualization = () => {
         <div className="text-center">
           <div className="mb-4">
             <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
-              <span className="bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-700 bg-clip-text text-transparent drop-shadow-sm">
+              <span className="bg-gradient-to-r from-red-600 via-orange-600 to-red-700 bg-clip-text text-transparent drop-shadow-sm">
                 Today's Process
               </span>
-              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"></div>
-              <div className="absolute -top-1 -right-2 w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-red-500 to-orange-500 rounded-full"></div>
+              <div className="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
             </h4>
-            <div className="text-xs text-blue-600 font-semibold uppercase tracking-wide opacity-80">
+            <div className="text-xs text-red-600 font-semibold uppercase tracking-wide opacity-80">
               Manual • Slow • Error-Prone • Store • Repeat
             </div>
           </div>
@@ -591,13 +591,11 @@ export const PropertyManagementVisualization = () => {
             </div>
           </div>
           
-          <div className="text-xs font-bold mt-3 space-y-1">
-            <div className="text-blue-600">📄 20 × Lease Agreements</div>
-            <div className="text-orange-600">📋 12 × Deeds of Variation</div>
-            <div className="text-purple-600">📑 3 × Reversionary Leases</div>
-            <div className="text-emerald-600 mt-2 text-sm font-black">
-              ✓ Total = 55 available review dates
-            </div>
+          <div className="text-xs text-muted-foreground font-bold mt-3 space-y-1">
+            <div>20 × Lease Agreements</div>
+            <div>12 × Deeds of Variation</div>
+            <div>3 × Reversionary Leases</div>
+            <div className="text-emerald-600 mt-2">Total = 55 available review dates</div>
           </div>
         </div>
 
