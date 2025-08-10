@@ -48,48 +48,6 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* How It Works Section */}
-        <section className="py-20 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
-                How Hobson Pricing Works
-              </h2>
-            </div>
-            
-            <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
-              <div className="text-center group">
-                <div className="mb-6 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <MessageSquare className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Ask</h3>
-                <p className="text-muted-foreground">
-                  You ask Hobson — a question, a document check, or a report request.
-                </p>
-              </div>
-              
-              <div className="text-center group">
-                <div className="mb-6 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <Cog className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Process</h3>
-                <p className="text-muted-foreground">
-                  Hobson works — each task uses a small number of HEUs.
-                </p>
-              </div>
-              
-              <div className="text-center group">
-                <div className="mb-6 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
-                  <CreditCard className="w-8 h-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3 text-foreground">Pay</h3>
-                <p className="text-muted-foreground">
-                  You only pay for what's used — no hidden fees, no wasted spend.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Pricing Plans - Cards */}
         <section className="py-20">
