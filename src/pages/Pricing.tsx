@@ -190,6 +190,13 @@ const Pricing = () => {
         {/* Pricing Plans - Cards */}
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-foreground mb-4">Choose Your Plan</h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Start with our Free plan or choose a monthly HEU bundle that fits your workload
+              </p>
+            </div>
+            
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
               {/* Free Plan */}
               <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
