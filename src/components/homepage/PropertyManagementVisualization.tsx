@@ -13,54 +13,67 @@ export const PropertyManagementVisualization = () => {
         <div className="text-center">
           <h4 className="text-sm font-bold text-muted-foreground mb-4 uppercase tracking-wide">Today's Process</h4>
           
-          {/* Circular Process */}
-          <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 mx-auto mb-4">
-            <div className="absolute inset-0 border-2 border-dashed border-purple-300 rounded-full animate-spin" style={{
-            animationDuration: '8s'
-          }}></div>
-            
-            {/* Process Icons */}
-            <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
-              <div className="bg-background border border-border rounded-full p-2">
-                <UserCheck className="w-4 h-4 text-blue-600" />
-              </div>
+          {/* Enhanced Eye-catching Container */}
+          <div className="bg-gradient-to-br from-red-50 to-orange-50 border-2 border-red-200 rounded-xl p-6 shadow-lg relative overflow-hidden">
+            {/* Background Pattern */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-2 left-2 w-4 h-4 bg-red-300 rounded-full"></div>
+              <div className="absolute top-4 right-4 w-3 h-3 bg-orange-300 rounded-full"></div>
+              <div className="absolute bottom-3 left-4 w-2 h-2 bg-red-400 rounded-full"></div>
+              <div className="absolute bottom-4 right-2 w-3 h-3 bg-orange-400 rounded-full"></div>
             </div>
             
-            <div className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2">
-              <div className="bg-background border border-border rounded-full p-2">
-                <FolderOpen className="w-4 h-4 text-orange-600" />
+            {/* Circular Process */}
+            <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 mx-auto mb-4">
+              <div className="absolute inset-0 border-3 border-dashed border-red-400 rounded-full animate-spin shadow-md" style={{
+              animationDuration: '8s'
+            }}></div>
+              
+              {/* Process Icons */}
+              <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2">
+                <div className="bg-white border-2 border-red-300 rounded-full p-2 shadow-md">
+                  <UserCheck className="w-4 h-4 text-red-600" />
+                </div>
+              </div>
+              
+              <div className="absolute right-0 top-1/2 transform translate-x-2 -translate-y-1/2">
+                <div className="bg-white border-2 border-orange-300 rounded-full p-2 shadow-md">
+                  <FolderOpen className="w-4 h-4 text-orange-600" />
+                </div>
+              </div>
+              
+              <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2">
+                <div className="bg-white border-2 border-red-300 rounded-full p-2 shadow-md">
+                  <Search className="w-4 h-4 text-red-600" />
+                </div>
+              </div>
+              
+              <div className="absolute left-0 top-1/2 transform -translate-x-2 -translate-y-1/2">
+                <div className="bg-white border-2 border-orange-300 rounded-full p-2 shadow-md">
+                  <RotateCcw className="w-4 h-4 text-orange-600" />
+                </div>
               </div>
             </div>
-            
-            <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-2">
-              <div className="bg-background border border-border rounded-full p-2">
-                <Search className="w-4 h-4 text-green-600" />
-              </div>
-            </div>
-            
-            <div className="absolute left-0 top-1/2 transform -translate-x-2 -translate-y-1/2">
-              <div className="bg-background border border-border rounded-full p-2">
-                <RotateCcw className="w-4 h-4 text-purple-600" />
-              </div>
-            </div>
-          </div>
 
-          <div className="space-y-1 text-xs text-muted-foreground">
-            <div className="flex items-center justify-center gap-1">
-              <span className="font-bold">Manual extraction</span>
-              <ArrowRight className="w-3 h-3" />
-              <span className="font-bold">Store in system</span>
+            <div className="space-y-1 text-xs text-gray-700 font-medium">
+              <div className="flex items-center justify-center gap-1">
+                <span className="font-bold text-red-700">Manual extraction</span>
+                <ArrowRight className="w-3 h-3 text-red-600" />
+                <span className="font-bold text-red-700">Store in system</span>
+              </div>
+              <div className="flex items-center justify-center gap-1">
+                <span className="font-bold text-orange-700">Search</span>
+                <ArrowRight className="w-3 h-3 text-orange-600" />
+                <span className="font-bold text-orange-700">Repeat</span>
+              </div>
             </div>
-            <div className="flex items-center justify-center gap-1">
-              <span className="font-bold">Search</span>
-              <ArrowRight className="w-3 h-3" />
-              <span className="font-bold">Repeat</span>
+            
+            <div className="mt-3 bg-red-100 border border-red-300 rounded-lg p-2">
+              <p className="text-xs text-red-700 font-bold">
+                ⚠️ Time-consuming, error-prone, out-of-date
+              </p>
             </div>
           </div>
-          
-          <p className="text-xs text-purple-600 font-bold mt-3">
-            Time-consuming, error-prone, out-of-date
-          </p>
         </div>
 
         {/* Center: The Challenge */}
