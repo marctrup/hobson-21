@@ -60,7 +60,7 @@ export const PropertyManagementVisualization = () => {
 
         {/* Center: The Challenge */}
         <div className="text-center" style={{
-        marginTop: '-13px'
+        marginTop: '-3px'
       }}>
           <div className="mb-4">
             <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
