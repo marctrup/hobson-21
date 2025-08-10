@@ -123,7 +123,7 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-[5px] font-space border-[5px] border-red-500 rounded-lg p-6">
+                <div className="relative mt-[5px] font-space">
                   <PropertyManagementVisualization />
                 </div>
 
