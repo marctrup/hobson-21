@@ -43,14 +43,15 @@ const Pricing = () => {
                 </Button>
               </div>
               
-              {/* Right Column - HEU Coin Animation */}
+              {/* Right Column - Illustration Placeholder */}
               <div className="flex items-center justify-center">
-                <div className="w-full max-w-md h-80 flex items-center justify-center">
-                  <img 
-                    src="/lovable-uploads/38e872ff-ad6a-490a-9166-a5ab809c890a.png" 
-                    alt="Hobson Energy Unit (HEU) coin representing pay-per-task pricing model"
-                    className="w-64 h-64 object-contain drop-shadow-2xl animate-pulse"
-                  />
+                <div className="w-full max-w-md h-80 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl border-2 border-dashed border-primary/30 flex items-center justify-center">
+                  <div className="text-center text-muted-foreground">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center">
+                      <span className="text-2xl">💰</span>
+                    </div>
+                    <p className="text-sm">Illustration placeholder<br />Old pricing vs HEU coin</p>
+                  </div>
                 </div>
               </div>
             </div>
