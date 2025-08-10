@@ -610,7 +610,7 @@ export const PropertyManagementVisualization = () => {
               <div className="absolute -top-1 -right-2 w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
             </h4>
             <div className="text-xs text-purple-600 font-semibold uppercase tracking-wide opacity-80">
-              Instant • Accurate • Intelligent
+              Instant • Accurate • Intelligent • Citations
             </div>
           </div>
           
