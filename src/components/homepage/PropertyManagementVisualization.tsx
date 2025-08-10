@@ -20,7 +20,7 @@ export const PropertyManagementVisualization = () => {
               <div className="absolute -top-1 -right-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
             </h4>
             <div className="text-xs text-red-600 font-semibold uppercase tracking-wide opacity-80">
-              Manual • Slow • Error-Prone
+              Manual • Slow • Error-Prone • Store • Repeat
             </div>
           </div>
           
