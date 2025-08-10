@@ -14,7 +14,7 @@ const Pricing = () => {
 
       <div className="min-h-screen bg-background">
         {/* Hero Section - 2 Column */}
-        <section className="relative overflow-hidden bg-background py-24 lg:py-32 min-h-[80vh]">
+        <section className="relative overflow-hidden bg-white py-24 lg:py-32 min-h-[80vh]">
           <div className="container relative mx-auto px-4 h-full flex items-center">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left Column - Content */}
