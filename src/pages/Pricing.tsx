@@ -46,11 +46,7 @@ const Pricing = () => {
                   <img 
                     src="/lovable-uploads/38e872ff-ad6a-490a-9166-a5ab809c890a.png"
                     alt="1 HEU Coin" 
-                    className="w-80 h-80 lg:w-96 lg:h-96 object-contain animate-[rotateY_8s_linear_infinite] drop-shadow-2xl"
-                    style={{
-                      filter: 'drop-shadow(0 0 20px rgba(111, 45, 168, 0.3))',
-                      animation: 'rotateY 8s linear infinite, glowPulse 4s ease-in-out infinite'
-                    }}
+                    className="w-80 h-80 lg:w-96 lg:h-96 object-contain animate-spin-slow drop-shadow-2xl"
                   />
                 </div>
               </div>
@@ -58,19 +54,6 @@ const Pricing = () => {
           </div>
         </section>
 
-        <style>
-          {`
-            @keyframes rotateY {
-              from { transform: rotateY(0deg); }
-              to { transform: rotateY(360deg); }
-            }
-            
-            @keyframes glowPulse {
-              0%, 100% { filter: drop-shadow(0 0 20px rgba(111, 45, 168, 0.3)); }
-              50% { filter: drop-shadow(0 0 40px rgba(111, 45, 168, 0.6)); }
-            }
-          `}
-        </style>
 
         {/* How It Works Section */}
         <section className="py-20 bg-muted/30">
