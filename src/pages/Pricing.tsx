@@ -325,7 +325,7 @@ const Pricing = () => {
                               <span className="text-base">💬</span>
                               <span>Simple Question — "When was my last rent review?"</span>
                             </div>
-                            <span className="font-mono text-primary font-medium">→ 0.0026 HUE</span>
+                            <span className="font-mono text-primary font-medium">~ 0.0026 HUE</span>
                           </div>
                           
                           <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/50">
@@ -333,7 +333,7 @@ const Pricing = () => {
                               <span className="text-base">🔍</span>
                               <span>Medium Query — "Summarise this inspection report"</span>
                             </div>
-                            <span className="font-mono text-primary font-medium">→ 0.01 HUE</span>
+                            <span className="font-mono text-primary font-medium">~ 0.01 HUE</span>
                           </div>
                           
                           <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/70">
@@ -341,7 +341,7 @@ const Pricing = () => {
                               <span className="text-base">🧠</span>
                               <span>Complex Query — "Find every clause in my leases about pets"</span>
                             </div>
-                            <span className="font-mono text-primary font-medium">→ 0.03 HUE</span>
+                            <span className="font-mono text-primary font-medium">~ 0.03 HUE</span>
                           </div>
                           
                           <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-secondary/40">
@@ -349,7 +349,7 @@ const Pricing = () => {
                               <span className="text-base">📄</span>
                               <span>Simple Doc Extraction — 1-page letter</span>
                             </div>
-                            <span className="font-mono text-secondary font-medium">→ 0.025 HUE</span>
+                            <span className="font-mono text-secondary font-medium">~ 0.025 HUE</span>
                           </div>
                           
                           <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-secondary/60">
@@ -357,7 +357,7 @@ const Pricing = () => {
                               <span className="text-base">📋</span>
                               <span>Medium Doc Extraction — mid-length contract</span>
                             </div>
-                            <span className="font-mono text-secondary font-medium">→ 0.76 HUE</span>
+                            <span className="font-mono text-secondary font-medium">~ 0.76 HUE</span>
                           </div>
                           
                           <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-secondary/80">
@@ -365,7 +365,7 @@ const Pricing = () => {
                               <span className="text-base">📚</span>
                               <span>Complex Doc Extraction — large legal agreement</span>
                             </div>
-                            <span className="font-mono text-secondary font-medium">→ 0.92 HUE</span>
+                            <span className="font-mono text-secondary font-medium">~ 0.92 HUE</span>
                           </div>
                         </div>
                       </div>
