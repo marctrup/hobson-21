@@ -84,6 +84,7 @@ const Pricing = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-foreground mb-4">The Pricing Model That Doesn't Punish Growth</h2>
+              <p className="text-muted-foreground text-lg">Where the Savings Come From</p>
             </div>
             
             <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
