@@ -13,43 +13,64 @@ const Pricing = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
-        {/* Hero Section - 2 Column */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-24 lg:py-32">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.1)_50%,transparent_75%,transparent_100%)] bg-[length:60px_60px]" />
-          <div className="container relative mx-auto px-4">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
+        {/* Hero Section */}
+        <section className="relative overflow-hidden bg-white py-20 lg:py-28">
+          {/* Subtle gradient behind coin */}
+          <div className="absolute top-1/2 right-1/4 transform -translate-y-1/2 w-96 h-96 bg-gradient-radial from-primary/8 via-primary/4 to-transparent rounded-full blur-3xl" />
+          
+          <div className="container relative mx-auto px-6 lg:px-8">
+            <div className="grid lg:grid-cols-2 gap-16 items-center min-h-[600px]">
               {/* Left Column - Content */}
-              <div>
-                <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                  Only Pay for What Hobson Works On —{" "}
-                  <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
-                    Not Seats, Not Properties
+              <div className="space-y-8">
+                <h1 className="text-5xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.1]">
+                  Turning Pricing on{" "}
+                  <span className="bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                    Its Head
                   </span>
                 </h1>
-                <p className="mb-8 text-xl text-muted-foreground">
-                  Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
-                  Hobson charges for the actual work our AI does — measured in{" "}
-                  <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
+                
+                <p className="text-xl lg:text-2xl text-muted-foreground font-light leading-relaxed">
+                  One flat fee. All features. No per-user or per-property nonsense.
                 </p>
-                <Button size="lg" className="h-12 px-8 text-lg font-semibold">
-                  See Plans & Compare Savings
-                </Button>
+                
+                <div className="pt-4">
+                  <Button size="lg" className="h-14 px-10 text-lg font-semibold rounded-full shadow-lg hover:shadow-xl transition-all duration-300">
+                    See How Hobson Works
+                  </Button>
+                </div>
               </div>
               
-              {/* Right Column - Illustration Placeholder */}
-              <div className="flex items-center justify-center">
-                <div className="w-full max-w-md h-80 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl border-2 border-dashed border-primary/30 flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center">
-                      <span className="text-2xl">💰</span>
-                    </div>
-                    <p className="text-sm">Illustration placeholder<br />Old pricing vs HEU coin</p>
-                  </div>
+              {/* Right Column - Animated HEU Coin */}
+              <div className="flex items-center justify-center lg:justify-end">
+                <div className="relative">
+                  <img 
+                    src="/lovable-uploads/38e872ff-ad6a-490a-9166-a5ab809c890a.png"
+                    alt="1 HEU Coin" 
+                    className="w-80 h-80 lg:w-96 lg:h-96 object-contain animate-[rotateY_8s_linear_infinite] drop-shadow-2xl"
+                    style={{
+                      filter: 'drop-shadow(0 0 20px rgba(111, 45, 168, 0.3))',
+                      animation: 'rotateY 8s linear infinite, glowPulse 4s ease-in-out infinite'
+                    }}
+                  />
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+        <style>
+          {`
+            @keyframes rotateY {
+              from { transform: rotateY(0deg); }
+              to { transform: rotateY(360deg); }
+            }
+            
+            @keyframes glowPulse {
+              0%, 100% { filter: drop-shadow(0 0 20px rgba(111, 45, 168, 0.3)); }
+              50% { filter: drop-shadow(0 0 40px rgba(111, 45, 168, 0.6)); }
+            }
+          `}
+        </style>
 
         {/* How It Works Section */}
         <section className="py-20 bg-muted/30">
