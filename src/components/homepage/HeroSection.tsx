@@ -33,9 +33,9 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
             </div>
           </div>
           
-          <div className="border-[5px] border-red-500 rounded-lg p-6 bg-white/5 backdrop-blur-sm">
+          <div className="border-[5px] border-red-500 rounded-lg p-6 bg-white/5 backdrop-blur-sm shadow-2xl">
             <div className="space-y-4">
-              <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg flex items-center justify-center">
+              <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg flex items-center justify-center shadow-lg">
                 <div className="text-center text-muted-foreground">
                   <p className="text-lg font-medium">Demo Content</p>
                   <p className="text-sm">Visual representation area</p>
