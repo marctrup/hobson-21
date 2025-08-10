@@ -294,61 +294,162 @@ const Pricing = () => {
         {/* FAQ Section */}
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger className="text-left">What's an HEU?</AccordionTrigger>
-                  <AccordionContent>
-                    A Hobson Energy Unit measures the AI work used. Small queries use less; big document analysis uses more.
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                Frequently Asked Questions
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Everything you need to know about Hobson's revolutionary pricing model
+              </p>
+            </div>
+            
+            <div className="max-w-4xl mx-auto">
+              <Accordion type="single" collapsible className="w-full space-y-4">
+                <AccordionItem value="item-1" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      ❓ What's a HUE? 🪙
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <div className="space-y-4">
+                      <p className="text-muted-foreground">
+                        A HUE (Hobson Energy Unit) measures AI workload. Small tasks use fractions, big jobs use more.
+                      </p>
+                      <div className="bg-muted/50 p-4 rounded-lg">
+                        <p className="font-medium text-foreground mb-2">Example:</p>
+                        <div className="space-y-1 text-sm">
+                          <div className="flex justify-between">
+                            <span>Simple Question</span>
+                            <span className="font-mono text-primary">0.0026 HUE</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Medium Query</span>
+                            <span className="font-mono text-primary">0.01 HUE</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Complex Query</span>
+                            <span className="font-mono text-primary">0.03 HUE</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Simple Doc Extraction</span>
+                            <span className="font-mono text-primary">0.025 HUE</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Medium Doc Extraction</span>
+                            <span className="font-mono text-primary">0.76 HUE</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Complex Doc Extraction</span>
+                            <span className="font-mono text-primary">0.92 HUE</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-2">
-                  <AccordionTrigger className="text-left">Do I pay per user or per property?</AccordionTrigger>
-                  <AccordionContent>
-                    No. Unlimited users and properties. You only pay for the AI work done.
+                <AccordionItem value="item-2" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      ❓ Do I pay per user or property? 👥🏠
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <p className="text-muted-foreground">
+                      No — only for the AI work you use.
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-3">
-                  <AccordionTrigger className="text-left">Are new features extra?</AccordionTrigger>
-                  <AccordionContent>
-                    Never. As Hobson grows, you get everything included.
+                <AccordionItem value="item-3" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      ❓ Are new features extra? ✨
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <p className="text-muted-foreground">
+                      No — all new features are included.
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-4">
-                  <AccordionTrigger className="text-left">What happens if I run out of HEUs?</AccordionTrigger>
-                  <AccordionContent>
-                    You can top up anytime. No penalties, no lock-ins.
+                <AccordionItem value="item-4" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      ❓ What if I run out of HUEs? ⚡
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <p className="text-muted-foreground">
+                      Top up instantly, no plan changes needed.
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-5">
-                  <AccordionTrigger className="text-left">Can I predict monthly costs?</AccordionTrigger>
-                  <AccordionContent>
-                    Yes. Pick a plan sized to your usual workload, then top up only in busy periods.
+                <AccordionItem value="item-5" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      ❓ Can I predict monthly costs? 📊
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <p className="text-muted-foreground">
+                      Yes — each task has a fixed HUE value.
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-6">
-                  <AccordionTrigger className="text-left">Can I roll over unused HEUs?</AccordionTrigger>
-                  <AccordionContent>
-                    (Adjust policy if needed).
+                <AccordionItem value="item-6" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      ❓ Can I roll over unused HUEs? 🔄
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <p className="text-muted-foreground">
+                      No — they reset monthly.
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-7">
-                  <AccordionTrigger className="text-left">Do you charge setup or onboarding fees?</AccordionTrigger>
-                  <AccordionContent>
-                    Onboarding is optional; no hidden fees.
+                <AccordionItem value="item-7" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      ❓ Do you charge setup or onboarding fees? 🚀
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <p className="text-muted-foreground">
+                      No — optional paid onboarding is available.
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-8">
-                  <AccordionTrigger className="text-left">What if my team grows?</AccordionTrigger>
-                  <AccordionContent>
-                    Invite everyone. No extra cost unless workload increases.
+                <AccordionItem value="item-8" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      ❓ What if my team grows? 📈
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <p className="text-muted-foreground">
+                      No extra cost — add as many users as you like.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-9" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
+                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
+                    <span className="flex items-center gap-3 text-lg font-semibold">
+                      ❓ Can I monitor usage? 👀
+                    </span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <p className="text-muted-foreground">
+                      Yes — your dashboard shows real-time HUE usage.
+                    </p>
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
