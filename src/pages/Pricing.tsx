@@ -79,71 +79,8 @@ const Pricing = () => {
           </div>
         </section>
 
-
-        {/* Pricing Plans - Cards */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
-              {/* Free Plan */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Free</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£0</div>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">5 HEUs</div>
-                  <p className="text-sm text-muted-foreground">Try Hobson on a few documents </p>
-                  <Button variant="outline" className="w-full">Get Started</Button>
-                </CardContent>
-              </Card>
-
-              {/* Standard Plan */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Standard</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£18.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">31 HEUs</div>
-                  <p className="text-sm text-muted-foreground">Small portfolios, steady workload</p>
-                  <Button className="w-full">Choose Plan</Button>
-                </CardContent>
-              </Card>
-
-              {/* Pro Plan - Most Popular */}
-              <Card className="bg-card border-2 border-primary rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative">
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-primary text-primary-foreground">⭐ Most Popular</Badge>
-                </div>
-                <CardHeader className="text-center pt-6">
-                  <CardTitle className="text-lg font-semibold">Pro</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£28.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">50 HEUs</div>
-                  <p className="text-sm text-muted-foreground">Growing portfolios, frequent use</p>
-                  <Button className="w-full">Choose Plan</Button>
-                </CardContent>
-              </Card>
-
-              {/* Top-Up */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Top-Up</CardTitle>
-                  <div className="text-3xl font-bold text-primary">From £10</div>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">20 HEUs</div>
-                  <p className="text-sm text-muted-foreground">For busy months or large projects</p>
-                  <Button variant="outline" className="w-full">Add Top-Up</Button>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
         {/* Old CRM vs Hobson - Redesigned */}
-        <section className="py-20 bg-muted/30">
+        <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-foreground mb-4">Why Existing CRM`s Pricing Costs More</h2>
@@ -249,6 +186,68 @@ const Pricing = () => {
           </div>
         </section>
 
+
+        {/* Pricing Plans - Cards */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
+              {/* Free Plan */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Free</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£0</div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">5 HEUs</div>
+                  <p className="text-sm text-muted-foreground">Try Hobson on a few documents </p>
+                  <Button variant="outline" className="w-full">Get Started</Button>
+                </CardContent>
+              </Card>
+
+              {/* Standard Plan */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Standard</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£18.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">31 HEUs</div>
+                  <p className="text-sm text-muted-foreground">Small portfolios, steady workload</p>
+                  <Button className="w-full">Choose Plan</Button>
+                </CardContent>
+              </Card>
+
+              {/* Pro Plan - Most Popular */}
+              <Card className="bg-card border-2 border-primary rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-primary text-primary-foreground">⭐ Most Popular</Badge>
+                </div>
+                <CardHeader className="text-center pt-6">
+                  <CardTitle className="text-lg font-semibold">Pro</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£28.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">50 HEUs</div>
+                  <p className="text-sm text-muted-foreground">Growing portfolios, frequent use</p>
+                  <Button className="w-full">Choose Plan</Button>
+                </CardContent>
+              </Card>
+
+              {/* Top-Up */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Top-Up</CardTitle>
+                  <div className="text-3xl font-bold text-primary">From £10</div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">20 HEUs</div>
+                  <p className="text-sm text-muted-foreground">For busy months or large projects</p>
+                  <Button variant="outline" className="w-full">Add Top-Up</Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
 
         {/* FAQ Section */}
         <section className="py-20 bg-muted/30">
