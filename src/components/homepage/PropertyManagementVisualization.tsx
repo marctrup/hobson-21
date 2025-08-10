@@ -591,38 +591,12 @@ export const PropertyManagementVisualization = () => {
             </div>
           </div>
           
-          <div className="bg-white/80 backdrop-blur-sm rounded-lg border border-emerald-200 p-3 mt-3 shadow-sm">
-            <div className="text-xs font-semibold text-gray-700 mb-2 uppercase tracking-wide">
-              Document Analysis
-            </div>
-            <div className="space-y-2 text-xs">
-              <div className="flex items-center justify-between">
-                <span className="text-gray-600 flex items-center gap-1">
-                  <div className="w-2 h-2 bg-blue-400 rounded-full"></div>
-                  Lease Agreements
-                </span>
-                <span className="font-bold text-gray-800">20 documents</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-gray-600 flex items-center gap-1">
-                  <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
-                  Deeds of Variation
-                </span>
-                <span className="font-bold text-gray-800">12 documents</span>
-              </div>
-              <div className="flex items-center justify-between">
-                <span className="text-gray-600 flex items-center gap-1">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  Reversionary Leases
-                </span>
-                <span className="font-bold text-gray-800">3 documents</span>
-              </div>
-              <div className="border-t border-emerald-200 pt-2 mt-2">
-                <div className="flex items-center justify-between bg-emerald-50 rounded px-2 py-1">
-                  <span className="font-bold text-emerald-700">Total Review Dates Found</span>
-                  <span className="font-black text-emerald-600 text-sm">55</span>
-                </div>
-              </div>
+          <div className="text-xs font-bold mt-3 space-y-1">
+            <div className="text-blue-600">📄 20 × Lease Agreements</div>
+            <div className="text-orange-600">📋 12 × Deeds of Variation</div>
+            <div className="text-purple-600">📑 3 × Reversionary Leases</div>
+            <div className="text-emerald-600 mt-2 text-sm font-black">
+              ✓ Total = 55 available review dates
             </div>
           </div>
         </div>
