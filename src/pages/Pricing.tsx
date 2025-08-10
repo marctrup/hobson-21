@@ -48,6 +48,37 @@ const Pricing = () => {
           </div>
         </section>
 
+        {/* Real-Life Savings */}
+        <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+              <div className="text-center">
+                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Briefcase className="w-8 h-8 text-primary" />
+                </div>
+                <div className="text-2xl font-bold text-primary mb-2">Save £1,452/year</div>
+                <p className="text-muted-foreground">Small Business (1-9 employees)</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Building2 className="w-8 h-8 text-primary" />
+                </div>
+                <div className="text-2xl font-bold text-primary mb-2">Save £5,676/year</div>
+                <p className="text-muted-foreground">Medium Business (10-49 employees)</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <TrendingUp className="w-8 h-8 text-primary" />
+                </div>
+                <div className="text-2xl font-bold text-primary mb-2">No price jump</div>
+                <p className="text-muted-foreground">When you add people or properties</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
 
         {/* Pricing Plans - Cards */}
         <section className="py-20">
@@ -218,36 +249,6 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Real-Life Savings */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
-              <div className="text-center">
-                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Briefcase className="w-8 h-8 text-primary" />
-                </div>
-                <div className="text-2xl font-bold text-primary mb-2">Save £1,452/year</div>
-                <p className="text-muted-foreground">Small Business (1-9 employees)</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Building2 className="w-8 h-8 text-primary" />
-                </div>
-                <div className="text-2xl font-bold text-primary mb-2">Save £5,676/year</div>
-                <p className="text-muted-foreground">Medium Business (10-49 employees)</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-8 h-8 text-primary" />
-                </div>
-                <div className="text-2xl font-bold text-primary mb-2">No price jump</div>
-                <p className="text-muted-foreground">When you add people or properties</p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* FAQ Section */}
         <section className="py-20 bg-muted/30">
