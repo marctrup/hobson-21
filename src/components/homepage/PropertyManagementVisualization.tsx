@@ -595,7 +595,7 @@ export const PropertyManagementVisualization = () => {
             <div className="whitespace-nowrap">20 × Lease Agreements</div>
             <div className="whitespace-nowrap">12 × Deeds of Variation</div>
             <div className="whitespace-nowrap">3 × Reversionary Leases</div>
-            <div className="text-emerald-600 mt-2 whitespace-nowrap">Total = 55 available review dates</div>
+            <div className="text-emerald-600 mt-2 whitespace-nowrap">Total: 55 review dates</div>
           </div>
         </div>
 
