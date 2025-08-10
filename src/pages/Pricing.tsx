@@ -344,28 +344,28 @@ const Pricing = () => {
                             <span className="font-mono text-primary font-medium">~ 0.03 HUE</span>
                           </div>
                           
-                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-secondary/40">
+                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/40">
                             <div className="flex items-center gap-2">
                               <span className="text-base">📄</span>
                               <span>Simple Doc Extraction — 1-page letter</span>
                             </div>
-                            <span className="font-mono text-secondary font-medium">~ 0.025 HUE</span>
+                            <span className="font-mono text-primary font-medium">~ 0.025 HUE</span>
                           </div>
                           
-                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-secondary/60">
+                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/60">
                             <div className="flex items-center gap-2">
                               <span className="text-base">📋</span>
                               <span>Medium Doc Extraction — mid-length contract</span>
                             </div>
-                            <span className="font-mono text-secondary font-medium">~ 0.76 HUE</span>
+                            <span className="font-mono text-primary font-medium">~ 0.76 HUE</span>
                           </div>
                           
-                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-secondary/80">
+                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/80">
                             <div className="flex items-center gap-2">
                               <span className="text-base">📚</span>
                               <span>Complex Doc Extraction — large legal agreement</span>
                             </div>
-                            <span className="font-mono text-secondary font-medium">~ 0.92 HUE</span>
+                            <span className="font-mono text-primary font-medium">~ 0.92 HUE</span>
                           </div>
                         </div>
                       </div>
