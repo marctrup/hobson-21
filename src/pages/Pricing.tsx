@@ -16,36 +16,24 @@ const Pricing = () => {
         {/* Hero Section - 2 Column */}
         <section className="relative overflow-hidden bg-white py-24 lg:py-32 min-h-[80vh]">
           <div className="container relative mx-auto px-4 h-full flex items-center">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Left Column - Content */}
-              <div>
-                <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                  Only Pay for What Hobson Works On —{" "}
-                  <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
-                    Not Seats, Not Properties
-                  </span>
-                </h1>
-                <p className="mb-8 text-xl text-muted-foreground">
-                  Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
-                  Hobson charges for the actual work our AI does — measured in{" "}
-                  <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
-                </p>
-                <Button size="lg" className="h-12 px-8 text-lg font-semibold">
-                  See Plans & Compare Savings
-                </Button>
-              </div>
-              
-              {/* Right Column - Illustration Placeholder */}
-              <div className="flex items-center justify-center">
-                <div className="w-full max-w-md h-80 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl border-2 border-dashed border-primary/30 flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center">
-                      <span className="text-2xl">💰</span>
-                    </div>
-                    <p className="text-sm">Illustration placeholder<br />Old pricing vs HEU coin</p>
-                  </div>
-                </div>
-              </div>
+             <div className="grid lg:grid-cols-1 gap-12 items-center max-w-4xl mx-auto text-center">
+               {/* Content */}
+               <div>
+                 <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                   Only Pay for What Hobson Works On —{" "}
+                   <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
+                     Not Seats, Not Properties
+                   </span>
+                 </h1>
+                 <p className="mb-8 text-xl text-muted-foreground">
+                   Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
+                   Hobson charges for the actual work our AI does — measured in{" "}
+                   <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
+                 </p>
+                 <Button size="lg" className="h-12 px-8 text-lg font-semibold">
+                   See Plans & Compare Savings
+                 </Button>
+               </div>
             </div>
           </div>
         </section>
