@@ -32,7 +32,6 @@ const Pricing = () => {
               
               {/* Right Column - HUE Coin */}
               <div className="flex items-center justify-center relative">
-                <div className="absolute inset-0 bg-gradient-radial from-purple-200/30 to-transparent opacity-60 rounded-full blur-3xl"></div>
                 <img 
                   src="/lovable-uploads/2ed652f9-86e3-40fa-bc66-fdd75bce003d.png"
                   alt="1 HUE Coin"
