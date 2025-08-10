@@ -26,6 +26,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogManagement = lazy(() => import("./pages/admin/BlogManagement"));
 const BlogEditor = lazy(() => import("./pages/admin/BlogEditor"));
+const Pricing = lazy(() => import("./pages/Pricing"));
 
 // Loading component
 const PageLoader = () => (
@@ -89,6 +90,7 @@ const App = () => {
                   <Route path="/about" element={<AboutUs />} />
                   <Route path="/about/property-ai" element={<AboutUs />} />
                   <Route path="/contact" element={<ContactUs />} />
+                  <Route path="/pricing" element={<Pricing />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/admin/blog" element={<BlogManagement />} />
