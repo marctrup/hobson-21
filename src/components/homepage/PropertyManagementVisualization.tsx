@@ -593,8 +593,7 @@ export const PropertyManagementVisualization = () => {
             <div className="whitespace-nowrap">20 × Lease Agreements</div>
             <div className="whitespace-nowrap">12 × Deeds of Variation</div>
             <div className="whitespace-nowrap">3 × Reversionary Leases</div>
-            <div className="whitespace-nowrap flex items-center gap-2 mt-2 text-green-600">
-              <CheckCircle className="w-3 h-3" />
+            <div className="whitespace-nowrap mt-2 text-green-600">
               Total = 49 Review dates
             </div>
           </div>
