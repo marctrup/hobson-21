@@ -33,7 +33,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
             </div>
           </div>
           
-          <div className="border border-white rounded-lg p-6 bg-white/5 backdrop-blur-sm">
+          <div className="border-[5px] border-white rounded-lg p-6 bg-white/5 backdrop-blur-sm">
             <div className="space-y-4">
               <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg flex items-center justify-center">
                 <div className="text-center text-muted-foreground">
