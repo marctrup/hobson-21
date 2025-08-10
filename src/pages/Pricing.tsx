@@ -103,7 +103,7 @@ const Pricing = () => {
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
                   <div className="text-2xl font-semibold text-foreground">5 HEUs</div>
-                  <p className="text-sm text-muted-foreground">Try Hobson on a few documents & queries</p>
+                  <p className="text-sm text-muted-foreground">Try Hobson on a few documents </p>
                   <Button variant="outline" className="w-full">Get Started</Button>
                 </CardContent>
               </Card>
@@ -141,7 +141,7 @@ const Pricing = () => {
               <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <CardHeader className="text-center">
                   <CardTitle className="text-lg font-semibold">Top-Up</CardTitle>
-                  <div className="text-3xl font-bold text-primary">From £10</div>
+                  <div className="text-3xl font-bold text-primary">From £10 + VAT</div>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
                   <div className="text-2xl font-semibold text-foreground">20 HEUs</div>
