@@ -17,7 +17,7 @@ const Pricing = () => {
       backgroundImage: 'none'
     }}>
         {/* Hero Section - 2 Column */}
-        <section className="relative overflow-hidden py-24 lg:py-32 min-h-[80vh]" style={{
+        <section className="relative overflow-hidden py-24 lg:py-32 min-h-[72vh]" style={{
         backgroundColor: '#ffffff',
         backgroundImage: 'none',
         background: '#ffffff'
