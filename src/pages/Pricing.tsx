@@ -48,39 +48,111 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Real-Life Savings */}
+        {/* How It Works Section */}
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                How Hobson Pricing Works
+              </h2>
+            </div>
+            
             <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
-              <div className="text-center">
-                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Briefcase className="w-8 h-8 text-primary" />
+              <div className="text-center group">
+                <div className="mb-6 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <MessageSquare className="w-8 h-8 text-primary" />
                 </div>
-                <div className="text-2xl font-bold text-primary mb-2">Save £1,452/year</div>
-                <p className="text-muted-foreground">Small Business (1-9 employees)</p>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">Ask</h3>
+                <p className="text-muted-foreground">
+                  You ask Hobson — a question, a document check, or a report request.
+                </p>
               </div>
               
-              <div className="text-center">
-                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Building2 className="w-8 h-8 text-primary" />
+              <div className="text-center group">
+                <div className="mb-6 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <Cog className="w-8 h-8 text-primary" />
                 </div>
-                <div className="text-2xl font-bold text-primary mb-2">Save £5,676/year</div>
-                <p className="text-muted-foreground">Medium Business (10-49 employees)</p>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">Process</h3>
+                <p className="text-muted-foreground">
+                  Hobson works — each task uses a small number of HEUs.
+                </p>
               </div>
               
-              <div className="text-center">
-                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                  <TrendingUp className="w-8 h-8 text-primary" />
+              <div className="text-center group">
+                <div className="mb-6 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center group-hover:bg-primary/20 transition-colors">
+                  <CreditCard className="w-8 h-8 text-primary" />
                 </div>
-                <div className="text-2xl font-bold text-primary mb-2">No price jump</div>
-                <p className="text-muted-foreground">When you add people or properties</p>
+                <h3 className="text-xl font-semibold mb-3 text-foreground">Pay</h3>
+                <p className="text-muted-foreground">The Pricing Model That Doesn’t Punish Growth</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Old CRM vs Hobson - Redesigned */}
+        {/* Pricing Plans - Cards */}
         <section className="py-20">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
+              {/* Free Plan */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Free</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£0</div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">5 HEUs</div>
+                  <p className="text-sm text-muted-foreground">Try Hobson on a few documents </p>
+                  <Button variant="outline" className="w-full">Get Started</Button>
+                </CardContent>
+              </Card>
+
+              {/* Standard Plan */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Standard</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£18.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">31 HEUs</div>
+                  <p className="text-sm text-muted-foreground">Small portfolios, steady workload</p>
+                  <Button className="w-full">Choose Plan</Button>
+                </CardContent>
+              </Card>
+
+              {/* Pro Plan - Most Popular */}
+              <Card className="bg-card border-2 border-primary rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-primary text-primary-foreground">⭐ Most Popular</Badge>
+                </div>
+                <CardHeader className="text-center pt-6">
+                  <CardTitle className="text-lg font-semibold">Pro</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£28.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">50 HEUs</div>
+                  <p className="text-sm text-muted-foreground">Growing portfolios, frequent use</p>
+                  <Button className="w-full">Choose Plan</Button>
+                </CardContent>
+              </Card>
+
+              {/* Top-Up */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Top-Up</CardTitle>
+                  <div className="text-3xl font-bold text-primary">From £10</div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">20 HEUs</div>
+                  <p className="text-sm text-muted-foreground">For busy months or large projects</p>
+                  <Button variant="outline" className="w-full">Add Top-Up</Button>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Old CRM vs Hobson - Redesigned */}
+        <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-foreground mb-4">Why Existing CRM`s Pricing Costs More</h2>
@@ -186,65 +258,33 @@ const Pricing = () => {
           </div>
         </section>
 
-
-        {/* Pricing Plans - Cards */}
+        {/* Real-Life Savings */}
         <section className="py-20">
           <div className="container mx-auto px-4">
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
-              {/* Free Plan */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Free</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£0</div>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">5 HEUs</div>
-                  <p className="text-sm text-muted-foreground">Try Hobson on a few documents </p>
-                  <Button variant="outline" className="w-full">Get Started</Button>
-                </CardContent>
-              </Card>
-
-              {/* Standard Plan */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Standard</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£18.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">31 HEUs</div>
-                  <p className="text-sm text-muted-foreground">Small portfolios, steady workload</p>
-                  <Button className="w-full">Choose Plan</Button>
-                </CardContent>
-              </Card>
-
-              {/* Pro Plan - Most Popular */}
-              <Card className="bg-card border-2 border-primary rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative">
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-primary text-primary-foreground">⭐ Most Popular</Badge>
+            <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+              <div className="text-center">
+                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Briefcase className="w-8 h-8 text-primary" />
                 </div>
-                <CardHeader className="text-center pt-6">
-                  <CardTitle className="text-lg font-semibold">Pro</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£28.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">50 HEUs</div>
-                  <p className="text-sm text-muted-foreground">Growing portfolios, frequent use</p>
-                  <Button className="w-full">Choose Plan</Button>
-                </CardContent>
-              </Card>
-
-              {/* Top-Up */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Top-Up</CardTitle>
-                  <div className="text-3xl font-bold text-primary">From £10</div>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">20 HEUs</div>
-                  <p className="text-sm text-muted-foreground">For busy months or large projects</p>
-                  <Button variant="outline" className="w-full">Add Top-Up</Button>
-                </CardContent>
-              </Card>
+                <div className="text-2xl font-bold text-primary mb-2">Save £1,452/year</div>
+                <p className="text-muted-foreground">Small Business (1-9 employees)</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Building2 className="w-8 h-8 text-primary" />
+                </div>
+                <div className="text-2xl font-bold text-primary mb-2">Save £5,676/year</div>
+                <p className="text-muted-foreground">Medium Business (10-49 employees)</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <TrendingUp className="w-8 h-8 text-primary" />
+                </div>
+                <div className="text-2xl font-bold text-primary mb-2">No price jump</div>
+                <p className="text-muted-foreground">When you add people or properties</p>
+              </div>
             </div>
           </div>
         </section>
@@ -252,186 +292,61 @@ const Pricing = () => {
         {/* FAQ Section */}
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                Everything you need to know about Hobson's revolutionary pricing model
-              </p>
-            </div>
-            
-            <div className="max-w-4xl mx-auto">
-              <Accordion type="single" collapsible className="w-full space-y-4">
-                <AccordionItem value="item-1" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
-                    <span className="flex items-center gap-3 text-lg font-semibold">
-                      ❓ What's a HUE? 🪙
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
-                    <div className="space-y-4">
-                      <p className="text-muted-foreground">
-                        A HUE (Hobson Energy Unit) measures AI workload. Small tasks use fractions, big jobs use more.
-                      </p>
-                      
-                      <div className="bg-muted/50 p-4 rounded-lg">
-                        <p className="font-medium text-foreground mb-3">📋 Examples & Typical Tasks:</p>
-                        <div className="space-y-3 text-sm">
-                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/30">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base">💬</span>
-                              <span>Simple Question — "When was my last rent review?"</span>
-                            </div>
-                            <span className="font-mono text-primary font-medium">~ 0.0026 HUE</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/50">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base">🔍</span>
-                              <span>Medium Query — "Summarise this inspection report"</span>
-                            </div>
-                            <span className="font-mono text-primary font-medium">~ 0.01 HUE</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/70">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base">🧠</span>
-                              <span>Complex Query — "Find every clause in my leases about pets"</span>
-                            </div>
-                            <span className="font-mono text-primary font-medium">~ 0.03 HUE</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/40">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base">📄</span>
-                              <span>Simple Doc Extraction — 1-page letter</span>
-                            </div>
-                            <span className="font-mono text-primary font-medium">~ 0.025 HUE</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/60">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base">📋</span>
-                              <span>Medium Doc Extraction — mid-length contract</span>
-                            </div>
-                            <span className="font-mono text-primary font-medium">~ 0.76 HUE</span>
-                          </div>
-                          
-                          <div className="flex items-center justify-between p-2 bg-card/60 rounded border-l-4 border-primary/80">
-                            <div className="flex items-center gap-2">
-                              <span className="text-base">📚</span>
-                              <span>Complex Doc Extraction — large legal agreement</span>
-                            </div>
-                            <span className="font-mono text-primary font-medium">~ 0.92 HUE</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+            <div className="max-w-3xl mx-auto">
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="text-left">What's an HEU?</AccordionTrigger>
+                  <AccordionContent>
+                    A Hobson Energy Unit measures the AI work used. Small queries use less; big document analysis uses more.
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-2" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
-                    <span className="flex items-center gap-3 text-lg font-semibold">
-                      ❓ Do I pay per user or property? 👥🏠
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
-                    <p className="text-muted-foreground">
-                      No — only for the AI work you use.
-                    </p>
+                <AccordionItem value="item-2">
+                  <AccordionTrigger className="text-left">Do I pay per user or per property?</AccordionTrigger>
+                  <AccordionContent>
+                    No. Unlimited users and properties. You only pay for the AI work done.
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-3" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
-                    <span className="flex items-center gap-3 text-lg font-semibold">
-                      ❓ Are new features extra? ✨
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
-                    <p className="text-muted-foreground">
-                      No — all new features are included.
-                    </p>
+                <AccordionItem value="item-3">
+                  <AccordionTrigger className="text-left">Are new features extra?</AccordionTrigger>
+                  <AccordionContent>
+                    Never. As Hobson grows, you get everything included.
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-4" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
-                    <span className="flex items-center gap-3 text-lg font-semibold">
-                      ❓ What if I run out of HUEs? ⚡
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
-                    <p className="text-muted-foreground">
-                      Top up instantly, no plan changes needed.
-                    </p>
+                <AccordionItem value="item-4">
+                  <AccordionTrigger className="text-left">What happens if I run out of HEUs?</AccordionTrigger>
+                  <AccordionContent>
+                    You can top up anytime. No penalties, no lock-ins.
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-5" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
-                    <span className="flex items-center gap-3 text-lg font-semibold">
-                      ❓ Can I predict monthly costs? 📊
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
-                    <p className="text-muted-foreground">
-                      Yes — each task has a fixed HUE value.
-                    </p>
+                <AccordionItem value="item-5">
+                  <AccordionTrigger className="text-left">Can I predict monthly costs?</AccordionTrigger>
+                  <AccordionContent>
+                    Yes. Pick a plan sized to your usual workload, then top up only in busy periods.
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-6" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
-                    <span className="flex items-center gap-3 text-lg font-semibold">
-                      ❓ Can I roll over unused HUEs? 🔄
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
-                    <p className="text-muted-foreground">
-                      No — they reset monthly.
-                    </p>
+                <AccordionItem value="item-6">
+                  <AccordionTrigger className="text-left">Can I roll over unused HEUs?</AccordionTrigger>
+                  <AccordionContent>
+                    (Adjust policy if needed).
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-7" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
-                    <span className="flex items-center gap-3 text-lg font-semibold">
-                      ❓ Do you charge setup or onboarding fees? 🚀
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
-                    <p className="text-muted-foreground">
-                      No — optional paid onboarding is available.
-                    </p>
+                <AccordionItem value="item-7">
+                  <AccordionTrigger className="text-left">Do you charge setup or onboarding fees?</AccordionTrigger>
+                  <AccordionContent>
+                    Onboarding is optional; no hidden fees.
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-8" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
-                    <span className="flex items-center gap-3 text-lg font-semibold">
-                      ❓ What if my team grows? 📈
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
-                    <p className="text-muted-foreground">
-                      No extra cost — add as many users as you like.
-                    </p>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-9" className="border border-border rounded-lg bg-card/50 backdrop-blur-sm">
-                  <AccordionTrigger className="text-left px-6 py-4 hover:no-underline">
-                    <span className="flex items-center gap-3 text-lg font-semibold">
-                      ❓ Can I monitor usage? 👀
-                    </span>
-                  </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-4">
-                    <p className="text-muted-foreground">
-                      Yes — your dashboard shows real-time HUE usage.
-                    </p>
+                <AccordionItem value="item-8">
+                  <AccordionTrigger className="text-left">What if my team grows?</AccordionTrigger>
+                  <AccordionContent>
+                    Invite everyone. No extra cost unless workload increases.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
