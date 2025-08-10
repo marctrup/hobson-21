@@ -69,7 +69,7 @@ export const PropertyManagementVisualization = () => {
               </span>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gray-400 rounded-full"></div>
             </h4>
-            <div className="text-xs text-gray-500 font-semibold uppercase tracking-wide opacity-80">
+            <div className="text-xs text-gray-500 font-bold uppercase tracking-wide opacity-80">
               Overwhelming • Scattered • Complex
             </div>
           </div>
