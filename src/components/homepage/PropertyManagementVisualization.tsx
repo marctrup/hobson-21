@@ -59,7 +59,7 @@ export const PropertyManagementVisualization = () => {
         </div>
 
         {/* Center: The Challenge */}
-        <div className="text-center">
+        <div className="text-center lg:mt-2.5">
           <div className="mb-4">
             <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
               <span className="text-gray-500 drop-shadow-sm">
