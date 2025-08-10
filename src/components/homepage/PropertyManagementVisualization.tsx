@@ -592,18 +592,9 @@ export const PropertyManagementVisualization = () => {
           </div>
           
           <div className="text-xs text-muted-foreground font-bold mt-3 space-y-1">
-            <div className="whitespace-nowrap flex items-center gap-2">
-              <CheckCircle className="w-3 h-3 text-green-500" />
-              20 × Lease Agreements
-            </div>
-            <div className="whitespace-nowrap flex items-center gap-2">
-              <CheckCircle className="w-3 h-3 text-green-500" />
-              12 × Deeds of Variation
-            </div>
-            <div className="whitespace-nowrap flex items-center gap-2">
-              <CheckCircle className="w-3 h-3 text-green-500" />
-              3 × Reversionary Leases
-            </div>
+            <div className="whitespace-nowrap">20 × Lease Agreements</div>
+            <div className="whitespace-nowrap">12 × Deeds of Variation</div>
+            <div className="whitespace-nowrap">3 × Reversionary Leases</div>
           </div>
         </div>
 
