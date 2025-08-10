@@ -14,8 +14,7 @@ const Pricing = () => {
 
       <div className="min-h-screen bg-background">
         {/* Hero Section - 2 Column */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-24 lg:py-32 border-4 border-red-500">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.1)_50%,transparent_75%,transparent_100%)] bg-[length:60px_60px] bg-slate-50" />
+        <section className="relative overflow-hidden bg-background py-24 lg:py-32">
           <div className="container relative mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left Column - Content */}
