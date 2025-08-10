@@ -168,7 +168,7 @@ const Pricing = () => {
                     <div className="w-8 h-8 rounded-full bg-destructive/20 flex items-center justify-center">
                       <span className="text-destructive text-sm font-bold">×</span>
                     </div>
-                    Old CRM Model
+                    Current CRM Model
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
