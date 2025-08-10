@@ -69,9 +69,6 @@ export const PropertyManagementVisualization = () => {
             </div>
           </div>
           
-          <p className="text-xs text-purple-600 font-bold mt-3">
-            Time-consuming, error-prone, out-of-date
-          </p>
         </div>
 
         {/* Center: The Challenge */}
@@ -668,7 +665,7 @@ export const PropertyManagementVisualization = () => {
           
           <div className="text-xs text-center text-muted-foreground mt-4 space-y-1">
             <div className="font-bold">Reads every document.</div>
-            <div className="font-bold">Extracts what matters.</div>
+            
             <div className="font-bold text-primary">Answers instantly and with citations.</div>
           </div>
         </div>
