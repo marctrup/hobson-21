@@ -49,7 +49,7 @@ const Pricing = () => {
         </section>
 
         {/* Real-Life Savings */}
-        <section className="py-20">
+        <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
               <div className="text-center">
