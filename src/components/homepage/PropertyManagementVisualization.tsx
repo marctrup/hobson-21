@@ -604,7 +604,6 @@ export const PropertyManagementVisualization = () => {
                 Hobson AI
               </span>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"></div>
-              <div className="absolute -top-1 -right-2 w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
             </h4>
             <div className="text-xs text-purple-600 font-semibold uppercase tracking-wide opacity-80">
               Instant • Accurate • Intelligent • Citations
