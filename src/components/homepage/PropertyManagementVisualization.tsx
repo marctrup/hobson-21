@@ -64,11 +64,12 @@ export const PropertyManagementVisualization = () => {
       }}>
           <div className="mb-4">
             <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
-              <span className="text-black drop-shadow-sm">
+              <span className="text-gray-500 drop-shadow-sm">
                 The Challenge
               </span>
+              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gray-400 rounded-full"></div>
             </h4>
-            <div className="text-xs text-black font-semibold uppercase tracking-wide opacity-80">
+            <div className="text-xs text-gray-500 font-semibold uppercase tracking-wide opacity-80">
               Overwhelming • Scattered • Complex
             </div>
           </div>
