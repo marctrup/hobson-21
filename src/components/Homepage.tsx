@@ -112,7 +112,7 @@ export const Homepage = () => {
                   
                   <a 
                     href="#pilot-section" 
-                    className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group"
+                    className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group"
                   >
                     <div className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-lg">
                       Your Free AI Property Assistant
