@@ -77,13 +77,13 @@ export const PropertyManagementVisualization = () => {
       }}>
           <div className="mb-4">
             <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
-              <span className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 bg-clip-text text-transparent drop-shadow-sm">
+              <span className="bg-gradient-to-r from-emerald-600 via-green-600 to-emerald-700 bg-clip-text text-transparent drop-shadow-sm">
                 The Challenge
               </span>
-              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"></div>
-              <div className="absolute -top-1 -right-2 w-2 h-2 bg-purple-500 rounded-full animate-pulse"></div>
+              <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full"></div>
+              <div className="absolute -top-1 -right-2 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
             </h4>
-            <div className="text-xs text-purple-600 font-semibold uppercase tracking-wide opacity-80">
+            <div className="text-xs text-emerald-600 font-semibold uppercase tracking-wide opacity-80">
               Overwhelming • Scattered • Complex
             </div>
           </div>
