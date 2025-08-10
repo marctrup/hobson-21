@@ -592,10 +592,10 @@ export const PropertyManagementVisualization = () => {
           </div>
           
           <div className="text-xs text-muted-foreground font-bold mt-3 space-y-1">
-            <div>20 × Lease Agreements</div>
-            <div>12 × Deeds of Variation</div>
-            <div>3 × Reversionary Leases</div>
-            <div className="text-emerald-600 mt-2">Total = 55 available review dates</div>
+            <div className="whitespace-nowrap">20 × Lease Agreements</div>
+            <div className="whitespace-nowrap">12 × Deeds of Variation</div>
+            <div className="whitespace-nowrap">3 × Reversionary Leases</div>
+            <div className="text-emerald-600 mt-2 whitespace-nowrap">Total = 55 available review dates</div>
           </div>
         </div>
 
