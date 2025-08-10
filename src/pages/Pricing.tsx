@@ -12,10 +12,20 @@ const Pricing = () => {
         <meta name="keywords" content="AI pricing, property management pricing, per-task billing, CRM alternative" />
       </Helmet>
 
-      <div className="min-h-screen" style={{ backgroundColor: '#ffffff', backgroundImage: 'none' }}>
+      <div className="min-h-screen" style={{
+      backgroundColor: '#ffffff',
+      backgroundImage: 'none'
+    }}>
         {/* Hero Section - 2 Column */}
-        <section className="relative overflow-hidden py-24 lg:py-32 min-h-[80vh]" style={{ backgroundColor: '#ffffff', backgroundImage: 'none', background: '#ffffff' }}>
-          <div className="container relative mx-auto px-4 h-full flex items-center" style={{ backgroundColor: '#ffffff', backgroundImage: 'none' }}>
+        <section className="relative overflow-hidden py-24 lg:py-32 min-h-[80vh]" style={{
+        backgroundColor: '#ffffff',
+        backgroundImage: 'none',
+        background: '#ffffff'
+      }}>
+          <div className="container relative mx-auto px-4 h-full flex items-center" style={{
+          backgroundColor: '#ffffff',
+          backgroundImage: 'none'
+        }}>
              <div className="grid lg:grid-cols-1 gap-12 items-center max-w-4xl mx-auto text-center">
                {/* Content */}
                <div>
@@ -147,9 +157,7 @@ const Pricing = () => {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-4">
-                Why Old CRM Pricing Costs More
-              </h2>
+              <h2 className="text-3xl font-bold text-foreground mb-4">Why Existing CRM`s Pricing Costs More</h2>
             </div>
             
             <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
