@@ -1,18 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CheckCircle2, MessageSquare, Cog, CreditCard, Briefcase, Building2, TrendingUp } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-
 const Pricing = () => {
-  return (
-    <>
+  return <>
       <Helmet>
         <title>Pricing - Pay for Work, Not Seats | Hobson's Choice AI</title>
         <meta name="description" content="Revolutionary pricing that charges for actual AI work, not users or properties. Start from £18.50/month with Hobson Energy Units (HEUs)." />
@@ -281,7 +274,7 @@ const Pricing = () => {
                   <Briefcase className="w-8 h-8 text-primary" />
                 </div>
                 <div className="text-2xl font-bold text-primary mb-2">Save £1,452/year</div>
-                <p className="text-muted-foreground">Small agency</p>
+                <p className="text-muted-foreground">Small Business (1-9 employees)</p>
               </div>
               
               <div className="text-center">
@@ -289,7 +282,7 @@ const Pricing = () => {
                   <Building2 className="w-8 h-8 text-primary" />
                 </div>
                 <div className="text-2xl font-bold text-primary mb-2">Save £5,676/year</div>
-                <p className="text-muted-foreground">Medium landlord</p>
+                <p className="text-muted-foreground">Medium Business (10-49 employees)</p>
               </div>
               
               <div className="text-center">
@@ -386,8 +379,6 @@ const Pricing = () => {
           </div>
         </section>
       </div>
-    </>
-  );
+    </>;
 };
-
 export default Pricing;
