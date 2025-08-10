@@ -20,25 +20,40 @@ const Pricing = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
-        {/* Hero Section */}
+        {/* Hero Section - 2 Column */}
         <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-24 lg:py-32">
           <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.1)_50%,transparent_75%,transparent_100%)] bg-[length:60px_60px]" />
           <div className="container relative mx-auto px-4">
-            <div className="mx-auto max-w-4xl text-center">
-              <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                Only Pay for What Hobson Works On —{" "}
-                <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
-                  Not Seats, Not Properties
-                </span>
-              </h1>
-              <p className="mb-8 text-xl text-muted-foreground sm:text-2xl">
-                Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
-                Hobson charges for the actual work our AI does — measured in{" "}
-                <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
-              </p>
-              <Button size="lg" className="h-12 px-8 text-lg font-semibold">
-                See Plans & Compare Savings
-              </Button>
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left Column - Content */}
+              <div>
+                <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                  Only Pay for What Hobson Works On —{" "}
+                  <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
+                    Not Seats, Not Properties
+                  </span>
+                </h1>
+                <p className="mb-8 text-xl text-muted-foreground">
+                  Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
+                  Hobson charges for the actual work our AI does — measured in{" "}
+                  <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
+                </p>
+                <Button size="lg" className="h-12 px-8 text-lg font-semibold">
+                  See Plans & Compare Savings
+                </Button>
+              </div>
+              
+              {/* Right Column - Illustration Placeholder */}
+              <div className="flex items-center justify-center">
+                <div className="w-full max-w-md h-80 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl border-2 border-dashed border-primary/30 flex items-center justify-center">
+                  <div className="text-center text-muted-foreground">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center">
+                      <span className="text-2xl">💰</span>
+                    </div>
+                    <p className="text-sm">Illustration placeholder<br />Old pricing vs HEU coin</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -86,143 +101,155 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Plans Section */}
+        {/* Pricing Plans - Cards */}
         <section className="py-20">
           <div className="container mx-auto px-4">
-            <div className="overflow-x-auto">
-              <table className="w-full max-w-4xl mx-auto border-collapse">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left py-4 px-6 font-semibold text-foreground">Plan</th>
-                    <th className="text-left py-4 px-6 font-semibold text-foreground">Monthly Cost</th>
-                    <th className="text-left py-4 px-6 font-semibold text-foreground">HEUs Included</th>
-                    <th className="text-left py-4 px-6 font-semibold text-foreground">Who It's For</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr className="border-b border-border hover:bg-muted/50">
-                    <td className="py-4 px-6">
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold">Free</span>
-                        <Badge variant="secondary">Try it</Badge>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6 font-semibold text-primary">£0</td>
-                    <td className="py-4 px-6">5 HEUs</td>
-                    <td className="py-4 px-6 text-muted-foreground">Try Hobson on a few documents & queries</td>
-                  </tr>
-                  <tr className="border-b border-border hover:bg-muted/50">
-                    <td className="py-4 px-6">
-                      <div className="flex items-center gap-2">
-                        <span className="font-semibold">Standard</span>
-                        <Badge>Popular</Badge>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6 font-semibold text-primary">£18.50 + VAT</td>
-                    <td className="py-4 px-6">31 HEUs</td>
-                    <td className="py-4 px-6 text-muted-foreground">Small portfolios, steady workload</td>
-                  </tr>
-                  <tr className="border-b border-border hover:bg-muted/50">
-                    <td className="py-4 px-6">
-                      <span className="font-semibold">Pro</span>
-                    </td>
-                    <td className="py-4 px-6 font-semibold text-primary">£28.50 + VAT</td>
-                    <td className="py-4 px-6">50 HEUs</td>
-                    <td className="py-4 px-6 text-muted-foreground">Growing portfolios, more frequent use</td>
-                  </tr>
-                  <tr className="hover:bg-muted/50">
-                    <td className="py-4 px-6">
-                      <span className="font-semibold">Top-Up</span>
-                    </td>
-                    <td className="py-4 px-6 font-semibold text-primary">From £10</td>
-                    <td className="py-4 px-6">20 extra HEUs</td>
-                    <td className="py-4 px-6 text-muted-foreground">For busy months or big projects</td>
-                  </tr>
-                </tbody>
-              </table>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
+              {/* Free Plan */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Free</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£0</div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">5 HEUs</div>
+                  <p className="text-sm text-muted-foreground">Try Hobson on a few documents & queries</p>
+                  <Button variant="outline" className="w-full">Get Started</Button>
+                </CardContent>
+              </Card>
+
+              {/* Standard Plan */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Standard</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£18.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">31 HEUs</div>
+                  <p className="text-sm text-muted-foreground">Small portfolios, steady workload</p>
+                  <Button className="w-full">Choose Plan</Button>
+                </CardContent>
+              </Card>
+
+              {/* Pro Plan - Most Popular */}
+              <Card className="bg-card border-2 border-primary rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative">
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-primary text-primary-foreground">⭐ Most Popular</Badge>
+                </div>
+                <CardHeader className="text-center pt-6">
+                  <CardTitle className="text-lg font-semibold">Pro</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£28.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">50 HEUs</div>
+                  <p className="text-sm text-muted-foreground">Growing portfolios, frequent use</p>
+                  <Button className="w-full">Choose Plan</Button>
+                </CardContent>
+              </Card>
+
+              {/* Top-Up */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Top-Up</CardTitle>
+                  <div className="text-3xl font-bold text-primary">From £10</div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">20 HEUs</div>
+                  <p className="text-sm text-muted-foreground">For busy months or large projects</p>
+                  <Button variant="outline" className="w-full">Add Top-Up</Button>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
 
-        {/* Comparison Section */}
+        {/* Old CRM vs Hobson - 2 Column Text + Image */}
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-foreground mb-4">
-                Why Old CRM Pricing Costs More
+                Old CRM vs Hobson
               </h2>
             </div>
             
-            <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
-              {/* Old CRM Model */}
-              <Card className="border-destructive/20">
-                <CardHeader>
-                  <CardTitle className="text-destructive">Old CRM Model</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <div className="w-2 h-2 bg-destructive rounded-full" />
-                      Per user + per property
-                    </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <div className="w-2 h-2 bg-destructive rounded-full" />
-                      Still billed for inactive properties
-                    </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <div className="w-2 h-2 bg-destructive rounded-full" />
-                      Pay more for extra users
-                    </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <div className="w-2 h-2 bg-destructive rounded-full" />
-                      Pay extra for new features
+            <div className="grid gap-8 md:grid-cols-2 max-w-6xl mx-auto">
+              {/* Old CRM - Left Side */}
+              <div className="bg-muted/60 p-8 rounded-lg">
+                <div className="mb-6">
+                  <div className="w-full h-48 bg-gradient-to-b from-muted to-muted/40 rounded-lg border-2 border-dashed border-muted-foreground/30 flex items-center justify-center mb-4">
+                    <div className="text-center text-muted-foreground">
+                      <div className="text-4xl mb-2 transform rotate-180">🏢</div>
+                      <p className="text-sm">Upside-down desk scene<br />Image placeholder</p>
                     </div>
                   </div>
-                  <div className="pt-4 border-t border-border">
-                    <div className="text-sm text-muted-foreground mb-1">Small agency</div>
-                    <div className="text-2xl font-bold text-destructive">£140/month</div>
+                  <h3 className="text-xl font-semibold text-destructive mb-4">Old CRM Model</h3>
+                </div>
+                
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className="text-destructive">❌</span>
+                    Per user + per property
                   </div>
-                  <div className="pt-2">
-                    <div className="text-sm text-muted-foreground mb-1">Larger portfolio</div>
-                    <div className="text-2xl font-bold text-destructive">£500/month</div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className="text-destructive">❌</span>
+                    Still billed for inactive properties
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className="text-destructive">❌</span>
+                    Pay extra for new features
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-muted-foreground">Small agency</span>
+                    <span className="font-bold text-destructive">£140/month</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-muted-foreground">Larger portfolio</span>
+                    <span className="font-bold text-destructive">£500/month</span>
+                  </div>
+                </div>
+              </div>
 
-              {/* Hobson */}
-              <Card className="border-primary/20 bg-primary/5">
-                <CardHeader>
-                  <CardTitle className="text-primary">Hobson</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <CheckCircle2 className="w-4 h-4 text-primary" />
-                      Pay per task (HEUs)
-                    </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <CheckCircle2 className="w-4 h-4 text-primary" />
-                      No charge for inactive properties
-                    </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <CheckCircle2 className="w-4 h-4 text-primary" />
-                      Unlimited users
-                    </div>
-                    <div className="flex items-center gap-2 text-muted-foreground">
-                      <CheckCircle2 className="w-4 h-4 text-primary" />
-                      All new features included
+              {/* Hobson - Right Side */}
+              <div className="bg-card p-8 rounded-lg border border-primary/20">
+                <div className="mb-6">
+                  <div className="w-full h-48 bg-gradient-to-b from-primary/10 to-primary/5 rounded-lg border-2 border-dashed border-primary/30 flex items-center justify-center mb-4">
+                    <div className="text-center text-muted-foreground">
+                      <div className="text-4xl mb-2">🏢💰</div>
+                      <p className="text-sm">Tidy desk + HEU coins<br />Image placeholder</p>
                     </div>
                   </div>
-                  <div className="pt-4 border-t border-border">
-                    <div className="text-sm text-muted-foreground mb-1">Small agency</div>
-                    <div className="text-2xl font-bold text-primary">£18.50/month</div>
+                  <h3 className="text-xl font-semibold text-primary mb-4">Hobson</h3>
+                </div>
+                
+                <div className="space-y-3 mb-6">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className="text-primary">✅</span>
+                    Pay per task (HEUs)
                   </div>
-                  <div className="pt-2">
-                    <div className="text-sm text-muted-foreground mb-1">Larger portfolio</div>
-                    <div className="text-2xl font-bold text-primary">£28.50/month</div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className="text-primary">✅</span>
+                    Unlimited users
                   </div>
-                </CardContent>
-              </Card>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <span className="text-primary">✅</span>
+                    All new features included
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span className="text-sm text-muted-foreground">Small agency</span>
+                    <span className="font-bold text-primary">£18.50/month</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-muted-foreground">Larger portfolio</span>
+                    <span className="font-bold text-primary">£28.50/month</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -266,28 +293,56 @@ const Pricing = () => {
                 <AccordionItem value="item-1">
                   <AccordionTrigger className="text-left">What's an HEU?</AccordionTrigger>
                   <AccordionContent>
-                    A Hobson Energy Unit measures the AI work used. Small queries = small usage, big document analysis = more.
+                    A Hobson Energy Unit measures the AI work used. Small queries use less; big document analysis uses more.
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-2">
-                  <AccordionTrigger className="text-left">Do I pay for people who don't log in?</AccordionTrigger>
+                  <AccordionTrigger className="text-left">Do I pay per user or per property?</AccordionTrigger>
                   <AccordionContent>
-                    No. Unlimited users.
+                    No. Unlimited users and properties. You only pay for the AI work done.
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-3">
-                  <AccordionTrigger className="text-left">Do I pay for empty properties?</AccordionTrigger>
+                  <AccordionTrigger className="text-left">Are new features extra?</AccordionTrigger>
                   <AccordionContent>
-                    No. Only active AI work is billed.
+                    Never. As Hobson grows, you get everything included.
                   </AccordionContent>
                 </AccordionItem>
                 
                 <AccordionItem value="item-4">
-                  <AccordionTrigger className="text-left">Do I pay extra for new features?</AccordionTrigger>
+                  <AccordionTrigger className="text-left">What happens if I run out of HEUs?</AccordionTrigger>
                   <AccordionContent>
-                    Never. All new features are included.
+                    You can top up anytime. No penalties, no lock-ins.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-5">
+                  <AccordionTrigger className="text-left">Can I predict monthly costs?</AccordionTrigger>
+                  <AccordionContent>
+                    Yes. Pick a plan sized to your usual workload, then top up only in busy periods.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-6">
+                  <AccordionTrigger className="text-left">Can I roll over unused HEUs?</AccordionTrigger>
+                  <AccordionContent>
+                    (Adjust policy if needed).
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-7">
+                  <AccordionTrigger className="text-left">Do you charge setup or onboarding fees?</AccordionTrigger>
+                  <AccordionContent>
+                    Onboarding is optional; no hidden fees.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-8">
+                  <AccordionTrigger className="text-left">What if my team grows?</AccordionTrigger>
+                  <AccordionContent>
+                    Invite everyone. No extra cost unless workload increases.
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
@@ -304,9 +359,12 @@ const Pricing = () => {
                 Start Paying for Results.
               </span>
             </h2>
-            <Button size="lg" className="h-12 px-8 text-lg font-semibold">
+            <Button size="lg" className="h-12 px-8 text-lg font-semibold mb-4">
               Choose Your Plan
             </Button>
+            <p className="text-muted-foreground">
+              No per-seat fees. No per-property fees. No feature add-ons.
+            </p>
           </div>
         </section>
       </div>
