@@ -14,38 +14,34 @@ const Pricing = () => {
 
       <div className="min-h-screen bg-background">
         {/* Hero Section - 2 Column */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-secondary/5 py-24 lg:py-32">
-          <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(68,68,68,.1)_50%,transparent_75%,transparent_100%)] bg-[length:60px_60px]" />
+        <section className="relative overflow-hidden bg-white py-24 lg:py-32">
           <div className="container relative mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Left Column - Content */}
               <div>
                 <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                  Only Pay for What Hobson Works On —{" "}
-                  <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
-                    Not Seats, Not Properties
-                  </span>
+                  Turning Pricing on Its Head.
                 </h1>
                 <p className="mb-8 text-xl text-muted-foreground">
-                  Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
-                  Hobson charges for the actual work our AI does — measured in{" "}
-                  <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
+                  One flat fee. All features. No per-user or per-property nonsense.
                 </p>
                 <Button size="lg" className="h-12 px-8 text-lg font-semibold">
-                  See Plans & Compare Savings
+                  See How Hobson Works
                 </Button>
               </div>
               
-              {/* Right Column - Illustration Placeholder */}
-              <div className="flex items-center justify-center">
-                <div className="w-full max-w-md h-80 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl border-2 border-dashed border-primary/30 flex items-center justify-center">
-                  <div className="text-center text-muted-foreground">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center">
-                      <span className="text-2xl">💰</span>
-                    </div>
-                    <p className="text-sm">Illustration placeholder<br />Old pricing vs HEU coin</p>
-                  </div>
-                </div>
+              {/* Right Column - HUE Coin */}
+              <div className="flex items-center justify-center relative">
+                <div className="absolute inset-0 bg-gradient-radial from-purple-200/30 to-transparent opacity-60 rounded-full blur-3xl"></div>
+                <img 
+                  src="/lovable-uploads/2ed652f9-86e3-40fa-bc66-fdd75bce003d.png"
+                  alt="1 HUE Coin"
+                  className="w-72 h-72 object-contain animate-spin-slow drop-shadow-2xl relative z-10"
+                  style={{
+                    animation: 'spin 8s linear infinite, pulse 4s ease-in-out infinite',
+                    filter: 'drop-shadow(0 0 40px rgba(168, 85, 247, 0.4))'
+                  }}
+                />
               </div>
             </div>
           </div>
