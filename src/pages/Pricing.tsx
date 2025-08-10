@@ -163,93 +163,111 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Old CRM vs Hobson - 2 Column Text + Image */}
+        {/* Old CRM vs Hobson - Redesigned */}
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-foreground mb-4">
-                Old CRM vs Hobson
+                Why Old CRM Pricing Costs More
               </h2>
             </div>
             
-            <div className="grid gap-8 md:grid-cols-2 max-w-6xl mx-auto">
+            <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
               {/* Old CRM - Left Side */}
-              <div className="bg-muted/60 p-8 rounded-lg">
-                <div className="mb-6">
-                  <div className="w-full h-48 bg-gradient-to-b from-muted to-muted/40 rounded-lg border-2 border-dashed border-muted-foreground/30 flex items-center justify-center mb-4">
-                    <div className="text-center text-muted-foreground">
-                      <div className="text-4xl mb-2 transform rotate-180">🏢</div>
-                      <p className="text-sm">Upside-down desk scene<br />Image placeholder</p>
+              <Card className="bg-muted/60 border-destructive/30 hover:shadow-lg transition-shadow duration-300">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl font-semibold text-destructive flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-destructive/20 flex items-center justify-center">
+                      <span className="text-destructive text-sm font-bold">×</span>
+                    </div>
+                    Old CRM Model
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
+                      <span className="text-destructive text-lg mt-0.5">❌</span>
+                      <div>
+                        <div className="font-medium text-foreground">Per user + per property</div>
+                        <div className="text-sm text-muted-foreground">Pay for every person and property</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
+                      <span className="text-destructive text-lg mt-0.5">❌</span>
+                      <div>
+                        <div className="font-medium text-foreground">Still billed for inactive properties</div>
+                        <div className="text-sm text-muted-foreground">Empty properties cost money</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
+                      <span className="text-destructive text-lg mt-0.5">❌</span>
+                      <div>
+                        <div className="font-medium text-foreground">Pay extra for new features</div>
+                        <div className="text-sm text-muted-foreground">Feature add-ons increase costs</div>
+                      </div>
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-destructive mb-4">Old CRM Model</h3>
-                </div>
-                
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <span className="text-destructive">❌</span>
-                    Per user + per property
+                  
+                  <div className="border-t border-destructive/20 pt-4 space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Small agency</span>
+                      <span className="font-bold text-destructive text-lg">£140/month</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Larger portfolio</span>
+                      <span className="font-bold text-destructive text-lg">£500/month</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <span className="text-destructive">❌</span>
-                    Still billed for inactive properties
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <span className="text-destructive">❌</span>
-                    Pay extra for new features
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Small agency</span>
-                    <span className="font-bold text-destructive">£140/month</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Larger portfolio</span>
-                    <span className="font-bold text-destructive">£500/month</span>
-                  </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
 
               {/* Hobson - Right Side */}
-              <div className="bg-card p-8 rounded-lg border border-primary/20">
-                <div className="mb-6">
-                  <div className="w-full h-48 bg-gradient-to-b from-primary/10 to-primary/5 rounded-lg border-2 border-dashed border-primary/30 flex items-center justify-center mb-4">
-                    <div className="text-center text-muted-foreground">
-                      <div className="text-4xl mb-2">🏢💰</div>
-                      <p className="text-sm">Tidy desk + HEU coins<br />Image placeholder</p>
+              <Card className="bg-card border-primary/30 hover:shadow-lg transition-shadow duration-300">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl font-semibold text-primary flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                      <span className="text-primary text-sm font-bold">✓</span>
+                    </div>
+                    Hobson
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5">
+                      <span className="text-primary text-lg mt-0.5">✅</span>
+                      <div>
+                        <div className="font-medium text-foreground">Pay per task (HEUs)</div>
+                        <div className="text-sm text-muted-foreground">Only pay for actual AI work</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5">
+                      <span className="text-primary text-lg mt-0.5">✅</span>
+                      <div>
+                        <div className="font-medium text-foreground">Unlimited users</div>
+                        <div className="text-sm text-muted-foreground">Add your whole team at no extra cost</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5">
+                      <span className="text-primary text-lg mt-0.5">✅</span>
+                      <div>
+                        <div className="font-medium text-foreground">All new features included</div>
+                        <div className="text-sm text-muted-foreground">Never pay extra for updates</div>
+                      </div>
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold text-primary mb-4">Hobson</h3>
-                </div>
-                
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <span className="text-primary">✅</span>
-                    Pay per task (HEUs)
+                  
+                  <div className="border-t border-primary/20 pt-4 space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Small agency</span>
+                      <span className="font-bold text-primary text-lg">£18.50/month</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Larger portfolio</span>
+                      <span className="font-bold text-primary text-lg">£28.50/month</span>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <span className="text-primary">✅</span>
-                    Unlimited users
-                  </div>
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <span className="text-primary">✅</span>
-                    All new features included
-                  </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Small agency</span>
-                    <span className="font-bold text-primary">£18.50/month</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-sm text-muted-foreground">Larger portfolio</span>
-                    <span className="font-bold text-primary">£28.50/month</span>
-                  </div>
-                </div>
-              </div>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>
