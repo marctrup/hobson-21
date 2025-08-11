@@ -173,6 +173,13 @@ img {
   contain-intrinsic-size: 400px 300px;
 }
 
+/* Ensure line breaks display properly in blog content */
+br {
+  display: block;
+  margin: 0.5em 0;
+  line-height: 0.5;
+}
+
 /* Reduce motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
