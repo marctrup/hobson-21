@@ -185,8 +185,8 @@ const BlogEditor = () => {
   const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const processContentForSave = (content: string) => {
-    // Return content as-is to preserve user spacing control
-    return content;
+    // Convert line breaks to <br> tags while preserving existing HTML
+    return content.replace(/\n/g, '<br>');
   };
 
   const handleImageInsert = (imageUrl: string, altText: string) => {
