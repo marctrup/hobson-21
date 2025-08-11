@@ -353,17 +353,8 @@ const BlogPost = () => {
               __html: post.content
                 // Handle links - add target="_blank" only for http/https links, not mailto
                 .replace(/<a\s+([^>]*href=["'](?:https?:\/\/[^"']+)["'][^>]*)>/gi, '<a $1 target="_blank" rel="noopener noreferrer">')
-                // Convert double line breaks to paragraph breaks, but preserve existing HTML
-                .replace(/\n\n+/g, '</p><p>')
-                // Convert single line breaks to <br> tags
+                // Convert line breaks to <br> tags but respect existing HTML
                 .replace(/\n/g, '<br>')
-                // Wrap the content in a paragraph if it doesn't start with an HTML tag
-                .replace(/^(?!<)/, '<p>')
-                .replace(/(?<!>)$/, '</p>')
-                // Clean up empty paragraphs and fix paragraph issues around HTML elements
-                .replace(/<p><\/p>/g, '')
-                .replace(/<p>(<(?:ul|ol|div|h[1-6]|blockquote))/g, '$1')
-                .replace(/(<\/(?:ul|ol|div|h[1-6]|blockquote)>)<\/p>/g, '$1')
             }}
           />
 

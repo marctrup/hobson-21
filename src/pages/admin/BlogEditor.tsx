@@ -185,18 +185,8 @@ const BlogEditor = () => {
   const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const processContentForSave = (content: string) => {
-    // If content already contains HTML tags, preserve it as-is
-    if (content.includes('<p>') || content.includes('<br>') || content.includes('<strong>') || content.includes('<em>') || content.includes('<u>')) {
-      return content;
-    }
-    
-    // Only process plain text content by converting line breaks to paragraph tags
-    return content
-      .split('\n\n')
-      .map(paragraph => paragraph.trim())
-      .filter(paragraph => paragraph.length > 0)
-      .map(paragraph => `<p>${paragraph.replace(/\n/g, '<br>')}</p>`)
-      .join('\n\n');
+    // Return content as-is to preserve user spacing control
+    return content;
   };
 
   const handleImageInsert = (imageUrl: string, altText: string) => {
