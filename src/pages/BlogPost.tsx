@@ -348,7 +348,7 @@ const BlogPost = () => {
           {/* Article Content */}
           <div 
             ref={contentRef}
-            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-p:mb-4 prose-strong:text-foreground prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800 hover:prose-a:no-underline [&>p]:mb-4 [&>div]:mb-4 [&_a]:text-blue-600 [&_a]:underline [&_a:hover]:text-blue-800 [&_a:hover]:no-underline [&_ul]:!list-disc [&_ul]:!pl-6 [&_ol]:!list-decimal [&_ol]:!pl-6 [&_li]:leading-relaxed prose-strong:mb-0 prose-ul:mt-0 prose-ol:mt-0"
+            className="prose-headings:text-foreground prose-strong:text-foreground [&_a]:text-blue-600 [&_a]:underline [&_a:hover]:text-blue-800 [&_a:hover]:no-underline [&_ul]:!list-disc [&_ul]:!pl-6 [&_ol]:!list-decimal [&_ol]:!pl-6 [&_li]:leading-relaxed text-foreground text-lg max-w-none"
             dangerouslySetInnerHTML={{ 
               __html: post.content
                 // Handle links - add target="_blank" only for http/https links, not mailto

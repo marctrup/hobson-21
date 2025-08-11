@@ -181,25 +181,3 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
-
-/* Blog post spacing overrides */
-.prose strong + ul,
-.prose strong + ol,
-.prose h1 + ul,
-.prose h1 + ol,
-.prose h2 + ul,
-.prose h2 + ol,
-.prose h3 + ul,
-.prose h3 + ol,
-.prose h4 + ul,
-.prose h4 + ol,
-.prose h5 + ul,
-.prose h5 + ol,
-.prose h6 + ul,
-.prose h6 + ol {
-  margin-top: 0 !important;
-}
-
-.prose strong {
-  margin-bottom: 0 !important;
-}
