@@ -244,10 +244,10 @@ const BlogEditor = () => {
       // If text is selected, convert lines to list items
       const lines = selectedText.split('\n').filter(line => line.trim());
       const listItems = lines.map(line => `  <li>${line.trim()}</li>`).join('\n');
-      listMarkup = `<ul>\n${listItems}\n</ul>`;
+      listMarkup = `<ul>${listItems}</ul>`;
     } else {
       // If no selection, insert empty list
-      listMarkup = '<ul>\n  <li>Item 1</li>\n  <li>Item 2</li>\n  <li>Item 3</li>\n</ul>';
+      listMarkup = '<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>';
     }
     
     const newContent = post.content.substring(0, start) + listMarkup + post.content.substring(end);
@@ -274,10 +274,10 @@ const BlogEditor = () => {
       // If text is selected, convert lines to list items
       const lines = selectedText.split('\n').filter(line => line.trim());
       const listItems = lines.map(line => `  <li>${line.trim()}</li>`).join('\n');
-      listMarkup = `<ol>\n${listItems}\n</ol>`;
+      listMarkup = `<ol>${listItems}</ol>`;
     } else {
       // If no selection, insert empty list
-      listMarkup = '<ol>\n  <li>Item 1</li>\n  <li>Item 2</li>\n  <li>Item 3</li>\n</ol>';
+      listMarkup = '<ol><li>Item 1</li><li>Item 2</li><li>Item 3</li></ol>';
     }
     
     const newContent = post.content.substring(0, start) + listMarkup + post.content.substring(end);
