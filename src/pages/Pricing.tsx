@@ -26,16 +26,16 @@ const Pricing = () => {
           backgroundColor: '#ffffff',
           backgroundImage: 'none'
         }}>
-             <div className="grid lg:grid-cols-1 gap-12 items-center max-w-4xl mx-auto text-center">
-               {/* Content */}
-               <div>
-                 <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+             <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+               {/* Left Container - Content */}
+               <div className="space-y-8">
+                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                    Only Pay for What Hobson Works On —{" "}
                    <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
                      Not Seats, Not Properties
                    </span>
                  </h1>
-                 <p className="mb-8 text-xl text-muted-foreground">
+                 <p className="text-xl text-muted-foreground">
                    Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
                    Hobson charges for the actual work our AI does — measured in{" "}
                    <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
@@ -43,6 +43,16 @@ const Pricing = () => {
                  <Button size="lg" className="h-12 px-8 text-lg font-semibold">
                    See Plans & Compare Savings
                  </Button>
+               </div>
+               
+               {/* Right Container - Image */}
+               <div className="flex justify-center lg:justify-end">
+                 <div className="w-full max-w-lg aspect-square bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg flex items-center justify-center shadow-lg">
+                   <div className="text-center text-muted-foreground">
+                     <p className="text-lg font-medium">Hero Image</p>
+                     <p className="text-sm">Placeholder for visual content</p>
+                   </div>
+                 </div>
                </div>
             </div>
           </div>
