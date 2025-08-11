@@ -348,7 +348,7 @@ const BlogPost = () => {
           {/* Article Content */}
           <div 
             ref={contentRef}
-            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-p:mb-4 prose-strong:text-foreground prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800 hover:prose-a:no-underline [&>p]:mb-4 [&>div]:mb-4 [&_a]:text-blue-600 [&_a]:underline [&_a:hover]:text-blue-800 [&_a:hover]:no-underline [&_ul]:!list-disc [&_ul]:!pl-6 [&_ul]:!my-0 [&_ul]:!space-y-0 [&_ol]:!list-decimal [&_ol]:!pl-6 [&_ol]:!my-0 [&_ol]:!space-y-0 [&_li]:!mb-0 [&_li]:!mt-0 [&_li]:!py-0 [&_li]:!leading-[1.1] [&_ul_li]:!mb-0 [&_ol_li]:!mb-0 [&_li]:!min-h-0"
+            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-p:mb-4 prose-strong:text-foreground prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800 hover:prose-a:no-underline [&>p]:mb-4 [&>div]:mb-4 [&_a]:text-blue-600 [&_a]:underline [&_a:hover]:text-blue-800 [&_a:hover]:no-underline [&_ul]:!list-disc [&_ul]:!pl-6 [&_ol]:!list-decimal [&_ol]:!pl-6 [&_li]:leading-relaxed"
             dangerouslySetInnerHTML={{ 
               __html: post.content
                 // Handle links - add target="_blank" only for http/https links, not mailto
