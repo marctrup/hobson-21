@@ -348,7 +348,7 @@ const BlogPost = () => {
           {/* Article Content */}
           <div 
             ref={contentRef}
-            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-p:mb-4 prose-strong:text-foreground prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800 hover:prose-a:no-underline [&>p]:mb-4 [&>div]:mb-4 [&_a]:text-blue-600 [&_a]:underline [&_a:hover]:text-blue-800 [&_a:hover]:no-underline [&_ul]:!list-disc [&_ul]:!pl-6 [&_ol]:!list-decimal [&_ol]:!pl-6 [&_li]:leading-relaxed [&_strong]:!mb-0 [&_strong+ul]:!mt-0 [&_strong+ol]:!mt-0 [&_h1+ul]:!mt-0 [&_h2+ul]:!mt-0 [&_h3+ul]:!mt-0 [&_h4+ul]:!mt-0 [&_h5+ul]:!mt-0 [&_h6+ul]:!mt-0 [&_h1+ol]:!mt-0 [&_h2+ol]:!mt-0 [&_h3+ol]:!mt-0 [&_h4+ol]:!mt-0 [&_h5+ol]:!mt-0 [&_h6+ol]:!mt-0"
+            className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-foreground prose-p:mb-4 prose-strong:text-foreground prose-a:text-blue-600 prose-a:underline hover:prose-a:text-blue-800 hover:prose-a:no-underline [&>p]:mb-4 [&>div]:mb-4 [&_a]:text-blue-600 [&_a]:underline [&_a:hover]:text-blue-800 [&_a:hover]:no-underline [&_ul]:!list-disc [&_ul]:!pl-6 [&_ol]:!list-decimal [&_ol]:!pl-6 [&_li]:leading-relaxed prose-strong:mb-0 prose-ul:mt-0 prose-ol:mt-0"
             dangerouslySetInnerHTML={{ 
               __html: post.content
                 // Handle links - add target="_blank" only for http/https links, not mailto
