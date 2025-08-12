@@ -407,9 +407,7 @@ const Pricing = () => {
                     </span>
                   </AccordionTrigger>
                   <AccordionContent className="px-6 pb-4">
-                    <p className="text-muted-foreground">
-                      No — they reset monthly.
-                    </p>
+                    <p className="text-muted-foreground">We will roll over 5 unused HEUs in to your next month</p>
                   </AccordionContent>
                 </AccordionItem>
                 
