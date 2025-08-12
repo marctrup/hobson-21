@@ -229,7 +229,7 @@ const Pricing = () => {
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
                   <div className="text-2xl font-semibold text-foreground">31 HEUs</div>
-                  <p className="text-sm text-muted-foreground"> steady workload, smaller team</p>
+                  <p className="text-sm text-muted-foreground"> Steady workload, Smaller team</p>
                   <Button className="w-full">Choose Plan</Button>
                 </CardContent>
               </Card>
