@@ -66,54 +66,7 @@ const Pricing = () => {
               <p className="text-muted-foreground text-lg">Where the Savings Come From</p>
             </div>
             
-            <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
-              {/* Old CRM - Left Side */}
-              <Card className="bg-muted/60 border-destructive/30 hover:shadow-lg transition-shadow duration-300">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-xl font-semibold text-destructive flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-destructive/20 flex items-center justify-center">
-                      <span className="text-destructive text-sm font-bold">×</span>
-                    </div>
-                    Current CRM Model
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
-                      <span className="text-destructive text-lg mt-0.5">❌</span>
-                      <div>
-                        <div className="font-medium text-foreground">Per user and or per property</div>
-                        <div className="text-sm text-muted-foreground">Pay for every person and property</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
-                      <span className="text-destructive text-lg mt-0.5">❌</span>
-                      <div>
-                        <div className="font-medium text-foreground">Still billed for inactive properties</div>
-                        <div className="text-sm text-muted-foreground">Empty properties cost money</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
-                      <span className="text-destructive text-lg mt-0.5">❌</span>
-                      <div>
-                        <div className="font-medium text-foreground">Pay extra for new features</div>
-                        <div className="text-sm text-muted-foreground">Feature add-ons increase costs</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="border-t border-destructive/20 pt-4 space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Business (1-9 employees, 50 units)</span>
-                      <span className="font-bold text-destructive text-lg">£140/month</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Business (10-49 employees, 200 units)</span>
-                      <span className="font-bold text-destructive text-lg">£500/month</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+            <div className="max-w-3xl mx-auto">
 
               {/* Hobson - Right Side */}
               <Card className="bg-card border-primary/30 hover:shadow-lg transition-shadow duration-300">
