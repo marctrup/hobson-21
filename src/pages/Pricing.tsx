@@ -110,64 +110,67 @@ const Pricing = () => {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-4">Choose Your Plan</h2>
+              <h2 className="text-3xl font-bold text-foreground mb-4">Try for Free</h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Start with our Free plan or choose a monthly HEU bundle that fits your workload
+                18 HEUs included
+              </p>
+              <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
+                Explore Hobson's AI features before committing
               </p>
             </div>
             
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto">
-              {/* Free Plan */}
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
+              {/* Essential Plan */}
               <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Free</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£0</div>
+                  <CardTitle className="text-lg font-semibold">Essential</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£19.50<span className="text-sm text-muted-foreground">/month</span></div>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">5 HEUs</div>
-                  <p className="text-sm text-muted-foreground">Try Hobson on a few documents </p>
-                  <Button variant="outline" className="w-full">Get Started</Button>
-                </CardContent>
-              </Card>
-
-              {/* Standard Plan */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Standard</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£18.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">31 HEUs</div>
-                  <p className="text-sm text-muted-foreground"> Steady workload, Smaller team</p>
+                  <div className="text-2xl font-semibold text-foreground">275 HEUs per month</div>
+                  <p className="text-sm text-muted-foreground">Steady, reliable AI support for regular tasks.</p>
                   <Button className="w-full">Choose Plan</Button>
                 </CardContent>
               </Card>
 
-              {/* Pro Plan - Most Popular */}
+              {/* Essential Plus Plan - Most Popular */}
               <Card className="bg-card border-2 border-primary rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative">
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <Badge className="bg-primary text-primary-foreground">⭐ Most Popular</Badge>
                 </div>
                 <CardHeader className="text-center pt-6">
-                  <CardTitle className="text-lg font-semibold">Pro</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£28.50 <span className="text-sm text-muted-foreground">+ VAT</span></div>
+                  <CardTitle className="text-lg font-semibold">Essential Plus</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£50.00<span className="text-sm text-muted-foreground">/month</span></div>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">50 HEUs</div>
-                  <p className="text-sm text-muted-foreground">Frequent use, larger team</p>
+                  <div className="text-2xl font-semibold text-foreground">700 HEUs per month</div>
+                  <p className="text-sm text-muted-foreground">Expanded capacity for more frequent, multi-step workflows.</p>
                   <Button className="w-full">Choose Plan</Button>
                 </CardContent>
               </Card>
 
-              {/* Top-Up */}
+              {/* Enterprise Plan */}
               <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Top-Up</CardTitle>
-                  <div className="text-3xl font-bold text-primary">From £10</div>
+                  <CardTitle className="text-lg font-semibold">Enterprise</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£150.00<span className="text-sm text-muted-foreground">/month</span></div>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">20 HEUs</div>
-                  <p className="text-sm text-muted-foreground">For busy months or large projects</p>
+                  <div className="text-2xl font-semibold text-foreground">2,000 HEUs per month</div>
+                  <p className="text-sm text-muted-foreground">Full-scale AI capability for continuous, high-demand operations.</p>
+                  <Button className="w-full">Choose Plan</Button>
+                </CardContent>
+              </Card>
+
+              {/* Top-Up Option */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Top-Up Option</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£10.00</div>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">150 HEUs</div>
+                  <p className="text-sm text-muted-foreground">for an extra 150 HEUs anytime</p>
                   <Button variant="outline" className="w-full">Add Top-Up</Button>
                 </CardContent>
               </Card>
