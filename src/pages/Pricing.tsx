@@ -186,7 +186,7 @@ const Pricing = () => {
                       <span className="font-bold text-primary text-lg">£18.50/month</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Business (10-49 employees, 200 units</span>
+                      <span className="text-sm text-muted-foreground">Business (10-49 employees, 200 units)</span>
                       <span className="font-bold text-primary text-lg">£28.50/month</span>
                     </div>
                   </div>
