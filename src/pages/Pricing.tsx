@@ -66,7 +66,7 @@ const Pricing = () => {
                   <Briefcase className="w-8 h-8 text-primary" />
                 </div>
                 <div className="text-2xl font-bold text-primary mb-2">Save £1,452/year</div>
-                <p className="text-muted-foreground">Small Business (1-9 employees)</p>
+                <p className="text-muted-foreground">Business (1-9 employees, 50 units)</p>
               </div>
               
               <div className="text-center">
@@ -74,7 +74,7 @@ const Pricing = () => {
                   <Building2 className="w-8 h-8 text-primary" />
                 </div>
                 <div className="text-2xl font-bold text-primary mb-2">Save £5,676/year</div>
-                <p className="text-muted-foreground">Medium Business (10-49 employees)</p>
+                <p className="text-muted-foreground">Business (10-49 employees, 200 units)</p>
               </div>
               
               <div className="text-center">
@@ -134,11 +134,11 @@ const Pricing = () => {
                   
                   <div className="border-t border-destructive/20 pt-4 space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Small Business (1-9 employees)</span>
+                      <span className="text-sm text-muted-foreground">Business (1-9 employees, 50 units)</span>
                       <span className="font-bold text-destructive text-lg">£140/month</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Medium Business (10-49 employees)</span>
+                      <span className="text-sm text-muted-foreground">Business (10-49 employees, 200 units)</span>
                       <span className="font-bold text-destructive text-lg">£500/month</span>
                     </div>
                   </div>
@@ -182,11 +182,11 @@ const Pricing = () => {
                   
                   <div className="border-t border-primary/20 pt-4 space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Small Business (1-9 employees)</span>
+                      <span className="text-sm text-muted-foreground">Business (1-9 employees, 50 units)</span>
                       <span className="font-bold text-primary text-lg">£18.50/month</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-sm text-muted-foreground">Medium Business (10-49 employees</span>
+                      <span className="text-sm text-muted-foreground">Business (10-49 employees, 200 units</span>
                       <span className="font-bold text-primary text-lg">£28.50/month</span>
                     </div>
                   </div>
