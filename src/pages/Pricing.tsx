@@ -31,9 +31,8 @@ const Pricing = () => {
                <div className="space-y-8">
                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                    Only Pay for What Hobson Works On —{" "}
-                   <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
-                     Not Seats, Not Properties
-                   </span>
+                   <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">Not Seats, Not Properties, Not Features
+                </span>
                  </h1>
                  <p className="text-xl text-muted-foreground">
                    Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
@@ -113,7 +112,7 @@ const Pricing = () => {
                     <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
                       <span className="text-destructive text-lg mt-0.5">❌</span>
                       <div>
-                        <div className="font-medium text-foreground">Per user + per property</div>
+                        <div className="font-medium text-foreground">Per user and or per property</div>
                         <div className="text-sm text-muted-foreground">Pay for every person and property</div>
                       </div>
                     </div>
