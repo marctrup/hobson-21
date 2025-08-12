@@ -57,16 +57,93 @@ const Pricing = () => {
           </div>
         </section>
 
+        {/* Real-Life Savings */}
+        <section className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-8 md:grid-cols-3 max-w-5xl mx-auto">
+              <div className="text-center">
+                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Briefcase className="w-8 h-8 text-primary" />
+                </div>
+                <div className="text-2xl font-bold text-primary mb-2">Save £1,452/year</div>
+                <p className="text-muted-foreground">Business (1-9 employees, 50 units)</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <Building2 className="w-8 h-8 text-primary" />
+                </div>
+                <div className="text-2xl font-bold text-primary mb-2">Save £5,676/year</div>
+                <p className="text-muted-foreground">Business (10-49 employees, 200 units)</p>
+              </div>
+              
+              <div className="text-center">
+                <div className="mb-4 mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
+                  <TrendingUp className="w-8 h-8 text-primary" />
+                </div>
+                <div className="text-2xl font-bold text-primary mb-2">No price jump</div>
+                <p className="text-muted-foreground">When you add people or properties</p>
+              </div>
+            </div>
+          </div>
+        </section>
 
         {/* Old CRM vs Hobson - Redesigned */}
         <section className="py-20">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-foreground mb-4">The Pricing Model That Doesn't Punish Growth</h2>
-              
+              <p className="text-muted-foreground text-lg">Where the Savings Come From</p>
             </div>
             
-            <div className="max-w-3xl mx-auto">
+            <div className="grid gap-8 md:grid-cols-2 max-w-5xl mx-auto">
+              {/* Old CRM - Left Side */}
+              <Card className="bg-muted/60 border-destructive/30 hover:shadow-lg transition-shadow duration-300">
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-xl font-semibold text-destructive flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-destructive/20 flex items-center justify-center">
+                      <span className="text-destructive text-sm font-bold">×</span>
+                    </div>
+                    Current CRM Model
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
+                      <span className="text-destructive text-lg mt-0.5">£50.00/month</span>
+                      <div>
+                        <div className="font-medium text-foreground">Per user and or per property</div>
+                        <div className="text-sm text-muted-foreground">Pay for every person and property</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
+                      <span className="text-destructive text-lg mt-0.5">❌</span>
+                      <div>
+                        <div className="font-medium text-foreground">Still billed for inactive properties</div>
+                        <div className="text-sm text-muted-foreground">Empty properties cost money</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-3 rounded-lg bg-destructive/5">
+                      <span className="text-destructive text-lg mt-0.5">❌</span>
+                      <div>
+                        <div className="font-medium text-foreground">Pay extra for new features</div>
+                        <div className="text-sm text-muted-foreground">Feature add-ons increase costs</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t border-destructive/20 pt-4 space-y-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Business (1-9 employees, 50 units)</span>
+                      <span className="font-bold text-destructive text-lg">£140/month</span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">Business (10-49 employees, 200 units)</span>
+                      <span className="font-bold text-destructive text-lg">£500/month</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
 
               {/* Hobson - Right Side */}
               <Card className="bg-card border-primary/30 hover:shadow-lg transition-shadow duration-300">
