@@ -211,7 +211,7 @@ const Pricing = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
-                        <span className="text-xs">Custom integrations</span>
+                        <span className="text-xs">Custom integrations (call us)</span>
                       </div>
                     </div>
                   </div>
@@ -238,7 +238,7 @@ const Pricing = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
-                        <span className="text-xs">No expiration</span>
+                        <span className="text-xs">Add more whenever you need</span>
                       </div>
                     </div>
                   </div>
