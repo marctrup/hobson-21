@@ -60,7 +60,7 @@ const Pricing = () => {
 
         {/* Modern Pricing Plans - All Purple Theme */}
         <section className="pt-4 pb-12 bg-gradient-to-br from-background to-purple-50/30">
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-4 overflow-visible">
             <div className="text-center mb-8">
               <h2 className="text-4xl font-bold text-foreground mb-4">Choose Your AI Journey</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
@@ -69,7 +69,7 @@ const Pricing = () => {
             </div>
             
             {/* All 5 Plans in Unified Grid */}
-            <div className="grid gap-6 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 max-w-7xl mx-auto pt-12 mt-16">
+            <div className="grid gap-6 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 max-w-7xl mx-auto pt-16 overflow-visible">
               
               {/* Free Plan */}
               <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
