@@ -104,7 +104,13 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-6">
                   <CardTitle className="text-lg font-bold">Essential</CardTitle>
-                  <div className="flex items-center justify-center gap-2 mt-2">
+                  <div className="text-3xl font-bold text-purple-600 mt-2">£19.50<span className="text-sm font-normal">/month</span></div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-purple-600 mb-1">275 HEUs</div>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
                     <span className="text-xs text-muted-foreground">Monthly</span>
                     <div className="relative">
                       <input type="checkbox" className="sr-only" />
@@ -113,12 +119,6 @@ const Pricing = () => {
                     </div>
                     <span className="text-xs font-medium">Annual</span>
                     <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
-                  </div>
-                  <div className="text-3xl font-bold text-purple-600 mt-2">£19.50<span className="text-sm font-normal">/month</span></div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-purple-600 mb-1">275 HEUs</div>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
@@ -146,7 +146,13 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
                 <CardHeader className="text-center pb-6 pt-6">
                   <CardTitle className="text-lg font-bold">Essential Plus</CardTitle>
-                  <div className="flex items-center justify-center gap-2 mt-2">
+                  <div className="text-3xl font-bold text-purple-700 mt-2">£50<span className="text-sm font-normal">/month</span></div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-purple-700 mb-1">700 HEUs</div>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
                     <span className="text-xs text-muted-foreground">Monthly</span>
                     <div className="relative">
                       <input type="checkbox" className="sr-only" />
@@ -155,12 +161,6 @@ const Pricing = () => {
                     </div>
                     <span className="text-xs font-medium">Annual</span>
                     <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
-                  </div>
-                  <div className="text-3xl font-bold text-purple-700 mt-2">£50<span className="text-sm font-normal">/month</span></div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-purple-700 mb-1">700 HEUs</div>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
@@ -187,7 +187,13 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-6">
                   <CardTitle className="text-lg font-bold">Enterprise</CardTitle>
-                  <div className="flex items-center justify-center gap-2 mt-2">
+                  <div className="text-3xl font-bold text-purple-600 mt-2">£150<span className="text-sm font-normal">/month</span></div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-purple-600 mb-1">2,000 HEUs</div>
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
                     <span className="text-xs text-muted-foreground">Monthly</span>
                     <div className="relative">
                       <input type="checkbox" className="sr-only" />
@@ -196,12 +202,6 @@ const Pricing = () => {
                     </div>
                     <span className="text-xs font-medium">Annual</span>
                     <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
-                  </div>
-                  <div className="text-3xl font-bold text-purple-600 mt-2">£150<span className="text-sm font-normal">/month</span></div>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="text-center">
-                    <div className="text-xl font-bold text-purple-600 mb-1">2,000 HEUs</div>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
