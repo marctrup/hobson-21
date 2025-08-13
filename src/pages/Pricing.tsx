@@ -60,7 +60,7 @@ const Pricing = () => {
 
         {/* Modern Pricing Plans - All Purple Theme */}
         <section className="pt-4 pb-12 bg-gradient-to-br from-background to-purple-50/30">
-          <div className="container mx-auto px-4 overflow-visible">
+          <div className="container mx-auto px-4 overflow-visible border-2 border-red-500">
             <div className="text-center mb-8">
               <h2 className="text-4xl font-bold text-foreground mb-4">Choose Your AI Journey</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
