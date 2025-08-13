@@ -57,54 +57,6 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Single Pricing Section - Hobson Only */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-4">The Pricing Model That Doesn't Punish Growth</h2>
-            </div>
-            
-            <div className="flex justify-center max-w-3xl mx-auto">
-              {/* Hobson - Full Width */}
-              <Card className="bg-card border-primary/30 hover:shadow-lg transition-shadow duration-300 w-full">
-                <CardHeader className="pb-4">
-                  <CardTitle className="text-xl font-semibold text-primary flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                      <span className="text-primary text-sm font-bold">✓</span>
-                    </div>
-                    Hobson
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5">
-                      <span className="text-primary text-lg mt-0.5">✅</span>
-                      <div>
-                        <div className="font-medium text-foreground">Pay per task (HEUs)</div>
-                        <div className="text-sm text-muted-foreground">Only pay for actual AI work</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5">
-                      <span className="text-primary text-lg mt-0.5">✅</span>
-                      <div>
-                        <div className="font-medium text-foreground">Unlimited users</div>
-                        <div className="text-sm text-muted-foreground">Add your whole team at no extra cost</div>
-                      </div>
-                    </div>
-                    <div className="flex items-start gap-3 p-3 rounded-lg bg-primary/5">
-                      <span className="text-primary text-lg mt-0.5">✅</span>
-                      <div>
-                        <div className="font-medium text-foreground">All new features included</div>
-                        <div className="text-sm text-muted-foreground">Never pay extra for updates</div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
-
 
         {/* Modern Pricing Plans - All Purple Theme */}
         <section className="py-24 bg-gradient-to-br from-background to-purple-50/30">
