@@ -1,3 +1,4 @@
+// Updated features section without badge and Meet Hobson text
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Map, FileText, TrendingUp, CheckCircle } from "lucide-react";
 import FeatureShowcase from "@/components/features/FeatureShowcase";
