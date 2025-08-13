@@ -106,8 +106,8 @@ const Pricing = () => {
         </section>
 
 
-        {/* Modern Pricing Plans */}
-        <section className="py-24 bg-gradient-to-br from-background to-muted/20">
+        {/* Modern Pricing Plans - All Purple Theme */}
+        <section className="py-24 bg-gradient-to-br from-background to-purple-50/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-20">
               <h2 className="text-4xl font-bold text-foreground mb-6">Choose Your AI Journey</h2>
@@ -116,195 +116,204 @@ const Pricing = () => {
               </p>
             </div>
             
-            {/* Pricing Grid - 3 main plans + 2 special options */}
-            <div className="grid gap-8 lg:grid-cols-3 max-w-6xl mx-auto mb-12">
+            {/* All 5 Plans in Unified Grid */}
+            <div className="grid gap-6 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 max-w-7xl mx-auto">
               
               {/* Free Plan */}
-              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-card/80 border-2 border-muted hover:border-primary/20 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-emerald-500"></div>
+              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-6">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center">
-                    <span className="text-2xl">🌱</span>
+                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center">
+                    <span className="text-lg">🌱</span>
                   </div>
-                  <CardTitle className="text-2xl font-bold">Free</CardTitle>
-                  <div className="text-5xl font-bold text-foreground mt-4">£0</div>
-                  <p className="text-muted-foreground mt-2">Discover what Hobson can do</p>
+                  <CardTitle className="text-lg font-bold">Free</CardTitle>
+                  <div className="text-3xl font-bold text-purple-600 mt-3">£0</div>
+                  <p className="text-xs text-muted-foreground mt-2">Discover Hobson</p>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-4">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">18 HEUs</div>
-                    <p className="text-sm text-muted-foreground">Free forever • No credit card required</p>
+                    <div className="text-xl font-bold text-purple-600 mb-1">18 HEUs</div>
+                    <p className="text-xs text-muted-foreground">Free forever</p>
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
-                      <span className="text-sm">All core features</span>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span className="text-xs">All features</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
-                      <span className="text-sm">Unlimited users & properties</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
-                      <span className="text-sm">Document insights</span>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span className="text-xs">Unlimited users</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white">
+                  <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm">
                     Start Free
                   </Button>
                 </CardContent>
               </Card>
 
+              {/* Essential Plan */}
+              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
+                <CardHeader className="text-center pb-6">
+                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center">
+                    <Briefcase className="h-6 w-6 text-purple-600" />
+                  </div>
+                  <CardTitle className="text-lg font-bold">Essential</CardTitle>
+                  <div className="flex items-center justify-center gap-2 mt-2">
+                    <span className="text-xs text-muted-foreground">Monthly</span>
+                    <div className="relative">
+                      <input type="checkbox" className="sr-only" />
+                      <div className="w-8 h-4 bg-purple-200 rounded-full cursor-pointer"></div>
+                      <div className="absolute left-0.5 top-0.5 bg-purple-500 w-3 h-3 rounded-full shadow transition-transform"></div>
+                    </div>
+                    <span className="text-xs font-medium">Annual</span>
+                    <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
+                  </div>
+                  <div className="text-3xl font-bold text-purple-600 mt-2">£19.50</div>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <div className="text-xl font-bold text-purple-600 mb-1">275 HEUs</div>
+                    <p className="text-xs text-muted-foreground">Steady support</p>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span className="text-xs">Everything in Free</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span className="text-xs">Regular workflows</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm">
+                    Choose Essential
+                  </Button>
+                </CardContent>
+              </Card>
+
               {/* Essential Plus - Most Popular */}
-              <Card className="relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 border-2 border-primary shadow-2xl scale-105 hover:scale-110 transition-all duration-300">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary-light"></div>
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-gradient-to-r from-primary to-primary-light text-white px-4 py-1 text-sm font-medium">
+              <Card className="relative overflow-hidden bg-gradient-to-br from-purple-50 to-purple-100/50 border-2 border-purple-400 shadow-2xl scale-110 hover:scale-115 transition-all duration-300">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 text-xs font-medium">
                     ⭐ Most Popular
                   </Badge>
                 </div>
                 <CardHeader className="text-center pb-6 pt-8">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-primary/30 rounded-2xl flex items-center justify-center">
-                    <TrendingUp className="h-8 w-8 text-primary" />
+                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-200 to-purple-300 rounded-xl flex items-center justify-center">
+                    <TrendingUp className="h-6 w-6 text-purple-700" />
                   </div>
-                  <CardTitle className="text-2xl font-bold">Essential Plus</CardTitle>
-                  <div className="flex items-center justify-center gap-3 mt-4">
-                    <span className="text-sm text-muted-foreground line-through">£60</span>
-                    <div className="text-5xl font-bold text-primary">£50</div>
-                  </div>
+                  <CardTitle className="text-lg font-bold">Essential Plus</CardTitle>
                   <div className="flex items-center justify-center gap-2 mt-2">
-                    <span className="text-sm text-muted-foreground">Monthly</span>
+                    <span className="text-xs text-muted-foreground">Monthly</span>
                     <div className="relative">
                       <input type="checkbox" className="sr-only" />
-                      <div className="w-10 h-5 bg-primary/20 rounded-full cursor-pointer"></div>
-                      <div className="absolute left-1 top-0.5 bg-primary w-4 h-4 rounded-full shadow transition-transform"></div>
+                      <div className="w-8 h-4 bg-purple-300 rounded-full cursor-pointer"></div>
+                      <div className="absolute left-0.5 top-0.5 bg-purple-600 w-3 h-3 rounded-full shadow transition-transform"></div>
                     </div>
-                    <span className="text-sm font-medium">Annual</span>
-                    <Badge variant="secondary" className="text-xs bg-green-100 text-green-700">Save 20%</Badge>
+                    <span className="text-xs font-medium">Annual</span>
+                    <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
                   </div>
+                  <div className="text-3xl font-bold text-purple-700 mt-2">£50</div>
                 </CardHeader>
-                <CardContent className="space-y-6">
+                <CardContent className="space-y-4">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-primary mb-2">700 HEUs</div>
-                    <p className="text-sm text-muted-foreground">Perfect for growing portfolios</p>
+                    <div className="text-xl font-bold text-purple-700 mb-1">700 HEUs</div>
+                    <p className="text-xs text-purple-600">Perfect for growth</p>
                   </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                      <span className="text-sm">Everything in Free</span>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
+                      <span className="text-xs">Everything in Essential</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                      <span className="text-sm">Advanced workflows</span>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
+                      <span className="text-xs">Advanced workflows</span>
                     </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
-                      <span className="text-sm">Priority support</span>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
+                      <span className="text-xs">Priority support</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-primary to-primary-light text-white">
+                  <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm">
                     Choose Essential Plus
                   </Button>
                 </CardContent>
               </Card>
 
               {/* Enterprise Plan */}
-              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-card/80 border-2 border-muted hover:border-primary/20 transition-all duration-300 hover:scale-105 hover:shadow-xl">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-indigo-500"></div>
+              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-6">
-                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-2xl flex items-center justify-center">
-                    <Building2 className="h-8 w-8 text-purple-600" />
+                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center">
+                    <Building2 className="h-6 w-6 text-purple-600" />
                   </div>
-                  <CardTitle className="text-2xl font-bold">Enterprise</CardTitle>
-                  <div className="text-5xl font-bold text-foreground mt-4">£150</div>
+                  <CardTitle className="text-lg font-bold">Enterprise</CardTitle>
                   <div className="flex items-center justify-center gap-2 mt-2">
-                    <span className="text-sm text-muted-foreground">Monthly</span>
-                    <div className="relative">
-                      <input type="checkbox" className="sr-only" />
-                      <div className="w-10 h-5 bg-muted rounded-full cursor-pointer"></div>
-                      <div className="absolute left-1 top-0.5 bg-white w-4 h-4 rounded-full shadow transition-transform"></div>
-                    </div>
-                    <span className="text-sm font-medium">Annual</span>
-                    <Badge variant="secondary" className="text-xs">Save 20%</Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="text-center">
-                    <div className="text-3xl font-bold text-purple-600 mb-2">2,000 HEUs</div>
-                    <p className="text-sm text-muted-foreground">For high-demand operations</p>
-                  </div>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                      <span className="text-sm">Everything in Essential Plus</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                      <span className="text-sm">Dedicated support</span>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
-                      <span className="text-sm">Custom integrations</span>
-                    </div>
-                  </div>
-                  <Button className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white">
-                    Contact Sales
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Bottom Row - Essential & Top-Up */}
-            <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
-              
-              {/* Essential Plan */}
-              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-card/80 border border-muted hover:border-primary/20 transition-all duration-300 hover:shadow-lg">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-cyan-500"></div>
-                <CardHeader className="text-center pb-4">
-                  <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center">
-                    <Briefcase className="h-6 w-6 text-blue-600" />
-                  </div>
-                  <CardTitle className="text-xl font-bold">Essential</CardTitle>
-                  <div className="text-3xl font-bold text-foreground mt-2">£19.50</div>
-                  <div className="flex items-center justify-center gap-2 mt-1">
                     <span className="text-xs text-muted-foreground">Monthly</span>
                     <div className="relative">
                       <input type="checkbox" className="sr-only" />
-                      <div className="w-8 h-4 bg-muted rounded-full cursor-pointer"></div>
-                      <div className="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full shadow transition-transform"></div>
+                      <div className="w-8 h-4 bg-purple-200 rounded-full cursor-pointer"></div>
+                      <div className="absolute left-0.5 top-0.5 bg-purple-500 w-3 h-3 rounded-full shadow transition-transform"></div>
                     </div>
                     <span className="text-xs font-medium">Annual</span>
-                    <Badge variant="secondary" className="text-xs">Save 20%</Badge>
+                    <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
                   </div>
+                  <div className="text-3xl font-bold text-purple-600 mt-2">£150</div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600 mb-1">275 HEUs</div>
-                    <p className="text-xs text-muted-foreground">Steady AI support</p>
+                    <div className="text-xl font-bold text-purple-600 mb-1">2,000 HEUs</div>
+                    <p className="text-xs text-muted-foreground">High-demand ops</p>
                   </div>
-                  <Button variant="outline" className="w-full border-blue-200 text-blue-600 hover:bg-blue-50">
-                    Choose Essential
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span className="text-xs">Everything in Plus</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span className="text-xs">Dedicated support</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span className="text-xs">Custom integrations</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm">
+                    Contact Sales
                   </Button>
                 </CardContent>
               </Card>
 
               {/* Top-Up Option */}
-              <Card className="relative overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 hover:border-orange-300 transition-all duration-300 hover:shadow-lg">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-orange-500"></div>
-                <CardHeader className="text-center pb-4">
-                  <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center">
-                    <CreditCard className="h-6 w-6 text-amber-600" />
+              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
+                <CardHeader className="text-center pb-6">
+                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center">
+                    <CreditCard className="h-6 w-6 text-purple-600" />
                   </div>
-                  <CardTitle className="text-xl font-bold text-amber-800">Top-Up</CardTitle>
-                  <div className="text-3xl font-bold text-amber-700 mt-2">£10</div>
-                  <p className="text-xs text-amber-600 mt-1">Add anytime</p>
+                  <CardTitle className="text-lg font-bold">Top-Up</CardTitle>
+                  <div className="text-3xl font-bold text-purple-600 mt-3">£10</div>
+                  <p className="text-xs text-muted-foreground mt-2">Add anytime</p>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-amber-700 mb-1">150 HEUs</div>
-                    <p className="text-xs text-amber-600">Perfect for busy periods</p>
+                    <div className="text-xl font-bold text-purple-600 mb-1">150 HEUs</div>
+                    <p className="text-xs text-muted-foreground">Perfect for busy periods</p>
                   </div>
-                  <Button variant="outline" className="w-full border-amber-300 text-amber-700 hover:bg-amber-100">
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span className="text-xs">One-time purchase</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                      <span className="text-xs">No expiration</span>
+                    </div>
+                  </div>
+                  <Button variant="outline" className="w-full border-purple-300 text-purple-600 hover:bg-purple-50 text-sm">
                     Add Top-Up
                   </Button>
                 </CardContent>
@@ -312,12 +321,12 @@ const Pricing = () => {
             </div>
 
             {/* Feature Highlight */}
-            <div className="text-center mt-16 p-8 bg-gradient-to-r from-primary/5 to-primary-light/5 rounded-2xl border border-primary/10">
-              <h3 className="text-2xl font-bold text-foreground mb-4">Every Plan Includes</h3>
+            <div className="text-center mt-16 p-8 bg-gradient-to-r from-purple-50 to-purple-100/50 rounded-2xl border border-purple-200">
+              <h3 className="text-2xl font-bold text-foreground mb-6">Every Plan Includes</h3>
               <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <CheckCircle2 className="h-5 w-5 text-purple-600" />
                   </div>
                   <div className="text-left">
                     <div className="font-semibold">Unlimited Users</div>
@@ -325,8 +334,8 @@ const Pricing = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <CheckCircle2 className="h-5 w-5 text-purple-600" />
                   </div>
                   <div className="text-left">
                     <div className="font-semibold">All Features</div>
@@ -334,8 +343,8 @@ const Pricing = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                  <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
+                    <CheckCircle2 className="h-5 w-5 text-purple-600" />
                   </div>
                   <div className="text-left">
                     <div className="font-semibold">Unlimited Properties</div>
