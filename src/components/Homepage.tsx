@@ -118,9 +118,11 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-[5px] font-space border-8 border-red-500 rounded-2xl p-4 bg-yellow-100 transform rotate-3 hover:rotate-6 transition-transform duration-300" style={{
+                <div className="relative mt-[5px] font-space border-8 border-red-500 rounded-2xl p-4 bg-yellow-100 transition-transform duration-300" style={{
                   border: '8px solid #ef4444',
-                  borderRadius: '16px'
+                  borderRadius: '16px',
+                  transform: 'perspective(1000px) rotateY(-10deg)',
+                  transformStyle: 'preserve-3d'
                 }}>
                   <PropertyManagementVisualization />
                 </div>
