@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } 
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
 import { LazyVideoDialog } from "@/components/LazyVideoDialog";
 import { LazyScrollVideo } from "@/components/LazyScrollVideo";
-import { BenefitsSection } from "@/components/homepage/BenefitsSection";
+import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 // Lazy load video only when needed
 
 export const Homepage = () => {
@@ -208,8 +208,8 @@ export const Homepage = () => {
             </div>
           </section>
 
-          {/* Benefits Section */}
-          <BenefitsSection />
+          {/* Features Section */}
+          <FeaturesSection />
 
           {/* CTA Section - Clean layout without card */}
           <section id="pilot-section" className="py-8 md:py-24">

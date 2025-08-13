@@ -1,61 +1,176 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Brain, Search, Zap, Shield, Users, Globe } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { MessageCircle, Map, FileText, TrendingUp, CheckCircle } from "lucide-react";
+import FeatureShowcase from "@/components/features/FeatureShowcase";
 
 export const FeaturesSection = () => {
-  const features = [
-    {
-      icon: Brain,
-      title: "Intelligent Analysis",
-      description: "Advanced AI understands context and extracts meaningful insights from complex property documents."
-    },
-    {
-      icon: Zap,
-      title: "Lightning Fast",
-      description: "Get instant answers to complex questions that would take hours of manual research."
-    },
-    {
-      icon: Search,
-      title: "Smart Search",
-      description: "Find exactly what you need across thousands of documents with natural language queries."
-    },
-    {
-      icon: Shield,
-      title: "Bank-Grade Security",
-      description: "Your sensitive property data is protected with enterprise-level security measures."
-    },
-    {
-      icon: Users,
-      title: "Team Collaboration",
-      description: "Share insights and collaborate seamlessly across your entire property team."
-    },
-    {
-      icon: Globe,
-      title: "Cloud-Based",
-      description: "Access your property intelligence from anywhere, on any device, at any time."
-    }
-  ];
-
   return (
-    <section id="features" className="py-24 bg-muted/30" aria-labelledby="features-heading">
+    <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-20">
-          <h2 id="features-heading" className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-            Why Choose Hobson AI?
-          </h2>
-        </div>
-        
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {features.map((feature, index) => (
-            <Card key={index} className="group hover:shadow-xl transition-all duration-300 hover:scale-105 border-0 bg-background/50 backdrop-blur-sm">
-              <CardContent className="p-8">
-                <div className="mb-6 inline-flex p-4 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl group-hover:from-primary/20 group-hover:to-secondary/20 transition-colors">
-                  <feature.icon className="h-8 w-8 text-primary" />
+        <div className="max-w-6xl mx-auto">
+          {/* Beta Badge */}
+          <div className="text-center mb-8">
+            <Badge variant="outline" className="text-primary border-primary/20">
+              🚀 AI-Powered Features
+            </Badge>
+          </div>
+
+          {/* Hero Section */}
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+              Meet Hobson
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-12">
+              Your intelligent property management assistant that understands context, learns from your data, 
+              and delivers insights that transform how you work.
+            </p>
+          </div>
+
+          {/* Angled Feature Showcase with Grid Map */}
+          <FeatureShowcase />
+
+          {/* Powerful Features Section */}
+          <div className="mb-16">
+            <div className="text-center mb-12">
+              <h3 className="text-3xl md:text-4xl font-bold mb-4">Powerful Features, Simple Interface</h3>
+              <p className="text-xl text-muted-foreground">
+                Everything you need to manage your property portfolio efficiently, powered by cutting-edge AI technology.
+              </p>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-8">
+              {/* Intelligent Chat Interface */}
+              <div className="bg-card rounded-lg border p-8">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <MessageCircle className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h4 className="text-xl font-semibold">Intelligent Chat Interface</h4>
+                      <Badge variant="secondary" className="text-xs">Beta</Badge>
+                    </div>
+                    <p className="text-primary font-medium mb-3">Natural language queries</p>
+                  </div>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-foreground">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
-              </CardContent>
-            </Card>
-          ))}
+                <p className="text-muted-foreground mb-4">
+                  Ask Hobson anything about your properties. Get instant answers to complex questions with our conversational AI assistant.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>24/7 availability</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Context-aware responses</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Multi-property insights</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Interactive Property Mapping */}
+              <div className="bg-card rounded-lg border p-8">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <Map className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h4 className="text-xl font-semibold">Interactive Property Mapping</h4>
+                      <Badge variant="secondary" className="text-xs">Beta</Badge>
+                    </div>
+                    <p className="text-primary font-medium mb-3">Geospatial intelligence</p>
+                  </div>
+                </div>
+                <p className="text-muted-foreground mb-4">
+                  Visualize your entire portfolio on an interactive map. See property locations, market data, and geographical insights at a glance.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Location-based analytics</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Market trend visualization</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Portfolio distribution insights</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Smart Document Analysis */}
+              <div className="bg-card rounded-lg border p-8">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <FileText className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h4 className="text-xl font-semibold">Smart Document Analysis</h4>
+                      <Badge variant="secondary" className="text-xs">Beta</Badge>
+                    </div>
+                    <p className="text-primary font-medium mb-3">AI-powered extraction</p>
+                  </div>
+                </div>
+                <p className="text-muted-foreground mb-4">
+                  Upload lease agreements, surveys, and contracts. Hobson extracts key information and identifies important dates automatically.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Automated data entry</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Key date identification</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Document summarization</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Predictive Analytics */}
+              <div className="bg-card rounded-lg border p-8">
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-12 h-12 bg-primary rounded-lg flex items-center justify-center">
+                    <TrendingUp className="w-6 h-6 text-primary-foreground" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h4 className="text-xl font-semibold">Predictive Analytics</h4>
+                      <Badge variant="outline" className="text-xs border-orange-500 text-orange-600">Coming</Badge>
+                    </div>
+                    <p className="text-primary font-medium mb-3">Future-focused insights</p>
+                  </div>
+                </div>
+                <p className="text-muted-foreground mb-4">
+                  Get ahead of market changes and lease renewals with AI-driven predictions and recommendations.
+                </p>
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Management forecasting</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Market trend analysis</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <CheckCircle className="w-4 h-4 text-primary" />
+                    <span>Revenue optimization</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
