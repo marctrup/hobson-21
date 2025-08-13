@@ -7,24 +7,6 @@ export const FeaturesSection = () => {
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          {/* Beta Badge */}
-          <div className="text-center mb-8">
-            <Badge variant="outline" className="text-primary border-primary/20">
-              🚀 AI-Powered Features
-            </Badge>
-          </div>
-
-          {/* Hero Section */}
-          <div className="text-center mb-16">
-            <h2 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              Meet Hobson
-            </h2>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-12">
-              Your intelligent property management assistant that understands context, learns from your data, 
-              and delivers insights that transform how you work.
-            </p>
-          </div>
-
           {/* Angled Feature Showcase with Grid Map */}
           <FeatureShowcase />
 
