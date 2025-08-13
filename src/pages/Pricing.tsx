@@ -29,11 +29,9 @@ const Pricing = () => {
              <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
                {/* Left Container - Content */}
                <div className="space-y-8">
-                 <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                   Only Pay for What Hobson Works On —{" "}
-                   <span className="bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">Not Seats, Not Properties, Not Features
-                </span>
-                 </h1>
+                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                    From Energy to Outcomes — that's the Hobson way.
+                  </h1>
                  <p className="text-xl text-muted-foreground">
                    Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
                    Hobson charges for the actual work our AI does — measured in{" "}
