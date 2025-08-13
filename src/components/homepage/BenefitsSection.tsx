@@ -1,26 +1,26 @@
-import { CheckCircle, TrendingUp, Clock, Users } from "lucide-react";
+import { MessageCircle, Map, FileText, TrendingUp } from "lucide-react";
 
 export const BenefitsSection = () => {
   const benefits = [
     {
-      icon: Clock,
-      title: "Save Time",
-      description: "Instantly find information across thousands of documents without manual searching"
+      icon: MessageCircle,
+      title: "Intelligent Chat Interface",
+      description: "Ask Hobson anything about your properties. Get instant answers to complex questions with our conversational AI assistant."
+    },
+    {
+      icon: Map,
+      title: "Interactive Property Mapping",
+      description: "Visualize your entire portfolio on an interactive map. See property locations, market data, and geographical insights at a glance."
+    },
+    {
+      icon: FileText,
+      title: "Smart Document Analysis",
+      description: "Upload lease agreements, surveys, and contracts. Hobson extracts key information and identifies important dates automatically."
     },
     {
       icon: TrendingUp,
-      title: "Increase Accuracy",
-      description: "Get precise answers with source citations, reducing errors and improving decision-making"
-    },
-    {
-      icon: Users,
-      title: "Scale Your Team",
-      description: "Handle more properties and clients without proportionally increasing headcount"
-    },
-    {
-      icon: CheckCircle,
-      title: "Stay Compliant",
-      description: "Never miss important dates, clauses, or requirements hidden in your documents"
+      title: "Predictive Analytics",
+      description: "Get ahead of market changes and lease renewals with AI-driven predictions and recommendations."
     }
   ];
 
@@ -30,10 +30,10 @@ export const BenefitsSection = () => {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-              Why Property Professionals Choose Hobson
+              Simple. Powerful. Intuitive.
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Transform how you work with property documents and unlock insights that drive better business outcomes
+              Chat with Hobson on the left, visualize your portfolio on the right. Everything you need in one seamless interface.
             </p>
           </div>
           
