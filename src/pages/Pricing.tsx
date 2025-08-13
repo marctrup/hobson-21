@@ -111,16 +111,6 @@ const Pricing = () => {
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold text-foreground mb-4">Simple Pricing</h2>
-              <div className="flex items-center justify-center gap-4 mb-8">
-                <span className="text-muted-foreground">Monthly</span>
-                <div className="relative">
-                  <input type="checkbox" className="sr-only" />
-                  <div className="w-12 h-6 bg-muted rounded-full shadow-inner cursor-pointer"></div>
-                  <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full shadow transition-transform"></div>
-                </div>
-                <span className="text-foreground font-medium">Annual</span>
-                <Badge variant="secondary" className="text-xs">Save 20%</Badge>
-              </div>
             </div>
             
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
@@ -142,6 +132,16 @@ const Pricing = () => {
               <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <CardHeader className="text-center">
                   <CardTitle className="text-lg font-semibold">Essential</CardTitle>
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <span className="text-sm text-muted-foreground">Monthly</span>
+                    <div className="relative">
+                      <input type="checkbox" className="sr-only" />
+                      <div className="w-8 h-4 bg-muted rounded-full shadow-inner cursor-pointer"></div>
+                      <div className="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full shadow transition-transform"></div>
+                    </div>
+                    <span className="text-sm text-foreground font-medium">Annual</span>
+                    <Badge variant="secondary" className="text-xs">Save 20%</Badge>
+                  </div>
                   <div className="text-3xl font-bold text-primary">£19.50<span className="text-sm text-muted-foreground">/month</span></div>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
@@ -158,6 +158,16 @@ const Pricing = () => {
                 </div>
                 <CardHeader className="text-center pt-6">
                   <CardTitle className="text-lg font-semibold">Essential Plus</CardTitle>
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <span className="text-sm text-muted-foreground">Monthly</span>
+                    <div className="relative">
+                      <input type="checkbox" className="sr-only" />
+                      <div className="w-8 h-4 bg-muted rounded-full shadow-inner cursor-pointer"></div>
+                      <div className="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full shadow transition-transform"></div>
+                    </div>
+                    <span className="text-sm text-foreground font-medium">Annual</span>
+                    <Badge variant="secondary" className="text-xs">Save 20%</Badge>
+                  </div>
                   <div className="text-3xl font-bold text-primary">£50.00<span className="text-sm text-muted-foreground">/month</span></div>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
@@ -171,6 +181,16 @@ const Pricing = () => {
               <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <CardHeader className="text-center">
                   <CardTitle className="text-lg font-semibold">Enterprise</CardTitle>
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <span className="text-sm text-muted-foreground">Monthly</span>
+                    <div className="relative">
+                      <input type="checkbox" className="sr-only" />
+                      <div className="w-8 h-4 bg-muted rounded-full shadow-inner cursor-pointer"></div>
+                      <div className="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full shadow transition-transform"></div>
+                    </div>
+                    <span className="text-sm text-foreground font-medium">Annual</span>
+                    <Badge variant="secondary" className="text-xs">Save 20%</Badge>
+                  </div>
                   <div className="text-3xl font-bold text-primary">£150.00<span className="text-sm text-muted-foreground">/month</span></div>
                 </CardHeader>
                 <CardContent className="text-center space-y-4">
