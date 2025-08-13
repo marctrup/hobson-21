@@ -21,7 +21,7 @@ const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const AboutUs = lazy(() => import("./pages/AboutUs"));
 const ContactUs = lazy(() => import("./pages/ContactUs"));
-const Features = lazy(() => import("./pages/Features"));
+
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogManagement = lazy(() => import("./pages/admin/BlogManagement"));
@@ -83,8 +83,8 @@ const App = () => {
                   <Route path="/home/property-management-software" element={<Navigate to="/" replace />} />
                   <Route path="/real-estate-ai" element={<Navigate to="/" replace />} />
                   <Route path="/tenancy-document" element={<Navigate to="/blog/making-light-work-of-a-tenancy-document" replace />} />
-                  <Route path="/features" element={<Navigate to="/features/real_estate_ai" replace />} />
-                  <Route path="/features/real_estate_ai" element={<Features />} />
+                  <Route path="/features" element={<Navigate to="/" replace />} />
+                  <Route path="/features/real_estate_ai" element={<Navigate to="/" replace />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
                   <Route path="/about" element={<AboutUs />} />

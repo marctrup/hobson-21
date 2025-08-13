@@ -56,9 +56,6 @@ export const Homepage = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-                <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Features
-                </Link>
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </Link>
@@ -79,9 +76,6 @@ export const Homepage = () => {
             {/* Mobile Navigation Menu */}
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
-                  <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Features
-                  </Link>
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Blog
                   </Link>
@@ -277,9 +271,6 @@ export const Homepage = () => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-foreground">Product</h4>
                   <div className="space-y-3">
-                    <Link to="/features" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Features
-                    </Link>
                     <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">
                       Join our pilot programme
                     </Link>
