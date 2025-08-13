@@ -75,9 +75,6 @@ const Pricing = () => {
               <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-6">
-                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center">
-                    <span className="text-lg">🌱</span>
-                  </div>
                   <CardTitle className="text-lg font-bold">Free</CardTitle>
                   <div className="text-3xl font-bold text-purple-600 mt-3">£0</div>
                   <p className="text-xs text-muted-foreground mt-2">Discover Hobson</p>
@@ -107,9 +104,6 @@ const Pricing = () => {
               <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-6">
-                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center">
-                    <Briefcase className="h-6 w-6 text-purple-600" />
-                  </div>
                   <CardTitle className="text-lg font-bold">Essential</CardTitle>
                   <div className="flex items-center justify-center gap-2 mt-2">
                     <span className="text-xs text-muted-foreground">Monthly</span>
@@ -153,9 +147,6 @@ const Pricing = () => {
                 </div>
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
                 <CardHeader className="text-center pb-6 pt-6">
-                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-200 to-purple-300 rounded-xl flex items-center justify-center">
-                    <TrendingUp className="h-6 w-6 text-purple-700" />
-                  </div>
                   <CardTitle className="text-lg font-bold">Essential Plus</CardTitle>
                   <div className="flex items-center justify-center gap-2 mt-2">
                     <span className="text-xs text-muted-foreground">Monthly</span>
@@ -198,9 +189,6 @@ const Pricing = () => {
               <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-6">
-                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center">
-                    <Building2 className="h-6 w-6 text-purple-600" />
-                  </div>
                   <CardTitle className="text-lg font-bold">Enterprise</CardTitle>
                   <div className="flex items-center justify-center gap-2 mt-2">
                     <span className="text-xs text-muted-foreground">Monthly</span>
@@ -243,9 +231,6 @@ const Pricing = () => {
               <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-6">
-                  <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl flex items-center justify-center">
-                    <CreditCard className="h-6 w-6 text-purple-600" />
-                  </div>
                   <CardTitle className="text-lg font-bold">Top-Up</CardTitle>
                   <div className="text-3xl font-bold text-purple-600 mt-3">£10</div>
                   <p className="text-xs text-muted-foreground mt-2">Add anytime</p>
