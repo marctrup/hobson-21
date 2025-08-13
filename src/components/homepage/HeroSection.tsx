@@ -33,7 +33,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
             </div>
           </div>
           
-          <div className="border-[5px] border-red-500 rounded-lg p-6 bg-white/5 backdrop-blur-sm shadow-2xl">
+          <div className="border-[5px] border-red-500 rounded-lg p-6 bg-white/5 backdrop-blur-sm shadow-2xl transform rotate-3 hover:rotate-1 transition-transform duration-300">
             <div className="space-y-4">
               <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg flex items-center justify-center shadow-lg">
                 <div className="text-center text-muted-foreground">
