@@ -192,11 +192,11 @@ const Pricing = () => {
                 </CardContent>
               </Card>
 
-              {/* Essential Plus - Most Popular */}
+               {/* Essential Plus - Most Popular */}
               <Card className="relative overflow-hidden bg-gradient-to-br from-purple-50 to-purple-100/50 border-2 border-purple-400 shadow-2xl scale-110 hover:scale-115 transition-all duration-300">
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-gradient-to-r from-purple-600 to-purple-700 text-white px-3 py-1 text-xs font-medium">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10">
+                  <Badge className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-1.5 text-sm font-medium shadow-lg">
                     ⭐ Most Popular
                   </Badge>
                 </div>
