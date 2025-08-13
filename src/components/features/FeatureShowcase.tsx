@@ -2,6 +2,7 @@ import { MessageCircle } from "lucide-react";
 import PropertyMap from "./PropertyMap";
 import { memo } from "react";
 
+// Updated with Features heading
 const FeatureShowcase = memo(() => {
   return (
     <div className="mb-20 overflow-hidden">
