@@ -114,7 +114,7 @@ const Pricing = () => {
                     <span className="text-xs font-medium">Annual</span>
                     <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
                   </div>
-                  <div className="text-3xl font-bold text-purple-600 mt-2">£19.50</div>
+                  <div className="text-3xl font-bold text-purple-600 mt-2">£19.50<span className="text-sm font-normal">/month</span></div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="text-center">
@@ -156,7 +156,7 @@ const Pricing = () => {
                     <span className="text-xs font-medium">Annual</span>
                     <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
                   </div>
-                  <div className="text-3xl font-bold text-purple-700 mt-2">£50</div>
+                  <div className="text-3xl font-bold text-purple-700 mt-2">£50<span className="text-sm font-normal">/month</span></div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="text-center">
@@ -197,7 +197,7 @@ const Pricing = () => {
                     <span className="text-xs font-medium">Annual</span>
                     <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
                   </div>
-                  <div className="text-3xl font-bold text-purple-600 mt-2">£150</div>
+                  <div className="text-3xl font-bold text-purple-600 mt-2">£150<span className="text-sm font-normal">/month</span></div>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="text-center">
