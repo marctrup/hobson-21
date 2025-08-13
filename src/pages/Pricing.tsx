@@ -308,24 +308,6 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Final CTA */}
-        <section className="py-24 bg-gradient-to-br from-primary/5 to-secondary/5">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="text-3xl font-bold text-foreground mb-6">Ready to Transform Your Property Management?</h2>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Start with our free plan and see how Hobson can revolutionize your workflow. 
-              Only pay for what you actually use.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="h-12 px-8 text-lg font-semibold">
-                Start Free Today
-              </Button>
-              <Button variant="outline" size="lg" className="h-12 px-8 text-lg font-semibold">
-                Book a Demo
-              </Button>
-            </div>
-          </div>
-        </section>
       </div>
     </>;
 };
