@@ -228,7 +228,6 @@ const Pricing = () => {
                 <CardHeader className="text-center pb-6">
                   <CardTitle className="text-lg font-bold">Top-Up</CardTitle>
                   <div className="text-3xl font-bold text-purple-600 mt-3">£10</div>
-                  <p className="text-xs text-muted-foreground mt-2">Add anytime</p>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="text-center">
