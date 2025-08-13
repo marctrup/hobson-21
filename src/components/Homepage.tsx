@@ -118,8 +118,8 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-[5px] font-space" style={{
-                  border: '10px solid #f0f0f0',
+                <div className="relative mt-[5px] font-space border-8 border-red-500 rounded-2xl p-4 bg-yellow-100" style={{
+                  border: '8px solid #ef4444',
                   borderRadius: '16px'
                 }}>
                   <PropertyManagementVisualization />
