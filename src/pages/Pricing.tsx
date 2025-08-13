@@ -82,6 +82,9 @@ const Pricing = () => {
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-600 mb-1">18 HEUs</div>
                   </div>
+                  <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm">
+                    Start Free
+                  </Button>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
@@ -92,9 +95,6 @@ const Pricing = () => {
                       <span className="text-xs">Unlimited users</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm">
-                    Start Free
-                  </Button>
                 </CardContent>
               </Card>
 
@@ -109,6 +109,9 @@ const Pricing = () => {
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-600 mb-1">275 HEUs</div>
                   </div>
+                  <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm">
+                    Choose Essential
+                  </Button>
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-xs text-muted-foreground">Monthly</span>
                     <div className="relative">
@@ -129,9 +132,6 @@ const Pricing = () => {
                       <span className="text-xs">Regular workflows</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm">
-                    Choose Essential
-                  </Button>
                 </CardContent>
               </Card>
 
@@ -151,6 +151,9 @@ const Pricing = () => {
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-700 mb-1">700 HEUs</div>
                   </div>
+                  <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm">
+                    Choose Essential Plus
+                  </Button>
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-xs text-muted-foreground">Monthly</span>
                     <div className="relative">
@@ -175,9 +178,6 @@ const Pricing = () => {
                       <span className="text-xs">Priority support</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm">
-                    Choose Essential Plus
-                  </Button>
                 </CardContent>
               </Card>
 
@@ -192,6 +192,9 @@ const Pricing = () => {
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-600 mb-1">2,000 HEUs</div>
                   </div>
+                  <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm">
+                    Contact Sales
+                  </Button>
                   <div className="flex items-center justify-center gap-2">
                     <span className="text-xs text-muted-foreground">Monthly</span>
                     <div className="relative">
@@ -216,9 +219,6 @@ const Pricing = () => {
                       <span className="text-xs">Custom integrations</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm">
-                    Contact Sales
-                  </Button>
                 </CardContent>
               </Card>
 
@@ -233,6 +233,9 @@ const Pricing = () => {
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-600 mb-1">150 HEUs</div>
                   </div>
+                  <Button variant="outline" className="w-full border-purple-300 text-purple-600 hover:bg-purple-50 text-sm">
+                    Add Top-Up
+                  </Button>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
@@ -243,9 +246,6 @@ const Pricing = () => {
                       <span className="text-xs">No expiration</span>
                     </div>
                   </div>
-                  <Button variant="outline" className="w-full border-purple-300 text-purple-600 hover:bg-purple-50 text-sm">
-                    Add Top-Up
-                  </Button>
                 </CardContent>
               </Card>
             </div>
