@@ -251,46 +251,6 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* How it Works */}
-        <section className="py-24 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-4">How HEUs Work</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Understanding our energy-based pricing is simple. Every AI task consumes energy units based on complexity.
-              </p>
-            </div>
-            
-            <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-              <Card className="text-center p-6 border-0 shadow-lg bg-card">
-                <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-                  <MessageSquare className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Simple Tasks</h3>
-                <p className="text-muted-foreground mb-4">Basic queries, data retrieval, simple calculations</p>
-                <div className="text-2xl font-bold text-primary">1-3 HEUs</div>
-              </Card>
-              
-              <Card className="text-center p-6 border-0 shadow-lg bg-card">
-                <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Cog className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Complex Analysis</h3>
-                <p className="text-muted-foreground mb-4">Market research, document analysis, reporting</p>
-                <div className="text-2xl font-bold text-primary">5-10 HEUs</div>
-              </Card>
-              
-              <Card className="text-center p-6 border-0 shadow-lg bg-card">
-                <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-                  <Building2 className="h-8 w-8 text-primary" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">Advanced Workflows</h3>
-                <p className="text-muted-foreground mb-4">Multi-step processes, integrations, automation</p>
-                <div className="text-2xl font-bold text-primary">15+ HEUs</div>
-              </Card>
-            </div>
-          </div>
-        </section>
 
         {/* FAQ Section */}
         <section className="py-24 bg-muted/30">
