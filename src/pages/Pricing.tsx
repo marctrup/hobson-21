@@ -117,7 +117,7 @@ const Pricing = () => {
             </div>
             
             {/* All 5 Plans in Unified Grid */}
-            <div className="grid gap-6 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 max-w-7xl mx-auto pt-12">
+            <div className="grid gap-6 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 max-w-7xl mx-auto pt-20">
               
               {/* Free Plan */}
               <Card className="relative overflow-hidden bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl">
@@ -193,14 +193,14 @@ const Pricing = () => {
               </Card>
 
                {/* Essential Plus - Most Popular */}
-              <Card className="relative overflow-hidden bg-gradient-to-br from-purple-50 to-purple-100/50 border-2 border-purple-400 shadow-2xl scale-110 hover:scale-115 transition-all duration-300">
+              <Card className="relative overflow-hidden bg-gradient-to-br from-purple-50 to-purple-100/50 border-2 border-purple-400 shadow-2xl transform scale-105 hover:scale-110 transition-all duration-300">
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
+                  <Badge className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 text-sm font-medium shadow-lg whitespace-nowrap">
+                    ⭐ Most Popular
+                  </Badge>
+                </div>
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
-                <CardHeader className="text-center pb-6 pt-8">
-                  <div className="absolute top-2 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-3 py-1 text-xs font-medium shadow-lg">
-                      ⭐ Most Popular
-                    </Badge>
-                  </div>
+                <CardHeader className="text-center pb-6 pt-6">
                   <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-br from-purple-200 to-purple-300 rounded-xl flex items-center justify-center">
                     <TrendingUp className="h-6 w-6 text-purple-700" />
                   </div>
