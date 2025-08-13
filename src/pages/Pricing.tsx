@@ -291,6 +291,13 @@ const Pricing = () => {
                 </AccordionItem>
                 
                 <AccordionItem value="item-5">
+                  <AccordionTrigger>Do my HEUs roll over?</AccordionTrigger>
+                  <AccordionContent>
+                    We will carry over 5 HEUs from any leftover from your previous month, but your monthly allocation will reset to your plan's standard amount. This gives you a small buffer for busy periods while keeping the pricing model simple and predictable.
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-6">
                   <AccordionTrigger>Is there really no limit on users or properties?</AccordionTrigger>
                   <AccordionContent>
                     Correct! Add as many team members and manage as many properties as you need. You only pay for the actual AI work performed, not the number of seats or properties in your account. This makes Hobson incredibly cost-effective as you scale.
