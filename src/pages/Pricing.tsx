@@ -110,16 +110,34 @@ const Pricing = () => {
         <section className="py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-4">Try for Free</h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
-                18 HEUs included
-              </p>
-              <p className="text-muted-foreground max-w-2xl mx-auto mt-2">
-                Explore Hobson's AI features before committing
-              </p>
+              <h2 className="text-3xl font-bold text-foreground mb-4">Simple Pricing</h2>
+              <div className="flex items-center justify-center gap-4 mb-8">
+                <span className="text-muted-foreground">Monthly</span>
+                <div className="relative">
+                  <input type="checkbox" className="sr-only" />
+                  <div className="w-12 h-6 bg-muted rounded-full shadow-inner cursor-pointer"></div>
+                  <div className="absolute left-1 top-1 bg-white w-4 h-4 rounded-full shadow transition-transform"></div>
+                </div>
+                <span className="text-foreground font-medium">Annual</span>
+                <Badge variant="secondary" className="text-xs">Save 20%</Badge>
+              </div>
             </div>
             
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
+              {/* Free Plan */}
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-lg font-semibold">Free</CardTitle>
+                  <div className="text-3xl font-bold text-primary">£0<span className="text-sm text-muted-foreground">/month</span></div>
+                  <p className="text-sm text-muted-foreground">Discover what Hobson can do for you</p>
+                </CardHeader>
+                <CardContent className="text-center space-y-4">
+                  <div className="text-2xl font-semibold text-foreground">18 HEUs included</div>
+                  <p className="text-sm text-muted-foreground">Free forever</p>
+                  <Button className="w-full">Get Started</Button>
+                </CardContent>
+              </Card>
+
               {/* Essential Plan */}
               <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
                 <CardHeader className="text-center">
@@ -161,9 +179,11 @@ const Pricing = () => {
                   <Button className="w-full">Choose Plan</Button>
                 </CardContent>
               </Card>
+            </div>
 
-              {/* Top-Up Option */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            {/* Top-Up Option - Separate row */}
+            <div className="flex justify-center mt-8">
+              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm">
                 <CardHeader className="text-center">
                   <CardTitle className="text-lg font-semibold">Top-Up Option</CardTitle>
                   <div className="text-3xl font-bold text-primary">£10.00</div>
