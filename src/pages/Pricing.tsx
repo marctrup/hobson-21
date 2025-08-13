@@ -30,7 +30,8 @@ const Pricing = () => {
                {/* Left Container - Content */}
                <div className="space-y-8">
                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                    From Energy to Outcomes — that's the Hobson way.
+                    From Energy to Outcomes —{" "}
+                    <span className="bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent">that's the Hobson way.</span>
                   </h1>
                  <p className="text-xl text-muted-foreground">
                    Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
