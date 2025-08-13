@@ -82,7 +82,6 @@ const Pricing = () => {
                 <CardContent className="space-y-4">
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-600 mb-1">18 HEUs</div>
-                    <p className="text-xs text-muted-foreground">Free forever</p>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
@@ -120,7 +119,6 @@ const Pricing = () => {
                 <CardContent className="space-y-4">
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-600 mb-1">275 HEUs</div>
-                    <p className="text-xs text-muted-foreground">Steady support</p>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
@@ -163,7 +161,6 @@ const Pricing = () => {
                 <CardContent className="space-y-4">
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-700 mb-1">700 HEUs</div>
-                    <p className="text-xs text-purple-600">Perfect for growth</p>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
@@ -205,7 +202,6 @@ const Pricing = () => {
                 <CardContent className="space-y-4">
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-600 mb-1">2,000 HEUs</div>
-                    <p className="text-xs text-muted-foreground">High-demand ops</p>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
@@ -238,7 +234,6 @@ const Pricing = () => {
                 <CardContent className="space-y-4">
                   <div className="text-center">
                     <div className="text-xl font-bold text-purple-600 mb-1">150 HEUs</div>
-                    <p className="text-xs text-muted-foreground">Perfect for busy periods</p>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
