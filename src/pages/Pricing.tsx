@@ -39,9 +39,6 @@ const Pricing = () => {
                    Hobson charges for the actual work our AI does — measured in{" "}
                    <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
                  </p>
-                 <Button size="lg" className="h-12 px-8 text-lg font-semibold">
-                   See Plans & Compare Savings
-                 </Button>
                </div>
                
                {/* Right Container - Image */}
