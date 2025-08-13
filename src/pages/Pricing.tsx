@@ -106,114 +106,243 @@ const Pricing = () => {
         </section>
 
 
-        {/* Pricing Plans - Cards */}
-        <section className="py-20 bg-muted/30">
+        {/* Modern Pricing Plans */}
+        <section className="py-24 bg-gradient-to-br from-background to-muted/20">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl font-bold text-foreground mb-4">Simple Pricing</h2>
+            <div className="text-center mb-20">
+              <h2 className="text-4xl font-bold text-foreground mb-6">Choose Your AI Journey</h2>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Start free, scale seamlessly. Every plan includes unlimited users, properties, and features.
+              </p>
             </div>
             
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto">
+            {/* Pricing Grid - 3 main plans + 2 special options */}
+            <div className="grid gap-8 lg:grid-cols-3 max-w-6xl mx-auto mb-12">
+              
               {/* Free Plan */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Free</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£0<span className="text-sm text-muted-foreground">/month</span></div>
-                  <p className="text-sm text-muted-foreground">Discover what Hobson can do for you</p>
-                </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">18 HEUs included</div>
-                  <p className="text-sm text-muted-foreground">Free forever</p>
-                  <Button className="w-full">Get Started</Button>
-                </CardContent>
-              </Card>
-
-              {/* Essential Plan */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Essential</CardTitle>
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <span className="text-sm text-muted-foreground">Monthly</span>
-                    <div className="relative">
-                      <input type="checkbox" className="sr-only" />
-                      <div className="w-8 h-4 bg-muted rounded-full shadow-inner cursor-pointer"></div>
-                      <div className="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full shadow transition-transform"></div>
-                    </div>
-                    <span className="text-sm text-foreground font-medium">Annual</span>
-                    <Badge variant="secondary" className="text-xs">Save 20%</Badge>
+              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-card/80 border-2 border-muted hover:border-primary/20 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-emerald-500"></div>
+                <CardHeader className="text-center pb-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-green-100 to-emerald-100 rounded-2xl flex items-center justify-center">
+                    <span className="text-2xl">🌱</span>
                   </div>
-                  <div className="text-3xl font-bold text-primary">£19.50<span className="text-sm text-muted-foreground">/month</span></div>
+                  <CardTitle className="text-2xl font-bold">Free</CardTitle>
+                  <div className="text-5xl font-bold text-foreground mt-4">£0</div>
+                  <p className="text-muted-foreground mt-2">Discover what Hobson can do</p>
                 </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">275 HEUs per month</div>
-                  <p className="text-sm text-muted-foreground">Steady, reliable AI support for regular tasks.</p>
-                  <Button className="w-full">Choose Plan</Button>
+                <CardContent className="space-y-6">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-primary mb-2">18 HEUs</div>
+                    <p className="text-sm text-muted-foreground">Free forever • No credit card required</p>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
+                      <span className="text-sm">All core features</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
+                      <span className="text-sm">Unlimited users & properties</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-green-500 flex-shrink-0" />
+                      <span className="text-sm">Document insights</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white">
+                    Start Free
+                  </Button>
                 </CardContent>
               </Card>
 
-              {/* Essential Plus Plan - Most Popular */}
-              <Card className="bg-card border-2 border-primary rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 relative">
-                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-primary text-primary-foreground">⭐ Most Popular</Badge>
+              {/* Essential Plus - Most Popular */}
+              <Card className="relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 border-2 border-primary shadow-2xl scale-105 hover:scale-110 transition-all duration-300">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary-light"></div>
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-gradient-to-r from-primary to-primary-light text-white px-4 py-1 text-sm font-medium">
+                    ⭐ Most Popular
+                  </Badge>
                 </div>
-                <CardHeader className="text-center pt-6">
-                  <CardTitle className="text-lg font-semibold">Essential Plus</CardTitle>
-                  <div className="flex items-center justify-center gap-2 mb-2">
+                <CardHeader className="text-center pb-6 pt-8">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-primary/20 to-primary/30 rounded-2xl flex items-center justify-center">
+                    <TrendingUp className="h-8 w-8 text-primary" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold">Essential Plus</CardTitle>
+                  <div className="flex items-center justify-center gap-3 mt-4">
+                    <span className="text-sm text-muted-foreground line-through">£60</span>
+                    <div className="text-5xl font-bold text-primary">£50</div>
+                  </div>
+                  <div className="flex items-center justify-center gap-2 mt-2">
                     <span className="text-sm text-muted-foreground">Monthly</span>
                     <div className="relative">
                       <input type="checkbox" className="sr-only" />
-                      <div className="w-8 h-4 bg-muted rounded-full shadow-inner cursor-pointer"></div>
-                      <div className="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full shadow transition-transform"></div>
+                      <div className="w-10 h-5 bg-primary/20 rounded-full cursor-pointer"></div>
+                      <div className="absolute left-1 top-0.5 bg-primary w-4 h-4 rounded-full shadow transition-transform"></div>
                     </div>
-                    <span className="text-sm text-foreground font-medium">Annual</span>
-                    <Badge variant="secondary" className="text-xs">Save 20%</Badge>
+                    <span className="text-sm font-medium">Annual</span>
+                    <Badge variant="secondary" className="text-xs bg-green-100 text-green-700">Save 20%</Badge>
                   </div>
-                  <div className="text-3xl font-bold text-primary">£50.00<span className="text-sm text-muted-foreground">/month</span></div>
                 </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">700 HEUs per month</div>
-                  <p className="text-sm text-muted-foreground">Expanded capacity for more frequent, multi-step workflows.</p>
-                  <Button className="w-full">Choose Plan</Button>
+                <CardContent className="space-y-6">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-primary mb-2">700 HEUs</div>
+                    <p className="text-sm text-muted-foreground">Perfect for growing portfolios</p>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                      <span className="text-sm">Everything in Free</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                      <span className="text-sm">Advanced workflows</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-primary flex-shrink-0" />
+                      <span className="text-sm">Priority support</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-gradient-to-r from-primary to-primary-light text-white">
+                    Choose Essential Plus
+                  </Button>
                 </CardContent>
               </Card>
 
               {/* Enterprise Plan */}
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Enterprise</CardTitle>
-                  <div className="flex items-center justify-center gap-2 mb-2">
+              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-card/80 border-2 border-muted hover:border-primary/20 transition-all duration-300 hover:scale-105 hover:shadow-xl">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-indigo-500"></div>
+                <CardHeader className="text-center pb-6">
+                  <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-purple-100 to-indigo-100 rounded-2xl flex items-center justify-center">
+                    <Building2 className="h-8 w-8 text-purple-600" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold">Enterprise</CardTitle>
+                  <div className="text-5xl font-bold text-foreground mt-4">£150</div>
+                  <div className="flex items-center justify-center gap-2 mt-2">
                     <span className="text-sm text-muted-foreground">Monthly</span>
                     <div className="relative">
                       <input type="checkbox" className="sr-only" />
-                      <div className="w-8 h-4 bg-muted rounded-full shadow-inner cursor-pointer"></div>
-                      <div className="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full shadow transition-transform"></div>
+                      <div className="w-10 h-5 bg-muted rounded-full cursor-pointer"></div>
+                      <div className="absolute left-1 top-0.5 bg-white w-4 h-4 rounded-full shadow transition-transform"></div>
                     </div>
-                    <span className="text-sm text-foreground font-medium">Annual</span>
+                    <span className="text-sm font-medium">Annual</span>
                     <Badge variant="secondary" className="text-xs">Save 20%</Badge>
                   </div>
-                  <div className="text-3xl font-bold text-primary">£150.00<span className="text-sm text-muted-foreground">/month</span></div>
                 </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">2,000 HEUs per month</div>
-                  <p className="text-sm text-muted-foreground">Full-scale AI capability for continuous, high-demand operations.</p>
-                  <Button className="w-full">Choose Plan</Button>
+                <CardContent className="space-y-6">
+                  <div className="text-center">
+                    <div className="text-3xl font-bold text-purple-600 mb-2">2,000 HEUs</div>
+                    <p className="text-sm text-muted-foreground">For high-demand operations</p>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                      <span className="text-sm">Everything in Essential Plus</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                      <span className="text-sm">Dedicated support</span>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <CheckCircle2 className="h-5 w-5 text-purple-600 flex-shrink-0" />
+                      <span className="text-sm">Custom integrations</span>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white">
+                    Contact Sales
+                  </Button>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Top-Up Option - Separate row */}
-            <div className="flex justify-center mt-8">
-              <Card className="bg-card border border-border rounded-lg hover:shadow-lg hover:-translate-y-1 transition-all duration-300 max-w-sm">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-lg font-semibold">Top-Up Option</CardTitle>
-                  <div className="text-3xl font-bold text-primary">£10.00</div>
+            {/* Bottom Row - Essential & Top-Up */}
+            <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
+              
+              {/* Essential Plan */}
+              <Card className="relative overflow-hidden bg-gradient-to-br from-card to-card/80 border border-muted hover:border-primary/20 transition-all duration-300 hover:shadow-lg">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 to-cyan-500"></div>
+                <CardHeader className="text-center pb-4">
+                  <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-blue-100 to-cyan-100 rounded-xl flex items-center justify-center">
+                    <Briefcase className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <CardTitle className="text-xl font-bold">Essential</CardTitle>
+                  <div className="text-3xl font-bold text-foreground mt-2">£19.50</div>
+                  <div className="flex items-center justify-center gap-2 mt-1">
+                    <span className="text-xs text-muted-foreground">Monthly</span>
+                    <div className="relative">
+                      <input type="checkbox" className="sr-only" />
+                      <div className="w-8 h-4 bg-muted rounded-full cursor-pointer"></div>
+                      <div className="absolute left-0.5 top-0.5 bg-white w-3 h-3 rounded-full shadow transition-transform"></div>
+                    </div>
+                    <span className="text-xs font-medium">Annual</span>
+                    <Badge variant="secondary" className="text-xs">Save 20%</Badge>
+                  </div>
                 </CardHeader>
-                <CardContent className="text-center space-y-4">
-                  <div className="text-2xl font-semibold text-foreground">150 HEUs</div>
-                  <p className="text-sm text-muted-foreground">for an extra 150 HEUs anytime</p>
-                  <Button variant="outline" className="w-full">Add Top-Up</Button>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-blue-600 mb-1">275 HEUs</div>
+                    <p className="text-xs text-muted-foreground">Steady AI support</p>
+                  </div>
+                  <Button variant="outline" className="w-full border-blue-200 text-blue-600 hover:bg-blue-50">
+                    Choose Essential
+                  </Button>
                 </CardContent>
               </Card>
+
+              {/* Top-Up Option */}
+              <Card className="relative overflow-hidden bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 hover:border-orange-300 transition-all duration-300 hover:shadow-lg">
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-orange-500"></div>
+                <CardHeader className="text-center pb-4">
+                  <div className="w-12 h-12 mx-auto mb-3 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center">
+                    <CreditCard className="h-6 w-6 text-amber-600" />
+                  </div>
+                  <CardTitle className="text-xl font-bold text-amber-800">Top-Up</CardTitle>
+                  <div className="text-3xl font-bold text-amber-700 mt-2">£10</div>
+                  <p className="text-xs text-amber-600 mt-1">Add anytime</p>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-amber-700 mb-1">150 HEUs</div>
+                    <p className="text-xs text-amber-600">Perfect for busy periods</p>
+                  </div>
+                  <Button variant="outline" className="w-full border-amber-300 text-amber-700 hover:bg-amber-100">
+                    Add Top-Up
+                  </Button>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Feature Highlight */}
+            <div className="text-center mt-16 p-8 bg-gradient-to-r from-primary/5 to-primary-light/5 rounded-2xl border border-primary/10">
+              <h3 className="text-2xl font-bold text-foreground mb-4">Every Plan Includes</h3>
+              <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-semibold">Unlimited Users</div>
+                    <div className="text-sm text-muted-foreground">Add your whole team</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-semibold">All Features</div>
+                    <div className="text-sm text-muted-foreground">Never pay for updates</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                    <CheckCircle2 className="h-5 w-5 text-primary" />
+                  </div>
+                  <div className="text-left">
+                    <div className="font-semibold">Unlimited Properties</div>
+                    <div className="text-sm text-muted-foreground">Scale without limits</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
