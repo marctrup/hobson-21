@@ -7,7 +7,7 @@ const FeatureShowcase = memo(() => {
     <div className="mb-20 overflow-hidden">
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold text-foreground mb-4">
-          Simple. Powerful. Intuitive.
+          Features
         </h2>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Chat with Hobson on the left, visualize your portfolio on the right. Everything you need in one seamless interface.
