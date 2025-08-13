@@ -121,8 +121,8 @@ export const Homepage = () => {
                 <div className="relative mt-[5px] font-space transition-transform duration-300 border-[3px] border-gray-400 rounded-lg" style={{
                   transform: 'perspective(1000px) rotateY(-10deg)',
                   transformStyle: 'preserve-3d',
-                  boxShadow: '20px 20px 40px rgba(0, 0, 0, 0.15), 10px 10px 20px rgba(0, 0, 0, 0.1)',
-                  filter: 'drop-shadow(8px 8px 16px rgba(0, 0, 0, 0.1))'
+                  boxShadow: '25px 25px 50px rgba(0, 0, 0, 0.2), 15px 15px 30px rgba(0, 0, 0, 0.15), 5px 5px 15px rgba(0, 0, 0, 0.1)',
+                  filter: 'drop-shadow(12px 12px 24px rgba(0, 0, 0, 0.15))'
                 }}>
                   <PropertyManagementVisualization />
                 </div>
