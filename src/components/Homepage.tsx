@@ -232,10 +232,7 @@ export const Homepage = () => {
                 <div className="max-w-4xl mx-auto mb-16">
                   <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border border-primary/20">
                     <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center">
-                      Hobson doesn't just "read" a lease — <span className="text-primary font-semibold">it understands it in context</span>. 
-                      When assessing a lease or tenancy agreement, Hobson also checks other related documents that might change its meaning, 
-                      like rent changes, amendments, or permissions. By reading these alongside the main lease, Hobson can give you answers 
-                      that reflect the <span className="text-primary font-semibold">real, current agreement</span> — not just what was originally signed.
+                      Hobson knows some documents must be read alongside the main lease to understand its current, operative form — and it reviews them all so you get answers that reflect the <span className="text-primary font-semibold">true, accurate position</span> of the tenancy today.
                     </p>
                   </div>
                 </div>
