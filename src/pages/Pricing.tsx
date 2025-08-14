@@ -426,6 +426,7 @@ const Pricing = () => {
                               <li>Surrenders & Regrants</li>
                               <li>Deeds of Rectification</li>
                               <li>Formal notices that alter rights or terms</li>
+                              <li>etc</li>
                             </ul>
                           </div>
                         </div>
@@ -442,6 +443,7 @@ const Pricing = () => {
                               <li>Energy Performance Certificates (EPCs) & electrical safety reports</li>
                               <li>Inventory & schedule of condition</li>
                               <li>Statutory disclosures (e.g., tenancy deposit information)</li>
+                              <li>etc</li>
                             </ul>
                           </div>
                         </div>
