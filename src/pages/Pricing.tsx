@@ -277,9 +277,9 @@ const Pricing = () => {
                 </AccordionItem>
                 
                 <AccordionItem value="item-2">
-                  <AccordionTrigger>Do HEUs expire?</AccordionTrigger>
+                  <AccordionTrigger>What is a HEU?</AccordionTrigger>
                   <AccordionContent>
-                    Monthly plan HEUs reset each billing cycle. However, any Top-Up HEUs you purchase never expire - they're yours to use whenever you need them, providing ultimate flexibility for busy periods.
+                    [Awaiting answer content]
                   </AccordionContent>
                 </AccordionItem>
                 
