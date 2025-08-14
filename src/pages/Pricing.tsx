@@ -471,10 +471,10 @@ const Pricing = () => {
                   <AccordionContent>
                     <div className="space-y-4">
                       <div>
-                        <h4 className="font-semibold mb-2">Q: What are daily credits and why do they exist?</h4>
-                        <p className="mb-3">A: Daily credits are small amounts you get automatically each day — free for both free and paid users.</p>
+                        <h4 className="font-semibold mb-2">Q: What are daily HEUs, and why do they exist?</h4>
+                        <p className="mb-3">A: Daily HUEs are small amounts you get automatically each day — free for both free and paid users.</p>
                         <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
-                          <li>Let you try things every day without using your main monthly credits.</li>
+                          <li>It lets you try things every day without using your main monthly credits.</li>
                           <li>Give free users a way to use the service without paying.</li>
                           <li>Refresh every 24 hours, but expire at the end of the day ("use it or lose it").</li>
                         </ul>
