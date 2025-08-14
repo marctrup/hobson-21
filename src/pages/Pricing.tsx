@@ -42,7 +42,7 @@ const Pricing = () => {
                
                 {/* Right Container - Video Screen */}
                 <div className="flex justify-center lg:justify-end">
-                  <div className="w-full max-w-2xl aspect-video bg-gray-100 rounded-xl overflow-hidden relative" style={{
+                  <div className="w-full max-w-3xl aspect-video bg-gray-100 rounded-xl overflow-hidden relative" style={{
                     border: '10px solid #f0f0f0'
                   }}>
                     <div className="w-full h-full cursor-pointer">
