@@ -420,7 +420,7 @@ const Pricing = () => {
                             <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
                               <li>Deeds of Variation</li>
                               <li>Addendums</li>
-                              <li>Rent Review Memoranda</li>
+                              <li>Memoranda</li>
                               <li>Assignments & Novations (changing parties)</li>
                               
                               <li>Surrenders & Regrants</li>
