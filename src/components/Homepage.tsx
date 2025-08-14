@@ -207,6 +207,43 @@ export const Homepage = () => {
           {/* Features Section */}
           <FeaturesSection />
 
+          {/* Current Focus Section */}
+          <section className="py-16 md:py-24 bg-background">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
+                  Our Current Focus
+                </h2>
+                <div className="space-y-6 mb-12">
+                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                    Right now, our AI is trained to understand a wide range of property management documents — from tenancy agreements and commercial leases to licences, deeds, and addendums. This allows us to deliver accurate, context-aware insights for landlords, tenants, and property professionals.
+                  </p>
+                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                    We're continuing to expand our training into other areas of the property business, so our capabilities will only grow over time.
+                  </p>
+                </div>
+
+                {/* Let's Talk Sub-section */}
+                <div className="bg-muted/30 rounded-2xl p-8 md:p-12">
+                  <div className="flex items-center justify-center gap-3 mb-6">
+                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
+                      <MessageCircle className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                      Let's Talk
+                    </h3>
+                  </div>
+                  <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
+                    If you'd like to discuss your business and your specific document needs, we'd love to hear from you.
+                  </p>
+                  <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
+                    <Link to="/contact">Contact Us</Link>
+                  </SimpleButton>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* CTA Section - Clean layout without card */}
           <section id="pilot-section" className="py-8 md:py-24">
             <div className="container mx-auto px-4">
