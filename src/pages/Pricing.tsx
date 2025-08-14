@@ -154,7 +154,7 @@ const Pricing = () => {
                     <p className="text-xs text-muted-foreground mb-4">
                       For heavy, frequent use.
                     </p>
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-3 mb-4">
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
                         <span className="text-xs">Everything in Essential</span>
@@ -163,6 +163,16 @@ const Pricing = () => {
                         <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
                         <span className="text-xs">Priority support</span>
                       </div>
+                    </div>
+                    <div className="flex items-center justify-center gap-2 mb-6">
+                      <span className="text-xs text-muted-foreground">Monthly</span>
+                      <div className="relative">
+                        <input type="checkbox" className="sr-only" />
+                        <div className="w-8 h-4 bg-purple-300 rounded-full cursor-pointer"></div>
+                        <div className="absolute left-0.5 top-0.5 bg-purple-600 w-3 h-3 rounded-full shadow transition-transform"></div>
+                      </div>
+                      <span className="text-xs font-medium">Annual</span>
+                      <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm mt-auto">
@@ -184,7 +194,7 @@ const Pricing = () => {
                     <p className="text-xs text-muted-foreground mb-4">
                       For high-volume, daily demands.
                     </p>
-                    <div className="space-y-3 mb-6">
+                    <div className="space-y-3 mb-4">
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
                         <span className="text-xs">Everything in Plus</span>
@@ -197,6 +207,16 @@ const Pricing = () => {
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
                         <span className="text-xs">Custom integrations (call us)</span>
                       </div>
+                    </div>
+                    <div className="flex items-center justify-center gap-2 mb-6">
+                      <span className="text-xs text-muted-foreground">Monthly</span>
+                      <div className="relative">
+                        <input type="checkbox" className="sr-only" />
+                        <div className="w-8 h-4 bg-purple-200 rounded-full cursor-pointer"></div>
+                        <div className="absolute left-0.5 top-0.5 bg-purple-500 w-3 h-3 rounded-full shadow transition-transform"></div>
+                      </div>
+                      <span className="text-xs font-medium">Annual</span>
+                      <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
