@@ -206,7 +206,7 @@ const Pricing = () => {
                 <CardContent className="flex flex-col flex-grow">
                   <div className="flex-grow">
                     <p className="text-xs text-muted-foreground mb-4">
-                      A flexible boost when you need extra capacity. Perfect for one-off busy periods or unexpected surges in work.
+                      Extra capacity, anytime.
                     </p>
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-2">
