@@ -208,49 +208,19 @@ export const Homepage = () => {
           <FeaturesSection />
 
           {/* Current Focus Section */}
-          <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-gradient-to-b from-muted/20 to-background">
+          <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-background">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
-                {/* Header with Badge */}
-                <div className="animate-fade-in mb-8">
-                  <Badge variant="secondary" className="mb-4 px-4 py-2 text-sm font-medium">
-                    <Brain className="w-4 h-4 mr-2" />
-                    AI Capabilities
-                  </Badge>
-                  <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-                    Our Current Focus
-                  </h2>
-                </div>
-
-                {/* Content Cards */}
+                <h2 className="text-2xl md:text-3xl font-bold mb-8 text-foreground">
+                  Our Current Focus
+                </h2>
                 <div className="space-y-6 mb-12">
-                  <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-6 md:p-8 hover-scale transition-all duration-300 hover:shadow-lg animate-fade-in">
-                    <div className="flex items-start gap-4 mb-4">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Search className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="text-left">
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Document Intelligence</h3>
-                        <p className="text-lg text-muted-foreground leading-relaxed">
-                          Right now, our AI is trained to understand a wide range of property management documents — from tenancy agreements and commercial leases to licences, deeds, and addendums. This allows us to deliver accurate, context-aware insights for landlords, tenants, and property professionals.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div className="bg-background/80 backdrop-blur-sm border border-border/50 rounded-xl p-6 md:p-8 hover-scale transition-all duration-300 hover:shadow-lg animate-fade-in">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
-                        <TrendingUp className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="text-left">
-                        <h3 className="text-lg font-semibold text-foreground mb-2">Continuous Expansion</h3>
-                        <p className="text-lg text-muted-foreground leading-relaxed">
-                          We're continuing to expand our training into other areas of the property business, so our capabilities will only grow over time.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                    Right now, our AI is trained to understand a wide range of property management documents — from tenancy agreements and commercial leases to licences, deeds, and addendums. This allows us to deliver accurate, context-aware insights for landlords, tenants, and property professionals.
+                  </p>
+                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                    We're continuing to expand our training into other areas of the property business, so our capabilities will only grow over time.
+                  </p>
                 </div>
 
                 {/* Let's Talk Sub-section */}
