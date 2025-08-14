@@ -384,27 +384,34 @@ const Pricing = () => {
                 </AccordionItem>
                 
                 <AccordionItem value="item-3">
+                  <AccordionTrigger>What document types does Hobson understand?</AccordionTrigger>
+                  <AccordionContent>
+                    [Awaiting answer content]
+                  </AccordionContent>
+                </AccordionItem>
+                
+                <AccordionItem value="item-4">
                   <AccordionTrigger>Can I change plans anytime?</AccordionTrigger>
                   <AccordionContent>
                     Absolutely! You can upgrade or downgrade your plan at any time. Changes take effect at your next billing cycle, and any unused HEUs from Top-Ups will carry over to your new plan.
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-4">
+                <AccordionItem value="item-5">
                   <AccordionTrigger>How do you calculate HEU usage?</AccordionTrigger>
                   <AccordionContent>
                     Each AI task is measured by computational complexity, processing time, and resources required. Simple queries use fewer HEUs, while complex analysis and workflows use more. You'll always see transparent usage tracking in your dashboard.
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-5">
+                <AccordionItem value="item-6">
                   <AccordionTrigger>Do my HEUs roll over?</AccordionTrigger>
                   <AccordionContent>
                     We will carry over 5 HEUs from any leftover from your previous month, but your monthly allocation will reset to your plan's standard amount. This gives you a small buffer for busy periods while keeping the pricing model simple and predictable.
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-6">
+                <AccordionItem value="item-7">
                   <AccordionTrigger>Is there really no limit on users or properties?</AccordionTrigger>
                   <AccordionContent>
                     Correct! Add as many team members and manage as many properties as you need. You only pay for the actual AI work performed, not the number of seats or properties in your account. This makes Hobson incredibly cost-effective as you scale.
