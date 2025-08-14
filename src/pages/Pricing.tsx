@@ -26,7 +26,7 @@ const Pricing = () => {
           backgroundColor: '#ffffff',
           backgroundImage: 'none'
         }}>
-             <div className="grid lg:grid-cols-2 gap-12 items-center w-full mx-auto">
+             <div className="grid lg:grid-cols-2 gap-14 items-center w-full mx-auto">
                 {/* Left Container - Video Screen */}
                 <div className="flex justify-center lg:justify-start">
                   <div className="w-full max-w-4xl aspect-video bg-gray-100 rounded-xl overflow-hidden relative" style={{
