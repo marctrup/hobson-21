@@ -424,7 +424,7 @@ const Pricing = () => {
                               <li>Assignments & Novations</li>
                               
                               <li>Surrenders & Regrants</li>
-                              <li>Deeds of Rectification</li>
+                              
                               <li>Formal notices that alter rights or terms</li>
                               <li>etc</li>
                             </ul>
