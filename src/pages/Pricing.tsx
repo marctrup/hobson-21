@@ -38,18 +38,6 @@ const Pricing = () => {
                         alt="HEU Coin - Hobson Energy Units Explained"
                         className="w-full h-full object-cover object-center transition-all duration-300 group-hover:brightness-75"
                       />
-                      {/* Play Button Overlay */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transform scale-75 group-hover:scale-100 transition-all duration-300">
-                          <div className="w-0 h-0 border-l-[16px] border-l-purple-600 border-y-[12px] border-y-transparent ml-1"></div>
-                        </div>
-                      </div>
-                      {/* Video Ready Indicator */}
-                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                        <div className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                          Click to play
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
