@@ -59,7 +59,7 @@ const Pricing = () => {
             <div className="text-center mb-8">
               <h2 className="text-4xl font-bold text-foreground mb-4">Choose Your AI Journey</h2>
               <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Start free, scale seamlessly. Every plan includes unlimited users, properties, and features.
+                Scale seamlessly. Every plan includes unlimited users, properties, and features.
               </p>
             </div>
             
