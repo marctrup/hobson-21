@@ -465,12 +465,6 @@ const Pricing = () => {
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-5">
-                  <AccordionTrigger>How do you calculate HEU usage?</AccordionTrigger>
-                  <AccordionContent>
-                    Each AI task is measured by computational complexity, processing time, and resources required. Simple queries use fewer HEUs, while complex analysis and workflows use more. You'll always see transparent usage tracking in your dashboard.
-                  </AccordionContent>
-                </AccordionItem>
                 
                 <AccordionItem value="item-6">
                   <AccordionTrigger>Do my HEUs roll over?</AccordionTrigger>
