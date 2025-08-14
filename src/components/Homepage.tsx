@@ -214,17 +214,31 @@ export const Homepage = () => {
                 <h2 className="text-2xl md:text-3xl font-bold mb-8 text-foreground">
                   Our Current Focus
                 </h2>
+                
+                {/* Main Body Text */}
                 <div className="space-y-6 mb-12">
                   <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                     Right now, our AI is trained to understand a wide range of property management documents — from tenancy agreements and commercial leases to licences, deeds, and addendums. This allows us to deliver accurate, context-aware insights for landlords, tenants, and property professionals.
                   </p>
+                </div>
+
+                {/* Our Approach Section */}
+                <div className="bg-muted/30 rounded-2xl p-8 md:p-12 mb-12">
+                  <h3 className="text-xl md:text-2xl font-bold mb-6 text-foreground">Our Approach</h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Hobson doesn't just "read" a lease — it understands it in context. When assessing a lease or tenancy agreement, Hobson also checks other related documents that might change its meaning, like rent changes, amendments, or permissions. By reading these alongside the main lease, Hobson can give you answers that reflect the real, current agreement — not just what was originally signed. This makes Hobson intelligent, reliable, and able to spot details others might miss.
+                  </p>
+                </div>
+
+                {/* Continuing Expansion */}
+                <div className="mb-12">
                   <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                     We're continuing to expand our training into other areas of the property business, so our capabilities will only grow over time.
                   </p>
                 </div>
 
                 {/* Let's Talk Sub-section */}
-                <div className="bg-muted/30 rounded-2xl p-8 md:p-12">
+                <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 md:p-12 border border-primary/20">
                   <div className="flex items-center justify-center gap-3 mb-6">
                     <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
                       <MessageCircle className="w-5 h-5 text-primary" />
