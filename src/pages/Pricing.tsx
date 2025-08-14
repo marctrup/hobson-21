@@ -270,9 +270,9 @@ const Pricing = () => {
             <div className="max-w-3xl mx-auto">
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="item-1">
-                  <AccordionTrigger>What happens if I run out of HEUs?</AccordionTrigger>
+                  <AccordionTrigger>What does the free plan include?</AccordionTrigger>
                   <AccordionContent>
-                    Don't worry! When you're running low, we'll notify you. You can either upgrade to a higher plan or purchase additional HEUs as needed. Hobson won't stop working - you'll just need to top up your energy units.
+                    On the free plan, you get 1 HEU per day, with a total limit of 5 HEUs per month. Example: If you use all 1 HEU every day for 5 days (5 HEUs total), you'll reach the monthly limit and won't be able to use any more credits until it resets at the end of the 1-month period.
                   </AccordionContent>
                 </AccordionItem>
                 
