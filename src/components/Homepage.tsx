@@ -251,24 +251,16 @@ export const Homepage = () => {
                 </div>
 
                 {/* Let's Talk CTA */}
-                <div className="relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-3xl blur-2xl"></div>
-                  <div className="relative bg-gradient-to-br from-background/95 to-background/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-primary/30 text-center">
-                    <div className="flex items-center justify-center gap-3 mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center">
-                        <MessageCircle className="w-8 h-8 text-white" />
-                      </div>
-                    </div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                      Let's Talk
-                    </h3>
-                    <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
-                      Ready to discuss your business and specific document needs? We'd love to hear from you and explore how Hobson can transform your property management workflow.
-                    </p>
-                    <SimpleButton size="lg" className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-white px-8 py-4 text-lg font-medium transform hover:scale-105 transition-all duration-300" asChild>
-                      <Link to="/contact">Contact Us</Link>
-                    </SimpleButton>
-                  </div>
+                <div className="bg-muted/30 rounded-2xl p-8 md:p-12 text-center">
+                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                    Let's Talk
+                  </h3>
+                  <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
+                    Ready to discuss your business and specific document needs? We'd love to hear from you and explore how Hobson can transform your property management workflow.
+                  </p>
+                  <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
+                    <Link to="/contact">Contact Us</Link>
+                  </SimpleButton>
                 </div>
               </div>
             </div>
