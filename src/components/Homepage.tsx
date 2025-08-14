@@ -250,16 +250,6 @@ export const Homepage = () => {
                   </div>
                 </div>
 
-                {/* Growth Message */}
-                <div className="text-center mb-16">
-                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 to-primary/5 px-6 py-3 rounded-full border border-primary/20">
-                    <TrendingUp className="w-5 h-5 text-primary" />
-                    <p className="text-lg font-medium text-foreground">
-                      Expanding capabilities across the property business
-                    </p>
-                  </div>
-                </div>
-
                 {/* Let's Talk CTA */}
                 <div className="relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-3xl blur-2xl"></div>
