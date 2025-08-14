@@ -172,7 +172,7 @@ const Pricing = () => {
                 <CardContent className="flex flex-col flex-grow">
                   <div className="flex-grow">
                     <p className="text-xs text-muted-foreground mb-4">
-                      For large-scale, high-intensity workloads. Ideal for organisations needing Hobson working at full capacity every day.
+                      For high-volume, daily demands.
                     </p>
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-2">
