@@ -88,10 +88,6 @@ const Pricing = () => {
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
                         <span className="text-xs">Unlimited users</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
-                        <span className="text-xs">Support</span>
-                      </div>
                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
