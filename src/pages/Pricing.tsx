@@ -29,15 +29,27 @@ const Pricing = () => {
              <div className="grid lg:grid-cols-2 gap-14 items-center w-full mx-auto">
                 {/* Left Container - Video Screen */}
                 <div className="flex justify-center lg:justify-start">
-                  <div className="w-full max-w-4xl aspect-video bg-gray-100 rounded-xl overflow-hidden relative" style={{
+                  <div className="w-full max-w-4xl aspect-video bg-gray-100 rounded-xl overflow-hidden relative group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl" style={{
                     border: '10px solid #f0f0f0'
                   }}>
-                    <div className="w-full h-full cursor-pointer">
+                    <div className="w-full h-full relative">
                       <img 
                         src="/lovable-uploads/e1c0b687-df4c-43fe-adfa-7a99ded5f9ac.png" 
                         alt="HEU Coin - Hobson Energy Units Explained"
-                        className="w-full h-full object-cover object-center"
+                        className="w-full h-full object-cover object-center transition-all duration-300 group-hover:brightness-75"
                       />
+                      {/* Play Button Overlay */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center shadow-lg backdrop-blur-sm transform scale-75 group-hover:scale-100 transition-all duration-300">
+                          <div className="w-0 h-0 border-l-[16px] border-l-purple-600 border-y-[12px] border-y-transparent ml-1"></div>
+                        </div>
+                      </div>
+                      {/* Video Ready Indicator */}
+                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                        <div className="bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                          Click to play
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
