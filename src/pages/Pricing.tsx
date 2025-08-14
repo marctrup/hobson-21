@@ -27,21 +27,8 @@ const Pricing = () => {
           backgroundImage: 'none'
         }}>
              <div className="grid lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
-               {/* Left Container - Content */}
-               <div className="space-y-8">
-                  <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                    From Energy to Outcomes —{" "}
-                    <span className="bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent">that's the Hobson way.</span>
-                  </h1>
-                 <p className="text-xl text-muted-foreground">
-                   Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
-                   Hobson charges for the actual work our AI does — measured in{" "}
-                   <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
-                 </p>
-               </div>
-               
-                {/* Right Container - Video Screen */}
-                <div className="flex justify-center lg:justify-end">
+                {/* Left Container - Video Screen */}
+                <div className="flex justify-center lg:justify-start">
                   <div className="w-full max-w-3xl aspect-video bg-gray-100 rounded-xl overflow-hidden relative" style={{
                     border: '10px solid #f0f0f0'
                   }}>
@@ -54,7 +41,20 @@ const Pricing = () => {
                     </div>
                   </div>
                 </div>
-            </div>
+                
+                {/* Right Container - Content */}
+                <div className="space-y-8">
+                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                     From Energy to Outcomes —{" "}
+                     <span className="bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent">that's the Hobson way.</span>
+                   </h1>
+                  <p className="text-xl text-muted-foreground">
+                    Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
+                    Hobson charges for the actual work our AI does — measured in{" "}
+                    <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
+                  </p>
+                </div>
+             </div>
           </div>
         </section>
 
