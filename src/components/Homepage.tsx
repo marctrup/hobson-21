@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight, MessageCircle } from "lucide-react";
+import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight, MessageCircle, FileText, Lightbulb, Target, CheckCircle } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
@@ -208,51 +208,158 @@ export const Homepage = () => {
           <FeaturesSection />
 
           {/* Current Focus Section */}
-          <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-background">
+          <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-gradient-to-br from-background via-muted/10 to-background">
             <div className="container mx-auto px-4">
-              <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-2xl md:text-3xl font-bold mb-8 text-foreground">
+              {/* Section Header */}
+              <div className="text-center mb-16">
+                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in">
+                  <Target className="w-4 h-4" />
+                  What We're Building
+                </div>
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
                   Our Current Focus
                 </h2>
-                
-                {/* Main Body Text */}
-                <div className="space-y-6 mb-12">
-                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                    Right now, our AI is trained to understand a wide range of property management documents — from tenancy agreements and commercial leases to licences, deeds, and addendums. This allows us to deliver accurate, context-aware insights for landlords, tenants, and property professionals.
-                  </p>
-                </div>
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                  Specialized AI training for property professionals
+                </p>
+              </div>
 
-                {/* Our Approach Section */}
-                <div className="bg-muted/30 rounded-2xl p-8 md:p-12 mb-12">
-                  <h3 className="text-xl md:text-2xl font-bold mb-6 text-foreground">Our Approach</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    Hobson doesn't just "read" a lease — it understands it in context. When assessing a lease or tenancy agreement, Hobson also checks other related documents that might change its meaning, like rent changes, amendments, or permissions. By reading these alongside the main lease, Hobson can give you answers that reflect the real, current agreement — not just what was originally signed. This makes Hobson intelligent, reliable, and able to spot details others might miss.
-                  </p>
-                </div>
-
-                {/* Continuing Expansion */}
-                <div className="mb-12">
-                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                    We're continuing to expand our training into other areas of the property business, so our capabilities will only grow over time.
-                  </p>
-                </div>
-
-                {/* Let's Talk Sub-section */}
-                <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-8 md:p-12 border border-primary/20">
-                  <div className="flex items-center justify-center gap-3 mb-6">
-                    <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                      <MessageCircle className="w-5 h-5 text-primary" />
+              <div className="max-w-6xl mx-auto">
+                {/* Document Types Grid */}
+                <div className="grid md:grid-cols-2 gap-8 mb-16">
+                  {/* Left Card - Document Types */}
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
+                    <div className="relative bg-background/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/80 rounded-xl flex items-center justify-center">
+                          <FileText className="w-6 h-6 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">Document Intelligence</h3>
+                      </div>
+                      <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                        Our AI understands a wide range of property management documents:
+                      </p>
+                      <div className="grid grid-cols-2 gap-3">
+                        {[
+                          "Tenancy Agreements",
+                          "Commercial Leases", 
+                          "Licences & Permits",
+                          "Property Deeds",
+                          "Addendums",
+                          "Amendments"
+                        ].map((item, index) => (
+                          <div key={index} className="flex items-center gap-2">
+                            <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
+                            <span className="text-sm text-muted-foreground">{item}</span>
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-foreground">
+                  </div>
+
+                  {/* Right Card - Context Understanding */}
+                  <div className="group relative">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
+                    <div className="relative bg-background/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
+                      <div className="flex items-center gap-3 mb-6">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/80 rounded-xl flex items-center justify-center">
+                          <Brain className="w-6 h-6 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-foreground">Smart Context Analysis</h3>
+                      </div>
+                      <p className="text-lg text-muted-foreground leading-relaxed">
+                        We deliver accurate, context-aware insights for:
+                      </p>
+                      <div className="mt-6 space-y-3">
+                        {[
+                          { icon: Building2, text: "Landlords & Property Managers" },
+                          { icon: Users, text: "Tenants & Residents" },
+                          { icon: Globe, text: "Property Professionals" }
+                        ].map((item, index) => (
+                          <div key={index} className="flex items-center gap-3">
+                            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
+                              <item.icon className="w-4 h-4 text-primary" />
+                            </div>
+                            <span className="text-muted-foreground">{item.text}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Our Approach - Full Width Card */}
+                <div className="relative mb-16">
+                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-3xl blur-2xl"></div>
+                  <div className="relative bg-background/90 backdrop-blur-sm border border-primary/20 rounded-3xl p-8 md:p-12">
+                    <div className="text-center mb-8">
+                      <div className="flex items-center justify-center gap-3 mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/80 rounded-xl flex items-center justify-center">
+                          <Lightbulb className="w-6 h-6 text-white" />
+                        </div>
+                        <h3 className="text-2xl md:text-3xl font-bold text-foreground">Our Approach</h3>
+                      </div>
+                    </div>
+                    
+                    <div className="max-w-4xl mx-auto">
+                      <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border border-primary/20">
+                        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center">
+                          Hobson doesn't just "read" a lease — <span className="text-primary font-semibold">it understands it in context</span>. 
+                          When assessing a lease or tenancy agreement, Hobson also checks other related documents that might change its meaning, 
+                          like rent changes, amendments, or permissions. By reading these alongside the main lease, Hobson can give you answers 
+                          that reflect the <span className="text-primary font-semibold">real, current agreement</span> — not just what was originally signed.
+                        </p>
+                      </div>
+                      
+                      <div className="grid md:grid-cols-3 gap-6 mt-8">
+                        {[
+                          { icon: Brain, title: "Intelligent", desc: "Context-aware analysis" },
+                          { icon: Shield, title: "Reliable", desc: "Accurate interpretations" },
+                          { icon: Search, title: "Detailed", desc: "Spots hidden insights" }
+                        ].map((feature, index) => (
+                          <div key={index} className="text-center">
+                            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
+                              <feature.icon className="w-6 h-6 text-primary" />
+                            </div>
+                            <h4 className="font-semibold text-foreground mb-2">{feature.title}</h4>
+                            <p className="text-sm text-muted-foreground">{feature.desc}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Growth Message */}
+                <div className="text-center mb-16">
+                  <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 to-primary/5 px-6 py-3 rounded-full border border-primary/20">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                    <p className="text-lg font-medium text-foreground">
+                      Expanding capabilities across the property business
+                    </p>
+                  </div>
+                </div>
+
+                {/* Let's Talk CTA */}
+                <div className="relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-3xl blur-2xl"></div>
+                  <div className="relative bg-gradient-to-br from-background/95 to-background/90 backdrop-blur-sm rounded-3xl p-8 md:p-12 border border-primary/30 text-center">
+                    <div className="flex items-center justify-center gap-3 mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/80 rounded-2xl flex items-center justify-center">
+                        <MessageCircle className="w-8 h-8 text-white" />
+                      </div>
+                    </div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                       Let's Talk
                     </h3>
+                    <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
+                      Ready to discuss your business and specific document needs? We'd love to hear from you and explore how Hobson can transform your property management workflow.
+                    </p>
+                    <SimpleButton size="lg" className="bg-gradient-to-r from-primary to-primary/90 hover:from-primary/90 hover:to-primary/80 text-white px-8 py-4 text-lg font-medium transform hover:scale-105 transition-all duration-300" asChild>
+                      <Link to="/contact">Contact Us</Link>
+                    </SimpleButton>
                   </div>
-                  <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                    If you'd like to discuss your business and your specific document needs, we'd love to hear from you.
-                  </p>
-                  <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                    <Link to="/contact">Contact Us</Link>
-                  </SimpleButton>
                 </div>
               </div>
             </div>
