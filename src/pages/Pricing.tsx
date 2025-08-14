@@ -469,7 +469,7 @@ const Pricing = () => {
                 <AccordionItem value="item-6">
                   <AccordionTrigger>Do my HEUs roll over?</AccordionTrigger>
                   <AccordionContent>
-                    We will carry over any unused HUE's from your top ups.
+                    We will carry over any unused HUE's.
                   </AccordionContent>
                 </AccordionItem>
                 
