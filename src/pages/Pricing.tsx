@@ -26,7 +26,7 @@ const Pricing = () => {
           backgroundColor: '#ffffff',
           backgroundImage: 'none'
         }}>
-             <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+             <div className="grid lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
                {/* Left Container - Content */}
                <div className="space-y-8">
                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
