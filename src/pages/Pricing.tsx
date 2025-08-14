@@ -279,7 +279,107 @@ const Pricing = () => {
                 <AccordionItem value="item-2">
                   <AccordionTrigger>What is a HEU?</AccordionTrigger>
                   <AccordionContent>
-                    [Awaiting answer content]
+                    <div className="space-y-4">
+                      <p>
+                        HEUs are Hobson's currency. You spend them whenever Hobson works on something for you. The amount of HEUs used depends on how complex the task is — simple jobs use fewer HEUs, complex jobs use more.
+                      </p>
+                      
+                      <p>This means you only spend what you need:</p>
+                      
+                      <ul className="list-disc list-inside space-y-1 ml-4">
+                        <li>Small, quick answers cost very little.</li>
+                        <li>Bigger, more detailed work costs more.</li>
+                      </ul>
+                      
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-3">Here are some example tasks and their HEU cost:</h4>
+                        <div className="overflow-x-auto">
+                          <table className="w-full border-collapse border border-border rounded-lg">
+                            <thead>
+                              <tr className="bg-muted/50">
+                                <th className="border border-border p-3 text-left font-medium">Example Task</th>
+                                <th className="border border-border p-3 text-left font-medium">Work Done</th>
+                                <th className="border border-border p-3 text-left font-medium">HEUs</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr>
+                                <td className="border border-border p-3">Reading a simple document (e.g. certificate)</td>
+                                <td className="border border-border p-3">Scans and summarises</td>
+                                <td className="border border-border p-3">
+                                  <input 
+                                    type="number" 
+                                    step="0.1" 
+                                    defaultValue="0.50" 
+                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
+                                  />
+                                </td>
+                              </tr>
+                              <tr className="bg-muted/20">
+                                <td className="border border-border p-3">Reading a medium document (e.g. deed)</td>
+                                <td className="border border-border p-3">Reviews, extracts key info</td>
+                                <td className="border border-border p-3">
+                                  <input 
+                                    type="number" 
+                                    step="0.1" 
+                                    defaultValue="1.00" 
+                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="border border-border p-3">Reading a complex document (e.g. lease)</td>
+                                <td className="border border-border p-3">Full detailed review and breakdown</td>
+                                <td className="border border-border p-3">
+                                  <input 
+                                    type="number" 
+                                    step="0.1" 
+                                    defaultValue="2.00" 
+                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
+                                  />
+                                </td>
+                              </tr>
+                              <tr className="bg-muted/20">
+                                <td className="border border-border p-3">Asking a simple query (e.g. "What is the rent?")</td>
+                                <td className="border border-border p-3">Finds and returns one fact</td>
+                                <td className="border border-border p-3">
+                                  <input 
+                                    type="number" 
+                                    step="0.1" 
+                                    defaultValue="0.20" 
+                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
+                                  />
+                                </td>
+                              </tr>
+                              <tr>
+                                <td className="border border-border p-3">Asking a medium query (e.g. "List all rents")</td>
+                                <td className="border border-border p-3">Searches and compiles several data points</td>
+                                <td className="border border-border p-3">
+                                  <input 
+                                    type="number" 
+                                    step="0.1" 
+                                    defaultValue="0.50" 
+                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
+                                  />
+                                </td>
+                              </tr>
+                              <tr className="bg-muted/20">
+                                <td className="border border-border p-3">Asking a complex query (e.g. "Build a tenancy report")</td>
+                                <td className="border border-border p-3">Gathers multiple details, formats a full report</td>
+                                <td className="border border-border p-3">
+                                  <input 
+                                    type="number" 
+                                    step="0.1" 
+                                    defaultValue="1.50" 
+                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
+                                  />
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
