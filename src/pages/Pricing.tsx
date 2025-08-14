@@ -142,7 +142,7 @@ const Pricing = () => {
                 <CardContent className="flex flex-col flex-grow">
                   <div className="flex-grow">
                     <p className="text-xs text-muted-foreground mb-4">
-                      Built for heavy, frequent use. Suited for teams or individuals running multiple projects at once and needing Hobson's help on a near-daily basis.
+                      For heavy, frequent use.
                     </p>
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-2">
