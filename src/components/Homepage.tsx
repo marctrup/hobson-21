@@ -212,10 +212,6 @@ export const Homepage = () => {
             <div className="container mx-auto px-4">
               {/* Section Header */}
               <div className="text-center mb-16">
-                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6 animate-fade-in">
-                  <Target className="w-4 h-4" />
-                  What We're Building
-                </div>
                 <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
                   Our Current Focus
                 </h2>
