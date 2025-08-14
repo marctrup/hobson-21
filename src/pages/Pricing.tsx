@@ -442,7 +442,7 @@ const Pricing = () => {
                               <li>Floor plans & site plans</li>
                               <li>Energy Performance Certificates (EPCs) & electrical safety reports</li>
                               <li>Inventory & schedule of condition</li>
-                              <li>Statutory disclosures (e.g., tenancy deposit information)</li>
+                              <li>Statutory disclosures</li>
                               <li>etc</li>
                             </ul>
                           </div>
