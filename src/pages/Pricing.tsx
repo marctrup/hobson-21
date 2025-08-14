@@ -40,15 +40,20 @@ const Pricing = () => {
                  </p>
                </div>
                
-               {/* Right Container - Image */}
-               <div className="flex justify-center lg:justify-end">
-                 <div className="w-full max-w-lg aspect-square bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg flex items-center justify-center shadow-lg">
-                   <div className="text-center text-muted-foreground">
-                     <p className="text-lg font-medium">Hero Image</p>
-                     <p className="text-sm">Placeholder for visual content</p>
-                   </div>
-                 </div>
-               </div>
+                {/* Right Container - Video Screen */}
+                <div className="flex justify-center lg:justify-end">
+                  <div className="w-full max-w-lg aspect-video bg-gray-100 rounded-xl overflow-hidden relative" style={{
+                    border: '10px solid #f0f0f0'
+                  }}>
+                    <div className="w-full h-full cursor-pointer">
+                      <img 
+                        src="/lovable-uploads/e1c0b687-df4c-43fe-adfa-7a99ded5f9ac.png" 
+                        alt="HEU Coin - Hobson Energy Units Explained"
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
         </section>
