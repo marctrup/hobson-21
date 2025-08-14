@@ -225,68 +225,11 @@ export const Homepage = () => {
               </div>
 
               <div className="max-w-6xl mx-auto">
-                {/* Document Types Grid */}
-                <div className="grid md:grid-cols-2 gap-8 mb-16">
-                  {/* Left Card - Document Types */}
-                  <div className="group relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
-                    <div className="relative bg-background/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/80 rounded-xl flex items-center justify-center">
-                          <FileText className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="text-xl font-bold text-foreground">Document Intelligence</h3>
-                      </div>
-                      <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                        Our AI understands a wide range of property management documents:
-                      </p>
-                      <div className="grid grid-cols-2 gap-3">
-                        {[
-                          "Tenancy Agreements",
-                          "Commercial Leases", 
-                          "Licences & Permits",
-                          "Property Deeds",
-                          "Addendums",
-                          "Amendments"
-                        ].map((item, index) => (
-                          <div key={index} className="flex items-center gap-2">
-                            <CheckCircle className="w-4 h-4 text-primary flex-shrink-0" />
-                            <span className="text-sm text-muted-foreground">{item}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Card - Context Understanding */}
-                  <div className="group relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-2xl blur-xl opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
-                    <div className="relative bg-background/80 backdrop-blur-sm border border-primary/20 rounded-2xl p-8 hover:shadow-lg transition-all duration-300">
-                      <div className="flex items-center gap-3 mb-6">
-                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/80 rounded-xl flex items-center justify-center">
-                          <Brain className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="text-xl font-bold text-foreground">Smart Context Analysis</h3>
-                      </div>
-                      <p className="text-lg text-muted-foreground leading-relaxed">
-                        We deliver accurate, context-aware insights for:
-                      </p>
-                      <div className="mt-6 space-y-3">
-                        {[
-                          { icon: Building2, text: "Landlords & Property Managers" },
-                          { icon: Users, text: "Tenants & Residents" },
-                          { icon: Globe, text: "Property Professionals" }
-                        ].map((item, index) => (
-                          <div key={index} className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center">
-                              <item.icon className="w-4 h-4 text-primary" />
-                            </div>
-                            <span className="text-muted-foreground">{item.text}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
+                {/* Main Content Text */}
+                <div className="text-center mb-16">
+                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+                    Right now, our AI is trained to understand a wide range of property management documents — from tenancy agreements and commercial leases to licences, deeds, and addendums. This allows us to deliver accurate, context-aware insights for landlords, tenants, and property professionals.
+                  </p>
                 </div>
 
                 {/* Our Approach - Full Width Card */}
