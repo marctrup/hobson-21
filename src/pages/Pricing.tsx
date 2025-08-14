@@ -421,7 +421,7 @@ const Pricing = () => {
                               <li>Deeds of Variation</li>
                               <li>Addendums</li>
                               <li>Memoranda</li>
-                              <li>Assignments & Novations (changing parties)</li>
+                              <li>Assignments & Novations</li>
                               
                               <li>Surrenders & Regrants</li>
                               <li>Deeds of Rectification</li>
