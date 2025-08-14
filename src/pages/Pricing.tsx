@@ -448,6 +448,12 @@ const Pricing = () => {
                           </div>
                         </div>
                       </div>
+                      
+                      <div className="mt-6 p-4 bg-muted rounded-lg border">
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Not sure about a document type?</strong> Please check with us if you're unsure whether Hobson can work with a specific document format or type.
+                        </p>
+                      </div>
                     </div>
                   </AccordionContent>
                 </AccordionItem>
