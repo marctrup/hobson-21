@@ -439,8 +439,8 @@ const Pricing = () => {
                           <div className="text-sm">
                             <p className="font-medium text-foreground mb-1">Examples:</p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
-                              <li>Floor plans & site plans</li>
-                              <li>Energy Performance Certificates (EPCs) & electrical safety reports</li>
+                              <li>Drawings</li>
+                              <li>Compliance certificates</li>
                               <li>Inventory & schedule of condition</li>
                               <li>Statutory disclosures</li>
                               <li>etc</li>
