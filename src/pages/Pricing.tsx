@@ -469,7 +469,7 @@ const Pricing = () => {
                 <AccordionItem value="item-6">
                   <AccordionTrigger>Do my HEUs roll over?</AccordionTrigger>
                   <AccordionContent>
-                    We will carry over 5 HEUs from any leftover from your previous month, but your monthly allocation will reset to your plan's standard amount. This gives you a small buffer for busy periods while keeping the pricing model simple and predictable.
+                    We will carry over any unused HUE's from your top ups.
                   </AccordionContent>
                 </AccordionItem>
                 
