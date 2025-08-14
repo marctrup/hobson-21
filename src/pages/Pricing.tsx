@@ -504,7 +504,7 @@ const Pricing = () => {
                           <div className="mb-3">
                             <p className="font-medium text-sm mb-2">Rollover rule:</p>
                             <p className="text-sm mb-2">If you don't use them all, leftovers move to next month — but you can't store more than your monthly amount.</p>
-                            <p className="text-sm italic">Example: You get 100 HEUs/month. If you only use 80, you start next month with 120. If you only use 10, you're still capped at 200 total (100 new + 100 carry-over).</p>
+                            <p className="text-sm italic">Example: You get 100 HEUs/month. If you only use 80, you start next month with 120. If you only use 10, you're still capped at 200 total (100 new + 100 carry-over). In month 3, you won't carry over any credits left from month 1 — only the unused credits from month 2 will roll over.</p>
                           </div>
 
                           <div className="mb-3">
