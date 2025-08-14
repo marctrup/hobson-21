@@ -76,6 +76,9 @@ const Pricing = () => {
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
                   <div className="flex-grow">
+                    <p className="text-xs text-muted-foreground mb-4">
+                      Perfect for light, occasional use. Ideal if you only need Hobson for small tasks or testing things out without a regular schedule.
+                    </p>
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
