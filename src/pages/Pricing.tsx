@@ -106,6 +106,9 @@ const Pricing = () => {
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
                   <div className="flex-grow">
+                    <p className="text-xs text-muted-foreground mb-4">
+                      Designed for steady, moderate workloads. Great for regular projects or ongoing work throughout the month without going over budget.
+                    </p>
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
