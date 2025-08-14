@@ -240,18 +240,6 @@ export const Homepage = () => {
                   </div>
                 </div>
 
-                {/* Let's Talk CTA */}
-                <div className="bg-muted/30 rounded-2xl p-8 md:p-12 text-center">
-                  <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                    Let's Talk
-                  </h3>
-                  <p className="text-lg text-muted-foreground mb-8 leading-relaxed max-w-2xl mx-auto">
-                    Ready to discuss your business and specific document needs? We'd love to hear from you and explore how Hobson can transform your property management workflow.
-                  </p>
-                  <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                    <Link to="/contact">Contact Us</Link>
-                  </SimpleButton>
-                </div>
               </div>
             </div>
           </section>
