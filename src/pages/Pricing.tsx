@@ -473,12 +473,6 @@ const Pricing = () => {
                   </AccordionContent>
                 </AccordionItem>
                 
-                <AccordionItem value="item-7">
-                  <AccordionTrigger>Is there really no limit on users or properties?</AccordionTrigger>
-                  <AccordionContent>
-                    Correct! Add as many team members and manage as many properties as you need. You only pay for the actual AI work performed. This makes Hobson incredibly cost-effective as you scale.
-                  </AccordionContent>
-                </AccordionItem>
               </Accordion>
             </div>
           </div>
