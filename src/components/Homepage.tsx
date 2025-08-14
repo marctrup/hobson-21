@@ -236,15 +236,6 @@ export const Homepage = () => {
                 <div className="relative mb-16">
                   <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-3xl blur-2xl"></div>
                   <div className="relative bg-background/90 backdrop-blur-sm border border-primary/20 rounded-3xl p-8 md:p-12">
-                    <div className="text-center mb-8">
-                      <div className="flex items-center justify-center gap-3 mb-4">
-                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/80 rounded-xl flex items-center justify-center">
-                          <Lightbulb className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="text-2xl md:text-3xl font-bold text-foreground">Our Approach</h3>
-                      </div>
-                    </div>
-                    
                     <div className="max-w-4xl mx-auto">
                       <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border border-primary/20">
                         <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center">
