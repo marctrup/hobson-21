@@ -386,7 +386,67 @@ const Pricing = () => {
                 <AccordionItem value="item-3">
                   <AccordionTrigger>What document types does Hobson understand?</AccordionTrigger>
                   <AccordionContent>
-                    [Awaiting answer content]
+                    <div className="space-y-6">
+                      <p className="text-muted-foreground leading-relaxed">
+                        Hobson works with a wide range of property-related documents — and this list is growing every week.
+                      </p>
+                      
+                      <div className="space-y-5">
+                        <div className="border-l-4 border-primary pl-4">
+                          <h4 className="font-semibold text-foreground mb-2">1. Right to Occupy (RTO) Documents</h4>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            These are the main agreements that give someone the legal right to occupy a property.
+                          </p>
+                          <div className="text-sm">
+                            <p className="font-medium text-foreground mb-1">Examples:</p>
+                            <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
+                              <li>Residential leases</li>
+                              <li>Commercial leases</li>
+                              <li>Licences to occupy</li>
+                            </ul>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-2 italic">
+                            If there's an RTO in place, most other property documents relate back to it.
+                          </p>
+                        </div>
+
+                        <div className="border-l-4 border-secondary pl-4">
+                          <h4 className="font-semibold text-foreground mb-2">2. Amending Documents (AMD)</h4>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            These are documents that change an existing RTO — either by altering its terms, the people involved, or the rules in it. You have to read them alongside the RTO to know its current form.
+                          </p>
+                          <div className="text-sm">
+                            <p className="font-medium text-foreground mb-1">Examples:</p>
+                            <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
+                              <li>Deeds of Variation</li>
+                              <li>Addendums</li>
+                              <li>Rent Review Memoranda</li>
+                              <li>Assignments & Novations (changing parties)</li>
+                              <li>Licences to Alter, Underlet, or Assign (if they override the lease)</li>
+                              <li>Surrenders & Regrants</li>
+                              <li>Deeds of Rectification</li>
+                              <li>Formal notices that alter rights or terms</li>
+                            </ul>
+                          </div>
+                        </div>
+
+                        <div className="border-l-4 border-accent pl-4">
+                          <h4 className="font-semibold text-foreground mb-2">3. Accompanying Documents (ACD)</h4>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            These support or explain an RTO but don't change its terms. They're often needed for compliance or reference, not for altering the legal agreement itself.
+                          </p>
+                          <div className="text-sm">
+                            <p className="font-medium text-foreground mb-1">Examples:</p>
+                            <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
+                              <li>Floor plans & site plans</li>
+                              <li>Energy Performance Certificates (EPCs) & electrical safety reports</li>
+                              <li>Inventory & schedule of condition</li>
+                              <li>Statutory disclosures (e.g., tenancy deposit information)</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
