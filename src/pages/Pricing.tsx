@@ -120,7 +120,7 @@ const Pricing = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
-                        <span className="text-xs">Regular workflows</span>
+                        <span className="text-xs">Priority support</span>
                       </div>
                     </div>
                   </div>
