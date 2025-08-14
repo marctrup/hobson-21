@@ -208,7 +208,7 @@ export const Homepage = () => {
           <FeaturesSection />
 
           {/* Current Focus Section */}
-          <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-gradient-to-br from-background via-muted/10 to-background">
+          <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-muted/30">
             <div className="container mx-auto px-4">
               {/* Section Header */}
               <div className="text-center mb-16">
