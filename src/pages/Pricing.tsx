@@ -22,11 +22,11 @@ const Pricing = () => {
         backgroundImage: 'none',
         background: '#ffffff'
       }}>
-          <div className="container relative mx-auto px-4 h-full flex items-center" style={{
+          <div className="container relative mx-auto px-2 h-full flex items-center" style={{
           backgroundColor: '#ffffff',
           backgroundImage: 'none'
         }}>
-             <div className="grid lg:grid-cols-2 gap-8 items-center max-w-7xl mx-auto">
+             <div className="grid lg:grid-cols-2 gap-6 items-center w-full mx-auto">
                 {/* Left Container - Video Screen */}
                 <div className="flex justify-center lg:justify-start">
                   <div className="w-full max-w-4xl aspect-video bg-gray-100 rounded-xl overflow-hidden relative" style={{
