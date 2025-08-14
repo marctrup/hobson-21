@@ -211,7 +211,7 @@ export const Homepage = () => {
           <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-background">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-3xl md:text-4xl font-bold mb-8 text-foreground">
+                <h2 className="text-2xl md:text-3xl font-bold mb-8 text-foreground">
                   Our Current Focus
                 </h2>
                 <div className="space-y-6 mb-12">
