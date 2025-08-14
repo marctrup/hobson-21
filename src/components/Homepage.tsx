@@ -229,20 +229,14 @@ export const Homepage = () => {
                 </div>
 
                 {/* Our Approach - Full Width Card */}
-                <div className="relative mb-16">
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-3xl blur-2xl"></div>
-                  <div className="relative bg-background/90 backdrop-blur-sm border border-primary/20 rounded-3xl p-8 md:p-12">
-                    <div className="max-w-4xl mx-auto">
-                      <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border border-primary/20">
-                        <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center">
-                          Hobson doesn't just "read" a lease — <span className="text-primary font-semibold">it understands it in context</span>. 
-                          When assessing a lease or tenancy agreement, Hobson also checks other related documents that might change its meaning, 
-                          like rent changes, amendments, or permissions. By reading these alongside the main lease, Hobson can give you answers 
-                          that reflect the <span className="text-primary font-semibold">real, current agreement</span> — not just what was originally signed.
-                        </p>
-                      </div>
-                      
-                    </div>
+                <div className="max-w-4xl mx-auto mb-16">
+                  <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border border-primary/20">
+                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center">
+                      Hobson doesn't just "read" a lease — <span className="text-primary font-semibold">it understands it in context</span>. 
+                      When assessing a lease or tenancy agreement, Hobson also checks other related documents that might change its meaning, 
+                      like rent changes, amendments, or permissions. By reading these alongside the main lease, Hobson can give you answers 
+                      that reflect the <span className="text-primary font-semibold">real, current agreement</span> — not just what was originally signed.
+                    </p>
                   </div>
                 </div>
 
