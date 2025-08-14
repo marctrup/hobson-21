@@ -216,7 +216,7 @@ export const Homepage = () => {
                   Our Current Focus
                 </h2>
                 <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  Specialized AI training for property professionals
+                  Starting here, moving everywhere.
                 </p>
               </div>
 
