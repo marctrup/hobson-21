@@ -418,7 +418,7 @@ const Pricing = () => {
                           <div className="text-sm">
                             <p className="font-medium text-foreground mb-1">Examples:</p>
                             <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
-                              <li>Deeds of Variation</li>
+                              <li>Deeds (variation, recification etc)</li>
                               <li>Addendums</li>
                               <li>Memoranda</li>
                               <li>Assignments & Novations</li>
