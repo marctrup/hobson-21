@@ -483,10 +483,10 @@ const Pricing = () => {
                       <div className="mt-6">
                         <h4 className="font-semibold mb-2">Monthly Credits</h4>
                         <div>
-                          <h5 className="font-medium mb-2">Q: What are monthly credits and how do they work?</h5>
-                          <p className="mb-3">A: Monthly credits are your main allowance, given in one lump at the start of each billing month (paid plans only).</p>
+                          <h5 className="font-medium mb-2">Q: What are monthly HEUs and how do they work?</h5>
+                          <p className="mb-3">A: Monthly HEUs are your main allowance, given in one lump at the start of each billing month (paid plans only).</p>
                           <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
-                            <li>Unused credits roll over to the next month, but you can't save more than your monthly limit.</li>
+                            <li>Unused HEUs roll over to the next month, but you can't save more than your monthly limit.</li>
                             <li>On a monthly plan, rollover credits last 1 month.</li>
                             <li>On an annual plan, rollover credits can build up to 12× your monthly amount and last 12 months.</li>
                             <li>If you cancel your plan, leftover credits expire at the end of that billing cycle.</li>
