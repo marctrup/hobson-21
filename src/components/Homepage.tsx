@@ -246,21 +246,6 @@ export const Homepage = () => {
                         </p>
                       </div>
                       
-                      <div className="grid md:grid-cols-3 gap-6 mt-8">
-                        {[
-                          { icon: Brain, title: "Intelligent", desc: "Context-aware analysis" },
-                          { icon: Shield, title: "Reliable", desc: "Accurate interpretations" },
-                          { icon: Search, title: "Detailed", desc: "Spots hidden insights" }
-                        ].map((feature, index) => (
-                          <div key={index} className="text-center">
-                            <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center mx-auto mb-3">
-                              <feature.icon className="w-6 h-6 text-primary" />
-                            </div>
-                            <h4 className="font-semibold text-foreground mb-2">{feature.title}</h4>
-                            <p className="text-sm text-muted-foreground">{feature.desc}</p>
-                          </div>
-                        ))}
-                      </div>
                     </div>
                   </div>
                 </div>
