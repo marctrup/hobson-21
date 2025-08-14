@@ -249,7 +249,7 @@ export const Homepage = () => {
             <div className="container mx-auto px-4">
               <div className="text-center max-w-4xl mx-auto">
                 <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground leading-tight">
-                  Ready to think about AI in your property business but unsure how?
+                  Ready to integrate AI into your business?
                 </h2>
                 <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
                   Join our exclusive pilot program and be among the first to experience the future of property intelligence.
