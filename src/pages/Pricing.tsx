@@ -467,9 +467,33 @@ const Pricing = () => {
                 
                 
                 <AccordionItem value="item-6">
-                  <AccordionTrigger>Do my HEUs roll over?</AccordionTrigger>
+                  <AccordionTrigger>How do my monthly HUEs work? - Daily Credits</AccordionTrigger>
                   <AccordionContent>
-                    We will carry over any unused HUE's.
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold mb-2">Q: What are daily credits and why do they exist?</h4>
+                        <p className="mb-3">A: Daily credits are small amounts you get automatically each day — free for both free and paid users.</p>
+                        <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
+                          <li>Let you try things every day without using your main monthly credits.</li>
+                          <li>Give free users a way to use the service without paying.</li>
+                          <li>Refresh every 24 hours, but expire at the end of the day ("use it or lose it").</li>
+                        </ul>
+                      </div>
+                      
+                      <div className="mt-6">
+                        <h4 className="font-semibold mb-2">Monthly Credits</h4>
+                        <div>
+                          <h5 className="font-medium mb-2">Q: What are monthly credits and how do they work?</h5>
+                          <p className="mb-3">A: Monthly credits are your main allowance, given in one lump at the start of each billing month (paid plans only).</p>
+                          <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
+                            <li>Unused credits roll over to the next month, but you can't save more than your monthly limit.</li>
+                            <li>On a monthly plan, rollover credits last 1 month.</li>
+                            <li>On an annual plan, rollover credits can build up to 12× your monthly amount and last 12 months.</li>
+                            <li>If you cancel your plan, leftover credits expire at the end of that billing cycle.</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
                 
