@@ -422,7 +422,7 @@ const Pricing = () => {
                               <li>Addendums</li>
                               <li>Rent Review Memoranda</li>
                               <li>Assignments & Novations (changing parties)</li>
-                              <li>Licences to Underlet, or Assign</li>
+                              
                               <li>Surrenders & Regrants</li>
                               <li>Deeds of Rectification</li>
                               <li>Formal notices that alter rights or terms</li>
