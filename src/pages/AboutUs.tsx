@@ -35,80 +35,81 @@ const AboutUs = () => {
 
       {/* Story Section */}
       <div className="container mx-auto px-4 py-20">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Story Cards */}
-            <div className="space-y-8">
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-2xl transform group-hover:scale-105 transition-transform duration-300"></div>
-                <div className="relative p-8 border border-primary/10 rounded-2xl backdrop-blur-sm">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary-light rounded-xl flex items-center justify-center">
-                      <Users className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground">The Problem</h3>
-                  </div>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    After years of relying on traditional systems, we saw how much time was wasted moving data between them.
-                  </p>
-                </div>
-              </div>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-foreground mb-6">Our Story</h2>
+            <p className="text-xl text-muted-foreground">How we went from problem to solution</p>
+          </div>
 
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-2xl transform group-hover:scale-105 transition-transform duration-300"></div>
-                <div className="relative p-8 border border-primary/10 rounded-2xl backdrop-blur-sm">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary-light rounded-xl flex items-center justify-center">
-                      <Lightbulb className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-primary">The Breakthrough</h3>
-                  </div>
-                  <p className="text-xl font-medium text-primary leading-relaxed">
-                    Then AI changed everything.
-                  </p>
+          {/* Timeline Layout */}
+          <div className="space-y-16">
+            {/* Step 1 */}
+            <div className="relative group">
+              <div className="absolute left-8 top-0 w-0.5 h-full bg-gradient-to-b from-primary/50 to-transparent"></div>
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 relative z-10">
+                  <Users className="w-8 h-8 text-white" />
                 </div>
-              </div>
-
-              <div className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent rounded-2xl transform group-hover:scale-105 transition-transform duration-300"></div>
-                <div className="relative p-8 border border-primary/10 rounded-2xl backdrop-blur-sm">
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary-light rounded-xl flex items-center justify-center">
-                      <Target className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-foreground">Our Mission</h3>
-                  </div>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
-                    That's why we built Hobson — not to replace, but to work alongside.
+                <div className="flex-1 pt-2">
+                  <h3 className="text-2xl font-bold text-foreground mb-4">The Problem We Faced</h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
+                    After years of working in property management, we experienced firsthand how much time was wasted moving data between traditional systems. The inefficiency was frustrating and costly.
                   </p>
                 </div>
               </div>
             </div>
 
-            {/* Visual Element */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-transparent rounded-3xl blur-2xl"></div>
-              <div className="relative bg-gradient-to-br from-background/90 to-background/70 backdrop-blur-sm rounded-3xl p-12 border border-primary/20">
-                <div className="text-center space-y-8">
-                  <div className="w-24 h-24 bg-gradient-to-r from-primary to-primary-light rounded-2xl mx-auto flex items-center justify-center transform hover:scale-110 transition-transform duration-300">
-                    <Heart className="w-12 h-12 text-white" />
-                  </div>
-                  
-                  <div className="space-y-4">
-                    <h3 className="text-2xl font-bold text-foreground">Our Commitment</h3>
-                    <p className="text-lg text-muted-foreground leading-relaxed">
-                      We're committed to getting this right, and we believe this technology can truly make a difference.
-                    </p>
-                  </div>
-
-                  <div className="pt-8">
-                    <Link to="/contact">
-                      <SimpleButton size="lg" className="text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-light hover:from-primary/90 hover:to-primary-light/90 text-white transform hover:scale-105 transition-all duration-300">
-                        Get in Touch
-                      </SimpleButton>
-                    </Link>
-                  </div>
+            {/* Step 2 */}
+            <div className="relative group">
+              <div className="absolute left-8 top-0 w-0.5 h-full bg-gradient-to-b from-primary/50 to-transparent"></div>
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 relative z-10">
+                  <Lightbulb className="w-8 h-8 text-white" />
                 </div>
+                <div className="flex-1 pt-2">
+                  <h3 className="text-2xl font-bold text-primary mb-4">The AI Breakthrough</h3>
+                  <p className="text-xl font-semibold text-primary leading-relaxed max-w-2xl">
+                    Then artificial intelligence changed everything. We realized we could build something that would actually understand property documents and work seamlessly with existing systems.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="relative group">
+              <div className="flex items-start gap-8">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 relative z-10">
+                  <Target className="w-8 h-8 text-white" />
+                </div>
+                <div className="flex-1 pt-2">
+                  <h3 className="text-2xl font-bold text-foreground mb-4">Our Mission Today</h3>
+                  <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
+                    That's why we built Hobson — not to replace your existing systems, but to work alongside them, making your property management workflow more efficient and intelligent.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Commitment Section */}
+          <div className="mt-20 text-center">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-3xl blur-xl"></div>
+              <div className="relative bg-gradient-to-br from-background/95 to-background/90 backdrop-blur-sm rounded-3xl p-12 border border-primary/20">
+                <div className="w-20 h-20 bg-gradient-to-r from-primary to-primary-light rounded-2xl mx-auto flex items-center justify-center mb-8 transform hover:scale-110 transition-transform duration-300">
+                  <Heart className="w-10 h-10 text-white" />
+                </div>
+                
+                <h3 className="text-3xl font-bold text-foreground mb-6">Our Commitment</h3>
+                <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
+                  We're committed to getting this right, and we believe this technology can truly make a difference in the property industry.
+                </p>
+
+                <Link to="/contact">
+                  <SimpleButton size="lg" className="text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-light hover:from-primary/90 hover:to-primary-light/90 text-white transform hover:scale-105 transition-all duration-300">
+                    Get in Touch
+                  </SimpleButton>
+                </Link>
               </div>
             </div>
           </div>
