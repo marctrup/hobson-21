@@ -860,7 +860,7 @@ const Learn = () => {
             </aside>
 
             {/* Desktop Main Content Area */}
-            <div className="flex-1 bg-muted/30 min-h-[calc(100vh-8rem)]">
+            <div className="flex-1 min-h-[calc(100vh-8rem)]">
               {renderContent()}
             </div>
           </div>
