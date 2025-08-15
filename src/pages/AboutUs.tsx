@@ -39,8 +39,6 @@ const AboutUs = () => {
 
           {/* Compact Timeline Layout */}
           <div className="relative grid lg:grid-cols-3 gap-8 lg:gap-12">
-            {/* Connection Lines - More Prominent */}
-            <div className="hidden lg:block absolute top-8 left-1/3 right-1/3 h-1 bg-gradient-to-r from-primary via-primary to-primary rounded-full transform -translate-x-6 translate-x-6"></div>
             
             {/* Step 1 */}
             <div className="relative group">
