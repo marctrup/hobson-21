@@ -4,7 +4,7 @@ import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, 
 
 const Learn = () => {
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
-  const [activeVerticalTab, setActiveVerticalTab] = useState('plans-credits');
+  const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
 
   const horizontalTabs = [
@@ -37,6 +37,7 @@ const Learn = () => {
     switch (horizontalTab) {
       case 'introduction':
         return [
+          { id: 'welcome', label: 'Welcome', icon: Heart },
           { id: 'plans-credits', label: 'Plans and Credits', icon: CreditCard },
           { id: 'faq', label: 'FAQ', icon: HelpCircle },
           { id: 'getting-started', label: 'Getting started', icon: Play },
