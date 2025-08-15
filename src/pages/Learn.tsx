@@ -1009,6 +1009,40 @@ const Learn = () => {
               </div>
             </div>
 
+            {/* Getting Started Section */}
+            <div className="mb-12">
+              <div className="w-full max-w-[70.4rem] mx-auto">
+                {/* Getting Started header */}
+                <div className="mb-6">
+                  <h2 className="text-3xl font-bold text-foreground mb-2">Getting Started</h2>
+                  <p className="text-lg text-muted-foreground mb-6">From first document to confident decision</p>
+                  
+                  <h3 className="text-xl font-semibold text-foreground mb-3">Overview of Hobson</h3>
+                  <p className="text-lg text-muted-foreground mb-6">Welcome to this step-by-step guide on how to get accurate, up-to-date answers from your property documents using Hobson.</p>
+                </div>
+                
+                {/* Second Video container */}
+                <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border">
+                  <img 
+                    src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
+                    alt="Overview of Hobson - Video placeholder"
+                    className="w-full h-full object-cover"
+                  />
+                  {/* Play button overlay */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <button className="bg-black/70 hover:bg-black/80 text-white rounded-full p-4 transition-colors">
+                      <Play className="w-12 h-12 ml-1" fill="currentColor" />
+                    </button>
+                  </div>
+                  {/* Video title overlay */}
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                    <h3 className="text-white text-xl font-semibold mb-2">Overview of Hobson</h3>
+                    <p className="text-white/90 text-sm">Step-by-step guide to getting started with Hobson AI</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       );
