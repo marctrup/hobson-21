@@ -1318,9 +1318,6 @@ const Learn = () => {
               </button>
               
               <nav className="hidden md:flex items-center gap-6">
-                <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Home
-                </a>
                 <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </a>
