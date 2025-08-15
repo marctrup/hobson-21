@@ -973,14 +973,17 @@ const Learn = () => {
       return (
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
-            <div className="mb-8 mt-5">
-              <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
-              <p className="text-lg text-muted-foreground">Get started with AI-powered property management</p>
-            </div>
-
-            {/* Large Video Screen */}
+            {/* Large Video Screen with aligned header */}
             <div className="mb-12">
-              <div className="relative aspect-video w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg border border-border">
+              <div className="w-full max-w-4xl mx-auto">
+                {/* Welcome header aligned with video left edge */}
+                <div className="mb-6">
+                  <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
+                  <p className="text-lg text-muted-foreground">Get started with AI-powered property management</p>
+                </div>
+                
+                {/* Video container */}
+                <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border">
                 <img 
                   src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
                   alt="Welcome to Hobson AI - Video placeholder"
@@ -996,6 +999,7 @@ const Learn = () => {
                 <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
                   <h3 className="text-white text-xl font-semibold mb-2">Getting Started with Hobson AI</h3>
                   <p className="text-white/90 text-sm">Learn how to transform your property management with AI-powered document analysis</p>
+                </div>
                 </div>
               </div>
             </div>
