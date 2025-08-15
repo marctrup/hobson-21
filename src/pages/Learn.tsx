@@ -167,7 +167,7 @@ const Learn = () => {
                 <div className="space-y-12">
                   {/* Getting started */}
                   <section id="getting-started">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Getting started</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting started</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="what-is-hobson">
                         <AccordionTrigger className="text-left">What is Hobson?</AccordionTrigger>
@@ -204,7 +204,7 @@ const Learn = () => {
 
                   {/* Building with Hobson */}
                   <section id="building-with-hobson">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Building with Hobson</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Building with Hobson</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="build-efficiently">
                         <AccordionTrigger className="text-left">How do I build efficiently with Hobson?</AccordionTrigger>
@@ -277,7 +277,7 @@ const Learn = () => {
 
                   {/* Features */}
                   <section id="features">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Features</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Features</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="project-settings">
                         <AccordionTrigger className="text-left">How do I find the Project settings?</AccordionTrigger>
@@ -410,7 +410,7 @@ const Learn = () => {
 
                   {/* Managing your account */}
                   <section id="managing-account">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Managing your account</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Managing your account</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="change-email">
                         <AccordionTrigger className="text-left">Can I change the email I use to login?</AccordionTrigger>
@@ -441,7 +441,7 @@ const Learn = () => {
 
                   {/* Policies and Security */}
                   <section id="policies-security">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Policies and Security</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Policies and Security</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="get-support">
                         <AccordionTrigger className="text-left">How can I get support?</AccordionTrigger>
@@ -484,7 +484,7 @@ const Learn = () => {
 
                   {/* How Hobson works */}
                   <section id="how-hobson-works">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">How Hobson works</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">How Hobson works</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="tech-stacks">
                         <AccordionTrigger className="text-left">What tech stacks does Hobson know?</AccordionTrigger>
@@ -515,7 +515,7 @@ const Learn = () => {
 
                   {/* About Hobson */}
                   <section id="about-hobson">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">About Hobson</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">About Hobson</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="where-based">
                         <AccordionTrigger className="text-left">Where is Hobson based?</AccordionTrigger>
@@ -537,7 +537,7 @@ const Learn = () => {
               {/* Table of Contents - Right Sidebar */}
               <div className="hidden lg:block w-64 flex-shrink-0">
                 <div className="sticky top-8">
-                  <div className="bg-card rounded-lg border border-border p-4">
+                  <div className="p-4">
                     <h3 className="text-sm font-semibold text-foreground mb-4 tracking-wide">ON THIS PAGE</h3>
                     <nav className="space-y-2">
                       {tocSections.map((section) => (
@@ -569,7 +569,7 @@ const Learn = () => {
           <h1 className="text-3xl font-bold text-foreground mb-6">
             {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
           </h1>
-          <div className="bg-card rounded-lg p-8 border border-border shadow-sm">
+          <div className="p-8">
             <p className="text-muted-foreground text-lg">
               Content for {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label} - {currentVerticalTabs.find(tab => tab.id === activeVerticalTab)?.label}
             </p>
