@@ -1252,7 +1252,6 @@ const Learn = () => {
                               : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                           }`}
                         >
-                          <span className="text-xs">→</span>
                           {section.label}
                         </button>
                       ))}
