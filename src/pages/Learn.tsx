@@ -18,6 +18,8 @@ const Learn = () => {
       setActiveTocSection('getting-started');
     } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       setActiveTocSection('overview');
+    } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
+      setActiveTocSection('hobson-platform-overview');
     }
   }, [activeHorizontalTab, activeVerticalTab]);
 
