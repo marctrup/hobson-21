@@ -1066,8 +1066,7 @@ const Learn = () => {
                 <div className="space-y-12">
                   {/* The Hobson platform overview */}
                   <section id="hobson-platform-overview">
-                    <div className="flex items-center gap-2 mb-8">
-                      <span className="text-foreground">→</span>
+                    <div className="mb-8">
                       <h2 className="text-3xl font-bold text-foreground">The Hobson platform overview</h2>
                     </div>
                     
