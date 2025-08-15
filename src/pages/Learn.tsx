@@ -5,6 +5,7 @@ import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, 
 const Learn = () => {
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
+  const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
 
   const horizontalTabs = [
     { id: 'introduction', label: 'Introduction', icon: Book },
@@ -194,7 +195,10 @@ const Learn = () => {
                     return (
                       <button
                         key={tab.id}
-                        onClick={() => setActiveVerticalTab(tab.id)}
+                        onClick={() => {
+                          setActiveVerticalTab(tab.id);
+                          setIsGlobalPageActive(true);
+                        }}
                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
                           activeVerticalTab === tab.id
                             ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
@@ -240,7 +244,10 @@ const Learn = () => {
                     return (
                       <button
                         key={tab.id}
-                        onClick={() => setActiveVerticalTab(tab.id)}
+                        onClick={() => {
+                          setActiveVerticalTab(tab.id);
+                          setIsGlobalPageActive(false);
+                        }}
                         className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
                           activeVerticalTab === tab.id
                             ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
@@ -270,9 +277,10 @@ const Learn = () => {
                         onClick={() => {
                           setActiveHorizontalTab(tab.id);
                           setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
+                          setIsGlobalPageActive(false);
                         }}
                         className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
-                          activeHorizontalTab === tab.id
+                          activeHorizontalTab === tab.id && !isGlobalPageActive
                             ? 'border-primary text-primary'
                             : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'
                         }`}
