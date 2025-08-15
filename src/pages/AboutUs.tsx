@@ -37,52 +37,48 @@ const AboutUs = () => {
             <p className="text-xl text-muted-foreground">How we went from problem to solution</p>
           </div>
 
-          {/* Timeline Layout */}
-          <div className="space-y-16">
+          {/* Compact Timeline Layout */}
+          <div className="grid lg:grid-cols-3 gap-8 lg:gap-6">
             {/* Step 1 */}
             <div className="relative group">
-              <div className="absolute left-8 top-0 w-0.5 h-full bg-gradient-to-b from-primary/50 to-transparent"></div>
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 relative z-10">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
                   <Users className="w-8 h-8 text-white" />
                 </div>
-                <div className="flex-1 pt-2">
-                  <h3 className="text-2xl font-bold text-foreground mb-4">The Problem We Faced</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                    After years of working in property management, we experienced firsthand how much time was wasted moving data between traditional systems. The inefficiency was frustrating and costly.
-                  </p>
-                </div>
+                <h3 className="text-xl font-bold text-foreground mb-4">The Problem We Faced</h3>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  After years of working in property management, we experienced firsthand how much time was wasted moving data between traditional systems. The inefficiency was frustrating and costly.
+                </p>
               </div>
+              {/* Connector Line - Hidden on mobile, visible on lg+ */}
+              <div className="hidden lg:block absolute top-8 -right-3 w-6 h-0.5 bg-gradient-to-r from-primary/50 to-transparent"></div>
             </div>
 
             {/* Step 2 */}
             <div className="relative group">
-              <div className="absolute left-8 top-0 w-0.5 h-full bg-gradient-to-b from-primary/50 to-transparent"></div>
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 relative z-10">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
                   <Lightbulb className="w-8 h-8 text-white" />
                 </div>
-                <div className="flex-1 pt-2">
-                  <h3 className="text-2xl font-bold text-primary mb-4">The AI Breakthrough</h3>
-                  <p className="text-xl font-semibold text-primary leading-relaxed max-w-2xl">
-                    Then artificial intelligence changed everything. We realized we could build something that would actually understand property documents and work seamlessly with existing systems.
-                  </p>
-                </div>
+                <h3 className="text-xl font-bold text-primary mb-4">The AI Breakthrough</h3>
+                <p className="text-lg font-semibold text-primary leading-relaxed">
+                  Then artificial intelligence changed everything. We realized we could build something that would actually understand property documents and work seamlessly with existing systems.
+                </p>
               </div>
+              {/* Connector Line - Hidden on mobile, visible on lg+ */}
+              <div className="hidden lg:block absolute top-8 -right-3 w-6 h-0.5 bg-gradient-to-r from-primary/50 to-transparent"></div>
             </div>
 
             {/* Step 3 */}
             <div className="relative group">
-              <div className="flex items-start gap-8">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 relative z-10">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
                   <Target className="w-8 h-8 text-white" />
                 </div>
-                <div className="flex-1 pt-2">
-                  <h3 className="text-2xl font-bold text-foreground mb-4">Our Mission Today</h3>
-                  <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-                    That's why we built Hobson — not to replace your existing systems, but to work alongside them, making your property management workflow more efficient and intelligent.
-                  </p>
-                </div>
+                <h3 className="text-xl font-bold text-foreground mb-4">Our Mission Today</h3>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  That's why we built Hobson — not to replace your existing systems, but to work alongside them, making your property management workflow more efficient and intelligent.
+                </p>
               </div>
             </div>
           </div>
