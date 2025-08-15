@@ -213,7 +213,7 @@ const Learn = () => {
             <aside className="w-80 border-r border-border bg-background/50 min-h-[calc(100vh-8rem)]">
               <div className="p-4 pt-20">
                 {/* Global Navigation Section */}
-                <div className="mb-4">
+                <div className="mb-8">
                   <div className="px-3 pb-2">
                     <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Global</h3>
                   </div>
@@ -240,6 +240,20 @@ const Learn = () => {
                     })}
                   </nav>
                 </div>
+
+                {/* Visual Separator */}
+                {!isGlobalPageActive && (
+                  <div className="relative mb-6">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-border"></div>
+                    </div>
+                    <div className="relative flex justify-center">
+                      <div className="bg-background px-3">
+                        <div className="w-2 h-2 bg-muted-foreground/40 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Contextual Section - Only show when not on global pages */}
                 {!isGlobalPageActive && (
