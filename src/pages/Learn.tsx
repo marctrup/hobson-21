@@ -133,6 +133,367 @@ const Learn = () => {
       );
     }
 
+    // Handle Plans and Credits content specifically
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
+      const tocSections = [
+        { id: 'overview', label: 'Overview' },
+        { id: 'feature-comparison', label: 'Feature comparison' },
+        { id: 'available-plans', label: 'Available Paid Plans' },
+        { id: 'credit-display', label: 'Credit display' },
+        { id: 'credit-usage', label: 'Credit usage' },
+        { id: 'credit-rollovers', label: 'Credit Rollovers' },
+        { id: 'faq-plans', label: 'FAQ' },
+        { id: 'troubleshooting', label: 'Common Issues' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
+      return (
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-2">Plans and Credits</h1>
+                  <p className="text-lg text-muted-foreground">Understanding plans, credit usage and credit rollovers in Lovable</p>
+                </div>
+
+                <div className="space-y-12">
+                  {/* Overview */}
+                  <section id="overview">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Overview</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        Lovable is a subscription based service with a free plan and several paid plans. When you pay for a subscription you get access to more features, and more credits. You need credits to send messages in Lovable.
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* Feature Comparison */}
+                  <section id="feature-comparison">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Feature comparison: Free plan vs. Paid plans</h2>
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-3">Free Plan</h3>
+                        <ul className="text-muted-foreground space-y-2">
+                          <li>• 5 daily credits up to a maximum of 30 per month</li>
+                          <li>• Workspace collaboration with unlimited members</li>
+                        </ul>
+                      </div>
+                      
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-3">Pro plan</h3>
+                        <ul className="text-muted-foreground space-y-2">
+                          <li>• 5 daily credits up to a maximum of 150 per month</li>
+                          <li>• Monthly credits depending on your plan</li>
+                          <li>• Workspace collaboration with unlimited members</li>
+                          <li>• Workspace roles and permissions</li>
+                          <li>• Private projects</li>
+                          <li>• Ability to connect custom domains to your Lovable projects</li>
+                          <li>• Ability to remove the "Edit with Lovable" badge from your Lovable projects</li>
+                          <li>• Access to Code mode to edit code directly inside of Lovable</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-3">Business plan</h3>
+                        <ul className="text-muted-foreground space-y-2">
+                          <li>• Everything in Pro, plus:</li>
+                          <li>• SSO</li>
+                          <li>• Personal projects within workspaces</li>
+                          <li>• Opt out of data training</li>
+                          <li>• Build reusable design templates to streamline your projects</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Available Plans */}
+                  <section id="available-plans">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Available Paid Plans</h2>
+                    <p className="text-muted-foreground mb-6">
+                      Each paid plan includes a set number of allocated monthly credits. We offer both Pro and Business plans, each with different pricing options and unique perks to suit individual users or teams. You can choose to pay for these plans either monthly or annually. Annual billing offers additional benefits such as a discounted monthly rate and higher rollover limits for unused credits.
+                    </p>
+                    
+                    <div className="space-y-8">
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-4">Pro</h3>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-sm">
+                            <thead>
+                              <tr className="border-b border-border">
+                                <th className="text-left py-2 text-foreground">Monthly credits</th>
+                                <th className="text-left py-2 text-foreground">Monthly billing</th>
+                                <th className="text-left py-2 text-foreground">Annual billing</th>
+                              </tr>
+                            </thead>
+                            <tbody className="text-muted-foreground">
+                              <tr><td className="py-2">100</td><td>$25</td><td>$250 ($21/month)</td></tr>
+                              <tr><td className="py-2">200</td><td>$50</td><td>$500 ($42/month)</td></tr>
+                              <tr><td className="py-2">400</td><td>$100</td><td>$1,000 ($84/month)</td></tr>
+                              <tr><td className="py-2">800</td><td>$200</td><td>$2,000 ($167/month)</td></tr>
+                              <tr><td className="py-2">1,200</td><td>$294</td><td>$2,940 ($245/month)</td></tr>
+                              <tr><td className="py-2">2,000</td><td>$480</td><td>$4,800 ($400/month)</td></tr>
+                              <tr><td className="py-2">3,000</td><td>$705</td><td>$7,050 ($588/month)</td></tr>
+                              <tr><td className="py-2">4,000</td><td>$920</td><td>$9,200 ($767/month)</td></tr>
+                              <tr><td className="py-2">5,000</td><td>$1,125</td><td>$11,250 ($938/month)</td></tr>
+                              <tr><td className="py-2">7,500</td><td>$1,688</td><td>$16,880 ($1,407/month)</td></tr>
+                              <tr><td className="py-2">10,000</td><td>$2,250</td><td>$22,500 ($1,875/month)</td></tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-4">Business</h3>
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-sm">
+                            <thead>
+                              <tr className="border-b border-border">
+                                <th className="text-left py-2 text-foreground">Monthly credits</th>
+                                <th className="text-left py-2 text-foreground">Monthly billing</th>
+                                <th className="text-left py-2 text-foreground">Annual billing</th>
+                              </tr>
+                            </thead>
+                            <tbody className="text-muted-foreground">
+                              <tr><td className="py-2">100</td><td>$50</td><td>$500 ($42/month)</td></tr>
+                              <tr><td className="py-2">200</td><td>$100</td><td>$1,000 ($84/month)</td></tr>
+                              <tr><td className="py-2">400</td><td>$200</td><td>$2,000 ($167/month)</td></tr>
+                              <tr><td className="py-2">800</td><td>$400</td><td>$4,000 ($334/month)</td></tr>
+                              <tr><td className="py-2">1,200</td><td>$588</td><td>$5,880 ($490/month)</td></tr>
+                              <tr><td className="py-2">2,000</td><td>$960</td><td>$9,600 ($800/month)</td></tr>
+                              <tr><td className="py-2">3,000</td><td>$1,410</td><td>$14,100 ($1,175/month)</td></tr>
+                              <tr><td className="py-2">4,000</td><td>$1,840</td><td>$18,400 ($1,534/month)</td></tr>
+                              <tr><td className="py-2">5,000</td><td>$2,250</td><td>$22,500 ($1,875/month)</td></tr>
+                              <tr><td className="py-2">7,500</td><td>$3,300</td><td>$33,000 ($2,750/month)</td></tr>
+                              <tr><td className="py-2">10,000</td><td>$4,300</td><td>$43,000 ($3,584/month)</td></tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className="text-muted-foreground mt-6">
+                      When you upgrade your plan, for example, from a 100 credit plan to a 200 credit plan you don't get 200 new credits. Instead, your total credits for the month are updated to 200. So if you already had 100 monthly credits upgrading gives you 100 more, not 200 more.
+                    </p>
+                  </section>
+
+                  {/* Credit Display */}
+                  <section id="credit-display">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit display</h2>
+                    <p className="text-muted-foreground mb-4">
+                      To view how many credits you have or have used, simply press your workspace name on the main dashboard or the project name when inside the project editor. You'll see how many credits you have left this billing period, as well as the credit bar. The credit bar provides a visual representation of how many credits a user has remaining and how many have been used.
+                    </p>
+                    <ul className="text-muted-foreground space-y-2">
+                      <li>• <strong>Grey part:</strong> Shows the amount of credits already used this billing period.</li>
+                      <li>• <strong>Blue parts:</strong> Shows different types of remaining credits. Hovering over each colored section will display a tooltip indicating the credit type and the exact number of credits available for that type.</li>
+                    </ul>
+                  </section>
+
+                  {/* Credit Usage */}
+                  <section id="credit-usage">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit usage</h2>
+                    <p className="text-muted-foreground mb-4">
+                      Lovable has a usage-based credit system, where sending messages deducts credits. The cost of a message depends on its complexity to ensure you only pay for what you actually use.
+                    </p>
+                    <p className="text-muted-foreground mb-6">
+                      Many messages cost less than 1 credit, while more complex ones may cost more. This approach allows for more precise edits and greater efficiency per message, making Lovable more affordable overall.
+                    </p>
+                    
+                    <h3 className="text-lg font-medium text-foreground mb-4">Example prompts and their cost:</h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b border-border">
+                            <th className="text-left py-2 text-foreground">User Prompt</th>
+                            <th className="text-left py-2 text-foreground">Work done</th>
+                            <th className="text-left py-2 text-foreground">Credits used</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-muted-foreground">
+                          <tr><td className="py-2">Make the button gray</td><td>Changes the button styles</td><td>0.50</td></tr>
+                          <tr><td className="py-2">Remove the footer</td><td>Removes the footer component</td><td>0.90</td></tr>
+                          <tr><td className="py-2">Add authentication</td><td>Adds login and authentication logic</td><td>1.20</td></tr>
+                          <tr><td className="py-2">Build a landing page with images</td><td>Creates a landing page with generated images, a theme and sections</td><td>2.00</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <p className="text-muted-foreground mt-6">
+                      You can see the cost of each message in the chat history by pressing the three dots beneath a message.
+                    </p>
+                  </section>
+
+                  {/* Credit Rollovers */}
+                  <section id="credit-rollovers">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit Rollovers</h2>
+                    <p className="text-muted-foreground mb-4">
+                      Unused credits automatically roll over at the end of each billing cycle for both monthly and annual paid plans, as long as you keep an active subscription, subject to the limitations outlined below.
+                    </p>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">Rollover credit limits:</h3>
+                        <ul className="text-muted-foreground space-y-2">
+                          <li>• <strong>Monthly plans:</strong> Rollover credits can accumulate up to the monthly credit limit.</li>
+                          <li>• <strong>Annual plans:</strong> Rollover credits can accumulate up to 12 times the monthly credit limit (i.e. the annual limit).</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">Rollover credits expiration:</h3>
+                        <p className="text-muted-foreground">
+                          Rollover credits are valid up to one month after being added for monthly plans, and 12 months after being added for annual plans.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">Cancellation:</h3>
+                        <p className="text-muted-foreground">
+                          Upon cancellation of a paid subscription, all unused and rollover credits will expire at the end of the current billing period and will not carry over.
+                        </p>
+                      </div>
+
+                      <p className="text-muted-foreground">
+                        Daily credits do not roll over. Unused daily credits will not accumulate from day to day for the free tier or for the paid tiers.
+                      </p>
+
+                      <p className="text-muted-foreground">
+                        For detailed information about subscription options, visit our pricing page.
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* FAQ */}
+                  <section id="faq-plans">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">FAQ</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="what-is-credit">
+                        <AccordionTrigger className="text-left">What is a credit?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">A credit is the unit of measurement for using Lovable's AI features. Each message or action costs a certain number of credits based on its complexity.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="upgrade-subscription">
+                        <AccordionTrigger className="text-left">How can I upgrade my subscription?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You can upgrade your subscription through your workspace settings or by contacting our support team.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="downgrade-subscription">
+                        <AccordionTrigger className="text-left">How can I downgrade my subscription?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Subscription downgrades can be managed through your account settings or by reaching out to support.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="cancel-subscription">
+                        <AccordionTrigger className="text-left">How can I cancel my subscription?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You can cancel your subscription at any time through your account settings. Your access will continue until the end of the current billing period.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="billing-info">
+                        <AccordionTrigger className="text-left">How can I change my billing information?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Billing information can be updated in your account settings under the billing section.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="download-invoices">
+                        <AccordionTrigger className="text-left">How do I download my invoices?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Invoices are available for download in your account settings under billing history.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="get-more-credits">
+                        <AccordionTrigger className="text-left">How do I get more credits?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You can get more credits by upgrading your subscription plan or purchasing additional credit packages.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="credit-reset">
+                        <AccordionTrigger className="text-left">When does my credit limit reset?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Your credit limit resets at the beginning of each billing cycle based on your subscription plan.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="credit-topup">
+                        <AccordionTrigger className="text-left">Can I buy a top-up of credits?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Additional credit packages may be available depending on your plan. Contact support for more information.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="remaining-credits">
+                        <AccordionTrigger className="text-left">How do I see the remaining credits in a workspace?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Click on your workspace name on the dashboard to view your remaining credits and usage statistics.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="free-credits">
+                        <AccordionTrigger className="text-left">Can I get free credits?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Free credits are included with the free plan. Additional free credits may be available through promotional offers or referral programs.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+
+                  {/* Common Issues */}
+                  <section id="troubleshooting">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Common Issues and Troubleshooting</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="payment-issues">
+                        <AccordionTrigger className="text-left">I can't pay for my subscription. What should I do?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">If you're experiencing payment issues, please check your payment method details and ensure your card is valid. If the problem persists, contact our support team for assistance.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="payment-access">
+                        <AccordionTrigger className="text-left">I've paid but still don't have access to my plan. What should I do?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Payment processing can sometimes take a few minutes. If you still don't have access after 10 minutes, please contact our support team with your payment confirmation details.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+                </div>
+              </div>
+
+              {/* Table of Contents */}
+              <div className="w-64 flex-shrink-0 hidden lg:block">
+                <div className="sticky top-24">
+                  <div className="p-4">
+                    <h3 className="text-sm font-medium text-foreground mb-4">On this page</h3>
+                    <div className="space-y-2">
+                      {tocSections.map((section) => (
+                        <button
+                          key={section.id}
+                          onClick={() => scrollToSection(section.id)}
+                          className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
+                            activeTocSection === section.id
+                              ? 'bg-purple-100 text-purple-700 font-medium'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                          }`}
+                        >
+                          {section.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     // Handle FAQ content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
       const tocSections = [
