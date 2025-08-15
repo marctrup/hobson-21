@@ -335,14 +335,12 @@ const BlogEditor = () => {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          {post.status === 'published' && (
-            <Button variant="outline" asChild>
-              <a href={`/blog/${post.slug}`} target="_blank" rel="noopener noreferrer">
-                <Eye className="w-4 h-4 mr-2" />
-                Preview
-              </a>
-            </Button>
-          )}
+          <Button variant="outline" asChild>
+            <a href={`/blog/preview/${post.id || 'new'}`} target="_blank" rel="noopener noreferrer">
+              <Eye className="w-4 h-4 mr-2" />
+              Preview
+            </a>
+          </Button>
           <Button 
             variant="outline" 
             onClick={() => handleSave('draft')}

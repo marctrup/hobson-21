@@ -26,6 +26,7 @@ const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogManagement = lazy(() => import("./pages/admin/BlogManagement"));
 const BlogEditor = lazy(() => import("./pages/admin/BlogEditor"));
+const BlogPreview = lazy(() => import("./pages/BlogPreview"));
 const Pricing = lazy(() => import("./pages/Pricing"));
 
 // Loading component
@@ -94,8 +95,9 @@ const App = () => {
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/admin" element={<Admin />} />
                   <Route path="/admin/blog" element={<BlogManagement />} />
-                  <Route path="/admin/blog/new" element={<BlogEditor />} />
-                  <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
+                   <Route path="/admin/blog/new" element={<BlogEditor />} />
+                   <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
+                   <Route path="/blog/preview/:id" element={<BlogPreview />} />
                   {/* Partnership route redirect */}
                   <Route path="/partnership" element={<Navigate to="/" replace />} />
                   {/* Temporary routes for testing landing pages in Lovable */}
