@@ -57,7 +57,7 @@ export const FeaturesSection = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h4 className="text-xl font-semibold">Interactive Property Mapping</h4>
-                      <Badge variant="secondary" className="text-xs">Beta</Badge>
+                      <Badge variant="secondary" className="text-xs">Coming Soon</Badge>
                     </div>
                     <p className="text-primary font-medium mb-3">Geospatial intelligence</p>
                   </div>
