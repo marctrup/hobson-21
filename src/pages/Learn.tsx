@@ -1017,38 +1017,229 @@ const Learn = () => {
 
     // Handle Getting Started content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
+      const tocSections = [
+        { id: 'create-first-project', label: 'Create your First Project' },
+        { id: 'lovable-dashboard', label: 'Lovable Dashboard' },
+        { id: 'project-overview', label: 'Project Overview' },
+        { id: 'project-settings', label: 'Project Settings' },
+        { id: 'project-quick-access', label: 'Project Quick Access' },
+        { id: 'start-your-project', label: 'Start your Project' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
         <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
-            {/* Getting Started Section */}
-            <div className="mb-12">
-              <div className="w-full max-w-[70.4rem] mx-auto">
-                {/* Getting Started header */}
-                <div className="mb-6">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="mb-8">
                   <h1 className="text-3xl font-bold text-foreground mb-2">Getting Started</h1>
-                  <p className="text-lg text-muted-foreground mb-6">From first document to confident decision</p>
-                  
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Overview of Hobson</h2>
-                  <p className="text-lg text-muted-foreground mb-6">Welcome to this step-by-step guide on how to get accurate, up-to-date answers from your property documents using Hobson.</p>
+                  <p className="text-lg text-muted-foreground">From first document to confident decision</p>
                 </div>
-                
-                {/* Video container */}
-                <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border">
-                  <img 
-                    src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
-                    alt="Overview of Hobson - Video placeholder"
-                    className="w-full h-full object-cover"
-                  />
-                  {/* Play button overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <button className="bg-black/70 hover:bg-black/80 text-white rounded-full p-4 transition-colors">
-                      <Play className="w-12 h-12 ml-1" fill="currentColor" />
-                    </button>
+
+                {/* Overview Video Section */}
+                <div className="mb-12">
+                  <h2 className="text-xl font-semibold text-foreground mb-6">Overview of Hobson</h2>
+                  <p className="text-muted-foreground mb-6">Welcome to this step-by-step guide on how to get accurate, up-to-date answers from your property documents using Hobson.</p>
+                  
+                  <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border mb-8">
+                    <img 
+                      src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
+                      alt="Overview of Hobson - Video placeholder"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <button className="bg-black/70 hover:bg-black/80 text-white rounded-full p-4 transition-colors">
+                        <Play className="w-12 h-12 ml-1" fill="currentColor" />
+                      </button>
+                    </div>
+                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                      <h3 className="text-white text-xl font-semibold mb-2">Overview of Hobson</h3>
+                      <p className="text-white/90 text-sm">Step-by-step guide to getting started with Hobson AI</p>
+                    </div>
                   </div>
-                  {/* Video title overlay */}
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                    <h3 className="text-white text-xl font-semibold mb-2">Overview of Hobson</h3>
-                    <p className="text-white/90 text-sm">Step-by-step guide to getting started with Hobson AI</p>
+                </div>
+
+                <div className="space-y-12">
+                  {/* Create your First Project */}
+                  <section id="create-first-project">
+                    <h2 className="text-xl font-semibold text-foreground mb-6">Create your First Project</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="getting-started-basics">
+                        <AccordionTrigger className="text-left">How do I create my first project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Creating your first project is simple. Start by clicking the "New Project" button on your dashboard and follow the setup wizard.</p>
+                          {/* Placeholder for video/text content */}
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+
+                  {/* Lovable Dashboard */}
+                  <section id="lovable-dashboard">
+                    <h2 className="text-xl font-semibold text-foreground mb-6">Lovable Dashboard</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="dashboard-overview">
+                        <AccordionTrigger className="text-left">Understanding your dashboard</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Your dashboard is the central hub for all your projects and activities.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+
+                  {/* Project Overview */}
+                  <section id="project-overview">
+                    <h2 className="text-xl font-semibold text-foreground mb-6">Project Overview</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="project-details">
+                        <AccordionTrigger className="text-left">What can I see in my project overview?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">The project overview gives you a comprehensive view of your project's status, files, and progress.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+
+                  {/* Project Settings */}
+                  <section id="project-settings">
+                    <h2 className="text-xl font-semibold text-foreground mb-6">Project Settings</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="configure-settings">
+                        <AccordionTrigger className="text-left">How do I configure my project settings?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Project settings allow you to customize your project's behavior and preferences.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+
+                  {/* Project Quick Access */}
+                  <section id="project-quick-access">
+                    <h2 className="text-xl font-semibold text-foreground mb-6">Project Quick Access</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="quick-access-features">
+                        <AccordionTrigger className="text-left">What are quick access features?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Quick access features help you navigate and work with your projects more efficiently.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+
+                  {/* Start your Project */}
+                  <section id="start-your-project">
+                    <h2 className="text-xl font-semibold text-foreground mb-6">Start your Project</h2>
+                    <p className="text-muted-foreground mb-6">There are several ways to get started with Lovable, depending on your preferences and resources:</p>
+                    
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="prompt">
+                        <AccordionTrigger className="text-left">Prompt</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Start with a simple prompt to describe what you want to build.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                      
+                      <AccordionItem value="templates">
+                        <AccordionTrigger className="text-left">Templates</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Choose from pre-built templates to get started quickly.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                      
+                      <AccordionItem value="remix-project">
+                        <AccordionTrigger className="text-left">Remix an Existing Project</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Build upon existing projects by remixing them.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                      
+                      <AccordionItem value="figma">
+                        <AccordionTrigger className="text-left">Using Figma</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Import your Figma designs to create your project.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                      
+                      <AccordionItem value="sketch">
+                        <AccordionTrigger className="text-left">Using a Sketch</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Upload sketches or wireframes to guide your project creation.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                      
+                      <AccordionItem value="clone-website">
+                        <AccordionTrigger className="text-left">Cloning a Website or Application</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-4">Recreate existing websites or applications as your starting point.</p>
+                          <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                            <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+                </div>
+              </div>
+
+              {/* Table of Contents */}
+              <div className="w-64 flex-shrink-0 hidden lg:block">
+                <div className="sticky top-24">
+                  <div className="p-4">
+                    <h3 className="text-sm font-medium text-foreground mb-4">On this page</h3>
+                    <div className="space-y-2">
+                      {tocSections.map((section) => (
+                        <button
+                          key={section.id}
+                          onClick={() => scrollToSection(section.id)}
+                          className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
+                            activeTocSection === section.id
+                              ? 'bg-purple-100 text-purple-700 font-medium'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                          }`}
+                        >
+                          {section.label}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
