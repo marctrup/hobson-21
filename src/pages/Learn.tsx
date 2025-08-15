@@ -1079,7 +1079,6 @@ const Learn = () => {
                           <AccordionItem value="dashboard-navigation">
                             <AccordionTrigger className="text-left hover:no-underline">
                               <div className="flex items-center gap-3">
-                                <span className="text-foreground">→</span>
                                 <span className="text-lg font-semibold text-foreground">Navigate the Hobson dashboard</span>
                               </div>
                             </AccordionTrigger>
@@ -1116,7 +1115,6 @@ const Learn = () => {
                           <AccordionItem value="upload-documents">
                             <AccordionTrigger className="text-left hover:no-underline">
                               <div className="flex items-center gap-3">
-                                <span className="text-foreground">→</span>
                                 <span className="text-lg font-semibold text-foreground">Upload and organize documents</span>
                               </div>
                             </AccordionTrigger>
@@ -1158,7 +1156,6 @@ const Learn = () => {
                           <AccordionItem value="ai-analysis">
                             <AccordionTrigger className="text-left hover:no-underline">
                               <div className="flex items-center gap-3">
-                                <span className="text-foreground">→</span>
                                 <span className="text-lg font-semibold text-foreground">Understand AI analysis results</span>
                               </div>
                             </AccordionTrigger>
