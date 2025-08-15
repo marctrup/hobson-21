@@ -52,16 +52,20 @@ const BlogPreview = () => {
 
   const fetchPost = async () => {
     try {
-      console.log('Fetching post with ID:', id);
+      console.log('=== BlogPreview fetchPost START ===');
+      console.log('Post ID:', id);
+      console.log('User:', user);
       
-      // First check if user has admin role
+      setLoading(true);
+      setNotFound(false);
+      
+      // Check user role first
       const { data: roleData, error: roleError } = await supabase
         .rpc('get_current_user_role');
       
-      console.log('User role check:', { roleData, roleError });
+      console.log('Role check result:', { roleData, roleError });
       
-      // For preview, always allow access if user is authenticated
-      // We'll handle permissions on the display side
+      // Fetch the blog post
       const { data, error } = await supabase
         .from('blog_posts')
         .select(`
@@ -84,51 +88,61 @@ const BlogPreview = () => {
         .eq('id', id)
         .maybeSingle();
 
-      console.log('Query result:', { data, error });
+      console.log('Blog post query result:', { data, error });
 
       if (error) {
         console.error('Error fetching post:', error);
         setNotFound(true);
-      } else if (data) {
-        // Fetch categories
-        const { data: categoriesData } = await supabase
-          .from('blog_post_categories')
-          .select(`
-            blog_categories (
-              name,
-              slug
-            )
-          `)
-          .eq('post_id', data.id);
-
-        console.log('Categories data:', categoriesData);
-
-        const formattedPost: BlogPost = {
-          id: data.id,
-          title: data.title,
-          content: data.content,
-          excerpt: data.excerpt,
-          featured_image_url: data.featured_image_url,
-          featured_image_alt: data.featured_image_alt,
-          published_at: data.published_at,
-          created_at: data.created_at,
-          reading_time: data.reading_time,
-          meta_title: data.meta_title,
-          meta_description: data.meta_description,
-          status: data.status,
-          author: {
-            display_name: data.profiles?.display_name || 'Unknown Author'
-          },
-          categories: categoriesData?.map(item => item.blog_categories).filter(Boolean) || []
-        };
-        setPost(formattedPost);
-      } else {
-        setNotFound(true);
+        setLoading(false);
+        return;
       }
+      
+      if (!data) {
+        console.log('No post data returned');
+        setNotFound(true);
+        setLoading(false);
+        return;
+      }
+
+      // Fetch categories
+      const { data: categoriesData, error: catError } = await supabase
+        .from('blog_post_categories')
+        .select(`
+          blog_categories (
+            name,
+            slug
+          )
+        `)
+        .eq('post_id', data.id);
+
+      console.log('Categories query result:', { categoriesData, catError });
+
+      const formattedPost: BlogPost = {
+        id: data.id,
+        title: data.title,
+        content: data.content,
+        excerpt: data.excerpt,
+        featured_image_url: data.featured_image_url,
+        featured_image_alt: data.featured_image_alt,
+        published_at: data.published_at,
+        created_at: data.created_at,
+        reading_time: data.reading_time,
+        meta_title: data.meta_title,
+        meta_description: data.meta_description,
+        status: data.status,
+        author: {
+          display_name: data.profiles?.display_name || 'Unknown Author'
+        },
+        categories: categoriesData?.map(item => item.blog_categories).filter(Boolean) || []
+      };
+      
+      console.log('Formatted post:', formattedPost);
+      setPost(formattedPost);
+      setLoading(false);
+      
     } catch (error) {
-      console.error('Unexpected error fetching post:', error);
+      console.error('Unexpected error in fetchPost:', error);
       setNotFound(true);
-    } finally {
       setLoading(false);
     }
   };
