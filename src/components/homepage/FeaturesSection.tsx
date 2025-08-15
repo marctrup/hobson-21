@@ -123,7 +123,7 @@ export const FeaturesSection = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h4 className="text-xl font-semibold">Predictive Analytics</h4>
-                      <Badge variant="outline" className="text-xs border-orange-500 text-orange-600">Coming Soon</Badge>
+                      <Badge variant="outline" className="text-xs border-primary text-primary">Coming Soon</Badge>
                     </div>
                     <p className="text-primary font-medium mb-3">Future-focused insights</p>
                   </div>
