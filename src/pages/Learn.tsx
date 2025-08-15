@@ -1004,48 +1004,6 @@ const Learn = () => {
               </div>
             </div>
 
-            {/* Additional welcome content */}
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <h2 className="text-xl font-semibold text-foreground mb-4">What you'll learn</h2>
-                <ul className="space-y-3 text-muted-foreground">
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                    <span>How to upload and analyze property documents</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                    <span>Setting up automated compliance monitoring</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                    <span>Creating custom workflows for your team</span>
-                  </li>
-                  <li className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
-                    <span>Integrating with existing property management systems</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div>
-                <h2 className="text-xl font-semibold text-foreground mb-4">Quick start guide</h2>
-                <div className="space-y-4">
-                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border">
-                    <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">1</div>
-                    <span className="text-muted-foreground">Watch the introduction video</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border">
-                    <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">2</div>
-                    <span className="text-muted-foreground">Explore our features and capabilities</span>
-                  </div>
-                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border">
-                    <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">3</div>
-                    <span className="text-muted-foreground">Review frequently asked questions</span>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       );
