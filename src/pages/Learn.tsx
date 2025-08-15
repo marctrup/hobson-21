@@ -1070,8 +1070,10 @@ const Learn = () => {
                       <h2 className="text-3xl font-bold text-foreground">The Hobson platform overview</h2>
                     </div>
                     
+                    {/* Learning Objectives Framework - Template for all sections */}
                     <div className="space-y-6">
-                      {/* Learning Objective 1 */}
+                      
+                      {/* Learning Objective Template 1 */}
                       <div>
                         <Accordion type="multiple" className="w-full">
                           <AccordionItem value="dashboard-navigation">
@@ -1085,7 +1087,7 @@ const Learn = () => {
                               <div className="pl-6 space-y-4">
                                 <p className="text-muted-foreground">Learn how to efficiently navigate through the Hobson dashboard to access all your property management tools and insights.</p>
                                 
-                                {/* Video placeholder */}
+                                {/* Video Teaching Element */}
                                 <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border">
                                   <img 
                                     src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
@@ -1108,7 +1110,7 @@ const Learn = () => {
                         </Accordion>
                       </div>
 
-                      {/* Learning Objective 2 */}
+                      {/* Learning Objective Template 2 */}
                       <div>
                         <Accordion type="multiple" className="w-full">
                           <AccordionItem value="upload-documents">
@@ -1122,7 +1124,7 @@ const Learn = () => {
                               <div className="pl-6 space-y-4">
                                 <p className="text-muted-foreground">Master the document upload process and learn organizational best practices for your property files.</p>
                                 
-                                {/* Text content example */}
+                                {/* Text Teaching Element */}
                                 <div className="bg-muted/20 p-6 rounded-lg border border-border">
                                   <h4 className="font-semibold text-foreground mb-3">Step-by-step guide:</h4>
                                   <div className="space-y-3 text-sm text-muted-foreground">
@@ -1150,7 +1152,7 @@ const Learn = () => {
                         </Accordion>
                       </div>
 
-                      {/* Learning Objective 3 */}
+                      {/* Learning Objective Template 3 */}
                       <div>
                         <Accordion type="multiple" className="w-full">
                           <AccordionItem value="ai-analysis">
@@ -1164,7 +1166,7 @@ const Learn = () => {
                               <div className="pl-6 space-y-4">
                                 <p className="text-muted-foreground">Learn how to interpret and act on the AI-generated insights from your property documents.</p>
                                 
-                                {/* Mixed content example */}
+                                {/* Mixed Teaching Elements - Video + Callout */}
                                 <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border mb-4">
                                   <img 
                                     src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
@@ -1198,6 +1200,36 @@ const Learn = () => {
                           </AccordionItem>
                         </Accordion>
                       </div>
+
+                      {/* 
+                      TEMPLATE FOR ADDITIONAL LEARNING OBJECTIVES:
+                      
+                      <div>
+                        <Accordion type="multiple" className="w-full">
+                          <AccordionItem value="unique-value-here">
+                            <AccordionTrigger className="text-left hover:no-underline">
+                              <div className="flex items-center gap-3">
+                                <span className="text-foreground">→</span>
+                                <span className="text-lg font-semibold text-foreground">Your Learning Objective Title</span>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pl-6 space-y-4">
+                                <p className="text-muted-foreground">Learning objective description goes here.</p>
+                                
+                                // Add your teaching elements here:
+                                // - Video tutorials
+                                // - Step-by-step guides  
+                                // - Pro tip callouts
+                                // - Interactive elements
+                                
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
+                      */}
+                      
                     </div>
                   </section>
 
