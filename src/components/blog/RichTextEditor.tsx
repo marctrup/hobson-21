@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 import { 
   Bold, 
   Italic, 
@@ -16,7 +17,6 @@ import {
   Heading2,
   Heading3
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface RichTextEditorProps {
   content: string;
@@ -29,122 +29,92 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
   onChange,
   placeholder = "Write your content here..."
 }) => {
-  const editorRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => {
-    if (editorRef.current && editorRef.current.innerHTML !== content) {
-      editorRef.current.innerHTML = content;
-    }
-  }, [content]);
+  const insertAtCursor = (startTag: string, endTag: string, defaultText?: string) => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
 
-  const execCommand = (command: string, value: string = '') => {
-    document.execCommand(command, false, value);
-    updateContent();
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    const insertText = selectedText || defaultText || '';
+    
+    const newContent = 
+      content.substring(0, start) + 
+      startTag + insertText + endTag + 
+      content.substring(end);
+    
+    onChange(newContent);
+    
+    // Restore cursor position
+    setTimeout(() => {
+      textarea.focus();
+      const newPosition = start + startTag.length + insertText.length;
+      textarea.setSelectionRange(newPosition, newPosition);
+    }, 0);
   };
 
-  const updateContent = () => {
-    if (editorRef.current) {
-      onChange(editorRef.current.innerHTML);
-    }
+  const insertBlock = (blockContent: string) => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    
+    const newContent = 
+      content.substring(0, start) + 
+      '\n\n' + blockContent + '\n\n' + 
+      content.substring(end);
+    
+    onChange(newContent);
+    
+    setTimeout(() => {
+      textarea.focus();
+      const newPosition = start + blockContent.length + 4;
+      textarea.setSelectionRange(newPosition, newPosition);
+    }, 0);
   };
 
-  const insertList = (ordered: boolean = false) => {
-    const selection = window.getSelection();
-    if (!selection || !selection.rangeCount) return;
-
-    const range = selection.getRangeAt(0);
-    const listElement = document.createElement(ordered ? 'ol' : 'ul');
-    listElement.style.marginTop = '16px';
-    listElement.style.marginBottom = '16px';
-    listElement.style.paddingLeft = '24px';
-    
-    const listItem = document.createElement('li');
-    listItem.style.marginBottom = '8px';
-    listItem.innerHTML = 'List item';
-    listElement.appendChild(listItem);
-
-    range.deleteContents();
-    range.insertNode(listElement);
-    
-    // Position cursor at the end of the first list item
-    const newRange = document.createRange();
-    newRange.setStart(listItem, 1);
-    newRange.collapse(true);
-    selection.removeAllRanges();
-    selection.addRange(newRange);
-    
-    updateContent();
+  const handleBold = () => insertAtCursor('<strong>', '</strong>', 'bold text');
+  const handleItalic = () => insertAtCursor('<em>', '</em>', 'italic text');
+  const handleUnderline = () => insertAtCursor('<u>', '</u>', 'underlined text');
+  
+  const handleHeading = (level: number) => {
+    const tag = `h${level}`;
+    insertAtCursor(`<${tag}>`, `</${tag}>`, `Heading ${level}`);
   };
 
-  const insertHeading = (level: number) => {
-    const selection = window.getSelection();
-    if (!selection || !selection.rangeCount) return;
-
-    const range = selection.getRangeAt(0);
-    const heading = document.createElement(`h${level}`);
-    
-    // Set heading styles
-    const styles = {
-      1: { fontSize: '2rem', fontWeight: '700', marginTop: '32px', marginBottom: '16px' },
-      2: { fontSize: '1.5rem', fontWeight: '600', marginTop: '24px', marginBottom: '12px' },
-      3: { fontSize: '1.25rem', fontWeight: '600', marginTop: '20px', marginBottom: '10px' }
-    };
-    
-    const style = styles[level as keyof typeof styles];
-    Object.assign(heading.style, style);
-    
-    heading.innerHTML = selection.toString() || `Heading ${level}`;
-    
-    range.deleteContents();
-    range.insertNode(heading);
-    
-    // Add a paragraph after the heading
-    const paragraph = document.createElement('p');
-    paragraph.style.marginBottom = '16px';
-    paragraph.innerHTML = '<br>';
-    heading.parentNode?.insertBefore(paragraph, heading.nextSibling);
-    
-    updateContent();
+  const handleList = (ordered: boolean = false) => {
+    const listType = ordered ? 'ol' : 'ul';
+    const listContent = `<${listType}>
+  <li>First item</li>
+  <li>Second item</li>
+  <li>Third item</li>
+</${listType}>`;
+    insertBlock(listContent);
   };
 
-  const insertLink = () => {
+  const handleLink = () => {
     const url = prompt('Enter the URL:');
     if (url) {
-      execCommand('createLink', url);
+      insertAtCursor(`<a href="${url}" target="_blank" rel="noopener noreferrer">`, '</a>', 'link text');
     }
   };
 
-  const changeTextColor = () => {
-    const color = prompt('Enter color (hex code, e.g., #ff0000):');
+  const handleColor = () => {
+    const color = prompt('Enter color (e.g., #ff0000, red, blue):');
     if (color) {
-      execCommand('foreColor', color);
+      insertAtCursor(`<span style="color: ${color}">`, '</span>', 'colored text');
     }
   };
 
-  const insertParagraph = () => {
-    const selection = window.getSelection();
-    if (!selection || !selection.rangeCount) return;
-
-    const range = selection.getRangeAt(0);
-    const paragraph = document.createElement('p');
-    paragraph.style.marginBottom = '16px';
-    paragraph.innerHTML = '<br>';
-    
-    range.deleteContents();
-    range.insertNode(paragraph);
-    
-    // Position cursor inside the paragraph
-    const newRange = document.createRange();
-    newRange.setStart(paragraph, 0);
-    newRange.collapse(true);
-    selection.removeAllRanges();
-    selection.addRange(newRange);
-    
-    updateContent();
+  const handleAlignment = (align: string) => {
+    insertAtCursor(`<div style="text-align: ${align}">`, '</div>', 'aligned text');
   };
 
-  const formatBlock = (tag: string) => {
-    execCommand('formatBlock', tag);
+  const handleParagraph = () => {
+    insertBlock('<p>New paragraph content here.</p>');
   };
 
   return (
@@ -157,9 +127,9 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => execCommand('bold')}
+            onClick={handleBold}
             className="h-8 w-8 p-0"
-            title="Bold (Ctrl+B)"
+            title="Bold"
           >
             <Bold className="h-4 w-4" />
           </Button>
@@ -167,9 +137,9 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => execCommand('italic')}
+            onClick={handleItalic}
             className="h-8 w-8 p-0"
-            title="Italic (Ctrl+I)"
+            title="Italic"
           >
             <Italic className="h-4 w-4" />
           </Button>
@@ -177,9 +147,9 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => execCommand('underline')}
+            onClick={handleUnderline}
             className="h-8 w-8 p-0"
-            title="Underline (Ctrl+U)"
+            title="Underline"
           >
             <Underline className="h-4 w-4" />
           </Button>
@@ -187,7 +157,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={changeTextColor}
+            onClick={handleColor}
             className="h-8 w-8 p-0"
             title="Text Color"
           >
@@ -201,7 +171,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => insertHeading(1)}
+            onClick={() => handleHeading(1)}
             className="h-8 w-8 p-0"
             title="Heading 1"
           >
@@ -211,7 +181,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => insertHeading(2)}
+            onClick={() => handleHeading(2)}
             className="h-8 w-8 p-0"
             title="Heading 2"
           >
@@ -221,7 +191,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => insertHeading(3)}
+            onClick={() => handleHeading(3)}
             className="h-8 w-8 p-0"
             title="Heading 3"
           >
@@ -235,7 +205,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => insertList(false)}
+            onClick={() => handleList(false)}
             className="h-8 w-8 p-0"
             title="Bullet List"
           >
@@ -245,7 +215,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => insertList(true)}
+            onClick={() => handleList(true)}
             className="h-8 w-8 p-0"
             title="Numbered List"
           >
@@ -259,7 +229,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => execCommand('justifyLeft')}
+            onClick={() => handleAlignment('left')}
             className="h-8 w-8 p-0"
             title="Align Left"
           >
@@ -269,7 +239,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => execCommand('justifyCenter')}
+            onClick={() => handleAlignment('center')}
             className="h-8 w-8 p-0"
             title="Align Center"
           >
@@ -279,7 +249,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={() => execCommand('justifyRight')}
+            onClick={() => handleAlignment('right')}
             className="h-8 w-8 p-0"
             title="Align Right"
           >
@@ -293,7 +263,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={insertLink}
+            onClick={handleLink}
             className="h-8 w-8 p-0"
             title="Insert Link"
           >
@@ -303,7 +273,7 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
             type="button"
             variant="ghost"
             size="sm"
-            onClick={insertParagraph}
+            onClick={handleParagraph}
             className="h-8 w-8 p-0"
             title="New Paragraph"
           >
@@ -313,35 +283,18 @@ export const RichTextEditor: React.FC<RichTextEditorProps> = ({
       </div>
 
       {/* Editor Content */}
-      <div
-        ref={editorRef}
-        contentEditable
-        className={cn(
-          "min-h-[400px] p-4 focus:outline-none",
-          "prose prose-sm max-w-none",
-          "[&_p]:mb-4 [&_h1]:mt-8 [&_h1]:mb-4 [&_h2]:mt-6 [&_h2]:mb-3 [&_h3]:mt-4 [&_h3]:mb-2",
-          "[&_ul]:mb-4 [&_ul]:pl-6 [&_ol]:mb-4 [&_ol]:pl-6",
-          "[&_li]:mb-2 [&_blockquote]:border-l-4 [&_blockquote]:border-primary [&_blockquote]:pl-4 [&_blockquote]:mb-4",
-          "[&_a]:text-primary [&_a]:underline [&_a:hover]:text-primary/80"
-        )}
-        onInput={updateContent}
-        onPaste={(e) => {
-          e.preventDefault();
-          const text = e.clipboardData?.getData('text/plain') || '';
-          document.execCommand('insertText', false, text);
-        }}
-        suppressContentEditableWarning={true}
-        style={{
-          lineHeight: '1.6',
-          color: 'hsl(var(--foreground))',
-          fontSize: '14px'
-        }}
-      >
-        {!content && (
-          <div className="text-muted-foreground pointer-events-none">
-            {placeholder}
-          </div>
-        )}
+      <Textarea
+        ref={textareaRef}
+        value={content}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="min-h-[400px] border-0 rounded-none resize-none focus-visible:ring-0 font-mono text-sm"
+        style={{ lineHeight: '1.6' }}
+      />
+      
+      {/* Helper Text */}
+      <div className="px-3 py-2 text-xs text-muted-foreground bg-muted/10 border-t">
+        Use the toolbar buttons to add HTML formatting. The content will be properly rendered when published.
       </div>
     </div>
   );
