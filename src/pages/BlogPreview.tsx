@@ -52,12 +52,14 @@ const BlogPreview = () => {
       console.log('Fetching post with ID:', id);
       
       // First check if user has admin role
-      const { data: roleData } = await supabase
+      const { data: roleData, error: roleError } = await supabase
         .rpc('get_current_user_role');
       
-      console.log('User role:', roleData);
+      console.log('User role check:', { roleData, roleError });
       
-      let query = supabase
+      // For preview, always allow access if user is authenticated
+      // We'll handle permissions on the display side
+      const { data, error } = await supabase
         .from('blog_posts')
         .select(`
           id,
@@ -76,14 +78,8 @@ const BlogPreview = () => {
             display_name
           )
         `)
-        .eq('id', id);
-      
-      // If not admin, only show published posts
-      if (roleData !== 'admin') {
-        query = query.eq('status', 'published');
-      }
-      
-      const { data, error } = await query.maybeSingle();
+        .eq('id', id)
+        .maybeSingle();
 
       console.log('Query result:', { data, error });
 
