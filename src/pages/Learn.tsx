@@ -17,15 +17,85 @@ const Learn = () => {
     { id: 'changelog', label: 'Changelog', icon: Clock },
   ];
 
-  const verticalTabs = [
+  // Static top menu items (separate pages)
+  const staticVerticalTabs = [
     { id: 'announcements', label: 'Announcements', icon: Bell },
     { id: 'status', label: 'Status', icon: Activity },
     { id: 'feature-requests', label: 'Feature requests', icon: MessageSquare },
-    { id: 'welcome', label: 'Welcome', icon: Heart },
-    { id: 'plans-credits', label: 'Plans and credits', icon: CreditCard },
-    { id: 'faq', label: 'FAQ', icon: HelpCircle },
-    { id: 'getting-started', label: 'Getting started', icon: Play },
   ];
+
+  // Dynamic submenu items based on horizontal selection
+  const getContextualVerticalTabs = (horizontalTab: string) => {
+    const baseItems = [
+      { id: 'overview', label: 'Overview', icon: Heart },
+      { id: 'documentation', label: 'Documentation', icon: FileText },
+      { id: 'examples', label: 'Examples', icon: Play },
+      { id: 'faq', label: 'FAQ', icon: HelpCircle },
+    ];
+
+    switch (horizontalTab) {
+      case 'introduction':
+        return [
+          { id: 'welcome', label: 'Welcome', icon: Heart },
+          { id: 'getting-started', label: 'Getting Started', icon: Play },
+          { id: 'basic-concepts', label: 'Basic Concepts', icon: Book },
+          { id: 'first-steps', label: 'First Steps', icon: FileText },
+        ];
+      case 'features':
+        return [
+          { id: 'core-features', label: 'Core Features', icon: Heart },
+          { id: 'advanced-features', label: 'Advanced Features', icon: Wand2 },
+          { id: 'feature-comparison', label: 'Feature Comparison', icon: FileText },
+          { id: 'roadmap', label: 'Roadmap', icon: Clock },
+        ];
+      case 'integrations':
+        return [
+          { id: 'available-integrations', label: 'Available Integrations', icon: Puzzle },
+          { id: 'setup-guide', label: 'Setup Guide', icon: Play },
+          { id: 'api-reference', label: 'API Reference', icon: FileText },
+          { id: 'troubleshooting', label: 'Troubleshooting', icon: HelpCircle },
+        ];
+      case 'tips-tricks':
+        return [
+          { id: 'best-practices', label: 'Best Practices', icon: Heart },
+          { id: 'productivity-tips', label: 'Productivity Tips', icon: Lightbulb },
+          { id: 'common-mistakes', label: 'Common Mistakes', icon: HelpCircle },
+          { id: 'advanced-techniques', label: 'Advanced Techniques', icon: Wand2 },
+        ];
+      case 'prompt-engineering':
+        return [
+          { id: 'fundamentals', label: 'Fundamentals', icon: Users },
+          { id: 'advanced-prompting', label: 'Advanced Prompting', icon: Wand2 },
+          { id: 'prompt-templates', label: 'Prompt Templates', icon: FileText },
+          { id: 'optimization', label: 'Optimization', icon: Activity },
+        ];
+      case 'use-cases':
+        return [
+          { id: 'business-scenarios', label: 'Business Scenarios', icon: Library },
+          { id: 'industry-examples', label: 'Industry Examples', icon: FileText },
+          { id: 'case-studies', label: 'Case Studies', icon: Book },
+          { id: 'success-stories', label: 'Success Stories', icon: Heart },
+        ];
+      case 'glossary':
+        return [
+          { id: 'terms-definitions', label: 'Terms & Definitions', icon: FileText },
+          { id: 'acronyms', label: 'Acronyms', icon: Book },
+          { id: 'technical-terms', label: 'Technical Terms', icon: Wand2 },
+          { id: 'industry-jargon', label: 'Industry Jargon', icon: Users },
+        ];
+      case 'changelog':
+        return [
+          { id: 'latest-updates', label: 'Latest Updates', icon: Clock },
+          { id: 'release-notes', label: 'Release Notes', icon: FileText },
+          { id: 'version-history', label: 'Version History', icon: Activity },
+          { id: 'upcoming-changes', label: 'Upcoming Changes', icon: Bell },
+        ];
+      default:
+        return baseItems;
+    }
+  };
+
+  const currentVerticalTabs = [...staticVerticalTabs, ...getContextualVerticalTabs(activeHorizontalTab)];
 
   const renderContent = () => {
     return (
@@ -36,7 +106,7 @@ const Learn = () => {
           </h1>
           <div className="bg-muted/50 rounded-lg p-8 border border-border">
             <p className="text-muted-foreground text-lg">
-              Content for {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label} - {verticalTabs.find(tab => tab.id === activeVerticalTab)?.label}
+              Content for {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label} - {currentVerticalTabs.find(tab => tab.id === activeVerticalTab)?.label}
             </p>
             <p className="text-muted-foreground mt-4">
               This is where the actual content will go for each section. The layout is now ready for you to populate with specific content for each combination of tabs.
@@ -83,7 +153,30 @@ const Learn = () => {
           <aside className="w-64 border-r border-border bg-background/50 min-h-[calc(100vh-4rem)]">
             <div className="p-4">
               <nav className="space-y-2">
-                {verticalTabs.map((tab) => {
+                {/* Static top menu items */}
+                {staticVerticalTabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveVerticalTab(tab.id)}
+                      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                        activeVerticalTab === tab.id
+                          ? 'bg-primary/10 text-primary border border-primary/20'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{tab.label}</span>
+                    </button>
+                  );
+                })}
+                
+                {/* Separator */}
+                <div className="border-t border-border my-3"></div>
+                
+                {/* Contextual submenu items */}
+                {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
                   const Icon = tab.icon;
                   return (
                     <button
