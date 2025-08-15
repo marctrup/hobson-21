@@ -177,92 +177,60 @@ const Learn = () => {
           </div>
         </header>
 
-        <div className="flex">
-          {/* Left Navigation Panel */}
-          <aside className="w-80 border-r border-border bg-background/50 min-h-[calc(100vh-4rem)]">
-            <div className="p-4">
-              {/* Horizontal Menu (now vertical on left) */}
-              <div className="mb-6">
-                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
-                  Topics
-                </h3>
-                <nav className="space-y-1">
-                  {horizontalTabs.map((tab) => {
-                    const Icon = tab.icon;
-                    return (
-                      <button
-                        key={tab.id}
-                        onClick={() => {
-                          setActiveHorizontalTab(tab.id);
-                          setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
-                          setIsGlobalPageActive(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
-                          activeHorizontalTab === tab.id && !isGlobalPageActive
-                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                        }`}
-                      >
-                        <Icon className="w-4 h-4 flex-shrink-0" />
-                        <span className="text-sm font-medium">{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
+        <div className="flex flex-col">
+          {/* Horizontal Topics Navigation */}
+          <div className="border-b border-border bg-background/50">
+            <div className="px-6">
+              <nav className="flex space-x-8 overflow-x-auto">
+                {horizontalTabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setActiveHorizontalTab(tab.id);
+                        setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
+                        setIsGlobalPageActive(false);
+                      }}
+                      className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
+                        activeHorizontalTab === tab.id && !isGlobalPageActive
+                          ? 'border-primary text-primary'
+                          : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          </div>
 
-              {/* Global Navigation Section */}
-              <div className="mb-4">
-                <div className="px-3 pb-2">
-                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Global</h3>
-                </div>
-                <nav className="space-y-1">
-                  {staticVerticalTabs.map((tab) => {
-                    const Icon = tab.icon;
-                    return (
-                      <button
-                        key={tab.id}
-                        onClick={() => {
-                          setActiveVerticalTab(tab.id);
-                          setIsGlobalPageActive(true);
-                        }}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                          activeVerticalTab === tab.id && isGlobalPageActive
-                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                        }`}
-                      >
-                        <Icon className="w-4 h-4 flex-shrink-0" />
-                        <span className="text-sm font-medium">{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
-
-              {/* Contextual Section - Only show when not on global pages */}
-              {!isGlobalPageActive && (
-                <div>
+          {/* Main Layout with Sidebar and Content */}
+          <div className="flex">
+            {/* Left Navigation Panel */}
+            <aside className="w-80 border-r border-border bg-background/50 min-h-[calc(100vh-8rem)]">
+              <div className="p-4">
+                {/* Global Navigation Section */}
+                <div className="mb-4">
                   <div className="px-3 pb-2">
-                    <h3 className="text-xs font-semibold text-primary uppercase tracking-wider">
-                      {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
-                    </h3>
-                    <p className="text-xs text-muted-foreground mt-1">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
+                    <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Global</h3>
                   </div>
                   <nav className="space-y-1">
-                    {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
+                    {staticVerticalTabs.map((tab) => {
                       const Icon = tab.icon;
                       return (
                         <button
                           key={tab.id}
                           onClick={() => {
                             setActiveVerticalTab(tab.id);
-                            setIsGlobalPageActive(false);
+                            setIsGlobalPageActive(true);
                           }}
                           className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                            activeVerticalTab === tab.id && !isGlobalPageActive
-                              ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                            activeVerticalTab === tab.id && isGlobalPageActive
+                              ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                           }`}
                         >
                           <Icon className="w-4 h-4 flex-shrink-0" />
@@ -272,13 +240,47 @@ const Learn = () => {
                     })}
                   </nav>
                 </div>
-              )}
-            </div>
-          </aside>
 
-          {/* Main Content Area */}
-          <div className="flex-1 bg-muted/30 min-h-[calc(100vh-4rem)]">
-            {renderContent()}
+                {/* Contextual Section - Only show when not on global pages */}
+                {!isGlobalPageActive && (
+                  <div>
+                    <div className="px-3 pb-2">
+                      <h3 className="text-xs font-semibold text-primary uppercase tracking-wider">
+                        {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
+                      </h3>
+                      <p className="text-xs text-muted-foreground mt-1">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
+                    </div>
+                    <nav className="space-y-1">
+                      {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
+                        const Icon = tab.icon;
+                        return (
+                          <button
+                            key={tab.id}
+                            onClick={() => {
+                              setActiveVerticalTab(tab.id);
+                              setIsGlobalPageActive(false);
+                            }}
+                            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                              activeVerticalTab === tab.id && !isGlobalPageActive
+                                ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
+                                : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                            }`}
+                          >
+                            <Icon className="w-4 h-4 flex-shrink-0" />
+                            <span className="text-sm font-medium">{tab.label}</span>
+                          </button>
+                        );
+                      })}
+                    </nav>
+                  </div>
+                )}
+              </div>
+            </aside>
+
+            {/* Main Content Area */}
+            <div className="flex-1 bg-muted/30 min-h-[calc(100vh-8rem)]">
+              {renderContent()}
+            </div>
           </div>
         </div>
       </div>
