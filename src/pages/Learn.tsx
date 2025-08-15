@@ -1201,41 +1201,6 @@ const Learn = () => {
                     </div>
                   </section>
 
-                  {/* Start your Project */}
-                  <section id="start-your-project">
-                    <div className="flex items-center gap-2 mb-6">
-                      <span className="text-foreground">→</span>
-                      <h2 className="text-xl font-semibold text-foreground">Start your Project</h2>
-                    </div>
-                    <p className="text-muted-foreground mb-6">There are several ways to get started with Lovable, depending on your preferences and resources:</p>
-                    
-                    <div className="space-y-4">
-                      <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm">→</span>
-                        <span className="text-foreground font-medium">Prompt</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm">→</span>
-                        <span className="text-foreground font-medium">Templates</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm">→</span>
-                        <span className="text-foreground font-medium">Remix an Existing Project</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm">→</span>
-                        <span className="text-foreground font-medium">Using Figma</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm">→</span>
-                        <span className="text-foreground font-medium">Using a Sketch</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-muted-foreground text-sm">→</span>
-                        <span className="text-foreground font-medium">Cloning a Website or Application</span>
-                      </div>
-                    </div>
-                  </section>
                 </div>
               </div>
 
