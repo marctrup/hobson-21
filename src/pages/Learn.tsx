@@ -12,6 +12,15 @@ const Learn = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTocSection, setActiveTocSection] = useState('getting-started');
 
+  // Set initial active section based on current tab
+  useEffect(() => {
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
+      setActiveTocSection('getting-started');
+    } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
+      setActiveTocSection('overview');
+    }
+  }, [activeHorizontalTab, activeVerticalTab]);
+
   // Scroll spy effect - moved to top level to avoid hook order issues
   useEffect(() => {
     // Only run scroll spy for pages that have table of contents
