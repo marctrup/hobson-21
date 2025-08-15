@@ -589,9 +589,9 @@ const Learn = () => {
         <meta name="description" content="Learn how to use Hobson's Choice AI with our comprehensive guides, tutorials, and documentation." />
       </Helmet>
       
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen">
         {/* Header */}
-        <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className="border-b border-border">
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
@@ -741,7 +741,7 @@ const Learn = () => {
         {/* Desktop Layout */}
         <div className="hidden md:flex flex-col">
           {/* Horizontal Topics Navigation */}
-          <div className="border-b border-border bg-background/50">
+          <div>
             <div className="px-6">
               <nav className="flex space-x-8 overflow-x-auto">
                 {horizontalTabs.map((tab) => {
@@ -772,7 +772,7 @@ const Learn = () => {
           {/* Desktop Main Layout with Sidebar and Content */}
           <div className="flex">
             {/* Desktop Left Navigation Panel */}
-            <aside className="w-80 border-r border-border bg-background/50 min-h-[calc(100vh-8rem)]">
+            <aside className="w-80 min-h-[calc(100vh-8rem)]">
               <div className="p-4 pt-[38px]">
                 {/* Global Navigation Section */}
                 <div className="mb-8">
@@ -868,7 +868,7 @@ const Learn = () => {
 
         {/* Mobile Layout */}
         <div className="md:hidden">
-          <div className="flex-1 bg-background min-h-[calc(100vh-8rem)]">
+          <div className="flex-1 min-h-[calc(100vh-8rem)] p-8">
             {renderContent()}
           </div>
         </div>
