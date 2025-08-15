@@ -38,11 +38,14 @@ const AboutUs = () => {
           </div>
 
           {/* Compact Timeline Layout */}
-          <div className="grid lg:grid-cols-3 gap-8 lg:gap-6">
+          <div className="relative grid lg:grid-cols-3 gap-8 lg:gap-12">
+            {/* Connection Lines - More Prominent */}
+            <div className="hidden lg:block absolute top-8 left-1/3 right-1/3 h-1 bg-gradient-to-r from-primary via-primary to-primary rounded-full transform -translate-x-6 translate-x-6"></div>
+            
             {/* Step 1 */}
             <div className="relative group">
               <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 mx-auto mb-6 relative z-10">
                   <Users className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-4">The Problem We Faced</h3>
@@ -50,14 +53,18 @@ const AboutUs = () => {
                   After years of working in property management, we experienced firsthand how much time was wasted moving data between traditional systems. The inefficiency was frustrating and costly.
                 </p>
               </div>
-              {/* Connector Line - Hidden on mobile, visible on lg+ */}
-              <div className="hidden lg:block absolute top-8 -right-3 w-6 h-0.5 bg-gradient-to-r from-primary/50 to-transparent"></div>
+              {/* Arrow Connector */}
+              <div className="hidden lg:flex absolute top-8 -right-6 items-center z-20">
+                <div className="w-4 h-4 border-t-2 border-r-2 border-primary transform rotate-45"></div>
+              </div>
+              {/* Mobile Connection Line */}
+              <div className="lg:hidden absolute -bottom-4 left-1/2 w-0.5 h-8 bg-primary transform -translate-x-0.5"></div>
             </div>
 
             {/* Step 2 */}
             <div className="relative group">
               <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 mx-auto mb-6 relative z-10">
                   <Lightbulb className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-primary mb-4">The AI Breakthrough</h3>
@@ -65,14 +72,18 @@ const AboutUs = () => {
                   Then artificial intelligence changed everything. We realized we could build something that would actually understand property documents and work seamlessly with existing systems.
                 </p>
               </div>
-              {/* Connector Line - Hidden on mobile, visible on lg+ */}
-              <div className="hidden lg:block absolute top-8 -right-3 w-6 h-0.5 bg-gradient-to-r from-primary/50 to-transparent"></div>
+              {/* Arrow Connector */}
+              <div className="hidden lg:flex absolute top-8 -right-6 items-center z-20">
+                <div className="w-4 h-4 border-t-2 border-r-2 border-primary transform rotate-45"></div>
+              </div>
+              {/* Mobile Connection Line */}
+              <div className="lg:hidden absolute -bottom-4 left-1/2 w-0.5 h-8 bg-primary transform -translate-x-0.5"></div>
             </div>
 
             {/* Step 3 */}
             <div className="relative group">
               <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 mx-auto mb-6">
+                <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary-light rounded-2xl flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300 mx-auto mb-6 relative z-10">
                   <Target className="w-8 h-8 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-foreground mb-4">Our Mission Today</h3>
