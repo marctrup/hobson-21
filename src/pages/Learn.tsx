@@ -194,10 +194,16 @@ const Learn = () => {
 
               {/* Contextual Section */}
               <div>
-                <div className="px-3 pb-2 mb-3">
-                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
-                  </h3>
+                <div className="px-3 pb-3 mb-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1 h-4 bg-primary rounded-full"></div>
+                    <h3 className="text-sm font-bold text-foreground">
+                      {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
+                    </h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground pl-3">
+                    Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content
+                  </p>
                 </div>
                 <nav className="space-y-1">
                   {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
