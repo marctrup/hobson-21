@@ -1018,12 +1018,7 @@ const Learn = () => {
     // Handle Getting Started content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
       const tocSections = [
-        { id: 'create-first-project', label: 'Create your First Project' },
-        { id: 'lovable-dashboard', label: 'Lovable Dashboard' },
-        { id: 'project-overview', label: 'Project Overview' },
-        { id: 'project-settings', label: 'Project Settings' },
-        { id: 'project-quick-access', label: 'Project Quick Access' },
-        { id: 'start-your-project', label: 'Start your Project' },
+        { id: 'hobson-platform-overview', label: 'The Hobson platform overview' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -1069,58 +1064,141 @@ const Learn = () => {
                 </div>
 
                 <div className="space-y-12">
-                  {/* Create your First Project */}
-                  <section id="create-first-project">
-                    <div className="flex items-center gap-2 mb-6">
+                  {/* The Hobson platform overview */}
+                  <section id="hobson-platform-overview">
+                    <div className="flex items-center gap-2 mb-8">
                       <span className="text-foreground">→</span>
-                      <h2 className="text-xl font-semibold text-foreground">Create your First Project</h2>
+                      <h2 className="text-3xl font-bold text-foreground">The Hobson platform overview</h2>
                     </div>
-                    <div className="bg-muted/20 p-4 rounded-lg border border-border">
-                      <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
-                    </div>
-                  </section>
+                    
+                    <div className="space-y-6">
+                      {/* Learning Objective 1 */}
+                      <div>
+                        <Accordion type="multiple" className="w-full">
+                          <AccordionItem value="dashboard-navigation">
+                            <AccordionTrigger className="text-left hover:no-underline">
+                              <div className="flex items-center gap-3">
+                                <span className="text-foreground">→</span>
+                                <span className="text-lg font-semibold text-foreground">Navigate the Hobson dashboard</span>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pl-6 space-y-4">
+                                <p className="text-muted-foreground">Learn how to efficiently navigate through the Hobson dashboard to access all your property management tools and insights.</p>
+                                
+                                {/* Video placeholder */}
+                                <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border">
+                                  <img 
+                                    src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
+                                    alt="Dashboard Navigation Tutorial"
+                                    className="w-full h-full object-cover"
+                                  />
+                                  <div className="absolute inset-0 flex items-center justify-center">
+                                    <button className="bg-black/70 hover:bg-black/80 text-white rounded-full p-3 transition-colors">
+                                      <Play className="w-8 h-8 ml-1" fill="currentColor" />
+                                    </button>
+                                  </div>
+                                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                                    <h4 className="text-white font-medium">Dashboard Navigation</h4>
+                                    <p className="text-white/90 text-sm">3:24 minutes</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
 
-                  {/* Lovable Dashboard */}
-                  <section id="lovable-dashboard">
-                    <div className="flex items-center gap-2 mb-6">
-                      <span className="text-foreground">→</span>
-                      <h2 className="text-xl font-semibold text-foreground">Lovable Dashboard</h2>
-                    </div>
-                    <div className="bg-muted/20 p-4 rounded-lg border border-border">
-                      <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
-                    </div>
-                  </section>
+                      {/* Learning Objective 2 */}
+                      <div>
+                        <Accordion type="multiple" className="w-full">
+                          <AccordionItem value="upload-documents">
+                            <AccordionTrigger className="text-left hover:no-underline">
+                              <div className="flex items-center gap-3">
+                                <span className="text-foreground">→</span>
+                                <span className="text-lg font-semibold text-foreground">Upload and organize documents</span>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pl-6 space-y-4">
+                                <p className="text-muted-foreground">Master the document upload process and learn organizational best practices for your property files.</p>
+                                
+                                {/* Text content example */}
+                                <div className="bg-muted/20 p-6 rounded-lg border border-border">
+                                  <h4 className="font-semibold text-foreground mb-3">Step-by-step guide:</h4>
+                                  <div className="space-y-3 text-sm text-muted-foreground">
+                                    <div className="flex gap-3">
+                                      <span className="font-medium text-foreground">1.</span>
+                                      <span>Click the "Upload Documents" button in your dashboard</span>
+                                    </div>
+                                    <div className="flex gap-3">
+                                      <span className="font-medium text-foreground">2.</span>
+                                      <span>Drag and drop files or browse to select documents</span>
+                                    </div>
+                                    <div className="flex gap-3">
+                                      <span className="font-medium text-foreground">3.</span>
+                                      <span>Add relevant tags and categories for easy organization</span>
+                                    </div>
+                                    <div className="flex gap-3">
+                                      <span className="font-medium text-foreground">4.</span>
+                                      <span>Verify document details and confirm upload</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
 
-                  {/* Project Overview */}
-                  <section id="project-overview">
-                    <div className="flex items-center gap-2 mb-6">
-                      <span className="text-foreground">→</span>
-                      <h2 className="text-xl font-semibold text-foreground">Project Overview</h2>
-                    </div>
-                    <div className="bg-muted/20 p-4 rounded-lg border border-border">
-                      <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
-                    </div>
-                  </section>
-
-                  {/* Project Settings */}
-                  <section id="project-settings">
-                    <div className="flex items-center gap-2 mb-6">
-                      <span className="text-foreground">→</span>
-                      <h2 className="text-xl font-semibold text-foreground">Project Settings</h2>
-                    </div>
-                    <div className="bg-muted/20 p-4 rounded-lg border border-border">
-                      <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
-                    </div>
-                  </section>
-
-                  {/* Project Quick Access */}
-                  <section id="project-quick-access">
-                    <div className="flex items-center gap-2 mb-6">
-                      <span className="text-foreground">→</span>
-                      <h2 className="text-xl font-semibold text-foreground">Project Quick Access</h2>
-                    </div>
-                    <div className="bg-muted/20 p-4 rounded-lg border border-border">
-                      <p className="text-muted-foreground text-sm italic">Video or detailed text content will go here</p>
+                      {/* Learning Objective 3 */}
+                      <div>
+                        <Accordion type="multiple" className="w-full">
+                          <AccordionItem value="ai-analysis">
+                            <AccordionTrigger className="text-left hover:no-underline">
+                              <div className="flex items-center gap-3">
+                                <span className="text-foreground">→</span>
+                                <span className="text-lg font-semibold text-foreground">Understand AI analysis results</span>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pl-6 space-y-4">
+                                <p className="text-muted-foreground">Learn how to interpret and act on the AI-generated insights from your property documents.</p>
+                                
+                                {/* Mixed content example */}
+                                <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border mb-4">
+                                  <img 
+                                    src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
+                                    alt="AI Analysis Results Tutorial"
+                                    className="w-full h-full object-cover"
+                                  />
+                                  <div className="absolute inset-0 flex items-center justify-center">
+                                    <button className="bg-black/70 hover:bg-black/80 text-white rounded-full p-3 transition-colors">
+                                      <Play className="w-8 h-8 ml-1" fill="currentColor" />
+                                    </button>
+                                  </div>
+                                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-4">
+                                    <h4 className="text-white font-medium">Understanding AI Results</h4>
+                                    <p className="text-white/90 text-sm">5:12 minutes</p>
+                                  </div>
+                                </div>
+                                
+                                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4">
+                                  <div className="flex items-start gap-3">
+                                    <div className="bg-amber-100 rounded-full p-1">
+                                      <Lightbulb className="w-4 h-4 text-amber-600" />
+                                    </div>
+                                    <div>
+                                      <h4 className="font-semibold text-amber-800 mb-2">Pro Tip</h4>
+                                      <p className="text-amber-700 text-sm">Always review AI suggestions with your domain expertise. The AI provides insights, but your property management knowledge is crucial for final decisions.</p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
                     </div>
                   </section>
 
