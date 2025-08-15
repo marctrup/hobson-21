@@ -592,8 +592,8 @@ const Learn = () => {
       <div className="min-h-screen bg-background">
         {/* Header */}
         <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="container mx-auto px-4">
-            <div className="flex items-center justify-between h-16">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <Link to="/" className="flex items-center">
                   <img 
