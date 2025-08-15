@@ -211,7 +211,7 @@ const Learn = () => {
           <div className="flex">
             {/* Left Navigation Panel */}
             <aside className="w-80 border-r border-border bg-background/50 min-h-[calc(100vh-8rem)]">
-              <div className="p-4 pt-16">
+              <div className="p-4 pt-12">
                 {/* Global Navigation Section */}
                 <div className="mb-8">
                   <div className="px-3 pb-3 mb-2 border-b border-border/50">
