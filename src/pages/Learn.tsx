@@ -1019,6 +1019,7 @@ const Learn = () => {
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
       const tocSections = [
         { id: 'hobson-platform-overview', label: 'The Hobson platform overview' },
+        { id: 'working-with-prompts', label: 'Working with Prompts' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -1210,6 +1211,53 @@ const Learn = () => {
                             <AccordionTrigger className="text-left hover:no-underline">
                               <div className="flex items-center gap-3">
                                 <span className="text-foreground">→</span>
+                                <span className="text-lg font-semibold text-foreground">Your Learning Objective Title</span>
+                    </div>
+                  </section>
+
+                  {/* Working with Prompts */}
+                  <section id="working-with-prompts">
+                    <div className="mb-8">
+                      <h2 className="text-3xl font-bold text-foreground">Working with Prompts</h2>
+                      <p className="text-lg text-muted-foreground mt-2">Master the art of crafting effective prompts to get the best results from Hobson AI</p>
+                    </div>
+                    
+                    {/* Learning Objectives Framework - Template for all sections */}
+                    <div className="space-y-6">
+                      
+                      {/* Learning Objective Template 1 */}
+                      <div>
+                        <Accordion type="multiple" className="w-full">
+                          <AccordionItem value="prompt-basics">
+                            <AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>div>span:first-child]:rotate-90 [&>svg]:hidden">
+                              <div className="flex items-center gap-3">
+                                <span className="transition-transform duration-200 text-foreground">▶</span>
+                                <span className="text-lg font-semibold text-foreground">Prompt</span>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pl-6 space-y-4">
+                                <p className="text-muted-foreground">Learn how to write effective prompts that get accurate results from your document analysis.</p>
+                                
+                                {/* Placeholder for teaching content */}
+                                <div className="bg-muted/20 p-4 rounded-lg border border-border">
+                                  <p className="text-muted-foreground text-sm italic">Teaching content will go here</p>
+                                </div>
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
+
+                      {/* 
+                      TEMPLATE FOR ADDITIONAL LEARNING OBJECTIVES:
+                      
+                      <div>
+                        <Accordion type="multiple" className="w-full">
+                          <AccordionItem value="unique-value-here">
+                            <AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>div>span:first-child]:rotate-90 [&>svg]:hidden">
+                              <div className="flex items-center gap-3">
+                                <span className="transition-transform duration-200 text-foreground">▶</span>
                                 <span className="text-lg font-semibold text-foreground">Your Learning Objective Title</span>
                               </div>
                             </AccordionTrigger>
