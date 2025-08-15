@@ -41,13 +41,11 @@ const BlogPreview = () => {
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (id && user) {
+    console.log('BlogPreview useEffect - id:', id, 'user:', user);
+    if (id) {
       fetchPost();
-    } else if (!user) {
-      setNotFound(true);
-      setLoading(false);
     }
-  }, [id, user]);
+  }, [id]);
 
   const fetchPost = async () => {
     try {
@@ -186,8 +184,20 @@ const BlogPreview = () => {
   }
 
   if (notFound || !post) {
-    console.log('Post not found or notFound flag set:', { notFound, post: !!post });
-    return <Navigate to="/admin/blog" replace />;
+    console.log('BlogPreview redirect - notFound:', notFound, 'post exists:', !!post, 'loading:', loading);
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-4">Preview Not Available</h1>
+          <p className="text-muted-foreground mb-4">
+            {notFound ? 'Post not found or access denied' : 'Loading preview...'}
+          </p>
+          <Button asChild>
+            <Link to="/admin/blog">Back to Blog Management</Link>
+          </Button>
+        </div>
+      </div>
+    );
   }
 
   const displayDate = post.published_at || post.created_at;
