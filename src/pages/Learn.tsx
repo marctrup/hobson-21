@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play } from 'lucide-react';
+import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X } from 'lucide-react';
 
 const Learn = () => {
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const horizontalTabs = [
     { id: 'introduction', label: 'Introduction', icon: Book },
@@ -163,6 +164,15 @@ const Learn = () => {
                 <Book className="w-8 h-8 text-primary" />
                 <h1 className="text-xl font-semibold text-foreground">Learn</h1>
               </div>
+              
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              >
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+              
               <nav className="hidden md:flex items-center gap-6">
                 <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">
                   Home
@@ -178,7 +188,118 @@ const Learn = () => {
           </div>
         </header>
 
-        <div className="flex flex-col">
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-50 md:hidden">
+            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
+            <div className="fixed left-0 top-16 bottom-0 w-80 bg-background border-r border-border p-4 overflow-y-auto">
+              {/* Mobile Global Navigation */}
+              <div className="mb-6">
+                <div className="px-3 pb-3 mb-2 border-b border-border/50">
+                  <h3 className="text-sm font-medium text-foreground tracking-wide">GLOBAL</h3>
+                </div>
+                <nav className="space-y-1">
+                  {staticVerticalTabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => {
+                          setActiveVerticalTab(tab.id);
+                          setIsGlobalPageActive(true);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                          activeVerticalTab === tab.id && isGlobalPageActive
+                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-sm font-medium">{tab.label}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Mobile Topics Navigation */}
+              <div className="mb-6">
+                <div className="px-3 pb-3 mb-2 border-b border-border/50">
+                  <h3 className="text-sm font-medium text-foreground tracking-wide">TOPICS</h3>
+                </div>
+                <nav className="space-y-1">
+                  {horizontalTabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => {
+                          setActiveHorizontalTab(tab.id);
+                          setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
+                          setIsGlobalPageActive(false);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                          activeHorizontalTab === tab.id && !isGlobalPageActive
+                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-sm font-medium">{tab.label}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Mobile Submenu */}
+              {!isGlobalPageActive && (
+                <div>
+                  <div className="px-3 pb-4 mb-4 bg-primary/5 rounded-lg border-l-4 border-primary">
+                    <div className="flex items-center gap-2 mb-2">
+                      {(() => {
+                        const ActiveIcon = horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.icon;
+                        return ActiveIcon ? <ActiveIcon className="w-5 h-5 text-primary" /> : null;
+                      })()}
+                      <h3 className="text-lg font-medium text-foreground">
+                        {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
+                      </h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground pl-7">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
+                  </div>
+                  <nav className="space-y-1">
+                    {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
+                      const Icon = tab.icon;
+                      return (
+                        <button
+                          key={tab.id}
+                          onClick={() => {
+                            setActiveVerticalTab(tab.id);
+                            setIsGlobalPageActive(false);
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                            activeVerticalTab === tab.id && !isGlobalPageActive
+                              ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                          }`}
+                        >
+                          <Icon className="w-4 h-4 flex-shrink-0" />
+                          <span className="text-sm font-medium">{tab.label}</span>
+                        </button>
+                      );
+                    })}
+                  </nav>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Desktop Layout */}
+        <div className="hidden md:flex flex-col">
           {/* Horizontal Topics Navigation */}
           <div className="border-b border-border bg-background/50">
             <div className="px-6">
@@ -208,9 +329,9 @@ const Learn = () => {
             </div>
           </div>
 
-          {/* Main Layout with Sidebar and Content */}
+          {/* Desktop Main Layout with Sidebar and Content */}
           <div className="flex">
-            {/* Left Navigation Panel */}
+            {/* Desktop Left Navigation Panel */}
             <aside className="w-80 border-r border-border bg-background/50 min-h-[calc(100vh-8rem)]">
               <div className="p-4 pt-[38px]">
                 {/* Global Navigation Section */}
@@ -298,10 +419,17 @@ const Learn = () => {
               </div>
             </aside>
 
-            {/* Main Content Area */}
+            {/* Desktop Main Content Area */}
             <div className="flex-1 bg-muted/30 min-h-[calc(100vh-8rem)]">
               {renderContent()}
             </div>
+          </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="md:hidden">
+          <div className="bg-muted/30 min-h-[calc(100vh-4rem)] p-4">
+            {renderContent()}
           </div>
         </div>
       </div>
