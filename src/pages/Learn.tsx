@@ -979,7 +979,7 @@ const Learn = () => {
                 {/* Welcome header aligned with video left edge */}
                 <div className="mb-6">
                   <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
-                  <p className="text-lg text-muted-foreground">Learn about Hobson</p>
+                  <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
                 </div>
                 
                 {/* Video container */}
