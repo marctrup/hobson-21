@@ -975,7 +975,7 @@ const Learn = () => {
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
             {/* Large Video Screen with aligned header */}
             <div className="mb-12">
-              <div className="w-full max-w-4xl mx-auto">
+              <div className="w-full max-w-[70.4rem] mx-auto">
                 {/* Welcome header aligned with video left edge */}
                 <div className="mb-6">
                   <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
