@@ -264,7 +264,7 @@ const Learn = () => {
                           const ActiveIcon = horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.icon;
                           return ActiveIcon ? <ActiveIcon className="w-5 h-5 text-primary" /> : null;
                         })()}
-                        <h3 className="text-lg font-bold text-foreground">
+                        <h3 className="text-lg font-medium text-foreground">
                           {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
                         </h3>
                       </div>
