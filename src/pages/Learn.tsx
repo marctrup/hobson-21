@@ -215,7 +215,7 @@ const Learn = () => {
                 {/* Global Navigation Section */}
                 <div className="mb-8">
                   <div className="px-3 pb-3 mb-2 border-b border-border/50">
-                    <h3 className="text-sm font-bold text-foreground tracking-wide">GLOBAL</h3>
+                    <h3 className="text-sm font-medium text-foreground tracking-wide">GLOBAL</h3>
                   </div>
                   <nav className="space-y-1">
                     {staticVerticalTabs.map((tab) => {
