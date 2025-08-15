@@ -42,10 +42,13 @@ const BlogPreview = () => {
 
   useEffect(() => {
     console.log('BlogPreview useEffect - id:', id, 'user:', user);
-    if (id) {
+    if (id && user) {
       fetchPost();
+    } else if (!user) {
+      setNotFound(true);
+      setLoading(false);
     }
-  }, [id]);
+  }, [id, user]);
 
   const fetchPost = async () => {
     try {
