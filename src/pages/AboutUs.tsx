@@ -119,42 +119,6 @@ const AboutUs = () => {
         </div>
       </div>
 
-      {/* Values Section */}
-      <div className="container mx-auto px-4 py-20 border-t border-border/50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-foreground mb-4">
-            Built on Trust & Innovation
-          </h2>
-          <p className="text-lg text-muted-foreground mb-16 max-w-2xl mx-auto">
-            Every decision we make is guided by our commitment to the property industry and the professionals who drive it forward.
-          </p>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Industry Focus",
-                description: "Deep understanding of property management challenges"
-              },
-              {
-                title: "Practical Solutions",
-                description: "Technology that works in the real world"
-              },
-              {
-                title: "Continuous Growth",
-                description: "Always evolving to meet your needs"
-              }
-            ].map((value, index) => (
-              <div key={index} className="group relative">
-                <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent rounded-xl transform group-hover:scale-105 transition-transform duration-300"></div>
-                <div className="relative p-6 border border-primary/10 rounded-xl backdrop-blur-sm">
-                  <h3 className="text-lg font-semibold text-foreground mb-3">{value.title}</h3>
-                  <p className="text-muted-foreground">{value.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
