@@ -12,6 +12,39 @@ const Learn = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTocSection, setActiveTocSection] = useState('getting-started');
 
+  // Scroll spy effect - moved to top level to avoid hook order issues
+  useEffect(() => {
+    // Only run scroll spy for pages that have table of contents
+    if ((activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') || 
+        (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits')) {
+      
+      let tocSections: string[] = [];
+      
+      if (activeVerticalTab === 'faq') {
+        tocSections = ['getting-started', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
+      } else if (activeVerticalTab === 'plans-credits') {
+        tocSections = ['overview', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
+      }
+
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY + 100; // offset for header
+
+        for (let i = tocSections.length - 1; i >= 0; i--) {
+          const element = document.getElementById(tocSections[i]);
+          if (element && element.offsetTop <= scrollPosition) {
+            setActiveTocSection(tocSections[i]);
+            break;
+          }
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      handleScroll(); // Set initial active section
+
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
+  }, [activeHorizontalTab, activeVerticalTab]);
+
   const horizontalTabs = [
     { id: 'introduction', label: 'Introduction', icon: Book },
     { id: 'features', label: 'Features', icon: Lightbulb },
@@ -154,26 +187,6 @@ const Learn = () => {
         }
       };
 
-      // Scroll spy effect for Plans and Credits
-      useEffect(() => {
-        const handleScroll = () => {
-          const sections = tocSections.map(section => section.id);
-          const scrollPosition = window.scrollY + 100; // offset for header
-
-          for (let i = sections.length - 1; i >= 0; i--) {
-            const element = document.getElementById(sections[i]);
-            if (element && element.offsetTop <= scrollPosition) {
-              setActiveTocSection(sections[i]);
-              break;
-            }
-          }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Set initial active section
-
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, [tocSections]);
 
       return (
         <div className="flex-1">
@@ -535,26 +548,6 @@ const Learn = () => {
         }
       };
 
-      // Scroll spy effect for FAQ
-      useEffect(() => {
-        const handleScroll = () => {
-          const sections = tocSections.map(section => section.id);
-          const scrollPosition = window.scrollY + 100; // offset for header
-
-          for (let i = sections.length - 1; i >= 0; i--) {
-            const element = document.getElementById(sections[i]);
-            if (element && element.offsetTop <= scrollPosition) {
-              setActiveTocSection(sections[i]);
-              break;
-            }
-          }
-        };
-
-        window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Set initial active section
-
-        return () => window.removeEventListener('scroll', handleScroll);
-      }, [tocSections]);
 
       return (
         <div className="flex-1">
