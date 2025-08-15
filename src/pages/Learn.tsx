@@ -588,41 +588,14 @@ const Learn = () => {
       </Helmet>
       
       <div className="min-h-screen bg-background">
-        {/* Learn Title - Top Left Corner */}
-        <div className="container mx-auto px-4 pt-6 pb-2">
-          <div className="flex items-center gap-3">
-            <Book className="w-8 h-8 text-primary" />
-            <h1 className="text-2xl font-bold text-foreground">Learn</h1>
-          </div>
-        </div>
-
         {/* Header */}
         <header className="border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between h-16">
-              {/* Horizontal Tabs - Desktop */}
-              <nav className="hidden md:flex items-center space-x-1 flex-1">
-                {horizontalTabs.map((tab) => {
-                  const Icon = tab.icon;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => {
-                        setActiveHorizontalTab(tab.id);
-                        setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
-                      }}
-                      className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                        activeHorizontalTab === tab.id
-                          ? 'bg-primary text-primary-foreground'
-                          : 'text-muted-foreground hover:text-foreground hover:bg-muted'
-                      }`}
-                    >
-                      <Icon className="w-4 h-4" />
-                      {tab.label}
-                    </button>
-                  );
-                })}
-              </nav>
+              <div className="flex items-center gap-3">
+                <Book className="w-8 h-8 text-primary" />
+                <h1 className="text-xl font-semibold text-foreground">Learn</h1>
+              </div>
               
               {/* Mobile Menu Button */}
               <button
@@ -759,6 +732,36 @@ const Learn = () => {
 
         {/* Desktop Layout */}
         <div className="hidden md:flex flex-col">
+          {/* Horizontal Topics Navigation */}
+          <div className="border-b border-border bg-background/50">
+            <div className="px-6">
+              <nav className="flex space-x-8 overflow-x-auto">
+                {horizontalTabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setActiveHorizontalTab(tab.id);
+                        setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
+                        setIsGlobalPageActive(false);
+                      }}
+                      className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
+                        activeHorizontalTab === tab.id && !isGlobalPageActive
+                          ? 'border-primary text-primary'
+                          : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          </div>
+
+          {/* Desktop Main Layout with Sidebar and Content */}
           <div className="flex">
             {/* Desktop Left Navigation Panel */}
             <aside className="w-80 border-r border-border bg-background/50 min-h-[calc(100vh-8rem)]">
