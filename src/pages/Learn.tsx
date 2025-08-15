@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X } from 'lucide-react';
+import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const Learn = () => {
@@ -593,8 +595,14 @@ const Learn = () => {
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-3">
-                <Book className="w-8 h-8 text-primary" />
-                <h1 className="text-xl font-semibold text-foreground">Learn</h1>
+                <Link to="/">
+                  <img 
+                    src={hobsonLogo} 
+                    alt="Hobson AI - AI-powered property management software company logo" 
+                    className="h-12" 
+                    loading="eager"
+                  />
+                </Link>
               </div>
               
               {/* Mobile Menu Button */}
