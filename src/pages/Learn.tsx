@@ -934,18 +934,17 @@ const Learn = () => {
                     <h3 className="text-sm font-medium text-foreground mb-4">On this page</h3>
                     <div className="space-y-2">
                       {tocSections.map((section) => (
-                        <button
-                          key={section.id}
-                          onClick={() => scrollToSection(section.id)}
-                          className={`flex items-center gap-2 w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
-                            activeTocSection === section.id
-                              ? 'bg-purple-100 text-purple-700 font-medium'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
-                          }`}
-                        >
-                          <span className="text-xs">→</span>
-                          {section.label}
-                        </button>
+                         <button
+                           key={section.id}
+                           onClick={() => scrollToSection(section.id)}
+                           className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
+                             activeTocSection === section.id
+                               ? 'bg-purple-100 text-purple-700 font-medium'
+                               : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                           }`}
+                         >
+                           {section.label}
+                         </button>
                       ))}
                     </div>
                   </div>
