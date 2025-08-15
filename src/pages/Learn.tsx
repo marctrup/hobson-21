@@ -129,6 +129,283 @@ const Learn = () => {
       );
     }
 
+    // Handle FAQ content specifically
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
+      return (
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-4xl">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-2">FAQ</h1>
+              <p className="text-lg text-muted-foreground">Frequently asked questions about Hobson</p>
+            </div>
+
+            <div className="space-y-12">
+              {/* Getting started */}
+              <section>
+                <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Getting started</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">What is Hobson?</h3>
+                    <p className="text-muted-foreground text-sm">Hobson is an AI-powered document analysis platform that helps property management companies extract insights from contracts and documents.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">What can I build with Hobson?</h3>
+                    <p className="text-muted-foreground text-sm">Hobson enables automated document processing, lease analysis, compliance monitoring, and property management workflows.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Do I need coding experience to build with Hobson?</h3>
+                    <p className="text-muted-foreground text-sm">No, Hobson is designed to be user-friendly for property managers without technical expertise.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How do I create a project?</h3>
+                    <p className="text-muted-foreground text-sm">Start by uploading your documents through our secure platform and configuring your analysis preferences.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I start from templates?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, Hobson provides pre-built templates for common property management scenarios like lease analysis and compliance checks.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Building with Hobson */}
+              <section>
+                <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Building with Hobson</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How do I build efficiently with Hobson?</h3>
+                    <p className="text-muted-foreground text-sm">Use clear document naming conventions, organize files systematically, and leverage automation features for repetitive tasks.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How should I structure my prompts for the best results?</h3>
+                    <p className="text-muted-foreground text-sm">Be specific about what information you need extracted and provide context about document types and expected outcomes.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">What should I do when I hit an error?</h3>
+                    <p className="text-muted-foreground text-sm">Check document format compatibility, verify upload requirements, and contact support if issues persist.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">What is refactoring, and why is it important?</h3>
+                    <p className="text-muted-foreground text-sm">Refactoring optimizes your document processing workflows for better accuracy and efficiency over time.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I connect my project to a backend to store data?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, Hobson integrates with popular property management systems and databases through secure API connections.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I add login to my website?</h3>
+                    <p className="text-muted-foreground text-sm">Hobson includes enterprise-grade authentication and user management features.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I add third-party APIs to my project?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, Hobson supports integration with various property management tools and external APIs.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I store sensitive API keys in Hobson?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, all API keys and sensitive data are encrypted and stored securely according to industry standards.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How do I add payments to my website?</h3>
+                    <p className="text-muted-foreground text-sm">Hobson integrates with payment processors commonly used in property management for rent collection and fees.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How can I improve SEO for my project?</h3>
+                    <p className="text-muted-foreground text-sm">Focus on structured data markup for property listings and ensure fast loading times for document access.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How long does it take to complete a project?</h3>
+                    <p className="text-muted-foreground text-sm">Implementation typically takes 2-4 weeks depending on document volume and integration requirements.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Features */}
+              <section>
+                <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Features</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How do I find the Project settings?</h3>
+                    <p className="text-muted-foreground text-sm">Navigate to your dashboard and click on the project settings icon in the top navigation bar.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I change the visibility of my project?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, you can set projects as private, shared with team members, or public within your organization.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I hide the Hobson badge?</h3>
+                    <p className="text-muted-foreground text-sm">Enterprise plans include white-label options to customize or remove branding elements.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I rename a project?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, project names can be updated at any time from the project settings menu.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I make a copy of a project?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, you can duplicate projects to create templates or test different configurations.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I delete a project?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, projects can be deleted from the settings menu. This action is permanent and cannot be undone.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">What is a remix?</h3>
+                    <p className="text-muted-foreground text-sm">A remix creates a new project based on an existing one, allowing you to modify workflows without affecting the original.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">What is Chat mode?</h3>
+                    <p className="text-muted-foreground text-sm">Chat mode allows you to interact with your documents using natural language queries to extract specific information.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I see the code that Hobson generates and manually edit it?</h3>
+                    <p className="text-muted-foreground text-sm">Advanced users can access the underlying processing logic and customize extraction rules through the developer interface.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I manually edit text or colors?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, the interface supports customization of themes, colors, and text elements to match your brand.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I collaborate on my projects?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, Hobson supports team collaboration with role-based permissions and shared workspaces.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How do I publish my project?</h3>
+                    <p className="text-muted-foreground text-sm">Deploy your configured workflows to production through the deployment dashboard with one-click publishing.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How do I add a custom domain to my project?</h3>
+                    <p className="text-muted-foreground text-sm">Custom domains can be configured in the project settings under the "Domains" section for enterprise customers.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I see analytics for my published projects?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, comprehensive analytics show document processing volumes, accuracy metrics, and user engagement.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I add images to a Hobson prompt?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, Hobson supports image uploads and can extract text and data from visual documents and diagrams.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I add videos to a Hobson prompt?</h3>
+                    <p className="text-muted-foreground text-sm">Currently, Hobson focuses on document and image processing. Video support is planned for future releases.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I import designs from Figma?</h3>
+                    <p className="text-muted-foreground text-sm">Interface mockups can be imported to customize the look and feel of your document processing workflows.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I export all of my project's code?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, all configurations and custom logic can be exported for backup or migration purposes.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I start a project by importing code from an external source such as GitHub?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, existing automation scripts and workflows can be imported through our API or GitHub integration.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How do I see my project history?</h3>
+                    <p className="text-muted-foreground text-sm">Project history and version control are available in the project settings under "History" tab.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I restore an earlier version of my project?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, you can roll back to any previous version through the project history interface.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Managing your account */}
+              <section>
+                <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Managing your account</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I change the email I use to login?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, email addresses can be updated in your account settings under "Profile" section.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I delete my account?</h3>
+                    <p className="text-muted-foreground text-sm">Account deletion can be requested through the account settings. All data will be permanently removed.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Can I change the workspace owner?</h3>
+                    <p className="text-muted-foreground text-sm">Workspace ownership can be transferred to another team member through the admin panel.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How can I transfer project ownership to someone else?</h3>
+                    <p className="text-muted-foreground text-sm">Project ownership transfer is available in project settings under "Transfer Ownership" for team accounts.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Policies and Security */}
+              <section>
+                <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Policies and Security</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How can I get support?</h3>
+                    <p className="text-muted-foreground text-sm">Contact our support team through the help center, email support, or schedule a consultation call.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Where can I find Hobson's privacy policy?</h3>
+                    <p className="text-muted-foreground text-sm">Our privacy policy is available at the bottom of our website and in your account dashboard.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Where can I find Hobson's Terms of Service?</h3>
+                    <p className="text-muted-foreground text-sm">Terms of Service are accessible through the footer links and account settings.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">What is Hobson's refund policy?</h3>
+                    <p className="text-muted-foreground text-sm">We offer a 30-day money-back guarantee for new subscriptions. Contact support for refund requests.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Is Hobson compliant with security standards?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, Hobson is SOC 2 compliant and follows industry-standard security practices for data protection.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Is Hobson GDPR compliant?</h3>
+                    <p className="text-muted-foreground text-sm">Yes, Hobson is fully GDPR compliant with data processing agreements and privacy controls available.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* How Hobson works */}
+              <section>
+                <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">How Hobson works</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">What tech stacks does Hobson know?</h3>
+                    <p className="text-muted-foreground text-sm">Hobson integrates with major property management platforms, CRMs, and accounting systems commonly used in real estate.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Does Hobson support mobile app development?</h3>
+                    <p className="text-muted-foreground text-sm">Mobile access is available through responsive web interfaces, with native apps planned for future releases.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">How does Hobson remember context?</h3>
+                    <p className="text-muted-foreground text-sm">Hobson uses machine learning to understand document patterns and maintain context across related documents and projects.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Who owns the projects and the code that Hobson creates?</h3>
+                    <p className="text-muted-foreground text-sm">You retain full ownership of your data, documents, and any custom configurations created within Hobson.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* About Hobson */}
+              <section>
+                <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">About Hobson</h2>
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Where is Hobson based?</h3>
+                    <p className="text-muted-foreground text-sm">Hobson is headquartered in [Location] with team members distributed globally to provide 24/7 support.</p>
+                  </div>
+                  <div>
+                    <h3 className="font-medium text-foreground mb-1">Is Hobson hiring?</h3>
+                    <p className="text-muted-foreground text-sm">We're always looking for talented individuals. Check our careers page for current openings in engineering, sales, and customer success.</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="flex-1">
         <div className="container mx-auto p-8 max-w-5xl">
