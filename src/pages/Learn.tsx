@@ -178,9 +178,39 @@ const Learn = () => {
         </header>
 
         <div className="flex">
-          {/* Vertical Sidebar */}
-          <aside className="w-64 border-r border-border bg-background/50 min-h-[calc(100vh-4rem)]">
+          {/* Left Navigation Panel */}
+          <aside className="w-80 border-r border-border bg-background/50 min-h-[calc(100vh-4rem)]">
             <div className="p-4">
+              {/* Horizontal Menu (now vertical on left) */}
+              <div className="mb-6">
+                <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3 px-3">
+                  Topics
+                </h3>
+                <nav className="space-y-1">
+                  {horizontalTabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => {
+                          setActiveHorizontalTab(tab.id);
+                          setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
+                          setIsGlobalPageActive(false);
+                        }}
+                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
+                          activeHorizontalTab === tab.id && !isGlobalPageActive
+                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-sm font-medium">{tab.label}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+
               {/* Global Navigation Section */}
               <div className="mb-4">
                 <div className="px-3 pb-2">
@@ -246,37 +276,8 @@ const Learn = () => {
             </div>
           </aside>
 
-          <div className="flex-1 flex flex-col bg-muted/30 min-h-[calc(100vh-4rem)]">
-            {/* Horizontal Tab Navigation */}
-            <div className="border-b border-border bg-background/50">
-              <div className="px-6">
-                <nav className="flex space-x-8 overflow-x-auto">
-                  {horizontalTabs.map((tab) => {
-                    const Icon = tab.icon;
-                    return (
-                      <button
-                        key={tab.id}
-                        onClick={() => {
-                          setActiveHorizontalTab(tab.id);
-                          setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
-                          setIsGlobalPageActive(false);
-                        }}
-                        className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
-                          activeHorizontalTab === tab.id && !isGlobalPageActive
-                            ? 'border-primary text-primary'
-                            : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'
-                        }`}
-                      >
-                        <Icon className="w-4 h-4" />
-                        <span className="text-sm font-medium">{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
-            </div>
-
-            {/* Main Content */}
+          {/* Main Content Area */}
+          <div className="flex-1 bg-muted/30 min-h-[calc(100vh-4rem)]">
             {renderContent()}
           </div>
         </div>
