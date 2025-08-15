@@ -246,7 +246,7 @@ const Learn = () => {
             </div>
           </aside>
 
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col bg-muted/30 min-h-[calc(100vh-4rem)]">
             {/* Horizontal Tab Navigation */}
             <div className="border-b border-border bg-background/50">
               <div className="px-6">
