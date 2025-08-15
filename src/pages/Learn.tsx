@@ -267,7 +267,10 @@ const Learn = () => {
                     return (
                       <button
                         key={tab.id}
-                        onClick={() => setActiveHorizontalTab(tab.id)}
+                        onClick={() => {
+                          setActiveHorizontalTab(tab.id);
+                          setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
+                        }}
                         className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
                           activeHorizontalTab === tab.id
                             ? 'border-primary text-primary'
