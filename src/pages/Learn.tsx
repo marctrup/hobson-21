@@ -1077,8 +1077,9 @@ const Learn = () => {
                       <div>
                         <Accordion type="multiple" className="w-full">
                           <AccordionItem value="dashboard-navigation">
-                            <AccordionTrigger className="text-left hover:no-underline">
+                            <AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>div>span]:rotate-90">
                               <div className="flex items-center gap-3">
+                                <span className="transition-transform duration-200 text-foreground">▶</span>
                                 <span className="text-lg font-semibold text-foreground">Navigate the Hobson dashboard</span>
                               </div>
                             </AccordionTrigger>
@@ -1113,8 +1114,9 @@ const Learn = () => {
                       <div>
                         <Accordion type="multiple" className="w-full">
                           <AccordionItem value="upload-documents">
-                            <AccordionTrigger className="text-left hover:no-underline">
+                            <AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>div>span]:rotate-90">
                               <div className="flex items-center gap-3">
+                                <span className="transition-transform duration-200 text-foreground">▶</span>
                                 <span className="text-lg font-semibold text-foreground">Upload and organize documents</span>
                               </div>
                             </AccordionTrigger>
@@ -1154,8 +1156,9 @@ const Learn = () => {
                       <div>
                         <Accordion type="multiple" className="w-full">
                           <AccordionItem value="ai-analysis">
-                            <AccordionTrigger className="text-left hover:no-underline">
+                            <AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>div>span]:rotate-90">
                               <div className="flex items-center gap-3">
+                                <span className="transition-transform duration-200 text-foreground">▶</span>
                                 <span className="text-lg font-semibold text-foreground">Understand AI analysis results</span>
                               </div>
                             </AccordionTrigger>
