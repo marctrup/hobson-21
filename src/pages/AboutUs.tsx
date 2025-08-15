@@ -94,25 +94,20 @@ const AboutUs = () => {
 
           {/* Commitment Section */}
           <div className="mt-20 text-center">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-primary/5 to-transparent rounded-3xl blur-xl"></div>
-              <div className="relative bg-gradient-to-br from-background/95 to-background/90 backdrop-blur-sm rounded-3xl p-12 border border-primary/20">
-                <div className="w-20 h-20 bg-gradient-to-r from-primary to-primary-light rounded-2xl mx-auto flex items-center justify-center mb-8 transform hover:scale-110 transition-transform duration-300">
-                  <Heart className="w-10 h-10 text-white" />
-                </div>
-                
-                <h3 className="text-3xl font-bold text-foreground mb-6">Our Commitment</h3>
-                <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
-                  We're committed to getting this right, and we believe this technology can truly make a difference in the property industry.
-                </p>
-
-                <Link to="/contact">
-                  <SimpleButton size="lg" className="text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-light hover:from-primary/90 hover:to-primary-light/90 text-white transform hover:scale-105 transition-all duration-300">
-                    Get in Touch
-                  </SimpleButton>
-                </Link>
-              </div>
+            <div className="w-20 h-20 bg-gradient-to-r from-primary to-primary-light rounded-2xl mx-auto flex items-center justify-center mb-8 transform hover:scale-110 transition-transform duration-300">
+              <Heart className="w-10 h-10 text-white" />
             </div>
+            
+            <h3 className="text-3xl font-bold text-foreground mb-6">Our Commitment</h3>
+            <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto mb-8">
+              We're committed to getting this right, and we believe this technology can truly make a difference in the property industry.
+            </p>
+
+            <Link to="/contact">
+              <SimpleButton size="lg" className="text-lg px-8 py-4 bg-gradient-to-r from-primary to-primary-light hover:from-primary/90 hover:to-primary-light/90 text-white transform hover:scale-105 transition-all duration-300">
+                Get in Touch
+              </SimpleButton>
+            </Link>
           </div>
         </div>
       </div>
