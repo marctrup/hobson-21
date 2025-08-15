@@ -1040,9 +1040,6 @@ const Learn = () => {
             <div className="fixed left-0 top-16 bottom-0 w-80 bg-background border-r border-border p-4 overflow-y-auto">
               {/* Mobile Global Navigation */}
               <div className="mb-6">
-                <div className="px-3 pb-3 mb-2 border-b border-border/50">
-                  <h3 className="text-sm font-medium text-foreground tracking-wide">GLOBAL</h3>
-                </div>
                 <nav className="space-y-1">
                   {staticVerticalTabs.map((tab) => {
                     const Icon = tab.icon;
@@ -1181,9 +1178,6 @@ const Learn = () => {
               <div className="p-4 pt-[38px]">
                 {/* Global Navigation Section */}
                 <div className="mb-8">
-                  <div className="px-3 pb-3 mb-2 border-b border-border/50">
-                    <h3 className="text-sm font-medium text-foreground tracking-wide">GLOBAL</h3>
-                  </div>
                   <nav className="space-y-1">
                     {staticVerticalTabs.map((tab) => {
                       const Icon = tab.icon;
