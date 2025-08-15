@@ -258,11 +258,17 @@ const Learn = () => {
                 {/* Contextual Section - Only show when not on global pages */}
                 {!isGlobalPageActive && (
                   <div>
-                    <div className="px-3 pb-2">
-                      <h3 className="text-xs font-semibold text-primary uppercase tracking-wider">
-                        {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
-                      </h3>
-                      <p className="text-xs text-muted-foreground mt-1">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
+                    <div className="px-3 pb-4 mb-4 bg-primary/5 rounded-lg border-l-4 border-primary">
+                      <div className="flex items-center gap-2 mb-2">
+                        {(() => {
+                          const ActiveIcon = horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.icon;
+                          return ActiveIcon ? <ActiveIcon className="w-5 h-5 text-primary" /> : null;
+                        })()}
+                        <h3 className="text-lg font-bold text-foreground">
+                          {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground pl-7">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
                     </div>
                     <nav className="space-y-1">
                       {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
