@@ -294,10 +294,13 @@ const BlogEditor = () => {
         }
       }
 
-      toast({
-        title: "Success",
-        description: `Post ${statusToSave === 'published' ? 'published' : 'saved'} successfully`,
-      });
+      // Only show success toast for publishing, not for drafts
+      if (statusToSave === 'published') {
+        toast({
+          title: "Success",
+          description: "Post published successfully",
+        });
+      }
 
       if (!isEditing) {
         navigate(`/admin/blog/edit/${postId}`);
@@ -335,12 +338,14 @@ const BlogEditor = () => {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" asChild>
-            <a href={`/blog/preview/${post.id || 'new'}`} target="_blank" rel="noopener noreferrer">
-              <Eye className="w-4 h-4 mr-2" />
-              Preview
-            </a>
-          </Button>
+          {post.id && (
+            <Button variant="outline" asChild>
+              <a href={`/blog/preview/${post.id}`} target="_blank" rel="noopener noreferrer">
+                <Eye className="w-4 h-4 mr-2" />
+                Preview
+              </a>
+            </Button>
+          )}
           <Button 
             variant="outline" 
             onClick={() => handleSave('draft')}
