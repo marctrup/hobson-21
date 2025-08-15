@@ -1001,6 +1001,11 @@ const Learn = () => {
                   <p className="text-white/90 text-sm">Learn how to transform your property management with AI-powered document analysis</p>
                 </div>
                 </div>
+                
+                {/* Description text aligned with video */}
+                <div className="mt-6">
+                  <p className="text-lg text-muted-foreground">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
+                </div>
               </div>
             </div>
 
