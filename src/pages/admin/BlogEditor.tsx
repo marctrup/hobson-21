@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { ArrowLeft, Save, Eye } from "lucide-react";
+import { ArrowLeft, Save, Eye, Upload, Bold, Italic, Underline, Link, List, ListOrdered, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { ImageUpload } from "@/components/blog/ImageUpload";
-import { RichTextEditor } from "@/components/blog/RichTextEditor";
 
 interface BlogPost {
   id?: string;
@@ -182,9 +182,164 @@ const BlogEditor = () => {
     }));
   };
 
+  const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
+
   const processContentForSave = (content: string) => {
-    // Content is already in HTML format from the rich text editor
-    return content;
+    // Convert line breaks to <br> tags while preserving existing HTML
+    return content.replace(/\n/g, '<br>');
+  };
+
+  const handleImageInsert = (imageUrl: string, altText: string) => {
+    const imageMarkup = `<img src="${imageUrl}" alt="${altText}" style="max-width: 100%; height: auto; margin: 20px 0;" />`;
+    setPost(prev => ({
+      ...prev,
+      content: prev.content + '\n\n' + imageMarkup
+    }));
+  };
+
+  const insertFormatting = (startTag: string, endTag: string) => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = post.content.substring(start, end);
+    
+    const formattedText = startTag + selectedText + endTag;
+    const newContent = post.content.substring(0, start) + formattedText + post.content.substring(end);
+    
+    handleContentChange(newContent);
+    
+    // Restore selection after state update
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + startTag.length, start + startTag.length + selectedText.length);
+    }, 0);
+  };
+
+  const handleBold = () => insertFormatting('<strong>', '</strong>');
+  const handleItalic = () => insertFormatting('<em>', '</em>');
+  const handleUnderline = () => insertFormatting('<u>', '</u>');
+  
+  const handleBulletList = () => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = post.content.substring(start, end);
+    
+    let listMarkup;
+    if (selectedText) {
+      // If text is selected, convert lines to list items
+      const lines = selectedText.split('\n').filter(line => line.trim());
+      const listItems = lines.map(line => `  <li>${line.trim()}</li>`).join('\n');
+      listMarkup = `<ul>${listItems}</ul>`;
+    } else {
+      // If no selection, insert empty list
+      listMarkup = '<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>';
+    }
+    
+    const newContent = post.content.substring(0, start) + listMarkup + post.content.substring(end);
+    handleContentChange(newContent);
+    
+    // Focus and position cursor
+    setTimeout(() => {
+      textarea.focus();
+      const newPosition = start + listMarkup.length;
+      textarea.setSelectionRange(newPosition, newPosition);
+    }, 0);
+  };
+
+  const handleNumberedList = () => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = post.content.substring(start, end);
+    
+    let listMarkup;
+    if (selectedText) {
+      // If text is selected, convert lines to list items
+      const lines = selectedText.split('\n').filter(line => line.trim());
+      const listItems = lines.map(line => `  <li>${line.trim()}</li>`).join('\n');
+      listMarkup = `<ol>${listItems}</ol>`;
+    } else {
+      // If no selection, insert empty list
+      listMarkup = '<ol><li>Item 1</li><li>Item 2</li><li>Item 3</li></ol>';
+    }
+    
+    const newContent = post.content.substring(0, start) + listMarkup + post.content.substring(end);
+    handleContentChange(newContent);
+    
+    // Focus and position cursor
+    setTimeout(() => {
+      textarea.focus();
+      const newPosition = start + listMarkup.length;
+      textarea.setSelectionRange(newPosition, newPosition);
+    }, 0);
+  };
+  
+  const handleLink = () => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = post.content.substring(start, end);
+    
+    const url = prompt("Enter the URL:");
+    if (!url) return;
+    
+    const linkText = selectedText || "link text";
+    const linkMarkup = `<a href="${url}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
+    const newContent = post.content.substring(0, start) + linkMarkup + post.content.substring(end);
+    
+    handleContentChange(newContent);
+    
+    // Focus and position cursor after the link
+    setTimeout(() => {
+      textarea.focus();
+      const newPosition = start + linkMarkup.length;
+      textarea.setSelectionRange(newPosition, newPosition);
+    }, 0);
+  };
+
+  const handleEmailLink = () => {
+    const textarea = contentTextareaRef.current;
+    if (!textarea) return;
+
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = post.content.substring(start, end);
+    
+    const email = prompt("Enter the email address:");
+    if (!email) return;
+    
+    const subject = prompt("Enter the email subject (optional):") || "";
+    const body = prompt("Enter the email body (optional):") || "";
+    
+    let mailtoUrl = `mailto:${email}`;
+    const params = [];
+    if (subject) params.push(`subject=${encodeURIComponent(subject)}`);
+    if (body) params.push(`body=${encodeURIComponent(body)}`);
+    if (params.length > 0) {
+      mailtoUrl += `?${params.join('&')}`;
+    }
+    
+    const linkText = selectedText || email;
+    const emailLinkMarkup = `<a href="${mailtoUrl}">${linkText}</a>`;
+    const newContent = post.content.substring(0, start) + emailLinkMarkup + post.content.substring(end);
+    
+    handleContentChange(newContent);
+    
+    // Focus and position cursor after the email link
+    setTimeout(() => {
+      textarea.focus();
+      const newPosition = start + emailLinkMarkup.length;
+      textarea.setSelectionRange(newPosition, newPosition);
+    }, 0);
   };
 
   const handleSave = async (newStatus?: 'draft' | 'published') => {
@@ -294,13 +449,10 @@ const BlogEditor = () => {
         }
       }
 
-      // Only show success toast for publishing, not for drafts
-      if (statusToSave === 'published') {
-        toast({
-          title: "Success",
-          description: "Post published successfully",
-        });
-      }
+      toast({
+        title: "Success",
+        description: `Post ${statusToSave === 'published' ? 'published' : 'saved'} successfully`,
+      });
 
       if (!isEditing) {
         navigate(`/admin/blog/edit/${postId}`);
@@ -338,9 +490,9 @@ const BlogEditor = () => {
           </h1>
         </div>
         <div className="flex items-center gap-2">
-          {post.id && (
+          {post.status === 'published' && (
             <Button variant="outline" asChild>
-              <a href={`/blog/preview/${post.id}`} target="_blank" rel="noopener noreferrer">
+              <a href={`/blog/${post.slug}`} target="_blank" rel="noopener noreferrer">
                 <Eye className="w-4 h-4 mr-2" />
                 Preview
               </a>
@@ -404,10 +556,92 @@ const BlogEditor = () => {
 
               <div>
                 <Label htmlFor="content">Content</Label>
-                <RichTextEditor
-                  content={post.content}
-                  onChange={handleContentChange}
+                
+                {/* Formatting Toolbar */}
+                <div className="border border-input rounded-t-md bg-muted/20 px-3 py-2 flex items-center gap-1">
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleBold}
+                    className="h-8 w-8 p-0"
+                    title="Bold"
+                  >
+                    <Bold className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleItalic}
+                    className="h-8 w-8 p-0"
+                    title="Italic"
+                  >
+                    <Italic className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleUnderline}
+                    className="h-8 w-8 p-0"
+                    title="Underline"
+                  >
+                    <Underline className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleLink}
+                    className="h-8 w-8 p-0"
+                    title="Add Link"
+                  >
+                    <Link className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleEmailLink}
+                    className="h-8 w-8 p-0"
+                    title="Add Email Link"
+                  >
+                    <Mail className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleBulletList}
+                    className="h-8 w-8 p-0"
+                    title="Bullet List"
+                  >
+                    <List className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleNumberedList}
+                    className="h-8 w-8 p-0"
+                    title="Numbered List"
+                  >
+                    <ListOrdered className="h-4 w-4" />
+                  </Button>
+                  <div className="text-xs text-muted-foreground ml-2">
+                    Select text and click formatting buttons
+                  </div>
+                </div>
+                
+                <Textarea
+                  ref={contentTextareaRef}
+                  id="content"
+                  value={post.content}
+                  onChange={(e) => handleContentChange(e.target.value)}
                   placeholder="Write your blog post content here..."
+                  rows={20}
+                  className="font-mono rounded-t-none border-t-0"
                 />
                 <p className="text-sm text-muted-foreground mt-1">
                   Estimated reading time: {post.reading_time} minutes
