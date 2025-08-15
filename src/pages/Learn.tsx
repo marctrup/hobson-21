@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X } from 'lucide-react';
@@ -153,6 +153,27 @@ const Learn = () => {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       };
+
+      // Scroll spy effect for Plans and Credits
+      useEffect(() => {
+        const handleScroll = () => {
+          const sections = tocSections.map(section => section.id);
+          const scrollPosition = window.scrollY + 100; // offset for header
+
+          for (let i = sections.length - 1; i >= 0; i--) {
+            const element = document.getElementById(sections[i]);
+            if (element && element.offsetTop <= scrollPosition) {
+              setActiveTocSection(sections[i]);
+              break;
+            }
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Set initial active section
+
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, [tocSections]);
 
       return (
         <div className="flex-1">
@@ -513,6 +534,27 @@ const Learn = () => {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       };
+
+      // Scroll spy effect for FAQ
+      useEffect(() => {
+        const handleScroll = () => {
+          const sections = tocSections.map(section => section.id);
+          const scrollPosition = window.scrollY + 100; // offset for header
+
+          for (let i = sections.length - 1; i >= 0; i--) {
+            const element = document.getElementById(sections[i]);
+            if (element && element.offsetTop <= scrollPosition) {
+              setActiveTocSection(sections[i]);
+              break;
+            }
+          }
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll(); // Set initial active section
+
+        return () => window.removeEventListener('scroll', handleScroll);
+      }, [tocSections]);
 
       return (
         <div className="flex-1">
