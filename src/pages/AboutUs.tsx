@@ -17,10 +17,6 @@ const AboutUs = () => {
         
         <div className="relative container mx-auto px-4 py-20">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-8 animate-fade-in">
-              <Heart className="w-4 h-4" />
-              Built by Property Professionals
-            </div>
             
             <h1 className="text-6xl md:text-7xl font-bold mb-8 bg-gradient-to-r from-primary via-primary-light to-primary bg-clip-text text-transparent animate-fade-in">
               About Us
