@@ -39,18 +39,7 @@ export const GlobalHeader = () => {
             >
               Blog
             </Link>
-            <Link 
-              to="/about" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="About Hobson Property Management AI - Learn about our AI-powered property management solutions"
-            >
-              About
-            </Link>
-            <Link 
-              to="/contact" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Contact Real Estate Software Support - Get in touch with our AI property management specialists"
-            >
+            <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Contact
             </Link>
           </nav>
@@ -82,14 +71,6 @@ export const GlobalHeader = () => {
                 title="Property Management Insights"
               >
                 Blog
-              </Link>
-              <Link 
-                to="/about" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-                title="About Hobson Property Management AI"
-              >
-                About
               </Link>
               <Link 
                 to="/contact" 

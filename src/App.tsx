@@ -19,7 +19,7 @@ const PilotForm = lazy(() => import("./pages/PilotForm"));
 const Auth = lazy(() => import("./pages/Auth"));
 const Admin = lazy(() => import("./pages/Admin"));
 const NotFound = lazy(() => import("./pages/NotFound"));
-const AboutUs = lazy(() => import("./pages/AboutUs"));
+
 const ContactUs = lazy(() => import("./pages/ContactUs"));
 
 const Blog = lazy(() => import("./pages/Blog"));
@@ -88,8 +88,6 @@ const App = () => {
                   <Route path="/features/real_estate_ai" element={<Navigate to="/" replace />} />
                   <Route path="/blog" element={<Blog />} />
                   <Route path="/blog/:slug" element={<BlogPost />} />
-                  <Route path="/about" element={<AboutUs />} />
-                  <Route path="/about/property-ai" element={<AboutUs />} />
                   <Route path="/contact" element={<ContactUs />} />
                   <Route path="/pricing" element={<Pricing />} />
                   <Route path="/learn" element={<Learn />} />

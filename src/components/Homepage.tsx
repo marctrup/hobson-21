@@ -59,9 +59,6 @@ export const Homepage = () => {
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </Link>
-                <Link to="/about" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  About
-                </Link>
                 <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Contact
                 </Link>
@@ -78,9 +75,6 @@ export const Homepage = () => {
                 <div className="flex flex-col gap-4">
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Blog
-                  </Link>
-                  <Link to="/about" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    About
                   </Link>
                   <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Contact
@@ -319,9 +313,6 @@ export const Homepage = () => {
                   <div className="space-y-3">
                     <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors">
                       Blog
-                    </Link>
-                    <Link to="/about" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      About
                     </Link>
                     <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">
                       Contact

@@ -32,9 +32,6 @@ export const SimpleHomepage = () => {
               <Link to="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Blog
               </Link>
-              <Link to="/about" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                About
-              </Link>
               <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                 Contact
               </Link>
@@ -58,9 +55,6 @@ export const SimpleHomepage = () => {
                 </Link>
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2">
                   Blog
-                </Link>
-                <Link to="/about" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2">
-                  About
                 </Link>
                 <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2">
                   Contact
