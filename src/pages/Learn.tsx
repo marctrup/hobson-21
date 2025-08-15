@@ -332,21 +332,45 @@ const Learn = () => {
                   <section id="credit-display">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit display</h2>
                     <p className="text-muted-foreground mb-4">
-                      Your credit balance is displayed prominently in the Lovable interface. This shows your total available credits across all sources - daily allowance, monthly subscription credits, and any rolled-over credits from previous months.
+                      To view how many credits you have or have used, simply press your workspace name on the main dashboard or the project name when inside the project editor. You'll see how many credits you have left this billing period, as well as the credit bar. The credit bar provides a visual representation of how many credits a user has remaining and how many have been used.
                     </p>
-                    <p className="text-muted-foreground">
-                      Credits are consumed when you send messages to the AI. Different types of interactions may consume different amounts of credits based on complexity and resource usage.
-                    </p>
+                    <ul className="text-muted-foreground space-y-2">
+                      <li>• <strong>Grey part:</strong> Shows the amount of credits already used this billing period.</li>
+                      <li>• <strong>Blue parts:</strong> Shows different types of remaining credits. Hovering over each colored section will display a tooltip indicating the credit type and the exact number of credits available for that type.</li>
+                    </ul>
                   </section>
 
                   {/* Credit Usage */}
                   <section id="credit-usage">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit usage</h2>
                     <p className="text-muted-foreground mb-4">
-                      Credits are primarily used when you send messages or prompts to the AI. The number of credits consumed per message depends on various factors including message complexity, file attachments, and the type of AI operation being performed.
+                      Lovable has a usage-based credit system, where sending messages deducts credits. The cost of a message depends on its complexity to ensure you only pay for what you actually use.
                     </p>
-                    <p className="text-muted-foreground">
-                      You can track your credit usage in your account dashboard to monitor consumption patterns and plan accordingly.
+                    <p className="text-muted-foreground mb-6">
+                      Many messages cost less than 1 credit, while more complex ones may cost more. This approach allows for more precise edits and greater efficiency per message, making Lovable more affordable overall.
+                    </p>
+                    
+                    <h3 className="text-lg font-medium text-foreground mb-4">Example prompts and their cost:</h3>
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead>
+                          <tr className="border-b border-border">
+                            <th className="text-left py-2 text-foreground">User Prompt</th>
+                            <th className="text-left py-2 text-foreground">Work done</th>
+                            <th className="text-left py-2 text-foreground">Credits used</th>
+                          </tr>
+                        </thead>
+                        <tbody className="text-muted-foreground">
+                          <tr><td className="py-2">Make the button gray</td><td>Changes the button styles</td><td>0.50</td></tr>
+                          <tr><td className="py-2">Remove the footer</td><td>Removes the footer component</td><td>0.90</td></tr>
+                          <tr><td className="py-2">Add authentication</td><td>Adds login and authentication logic</td><td>1.20</td></tr>
+                          <tr><td className="py-2">Build a landing page with images</td><td>Creates a landing page with generated images, a theme and sections</td><td>2.00</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <p className="text-muted-foreground mt-6">
+                      You can see the cost of each message in the chat history by pressing the three dots beneath a message.
                     </p>
                   </section>
 
@@ -354,45 +378,132 @@ const Learn = () => {
                   <section id="credit-rollovers">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit Rollovers</h2>
                     <p className="text-muted-foreground mb-4">
-                      Unused monthly credits from your subscription can roll over to the next month, subject to certain limits. The rollover limit depends on your plan type and billing frequency:
+                      Unused credits automatically roll over at the end of each billing cycle for both monthly and annual paid plans, as long as you keep an active subscription, subject to the limitations outlined below.
                     </p>
-                    <ul className="text-muted-foreground space-y-2 mb-4">
-                      <li>• Monthly billing: Lower rollover limits</li>
-                      <li>• Annual billing: Higher rollover limits as a benefit</li>
-                    </ul>
-                    <p className="text-muted-foreground">
-                      Credits that exceed the rollover limit will expire at the end of each billing period, so it's best to use them regularly.
-                    </p>
+                    
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">Rollover credit limits:</h3>
+                        <ul className="text-muted-foreground space-y-2">
+                          <li>• <strong>Monthly plans:</strong> Rollover credits can accumulate up to the monthly credit limit.</li>
+                          <li>• <strong>Annual plans:</strong> Rollover credits can accumulate up to 12 times the monthly credit limit (i.e. the annual limit).</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">Rollover credits expiration:</h3>
+                        <p className="text-muted-foreground">
+                          Rollover credits are valid up to one month after being added for monthly plans, and 12 months after being added for annual plans.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-2">Cancellation:</h3>
+                        <p className="text-muted-foreground">
+                          Upon cancellation of a paid subscription, all unused and rollover credits will expire at the end of the current billing period and will not carry over.
+                        </p>
+                      </div>
+
+                      <p className="text-muted-foreground">
+                        Daily credits do not roll over. Unused daily credits will not accumulate from day to day for the free tier or for the paid tiers.
+                      </p>
+
+                      <p className="text-muted-foreground">
+                        For detailed information about subscription options, visit our pricing page.
+                      </p>
+                    </div>
                   </section>
 
                   {/* FAQ */}
                   <section id="faq-plans">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">FAQ</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-medium text-foreground mb-2">Can I change my plan at any time?</h4>
-                        <p className="text-muted-foreground text-sm">Yes, you can upgrade or downgrade your plan at any time through your account settings.</p>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-foreground mb-2">What happens to unused credits when I change plans?</h4>
-                        <p className="text-muted-foreground text-sm">Your existing credits will be preserved when you change plans, and any new credits from your updated plan will be added.</p>
-                      </div>
-                    </div>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="what-is-credit">
+                        <AccordionTrigger className="text-left">What is a credit?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">A credit is the unit of measurement for using Lovable's AI features. Each message or action costs a certain number of credits based on its complexity.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="upgrade-subscription">
+                        <AccordionTrigger className="text-left">How can I upgrade my subscription?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You can upgrade your subscription through your workspace settings or by contacting our support team.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="downgrade-subscription">
+                        <AccordionTrigger className="text-left">How can I downgrade my subscription?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Subscription downgrades can be managed through your account settings or by reaching out to support.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="cancel-subscription">
+                        <AccordionTrigger className="text-left">How can I cancel my subscription?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You can cancel your subscription at any time through your account settings. Your access will continue until the end of the current billing period.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="billing-info">
+                        <AccordionTrigger className="text-left">How can I change my billing information?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Billing information can be updated in your account settings under the billing section.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="download-invoices">
+                        <AccordionTrigger className="text-left">How do I download my invoices?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Invoices are available for download in your account settings under billing history.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="get-more-credits">
+                        <AccordionTrigger className="text-left">How do I get more credits?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You can get more credits by upgrading your subscription plan or purchasing additional credit packages.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="credit-reset">
+                        <AccordionTrigger className="text-left">When does my credit limit reset?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Your credit limit resets at the beginning of each billing cycle based on your subscription plan.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="credit-topup">
+                        <AccordionTrigger className="text-left">Can I buy a top-up of credits?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Additional credit packages may be available depending on your plan. Contact support for more information.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="remaining-credits">
+                        <AccordionTrigger className="text-left">How do I see the remaining credits in a workspace?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Click on your workspace name on the dashboard to view your remaining credits and usage statistics.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="free-credits">
+                        <AccordionTrigger className="text-left">Can I get free credits?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Free credits are included with the free plan. Additional free credits may be available through promotional offers or referral programs.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </section>
 
-                  {/* Troubleshooting */}
+                  {/* Common Issues */}
                   <section id="troubleshooting">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Common Issues</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-medium text-foreground mb-2">My credits aren't updating after payment</h4>
-                        <p className="text-muted-foreground text-sm">Credit updates typically happen within a few minutes of successful payment. If you don't see your credits after 10 minutes, please contact support.</p>
-                      </div>
-                      <div>
-                        <h4 className="font-medium text-foreground mb-2">I'm not receiving my daily credits</h4>
-                        <p className="text-muted-foreground text-sm">Daily credits reset at midnight UTC. Make sure you haven't reached your monthly maximum for daily credits based on your plan.</p>
-                      </div>
-                    </div>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Common Issues and Troubleshooting</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="payment-issues">
+                        <AccordionTrigger className="text-left">I can't pay for my subscription. What should I do?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">If you're experiencing payment issues, please check your payment method details and ensure your card is valid. If the problem persists, contact our support team for assistance.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="payment-access">
+                        <AccordionTrigger className="text-left">I've paid but still don't have access to my plan. What should I do?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Payment processing can sometimes take a few minutes. If you still don't have access after 10 minutes, please contact our support team with your payment confirmation details.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </section>
                 </div>
               </div>
@@ -426,13 +537,13 @@ const Learn = () => {
       );
     }
 
-    // Handle FAQ content specifically  
+    // Handle FAQ content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
       const tocSections = [
-        { id: 'getting-started', label: 'Getting Started' },
+        { id: 'getting-started', label: 'Getting started' },
         { id: 'building-with-hobson', label: 'Building with Hobson' },
         { id: 'features', label: 'Features' },
-        { id: 'managing-account', label: 'Managing my account' },
+        { id: 'managing-account', label: 'Managing your account' },
         { id: 'policies-security', label: 'Policies and Security' },
         { id: 'how-hobson-works', label: 'How Hobson works' },
         { id: 'about-hobson', label: 'About Hobson' },
@@ -446,6 +557,7 @@ const Learn = () => {
         }
       };
 
+
       return (
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
@@ -453,8 +565,8 @@ const Learn = () => {
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-foreground mb-2">Frequently Asked Questions</h1>
-                  <p className="text-lg text-muted-foreground">Common questions and answers about using Hobson</p>
+                  <h1 className="text-3xl font-bold text-foreground mb-2">FAQ</h1>
+                  <p className="text-lg text-muted-foreground">Frequently asked questions about Hobson</p>
                 </div>
 
                 <div className="space-y-12">
@@ -536,9 +648,33 @@ const Learn = () => {
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="third-party-apis">
-                        <AccordionTrigger className="text-left">Can I connect third-party APIs to my project?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">Can I add third-party APIs to my project?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson supports integration with various third-party APIs for enhanced functionality and data exchange.</p>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson supports integration with various property management tools and external APIs.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="store-api-keys">
+                        <AccordionTrigger className="text-left">Can I store sensitive API keys in Hobson?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, all API keys and sensitive data are encrypted and stored securely according to industry standards.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="add-payments">
+                        <AccordionTrigger className="text-left">How do I add payments to my website?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Hobson integrates with payment processors commonly used in property management for rent collection and fees.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="improve-seo">
+                        <AccordionTrigger className="text-left">How can I improve SEO for my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Focus on structured data markup for property listings and ensure fast loading times for document access.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="project-completion-time">
+                        <AccordionTrigger className="text-left">How long does it take to complete a project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Implementation typically takes 2-4 weeks depending on document volume and integration requirements.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
@@ -548,47 +684,161 @@ const Learn = () => {
                   <section id="features">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Features</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="ai-capabilities">
-                        <AccordionTrigger className="text-left">What AI capabilities does Hobson offer?</AccordionTrigger>
+                      <AccordionItem value="project-settings">
+                        <AccordionTrigger className="text-left">How do I find the Project settings?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson offers document parsing, contract analysis, automated data extraction, and intelligent insights generation.</p>
+                          <p className="text-muted-foreground text-sm">Navigate to your dashboard and click on the project settings icon in the top navigation bar.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="supported-formats">
-                        <AccordionTrigger className="text-left">What document formats are supported?</AccordionTrigger>
+                      <AccordionItem value="project-visibility">
+                        <AccordionTrigger className="text-left">Can I change the visibility of my project?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson supports PDF, Word documents, images, and various other common document formats used in property management.</p>
+                          <p className="text-muted-foreground text-sm">Yes, you can set projects as private, shared with team members, or public within your organization.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="collaboration">
-                        <AccordionTrigger className="text-left">Can multiple team members collaborate on projects?</AccordionTrigger>
+                      <AccordionItem value="hide-badge">
+                        <AccordionTrigger className="text-left">Can I hide the Hobson badge?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson includes team collaboration features with role-based access controls and shared project workspaces.</p>
+                          <p className="text-muted-foreground text-sm">Enterprise plans include white-label options to customize or remove branding elements.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="rename-project">
+                        <AccordionTrigger className="text-left">Can I rename a project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, project names can be updated at any time from the project settings menu.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="copy-project">
+                        <AccordionTrigger className="text-left">Can I make a copy of a project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, you can duplicate projects to create templates or test different configurations.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="delete-project">
+                        <AccordionTrigger className="text-left">Can I delete a project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, projects can be deleted from the settings menu. This action is permanent and cannot be undone.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="what-is-remix">
+                        <AccordionTrigger className="text-left">What is a remix?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">A remix creates a new project based on an existing one, allowing you to modify workflows without affecting the original.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="chat-mode">
+                        <AccordionTrigger className="text-left">What is Chat mode?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Chat mode allows you to interact with your documents using natural language queries to extract specific information.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="see-edit-code">
+                        <AccordionTrigger className="text-left">Can I see the code that Hobson generates and manually edit it?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Advanced users can access the underlying processing logic and customize extraction rules through the developer interface.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="edit-text-colors">
+                        <AccordionTrigger className="text-left">Can I manually edit text or colors?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, the interface supports customization of themes, colors, and text elements to match your brand.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="collaborate">
+                        <AccordionTrigger className="text-left">Can I collaborate on my projects?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson supports team collaboration with role-based permissions and shared workspaces.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="publish-project">
+                        <AccordionTrigger className="text-left">How do I publish my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Deploy your configured workflows to production through the deployment dashboard with one-click publishing.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="custom-domain">
+                        <AccordionTrigger className="text-left">How do I add a custom domain to my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Custom domains can be configured in the project settings under the "Domains" section for enterprise customers.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="analytics">
+                        <AccordionTrigger className="text-left">Can I see analytics for my published projects?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, comprehensive analytics show document processing volumes, accuracy metrics, and user engagement.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="add-images">
+                        <AccordionTrigger className="text-left">Can I add images to a Hobson prompt?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson supports image uploads and can extract text and data from visual documents and diagrams.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="add-videos">
+                        <AccordionTrigger className="text-left">Can I add videos to a Hobson prompt?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Currently, Hobson focuses on document and image processing. Video support is planned for future releases.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="import-figma">
+                        <AccordionTrigger className="text-left">Can I import designs from Figma?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Interface mockups can be imported to customize the look and feel of your document processing workflows.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="export-code">
+                        <AccordionTrigger className="text-left">Can I export all of my project's code?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, all configurations and custom logic can be exported for backup or migration purposes.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="import-code">
+                        <AccordionTrigger className="text-left">Can I start a project by importing code from an external source such as GitHub?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, existing automation scripts and workflows can be imported through our API or GitHub integration.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="project-history">
+                        <AccordionTrigger className="text-left">How do I see my project history?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Project history and version control are available in the project settings under "History" tab.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="restore-version">
+                        <AccordionTrigger className="text-left">Can I restore an earlier version of my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, you can roll back to any previous version through the project history interface.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
                   </section>
 
-                  {/* Managing Account */}
+                  {/* Managing your account */}
                   <section id="managing-account">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Managing my account</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Managing your account</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="account-settings">
-                        <AccordionTrigger className="text-left">How do I update my account settings?</AccordionTrigger>
+                      <AccordionItem value="change-email">
+                        <AccordionTrigger className="text-left">Can I change the email I use to login?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Access your account settings through the profile menu to update personal information, preferences, and billing details.</p>
+                          <p className="text-muted-foreground text-sm">Yes, email addresses can be updated in your account settings under "Profile" section.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="billing">
-                        <AccordionTrigger className="text-left">How does billing work?</AccordionTrigger>
+                      <AccordionItem value="delete-account">
+                        <AccordionTrigger className="text-left">Can I delete my account?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson offers flexible billing options including monthly and annual subscriptions with different usage tiers.</p>
+                          <p className="text-muted-foreground text-sm">Account deletion can be requested through the account settings. All data will be permanently removed.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="data-export">
-                        <AccordionTrigger className="text-left">Can I export my data?</AccordionTrigger>
+                      <AccordionItem value="change-workspace-owner">
+                        <AccordionTrigger className="text-left">Can I change the workspace owner?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, you can export your analyzed documents and extracted data in various formats for backup or migration purposes.</p>
+                          <p className="text-muted-foreground text-sm">Workspace ownership can be transferred to another team member through the admin panel.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="transfer-project-ownership">
+                        <AccordionTrigger className="text-left">How can I transfer project ownership to someone else?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Project ownership transfer is available in project settings under "Transfer Ownership" for team accounts.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
@@ -598,47 +848,71 @@ const Learn = () => {
                   <section id="policies-security">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Policies and Security</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="data-security">
-                        <AccordionTrigger className="text-left">How is my data protected?</AccordionTrigger>
+                      <AccordionItem value="get-support">
+                        <AccordionTrigger className="text-left">How can I get support?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson employs enterprise-grade security measures including encryption, secure data centers, and compliance with industry standards.</p>
+                          <p className="text-muted-foreground text-sm">Contact our support team through the help center, email support, or schedule a consultation call.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="privacy-policy">
-                        <AccordionTrigger className="text-left">Where can I find the privacy policy?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">Where can I find Hobson's privacy policy?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Our privacy policy is available in the footer of our website and outlines how we collect, use, and protect your information.</p>
+                          <p className="text-muted-foreground text-sm">Our privacy policy is available at the bottom of our website and in your account dashboard.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="compliance">
-                        <AccordionTrigger className="text-left">Is Hobson compliant with regulations?</AccordionTrigger>
+                      <AccordionItem value="terms-of-service">
+                        <AccordionTrigger className="text-left">Where can I find Hobson's Terms of Service?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson is designed to comply with relevant data protection and industry regulations including GDPR and SOC 2.</p>
+                          <p className="text-muted-foreground text-sm">Terms of Service are accessible through the footer links and account settings.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="refund-policy">
+                        <AccordionTrigger className="text-left">What is Hobson's refund policy?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">We offer a 30-day money-back guarantee for new subscriptions. Contact support for refund requests.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="security-compliance">
+                        <AccordionTrigger className="text-left">Is Hobson compliant with security standards?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson is SOC 2 compliant and follows industry-standard security practices for data protection.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="gdpr-compliance">
+                        <AccordionTrigger className="text-left">Is Hobson GDPR compliant?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson is fully GDPR compliant with data processing agreements and privacy controls available.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
                   </section>
 
-                  {/* How Hobson Works */}
+                  {/* How Hobson works */}
                   <section id="how-hobson-works">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">How Hobson works</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="ai-technology">
-                        <AccordionTrigger className="text-left">What AI technology powers Hobson?</AccordionTrigger>
+                      <AccordionItem value="tech-stacks">
+                        <AccordionTrigger className="text-left">What tech stacks does Hobson know?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson uses advanced natural language processing and machine learning models specifically trained for property management documents.</p>
+                          <p className="text-muted-foreground text-sm">Hobson integrates with major property management platforms, CRMs, and accounting systems commonly used in real estate.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="processing-time">
-                        <AccordionTrigger className="text-left">How long does document processing take?</AccordionTrigger>
+                      <AccordionItem value="mobile-support">
+                        <AccordionTrigger className="text-left">Does Hobson support mobile app development?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Processing time varies by document size and complexity, but most documents are analyzed within minutes.</p>
+                          <p className="text-muted-foreground text-sm">Mobile access is available through responsive web interfaces, with native apps planned for future releases.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="accuracy">
-                        <AccordionTrigger className="text-left">How accurate is the AI analysis?</AccordionTrigger>
+                      <AccordionItem value="remember-context">
+                        <AccordionTrigger className="text-left">How does Hobson remember context?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson achieves high accuracy rates through continuous model training and can be fine-tuned for specific document types and requirements.</p>
+                          <p className="text-muted-foreground text-sm">Hobson uses machine learning to understand document patterns and maintain context across related documents and projects.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="project-ownership">
+                        <AccordionTrigger className="text-left">Who owns the projects and the code that Hobson creates?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You retain full ownership of your data, documents, and any custom configurations created within Hobson.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
@@ -648,22 +922,16 @@ const Learn = () => {
                   <section id="about-hobson">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">About Hobson</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="company-mission">
-                        <AccordionTrigger className="text-left">What is Hobson's mission?</AccordionTrigger>
+                      <AccordionItem value="where-based">
+                        <AccordionTrigger className="text-left">Where is Hobson based?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Our mission is to streamline property management through intelligent document analysis and automation, helping companies make better decisions faster.</p>
+                          <p className="text-muted-foreground text-sm">Hobson is headquartered in [Location] with team members distributed globally to provide 24/7 support.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="get-support">
-                        <AccordionTrigger className="text-left">How can I get support?</AccordionTrigger>
+                      <AccordionItem value="hiring">
+                        <AccordionTrigger className="text-left">Is Hobson hiring?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Support is available through our help center, email support, and for enterprise customers, dedicated account management.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="feature-requests">
-                        <AccordionTrigger className="text-left">Can I request new features?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes! We welcome feature requests through our feedback portal and regularly incorporate user suggestions into our product roadmap.</p>
+                          <p className="text-muted-foreground text-sm">We're always looking for talented individuals. Check our careers page for current openings in engineering, sales, and customer success.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
@@ -671,30 +939,77 @@ const Learn = () => {
                 </div>
               </div>
 
-              {/* Table of Contents */}
-              <div className="w-64 flex-shrink-0 hidden lg:block">
-                <div className="sticky top-24">
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 flex-shrink-0">
+                <div className="sticky top-8">
                   <div className="p-4">
-                    <h3 className="text-sm font-medium text-foreground mb-4">On this page</h3>
-                    <div className="space-y-2">
+                    <h3 className="text-sm font-semibold text-foreground mb-4 tracking-wide">ON THIS PAGE</h3>
+                    <nav className="space-y-2">
                       {tocSections.map((section) => (
                         <button
                           key={section.id}
                           onClick={() => scrollToSection(section.id)}
                           className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
                             activeTocSection === section.id
-                              ? 'bg-purple-100 text-purple-700 font-medium'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                              ? 'bg-purple-100 text-purple-700 border-l-2 border-purple-500 font-medium'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                           }`}
                         >
                           {section.label}
                         </button>
                       ))}
-                    </div>
+                    </nav>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Handle Welcome content specifically
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'welcome') {
+      return (
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
+            {/* Large Video Screen with aligned header */}
+            <div className="mb-12">
+              <div className="w-full max-w-[70.4rem] mx-auto">
+                {/* Welcome header aligned with video left edge */}
+                <div className="mb-6">
+                  <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
+                  <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
+                </div>
+                
+                {/* Video container */}
+                <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border">
+                <img 
+                  src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
+                  alt="Welcome to Hobson AI - Video placeholder"
+                  className="w-full h-full object-cover"
+                />
+                {/* Play button overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <button className="bg-black/70 hover:bg-black/80 text-white rounded-full p-4 transition-colors">
+                    <Play className="w-12 h-12 ml-1" fill="currentColor" />
+                  </button>
+                </div>
+                {/* Video title overlay */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                  <h3 className="text-white text-xl font-semibold mb-2">Getting Started with Hobson AI</h3>
+                  <p className="text-white/90 text-sm">Learn how to transform your property management with AI-powered document analysis</p>
+                </div>
+                </div>
+                
+                {/* Description text aligned with video */}
+                <div className="mt-6">
+                  <p className="text-lg text-muted-foreground">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
+                </div>
+              </div>
+            </div>
+
+
           </div>
         </div>
       );
@@ -886,6 +1201,17 @@ const Learn = () => {
                           </AccordionItem>
                         </Accordion>
                       </div>
+
+                      {/* 
+                      TEMPLATE FOR ADDITIONAL LEARNING OBJECTIVES:
+                      
+                      <div>
+                        <Accordion type="multiple" className="w-full">
+                          <AccordionItem value="unique-value-here">
+                            <AccordionTrigger className="text-left hover:no-underline">
+                              <div className="flex items-center gap-3">
+                                <span className="text-foreground">→</span>
+                                <span className="text-lg font-semibold text-foreground">Your Learning Objective Title</span>
                     </div>
                   </section>
 
@@ -922,8 +1248,39 @@ const Learn = () => {
                           </AccordionItem>
                         </Accordion>
                       </div>
+
+                      {/* 
+                      TEMPLATE FOR ADDITIONAL LEARNING OBJECTIVES:
+                      
+                      <div>
+                        <Accordion type="multiple" className="w-full">
+                          <AccordionItem value="unique-value-here">
+                            <AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>div>span:first-child]:rotate-90 [&>svg]:hidden">
+                              <div className="flex items-center gap-3">
+                                <span className="transition-transform duration-200 text-foreground">▶</span>
+                                <span className="text-lg font-semibold text-foreground">Your Learning Objective Title</span>
+                              </div>
+                            </AccordionTrigger>
+                            <AccordionContent>
+                              <div className="pl-6 space-y-4">
+                                <p className="text-muted-foreground">Learning objective description goes here.</p>
+                                
+                                // Add your teaching elements here:
+                                // - Video tutorials
+                                // - Step-by-step guides  
+                                // - Pro tip callouts
+                                // - Interactive elements
+                                
+                              </div>
+                            </AccordionContent>
+                          </AccordionItem>
+                        </Accordion>
+                      </div>
+                      */}
+                      
                     </div>
                   </section>
+
                 </div>
               </div>
 
@@ -934,17 +1291,18 @@ const Learn = () => {
                     <h3 className="text-sm font-medium text-foreground mb-4">On this page</h3>
                     <div className="space-y-2">
                       {tocSections.map((section) => (
-                         <button
-                           key={section.id}
-                           onClick={() => scrollToSection(section.id)}
-                           className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
-                             activeTocSection === section.id
-                               ? 'bg-purple-100 text-purple-700 font-medium'
-                               : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
-                           }`}
-                         >
-                           {section.label}
-                         </button>
+                        <button
+                          key={section.id}
+                          onClick={() => scrollToSection(section.id)}
+                          className={`flex items-center gap-2 w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
+                            activeTocSection === section.id
+                              ? 'bg-purple-100 text-purple-700 font-medium'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                          }`}
+                        >
+                          <span className="text-xs">→</span>
+                          {section.label}
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -980,166 +1338,284 @@ const Learn = () => {
       <Helmet>
         <title>Learn - Hobson's Choice AI</title>
         <meta name="description" content="Learn how to use Hobson's Choice AI with our comprehensive guides, tutorials, and documentation." />
-        <meta name="keywords" content="AI documentation, property management AI, document analysis, learn Hobson" />
-        <meta property="og:title" content="Learn - Hobson's Choice AI" />
-        <meta property="og:description" content="Master Hobson's Choice AI with our step-by-step guides and comprehensive documentation." />
-        <meta property="og:type" content="website" />
-        <link rel="canonical" href="/learn" />
       </Helmet>
-
-      <div className="min-h-screen bg-background">
-        {/* Mobile Header */}
-        <div className="lg:hidden bg-background border-b border-border px-4 py-3">
-          <div className="flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-2">
-              <img 
-                src={hobsonLogo} 
-                alt="Hobson's Choice AI" 
-                className="h-8 w-auto"
-              />
-            </Link>
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        <div className="flex min-h-screen">
-          {/* Desktop Sidebar */}
-          <div className="hidden lg:flex w-80 bg-muted/30 border-r border-border flex-col">
-            {/* Header */}
-            <div className="p-6 border-b border-border">
-              <Link to="/" className="flex items-center gap-3">
-                <img 
-                  src={hobsonLogo} 
-                  alt="Hobson's Choice AI" 
-                  className="h-8 w-auto"
-                />
-                <span className="font-semibold text-foreground">Learn</span>
-              </Link>
-            </div>
-
-            {/* Navigation */}
-            <div className="flex-1 overflow-auto">
-              {/* Horizontal Tabs */}
-              <div className="p-4">
-                <div className="space-y-1">
-                  {horizontalTabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => {
-                        setActiveHorizontalTab(tab.id);
-                        setActiveVerticalTab('welcome');
-                      }}
-                      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-sm transition-colors ${
-                        activeHorizontalTab === tab.id
-                          ? 'bg-primary/10 text-primary border border-primary/20'
-                          : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
-                      }`}
-                    >
-                      <tab.icon className="w-4 h-4" />
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
+      
+      <div className="min-h-screen">
+        {/* Header */}
+        <header className="border-b border-border">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <Link to="/" className="flex items-center">
+                  <img 
+                    src={hobsonLogo} 
+                    alt="Hobson AI - AI-powered property management software company logo" 
+                    className="h-12 md:h-16" 
+                    loading="eager"
+                  />
+                </Link>
               </div>
-
-              {/* Divider */}
-              <div className="border-t border-border mx-4 my-2"></div>
-
-              {/* Vertical Tabs */}
-              <div className="p-4">
-                <div className="space-y-1">
-                  {currentVerticalTabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => setActiveVerticalTab(tab.id)}
-                      className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-sm transition-colors ${
-                        activeVerticalTab === tab.id
-                          ? 'bg-accent text-accent-foreground'
-                          : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
-                      }`}
-                    >
-                      <tab.icon className="w-4 h-4" />
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
+              
+              {/* Mobile Menu Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50"
+              >
+                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+              
+              <nav className="hidden md:flex items-center gap-6">
+                <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Home
+                </a>
+                <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Blog
+                </a>
+                <a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Contact
+                </a>
+              </nav>
             </div>
           </div>
+        </header>
 
-          {/* Mobile Sidebar Overlay */}
-          {isMobileMenuOpen && (
-            <div className="fixed inset-0 z-50 lg:hidden">
-              <div className="fixed inset-0 bg-black/50" onClick={() => setIsMobileMenuOpen(false)} />
-              <div className="fixed top-0 left-0 w-80 h-full bg-background border-r border-border overflow-auto">
-                <div className="p-6 border-b border-border">
-                  <Link to="/" className="flex items-center gap-3">
-                    <img 
-                      src={hobsonLogo} 
-                      alt="Hobson's Choice AI" 
-                      className="h-8 w-auto"
-                    />
-                    <span className="font-semibold text-foreground">Learn</span>
-                  </Link>
-                </div>
-
-                <div className="p-4">
-                  <div className="space-y-1">
-                    {horizontalTabs.map((tab) => (
-                      <button
-                        key={tab.id}
-                        onClick={() => {
-                          setActiveHorizontalTab(tab.id);
-                          setActiveVerticalTab('welcome');
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-sm transition-colors ${
-                          activeHorizontalTab === tab.id
-                            ? 'bg-primary/10 text-primary border border-primary/20'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
-                        }`}
-                      >
-                        <tab.icon className="w-4 h-4" />
-                        {tab.label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="border-t border-border mx-4 my-2"></div>
-
-                <div className="p-4">
-                  <div className="space-y-1">
-                    {currentVerticalTabs.map((tab) => (
+        {/* Mobile Menu Overlay */}
+        {isMobileMenuOpen && (
+          <div className="fixed inset-0 z-50 md:hidden">
+            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
+            <div className="fixed left-0 top-16 bottom-0 w-80 bg-background border-r border-border p-4 overflow-y-auto">
+              {/* Mobile Global Navigation */}
+              <div className="mb-6">
+                <nav className="space-y-1">
+                  {staticVerticalTabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
                       <button
                         key={tab.id}
                         onClick={() => {
                           setActiveVerticalTab(tab.id);
+                          setIsGlobalPageActive(true);
                           setIsMobileMenuOpen(false);
                         }}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left text-sm transition-colors ${
-                          activeVerticalTab === tab.id
-                            ? 'bg-accent text-accent-foreground'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/50'
+                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                          activeVerticalTab === tab.id && isGlobalPageActive
+                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                         }`}
                       >
-                        <tab.icon className="w-4 h-4" />
-                        {tab.label}
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-sm font-medium">{tab.label}</span>
                       </button>
-                    ))}
-                  </div>
-                </div>
+                    );
+                  })}
+                </nav>
               </div>
-            </div>
-          )}
 
-          {/* Main Content */}
-          {renderContent()}
+              {/* Mobile Topics Navigation */}
+              <div className="mb-6">
+                <div className="px-3 pb-3 mb-2 border-b border-border/50">
+                  <h3 className="text-sm font-medium text-foreground tracking-wide">TOPICS</h3>
+                </div>
+                <nav className="space-y-1">
+                  {horizontalTabs.map((tab) => {
+                    const Icon = tab.icon;
+                    return (
+                      <button
+                        key={tab.id}
+                        onClick={() => {
+                          setActiveHorizontalTab(tab.id);
+                          setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
+                          setIsGlobalPageActive(false);
+                          setIsMobileMenuOpen(false);
+                        }}
+                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                          activeHorizontalTab === tab.id && !isGlobalPageActive
+                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        <Icon className="w-4 h-4 flex-shrink-0" />
+                        <span className="text-sm font-medium">{tab.label}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* Mobile Submenu */}
+              {!isGlobalPageActive && (
+                <div>
+                  <div className="px-3 pb-4 mb-4 bg-primary/5 rounded-lg border-l-4 border-primary">
+                    <div className="flex items-center gap-2 mb-2">
+                      {(() => {
+                        const ActiveIcon = horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.icon;
+                        return ActiveIcon ? <ActiveIcon className="w-5 h-5 text-primary" /> : null;
+                      })()}
+                      <h3 className="text-lg font-medium text-foreground">
+                        {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
+                      </h3>
+                    </div>
+                    <p className="text-sm text-muted-foreground pl-7">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
+                  </div>
+                  <nav className="space-y-1">
+                    {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
+                      const Icon = tab.icon;
+                      return (
+                        <button
+                          key={tab.id}
+                          onClick={() => {
+                            setActiveVerticalTab(tab.id);
+                            setIsGlobalPageActive(false);
+                            setIsMobileMenuOpen(false);
+                          }}
+                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                            activeVerticalTab === tab.id && !isGlobalPageActive
+                              ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                          }`}
+                        >
+                          <Icon className="w-4 h-4 flex-shrink-0" />
+                          <span className="text-sm font-medium">{tab.label}</span>
+                        </button>
+                      );
+                    })}
+                  </nav>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Desktop Layout */}
+        <div className="hidden md:flex flex-col">
+          {/* Horizontal Topics Navigation */}
+          <div>
+            <div className="px-6">
+              <nav className="flex space-x-8 overflow-x-auto">
+                {horizontalTabs.map((tab) => {
+                  const Icon = tab.icon;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setActiveHorizontalTab(tab.id);
+                        setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
+                        setIsGlobalPageActive(false);
+                      }}
+                      className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
+                        activeHorizontalTab === tab.id && !isGlobalPageActive
+                          ? 'border-primary text-primary'
+                          : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                      <span className="text-sm font-medium">{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </nav>
+            </div>
+          </div>
+
+          {/* Desktop Main Layout with Sidebar and Content */}
+          <div className="flex">
+            {/* Desktop Left Navigation Panel */}
+            <aside className="w-80 min-h-[calc(100vh-8rem)]">
+              <div className="p-4 pt-[38px]">
+                {/* Global Navigation Section */}
+                <div className="mb-8">
+                  <nav className="space-y-1">
+                    {staticVerticalTabs.map((tab) => {
+                      const Icon = tab.icon;
+                      return (
+                        <button
+                          key={tab.id}
+                          onClick={() => {
+                            setActiveVerticalTab(tab.id);
+                            setIsGlobalPageActive(true);
+                          }}
+                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                            activeVerticalTab === tab.id && isGlobalPageActive
+                              ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                          }`}
+                        >
+                          <Icon className="w-4 h-4 flex-shrink-0" />
+                          <span className="text-sm font-medium">{tab.label}</span>
+                        </button>
+                      );
+                    })}
+                  </nav>
+                </div>
+
+                {/* Visual Separator */}
+                {!isGlobalPageActive && (
+                  <div className="relative mb-6">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-border"></div>
+                    </div>
+                    <div className="relative flex justify-center">
+                      <div className="bg-background px-3">
+                        <div className="w-2 h-2 bg-muted-foreground/40 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Contextual Section - Only show when not on global pages */}
+                {!isGlobalPageActive && (
+                  <div>
+                    <div className="px-3 pb-4 mb-4 bg-primary/5 rounded-lg border-l-4 border-primary">
+                      <div className="flex items-center gap-2 mb-2">
+                        {(() => {
+                          const ActiveIcon = horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.icon;
+                          return ActiveIcon ? <ActiveIcon className="w-5 h-5 text-primary" /> : null;
+                        })()}
+                        <h3 className="text-lg font-medium text-foreground">
+                          {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
+                        </h3>
+                      </div>
+                      <p className="text-sm text-muted-foreground pl-7">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
+                    </div>
+                    <nav className="space-y-1">
+                      {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
+                        const Icon = tab.icon;
+                        return (
+                          <button
+                            key={tab.id}
+                            onClick={() => {
+                              setActiveVerticalTab(tab.id);
+                              setIsGlobalPageActive(false);
+                            }}
+                            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                              activeVerticalTab === tab.id && !isGlobalPageActive
+                                ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
+                                : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                            }`}
+                          >
+                            <Icon className="w-4 h-4 flex-shrink-0" />
+                            <span className="text-sm font-medium">{tab.label}</span>
+                          </button>
+                        );
+                      })}
+                    </nav>
+                  </div>
+                )}
+              </div>
+            </aside>
+
+            {/* Desktop Main Content Area */}
+            <div className="flex-1 min-h-[calc(100vh-8rem)]">
+              {renderContent()}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Layout */}
+        <div className="md:hidden">
+          <div className="flex-1 min-h-[calc(100vh-8rem)] p-8">
+            {renderContent()}
+          </div>
         </div>
       </div>
     </>
