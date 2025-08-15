@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X } from 'lucide-react';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 
 const Learn = () => {
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
@@ -163,262 +164,368 @@ const Learn = () => {
                   {/* Getting started */}
                   <section id="getting-started">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Getting started</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">What is Hobson?</h3>
-                        <p className="text-muted-foreground text-sm">Hobson is an AI-powered document analysis platform that helps property management companies extract insights from contracts and documents.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">What can I build with Hobson?</h3>
-                        <p className="text-muted-foreground text-sm">Hobson enables automated document processing, lease analysis, compliance monitoring, and property management workflows.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Do I need coding experience to build with Hobson?</h3>
-                        <p className="text-muted-foreground text-sm">No, Hobson is designed to be user-friendly for property managers without technical expertise.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How do I create a project?</h3>
-                        <p className="text-muted-foreground text-sm">Start by uploading your documents through our secure platform and configuring your analysis preferences.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I start from templates?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, Hobson provides pre-built templates for common property management scenarios like lease analysis and compliance checks.</p>
-                      </div>
-                    </div>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="what-is-hobson">
+                        <AccordionTrigger className="text-left">What is Hobson?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Hobson is an AI-powered document analysis platform that helps property management companies extract insights from contracts and documents.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="what-can-build">
+                        <AccordionTrigger className="text-left">What can I build with Hobson?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Hobson enables automated document processing, lease analysis, compliance monitoring, and property management workflows.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="coding-experience">
+                        <AccordionTrigger className="text-left">Do I need coding experience to build with Hobson?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">No, Hobson is designed to be user-friendly for property managers without technical expertise.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="create-project">
+                        <AccordionTrigger className="text-left">How do I create a project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Start by uploading your documents through our secure platform and configuring your analysis preferences.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="start-templates">
+                        <AccordionTrigger className="text-left">Can I start from templates?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson provides pre-built templates for common property management scenarios like lease analysis and compliance checks.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </section>
 
                   {/* Building with Hobson */}
                   <section id="building-with-hobson">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Building with Hobson</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How do I build efficiently with Hobson?</h3>
-                        <p className="text-muted-foreground text-sm">Use clear document naming conventions, organize files systematically, and leverage automation features for repetitive tasks.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How should I structure my prompts for the best results?</h3>
-                        <p className="text-muted-foreground text-sm">Be specific about what information you need extracted and provide context about document types and expected outcomes.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">What should I do when I hit an error?</h3>
-                        <p className="text-muted-foreground text-sm">Check document format compatibility, verify upload requirements, and contact support if issues persist.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">What is refactoring, and why is it important?</h3>
-                        <p className="text-muted-foreground text-sm">Refactoring optimizes your document processing workflows for better accuracy and efficiency over time.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I connect my project to a backend to store data?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, Hobson integrates with popular property management systems and databases through secure API connections.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I add login to my website?</h3>
-                        <p className="text-muted-foreground text-sm">Hobson includes enterprise-grade authentication and user management features.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I add third-party APIs to my project?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, Hobson supports integration with various property management tools and external APIs.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I store sensitive API keys in Hobson?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, all API keys and sensitive data are encrypted and stored securely according to industry standards.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How do I add payments to my website?</h3>
-                        <p className="text-muted-foreground text-sm">Hobson integrates with payment processors commonly used in property management for rent collection and fees.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How can I improve SEO for my project?</h3>
-                        <p className="text-muted-foreground text-sm">Focus on structured data markup for property listings and ensure fast loading times for document access.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How long does it take to complete a project?</h3>
-                        <p className="text-muted-foreground text-sm">Implementation typically takes 2-4 weeks depending on document volume and integration requirements.</p>
-                      </div>
-                    </div>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="build-efficiently">
+                        <AccordionTrigger className="text-left">How do I build efficiently with Hobson?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Use clear document naming conventions, organize files systematically, and leverage automation features for repetitive tasks.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="structure-prompts">
+                        <AccordionTrigger className="text-left">How should I structure my prompts for the best results?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Be specific about what information you need extracted and provide context about document types and expected outcomes.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="hit-error">
+                        <AccordionTrigger className="text-left">What should I do when I hit an error?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Check document format compatibility, verify upload requirements, and contact support if issues persist.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="refactoring">
+                        <AccordionTrigger className="text-left">What is refactoring, and why is it important?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Refactoring optimizes your document processing workflows for better accuracy and efficiency over time.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="backend-connection">
+                        <AccordionTrigger className="text-left">Can I connect my project to a backend to store data?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson integrates with popular property management systems and databases through secure API connections.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="add-login">
+                        <AccordionTrigger className="text-left">Can I add login to my website?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Hobson includes enterprise-grade authentication and user management features.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="third-party-apis">
+                        <AccordionTrigger className="text-left">Can I add third-party APIs to my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson supports integration with various property management tools and external APIs.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="store-api-keys">
+                        <AccordionTrigger className="text-left">Can I store sensitive API keys in Hobson?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, all API keys and sensitive data are encrypted and stored securely according to industry standards.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="add-payments">
+                        <AccordionTrigger className="text-left">How do I add payments to my website?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Hobson integrates with payment processors commonly used in property management for rent collection and fees.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="improve-seo">
+                        <AccordionTrigger className="text-left">How can I improve SEO for my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Focus on structured data markup for property listings and ensure fast loading times for document access.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="project-completion-time">
+                        <AccordionTrigger className="text-left">How long does it take to complete a project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Implementation typically takes 2-4 weeks depending on document volume and integration requirements.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </section>
 
                   {/* Features */}
                   <section id="features">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Features</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How do I find the Project settings?</h3>
-                        <p className="text-muted-foreground text-sm">Navigate to your dashboard and click on the project settings icon in the top navigation bar.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I change the visibility of my project?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, you can set projects as private, shared with team members, or public within your organization.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I hide the Hobson badge?</h3>
-                        <p className="text-muted-foreground text-sm">Enterprise plans include white-label options to customize or remove branding elements.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I rename a project?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, project names can be updated at any time from the project settings menu.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I make a copy of a project?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, you can duplicate projects to create templates or test different configurations.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I delete a project?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, projects can be deleted from the settings menu. This action is permanent and cannot be undone.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">What is a remix?</h3>
-                        <p className="text-muted-foreground text-sm">A remix creates a new project based on an existing one, allowing you to modify workflows without affecting the original.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">What is Chat mode?</h3>
-                        <p className="text-muted-foreground text-sm">Chat mode allows you to interact with your documents using natural language queries to extract specific information.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I see the code that Hobson generates and manually edit it?</h3>
-                        <p className="text-muted-foreground text-sm">Advanced users can access the underlying processing logic and customize extraction rules through the developer interface.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I manually edit text or colors?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, the interface supports customization of themes, colors, and text elements to match your brand.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I collaborate on my projects?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, Hobson supports team collaboration with role-based permissions and shared workspaces.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How do I publish my project?</h3>
-                        <p className="text-muted-foreground text-sm">Deploy your configured workflows to production through the deployment dashboard with one-click publishing.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How do I add a custom domain to my project?</h3>
-                        <p className="text-muted-foreground text-sm">Custom domains can be configured in the project settings under the "Domains" section for enterprise customers.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I see analytics for my published projects?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, comprehensive analytics show document processing volumes, accuracy metrics, and user engagement.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I add images to a Hobson prompt?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, Hobson supports image uploads and can extract text and data from visual documents and diagrams.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I add videos to a Hobson prompt?</h3>
-                        <p className="text-muted-foreground text-sm">Currently, Hobson focuses on document and image processing. Video support is planned for future releases.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I import designs from Figma?</h3>
-                        <p className="text-muted-foreground text-sm">Interface mockups can be imported to customize the look and feel of your document processing workflows.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I export all of my project's code?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, all configurations and custom logic can be exported for backup or migration purposes.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I start a project by importing code from an external source such as GitHub?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, existing automation scripts and workflows can be imported through our API or GitHub integration.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How do I see my project history?</h3>
-                        <p className="text-muted-foreground text-sm">Project history and version control are available in the project settings under "History" tab.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I restore an earlier version of my project?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, you can roll back to any previous version through the project history interface.</p>
-                      </div>
-                    </div>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="project-settings">
+                        <AccordionTrigger className="text-left">How do I find the Project settings?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Navigate to your dashboard and click on the project settings icon in the top navigation bar.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="project-visibility">
+                        <AccordionTrigger className="text-left">Can I change the visibility of my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, you can set projects as private, shared with team members, or public within your organization.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="hide-badge">
+                        <AccordionTrigger className="text-left">Can I hide the Hobson badge?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Enterprise plans include white-label options to customize or remove branding elements.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="rename-project">
+                        <AccordionTrigger className="text-left">Can I rename a project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, project names can be updated at any time from the project settings menu.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="copy-project">
+                        <AccordionTrigger className="text-left">Can I make a copy of a project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, you can duplicate projects to create templates or test different configurations.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="delete-project">
+                        <AccordionTrigger className="text-left">Can I delete a project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, projects can be deleted from the settings menu. This action is permanent and cannot be undone.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="what-is-remix">
+                        <AccordionTrigger className="text-left">What is a remix?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">A remix creates a new project based on an existing one, allowing you to modify workflows without affecting the original.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="chat-mode">
+                        <AccordionTrigger className="text-left">What is Chat mode?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Chat mode allows you to interact with your documents using natural language queries to extract specific information.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="see-edit-code">
+                        <AccordionTrigger className="text-left">Can I see the code that Hobson generates and manually edit it?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Advanced users can access the underlying processing logic and customize extraction rules through the developer interface.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="edit-text-colors">
+                        <AccordionTrigger className="text-left">Can I manually edit text or colors?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, the interface supports customization of themes, colors, and text elements to match your brand.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="collaborate">
+                        <AccordionTrigger className="text-left">Can I collaborate on my projects?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson supports team collaboration with role-based permissions and shared workspaces.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="publish-project">
+                        <AccordionTrigger className="text-left">How do I publish my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Deploy your configured workflows to production through the deployment dashboard with one-click publishing.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="custom-domain">
+                        <AccordionTrigger className="text-left">How do I add a custom domain to my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Custom domains can be configured in the project settings under the "Domains" section for enterprise customers.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="analytics">
+                        <AccordionTrigger className="text-left">Can I see analytics for my published projects?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, comprehensive analytics show document processing volumes, accuracy metrics, and user engagement.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="add-images">
+                        <AccordionTrigger className="text-left">Can I add images to a Hobson prompt?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson supports image uploads and can extract text and data from visual documents and diagrams.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="add-videos">
+                        <AccordionTrigger className="text-left">Can I add videos to a Hobson prompt?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Currently, Hobson focuses on document and image processing. Video support is planned for future releases.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="import-figma">
+                        <AccordionTrigger className="text-left">Can I import designs from Figma?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Interface mockups can be imported to customize the look and feel of your document processing workflows.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="export-code">
+                        <AccordionTrigger className="text-left">Can I export all of my project's code?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, all configurations and custom logic can be exported for backup or migration purposes.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="import-code">
+                        <AccordionTrigger className="text-left">Can I start a project by importing code from an external source such as GitHub?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, existing automation scripts and workflows can be imported through our API or GitHub integration.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="project-history">
+                        <AccordionTrigger className="text-left">How do I see my project history?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Project history and version control are available in the project settings under "History" tab.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="restore-version">
+                        <AccordionTrigger className="text-left">Can I restore an earlier version of my project?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, you can roll back to any previous version through the project history interface.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </section>
 
                   {/* Managing your account */}
                   <section id="managing-account">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Managing your account</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I change the email I use to login?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, email addresses can be updated in your account settings under "Profile" section.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I delete my account?</h3>
-                        <p className="text-muted-foreground text-sm">Account deletion can be requested through the account settings. All data will be permanently removed.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Can I change the workspace owner?</h3>
-                        <p className="text-muted-foreground text-sm">Workspace ownership can be transferred to another team member through the admin panel.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How can I transfer project ownership to someone else?</h3>
-                        <p className="text-muted-foreground text-sm">Project ownership transfer is available in project settings under "Transfer Ownership" for team accounts.</p>
-                      </div>
-                    </div>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="change-email">
+                        <AccordionTrigger className="text-left">Can I change the email I use to login?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, email addresses can be updated in your account settings under "Profile" section.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="delete-account">
+                        <AccordionTrigger className="text-left">Can I delete my account?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Account deletion can be requested through the account settings. All data will be permanently removed.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="change-workspace-owner">
+                        <AccordionTrigger className="text-left">Can I change the workspace owner?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Workspace ownership can be transferred to another team member through the admin panel.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="transfer-project-ownership">
+                        <AccordionTrigger className="text-left">How can I transfer project ownership to someone else?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Project ownership transfer is available in project settings under "Transfer Ownership" for team accounts.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </section>
 
                   {/* Policies and Security */}
                   <section id="policies-security">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">Policies and Security</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How can I get support?</h3>
-                        <p className="text-muted-foreground text-sm">Contact our support team through the help center, email support, or schedule a consultation call.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Where can I find Hobson's privacy policy?</h3>
-                        <p className="text-muted-foreground text-sm">Our privacy policy is available at the bottom of our website and in your account dashboard.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Where can I find Hobson's Terms of Service?</h3>
-                        <p className="text-muted-foreground text-sm">Terms of Service are accessible through the footer links and account settings.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">What is Hobson's refund policy?</h3>
-                        <p className="text-muted-foreground text-sm">We offer a 30-day money-back guarantee for new subscriptions. Contact support for refund requests.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Is Hobson compliant with security standards?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, Hobson is SOC 2 compliant and follows industry-standard security practices for data protection.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Is Hobson GDPR compliant?</h3>
-                        <p className="text-muted-foreground text-sm">Yes, Hobson is fully GDPR compliant with data processing agreements and privacy controls available.</p>
-                      </div>
-                    </div>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="get-support">
+                        <AccordionTrigger className="text-left">How can I get support?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Contact our support team through the help center, email support, or schedule a consultation call.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="privacy-policy">
+                        <AccordionTrigger className="text-left">Where can I find Hobson's privacy policy?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Our privacy policy is available at the bottom of our website and in your account dashboard.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="terms-of-service">
+                        <AccordionTrigger className="text-left">Where can I find Hobson's Terms of Service?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Terms of Service are accessible through the footer links and account settings.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="refund-policy">
+                        <AccordionTrigger className="text-left">What is Hobson's refund policy?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">We offer a 30-day money-back guarantee for new subscriptions. Contact support for refund requests.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="security-compliance">
+                        <AccordionTrigger className="text-left">Is Hobson compliant with security standards?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson is SOC 2 compliant and follows industry-standard security practices for data protection.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="gdpr-compliance">
+                        <AccordionTrigger className="text-left">Is Hobson GDPR compliant?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes, Hobson is fully GDPR compliant with data processing agreements and privacy controls available.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </section>
 
                   {/* How Hobson works */}
                   <section id="how-hobson-works">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">How Hobson works</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">What tech stacks does Hobson know?</h3>
-                        <p className="text-muted-foreground text-sm">Hobson integrates with major property management platforms, CRMs, and accounting systems commonly used in real estate.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Does Hobson support mobile app development?</h3>
-                        <p className="text-muted-foreground text-sm">Mobile access is available through responsive web interfaces, with native apps planned for future releases.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">How does Hobson remember context?</h3>
-                        <p className="text-muted-foreground text-sm">Hobson uses machine learning to understand document patterns and maintain context across related documents and projects.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Who owns the projects and the code that Hobson creates?</h3>
-                        <p className="text-muted-foreground text-sm">You retain full ownership of your data, documents, and any custom configurations created within Hobson.</p>
-                      </div>
-                    </div>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="tech-stacks">
+                        <AccordionTrigger className="text-left">What tech stacks does Hobson know?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Hobson integrates with major property management platforms, CRMs, and accounting systems commonly used in real estate.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="mobile-support">
+                        <AccordionTrigger className="text-left">Does Hobson support mobile app development?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Mobile access is available through responsive web interfaces, with native apps planned for future releases.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="remember-context">
+                        <AccordionTrigger className="text-left">How does Hobson remember context?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Hobson uses machine learning to understand document patterns and maintain context across related documents and projects.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="project-ownership">
+                        <AccordionTrigger className="text-left">Who owns the projects and the code that Hobson creates?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You retain full ownership of your data, documents, and any custom configurations created within Hobson.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </section>
 
                   {/* About Hobson */}
                   <section id="about-hobson">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2 border-b border-border">About Hobson</h2>
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Where is Hobson based?</h3>
-                        <p className="text-muted-foreground text-sm">Hobson is headquartered in [Location] with team members distributed globally to provide 24/7 support.</p>
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-foreground mb-1">Is Hobson hiring?</h3>
-                        <p className="text-muted-foreground text-sm">We're always looking for talented individuals. Check our careers page for current openings in engineering, sales, and customer success.</p>
-                      </div>
-                    </div>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="where-based">
+                        <AccordionTrigger className="text-left">Where is Hobson based?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Hobson is headquartered in [Location] with team members distributed globally to provide 24/7 support.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="hiring">
+                        <AccordionTrigger className="text-left">Is Hobson hiring?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">We're always looking for talented individuals. Check our careers page for current openings in engineering, sales, and customer success.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
                   </section>
                 </div>
               </div>
