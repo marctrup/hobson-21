@@ -51,6 +51,7 @@ const BlogPreview = () => {
 
   const fetchPost = async () => {
     try {
+      console.log('Fetching post with ID:', id);
       const { data, error } = await supabase
         .from('blog_posts')
         .select(`
@@ -73,6 +74,8 @@ const BlogPreview = () => {
         .eq('id', id)
         .maybeSingle();
 
+      console.log('Query result:', { data, error });
+
       if (error) {
         console.error('Error fetching post:', error);
         setNotFound(true);
@@ -87,6 +90,8 @@ const BlogPreview = () => {
             )
           `)
           .eq('post_id', data.id);
+
+        console.log('Categories data:', categoriesData);
 
         const formattedPost: BlogPost = {
           id: data.id,
@@ -181,6 +186,7 @@ const BlogPreview = () => {
   }
 
   if (notFound || !post) {
+    console.log('Post not found or notFound flag set:', { notFound, post: !!post });
     return <Navigate to="/admin/blog" replace />;
   }
 
