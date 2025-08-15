@@ -8,6 +8,7 @@ const Learn = () => {
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeTocSection, setActiveTocSection] = useState('getting-started');
 
   const horizontalTabs = [
     { id: 'introduction', label: 'Introduction', icon: Book },
@@ -143,6 +144,7 @@ const Learn = () => {
       ];
 
       const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -540,7 +542,11 @@ const Learn = () => {
                         <button
                           key={section.id}
                           onClick={() => scrollToSection(section.id)}
-                          className="block w-full text-left text-sm text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded hover:bg-muted/50"
+                          className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
+                            activeTocSection === section.id
+                              ? 'bg-purple-100 text-purple-700 border-l-2 border-purple-500 font-medium'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                          }`}
                         >
                           {section.label}
                         </button>
