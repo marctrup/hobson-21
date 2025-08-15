@@ -595,11 +595,11 @@ const Learn = () => {
           <div className="container mx-auto px-4">
             <div className="flex items-center justify-between h-16">
               <div className="flex items-center gap-3">
-                <Link to="/">
+                <Link to="/" className="flex items-center">
                   <img 
                     src={hobsonLogo} 
                     alt="Hobson AI - AI-powered property management software company logo" 
-                    className="h-12" 
+                    className="h-12 md:h-16" 
                     loading="eager"
                   />
                 </Link>
