@@ -974,7 +974,7 @@ const Learn = () => {
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-6xl">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to Hobson AI</h1>
+              <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
               <p className="text-lg text-muted-foreground">Get started with AI-powered property management</p>
             </div>
 
