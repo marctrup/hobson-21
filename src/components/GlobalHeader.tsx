@@ -33,13 +33,6 @@ export const GlobalHeader = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
             <Link 
-              to="/features" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              title="Property Management AI Features - Explore intelligent automation tools for property management"
-            >
-              Features
-            </Link>
-            <Link 
               to="/blog" 
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
               title="Property Management Insights - Expert perspectives on AI and real estate technology"
@@ -82,14 +75,6 @@ export const GlobalHeader = () => {
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4">
             <div className="flex flex-col gap-4">
-              <Link 
-                to="/features" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-                title="Property Management AI Features"
-              >
-                Features
-              </Link>
               <Link 
                 to="/blog" 
                 className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
