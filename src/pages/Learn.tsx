@@ -868,7 +868,7 @@ const Learn = () => {
 
         {/* Mobile Layout */}
         <div className="md:hidden">
-          <div className="bg-muted/30 min-h-[calc(100vh-4rem)] p-4">
+          <div className="flex-1 bg-background min-h-[calc(100vh-8rem)]">
             {renderContent()}
           </div>
         </div>
