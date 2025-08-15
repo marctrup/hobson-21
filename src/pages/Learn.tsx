@@ -225,42 +225,44 @@ const Learn = () => {
                 </div>
               </div>
 
-              {/* Contextual Section */}
-              <div>
-                <div className="px-3 pb-3 mb-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <div className="w-1 h-4 bg-primary rounded-full"></div>
-                    <h3 className="text-sm font-bold text-foreground">
-                      {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
-                    </h3>
+              {/* Contextual Section - Only show when not on global pages */}
+              {!isGlobalPageActive && (
+                <div>
+                  <div className="px-3 pb-3 mb-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-1 h-4 bg-primary rounded-full"></div>
+                      <h3 className="text-sm font-bold text-foreground">
+                        {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
+                      </h3>
+                    </div>
+                    <p className="text-xs text-muted-foreground pl-3">
+                      Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content
+                    </p>
                   </div>
-                  <p className="text-xs text-muted-foreground pl-3">
-                    Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content
-                  </p>
+                  <nav className="space-y-1">
+                    {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
+                      const Icon = tab.icon;
+                      return (
+                        <button
+                          key={tab.id}
+                          onClick={() => {
+                            setActiveVerticalTab(tab.id);
+                            setIsGlobalPageActive(false);
+                          }}
+                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
+                            activeVerticalTab === tab.id && !isGlobalPageActive
+                              ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                          }`}
+                        >
+                          <Icon className="w-4 h-4 flex-shrink-0" />
+                          <span className="text-sm font-medium">{tab.label}</span>
+                        </button>
+                      );
+                    })}
+                  </nav>
                 </div>
-                <nav className="space-y-1">
-                  {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
-                    const Icon = tab.icon;
-                    return (
-                      <button
-                        key={tab.id}
-                        onClick={() => {
-                          setActiveVerticalTab(tab.id);
-                          setIsGlobalPageActive(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
-                          activeVerticalTab === tab.id
-                            ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
-                        }`}
-                      >
-                        <Icon className="w-4 h-4 flex-shrink-0" />
-                        <span className="text-sm font-medium">{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
+              )}
             </div>
           </aside>
 
