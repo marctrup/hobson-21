@@ -128,12 +128,12 @@ const Learn = () => {
     }
 
     return (
-      <div className="flex-1 p-8">
-        <div className="max-w-4xl mx-auto">
+      <div className="flex-1">
+        <div className="container mx-auto p-8 max-w-5xl">
           <h1 className="text-3xl font-bold text-foreground mb-6">
             {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
           </h1>
-          <div className="bg-muted/50 rounded-lg p-8 border border-border">
+          <div className="bg-card rounded-lg p-8 border border-border shadow-sm">
             <p className="text-muted-foreground text-lg">
               Content for {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label} - {currentVerticalTabs.find(tab => tab.id === activeVerticalTab)?.label}
             </p>
@@ -180,13 +180,11 @@ const Learn = () => {
         <div className="flex">
           {/* Vertical Sidebar */}
           <aside className="w-64 border-r border-border bg-background/50 min-h-[calc(100vh-4rem)]">
-            <div className="p-4 space-y-6">
+            <div className="p-4">
               {/* Global Navigation Section */}
-              <div>
-                <div className="px-3 pb-2 mb-3">
-                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                    Global
-                  </h3>
+              <div className="mb-4">
+                <div className="px-3 pb-2">
+                  <h3 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Global</h3>
                 </div>
                 <nav className="space-y-1">
                   {staticVerticalTabs.map((tab) => {
@@ -198,8 +196,8 @@ const Learn = () => {
                           setActiveVerticalTab(tab.id);
                           setIsGlobalPageActive(true);
                         }}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
-                          activeVerticalTab === tab.id
+                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                          activeVerticalTab === tab.id && isGlobalPageActive
                             ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
                             : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                         }`}
@@ -212,31 +210,14 @@ const Learn = () => {
                 </nav>
               </div>
 
-              {/* Visual Separator */}
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-border"></div>
-                </div>
-                <div className="relative flex justify-center">
-                  <div className="bg-background px-2">
-                    <div className="w-2 h-2 bg-muted-foreground/30 rounded-full"></div>
-                  </div>
-                </div>
-              </div>
-
               {/* Contextual Section - Only show when not on global pages */}
               {!isGlobalPageActive && (
                 <div>
-                  <div className="px-3 pb-3 mb-3">
-                    <div className="flex items-center gap-2 mb-1">
-                      <div className="w-1 h-4 bg-primary rounded-full"></div>
-                      <h3 className="text-sm font-bold text-foreground">
-                        {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
-                      </h3>
-                    </div>
-                    <p className="text-xs text-muted-foreground pl-3">
-                      Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content
-                    </p>
+                  <div className="px-3 pb-2">
+                    <h3 className="text-xs font-semibold text-primary uppercase tracking-wider">
+                      {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-1">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
                   </div>
                   <nav className="space-y-1">
                     {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
@@ -248,7 +229,7 @@ const Learn = () => {
                             setActiveVerticalTab(tab.id);
                             setIsGlobalPageActive(false);
                           }}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${
+                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                             activeVerticalTab === tab.id && !isGlobalPageActive
                               ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
                               : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
