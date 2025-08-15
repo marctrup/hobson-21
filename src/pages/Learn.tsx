@@ -968,6 +968,85 @@ const Learn = () => {
       );
     }
 
+    // Handle Welcome content specifically
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'welcome') {
+      return (
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-6xl">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-2">Welcome to Hobson AI</h1>
+              <p className="text-lg text-muted-foreground">Get started with AI-powered property management</p>
+            </div>
+
+            {/* Large Video Screen */}
+            <div className="mb-12">
+              <div className="relative aspect-video w-full max-w-4xl mx-auto rounded-lg overflow-hidden shadow-lg border border-border">
+                <img 
+                  src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
+                  alt="Welcome to Hobson AI - Video placeholder"
+                  className="w-full h-full object-cover"
+                />
+                {/* Play button overlay */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <button className="bg-black/70 hover:bg-black/80 text-white rounded-full p-4 transition-colors">
+                    <Play className="w-12 h-12 ml-1" fill="currentColor" />
+                  </button>
+                </div>
+                {/* Video title overlay */}
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
+                  <h3 className="text-white text-xl font-semibold mb-2">Getting Started with Hobson AI</h3>
+                  <p className="text-white/90 text-sm">Learn how to transform your property management with AI-powered document analysis</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Additional welcome content */}
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h2 className="text-xl font-semibold text-foreground mb-4">What you'll learn</h2>
+                <ul className="space-y-3 text-muted-foreground">
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                    <span>How to upload and analyze property documents</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                    <span>Setting up automated compliance monitoring</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                    <span>Creating custom workflows for your team</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                    <span>Integrating with existing property management systems</span>
+                  </li>
+                </ul>
+              </div>
+              
+              <div>
+                <h2 className="text-xl font-semibold text-foreground mb-4">Quick start guide</h2>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border">
+                    <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">1</div>
+                    <span className="text-muted-foreground">Watch the introduction video</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border">
+                    <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">2</div>
+                    <span className="text-muted-foreground">Explore our features and capabilities</span>
+                  </div>
+                  <div className="flex items-center gap-3 p-3 rounded-lg border border-border">
+                    <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-medium">3</div>
+                    <span className="text-muted-foreground">Review frequently asked questions</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="flex-1">
         <div className="container mx-auto p-8 max-w-5xl">
