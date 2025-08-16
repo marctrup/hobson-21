@@ -226,7 +226,7 @@ export const Homepage = () => {
                 <div className="max-w-4xl mx-auto mb-16">
                   <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border border-primary/20">
                     <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center">
-                      Hobson knows some documents must be read alongside the main lease to understand its current, operative form — and it reviews them all so you get answers that reflect the <span className="text-primary font-semibold">true, accurate position</span> of the tenancy today.
+                      Hobson recognises that documents don't exist in isolation — they often need to be read together to get the full picture.
                     </p>
                   </div>
                 </div>
