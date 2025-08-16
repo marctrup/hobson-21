@@ -118,7 +118,6 @@ const Learn = () => {
           { id: 'fundamentals', label: 'Fundamentals', icon: Users },
           { id: 'advanced-prompting', label: 'Advanced Prompting', icon: Wand2 },
           { id: 'debugging-prompts', label: 'Debugging Prompts', icon: FileText },
-          { id: 'optimization', label: 'Optimization', icon: Activity },
         ];
       case 'use-cases':
         return [
