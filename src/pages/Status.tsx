@@ -52,24 +52,6 @@ const Status = () => {
     }
   ];
 
-  const recentIncidents = [
-    {
-      id: 1,
-      title: 'Planned maintenance completed',
-      description: 'Routine database optimization completed successfully',
-      status: 'resolved',
-      date: '2024-08-15 02:00 UTC',
-      duration: '45 minutes'
-    },
-    {
-      id: 2,
-      title: 'Performance improvements deployed',
-      description: 'Enhanced response times across all services',
-      status: 'completed',
-      date: '2024-08-12 14:30 UTC',
-      duration: '15 minutes'
-    }
-  ];
 
   const handleSubscribe = async () => {
     if (!email) {
@@ -230,51 +212,6 @@ const Status = () => {
             </div>
           </Card>
 
-          {/* Recent Activity */}
-          <Card className="p-6 mb-8">
-            <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
-              <Clock className="w-5 h-5" />
-              Recent Activity
-            </h2>
-            <div className="space-y-4">
-              {recentIncidents.map((incident) => (
-                <div key={incident.id} className="border-l-4 border-green-500 pl-4 py-2">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-medium text-foreground">{incident.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-2">{incident.description}</p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <span>{incident.date}</span>
-                        <span>Duration: {incident.duration}</span>
-                      </div>
-                    </div>
-                    <Badge variant="outline" className="text-green-600 bg-green-50 border-green-200">
-                      {incident.status}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </Card>
-
-          {/* Uptime Stats */}
-          <Card className="p-6">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Uptime Statistics</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-green-600 mb-1">99.99%</div>
-                <div className="text-sm text-muted-foreground">Last 30 days</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-green-600 mb-1">99.95%</div>
-                <div className="text-sm text-muted-foreground">Last 90 days</div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-green-600 mb-1">99.9%</div>
-                <div className="text-sm text-muted-foreground">All time</div>
-              </div>
-            </div>
-          </Card>
 
           {/* Footer */}
           <div className="text-center mt-8 pt-6 border-t border-border">
