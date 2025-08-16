@@ -171,6 +171,82 @@ const FeatureRequests = () => {
     }
   };
 
+  const handleVote = async (postId: string) => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to vote.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    try {
+      // Check if user has already voted
+      const { data: existingVote } = await supabase
+        .from('feature_request_votes')
+        .select('id')
+        .eq('feature_request_id', postId)
+        .eq('user_id', user.id)
+        .single();
+
+      if (existingVote) {
+        // Remove vote
+        const { error: deleteError } = await supabase
+          .from('feature_request_votes')
+          .delete()
+          .eq('feature_request_id', postId)
+          .eq('user_id', user.id);
+
+        if (deleteError) throw deleteError;
+
+        // Decrease vote count
+        const { error: updateError } = await supabase
+          .from('feature_requests')
+          .update({ votes: posts.find(p => p.id === postId)?.votes - 1 || 0 })
+          .eq('id', postId);
+
+        if (updateError) throw updateError;
+
+        toast({
+          title: "Vote removed",
+          description: "Your vote has been removed.",
+        });
+      } else {
+        // Add vote
+        const { error: insertError } = await supabase
+          .from('feature_request_votes')
+          .insert({
+            feature_request_id: postId,
+            user_id: user.id
+          });
+
+        if (insertError) throw insertError;
+
+        // Increase vote count
+        const { error: updateError } = await supabase
+          .from('feature_requests')
+          .update({ votes: (posts.find(p => p.id === postId)?.votes || 0) + 1 })
+          .eq('id', postId);
+
+        if (updateError) throw updateError;
+
+        toast({
+          title: "Vote added",
+          description: "Thank you for your vote!",
+        });
+      }
+
+      fetchPosts(); // Refresh the posts
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to vote",
+        variant: "destructive",
+      });
+    }
+  };
+
   const formatTimeAgo = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -296,8 +372,14 @@ const FeatureRequests = () => {
                         <div className="flex items-start gap-4">
                           {/* Vote Button */}
                           <div className="flex flex-col items-center gap-1">
-                            <button className="p-2 hover:bg-accent rounded-lg transition-colors">
-                              <ThumbsUp className="w-4 h-4 text-muted-foreground" />
+                            <button 
+                              className="p-2 hover:bg-accent rounded-lg transition-colors group"
+                              onClick={() => handleVote(post.id)}
+                              disabled={!user}
+                            >
+                              <ThumbsUp className={`w-4 h-4 transition-colors ${
+                                user ? 'text-muted-foreground group-hover:text-primary' : 'text-muted-foreground/50'
+                              }`} />
                             </button>
                             <span className="text-sm font-medium text-foreground">{post.votes}</span>
                           </div>
