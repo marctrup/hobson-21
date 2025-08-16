@@ -72,12 +72,10 @@ const FeatureRequests = () => {
   const fetchPosts = async () => {
     setIsLoading(true);
     try {
+      // First get all feature requests
       let query = supabase
         .from('feature_requests')
-        .select(`
-          *,
-          comment_count:feature_request_comments!feature_request_id(count)
-        `);
+        .select('*');
 
       // Apply category filter
       if (activeCategoryFilter) {
@@ -99,11 +97,34 @@ const FeatureRequests = () => {
         query = query.or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`);
       }
 
-      const { data, error } = await query;
+      const { data: postsData, error: postsError } = await query;
 
-      if (error) throw error;
-      setPosts(data || []);
+      if (postsError) {
+        console.error('Error fetching posts:', postsError);
+        setPosts([]);
+        return;
+      }
+
+      // Get comment counts for all posts
+      const postsWithCommentCounts = await Promise.all(
+        (postsData || []).map(async (post) => {
+          const { data: commentsData, error: commentsError } = await supabase
+            .from('feature_request_comments')
+            .select('id')
+            .eq('feature_request_id', post.id);
+
+          if (commentsError) {
+            console.error('Error fetching comment count:', commentsError);
+            return { ...post, comment_count: 0 };
+          }
+
+          return { ...post, comment_count: commentsData?.length || 0 };
+        })
+      );
+
+      setPosts(postsWithCommentCounts || []);
     } catch (error: any) {
+      console.error('Error in fetchPosts:', error);
       toast({
         title: "Error",
         description: "Failed to load posts",
@@ -526,11 +547,11 @@ const FeatureRequests = () => {
                                <Calendar className="w-4 h-4 ml-2" />
                                <span>{formatTimeAgo(post.created_at)}</span>
                                
-                                {/* Comment count indicator - always show */}
-                                <div className="flex items-center gap-1 ml-2">
-                                  <MessageSquare className="w-4 h-4" />
-                                  <span>{post.comment_count?.[0]?.count || 0}</span>
-                                </div>
+                                 {/* Comment count indicator - always show */}
+                                 <div className="flex items-center gap-1 ml-2">
+                                   <MessageSquare className="w-4 h-4" />
+                                   <span>{post.comment_count || 0}</span>
+                                 </div>
                              </div>
                          </div>
                        </div>
