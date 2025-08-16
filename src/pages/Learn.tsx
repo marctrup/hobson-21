@@ -2116,9 +2116,9 @@ const Learn = () => {
       <div className="min-h-screen">
         {/* Header */}
         <header className="border-b border-border">
-          <div className="container mx-auto px-4 py-4">
+          <div className="px-4 py-4">
             <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
+              <div className="absolute top-4 left-4">
                 <Link to="/" className="flex items-center">
                   <img 
                     src={hobsonLogo} 
@@ -2132,12 +2132,12 @@ const Learn = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 ml-auto"
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
               
-               <nav className="hidden md:flex items-center gap-6">
+               <nav className="hidden md:flex items-center gap-6 ml-auto">
                 <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </a>
