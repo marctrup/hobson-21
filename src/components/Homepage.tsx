@@ -218,7 +218,7 @@ export const Homepage = () => {
                 {/* Main Content Text */}
                 <div className="text-center mb-16">
                   <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-                    <span className="text-primary font-semibold">Right now</span>, our AI is trained to understand a wide range of property management documents — from tenancy agreements and commercial leases to licences, deeds, and addendums.
+                    <span className="text-primary font-semibold">Right now</span>, our AI is trained to understand a wide range of property documents — from tenancy agreements and commercial leases to licences, deeds, and addendums. We are continuing to broaden Hobson's knowledge.
                   </p>
                 </div>
 
