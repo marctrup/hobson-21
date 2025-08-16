@@ -231,6 +231,7 @@ const Learn = () => {
                           <li>• 18 HEU (Hobson Energy Unit) per month</li>
                           <li>• Unlimited Members</li>
                           <li>• Unlimited documents</li>
+                          <li>• Limited Support</li>
                         </ul>
                       </div>
                       
