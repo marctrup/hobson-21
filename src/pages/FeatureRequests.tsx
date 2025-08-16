@@ -50,8 +50,6 @@ const FeatureRequests = () => {
     { id: 'integrations', label: 'Integrations', icon: Puzzle, emoji: '🧩' },
     { id: 'questions', label: 'Questions', icon: HelpCircle, emoji: '⁉️' },
     { id: 'bug-hunting', label: 'Bug Hunting', icon: Bug, emoji: '🐛' },
-    { id: 'lovable-project', label: 'Lovable Project', icon: Trophy, emoji: '🏆' },
-    { id: 'ama', label: 'AMA', icon: MessageSquare, emoji: '💬' },
   ];
 
   const leaderboard = [
