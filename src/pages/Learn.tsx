@@ -307,7 +307,7 @@ const Learn = () => {
                         </thead>
                         <tbody className="text-muted-foreground">
                           <tr><td className="py-2">Uploading a lease</td><td>Read and understand</td><td>0.50</td></tr>
-                          <tr><td className="py-2">When is the next review?</td><td>Removes the footer component</td><td>0.90</td></tr>
+                          <tr><td className="py-2">When is the next review?</td><td>retrieve that information</td><td>0.90</td></tr>
                           <tr><td className="py-2">Add authentication</td><td>Adds login and authentication logic</td><td>1.20</td></tr>
                           <tr><td className="py-2">Build a landing page with images</td><td>Creates a landing page with generated images, a theme and sections</td><td>2.00</td></tr>
                         </tbody>
