@@ -162,10 +162,10 @@ const Learn = () => {
         ];
       case 'glossary':
         return [
-          { id: 'terms-definitions', label: 'Terms & Definitions', icon: FileText },
-          { id: 'acronyms', label: 'Acronyms', icon: Book },
-          { id: 'technical-terms', label: 'Technical Terms', icon: Wand2 },
-          { id: 'industry-jargon', label: 'Industry Jargon', icon: Users },
+          { id: 'hobson-glossary', label: 'Hobson Glossary', icon: FileText },
+          { id: 'terms-definitions', label: 'Terms & Definitions', icon: Book },
+          { id: 'acronyms', label: 'Acronyms', icon: Wand2 },
+          { id: 'technical-terms', label: 'Technical Terms', icon: Users },
         ];
       case 'changelog':
         return [
@@ -1993,6 +1993,97 @@ const Learn = () => {
                     ))}
                   </nav>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Handle Hobson Glossary specifically
+    if (activeHorizontalTab === 'glossary' && activeVerticalTab === 'hobson-glossary') {
+      return (
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-4xl">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-2">Hobson Glossary</h1>
+              <p className="text-lg text-muted-foreground">Key Terms for Using Your AI Assistant</p>
+            </div>
+
+            <div className="space-y-8">
+              <div className="grid gap-6">
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">AI (Artificial Intelligence)</h3>
+                  <p className="text-muted-foreground">The technology that powers Hobson. It enables Hobson to read your documents, answer questions, and generate reports.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Prompt</h3>
+                  <p className="text-muted-foreground">A question or instruction you give to Hobson. Clearer prompts = more useful answers.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Prompt Library</h3>
+                  <p className="text-muted-foreground">A set of example prompts you can copy or adapt for common tasks (e.g. summarising leases, creating rent reports, preparing lender packs).</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Debugging</h3>
+                  <p className="text-muted-foreground">Fixing or refining a prompt when Hobson's answer isn't right. This might mean rephrasing the question, narrowing the focus, or asking Hobson to explain its reasoning.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Meta Prompting</h3>
+                  <p className="text-muted-foreground mb-3">Asking Hobson how to improve your question for a clearer answer.</p>
+                  <div className="p-3 bg-background rounded border border-border text-sm">
+                    <strong>Example:</strong> "How should I phrase this to get a better summary of this lease?"
+                  </div>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Reverse Prompting</h3>
+                  <p className="text-muted-foreground">Asking Hobson to explain how it arrived at an answer, so you can check the logic.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Context</h3>
+                  <p className="text-muted-foreground">The background information Hobson needs to give accurate answers. If you don't provide enough, the response may be vague.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Report</h3>
+                  <p className="text-muted-foreground">A structured output created by Hobson — for example, a portfolio summary, cashflow projection, or lender briefing.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Knowledge Base</h3>
+                  <p className="text-muted-foreground">A space where your business can add important background information (e.g. standard reporting formats, preferred output styles) that Hobson uses to stay consistent.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Session</h3>
+                  <p className="text-muted-foreground">A continuous conversation with Hobson. Within a session, Hobson remembers your earlier questions and answers.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Debugging Flow</h3>
+                  <p className="text-muted-foreground mb-3">A step-by-step process for refining prompts if Hobson misunderstands.</p>
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-foreground">Example:</p>
+                    <ol className="text-sm text-muted-foreground space-y-1 ml-4">
+                      <li>1. Point out what's missing ("You didn't include service charges").</li>
+                      <li>2. Ask for a correction.</li>
+                      <li>3. Confirm or refine further.</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 p-6 bg-primary/10 rounded-lg border border-primary/20">
+                <h4 className="text-lg font-semibold text-foreground mb-3">👉 In short</h4>
+                <p className="text-muted-foreground">
+                  This glossary isn't about property law or finance — it's about helping your team understand the AI terms and features that make Hobson work for them.
+                </p>
               </div>
             </div>
           </div>
