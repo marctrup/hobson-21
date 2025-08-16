@@ -27,9 +27,7 @@ const postSchema = z.object({
     'feature-request', 
     'integrations',
     'questions',
-    'bug-hunting',
-    'lovable-project',
-    'ama'
+    'bug-hunting'
   ])
 });
 
@@ -47,8 +45,6 @@ const categoryOptions = [
   { value: 'integrations', label: 'Integrations', emoji: '🧩' },
   { value: 'questions', label: 'Questions', emoji: '⁉️' },
   { value: 'bug-hunting', label: 'Bug Hunting', emoji: '🐛' },
-  { value: 'lovable-project', label: 'Lovable Project', emoji: '🏆' },
-  { value: 'ama', label: 'AMA', emoji: '💬' },
 ];
 
 export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePostDialogProps) {
