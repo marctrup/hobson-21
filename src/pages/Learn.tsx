@@ -253,6 +253,17 @@ const Learn = () => {
                           <li>• Priority Support</li>
                         </ul>
                       </div>
+
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-3">Enterprise</h3>
+                        <ul className="text-muted-foreground space-y-2">
+                          <li>• Everything in Essential Plus, plus:</li>
+                          <li>• 2000 HEU (Hobson Energy Unit) per month</li>
+                          <li>• Unlimited Members</li>
+                          <li>• Unlimited documents</li>
+                          <li>• Priority Support</li>
+                        </ul>
+                      </div>
                     </div>
                   </section>
 
