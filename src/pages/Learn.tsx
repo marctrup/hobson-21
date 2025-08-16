@@ -262,6 +262,7 @@ const Learn = () => {
                           <li>• Unlimited Members</li>
                           <li>• Unlimited documents</li>
                           <li>• Support person</li>
+                          <li>• Bespoke document training</li>
                         </ul>
                       </div>
                     </div>
