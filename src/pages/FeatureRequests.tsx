@@ -489,7 +489,11 @@ const FeatureRequests = () => {
                     const categoryInfo = categoryLabels[post.category] || { label: post.category, emoji: '📝' };
                     
                     return (
-                       <div key={post.id} className="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow relative">
+                       <div 
+                         key={post.id} 
+                         className="bg-card border border-border rounded-lg p-6 hover:shadow-md hover:bg-purple-50/30 transition-all duration-200 cursor-pointer relative"
+                         onClick={() => handlePostClick(post)}
+                       >
                          {/* Vote Button - Top Right */}
                          <div className="absolute top-4 right-4 flex flex-col items-center gap-1">
                            <button 
@@ -528,12 +532,9 @@ const FeatureRequests = () => {
                              </Badge>
                            </div>
                              
-                             <h3 
-                               className="text-lg font-semibold text-foreground mb-2 hover:text-primary cursor-pointer"
-                               onClick={() => handlePostClick(post)}
-                             >
-                               {post.title}
-                             </h3>
+                              <h3 className="text-lg font-semibold text-foreground mb-2">
+                                {post.title}
+                              </h3>
                              
                              {post.description && (
                                <p className="text-muted-foreground mb-3 line-clamp-3">
