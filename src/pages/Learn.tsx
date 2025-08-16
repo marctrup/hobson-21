@@ -292,7 +292,7 @@ const Learn = () => {
                       Hobson has a usage-based credit system called HEU (Hobson Energy Unit), where sending messages deducts HEUs. The cost of a message depends on its complexity to ensure you only pay for what you actually use.
                     </p>
                     <p className="text-muted-foreground mb-6">
-                      Many messages cost less than 1 credit, while more complex ones may cost more. This approach allows for more precise edits and greater efficiency per message, making Lovable more affordable overall.
+                      Many messages cost less than 1 HEU, while more complex ones may cost more. This approach allows for more precise edits and greater efficiency per message, making Hobson more affordable overall.
                     </p>
                     
                     <h3 className="text-lg font-medium text-foreground mb-4">Example prompts and their cost:</h3>
