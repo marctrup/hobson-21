@@ -18,6 +18,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { PostSurvey } from './PostSurvey';
 
 const postSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters"),
@@ -49,6 +50,8 @@ const categoryOptions = [
 
 export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePostDialogProps) {
   const [isLoading, setIsLoading] = useState(false);
+  const [newPostId, setNewPostId] = useState<string | null>(null);
+  const [showSurvey, setShowSurvey] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
 
@@ -90,7 +93,7 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
 
       const authorName = profile?.display_name || user.email || 'Anonymous';
 
-      const { error } = await supabase
+      const { data: newPost, error } = await supabase
         .from('feature_requests')
         .insert({
           title: data.title,
@@ -98,7 +101,9 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
           category: data.category,
           author_id: user.id,
           author_name: authorName
-        });
+        })
+        .select()
+        .single();
 
       if (error) throw error;
 
@@ -107,9 +112,10 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
         description: "Your feature request has been submitted successfully.",
       });
 
+      // Show survey for the newly created post
+      setNewPostId(newPost.id);
+      setShowSurvey(true);
       reset();
-      onOpenChange(false);
-      onPostCreated();
     } catch (error: any) {
       toast({
         title: "Error",
@@ -121,75 +127,105 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
     }
   };
 
+  const handleCloseDialog = () => {
+    setShowSurvey(false);
+    setNewPostId(null);
+    onOpenChange(false);
+    onPostCreated();
+  };
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[525px]">
-        <DialogHeader>
-          <DialogTitle>Create a New Post</DialogTitle>
-          <DialogDescription>
-            Share your feedback, feature request, or question with the community.
-          </DialogDescription>
-        </DialogHeader>
-        
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="category">Category</Label>
-            <Select value={selectedCategory} onValueChange={(value) => setValue('category', value as any)}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select a category" />
-              </SelectTrigger>
-              <SelectContent>
-                {categoryOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    <span className="flex items-center gap-2">
-                      <span>{option.emoji}</span>
-                      <span>{option.label}</span>
-                    </span>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.category && (
-              <p className="text-sm text-destructive">{errors.category.message}</p>
-            )}
-          </div>
+        {!showSurvey ? (
+          <>
+            <DialogHeader>
+              <DialogTitle>Create a New Post</DialogTitle>
+              <DialogDescription>
+                Share your feedback, feature request, or question with the community.
+              </DialogDescription>
+            </DialogHeader>
+            
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="category">Category</Label>
+                <Select value={selectedCategory} onValueChange={(value) => setValue('category', value as any)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categoryOptions.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        <span className="flex items-center gap-2">
+                          <span>{option.emoji}</span>
+                          <span>{option.label}</span>
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {errors.category && (
+                  <p className="text-sm text-destructive">{errors.category.message}</p>
+                )}
+              </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="title">Title</Label>
-            <Input
-              id="title"
-              {...register("title")}
-              placeholder="Describe your request in a few words..."
-              disabled={isLoading}
-            />
-            {errors.title && (
-              <p className="text-sm text-destructive">{errors.title.message}</p>
-            )}
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="title">Title</Label>
+                <Input
+                  id="title"
+                  {...register("title")}
+                  placeholder="Describe your request in a few words..."
+                  disabled={isLoading}
+                />
+                {errors.title && (
+                  <p className="text-sm text-destructive">{errors.title.message}</p>
+                )}
+              </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">Description (Optional)</Label>
-            <Textarea
-              id="description"
-              {...register("description")}
-              placeholder="Provide additional details about your request..."
-              className="min-h-[100px]"
-              disabled={isLoading}
-            />
-            {errors.description && (
-              <p className="text-sm text-destructive">{errors.description.message}</p>
-            )}
-          </div>
+              <div className="space-y-2">
+                <Label htmlFor="description">Description (Optional)</Label>
+                <Textarea
+                  id="description"
+                  {...register("description")}
+                  placeholder="Provide additional details about your request..."
+                  className="min-h-[100px]"
+                  disabled={isLoading}
+                />
+                {errors.description && (
+                  <p className="text-sm text-destructive">{errors.description.message}</p>
+                )}
+              </div>
 
-          <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isLoading}>
-              Cancel
-            </Button>
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? "Creating..." : "Create Post"}
-            </Button>
-          </DialogFooter>
-        </form>
+              <DialogFooter>
+                <Button type="button" variant="outline" onClick={() => onOpenChange(false)} disabled={isLoading}>
+                  Cancel
+                </Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? "Creating..." : "Create Post"}
+                </Button>
+              </DialogFooter>
+            </form>
+          </>
+        ) : (
+          <>
+            <DialogHeader>
+              <DialogTitle>Quick Feedback</DialogTitle>
+              <DialogDescription>
+                Help us prioritize your request by answering a few quick questions.
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="py-4">
+              {newPostId && <PostSurvey postId={newPostId} />}
+            </div>
+            
+            <DialogFooter>
+              <Button onClick={handleCloseDialog}>
+                Skip for now
+              </Button>
+            </DialogFooter>
+          </>
+        )}
       </DialogContent>
     </Dialog>
   );
