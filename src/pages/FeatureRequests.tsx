@@ -491,7 +491,7 @@ const FeatureRequests = () => {
                     return (
                        <div 
                          key={post.id} 
-                         className="bg-card border border-border rounded-lg p-6 hover:shadow-md hover:bg-purple-50/30 transition-all duration-200 cursor-pointer relative"
+                         className="bg-card border border-border rounded-lg p-6 hover:shadow-md hover:bg-purple-100/50 transition-all duration-200 cursor-pointer relative"
                          onClick={() => handlePostClick(post)}
                        >
                          {/* Vote Button - Top Right */}
