@@ -146,10 +146,10 @@ export function PostSurvey({ postId }: PostSurveyProps) {
 
   if (!user) {
     return (
-      <Card className="p-6 border-2 border-dashed border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5">
+      <Card className="p-4 border border-border bg-muted/20">
         <div className="text-center">
-          <h3 className="text-lg font-semibold mb-2">Help us prioritize this feature!</h3>
-          <p className="text-muted-foreground">Sign in to share your feedback</p>
+          <h4 className="text-sm font-medium mb-1">Quick feedback</h4>
+          <p className="text-xs text-muted-foreground">Sign in to share your thoughts</p>
         </div>
       </Card>
     );
@@ -157,37 +157,37 @@ export function PostSurvey({ postId }: PostSurveyProps) {
 
   if (hasSubmitted && existingResponse) {
     return (
-      <Card className="p-6 border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-secondary/10">
-        <div className="space-y-4">
+      <Card className="p-4 border border-border bg-muted/20">
+        <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold">Your feedback</h3>
-            <Button variant="ghost" size="sm" onClick={resetSurvey}>
-              View questions again
+            <h4 className="text-sm font-medium text-muted-foreground">Your feedback</h4>
+            <Button variant="ghost" size="sm" onClick={resetSurvey} className="text-xs">
+              Edit
             </Button>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="grid grid-cols-3 gap-3 text-xs">
             <div className="text-center">
-              <p className="text-sm text-muted-foreground mb-1">Importance</p>
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-2xl">{importanceOptions[existingResponse.importance - 1].emoji}</span>
-                <span className="font-medium">{importanceOptions[existingResponse.importance - 1].label}</span>
+              <p className="text-muted-foreground mb-1">Importance</p>
+              <div className="flex items-center justify-center gap-1">
+                <span className="text-lg">{importanceOptions[existingResponse.importance - 1].emoji}</span>
+                <span className="text-xs">{importanceOptions[existingResponse.importance - 1].label}</span>
               </div>
             </div>
             
             <div className="text-center">
-              <p className="text-sm text-muted-foreground mb-1">Timing</p>
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-2xl">{timingOptions[existingResponse.timing - 1].emoji}</span>
-                <span className="font-medium">{timingOptions[existingResponse.timing - 1].label}</span>
+              <p className="text-muted-foreground mb-1">Timing</p>
+              <div className="flex items-center justify-center gap-1">
+                <span className="text-lg">{timingOptions[existingResponse.timing - 1].emoji}</span>
+                <span className="text-xs">{timingOptions[existingResponse.timing - 1].label}</span>
               </div>
             </div>
             
             <div className="text-center">
-              <p className="text-sm text-muted-foreground mb-1">Frequency</p>
-              <div className="flex items-center justify-center gap-2">
-                <span className="text-2xl">{frequencyOptions[existingResponse.frequency - 1].emoji}</span>
-                <span className="font-medium">{frequencyOptions[existingResponse.frequency - 1].label}</span>
+              <p className="text-muted-foreground mb-1">Frequency</p>
+              <div className="flex items-center justify-center gap-1">
+                <span className="text-lg">{frequencyOptions[existingResponse.frequency - 1].emoji}</span>
+                <span className="text-xs">{frequencyOptions[existingResponse.frequency - 1].label}</span>
               </div>
             </div>
           </div>
@@ -222,18 +222,18 @@ export function PostSurvey({ postId }: PostSurveyProps) {
   if (!question) return null;
 
   return (
-    <Card className="p-6 border-2 border-primary/30 bg-gradient-to-br from-primary/10 to-secondary/10">
-      <div className="space-y-6">
+    <Card className="p-4 border border-border bg-muted/20">
+      <div className="space-y-4">
         <div className="text-center">
-          <div className="flex justify-center gap-2 mb-4">
+          <div className="flex justify-center gap-1 mb-3">
             {[1, 2, 3].map((step) => (
               <div
                 key={step}
-                className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
+                className={`w-6 h-6 rounded-full flex items-center justify-center text-xs transition-colors ${
                   step < currentQuestion
-                    ? 'bg-primary text-primary-foreground'
+                    ? 'bg-muted-foreground text-background'
                     : step === currentQuestion
-                    ? 'bg-primary/20 text-primary border-2 border-primary'
+                    ? 'bg-muted text-muted-foreground border border-muted-foreground'
                     : 'bg-muted text-muted-foreground'
                 }`}
               >
@@ -242,22 +242,22 @@ export function PostSurvey({ postId }: PostSurveyProps) {
             ))}
           </div>
           
-          <h3 className="text-xl font-bold mb-2">{question.title}</h3>
-          <p className="text-sm text-muted-foreground">Question {currentQuestion} of 3</p>
+          <h4 className="text-sm font-medium mb-1">{question.title}</h4>
+          <p className="text-xs text-muted-foreground">Question {currentQuestion} of 3</p>
         </div>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 gap-2">
           {question.options.map((option) => (
             <Button
               key={option.value}
               variant="outline"
-              size="lg"
+              size="sm"
               onClick={() => handleAnswer(option.value)}
               disabled={isLoading}
-              className="h-auto p-4 flex flex-col items-center gap-2 hover:bg-primary/10 hover:border-primary transition-all duration-200"
+              className="h-auto p-3 flex flex-col items-center gap-1 hover:bg-muted/50 text-xs"
             >
-              <span className="text-3xl">{option.emoji}</span>
-              <span className="text-sm font-medium">{option.label}</span>
+              <span className="text-xl">{option.emoji}</span>
+              <span className="font-normal">{option.label}</span>
             </Button>
           ))}
         </div>
@@ -269,6 +269,7 @@ export function PostSurvey({ postId }: PostSurveyProps) {
               size="sm"
               onClick={() => setCurrentQuestion(currentQuestion - 1)}
               disabled={isLoading}
+              className="text-xs"
             >
               ← Back
             </Button>
