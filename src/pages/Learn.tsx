@@ -228,7 +228,7 @@ const Learn = () => {
                       <div>
                         <h3 className="text-lg font-medium text-foreground mb-3">Free Plan</h3>
                         <ul className="text-muted-foreground space-y-2">
-                          <li>• 5 daily credits up to a maximum of 30 per month</li>
+                          <li>• 1 daily HEU (Hobson Energy Unit) up to a maximum of 5 per month</li>
                           <li>• Workspace collaboration with unlimited members</li>
                         </ul>
                       </div>
