@@ -15,13 +15,15 @@ import {
   User,
   Calendar,
   ThumbsUp,
-  ArrowLeft
+  ArrowLeft,
+  Settings
 } from 'lucide-react';
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { CreatePostDialog } from '@/components/features/CreatePostDialog';
+import { ProfileUpdateDialog } from '@/components/features/ProfileUpdateDialog';
 import { AuthDialog } from '@/components/features/AuthDialog';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
@@ -32,6 +34,7 @@ const FeatureRequests = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [showProfileDialog, setShowProfileDialog] = useState(false);
   const [posts, setPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
@@ -152,6 +155,12 @@ const FeatureRequests = () => {
                   <img src={hobsonLogo} alt="Hobson" className="h-8 w-auto" />
                 </Link>
               </div>
+              {user && (
+                <Button variant="ghost" size="sm" onClick={() => setShowProfileDialog(true)}>
+                  <Settings className="w-4 h-4 mr-2" />
+                  Update Display Name
+                </Button>
+              )}
             </div>
           </div>
         </header>
@@ -306,6 +315,12 @@ const FeatureRequests = () => {
           open={showCreateDialog}
           onOpenChange={setShowCreateDialog}
           onPostCreated={handlePostCreated}
+        />
+        
+        <ProfileUpdateDialog
+          open={showProfileDialog}
+          onOpenChange={setShowProfileDialog}
+          onSuccess={handlePostCreated}
         />
         
         <AuthDialog
