@@ -2116,9 +2116,9 @@ const Learn = () => {
       <div className="min-h-screen">
         {/* Header */}
         <header className="border-b border-border border-2 border-red-500">
-          <div className="px-8 py-4">
-            <div className="flex justify-between items-center">
-              <div className="absolute top-4 left-4">
+          <div className="w-full px-4 py-4">
+            <div className="flex justify-between items-center w-full">
+              <div className="flex items-center">
                 <Link to="/" className="flex items-center">
                   <img 
                     src={hobsonLogo} 
@@ -2132,12 +2132,12 @@ const Learn = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 ml-auto"
+                className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50"
               >
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
               
-               <nav className="hidden md:flex items-center gap-6 ml-auto">
+               <nav className="hidden md:flex items-center gap-6">
                 <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </a>
@@ -2260,7 +2260,7 @@ const Learn = () => {
         <div className="hidden md:flex flex-col">
           {/* Horizontal Topics Navigation */}
           <div className="mt-12">
-            <div className="px-6">
+            <div className="w-full px-4">
               <nav className="flex space-x-8 overflow-x-auto">
                 {horizontalTabs.map((tab) => {
                   const Icon = tab.icon;
