@@ -2116,7 +2116,7 @@ const Learn = () => {
       <div className="min-h-screen">
         {/* Header */}
         <header className="border-b border-border">
-          <div className="px-9 py-4">
+          <div className="px-16 py-4">
             <div className="flex justify-between items-center">
               <div className="absolute top-4 left-4">
                 <Link to="/" className="flex items-center">
