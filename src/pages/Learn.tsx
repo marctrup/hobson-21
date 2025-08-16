@@ -1211,130 +1211,173 @@ const Learn = () => {
 
     // Handle Prompt Engineering - Fundamentals content specifically
     if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') {
+      const tocSections = [
+        { id: 'what-is-prompting', label: 'What is Prompting?' },
+        { id: 'why-prompting-matters', label: 'Why Prompting Matters' },
+        { id: 'how-hobson-thinks', label: 'How Hobson "Thinks"' },
+        { id: 'clear-method', label: 'The C.L.E.A.R. Method' },
+        { id: 'advanced-tactics', label: 'Advanced Tactics' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
         <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-5xl">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">Prompting</h1>
-              <p className="text-lg text-muted-foreground">Master the fundamentals of effective prompting with Hobson</p>
-            </div>
-
-            <div className="space-y-12">
-              {/* What is Prompting */}
-              <section>
-                <h2 className="text-2xl font-semibold text-foreground mb-6">What is Prompting?</h2>
-                <div className="prose prose-gray max-w-none">
-                  <p className="text-muted-foreground mb-4">
-                    Prompting means the way you ask Hobson a question or give instructions. Think of it as giving directions to a very literal assistant. Clearer prompts = better answers.
-                  </p>
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-2">Prompting</h1>
+                  <p className="text-lg text-muted-foreground">Master the fundamentals of effective prompting with Hobson</p>
                 </div>
-              </section>
 
-              {/* Why Prompting Matters */}
-              <section>
-                <h2 className="text-2xl font-semibold text-foreground mb-6">Why Prompting Matters</h2>
-                <div className="prose prose-gray max-w-none">
-                  <p className="text-muted-foreground mb-4">
-                    A vague question might get you a vague answer. A precise question can get Hobson to:
-                  </p>
-                  <ul className="text-muted-foreground space-y-2 ml-6">
-                    <li>• Summarise property documents clearly.</li>
-                    <li>• Build tailored reports (e.g. rental yield comparisons).</li>
-                    <li>• Bring in outside market insights when needed.</li>
-                  </ul>
-                  <p className="text-muted-foreground mt-4">
-                    The way you phrase your request can be the difference between a quick note and a full market analysis.
-                  </p>
+                <div className="space-y-12">
+                  {/* What is Prompting */}
+                  <section id="what-is-prompting">
+                    <h2 className="text-2xl font-semibold text-foreground mb-6">What is Prompting?</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        Prompting means the way you ask Hobson a question or give instructions. Think of it as giving directions to a very literal assistant. Clearer prompts = better answers.
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* Why Prompting Matters */}
+                  <section id="why-prompting-matters">
+                    <h2 className="text-2xl font-semibold text-foreground mb-6">Why Prompting Matters</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        A vague question might get you a vague answer. A precise question can get Hobson to:
+                      </p>
+                      <ul className="text-muted-foreground space-y-2 ml-6">
+                        <li>• Summarise property documents clearly.</li>
+                        <li>• Build tailored reports (e.g. rental yield comparisons).</li>
+                        <li>• Bring in outside market insights when needed.</li>
+                      </ul>
+                      <p className="text-muted-foreground mt-4">
+                        The way you phrase your request can be the difference between a quick note and a full market analysis.
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* How Hobson "Thinks" */}
+                  <section id="how-hobson-thinks">
+                    <h2 className="text-2xl font-semibold text-foreground mb-6">How Hobson "Thinks"</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        Hobson doesn't "know" things the way people do – it predicts answers based on patterns. That's why:
+                      </p>
+                      <ul className="text-muted-foreground space-y-3 ml-6">
+                        <li><strong>Context is key:</strong> Always give Hobson the background it needs (e.g. "Focus on commercial properties in East London").</li>
+                        <li><strong>Be explicit:</strong> State exactly what you want (e.g. "Summarise the lease terms in bullet points").</li>
+                        <li><strong>Order matters:</strong> Put the most important parts of your question first.</li>
+                        <li><strong>Check facts:</strong> Hobson can sound confident even when uncertain, so always review the output.</li>
+                      </ul>
+                    </div>
+                  </section>
+
+                  {/* Core Prompting Principles - The C.L.E.A.R. Method */}
+                  <section id="clear-method">
+                    <h2 className="text-2xl font-semibold text-foreground mb-6">Core Prompting Principles – The C.L.E.A.R. Method</h2>
+                    <div className="space-y-6">
+                      <div className="bg-card border border-border rounded-lg p-6">
+                        <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
+                          <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">C</span>
+                          Concise
+                        </h3>
+                        <p className="text-muted-foreground">Be brief but direct. "Summarise this tenancy agreement in 200 words."</p>
+                      </div>
+
+                      <div className="bg-card border border-border rounded-lg p-6">
+                        <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
+                          <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">L</span>
+                          Logical
+                        </h3>
+                        <p className="text-muted-foreground">Break down requests step by step. "First, outline key risks. Then, provide recommendations."</p>
+                      </div>
+
+                      <div className="bg-card border border-border rounded-lg p-6">
+                        <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
+                          <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">E</span>
+                          Explicit
+                        </h3>
+                        <p className="text-muted-foreground">Tell Hobson exactly what you want. "List 5 comparable sales in table format."</p>
+                      </div>
+
+                      <div className="bg-card border border-border rounded-lg p-6">
+                        <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
+                          <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">A</span>
+                          Adaptive
+                        </h3>
+                        <p className="text-muted-foreground">If the answer isn't right, refine your question and ask again.</p>
+                      </div>
+
+                      <div className="bg-card border border-border rounded-lg p-6">
+                        <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
+                          <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">R</span>
+                          Reflective
+                        </h3>
+                        <p className="text-muted-foreground">Notice which questions worked best, and use that style again.</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Advanced Tactics */}
+                  <section id="advanced-tactics">
+                    <h2 className="text-2xl font-semibold text-foreground mb-6">Advanced Tactics</h2>
+                    <div className="space-y-4">
+                      <div className="bg-accent/10 border border-accent/20 rounded-lg p-6">
+                        <h3 className="text-lg font-medium text-foreground mb-3">Meta Prompting</h3>
+                        <p className="text-muted-foreground">Ask Hobson how to improve your question. ("How could I phrase this better for clearer results?")</p>
+                      </div>
+
+                      <div className="bg-accent/10 border border-accent/20 rounded-lg p-6">
+                        <h3 className="text-lg font-medium text-foreground mb-3">Reverse Meta Prompting</h3>
+                        <p className="text-muted-foreground">Ask Hobson to explain how it reached its answer, so you can check reasoning.</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Summary */}
+                  <section>
+                    <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
+                      <h3 className="text-lg font-medium text-foreground mb-3">👉 In short:</h3>
+                      <p className="text-muted-foreground">
+                        Treat Hobson like a very smart but very literal property assistant. The clearer your instructions, the more useful the results.
+                      </p>
+                    </div>
+                  </section>
                 </div>
-              </section>
+              </div>
 
-              {/* How Hobson "Thinks" */}
-              <section>
-                <h2 className="text-2xl font-semibold text-foreground mb-6">How Hobson "Thinks"</h2>
-                <div className="prose prose-gray max-w-none">
-                  <p className="text-muted-foreground mb-4">
-                    Hobson doesn't "know" things the way people do – it predicts answers based on patterns. That's why:
-                  </p>
-                  <ul className="text-muted-foreground space-y-3 ml-6">
-                    <li><strong>Context is key:</strong> Always give Hobson the background it needs (e.g. "Focus on commercial properties in East London").</li>
-                    <li><strong>Be explicit:</strong> State exactly what you want (e.g. "Summarise the lease terms in bullet points").</li>
-                    <li><strong>Order matters:</strong> Put the most important parts of your question first.</li>
-                    <li><strong>Check facts:</strong> Hobson can sound confident even when uncertain, so always review the output.</li>
-                  </ul>
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-muted text-foreground font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
                 </div>
-              </section>
-
-              {/* Core Prompting Principles - The C.L.E.A.R. Method */}
-              <section>
-                <h2 className="text-2xl font-semibold text-foreground mb-6">Core Prompting Principles – The C.L.E.A.R. Method</h2>
-                <div className="space-y-6">
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
-                      <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">C</span>
-                      Concise
-                    </h3>
-                    <p className="text-muted-foreground">Be brief but direct. "Summarise this tenancy agreement in 200 words."</p>
-                  </div>
-
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
-                      <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">L</span>
-                      Logical
-                    </h3>
-                    <p className="text-muted-foreground">Break down requests step by step. "First, outline key risks. Then, provide recommendations."</p>
-                  </div>
-
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
-                      <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">E</span>
-                      Explicit
-                    </h3>
-                    <p className="text-muted-foreground">Tell Hobson exactly what you want. "List 5 comparable sales in table format."</p>
-                  </div>
-
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
-                      <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">A</span>
-                      Adaptive
-                    </h3>
-                    <p className="text-muted-foreground">If the answer isn't right, refine your question and ask again.</p>
-                  </div>
-
-                  <div className="bg-card border border-border rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-foreground mb-3 flex items-center gap-2">
-                      <span className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-sm font-bold">R</span>
-                      Reflective
-                    </h3>
-                    <p className="text-muted-foreground">Notice which questions worked best, and use that style again.</p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Advanced Tactics */}
-              <section>
-                <h2 className="text-2xl font-semibold text-foreground mb-6">Advanced Tactics</h2>
-                <div className="space-y-4">
-                  <div className="bg-accent/10 border border-accent/20 rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-foreground mb-3">Meta Prompting</h3>
-                    <p className="text-muted-foreground">Ask Hobson how to improve your question. ("How could I phrase this better for clearer results?")</p>
-                  </div>
-
-                  <div className="bg-accent/10 border border-accent/20 rounded-lg p-6">
-                    <h3 className="text-lg font-medium text-foreground mb-3">Reverse Meta Prompting</h3>
-                    <p className="text-muted-foreground">Ask Hobson to explain how it reached its answer, so you can check reasoning.</p>
-                  </div>
-                </div>
-              </section>
-
-              {/* Summary */}
-              <section>
-                <div className="bg-primary/5 border border-primary/20 rounded-lg p-6">
-                  <h3 className="text-lg font-medium text-foreground mb-3">👉 In short:</h3>
-                  <p className="text-muted-foreground">
-                    Treat Hobson like a very smart but very literal property assistant. The clearer your instructions, the more useful the results.
-                  </p>
-                </div>
-              </section>
+              </div>
             </div>
           </div>
         </div>
