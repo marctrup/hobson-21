@@ -100,7 +100,6 @@ const Learn = () => {
     { id: 'prompt-engineering', label: 'Prompt Engineering', icon: Users },
     { id: 'use-cases', label: 'Use Cases', icon: Library },
     { id: 'glossary', label: 'Glossary', icon: FileText },
-    { id: 'changelog', label: 'Changelog', icon: Clock },
   ];
 
   // Static top menu items (separate pages)
