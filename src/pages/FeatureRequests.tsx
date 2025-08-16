@@ -33,6 +33,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const FeatureRequests = () => {
   const [activeFilter, setActiveFilter] = useState('new');
+  const [activeCategoryFilter, setActiveCategoryFilter] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
@@ -75,6 +76,11 @@ const FeatureRequests = () => {
         .from('feature_requests')
         .select('*');
 
+      // Apply category filter
+      if (activeCategoryFilter) {
+        query = query.eq('category', activeCategoryFilter as any);
+      }
+
       // Apply sorting based on filter
       if (activeFilter === 'new') {
         query = query.order('created_at', { ascending: false });
@@ -107,7 +113,7 @@ const FeatureRequests = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, [activeFilter, searchQuery]);
+  }, [activeFilter, searchQuery, activeCategoryFilter]);
 
   const handleCreatePost = () => {
     if (!user) {
@@ -528,16 +534,28 @@ const FeatureRequests = () => {
               <div className="bg-card border border-border rounded-lg p-6">
                 <h3 className="text-lg font-semibold text-foreground mb-4">Boards</h3>
                 <div className="space-y-2">
-                  <button className="w-full flex items-center justify-between p-2 text-left hover:bg-accent rounded-lg transition-colors">
-                    <span className="text-sm font-medium text-foreground">View all posts</span>
+                  <button 
+                    onClick={() => setActiveCategoryFilter(null)}
+                    className={`w-full flex items-center justify-between p-2 text-left rounded-lg transition-colors ${
+                      activeCategoryFilter === null 
+                        ? 'bg-accent text-foreground' 
+                        : 'hover:bg-accent text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    <span className="text-sm font-medium">View all posts</span>
                   </button>
                   {boards.map((board) => (
                     <button
                       key={board.id}
-                      className="w-full flex items-center gap-3 p-2 text-left hover:bg-accent rounded-lg transition-colors"
+                      onClick={() => setActiveCategoryFilter(board.id)}
+                      className={`w-full flex items-center gap-3 p-2 text-left rounded-lg transition-colors ${
+                        activeCategoryFilter === board.id 
+                          ? 'bg-accent text-foreground' 
+                          : 'hover:bg-accent text-muted-foreground hover:text-foreground'
+                      }`}
                     >
                       <span className="text-base">{board.emoji}</span>
-                      <span className="text-sm text-muted-foreground">{board.label}</span>
+                      <span className="text-sm">{board.label}</span>
                     </button>
                   ))}
                 </div>
