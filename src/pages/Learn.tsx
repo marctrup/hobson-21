@@ -2259,7 +2259,7 @@ const Learn = () => {
         {/* Desktop Layout */}
         <div className="hidden md:flex flex-col">
           {/* Horizontal Topics Navigation */}
-          <div className="mt-8">
+          <div className="mt-12">
             <div className="px-6">
               <nav className="flex space-x-8 overflow-x-auto">
                 {horizontalTabs.map((tab) => {
