@@ -74,7 +74,10 @@ const FeatureRequests = () => {
     try {
       let query = supabase
         .from('feature_requests')
-        .select('*');
+        .select(`
+          *,
+          comment_count:feature_request_comments(count)
+        `);
 
       // Apply category filter
       if (activeCategoryFilter) {
@@ -504,22 +507,30 @@ const FeatureRequests = () => {
                               </p>
                             )}
                             
-                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                              <User className="w-4 h-4" />
-                              <span>{post.author_name}</span>
-                              <Calendar className="w-4 h-4 ml-2" />
-                              <span>{formatTimeAgo(post.created_at)}</span>
-                              
-                              {user && user.id === post.author_id && (
-                                <button
-                                  onClick={() => handleDeletePost(post.id)}
-                                  className="ml-auto p-1 hover:bg-destructive/10 hover:text-destructive rounded transition-colors"
-                                  title="Delete post"
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </button>
-                              )}
-                            </div>
+                             <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                               <User className="w-4 h-4" />
+                               <span>{post.author_name}</span>
+                               <Calendar className="w-4 h-4 ml-2" />
+                               <span>{formatTimeAgo(post.created_at)}</span>
+                               
+                               {/* Comment count indicator */}
+                               {post.comment_count && post.comment_count[0]?.count > 0 && (
+                                 <div className="flex items-center gap-1 ml-2">
+                                   <MessageSquare className="w-4 h-4" />
+                                   <span>{post.comment_count[0].count}</span>
+                                 </div>
+                               )}
+                               
+                               {user && user.id === post.author_id && (
+                                 <button
+                                   onClick={() => handleDeletePost(post.id)}
+                                   className="ml-auto p-1 hover:bg-destructive/10 hover:text-destructive rounded transition-colors"
+                                   title="Delete post"
+                                 >
+                                   <Trash2 className="w-4 h-4" />
+                                 </button>
+                               )}
+                             </div>
                           </div>
                         </div>
                       );
