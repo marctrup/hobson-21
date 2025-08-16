@@ -51,7 +51,7 @@ const Learn = () => {
         if (activeVerticalTab === 'fundamentals') {
           tocSections = ['what-is-prompting', 'why-prompting-matters', 'how-hobson-thinks', 'clear-method', 'advanced-tactics'];
         } else if (activeVerticalTab === 'advanced-prompting') {
-          tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building', 'market-context', 'lending-finance', 'asset-portfolio', 'planning-development'];
+          tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building', 'market-context', 'lending-finance'];
         } else if (activeVerticalTab === 'debugging-prompts') {
           tocSections = ['quick-fixes', 'deep-reviews', 'fragile-areas', 'performance-issues', 'persistent-problems', 'debugging-flows', 'root-cause', 'pro-tips'];
         }
@@ -1416,15 +1416,13 @@ const Learn = () => {
     if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') {
       const tocSections = [
         { id: 'prompt-library', label: 'Prompt Library' },
-        { id: 'lease-summaries', label: 'Lease & Contract Summaries' },
-        { id: 'extracting-data', label: 'Extracting Key Data' },
-        { id: 'comparing-properties', label: 'Comparing Properties & Leases' },
-        { id: 'risk-compliance', label: 'Risk & Compliance Checks' },
-        { id: 'report-building', label: 'Report Building' },
-        { id: 'market-context', label: 'Market Context & Insights' },
-        { id: 'lending-finance', label: 'Lending & Finance' },
-        { id: 'asset-portfolio', label: 'Asset & Portfolio Management' },
-        { id: 'planning-development', label: 'Planning & Development' },
+        { id: 'lease-summaries', label: 'Summarising & Simplifying' },
+        { id: 'extracting-data', label: 'Extracting & Structuring Data' },
+        { id: 'comparing-properties', label: 'Comparing & Contrasting' },
+        { id: 'risk-compliance', label: 'Identifying Risks & Issues' },
+        { id: 'report-building', label: 'Creating Reports & Dashboards' },
+        { id: 'market-context', label: 'Adding Context & Insight' },
+        { id: 'lending-finance', label: 'Explaining & Stress-Testing' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -1465,22 +1463,22 @@ const Learn = () => {
 
                       <Accordion type="single" collapsible className="space-y-4">
                         <AccordionItem value="lease-summaries" id="lease-summaries">
-                          <AccordionTrigger className="text-lg font-semibold">1. Lease & Contract Summaries</AccordionTrigger>
+                          <AccordionTrigger className="text-lg font-semibold">1. Summarising & Simplifying</AccordionTrigger>
                           <AccordionContent className="space-y-4">
                             <div className="space-y-4">
                               <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To quickly digest complex legal or technical text.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to summarise, highlight, or reformat clauses into plain English.</p>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To turn long or technical documents into clear takeaways.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson for plain-English summaries, bullet points, or key highlights.</p>
                               </div>
                               
                               <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts:</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="p-3 bg-background rounded border border-border">
                                     "Summarise the lease for 22 Queen Street in bullet points, focusing on rent, break clauses, and repair obligations."
                                   </div>
                                   <div className="p-3 bg-background rounded border border-border">
-                                    "Highlight any unusual service charge clauses in the lease for Unit 4, Business Park."
+                                    "Highlight any unusual service charge clauses in the agreement for Unit 4."
                                   </div>
                                 </div>
                               </div>
@@ -1489,22 +1487,22 @@ const Learn = () => {
                         </AccordionItem>
 
                         <AccordionItem value="extracting-data" id="extracting-data">
-                          <AccordionTrigger className="text-lg font-semibold">2. Extracting Key Data</AccordionTrigger>
+                          <AccordionTrigger className="text-lg font-semibold">2. Extracting & Structuring Data</AccordionTrigger>
                           <AccordionContent className="space-y-4">
                             <div className="space-y-4">
                               <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> When you need specific details pulled from long schedules or contracts.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask for tables or lists with exactly the data points you care about.</p>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> When you need specific details pulled into a clear format.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Tell Hobson what fields to find and how to present them (table, list, chart).</p>
                               </div>
                               
                               <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts:</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="p-3 bg-background rounded border border-border">
-                                    "From the rent schedule for the retail portfolio, list each unit with tenant name, rent, lease expiry, and next review date."
+                                    "From the rent schedule, list each unit with tenant name, rent, lease expiry, and next review date."
                                   </div>
                                   <div className="p-3 bg-background rounded border border-border">
-                                    "From the deed for 14 Market Road, list all covenants and who they apply to."
+                                    "Extract all covenants from this deed and show who they apply to."
                                   </div>
                                 </div>
                               </div>
@@ -1513,19 +1511,19 @@ const Learn = () => {
                         </AccordionItem>
 
                         <AccordionItem value="comparing-properties" id="comparing-properties">
-                          <AccordionTrigger className="text-lg font-semibold">3. Comparing Properties & Leases</AccordionTrigger>
+                          <AccordionTrigger className="text-lg font-semibold">3. Comparing & Contrasting</AccordionTrigger>
                           <AccordionContent className="space-y-4">
                             <div className="space-y-4">
                               <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To see differences between assets or contracts at a glance.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Name the properties/documents and ask for a comparison.</p>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To spot differences or similarities across multiple documents.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Point Hobson to two or more documents and specify what to compare.</p>
                               </div>
                               
                               <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts:</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="p-3 bg-background rounded border border-border">
-                                    "Compare the leases for Units 1, 2, and 3 in the Industrial Estate. Focus on rent reviews, repairing obligations, and break clauses."
+                                    "Compare the leases for Units 1, 2, and 3. Focus on rent reviews, repairing obligations, and break clauses."
                                   </div>
                                   <div className="p-3 bg-background rounded border border-border">
                                     "Compare the tenancy agreements for 10 and 12 Green Lane, highlighting differences in tenant obligations."
@@ -1537,22 +1535,22 @@ const Learn = () => {
                         </AccordionItem>
 
                         <AccordionItem value="risk-compliance" id="risk-compliance">
-                          <AccordionTrigger className="text-lg font-semibold">4. Risk & Compliance Checks</AccordionTrigger>
+                          <AccordionTrigger className="text-lg font-semibold">4. Identifying Risks & Issues</AccordionTrigger>
                           <AccordionContent className="space-y-4">
                             <div className="space-y-4">
                               <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To identify red flags or restrictions in documents.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to review with a focus on risks, compliance, or legal issues.</p>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To uncover red flags, compliance gaps, or restrictions.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to review documents with a focus on potential problems.</p>
                               </div>
                               
                               <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts:</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="p-3 bg-background rounded border border-border">
                                     "Review the title deed for 30 River Road and highlight any restrictive covenants or easements."
                                   </div>
                                   <div className="p-3 bg-background rounded border border-border">
-                                    "Check the lease for 45 Market Road for compliance with the Landlord and Tenant Act."
+                                    "Check this agreement for compliance with the Landlord and Tenant Act."
                                   </div>
                                 </div>
                               </div>
@@ -1561,22 +1559,70 @@ const Learn = () => {
                         </AccordionItem>
 
                         <AccordionItem value="report-building" id="report-building">
-                          <AccordionTrigger className="text-lg font-semibold">5. Report Building</AccordionTrigger>
+                          <AccordionTrigger className="text-lg font-semibold">5. Creating Reports & Dashboards</AccordionTrigger>
                           <AccordionContent className="space-y-4">
                             <div className="space-y-4">
                               <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To create reports for management, clients, or investors.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Tell Hobson what to include (leases, rents, key events, risks) and how to structure it (summary, table, or narrative).</p>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To generate structured outputs for stakeholders.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Specify the scope (portfolio, set of documents) and the output format (summary, dashboard, narrative).</p>
                               </div>
                               
                               <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts:</h5>
                                 <div className="space-y-2 text-sm">
                                   <div className="p-3 bg-background rounded border border-border">
-                                    "Create a report on the office portfolio: summarise each lease, include rent schedules, and note any lease events in the next 12 months."
+                                    "Create a report on the portfolio: summarise each lease, include rent schedules, and note all lease events in the next 12 months."
                                   </div>
                                   <div className="p-3 bg-background rounded border border-border">
-                                    "Produce an investor briefing on the retail portfolio, including tenant mix, income, lease expiries, and risks."
+                                    "Build a dashboard showing income by tenant, lease expiry profile, and upcoming rent reviews."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="market-context" id="market-context">
+                          <AccordionTrigger className="text-lg font-semibold">6. Adding Context & Insight</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To combine internal documents with external trends or policies.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to connect document insights to wider market or regulatory context.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts:</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Using the rent reviews due in the next year, explain how current market trends might affect outcomes."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Summarise how new energy efficiency rules could affect our property portfolio."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="lending-finance" id="lending-finance">
+                          <AccordionTrigger className="text-lg font-semibold">7. Explaining & Stress-Testing</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To simplify complex terms or test "what if" scenarios.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to explain terms, calculate impacts, or run stress scenarios.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts:</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Summarise the key terms of this loan facility, including covenants, repayment terms, and interest cover."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "If rental income drops by 10%, what impact would this have on loan cover ratios?"
                                   </div>
                                 </div>
                               </div>
