@@ -216,7 +216,7 @@ const Learn = () => {
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Overview</h2>
                     <div className="prose prose-gray max-w-none">
                       <p className="text-muted-foreground mb-4">
-                        Lovable is a subscription based service with a free plan and several paid plans. When you pay for a subscription you get access to more features, and more credits. You need credits to send messages in Lovable.
+                        Hobson is a subscription based service with a free plan and several paid plans. When you pay for a subscription you get access to more additional support, and more HEUs (Hobsons Energy units - the currency used to buy effort). You need HEUs to interact with Hobson.
                       </p>
                     </div>
                   </section>
