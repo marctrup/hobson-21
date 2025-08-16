@@ -230,6 +230,7 @@ const Learn = () => {
                         <ul className="text-muted-foreground space-y-2">
                           <li>• 18 HEU (Hobson Energy Unit) per month</li>
                           <li>• Unlimited Members</li>
+                          <li>• Unlimited documents</li>
                         </ul>
                       </div>
                       
