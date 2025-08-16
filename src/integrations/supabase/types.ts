@@ -169,6 +169,42 @@ export type Database = {
         }
         Relationships: []
       }
+      feature_request_comments: {
+        Row: {
+          author_name: string
+          content: string
+          created_at: string
+          feature_request_id: string
+          id: string
+          parent_comment_id: string | null
+          updated_at: string
+          user_id: string
+          votes: number
+        }
+        Insert: {
+          author_name: string
+          content: string
+          created_at?: string
+          feature_request_id: string
+          id?: string
+          parent_comment_id?: string | null
+          updated_at?: string
+          user_id: string
+          votes?: number
+        }
+        Update: {
+          author_name?: string
+          content?: string
+          created_at?: string
+          feature_request_id?: string
+          id?: string
+          parent_comment_id?: string | null
+          updated_at?: string
+          user_id?: string
+          votes?: number
+        }
+        Relationships: []
+      }
       feature_request_votes: {
         Row: {
           created_at: string

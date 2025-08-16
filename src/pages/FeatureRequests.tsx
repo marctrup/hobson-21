@@ -25,6 +25,7 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { CreatePostDialog } from '@/components/features/CreatePostDialog';
 import { ProfileUpdateDialog } from '@/components/features/ProfileUpdateDialog';
+import { PostDetailDialog } from '@/components/features/PostDetailDialog';
 import { AuthDialog } from '@/components/features/AuthDialog';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
@@ -36,6 +37,8 @@ const FeatureRequests = () => {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [showProfileDialog, setShowProfileDialog] = useState(false);
+  const [selectedPost, setSelectedPost] = useState<any>(null);
+  const [showPostDetail, setShowPostDetail] = useState(false);
   const [posts, setPosts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
@@ -120,6 +123,15 @@ const FeatureRequests = () => {
 
   const handlePostCreated = () => {
     fetchPosts(); // Refresh the posts
+  };
+
+  const handlePostClick = (post: any) => {
+    if (user) {
+      setSelectedPost(post);
+      setShowPostDetail(true);
+    } else {
+      setShowAuthDialog(true);
+    }
   };
 
   const handleDeletePost = async (postId: string) => {
@@ -299,7 +311,10 @@ const FeatureRequests = () => {
                               </Badge>
                             </div>
                             
-                            <h3 className="text-lg font-semibold text-foreground mb-2 hover:text-primary cursor-pointer">
+                            <h3 
+                              className="text-lg font-semibold text-foreground mb-2 hover:text-primary cursor-pointer"
+                              onClick={() => handlePostClick(post)}
+                            >
                               {post.title}
                             </h3>
                             
@@ -369,6 +384,12 @@ const FeatureRequests = () => {
           open={showProfileDialog}
           onOpenChange={setShowProfileDialog}
           onSuccess={handlePostCreated}
+        />
+        
+        <PostDetailDialog
+          open={showPostDetail}
+          onOpenChange={setShowPostDetail}
+          post={selectedPost}
         />
         
         <AuthDialog
