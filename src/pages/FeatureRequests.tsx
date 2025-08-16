@@ -109,10 +109,6 @@ const FeatureRequests = () => {
                   <img src={hobsonLogo} alt="Hobson" className="h-8 w-auto" />
                 </Link>
               </div>
-              <Button size="sm">
-                <Plus className="w-4 h-4 mr-2" />
-                Create A New Post
-              </Button>
             </div>
           </div>
         </header>
@@ -129,7 +125,7 @@ const FeatureRequests = () => {
           <div className="flex gap-8">
             {/* Main Content */}
             <div className="flex-1 max-w-4xl">
-              {/* Filters and Search */}
+              {/* Filters, Create Post and Search */}
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
                   {filters.map((filter) => (
@@ -145,6 +141,11 @@ const FeatureRequests = () => {
                       {filter.label}
                     </button>
                   ))}
+                  
+                  <Button size="sm" className="ml-4">
+                    <Plus className="w-4 h-4 mr-2" />
+                    Create A New Post
+                  </Button>
                 </div>
                 
                 <div className="relative">
