@@ -247,11 +247,10 @@ const Learn = () => {
                       <div>
                         <h3 className="text-lg font-medium text-foreground mb-3">Essential Plus</h3>
                         <ul className="text-muted-foreground space-y-2">
-                          <li>• Everything in Pro, plus:</li>
-                          <li>• SSO</li>
-                          <li>• Personal projects within workspaces</li>
-                          <li>• Opt out of data training</li>
-                          <li>• Build reusable design templates to streamline your projects</li>
+                          <li>• 700 HEU (Hobson Energy Unit) per month</li>
+                          <li>• Unlimited Members</li>
+                          <li>• Unlimited documents</li>
+                          <li>• Priority Support</li>
                         </ul>
                       </div>
                     </div>
