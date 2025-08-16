@@ -213,6 +213,39 @@ export type Database = {
           },
         ]
       }
+      feature_request_surveys: {
+        Row: {
+          created_at: string
+          feature_request_id: string
+          frequency: number
+          id: string
+          importance: number
+          timing: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          feature_request_id: string
+          frequency: number
+          id?: string
+          importance: number
+          timing: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          feature_request_id?: string
+          frequency?: number
+          id?: string
+          importance?: number
+          timing?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       feature_request_votes: {
         Row: {
           created_at: string

@@ -26,6 +26,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { PostSurvey } from './PostSurvey';
 
 const commentSchema = z.object({
   content: z.string().min(1, "Comment cannot be empty"),
@@ -281,6 +282,9 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
                 </div>
               </div>
             </div>
+
+            {/* Survey Section */}
+            <PostSurvey postId={post.id} />
 
             {/* Comments Section */}
             <div className="space-y-4">
