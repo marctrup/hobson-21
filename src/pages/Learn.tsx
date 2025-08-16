@@ -309,7 +309,7 @@ const Learn = () => {
                           <tr><td className="py-2">Uploading a lease</td><td>Read and understand</td><td>0.50</td></tr>
                           <tr><td className="py-2">When is the next review?</td><td>Retrieve that information</td><td>0.90</td></tr>
                           <tr><td className="py-2">Compare my rent to the market.</td><td>Build a comparison</td><td>1.20</td></tr>
-                          <tr><td className="py-2">Build a market appraisal report</td><td>Creates a landing page with generated images, a theme and sections</td><td>2.00</td></tr>
+                          <tr><td className="py-2">Build a market appraisal report</td><td>Builds a report</td><td>2.00</td></tr>
                         </tbody>
                       </table>
                     </div>
