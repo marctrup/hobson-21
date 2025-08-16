@@ -323,7 +323,7 @@ const Learn = () => {
                   <section id="credit-rollovers">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit Rollovers</h2>
                     <p className="text-muted-foreground mb-4">
-                      Unused credits automatically roll over at the end of each billing cycle for both monthly and annual paid plans, as long as you keep an active subscription, subject to the limitations outlined below.
+                      Unused HEUs automatically roll over at the end of each billing cycle for both monthly and annual paid plans, as long as you keep an active subscription, subject to the limitations outlined below.
                     </p>
                     
                     <div className="space-y-4">
