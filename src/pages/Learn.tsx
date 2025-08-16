@@ -237,6 +237,7 @@ const Learn = () => {
                         <h3 className="text-lg font-medium text-foreground mb-3">Essential plan</h3>
                         <ul className="text-muted-foreground space-y-2">
                           <li>• 1 daily HEU (Hobson Energy Unit) up to a maximum of 20 per month</li>
+                          <li>• Priority Support</li>
                         </ul>
                       </div>
 
