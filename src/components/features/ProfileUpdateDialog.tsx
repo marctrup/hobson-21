@@ -74,9 +74,18 @@ export function ProfileUpdateDialog({ open, onOpenChange, onSuccess }: ProfileUp
       onOpenChange(false);
       onSuccess();
     } catch (error: any) {
+      let errorMessage = "Failed to update profile";
+      
+      // Check for uniqueness constraint violation
+      if (error.code === '23505' && error.message.includes('profiles_display_name_unique')) {
+        errorMessage = "This display name is already taken. Please choose a different one.";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Error",
-        description: error.message || "Failed to update profile",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
