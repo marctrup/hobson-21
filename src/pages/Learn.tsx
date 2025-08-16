@@ -2274,7 +2274,7 @@ const Learn = () => {
                       }}
                       className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
                         activeHorizontalTab === tab.id && !isGlobalPageActive
-                          ? 'border-primary text-primary'
+                          ? 'border-pink-500 text-pink-600'
                           : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'
                       }`}
                     >
