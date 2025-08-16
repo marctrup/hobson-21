@@ -177,7 +177,7 @@ const FeatureRequests = () => {
                       onClick={() => setActiveFilter(filter.id)}
                       className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
                         activeFilter === filter.id
-                          ? 'bg-primary text-primary-foreground'
+                          ? 'bg-filter-active text-filter-active-foreground'
                           : 'text-muted-foreground hover:text-foreground hover:bg-accent'
                       }`}
                     >

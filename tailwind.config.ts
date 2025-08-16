@@ -50,6 +50,10 @@ export default {
 					DEFAULT: 'hsl(var(--accent))',
 					foreground: 'hsl(var(--accent-foreground))'
 				},
+				filter: {
+					active: 'hsl(var(--filter-active))',
+					'active-foreground': 'hsl(var(--filter-active-foreground))'
+				},
 				popover: {
 					DEFAULT: 'hsl(var(--popover))',
 					foreground: 'hsl(var(--popover-foreground))'

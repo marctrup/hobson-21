@@ -52,6 +52,10 @@ All colors MUST be HSL.
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 269 91% 52%;
+    
+    /* Filter button highlighting - lighter, less purple */
+    --filter-active: 220 70% 70%;
+    --filter-active-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
