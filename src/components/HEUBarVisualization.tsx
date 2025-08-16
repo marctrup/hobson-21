@@ -19,7 +19,14 @@ export const HEUBarVisualization: React.FC<HEUBarVisualizationProps> = ({
     <div className={`bg-card border border-border rounded-lg p-6 ${className}`}>
       <div className="space-y-4">
         <div className="flex justify-between items-center text-sm">
-          <span className="text-muted-foreground">HEU Usage This Period</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src="/lovable-uploads/3e86ba63-c616-4cf5-883f-237b6295efcd.png" 
+              alt="HEU Coin" 
+              className="w-6 h-6 object-contain"
+            />
+            <span className="text-muted-foreground">HEU Usage This Period</span>
+          </div>
           <span className="font-medium text-foreground">
             {usedHEUs} / {totalHEUs} HEUs used
           </span>
@@ -39,8 +46,17 @@ export const HEUBarVisualization: React.FC<HEUBarVisualizationProps> = ({
             style={{ width: `${remainingPercentage}%` }}
           />
           
+          {/* HEU Coin overlay on the bar */}
+          <div className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10">
+            <img 
+              src="/lovable-uploads/3e86ba63-c616-4cf5-883f-237b6295efcd.png" 
+              alt="HEU Coin" 
+              className="w-5 h-5 object-contain opacity-80"
+            />
+          </div>
+          
           {/* Labels inside the bar */}
-          <div className="absolute inset-0 flex items-center justify-between px-3 text-xs font-medium text-white">
+          <div className="absolute inset-0 flex items-center justify-between px-8 text-xs font-medium text-white">
             {usedPercentage > 15 && (
               <span className="text-white">Used: {usedHEUs}</span>
             )}
@@ -62,18 +78,25 @@ export const HEUBarVisualization: React.FC<HEUBarVisualizationProps> = ({
           </div>
         </div>
         
-        {/* Additional Info */}
+        {/* Additional Info with HEU coin */}
         <div className="pt-2 border-t border-border">
           <div className="grid grid-cols-3 gap-4 text-center text-sm">
-            <div>
+            <div className="flex flex-col items-center">
               <div className="font-medium text-foreground">{usedHEUs}</div>
               <div className="text-muted-foreground">Used</div>
             </div>
-            <div>
-              <div className="font-medium text-foreground">{remainingHEUs}</div>
+            <div className="flex flex-col items-center">
+              <div className="flex items-center gap-1">
+                <img 
+                  src="/lovable-uploads/3e86ba63-c616-4cf5-883f-237b6295efcd.png" 
+                  alt="HEU Coin" 
+                  className="w-4 h-4 object-contain"
+                />
+                <span className="font-medium text-foreground">{remainingHEUs}</span>
+              </div>
               <div className="text-muted-foreground">Remaining</div>
             </div>
-            <div>
+            <div className="flex flex-col items-center">
               <div className="font-medium text-foreground">{totalHEUs}</div>
               <div className="text-muted-foreground">Total Monthly</div>
             </div>
