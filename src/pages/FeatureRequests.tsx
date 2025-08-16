@@ -501,33 +501,39 @@ const FeatureRequests = () => {
                          onClick={() => handlePostClick(post)}
                        >
                          {/* Vote Button - Top Right */}
-                         <div className="absolute top-4 right-4 flex flex-col items-center gap-1">
-                           <button 
-                             className="p-2 hover:bg-accent rounded-lg transition-all duration-200 group"
-                             onClick={() => handleVote(post.id)}
-                             disabled={!user}
-                           >
-                             <ThumbsUp className={`w-4 h-4 transition-all duration-200 ${
-                               user ? 'text-yellow-500 group-hover:text-yellow-400 group-hover:scale-110' : 'text-yellow-300'
-                             }`} />
-                           </button>
-                           <span className="text-sm font-medium text-foreground min-w-[16px] text-center transition-all duration-200">
-                             {post.votes}
-                           </span>
-                         </div>
+                          <div className="absolute top-4 right-4 flex flex-col items-center gap-1">
+                            <button 
+                              className="p-2 hover:bg-accent rounded-lg transition-all duration-200 group"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleVote(post.id);
+                              }}
+                              disabled={!user}
+                            >
+                              <ThumbsUp className={`w-4 h-4 transition-all duration-200 ${
+                                user ? 'text-yellow-500 group-hover:text-yellow-400 group-hover:scale-110' : 'text-yellow-300'
+                              }`} />
+                            </button>
+                            <span className="text-sm font-medium text-foreground min-w-[16px] text-center transition-all duration-200">
+                              {post.votes}
+                            </span>
+                          </div>
                          
-                         {/* Delete Button - Bottom Right */}
-                         {user && user.id === post.author_id && (
-                           <div className="absolute bottom-4 right-4">
-                             <button
-                               onClick={() => handleDeletePost(post.id)}
-                               className="p-2 hover:bg-destructive/10 hover:text-destructive rounded-lg transition-colors"
-                               title="Delete post"
-                             >
-                               <Trash2 className="w-4 h-4" />
-                             </button>
-                           </div>
-                         )}
+                          {/* Delete Button - Bottom Right */}
+                          {user && user.id === post.author_id && (
+                            <div className="absolute bottom-4 right-4">
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleDeletePost(post.id);
+                                }}
+                                className="p-2 hover:bg-destructive/10 hover:text-destructive rounded-lg transition-colors"
+                                title="Delete post"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          )}
 
                          {/* Content */}
                          <div className="pr-16">
