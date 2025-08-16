@@ -236,7 +236,7 @@ const Learn = () => {
                       <div>
                         <h3 className="text-lg font-medium text-foreground mb-3">Essential plan</h3>
                         <ul className="text-muted-foreground space-y-2">
-                          <li>• 5 daily credits up to a maximum of 150 per month</li>
+                          <li>• 1 daily HEU (Hobson Energy Unit) up to a maximum of 20 per month</li>
                           <li>• Monthly credits depending on your plan</li>
                           <li>• Workspace collaboration with unlimited members</li>
                           <li>• Workspace roles and permissions</li>
