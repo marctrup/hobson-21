@@ -96,7 +96,6 @@ const Learn = () => {
     { id: 'introduction', label: 'Introduction', icon: Book },
     { id: 'features', label: 'Features', icon: Lightbulb },
     { id: 'integrations', label: 'Integrations', icon: Puzzle },
-    { id: 'tips-tricks', label: 'Tips & tricks', icon: Wand2 },
     { id: 'prompt-engineering', label: 'Prompt Engineering', icon: Users },
     { id: 'use-cases', label: 'Use Cases', icon: Library },
     { id: 'glossary', label: 'Glossary', icon: FileText },
