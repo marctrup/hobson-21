@@ -163,9 +163,6 @@ const Learn = () => {
       case 'glossary':
         return [
           { id: 'hobson-glossary', label: 'Hobson Glossary', icon: FileText },
-          { id: 'terms-definitions', label: 'Terms & Definitions', icon: Book },
-          { id: 'acronyms', label: 'Acronyms', icon: Wand2 },
-          { id: 'technical-terms', label: 'Technical Terms', icon: Users },
         ];
       case 'changelog':
         return [
