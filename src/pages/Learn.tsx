@@ -345,12 +345,12 @@ const Learn = () => {
                       <div>
                         <h3 className="text-lg font-medium text-foreground mb-2">Cancellation:</h3>
                         <p className="text-muted-foreground">
-                          Upon cancellation of a paid subscription, all unused and rollover credits will expire at the end of the current billing period and will not carry over.
+                          Upon cancellation of a paid subscription, all unused and rollover HEUs will expire at the end of the current billing period and will not carry over.
                         </p>
                       </div>
 
                       <p className="text-muted-foreground">
-                        Daily credits do not roll over. Unused daily credits will not accumulate from day to day for the free tier or for the paid tiers.
+                        Daily HEUs do not roll over. Unused daily HEUs will not accumulate from day to day for the free tier or for the paid tiers.
                       </p>
 
                       <p className="text-muted-foreground">
