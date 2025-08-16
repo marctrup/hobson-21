@@ -245,7 +245,7 @@ const Learn = () => {
                       </div>
 
                       <div>
-                        <h3 className="text-lg font-medium text-foreground mb-3">Business plan</h3>
+                        <h3 className="text-lg font-medium text-foreground mb-3">Essential Plus</h3>
                         <ul className="text-muted-foreground space-y-2">
                           <li>• Everything in Pro, plus:</li>
                           <li>• SSO</li>
