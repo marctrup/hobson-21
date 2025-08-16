@@ -468,45 +468,57 @@ const FeatureRequests = () => {
                     const categoryInfo = categoryLabels[post.category] || { label: post.category, emoji: '📝' };
                     
                     return (
-                      <div key={post.id} className="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow relative">
-                        {/* Vote Button - Top Right */}
-                        <div className="absolute top-4 right-4 flex flex-col items-center gap-1">
-                          <button 
-                            className="p-2 hover:bg-accent rounded-lg transition-all duration-200 group"
-                            onClick={() => handleVote(post.id)}
-                            disabled={!user}
-                          >
-                            <ThumbsUp className={`w-4 h-4 transition-all duration-200 ${
-                              user ? 'text-muted-foreground group-hover:text-primary group-hover:scale-110' : 'text-muted-foreground/50'
-                            }`} />
-                          </button>
-                          <span className="text-sm font-medium text-foreground min-w-[16px] text-center transition-all duration-200">
-                            {post.votes}
-                          </span>
-                        </div>
+                       <div key={post.id} className="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow relative">
+                         {/* Vote Button and Delete Button - Top Right */}
+                         <div className="absolute top-4 right-4 flex flex-col items-center gap-3">
+                           <div className="flex flex-col items-center gap-1">
+                             <button 
+                               className="p-2 hover:bg-accent rounded-lg transition-all duration-200 group"
+                               onClick={() => handleVote(post.id)}
+                               disabled={!user}
+                             >
+                               <ThumbsUp className={`w-4 h-4 transition-all duration-200 ${
+                                 user ? 'text-muted-foreground group-hover:text-primary group-hover:scale-110' : 'text-muted-foreground/50'
+                               }`} />
+                             </button>
+                             <span className="text-sm font-medium text-foreground min-w-[16px] text-center transition-all duration-200">
+                               {post.votes}
+                             </span>
+                           </div>
+                           
+                           {user && user.id === post.author_id && (
+                             <button
+                               onClick={() => handleDeletePost(post.id)}
+                               className="p-2 hover:bg-destructive/10 hover:text-destructive rounded-lg transition-colors"
+                               title="Delete post"
+                             >
+                               <Trash2 className="w-4 h-4" />
+                             </button>
+                           )}
+                         </div>
 
-                        {/* Content */}
-                        <div className="pr-16">
-                          <div className="flex items-center gap-2 mb-2">
-                            <Badge variant="secondary" className="flex items-center gap-1">
-                              <span>{categoryInfo.emoji}</span>
-                              <span>{categoryInfo.label}</span>
-                            </Badge>
-                          </div>
-                            
-                            <h3 
-                              className="text-lg font-semibold text-foreground mb-2 hover:text-primary cursor-pointer"
-                              onClick={() => handlePostClick(post)}
-                            >
-                              {post.title}
-                            </h3>
-                            
-                            {post.description && (
-                              <p className="text-muted-foreground mb-3 line-clamp-3">
-                                {post.description}
-                              </p>
-                            )}
-                            
+                         {/* Content */}
+                         <div className="pr-16">
+                           <div className="flex items-center gap-2 mb-2">
+                             <Badge variant="secondary" className="flex items-center gap-1">
+                               <span>{categoryInfo.emoji}</span>
+                               <span>{categoryInfo.label}</span>
+                             </Badge>
+                           </div>
+                             
+                             <h3 
+                               className="text-lg font-semibold text-foreground mb-2 hover:text-primary cursor-pointer"
+                               onClick={() => handlePostClick(post)}
+                             >
+                               {post.title}
+                             </h3>
+                             
+                             {post.description && (
+                               <p className="text-muted-foreground mb-3 line-clamp-3">
+                                 {post.description}
+                               </p>
+                             )}
+                             
                              <div className="flex items-center gap-2 text-sm text-muted-foreground">
                                <User className="w-4 h-4" />
                                <span>{post.author_name}</span>
@@ -520,19 +532,9 @@ const FeatureRequests = () => {
                                    <span>{post.comment_count[0].count}</span>
                                  </div>
                                )}
-                               
-                               {user && user.id === post.author_id && (
-                                 <button
-                                   onClick={() => handleDeletePost(post.id)}
-                                   className="ml-auto p-1 hover:bg-destructive/10 hover:text-destructive rounded transition-colors"
-                                   title="Delete post"
-                                 >
-                                   <Trash2 className="w-4 h-4" />
-                                 </button>
-                               )}
                              </div>
-                          </div>
-                        </div>
+                         </div>
+                       </div>
                       );
                     })}
                   </div>
