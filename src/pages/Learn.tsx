@@ -51,7 +51,7 @@ const Learn = () => {
         if (activeVerticalTab === 'fundamentals') {
           tocSections = ['what-is-prompting', 'why-prompting-matters', 'how-hobson-thinks', 'clear-method', 'advanced-tactics'];
         } else if (activeVerticalTab === 'advanced-prompting') {
-          tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building', 'market-context', 'lending-finance'];
+          tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building', 'market-context'];
         } else if (activeVerticalTab === 'debugging-prompts') {
           tocSections = ['quick-fixes', 'deep-reviews', 'fragile-areas', 'performance-issues', 'persistent-problems', 'debugging-flows', 'root-cause', 'pro-tips'];
         }
@@ -1422,7 +1422,6 @@ const Learn = () => {
         { id: 'risk-compliance', label: 'Identifying Risks & Issues' },
         { id: 'report-building', label: 'Creating Reports & Dashboards' },
         { id: 'market-context', label: 'Adding Context & Insight' },
-        { id: 'lending-finance', label: 'Explaining & Stress-Testing' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -1606,29 +1605,6 @@ const Learn = () => {
                           </AccordionContent>
                         </AccordionItem>
 
-                        <AccordionItem value="lending-finance" id="lending-finance">
-                          <AccordionTrigger className="text-lg font-semibold">7. Explaining & Stress-Testing</AccordionTrigger>
-                          <AccordionContent className="space-y-4">
-                            <div className="space-y-4">
-                              <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To simplify complex terms or test "what if" scenarios.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to explain terms, calculate impacts, or run stress scenarios.</p>
-                              </div>
-                              
-                              <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts:</h5>
-                                <div className="space-y-2 text-sm">
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Summarise the key terms of this loan facility, including covenants, repayment terms, and interest cover."
-                                  </div>
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "If rental income drops by 10%, what impact would this have on loan cover ratios?"
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
 
                         <AccordionItem value="market-context" id="market-context">
                           <AccordionTrigger className="text-lg font-semibold">6. Market Context & Insights</AccordionTrigger>
