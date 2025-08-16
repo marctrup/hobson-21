@@ -1,17 +1,24 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X } from 'lucide-react';
+import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X, Plus } from 'lucide-react';
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HEUBarVisualization } from '@/components/HEUBarVisualization';
+import { useAuth } from '@/hooks/useAuth';
+import { AuthDialog } from '@/components/features/AuthDialog';
+import { CreatePostDialog } from '@/components/features/CreatePostDialog';
+import { Button } from '@/components/ui/button';
 
 const Learn = () => {
+  const { user } = useAuth();
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTocSection, setActiveTocSection] = useState('getting-started');
+  const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
+  const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
 
   // Set initial active section based on current tab
   useEffect(() => {
@@ -174,6 +181,18 @@ const Learn = () => {
   };
 
   const currentVerticalTabs = [...staticVerticalTabs, ...getContextualVerticalTabs(activeHorizontalTab)];
+
+  const handleCreatePost = () => {
+    if (!user) {
+      setIsAuthDialogOpen(true);
+    } else {
+      setIsCreatePostDialogOpen(true);
+    }
+  };
+
+  const handleAuthSuccess = () => {
+    setIsCreatePostDialogOpen(true);
+  };
 
   const renderContent = () => {
     // Check if it's the feature requests page - redirect to dedicated page
@@ -2032,13 +2051,21 @@ const Learn = () => {
                 {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
               
-              <nav className="hidden md:flex items-center gap-6">
+               <nav className="hidden md:flex items-center gap-6">
                 <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </a>
                 <a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact
                 </a>
+                <Button 
+                  onClick={handleCreatePost}
+                  className="gap-2"
+                  size="sm"
+                >
+                  <Plus className="w-4 h-4" />
+                  Create Post
+                </Button>
               </nav>
             </div>
           </div>
@@ -2283,6 +2310,22 @@ const Learn = () => {
           </div>
         </div>
       </div>
+
+      {/* Auth Dialog */}
+      <AuthDialog
+        open={isAuthDialogOpen}
+        onOpenChange={setIsAuthDialogOpen}
+        onSuccess={handleAuthSuccess}
+      />
+
+      {/* Create Post Dialog */}
+      <CreatePostDialog
+        open={isCreatePostDialogOpen}
+        onOpenChange={setIsCreatePostDialogOpen}
+        onPostCreated={() => {
+          setIsCreatePostDialogOpen(false);
+        }}
+      />
     </>
   );
 };
