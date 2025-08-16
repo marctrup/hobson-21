@@ -26,16 +26,23 @@ const Learn = () => {
 
   // Scroll spy effect - moved to top level to avoid hook order issues
   useEffect(() => {
+    let tocSections: string[] = [];
+    
     // Only run scroll spy for pages that have table of contents
     if ((activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') || 
-        (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits')) {
+        (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals')) {
       
-      let tocSections: string[] = [];
-      
-      if (activeVerticalTab === 'faq') {
-        tocSections = ['getting-started', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
-      } else if (activeVerticalTab === 'plans-credits') {
-        tocSections = ['overview', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
+      if (activeHorizontalTab === 'introduction') {
+        if (activeVerticalTab === 'faq') {
+          tocSections = ['getting-started', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
+        } else if (activeVerticalTab === 'plans-credits') {
+          tocSections = ['overview', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
+        }
+      } else if (activeHorizontalTab === 'prompt-engineering') {
+        if (activeVerticalTab === 'fundamentals') {
+          tocSections = ['what-is-prompting', 'why-prompting-matters', 'how-hobson-thinks', 'clear-method', 'advanced-tactics'];
+        }
       }
 
       const handleScroll = () => {
