@@ -219,13 +219,6 @@ const Learn = () => {
                       <p className="text-muted-foreground mb-4">
                         Hobson is a subscription based service with a free plan and several paid plans. When you pay for a subscription you get access to more additional support, and more HEUs (Hobsons Energy units - the currency used to buy effort). You need HEUs to interact with Hobson.
                       </p>
-                      <div className="mb-6">
-                        <img 
-                          src="/lovable-uploads/5ffb0ad5-ca33-4cfe-9b77-69c4500fffcb.png" 
-                          alt="HEU Coin - Hobson's Energy Unit currency" 
-                          className="w-20 h-20 object-contain drop-shadow-md"
-                        />
-                      </div>
                     </div>
                   </section>
 
