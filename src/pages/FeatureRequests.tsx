@@ -191,6 +191,12 @@ const FeatureRequests = () => {
         description: "Your post has been successfully deleted.",
       });
 
+      // Close post detail dialog if it's open for this post
+      if (selectedPost?.id === postId) {
+        setShowPostDetail(false);
+        setSelectedPost(null);
+      }
+
       fetchPosts(); // Refresh the posts
     } catch (error: any) {
       toast({
