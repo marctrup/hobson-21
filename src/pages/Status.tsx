@@ -158,10 +158,6 @@ const Status = () => {
             </p>
             
             <div className="flex items-center justify-center gap-4">
-              <Button variant="outline" className="gap-2">
-                <Clock className="w-4 h-4" />
-                View History
-              </Button>
               <div className="flex items-center gap-2">
                 <Input
                   type="email"
@@ -212,19 +208,15 @@ const Status = () => {
             </div>
           </Card>
 
-
-          {/* Footer */}
-          <div className="text-center mt-8 pt-6 border-t border-border">
-            <p className="text-sm text-muted-foreground mb-2">
-              Need help? Contact our support team
-            </p>
-            <Button variant="link" className="gap-2" asChild>
-              <Link to="/contact">
-                Contact Support
-                <ExternalLink className="w-4 h-4" />
-              </Link>
+          {/* View History Button */}
+          <div className="flex justify-center mb-8">
+            <Button variant="outline" className="gap-2">
+              <Clock className="w-4 h-4" />
+              View History
             </Button>
           </div>
+
+
         </div>
       </div>
     </>
