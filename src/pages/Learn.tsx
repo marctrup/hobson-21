@@ -215,17 +215,21 @@ const Learn = () => {
                   {/* Overview */}
                   <section id="overview">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Overview</h2>
-                    <div className="text-center mb-6">
-                      <img 
-                        src="/lovable-uploads/5ffb0ad5-ca33-4cfe-9b77-69c4500fffcb.png" 
-                        alt="HEU Coin - Hobson's Energy Unit currency" 
-                        className="w-20 h-20 object-contain drop-shadow-md mx-auto"
-                      />
-                    </div>
                     <div className="prose prose-gray max-w-none">
-                      <p className="text-muted-foreground mb-4">
-                        Hobson is a subscription based service with a free plan and several paid plans. When you pay for a subscription you get access to more additional support, and more HEUs (Hobsons Energy units - the currency used to buy effort). You need HEUs to interact with Hobson.
-                      </p>
+                      <div className="flex items-start gap-6 mb-4">
+                        <div className="flex-1">
+                          <p className="text-muted-foreground">
+                            Hobson is a subscription based service with a free plan and several paid plans. When you pay for a subscription you get access to more additional support, and more HEUs (Hobsons Energy units - the currency used to buy effort). You need HEUs to interact with Hobson.
+                          </p>
+                        </div>
+                        <div className="flex-shrink-0">
+                          <img 
+                            src="/lovable-uploads/5ffb0ad5-ca33-4cfe-9b77-69c4500fffcb.png" 
+                            alt="HEU Coin - Hobson's Energy Unit currency" 
+                            className="w-20 h-20 object-contain drop-shadow-md"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </section>
 
