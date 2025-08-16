@@ -141,21 +141,23 @@ const FeatureRequests = () => {
                       {filter.label}
                     </button>
                   ))}
+                </div>
+                
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                    <Input
+                      placeholder="Search"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10 w-64"
+                    />
+                  </div>
                   
-                  <Button size="sm" className="ml-4">
+                  <Button size="sm">
                     <Plus className="w-4 h-4 mr-2" />
                     Create A New Post
                   </Button>
-                </div>
-                
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                  <Input
-                    placeholder="Search"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10 w-64"
-                  />
                 </div>
               </div>
 
