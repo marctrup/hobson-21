@@ -611,10 +611,11 @@ const FeatureRequests = () => {
           onSuccess={handlePostCreated}
         />
         
-        <PostDetailDialog
-          open={showPostDetail}
-          onOpenChange={setShowPostDetail}
+        <PostDetailDialog 
+          open={showPostDetail} 
+          onOpenChange={setShowPostDetail} 
           post={selectedPost}
+          onCommentChange={fetchPosts}
         />
         
         <AuthDialog

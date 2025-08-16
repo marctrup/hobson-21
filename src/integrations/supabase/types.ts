@@ -203,7 +203,15 @@ export type Database = {
           user_id?: string
           votes?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "feature_request_comments_parent_comment_id_fkey"
+            columns: ["parent_comment_id"]
+            isOneToOne: false
+            referencedRelation: "feature_request_comments"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       feature_request_votes: {
         Row: {

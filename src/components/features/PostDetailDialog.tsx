@@ -58,6 +58,7 @@ interface PostDetailDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   post: Post | null;
+  onCommentChange?: () => void;
 }
 
 const categoryLabels: Record<string, { label: string; emoji: string }> = {
@@ -68,7 +69,7 @@ const categoryLabels: Record<string, { label: string; emoji: string }> = {
   'bug-hunting': { label: 'Bug Hunting', emoji: '🐛' },
 };
 
-export function PostDetailDialog({ open, onOpenChange, post }: PostDetailDialogProps) {
+export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: PostDetailDialogProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
@@ -176,6 +177,8 @@ export function PostDetailDialog({ open, onOpenChange, post }: PostDetailDialogP
       reset();
       setReplyingTo(null);
       fetchComments();
+      // Notify parent component to refresh comment count
+      onCommentChange?.();
     } catch (error: any) {
       toast({
         title: "Error",
@@ -228,6 +231,8 @@ export function PostDetailDialog({ open, onOpenChange, post }: PostDetailDialogP
 
       fetchComments();
       setOpenDropdowns(new Set());
+      // Notify parent component to refresh comment count
+      onCommentChange?.();
     } catch (error: any) {
       toast({
         title: "Error",
