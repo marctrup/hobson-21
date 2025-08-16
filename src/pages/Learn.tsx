@@ -58,7 +58,7 @@ const Learn = () => {
       }
 
       const handleScroll = () => {
-        const scrollPosition = window.scrollY + 100; // offset for header
+        const scrollPosition = window.scrollY + 150; // offset for header and better accuracy
 
         for (let i = tocSections.length - 1; i >= 0; i--) {
           const element = document.getElementById(tocSections[i]);
@@ -69,10 +69,19 @@ const Learn = () => {
         }
       };
 
+      const handleClick = () => {
+        // Re-run scroll detection after any click to ensure proper highlighting
+        setTimeout(handleScroll, 100);
+      };
+
       window.addEventListener('scroll', handleScroll);
+      window.addEventListener('click', handleClick);
       handleScroll(); // Set initial active section
 
-      return () => window.removeEventListener('scroll', handleScroll);
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('click', handleClick);
+      };
     }
   }, [activeHorizontalTab, activeVerticalTab]);
 
