@@ -237,13 +237,6 @@ const Learn = () => {
                         <h3 className="text-lg font-medium text-foreground mb-3">Essential plan</h3>
                         <ul className="text-muted-foreground space-y-2">
                           <li>• 1 daily HEU (Hobson Energy Unit) up to a maximum of 20 per month</li>
-                          <li>• Monthly credits depending on your plan</li>
-                          <li>• Workspace collaboration with unlimited members</li>
-                          <li>• Workspace roles and permissions</li>
-                          <li>• Private projects</li>
-                          <li>• Ability to connect custom domains to your Lovable projects</li>
-                          <li>• Ability to remove the "Edit with Lovable" badge from your Lovable projects</li>
-                          <li>• Access to Code mode to edit code directly inside of Lovable</li>
                         </ul>
                       </div>
 
