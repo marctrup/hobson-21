@@ -273,7 +273,7 @@ const Learn = () => {
                   <section id="credit-display">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit display</h2>
                     <p className="text-muted-foreground mb-4">
-                      To view how many credits you have or have used, simply press your workspace name on the main dashboard or the project name when inside the project editor. You'll see how many credits you have left this billing period, as well as the credit bar. The credit bar provides a visual representation of how many credits a user has remaining and how many have been used.
+                      The credit bar provides a visual representation of how many credits a user has remaining and how many have been used.
                     </p>
                     <ul className="text-muted-foreground space-y-2">
                       <li>• <strong>Grey part:</strong> Shows the amount of credits already used this billing period.</li>
