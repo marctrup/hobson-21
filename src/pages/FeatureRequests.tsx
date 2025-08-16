@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { 
@@ -21,10 +21,22 @@ import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.pn
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
+import { CreatePostDialog } from '@/components/features/CreatePostDialog';
+import { AuthDialog } from '@/components/features/AuthDialog';
+import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 const FeatureRequests = () => {
   const [activeFilter, setActiveFilter] = useState('new');
   const [searchQuery, setSearchQuery] = useState('');
+  const [showCreateDialog, setShowCreateDialog] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [posts, setPosts] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  const { user, isLoading: authLoading } = useAuth();
+  const { toast } = useToast();
 
   const filters = [
     { id: 'new', label: 'New' },
@@ -38,8 +50,8 @@ const FeatureRequests = () => {
     { id: 'integrations', label: 'Integrations', icon: Puzzle, emoji: '🧩' },
     { id: 'questions', label: 'Questions', icon: HelpCircle, emoji: '⁉️' },
     { id: 'bug-hunting', label: 'Bug Hunting', icon: Bug, emoji: '🐛' },
-    { id: 'lovable-project', label: 'Lovable Project', icon: Trophy, emoji: '' },
-    { id: 'ama', label: 'AMA', icon: MessageSquare, emoji: '' },
+    { id: 'lovable-project', label: 'Lovable Project', icon: Trophy, emoji: '🏆' },
+    { id: 'ama', label: 'AMA', icon: MessageSquare, emoji: '💬' },
   ];
 
   const leaderboard = [
@@ -51,41 +63,85 @@ const FeatureRequests = () => {
     { rank: 6, name: 'Mat', points: 485, emoji: '6' },
   ];
 
-  const posts = [
-    {
-      id: 1,
-      title: "Can't refresh or delete the text, so I can't use the product",
-      author: "Henrik Johannessen",
-      timeAgo: "1 day ago",
-      category: "bug-hunting",
-      categoryLabel: "Bug Hunting",
-      categoryEmoji: "🐛",
-      votes: 1,
-      description: ""
-    },
-    {
-      id: 2,
-      title: "SEO is a fairytale with lovable built websites.",
-      author: "Jiffri Khan",
-      timeAgo: "1 day ago",
-      category: "feature-request",
-      categoryLabel: "Feature Request",
-      categoryEmoji: "💡",
-      votes: 2,
-      description: "Is it possible to integrate Next.js into lovable? Such that users can choose between creating a create react app or a next.js app, cause the core function of a website is SEO, and currently lovables create react only framework is really really a disappointment. So it possible to fix this issue? Preferably with Next.js integration."
-    },
-    {
-      id: 3,
-      title: "Show unique website visitors 🙋",
-      author: "Ellinor Axelsson",
-      timeAgo: "1 day ago",
-      category: "feature-request",
-      categoryLabel: "Feature Request",
-      categoryEmoji: "💡",
-      votes: 1,
-      description: "Not only total number of visitors"
+  const categoryLabels: Record<string, { label: string; emoji: string }> = {
+    feedback: { label: 'Feedback', emoji: '📣' },
+    'feature-request': { label: 'Feature Request', emoji: '💡' },
+    integrations: { label: 'Integrations', emoji: '🧩' },
+    questions: { label: 'Questions', emoji: '⁉️' },
+    'bug-hunting': { label: 'Bug Hunting', emoji: '🐛' },
+    'lovable-project': { label: 'Lovable Project', emoji: '🏆' },
+    ama: { label: 'AMA', emoji: '💬' },
+  };
+
+  // Fetch posts from database
+  const fetchPosts = async () => {
+    setIsLoading(true);
+    try {
+      let query = supabase
+        .from('feature_requests')
+        .select('*');
+
+      // Apply sorting based on filter
+      if (activeFilter === 'new') {
+        query = query.order('created_at', { ascending: false });
+      } else if (activeFilter === 'top') {
+        query = query.order('votes', { ascending: false });
+      } else if (activeFilter === 'trending') {
+        // For trending, we'll use a combination of votes and recency
+        query = query.order('votes', { ascending: false }).order('created_at', { ascending: false });
+      }
+
+      // Apply search filter
+      if (searchQuery) {
+        query = query.or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`);
+      }
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+      setPosts(data || []);
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: "Failed to load posts",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-  ];
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, [activeFilter, searchQuery]);
+
+  const handleCreatePost = () => {
+    if (!user) {
+      setShowAuthDialog(true);
+    } else {
+      setShowCreateDialog(true);
+    }
+  };
+
+  const handleAuthSuccess = () => {
+    setShowCreateDialog(true);
+  };
+
+  const handlePostCreated = () => {
+    fetchPosts(); // Refresh the posts
+  };
+
+  const formatTimeAgo = (dateString: string) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
+    
+    if (diffInHours < 1) return 'Less than an hour ago';
+    if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+    
+    const diffInDays = Math.floor(diffInHours / 24);
+    return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+  };
 
   return (
     <>
@@ -154,7 +210,7 @@ const FeatureRequests = () => {
                     />
                   </div>
                   
-                  <Button size="sm">
+                  <Button size="sm" onClick={handleCreatePost}>
                     <Plus className="w-4 h-4 mr-2" />
                     Create A New Post
                   </Button>
@@ -162,48 +218,76 @@ const FeatureRequests = () => {
               </div>
 
               {/* Posts */}
-              <div className="space-y-4">
-                {posts.map((post) => (
-                  <div key={post.id} className="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
-                    <div className="flex items-start gap-4">
-                      {/* Vote Button */}
-                      <div className="flex flex-col items-center gap-1">
-                        <button className="p-2 hover:bg-accent rounded-lg transition-colors">
-                          <ThumbsUp className="w-4 h-4 text-muted-foreground" />
-                        </button>
-                        <span className="text-sm font-medium text-foreground">{post.votes}</span>
-                      </div>
-
-                      {/* Content */}
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge variant="secondary" className="flex items-center gap-1">
-                            <span>{post.categoryEmoji}</span>
-                            <span>{post.categoryLabel}</span>
-                          </Badge>
-                        </div>
-                        
-                        <h3 className="text-lg font-semibold text-foreground mb-2 hover:text-primary cursor-pointer">
-                          {post.title}
-                        </h3>
-                        
-                        {post.description && (
-                          <p className="text-muted-foreground mb-3 line-clamp-3">
-                            {post.description}
-                          </p>
-                        )}
-                        
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                          <User className="w-4 h-4" />
-                          <span>{post.author}</span>
-                          <Calendar className="w-4 h-4 ml-2" />
-                          <span>{post.timeAgo}</span>
+              {isLoading ? (
+                <div className="space-y-4">
+                  {[...Array(3)].map((_, index) => (
+                    <div key={index} className="bg-card border border-border rounded-lg p-6 animate-pulse">
+                      <div className="flex items-start gap-4">
+                        <div className="w-8 h-16 bg-muted rounded"></div>
+                        <div className="flex-1 space-y-2">
+                          <div className="h-4 bg-muted rounded w-20"></div>
+                          <div className="h-6 bg-muted rounded w-3/4"></div>
+                          <div className="h-4 bg-muted rounded w-1/2"></div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : posts.length === 0 ? (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">No posts found</p>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {searchQuery ? 'Try adjusting your search' : 'Be the first to create a post!'}
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {posts.map((post) => {
+                    const categoryInfo = categoryLabels[post.category] || { label: post.category, emoji: '📝' };
+                    
+                    return (
+                      <div key={post.id} className="bg-card border border-border rounded-lg p-6 hover:shadow-md transition-shadow">
+                        <div className="flex items-start gap-4">
+                          {/* Vote Button */}
+                          <div className="flex flex-col items-center gap-1">
+                            <button className="p-2 hover:bg-accent rounded-lg transition-colors">
+                              <ThumbsUp className="w-4 h-4 text-muted-foreground" />
+                            </button>
+                            <span className="text-sm font-medium text-foreground">{post.votes}</span>
+                          </div>
+
+                          {/* Content */}
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge variant="secondary" className="flex items-center gap-1">
+                                <span>{categoryInfo.emoji}</span>
+                                <span>{categoryInfo.label}</span>
+                              </Badge>
+                            </div>
+                            
+                            <h3 className="text-lg font-semibold text-foreground mb-2 hover:text-primary cursor-pointer">
+                              {post.title}
+                            </h3>
+                            
+                            {post.description && (
+                              <p className="text-muted-foreground mb-3 line-clamp-3">
+                                {post.description}
+                              </p>
+                            )}
+                            
+                            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                              <User className="w-4 h-4" />
+                              <span>{post.author_name}</span>
+                              <Calendar className="w-4 h-4 ml-2" />
+                              <span>{formatTimeAgo(post.created_at)}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
 
             {/* Right Sidebar */}
@@ -245,6 +329,19 @@ const FeatureRequests = () => {
             </div>
           </div>
         </div>
+
+        {/* Dialogs */}
+        <CreatePostDialog 
+          open={showCreateDialog}
+          onOpenChange={setShowCreateDialog}
+          onPostCreated={handlePostCreated}
+        />
+        
+        <AuthDialog
+          open={showAuthDialog}
+          onOpenChange={setShowAuthDialog}
+          onSuccess={handleAuthSuccess}
+        />
       </div>
     </>
   );
