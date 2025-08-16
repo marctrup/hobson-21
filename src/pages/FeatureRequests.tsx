@@ -16,7 +16,8 @@ import {
   Calendar,
   ThumbsUp,
   ArrowLeft,
-  Settings
+  Settings,
+  Trash2
 } from 'lucide-react';
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import { Button } from '@/components/ui/button';
@@ -119,6 +120,43 @@ const FeatureRequests = () => {
 
   const handlePostCreated = () => {
     fetchPosts(); // Refresh the posts
+  };
+
+  const handleDeletePost = async (postId: string) => {
+    if (!user) {
+      toast({
+        title: "Authentication required",
+        description: "Please sign in to delete posts.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!confirm("Are you sure you want to delete this post? This action cannot be undone.")) {
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('feature_requests')
+        .delete()
+        .eq('id', postId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Post deleted",
+        description: "Your post has been successfully deleted.",
+      });
+
+      fetchPosts(); // Refresh the posts
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete post",
+        variant: "destructive",
+      });
+    }
   };
 
   const formatTimeAgo = (dateString: string) => {
@@ -276,6 +314,16 @@ const FeatureRequests = () => {
                               <span>{post.author_name}</span>
                               <Calendar className="w-4 h-4 ml-2" />
                               <span>{formatTimeAgo(post.created_at)}</span>
+                              
+                              {user && user.id === post.author_id && (
+                                <button
+                                  onClick={() => handleDeletePost(post.id)}
+                                  className="ml-auto p-1 hover:bg-destructive/10 hover:text-destructive rounded transition-colors"
+                                  title="Delete post"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              )}
                             </div>
                           </div>
                         </div>
