@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X } from 'lucide-react';
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { HEUBarVisualization } from '@/components/HEUBarVisualization';
 
 const Learn = () => {
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
@@ -275,10 +276,13 @@ const Learn = () => {
                     <p className="text-muted-foreground mb-4">
                       The HEU bar provides a visual representation of how many HEUs a user has remaining and how many have been used.
                     </p>
-                    <ul className="text-muted-foreground space-y-2">
+                    <ul className="text-muted-foreground space-y-2 mb-6">
                       <li>• <strong>Grey part:</strong> Shows the amount of HEUs already used this billing period.</li>
                       <li>• <strong>Blue parts:</strong> Shows the remaining HEUs.</li>
                     </ul>
+                    
+                    {/* HEU Bar Visualization */}
+                    <HEUBarVisualization />
                   </section>
 
                   {/* Credit Usage */}
