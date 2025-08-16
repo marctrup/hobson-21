@@ -418,26 +418,26 @@ const FeatureRequests = () => {
           </div>
         </header>
 
-        <div className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="container mx-auto px-4 py-4 sm:py-8 max-w-7xl">
           {/* Hero Section */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-foreground mb-2">Share your product feedback!</h1>
-            <p className="text-lg text-muted-foreground">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Share your product feedback!</h1>
+            <p className="text-base sm:text-lg text-muted-foreground px-4">
               Please tell us what we can do to make Hobson the best product for you.
             </p>
           </div>
 
-          <div className="flex gap-8">
+          <div className="flex flex-col lg:flex-row gap-4 lg:gap-8">
             {/* Main Content */}
-            <div className="flex-1 max-w-4xl">
+            <div className="flex-1 lg:max-w-4xl">
               {/* Filters, Create Post and Search */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-4">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 gap-4">
+                <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto overflow-x-auto">
                   {filters.map((filter) => (
                     <button
                       key={filter.id}
                       onClick={() => setActiveFilter(filter.id)}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      className={`px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap ${
                         activeFilter === filter.id
                           ? 'bg-filter-active text-filter-active-foreground'
                           : 'text-muted-foreground hover:text-foreground hover:bg-accent'
@@ -448,20 +448,21 @@ const FeatureRequests = () => {
                   ))}
                 </div>
                 
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
                     <Input
                       placeholder="Search"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10 w-64"
+                      className="pl-10 w-full sm:w-64"
                     />
                   </div>
                   
-                  <Button size="sm" onClick={handleCreatePost}>
+                  <Button size="sm" onClick={handleCreatePost} className="w-full sm:w-auto">
                     <Plus className="w-4 h-4 mr-2" />
-                    Create A New Post
+                    <span className="hidden sm:inline">Create A New Post</span>
+                    <span className="sm:hidden">Create Post</span>
                   </Button>
                 </div>
               </div>
@@ -497,11 +498,11 @@ const FeatureRequests = () => {
                     return (
                        <div 
                          key={post.id} 
-                         className="bg-card border border-border rounded-lg p-6 hover:shadow-md hover:bg-purple-100/50 transition-all duration-200 cursor-pointer relative"
+                         className="bg-card border border-border rounded-lg p-4 sm:p-6 hover:shadow-md hover:bg-purple-100/50 transition-all duration-200 cursor-pointer relative"
                          onClick={() => handlePostClick(post)}
                        >
                          {/* Vote Button - Top Right */}
-                          <div className="absolute top-4 right-4 flex flex-col items-center gap-1">
+                         <div className="absolute top-3 sm:top-4 right-3 sm:right-4 flex flex-col items-center gap-1">
                             <button 
                               className="p-2 hover:bg-accent rounded-lg transition-all duration-200 group"
                               onClick={(e) => {
@@ -519,10 +520,10 @@ const FeatureRequests = () => {
                             </span>
                           </div>
                          
-                          {/* Delete Button - Bottom Right */}
-                          {user && user.id === post.author_id && (
-                            <div className="absolute bottom-4 right-4">
-                              <button
+                         {/* Delete Button - Bottom Right */}
+                         {user && user.id === post.author_id && (
+                           <div className="absolute bottom-3 sm:bottom-4 right-3 sm:right-4">
+                             <button
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   handleDeletePost(post.id);
@@ -536,36 +537,40 @@ const FeatureRequests = () => {
                           )}
 
                          {/* Content */}
-                         <div className="pr-16">
+                         <div className="pr-12 sm:pr-16">
                            <div className="flex items-center gap-2 mb-2">
                              <Badge variant="secondary" className="flex items-center gap-1">
                                <span>{categoryInfo.emoji}</span>
                                <span>{categoryInfo.label}</span>
                              </Badge>
                            </div>
-                             
-                              <h3 className="text-lg font-semibold text-foreground mb-2">
-                                {post.title}
-                              </h3>
-                             
-                             {post.description && (
-                               <p className="text-muted-foreground mb-3 line-clamp-3">
+                              
+                               <h3 className="text-base sm:text-lg font-semibold text-foreground mb-2">
+                                 {post.title}
+                               </h3>
+                              
+                              {post.description && (
+                                <p className="text-sm sm:text-base text-muted-foreground mb-3 line-clamp-3">
                                  {post.description}
                                </p>
                              )}
-                             
-                             <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                               <User className="w-4 h-4" />
-                               <span>{post.author_name}</span>
-                               <Calendar className="w-4 h-4 ml-2" />
-                               <span>{formatTimeAgo(post.created_at)}</span>
-                               
-                                 {/* Comment count indicator - always show */}
-                                 <div className="flex items-center gap-1 ml-2">
-                                   <MessageSquare className="w-4 h-4" />
-                                   <span>{post.comment_count || 0}</span>
-                                 </div>
-                             </div>
+                              
+                              <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                                <div className="flex items-center gap-1">
+                                  <User className="w-3 h-3 sm:w-4 sm:h-4" />
+                                  <span className="truncate max-w-[100px] sm:max-w-none">{post.author_name}</span>
+                                </div>
+                                <div className="flex items-center gap-1">
+                                  <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
+                                  <span className="whitespace-nowrap">{formatTimeAgo(post.created_at)}</span>
+                                </div>
+                                
+                                  {/* Comment count indicator - always show */}
+                                  <div className="flex items-center gap-1">
+                                    <MessageSquare className="w-3 h-3 sm:w-4 sm:h-4" />
+                                    <span>{post.comment_count || 0}</span>
+                                  </div>
+                              </div>
                          </div>
                        </div>
                       );
@@ -575,11 +580,11 @@ const FeatureRequests = () => {
               </div>
 
             {/* Right Sidebar */}
-            <div className="w-80 space-y-6">
+            <div className="w-full lg:w-80 space-y-6 order-first lg:order-last">
               {/* Boards */}
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Boards</h3>
-                <div className="space-y-2">
+              <div className="bg-card border border-border rounded-lg p-4 sm:p-6">
+                <h3 className="text-base sm:text-lg font-semibold text-foreground mb-4">Boards</h3>
+                <div className="grid grid-cols-2 lg:grid-cols-1 gap-2 lg:space-y-2 lg:grid-cols-none">
                   <button 
                     onClick={() => setActiveCategoryFilter(null)}
                     className={`w-full flex items-center justify-between p-2 text-left rounded-lg transition-colors ${

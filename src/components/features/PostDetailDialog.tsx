@@ -250,14 +250,14 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-4xl max-h-[80vh] overflow-hidden flex flex-col">
+      <DialogContent className="sm:max-w-4xl max-h-[85vh] sm:max-h-[80vh] overflow-hidden flex flex-col w-[95vw] sm:w-full p-4 sm:p-6">
         <DialogHeader className="flex-shrink-0">
-          <DialogTitle className="text-xl font-bold">{post.title}</DialogTitle>
+          <DialogTitle className="text-lg sm:text-xl font-bold pr-8">{post.title}</DialogTitle>
         </DialogHeader>
         
-        <div className="flex gap-6 flex-1 overflow-hidden">
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 flex-1 overflow-hidden">
           {/* Main Content */}
-          <div className="flex-1 space-y-4 overflow-y-auto">
+          <div className="flex-1 space-y-4 overflow-y-auto max-h-full">
             {/* Post Content */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
@@ -271,14 +271,14 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
                 <p className="text-foreground leading-relaxed">{post.description}</p>
               )}
               
-              <div className="flex items-center gap-4 text-sm text-muted-foreground pt-2 border-t">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-muted-foreground pt-2 border-t">
                 <div className="flex items-center gap-1">
-                  <User className="w-4 h-4" />
-                  <span>{post.author_name}</span>
+                  <User className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="truncate max-w-[120px] sm:max-w-none">{post.author_name}</span>
                 </div>
                 <div className="flex items-center gap-1">
-                  <Calendar className="w-4 h-4" />
-                  <span>{formatTimeAgo(post.created_at)}</span>
+                  <Calendar className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span className="whitespace-nowrap">{formatTimeAgo(post.created_at)}</span>
                 </div>
               </div>
             </div>
@@ -287,7 +287,7 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
             <PostSurvey postId={post.id} />
 
             {/* Comments Section */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div className="flex items-center gap-2 text-sm font-medium">
                 <MessageSquare className="w-4 h-4" />
                 <span>Comments {comments.length > 0 && `(${comments.length})`}</span>
@@ -367,12 +367,13 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
                              {/* 3-dot menu - only show for comment owner */}
                              {user && user.id === comment.user_id && (
                                <div className="relative">
-                                 <Button 
-                                   variant="ghost" 
-                                   size="sm"
-                                   onClick={() => toggleDropdown(comment.id)}
-                                 >
-                                   <MoreHorizontal className="w-4 h-4" />
+                            <Button 
+                              variant="ghost" 
+                              size="sm"
+                              onClick={() => toggleDropdown(comment.id)}
+                              className="h-7 sm:h-8 p-1 sm:p-2"
+                            >
+                              <MoreHorizontal className="w-3 h-3 sm:w-4 sm:h-4" />
                                  </Button>
                                  
                                  {/* Dropdown Menu */}
@@ -380,17 +381,17 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
                                    <div className="absolute right-0 top-8 z-50 bg-background border border-border rounded-lg shadow-lg w-40">
                                      <div className="py-1">
                                        <button
-                                         onClick={() => handleEditComment(comment)}
-                                         className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-accent transition-colors"
-                                       >
-                                         <Edit className="w-4 h-4" />
+                                    onClick={() => handleEditComment(comment)}
+                                    className="flex items-center gap-2 w-full px-3 py-2 text-xs sm:text-sm hover:bg-accent transition-colors"
+                                  >
+                                    <Edit className="w-3 h-3 sm:w-4 sm:h-4" />
                                          Edit comment
                                        </button>
-                                       <button
-                                         onClick={() => handleDeleteComment(comment.id)}
-                                         className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-destructive/10 hover:text-destructive transition-colors"
-                                       >
-                                         <Trash2 className="w-4 h-4" />
+                                  <button
+                                    onClick={() => handleDeleteComment(comment.id)}
+                                    className="flex items-center gap-2 w-full px-3 py-2 text-xs sm:text-sm hover:bg-destructive/10 hover:text-destructive transition-colors"
+                                  >
+                                    <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                                          Delete comment
                                        </button>
                                      </div>
@@ -399,8 +400,8 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
                                </div>
                              )}
                            </div>
-                           
-                           <p className="text-sm mb-3">{comment.content}</p>
+                            
+                            <p className="text-sm mb-3">{comment.content}</p>
                            
                            <div className="flex items-center gap-3">
                              <div className="flex items-center gap-1">
@@ -450,8 +451,8 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
             </div>
           </div>
 
-          {/* Right Sidebar */}
-          <div className="w-80 space-y-4 flex-shrink-0">
+          {/* Right Sidebar - Hidden on mobile */}
+          <div className="hidden lg:block w-80 space-y-4 flex-shrink-0">
             <div className="bg-muted/30 rounded-lg p-4 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium">Upvoters</span>
@@ -504,6 +505,19 @@ export function PostDetailDialog({ open, onOpenChange, post, onCommentChange }: 
                 Get notified by email when there are changes.
               </p>
               <Button variant="outline" size="sm" className="w-full">
+                Subscribe
+              </Button>
+            </div>
+          </div>
+          
+          {/* Mobile Actions Bar - Only visible on mobile */}
+          <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-background border-t border-border p-4 z-50">
+            <div className="flex items-center justify-center gap-4">
+              <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <ThumbsUp className="w-4 h-4" />
+                {post.votes}
+              </Button>
+              <Button variant="outline" size="sm">
                 Subscribe
               </Button>
             </div>
