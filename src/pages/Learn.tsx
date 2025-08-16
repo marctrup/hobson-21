@@ -330,8 +330,8 @@ const Learn = () => {
                       <div>
                         <h3 className="text-lg font-medium text-foreground mb-2">Rollover credit limits:</h3>
                         <ul className="text-muted-foreground space-y-2">
-                          <li>• <strong>Monthly plans:</strong> Rollover credits can accumulate up to the monthly credit limit.</li>
-                          <li>• <strong>Annual plans:</strong> Rollover credits can accumulate up to 12 times the monthly credit limit (i.e. the annual limit).</li>
+                          <li>• <strong>Monthly plans:</strong> Rollover HEUs can accumulate up to the monthly credit limit.</li>
+                          <li>• <strong>Annual plans:</strong> Rollover HEUs can accumulate up to 12 times the monthly credit limit (i.e. the annual limit).</li>
                         </ul>
                       </div>
 
