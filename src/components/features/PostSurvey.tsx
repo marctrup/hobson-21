@@ -123,6 +123,13 @@ export function PostSurvey({ postId }: PostSurveyProps) {
       setExistingResponse(finalResponses);
       setHasSubmitted(true);
 
+      // Show toast with the responses for the blog author
+      toast({
+        title: "New feedback received!",
+        description: `Importance: ${importanceOptions[finalResponses.importance - 1].emoji} ${importanceOptions[finalResponses.importance - 1].label} | Timing: ${timingOptions[finalResponses.timing - 1].emoji} ${timingOptions[finalResponses.timing - 1].label} | Frequency: ${frequencyOptions[finalResponses.frequency - 1].emoji} ${frequencyOptions[finalResponses.frequency - 1].label}`,
+        duration: 8000,
+      });
+
       toast({
         title: "Thank you!",
         description: "Your feedback has been recorded.",
