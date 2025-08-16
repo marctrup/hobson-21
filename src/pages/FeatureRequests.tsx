@@ -52,23 +52,12 @@ const FeatureRequests = () => {
     { id: 'bug-hunting', label: 'Bug Hunting', icon: Bug, emoji: '🐛' },
   ];
 
-  const leaderboard = [
-    { rank: 1, name: 'Scott Richard', points: 1145, emoji: '🥇' },
-    { rank: 2, name: 'Luke', points: 939, emoji: '🥈' },
-    { rank: 3, name: 'Yohan Costa', points: 789, emoji: '🥉' },
-    { rank: 4, name: 'InsourceGG', points: 609, emoji: '4' },
-    { rank: 5, name: 'Stephane Boghossian', points: 563, emoji: '5' },
-    { rank: 6, name: 'Mat', points: 485, emoji: '6' },
-  ];
-
   const categoryLabels: Record<string, { label: string; emoji: string }> = {
     feedback: { label: 'Feedback', emoji: '📣' },
     'feature-request': { label: 'Feature Request', emoji: '💡' },
     integrations: { label: 'Integrations', emoji: '🧩' },
     questions: { label: 'Questions', emoji: '⁉️' },
     'bug-hunting': { label: 'Bug Hunting', emoji: '🐛' },
-    'lovable-project': { label: 'Lovable Project', emoji: '🏆' },
-    ama: { label: 'AMA', emoji: '💬' },
   };
 
   // Fetch posts from database
@@ -305,22 +294,6 @@ const FeatureRequests = () => {
                       <span className="text-base">{board.emoji}</span>
                       <span className="text-sm text-muted-foreground">{board.label}</span>
                     </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Leaderboard */}
-              <div className="bg-card border border-border rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-foreground mb-4">Most helpful</h3>
-                <div className="space-y-3">
-                  {leaderboard.map((user) => (
-                    <div key={user.rank} className="flex items-center gap-3">
-                      <span className="text-lg">{user.emoji}</span>
-                      <div className="flex-1">
-                        <div className="text-sm font-medium text-foreground">{user.name}</div>
-                        <div className="text-xs text-muted-foreground">{user.points} points</div>
-                      </div>
-                    </div>
                   ))}
                 </div>
               </div>
