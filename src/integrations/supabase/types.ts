@@ -211,6 +211,13 @@ export type Database = {
             referencedRelation: "feature_request_comments"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "fk_feature_request_comments_feature_request_id"
+            columns: ["feature_request_id"]
+            isOneToOne: false
+            referencedRelation: "feature_requests"
+            referencedColumns: ["id"]
+          },
         ]
       }
       feature_request_surveys: {
@@ -244,7 +251,15 @@ export type Database = {
           updated_at?: string
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fk_feature_request_surveys_feature_request_id"
+            columns: ["feature_request_id"]
+            isOneToOne: false
+            referencedRelation: "feature_requests"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       feature_request_votes: {
         Row: {
@@ -268,6 +283,13 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "feature_request_votes_feature_request_id_fkey"
+            columns: ["feature_request_id"]
+            isOneToOne: false
+            referencedRelation: "feature_requests"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_feature_request_votes_feature_request_id"
             columns: ["feature_request_id"]
             isOneToOne: false
             referencedRelation: "feature_requests"
