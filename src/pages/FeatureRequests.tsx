@@ -190,30 +190,71 @@ const FeatureRequests = () => {
         .eq('user_id', user.id)
         .single();
 
+      const currentPost = posts.find(p => p.id === postId);
+      if (!currentPost) return;
+
       if (existingVote) {
-        // Remove vote
+        // Optimistically update UI - decrease vote
+        setPosts(prevPosts => 
+          prevPosts.map(post => 
+            post.id === postId 
+              ? { ...post, votes: Math.max(0, post.votes - 1) }
+              : post
+          )
+        );
+
+        // Remove vote from database
         const { error: deleteError } = await supabase
           .from('feature_request_votes')
           .delete()
           .eq('feature_request_id', postId)
           .eq('user_id', user.id);
 
-        if (deleteError) throw deleteError;
+        if (deleteError) {
+          // Revert optimistic update on error
+          setPosts(prevPosts => 
+            prevPosts.map(post => 
+              post.id === postId 
+                ? { ...post, votes: post.votes + 1 }
+                : post
+            )
+          );
+          throw deleteError;
+        }
 
-        // Decrease vote count
+        // Update vote count in database
         const { error: updateError } = await supabase
           .from('feature_requests')
-          .update({ votes: posts.find(p => p.id === postId)?.votes - 1 || 0 })
+          .update({ votes: Math.max(0, currentPost.votes - 1) })
           .eq('id', postId);
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          // Revert optimistic update on error
+          setPosts(prevPosts => 
+            prevPosts.map(post => 
+              post.id === postId 
+                ? { ...post, votes: post.votes + 1 }
+                : post
+            )
+          );
+          throw updateError;
+        }
 
         toast({
           title: "Vote removed",
           description: "Your vote has been removed.",
         });
       } else {
-        // Add vote
+        // Optimistically update UI - increase vote
+        setPosts(prevPosts => 
+          prevPosts.map(post => 
+            post.id === postId 
+              ? { ...post, votes: post.votes + 1 }
+              : post
+          )
+        );
+
+        // Add vote to database
         const { error: insertError } = await supabase
           .from('feature_request_votes')
           .insert({
@@ -221,23 +262,41 @@ const FeatureRequests = () => {
             user_id: user.id
           });
 
-        if (insertError) throw insertError;
+        if (insertError) {
+          // Revert optimistic update on error
+          setPosts(prevPosts => 
+            prevPosts.map(post => 
+              post.id === postId 
+                ? { ...post, votes: post.votes - 1 }
+                : post
+            )
+          );
+          throw insertError;
+        }
 
-        // Increase vote count
+        // Update vote count in database
         const { error: updateError } = await supabase
           .from('feature_requests')
-          .update({ votes: (posts.find(p => p.id === postId)?.votes || 0) + 1 })
+          .update({ votes: currentPost.votes + 1 })
           .eq('id', postId);
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          // Revert optimistic update on error
+          setPosts(prevPosts => 
+            prevPosts.map(post => 
+              post.id === postId 
+                ? { ...post, votes: post.votes - 1 }
+                : post
+            )
+          );
+          throw updateError;
+        }
 
         toast({
           title: "Vote added",
           description: "Thank you for your vote!",
         });
       }
-
-      fetchPosts(); // Refresh the posts
     } catch (error: any) {
       toast({
         title: "Error",
@@ -373,15 +432,17 @@ const FeatureRequests = () => {
                           {/* Vote Button */}
                           <div className="flex flex-col items-center gap-1">
                             <button 
-                              className="p-2 hover:bg-accent rounded-lg transition-colors group"
+                              className="p-2 hover:bg-accent rounded-lg transition-all duration-200 group"
                               onClick={() => handleVote(post.id)}
                               disabled={!user}
                             >
-                              <ThumbsUp className={`w-4 h-4 transition-colors ${
-                                user ? 'text-muted-foreground group-hover:text-primary' : 'text-muted-foreground/50'
+                              <ThumbsUp className={`w-4 h-4 transition-all duration-200 ${
+                                user ? 'text-muted-foreground group-hover:text-primary group-hover:scale-110' : 'text-muted-foreground/50'
                               }`} />
                             </button>
-                            <span className="text-sm font-medium text-foreground">{post.votes}</span>
+                            <span className="text-sm font-medium text-foreground min-w-[16px] text-center transition-all duration-200">
+                              {post.votes}
+                            </span>
                           </div>
 
                           {/* Content */}
