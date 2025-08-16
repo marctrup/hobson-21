@@ -273,11 +273,11 @@ const Learn = () => {
                   <section id="credit-display">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit display</h2>
                     <p className="text-muted-foreground mb-4">
-                      The credit bar provides a visual representation of how many credits a user has remaining and how many have been used.
+                      The HEU bar provides a visual representation of how many HEUs a user has remaining and how many have been used.
                     </p>
                     <ul className="text-muted-foreground space-y-2">
-                      <li>• <strong>Grey part:</strong> Shows the amount of credits already used this billing period.</li>
-                      <li>• <strong>Blue parts:</strong> Shows different types of remaining credits. Hovering over each colored section will display a tooltip indicating the credit type and the exact number of credits available for that type.</li>
+                      <li>• <strong>Grey part:</strong> Shows the amount of HEUs already used this billing period.</li>
+                      <li>• <strong>Blue parts:</strong> Shows the remaining HEUs.</li>
                     </ul>
                   </section>
 
