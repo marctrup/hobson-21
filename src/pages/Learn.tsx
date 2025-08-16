@@ -283,15 +283,6 @@ const Learn = () => {
                     
                     {/* HEU Bar Visualization */}
                     <HEUBarVisualization />
-                    
-                    {/* HEU Coin Image */}
-                    <div className="flex justify-center mt-8">
-                      <img 
-                        src="/lovable-uploads/25d32ced-59d0-4c04-966a-ab6675224ee3.png" 
-                        alt="HEU (Hobson Energy Unit) coin"
-                        className="w-32 h-32 object-contain"
-                      />
-                    </div>
                   </section>
 
                   {/* Credit Usage */}
