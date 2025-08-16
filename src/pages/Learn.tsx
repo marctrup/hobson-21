@@ -1215,7 +1215,7 @@ const Learn = () => {
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-5xl">
             <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">Prompting 1.1</h1>
+              <h1 className="text-3xl font-bold text-foreground mb-2">Prompting</h1>
               <p className="text-lg text-muted-foreground">Master the fundamentals of effective prompting with Hobson</p>
             </div>
 
