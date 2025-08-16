@@ -52,6 +52,7 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
   const [isLoading, setIsLoading] = useState(false);
   const [newPostId, setNewPostId] = useState<string | null>(null);
   const [showSurvey, setShowSurvey] = useState(false);
+  const [surveyCompleted, setSurveyCompleted] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
 
@@ -130,8 +131,13 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
   const handleCloseDialog = () => {
     setShowSurvey(false);
     setNewPostId(null);
+    setSurveyCompleted(false);
     onOpenChange(false);
     onPostCreated();
+  };
+
+  const handleSurveyComplete = () => {
+    setSurveyCompleted(true);
   };
 
   return (
@@ -209,19 +215,22 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
         ) : (
           <>
             <DialogHeader>
-              <DialogTitle>Quick Feedback</DialogTitle>
+              <DialogTitle>{surveyCompleted ? "Thank You!" : "Quick Feedback"}</DialogTitle>
               <DialogDescription>
-                Help us prioritize your request by answering a few quick questions.
+                {surveyCompleted 
+                  ? "Thank you for your responses! This helps us prioritize development."
+                  : "Help us prioritize your request by answering a few quick questions."
+                }
               </DialogDescription>
             </DialogHeader>
             
             <div className="py-4">
-              {newPostId && <PostSurvey postId={newPostId} />}
+              {newPostId && <PostSurvey postId={newPostId} onComplete={handleSurveyComplete} />}
             </div>
             
             <DialogFooter>
               <Button onClick={handleCloseDialog}>
-                Skip for now
+                {surveyCompleted ? "Close" : "Skip for now"}
               </Button>
             </DialogFooter>
           </>

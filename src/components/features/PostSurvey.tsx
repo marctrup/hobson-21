@@ -8,6 +8,7 @@ import { useAuth } from '@/hooks/useAuth';
 
 interface PostSurveyProps {
   postId: string;
+  onComplete?: () => void;
 }
 
 interface SurveyResponse {
@@ -37,7 +38,7 @@ const frequencyOptions = [
   { value: 4, emoji: '🤩', label: 'Daily' }
 ];
 
-export function PostSurvey({ postId }: PostSurveyProps) {
+export function PostSurvey({ postId, onComplete }: PostSurveyProps) {
   const [currentQuestion, setCurrentQuestion] = useState(1);
   const [responses, setResponses] = useState<Partial<SurveyResponse>>({});
   const [existingResponse, setExistingResponse] = useState<SurveyResponse | null>(null);
@@ -134,6 +135,9 @@ export function PostSurvey({ postId }: PostSurveyProps) {
         title: "Thank you!",
         description: "Your feedback has been recorded.",
       });
+
+      // Call onComplete callback if provided
+      onComplete?.();
     } catch (error: any) {
       toast({
         title: "Error",
