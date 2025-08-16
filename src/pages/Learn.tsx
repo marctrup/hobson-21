@@ -21,6 +21,8 @@ const Learn = () => {
       setActiveTocSection('overview');
     } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
       setActiveTocSection('hobson-platform-overview');
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') {
+      setActiveTocSection('what-is-prompting');
     }
   }, [activeHorizontalTab, activeVerticalTab]);
 
