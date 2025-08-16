@@ -309,13 +309,45 @@ const FeatureRequests = () => {
   const formatTimeAgo = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
     
-    if (diffInHours < 1) return 'Less than an hour ago';
-    if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+    // Reset time to start of day for "today" comparison
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const postDate = new Date(date.getFullYear(), date.getMonth(), date.getDate());
     
-    const diffInDays = Math.floor(diffInHours / 24);
-    return `${diffInDays} day${diffInDays > 1 ? 's' : ''} ago`;
+    const diffInMs = now.getTime() - date.getTime();
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor((today.getTime() - postDate.getTime()) / (1000 * 60 * 60 * 24));
+    
+    // Same day
+    if (diffInDays === 0) {
+      if (diffInMinutes < 1) return 'Just now';
+      if (diffInMinutes < 60) return `${diffInMinutes} minute${diffInMinutes > 1 ? 's' : ''} ago`;
+      if (diffInHours < 24) return `${diffInHours} hour${diffInHours > 1 ? 's' : ''} ago`;
+      return 'Today';
+    }
+    
+    // Yesterday
+    if (diffInDays === 1) return 'Yesterday';
+    
+    // This week (2-6 days ago)
+    if (diffInDays < 7) return `${diffInDays} days ago`;
+    
+    // This month (1-3 weeks ago)
+    if (diffInDays < 30) {
+      const weeks = Math.floor(diffInDays / 7);
+      return `${weeks} week${weeks > 1 ? 's' : ''} ago`;
+    }
+    
+    // This year (1-11 months ago)
+    if (diffInDays < 365) {
+      const months = Math.floor(diffInDays / 30);
+      return `${months} month${months > 1 ? 's' : ''} ago`;
+    }
+    
+    // Over a year
+    const years = Math.floor(diffInDays / 365);
+    return `${years} year${years > 1 ? 's' : ''} ago`;
   };
 
   return (
