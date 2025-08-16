@@ -76,7 +76,7 @@ const FeatureRequests = () => {
         .from('feature_requests')
         .select(`
           *,
-          comment_count:feature_request_comments(count)
+          comment_count:feature_request_comments!feature_request_id(count)
         `);
 
       // Apply category filter
@@ -526,13 +526,11 @@ const FeatureRequests = () => {
                                <Calendar className="w-4 h-4 ml-2" />
                                <span>{formatTimeAgo(post.created_at)}</span>
                                
-                               {/* Comment count indicator */}
-                               {post.comment_count && post.comment_count[0]?.count > 0 && (
-                                 <div className="flex items-center gap-1 ml-2">
-                                   <MessageSquare className="w-4 h-4" />
-                                   <span>{post.comment_count[0].count}</span>
-                                 </div>
-                               )}
+                                {/* Comment count indicator - always show */}
+                                <div className="flex items-center gap-1 ml-2">
+                                  <MessageSquare className="w-4 h-4" />
+                                  <span>{post.comment_count?.[0]?.count || 0}</span>
+                                </div>
                              </div>
                          </div>
                        </div>
