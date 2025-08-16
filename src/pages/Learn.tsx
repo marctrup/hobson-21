@@ -103,7 +103,7 @@ const Learn = () => {
 
   // Static top menu items (separate pages)
   const staticVerticalTabs = [
-    { id: 'announcements', label: 'Announcements', icon: Bell },
+    { id: 'announcements', label: 'Announcements', icon: Bell, href: '/announcements' },
     { id: 'status', label: 'Status', icon: Activity, href: '/status' },
     { id: 'feature-requests', label: 'Feature requests', icon: MessageSquare },
   ];
@@ -190,6 +190,12 @@ const Learn = () => {
   };
 
   const renderContent = () => {
+    // Check if it's the announcements page - redirect to dedicated page
+    if (activeVerticalTab === 'announcements') {
+      window.location.href = '/announcements';
+      return null;
+    }
+    
     // Check if it's the feature requests page - redirect to dedicated page
     if (activeVerticalTab === 'feature-requests') {
       window.location.href = '/feature-requests';
@@ -203,7 +209,7 @@ const Learn = () => {
     }
     
     // Check if it's a global navigation item
-    const isGlobalPage = staticVerticalTabs.some(tab => tab.id === activeVerticalTab && !['feature-requests', 'status'].includes(tab.id));
+    const isGlobalPage = staticVerticalTabs.some(tab => tab.id === activeVerticalTab && !['announcements', 'feature-requests', 'status'].includes(tab.id));
     
     if (isGlobalPage) {
       const activeTab = staticVerticalTabs.find(tab => tab.id === activeVerticalTab);
