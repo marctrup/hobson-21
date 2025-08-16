@@ -1377,8 +1377,8 @@ const Learn = () => {
                         onClick={() => scrollToSection(section.id)}
                         className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-muted text-foreground font-medium'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
