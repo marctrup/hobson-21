@@ -176,8 +176,14 @@ const Learn = () => {
   const currentVerticalTabs = [...staticVerticalTabs, ...getContextualVerticalTabs(activeHorizontalTab)];
 
   const renderContent = () => {
+    // Check if it's the feature requests page - redirect to dedicated page
+    if (activeVerticalTab === 'feature-requests') {
+      window.location.href = '/feature-requests';
+      return null;
+    }
+    
     // Check if it's a global navigation item
-    const isGlobalPage = staticVerticalTabs.some(tab => tab.id === activeVerticalTab);
+    const isGlobalPage = staticVerticalTabs.some(tab => tab.id === activeVerticalTab && tab.id !== 'feature-requests');
     
     if (isGlobalPage) {
       const activeTab = staticVerticalTabs.find(tab => tab.id === activeVerticalTab);
