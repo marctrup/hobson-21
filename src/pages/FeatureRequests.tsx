@@ -498,7 +498,7 @@ const FeatureRequests = () => {
                              disabled={!user}
                            >
                              <ThumbsUp className={`w-4 h-4 transition-all duration-200 ${
-                               user ? 'text-muted-foreground group-hover:text-primary group-hover:scale-110' : 'text-muted-foreground/50'
+                               user ? 'text-yellow-500 group-hover:text-yellow-400 group-hover:scale-110' : 'text-yellow-300'
                              }`} />
                            </button>
                            <span className="text-sm font-medium text-foreground min-w-[16px] text-center transition-all duration-200">
