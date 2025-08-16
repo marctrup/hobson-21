@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
@@ -169,6 +169,71 @@ export type Database = {
         }
         Relationships: []
       }
+      feature_request_votes: {
+        Row: {
+          created_at: string
+          feature_request_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          feature_request_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          feature_request_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "feature_request_votes_feature_request_id_fkey"
+            columns: ["feature_request_id"]
+            isOneToOne: false
+            referencedRelation: "feature_requests"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      feature_requests: {
+        Row: {
+          author_id: string
+          author_name: string
+          category: Database["public"]["Enums"]["feature_request_category"]
+          created_at: string
+          description: string | null
+          id: string
+          title: string
+          updated_at: string
+          votes: number
+        }
+        Insert: {
+          author_id: string
+          author_name: string
+          category?: Database["public"]["Enums"]["feature_request_category"]
+          created_at?: string
+          description?: string | null
+          id?: string
+          title: string
+          updated_at?: string
+          votes?: number
+        }
+        Update: {
+          author_id?: string
+          author_name?: string
+          category?: Database["public"]["Enums"]["feature_request_category"]
+          created_at?: string
+          description?: string | null
+          id?: string
+          title?: string
+          updated_at?: string
+          votes?: number
+        }
+        Relationships: []
+      }
       pilot_applications: {
         Row: {
           business_types: string[] | null
@@ -273,8 +338,8 @@ export type Database = {
       }
       has_role: {
         Args: {
-          _user_id: string
           _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
         }
         Returns: boolean
       }
@@ -285,6 +350,14 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user"
+      feature_request_category:
+        | "feedback"
+        | "feature-request"
+        | "integrations"
+        | "questions"
+        | "bug-hunting"
+        | "lovable-project"
+        | "ama"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -413,6 +486,15 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user"],
+      feature_request_category: [
+        "feedback",
+        "feature-request",
+        "integrations",
+        "questions",
+        "bug-hunting",
+        "lovable-project",
+        "ama",
+      ],
     },
   },
 } as const
