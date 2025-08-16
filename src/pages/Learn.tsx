@@ -51,7 +51,7 @@ const Learn = () => {
         if (activeVerticalTab === 'fundamentals') {
           tocSections = ['what-is-prompting', 'why-prompting-matters', 'how-hobson-thinks', 'clear-method', 'advanced-tactics'];
         } else if (activeVerticalTab === 'advanced-prompting') {
-          tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building', 'market-context', 'lending-finance'];
+          tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building'];
         } else if (activeVerticalTab === 'debugging-prompts') {
           tocSections = ['quick-fixes', 'deep-reviews', 'fragile-areas', 'performance-issues', 'persistent-problems', 'debugging-flows', 'root-cause', 'pro-tips'];
         }
@@ -1630,110 +1630,6 @@ const Learn = () => {
                           </AccordionContent>
                         </AccordionItem>
 
-                        <AccordionItem value="market-context" id="market-context">
-                          <AccordionTrigger className="text-lg font-semibold">6. Market Context & Insights</AccordionTrigger>
-                          <AccordionContent className="space-y-4">
-                            <div className="space-y-4">
-                              <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To combine internal data with wider market or policy information.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to apply external market trends to your portfolio.</p>
-                              </div>
-                              
-                              <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                                <div className="space-y-2 text-sm">
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Using the rent reviews due in the industrial portfolio, explain how current market trends in London might affect outcomes."
-                                  </div>
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Summarise how new government energy efficiency rules could affect our residential lettings portfolio."
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-
-                        <AccordionItem value="lending-finance" id="lending-finance">
-                          <AccordionTrigger className="text-lg font-semibold">7. Lending & Finance</AccordionTrigger>
-                          <AccordionContent className="space-y-4">
-                            <div className="space-y-4">
-                              <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To prepare, review, or stress-test lending information.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Point Hobson to loan agreements, facility letters, or valuations and ask for analysis.</p>
-                              </div>
-                              
-                              <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                                <div className="space-y-2 text-sm">
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Summarise the key terms of the loan facility for the Riverside portfolio, including covenants, repayment terms, and interest cover."
-                                  </div>
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "From the bank's term sheet, list all financial covenants and explain what they mean in simple terms."
-                                  </div>
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Prepare a lender-ready report for the City offices portfolio: include rental income, lease expiries, and DSCR (Debt Service Coverage Ratio)."
-                                  </div>
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Stress test the shopping centre loan agreement: what happens if rental income falls by 10%?"
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-
-                        <AccordionItem value="asset-portfolio" id="asset-portfolio">
-                          <AccordionTrigger className="text-lg font-semibold">8. Asset & Portfolio Management</AccordionTrigger>
-                          <AccordionContent className="space-y-4">
-                            <div className="space-y-4">
-                              <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To track performance and plan strategy.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to create summaries, highlight issues, or build dashboards.</p>
-                              </div>
-                              
-                              <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                                <div className="space-y-2 text-sm">
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "List all lease events in the next 18 months across the office portfolio."
-                                  </div>
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Create a dashboard showing income by tenant, lease expiry profile, and upcoming rent reviews."
-                                  </div>
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Highlight underperforming assets in the retail portfolio and suggest potential strategies."
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
-
-                        <AccordionItem value="planning-development" id="planning-development">
-                          <AccordionTrigger className="text-lg font-semibold">9. Planning & Development</AccordionTrigger>
-                          <AccordionContent className="space-y-4">
-                            <div className="space-y-4">
-                              <div>
-                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To assess redevelopment or planning opportunities.</p>
-                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to review deeds, covenants, or local policy.</p>
-                              </div>
-                              
-                              <div>
-                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                                <div className="space-y-2 text-sm">
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Check the deeds for 12 King Street and highlight anything that could restrict redevelopment."
-                                  </div>
-                                  <div className="p-3 bg-background rounded border border-border">
-                                    "Summarise planning policies in Camden that could affect residential conversions."
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </AccordionContent>
-                        </AccordionItem>
                       </Accordion>
 
                       <div className="mt-8 p-6 bg-muted rounded-lg">
