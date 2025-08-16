@@ -2145,15 +2145,7 @@ const Learn = () => {
                 <a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact
                 </a>
-                <Button 
-                  onClick={handleCreatePost}
-                  className="gap-2"
-                  size="sm"
-                >
-                  <Plus className="w-4 h-4" />
-                  Create Post
-                </Button>
-              </nav>
+               </nav>
             </div>
           </div>
         </header>
