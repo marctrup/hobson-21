@@ -156,44 +156,7 @@ export function PostSurvey({ postId }: PostSurveyProps) {
   }
 
   if (hasSubmitted && existingResponse) {
-    return (
-      <Card className="p-4 border border-border bg-muted/20">
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h4 className="text-sm font-medium text-muted-foreground">Your feedback</h4>
-            <Button variant="ghost" size="sm" onClick={resetSurvey} className="text-xs">
-              Edit
-            </Button>
-          </div>
-          
-          <div className="grid grid-cols-3 gap-3 text-xs">
-            <div className="text-center">
-              <p className="text-muted-foreground mb-1">Importance</p>
-              <div className="flex items-center justify-center gap-1">
-                <span className="text-lg">{importanceOptions[existingResponse.importance - 1].emoji}</span>
-                <span className="text-xs">{importanceOptions[existingResponse.importance - 1].label}</span>
-              </div>
-            </div>
-            
-            <div className="text-center">
-              <p className="text-muted-foreground mb-1">Timing</p>
-              <div className="flex items-center justify-center gap-1">
-                <span className="text-lg">{timingOptions[existingResponse.timing - 1].emoji}</span>
-                <span className="text-xs">{timingOptions[existingResponse.timing - 1].label}</span>
-              </div>
-            </div>
-            
-            <div className="text-center">
-              <p className="text-muted-foreground mb-1">Frequency</p>
-              <div className="flex items-center justify-center gap-1">
-                <span className="text-lg">{frequencyOptions[existingResponse.frequency - 1].emoji}</span>
-                <span className="text-xs">{frequencyOptions[existingResponse.frequency - 1].label}</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Card>
-    );
+    return null;
   }
 
   const getCurrentQuestion = () => {
