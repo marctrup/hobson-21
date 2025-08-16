@@ -23,6 +23,10 @@ const Learn = () => {
       setActiveTocSection('hobson-platform-overview');
     } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') {
       setActiveTocSection('what-is-prompting');
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') {
+      setActiveTocSection('prompt-library');
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts') {
+      setActiveTocSection('quick-fixes');
     }
   }, [activeHorizontalTab, activeVerticalTab]);
 
@@ -33,7 +37,9 @@ const Learn = () => {
     // Only run scroll spy for pages that have table of contents
     if ((activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') || 
         (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') ||
-        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals')) {
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts')) {
       
       if (activeHorizontalTab === 'introduction') {
         if (activeVerticalTab === 'faq') {
@@ -44,6 +50,10 @@ const Learn = () => {
       } else if (activeHorizontalTab === 'prompt-engineering') {
         if (activeVerticalTab === 'fundamentals') {
           tocSections = ['what-is-prompting', 'why-prompting-matters', 'how-hobson-thinks', 'clear-method', 'advanced-tactics'];
+        } else if (activeVerticalTab === 'advanced-prompting') {
+          tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building', 'market-context', 'lending-finance', 'asset-portfolio', 'planning-development'];
+        } else if (activeVerticalTab === 'debugging-prompts') {
+          tocSections = ['quick-fixes', 'deep-reviews', 'fragile-areas', 'performance-issues', 'persistent-problems', 'debugging-flows', 'root-cause', 'pro-tips'];
         }
       }
 
@@ -1395,277 +1405,325 @@ const Learn = () => {
 
     // Handle Prompt Engineering - Advanced Prompting content specifically
     if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') {
+      const tocSections = [
+        { id: 'prompt-library', label: 'Prompt Library' },
+        { id: 'lease-summaries', label: 'Lease & Contract Summaries' },
+        { id: 'extracting-data', label: 'Extracting Key Data' },
+        { id: 'comparing-properties', label: 'Comparing Properties & Leases' },
+        { id: 'risk-compliance', label: 'Risk & Compliance Checks' },
+        { id: 'report-building', label: 'Report Building' },
+        { id: 'market-context', label: 'Market Context & Insights' },
+        { id: 'lending-finance', label: 'Lending & Finance' },
+        { id: 'asset-portfolio', label: 'Asset & Portfolio Management' },
+        { id: 'planning-development', label: 'Planning & Development' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
         <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-5xl">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">Advanced Prompting</h1>
-              <p className="text-lg text-muted-foreground">Advanced techniques and strategies for getting the most out of Hobson</p>
-            </div>
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-2">Advanced Prompting</h1>
+                  <p className="text-lg text-muted-foreground">Advanced techniques and strategies for getting the most out of Hobson</p>
+                </div>
 
-            <div className="space-y-12">
-              {/* Prompt Library */}
-              <section>
-                <h2 className="text-2xl font-bold text-foreground mb-6">Prompt Library</h2>
-                <h3 className="text-lg font-semibold text-foreground mb-4">Prompting Strategies and Examples for Property Professionals</h3>
-                
-                <div className="space-y-6">
-                  <div className="p-6 bg-muted rounded-lg">
-                    <h4 className="text-lg font-semibold text-foreground mb-3">Welcome to Hobson's Prompt Library!</h4>
-                    <p className="text-muted-foreground mb-4">
-                      This guide gives you prompt patterns for everyday property tasks. Think of them as templates: you can copy, adapt, and reuse them whenever you need.
-                    </p>
-                    <p className="text-muted-foreground">
-                      Hobson already has access to your business's documents — leases, deeds, rent schedules, plans, lending agreements, valuations, and more. Your job is simple: tell Hobson what you want to know and how you want it presented.
-                    </p>
-                  </div>
-
-                  <Accordion type="single" collapsible className="space-y-4">
-                    <AccordionItem value="lease-summaries">
-                      <AccordionTrigger className="text-lg font-semibold">1. Lease & Contract Summaries</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To quickly digest complex legal or technical text.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to summarise, highlight, or reformat clauses into plain English.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Summarise the lease for 22 Queen Street in bullet points, focusing on rent, break clauses, and repair obligations."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Highlight any unusual service charge clauses in the lease for Unit 4, Business Park."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="extracting-data">
-                      <AccordionTrigger className="text-lg font-semibold">2. Extracting Key Data</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> When you need specific details pulled from long schedules or contracts.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask for tables or lists with exactly the data points you care about.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "From the rent schedule for the retail portfolio, list each unit with tenant name, rent, lease expiry, and next review date."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "From the deed for 14 Market Road, list all covenants and who they apply to."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="comparing-properties">
-                      <AccordionTrigger className="text-lg font-semibold">3. Comparing Properties & Leases</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To see differences between assets or contracts at a glance.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Name the properties/documents and ask for a comparison.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Compare the leases for Units 1, 2, and 3 in the Industrial Estate. Focus on rent reviews, repairing obligations, and break clauses."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Compare the tenancy agreements for 10 and 12 Green Lane, highlighting differences in tenant obligations."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="risk-compliance">
-                      <AccordionTrigger className="text-lg font-semibold">4. Risk & Compliance Checks</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To identify red flags or restrictions in documents.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to review with a focus on risks, compliance, or legal issues.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Review the title deed for 30 River Road and highlight any restrictive covenants or easements."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Check the lease for 45 Market Road for compliance with the Landlord and Tenant Act."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="report-building">
-                      <AccordionTrigger className="text-lg font-semibold">5. Report Building</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To create reports for management, clients, or investors.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Tell Hobson what to include (leases, rents, key events, risks) and how to structure it (summary, table, or narrative).</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Create a report on the office portfolio: summarise each lease, include rent schedules, and note any lease events in the next 12 months."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Produce an investor briefing on the retail portfolio, including tenant mix, income, lease expiries, and risks."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="market-context">
-                      <AccordionTrigger className="text-lg font-semibold">6. Market Context & Insights</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To combine internal data with wider market or policy information.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to apply external market trends to your portfolio.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Using the rent reviews due in the industrial portfolio, explain how current market trends in London might affect outcomes."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Summarise how new government energy efficiency rules could affect our residential lettings portfolio."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="lending-finance">
-                      <AccordionTrigger className="text-lg font-semibold">7. Lending & Finance</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To prepare, review, or stress-test lending information.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Point Hobson to loan agreements, facility letters, or valuations and ask for analysis.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Summarise the key terms of the loan facility for the Riverside portfolio, including covenants, repayment terms, and interest cover."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "From the bank's term sheet, list all financial covenants and explain what they mean in simple terms."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Prepare a lender-ready report for the City offices portfolio: include rental income, lease expiries, and DSCR (Debt Service Coverage Ratio)."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Stress test the shopping centre loan agreement: what happens if rental income falls by 10%?"
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="asset-portfolio">
-                      <AccordionTrigger className="text-lg font-semibold">8. Asset & Portfolio Management</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To track performance and plan strategy.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to create summaries, highlight issues, or build dashboards.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "List all lease events in the next 18 months across the office portfolio."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Create a dashboard showing income by tenant, lease expiry profile, and upcoming rent reviews."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Highlight underperforming assets in the retail portfolio and suggest potential strategies."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="planning-development">
-                      <AccordionTrigger className="text-lg font-semibold">9. Planning & Development</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To assess redevelopment or planning opportunities.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to review deeds, covenants, or local policy.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Check the deeds for 12 King Street and highlight anything that could restrict redevelopment."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Summarise planning policies in Camden that could affect residential conversions."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-
-                  <div className="mt-8 p-6 bg-muted rounded-lg">
-                    <h4 className="text-lg font-semibold text-foreground mb-3">👉 Pro Tip</h4>
-                    <p className="text-muted-foreground mb-3">
-                      You can also use meta-prompting with Hobson. For example:
-                    </p>
-                    <div className="space-y-2 text-sm">
-                      <div className="p-3 bg-background rounded border border-border">
-                        "Suggest a better way to phrase this question to get clearer results."
+                <div className="space-y-12">
+                  {/* Prompt Library */}
+                  <section id="prompt-library">
+                    <h2 className="text-2xl font-bold text-foreground mb-6">Prompt Library</h2>
+                    <h3 className="text-lg font-semibold text-foreground mb-4">Prompting Strategies and Examples for Property Professionals</h3>
+                    
+                    <div className="space-y-6">
+                      <div className="p-6 bg-muted rounded-lg">
+                        <h4 className="text-lg font-semibold text-foreground mb-3">Welcome to Hobson's Prompt Library!</h4>
+                        <p className="text-muted-foreground mb-4">
+                          This guide gives you prompt patterns for everyday property tasks. Think of them as templates: you can copy, adapt, and reuse them whenever you need.
+                        </p>
+                        <p className="text-muted-foreground">
+                          Hobson already has access to your business's documents — leases, deeds, rent schedules, plans, lending agreements, valuations, and more. Your job is simple: tell Hobson what you want to know and how you want it presented.
+                        </p>
                       </div>
-                      <div className="p-3 bg-background rounded border border-border">
-                        "Explain how you reached this answer, step by step."
+
+                      <Accordion type="single" collapsible className="space-y-4">
+                        <AccordionItem value="lease-summaries" id="lease-summaries">
+                          <AccordionTrigger className="text-lg font-semibold">1. Lease & Contract Summaries</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To quickly digest complex legal or technical text.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to summarise, highlight, or reformat clauses into plain English.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Summarise the lease for 22 Queen Street in bullet points, focusing on rent, break clauses, and repair obligations."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Highlight any unusual service charge clauses in the lease for Unit 4, Business Park."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="extracting-data" id="extracting-data">
+                          <AccordionTrigger className="text-lg font-semibold">2. Extracting Key Data</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> When you need specific details pulled from long schedules or contracts.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask for tables or lists with exactly the data points you care about.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "From the rent schedule for the retail portfolio, list each unit with tenant name, rent, lease expiry, and next review date."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "From the deed for 14 Market Road, list all covenants and who they apply to."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="comparing-properties" id="comparing-properties">
+                          <AccordionTrigger className="text-lg font-semibold">3. Comparing Properties & Leases</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To see differences between assets or contracts at a glance.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Name the properties/documents and ask for a comparison.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Compare the leases for Units 1, 2, and 3 in the Industrial Estate. Focus on rent reviews, repairing obligations, and break clauses."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Compare the tenancy agreements for 10 and 12 Green Lane, highlighting differences in tenant obligations."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="risk-compliance" id="risk-compliance">
+                          <AccordionTrigger className="text-lg font-semibold">4. Risk & Compliance Checks</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To identify red flags or restrictions in documents.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to review with a focus on risks, compliance, or legal issues.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Review the title deed for 30 River Road and highlight any restrictive covenants or easements."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Check the lease for 45 Market Road for compliance with the Landlord and Tenant Act."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="report-building" id="report-building">
+                          <AccordionTrigger className="text-lg font-semibold">5. Report Building</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To create reports for management, clients, or investors.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Tell Hobson what to include (leases, rents, key events, risks) and how to structure it (summary, table, or narrative).</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Create a report on the office portfolio: summarise each lease, include rent schedules, and note any lease events in the next 12 months."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Produce an investor briefing on the retail portfolio, including tenant mix, income, lease expiries, and risks."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="market-context" id="market-context">
+                          <AccordionTrigger className="text-lg font-semibold">6. Market Context & Insights</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To combine internal data with wider market or policy information.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to apply external market trends to your portfolio.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Using the rent reviews due in the industrial portfolio, explain how current market trends in London might affect outcomes."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Summarise how new government energy efficiency rules could affect our residential lettings portfolio."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="lending-finance" id="lending-finance">
+                          <AccordionTrigger className="text-lg font-semibold">7. Lending & Finance</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To prepare, review, or stress-test lending information.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Point Hobson to loan agreements, facility letters, or valuations and ask for analysis.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Summarise the key terms of the loan facility for the Riverside portfolio, including covenants, repayment terms, and interest cover."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "From the bank's term sheet, list all financial covenants and explain what they mean in simple terms."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Prepare a lender-ready report for the City offices portfolio: include rental income, lease expiries, and DSCR (Debt Service Coverage Ratio)."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Stress test the shopping centre loan agreement: what happens if rental income falls by 10%?"
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="asset-portfolio" id="asset-portfolio">
+                          <AccordionTrigger className="text-lg font-semibold">8. Asset & Portfolio Management</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To track performance and plan strategy.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to create summaries, highlight issues, or build dashboards.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "List all lease events in the next 18 months across the office portfolio."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Create a dashboard showing income by tenant, lease expiry profile, and upcoming rent reviews."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Highlight underperforming assets in the retail portfolio and suggest potential strategies."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="planning-development" id="planning-development">
+                          <AccordionTrigger className="text-lg font-semibold">9. Planning & Development</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> To assess redevelopment or planning opportunities.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to review deeds, covenants, or local policy.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Check the deeds for 12 King Street and highlight anything that could restrict redevelopment."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Summarise planning policies in Camden that could affect residential conversions."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+
+                      <div className="mt-8 p-6 bg-muted rounded-lg">
+                        <h4 className="text-lg font-semibold text-foreground mb-3">👉 Pro Tip</h4>
+                        <p className="text-muted-foreground mb-3">
+                          You can also use meta-prompting with Hobson. For example:
+                        </p>
+                        <div className="space-y-2 text-sm">
+                          <div className="p-3 bg-background rounded border border-border">
+                            "Suggest a better way to phrase this question to get clearer results."
+                          </div>
+                          <div className="p-3 bg-background rounded border border-border">
+                            "Explain how you reached this answer, step by step."
+                          </div>
+                        </div>
+                        <p className="text-muted-foreground mt-3">
+                          This way, Hobson helps you ask better questions and trust the answers more.
+                        </p>
                       </div>
                     </div>
-                    <p className="text-muted-foreground mt-3">
-                      This way, Hobson helps you ask better questions and trust the answers more.
-                    </p>
-                  </div>
+                  </section>
                 </div>
-              </section>
+              </div>
+
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1674,247 +1732,293 @@ const Learn = () => {
 
     // Handle Prompt Engineering - Debugging Prompts content specifically
     if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts') {
+      const tocSections = [
+        { id: 'quick-fixes', label: 'Quick Fixes' },
+        { id: 'deep-reviews', label: 'Deep Reviews' },
+        { id: 'fragile-areas', label: 'Fragile Areas (Handle with Care)' },
+        { id: 'performance-issues', label: 'Performance Issues' },
+        { id: 'persistent-problems', label: 'Persistent Problems' },
+        { id: 'debugging-flows', label: 'Debugging Flows (Examples)' },
+        { id: 'root-cause', label: 'Root Cause Mindset' },
+        { id: 'pro-tips', label: 'Pro Tips' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
         <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-5xl">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-2">Debugging Prompts</h1>
-              <p className="text-lg text-muted-foreground">Troubleshooting workflows, strategies, and examples for property professionals</p>
-            </div>
-
-            <div className="space-y-12">
-              <section>
-                <div className="space-y-6">
-                  <div className="p-6 bg-muted rounded-lg">
-                    <h4 className="text-lg font-semibold text-foreground mb-3">Debugging Prompts</h4>
-                    <h5 className="text-base font-medium text-foreground mb-3">Troubleshooting Workflows, Strategies, and Examples for Property Professionals</h5>
-                    <p className="text-muted-foreground mb-4">
-                      Working with Hobson is usually smooth — but sometimes you might get an answer that feels off, incomplete, or "not quite right." That's normal. Debugging is simply the process of refining your question (prompt), checking what Hobson has understood, and guiding it back on track.
-                    </p>
-                    <p className="text-muted-foreground">
-                      This guide shows you how to spot problems, fix them, and even turn mistakes into better insights.
-                    </p>
-                  </div>
-
-                  <Accordion type="single" collapsible className="space-y-4">
-                    <AccordionItem value="quick-fixes">
-                      <AccordionTrigger className="text-lg font-semibold">1. Quick Fixes</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> When Hobson's response is unclear, too general, or misses part of your request.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Be specific about what's wrong and ask Hobson to correct it.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "You missed the rent review dates. Please include them in the summary."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "That summary is too detailed. Give me a shorter, 5-point version instead."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="deep-reviews">
-                      <AccordionTrigger className="text-lg font-semibold">2. Deep Reviews</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-2"><strong>When to use:</strong> If you suspect Hobson misunderstood a document or gave an unreliable answer.</p>
-                            <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to explain how it reached its conclusion or to double-check its own work.</p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Explain step by step how you identified the covenants in this deed."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Review the lease summary again, but only highlight break clauses and repairing obligations."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="fragile-areas">
-                      <AccordionTrigger className="text-lg font-semibold">3. Fragile Areas (Handle with Care)</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-4">
-                              Some documents are especially sensitive — like loan agreements, head leases, or planning restrictions. Here you'll want Hobson to slow down and be extra cautious.
-                            </p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompt</h5>
-                            <div className="p-3 bg-background rounded border border-border text-sm">
-                              "The loan facility agreement for the Riverside portfolio is critical. Please review carefully, explain each covenant in plain English, and double-check that you haven't missed anything."
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="performance-issues">
-                      <AccordionTrigger className="text-lg font-semibold">4. Performance Issues</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-4">
-                              Sometimes Hobson's answers may feel "sluggish" — either too long, too vague, or full of repetition. You can tighten the response by asking for focus or a different format.
-                            </p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Summarise this 40-page lease into just 10 key points."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                "Put the tenant obligations into a clear table with columns for clause number, obligation, and responsibility."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="persistent-problems">
-                      <AccordionTrigger className="text-lg font-semibold">5. Persistent Problems</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-4">
-                              If Hobson keeps misunderstanding or giving the wrong kind of answer, take a step back. Try reframing or breaking down your request.
-                            </p>
-                          </div>
-                          
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-2">Strategies</h5>
-                            <div className="space-y-2 text-sm">
-                              <div className="p-3 bg-background rounded border border-border">
-                                <strong>Ask what went wrong:</strong> "Why do you think your answer didn't include rent figures?"
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                <strong>Try a different approach:</strong> "Instead of a summary, extract just the numbers from the rent schedule."
-                              </div>
-                              <div className="p-3 bg-background rounded border border-border">
-                                <strong>Start fresh:</strong> "Ignore earlier instructions. Start again: list each tenant, rent, and expiry date."
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="debugging-flows">
-                      <AccordionTrigger className="text-lg font-semibold">6. Debugging Flows (Examples)</AccordionTrigger>
-                      <AccordionContent className="space-y-6">
-                        <div className="space-y-6">
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-3">a) "Stuck in a loop"</h5>
-                            <p className="text-muted-foreground mb-3">
-                              You ask Hobson to summarise a lease, but it keeps missing service charges.
-                            </p>
-                            <div className="space-y-2">
-                              <p className="text-sm font-medium text-foreground">Flow:</p>
-                              <ol className="text-sm text-muted-foreground space-y-2 ml-4">
-                                <li>1. Say: "You didn't include service charges. Please review again and only list service charge clauses."</li>
-                                <li>2. Hobson corrects and shows just the relevant clauses.</li>
-                                <li>3. You confirm: "Yes, that's correct. Now add rent review dates as well."</li>
-                              </ol>
-                            </div>
-                          </div>
-
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-3">b) "Feature not working"</h5>
-                            <p className="text-muted-foreground mb-3">
-                              You ask for a cashflow report, but Hobson outputs only a lease summary.
-                            </p>
-                            <div className="space-y-2">
-                              <p className="text-sm font-medium text-foreground">Flow:</p>
-                              <ol className="text-sm text-muted-foreground space-y-2 ml-4">
-                                <li>1. Say: "I asked for a cashflow report, but you gave me a lease summary. Can you explain why?"</li>
-                                <li>2. Hobson may say it used the wrong source.</li>
-                                <li>3. You reply: "Use the rent schedule for the retail portfolio and build a 12-month cashflow instead."</li>
-                              </ol>
-                            </div>
-                          </div>
-
-                          <div>
-                            <h5 className="font-semibold text-foreground mb-3">c) "Information disappeared"</h5>
-                            <p className="text-muted-foreground mb-3">
-                              You ask for tenant obligations, but only get landlord obligations back.
-                            </p>
-                            <div className="space-y-2">
-                              <p className="text-sm font-medium text-foreground">Flow:</p>
-                              <ol className="text-sm text-muted-foreground space-y-2 ml-4">
-                                <li>1. Say: "You only gave landlord obligations. Please check again and list tenant obligations separately."</li>
-                                <li>2. Hobson re-checks and adds the missing section.</li>
-                              </ol>
-                            </div>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="root-cause">
-                      <AccordionTrigger className="text-lg font-semibold">7. Root Cause Mindset</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <div>
-                            <p className="text-muted-foreground mb-4">
-                              Don't just patch mistakes — look for the cause.
-                            </p>
-                          </div>
-                          
-                          <div className="space-y-3">
-                            <div className="p-3 bg-background rounded border border-border text-sm">
-                              <p className="text-muted-foreground mb-2"><strong>Instead of:</strong> "Add the missing covenant."</p>
-                              <p className="text-muted-foreground"><strong>Try:</strong> "Why did you miss this covenant in the first place?"</p>
-                            </div>
-                            <p className="text-muted-foreground text-sm">
-                              This way Hobson can learn with you and future answers improve.
-                            </p>
-                          </div>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-
-                    <AccordionItem value="pro-tips">
-                      <AccordionTrigger className="text-lg font-semibold">8. Pro Tips</AccordionTrigger>
-                      <AccordionContent className="space-y-4">
-                        <div className="space-y-4">
-                          <ul className="text-muted-foreground space-y-3">
-                            <li>• <strong>Rollback:</strong> If the conversation feels messy, reset with a clean, clear new question.</li>
-                            <li>• <strong>Small steps:</strong> Break big tasks into smaller ones (e.g. "Summarise lease" → "List covenants" → "Create table").</li>
-                            <li>• <strong>Document fixes:</strong> Ask Hobson: "Summarise what went wrong and how we fixed it" to keep a record.</li>
-                            <li>• <strong>Ask for alternatives:</strong> If one path fails, try: "Suggest a different way to approach this problem."</li>
-                          </ul>
-                        </div>
-                      </AccordionContent>
-                    </AccordionItem>
-                  </Accordion>
-
-                  <div className="mt-8 p-6 bg-muted rounded-lg">
-                    <h4 className="text-lg font-semibold text-foreground mb-3">👉 In short</h4>
-                    <p className="text-muted-foreground">
-                      Debugging with Hobson isn't about "errors in code" — it's about refining your questions, checking assumptions, and guiding Hobson like you would a junior colleague.
-                    </p>
-                  </div>
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-2">Debugging Prompts</h1>
+                  <p className="text-lg text-muted-foreground">Troubleshooting workflows, strategies, and examples for property professionals</p>
                 </div>
-              </section>
+
+                <div className="space-y-12">
+                  <section>
+                    <div className="space-y-6">
+                      <div className="p-6 bg-muted rounded-lg">
+                        <h4 className="text-lg font-semibold text-foreground mb-3">Debugging Prompts</h4>
+                        <h5 className="text-base font-medium text-foreground mb-3">Troubleshooting Workflows, Strategies, and Examples for Property Professionals</h5>
+                        <p className="text-muted-foreground mb-4">
+                          Working with Hobson is usually smooth — but sometimes you might get an answer that feels off, incomplete, or "not quite right." That's normal. Debugging is simply the process of refining your question (prompt), checking what Hobson has understood, and guiding it back on track.
+                        </p>
+                        <p className="text-muted-foreground">
+                          This guide shows you how to spot problems, fix them, and even turn mistakes into better insights.
+                        </p>
+                      </div>
+
+                      <Accordion type="single" collapsible className="space-y-4">
+                        <AccordionItem value="quick-fixes" id="quick-fixes">
+                          <AccordionTrigger className="text-lg font-semibold">1. Quick Fixes</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> When Hobson's response is unclear, too general, or misses part of your request.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Be specific about what's wrong and ask Hobson to correct it.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "You missed the rent review dates. Please include them in the summary."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "That summary is too detailed. Give me a shorter, 5-point version instead."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="deep-reviews" id="deep-reviews">
+                          <AccordionTrigger className="text-lg font-semibold">2. Deep Reviews</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-2"><strong>When to use:</strong> If you suspect Hobson misunderstood a document or gave an unreliable answer.</p>
+                                <p className="text-muted-foreground mb-4"><strong>How to use:</strong> Ask Hobson to explain how it reached its conclusion or to double-check its own work.</p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Explain step by step how you identified the covenants in this deed."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Review the lease summary again, but only highlight break clauses and repairing obligations."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="fragile-areas" id="fragile-areas">
+                          <AccordionTrigger className="text-lg font-semibold">3. Fragile Areas (Handle with Care)</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-4">
+                                  Some documents are especially sensitive — like loan agreements, head leases, or planning restrictions. Here you'll want Hobson to slow down and be extra cautious.
+                                </p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompt</h5>
+                                <div className="p-3 bg-background rounded border border-border text-sm">
+                                  "The loan facility agreement for the Riverside portfolio is critical. Please review carefully, explain each covenant in plain English, and double-check that you haven't missed anything."
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="performance-issues" id="performance-issues">
+                          <AccordionTrigger className="text-lg font-semibold">4. Performance Issues</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-4">
+                                  Sometimes Hobson's answers may feel "sluggish" — either too long, too vague, or full of repetition. You can tighten the response by asking for focus or a different format.
+                                </p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Example Prompts</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Summarise this 40-page lease into just 10 key points."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    "Put the tenant obligations into a clear table with columns for clause number, obligation, and responsibility."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="persistent-problems" id="persistent-problems">
+                          <AccordionTrigger className="text-lg font-semibold">5. Persistent Problems</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-4">
+                                  If Hobson keeps misunderstanding or giving the wrong kind of answer, take a step back. Try reframing or breaking down your request.
+                                </p>
+                              </div>
+                              
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-2">Strategies</h5>
+                                <div className="space-y-2 text-sm">
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    <strong>Ask what went wrong:</strong> "Why do you think your answer didn't include rent figures?"
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    <strong>Try a different approach:</strong> "Instead of a summary, extract just the numbers from the rent schedule."
+                                  </div>
+                                  <div className="p-3 bg-background rounded border border-border">
+                                    <strong>Start fresh:</strong> "Ignore earlier instructions. Start again: list each tenant, rent, and expiry date."
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="debugging-flows" id="debugging-flows">
+                          <AccordionTrigger className="text-lg font-semibold">6. Debugging Flows (Examples)</AccordionTrigger>
+                          <AccordionContent className="space-y-6">
+                            <div className="space-y-6">
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-3">a) "Stuck in a loop"</h5>
+                                <p className="text-muted-foreground mb-3">
+                                  You ask Hobson to summarise a lease, but it keeps missing service charges.
+                                </p>
+                                <div className="space-y-2">
+                                  <p className="text-sm font-medium text-foreground">Flow:</p>
+                                  <ol className="text-sm text-muted-foreground space-y-2 ml-4">
+                                    <li>1. Say: "You didn't include service charges. Please review again and only list service charge clauses."</li>
+                                    <li>2. Hobson corrects and shows just the relevant clauses.</li>
+                                    <li>3. You confirm: "Yes, that's correct. Now add rent review dates as well."</li>
+                                  </ol>
+                                </div>
+                              </div>
+
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-3">b) "Feature not working"</h5>
+                                <p className="text-muted-foreground mb-3">
+                                  You ask for a cashflow report, but Hobson outputs only a lease summary.
+                                </p>
+                                <div className="space-y-2">
+                                  <p className="text-sm font-medium text-foreground">Flow:</p>
+                                  <ol className="text-sm text-muted-foreground space-y-2 ml-4">
+                                    <li>1. Say: "I asked for a cashflow report, but you gave me a lease summary. Can you explain why?"</li>
+                                    <li>2. Hobson may say it used the wrong source.</li>
+                                    <li>3. You reply: "Use the rent schedule for the retail portfolio and build a 12-month cashflow instead."</li>
+                                  </ol>
+                                </div>
+                              </div>
+
+                              <div>
+                                <h5 className="font-semibold text-foreground mb-3">c) "Information disappeared"</h5>
+                                <p className="text-muted-foreground mb-3">
+                                  You ask for tenant obligations, but only get landlord obligations back.
+                                </p>
+                                <div className="space-y-2">
+                                  <p className="text-sm font-medium text-foreground">Flow:</p>
+                                  <ol className="text-sm text-muted-foreground space-y-2 ml-4">
+                                    <li>1. Say: "You only gave landlord obligations. Please check again and list tenant obligations separately."</li>
+                                    <li>2. Hobson re-checks and adds the missing section.</li>
+                                  </ol>
+                                </div>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="root-cause" id="root-cause">
+                          <AccordionTrigger className="text-lg font-semibold">7. Root Cause Mindset</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <div>
+                                <p className="text-muted-foreground mb-4">
+                                  Don't just patch mistakes — look for the cause.
+                                </p>
+                              </div>
+                              
+                              <div className="space-y-3">
+                                <div className="p-3 bg-background rounded border border-border text-sm">
+                                  <p className="text-muted-foreground mb-2"><strong>Instead of:</strong> "Add the missing covenant."</p>
+                                  <p className="text-muted-foreground"><strong>Try:</strong> "Why did you miss this covenant in the first place?"</p>
+                                </div>
+                                <p className="text-muted-foreground text-sm">
+                                  This way Hobson can learn with you and future answers improve.
+                                </p>
+                              </div>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+
+                        <AccordionItem value="pro-tips" id="pro-tips">
+                          <AccordionTrigger className="text-lg font-semibold">8. Pro Tips</AccordionTrigger>
+                          <AccordionContent className="space-y-4">
+                            <div className="space-y-4">
+                              <ul className="text-muted-foreground space-y-3">
+                                <li>• <strong>Rollback:</strong> If the conversation feels messy, reset with a clean, clear new question.</li>
+                                <li>• <strong>Small steps:</strong> Break big tasks into smaller ones (e.g. "Summarise lease" → "List covenants" → "Create table").</li>
+                                <li>• <strong>Document fixes:</strong> Ask Hobson: "Summarise what went wrong and how we fixed it" to keep a record.</li>
+                                <li>• <strong>Ask for alternatives:</strong> If one path fails, try: "Suggest a different way to approach this problem."</li>
+                              </ul>
+                            </div>
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+
+                      <div className="mt-8 p-6 bg-muted rounded-lg">
+                        <h4 className="text-lg font-semibold text-foreground mb-3">👉 In short</h4>
+                        <p className="text-muted-foreground">
+                          Debugging with Hobson isn't about "errors in code" — it's about refining your questions, checking assumptions, and guiding Hobson like you would a junior colleague.
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
         </div>
