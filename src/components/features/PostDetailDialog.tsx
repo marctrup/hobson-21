@@ -19,7 +19,9 @@ import {
   ArrowUp,
   ArrowDown,
   Reply,
-  MoreHorizontal
+  MoreHorizontal,
+  Edit,
+  Trash2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -71,6 +73,8 @@ export function PostDetailDialog({ open, onOpenChange, post }: PostDetailDialogP
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingComments, setIsLoadingComments] = useState(false);
   const [replyingTo, setReplyingTo] = useState<string | null>(null);
+  const [editingComment, setEditingComment] = useState<string | null>(null);
+  const [openDropdowns, setOpenDropdowns] = useState<Set<string>>(new Set());
   
   const { toast } = useToast();
   const { user } = useAuth();
@@ -188,6 +192,51 @@ export function PostDetailDialog({ open, onOpenChange, post }: PostDetailDialogP
     setValue('content', '');
   };
 
+  const toggleDropdown = (commentId: string) => {
+    const newDropdowns = new Set(openDropdowns);
+    if (newDropdowns.has(commentId)) {
+      newDropdowns.delete(commentId);
+    } else {
+      newDropdowns.clear(); // Close all other dropdowns
+      newDropdowns.add(commentId);
+    }
+    setOpenDropdowns(newDropdowns);
+  };
+
+  const handleEditComment = (comment: Comment) => {
+    setEditingComment(comment.id);
+    setValue('content', comment.content);
+    setOpenDropdowns(new Set());
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    if (!user) return;
+
+    try {
+      const { error } = await supabase
+        .from('feature_request_comments')
+        .delete()
+        .eq('id', commentId)
+        .eq('user_id', user.id); // Ensure user can only delete their own comments
+
+      if (error) throw error;
+
+      toast({
+        title: "Comment deleted",
+        description: "Your comment has been deleted successfully.",
+      });
+
+      fetchComments();
+      setOpenDropdowns(new Set());
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to delete comment",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (!post) return null;
 
   const categoryInfo = categoryLabels[post.category] || { label: post.category, emoji: '📝' };
@@ -293,45 +342,77 @@ export function PostDetailDialog({ open, onOpenChange, post }: PostDetailDialogP
                     
                     return (
                       <div key={comment.id} className="space-y-2">
-                        {/* Main Comment */}
-                        <div className="p-3 bg-muted/30 rounded-lg">
-                          <div className="flex items-start justify-between">
-                            <div className="flex items-center gap-2 mb-2">
-                              <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-medium">
-                                {comment.author_name.charAt(0).toUpperCase()}
-                              </div>
-                              <span className="text-sm font-medium">{comment.author_name}</span>
-                              <span className="text-xs text-muted-foreground">
-                                {formatTimeAgo(comment.created_at)}
-                              </span>
-                            </div>
-                            <Button variant="ghost" size="sm">
-                              <MoreHorizontal className="w-4 h-4" />
-                            </Button>
-                          </div>
-                          
-                          <p className="text-sm mb-3">{comment.content}</p>
-                          
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center gap-1">
-                              <Button variant="ghost" size="sm" className="h-6 px-2">
-                                <ThumbsUp className="w-3 h-3 mr-1" />
-                                {comment.votes}
-                              </Button>
-                            </div>
-                            {user && (
-                              <Button 
-                                variant="ghost" 
-                                size="sm" 
-                                className="h-6 px-2"
-                                onClick={() => handleReply(comment.id)}
-                              >
-                                <Reply className="w-3 h-3 mr-1" />
-                                Reply
-                              </Button>
-                            )}
-                          </div>
-                        </div>
+                         {/* Main Comment */}
+                         <div className="p-3 bg-muted/30 rounded-lg">
+                           <div className="flex items-start justify-between">
+                             <div className="flex items-center gap-2 mb-2">
+                               <div className="w-6 h-6 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-xs font-medium">
+                                 {comment.author_name.charAt(0).toUpperCase()}
+                               </div>
+                               <span className="text-sm font-medium">{comment.author_name}</span>
+                               <span className="text-xs text-muted-foreground">
+                                 {formatTimeAgo(comment.created_at)}
+                               </span>
+                             </div>
+                             
+                             {/* 3-dot menu - only show for comment owner */}
+                             {user && user.id === comment.user_id && (
+                               <div className="relative">
+                                 <Button 
+                                   variant="ghost" 
+                                   size="sm"
+                                   onClick={() => toggleDropdown(comment.id)}
+                                 >
+                                   <MoreHorizontal className="w-4 h-4" />
+                                 </Button>
+                                 
+                                 {/* Dropdown Menu */}
+                                 {openDropdowns.has(comment.id) && (
+                                   <div className="absolute right-0 top-8 z-50 bg-background border border-border rounded-lg shadow-lg w-40">
+                                     <div className="py-1">
+                                       <button
+                                         onClick={() => handleEditComment(comment)}
+                                         className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-accent transition-colors"
+                                       >
+                                         <Edit className="w-4 h-4" />
+                                         Edit comment
+                                       </button>
+                                       <button
+                                         onClick={() => handleDeleteComment(comment.id)}
+                                         className="flex items-center gap-2 w-full px-3 py-2 text-sm hover:bg-destructive/10 hover:text-destructive transition-colors"
+                                       >
+                                         <Trash2 className="w-4 h-4" />
+                                         Delete comment
+                                       </button>
+                                     </div>
+                                   </div>
+                                 )}
+                               </div>
+                             )}
+                           </div>
+                           
+                           <p className="text-sm mb-3">{comment.content}</p>
+                           
+                           <div className="flex items-center gap-3">
+                             <div className="flex items-center gap-1">
+                               <Button variant="ghost" size="sm" className="h-6 px-2">
+                                 <ThumbsUp className="w-3 h-3 mr-1" />
+                                 {comment.votes}
+                               </Button>
+                             </div>
+                             {user && (
+                               <Button 
+                                 variant="ghost" 
+                                 size="sm" 
+                                 className="h-6 px-2"
+                                 onClick={() => handleReply(comment.id)}
+                               >
+                                 <Reply className="w-3 h-3 mr-1" />
+                                 Reply
+                               </Button>
+                             )}
+                           </div>
+                         </div>
                         
                         {/* Replies */}
                         {replies.length > 0 && (
