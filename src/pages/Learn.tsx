@@ -364,9 +364,9 @@ const Learn = () => {
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">FAQ</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="what-is-credit">
-                        <AccordionTrigger className="text-left">What is a credit?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">What is a HEU?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">A credit is the unit of measurement for using Lovable's AI features. Each message or action costs a certain number of credits based on its complexity.</p>
+                          <p className="text-muted-foreground text-sm">A HEU (Hobson Energy Unit) is the unit of measurement for using Hobson's AI features. Each message or action costs a certain number of HEUs based on its complexity.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="upgrade-subscription">
