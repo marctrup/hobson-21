@@ -53,9 +53,9 @@ All colors MUST be HSL.
     --accent: 210 40% 96.1%;
     --accent-foreground: 269 91% 52%;
     
-    /* Filter button highlighting - light pink */
-    --filter-active: 330 81% 85%;
-    --filter-active-foreground: 330 61% 25%;
+    /* Filter button highlighting - light grey */
+    --filter-active: 210 20% 92%;
+    --filter-active-foreground: 222.2 84% 4.9%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
