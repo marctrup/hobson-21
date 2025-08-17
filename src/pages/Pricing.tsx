@@ -551,6 +551,42 @@ const Pricing = () => {
                   </AccordionContent>
                 </AccordionItem>
 
+                <AccordionItem value="item-4-knowledge">
+                  <AccordionTrigger>What is the knowledgebase?</AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-4">
+                      <p>
+                        The knowledgebase is a powerful feature that allows you to build a comprehensive, searchable database of all your property documents and information.
+                      </p>
+                      
+                      <div className="space-y-3">
+                        <div>
+                          <h4 className="font-semibold text-purple-700 mb-2">Key Features:</h4>
+                          <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
+                            <li><strong>Document Organization</strong> - Automatically categorizes and indexes all your uploaded documents</li>
+                            <li><strong>Smart Search</strong> - Find information across all your documents instantly using natural language queries</li>
+                            <li><strong>Cross-Reference</strong> - Links related information from different documents automatically</li>
+                            <li><strong>Data Extraction</strong> - Pulls key facts, dates, and terms from your documents into a structured format</li>
+                            <li><strong>Quick Access</strong> - Get answers without having to remember which document contains what information</li>
+                          </ul>
+                        </div>
+                        
+                        <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
+                          <p className="text-sm text-purple-800">
+                            <strong>Perfect for:</strong> Property managers who need to quickly access information from leases, certificates, inventories, and other documents without manually searching through files.
+                          </p>
+                        </div>
+                        
+                        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+                          <p className="text-sm text-blue-800">
+                            <strong>Available in:</strong> Essential Plus plan and above - this feature requires additional AI processing power to analyze and cross-reference your documents.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
                 <AccordionItem value="item-5">
                   <AccordionTrigger>Can I change plans anytime?</AccordionTrigger>
                   <AccordionContent>
