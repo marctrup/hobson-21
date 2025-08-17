@@ -349,6 +349,17 @@ const Learn = () => {
                           <li>• Bespoke integrations (call us)</li>
                         </ul>
                       </div>
+
+                      <div>
+                        <h3 className="text-lg font-medium text-foreground mb-3">Top-up - Top-Up</h3>
+                        <ul className="text-muted-foreground space-y-2">
+                          <li>• £15 one-off purchase (no subscription)</li>
+                          <li>• 150 HEUs (Hobson Energy Units) added to your balance</li>
+                          <li>• Covers extraction, indexing (preps docs for search), and Q&A</li>
+                          <li>• No rollover — unused HEUs expire at the end of your current billing period</li>
+                          <li>• Activates instantly and works with any plan</li>
+                        </ul>
+                      </div>
                     </div>
                   </section>
 
