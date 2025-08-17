@@ -232,7 +232,7 @@ const Pricing = () => {
                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm mt-auto">
-                    Choose Essential Plus
+                    Choose Essential +
                   </Button>
                 </CardContent>
               </Card>
