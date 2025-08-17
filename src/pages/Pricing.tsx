@@ -257,7 +257,7 @@ const Pricing = () => {
                     <div className="space-y-3 mb-4">
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
-                        <span className="text-xs">Everything in Plus</span>
+                        <span className="text-xs">Business Knowledgebase - Everything in Plus</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
