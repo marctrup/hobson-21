@@ -411,7 +411,7 @@ const Learn = () => {
                     </div>
 
                     <p className="text-muted-foreground mt-6">
-                      You can see the cost of each message in the chat history by pressing the three dots beneath a message.
+                      You can see the cost of each message in the chat by pressing the three dots beneath a message.
                     </p>
 
                     <div className="mt-8">
