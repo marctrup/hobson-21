@@ -578,12 +578,6 @@ const Pricing = () => {
                         </p>
                       </div>
 
-                      <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ Can I use it with Essential Plus?</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Yes. It works across plans and helps populate your Knowledgebase/Context Hub (docs, contacts, schedule) from day one.
-                        </p>
-                      </div>
 
                       <div>
                         <h4 className="font-semibold text-green-700 mb-3">❓ Will this unlock the full platform?</h4>
