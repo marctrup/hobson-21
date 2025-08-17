@@ -345,7 +345,7 @@ const Learn = () => {
                           <li>• Everything in Essential Plus</li>
                           <li>• 2000 HEU (Hobson Energy Unit) per month</li>
                           <li>• Support person</li>
-                          <li>• Bespoke document training</li>
+                          <li>• Business Knowledgebase</li>
                           <li>• Bespoke integrations (call us)</li>
                         </ul>
                       </div>
