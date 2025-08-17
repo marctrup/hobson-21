@@ -294,6 +294,13 @@ const Learn = () => {
                             Most of the cost happens up front when we process your files. The Starter Pack gives you extra credit to finish onboarding without worrying about limits.
                           </p>
                         </div>
+                        
+                        <div>
+                          <h4 className="font-medium text-foreground mb-2">What do I get?</h4>
+                          <p className="text-muted-foreground">
+                            1000 HEUs (Hobson Energy Units) to spend HEUs on document extraction, storage, and initial Q&A. Any unspent will roll over for two months.
+                          </p>
+                        </div>
                       </div>
                     </div>
                   </section>
