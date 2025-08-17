@@ -294,7 +294,7 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-4 flex-shrink-0">
                   <CardTitle className="text-lg font-bold">Top-Up</CardTitle>
-                  <div className="text-3xl font-bold text-purple-600 mt-2">£10</div>
+                  <div className="text-3xl font-bold text-purple-600 mt-2">£15</div>
                   <div className="text-sm text-purple-600 font-medium mt-1">150 HEUs</div>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
