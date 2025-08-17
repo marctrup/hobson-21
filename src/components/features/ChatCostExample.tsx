@@ -1,13 +1,15 @@
-import React from 'react';
-import { MoreHorizontal, User, Bot } from 'lucide-react';
+import React, { useState } from 'react';
+import { MoreHorizontal, User, Bot, X } from 'lucide-react';
 
 const ChatCostExample = () => {
+  const [showUsagePopup, setShowUsagePopup] = useState(false);
+
   return (
-    <div className="max-w-2xl mx-auto bg-background border border-border rounded-lg overflow-hidden">
+    <div className="max-w-2xl mx-auto bg-background border border-border rounded-lg overflow-hidden relative">
       {/* Chat Header */}
       <div className="bg-muted/30 px-4 py-3 border-b border-border">
         <h4 className="font-semibold text-foreground">Chat with Hobson</h4>
-        <p className="text-sm text-muted-foreground">Example conversation showing HEU cost</p>
+        <p className="text-sm text-muted-foreground">Click the ⋯ button to see HEU usage</p>
       </div>
       
       {/* Chat Messages */}
@@ -43,18 +45,12 @@ const ChatCostExample = () => {
             {/* Message Actions */}
             <div className="flex items-center gap-2 mt-1">
               <div className="text-xs text-muted-foreground">Hobson • 2:34 PM</div>
-              <button className="p-1 hover:bg-muted rounded">
+              <button 
+                className="p-1 hover:bg-muted rounded transition-colors relative"
+                onClick={() => setShowUsagePopup(!showUsagePopup)}
+              >
                 <MoreHorizontal className="w-3 h-3 text-muted-foreground" />
               </button>
-            </div>
-            
-            {/* HEU Cost Display */}
-            <div className="mt-2 bg-amber-50 border border-amber-200 rounded-md px-3 py-2 text-xs">
-              <div className="flex items-center justify-between">
-                <span className="text-amber-800 font-medium">HEU Cost:</span>
-                <span className="text-amber-900 font-semibold">0.05 HEUs</span>
-              </div>
-              <p className="text-amber-700 mt-1">Simple query - finds and returns one fact</p>
             </div>
           </div>
         </div>
@@ -71,10 +67,70 @@ const ChatCostExample = () => {
           </button>
         </div>
         <div className="flex items-center justify-between mt-2 text-xs text-muted-foreground">
-          <span>HEUs remaining: 245.7</span>
+          <span>HEUs remaining: 245.65</span>
           <span>Click ⋯ on any message to see HEU cost</span>
         </div>
       </div>
+
+      {/* Usage Popup */}
+      {showUsagePopup && (
+        <>
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-background/80 backdrop-blur-sm z-10"
+            onClick={() => setShowUsagePopup(false)}
+          />
+          
+          {/* Popup */}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-background border border-border rounded-lg shadow-lg w-80 p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold text-foreground">Message Usage</h3>
+              <button 
+                onClick={() => setShowUsagePopup(false)}
+                className="p-1 hover:bg-muted rounded"
+              >
+                <X className="w-4 h-4 text-muted-foreground" />
+              </button>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-sm font-medium text-blue-900">HEU Cost</span>
+                  <span className="text-lg font-bold text-blue-900">0.05</span>
+                </div>
+                <p className="text-xs text-blue-700">Simple query - finds and returns one fact</p>
+              </div>
+              
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Query type:</span>
+                  <span className="text-foreground">Simple</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Processing time:</span>
+                  <span className="text-foreground">0.8s</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Documents searched:</span>
+                  <span className="text-foreground">1</span>
+                </div>
+              </div>
+              
+              <div className="pt-3 border-t border-border">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">HEUs before:</span>
+                  <span className="text-foreground">245.70</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">HEUs after:</span>
+                  <span className="text-foreground">245.65</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
