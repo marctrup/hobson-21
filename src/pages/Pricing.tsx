@@ -115,7 +115,7 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-green-600"></div>
                 <CardHeader className="text-center pb-4 pt-6 flex-shrink-0">
                   <CardTitle className="text-lg font-bold">Starter Pack</CardTitle>
-                  <div className="text-3xl font-bold text-green-700 mt-2">£50</div>
+                  <div className="text-3xl font-bold text-green-700 mt-2">£54.50</div>
                   <div className="text-sm text-green-700 font-medium mt-1">1000 HEUs (one-time)</div>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
@@ -202,7 +202,7 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
                 <CardHeader className="text-center pb-4 pt-6 flex-shrink-0">
                   <CardTitle className="text-lg font-bold">Essential Plus</CardTitle>
-                  <div className="text-3xl font-bold text-purple-700 mt-2">£50<span className="text-sm font-normal">/month</span></div>
+                  <div className="text-3xl font-bold text-purple-700 mt-2">£49.75<span className="text-sm font-normal">/month</span></div>
                   <div className="text-sm text-purple-700 font-medium mt-1">700 HEUs</div>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
@@ -242,7 +242,7 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-4 flex-shrink-0">
                   <CardTitle className="text-lg font-bold">Enterprise</CardTitle>
-                  <div className="text-3xl font-bold text-purple-600 mt-2">£150<span className="text-sm font-normal">/month</span></div>
+                  <div className="text-3xl font-bold text-purple-600 mt-2">£148.50<span className="text-sm font-normal">/month</span></div>
                   <div className="text-sm text-purple-600 font-medium mt-1">2,000 HEUs</div>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
