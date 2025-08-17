@@ -122,19 +122,19 @@ const Pricing = () => {
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
-                        <span className="text-xs">One-time purchase</span>
+                        <span className="text-xs">Load up fast with the Starter Pack</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
-                        <span className="text-xs">Generous credits for document loading</span>
+                        <span className="text-xs">Get 1000 HEUs to power your documents</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
-                        <span className="text-xs">2-month rollover (vs 1 month)</span>
+                        <span className="text-xs">Keep credits longer with 2-month rollover</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
-                        <span className="text-xs">Try the full platform</span>
+                        <span className="text-xs">Unlock everything from the start</span>
                       </div>
                     </div>
                   </div>
