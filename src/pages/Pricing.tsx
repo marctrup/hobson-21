@@ -612,7 +612,7 @@ const Pricing = () => {
 
                       <div>
                         <h4 className="font-semibold text-purple-700 mb-3">❓ Does it cost extra?</h4>
-                        <p className="text-sm text-muted-foreground">The Business Knowledgebase is included with the Essential Plus and Enterprise plans. Uploading and indexing files uses your Hobson Energy Units (HEUs).</p>
+                        <p className="text-sm text-muted-foreground">The Business Knowledgebase is an option with Enterprise plans at no extra cost. It will be removed if there is a change in plan.</p>
                       </div>
                     </div>
                   </AccordionContent>
