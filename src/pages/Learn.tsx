@@ -497,7 +497,7 @@ const Learn = () => {
                       <AccordionItem value="get-more-credits">
                         <AccordionTrigger className="text-left">How do I get more credits?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">You can get more credits by upgrading your subscription plan or purchasing additional credit packages.</p>
+                          <p className="text-muted-foreground text-sm">You can get more HEUs by upgrading your plan or purchasing Top-ups.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="credit-reset">
