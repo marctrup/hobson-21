@@ -671,68 +671,6 @@ const Pricing = () => {
                 </AccordionItem>
                 
                 
-                <AccordionItem value="item-6">
-                  <AccordionTrigger>Daily and Monthly HEUs</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="font-semibold mb-2 text-purple-700">Daily HEUs</h4>
-                        <div className="mb-4">
-                          <h5 className="font-medium mb-2">Q: What are daily HEUs and how do they work?</h5>
-                          <p className="mb-3">A: Daily HEUs are small, free credits you get every day — included in both free and paid plans.</p>
-                          
-                          <div className="mb-3">
-                            <p className="font-medium text-sm mb-2">Use it or lose it:</p>
-                            <p className="text-sm mb-2">They expire at the end of the day and don't roll over.</p>
-                            <p className="text-sm italic">Example: If you get 5 daily HEUs and only use 3, the other 2 vanish at midnight.</p>
-                          </div>
-
-                          <div className="mb-3">
-                            <p className="font-medium text-sm mb-2">Purpose:</p>
-                            <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
-                              <li>Let you use the service each day without touching your monthly HEUs.</li>
-                              <li>Give free users a way to try the service daily.</li>
-                              <li>Encourage regular use by refreshing every 24 hours.</li>
-                            </ul>
-                          </div>
-
-                          <p className="text-sm font-medium">Bonus, not your main allowance: Best for quick or small tasks.</p>
-                        </div>
-                      </div>
-                      
-                      <div>
-                        <h4 className="font-semibold mb-2 text-purple-700">Monthly HEUs</h4>
-                        <div>
-                          <h5 className="font-medium mb-2">Q: What are monthly HEUs and how do they work?</h5>
-                          <p className="mb-3">A: Monthly HEUs are the main credits you get at the start of each billing month (paid plans only).</p>
-                          
-                          <div className="mb-3">
-                            <p className="font-medium text-sm mb-2">Rollover rule:</p>
-                            <p className="text-sm mb-2">If you don't use them all, leftovers move to next month — but you can't store more than your monthly amount.</p>
-                            <p className="text-sm italic">Example: You get 100 HEUs/month. If you only use 80, you start next month with 120. If you only use 10, you're still capped at 200 total (100 new + 100 carry-over). In month 3, you won't carry over any credits left from month 1 — only the unused credits from month 2 will roll over.</p>
-                          </div>
-
-                          <div className="mb-3">
-                            <p className="font-medium text-sm mb-2">Monthly plan:</p>
-                            <p className="text-sm mb-2">Rolled-over HEUs last 1 month, then expire.</p>
-                            <p className="text-sm italic">Example: Leftovers from July must be used in August, or they disappear.</p>
-                          </div>
-
-                          <div className="mb-3">
-                            <p className="font-medium text-sm mb-2">Annual plan:</p>
-                            <p className="text-sm mb-2">Rolled-over HEUs can stack up to 12× your monthly amount and last for 12 months.</p>
-                            <p className="text-sm italic">Example: With 100/month, you can store up to 1,200, and July's credits stay usable until the next July.</p>
-                          </div>
-
-                          <div>
-                            <p className="font-medium text-sm mb-2">Cancel plan:</p>
-                            <p className="text-sm">Any unused HEUs vanish at the end of your billing cycle.</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
                 
               </Accordion>
             </div>
