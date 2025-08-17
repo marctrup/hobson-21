@@ -581,7 +581,7 @@ const Learn = () => {
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
       const tocSections = [
         { id: 'getting-started', label: 'Getting started' },
-        { id: 'building-with-hobson', label: 'Getting started with Hobson' },
+        { id: 'building-with-hobson', label: 'Using Hobson day-to-day' },
         { id: 'features', label: 'Features' },
         { id: 'managing-account', label: 'Managing your account' },
         { id: 'policies-security', label: 'Policies and Security' },
@@ -649,7 +649,7 @@ const Learn = () => {
 
                   {/* Building with Hobson */}
                   <section id="building-with-hobson">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting started with Hobson</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Using Hobson day-to-day</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="build-efficiently">
                         <AccordionTrigger className="text-left">How do I build efficiently with Hobson?</AccordionTrigger>
