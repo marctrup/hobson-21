@@ -357,7 +357,7 @@ const Learn = () => {
                           <li>• 150 HEUs (Hobson Energy Units) added to your balance</li>
                           <li>• Covers extraction, indexing (preps docs for search), and Q&A</li>
                           <li>• No rollover — unused HEUs expire at the end of your current billing period</li>
-                          <li>• Activates instantly and works with any plan</li>
+                          <li>• Activates instantly and works with any paid plan</li>
                         </ul>
                       </div>
                     </div>
