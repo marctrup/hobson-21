@@ -617,7 +617,7 @@ const Learn = () => {
                       <AccordionItem value="what-is-hobson">
                         <AccordionTrigger className="text-left">What is Hobson?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson is an AI-powered document analysis platform that helps property management companies extract insights from contracts and documents.</p>
+                          <p className="text-muted-foreground text-sm">Hobson is your AI business assistant. It reads your documents, pulls out the key data, stores it safely, and answers questions using your own content.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="what-can-build">
