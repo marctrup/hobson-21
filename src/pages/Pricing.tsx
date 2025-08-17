@@ -525,27 +525,78 @@ const Pricing = () => {
                 <AccordionItem value="item-4">
                   <AccordionTrigger>What is the Starter Pack?</AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-4">
-                      <p>
-                        The Starter Pack is a one-time purchase designed to help you onboard your documents and try out Hobson without committing to a monthly subscription.
-                      </p>
-                      
-                      <div className="space-y-3">
-                        <div>
-                          <h4 className="font-semibold text-green-700 mb-2">Key Benefits:</h4>
-                          <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
-                            <li><strong>1000 HEUs</strong> - Generous credits for uploading and processing your documents</li>
-                            <li><strong>2-month rollover</strong> - Your unused HEUs last twice as long compared to monthly plans</li>
-                            <li><strong>One-time payment</strong> - No recurring charges, pay once and use when you need</li>
-                            <li><strong>Perfect for testing</strong> - Try out all features and see how Hobson works with your documents</li>
-                          </ul>
-                        </div>
-                        
-                        <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                          <p className="text-sm text-green-800">
-                            <strong>Perfect for:</strong> New users who want to upload their document library, test Hobson's capabilities, and decide if a monthly plan makes sense for their workflow.
-                          </p>
-                        </div>
+                    <div className="space-y-6">
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ What's the Starter Pack for?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          It's a one-time bundle to help you load your documents into the platform fast. It covers the heavy lifting: upload, extract key data, and index for search.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ Why do I need this before a plan?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Most of the cost happens up front when we process your files. The Starter Pack gives you extra credit to finish onboarding without worrying about limits.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ What do I get?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          £50 → 500 HEUs (Hobson Energy Units — our usage credits). You can spend HEUs on document extraction, storage, and initial Q&A.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ What's a HEU?</h4>
+                        <p className="text-sm text-muted-foreground mb-3">A HEU is our usage credit. Think of it like fuel. It's used for:</p>
+                        <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
+                          <li><strong>Extraction:</strong> reading your docs and pulling key fields.</li>
+                          <li><strong>Indexing for RAG:</strong> preparing your docs so answers include your content. (RAG = retrieval-augmented generation, i.e., the AI looks up your docs before answering.)</li>
+                          <li><strong>Early queries:</strong> first questions to test your setup.</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ Do Starter Pack HEUs expire?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Unused HEUs roll over for 2 months. (Other plan rollovers last 1 month.)
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ Is it a subscription?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          No. It's a one-time purchase made for onboarding. Pick a plan later, or right away—your Starter HEUs still apply to the same account.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ How is this different from Free/Essential?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Free/Essential include ongoing monthly usage. The Starter Pack front-loads generous HEUs so you can complete document onboarding quickly.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ Can I use it with Essential Plus?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Yes. It works across plans and helps populate your Knowledgebase/Context Hub (docs, contacts, schedule) from day one.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ Will this unlock the full platform?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          Yes. You can try the full platform while you import and set everything up.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-green-700 mb-3">❓ What happens when I run out of HEUs?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          You can move to a plan (or upgrade) and continue using the system. Any leftover Starter HEUs keep rolling for up to 2 months.
+                        </p>
                       </div>
                     </div>
                   </AccordionContent>
