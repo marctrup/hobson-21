@@ -552,36 +552,67 @@ const Pricing = () => {
                 </AccordionItem>
 
                 <AccordionItem value="item-4-knowledge">
-                  <AccordionTrigger>What is the knowledgebase?</AccordionTrigger>
+                  <AccordionTrigger>What is the Business Knowledgebase?</AccordionTrigger>
                   <AccordionContent>
-                    <div className="space-y-4">
-                      <p>
-                        The knowledgebase is a powerful feature that allows you to build a comprehensive, searchable database of all your property documents and information.
-                      </p>
-                      
-                      <div className="space-y-3">
-                        <div>
-                          <h4 className="font-semibold text-purple-700 mb-2">Key Features:</h4>
+                    <div className="space-y-6">
+                      <div>
+                        <p className="mb-4">
+                          The Business Knowledgebase is a private area where Hobson learns about your property company — your people, your terms, and your ways of working. It means Hobson's answers are not just property-smart, but tailored to your business.
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-purple-700 mb-3">❓ Why would my company use it?</h4>
+                        <p className="mb-3">With the Knowledgebase, Hobson can answer questions more personally, such as:</p>
+                        <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground mb-4">
+                          <li>"Who in our company handles rent reviews?"</li>
+                          <li>"What's our standard notice period for lease renewals?"</li>
+                          <li>"What process do we follow for arrears?"</li>
+                        </ul>
+                        <p className="text-sm">Instead of a generic answer, Hobson will respond with your team, your terms, and your processes.</p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-purple-700 mb-3">❓ What do we need to provide?</h4>
+                        <p className="mb-3">There are two simple ways to get started:</p>
+                        
+                        <div className="mb-4">
+                          <h5 className="font-medium mb-2">1. Fill out a template page (fast setup)</h5>
                           <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
-                            <li><strong>Document Organization</strong> - Automatically categorizes and indexes all your uploaded documents</li>
-                            <li><strong>Smart Search</strong> - Find information across all your documents instantly using natural language queries</li>
-                            <li><strong>Cross-Reference</strong> - Links related information from different documents automatically</li>
-                            <li><strong>Data Extraction</strong> - Pulls key facts, dates, and terms from your documents into a structured format</li>
-                            <li><strong>Quick Access</strong> - Get answers without having to remember which document contains what information</li>
+                            <li>Company overview (name, portfolio size, regions, services offered)</li>
+                            <li>Key people (name, role, email, area of expertise)</li>
+                            <li>Policies & terms (rent review cycle, service standards, billing terms)</li>
+                            <li>Glossary of internal terms</li>
                           </ul>
                         </div>
-                        
-                        <div className="bg-purple-50 p-4 rounded-lg border border-purple-200">
-                          <p className="text-sm text-purple-800">
-                            <strong>Perfect for:</strong> Property managers who need to quickly access information from leases, certificates, inventories, and other documents without manually searching through files.
-                          </p>
+
+                        <div className="mb-4">
+                          <h5 className="font-medium mb-2">2. Upload your own documents (deep context)</h5>
+                          <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
+                            <li>Rent review / lease renewal playbooks</li>
+                            <li>Staff handbooks or SOPs (standard operating procedures)</li>
+                            <li>Lease templates & FAQs</li>
+                            <li>Marketing packs or client brochures</li>
+                          </ul>
                         </div>
-                        
-                        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
-                          <p className="text-sm text-blue-800">
-                            <strong>Available in:</strong> Essential Plus plan and above - this feature requires additional AI processing power to analyze and cross-reference your documents.
-                          </p>
-                        </div>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-purple-700 mb-3">❓ How is the information used?</h4>
+                        <ul className="list-disc list-inside space-y-2 ml-4 text-sm text-muted-foreground">
+                          <li>Structured facts (like contacts or SLA times) are added to Hobson's "memory," so they are always at hand.</li>
+                          <li>Documents are broken into small pieces and stored privately for your company. Hobson only pulls the most relevant snippets when answering a question.</li>
+                        </ul>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-purple-700 mb-3">❓ Is our data secure?</h4>
+                        <p className="text-sm text-muted-foreground">Yes. Your Knowledgebase is private to your company only. Information is never shared between clients.</p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-purple-700 mb-3">❓ Does it cost extra?</h4>
+                        <p className="text-sm text-muted-foreground">The Business Knowledgebase is included with the Essential Plus and Enterprise plans. Uploading and indexing files uses your Hobson Energy Units (HEUs).</p>
                       </div>
                     </div>
                   </AccordionContent>
