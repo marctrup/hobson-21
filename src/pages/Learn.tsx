@@ -610,368 +610,349 @@ const Learn = () => {
                 </div>
 
                 <div className="space-y-12">
-                  {/* Getting started */}
+                  {/* What is Hobson */}
                   <section id="getting-started">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">What is Hobson?</h2>
+                    <div className="mb-6">
+                      <p className="text-muted-foreground text-sm">Hobson is your AI business assistant. It reads your documents, pulls out key data, stores it safely, and answers questions using your own content.</p>
+                    </div>
+                  </section>
+
+                  {/* Getting started */}
+                  <section id="building-with-hobson">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting started</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="what-is-hobson">
-                        <AccordionTrigger className="text-left">What is Hobson?</AccordionTrigger>
+                      <AccordionItem value="what-can-do">
+                        <AccordionTrigger className="text-left">What can I do with Hobson?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson is your AI business assistant. It reads your documents, pulls out the key data, stores it safely, and answers questions using your own content.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="what-can-build">
-                        <AccordionTrigger className="text-left">What can I build with Hobson?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson enables automated document processing, lease analysis, compliance monitoring, and property management workflows.</p>
+                          <p className="text-muted-foreground text-sm">Search leases/ASTs, pull key terms and dates, answer clause questions, create summaries, spot renewals/breaks, and (on Essential Plus) include contacts and schedule in answers.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="coding-experience">
-                        <AccordionTrigger className="text-left">Do I need coding experience to build with Hobson?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">Do I need coding experience?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">No, Hobson is designed to be user-friendly for property managers without technical expertise.</p>
+                          <p className="text-muted-foreground text-sm">No. Upload documents and ask questions in plain English.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="create-project">
+                      <AccordionItem value="get-started">
                         <AccordionTrigger className="text-left">How do I get started?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Start by uploading your documents through our secure platform and configuring your analysis preferences.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="start-templates">
-                        <AccordionTrigger className="text-left">Can I start from templates?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson provides pre-built templates for common property management scenarios like lease analysis and compliance checks.</p>
+                          <div className="text-muted-foreground text-sm space-y-2">
+                            <p>(Optional) Buy the Starter Pack to cover onboarding.</p>
+                            <p>Upload your documents.</p>
+                            <p>Hobson extracts and indexes them (prepares for search).</p>
+                            <p>Ask questions; invite your team.</p>
+                            <p>On Essential Plus, connect contacts and calendar.</p>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
                   </section>
 
-                  {/* Building with Hobson */}
-                  <section id="building-with-hobson">
+                  {/* Using Hobson day-to-day */}
+                  <section id="features">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Using Hobson day-to-day</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="build-efficiently">
-                        <AccordionTrigger className="text-left">How do I build efficiently with Hobson?</AccordionTrigger>
+                      <AccordionItem value="work-efficiently">
+                        <AccordionTrigger className="text-left">How do I work efficiently with Hobson?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Use clear document naming conventions, organize files systematically, and leverage automation features for repetitive tasks.</p>
+                          <p className="text-muted-foreground text-sm">Batch uploads. Occasionally some documents may be poorly labelled, so check the correct label has been applied.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="structure-prompts">
                         <AccordionTrigger className="text-left">How should I structure my prompts for the best results?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Be specific about what information you need extracted and provide context about document types and expected outcomes.</p>
+                          <div className="text-muted-foreground text-sm space-y-2">
+                            <p>Be specific: include property/tenant, date range, and the field you want.</p>
+                            <p>Example: "For 12 King St, what's the break clause and notice period? Cite the clause."</p>
+                            <p>("Cite" = show the source text.)</p>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="hit-error">
                         <AccordionTrigger className="text-left">What should I do when I hit an error?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Check document format compatibility, verify upload requirements, and contact support if issues persist.</p>
+                          <p className="text-muted-foreground text-sm">Retry once, then check file type/size. If it persists, contact support with the file name and timestamp.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="refactoring">
-                        <AccordionTrigger className="text-left">What is refactoring, and why is it important?</AccordionTrigger>
+                      <AccordionItem value="data-cleanup">
+                        <AccordionTrigger className="text-left">What is "data cleanup," and why is it important?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Refactoring optimizes your document processing workflows for better accuracy and efficiency over time.</p>
+                          <p className="text-muted-foreground text-sm">Standardising names, dates, and tags improves extraction accuracy and search quality.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="backend-connection">
-                        <AccordionTrigger className="text-left">Can I connect my project to a backend to store data?</AccordionTrigger>
+                      <AccordionItem value="connect-systems">
+                        <AccordionTrigger className="text-left">Can Hobson connect to our systems?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson integrates with popular property management systems and databases through secure API connections.</p>
+                          <p className="text-muted-foreground text-sm">Yes. We support exports and, on Enterprise, bespoke integrations with CRMs/property management software. Talk to us.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="add-login">
-                        <AccordionTrigger className="text-left">Can I add login to my website?</AccordionTrigger>
+                      <AccordionItem value="control-access">
+                        <AccordionTrigger className="text-left">Can I control who has access?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson includes enterprise-grade authentication and user management features.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Role-based access (admin/standard/view) and per-workspace permissions.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="third-party-apis">
-                        <AccordionTrigger className="text-left">Can I add third-party APIs to my project?</AccordionTrigger>
+                      <AccordionItem value="billing-heus">
+                        <AccordionTrigger className="text-left">How does billing/HEUs work?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson supports integration with various property management tools and external APIs.</p>
+                          <div className="text-muted-foreground text-sm space-y-2">
+                            <p>HEU = Hobson Energy Unit (your usage credit). You spend HEUs on extraction, indexing, and Q&A.</p>
+                            <p>Plans: monthly HEUs; unused plan HEUs roll over for 1 month.</p>
+                            <p>Starter Pack (£50): 500 HEUs; roll over for 2 months (to help onboarding).</p>
+                            <p>Top-Up (£15): 150 HEUs; one-off, no rollover (use within your current billing period).</p>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="store-api-keys">
-                        <AccordionTrigger className="text-left">Can I store sensitive API keys in Hobson?</AccordionTrigger>
+                      <AccordionItem value="improve-quality">
+                        <AccordionTrigger className="text-left">How can I improve answer quality?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, all API keys and sensitive data are encrypted and stored securely according to industry standards.</p>
+                          <p className="text-muted-foreground text-sm">Upload original text-PDFs (not photos), keep documents complete, ask focused questions, and save frequent prompts for reuse.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="add-payments">
-                        <AccordionTrigger className="text-left">How do I add payments to my website?</AccordionTrigger>
+                      <AccordionItem value="onboarding-time">
+                        <AccordionTrigger className="text-left">How long does onboarding take?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson integrates with payment processors commonly used in property management for rent collection and fees.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="improve-seo">
-                        <AccordionTrigger className="text-left">How can I improve SEO for my project?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Focus on structured data markup for property listings and ensure fast loading times for document access.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="project-completion-time">
-                        <AccordionTrigger className="text-left">How long does it take to complete a project?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Implementation typically takes 2-4 weeks depending on document volume and integration requirements.</p>
+                          <p className="text-muted-foreground text-sm">Small sets: hours. Large portfolios: a few days, depending on volume and file quality.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
                   </section>
 
                   {/* Features */}
-                  <section id="features">
+                  <section id="managing-account">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Features</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="project-settings">
-                        <AccordionTrigger className="text-left">How do I find the Project settings?</AccordionTrigger>
+                      <AccordionItem value="company-settings">
+                        <AccordionTrigger className="text-left">Where are Company Settings?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Navigate to your dashboard and click on the project settings icon in the top navigation bar.</p>
+                          <p className="text-muted-foreground text-sm">In the app under Settings (company, users, billing, HEUs).</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="project-visibility">
-                        <AccordionTrigger className="text-left">Can I change the visibility of my project?</AccordionTrigger>
+                      <AccordionItem value="data-visibility">
+                        <AccordionTrigger className="text-left">Can I change data visibility?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, you can set projects as private, shared with team members, or public within your organization.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Control who can view, upload, and query per workspace.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="hide-badge">
-                        <AccordionTrigger className="text-left">Can I hide the Hobson badge?</AccordionTrigger>
+                      <AccordionItem value="white-label">
+                        <AccordionTrigger className="text-left">Can I white-label Hobson?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Enterprise plans include white-label options to customize or remove branding elements.</p>
+                          <p className="text-muted-foreground text-sm">Enterprise option—contact us.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="rename-project">
-                        <AccordionTrigger className="text-left">Can I rename a project?</AccordionTrigger>
+                      <AccordionItem value="rename-workspace">
+                        <AccordionTrigger className="text-left">Can I rename a workspace/portfolio?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, project names can be updated at any time from the project settings menu.</p>
+                          <p className="text-muted-foreground text-sm">Yes, from Settings or the workspace menu.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="copy-project">
-                        <AccordionTrigger className="text-left">Can I make a copy of a project?</AccordionTrigger>
+                      <AccordionItem value="duplicate-query">
+                        <AccordionTrigger className="text-left">Can I duplicate a saved view or query?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, you can duplicate projects to create templates or test different configurations.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Duplicate saved filters and saved prompts.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="delete-project">
-                        <AccordionTrigger className="text-left">Can I delete a project?</AccordionTrigger>
+                      <AccordionItem value="delete-workspace">
+                        <AccordionTrigger className="text-left">Can I delete documents or a workspace?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, projects can be deleted from the settings menu. This action is permanent and cannot be undone.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Admins can delete; deletions are logged.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="what-is-remix">
-                        <AccordionTrigger className="text-left">What is a remix?</AccordionTrigger>
+                      <AccordionItem value="playbooks">
+                        <AccordionTrigger className="text-left">What are Playbooks?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">A remix creates a new project based on an existing one, allowing you to modify workflows without affecting the original.</p>
+                          <p className="text-muted-foreground text-sm">Reusable prompt sets for common tasks (e.g., renewal checks).</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="chat-mode">
                         <AccordionTrigger className="text-left">What is Chat mode?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Chat mode allows you to interact with your documents using natural language queries to extract specific information.</p>
+                          <div className="text-muted-foreground text-sm space-y-2">
+                            <p>Ask a question in plain English; Hobson fetches relevant snippets first, then answers.</p>
+                            <p>(This is "RAG"—retrieval-augmented generation: the AI retrieves context from your docs before generating a reply.)</p>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="see-edit-code">
-                        <AccordionTrigger className="text-left">Can I see the code that Hobson generates and manually edit it?</AccordionTrigger>
+                      <AccordionItem value="edit-fields">
+                        <AccordionTrigger className="text-left">Can I edit extracted fields?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Advanced users can access the underlying processing logic and customize extraction rules through the developer interface.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Review and correct extractions; changes are tracked.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="edit-text-colors">
-                        <AccordionTrigger className="text-left">Can I manually edit text or colors?</AccordionTrigger>
+                      <AccordionItem value="team-collaborate">
+                        <AccordionTrigger className="text-left">Can my team collaborate?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, the interface supports customization of themes, colors, and text elements to match your brand.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Invite teammates, set roles, and share saved views.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="collaborate">
-                        <AccordionTrigger className="text-left">Can I collaborate on my projects?</AccordionTrigger>
+                      <AccordionItem value="share-results">
+                        <AccordionTrigger className="text-left">How do I share results?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson supports team collaboration with role-based permissions and shared workspaces.</p>
+                          <p className="text-muted-foreground text-sm">Share within your workspace, export tables, or copy cited answers.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="publish-project">
-                        <AccordionTrigger className="text-left">How do I publish my project?</AccordionTrigger>
+                      <AccordionItem value="cloud-connectors">
+                        <AccordionTrigger className="text-left">Can I connect Google Drive/SharePoint/Dropbox?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Deploy your configured workflows to production through the deployment dashboard with one-click publishing.</p>
+                          <p className="text-muted-foreground text-sm">Yes—connectors are available; Enterprise can add others.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="custom-domain">
-                        <AccordionTrigger className="text-left">How do I add a custom domain to my project?</AccordionTrigger>
+                      <AccordionItem value="usage-analytics">
+                        <AccordionTrigger className="text-left">Do you show usage analytics?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Custom domains can be configured in the project settings under the "Domains" section for enterprise customers.</p>
+                          <p className="text-muted-foreground text-sm">Yes. See HEU usage, document counts, and query history.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="analytics">
-                        <AccordionTrigger className="text-left">Can I see analytics for my published projects?</AccordionTrigger>
+                      <AccordionItem value="scans-images">
+                        <AccordionTrigger className="text-left">Can I upload scans or images?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, comprehensive analytics show document processing volumes, accuracy metrics, and user engagement.</p>
+                          <div className="text-muted-foreground text-sm space-y-2">
+                            <p>Text-PDFs and DOCX work best. Scanned PDFs work if text is readable.</p>
+                            <p>(OCR = turning images into text.)</p>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="add-images">
-                        <AccordionTrigger className="text-left">Can I add images to a Hobson prompt?</AccordionTrigger>
+                      <AccordionItem value="bulk-import">
+                        <AccordionTrigger className="text-left">Can I bulk import from cloud drives?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson supports image uploads and can extract text and data from visual documents and diagrams.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Bulk import from connected drives or via folder upload.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="add-videos">
-                        <AccordionTrigger className="text-left">Can I add videos to a Hobson prompt?</AccordionTrigger>
+                      <AccordionItem value="export-data">
+                        <AccordionTrigger className="text-left">Can I export my data?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Currently, Hobson focuses on document and image processing. Video support is planned for future releases.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Export extracted fields and logs (CSV/JSON). Contact us for full exports.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="import-figma">
-                        <AccordionTrigger className="text-left">Can I import designs from Figma?</AccordionTrigger>
+                      <AccordionItem value="history-audit">
+                        <AccordionTrigger className="text-left">Can I see history/audit?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Interface mockups can be imported to customize the look and feel of your document processing workflows.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="export-code">
-                        <AccordionTrigger className="text-left">Can I export all of my project's code?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, all configurations and custom logic can be exported for backup or migration purposes.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="import-code">
-                        <AccordionTrigger className="text-left">Can I start a project by importing code from an external source such as GitHub?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, existing automation scripts and workflows can be imported through our API or GitHub integration.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="project-history">
-                        <AccordionTrigger className="text-left">How do I see my project history?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Project history and version control are available in the project settings under "History" tab.</p>
+                          <p className="text-muted-foreground text-sm">Yes. We log uploads, edits, and queries.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="restore-version">
-                        <AccordionTrigger className="text-left">Can I restore an earlier version of my project?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">Can I restore an earlier version?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, you can roll back to any previous version through the project history interface.</p>
+                          <p className="text-muted-foreground text-sm">We keep change history; contact support for restores.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
                   </section>
 
                   {/* Managing your account */}
-                  <section id="managing-account">
+                  <section id="policies-security">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Managing your account</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="change-email">
-                        <AccordionTrigger className="text-left">Can I change the email I use to login?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">Can I change the email I use to log in?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, email addresses can be updated in your account settings under "Profile" section.</p>
+                          <p className="text-muted-foreground text-sm">Yes, in Account Settings.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="delete-account">
                         <AccordionTrigger className="text-left">Can I delete my account?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Account deletion can be requested through the account settings. All data will be permanently removed.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Request deletion in Settings; we'll guide you on exporting data first.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="change-workspace-owner">
                         <AccordionTrigger className="text-left">Can I change the workspace owner?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Workspace ownership can be transferred to another team member through the admin panel.</p>
+                          <p className="text-muted-foreground text-sm">Admins can transfer ownership in Workspace Settings.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="transfer-project-ownership">
-                        <AccordionTrigger className="text-left">How can I transfer project ownership to someone else?</AccordionTrigger>
+                      <AccordionItem value="transfer-workspace">
+                        <AccordionTrigger className="text-left">How can I transfer a workspace to someone else?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Project ownership transfer is available in project settings under "Transfer Ownership" for team accounts.</p>
+                          <p className="text-muted-foreground text-sm">Use Transfer Ownership in Settings or contact support.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
                   </section>
 
-                  {/* Policies and Security */}
-                  <section id="policies-security">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Policies and Security</h2>
+                  {/* Policies and security */}
+                  <section id="how-hobson-works">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Policies and security</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="get-support">
                         <AccordionTrigger className="text-left">How can I get support?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Contact our support team through the help center, email support, or schedule a consultation call.</p>
+                          <p className="text-muted-foreground text-sm">Use in-app chat or email [support@yourdomain].</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="privacy-policy">
-                        <AccordionTrigger className="text-left">Where can I find Hobson's privacy policy?</AccordionTrigger>
+                      <AccordionItem value="privacy-terms">
+                        <AccordionTrigger className="text-left">Where can I find Hobson's Privacy Policy and Terms of Service?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Our privacy policy is available at the bottom of our website and in your account dashboard.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="terms-of-service">
-                        <AccordionTrigger className="text-left">Where can I find Hobson's Terms of Service?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Terms of Service are accessible through the footer links and account settings.</p>
+                          <p className="text-muted-foreground text-sm">See [link to Privacy Policy] and [link to Terms].</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="refund-policy">
                         <AccordionTrigger className="text-left">What is Hobson's refund policy?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">We offer a 30-day money-back guarantee for new subscriptions. Contact support for refund requests.</p>
+                          <p className="text-muted-foreground text-sm">See [link to Refunds]; we'll always try to make things right.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="security-compliance">
                         <AccordionTrigger className="text-left">Is Hobson compliant with security standards?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson is SOC 2 compliant and follows industry-standard security practices for data protection.</p>
+                          <p className="text-muted-foreground text-sm">We use encryption in transit and at rest, role-based access, and tenant isolation (your data is kept separate from other customers). See [Security Overview] for details.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="gdpr-compliance">
                         <AccordionTrigger className="text-left">Is Hobson GDPR compliant?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, Hobson is fully GDPR compliant with data processing agreements and privacy controls available.</p>
+                          <p className="text-muted-foreground text-sm">Yes. We support GDPR rights (access, export, deletion). A Data Processing Addendum (DPA) is available—contact us.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
                   </section>
 
                   {/* How Hobson works */}
-                  <section id="how-hobson-works">
+                  <section id="about-hobson">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">How Hobson works</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="tech-stacks">
-                        <AccordionTrigger className="text-left">What tech stacks does Hobson know?</AccordionTrigger>
+                      <AccordionItem value="file-types">
+                        <AccordionTrigger className="text-left">Which file types are supported?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson integrates with major property management platforms, CRMs, and accounting systems commonly used in real estate.</p>
+                          <p className="text-muted-foreground text-sm">PDF, DOCX, and common text files. CSV/Excel for tabular data.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="mobile-support">
-                        <AccordionTrigger className="text-left">Does Hobson support mobile app development?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">Does Hobson work on mobile?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Mobile access is available through responsive web interfaces, with native apps planned for future releases.</p>
+                          <p className="text-muted-foreground text-sm">Yes—Hobson runs in the browser and works on mobile for core tasks.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="remember-context">
                         <AccordionTrigger className="text-left">How does Hobson remember context?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson uses machine learning to understand document patterns and maintain context across related documents and projects.</p>
+                          <p className="text-muted-foreground text-sm">Hobson uses light RAG (retrieval-augmented generation). It retrieves the most relevant snippets from your private knowledgebase before answering. On Essential Plus, you can add contacts and schedule for richer context.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="project-ownership">
-                        <AccordionTrigger className="text-left">Who owns the projects and the code that Hobson creates?</AccordionTrigger>
+                      <AccordionItem value="data-ownership">
+                        <AccordionTrigger className="text-left">Who owns the data and outputs?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">You retain full ownership of your data, documents, and any custom configurations created within Hobson.</p>
+                          <p className="text-muted-foreground text-sm">You do. Your documents, extracted data, and answers belong to your company.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
                   </section>
 
                   {/* About Hobson */}
-                  <section id="about-hobson">
+                  <section>
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">About Hobson</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="where-based">
                         <AccordionTrigger className="text-left">Where is Hobson based?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson is headquartered in [Location] with team members distributed globally to provide 24/7 support.</p>
+                          <p className="text-muted-foreground text-sm">[Add your location].</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="hiring">
                         <AccordionTrigger className="text-left">Is Hobson hiring?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">We're always looking for talented individuals. Check our careers page for current openings in engineering, sales, and customer success.</p>
+                          <p className="text-muted-foreground text-sm">Check our careers page [link] or email [careers@yourdomain].</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
