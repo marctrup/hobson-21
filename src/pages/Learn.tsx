@@ -5,6 +5,7 @@ import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, 
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HEUBarVisualization } from '@/components/HEUBarVisualization';
+import ChatCostExample from '@/components/features/ChatCostExample';
 import { useAuth } from '@/hooks/useAuth';
 import { AuthDialog } from '@/components/features/AuthDialog';
 import { CreatePostDialog } from '@/components/features/CreatePostDialog';
@@ -412,6 +413,11 @@ const Learn = () => {
                     <p className="text-muted-foreground mt-6">
                       You can see the cost of each message in the chat history by pressing the three dots beneath a message.
                     </p>
+
+                    <div className="mt-8">
+                      <h3 className="text-lg font-medium text-foreground mb-4">Example: How HEU costs appear in chat</h3>
+                      <ChatCostExample />
+                    </div>
                   </section>
 
                   {/* Credit Rollovers */}
