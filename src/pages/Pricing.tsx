@@ -589,7 +589,7 @@ const Pricing = () => {
                       <div>
                         <h4 className="font-semibold text-green-700 mb-3">❓ What happens when I run out of HEUs?</h4>
                         <p className="text-sm text-muted-foreground">
-                          You can move to a plan (or upgrade) and continue using the system. Any leftover Starter HEUs keep rolling for up to 2 months.
+                          You can move to a plan or buy top-ups to finish the process.
                         </p>
                       </div>
                     </div>
