@@ -344,8 +344,6 @@ const Learn = () => {
                         <ul className="text-muted-foreground space-y-2">
                           <li>• Everything in Essential Plus</li>
                           <li>• 2000 HEU (Hobson Energy Unit) per month</li>
-                          <li>• Unlimited Members</li>
-                          <li>• Unlimited documents</li>
                           <li>• Support person</li>
                           <li>• Bespoke document training</li>
                           <li>• Bespoke integrations (call us)</li>
