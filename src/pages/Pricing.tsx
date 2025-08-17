@@ -311,6 +311,10 @@ const Pricing = () => {
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
                         <span className="text-xs">Add more whenever you need</span>
                       </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                        <span className="text-xs">Activates instantly and works with any paid plan</span>
+                      </div>
                     </div>
                   </div>
                   <Button variant="outline" className="w-full border-purple-300 text-purple-600 hover:bg-purple-50 text-sm mt-auto">
