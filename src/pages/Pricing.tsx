@@ -215,10 +215,6 @@ const Pricing = () => {
                         <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
                         <span className="text-xs">Everything in Essential</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
-                        <span className="text-xs">Priority support</span>
-                      </div>
                     </div>
                     <div className="space-y-2 mb-4">
                       <div className="flex items-center justify-center gap-2">
