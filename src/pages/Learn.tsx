@@ -388,21 +388,23 @@ const Learn = () => {
                       Many messages cost less than 1 HEU, while more complex ones may cost more. This approach allows for more precise edits and greater efficiency per message, making Hobson more affordable overall.
                     </p>
                     
-                    <h3 className="text-lg font-medium text-foreground mb-4">Example prompts and their cost:</h3>
+                    <h3 className="text-lg font-medium text-foreground mb-4">Example tasks and their HEU cost:</h3>
                     <div className="overflow-x-auto">
                       <table className="w-full text-sm">
                         <thead>
                           <tr className="border-b border-border">
-                            <th className="text-left py-2 text-foreground">User Prompt</th>
-                            <th className="text-left py-2 text-foreground">Work done</th>
-                            <th className="text-left py-2 text-foreground">Credits used</th>
+                            <th className="text-left py-2 text-foreground">Example Task</th>
+                            <th className="text-left py-2 text-foreground">Work Done</th>
+                            <th className="text-left py-2 text-foreground">HEUs</th>
                           </tr>
                         </thead>
                         <tbody className="text-muted-foreground">
-                          <tr><td className="py-2">Uploading a lease</td><td>Read and understand</td><td>0.50</td></tr>
-                          <tr><td className="py-2">When is the next review?</td><td>Retrieve that information</td><td>0.90</td></tr>
-                          <tr><td className="py-2">Compare my rent to the market.</td><td>Build a comparison</td><td>1.20</td></tr>
-                          <tr><td className="py-2">Build a market appraisal report</td><td>Builds a report</td><td>2.00</td></tr>
+                          <tr><td className="py-2">Reading a simple document (e.g. certificate)</td><td>Scans and summarises</td><td>0.5</td></tr>
+                          <tr><td className="py-2">Reading a medium document (e.g. deed)</td><td>Reviews, extracts key info</td><td>1.4</td></tr>
+                          <tr><td className="py-2">Reading a complex document (e.g. lease)</td><td>Full detailed review and breakdown</td><td>16.9</td></tr>
+                          <tr><td className="py-2">Asking a simple query (e.g. "What is the rent?")</td><td>Finds and returns one fact</td><td>0.05</td></tr>
+                          <tr><td className="py-2">Asking a medium query (e.g. "List all rents")</td><td>Searches and compiles several data points</td><td>0.26</td></tr>
+                          <tr><td className="py-2">Asking a complex query (e.g. "Build a tenancy report")</td><td>Gathers multiple details, formats a full report</td><td>0.54</td></tr>
                         </tbody>
                       </table>
                     </div>
