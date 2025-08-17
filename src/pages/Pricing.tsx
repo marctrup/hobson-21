@@ -112,7 +112,7 @@ const Pricing = () => {
                 <CardHeader className="text-center pb-4 pt-6 flex-shrink-0">
                   <CardTitle className="text-lg font-bold">Starter Pack</CardTitle>
                   <div className="text-3xl font-bold text-green-700 mt-2">£50</div>
-                  <div className="text-sm text-green-700 font-medium mt-1">500 HEUs (one-time)</div>
+                  <div className="text-sm text-green-700 font-medium mt-1">1000 HEUs (one-time)</div>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
                   <div className="flex-grow">
@@ -518,7 +518,7 @@ const Pricing = () => {
                         <div>
                           <h4 className="font-semibold text-green-700 mb-2">Key Benefits:</h4>
                           <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
-                            <li><strong>500 HEUs</strong> - Generous credits for uploading and processing your documents</li>
+                            <li><strong>1000 HEUs</strong> - Generous credits for uploading and processing your documents</li>
                             <li><strong>2-month rollover</strong> - Your unused HEUs last twice as long compared to monthly plans</li>
                             <li><strong>One-time payment</strong> - No recurring charges, pay once and use when you need</li>
                             <li><strong>Perfect for testing</strong> - Try out all features and see how Hobson works with your documents</li>
