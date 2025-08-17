@@ -77,7 +77,7 @@ const Pricing = () => {
                 <CardHeader className="text-center pb-4 flex-shrink-0">
                   <CardTitle className="text-lg font-bold">Free</CardTitle>
                   <div className="text-3xl font-bold text-purple-600 mt-2">£0</div>
-                  <div className="text-sm text-purple-600 font-medium mt-1">1 daily HUE (up to 5/month)</div>
+                  <div className="text-sm text-purple-600 font-medium mt-1">18HEUs</div>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
                   <div className="flex-grow">
