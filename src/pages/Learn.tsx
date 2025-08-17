@@ -506,12 +506,6 @@ const Learn = () => {
                           <p className="text-muted-foreground text-sm">Your credit limit resets at the beginning of each billing cycle based on your subscription plan.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="credit-topup">
-                        <AccordionTrigger className="text-left">Can I buy a top-up of credits?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Additional credit packages may be available depending on your plan. Contact support for more information.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="remaining-credits">
                         <AccordionTrigger className="text-left">How do I see the remaining credits in a workspace?</AccordionTrigger>
                         <AccordionContent>
