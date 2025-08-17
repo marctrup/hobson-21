@@ -68,8 +68,8 @@ const Pricing = () => {
               </p>
             </div>
             
-            {/* All 5 Plans in Unified Grid */}
-            <div className="grid gap-6 lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 max-w-7xl mx-auto pt-16 overflow-visible items-stretch">
+            {/* All 6 Plans in Unified Grid */}
+            <div className="grid gap-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 max-w-8xl mx-auto pt-16 overflow-visible items-stretch">
               
               {/* Free Plan */}
               <Card className="relative bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
@@ -97,6 +97,49 @@ const Pricing = () => {
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
                     Start Free
+                  </Button>
+                </CardContent>
+              </Card>
+
+              {/* Starter Pack - Onboarding Option */}
+              <Card className="relative bg-gradient-to-br from-green-50 to-green-100/50 border-2 border-green-400 hover:border-green-500 transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
+                <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
+                  <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white px-3 py-1 text-xs font-medium shadow-lg whitespace-nowrap">
+                    🚀 Perfect Start
+                  </Badge>
+                </div>
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-green-400 to-green-600"></div>
+                <CardHeader className="text-center pb-4 pt-6 flex-shrink-0">
+                  <CardTitle className="text-lg font-bold">Starter Pack</CardTitle>
+                  <div className="text-3xl font-bold text-green-700 mt-2">£50</div>
+                  <div className="text-sm text-green-700 font-medium mt-1">500 HEUs (one-time)</div>
+                </CardHeader>
+                <CardContent className="flex flex-col flex-grow">
+                  <div className="flex-grow">
+                    <p className="text-xs text-muted-foreground mb-4">
+                      Perfect for onboarding your documents and getting started.
+                    </p>
+                    <div className="space-y-3 mb-6">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                        <span className="text-xs">One-time purchase</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                        <span className="text-xs">Generous credits for document loading</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                        <span className="text-xs">2-month rollover (vs 1 month)</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-green-600 flex-shrink-0" />
+                        <span className="text-xs">Try the full platform</span>
+                      </div>
+                    </div>
+                  </div>
+                  <Button className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white text-sm mt-auto">
+                    Get Started
                   </Button>
                 </CardContent>
               </Card>
@@ -464,6 +507,35 @@ const Pricing = () => {
                 </AccordionItem>
                 
                 <AccordionItem value="item-4">
+                  <AccordionTrigger>What is the Starter Pack?</AccordionTrigger>
+                  <AccordionContent>
+                    <div className="space-y-4">
+                      <p>
+                        The Starter Pack is a one-time purchase designed to help you onboard your documents and try out Hobson without committing to a monthly subscription.
+                      </p>
+                      
+                      <div className="space-y-3">
+                        <div>
+                          <h4 className="font-semibold text-green-700 mb-2">Key Benefits:</h4>
+                          <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
+                            <li><strong>500 HEUs</strong> - Generous credits for uploading and processing your documents</li>
+                            <li><strong>2-month rollover</strong> - Your unused HEUs last twice as long compared to monthly plans</li>
+                            <li><strong>One-time payment</strong> - No recurring charges, pay once and use when you need</li>
+                            <li><strong>Perfect for testing</strong> - Try out all features and see how Hobson works with your documents</li>
+                          </ul>
+                        </div>
+                        
+                        <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                          <p className="text-sm text-green-800">
+                            <strong>Perfect for:</strong> New users who want to upload their document library, test Hobson's capabilities, and decide if a monthly plan makes sense for their workflow.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-5">
                   <AccordionTrigger>Can I change plans anytime?</AccordionTrigger>
                   <AccordionContent>
                     Absolutely! You can upgrade or downgrade your plan at any time. Changes take effect at your next billing cycle, and any unused HEUs from Top-Ups will carry over to your new plan.
