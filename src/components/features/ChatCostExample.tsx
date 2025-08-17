@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { MoreHorizontal, User, Bot, X } from 'lucide-react';
 
 const ChatCostExample = () => {
-  const [showUsagePopup, setShowUsagePopup] = useState(false);
+  const [showUsagePopup, setShowUsagePopup] = useState(true); // Show popup by default to demonstrate
 
   return (
     <div className="max-w-2xl mx-auto bg-background border border-border rounded-lg overflow-hidden relative">
