@@ -52,7 +52,7 @@ const Learn = () => {
         if (activeVerticalTab === 'faq') {
           tocSections = ['getting-started', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
         } else if (activeVerticalTab === 'plans-credits') {
-          tocSections = ['overview', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
+          tocSections = ['overview', 'starter-pack', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
         }
       } else if (activeHorizontalTab === 'prompt-engineering') {
         if (activeVerticalTab === 'fundamentals') {
@@ -241,6 +241,7 @@ const Learn = () => {
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       const tocSections = [
         { id: 'overview', label: 'Overview' },
+        { id: 'starter-pack', label: 'Starter pack' },
         { id: 'feature-comparison', label: 'Feature comparison' },
         { id: 'available-plans', label: 'Available Paid Plans' },
         { id: 'credit-display', label: 'Credit display' },
@@ -278,29 +279,32 @@ const Learn = () => {
                       <p className="text-muted-foreground mb-4">
                         Hobson is a subscription based service with a free plan and several paid plans. When you pay for a subscription you get access to more additional support, and more HEUs (Hobsons Energy units - the currency used to buy effort). You need HEUs to interact with Hobson.
                       </p>
+                    </div>
+                  </section>
+
+                  {/* Starter pack */}
+                  <section id="starter-pack">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Starter pack</h2>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-medium text-foreground mb-2">What's the Starter Pack for?</h4>
+                        <p className="text-muted-foreground">
+                          It's a one-time bundle to help you load your documents into the platform fast. It covers the heavy lifting: upload, extract key data, and index for search.
+                        </p>
+                      </div>
                       
-                      <h3 className="text-lg font-medium text-foreground mb-3 mt-6">Starter pack</h3>
-                      <div className="space-y-4">
-                        <div>
-                          <h4 className="font-medium text-foreground mb-2">What's the Starter Pack for?</h4>
-                          <p className="text-muted-foreground">
-                            It's a one-time bundle to help you load your documents into the platform fast. It covers the heavy lifting: upload, extract key data, and index for search.
-                          </p>
-                        </div>
-                        
-                        <div>
-                          <h4 className="font-medium text-foreground mb-2">Why do I need this before a plan?</h4>
-                          <p className="text-muted-foreground">
-                            Most of the cost happens up front when we process your files. The Starter Pack gives you extra credit to finish onboarding without worrying about limits.
-                          </p>
-                        </div>
-                        
-                        <div>
-                          <h4 className="font-medium text-foreground mb-2">What do I get?</h4>
-                          <p className="text-muted-foreground">
-                            1000 HEUs (Hobson Energy Units) to spend HEUs on document extraction, storage, and initial Q&A. Any unspent will roll over for two months.
-                          </p>
-                        </div>
+                      <div>
+                        <h4 className="font-medium text-foreground mb-2">Why do I need this before a plan?</h4>
+                        <p className="text-muted-foreground">
+                          Most of the cost happens up front when we process your files. The Starter Pack gives you extra credit to finish onboarding without worrying about limits.
+                        </p>
+                      </div>
+                      
+                      <div>
+                        <h4 className="font-medium text-foreground mb-2">What do I get?</h4>
+                        <p className="text-muted-foreground">
+                          1000 HEUs (Hobson Energy Units) to spend HEUs on document extraction, storage, and initial Q&A. Any unspent will roll over for two months.
+                        </p>
                       </div>
                     </div>
                   </section>
