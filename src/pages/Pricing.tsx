@@ -666,7 +666,7 @@ const Pricing = () => {
                 <AccordionItem value="item-5">
                   <AccordionTrigger>Can I change plans anytime?</AccordionTrigger>
                   <AccordionContent>
-                    Absolutely! You can upgrade or downgrade your plan at any time. Changes take effect at your next billing cycle, and any unused HEUs from Top-Ups will carry over to your new plan.
+                    Absolutely! You can upgrade or downgrade your plan at any time. Changes take effect at your next billing cycle. Any benefits by downgrading will be lost.
                   </AccordionContent>
                 </AccordionItem>
                 
