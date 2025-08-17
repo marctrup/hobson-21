@@ -351,7 +351,7 @@ const Learn = () => {
                       </div>
 
                       <div>
-                        <h3 className="text-lg font-medium text-foreground mb-3">Top-up - Top-Up</h3>
+                        <h3 className="text-lg font-medium text-foreground mb-3">Top-up</h3>
                         <ul className="text-muted-foreground space-y-2">
                           <li>• £15 one-off purchase (no subscription)</li>
                           <li>• 150 HEUs (Hobson Energy Units) added to your balance</li>
