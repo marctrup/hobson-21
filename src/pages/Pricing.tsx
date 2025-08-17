@@ -374,74 +374,32 @@ const Pricing = () => {
                               <tr>
                                 <td className="border border-border p-3">Reading a simple document (e.g. certificate)</td>
                                 <td className="border border-border p-3">Scans and summarises</td>
-                                <td className="border border-border p-3">
-                                  <input 
-                                    type="number" 
-                                    step="0.1" 
-                                    defaultValue="0.50" 
-                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
-                                  />
-                                </td>
+                                <td className="border border-border p-3 font-medium">0.5</td>
                               </tr>
                               <tr className="bg-muted/20">
                                 <td className="border border-border p-3">Reading a medium document (e.g. deed)</td>
                                 <td className="border border-border p-3">Reviews, extracts key info</td>
-                                <td className="border border-border p-3">
-                                  <input 
-                                    type="number" 
-                                    step="0.1" 
-                                    defaultValue="1.00" 
-                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
-                                  />
-                                </td>
+                                <td className="border border-border p-3 font-medium">1.4</td>
                               </tr>
                               <tr>
                                 <td className="border border-border p-3">Reading a complex document (e.g. lease)</td>
                                 <td className="border border-border p-3">Full detailed review and breakdown</td>
-                                <td className="border border-border p-3">
-                                  <input 
-                                    type="number" 
-                                    step="0.1" 
-                                    defaultValue="2.00" 
-                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
-                                  />
-                                </td>
+                                <td className="border border-border p-3 font-medium">16.9</td>
                               </tr>
                               <tr className="bg-muted/20">
                                 <td className="border border-border p-3">Asking a simple query (e.g. "What is the rent?")</td>
                                 <td className="border border-border p-3">Finds and returns one fact</td>
-                                <td className="border border-border p-3">
-                                  <input 
-                                    type="number" 
-                                    step="0.1" 
-                                    defaultValue="0.20" 
-                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
-                                  />
-                                </td>
+                                <td className="border border-border p-3 font-medium">0.05</td>
                               </tr>
                               <tr>
                                 <td className="border border-border p-3">Asking a medium query (e.g. "List all rents")</td>
                                 <td className="border border-border p-3">Searches and compiles several data points</td>
-                                <td className="border border-border p-3">
-                                  <input 
-                                    type="number" 
-                                    step="0.1" 
-                                    defaultValue="0.50" 
-                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
-                                  />
-                                </td>
+                                <td className="border border-border p-3 font-medium">0.26</td>
                               </tr>
                               <tr className="bg-muted/20">
                                 <td className="border border-border p-3">Asking a complex query (e.g. "Build a tenancy report")</td>
                                 <td className="border border-border p-3">Gathers multiple details, formats a full report</td>
-                                <td className="border border-border p-3">
-                                  <input 
-                                    type="number" 
-                                    step="0.1" 
-                                    defaultValue="1.50" 
-                                    className="w-16 px-2 py-1 border border-input rounded text-sm bg-background"
-                                  />
-                                </td>
+                                <td className="border border-border p-3 font-medium">0.54</td>
                               </tr>
                             </tbody>
                           </table>
