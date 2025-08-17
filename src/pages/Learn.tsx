@@ -633,7 +633,7 @@ const Learn = () => {
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="create-project">
-                        <AccordionTrigger className="text-left">How do I create a project?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">How do I get started?</AccordionTrigger>
                         <AccordionContent>
                           <p className="text-muted-foreground text-sm">Start by uploading your documents through our secure platform and configuring your analysis preferences.</p>
                         </AccordionContent>
