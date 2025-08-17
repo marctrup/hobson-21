@@ -167,7 +167,7 @@ const Pricing = () => {
                         <span className="text-xs">Priority support</span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-center gap-2 mb-6">
+                    <div className="flex items-center justify-center gap-2 mb-4 px-2">
                       <span className="text-xs text-muted-foreground">Monthly</span>
                       <div className="relative">
                         <input type="checkbox" className="sr-only" />
@@ -175,7 +175,7 @@ const Pricing = () => {
                         <div className="absolute left-0.5 top-0.5 bg-purple-500 w-3 h-3 rounded-full shadow transition-transform"></div>
                       </div>
                       <span className="text-xs font-medium">Annual</span>
-                      <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
+                      <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 ml-1">Save 20%</Badge>
                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
@@ -212,7 +212,7 @@ const Pricing = () => {
                         <span className="text-xs">Priority support</span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-center gap-2 mb-6">
+                    <div className="flex items-center justify-center gap-2 mb-4 px-2">
                       <span className="text-xs text-muted-foreground">Monthly</span>
                       <div className="relative">
                         <input type="checkbox" className="sr-only" />
@@ -220,7 +220,7 @@ const Pricing = () => {
                         <div className="absolute left-0.5 top-0.5 bg-purple-600 w-3 h-3 rounded-full shadow transition-transform"></div>
                       </div>
                       <span className="text-xs font-medium">Annual</span>
-                      <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
+                      <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 ml-1">Save 20%</Badge>
                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm mt-auto">
@@ -256,7 +256,7 @@ const Pricing = () => {
                         <span className="text-xs">Custom integrations (call us)</span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-center gap-2 mb-6">
+                    <div className="flex items-center justify-center gap-2 mb-4 px-2">
                       <span className="text-xs text-muted-foreground">Monthly</span>
                       <div className="relative">
                         <input type="checkbox" className="sr-only" />
@@ -264,7 +264,7 @@ const Pricing = () => {
                         <div className="absolute left-0.5 top-0.5 bg-purple-500 w-3 h-3 rounded-full shadow transition-transform"></div>
                       </div>
                       <span className="text-xs font-medium">Annual</span>
-                      <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
+                      <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 ml-1">Save 20%</Badge>
                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
