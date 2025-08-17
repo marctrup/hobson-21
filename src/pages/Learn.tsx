@@ -278,6 +278,23 @@ const Learn = () => {
                       <p className="text-muted-foreground mb-4">
                         Hobson is a subscription based service with a free plan and several paid plans. When you pay for a subscription you get access to more additional support, and more HEUs (Hobsons Energy units - the currency used to buy effort). You need HEUs to interact with Hobson.
                       </p>
+                      
+                      <h3 className="text-lg font-medium text-foreground mb-3 mt-6">Starter pack</h3>
+                      <div className="space-y-4">
+                        <div>
+                          <h4 className="font-medium text-foreground mb-2">What's the Starter Pack for?</h4>
+                          <p className="text-muted-foreground">
+                            It's a one-time bundle to help you load your documents into the platform fast. It covers the heavy lifting: upload, extract key data, and index for search.
+                          </p>
+                        </div>
+                        
+                        <div>
+                          <h4 className="font-medium text-foreground mb-2">Why do I need this before a plan?</h4>
+                          <p className="text-muted-foreground">
+                            Most of the cost happens up front when we process your files. The Starter Pack gives you extra credit to finish onboarding without worrying about limits.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </section>
 
