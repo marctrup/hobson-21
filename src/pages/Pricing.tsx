@@ -543,7 +543,7 @@ const Pricing = () => {
                       <div>
                         <h4 className="font-semibold text-green-700 mb-3">❓ What do I get?</h4>
                         <p className="text-sm text-muted-foreground">
-                          £50 → 500 HEUs (Hobson Energy Units — our usage credits). You can spend HEUs on document extraction, storage, and initial Q&A.
+                          1000 HEUs (Hobson Energy Units — our usage credits). You can spend HEUs on document extraction, storage, and initial Q&A.
                         </p>
                       </div>
 
