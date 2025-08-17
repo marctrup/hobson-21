@@ -342,7 +342,7 @@ const Learn = () => {
                       <div>
                         <h3 className="text-lg font-medium text-foreground mb-3">Enterprise</h3>
                         <ul className="text-muted-foreground space-y-2">
-                          <li>• Everything in Essential Plus, plus:</li>
+                          <li>• Everything in Essential Plus</li>
                           <li>• 2000 HEU (Hobson Energy Unit) per month</li>
                           <li>• Unlimited Members</li>
                           <li>• Unlimited documents</li>
