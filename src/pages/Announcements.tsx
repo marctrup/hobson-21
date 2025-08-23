@@ -179,19 +179,19 @@ const Announcements = () => {
               Stay updated with the latest features, updates, and news from Hobson AI
             </p>
             
-            <div className="flex items-center justify-center gap-4">
-              <div className="flex items-center gap-2">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4">
+              <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 w-full md:w-auto">
                 <Input
                   type="email"
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-64"
+                  className="w-full md:w-64"
                 />
                 <Button 
                   onClick={handleSubscribe}
                   disabled={isSubscribing}
-                  className="gap-2"
+                  className="gap-2 w-full md:w-auto"
                 >
                   <Bell className="w-4 h-4" />
                   {isSubscribing ? 'Subscribing...' : 'Subscribe to Updates'}
@@ -206,11 +206,11 @@ const Announcements = () => {
               <Calendar className="w-5 h-5" />
               Latest Announcements
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {announcements.map((announcement) => (
                 <div 
                   key={announcement.id} 
-                  className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/20 dark:to-slate-800/30 border border-slate-200/50 dark:border-slate-700/30 rounded-lg p-6 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200 aspect-square flex flex-col justify-between"
+                  className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/20 dark:to-slate-800/30 border border-slate-200/50 dark:border-slate-700/30 rounded-lg p-4 md:p-6 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200 aspect-square flex flex-col justify-between"
                   onClick={() => handleAnnouncementClick(announcement.slug)}
                 >
                   <div className="flex-1">
@@ -229,8 +229,8 @@ const Announcements = () => {
                       </Badge>
                     </div>
                     
-                    <h3 className="font-semibold text-foreground mb-3 text-lg leading-tight line-clamp-3">{announcement.title}</h3>
-                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{announcement.description}</p>
+                    <h3 className="font-semibold text-foreground mb-3 text-base md:text-lg leading-tight line-clamp-3">{announcement.title}</h3>
+                    <p className="text-xs md:text-sm text-muted-foreground mb-4 line-clamp-3">{announcement.description}</p>
                   </div>
                   
                   <div className="space-y-2 text-xs text-muted-foreground">

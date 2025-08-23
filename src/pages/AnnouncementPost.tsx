@@ -177,25 +177,25 @@ const AnnouncementPost = () => {
 
         <main className="container mx-auto px-4 py-8 max-w-6xl">
           <article>
-            <div className="flex gap-8 min-h-[80vh]">
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 min-h-[80vh]">
               {/* Left Container - Featured Image */}
-              <div className="flex flex-col mt-3">
+              <div className="flex flex-col lg:mt-3 order-2 lg:order-1">
                 {post.featured_image_url && (
                   <div className="p-4 rounded-lg">
                     <img
                       src={post.featured_image_url}
                       alt={post.featured_image_alt || post.title}
-                      className="w-full h-auto rounded-lg object-cover max-h-[70vh]"
+                      className="w-full h-auto rounded-lg object-cover max-h-[50vh] lg:max-h-[70vh]"
                     />
                   </div>
                 )}
               </div>
 
               {/* Right Container - Content */}
-              <div className="flex-1 flex flex-col">
+              <div className="flex-1 flex flex-col order-1 lg:order-2">
                 {/* Article Header */}
                 <header className="mb-1">
-                  <div className="flex items-center gap-2 mb-4">
+                  <div className="flex flex-wrap items-center gap-2 mb-4">
                     {post.categories.map((category) => (
                       <Badge key={category.slug} variant="secondary">
                         {category.name}
@@ -203,17 +203,17 @@ const AnnouncementPost = () => {
                     ))}
                   </div>
                   
-                  <h1 className="text-3xl font-bold text-foreground mb-4">
+                  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
                     {post.title}
                   </h1>
                   
                   {post.excerpt && (
-                    <p className="text-lg text-muted-foreground mb-6">
+                    <p className="text-base md:text-lg text-muted-foreground mb-4 md:mb-6">
                       {post.excerpt}
                     </p>
                   )}
 
-                  <div className="flex items-center gap-6 text-sm text-muted-foreground mb-2">
+                  <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-6 text-sm text-muted-foreground mb-2">
                     <div className="flex items-center gap-2">
                       <User className="w-4 h-4" />
                       <span>{post.author.display_name}</span>
@@ -230,9 +230,9 @@ const AnnouncementPost = () => {
                 </header>
 
                 {/* Article Content */}
-                <Card className="p-6 flex-1 bg-gray-50 dark:bg-gray-900/20">
+                <Card className="p-4 md:p-6 flex-1 bg-gray-50 dark:bg-gray-900/20">
                   <div 
-                    className="prose prose-lg max-w-none dark:prose-invert"
+                    className="prose prose-sm md:prose-lg max-w-none dark:prose-invert"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 </Card>
