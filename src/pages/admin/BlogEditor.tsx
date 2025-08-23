@@ -136,7 +136,7 @@ const BlogEditor = () => {
         title: data.title,
         slug: data.slug,
         excerpt: data.excerpt,
-        content: data.content,
+        content: processContentForEditing(data.content),
         featured_image_url: data.featured_image_url || '',
         featured_image_alt: data.featured_image_alt || '',
         status: data.status as 'draft' | 'published',
@@ -199,6 +199,16 @@ const BlogEditor = () => {
   const processContentForSave = (content: string) => {
     // Convert line breaks to <br> tags while preserving existing HTML
     return content.replace(/\n/g, '<br>');
+  };
+
+  const processContentForEditing = (content: string) => {
+    // Convert HTML back to editable format
+    return content
+      .replace(/<br\s*\/?>/gi, '\n') // Convert <br> tags to line breaks
+      .replace(/<\/p><p>/gi, '\n\n') // Convert paragraph breaks
+      .replace(/<p>/gi, '') // Remove opening p tags
+      .replace(/<\/p>/gi, '\n') // Convert closing p tags to line breaks
+      .trim();
   };
 
   const handleImageInsert = (imageUrl: string, altText: string) => {
