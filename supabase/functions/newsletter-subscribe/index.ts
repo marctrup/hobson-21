@@ -94,7 +94,7 @@ const handler = async (req: Request): Promise<Response> => {
     const origin = req.headers.get('origin') || 'https://hobsonschoice.ai';
     
     const announcementUrl = latestAnnouncement 
-      ? `${origin}/announcements/${latestAnnouncement.slug}`
+      ? `${origin}/announcement/${latestAnnouncement.slug}`
       : `${origin}/announcements`;
 
     // Send welcome email using HTML template
