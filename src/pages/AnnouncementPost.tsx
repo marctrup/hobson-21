@@ -40,6 +40,9 @@ const AnnouncementPost = () => {
 
     const fetchPost = async () => {
       try {
+        // Decode the URL slug and handle potential trailing spaces
+        const decodedSlug = decodeURIComponent(slug);
+        
         const { data: postData, error: postError } = await supabase
           .from('blog_posts')
           .select(`
@@ -56,12 +59,12 @@ const AnnouncementPost = () => {
             reading_time,
             author_id
           `)
-          .eq('slug', slug)
           .eq('link_location', 'announcements')
           .eq('status', 'published')
-          .single();
+          .or(`slug.eq.${decodedSlug},slug.eq.${decodedSlug.trim()},slug.eq.${decodedSlug} `)
+          .maybeSingle();
 
-        if (postError) {
+        if (postError || !postData) {
           setError('Announcement not found');
           return;
         }
