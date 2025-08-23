@@ -339,6 +339,33 @@ export type Database = {
         }
         Relationships: []
       }
+      newsletter_subscriptions: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          is_active: boolean
+          subscription_type: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          is_active?: boolean
+          subscription_type?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          is_active?: boolean
+          subscription_type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pilot_applications: {
         Row: {
           business_types: string[] | null

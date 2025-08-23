@@ -88,18 +88,35 @@ const Announcements = () => {
     setIsSubscribing(true);
     
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Subscription successful!",
-        description: "You'll receive announcements at " + email,
+      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+        body: {
+          email: email.trim(),
+          subscriptionType: 'announcements'
+        }
       });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data?.alreadySubscribed) {
+        toast({
+          title: "Already subscribed!",
+          description: "You're already subscribed to our announcements.",
+        });
+      } else {
+        toast({
+          title: "Subscription successful!",
+          description: `You'll receive announcements at ${email}. Check your email for a welcome message!`,
+        });
+      }
       
       setEmail('');
     } catch (error) {
+      console.error('Subscription error:', error);
       toast({
         title: "Subscription failed",
-        description: "Please try again later.",
+        description: error?.message || "Please try again later.",
         variant: "destructive",
       });
     } finally {
