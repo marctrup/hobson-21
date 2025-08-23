@@ -683,6 +683,138 @@ const Learn = () => {
       );
     }
 
+    // Handle Integrations content
+    if (activeHorizontalTab === 'integrations') {
+      return (
+        <div className="flex-1 p-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-4">Integrations with Hobson AI</h1>
+              <div className="mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-orange-100 dark:bg-orange-900/30 border border-orange-200 dark:border-orange-800">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                  <span className="text-sm font-medium text-orange-700 dark:text-orange-300">Coming Soon</span>
+                </div>
+              </div>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Integrations are not yet available in Hobson AI — but they're a core part of our future. 
+                Our goal is to make Hobson fit seamlessly into the tools you already use, so insights are 
+                available instantly within your existing workflows. This page explains what we're working 
+                towards and why it matters.
+              </p>
+            </div>
+
+            <div className="space-y-12">
+              {/* Why Integrations Matter */}
+              <section>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🔗</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground">Why Integrations Matter</h2>
+                </div>
+                <div className="ml-16">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Many organisations already rely on document management systems (DMS), CRMs, and workflow tools. 
+                    Integrations will allow Hobson to connect directly to these platforms so insights flow automatically, 
+                    without switching between systems.
+                  </p>
+                </div>
+              </section>
+
+              {/* What We're Working Towards */}
+              <section>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🚀</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground">What We're Working Towards</h2>
+                </div>
+                <div className="ml-16 space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Direct connection to document management systems (DMS)</h3>
+                      <p className="text-sm text-muted-foreground">Seamlessly access and analyze documents stored in your existing DMS platforms.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">CRM integrations for faster contract and client insights</h3>
+                      <p className="text-sm text-muted-foreground">Surface relevant document insights directly within your CRM workflows.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">API access for custom workflows</h3>
+                      <p className="text-sm text-muted-foreground">Build custom integrations tailored to your specific business processes.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Single sign-on (SSO) for secure, easy access</h3>
+                      <p className="text-sm text-muted-foreground">Maintain security standards while simplifying user access across systems.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              {/* The Benefit for You */}
+              <section>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🌟</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground">The Benefit for You</h2>
+                </div>
+                <div className="ml-16 space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Less manual exporting and importing</h3>
+                      <p className="text-sm text-muted-foreground">Eliminate time-consuming file transfers between systems.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Centralised insights across platforms</h3>
+                      <p className="text-sm text-muted-foreground">Access Hobson's intelligence wherever you work, without switching applications.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Faster, more consistent decision-making</h3>
+                      <p className="text-sm text-muted-foreground">Make informed decisions with real-time insights in your existing workflow.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Reduced risk of missed details</h3>
+                      <p className="text-sm text-muted-foreground">Important information surfaces automatically in context, when you need it.</p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            {/* Closing Note */}
+            <div className="mt-16 bg-primary/5 rounded-lg p-6 border border-primary/20">
+              <p className="text-muted-foreground text-center leading-relaxed">
+                Integrations are coming soon. By connecting Hobson AI directly into your systems, 
+                we aim to create a seamless experience where insights are always available when and where you need them.
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     // Handle Plans and Credits content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       const tocSections = [
