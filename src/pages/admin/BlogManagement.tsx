@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Plus, Edit, Trash2, Eye, Calendar, Clock, ChevronUp, ChevronDown } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, Calendar, Clock, ChevronUp, ChevronDown, Megaphone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -271,12 +271,20 @@ const BlogManagement = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-2xl font-bold">Blog Management</CardTitle>
-            <Button asChild>
-              <Link to="/admin/blog/new">
-                <Plus className="w-4 h-4 mr-2" />
-                New Post
-              </Link>
-            </Button>
+            <div className="flex gap-2">
+              <Button asChild>
+                <Link to="/admin/blog/new?type=blog">
+                  <Plus className="w-4 h-4 mr-2" />
+                  New Post
+                </Link>
+              </Button>
+              <Button variant="secondary" asChild>
+                <Link to="/admin/blog/new?type=announcements">
+                  <Megaphone className="w-4 h-4 mr-2" />
+                  New Announcement
+                </Link>
+              </Button>
+            </div>
           </div>
         </CardHeader>
         <CardContent>

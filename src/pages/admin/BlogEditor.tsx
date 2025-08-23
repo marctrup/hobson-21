@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { ArrowLeft, Save, Eye, Upload, Bold, Italic, Underline, Link, List, ListOrdered, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -41,6 +41,10 @@ const BlogEditor = () => {
   const { toast } = useToast();
   const { user, isLoading } = useAuth();
   const isEditing = Boolean(id && id !== 'new');
+  
+  // Get link location from URL parameter
+  const [searchParams] = useSearchParams();
+  const linkType = searchParams.get('type') as 'blog' | 'announcements' | null;
 
   const [post, setPost] = useState<BlogPost>({
     title: '',
@@ -54,7 +58,7 @@ const BlogEditor = () => {
     meta_description: '',
     reading_time: 5,
     categories: [],
-    link_location: 'blog'
+    link_location: linkType || 'blog'
   });
 
   const [originalPost, setOriginalPost] = useState<BlogPost | null>(null);
