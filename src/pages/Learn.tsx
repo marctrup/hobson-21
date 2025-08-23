@@ -684,7 +684,7 @@ const Learn = () => {
     }
 
     // Handle Integrations content
-    if (activeHorizontalTab === 'integrations') {
+    if (activeHorizontalTab === 'integrations' && (!activeVerticalTab || activeVerticalTab === 'available-integrations')) {
       return (
         <div className="flex-1 p-8">
           <div className="max-w-4xl mx-auto">
