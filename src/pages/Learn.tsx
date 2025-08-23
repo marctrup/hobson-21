@@ -1112,36 +1112,6 @@ const Learn = () => {
       );
     }
 
-    // Handle API Reference content
-    if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'api-reference') {
-      return (
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/70 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📘</span>
-              </div>
-              <h1 className="text-3xl font-bold text-foreground mb-6">API Reference</h1>
-              
-              {/* Coming Soon Banner */}
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <p className="text-orange-700 dark:text-orange-300 font-medium">
-                    This resource is not yet available — Coming Soon.
-                  </p>
-                </div>
-              </div>
-
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                The API Reference will offer a complete guide to Hobson's API, including examples and 
-                explanations to support developers and integrations.
-              </p>
-            </div>
-          </div>
-        </div>
-      );
-    }
 
     // Handle Integrations content
     if (activeHorizontalTab === 'integrations' && (!activeVerticalTab || activeVerticalTab === 'available-integrations')) {
