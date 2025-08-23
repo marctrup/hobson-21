@@ -22,10 +22,12 @@ const handler = async (req: Request): Promise<Response> => {
     const { email, subscriptionType = 'announcements' }: SubscribeRequest = await req.json();
 
     console.log('Newsletter subscription request for:', email);
+    console.log('Subscription type:', subscriptionType);
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
+      console.log('Invalid email format:', email);
       return new Response(
         JSON.stringify({ error: "Invalid email format" }),
         {
