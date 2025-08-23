@@ -175,72 +175,79 @@ const AnnouncementPost = () => {
           </div>
         </header>
 
-        <main className="container mx-auto px-4 py-8 max-w-4xl">
+        <main className="container mx-auto px-4 py-8 max-w-6xl">
           <article>
-            {/* Article Header */}
-            <header className="mb-8">
-              <div className="flex items-center gap-2 mb-4">
-                {post.categories.map((category) => (
-                  <Badge key={category.slug} variant="secondary">
-                    {category.name}
-                  </Badge>
-                ))}
+            <div className="flex gap-8 min-h-[80vh]">
+              {/* Left Container - Featured Image */}
+              <div className="w-1/2 flex flex-col">
+                {post.featured_image_url && (
+                  <div className="h-full flex items-start">
+                    <img
+                      src={post.featured_image_url}
+                      alt={post.featured_image_alt || post.title}
+                      className="w-full h-auto rounded-lg object-cover max-h-[70vh]"
+                    />
+                  </div>
+                )}
               </div>
-              
-              <h1 className="text-4xl font-bold text-foreground mb-4">
-                {post.title}
-              </h1>
-              
-              {post.excerpt && (
-                <p className="text-xl text-muted-foreground mb-6">
-                  {post.excerpt}
-                </p>
-              )}
 
-              <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <User className="w-4 h-4" />
-                  <span>{post.author.display_name}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Calendar className="w-4 h-4" />
-                  <span>{new Date(post.published_at).toLocaleDateString()}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Clock className="w-4 h-4" />
-                  <span>{post.reading_time} min read</span>
+              {/* Right Container - Content */}
+              <div className="w-1/2 flex flex-col">
+                {/* Article Header */}
+                <header className="mb-6">
+                  <div className="flex items-center gap-2 mb-4">
+                    {post.categories.map((category) => (
+                      <Badge key={category.slug} variant="secondary">
+                        {category.name}
+                      </Badge>
+                    ))}
+                  </div>
+                  
+                  <h1 className="text-3xl font-bold text-foreground mb-4">
+                    {post.title}
+                  </h1>
+                  
+                  {post.excerpt && (
+                    <p className="text-lg text-muted-foreground mb-6">
+                      {post.excerpt}
+                    </p>
+                  )}
+
+                  <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6">
+                    <div className="flex items-center gap-2">
+                      <User className="w-4 h-4" />
+                      <span>{post.author.display_name}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>{new Date(post.published_at).toLocaleDateString()}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      <span>{post.reading_time} min read</span>
+                    </div>
+                  </div>
+                </header>
+
+                {/* Article Content */}
+                <Card className="p-6 flex-1">
+                  <div 
+                    className="prose prose-lg max-w-none dark:prose-invert"
+                    dangerouslySetInnerHTML={{ __html: post.content }}
+                  />
+                </Card>
+
+                {/* Back Link */}
+                <div className="mt-6">
+                  <Link 
+                    to="/announcements" 
+                    className="inline-flex items-center gap-2 text-primary hover:underline"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Back to all announcements
+                  </Link>
                 </div>
               </div>
-            </header>
-
-            {/* Featured Image */}
-            {post.featured_image_url && (
-              <div className="mb-8 flex justify-center">
-                <img
-                  src={post.featured_image_url}
-                  alt={post.featured_image_alt || post.title}
-                  className="w-1/2 h-auto rounded-lg"
-                />
-              </div>
-            )}
-
-            {/* Article Content */}
-            <Card className="p-8">
-              <div 
-                className="prose prose-lg max-w-none dark:prose-invert"
-                dangerouslySetInnerHTML={{ __html: post.content }}
-              />
-            </Card>
-
-            {/* Back Link */}
-            <div className="mt-8 text-center">
-              <Link 
-                to="/announcements" 
-                className="inline-flex items-center gap-2 text-primary hover:underline"
-              >
-                <ArrowLeft className="w-4 h-4" />
-                Back to all announcements
-              </Link>
             </div>
           </article>
         </main>
