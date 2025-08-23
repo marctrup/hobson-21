@@ -90,9 +90,12 @@ const handler = async (req: Request): Promise<Response> => {
       .limit(1)
       .maybeSingle();
 
+    // Get the current domain from the request origin or default to production
+    const origin = req.headers.get('origin') || 'https://hobsonschoice.ai';
+    
     const announcementUrl = latestAnnouncement 
-      ? `https://hobsonschoice.ai/announcements/${latestAnnouncement.slug}`
-      : 'https://hobsonschoice.ai/announcements';
+      ? `${origin}/announcements/${latestAnnouncement.slug}`
+      : `${origin}/announcements`;
 
     // Send welcome email using HTML template
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
