@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Plus, Edit, Trash2, Eye, Calendar, Clock, ChevronUp, ChevronDown, Megaphone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -29,6 +29,10 @@ const BlogManagement = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
+  const [searchParams] = useSearchParams();
+  
+  // Check if we should refresh (e.g., after creating a new post)
+  const shouldRefresh = searchParams.get('refresh') === 'true';
   const { user } = useAuth();
 
   useEffect(() => {
@@ -37,7 +41,12 @@ const BlogManagement = () => {
       await fetchPosts();
     };
     loadData();
-  }, []);
+    
+    // If we have a refresh parameter, clear it from URL after fetching
+    if (shouldRefresh) {
+      window.history.replaceState({}, '', '/admin/blog');
+    }
+  }, [shouldRefresh]);
 
   const fixSortOrders = async () => {
     const { data, error } = await supabase
@@ -352,8 +361,8 @@ const BlogManagement = () => {
                       </Badge>
                     </TableCell>
                     <TableCell>
-                      <Badge variant="outline">
-                        {post.link_location}
+                      <Badge variant="outline" className="capitalize">
+                        {post.link_location === 'announcements' ? 'announcement' : 'blog'}
                       </Badge>
                     </TableCell>
                     <TableCell>{post.author.display_name}</TableCell>

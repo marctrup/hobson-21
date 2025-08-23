@@ -464,7 +464,11 @@ const BlogEditor = () => {
       });
 
       if (!isEditing) {
-        navigate(`/admin/blog/edit/${postId}`);
+        // Navigate back to blog management with refresh parameter
+        navigate('/admin/blog?refresh=true');
+      } else {
+        // For edits, just refresh the management page
+        navigate('/admin/blog?refresh=true');
       }
     } catch (error) {
       console.error('Error saving post:', error);
