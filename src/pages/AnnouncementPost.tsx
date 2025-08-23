@@ -215,11 +215,11 @@ const AnnouncementPost = () => {
 
             {/* Featured Image */}
             {post.featured_image_url && (
-              <div className="mb-8">
+              <div className="mb-8 flex justify-center">
                 <img
                   src={post.featured_image_url}
                   alt={post.featured_image_alt || post.title}
-                  className="w-full h-auto rounded-lg"
+                  className="w-1/2 h-auto rounded-lg"
                 />
               </div>
             )}
