@@ -98,9 +98,7 @@ const handler = async (req: Request): Promise<Response> => {
     // Get the current domain - always use production for emails
     const origin = 'https://hobsonschoice.ai';
     
-    const announcementUrl = latestAnnouncement 
-      ? `${origin}/announcement/${encodeURIComponent(latestAnnouncement.slug.trim())}`
-      : `${origin}/announcements`;
+    const announcementUrl = `${origin}/announcements`;
     
     console.log('Generated announcement URL:', announcementUrl);
     console.log('Latest announcement slug:', latestAnnouncement?.slug);
