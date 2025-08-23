@@ -863,80 +863,185 @@ const Learn = () => {
     }
 
     // Handle Integrations content
-                what we're working on now, and where we're heading next. It's designed to give you 
-                transparency and confidence that Hobson is built for the long term.
+    if (activeHorizontalTab === 'integrations' && (!activeVerticalTab || activeVerticalTab === 'available-integrations')) {
+      return (
+        <div className="flex-1 p-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-6">Integrations with Hobson AI</h1>
+              
+              {/* Disclaimer Banner */}
+              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                  <p className="text-orange-700 dark:text-orange-300 font-medium">
+                    Integrations are not yet available in Hobson AI — all integrations listed here are coming soon.
+                  </p>
+                </div>
+              </div>
+
+              {/* Integrations Framework */}
+              <div className="mb-8">
+                <h2 className="text-xl font-semibold text-foreground mb-4">Planned Integrations</h2>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  <div className="bg-card border rounded-lg p-4 text-center relative">
+                    <div className="absolute top-2 right-2">
+                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <div className="text-2xl mb-2">📅</div>
+                    <h3 className="font-medium text-foreground">Calendar</h3>
+                  </div>
+                  
+                  <div className="bg-card border rounded-lg p-4 text-center relative">
+                    <div className="absolute top-2 right-2">
+                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <div className="text-2xl mb-2">✉️</div>
+                    <h3 className="font-medium text-foreground">Email</h3>
+                  </div>
+                  
+                  <div className="bg-card border rounded-lg p-4 text-center relative">
+                    <div className="absolute top-2 right-2">
+                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <div className="text-2xl mb-2">📂</div>
+                    <h3 className="font-medium text-foreground">Dropbox</h3>
+                  </div>
+                  
+                  <div className="bg-card border rounded-lg p-4 text-center relative">
+                    <div className="absolute top-2 right-2">
+                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <div className="text-2xl mb-2">📂</div>
+                    <h3 className="font-medium text-foreground">Google Drive</h3>
+                  </div>
+                  
+                  <div className="bg-card border rounded-lg p-4 text-center relative">
+                    <div className="absolute top-2 right-2">
+                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <div className="text-2xl mb-2">📂</div>
+                    <h3 className="font-medium text-foreground">OneDrive</h3>
+                  </div>
+                  
+                  <div className="bg-card border rounded-lg p-4 text-center relative">
+                    <div className="absolute top-2 right-2">
+                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+                    <div className="text-2xl mb-2">➕</div>
+                    <h3 className="font-medium text-foreground text-sm">Others (to be determined)</h3>
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Hobson AI works best when it fits seamlessly into the tools you already use. 
+                Our upcoming integrations are designed to make insights instantly available within 
+                your existing workflows — reducing friction, saving time, and keeping your team focused.
               </p>
             </div>
 
             <div className="space-y-12">
-              {/* Recently Launched */}
+              {/* Why Integrations Matter */}
               <section>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
-                    <span className="text-lg">✅</span>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🔗</span>
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground">Recently Launched</h2>
+                  <h2 className="text-2xl font-bold text-foreground">Why Integrations Matter</h2>
                 </div>
-                <div className="ml-11 space-y-4">
-                  <div className="bg-card border rounded-lg p-6">
-                    <h3 className="font-semibold text-foreground mb-2">AI-powered document summarisation</h3>
-                    <p className="text-muted-foreground text-sm">Transform lengthy documents into clear, actionable summaries.</p>
+                <div className="ml-16">
+                  <p className="text-muted-foreground leading-relaxed">
+                    Many organisations already rely on document management systems (DMS), CRMs, calendars, and email platforms. 
+                    Integrations will let Hobson plug directly into these tools so insights flow automatically, 
+                    without switching between systems.
+                  </p>
+                </div>
+              </section>
+
+              {/* What We're Working Towards */}
+              <section>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🚀</span>
                   </div>
-                  <div className="bg-card border rounded-lg p-6">
-                    <h3 className="font-semibold text-foreground mb-2">Chat interface for natural-language queries</h3>
-                    <p className="text-muted-foreground text-sm">Ask questions in plain language and get instant answers from your documents.</p>
+                  <h2 className="text-2xl font-bold text-foreground">What We're Working Towards</h2>
+                </div>
+                <div className="ml-16 space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Direct connection to DMS and storage platforms (Dropbox, Google Drive, OneDrive)</h3>
+                      <p className="text-sm text-muted-foreground">Seamlessly access and analyze documents stored in your cloud storage platforms.</p>
+                    </div>
                   </div>
-                  <div className="bg-card border rounded-lg p-6">
-                    <h3 className="font-semibold text-foreground mb-2">Clause and obligation tracking</h3>
-                    <p className="text-muted-foreground text-sm">Automatically track key dates, deadlines, and obligations across your documents.</p>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Email and calendar integrations for faster knowledge retrieval</h3>
+                      <p className="text-sm text-muted-foreground">Surface relevant insights from your email threads and calendar events.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">CRM integrations for client and contract insights</h3>
+                      <p className="text-sm text-muted-foreground">Access document insights directly within your CRM workflows.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">API access for custom workflows</h3>
+                      <p className="text-sm text-muted-foreground">Build custom integrations tailored to your specific business processes.</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Single sign-on (SSO) for secure, easy access</h3>
+                      <p className="text-sm text-muted-foreground">Maintain security standards while simplifying user access across systems.</p>
+                    </div>
                   </div>
                 </div>
               </section>
 
-              {/* In Progress */}
+              {/* The Benefit for You */}
               <section>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
-                    <span className="text-lg">🚧</span>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🌟</span>
                   </div>
-                  <h2 className="text-2xl font-bold text-foreground">In Progress</h2>
+                  <h2 className="text-2xl font-bold text-foreground">The Benefit for You</h2>
                 </div>
-                <div className="ml-11 space-y-4">
-                  <div className="bg-card border rounded-lg p-6 border-l-4 border-l-primary">
-                    <h3 className="font-semibold text-foreground mb-2">Smarter follow-up questioning in chat</h3>
-                    <p className="text-muted-foreground text-sm">Enhanced conversational AI that understands context and asks better follow-up questions.</p>
+                <div className="ml-16 space-y-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Less manual exporting and importing</h3>
+                      <p className="text-sm text-muted-foreground">Eliminate time-consuming file transfers between systems.</p>
+                    </div>
                   </div>
-                  <div className="bg-card border rounded-lg p-6 border-l-4 border-l-primary">
-                    <h3 className="font-semibold text-foreground mb-2">Cross-document insights and comparisons</h3>
-                    <p className="text-muted-foreground text-sm">Compare terms and find connections across multiple documents simultaneously.</p>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Centralised insights across platforms</h3>
+                      <p className="text-sm text-muted-foreground">Access Hobson's intelligence wherever you work, without switching applications.</p>
+                    </div>
                   </div>
-                  <div className="bg-card border rounded-lg p-6 border-l-4 border-l-primary">
-                    <h3 className="font-semibold text-foreground mb-2">Improved accuracy for complex property documents</h3>
-                    <p className="text-muted-foreground text-sm">Enhanced AI models specifically trained on property and legal document structures.</p>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Faster, more consistent decision-making</h3>
+                      <p className="text-sm text-muted-foreground">Make informed decisions with real-time insights in your existing workflow.</p>
+                    </div>
                   </div>
-                </div>
-              </section>
-
-              {/* Coming Soon */}
-              <section>
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                    <span className="text-lg">🌟</span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-foreground">Coming Soon</h2>
-                </div>
-                <div className="ml-11 space-y-4">
-                  <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
-                    <h3 className="font-semibold text-foreground mb-2">Integrations with document management systems (DMS) and CRMs</h3>
-                    <p className="text-muted-foreground text-sm">Seamless connection to your existing tools and workflows.</p>
-                  </div>
-                  <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
-                    <h3 className="font-semibold text-foreground mb-2">Predictive insights (e.g. flagging risks before they're missed)</h3>
-                    <p className="text-muted-foreground text-sm">Proactive alerts about potential issues and opportunities in your documents.</p>
-                  </div>
-                  <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
-                    <h3 className="font-semibold text-foreground mb-2">Expanded compliance automation</h3>
-                    <p className="text-muted-foreground text-sm">Automated compliance checks and reporting across regulatory requirements.</p>
+                  <div className="flex items-start gap-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div>
+                      <h3 className="font-semibold text-foreground mb-1">Reduced risk of missed details</h3>
+                      <p className="text-sm text-muted-foreground">Important information surfaces automatically in context, when you need it.</p>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -945,8 +1050,8 @@ const Learn = () => {
             {/* Closing Note */}
             <div className="mt-16 bg-primary/5 rounded-lg p-6 border border-primary/20">
               <p className="text-muted-foreground text-center leading-relaxed">
-                We build Hobson AI in close partnership with our users. Your feedback helps shape the roadmap — 
-                ensuring the platform grows in ways that bring you the most value.
+                Integrations are a key part of our roadmap. By bringing Hobson AI directly into your existing systems, 
+                we aim to create a seamless experience where insights are always available when and where you need them.
               </p>
             </div>
           </div>
