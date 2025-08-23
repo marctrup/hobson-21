@@ -27,6 +27,7 @@ interface BlogPost {
   reading_time: number;
   categories: string[];
   link_location: 'blog' | 'announcements';
+  priority?: 'low' | 'medium' | 'high';
 }
 
 interface Category {
@@ -58,7 +59,8 @@ const BlogEditor = () => {
     meta_description: '',
     reading_time: 5,
     categories: [],
-    link_location: linkType || 'blog'
+    link_location: linkType || 'blog',
+    priority: 'medium'
   });
 
   const [originalPost, setOriginalPost] = useState<BlogPost | null>(null);
@@ -738,54 +740,80 @@ const BlogEditor = () => {
             </CardContent>
           </Card>
 
-          {/* Categories */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Categories</CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Select one or more categories for this post
-              </p>
-            </CardHeader>
-            <CardContent>
-              {categories.length === 0 ? (
-                <p className="text-sm text-muted-foreground">No categories available</p>
-              ) : (
-                <div className="space-y-3">
-                  {categories.map((category) => (
-                    <div key={category.id} className="flex items-center space-x-3 p-2 rounded hover:bg-muted/50">
-                      <Checkbox
-                        id={category.id}
-                        checked={post.categories.includes(category.id)}
-                        onCheckedChange={(checked) => 
-                          handleCategoryToggle(category.id, checked as boolean)
-                        }
-                      />
-                      <Label htmlFor={category.id} className="text-sm font-medium cursor-pointer flex-1">
-                        {category.name}
-                      </Label>
-                    </div>
-                  ))}
-                  
-                  {/* Selected categories summary */}
-                  {post.categories.length > 0 && (
-                    <div className="mt-4 pt-3 border-t">
-                      <p className="text-xs text-muted-foreground mb-2">Selected categories:</p>
-                      <div className="flex flex-wrap gap-1">
-                        {post.categories.map(categoryId => {
-                          const category = categories.find(c => c.id === categoryId);
-                          return category ? (
-                            <span key={categoryId} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/10 text-primary">
-                              {category.name}
-                            </span>
-                          ) : null;
-                        })}
+          {/* Categories for Blog Posts */}
+          {post.link_location === 'blog' && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Categories</CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Select one or more categories for this post
+                </p>
+              </CardHeader>
+              <CardContent>
+                {categories.length === 0 ? (
+                  <p className="text-sm text-muted-foreground">No categories available</p>
+                ) : (
+                  <div className="space-y-3">
+                    {categories.map((category) => (
+                      <div key={category.id} className="flex items-center space-x-3 p-2 rounded hover:bg-muted/50">
+                        <Checkbox
+                          id={category.id}
+                          checked={post.categories.includes(category.id)}
+                          onCheckedChange={(checked) => 
+                            handleCategoryToggle(category.id, checked as boolean)
+                          }
+                        />
+                        <Label htmlFor={category.id} className="text-sm font-medium cursor-pointer flex-1">
+                          {category.name}
+                        </Label>
                       </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                    ))}
+                    
+                    {/* Selected categories summary */}
+                    {post.categories.length > 0 && (
+                      <div className="mt-4 pt-3 border-t">
+                        <p className="text-xs text-muted-foreground mb-2">Selected categories:</p>
+                        <div className="flex flex-wrap gap-1">
+                          {post.categories.map(categoryId => {
+                            const category = categories.find(c => c.id === categoryId);
+                            return category ? (
+                              <span key={categoryId} className="inline-flex items-center px-2 py-1 rounded-full text-xs bg-primary/10 text-primary">
+                                {category.name}
+                              </span>
+                            ) : null;
+                          })}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Priority for Announcements */}
+          {post.link_location === 'announcements' && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Announcement Priority</CardTitle>
+                <p className="text-sm text-muted-foreground">
+                  Set the priority level for this announcement
+                </p>
+              </CardHeader>
+              <CardContent>
+                <Select value={post.priority} onValueChange={(value) => setPost(prev => ({ ...prev, priority: value as 'low' | 'medium' | 'high' }))}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="low">Low Priority</SelectItem>
+                    <SelectItem value="medium">Medium Priority</SelectItem>
+                    <SelectItem value="high">High Priority</SelectItem>
+                  </SelectContent>
+                </Select>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
     </div>
