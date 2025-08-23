@@ -203,9 +203,9 @@ const AnnouncementPost = () => {
               </div>
 
               {/* Right Container - Content */}
-              <div className="flex-1 flex flex-col">
+              <div className="flex-1 flex flex-col border-2 border-red-500">
                 {/* Article Header */}
-                <header className="mb-6">
+                <header className="mb-6 border-2 border-red-300">
                   <div className="flex items-center gap-2 mb-4">
                     {post.categories.map((category) => (
                       <Badge key={category.slug} variant="secondary">
@@ -241,7 +241,7 @@ const AnnouncementPost = () => {
                 </header>
 
                 {/* Article Content */}
-                <Card className="p-6 flex-1">
+                <Card className="p-6 flex-1 border-2 border-red-600">
                   <div 
                     className="prose prose-lg max-w-none dark:prose-invert"
                     dangerouslySetInnerHTML={{ __html: post.content }}
