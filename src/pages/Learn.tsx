@@ -45,6 +45,7 @@ const Learn = () => {
     // Only run scroll spy for pages that have table of contents
     if ((activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') || 
         (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') ||
+        (activeHorizontalTab === 'features' && ['core-features', 'advanced-features', 'feature-comparison', 'roadmap'].includes(activeVerticalTab)) ||
         (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') ||
         (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') ||
         (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts')) {
@@ -54,6 +55,16 @@ const Learn = () => {
           tocSections = ['getting-started', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
         } else if (activeVerticalTab === 'plans-credits') {
           tocSections = ['overview', 'starter-pack', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
+        }
+      } else if (activeHorizontalTab === 'features') {
+        if (activeVerticalTab === 'core-features') {
+          tocSections = ['intelligent-document-processing', 'smart-search-insights', 'real-time-analytics', 'collaboration-ready', 'security-compliance'];
+        } else if (activeVerticalTab === 'advanced-features') {
+          tocSections = ['ai-powered-summarisation', 'cross-document-insights', 'automated-report-generation', 'clause-obligation-tracking', 'integration-ready'];
+        } else if (activeVerticalTab === 'feature-comparison') {
+          tocSections = ['comparison-table', 'key-differentiators'];
+        } else if (activeVerticalTab === 'roadmap') {
+          tocSections = ['recently-launched', 'in-progress', 'coming-soon'];
         }
       } else if (activeHorizontalTab === 'prompt-engineering') {
         if (activeVerticalTab === 'fundamentals') {
@@ -240,98 +251,141 @@ const Learn = () => {
 
     // Handle Core Features content
     if (activeHorizontalTab === 'features' && activeVerticalTab === 'core-features') {
+      const tocSections = [
+        { id: 'intelligent-document-processing', label: 'Intelligent Document Processing' },
+        { id: 'smart-search-insights', label: 'Smart Search & Insights' },
+        { id: 'real-time-analytics', label: 'Real-Time Analytics' },
+        { id: 'collaboration-ready', label: 'Collaboration Ready' },
+        { id: 'security-compliance', label: 'Security & Compliance' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-4">Core Features of Hobson AI</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Hobson AI is an intelligent platform that turns complex documents into clear, usable insights. 
-                Designed for property and document management professionals, it helps you save time, reduce risk, 
-                and make smarter decisions by putting the right information at your fingertips.
-              </p>
-            </div>
-
-            <div className="space-y-12">
-              {/* Intelligent Document Processing */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">📂</span>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Intelligent Document Processing</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Hobson AI automatically reads and extracts key details from leases, contracts, and reports. 
-                    This removes the need for manual searching and ensures important information is never missed.
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-4">Core Features of Hobson AI</h1>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Hobson AI is an intelligent platform that turns complex documents into clear, usable insights. 
+                    Designed for property and document management professionals, it helps you save time, reduce risk, 
+                    and make smarter decisions by putting the right information at your fingertips.
                   </p>
                 </div>
-              </section>
 
-              {/* Smart Search & Insights */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🔍</span>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Smart Search & Insights</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Ask questions in plain language like "When is the rent review date?" and Hobson instantly 
-                    retrieves the answer from your documents. It's like having a specialist always ready to help.
-                  </p>
-                </div>
-              </section>
+                <div className="space-y-12">
+                  {/* Intelligent Document Processing */}
+                  <section id="intelligent-document-processing" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">📂</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">Intelligent Document Processing</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Hobson AI automatically reads and extracts key details from leases, contracts, and reports. 
+                        This removes the need for manual searching and ensures important information is never missed.
+                      </p>
+                    </div>
+                  </section>
 
-              {/* Real-Time Analytics */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">📊</span>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Real-Time Analytics</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Hobson transforms unstructured text into clear summaries and dashboards. Spot trends, 
-                    compare clauses, and access data that supports confident, evidence-based decisions.
-                  </p>
-                </div>
-              </section>
+                  {/* Smart Search & Insights */}
+                  <section id="smart-search-insights" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🔍</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">Smart Search & Insights</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Ask questions in plain language like "When is the rent review date?" and Hobson instantly 
+                        retrieves the answer from your documents. It's like having a specialist always ready to help.
+                      </p>
+                    </div>
+                  </section>
 
-              {/* Collaboration Ready */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🤝</span>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Collaboration Ready</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Insights can be shared across your team securely, creating a single source of truth. 
-                    Everyone works from the same reliable information, reducing confusion and speeding up workflows.
-                  </p>
-                </div>
-              </section>
+                  {/* Real-Time Analytics */}
+                  <section id="real-time-analytics" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">📊</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">Real-Time Analytics</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Hobson transforms unstructured text into clear summaries and dashboards. Spot trends, 
+                        compare clauses, and access data that supports confident, evidence-based decisions.
+                      </p>
+                    </div>
+                  </section>
 
-              {/* Security & Compliance */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🔐</span>
-                  </div>
+                  {/* Collaboration Ready */}
+                  <section id="collaboration-ready" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🤝</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">Collaboration Ready</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Insights can be shared across your team securely, creating a single source of truth. 
+                        Everyone works from the same reliable information, reducing confusion and speeding up workflows.
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* Security & Compliance */}
+                  <section id="security-compliance" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🔐</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">Security & Compliance</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Built with enterprise-grade encryption and strict data handling, Hobson keeps your information safe. 
+                        Security and compliance are at the heart of everything we do.
+                      </p>
+                    </div>
+                  </section>
                 </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Security & Compliance</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Built with enterprise-grade encryption and strict data handling, Hobson keeps your information safe. 
-                    Security and compliance are at the heart of everything we do.
-                  </p>
+              </div>
+
+              {/* Table of Contents Sidebar */}
+              <div className="hidden lg:block w-64 flex-shrink-0">
+                <div className="sticky top-8">
+                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                  <nav className="space-y-1">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
                 </div>
-              </section>
+              </div>
             </div>
           </div>
         </div>
@@ -340,93 +394,136 @@ const Learn = () => {
 
     // Handle Advanced Features content
     if (activeHorizontalTab === 'features' && activeVerticalTab === 'advanced-features') {
+      const tocSections = [
+        { id: 'ai-powered-summarisation', label: 'AI-Powered Summarisation' },
+        { id: 'cross-document-insights', label: 'Cross-Document Insights' },
+        { id: 'automated-report-generation', label: 'Automated Report Generation' },
+        { id: 'clause-obligation-tracking', label: 'Clause & Obligation Tracking' },
+        { id: 'integration-ready', label: 'Integration Ready' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-4">Advanced Features of Hobson AI</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Beyond the core features, Hobson AI includes advanced capabilities that give professionals even deeper 
-                insights and time-saving tools. These features are designed to handle complexity, automate repetitive tasks, 
-                and uncover connections across your documents that would otherwise go unnoticed.
-              </p>
-            </div>
-
-            <div className="space-y-12">
-              {/* AI-Powered Summarisation */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🧠</span>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">AI-Powered Summarisation</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Quickly understand long contracts or reports with plain-language summaries that highlight the most important details.
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-4">Advanced Features of Hobson AI</h1>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Beyond the core features, Hobson AI includes advanced capabilities that give professionals even deeper 
+                    insights and time-saving tools. These features are designed to handle complexity, automate repetitive tasks, 
+                    and uncover connections across your documents that would otherwise go unnoticed.
                   </p>
                 </div>
-              </section>
 
-              {/* Cross-Document Insights */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🔗</span>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Cross-Document Insights</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Compare terms, find inconsistencies, and surface connections across multiple documents at once.
-                  </p>
-                </div>
-              </section>
+                <div className="space-y-12">
+                  {/* AI-Powered Summarisation */}
+                  <section id="ai-powered-summarisation" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🧠</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">AI-Powered Summarisation</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Quickly understand long contracts or reports with plain-language summaries that highlight the most important details.
+                      </p>
+                    </div>
+                  </section>
 
-              {/* Automated Report Generation */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">📑</span>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Automated Report Generation</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Turn extracted data into professional reports and dashboards automatically, saving hours of manual work.
-                  </p>
-                </div>
-              </section>
+                  {/* Cross-Document Insights */}
+                  <section id="cross-document-insights" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🔗</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">Cross-Document Insights</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Compare terms, find inconsistencies, and surface connections across multiple documents at once.
+                      </p>
+                    </div>
+                  </section>
 
-              {/* Clause & Obligation Tracking */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">📌</span>
-                  </div>
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Clause & Obligation Tracking</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Stay ahead of deadlines, renewals, and key obligations. Hobson flags upcoming dates and critical actions automatically.
-                  </p>
-                </div>
-              </section>
+                  {/* Automated Report Generation */}
+                  <section id="automated-report-generation" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">📑</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">Automated Report Generation</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Turn extracted data into professional reports and dashboards automatically, saving hours of manual work.
+                      </p>
+                    </div>
+                  </section>
 
-              {/* Integration Ready */}
-              <section className="flex gap-6">
-                <div className="flex-shrink-0">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🌍</span>
-                  </div>
+                  {/* Clause & Obligation Tracking */}
+                  <section id="clause-obligation-tracking" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">📌</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">Clause & Obligation Tracking</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Stay ahead of deadlines, renewals, and key obligations. Hobson flags upcoming dates and critical actions automatically.
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* Integration Ready */}
+                  <section id="integration-ready" className="flex gap-6">
+                    <div className="flex-shrink-0">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🌍</span>
+                      </div>
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold text-foreground mb-3">Integration Ready</h2>
+                      <p className="text-muted-foreground leading-relaxed">
+                        Connect Hobson to your existing systems (such as document management platforms or CRMs) so insights flow seamlessly into your workflows.
+                      </p>
+                    </div>
+                  </section>
                 </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-3">Integration Ready</h2>
-                  <p className="text-muted-foreground leading-relaxed">
-                    Connect Hobson to your existing systems (such as document management platforms or CRMs) so insights flow seamlessly into your workflows.
-                  </p>
+              </div>
+
+              {/* Table of Contents Sidebar */}
+              <div className="hidden lg:block w-64 flex-shrink-0">
+                <div className="sticky top-8">
+                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                  <nav className="space-y-1">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
                 </div>
-              </section>
+              </div>
             </div>
           </div>
         </div>
@@ -435,148 +532,189 @@ const Learn = () => {
 
     // Handle Feature Comparison content
     if (activeHorizontalTab === 'features' && activeVerticalTab === 'feature-comparison') {
+      const tocSections = [
+        { id: 'comparison-table', label: 'Comparison Table' },
+        { id: 'key-differentiators', label: 'Key Differentiators' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
-        <div className="flex-1 p-8">
-          <div className="max-w-5xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-4">Feature Comparisons</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Choosing the right approach to document intelligence means understanding the differences. 
-                This page shows how Hobson AI compares with manual work and traditional software, 
-                so you can see the advantages more clearly.
-              </p>
-            </div>
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-5xl">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-4">Feature Comparisons</h1>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Choosing the right approach to document intelligence means understanding the differences. 
+                    This page shows how Hobson AI compares with manual work and traditional software, 
+                    so you can see the advantages more clearly.
+                  </p>
+                </div>
 
-            {/* Comparison Table */}
-            <div className="mb-16">
-              <div className="bg-card border rounded-lg overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b bg-muted/50">
-                        <th className="text-left p-4 font-semibold text-foreground">Feature</th>
-                        <th className="text-left p-4 font-semibold text-foreground">Manual Work</th>
-                        <th className="text-left p-4 font-semibold text-foreground">Traditional Software</th>
-                        <th className="text-left p-4 font-semibold text-foreground bg-primary/5">Hobson AI</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b">
-                        <td className="p-4 font-medium text-foreground">Document processing speed</td>
-                        <td className="p-4 text-muted-foreground">Hours to days per document</td>
-                        <td className="p-4 text-muted-foreground">Minutes with setup required</td>
-                        <td className="p-4 bg-primary/5">
-                          <span className="text-primary font-medium">✓ Instant processing</span>
-                        </td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="p-4 font-medium text-foreground">Accuracy of data extraction</td>
-                        <td className="p-4 text-muted-foreground">Variable, prone to errors</td>
-                        <td className="p-4 text-muted-foreground">Good for structured data</td>
-                        <td className="p-4 bg-primary/5">
-                          <span className="text-primary font-medium">✓ AI-powered accuracy</span>
-                        </td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="p-4 font-medium text-foreground">Ability to answer natural-language questions</td>
-                        <td className="p-4 text-muted-foreground">Manual search required</td>
-                        <td className="p-4 text-muted-foreground">Limited or not available</td>
-                        <td className="p-4 bg-primary/5">
-                          <span className="text-primary font-medium">✓ Natural conversation</span>
-                        </td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="p-4 font-medium text-foreground">Cross-document insights</td>
-                        <td className="p-4 text-muted-foreground">Very time-consuming</td>
-                        <td className="p-4 text-muted-foreground">Basic comparison features</td>
-                        <td className="p-4 bg-primary/5">
-                          <span className="text-primary font-medium">✓ Automatic connections</span>
-                        </td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="p-4 font-medium text-foreground">Report generation</td>
-                        <td className="p-4 text-muted-foreground">Manual creation</td>
-                        <td className="p-4 text-muted-foreground">Template-based</td>
-                        <td className="p-4 bg-primary/5">
-                          <span className="text-primary font-medium">✓ AI-generated insights</span>
-                        </td>
-                      </tr>
-                      <tr className="border-b">
-                        <td className="p-4 font-medium text-foreground">Collaboration & sharing</td>
-                        <td className="p-4 text-muted-foreground">Email or file sharing</td>
-                        <td className="p-4 text-muted-foreground">Basic sharing features</td>
-                        <td className="p-4 bg-primary/5">
-                          <span className="text-primary font-medium">✓ Real-time collaboration</span>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="p-4 font-medium text-foreground">Security & compliance</td>
-                        <td className="p-4 text-muted-foreground">Depends on processes</td>
-                        <td className="p-4 text-muted-foreground">Standard security</td>
-                        <td className="p-4 bg-primary/5">
-                          <span className="text-primary font-medium">✓ Enterprise-grade</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                {/* Comparison Table */}
+                <div id="comparison-table" className="mb-16">
+                  <h2 className="text-2xl font-bold text-foreground mb-8">Feature Comparison</h2>
+                  <div className="bg-card border rounded-lg overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="w-full">
+                        <thead>
+                          <tr className="border-b bg-muted/50">
+                            <th className="text-left p-4 font-semibold text-foreground">Feature</th>
+                            <th className="text-left p-4 font-semibold text-foreground">Manual Work</th>
+                            <th className="text-left p-4 font-semibold text-foreground">Traditional Software</th>
+                            <th className="text-left p-4 font-semibold text-foreground bg-primary/5">Hobson AI</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr className="border-b">
+                            <td className="p-4 font-medium text-foreground">Document processing speed</td>
+                            <td className="p-4 text-muted-foreground">Hours to days per document</td>
+                            <td className="p-4 text-muted-foreground">Minutes with setup required</td>
+                            <td className="p-4 bg-primary/5">
+                              <span className="text-primary font-medium">✓ Instant processing</span>
+                            </td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="p-4 font-medium text-foreground">Accuracy of data extraction</td>
+                            <td className="p-4 text-muted-foreground">Variable, prone to errors</td>
+                            <td className="p-4 text-muted-foreground">Good for structured data</td>
+                            <td className="p-4 bg-primary/5">
+                              <span className="text-primary font-medium">✓ AI-powered accuracy</span>
+                            </td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="p-4 font-medium text-foreground">Ability to answer natural-language questions</td>
+                            <td className="p-4 text-muted-foreground">Manual search required</td>
+                            <td className="p-4 text-muted-foreground">Limited or not available</td>
+                            <td className="p-4 bg-primary/5">
+                              <span className="text-primary font-medium">✓ Natural conversation</span>
+                            </td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="p-4 font-medium text-foreground">Cross-document insights</td>
+                            <td className="p-4 text-muted-foreground">Very time-consuming</td>
+                            <td className="p-4 text-muted-foreground">Basic comparison features</td>
+                            <td className="p-4 bg-primary/5">
+                              <span className="text-primary font-medium">✓ Automatic connections</span>
+                            </td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="p-4 font-medium text-foreground">Report generation</td>
+                            <td className="p-4 text-muted-foreground">Manual creation</td>
+                            <td className="p-4 text-muted-foreground">Template-based</td>
+                            <td className="p-4 bg-primary/5">
+                              <span className="text-primary font-medium">✓ AI-generated insights</span>
+                            </td>
+                          </tr>
+                          <tr className="border-b">
+                            <td className="p-4 font-medium text-foreground">Collaboration & sharing</td>
+                            <td className="p-4 text-muted-foreground">Email or file sharing</td>
+                            <td className="p-4 text-muted-foreground">Basic sharing features</td>
+                            <td className="p-4 bg-primary/5">
+                              <span className="text-primary font-medium">✓ Real-time collaboration</span>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className="p-4 font-medium text-foreground">Security & compliance</td>
+                            <td className="p-4 text-muted-foreground">Depends on processes</td>
+                            <td className="p-4 text-muted-foreground">Standard security</td>
+                            <td className="p-4 bg-primary/5">
+                              <span className="text-primary font-medium">✓ Enterprise-grade</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Differentiator Callouts */}
+                <div id="key-differentiators" className="mb-12">
+                  <h2 className="text-2xl font-bold text-foreground mb-8">Key Differentiators</h2>
+                  <div className="space-y-8">
+                    <div className="flex gap-6">
+                      <div className="flex-shrink-0">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                          <span className="text-xl">💬</span>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">Natural-Language Search</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          Ask plain-language questions and get instant answers from your documents.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-6">
+                      <div className="flex-shrink-0">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                          <span className="text-xl">🔗</span>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">Cross-Document Insights</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          Spot trends, connections, and inconsistencies across your entire document set.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-6">
+                      <div className="flex-shrink-0">
+                        <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                          <span className="text-xl">🔐</span>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">Built for Compliance</h3>
+                        <p className="text-muted-foreground leading-relaxed">
+                          Enterprise-level security and data handling designed to meet strict standards.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Closing Note */}
+                <div className="bg-muted/30 rounded-lg p-6 border border-primary/10">
+                  <p className="text-muted-foreground text-center leading-relaxed">
+                    Every organisation is different. Hobson AI is designed to complement existing tools 
+                    while providing powerful features you won't find elsewhere.
+                  </p>
                 </div>
               </div>
-            </div>
 
-            {/* Differentiator Callouts */}
-            <div className="mb-12">
-              <h2 className="text-2xl font-bold text-foreground mb-8">Key Differentiators</h2>
-              <div className="space-y-8">
-                <div className="flex gap-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                      <span className="text-xl">💬</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Natural-Language Search</h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Ask plain-language questions and get instant answers from your documents.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                      <span className="text-xl">🔗</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Cross-Document Insights</h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Spot trends, connections, and inconsistencies across your entire document set.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex gap-6">
-                  <div className="flex-shrink-0">
-                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                      <span className="text-xl">🔐</span>
-                    </div>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-semibold text-foreground mb-2">Built for Compliance</h3>
-                    <p className="text-muted-foreground leading-relaxed">
-                      Enterprise-level security and data handling designed to meet strict standards.
-                    </p>
-                  </div>
+              {/* Table of Contents Sidebar */}
+              <div className="hidden lg:block w-64 flex-shrink-0">
+                <div className="sticky top-8">
+                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                  <nav className="space-y-1">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
                 </div>
               </div>
-            </div>
-
-            {/* Closing Note */}
-            <div className="bg-muted/30 rounded-lg p-6 border border-primary/10">
-              <p className="text-muted-foreground text-center leading-relaxed">
-                Every organisation is different. Hobson AI is designed to complement existing tools 
-                while providing powerful features you won't find elsewhere.
-              </p>
             </div>
           </div>
         </div>
@@ -585,13 +723,146 @@ const Learn = () => {
 
     // Handle Product Roadmap content
     if (activeHorizontalTab === 'features' && activeVerticalTab === 'roadmap') {
+      const tocSections = [
+        { id: 'recently-launched', label: 'Recently Launched' },
+        { id: 'in-progress', label: 'In Progress' },
+        { id: 'coming-soon', label: 'Coming Soon' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-4">Our Roadmap</h1>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Hobson AI is always evolving. Our roadmap highlights what we've recently delivered, 
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-4">Our Roadmap</h1>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Hobson AI is always evolving. Our roadmap highlights what we've recently delivered, 
+                    what we're working on now, and where we're heading next. It's designed to give you 
+                    transparency and confidence that Hobson is built for the long term.
+                  </p>
+                </div>
+
+                <div className="space-y-12">
+                  {/* Recently Launched */}
+                  <section id="recently-launched">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                        <span className="text-lg">✅</span>
+                      </div>
+                      <h2 className="text-2xl font-bold text-foreground">Recently Launched</h2>
+                    </div>
+                    <div className="ml-11 space-y-4">
+                      <div className="bg-card border rounded-lg p-6">
+                        <h3 className="font-semibold text-foreground mb-2">AI-powered document summarisation</h3>
+                        <p className="text-muted-foreground text-sm">Transform lengthy documents into clear, actionable summaries.</p>
+                      </div>
+                      <div className="bg-card border rounded-lg p-6">
+                        <h3 className="font-semibold text-foreground mb-2">Chat interface for natural-language queries</h3>
+                        <p className="text-muted-foreground text-sm">Ask questions in plain language and get instant answers from your documents.</p>
+                      </div>
+                      <div className="bg-card border rounded-lg p-6">
+                        <h3 className="font-semibold text-foreground mb-2">Clause and obligation tracking</h3>
+                        <p className="text-muted-foreground text-sm">Automatically track key dates, deadlines, and obligations across your documents.</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* In Progress */}
+                  <section id="in-progress">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                        <span className="text-lg">🚧</span>
+                      </div>
+                      <h2 className="text-2xl font-bold text-foreground">In Progress</h2>
+                    </div>
+                    <div className="ml-11 space-y-4">
+                      <div className="bg-card border rounded-lg p-6 border-l-4 border-l-primary">
+                        <h3 className="font-semibold text-foreground mb-2">Smarter follow-up questioning in chat</h3>
+                        <p className="text-muted-foreground text-sm">Enhanced conversational AI that understands context and asks better follow-up questions.</p>
+                      </div>
+                      <div className="bg-card border rounded-lg p-6 border-l-4 border-l-primary">
+                        <h3 className="font-semibold text-foreground mb-2">Cross-document insights and comparisons</h3>
+                        <p className="text-muted-foreground text-sm">Compare terms and find connections across multiple documents simultaneously.</p>
+                      </div>
+                      <div className="bg-card border rounded-lg p-6 border-l-4 border-l-primary">
+                        <h3 className="font-semibold text-foreground mb-2">Improved accuracy for complex property documents</h3>
+                        <p className="text-muted-foreground text-sm">Enhanced AI models specifically trained on property and legal document structures.</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Coming Soon */}
+                  <section id="coming-soon">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+                        <span className="text-lg">🌟</span>
+                      </div>
+                      <h2 className="text-2xl font-bold text-foreground">Coming Soon</h2>
+                    </div>
+                    <div className="ml-11 space-y-4">
+                      <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
+                        <h3 className="font-semibold text-foreground mb-2">Integrations with document management systems (DMS) and CRMs</h3>
+                        <p className="text-muted-foreground text-sm">Seamless connection to your existing tools and workflows.</p>
+                      </div>
+                      <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
+                        <h3 className="font-semibold text-foreground mb-2">Predictive insights (e.g. flagging risks before they're missed)</h3>
+                        <p className="text-muted-foreground text-sm">Proactive alerts about potential issues and opportunities in your documents.</p>
+                      </div>
+                      <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
+                        <h3 className="font-semibold text-foreground mb-2">Expanded compliance automation</h3>
+                        <p className="text-muted-foreground text-sm">Automated compliance checks and reporting across regulatory requirements.</p>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                {/* Closing Note */}
+                <div className="mt-16 bg-primary/5 rounded-lg p-6 border border-primary/20">
+                  <p className="text-muted-foreground text-center leading-relaxed">
+                    We build Hobson AI in close partnership with our users. Your feedback helps shape the roadmap — 
+                    ensuring the platform grows in ways that bring you the most value.
+                  </p>
+                </div>
+              </div>
+
+              {/* Table of Contents Sidebar */}
+              <div className="hidden lg:block w-64 flex-shrink-0">
+                <div className="sticky top-8">
+                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                  <nav className="space-y-1">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Handle Integrations content
                 what we're working on now, and where we're heading next. It's designed to give you 
                 transparency and confidence that Hobson is built for the long term.
               </p>
