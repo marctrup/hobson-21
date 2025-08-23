@@ -215,6 +215,17 @@ const Announcements = () => {
                 </Button>
               </div>
             </div>
+            
+            {/* Test link for debugging */}
+            <div className="mt-6 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+              <p className="text-sm text-yellow-800 mb-2">Debug Test Link:</p>
+              <a 
+                href="/announcement/breakthrough-hobson-now-achieves-high-accuracy" 
+                className="text-blue-600 hover:underline text-sm font-medium"
+              >
+                Direct link to latest announcement
+              </a>
+            </div>
           </div>
 
           {/* Latest Announcements */}

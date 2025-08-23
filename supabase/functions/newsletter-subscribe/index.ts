@@ -94,7 +94,7 @@ const handler = async (req: Request): Promise<Response> => {
     const origin = req.headers.get('origin') || 'https://hobsonschoice.ai';
     
     const announcementUrl = latestAnnouncement 
-      ? `${origin}/announcement/${latestAnnouncement.slug}`
+      ? `${origin}/announcement/${encodeURIComponent(latestAnnouncement.slug.trim())}`
       : `${origin}/announcements`;
     
     console.log('Generated announcement URL:', announcementUrl);
