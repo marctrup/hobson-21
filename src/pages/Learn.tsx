@@ -917,9 +917,6 @@ const Learn = () => {
         <div className="flex-1 p-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/70 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">⚙️</span>
-              </div>
               <h1 className="text-3xl font-bold text-foreground mb-6">Setup Guide</h1>
               
               {/* Coming Soon Banner */}
@@ -948,9 +945,6 @@ const Learn = () => {
         <div className="flex-1 p-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/70 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📘</span>
-              </div>
               <h1 className="text-3xl font-bold text-foreground mb-6">API Reference</h1>
               
               {/* Coming Soon Banner */}
@@ -979,9 +973,6 @@ const Learn = () => {
         <div className="flex-1 p-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-r from-primary to-primary/70 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">🛠</span>
-              </div>
               <h1 className="text-3xl font-bold text-foreground mb-6">Troubleshooting</h1>
               
               {/* Coming Soon Banner */}
