@@ -29,22 +29,6 @@ const Announcements = () => {
       type: 'feature',
       priority: 'high'
     },
-    {
-      id: 2,
-      title: 'Enhanced Security Updates',
-      description: 'Implementation of advanced encryption and multi-factor authentication for all user accounts.',
-      date: '2024-08-10',
-      type: 'security',
-      priority: 'high'
-    },
-    {
-      id: 3,
-      title: 'Mobile App Beta Release',
-      description: 'Our mobile application is now available for beta testing. Sign up to get early access.',
-      date: '2024-08-05',
-      type: 'product',
-      priority: 'medium'
-    }
   ];
 
   const handleSubscribe = async () => {
