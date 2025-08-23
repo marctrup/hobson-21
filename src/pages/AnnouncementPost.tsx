@@ -191,7 +191,7 @@ const AnnouncementPost = () => {
                 )}
                 
                 {/* Back Link */}
-                <div className="mt-6">
+                <div className="mt-2">
                   <Link 
                     to="/announcements" 
                     className="inline-flex items-center gap-2 text-primary hover:underline"
