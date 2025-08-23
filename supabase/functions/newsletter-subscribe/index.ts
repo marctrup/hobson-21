@@ -95,8 +95,8 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log('Announcement query result:', { latestAnnouncement, announcementError });
 
-    // Get the current domain from the request origin or default to production
-    const origin = req.headers.get('origin') || 'https://hobsonschoice.ai';
+    // Get the current domain - always use production for emails
+    const origin = 'https://hobsonschoice.ai';
     
     const announcementUrl = latestAnnouncement 
       ? `${origin}/announcement/${encodeURIComponent(latestAnnouncement.slug.trim())}`
