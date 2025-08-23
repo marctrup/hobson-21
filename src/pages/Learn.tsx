@@ -176,12 +176,7 @@ const Learn = () => {
           { id: 'debugging-prompts', label: 'Debugging Prompts', icon: FileText },
         ];
       case 'use-cases':
-        return [
-          { id: 'business-scenarios', label: 'Business Scenarios', icon: Library },
-          { id: 'industry-examples', label: 'Industry Examples', icon: FileText },
-          { id: 'case-studies', label: 'Case Studies', icon: Book },
-          { id: 'success-stories', label: 'Success Stories', icon: Heart },
-        ];
+        return [];
       case 'glossary':
         return [
           { id: 'hobson-glossary', label: 'Hobson Glossary', icon: FileText },
