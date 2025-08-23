@@ -179,7 +179,7 @@ const AnnouncementPost = () => {
           <article>
             <div className="flex gap-8 min-h-[80vh]">
               {/* Left Container - Featured Image */}
-              <div className="w-1/2 flex flex-col">
+              <div className="w-1/2 flex flex-col border-2 border-red-500 p-4 rounded-lg">
                 {post.featured_image_url && (
                   <div className="h-full flex items-start">
                     <img
