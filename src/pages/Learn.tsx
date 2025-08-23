@@ -73,7 +73,7 @@ const Learn = () => {
         } else if (activeVerticalTab === 'setup-guide') {
           tocSections = ['coming-soon-notice', 'what-to-expect'];
         } else if (activeVerticalTab === 'api-reference') {
-          tocSections = ['coming-soon-notice', 'what-to-expect'];
+          tocSections = ['overview', 'authentication', 'endpoints', 'document-analysis', 'query-interface', 'webhooks', 'rate-limits', 'error-handling', 'examples'];
         } else if (activeVerticalTab === 'troubleshooting') {
           tocSections = ['coming-soon-notice', 'what-to-expect'];
         }
