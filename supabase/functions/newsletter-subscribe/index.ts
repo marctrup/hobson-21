@@ -139,6 +139,12 @@ const handler = async (req: Request): Promise<Response> => {
     
     <div style="border-top: 1px solid #eee; padding-top: 20px; font-size: 12px; color: #666; text-align: center;">
         <p>If you didn't subscribe to this newsletter, you can safely ignore this email.</p>
+        <p style="margin-top: 15px;">
+            <a href="https://hobsonschoice.ai/functions/v1/newsletter-unsubscribe?email=${encodeURIComponent(email)}" 
+               style="color: #999; text-decoration: underline; font-size: 11px;">
+                Unsubscribe from all Hobson AI emails
+            </a>
+        </p>
     </div>
     
 </body>

@@ -5,3 +5,9 @@ verify_jwt = false
 
 [functions.send-pilot-application]
 verify_jwt = false
+
+[functions.newsletter-subscribe]
+verify_jwt = false
+
+[functions.newsletter-unsubscribe]
+verify_jwt = false
