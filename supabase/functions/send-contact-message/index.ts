@@ -66,20 +66,15 @@ serve(async (req) => {
       console.log('New contact message saved to database')
     }
 
-    // Render the React Email template for confirmation
-    const confirmationEmailHtml = await renderAsync(
-      React.createElement(ContactEmail, {
-        name,
-        message: reason,
-      })
-    );
+    // Read the HTML template
+    const htmlTemplate = await fetch('https://hobsonschoice.ai/email-1.html').then(r => r.text());
 
     // Send confirmation email to the user
     const confirmationResponse = await resend.emails.send({
       from: "Hobson AI <noreply@hobsonschoice.ai>",
       to: [email],
       subject: "Thank you for contacting Hobson AI",
-      html: confirmationEmailHtml,
+      html: htmlTemplate,
     });
 
     console.log("Confirmation email sent successfully:", confirmationResponse);

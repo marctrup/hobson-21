@@ -80,34 +80,17 @@ const handler = async (req: Request): Promise<Response> => {
       throw insertError;
     }
 
-    // Send welcome email
+    // Send welcome email using HTML template
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+    
+    // Read the HTML template
+    const htmlTemplate = await fetch('https://hobsonschoice.ai/email-1.html').then(r => r.text());
     
     const { error: emailError } = await resend.emails.send({
       from: 'Hobson AI <info@hobsonschoice.ai>',
       to: [email],
       subject: 'Welcome to Hobson AI Updates!',
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #333; text-align: center;">Welcome to Hobson AI!</h1>
-          <p style="color: #666; font-size: 16px; line-height: 1.6;">
-            Thank you for subscribing to our ${subscriptionType} updates! 
-            You'll now receive the latest news about Hobson AI's features, improvements, and announcements.
-          </p>
-          <p style="color: #666; font-size: 16px; line-height: 1.6;">
-            We're excited to keep you informed about our journey to build the most reliable AI assistant for property compliance and management.
-          </p>
-          <div style="text-align: center; margin: 30px 0;">
-            <a href="https://hobsonschoice.ai" 
-               style="background-color: #007bff; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block;">
-              Visit Hobson AI
-            </a>
-          </div>
-          <p style="color: #999; font-size: 14px; text-align: center;">
-            If you didn't subscribe to this newsletter, you can safely ignore this email.
-          </p>
-        </div>
-      `,
+      html: htmlTemplate,
     });
 
     if (emailError) {

@@ -69,21 +69,15 @@ serve(async (req) => {
     const firstName = nameParts[0];
     const lastName = nameParts.slice(1).join(' ');
 
-    // Render the React Email template for confirmation
-    const confirmationEmailHtml = await renderAsync(
-      React.createElement(PilotEmail, {
-        firstName,
-        lastName,
-        company,
-      })
-    );
+    // Read the HTML template  
+    const htmlTemplate = await fetch('https://hobsonschoice.ai/email-1.html').then(r => r.text());
 
     // Send confirmation email to the applicant
     const confirmationResponse = await resend.emails.send({
       from: "Hobson AI <noreply@hobsonschoice.ai>",
       to: [email],
       subject: "Welcome to the Hobson AI Pilot Program!",
-      html: confirmationEmailHtml,
+      html: htmlTemplate,
     });
 
     console.log("Confirmation email sent successfully:", confirmationResponse);
