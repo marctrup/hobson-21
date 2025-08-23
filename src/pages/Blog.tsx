@@ -88,6 +88,7 @@ const Blog = () => {
               )
             `)
             .eq('status', 'published')
+            .eq('link_location', 'blog')
             .order('sort_order', { ascending: false })
             .limit(limit);
 
