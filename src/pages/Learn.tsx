@@ -46,6 +46,7 @@ const Learn = () => {
     if ((activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') || 
         (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') ||
         (activeHorizontalTab === 'features' && ['core-features', 'advanced-features', 'feature-comparison', 'roadmap'].includes(activeVerticalTab)) ||
+        (activeHorizontalTab === 'integrations' && ['available-integrations', 'setup-guide', 'api-reference', 'troubleshooting'].includes(activeVerticalTab)) ||
         (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') ||
         (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') ||
         (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts')) {
@@ -65,6 +66,16 @@ const Learn = () => {
           tocSections = ['comparison-table', 'key-differentiators'];
         } else if (activeVerticalTab === 'roadmap') {
           tocSections = ['recently-launched', 'in-progress', 'coming-soon'];
+        }
+      } else if (activeHorizontalTab === 'integrations') {
+        if (activeVerticalTab === 'available-integrations' || !activeVerticalTab) {
+          tocSections = ['planned-integrations', 'why-integrations-matter', 'what-were-working-towards', 'benefit-for-you'];
+        } else if (activeVerticalTab === 'setup-guide') {
+          tocSections = ['coming-soon-notice', 'what-to-expect'];
+        } else if (activeVerticalTab === 'api-reference') {
+          tocSections = ['coming-soon-notice', 'what-to-expect'];
+        } else if (activeVerticalTab === 'troubleshooting') {
+          tocSections = ['coming-soon-notice', 'what-to-expect'];
         }
       } else if (activeHorizontalTab === 'prompt-engineering') {
         if (activeVerticalTab === 'fundamentals') {
@@ -864,195 +875,237 @@ const Learn = () => {
 
     // Handle Integrations content
     if (activeHorizontalTab === 'integrations' && (!activeVerticalTab || activeVerticalTab === 'available-integrations')) {
+      const tocSections = [
+        { id: 'planned-integrations', label: 'Planned Integrations' },
+        { id: 'why-integrations-matter', label: 'Why Integrations Matter' },
+        { id: 'what-were-working-towards', label: 'What We\'re Working Towards' },
+        { id: 'benefit-for-you', label: 'The Benefit for You' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-6">Integrations with Hobson AI</h1>
-              
-              {/* Disclaimer Banner */}
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
-                <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <p className="text-orange-700 dark:text-orange-300 font-medium">
-                    Integrations are not yet available in Hobson AI — all integrations listed here are coming soon.
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-6">Integrations with Hobson AI</h1>
+                  
+                  {/* Disclaimer Banner */}
+                  <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <p className="text-orange-700 dark:text-orange-300 font-medium">
+                        Integrations are not yet available in Hobson AI — all integrations listed here are coming soon.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Integrations Framework */}
+                  <div id="planned-integrations" className="mb-8">
+                    <h2 className="text-xl font-semibold text-foreground mb-4">Planned Integrations</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                      <div className="bg-card border rounded-lg p-4 text-center relative">
+                        <div className="absolute top-2 right-2">
+                          <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                        </div>
+                        <div className="text-2xl mb-2">📅</div>
+                        <h3 className="font-medium text-foreground">Calendar</h3>
+                      </div>
+                      
+                      <div className="bg-card border rounded-lg p-4 text-center relative">
+                        <div className="absolute top-2 right-2">
+                          <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                        </div>
+                        <div className="text-2xl mb-2">✉️</div>
+                        <h3 className="font-medium text-foreground">Email</h3>
+                      </div>
+                      
+                      <div className="bg-card border rounded-lg p-4 text-center relative">
+                        <div className="absolute top-2 right-2">
+                          <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                        </div>
+                        <div className="text-2xl mb-2">📂</div>
+                        <h3 className="font-medium text-foreground">Dropbox</h3>
+                      </div>
+                      
+                      <div className="bg-card border rounded-lg p-4 text-center relative">
+                        <div className="absolute top-2 right-2">
+                          <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                        </div>
+                        <div className="text-2xl mb-2">📂</div>
+                        <h3 className="font-medium text-foreground">Google Drive</h3>
+                      </div>
+                      
+                      <div className="bg-card border rounded-lg p-4 text-center relative">
+                        <div className="absolute top-2 right-2">
+                          <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                        </div>
+                        <div className="text-2xl mb-2">📂</div>
+                        <h3 className="font-medium text-foreground">OneDrive</h3>
+                      </div>
+                      
+                      <div className="bg-card border rounded-lg p-4 text-center relative">
+                        <div className="absolute top-2 right-2">
+                          <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
+                        </div>
+                        <div className="text-2xl mb-2">➕</div>
+                        <h3 className="font-medium text-foreground text-sm">Others (to be determined)</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p className="text-lg text-muted-foreground leading-relaxed mb-12">
+                    Hobson AI works best when it fits seamlessly into the tools you already use. 
+                    Our upcoming integrations are designed to make insights instantly available within 
+                    your existing workflows — reducing friction, saving time, and keeping your team focused.
+                  </p>
+                </div>
+
+                <div className="space-y-12">
+                  {/* Why Integrations Matter */}
+                  <section id="why-integrations-matter">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🔗</span>
+                      </div>
+                      <h2 className="text-2xl font-bold text-foreground">Why Integrations Matter</h2>
+                    </div>
+                    <div className="ml-16">
+                      <p className="text-muted-foreground leading-relaxed">
+                        Many organisations already rely on document management systems (DMS), CRMs, calendars, and email platforms. 
+                        Integrations will let Hobson plug directly into these tools so insights flow automatically, 
+                        without switching between systems.
+                      </p>
+                    </div>
+                  </section>
+
+                  {/* What We're Working Towards */}
+                  <section id="what-were-working-towards">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🚀</span>
+                      </div>
+                      <h2 className="text-2xl font-bold text-foreground">What We're Working Towards</h2>
+                    </div>
+                    <div className="ml-16 space-y-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1">Direct connection to DMS and storage platforms (Dropbox, Google Drive, OneDrive)</h3>
+                          <p className="text-sm text-muted-foreground">Seamlessly access and analyze documents stored in your cloud storage platforms.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1">Email and calendar integrations for faster knowledge retrieval</h3>
+                          <p className="text-sm text-muted-foreground">Surface relevant insights from your email threads and calendar events.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1">CRM integrations for client and contract insights</h3>
+                          <p className="text-sm text-muted-foreground">Access document insights directly within your CRM workflows.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1">API access for custom workflows</h3>
+                          <p className="text-sm text-muted-foreground">Build custom integrations tailored to your specific business processes.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1">Single sign-on (SSO) for secure, easy access</h3>
+                          <p className="text-sm text-muted-foreground">Maintain security standards while simplifying user access across systems.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* The Benefit for You */}
+                  <section id="benefit-for-you">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                        <span className="text-xl">🌟</span>
+                      </div>
+                      <h2 className="text-2xl font-bold text-foreground">The Benefit for You</h2>
+                    </div>
+                    <div className="ml-16 space-y-4">
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1">Less manual exporting and importing</h3>
+                          <p className="text-sm text-muted-foreground">Eliminate time-consuming file transfers between systems.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1">Centralised insights across platforms</h3>
+                          <p className="text-sm text-muted-foreground">Access Hobson's intelligence wherever you work, without switching applications.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1">Faster, more consistent decision-making</h3>
+                          <p className="text-sm text-muted-foreground">Make informed decisions with real-time insights in your existing workflow.</p>
+                        </div>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+                        <div>
+                          <h3 className="font-semibold text-foreground mb-1">Reduced risk of missed details</h3>
+                          <p className="text-sm text-muted-foreground">Important information surfaces automatically in context, when you need it.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+
+                {/* Closing Note */}
+                <div className="mt-16 bg-primary/5 rounded-lg p-6 border border-primary/20">
+                  <p className="text-muted-foreground text-center leading-relaxed">
+                    Integrations are a key part of our roadmap. By bringing Hobson AI directly into your existing systems, 
+                    we aim to create a seamless experience where insights are always available when and where you need them.
                   </p>
                 </div>
               </div>
 
-              {/* Integrations Framework */}
-              <div className="mb-8">
-                <h2 className="text-xl font-semibold text-foreground mb-4">Planned Integrations</h2>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                  <div className="bg-card border rounded-lg p-4 text-center relative">
-                    <div className="absolute top-2 right-2">
-                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
-                    </div>
-                    <div className="text-2xl mb-2">📅</div>
-                    <h3 className="font-medium text-foreground">Calendar</h3>
-                  </div>
-                  
-                  <div className="bg-card border rounded-lg p-4 text-center relative">
-                    <div className="absolute top-2 right-2">
-                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
-                    </div>
-                    <div className="text-2xl mb-2">✉️</div>
-                    <h3 className="font-medium text-foreground">Email</h3>
-                  </div>
-                  
-                  <div className="bg-card border rounded-lg p-4 text-center relative">
-                    <div className="absolute top-2 right-2">
-                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
-                    </div>
-                    <div className="text-2xl mb-2">📂</div>
-                    <h3 className="font-medium text-foreground">Dropbox</h3>
-                  </div>
-                  
-                  <div className="bg-card border rounded-lg p-4 text-center relative">
-                    <div className="absolute top-2 right-2">
-                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
-                    </div>
-                    <div className="text-2xl mb-2">📂</div>
-                    <h3 className="font-medium text-foreground">Google Drive</h3>
-                  </div>
-                  
-                  <div className="bg-card border rounded-lg p-4 text-center relative">
-                    <div className="absolute top-2 right-2">
-                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
-                    </div>
-                    <div className="text-2xl mb-2">📂</div>
-                    <h3 className="font-medium text-foreground">OneDrive</h3>
-                  </div>
-                  
-                  <div className="bg-card border rounded-lg p-4 text-center relative">
-                    <div className="absolute top-2 right-2">
-                      <span className="text-xs bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 px-2 py-1 rounded-full">Coming Soon</span>
-                    </div>
-                    <div className="text-2xl mb-2">➕</div>
-                    <h3 className="font-medium text-foreground text-sm">Others (to be determined)</h3>
-                  </div>
+              {/* Table of Contents Sidebar */}
+              <div className="hidden lg:block w-64 flex-shrink-0">
+                <div className="sticky top-8">
+                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                  <nav className="space-y-1">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
                 </div>
               </div>
-
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Hobson AI works best when it fits seamlessly into the tools you already use. 
-                Our upcoming integrations are designed to make insights instantly available within 
-                your existing workflows — reducing friction, saving time, and keeping your team focused.
-              </p>
-            </div>
-
-            <div className="space-y-12">
-              {/* Why Integrations Matter */}
-              <section>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🔗</span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-foreground">Why Integrations Matter</h2>
-                </div>
-                <div className="ml-16">
-                  <p className="text-muted-foreground leading-relaxed">
-                    Many organisations already rely on document management systems (DMS), CRMs, calendars, and email platforms. 
-                    Integrations will let Hobson plug directly into these tools so insights flow automatically, 
-                    without switching between systems.
-                  </p>
-                </div>
-              </section>
-
-              {/* What We're Working Towards */}
-              <section>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🚀</span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-foreground">What We're Working Towards</h2>
-                </div>
-                <div className="ml-16 space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">Direct connection to DMS and storage platforms (Dropbox, Google Drive, OneDrive)</h3>
-                      <p className="text-sm text-muted-foreground">Seamlessly access and analyze documents stored in your cloud storage platforms.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">Email and calendar integrations for faster knowledge retrieval</h3>
-                      <p className="text-sm text-muted-foreground">Surface relevant insights from your email threads and calendar events.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">CRM integrations for client and contract insights</h3>
-                      <p className="text-sm text-muted-foreground">Access document insights directly within your CRM workflows.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">API access for custom workflows</h3>
-                      <p className="text-sm text-muted-foreground">Build custom integrations tailored to your specific business processes.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">Single sign-on (SSO) for secure, easy access</h3>
-                      <p className="text-sm text-muted-foreground">Maintain security standards while simplifying user access across systems.</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
-
-              {/* The Benefit for You */}
-              <section>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
-                    <span className="text-xl">🌟</span>
-                  </div>
-                  <h2 className="text-2xl font-bold text-foreground">The Benefit for You</h2>
-                </div>
-                <div className="ml-16 space-y-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">Less manual exporting and importing</h3>
-                      <p className="text-sm text-muted-foreground">Eliminate time-consuming file transfers between systems.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">Centralised insights across platforms</h3>
-                      <p className="text-sm text-muted-foreground">Access Hobson's intelligence wherever you work, without switching applications.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">Faster, more consistent decision-making</h3>
-                      <p className="text-sm text-muted-foreground">Make informed decisions with real-time insights in your existing workflow.</p>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-1">Reduced risk of missed details</h3>
-                      <p className="text-sm text-muted-foreground">Important information surfaces automatically in context, when you need it.</p>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </div>
-
-            {/* Closing Note */}
-            <div className="mt-16 bg-primary/5 rounded-lg p-6 border border-primary/20">
-              <p className="text-muted-foreground text-center leading-relaxed">
-                Integrations are a key part of our roadmap. By bringing Hobson AI directly into your existing systems, 
-                we aim to create a seamless experience where insights are always available when and where you need them.
-              </p>
             </div>
           </div>
         </div>
@@ -1289,26 +1342,68 @@ const Learn = () => {
 
     // Handle Setup Guide content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'setup-guide') {
+      const tocSections = [
+        { id: 'coming-soon-notice', label: 'Coming Soon Notice' },
+        { id: 'what-to-expect', label: 'What to Expect' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-6">Setup Guide</h1>
-              
-              {/* Coming Soon Banner */}
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <p className="text-orange-700 dark:text-orange-300 font-medium">
-                    This resource is not yet available — Coming Soon.
-                  </p>
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="text-center mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-6">Setup Guide</h1>
+                  
+                  {/* Coming Soon Banner */}
+                  <div id="coming-soon-notice" className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <p className="text-orange-700 dark:text-orange-300 font-medium">
+                        This resource is not yet available — Coming Soon.
+                      </p>
+                    </div>
+                  </div>
+
+                  <section id="what-to-expect">
+                    <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                      The Setup Guide will provide step-by-step instructions to help you get started quickly 
+                      and configure Hobson AI for your organisation.
+                    </p>
+                  </section>
                 </div>
               </div>
 
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                The Setup Guide will provide step-by-step instructions to help you get started quickly 
-                and configure Hobson AI for your organisation.
-              </p>
+              {/* Table of Contents Sidebar */}
+              <div className="hidden lg:block w-64 flex-shrink-0">
+                <div className="sticky top-8">
+                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                  <nav className="space-y-1">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1317,26 +1412,68 @@ const Learn = () => {
 
     // Handle API Reference content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'api-reference') {
+      const tocSections = [
+        { id: 'coming-soon-notice', label: 'Coming Soon Notice' },
+        { id: 'what-to-expect', label: 'What to Expect' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-6">API Reference</h1>
-              
-              {/* Coming Soon Banner */}
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <p className="text-orange-700 dark:text-orange-300 font-medium">
-                    This resource is not yet available — Coming Soon.
-                  </p>
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="text-center mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-6">API Reference</h1>
+                  
+                  {/* Coming Soon Banner */}
+                  <div id="coming-soon-notice" className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <p className="text-orange-700 dark:text-orange-300 font-medium">
+                        This resource is not yet available — Coming Soon.
+                      </p>
+                    </div>
+                  </div>
+
+                  <section id="what-to-expect">
+                    <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                      The API Reference will offer a complete guide to Hobson's API, including examples and 
+                      explanations to support developers and integrations.
+                    </p>
+                  </section>
                 </div>
               </div>
 
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                The API Reference will offer a complete guide to Hobson's API, including examples and 
-                explanations to support developers and integrations.
-              </p>
+              {/* Table of Contents Sidebar */}
+              <div className="hidden lg:block w-64 flex-shrink-0">
+                <div className="sticky top-8">
+                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                  <nav className="space-y-1">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1345,26 +1482,68 @@ const Learn = () => {
 
     // Handle Troubleshooting content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'troubleshooting') {
+      const tocSections = [
+        { id: 'coming-soon-notice', label: 'Coming Soon Notice' },
+        { id: 'what-to-expect', label: 'What to Expect' },
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+
       return (
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-6">Troubleshooting</h1>
-              
-              {/* Coming Soon Banner */}
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <p className="text-orange-700 dark:text-orange-300 font-medium">
-                    This resource is not yet available — Coming Soon.
-                  </p>
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-7xl">
+            <div className="flex gap-8">
+              {/* Main Content */}
+              <div className="flex-1 max-w-4xl">
+                <div className="text-center mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-6">Troubleshooting</h1>
+                  
+                  {/* Coming Soon Banner */}
+                  <div id="coming-soon-notice" className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
+                    <div className="flex items-center justify-center gap-2">
+                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                      <p className="text-orange-700 dark:text-orange-300 font-medium">
+                        This resource is not yet available — Coming Soon.
+                      </p>
+                    </div>
+                  </div>
+
+                  <section id="what-to-expect">
+                    <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                      The Troubleshooting guide will provide clear steps for diagnosing and resolving common issues, 
+                      along with tips to keep Hobson running smoothly.
+                    </p>
+                  </section>
                 </div>
               </div>
 
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                The Troubleshooting guide will provide clear steps for diagnosing and resolving common issues, 
-                along with tips to keep Hobson running smoothly.
-              </p>
+              {/* Table of Contents Sidebar */}
+              <div className="hidden lg:block w-64 flex-shrink-0">
+                <div className="sticky top-8">
+                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                  <nav className="space-y-1">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
+                </div>
+              </div>
             </div>
           </div>
         </div>
