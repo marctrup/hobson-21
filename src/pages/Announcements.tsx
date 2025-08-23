@@ -201,38 +201,20 @@ const Announcements = () => {
           </div>
 
           {/* Latest Announcements */}
-          <Card className="p-6 mb-8">
-            <h2 className="text-xl font-semibold text-foreground mb-4 flex items-center gap-2">
+          <div className="mb-8">
+            <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
               <Calendar className="w-5 h-5" />
               Latest Announcements
             </h2>
-            <div className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {announcements.map((announcement) => (
                 <div 
                   key={announcement.id} 
-                  className="p-4 rounded-lg border border-border cursor-pointer hover:bg-muted/50 transition-colors"
+                  className="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-lg p-6 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200 aspect-square flex flex-col justify-between"
                   onClick={() => handleAnnouncementClick(announcement.slug)}
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="font-medium text-foreground mb-2 hover:text-primary">{announcement.title}</h3>
-                      <p className="text-sm text-muted-foreground mb-3">{announcement.description}</p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          {new Date(announcement.date).toLocaleDateString()}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Clock className="w-3 h-3" />
-                          {announcement.readingTime} min read
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <User className="w-3 h-3" />
-                          {announcement.author}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col gap-2 ml-4">
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-4">
                       <Badge 
                         variant="outline" 
                         className={`capitalize ${getTypeColor(announcement.type)}`}
@@ -246,11 +228,29 @@ const Announcements = () => {
                         {announcement.priority}
                       </Badge>
                     </div>
+                    
+                    <h3 className="font-semibold text-foreground mb-3 text-lg leading-tight line-clamp-3">{announcement.title}</h3>
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-3">{announcement.description}</p>
+                  </div>
+                  
+                  <div className="space-y-2 text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-3 h-3" />
+                      <span>{new Date(announcement.date).toLocaleDateString()}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-3 h-3" />
+                      <span>{announcement.readingTime} min read</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <User className="w-3 h-3" />
+                      <span>{announcement.author}</span>
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
-          </Card>
+          </div>
 
           {/* View Archive Button */}
           <div className="flex justify-center">
