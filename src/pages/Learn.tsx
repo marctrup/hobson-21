@@ -433,6 +433,156 @@ const Learn = () => {
       );
     }
 
+    // Handle Feature Comparison content
+    if (activeHorizontalTab === 'features' && activeVerticalTab === 'feature-comparison') {
+      return (
+        <div className="flex-1 p-8">
+          <div className="max-w-5xl mx-auto">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-4">Feature Comparisons</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Choosing the right approach to document intelligence means understanding the differences. 
+                This page shows how Hobson AI compares with manual work and traditional software, 
+                so you can see the advantages more clearly.
+              </p>
+            </div>
+
+            {/* Comparison Table */}
+            <div className="mb-16">
+              <div className="bg-card border rounded-lg overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b bg-muted/50">
+                        <th className="text-left p-4 font-semibold text-foreground">Feature</th>
+                        <th className="text-left p-4 font-semibold text-foreground">Manual Work</th>
+                        <th className="text-left p-4 font-semibold text-foreground">Traditional Software</th>
+                        <th className="text-left p-4 font-semibold text-foreground bg-primary/5">Hobson AI</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr className="border-b">
+                        <td className="p-4 font-medium text-foreground">Document processing speed</td>
+                        <td className="p-4 text-muted-foreground">Hours to days per document</td>
+                        <td className="p-4 text-muted-foreground">Minutes with setup required</td>
+                        <td className="p-4 bg-primary/5">
+                          <span className="text-primary font-medium">✓ Instant processing</span>
+                        </td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="p-4 font-medium text-foreground">Accuracy of data extraction</td>
+                        <td className="p-4 text-muted-foreground">Variable, prone to errors</td>
+                        <td className="p-4 text-muted-foreground">Good for structured data</td>
+                        <td className="p-4 bg-primary/5">
+                          <span className="text-primary font-medium">✓ AI-powered accuracy</span>
+                        </td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="p-4 font-medium text-foreground">Ability to answer natural-language questions</td>
+                        <td className="p-4 text-muted-foreground">Manual search required</td>
+                        <td className="p-4 text-muted-foreground">Limited or not available</td>
+                        <td className="p-4 bg-primary/5">
+                          <span className="text-primary font-medium">✓ Natural conversation</span>
+                        </td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="p-4 font-medium text-foreground">Cross-document insights</td>
+                        <td className="p-4 text-muted-foreground">Very time-consuming</td>
+                        <td className="p-4 text-muted-foreground">Basic comparison features</td>
+                        <td className="p-4 bg-primary/5">
+                          <span className="text-primary font-medium">✓ Automatic connections</span>
+                        </td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="p-4 font-medium text-foreground">Report generation</td>
+                        <td className="p-4 text-muted-foreground">Manual creation</td>
+                        <td className="p-4 text-muted-foreground">Template-based</td>
+                        <td className="p-4 bg-primary/5">
+                          <span className="text-primary font-medium">✓ AI-generated insights</span>
+                        </td>
+                      </tr>
+                      <tr className="border-b">
+                        <td className="p-4 font-medium text-foreground">Collaboration & sharing</td>
+                        <td className="p-4 text-muted-foreground">Email or file sharing</td>
+                        <td className="p-4 text-muted-foreground">Basic sharing features</td>
+                        <td className="p-4 bg-primary/5">
+                          <span className="text-primary font-medium">✓ Real-time collaboration</span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="p-4 font-medium text-foreground">Security & compliance</td>
+                        <td className="p-4 text-muted-foreground">Depends on processes</td>
+                        <td className="p-4 text-muted-foreground">Standard security</td>
+                        <td className="p-4 bg-primary/5">
+                          <span className="text-primary font-medium">✓ Enterprise-grade</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            {/* Differentiator Callouts */}
+            <div className="mb-12">
+              <h2 className="text-2xl font-bold text-foreground mb-8">Key Differentiators</h2>
+              <div className="space-y-8">
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                      <span className="text-xl">💬</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">Natural-Language Search</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Ask plain-language questions and get instant answers from your documents.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                      <span className="text-xl">🔗</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">Cross-Document Insights</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Spot trends, connections, and inconsistencies across your entire document set.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex gap-6">
+                  <div className="flex-shrink-0">
+                    <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                      <span className="text-xl">🔐</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">Built for Compliance</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      Enterprise-level security and data handling designed to meet strict standards.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Closing Note */}
+            <div className="bg-muted/30 rounded-lg p-6 border border-primary/10">
+              <p className="text-muted-foreground text-center leading-relaxed">
+                Every organisation is different. Hobson AI is designed to complement existing tools 
+                while providing powerful features you won't find elsewhere.
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     // Handle Plans and Credits content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       const tocSections = [
