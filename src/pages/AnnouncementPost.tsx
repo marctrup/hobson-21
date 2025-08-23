@@ -181,7 +181,7 @@ const AnnouncementPost = () => {
               {/* Left Container - Featured Image */}
               <div className="flex flex-col">
                 {post.featured_image_url && (
-                  <div className="border-2 border-red-500 p-4 rounded-lg">
+                  <div className="p-4 rounded-lg">
                     <img
                       src={post.featured_image_url}
                       alt={post.featured_image_alt || post.title}
