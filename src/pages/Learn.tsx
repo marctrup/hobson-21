@@ -238,6 +238,106 @@ const Learn = () => {
       );
     }
 
+    // Handle Core Features content
+    if (activeHorizontalTab === 'features' && activeVerticalTab === 'core-features') {
+      return (
+        <div className="flex-1 p-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-4">Core Features of Hobson AI</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Hobson AI is an intelligent platform that turns complex documents into clear, usable insights. 
+                Designed for property and document management professionals, it helps you save time, reduce risk, 
+                and make smarter decisions by putting the right information at your fingertips.
+              </p>
+            </div>
+
+            <div className="space-y-12">
+              {/* Intelligent Document Processing */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">📂</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">Intelligent Document Processing</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Hobson AI automatically reads and extracts key details from leases, contracts, and reports. 
+                    This removes the need for manual searching and ensures important information is never missed.
+                  </p>
+                </div>
+              </section>
+
+              {/* Smart Search & Insights */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🔍</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">Smart Search & Insights</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Ask questions in plain language like "When is the rent review date?" and Hobson instantly 
+                    retrieves the answer from your documents. It's like having a specialist always ready to help.
+                  </p>
+                </div>
+              </section>
+
+              {/* Real-Time Analytics */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">📊</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">Real-Time Analytics</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Hobson transforms unstructured text into clear summaries and dashboards. Spot trends, 
+                    compare clauses, and access data that supports confident, evidence-based decisions.
+                  </p>
+                </div>
+              </section>
+
+              {/* Collaboration Ready */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🤝</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">Collaboration Ready</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Insights can be shared across your team securely, creating a single source of truth. 
+                    Everyone works from the same reliable information, reducing confusion and speeding up workflows.
+                  </p>
+                </div>
+              </section>
+
+              {/* Security & Compliance */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🔐</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">Security & Compliance</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Built with enterprise-grade encryption and strict data handling, Hobson keeps your information safe. 
+                    Security and compliance are at the heart of everything we do.
+                  </p>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     // Handle Plans and Credits content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       const tocSections = [
