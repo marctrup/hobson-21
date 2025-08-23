@@ -438,6 +438,45 @@ export type Database = {
         }
         Relationships: []
       }
+      use_case_videos: {
+        Row: {
+          client_name: string | null
+          client_role: string | null
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          sort_order: number | null
+          title: string
+          updated_at: string
+          vimeo_url: string
+        }
+        Insert: {
+          client_name?: string | null
+          client_role?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          sort_order?: number | null
+          title: string
+          updated_at?: string
+          vimeo_url: string
+        }
+        Update: {
+          client_name?: string | null
+          client_role?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          sort_order?: number | null
+          title?: string
+          updated_at?: string
+          vimeo_url?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string

@@ -9,6 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { format } from "date-fns";
+import UseCaseVideoManagement from "@/components/admin/UseCaseVideoManagement";
 
 interface BlogPost {
   id: string;
@@ -28,6 +29,7 @@ interface BlogPost {
 const BlogManagement = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<'blog' | 'use-cases'>('blog');
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   
@@ -279,145 +281,173 @@ const BlogManagement = () => {
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl font-bold">Blog Management</CardTitle>
+            <CardTitle className="text-2xl font-bold">Content Management</CardTitle>
             <div className="flex gap-2">
-              <Button asChild>
-                <Link to="/admin/blog/new?type=blog">
-                  <Plus className="w-4 h-4 mr-2" />
-                  New Post
-                </Link>
+              {activeTab === 'blog' && (
+                <>
+                  <Button asChild>
+                    <Link to="/admin/blog/new?type=blog">
+                      <Plus className="w-4 h-4 mr-2" />
+                      New Post
+                    </Link>
+                  </Button>
+                  <Button variant="secondary" asChild>
+                    <Link to="/admin/blog/new?type=announcements">
+                      <Megaphone className="w-4 h-4 mr-2" />
+                      New Announcement
+                    </Link>
+                  </Button>
+                </>
+              )}
+            </div>
+          </div>
+          
+          {/* Tab Navigation */}
+          <div className="mt-4">
+            <div className="flex space-x-1 bg-muted p-1 rounded-lg w-fit">
+              <Button
+                variant={activeTab === 'blog' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setActiveTab('blog')}
+              >
+                Blog Posts
               </Button>
-              <Button variant="secondary" asChild>
-                <Link to="/admin/blog/new?type=announcements">
-                  <Megaphone className="w-4 h-4 mr-2" />
-                  New Announcement
-                </Link>
+              <Button
+                variant={activeTab === 'use-cases' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setActiveTab('use-cases')}
+              >
+                Use Case Videos
               </Button>
             </div>
           </div>
         </CardHeader>
         <CardContent>
-          {posts.length === 0 ? (
-            <div className="text-center py-8">
-              <h3 className="text-lg font-semibold mb-2">No blog posts yet</h3>
-              <p className="text-muted-foreground">Create your first blog post using the "New Post" button above.</p>
-            </div>
-          ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Order</TableHead>
-                  <TableHead>Title</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Location</TableHead>
-                  <TableHead>Author</TableHead>
-                  <TableHead>Created</TableHead>
-                  <TableHead>Published</TableHead>
-                  <TableHead>Reading Time</TableHead>
-                  <TableHead>Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {posts.map((post, index) => (
-                  <TableRow key={post.id}>
-                    <TableCell>
-                      <div className="flex items-center gap-1">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleMoveUp(post.id, index)}
-                          disabled={index === 0}
-                          className="h-6 w-6 p-0"
+          {activeTab === 'blog' ? (
+            posts.length === 0 ? (
+              <div className="text-center py-8">
+                <h3 className="text-lg font-semibold mb-2">No blog posts yet</h3>
+                <p className="text-muted-foreground">Create your first blog post using the "New Post" button above.</p>
+              </div>
+            ) : (
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Order</TableHead>
+                    <TableHead>Title</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Location</TableHead>
+                    <TableHead>Author</TableHead>
+                    <TableHead>Created</TableHead>
+                    <TableHead>Published</TableHead>
+                    <TableHead>Reading Time</TableHead>
+                    <TableHead>Actions</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {posts.map((post, index) => (
+                    <TableRow key={post.id}>
+                      <TableCell>
+                        <div className="flex items-center gap-1">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleMoveUp(post.id, index)}
+                            disabled={index === 0}
+                            className="h-6 w-6 p-0"
+                          >
+                            <ChevronUp className="w-3 h-3" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleMoveDown(post.id, index)}
+                            disabled={index === posts.length - 1}
+                            className="h-6 w-6 p-0"
+                          >
+                            <ChevronDown className="w-3 h-3" />
+                          </Button>
+                          <span className="text-xs text-muted-foreground ml-1">
+                            {post.sort_order}
+                          </span>
+                        </div>
+                      </TableCell>
+                      <TableCell className="font-medium">
+                        <div>
+                          <div className="font-semibold">{post.title}</div>
+                          <div className="text-sm text-muted-foreground">/{post.slug}</div>
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <Badge 
+                          variant={post.status === 'published' ? 'default' : 'secondary'}
+                          className="cursor-pointer"
+                          onClick={() => handleToggleStatus(post.id, post.status)}
                         >
-                          <ChevronUp className="w-3 h-3" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleMoveDown(post.id, index)}
-                          disabled={index === posts.length - 1}
-                          className="h-6 w-6 p-0"
-                        >
-                          <ChevronDown className="w-3 h-3" />
-                        </Button>
-                        <span className="text-xs text-muted-foreground ml-1">
-                          {post.sort_order}
-                        </span>
-                      </div>
-                    </TableCell>
-                    <TableCell className="font-medium">
-                      <div>
-                        <div className="font-semibold">{post.title}</div>
-                        <div className="text-sm text-muted-foreground">/{post.slug}</div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <Badge 
-                        variant={post.status === 'published' ? 'default' : 'secondary'}
-                        className="cursor-pointer"
-                        onClick={() => handleToggleStatus(post.id, post.status)}
-                      >
-                        {post.status}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline" className="capitalize">
-                        {post.link_location === 'announcements' ? 'announcement' : 'blog'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell>{post.author.display_name}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Calendar className="w-3 h-3" />
-                        {format(new Date(post.created_at), 'MMM dd, yyyy')}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {post.published_at ? (
+                          {post.status}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline" className="capitalize">
+                          {post.link_location === 'announcements' ? 'announcement' : 'blog'}
+                        </Badge>
+                      </TableCell>
+                      <TableCell>{post.author.display_name}</TableCell>
+                      <TableCell>
                         <div className="flex items-center gap-1 text-sm text-muted-foreground">
                           <Calendar className="w-3 h-3" />
-                          {format(new Date(post.published_at), 'MMM dd, yyyy')}
+                          {format(new Date(post.created_at), 'MMM dd, yyyy')}
                         </div>
-                      ) : (
-                        <span className="text-muted-foreground">-</span>
-                      )}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                        <Clock className="w-3 h-3" />
-                        {post.reading_time} min
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        {post.status === 'published' && (
-                          <Button variant="outline" size="sm" asChild className="border-blue-500 text-blue-600 hover:bg-blue-50">
-                            <Link 
-                              to={post.link_location === 'announcements' ? `/announcement/${encodeURIComponent(post.slug.trim())}` : `/blog/${encodeURIComponent(post.slug.trim())}`} 
-                              target="_blank"
-                            >
-                              <Eye className="w-3 h-3" />
+                      </TableCell>
+                      <TableCell>
+                        {post.published_at ? (
+                          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                            <Calendar className="w-3 h-3" />
+                            {format(new Date(post.published_at), 'MMM dd, yyyy')}
+                          </div>
+                        ) : (
+                          <span className="text-muted-foreground">-</span>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                          <Clock className="w-3 h-3" />
+                          {post.reading_time} min
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="flex items-center gap-2">
+                          {post.status === 'published' && (
+                            <Button variant="outline" size="sm" asChild className="border-blue-500 text-blue-600 hover:bg-blue-50">
+                              <Link 
+                                to={post.link_location === 'announcements' ? `/announcement/${encodeURIComponent(post.slug.trim())}` : `/blog/${encodeURIComponent(post.slug.trim())}`} 
+                                target="_blank"
+                              >
+                                <Eye className="w-3 h-3" />
+                              </Link>
+                            </Button>
+                          )}
+                          <Button variant="outline" size="sm" asChild>
+                            <Link to={`/admin/blog/edit/${post.id}`}>
+                              <Edit className="w-3 h-3" />
                             </Link>
                           </Button>
-                        )}
-                        <Button variant="outline" size="sm" asChild>
-                          <Link to={`/admin/blog/edit/${post.id}`}>
-                            <Edit className="w-3 h-3" />
-                          </Link>
-                        </Button>
-                        <Button 
-                          variant="outline" 
-                          size="sm"
-                          onClick={() => handleDelete(post.id, post.title)}
-                        >
-                          <Trash2 className="w-3 h-3" />
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            onClick={() => handleDelete(post.id, post.title)}
+                          >
+                            <Trash2 className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            )
+          ) : (
+            <UseCaseVideoManagement />
           )}
         </CardContent>
       </Card>
