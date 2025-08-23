@@ -3708,6 +3708,149 @@ Content-Type: multipart/form-data
       );
     }
 
+    // Handle Use Cases content
+    if (activeHorizontalTab === 'use-cases') {
+      const tocSections = [
+        { id: 'overview', label: 'Overview' },
+        { id: 'contract-reviews', label: 'Contract Reviews' },
+        { id: 'property-insights', label: 'Property Insights' },
+        { id: 'compliance', label: 'Compliance' },
+        { id: 'closing-note', label: 'Closing Note' }
+      ];
+
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
+      return (
+        <div className="flex-1">
+          <div className="flex gap-8">
+            <div className="flex-1 p-8">
+              <div className="max-w-4xl mx-auto">
+                <h1 className="text-3xl font-bold text-foreground mb-6">Use Cases</h1>
+                
+                <div className="mb-8">
+                  <p className="text-lg text-muted-foreground leading-relaxed" id="overview">
+                    Real stories matter. On this page, clients share in their own words how they use Hobson AI. 
+                    Each video is paired with a short description to explain the context and outcome.
+                  </p>
+                </div>
+
+                <div className="space-y-8">
+                  {/* Contract Reviews Use Case */}
+                  <section id="contract-reviews" className="bg-card rounded-xl p-6 border border-border shadow-sm">
+                    <div className="grid md:grid-cols-2 gap-6 items-start">
+                      <div className="relative bg-muted rounded-lg aspect-video flex items-center justify-center border-2 border-dashed border-muted-foreground/30">
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-purple-100 flex items-center justify-center">
+                            <svg className="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </div>
+                          <p className="text-sm text-muted-foreground">Video placeholder</p>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">Contract Review Efficiency</h3>
+                        <p className="text-muted-foreground mb-3">
+                          "Before Hobson, reviewing lease contracts took hours of manual work. Now I can quickly identify key clauses and potential risks in minutes, giving me more time to focus on strategic decisions."
+                        </p>
+                        <p className="text-sm text-muted-foreground italic">— Sarah M., Property Manager</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Property Insights Use Case */}
+                  <section id="property-insights" className="bg-card rounded-xl p-6 border border-border shadow-sm">
+                    <div className="grid md:grid-cols-2 gap-6 items-start">
+                      <div className="relative bg-muted rounded-lg aspect-video flex items-center justify-center border-2 border-dashed border-muted-foreground/30">
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-purple-100 flex items-center justify-center">
+                            <svg className="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </div>
+                          <p className="text-sm text-muted-foreground">Video placeholder</p>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">Property Document Insights</h3>
+                        <p className="text-muted-foreground mb-3">
+                          "Hobson helps me extract valuable insights from property documents that I used to miss. It's like having an expert assistant that never gets tired and always catches the important details."
+                        </p>
+                        <p className="text-sm text-muted-foreground italic">— Michael R., Real Estate Analyst</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Compliance Use Case */}
+                  <section id="compliance" className="bg-card rounded-xl p-6 border border-border shadow-sm">
+                    <div className="grid md:grid-cols-2 gap-6 items-start">
+                      <div className="relative bg-muted rounded-lg aspect-video flex items-center justify-center border-2 border-dashed border-muted-foreground/30">
+                        <div className="text-center">
+                          <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-purple-100 flex items-center justify-center">
+                            <svg className="w-8 h-8 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M8 5v14l11-7z"/>
+                            </svg>
+                          </div>
+                          <p className="text-sm text-muted-foreground">Video placeholder</p>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-semibold text-foreground mb-2">Simplified Compliance</h3>
+                        <p className="text-muted-foreground mb-3">
+                          "Compliance used to be our biggest headache. Hobson automatically flags potential compliance issues and helps us stay on top of regulatory requirements without the stress."
+                        </p>
+                        <p className="text-sm text-muted-foreground italic">— Jennifer L., Compliance Officer</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Closing Note */}
+                  <section id="closing-note" className="bg-primary/5 border border-primary/20 rounded-lg p-6">
+                    <div className="text-center">
+                      <h3 className="text-lg font-medium text-foreground mb-3">Every Organisation Has Unique Needs</h3>
+                      <p className="text-muted-foreground">
+                        These use cases highlight just some of the ways Hobson AI can bring value. 
+                        Whether you're managing contracts, analyzing property documents, or ensuring compliance, 
+                        Hobson adapts to your specific workflow and requirements.
+                      </p>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            </div>
+
+            {/* Table of Contents - On This Page */}
+            <div className="hidden lg:block w-64 flex-shrink-0">
+              <div className="sticky top-8">
+                <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                <nav className="space-y-1">
+                  {tocSections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => scrollToSection(section.id)}
+                      className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-colors ${
+                        activeTocSection === section.id
+                          ? 'text-primary bg-primary/10 font-medium'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      }`}
+                    >
+                      {section.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="flex-1">
         <div className="container mx-auto p-8 max-w-5xl">
