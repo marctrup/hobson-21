@@ -232,12 +232,9 @@ const BlogEditor = () => {
   };
 
   const processContentForEditing = (content: string) => {
-    // Convert HTML back to editable format
+    // Preserve HTML formatting for editing - only convert basic <br> tags
     return content
       .replace(/<br\s*\/?>/gi, '\n') // Convert <br> tags to line breaks
-      .replace(/<\/p><p>/gi, '\n\n') // Convert paragraph breaks
-      .replace(/<p>/gi, '') // Remove opening p tags
-      .replace(/<\/p>/gi, '\n') // Convert closing p tags to line breaks
       .trim();
   };
 
