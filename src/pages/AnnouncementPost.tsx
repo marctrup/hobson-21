@@ -232,7 +232,7 @@ const AnnouncementPost = () => {
                 {/* Article Content */}
                 <Card className="p-4 md:p-6 flex-1 bg-gray-50 dark:bg-gray-900/20">
                   <div 
-                    className="prose prose-sm md:prose-lg max-w-none dark:prose-invert prose-ul:list-disc prose-ul:ml-6 prose-li:my-1"
+                    className="prose prose-sm md:prose-lg max-w-none dark:prose-invert prose-ul:list-disc prose-ol:list-decimal prose-li:marker:text-current"
                     dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 </Card>
