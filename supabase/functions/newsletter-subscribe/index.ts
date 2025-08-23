@@ -83,7 +83,8 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Get the latest announcement
-    const { data: latestAnnouncement } = await supabase
+    console.log('Fetching latest announcement...');
+    const { data: latestAnnouncement, error: announcementError } = await supabase
       .from('blog_posts')
       .select('slug')
       .eq('link_location', 'announcements')
@@ -91,6 +92,8 @@ const handler = async (req: Request): Promise<Response> => {
       .order('published_at', { ascending: false })
       .limit(1)
       .maybeSingle();
+
+    console.log('Announcement query result:', { latestAnnouncement, announcementError });
 
     // Get the current domain from the request origin or default to production
     const origin = req.headers.get('origin') || 'https://hobsonschoice.ai';
