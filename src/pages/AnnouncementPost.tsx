@@ -224,7 +224,7 @@ const AnnouncementPost = () => {
                     </p>
                   )}
 
-                  <div className="flex items-center gap-6 text-sm text-muted-foreground mb-6">
+                  <div className="flex items-center gap-6 text-sm text-muted-foreground mb-4">
                     <div className="flex items-center gap-2">
                       <User className="w-4 h-4" />
                       <span>{post.author.display_name}</span>
