@@ -108,6 +108,22 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
 
       if (error) throw error;
 
+      // Send notification email to team
+      try {
+        await supabase.functions.invoke('notify-feature-request', {
+          body: {
+            title: data.title,
+            description: data.description || '',
+            category: data.category,
+            author_name: authorName,
+            author_id: user.id
+          }
+        });
+      } catch (notificationError) {
+        // Don't fail the entire operation if notification fails
+        console.error('Failed to send notification email:', notificationError);
+      }
+
       toast({
         title: "Post created!",
         description: "Your feature request has been submitted successfully.",
