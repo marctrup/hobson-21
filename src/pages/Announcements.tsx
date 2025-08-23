@@ -210,7 +210,7 @@ const Announcements = () => {
               {announcements.map((announcement) => (
                 <div 
                   key={announcement.id} 
-                  className="bg-gradient-to-br from-primary/5 to-primary/10 border border-primary/20 rounded-lg p-6 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200 aspect-square flex flex-col justify-between"
+                  className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-950/20 dark:to-blue-900/30 border border-blue-200/50 dark:border-blue-800/30 rounded-lg p-6 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200 aspect-square flex flex-col justify-between"
                   onClick={() => handleAnnouncementClick(announcement.slug)}
                 >
                   <div className="flex-1">
