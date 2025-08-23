@@ -115,6 +115,7 @@ const BlogEditor = () => {
         meta_description,
         reading_time,
         link_location,
+        priority,
         blog_post_categories (
           category_id
         )
@@ -143,7 +144,8 @@ const BlogEditor = () => {
         meta_description: data.meta_description || '',
         reading_time: data.reading_time,
         categories: data.blog_post_categories?.map(bpc => bpc.category_id) || [],
-        link_location: (data.link_location as 'blog' | 'announcements') || 'blog'
+        link_location: (data.link_location as 'blog' | 'announcements') || 'blog',
+        priority: (data.priority as 'low' | 'medium' | 'high') || 'medium'
       };
       setPost(postData);
       setOriginalPost(postData);
@@ -413,6 +415,7 @@ const BlogEditor = () => {
       reading_time: post.reading_time,
       author_id: user.id,
       link_location: post.link_location,
+      priority: post.priority || 'medium',
       ...(shouldSetPublishedAt ? { published_at: new Date().toISOString() } : {}),
       ...(!isEditing ? { sort_order } : {})
     };
