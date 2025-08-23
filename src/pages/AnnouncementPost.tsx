@@ -37,6 +37,8 @@ const AnnouncementPost = () => {
 
   useEffect(() => {
     if (!slug) return;
+    
+    console.log('AnnouncementPost: Received slug parameter:', slug);
 
     const fetchPost = async () => {
       try {

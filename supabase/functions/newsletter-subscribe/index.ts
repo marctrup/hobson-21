@@ -96,6 +96,9 @@ const handler = async (req: Request): Promise<Response> => {
     const announcementUrl = latestAnnouncement 
       ? `${origin}/announcement/${latestAnnouncement.slug}`
       : `${origin}/announcements`;
+    
+    console.log('Generated announcement URL:', announcementUrl);
+    console.log('Latest announcement slug:', latestAnnouncement?.slug);
 
     // Send welcome email using HTML template
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
