@@ -30,6 +30,7 @@ const Pricing = lazy(() => import("./pages/Pricing"));
 const Learn = lazy(() => import("./pages/Learn"));
 const Status = lazy(() => import("./pages/Status"));
 const Announcements = lazy(() => import("./pages/Announcements"));
+const AnnouncementPost = lazy(() => import("./pages/AnnouncementPost"));
 const FeatureRequests = lazy(() => import("./pages/FeatureRequests"));
 
 // Loading component
@@ -96,6 +97,7 @@ const App = () => {
                    <Route path="/learn" element={<Learn />} />
                    <Route path="/status" element={<Status />} />
                    <Route path="/announcements" element={<Announcements />} />
+                   <Route path="/announcement/:slug" element={<AnnouncementPost />} />
                    <Route path="/feature-requests" element={<FeatureRequests />} />
                   <Route path="/auth" element={<Auth />} />
                   <Route path="/admin" element={<Admin />} />

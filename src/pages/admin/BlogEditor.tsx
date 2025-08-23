@@ -26,6 +26,7 @@ interface BlogPost {
   meta_description: string;
   reading_time: number;
   categories: string[];
+  link_location: 'blog' | 'announcements';
 }
 
 interface Category {
@@ -52,7 +53,8 @@ const BlogEditor = () => {
     meta_title: '',
     meta_description: '',
     reading_time: 5,
-    categories: []
+    categories: [],
+    link_location: 'blog'
   });
 
   const [originalPost, setOriginalPost] = useState<BlogPost | null>(null);
@@ -106,6 +108,7 @@ const BlogEditor = () => {
         meta_title,
         meta_description,
         reading_time,
+        link_location,
         blog_post_categories (
           category_id
         )
@@ -133,7 +136,8 @@ const BlogEditor = () => {
         meta_title: data.meta_title || '',
         meta_description: data.meta_description || '',
         reading_time: data.reading_time,
-        categories: data.blog_post_categories?.map(bpc => bpc.category_id) || []
+        categories: data.blog_post_categories?.map(bpc => bpc.category_id) || [],
+        link_location: (data.link_location as 'blog' | 'announcements') || 'blog'
       };
       setPost(postData);
       setOriginalPost(postData);
@@ -402,6 +406,7 @@ const BlogEditor = () => {
       meta_description: post.meta_description || null,
       reading_time: post.reading_time,
       author_id: user.id,
+      link_location: post.link_location,
       ...(shouldSetPublishedAt ? { published_at: new Date().toISOString() } : {}),
       ...(!isEditing ? { sort_order } : {})
     };
@@ -701,6 +706,27 @@ const BlogEditor = () => {
                   placeholder="Describe the image for SEO and accessibility"
                 />
               </div>
+            </CardContent>
+          </Card>
+
+          {/* Link Location */}
+          <Card>
+            <CardHeader>
+              <CardTitle>Link Location</CardTitle>
+              <p className="text-sm text-muted-foreground">
+                Choose where this post will be linked from
+              </p>
+            </CardHeader>
+            <CardContent>
+              <Select value={post.link_location} onValueChange={(value) => setPost(prev => ({ ...prev, link_location: value as 'blog' | 'announcements' }))}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="blog">Blog</SelectItem>
+                  <SelectItem value="announcements">Announcements</SelectItem>
+                </SelectContent>
+              </Select>
             </CardContent>
           </Card>
 

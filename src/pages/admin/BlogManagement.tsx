@@ -19,6 +19,7 @@ interface BlogPost {
   created_at: string;
   reading_time: number;
   sort_order: number;
+  link_location: string;
   author: {
     display_name: string;
   };
@@ -72,6 +73,7 @@ const BlogManagement = () => {
         created_at,
         reading_time,
         sort_order,
+        link_location,
         author_id,
         profiles!blog_posts_author_id_fkey (
           display_name
@@ -97,6 +99,7 @@ const BlogManagement = () => {
         created_at: post.created_at,
         reading_time: post.reading_time,
         sort_order: post.sort_order,
+        link_location: post.link_location,
         author: {
           display_name: post.profiles?.display_name || 'Unknown Author'
         }
@@ -289,6 +292,7 @@ const BlogManagement = () => {
                   <TableHead>Order</TableHead>
                   <TableHead>Title</TableHead>
                   <TableHead>Status</TableHead>
+                  <TableHead>Location</TableHead>
                   <TableHead>Author</TableHead>
                   <TableHead>Created</TableHead>
                   <TableHead>Published</TableHead>
@@ -339,6 +343,11 @@ const BlogManagement = () => {
                         {post.status}
                       </Badge>
                     </TableCell>
+                    <TableCell>
+                      <Badge variant="outline">
+                        {post.link_location}
+                      </Badge>
+                    </TableCell>
                     <TableCell>{post.author.display_name}</TableCell>
                     <TableCell>
                       <div className="flex items-center gap-1 text-sm text-muted-foreground">
@@ -366,7 +375,7 @@ const BlogManagement = () => {
                       <div className="flex items-center gap-2">
                         {post.status === 'published' && (
                           <Button variant="outline" size="sm" asChild className="border-blue-500 text-blue-600 hover:bg-blue-50">
-                            <Link to={`/blog/${post.slug}`} target="_blank">
+                            <Link to={post.link_location === 'announcements' ? `/announcement/${post.slug}` : `/blog/${post.slug}`} target="_blank">
                               <Eye className="w-3 h-3" />
                             </Link>
                           </Button>

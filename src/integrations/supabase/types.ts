@@ -83,6 +83,7 @@ export type Database = {
           featured_image_alt: string | null
           featured_image_url: string | null
           id: string
+          link_location: string
           meta_description: string | null
           meta_title: string | null
           published_at: string | null
@@ -101,6 +102,7 @@ export type Database = {
           featured_image_alt?: string | null
           featured_image_url?: string | null
           id?: string
+          link_location?: string
           meta_description?: string | null
           meta_title?: string | null
           published_at?: string | null
@@ -119,6 +121,7 @@ export type Database = {
           featured_image_alt?: string | null
           featured_image_url?: string | null
           id?: string
+          link_location?: string
           meta_description?: string | null
           meta_title?: string | null
           published_at?: string | null

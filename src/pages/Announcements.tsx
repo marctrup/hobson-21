@@ -1,12 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
   Megaphone, 
   Calendar, 
   Bell, 
-  ExternalLink
+  ExternalLink,
+  Clock,
+  User
 } from 'lucide-react';
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import { Button } from '@/components/ui/button';
@@ -14,22 +16,62 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const Announcements = () => {
   const [email, setEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [announcements, setAnnouncements] = useState([]);
   const { toast } = useToast();
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    fetchAnnouncements();
+  }, []);
 
-  const announcements = [
-    {
-      id: 1,
-      title: 'New AI-Powered Document Analysis Features',
-      description: 'Enhanced property document processing with improved accuracy and faster analysis times.',
-      date: '2024-08-15',
-      type: 'feature',
-      priority: 'high'
-    },
-  ];
+  const fetchAnnouncements = async () => {
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select(`
+        id,
+        title,
+        slug,
+        excerpt,
+        published_at,
+        reading_time,
+        author_id,
+        profiles!blog_posts_author_id_fkey (
+          display_name
+        ),
+        blog_post_categories (
+          blog_categories (
+            name,
+            slug
+          )
+        )
+      `)
+      .eq('link_location', 'announcements')
+      .eq('status', 'published')
+      .order('published_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching announcements:', error);
+    } else {
+      const formattedAnnouncements = data?.map(announcement => ({
+        id: announcement.id,
+        title: announcement.title,
+        slug: announcement.slug,
+        description: announcement.excerpt,
+        date: announcement.published_at,
+        type: announcement.blog_post_categories?.[0]?.blog_categories?.slug || 'announcement',
+        priority: 'medium',
+        readingTime: announcement.reading_time,
+        author: announcement.profiles?.display_name || 'Anonymous'
+      })) || [];
+      
+      setAnnouncements(formattedAnnouncements);
+    }
+  };
 
   const handleSubscribe = async () => {
     if (!email) {
@@ -157,14 +199,28 @@ const Announcements = () => {
             </h2>
             <div className="space-y-4">
               {announcements.map((announcement) => (
-                <div key={announcement.id} className="p-4 rounded-lg border border-border">
+                <div 
+                  key={announcement.id} 
+                  className="p-4 rounded-lg border border-border cursor-pointer hover:bg-muted/50 transition-colors"
+                  onClick={() => navigate(`/announcement/${announcement.slug}`)}
+                >
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
-                      <h3 className="font-medium text-foreground mb-2">{announcement.title}</h3>
+                      <h3 className="font-medium text-foreground mb-2 hover:text-primary">{announcement.title}</h3>
                       <p className="text-sm text-muted-foreground mb-3">{announcement.description}</p>
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Calendar className="w-3 h-3" />
-                        {new Date(announcement.date).toLocaleDateString()}
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                        <div className="flex items-center gap-1">
+                          <Calendar className="w-3 h-3" />
+                          {new Date(announcement.date).toLocaleDateString()}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {announcement.readingTime} min read
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <User className="w-3 h-3" />
+                          {announcement.author}
+                        </div>
                       </div>
                     </div>
                     <div className="flex flex-col gap-2 ml-4">
