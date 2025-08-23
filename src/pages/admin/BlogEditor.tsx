@@ -197,8 +197,38 @@ const BlogEditor = () => {
   const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const processContentForSave = (content: string) => {
-    // Convert line breaks to <br> tags while preserving existing HTML
-    return content.replace(/\n/g, '<br>');
+    // More intelligent content processing that preserves HTML structures
+    // Split content by HTML tags to avoid adding <br> inside HTML elements
+    const htmlTagRegex = /<[^>]*>/g;
+    let result = '';
+    let lastIndex = 0;
+    let match;
+    
+    // Process text between HTML tags
+    while ((match = htmlTagRegex.exec(content)) !== null) {
+      // Process text before the HTML tag
+      const textBefore = content.substring(lastIndex, match.index);
+      if (textBefore) {
+        // Only convert newlines to <br> in plain text portions
+        result += textBefore.replace(/\n/g, '<br>');
+      }
+      
+      // Add the HTML tag as-is
+      result += match[0];
+      lastIndex = htmlTagRegex.lastIndex;
+    }
+    
+    // Process remaining text after the last HTML tag
+    const remainingText = content.substring(lastIndex);
+    if (remainingText) {
+      result += remainingText.replace(/\n/g, '<br>');
+    }
+    
+    // Clean up: remove <br> tags that are immediately before or after block elements
+    result = result.replace(/<br>\s*(<\/?(ul|ol|li|div|p|h[1-6])[^>]*>)/gi, '$1');
+    result = result.replace(/(<\/?(ul|ol|li|div|p|h[1-6])[^>]*>)\s*<br>/gi, '$1');
+    
+    return result;
   };
 
   const processContentForEditing = (content: string) => {
