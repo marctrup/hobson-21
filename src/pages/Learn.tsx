@@ -583,6 +583,106 @@ const Learn = () => {
       );
     }
 
+    // Handle Product Roadmap content
+    if (activeHorizontalTab === 'features' && activeVerticalTab === 'roadmap') {
+      return (
+        <div className="flex-1 p-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-4">Our Roadmap</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Hobson AI is always evolving. Our roadmap highlights what we've recently delivered, 
+                what we're working on now, and where we're heading next. It's designed to give you 
+                transparency and confidence that Hobson is built for the long term.
+              </p>
+            </div>
+
+            <div className="space-y-12">
+              {/* Recently Launched */}
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center">
+                    <span className="text-lg">✅</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground">Recently Launched</h2>
+                </div>
+                <div className="ml-11 space-y-4">
+                  <div className="bg-card border rounded-lg p-6">
+                    <h3 className="font-semibold text-foreground mb-2">AI-powered document summarisation</h3>
+                    <p className="text-muted-foreground text-sm">Transform lengthy documents into clear, actionable summaries.</p>
+                  </div>
+                  <div className="bg-card border rounded-lg p-6">
+                    <h3 className="font-semibold text-foreground mb-2">Chat interface for natural-language queries</h3>
+                    <p className="text-muted-foreground text-sm">Ask questions in plain language and get instant answers from your documents.</p>
+                  </div>
+                  <div className="bg-card border rounded-lg p-6">
+                    <h3 className="font-semibold text-foreground mb-2">Clause and obligation tracking</h3>
+                    <p className="text-muted-foreground text-sm">Automatically track key dates, deadlines, and obligations across your documents.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* In Progress */}
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-8 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center">
+                    <span className="text-lg">🚧</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground">In Progress</h2>
+                </div>
+                <div className="ml-11 space-y-4">
+                  <div className="bg-card border rounded-lg p-6 border-l-4 border-l-primary">
+                    <h3 className="font-semibold text-foreground mb-2">Smarter follow-up questioning in chat</h3>
+                    <p className="text-muted-foreground text-sm">Enhanced conversational AI that understands context and asks better follow-up questions.</p>
+                  </div>
+                  <div className="bg-card border rounded-lg p-6 border-l-4 border-l-primary">
+                    <h3 className="font-semibold text-foreground mb-2">Cross-document insights and comparisons</h3>
+                    <p className="text-muted-foreground text-sm">Compare terms and find connections across multiple documents simultaneously.</p>
+                  </div>
+                  <div className="bg-card border rounded-lg p-6 border-l-4 border-l-primary">
+                    <h3 className="font-semibold text-foreground mb-2">Improved accuracy for complex property documents</h3>
+                    <p className="text-muted-foreground text-sm">Enhanced AI models specifically trained on property and legal document structures.</p>
+                  </div>
+                </div>
+              </section>
+
+              {/* Coming Soon */}
+              <section>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+                    <span className="text-lg">🌟</span>
+                  </div>
+                  <h2 className="text-2xl font-bold text-foreground">Coming Soon</h2>
+                </div>
+                <div className="ml-11 space-y-4">
+                  <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
+                    <h3 className="font-semibold text-foreground mb-2">Integrations with document management systems (DMS) and CRMs</h3>
+                    <p className="text-muted-foreground text-sm">Seamless connection to your existing tools and workflows.</p>
+                  </div>
+                  <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
+                    <h3 className="font-semibold text-foreground mb-2">Predictive insights (e.g. flagging risks before they're missed)</h3>
+                    <p className="text-muted-foreground text-sm">Proactive alerts about potential issues and opportunities in your documents.</p>
+                  </div>
+                  <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
+                    <h3 className="font-semibold text-foreground mb-2">Expanded compliance automation</h3>
+                    <p className="text-muted-foreground text-sm">Automated compliance checks and reporting across regulatory requirements.</p>
+                  </div>
+                </div>
+              </section>
+            </div>
+
+            {/* Closing Note */}
+            <div className="mt-16 bg-primary/5 rounded-lg p-6 border border-primary/20">
+              <p className="text-muted-foreground text-center leading-relaxed">
+                We build Hobson AI in close partnership with our users. Your feedback helps shape the roadmap — 
+                ensuring the platform grows in ways that bring you the most value.
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     // Handle Plans and Credits content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       const tocSections = [
