@@ -189,6 +189,17 @@ const AnnouncementPost = () => {
                     />
                   </div>
                 )}
+                
+                {/* Back Link */}
+                <div className="mt-6">
+                  <Link 
+                    to="/announcements" 
+                    className="inline-flex items-center gap-2 text-primary hover:underline"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    Back to all announcements
+                  </Link>
+                </div>
               </div>
 
               {/* Right Container - Content */}
@@ -236,17 +247,6 @@ const AnnouncementPost = () => {
                     dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 </Card>
-
-                {/* Back Link */}
-                <div className="mt-6">
-                  <Link 
-                    to="/announcements" 
-                    className="inline-flex items-center gap-2 text-primary hover:underline"
-                  >
-                    <ArrowLeft className="w-4 h-4" />
-                    Back to all announcements
-                  </Link>
-                </div>
               </div>
             </div>
           </article>
