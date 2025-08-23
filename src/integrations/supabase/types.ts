@@ -86,6 +86,7 @@ export type Database = {
           link_location: string
           meta_description: string | null
           meta_title: string | null
+          priority: string | null
           published_at: string | null
           reading_time: number | null
           slug: string
@@ -105,6 +106,7 @@ export type Database = {
           link_location?: string
           meta_description?: string | null
           meta_title?: string | null
+          priority?: string | null
           published_at?: string | null
           reading_time?: number | null
           slug: string
@@ -124,6 +126,7 @@ export type Database = {
           link_location?: string
           meta_description?: string | null
           meta_title?: string | null
+          priority?: string | null
           published_at?: string | null
           reading_time?: number | null
           slug?: string

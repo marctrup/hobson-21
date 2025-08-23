@@ -39,6 +39,7 @@ const Announcements = () => {
         excerpt,
         published_at,
         reading_time,
+        priority,
         author_id,
         profiles!blog_posts_author_id_fkey (
           display_name
@@ -64,7 +65,7 @@ const Announcements = () => {
         description: announcement.excerpt,
         date: announcement.published_at,
         type: announcement.blog_post_categories?.[0]?.blog_categories?.slug || 'announcement',
-        priority: 'medium',
+        priority: announcement.priority || 'medium',
         readingTime: announcement.reading_time,
         author: announcement.profiles?.display_name || 'Anonymous'
       })) || [];
