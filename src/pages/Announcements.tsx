@@ -109,7 +109,9 @@ const Announcements = () => {
 
   const handleAnnouncementClick = (slug) => {
     console.log('Navigating to announcement:', slug);
-    navigate(`/announcement/${slug}`);
+    // Properly encode the slug to handle special characters like %
+    const encodedSlug = encodeURIComponent(slug.trim());
+    navigate(`/announcement/${encodedSlug}`);
   };
 
   const getTypeColor = (type: string) => {

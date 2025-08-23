@@ -40,8 +40,16 @@ const AnnouncementPost = () => {
 
     const fetchPost = async () => {
       try {
-        // Decode the URL slug and handle potential trailing spaces
-        const decodedSlug = decodeURIComponent(slug);
+        // Safely decode the URL slug and handle potential trailing spaces
+        let decodedSlug = slug;
+        try {
+          decodedSlug = decodeURIComponent(slug);
+        } catch (error) {
+          console.log('Could not decode slug, using as-is:', slug);
+        }
+        
+        console.log('Searching for slug:', decodedSlug);
+        console.log('Trying variations:', [decodedSlug, decodedSlug.trim(), `${decodedSlug} `]);
         
         const { data: postData, error: postError } = await supabase
           .from('blog_posts')
@@ -64,7 +72,10 @@ const AnnouncementPost = () => {
           .or(`slug.eq.${decodedSlug},slug.eq.${decodedSlug.trim()},slug.eq.${decodedSlug} `)
           .maybeSingle();
 
+        console.log('Database query result:', { postData, postError });
+
         if (postError || !postData) {
+          console.log('No post found or error occurred');
           setError('Announcement not found');
           return;
         }
