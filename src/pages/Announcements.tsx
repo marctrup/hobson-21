@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate } from 'react-router-dom';
@@ -106,6 +107,11 @@ const Announcements = () => {
     }
   };
 
+  const handleAnnouncementClick = (slug) => {
+    console.log('Navigating to announcement:', slug);
+    navigate(`/announcement/${slug}`);
+  };
+
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'feature':
@@ -203,7 +209,7 @@ const Announcements = () => {
                 <div 
                   key={announcement.id} 
                   className="p-4 rounded-lg border border-border cursor-pointer hover:bg-muted/50 transition-colors"
-                  onClick={() => navigate(`/announcement/${announcement.slug}`)}
+                  onClick={() => handleAnnouncementClick(announcement.slug)}
                 >
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
