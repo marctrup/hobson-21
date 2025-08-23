@@ -338,6 +338,101 @@ const Learn = () => {
       );
     }
 
+    // Handle Advanced Features content
+    if (activeHorizontalTab === 'features' && activeVerticalTab === 'advanced-features') {
+      return (
+        <div className="flex-1 p-8">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-4">Advanced Features of Hobson AI</h1>
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Beyond the core features, Hobson AI includes advanced capabilities that give professionals even deeper 
+                insights and time-saving tools. These features are designed to handle complexity, automate repetitive tasks, 
+                and uncover connections across your documents that would otherwise go unnoticed.
+              </p>
+            </div>
+
+            <div className="space-y-12">
+              {/* AI-Powered Summarisation */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🧠</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">AI-Powered Summarisation</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Quickly understand long contracts or reports with plain-language summaries that highlight the most important details.
+                  </p>
+                </div>
+              </section>
+
+              {/* Cross-Document Insights */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🔗</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">Cross-Document Insights</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Compare terms, find inconsistencies, and surface connections across multiple documents at once.
+                  </p>
+                </div>
+              </section>
+
+              {/* Automated Report Generation */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">📑</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">Automated Report Generation</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Turn extracted data into professional reports and dashboards automatically, saving hours of manual work.
+                  </p>
+                </div>
+              </section>
+
+              {/* Clause & Obligation Tracking */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">📌</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">Clause & Obligation Tracking</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Stay ahead of deadlines, renewals, and key obligations. Hobson flags upcoming dates and critical actions automatically.
+                  </p>
+                </div>
+              </section>
+
+              {/* Integration Ready */}
+              <section className="flex gap-6">
+                <div className="flex-shrink-0">
+                  <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
+                    <span className="text-xl">🌍</span>
+                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold text-foreground mb-3">Integration Ready</h2>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Connect Hobson to your existing systems (such as document management platforms or CRMs) so insights flow seamlessly into your workflows.
+                  </p>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     // Handle Plans and Credits content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       const tocSections = [
