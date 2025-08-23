@@ -1413,8 +1413,15 @@ const Learn = () => {
     // Handle API Reference content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'api-reference') {
       const tocSections = [
-        { id: 'coming-soon-notice', label: 'Coming Soon Notice' },
-        { id: 'what-to-expect', label: 'What to Expect' },
+        { id: 'overview', label: 'Overview' },
+        { id: 'authentication', label: 'Authentication' },
+        { id: 'endpoints', label: 'Endpoints' },
+        { id: 'document-analysis', label: 'Document Analysis' },
+        { id: 'query-interface', label: 'Query Interface' },
+        { id: 'webhooks', label: 'Webhooks' },
+        { id: 'rate-limits', label: 'Rate Limits' },
+        { id: 'error-handling', label: 'Error Handling' },
+        { id: 'examples', label: 'Examples' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -1431,24 +1438,256 @@ const Learn = () => {
             <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
-                <div className="text-center mb-8">
-                  <h1 className="text-3xl font-bold text-foreground mb-6">API Reference</h1>
-                  
-                  {/* Coming Soon Banner */}
-                  <div id="coming-soon-notice" className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                      <p className="text-orange-700 dark:text-orange-300 font-medium">
-                        This resource is not yet available — Coming Soon.
-                      </p>
-                    </div>
-                  </div>
+                <div className="mb-8">
+                  <h1 className="text-3xl font-bold text-foreground mb-4">API Reference</h1>
+                  <p className="text-lg text-muted-foreground leading-relaxed">
+                    Complete guide to Hobson AI's REST API. Build powerful integrations and automate 
+                    document analysis workflows with our comprehensive API endpoints.
+                  </p>
+                </div>
 
-                  <section id="what-to-expect">
-                    <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                      The API Reference will offer a complete guide to Hobson's API, including examples and 
-                      explanations to support developers and integrations.
-                    </p>
+                <div className="space-y-12">
+                  {/* Overview */}
+                  <section id="overview">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Overview</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        The Hobson AI API provides programmatic access to our document intelligence platform. 
+                        Use our RESTful API to upload documents, extract insights, and integrate AI-powered 
+                        analysis into your applications.
+                      </p>
+                      <div className="bg-muted/30 rounded-lg p-4 border border-primary/10">
+                        <p className="text-sm text-muted-foreground mb-2">
+                          <strong>Base URL:</strong> <code className="bg-muted px-2 py-1 rounded text-xs">https://api.hobsonschoice.ai/v1</code>
+                        </p>
+                        <p className="text-sm text-muted-foreground">
+                          <strong>Content Type:</strong> <code className="bg-muted px-2 py-1 rounded text-xs">application/json</code>
+                        </p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Authentication */}
+                  <section id="authentication">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Authentication</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        All API requests must be authenticated using an API key. Include your API key 
+                        in the Authorization header of each request.
+                      </p>
+                      <div className="bg-card border rounded-lg p-4">
+                        <h4 className="font-medium text-foreground mb-2">Request Header</h4>
+                        <pre className="bg-muted p-3 rounded text-sm overflow-x-auto">
+                          <code>Authorization: Bearer YOUR_API_KEY</code>
+                        </pre>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Endpoints */}
+                  <section id="endpoints">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Core Endpoints</h2>
+                    <div className="space-y-6">
+                      <div className="bg-card border rounded-lg p-6">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded text-xs font-mono">GET</span>
+                          <code className="text-sm font-mono">/documents</code>
+                        </div>
+                        <p className="text-muted-foreground text-sm">Retrieve a list of uploaded documents</p>
+                      </div>
+                      
+                      <div className="bg-card border rounded-lg p-6">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-2 py-1 rounded text-xs font-mono">POST</span>
+                          <code className="text-sm font-mono">/documents/upload</code>
+                        </div>
+                        <p className="text-muted-foreground text-sm">Upload a new document for analysis</p>
+                      </div>
+                      
+                      <div className="bg-card border rounded-lg p-6">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-2 py-1 rounded text-xs font-mono">GET</span>
+                          <code className="text-sm font-mono">/documents/{"{id}"}</code>
+                        </div>
+                        <p className="text-muted-foreground text-sm">Get details and analysis for a specific document</p>
+                      </div>
+                      
+                      <div className="bg-card border rounded-lg p-6">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 px-2 py-1 rounded text-xs font-mono">POST</span>
+                          <code className="text-sm font-mono">/query</code>
+                        </div>
+                        <p className="text-muted-foreground text-sm">Ask natural language questions about your documents</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Document Analysis */}
+                  <section id="document-analysis">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Document Analysis</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        Upload documents to extract structured data, generate summaries, and identify key clauses.
+                      </p>
+                      <div className="bg-card border rounded-lg p-4">
+                        <h4 className="font-medium text-foreground mb-2">Upload Document</h4>
+                        <pre className="bg-muted p-3 rounded text-sm overflow-x-auto">
+                          <code>{`POST /documents/upload
+Content-Type: multipart/form-data
+
+{
+  "file": "[binary file data]",
+  "type": "lease|contract|report",
+  "options": {
+    "extract_clauses": true,
+    "generate_summary": true
+  }
+}`}</code>
+                        </pre>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Query Interface */}
+                  <section id="query-interface">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Query Interface</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        Use natural language queries to extract specific information from your documents.
+                      </p>
+                      <div className="bg-card border rounded-lg p-4">
+                        <h4 className="font-medium text-foreground mb-2">Natural Language Query</h4>
+                        <pre className="bg-muted p-3 rounded text-sm overflow-x-auto">
+                          <code>{`POST /query
+
+{
+  "query": "What is the rent review date?",
+  "document_id": "doc_123456789",
+  "context": {
+    "include_source": true,
+    "confidence_threshold": 0.8
+  }
+}`}</code>
+                        </pre>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Webhooks */}
+                  <section id="webhooks">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Webhooks</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        Receive real-time notifications when document processing is complete or when 
+                        specific events occur in your account.
+                      </p>
+                      <div className="space-y-4">
+                        <div className="bg-card border rounded-lg p-4">
+                          <h4 className="font-medium text-foreground mb-2">Supported Events</h4>
+                          <ul className="text-sm text-muted-foreground space-y-1">
+                            <li>• <code className="bg-muted px-2 py-1 rounded text-xs">document.processed</code> - Document analysis complete</li>
+                            <li>• <code className="bg-muted px-2 py-1 rounded text-xs">document.failed</code> - Document processing failed</li>
+                            <li>• <code className="bg-muted px-2 py-1 rounded text-xs">query.completed</code> - Query response ready</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Rate Limits */}
+                  <section id="rate-limits">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Rate Limits</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        API requests are subject to rate limits to ensure fair usage and system stability.
+                      </p>
+                      <div className="bg-card border rounded-lg p-4">
+                        <div className="grid md:grid-cols-2 gap-4 text-sm">
+                          <div>
+                            <h4 className="font-medium text-foreground mb-2">Standard Plan</h4>
+                            <ul className="text-muted-foreground space-y-1">
+                              <li>• 1,000 requests/hour</li>
+                              <li>• 100 MB/document</li>
+                              <li>• 50 documents/day</li>
+                            </ul>
+                          </div>
+                          <div>
+                            <h4 className="font-medium text-foreground mb-2">Enterprise Plan</h4>
+                            <ul className="text-muted-foreground space-y-1">
+                              <li>• 10,000 requests/hour</li>
+                              <li>• 500 MB/document</li>
+                              <li>• Unlimited documents</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Error Handling */}
+                  <section id="error-handling">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Error Handling</h2>
+                    <div className="prose prose-gray max-w-none">
+                      <p className="text-muted-foreground mb-4">
+                        The API uses conventional HTTP response codes to indicate success or failure.
+                      </p>
+                      <div className="space-y-4">
+                        <div className="bg-card border rounded-lg p-4">
+                          <h4 className="font-medium text-foreground mb-2">Common Error Codes</h4>
+                          <div className="space-y-2 text-sm">
+                            <div className="flex items-center gap-2">
+                              <span className="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded text-xs font-mono">400</span>
+                              <span className="text-muted-foreground">Bad Request - Invalid request format</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded text-xs font-mono">401</span>
+                              <span className="text-muted-foreground">Unauthorized - Invalid API key</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded text-xs font-mono">429</span>
+                              <span className="text-muted-foreground">Too Many Requests - Rate limit exceeded</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 px-2 py-1 rounded text-xs font-mono">500</span>
+                              <span className="text-muted-foreground">Internal Server Error - System error</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+
+                  {/* Examples */}
+                  <section id="examples">
+                    <h2 className="text-2xl font-bold text-foreground mb-4">Code Examples</h2>
+                    <div className="space-y-6">
+                      <div className="bg-card border rounded-lg p-4">
+                        <h4 className="font-medium text-foreground mb-3">Upload and Analyze Document</h4>
+                        <pre className="bg-muted p-4 rounded text-sm overflow-x-auto">
+                          <code>{`curl -X POST \\
+  https://api.hobsonschoice.ai/v1/documents/upload \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Content-Type: multipart/form-data" \\
+  -F "file=@lease_agreement.pdf" \\
+  -F "type=lease" \\
+  -F "options[extract_clauses]=true"`}</code>
+                        </pre>
+                      </div>
+                      
+                      <div className="bg-card border rounded-lg p-4">
+                        <h4 className="font-medium text-foreground mb-3">Query Document</h4>
+                        <pre className="bg-muted p-4 rounded text-sm overflow-x-auto">
+                          <code>{`curl -X POST \\
+  https://api.hobsonschoice.ai/v1/query \\
+  -H "Authorization: Bearer YOUR_API_KEY" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "query": "When does the lease expire?",
+    "document_id": "doc_123456789"
+  }'`}</code>
+                        </pre>
+                      </div>
+                    </div>
                   </section>
                 </div>
               </div>
