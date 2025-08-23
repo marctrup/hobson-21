@@ -205,7 +205,7 @@ const AnnouncementPost = () => {
               {/* Right Container - Content */}
               <div className="flex-1 flex flex-col border-2 border-red-500">
                 {/* Article Header */}
-                <header className="mb-4 border-2 border-red-300">
+                <header className="mb-2 border-2 border-red-300">
                   <div className="flex items-center gap-2 mb-4">
                     {post.categories.map((category) => (
                       <Badge key={category.slug} variant="secondary">
