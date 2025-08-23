@@ -80,16 +80,64 @@ const handler = async (req: Request): Promise<Response> => {
       throw insertError;
     }
 
+    // Get the latest announcement
+    const { data: latestAnnouncement } = await supabase
+      .from('blog_posts')
+      .select('slug')
+      .eq('link_location', 'announcements')
+      .eq('status', 'published')
+      .order('published_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    const announcementUrl = latestAnnouncement 
+      ? `https://hobsonschoice.ai/announcements/${latestAnnouncement.slug}`
+      : 'https://hobsonschoice.ai/announcements';
+
     // Send welcome email using HTML template
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
     
-    // Read the HTML template
-    const htmlTemplate = await fetch('https://hobsonschoice.ai/email-1.html').then(r => r.text());
+    const htmlTemplate = `
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Hobson AI Updates</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
+    
+    <div style="margin-bottom: 30px;">
+        <p style="margin-bottom: 20px;">Hi there,</p>
+        
+        <p style="margin-bottom: 20px;">Thanks for subscribing to Hobson AI Updates! You'll now be the first to hear about our latest announcement on AI-powered document intelligence.</p>
+        
+        <p style="margin-bottom: 20px;">
+            👉 <a href="${announcementUrl}" style="color: #007bff; text-decoration: none; font-weight: 500;">Please see our latest announcement</a>
+        </p>
+        
+        <p style="margin-bottom: 30px;">We're excited to share what's coming next.</p>
+        
+        <p style="margin-bottom: 10px;">— The Hobson AI Team</p>
+        
+        <p style="margin-bottom: 0;">
+            <a href="https://www.hobsonschoice.ai" style="color: #007bff; text-decoration: none;">www.hobsonschoice.ai</a> | 
+            <a href="mailto:info@hobsonschoice.ai" style="color: #007bff; text-decoration: none;">info@hobsonschoice.ai</a>
+        </p>
+    </div>
+    
+    <div style="border-top: 1px solid #eee; padding-top: 20px; font-size: 12px; color: #666; text-align: center;">
+        <p>If you didn't subscribe to this newsletter, you can safely ignore this email.</p>
+    </div>
+    
+</body>
+</html>
+    `;
     
     const { error: emailError } = await resend.emails.send({
       from: 'Hobson AI <info@hobsonschoice.ai>',
       to: [email],
-      subject: 'Welcome to Hobson AI Updates!',
+      subject: 'Welcome to Hobson AI Updates 🚀',
       html: htmlTemplate,
     });
 
