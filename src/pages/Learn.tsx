@@ -1114,29 +1114,70 @@ const Learn = () => {
 
     // Handle API Reference content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'api-reference') {
-      return (
-        <div className="flex-1 p-8">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-8">
-              <div className="w-16 h-16 bg-gradient-to-r from-purple-600 to-purple-700 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">📘</span>
-              </div>
-              <h1 className="text-3xl font-bold text-foreground mb-6">API Reference</h1>
-              
-              {/* Coming Soon Banner */}
-              <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                  <p className="text-orange-700 dark:text-orange-300 font-medium">
-                    This resource is not yet available — Coming Soon.
-                  </p>
-                </div>
-              </div>
+      const tocSections = [
+        { id: 'overview', label: 'Overview' },
+        { id: 'authentication', label: 'Authentication' },
+        { id: 'endpoints', label: 'Endpoints' },
+        { id: 'document-analysis', label: 'Document Analysis' },
+        { id: 'query-interface', label: 'Query Interface' },
+        { id: 'webhooks', label: 'Webhooks' },
+        { id: 'rate-limits', label: 'Rate Limits' },
+        { id: 'error-handling', label: 'Error Handling' },
+        { id: 'examples', label: 'Examples' }
+      ];
 
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                The API Reference will offer a complete guide to Hobson's API, including examples and 
-                explanations to support developers and integrations.
-              </p>
+      const scrollToSection = (id: string) => {
+        setActiveTocSection(id);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
+      return (
+        <div className="flex-1">
+          <div className="flex gap-8">
+            <div className="flex-1 p-8">
+              <div className="max-w-4xl mx-auto">
+                <h1 className="text-3xl font-bold text-foreground mb-6">API Reference</h1>
+                
+                {/* Coming Soon Banner */}
+                <div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
+                  <div className="flex items-center gap-2">
+                    <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                    <p className="text-orange-700 dark:text-orange-300 font-medium">
+                      This resource is not yet available — Coming Soon.
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                  The API Reference will offer a complete guide to Hobson's API, including examples and 
+                  explanations to support developers and integrations.
+                </p>
+              </div>
+            </div>
+
+            {/* Table of Contents - On This Page */}
+            <div className="hidden lg:block w-64 flex-shrink-0">
+              <div className="sticky top-8">
+                <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
+                <nav className="space-y-1">
+                  {tocSections.map((section) => (
+                    <button
+                      key={section.id}
+                      onClick={() => scrollToSection(section.id)}
+                      className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-colors ${
+                        activeTocSection === section.id
+                          ? 'text-primary bg-primary/10 font-medium'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                      }`}
+                    >
+                      {section.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
             </div>
           </div>
         </div>
