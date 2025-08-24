@@ -489,57 +489,56 @@ const Pricing = () => {
                   <AccordionContent>
                     <div className="space-y-6">
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ What's the Starter Pack for?</h4>
+                        <h4 className="font-semibold mb-3">What's the Starter Pack for?</h4>
                         <p className="text-sm text-muted-foreground">
                           It's a one-time bundle to help you load your documents into the platform fast. It covers the heavy lifting: upload, extract key data, and index for search.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ Why do I need this before a plan?</h4>
+                        <h4 className="font-semibold mb-3">Why do I need this before a plan?</h4>
                         <p className="text-sm text-muted-foreground">
                           Most of the cost happens up front when we process your files. The Starter Pack gives you extra credit to finish onboarding without worrying about limits.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ What do I get?</h4>
+                        <h4 className="font-semibold mb-3">What do I get?</h4>
                         <p className="text-sm text-muted-foreground">
                           1000 HEUs (Hobson Energy Units — our usage credits). You can spend HEUs on document extraction, storage, and initial Q&A.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ Do Starter Pack HEUs expire?</h4>
+                        <h4 className="font-semibold mb-3">Do Starter Pack HEUs expire?</h4>
                         <p className="text-sm text-muted-foreground">
                           Unused HEUs roll over for 2 months. (Other plan rollovers last 1 month.)
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ Is it a subscription?</h4>
+                        <h4 className="font-semibold mb-3">Is it a subscription?</h4>
                         <p className="text-sm text-muted-foreground">
                           No. It's a one-time purchase made for onboarding. Pick a plan later, or right away—your Starter HEUs still apply to the same account.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ How is this different from Free/Essential?</h4>
+                        <h4 className="font-semibold mb-3">How is this different from Free/Essential?</h4>
                         <p className="text-sm text-muted-foreground">
                           Free/Essential include ongoing monthly usage. The Starter Pack front-loads generous HEUs so you can complete document onboarding quickly.
                         </p>
                       </div>
 
-
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ Will this unlock the full platform?</h4>
+                        <h4 className="font-semibold mb-3">Will this unlock the full platform?</h4>
                         <p className="text-sm text-muted-foreground">
                           Yes. You can try the full platform while you import and set everything up.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ What happens when I run out of HEUs?</h4>
+                        <h4 className="font-semibold mb-3">What happens when I run out of HEUs?</h4>
                         <p className="text-sm text-muted-foreground">
                           You can move to a plan or buy top-ups to finish the process.
                         </p>
