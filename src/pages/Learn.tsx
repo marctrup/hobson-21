@@ -18,7 +18,7 @@ const Learn = () => {
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isVideoVisible, setIsVideoVisible] = useState(false);
+  const [isVideoVisible, setIsVideoVisible] = useState(true);
   const videoRef = useRef<HTMLDivElement>(null);
 
   // Intersection observer for video pop animation
@@ -2582,8 +2582,8 @@ Content-Type: multipart/form-data
                   ref={videoRef}
                   className={`relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border transition-all duration-700 ${
                     isVideoVisible 
-                      ? 'animate-scale-in opacity-100 scale-100' 
-                      : 'opacity-0 scale-95'
+                      ? 'animate-scale-in scale-100' 
+                      : 'scale-95'
                   }`}
                 >
                 <img 
