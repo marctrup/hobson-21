@@ -2608,7 +2608,6 @@ Content-Type: multipart/form-data
     // Handle Getting Started content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
       const tocSections = [
-        { id: 'hobson-platform-overview', label: 'The Hobson platform overview' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -2654,11 +2653,6 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="space-y-12">
-                  {/* The Hobson platform overview */}
-                  <section id="hobson-platform-overview">
-                    <div className="mb-8">
-                      <h2 className="text-3xl font-bold text-foreground">The Hobson platform overview</h2>
-                    </div>
                     
                     {/* Learning Objectives Framework - Template for all sections */}
                     <div className="space-y-6">
@@ -2821,7 +2815,6 @@ Content-Type: multipart/form-data
                       */}
                       
                     </div>
-                  </section>
 
                 </div>
               </div>
