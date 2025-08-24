@@ -510,16 +510,6 @@ const Pricing = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-green-700 mb-3">❓ What's a HEU?</h4>
-                        <p className="text-sm text-muted-foreground mb-3">A HEU is our usage credit. Think of it like fuel. It's used for:</p>
-                        <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
-                          <li><strong>Extraction:</strong> reading your docs and pulling key fields.</li>
-                          <li><strong>Indexing for RAG:</strong> preparing your docs so answers include your content. (RAG = retrieval-augmented generation, i.e., the AI looks up your docs before answering.)</li>
-                          <li><strong>Early queries:</strong> first questions to test your setup.</li>
-                        </ul>
-                      </div>
-
-                      <div>
                         <h4 className="font-semibold text-green-700 mb-3">❓ Do Starter Pack HEUs expire?</h4>
                         <p className="text-sm text-muted-foreground">
                           Unused HEUs roll over for 2 months. (Other plan rollovers last 1 month.)
