@@ -438,6 +438,39 @@ export type Database = {
         }
         Relationships: []
       }
+      status_updates: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          service_key: string
+          service_name: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          service_key: string
+          service_name: string
+          status: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          service_key?: string
+          service_name?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       use_case_videos: {
         Row: {
           client_name: string | null

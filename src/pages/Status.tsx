@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { 
@@ -19,39 +19,30 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const Status = () => {
   const [email, setEmail] = useState('');
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [services, setServices] = useState([]);
   const { toast } = useToast();
 
-  const services = [
-    {
-      name: 'Web Application',
-      status: 'operational',
-      icon: Globe,
-      description: 'Main application and user interface'
-    },
-    {
-      name: 'API Services',
-      status: 'operational',
-      icon: Server,
-      description: 'Backend services and data processing'
-    },
-    {
-      name: 'Database',
-      status: 'operational',
-      icon: Database,
-      description: 'Data storage and retrieval systems'
-    },
-    {
-      name: 'Authentication',
-      status: 'operational',
-      icon: Shield,
-      description: 'User login and security systems'
-    }
-  ];
+  useEffect(() => {
+    fetchStatusUpdates();
+  }, []);
 
+  const fetchStatusUpdates = async () => {
+    const { data, error } = await supabase
+      .from('status_updates')
+      .select('*')
+      .order('service_name');
+
+    if (error) {
+      console.error('Error fetching status updates:', error);
+    } else {
+      setServices(data || []);
+    }
+  };
 
   const handleSubscribe = async () => {
     if (!email) {
@@ -65,24 +56,50 @@ const Status = () => {
 
     setIsSubscribing(true);
     
-    // Simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      toast({
-        title: "Subscription successful!",
-        description: "You'll receive status updates at " + email,
+      const { data, error } = await supabase.functions.invoke('newsletter-subscribe', {
+        body: {
+          email: email.trim(),
+          subscriptionType: 'status'
+        }
       });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data?.alreadySubscribed) {
+        toast({
+          title: "Already subscribed!",
+          description: "You're already subscribed to our status updates.",
+        });
+      } else {
+        toast({
+          title: "Subscription successful!",
+          description: `You'll receive status updates at ${email}. Check your email for a welcome message!`,
+        });
+      }
       
       setEmail('');
     } catch (error) {
+      console.error('Subscription error:', error);
       toast({
         title: "Subscription failed",
-        description: "Please try again later.",
+        description: error?.message || "Please try again later.",
         variant: "destructive",
       });
     } finally {
       setIsSubscribing(false);
+    }
+  };
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'Globe': return Globe;
+      case 'Server': return Server;
+      case 'Database': return Database;
+      case 'Shield': return Shield;
+      default: return Activity;
     }
   };
 
