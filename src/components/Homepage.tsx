@@ -99,16 +99,13 @@ export const Homepage = () => {
                 <div className="space-y-6 -mt-[20px]">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">AI-powered document insights, </span>
-                    <span className="text-foreground">backed by your own property documents.</span>
+                    <span className="text-foreground">provided by your own property documents.</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
                     A 24/7 assistant that answers property questions with citations from your documents — delivering accuracy and insights you can trust.
                   </p>
                   
-                  <a 
-                    href="#pilot-section" 
-                    className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group"
-                  >
+                  <a href="#pilot-section" className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group">
                     <div className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-lg">
                       Your Free AI Property Assistant
                       <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
@@ -119,11 +116,11 @@ export const Homepage = () => {
 
                 {/* Right Container - Document to Insights Visualization */}
                 <div className="relative mt-[5px] font-space transition-transform duration-300 border-[3px] border-gray-500 rounded-lg" style={{
-                  transform: 'perspective(1000px) rotateY(-10deg)',
-                  transformStyle: 'preserve-3d',
-                  boxShadow: '25px 25px 60px rgba(0, 0, 0, 0.08), 15px 15px 40px rgba(0, 0, 0, 0.05), 8px 8px 25px rgba(0, 0, 0, 0.04), 0 -10px 30px rgba(0, 0, 0, 0.04), 0 20px 40px rgba(0, 0, 0, 0.06)',
-                  filter: 'drop-shadow(10px 10px 30px rgba(0, 0, 0, 0.06))'
-                }}>
+                transform: 'perspective(1000px) rotateY(-10deg)',
+                transformStyle: 'preserve-3d',
+                boxShadow: '25px 25px 60px rgba(0, 0, 0, 0.08), 15px 15px 40px rgba(0, 0, 0, 0.05), 8px 8px 25px rgba(0, 0, 0, 0.04), 0 -10px 30px rgba(0, 0, 0, 0.04), 0 20px 40px rgba(0, 0, 0, 0.06)',
+                filter: 'drop-shadow(10px 10px 30px rgba(0, 0, 0, 0.06))'
+              }}>
                   <PropertyManagementVisualization />
                 </div>
 
@@ -188,15 +185,9 @@ export const Homepage = () => {
                 {/* Right Content - Georgia Video */}
                 <div>
                   <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden relative" style={{
-                    border: '10px solid #f0f0f0'
-                  }}>
-                    <LazyVideoDialog
-                      thumbnailSrc="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png"
-                      thumbnailAlt="Georgia - Hobson AI Assistant"
-                      videoId="1108183128"
-                      title="Meet Georgia - Property AI Assistant"
-                      description="Need more information? Meet Georgia"
-                    />
+                  border: '10px solid #f0f0f0'
+                }}>
+                    <LazyVideoDialog thumbnailSrc="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" thumbnailAlt="Georgia - Hobson AI Assistant" videoId="1108183128" title="Meet Georgia - Property AI Assistant" description="Need more information? Meet Georgia" />
                   </div>
                 </div>
 
@@ -261,13 +252,9 @@ export const Homepage = () => {
           </section>
 
           {/* Scroll Video */}
-          <LazyScrollVideo 
-            videoId="1108176938" 
-            title="Hobson AI Pilot Program" 
-            description="Learn more about our pilot program"
-            className="container mx-auto px-4 mb-5"
-            style={{ marginTop: '-40px' }}
-          />
+          <LazyScrollVideo videoId="1108176938" title="Hobson AI Pilot Program" description="Learn more about our pilot program" className="container mx-auto px-4 mb-5" style={{
+          marginTop: '-40px'
+        }} />
           <div className="container mx-auto px-4">
             <div className="text-center mt-4">
               <p className="text-lg text-muted-foreground">Want to know more about the pilot?</p>
