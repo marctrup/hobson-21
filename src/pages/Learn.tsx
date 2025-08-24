@@ -2571,8 +2571,8 @@ Content-Type: multipart/form-data
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
              {/* Large Video Screen with aligned header */}
              <div className="mb-12">
-               {/* Welcome header above video */}
-               <div className="text-center mb-12">
+               {/* Welcome header above video - aligned with video left edge */}
+               <div className="mb-12" style={{ marginLeft: 'calc(50% - 320px)' }}>
                  <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
                  <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
                </div>
@@ -2596,9 +2596,9 @@ Content-Type: multipart/form-data
                  </div>
                </div>
                
-               {/* Description text below video */}
-               <div className="text-center mt-12">
-                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
+               {/* Description text below video - aligned with video left edge */}
+               <div className="mt-12" style={{ marginLeft: 'calc(50% - 320px)' }}>
+                 <p className="text-lg text-muted-foreground max-w-3xl">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
                </div>
              </div>
 
