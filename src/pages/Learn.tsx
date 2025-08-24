@@ -2322,12 +2322,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Yes. Control who can view, upload, and query per workspace.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="white-label">
-                        <AccordionTrigger className="text-left">Can I white-label Hobson?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Enterprise option—contact us.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="rename-workspace">
                         <AccordionTrigger className="text-left">Can I rename a workspace/portfolio?</AccordionTrigger>
                         <AccordionContent>
