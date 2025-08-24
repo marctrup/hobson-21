@@ -2322,12 +2322,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Yes. Control who can view, upload, and query per workspace.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="rename-workspace">
-                        <AccordionTrigger className="text-left">Can I rename a workspace/portfolio?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, from Settings or the workspace menu.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="duplicate-query">
                         <AccordionTrigger className="text-left">Can I duplicate a saved view or query?</AccordionTrigger>
                         <AccordionContent>
