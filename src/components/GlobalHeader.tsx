@@ -42,6 +42,9 @@ export const GlobalHeader = () => {
             <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Contact
             </Link>
+            <Link to="/learn" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Learn
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -79,6 +82,14 @@ export const GlobalHeader = () => {
                 title="Contact Real Estate Software Support"
               >
                 Contact
+              </Link>
+              <Link 
+                to="/learn" 
+                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                onClick={closeMobileMenu}
+                title="Learning Resources"
+              >
+                Learn
               </Link>
             </div>
           </nav>
