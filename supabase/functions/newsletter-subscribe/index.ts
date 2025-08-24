@@ -48,7 +48,7 @@ const handler = async (req: Request): Promise<Response> => {
       .select('*')
       .eq('email', email)
       .eq('subscription_type', subscriptionType)
-      .single();
+      .maybeSingle();
 
     if (existingSubscription) {
       // Reactivate if previously unsubscribed
@@ -108,26 +108,38 @@ const handler = async (req: Request): Promise<Response> => {
     // Send welcome email using HTML template
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
     
+    const isStatusSubscription = subscriptionType === 'status';
+    
     const htmlTemplate = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Hobson AI Updates</title>
+    <title>Welcome to Hobson AI ${isStatusSubscription ? 'Status ' : ''}Updates</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
     
     <div style="margin-bottom: 30px;">
         <p style="margin-bottom: 20px;">Hi there,</p>
         
-        <p style="margin-bottom: 20px;">Thanks for subscribing to Hobson AI Updates! You'll now be the first to hear about our latest announcement on AI-powered document intelligence.</p>
+        ${isStatusSubscription ? `
+        <p style="margin-bottom: 20px;">Thanks for subscribing to Hobson AI Status Updates! You'll now receive notifications whenever there are changes to our system status and service availability.</p>
+        
+        <p style="margin-bottom: 20px;">
+            👉 <a href="https://hobsonschoice.ai/learn/status" style="color: #007bff; text-decoration: none; font-weight: 500;">Check current system status</a>
+        </p>
+        
+        <p style="margin-bottom: 30px;">We'll notify you immediately of any service disruptions or maintenance windows.</p>
+        ` : `
+        <p style="margin-bottom: 20px;">Thanks for subscribing to Hobson AI Updates! You'll now be the first to hear about our latest announcements on AI-powered document intelligence.</p>
         
         <p style="margin-bottom: 20px;">
             👉 <a href="${announcementUrl}" style="color: #007bff; text-decoration: none; font-weight: 500;">Please see our latest announcement</a>
         </p>
         
         <p style="margin-bottom: 30px;">We're excited to share what's coming next.</p>
+        `}
         
         <p style="margin-bottom: 10px;">— The Hobson AI Team</p>
         
@@ -154,7 +166,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { error: emailError } = await resend.emails.send({
       from: 'Hobson AI <info@hobsonschoice.ai>',
       to: [email],
-      subject: 'Welcome to Hobson AI Updates 🚀',
+      subject: `Welcome to Hobson AI ${isStatusSubscription ? 'Status ' : ''}Updates 🚀`,
       html: htmlTemplate,
     });
 
