@@ -39,6 +39,7 @@ export const HomepageFooter = () => {
               <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors" title="Contact Real Estate Software Support - Get in touch with our AI property management specialists">Contact</Link>
               <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors" title="Learning Resources">Learn</Link>
               <Link to="/privacy-policy" className="block text-muted-foreground hover:text-foreground transition-colors" title="Privacy Policy">Privacy Policy</Link>
+              <Link to="/data-protection" className="block text-muted-foreground hover:text-foreground transition-colors" title="Data Protection & Security Policy">Data Protection & Security</Link>
               <a 
                 href="https://www.linkedin.com/company/hobsonschoice-ai"
                 target="_blank"

@@ -377,6 +377,9 @@ const LandingPageC = () => {
             <Link to="/privacy-policy" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
               Privacy Policy
             </Link>
+            <Link to="/data-protection" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+              Data Protection & Security
+            </Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
               Contact
             </Link>
