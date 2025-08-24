@@ -223,34 +223,34 @@ const Announcements = () => {
               <Calendar className="w-5 h-5" />
               Latest Announcements
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
               {announcements.map((announcement) => (
                 <div 
                   key={announcement.id} 
-                  className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/20 dark:to-slate-800/30 border border-slate-200/50 dark:border-slate-700/30 rounded-lg p-4 md:p-6 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200 aspect-square flex flex-col justify-between"
+                  className="bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/20 dark:to-slate-800/30 border border-slate-200/50 dark:border-slate-700/30 rounded-lg p-3 md:p-6 cursor-pointer hover:shadow-lg hover:scale-105 transition-all duration-200 md:aspect-square flex flex-col justify-between min-h-[180px] md:min-h-0"
                   onClick={() => handleAnnouncementClick(announcement.slug)}
                 >
                   <div className="flex-1">
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-2 md:mb-4">
                       <Badge 
                         variant="outline" 
-                        className={`capitalize ${getTypeColor(announcement.type)}`}
+                        className={`capitalize text-xs ${getTypeColor(announcement.type)}`}
                       >
                         {announcement.type}
                       </Badge>
                       <Badge 
                         variant="outline" 
-                        className={`capitalize ${getPriorityColor(announcement.priority)}`}
+                        className={`capitalize text-xs ${getPriorityColor(announcement.priority)}`}
                       >
                         {announcement.priority}
                       </Badge>
                     </div>
                     
-                    <h3 className="font-semibold text-foreground mb-3 text-base md:text-lg leading-tight line-clamp-3">{announcement.title}</h3>
-                    <p className="text-xs md:text-sm text-muted-foreground mb-4 line-clamp-3">{announcement.description}</p>
+                    <h3 className="font-semibold text-foreground mb-2 md:mb-3 text-sm md:text-lg leading-tight line-clamp-2 md:line-clamp-3">{announcement.title}</h3>
+                    <p className="text-xs md:text-sm text-muted-foreground mb-3 md:mb-4 line-clamp-2 md:line-clamp-3">{announcement.description}</p>
                   </div>
                   
-                  <div className="space-y-2 text-xs text-muted-foreground">
+                  <div className="space-y-1 md:space-y-2 text-xs text-muted-foreground">
                     <div className="flex items-center gap-2">
                       <Calendar className="w-3 h-3" />
                       <span>{new Date(announcement.date).toLocaleDateString()}</span>
