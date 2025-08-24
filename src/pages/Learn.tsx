@@ -2391,12 +2391,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Yes. We log uploads, edits, and queries.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="restore-version">
-                        <AccordionTrigger className="text-left">Can I restore an earlier version?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">We keep change history; contact support for restores.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                     </Accordion>
                   </section>
 
