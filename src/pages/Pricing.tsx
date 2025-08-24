@@ -558,20 +558,20 @@ const Pricing = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="item-4-knowledge">
-                  <AccordionTrigger>What is it?</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-6">
+                <AccordionItem value="item-4-knowledge" className="bg-background border-border">
+                  <AccordionTrigger className="text-foreground hover:text-primary">What is it?</AccordionTrigger>
+                  <AccordionContent className="bg-background text-foreground">
+                    <div className="space-y-6 bg-background p-4 rounded-lg">
                       <div>
-                        <p className="mb-4 text-sm text-muted-foreground">
+                        <p className="mb-4 text-foreground">
                           A private space where Hobson learns your people, rules, and ways of working — so answers are personalised, not generic.
                         </p>
                       </div>
 
                       <div>
                         <h4 className="font-semibold text-purple-700 mb-3">Why use it?</h4>
-                        <p className="mb-3 text-sm text-muted-foreground">Hobson can act like part of your team. Example:</p>
-                        <div className="mb-4 p-3 bg-purple-50/50 rounded-lg border border-purple-200">
+                        <p className="mb-3 text-foreground">Hobson can act like part of your team. Example:</p>
+                        <div className="mb-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
                           <p className="text-sm italic text-purple-700">"Gas certificate expired — email John Higgins?"</p>
                           <p className="text-sm italic text-purple-700">"Guardian breach — escalate to Paul Evans?"</p>
                         </div>
@@ -579,8 +579,8 @@ const Pricing = () => {
 
                       <div>
                         <h4 className="font-semibold text-purple-700 mb-3">What do we provide?</h4>
-                        <p className="mb-3 text-sm text-muted-foreground">Just a one-page template:</p>
-                        <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
+                        <p className="mb-3 text-foreground">Just a one-page template:</p>
+                        <ul className="list-disc list-inside space-y-1 ml-4 text-foreground">
                           <li>A short business overview</li>
                           <li>Key people & contacts</li>
                           <li>A few quick-win business rules</li>
@@ -589,19 +589,19 @@ const Pricing = () => {
 
                       <div>
                         <h4 className="font-semibold text-purple-700 mb-3">How is it used?</h4>
-                        <p className="text-sm text-muted-foreground">
+                        <p className="text-foreground">
                           We store this securely in MongoDB. Hobson checks it before answering, so replies are tailored to your company.
                         </p>
                       </div>
 
                       <div>
                         <h4 className="font-semibold text-purple-700 mb-3">Is it secure?</h4>
-                        <p className="text-sm text-muted-foreground">Yes. Your data stays private, encrypted, and never shared.</p>
+                        <p className="text-foreground">Yes. Your data stays private, encrypted, and never shared.</p>
                       </div>
 
                       <div>
                         <h4 className="font-semibold text-purple-700 mb-3">Does it cost extra?</h4>
-                        <p className="text-sm text-muted-foreground">No — included with Enterprise plans only.</p>
+                        <p className="text-foreground">No — included with Enterprise plans only.</p>
                       </div>
                     </div>
                   </AccordionContent>
