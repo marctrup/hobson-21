@@ -2570,7 +2570,7 @@ Content-Type: multipart/form-data
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
                {/* Welcome header above video - aligned with video left edge */}
-               <div className="mb-12 border-2 border-red-500" style={{ marginLeft: 'calc(50% - 320px)' }}>
+               <div className="mb-12 border-2 border-red-500" style={{ marginLeft: 'calc(50% - 320px * 2.0736 / 2)' }}>
                  <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
                  <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
                </div>
