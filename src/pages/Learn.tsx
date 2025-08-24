@@ -2576,20 +2576,22 @@ Content-Type: multipart/form-data
                </div>
                
                {/* Video container with extra spacing */}
-               <div 
-                 ref={videoRef}
-                 className={`transition-all duration-700 border-2 border-red-500 flex justify-center ${
-                   isVideoVisible 
-                     ? 'animate-scale-in scale-100' 
-                     : 'scale-95'
-                 }`}
-                 style={{ transform: 'scale(2)', transformOrigin: 'center', marginTop: 'calc(6rem + 10px)' }}
-               >
-                 <ScrollVideoPlayer 
-                   videoId="1108183128"
-                   title="Getting Started with Hobson AI"
-                   description="Learn how to transform your property management with AI-powered document analysis"
-                 />
+               <div className="flex justify-center" style={{ marginTop: 'calc(6rem + 10px)' }}>
+                 <div 
+                   ref={videoRef}
+                   className={`transition-all duration-700 border-2 border-red-500 ${
+                     isVideoVisible 
+                       ? 'animate-scale-in scale-100' 
+                       : 'scale-95'
+                   }`}
+                   style={{ transform: 'scale(1.2)', transformOrigin: 'center', width: '400px' }}
+                 >
+                   <ScrollVideoPlayer 
+                     videoId="1108183128"
+                     title="Getting Started with Hobson AI"
+                     description="Learn how to transform your property management with AI-powered document analysis"
+                   />
+                 </div>
                </div>
                
                {/* Description text below video - aligned with video left edge */}
