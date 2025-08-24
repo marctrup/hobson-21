@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X, Plus } from 'lucide-react';
@@ -18,6 +18,26 @@ const Learn = () => {
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isVideoVisible, setIsVideoVisible] = useState(false);
+  const videoRef = useRef<HTMLDivElement>(null);
+
+  // Intersection observer for video pop animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVideoVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
   const [activeTocSection, setActiveTocSection] = useState('getting-started');
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
@@ -2558,7 +2578,14 @@ Content-Type: multipart/form-data
                 </div>
                 
                 {/* Video container */}
-                <div className="relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border">
+                <div 
+                  ref={videoRef}
+                  className={`relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border transition-all duration-700 ${
+                    isVideoVisible 
+                      ? 'animate-scale-in opacity-100 scale-100' 
+                      : 'opacity-0 scale-95'
+                  }`}
+                >
                 <img 
                   src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
                   alt="Welcome to Hobson AI - Video placeholder"
