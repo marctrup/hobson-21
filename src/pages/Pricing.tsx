@@ -558,7 +558,7 @@ const Pricing = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="item-4-knowledge" className="bg-background border-border">
+                <AccordionItem value="item-5" className="bg-background border-border">
                   <AccordionTrigger className="text-foreground hover:text-primary">What is it?</AccordionTrigger>
                   <AccordionContent className="bg-background text-foreground">
                     <div className="space-y-6 bg-background p-4 rounded-lg">
@@ -607,7 +607,7 @@ const Pricing = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                <AccordionItem value="item-5">
+                <AccordionItem value="item-6">
                   <AccordionTrigger>Can I change plans anytime?</AccordionTrigger>
                   <AccordionContent>
                     Absolutely! You can upgrade or downgrade your plan at any time. Changes take effect at your next billing cycle. Any benefits by downgrading will be lost.
