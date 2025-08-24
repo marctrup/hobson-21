@@ -3632,6 +3632,11 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Embeddings</h3>
+                  <p className="text-muted-foreground">A method of turning words or sentences into numbers that capture their meaning. These numbers let Hobson compare ideas and find connections between different pieces of text.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">JSON</h3>
                   <p className="text-muted-foreground">A way of structuring data so both people and computers can read it. Think of it like a digital "spreadsheet" written in text, with labels and values. Hobson often uses JSON behind the scenes to organise information.</p>
                 </div>
@@ -3672,7 +3677,11 @@ Content-Type: multipart/form-data
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Reverse Prompting</h3>
                   <p className="text-muted-foreground">Asking Hobson to explain how it arrived at an answer, so you can check the logic.</p>
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Vector Search</h3>
+                  <p className="text-muted-foreground">A smart way of finding information. Instead of matching exact words, it looks for meanings and similarities. This means Hobson can find the right answer even if you phrase your question differently from how it's written in the document.</p>
                 </div>
+              </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Session</h3>
