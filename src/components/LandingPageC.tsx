@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -372,6 +373,14 @@ const LandingPageC = () => {
       {/* Footer */}
       <footer className="border-t bg-muted/50 py-8">
         <div className="container mx-auto px-4 text-center">
+          <div className="flex justify-center gap-6 mb-4">
+            <Link to="/privacy-policy" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+              Privacy Policy
+            </Link>
+            <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+              Contact
+            </Link>
+          </div>
           <p className="text-muted-foreground">
             © 2024 Hobson AI. All rights reserved.
           </p>
