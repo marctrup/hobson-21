@@ -2550,7 +2550,7 @@ Content-Type: multipart/form-data
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
             {/* Large Video Screen with aligned header */}
             <div className="mb-12">
-              <div className="w-full max-w-[56.32rem] mx-auto">
+              <div className="w-full max-w-[45.056rem] mx-auto">
                 {/* Welcome header aligned with video left edge */}
                 <div className="mb-6">
                   <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
