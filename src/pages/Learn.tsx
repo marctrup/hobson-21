@@ -2578,7 +2578,7 @@ Content-Type: multipart/form-data
                </div>
                
                {/* Video container with extra spacing */}
-               <div className="flex justify-center my-24">
+               <div className="flex justify-center my-24" style={{ marginTop: 'calc(6rem + 10px)' }}>
                  <div 
                    ref={videoRef}
                    className={`transition-all duration-700 ${
