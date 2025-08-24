@@ -2576,7 +2576,7 @@ Content-Type: multipart/form-data
                </div>
                
                {/* Video container with extra spacing */}
-               <div className="flex justify-center" style={{ marginTop: 'calc(6rem + 10px)' }}>
+               <div className="flex justify-center" style={{ marginTop: 'calc(6rem + 20px)' }}>
                  <div 
                    ref={videoRef}
                    className={`transition-all duration-700 border-2 border-red-500 ${
@@ -2595,7 +2595,7 @@ Content-Type: multipart/form-data
                </div>
                
                {/* Description text below video - aligned with video container sides */}
-               <div className="border-2 border-red-500 text-left" style={{ marginLeft: 'calc(50% - 320px * 2.0736 / 2)', marginRight: 'calc(50% - 320px * 2.0736 / 2)', marginTop: 'calc(3rem + 70px)' }}>
+               <div className="border-2 border-red-500 text-left" style={{ marginLeft: 'calc(50% - 320px * 2.0736 / 2)', marginRight: 'calc(50% - 320px * 2.0736 / 2)', marginTop: 'calc(3rem + 80px)' }}>
                  <p className="text-lg text-muted-foreground">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
                </div>
 
