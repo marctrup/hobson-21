@@ -3673,6 +3673,11 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Knowledge Graph</h3>
+                  <p className="text-muted-foreground">A Knowledge Graph is a way of organising information so that facts are linked together like a web. Each entity (e.g., a person, property, contract, or certificate) is a node. The relationships between them (e.g., "tenant of", "guarantor for", "owns") are the edges. This makes it easier for AI to understand context and answer complex questions, because it can follow the connections between facts instead of treating each fact in isolation. At Hobson AI, knowledge graphs help us model how documents, people, and events relate to each other—so answers are not just accurate, but context-aware.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Session</h3>
                   <p className="text-muted-foreground">A continuous conversation with Hobson. Within a session, Hobson remembers your earlier questions and answers.</p>
                 </div>
