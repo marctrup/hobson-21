@@ -559,7 +559,7 @@ const Pricing = () => {
                 </AccordionItem>
 
                 <AccordionItem value="item-5" className="bg-background border-border">
-                  <AccordionTrigger className="text-foreground hover:text-primary">What is it?</AccordionTrigger>
+                  <AccordionTrigger className="text-foreground hover:text-primary">What is the knowledgebase?</AccordionTrigger>
                   <AccordionContent className="bg-background text-foreground">
                     <div className="space-y-6 bg-background p-4 rounded-lg">
                       <div>
