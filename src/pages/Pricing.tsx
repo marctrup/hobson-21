@@ -559,67 +559,49 @@ const Pricing = () => {
                 </AccordionItem>
 
                 <AccordionItem value="item-4-knowledge">
-                  <AccordionTrigger>What is the Business Knowledgebase?</AccordionTrigger>
+                  <AccordionTrigger>What is it?</AccordionTrigger>
                   <AccordionContent>
                     <div className="space-y-6">
                       <div>
-                        <p className="mb-4">
-                          The Business Knowledgebase is a private area where Hobson learns about your property company — your people, your terms, and your ways of working. It means Hobson's answers are not just property-smart, but tailored to your business.
+                        <p className="mb-4 text-sm text-muted-foreground">
+                          A private space where Hobson learns your people, rules, and ways of working — so answers are personalised, not generic.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">❓ Why would my company use it?</h4>
-                        <p className="mb-3">With the Knowledgebase, Hobson can answer questions more personally, such as:</p>
-                        <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground mb-4">
-                          <li>"Who in our company handles rent reviews?"</li>
-                          <li>"What's our standard notice period for lease renewals?"</li>
-                          <li>"What process do we follow for arrears?"</li>
-                        </ul>
-                        <p className="text-sm">Instead of a generic answer, Hobson will respond with your team, your terms, and your processes.</p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">❓ What do we need to provide?</h4>
-                        <p className="mb-3">There are two simple ways to get started:</p>
-                        
-                        <div className="mb-4">
-                          <h5 className="font-medium mb-2">1. Fill out a template page (fast setup)</h5>
-                          <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
-                            <li>Company overview (name, portfolio size, regions, services offered)</li>
-                            <li>Key people (name, role, email, area of expertise)</li>
-                            <li>Policies & terms (rent review cycle, service standards, billing terms)</li>
-                            <li>Glossary of internal terms</li>
-                          </ul>
-                        </div>
-
-                        <div className="mb-4">
-                          <h5 className="font-medium mb-2">2. Upload your own documents (deep context)</h5>
-                          <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
-                            <li>Rent review / lease renewal playbooks</li>
-                            <li>Staff handbooks or SOPs (standard operating procedures)</li>
-                            <li>Lease templates & FAQs</li>
-                            <li>Marketing packs or client brochures</li>
-                          </ul>
+                        <h4 className="font-semibold text-purple-700 mb-3">Why use it?</h4>
+                        <p className="mb-3 text-sm text-muted-foreground">Hobson can act like part of your team. Example:</p>
+                        <div className="mb-4 p-3 bg-purple-50/50 rounded-lg border border-purple-200">
+                          <p className="text-sm italic text-purple-700">"Gas certificate expired — email John Higgins?"</p>
+                          <p className="text-sm italic text-purple-700">"Guardian breach — escalate to Paul Evans?"</p>
                         </div>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">❓ How is the information used?</h4>
-                        <ul className="list-disc list-inside space-y-2 ml-4 text-sm text-muted-foreground">
-                          <li>Structured facts (like contacts or SLA times) are added to Hobson's "memory," so they are always at hand.</li>
-                          <li>Documents are broken into small pieces and stored privately for your company. Hobson only pulls the most relevant snippets when answering a question.</li>
+                        <h4 className="font-semibold text-purple-700 mb-3">What do we provide?</h4>
+                        <p className="mb-3 text-sm text-muted-foreground">Just a one-page template:</p>
+                        <ul className="list-disc list-inside space-y-1 ml-4 text-sm text-muted-foreground">
+                          <li>A short business overview</li>
+                          <li>Key people & contacts</li>
+                          <li>A few quick-win business rules</li>
                         </ul>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">❓ Is our data secure?</h4>
-                        <p className="text-sm text-muted-foreground">Yes. Your Knowledgebase is private to your company only. Information is never shared between clients.</p>
+                        <h4 className="font-semibold text-purple-700 mb-3">How is it used?</h4>
+                        <p className="text-sm text-muted-foreground">
+                          We store this securely in MongoDB. Hobson checks it before answering, so replies are tailored to your company.
+                        </p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">❓ Does it cost extra?</h4>
-                        <p className="text-sm text-muted-foreground">The Business Knowledgebase is an option with Enterprise plans at no extra cost. It will be removed if there is a change in plan.</p>
+                        <h4 className="font-semibold text-purple-700 mb-3">Is it secure?</h4>
+                        <p className="text-sm text-muted-foreground">Yes. Your data stays private, encrypted, and never shared.</p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-purple-700 mb-3">Does it cost extra?</h4>
+                        <p className="text-sm text-muted-foreground">No — included with Enterprise plans only.</p>
                       </div>
                     </div>
                   </AccordionContent>
