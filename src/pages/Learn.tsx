@@ -3751,6 +3751,9 @@ Content-Type: multipart/form-data
                 <a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact
                 </a>
+                <a href="/learn" className="text-muted-foreground hover:text-foreground transition-colors">
+                  Learn
+                </a>
                </nav>
             </div>
           </div>
