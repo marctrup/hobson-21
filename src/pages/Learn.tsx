@@ -3660,6 +3660,11 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">RAG</h3>
+                  <p className="text-muted-foreground">Short for Retrieval-Augmented Generation. It's a way Hobson answers questions more accurately by first finding relevant information from your documents, then using that information to generate a better response.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Report</h3>
                   <p className="text-muted-foreground">A structured output created by Hobson — for example, a portfolio summary, cashflow projection, or lender briefing.</p>
                 </div>
