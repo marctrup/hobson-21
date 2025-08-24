@@ -2569,38 +2569,38 @@ Content-Type: multipart/form-data
       return (
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
-            {/* Large Video Screen with aligned header */}
-            <div className="mb-12">
-              <div className="w-full max-w-[36.045rem] mx-auto">
-                {/* Welcome header aligned with video left edge */}
-                <div className="mb-6">
-                  <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
-                  <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
-                </div>
-                
-                {/* Video container */}
-                <div 
-                  ref={videoRef}
-                  className={`transition-all duration-700 ${
-                    isVideoVisible 
-                      ? 'animate-scale-in scale-100' 
-                      : 'scale-95'
-                  }`}
-                  style={{ transform: 'scale(2)', transformOrigin: 'center' }}
-                >
-                  <ScrollVideoPlayer 
-                    videoId="1108183128"
-                    title="Getting Started with Hobson AI"
-                    description="Learn how to transform your property management with AI-powered document analysis"
-                  />
-                </div>
-                
-                {/* Description text aligned with video */}
-                <div className="mt-6">
-                  <p className="text-lg text-muted-foreground">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
-                </div>
-              </div>
-            </div>
+             {/* Large Video Screen with aligned header */}
+             <div className="mb-12">
+               {/* Welcome header above video */}
+               <div className="text-center mb-12">
+                 <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
+                 <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
+               </div>
+               
+               {/* Video container with extra spacing */}
+               <div className="flex justify-center my-24">
+                 <div 
+                   ref={videoRef}
+                   className={`transition-all duration-700 ${
+                     isVideoVisible 
+                       ? 'animate-scale-in scale-100' 
+                       : 'scale-95'
+                   }`}
+                   style={{ transform: 'scale(2)', transformOrigin: 'center' }}
+                 >
+                   <ScrollVideoPlayer 
+                     videoId="1108183128"
+                     title="Getting Started with Hobson AI"
+                     description="Learn how to transform your property management with AI-powered document analysis"
+                   />
+                 </div>
+               </div>
+               
+               {/* Description text below video */}
+               <div className="text-center mt-12">
+                 <p className="text-lg text-muted-foreground max-w-3xl mx-auto">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
+               </div>
+             </div>
 
 
           </div>
