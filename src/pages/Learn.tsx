@@ -2340,15 +2340,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Reusable prompt sets for common tasks (e.g., renewal checks).</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="chat-mode">
-                        <AccordionTrigger className="text-left">What is Chat mode?</AccordionTrigger>
-                        <AccordionContent>
-                          <div className="text-muted-foreground text-sm space-y-2">
-                            <p>Ask a question in plain English; Hobson fetches relevant snippets first, then answers.</p>
-                            <p>(This is "RAG"—retrieval-augmented generation: the AI retrieves context from your docs before generating a reply.)</p>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="edit-fields">
                         <AccordionTrigger className="text-left">Can I edit extracted fields?</AccordionTrigger>
                         <AccordionContent>
