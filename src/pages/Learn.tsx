@@ -11,6 +11,7 @@ import { AuthDialog } from '@/components/features/AuthDialog';
 import { CreatePostDialog } from '@/components/features/CreatePostDialog';
 import { Button } from '@/components/ui/button';
 import { UseCasesContent } from '@/components/UseCasesContent';
+import { ScrollVideoPlayer } from '@/components/ScrollVideoPlayer';
 
 const Learn = () => {
   const { user } = useAuth();
@@ -2580,17 +2581,17 @@ Content-Type: multipart/form-data
                 {/* Video container */}
                 <div 
                   ref={videoRef}
-                  className={`relative aspect-video w-full rounded-lg overflow-hidden shadow-lg border border-border transition-all duration-700 ${
+                  className={`transition-all duration-700 ${
                     isVideoVisible 
                       ? 'animate-scale-in scale-100' 
                       : 'scale-95'
                   }`}
                 >
-                <img 
-                  src="/lovable-uploads/22288036-7492-4957-944b-c3c0aad87c98.png"
-                  alt="Welcome to Hobson AI - Video placeholder"
-                  className="w-full h-full object-cover"
-                />
+                  <ScrollVideoPlayer 
+                    videoId="1108183128"
+                    title="Getting Started with Hobson AI"
+                    description="Learn how to transform your property management with AI-powered document analysis"
+                  />
                 </div>
                 
                 {/* Description text aligned with video */}
