@@ -23,7 +23,7 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                    id="hero-heading" 
                    className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1]"
                  >
-                    The bleeding obvious in property — trapped in documents, <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">freed by Hobson</span>
+                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">AI-powered document insights</span>, backed by your own property documents.
                   </h1>
               </div>
               <p className="text-xl text-muted-foreground leading-relaxed">
