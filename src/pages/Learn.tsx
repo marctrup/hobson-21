@@ -2340,12 +2340,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Reusable prompt sets for common tasks (e.g., renewal checks).</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="edit-fields">
-                        <AccordionTrigger className="text-left">Can I edit extracted fields?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. Review and correct extractions; changes are tracked.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="team-collaborate">
                         <AccordionTrigger className="text-left">Can my team collaborate?</AccordionTrigger>
                         <AccordionContent>
