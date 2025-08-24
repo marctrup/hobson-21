@@ -558,16 +558,16 @@ const Pricing = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">Why use it?</h4>
+                        <h4 className="font-semibold mb-3">Why use it?</h4>
                         <p className="mb-3 text-foreground">Hobson can act like part of your team. Example:</p>
-                        <div className="mb-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
-                          <p className="text-sm italic text-purple-700">"Gas certificate expired — email John Higgins?"</p>
-                          <p className="text-sm italic text-purple-700">"Guardian breach — escalate to Paul Evans?"</p>
+                        <div className="mb-4 p-3 bg-muted rounded-lg border">
+                          <p className="text-sm italic">"Gas certificate expired — email John Higgins?"</p>
+                          <p className="text-sm italic">"Guardian breach — escalate to Paul Evans?"</p>
                         </div>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">What do we provide?</h4>
+                        <h4 className="font-semibold mb-3">What do we provide?</h4>
                         <p className="mb-3 text-foreground">Just a one-page template:</p>
                         <ul className="list-disc list-inside space-y-1 ml-4 text-foreground">
                           <li>A short business overview</li>
@@ -577,19 +577,19 @@ const Pricing = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">How is it used?</h4>
+                        <h4 className="font-semibold mb-3">How is it used?</h4>
                         <p className="text-foreground">
                           We store this securely in MongoDB. Hobson checks it before answering, so replies are tailored to your company.
                         </p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">Is it secure?</h4>
+                        <h4 className="font-semibold mb-3">Is it secure?</h4>
                         <p className="text-foreground">Yes. Your data stays private, encrypted, and never shared.</p>
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-purple-700 mb-3">Does it cost extra?</h4>
+                        <h4 className="font-semibold mb-3">Does it cost extra?</h4>
                         <p className="text-foreground">No — included with Enterprise plans only.</p>
                       </div>
                     </div>
