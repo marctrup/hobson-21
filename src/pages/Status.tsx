@@ -202,26 +202,29 @@ const Status = () => {
               Current Status
             </h2>
             <div className="space-y-3">
-              {services.map((service) => (
-                <div key={service.name} className="flex items-center justify-between p-4 rounded-lg border border-border">
-                  <div className="flex items-center gap-3">
-                    <service.icon className="w-5 h-5 text-muted-foreground" />
-                    <div>
-                      <h3 className="font-medium text-foreground">{service.name}</h3>
-                      <p className="text-sm text-muted-foreground">{service.description}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    {getStatusIcon(service.status)}
-                    <Badge 
-                      variant="outline" 
-                      className={`capitalize ${getStatusColor(service.status)}`}
-                    >
-                      {service.status}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
+              {services.map((service) => {
+                const IconComponent = getIcon(service.icon);
+                return (
+                  <div key={service.name} className="flex items-center justify-between p-4 rounded-lg border border-border">
+                    <div className="flex items-center gap-3">
+                      <IconComponent className="w-5 h-5 text-muted-foreground" />
+                      <div>
+                        <h3 className="font-medium text-foreground">{service.name}</h3>
+                        <p className="text-sm text-muted-foreground">{service.description}</p>
+                      </div>
+                     </div>
+                     <div className="flex items-center gap-2">
+                       {getStatusIcon(service.status)}
+                       <Badge 
+                         variant="outline" 
+                         className={`capitalize ${getStatusColor(service.status)}`}
+                       >
+                         {service.status}
+                       </Badge>
+                     </div>
+                   </div>
+                 );
+               })}
             </div>
           </Card>
 
