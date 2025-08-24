@@ -27,14 +27,14 @@ const PrivacyPolicy = () => {
           
           <div className="space-y-8 text-muted-foreground leading-relaxed">
             <p>
-              Hobson's Choice AI ("we", "our", "us") is committed to protecting your privacy. 
+              Hobson AI ("we", "our", "us") is committed to protecting your privacy. 
               This Privacy Policy explains how we handle your personal information when you use our services.
             </p>
 
             <section>
               <h2 className="text-2xl font-semibold mb-4 text-foreground">1. Who We Are</h2>
               <div className="space-y-2">
-                <p><strong>Hobson's Choice AI</strong></p>
+                <p><strong>Hobson AI</strong></p>
                 <p>5 Technology Park<br />
                 Collindeep Lane<br />
                 Colindale<br />
