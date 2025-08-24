@@ -2564,17 +2564,6 @@ Content-Type: multipart/form-data
                   alt="Welcome to Hobson AI - Video placeholder"
                   className="w-full h-full object-cover"
                 />
-                {/* Play button overlay */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <button className="bg-black/70 hover:bg-black/80 text-white rounded-full p-4 transition-colors">
-                    <Play className="w-12 h-12 ml-1" fill="currentColor" />
-                  </button>
-                </div>
-                {/* Video title overlay */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6">
-                  <h3 className="text-white text-xl font-semibold mb-2">Getting Started with Hobson AI</h3>
-                  <p className="text-white/90 text-sm">Learn how to transform your property management with AI-powered document analysis</p>
-                </div>
                 </div>
                 
                 {/* Description text aligned with video */}
