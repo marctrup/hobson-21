@@ -50,8 +50,8 @@ const Pricing = () => {
                    </h1>
                   <p className="text-xl text-muted-foreground">
                     Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
-                    Hobson charges for the actual work our AI does — measured in{" "}
-                    <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
+                    Hobson charges for the actual work our AI does — measured in a currency called a{" "}
+                    <span className="font-semibold text-primary">Hobson Energy Unit (HEU)</span>.
                   </p>
                 </div>
              </div>
