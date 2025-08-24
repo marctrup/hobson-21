@@ -374,11 +374,8 @@ const LandingPageC = () => {
       <footer className="border-t bg-muted/50 py-8">
         <div className="container mx-auto px-4 text-center">
           <div className="flex justify-center gap-6 mb-4">
-            <Link to="/privacy-policy" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-              Privacy Policy
-            </Link>
             <Link to="/data-protection" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
-              Data Protection & Security
+              AI Privacy & Data Protection Policy
             </Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
               Contact

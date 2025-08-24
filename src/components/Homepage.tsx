@@ -326,11 +326,8 @@ export const Homepage = () => {
                     <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors">
                       Learn
                     </Link>
-                    <Link to="/privacy-policy" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Privacy Policy
-                    </Link>
                     <Link to="/data-protection" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Data Protection & Security
+                      AI Privacy & Data Protection Policy
                     </Link>
                   </div>
                 </div>
