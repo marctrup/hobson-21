@@ -2584,7 +2584,7 @@ Content-Type: multipart/form-data
                        ? 'animate-scale-in scale-100' 
                        : 'scale-95'
                    }`}
-                   style={{ transform: 'scale(2.0736)', transformOrigin: 'center', width: '400px' }}
+                   style={{ transform: 'scale(2.0736)', transformOrigin: 'center' }}
                  >
                    <ScrollVideoPlayer 
                      videoId="1108183128"
