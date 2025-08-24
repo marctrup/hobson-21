@@ -2569,8 +2569,6 @@ Content-Type: multipart/form-data
       return (
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
-             {/* Large Video Screen with aligned header */}
-             <div className="mb-12 border-2 border-red-500">
                {/* Welcome header above video - aligned with video left edge */}
                <div className="mb-12 border-2 border-red-500" style={{ marginLeft: 'calc(50% - 320px)' }}>
                  <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
@@ -2600,7 +2598,6 @@ Content-Type: multipart/form-data
                <div className="mt-12 border-2 border-red-500" style={{ marginLeft: 'calc(50% - 320px)', marginTop: 'calc(3rem + 20px)' }}>
                  <p className="text-lg text-muted-foreground max-w-3xl">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
                </div>
-             </div>
 
 
           </div>
