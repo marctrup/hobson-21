@@ -1,5 +1,5 @@
 // Service Worker for caching and performance
-const CACHE_NAME = 'hobson-ai-v3';
+const CACHE_NAME = 'hobson-ai-v4';
 const urlsToCache = [
   '/',
   '/src/main.tsx',
