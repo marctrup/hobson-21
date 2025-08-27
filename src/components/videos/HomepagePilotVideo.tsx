@@ -38,7 +38,7 @@ export const HomepagePilotVideo = () => {
               className={`cursor-pointer relative w-full aspect-video bg-black rounded-lg overflow-hidden shadow-lg transition-all duration-700 transform ${
                 isHovered ? 'scale-105 shadow-2xl' : 'scale-100 opacity-100'
               }`}
-              style={{ border: '10px solid #f0f0f0', maxWidth: '800px' }}
+              style={{ border: '10px solid #f0f0f0', maxWidth: '640px' }}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               id="homepage-pilot-video-container"
@@ -85,8 +85,8 @@ export const HomepagePilotVideo = () => {
                 style={{
                   width: '100%',
                   height: '100%',
-                  minWidth: '800px',
-                  minHeight: '450px'
+                  minWidth: '640px',
+                  minHeight: '360px'
                 }}
                 id="homepage-pilot-video-iframe"
               />
