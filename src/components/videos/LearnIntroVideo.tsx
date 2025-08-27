@@ -26,15 +26,14 @@ export const LearnIntroVideo = () => {
   }, []);
 
   return (
-    <div className="flex justify-center" style={{ marginTop: 'calc(6rem - 105px)' }}>
+    <div className="flex justify-center px-4" style={{ marginTop: 'calc(6rem - 105px)' }}>
       <div 
         ref={videoRef}
-        className={`transition-all duration-700 w-[507px] ${
+        className={`transition-all duration-700 w-full max-w-[507px] ${
           isVideoVisible 
             ? 'animate-scale-in scale-100' 
             : 'scale-95'
         }`}
-        style={{ transform: 'scale(1.0368)', transformOrigin: 'center' }}
         id="learn-intro-video-container"
       >
         <Dialog 
@@ -92,8 +91,8 @@ export const LearnIntroVideo = () => {
                 style={{
                   width: '100%',
                   height: '100%',
-                  minWidth: '800px',
-                  minHeight: '450px'
+                  minWidth: 'min(800px, 90vw)',
+                  minHeight: 'min(450px, 50vh)'
                 }}
                 id="learn-intro-video-iframe"
               />
