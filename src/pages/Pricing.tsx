@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CheckCircle2, MessageSquare, Cog, CreditCard, Briefcase, Building2, TrendingUp } from "lucide-react";
 import { Helmet } from "react-helmet-async";
+import { LazyScrollVideo } from "@/components/LazyScrollVideo";
 const Pricing = () => {
   return <>
       <Helmet>
@@ -29,17 +30,12 @@ const Pricing = () => {
              <div className="grid lg:grid-cols-2 gap-14 items-center w-full mx-auto">
                 {/* Left Container - Video Screen */}
                 <div className="flex justify-center lg:justify-start">
-                  <div className="w-full max-w-4xl aspect-video bg-gray-100 rounded-xl overflow-hidden relative group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl" style={{
-                    border: '10px solid #f0f0f0'
-                  }}>
-                    <div className="w-full h-full relative">
-                      <img 
-                        src="/lovable-uploads/e1c0b687-df4c-43fe-adfa-7a99ded5f9ac.png" 
-                        alt="HEU Coin - Hobson Energy Units Explained"
-                        className="w-full h-full object-cover object-center transition-all duration-300 group-hover:brightness-75"
-                      />
-                    </div>
-                  </div>
+                  <LazyScrollVideo
+                    videoId="1113473075"
+                    title="HEU Coin - Hobson Energy Units Explained"
+                    description="Learn about Hobson Energy Units and our revolutionary pricing model"
+                    className="w-full max-w-4xl"
+                  />
                 </div>
                 
                 {/* Right Container - Content */}
