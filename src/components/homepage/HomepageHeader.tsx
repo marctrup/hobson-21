@@ -39,6 +39,9 @@ export const HomepageHeader = () => {
             <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Contact
             </Link>
+            <Link to="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Pricing
+            </Link>
             <Link to="/learn" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Learn
             </Link>
@@ -77,6 +80,13 @@ export const HomepageHeader = () => {
                 onClick={closeMobileMenu}
               >
                 Contact
+              </Link>
+              <Link 
+                to="/pricing" 
+                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                onClick={closeMobileMenu}
+              >
+                Pricing
               </Link>
               <Link 
                 to="/learn" 
