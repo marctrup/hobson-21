@@ -48,9 +48,18 @@ export const PricingHeroVideo = () => {
                 alt="HEU Coin - Hobson Energy Units"
                 className="absolute right-4 top-1/2 w-1/2 h-auto object-contain"
                 style={{
-                  transform: 'translateY(-50%) scale(1.35)'
+                  transform: 'translateY(-50%) scale(1.35)',
+                  animation: 'rotateY 12s linear infinite'
                 }}
               />
+              <style dangerouslySetInnerHTML={{
+                __html: `
+                  @keyframes rotateY {
+                    from { transform: translateY(-50%) scale(1.35) rotateY(0deg); }
+                    to { transform: translateY(-50%) scale(1.35) rotateY(360deg); }
+                  }
+                `
+              }} />
               <div className="absolute left-[74px] top-1/2 transform -translate-y-1/2 flex items-center justify-center">
                 <div className="bg-gray-200 hover:bg-gray-300 rounded-full p-5 shadow-lg transition-all duration-300 hover:scale-110">
                   <Play className="h-11 w-11 text-primary fill-current" />
