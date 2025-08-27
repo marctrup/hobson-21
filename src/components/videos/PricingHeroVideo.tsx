@@ -48,7 +48,7 @@ export const PricingHeroVideo = () => {
                 alt="HEU Coin - Hobson Energy Units"
                 className="absolute right-4 top-1/2 w-1/2 h-auto object-contain"
                 style={{
-                  transform: 'translateY(-50%) scale(1.25)'
+                  transform: 'translateY(-50%) scale(1.5)'
                 }}
               />
               <div className="absolute left-[74px] top-1/2 transform -translate-y-1/2 flex items-center justify-center">
