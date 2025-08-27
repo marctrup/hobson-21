@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { format } from "date-fns";
 import UseCaseVideoManagement from "@/components/admin/UseCaseVideoManagement";
+import VideoManagement from "@/components/admin/VideoManagement";
 
 interface BlogPost {
   id: string;
@@ -29,7 +30,7 @@ interface BlogPost {
 const BlogManagement = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'blog' | 'use-cases'>('blog');
+  const [activeTab, setActiveTab] = useState<'blog' | 'use-cases' | 'videos'>('blog');
   const { toast } = useToast();
   const [searchParams] = useSearchParams();
   
@@ -319,6 +320,13 @@ const BlogManagement = () => {
               >
                 Use Case Videos
               </Button>
+              <Button
+                variant={activeTab === 'videos' ? 'default' : 'ghost'}
+                size="sm"
+                onClick={() => setActiveTab('videos')}
+              >
+                Videos
+              </Button>
             </div>
           </div>
         </CardHeader>
@@ -446,8 +454,10 @@ const BlogManagement = () => {
                 </TableBody>
               </Table>
             )
-          ) : (
+          ) : activeTab === 'use-cases' ? (
             <UseCaseVideoManagement />
+          ) : (
+            <VideoManagement />
           )}
         </CardContent>
       </Card>
