@@ -46,9 +46,9 @@ export const PricingHeroVideo = () => {
               <img
                 src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
                 alt="HEU Coin - Hobson Energy Units"
-                className="w-full h-full object-contain transform -translate-y-[15px]"
+                className="absolute right-4 top-1/2 transform -translate-y-1/2 w-1/2 h-auto object-contain"
               />
-              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+              <div className="absolute left-8 top-1/2 transform -translate-y-1/2 flex items-center justify-center">
                 <div className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110">
                   <Play className="h-6 w-6 text-primary fill-current" />
                 </div>
