@@ -28,17 +28,7 @@ const Pricing = () => {
           backgroundImage: 'none'
         }}>
              <div className="grid lg:grid-cols-2 gap-14 items-center w-full mx-auto">
-                {/* Left Container - Video Screen */}
-                <div className="flex justify-center lg:justify-start">
-                  <LazyScrollVideo
-                    videoId="1113473075"
-                    title="HEU Coin - Hobson Energy Units Explained"
-                    description="Learn about Hobson Energy Units and our revolutionary pricing model"
-                    className="w-[461px] h-[288px] border-4 border-red-500"
-                  />
-                </div>
-                
-                {/* Right Container - Content */}
+                {/* Left Container - Content */}
                 <div className="space-y-8">
                    <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                      From Energy to Outcomes —{" "}
@@ -49,6 +39,16 @@ const Pricing = () => {
                     Hobson charges for the actual work our AI does — measured in a currency called a{" "}
                     <span className="font-semibold text-primary">Hobson Energy Unit (HEU)</span>.
                   </p>
+                </div>
+                
+                {/* Right Container - Video Screen */}
+                <div className="flex justify-center lg:justify-end">
+                  <LazyScrollVideo
+                    videoId="1113473075"
+                    title="HEU Coin - Hobson Energy Units Explained"
+                    description="Learn about Hobson Energy Units and our revolutionary pricing model"
+                    className="w-[461px] h-[288px] border-4 border-red-500"
+                  />
                 </div>
              </div>
           </div>
