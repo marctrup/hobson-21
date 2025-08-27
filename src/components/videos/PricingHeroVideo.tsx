@@ -61,20 +61,20 @@ export const PricingHeroVideo = () => {
                   }
                 
                   @keyframes spinY {
-                    0% { transform: scale(1.08) rotateY(0deg); }
-                    25% { transform: scale(1.08) rotateY(90deg); }
-                    50% { transform: scale(1.08) rotateY(180deg); }
-                    75% { transform: scale(1.08) rotateY(270deg); }
-                    100% { transform: scale(1.08) rotateY(360deg); }
+                    0% { transform: scale(2.16) rotateY(0deg); }
+                    25% { transform: scale(2.16) rotateY(90deg); }
+                    50% { transform: scale(2.16) rotateY(180deg); }
+                    75% { transform: scale(2.16) rotateY(270deg); }
+                    100% { transform: scale(2.16) rotateY(360deg); }
                   }
                   
                   @media (max-width: 640px) {
                     @keyframes spinY {
-                      0% { transform: scale(0.9) rotateY(0deg); }
-                      25% { transform: scale(0.9) rotateY(90deg); }
-                      50% { transform: scale(0.9) rotateY(180deg); }
-                      75% { transform: scale(0.9) rotateY(270deg); }
-                      100% { transform: scale(0.9) rotateY(360deg); }
+                      0% { transform: scale(1.8) rotateY(0deg); }
+                      25% { transform: scale(1.8) rotateY(90deg); }
+                      50% { transform: scale(1.8) rotateY(180deg); }
+                      75% { transform: scale(1.8) rotateY(270deg); }
+                      100% { transform: scale(1.8) rotateY(360deg); }
                     }
                   }
                 `
