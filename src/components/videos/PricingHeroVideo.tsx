@@ -59,6 +59,10 @@ export const PricingHeroVideo = () => {
                   .coin-animation {
                     animation: spinY 12s linear infinite;
                   }
+                  
+                  .play-button-container {
+                    transform: translateX(-50%) scale(1.08);
+                  }
                 
                   @keyframes spinY {
                     0% { transform: scale(1.08) rotateY(0deg); }
@@ -69,6 +73,10 @@ export const PricingHeroVideo = () => {
                   }
                   
                   @media (max-width: 640px) {
+                    .play-button-container {
+                      transform: translateX(-50%) scale(0.9);
+                    }
+                  
                     @keyframes spinY {
                       0% { transform: scale(0.9) rotateY(0deg); }
                       25% { transform: scale(0.9) rotateY(90deg); }
@@ -79,9 +87,9 @@ export const PricingHeroVideo = () => {
                   }
                 `
               }} />
-              <div className="absolute left-1/2 bottom-1/4 transform -translate-x-1/2 flex items-center justify-center">
-                <div className="bg-purple-500 hover:bg-purple-600 rounded-full p-2 sm:p-2.5 md:p-3 shadow-lg transition-all duration-300 hover:scale-110">
-                  <Play className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-white fill-current" />
+              <div className="absolute left-1/2 bottom-1/4 transform -translate-x-1/2 flex items-center justify-center play-button-container">
+                <div className="bg-purple-500 hover:bg-purple-600 rounded-full shadow-lg transition-all duration-300 hover:scale-110" style={{ padding: '12px' }}>
+                  <Play className="text-white fill-current" style={{ width: '28px', height: '28px' }} />
                 </div>
               </div>
             </div>
