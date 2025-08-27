@@ -47,6 +47,9 @@ export const PricingHeroVideo = () => {
                 src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
                 alt="HEU Coin - Hobson Energy Units"
                 className="absolute left-1/2 top-1/2 w-1/2 sm:w-2/5 md:w-1/2 h-auto object-contain coin-animation"
+                style={{
+                  transform: 'translateX(-50%) translateY(calc(-50% - 10px)) scale(1.08)'
+                }}
               />
               <style dangerouslySetInnerHTML={{
                 __html: `
