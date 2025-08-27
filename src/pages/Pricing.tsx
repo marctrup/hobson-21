@@ -27,14 +27,14 @@ const Pricing = () => {
           backgroundColor: '#ffffff',
           backgroundImage: 'none'
         }}>
-             <div className="grid lg:grid-cols-2 gap-14 items-center w-full mx-auto">
+             <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center w-full mx-auto">
                 {/* Left Container - Content */}
-                <div className="space-y-8">
-                   <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
+                <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
+                   <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground lg:text-5xl xl:text-6xl">
                      From Energy to Outcomes —{" "}
                      <span className="bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent">that's the Hobson way.</span>
                    </h1>
-                  <p className="text-xl text-muted-foreground">
+                  <p className="text-lg sm:text-xl text-muted-foreground">
                     Forget per-user fees. Forget per-property fees. Forget paying extra for features. 
                     Hobson charges for the actual work our AI does — measured in a currency called a{" "}
                     <span className="font-semibold text-primary">Hobson Energy Unit (HEU)</span>.
@@ -42,12 +42,12 @@ const Pricing = () => {
                 </div>
                 
                 {/* Right Container - Video Screen */}
-                <div className="flex justify-center lg:justify-end">
+                <div className="flex justify-center">
                   <LazyScrollVideo
                     videoId="1113482209"
                     title="HEU Coin - Hobson Energy Units Explained"
                     description="Learn about Hobson Energy Units and our revolutionary pricing model"
-                    className="w-[507px] h-[317px]"
+                    className="w-full max-w-[507px] h-auto aspect-video"
                   />
                 </div>
              </div>
