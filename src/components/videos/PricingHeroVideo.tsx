@@ -54,7 +54,7 @@ export const PricingHeroVideo = () => {
                   }}
                 />
               </div>
-              <div className="absolute left-1/2 bottom-1/5 transform -translate-x-1/2 flex items-center justify-center play-text-container">
+              <div className="absolute left-1/2 top-2/3 transform -translate-x-1/2 flex items-center justify-center play-text-container">
                 <div className="flex items-center gap-1 text-purple-500 font-semibold">
                   <span className="text-sm">Play Video</span>
                   <ChevronRight className="h-4 w-4" />
