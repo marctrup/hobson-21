@@ -49,9 +49,7 @@ export const PricingHeroVideo = () => {
                 className="w-full h-full object-contain transform -translate-y-[15px]"
               />
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                <div className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110">
-                  <Play className="h-6 w-6 text-primary fill-current" />
-                </div>
+                <Play className="h-8 w-8 text-primary fill-current hover:scale-110 transition-transform duration-300" />
               </div>
             </div>
           </DialogTrigger>
