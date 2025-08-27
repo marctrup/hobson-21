@@ -21,7 +21,7 @@ const Pricing = () => {
       backgroundImage: 'none'
     }}>
         {/* Hero Section - 2 Column */}
-        <section className="relative overflow-hidden py-24 lg:py-32 min-h-[72vh]">
+        <section className="relative overflow-hidden py-24 lg:py-32 pb-8 md:pb-24 min-h-[72vh]">
           <div className="container relative mx-auto px-2 h-full flex items-center">
              <div className="grid lg:grid-cols-[1fr,1.5fr] gap-4 lg:gap-8 items-center w-full mx-auto">
                 {/* Left Container - Content */}
