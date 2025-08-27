@@ -32,20 +32,20 @@ export const GlobalHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link to="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
               Pricing
             </Link>
             <Link 
               to="/blog" 
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              className="text-base text-muted-foreground hover:text-foreground transition-colors"
               title="Property Management Insights - Expert perspectives on AI and real estate technology"
             >
               Blog
             </Link>
-            <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
               Contact
             </Link>
-            <Link to="/learn" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
               Learn
             </Link>
           </nav>

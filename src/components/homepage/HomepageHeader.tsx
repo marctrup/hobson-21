@@ -33,16 +33,16 @@ export const HomepageHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-            <Link to="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
               Blog
             </Link>
-            <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
               Contact
             </Link>
-            <Link to="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
               Pricing
             </Link>
-            <Link to="/learn" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
               Learn
             </Link>
           </nav>
