@@ -49,14 +49,14 @@ export const PricingHeroVideo = () => {
                 className="absolute right-4 top-1/2 w-1/2 h-auto object-contain animate-spin-y"
                 style={{
                   transform: 'translateY(-50%) scale(1.25)',
-                  animation: 'rotateX 3s linear infinite'
+                  animation: 'rotateZ 3s linear infinite'
                 }}
               />
               <style dangerouslySetInnerHTML={{
                 __html: `
-                  @keyframes rotateX {
-                    from { transform: translateY(-50%) scale(1.25) rotateX(0deg); }
-                    to { transform: translateY(-50%) scale(1.25) rotateX(360deg); }
+                  @keyframes rotateZ {
+                    from { transform: translateY(-50%) scale(1.25) rotate(0deg); }
+                    to { transform: translateY(-50%) scale(1.25) rotate(360deg); }
                   }
                 `
               }} />
