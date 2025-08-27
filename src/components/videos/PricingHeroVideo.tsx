@@ -26,7 +26,7 @@ export const PricingHeroVideo = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-[730px] h-auto aspect-video">
+    <div className="w-full max-w-[876px] h-auto aspect-video">
       <div className="flex justify-center">
         <Dialog 
           open={videoDialogOpen} 
