@@ -43,18 +43,18 @@ export const PricingHeroVideo = () => {
               onMouseLeave={() => setIsHovered(false)}
               id="pricing-hero-video-container"
             >
-              <img
-                src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
-                alt="HEU Coin - Hobson Energy Units"
-                className="absolute coin-animation"
-                style={{
-                  left: '50%',
-                  top: '50%',
-                  width: '50%',
-                  height: 'auto',
-                  transform: 'translate(-50%, calc(-50% - 10px)) scale(1.08)'
-                }}
-              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img
+                  src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
+                  alt="HEU Coin - Hobson Energy Units"
+                  className="coin-animation"
+                  style={{
+                    width: '50%',
+                    height: 'auto',
+                    marginTop: '-10px'
+                  }}
+                />
+              </div>
               <style dangerouslySetInnerHTML={{
                 __html: `
                   .coin-animation {
@@ -62,20 +62,20 @@ export const PricingHeroVideo = () => {
                   }
                 
                   @keyframes spinY {
-                    0% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(0deg); }
-                    25% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(90deg); }
-                    50% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(180deg); }
-                    75% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(270deg); }
-                    100% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(360deg); }
+                    0% { transform: scale(1.08) rotateY(0deg); }
+                    25% { transform: scale(1.08) rotateY(90deg); }
+                    50% { transform: scale(1.08) rotateY(180deg); }
+                    75% { transform: scale(1.08) rotateY(270deg); }
+                    100% { transform: scale(1.08) rotateY(360deg); }
                   }
                   
                   @media (max-width: 640px) {
                     @keyframes spinY {
-                      0% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(0deg); }
-                      25% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(90deg); }
-                      50% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(180deg); }
-                      75% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(270deg); }
-                      100% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(360deg); }
+                      0% { transform: scale(0.9) rotateY(0deg); }
+                      25% { transform: scale(0.9) rotateY(90deg); }
+                      50% { transform: scale(0.9) rotateY(180deg); }
+                      75% { transform: scale(0.9) rotateY(270deg); }
+                      100% { transform: scale(0.9) rotateY(360deg); }
                     }
                   }
                 `
