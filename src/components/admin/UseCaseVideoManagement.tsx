@@ -322,24 +322,24 @@ export default function UseCaseVideoManagement() {
                     {video.thumbnail_url && (
                       <div className="flex-shrink-0 space-y-2">
                         {/* Portrait Container */}
-                        <div className="w-16 h-24 overflow-hidden rounded border-2 border-dashed border-muted-foreground/20">
+                        <div className="w-16 h-24 overflow-hidden rounded border-2 border-dashed border-muted-foreground/20 bg-muted/10 flex items-center justify-center">
                           <img
                             src={video.thumbnail_url}
                             alt={video.thumbnail_alt || `${video.title} - Portrait`}
-                            className="w-full h-full object-cover"
+                            className="max-w-full max-h-full object-contain"
                           />
-                          <p className="text-xs text-muted-foreground mt-1 text-center">Portrait</p>
                         </div>
+                        <p className="text-xs text-muted-foreground text-center">Portrait</p>
                         
                         {/* Landscape Container */}
-                        <div className="w-24 h-16 overflow-hidden rounded border-2 border-dashed border-muted-foreground/20">
+                        <div className="w-24 h-16 overflow-hidden rounded border-2 border-dashed border-muted-foreground/20 bg-muted/10 flex items-center justify-center">
                           <img
                             src={video.thumbnail_url}
                             alt={video.thumbnail_alt || `${video.title} - Landscape`}
-                            className="w-full h-full object-cover"
+                            className="max-w-full max-h-full object-contain"
                           />
-                          <p className="text-xs text-muted-foreground mt-1 text-center">Landscape</p>
                         </div>
+                        <p className="text-xs text-muted-foreground text-center">Landscape</p>
                       </div>
                     )}
                     <div>
