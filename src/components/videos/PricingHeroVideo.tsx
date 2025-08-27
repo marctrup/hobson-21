@@ -54,7 +54,7 @@ export const PricingHeroVideo = () => {
                   }}
                 />
               </div>
-              <div className="absolute left-1/2 top-2/3 transform -translate-x-1/2 flex items-center justify-center play-text-container">
+              <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center play-text-container" style={{ bottom: '5px' }}>
                 <div className="flex items-center gap-1 text-purple-500 font-semibold" style={{ transform: 'scale(0.9)' }}>
                   <span className="text-xs">Play Video</span>
                   <ChevronRight className="h-3 w-3" />
@@ -64,10 +64,6 @@ export const PricingHeroVideo = () => {
                 __html: `
                   .coin-animation {
                     animation: spinY 12s linear infinite;
-                  }
-                  
-                  .play-text-container {
-                    transform: translateX(-50%) scale(2.376);
                   }
                 
                   @keyframes spinY {
@@ -79,10 +75,6 @@ export const PricingHeroVideo = () => {
                   }
                   
                   @media (max-width: 640px) {
-                    .play-text-container {
-                      transform: translateX(-50%) scale(1.98);
-                    }
-                  
                     @keyframes spinY {
                       0% { transform: scale(1.98) rotateY(0deg); }
                       25% { transform: scale(1.98) rotateY(90deg); }
