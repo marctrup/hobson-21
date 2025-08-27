@@ -143,7 +143,10 @@ export const UseCasesContent = () => {
           </div>
         )}
 
-        <div className="mt-12 text-center">
+        <div className="mt-12 text-center space-y-4">
+          <p className="text-muted-foreground">
+            Some clients don't want to be on camera, so we share their words through others.
+          </p>
           <p className="text-muted-foreground">
             Every organisation has unique needs. These use cases highlight just some of the ways Hobson AI can bring value.
           </p>
