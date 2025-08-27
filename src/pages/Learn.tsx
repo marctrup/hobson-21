@@ -276,30 +276,30 @@ const Learn = () => {
 
       return (
         <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
+          <div className="container mx-auto p-4 md:p-8 max-w-7xl">
+            <div className="lg:flex lg:gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
-                <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-foreground mb-4">Core Features of Hobson AI</h1>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
+                <div className="mb-6 md:mb-8">
+                  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Core Features of Hobson AI</h1>
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                     Hobson AI is an intelligent platform that turns complex documents into clear, usable insights. 
                     Designed for property and document management professionals, it helps you save time, reduce risk, 
                     and make smarter decisions by putting the right information at your fingertips.
                   </p>
                 </div>
 
-                <div className="space-y-12">
+                <div className="space-y-8 md:space-y-12">
                   {/* Intelligent Document Processing */}
-                  <section id="intelligent-document-processing" className="flex gap-6">
+                  <section id="intelligent-document-processing" className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
                         <span className="text-xl">📂</span>
                       </div>
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-foreground mb-3">Intelligent Document Processing</h2>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <h2 className="text-lg md:text-xl font-semibold text-foreground mb-3">Intelligent Document Processing</h2>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                         Hobson AI automatically reads and extracts key details from leases, contracts, and reports. 
                         This removes the need for manual searching and ensures important information is never missed.
                       </p>
@@ -307,15 +307,15 @@ const Learn = () => {
                   </section>
 
                   {/* Smart Search & Insights */}
-                  <section id="smart-search-insights" className="flex gap-6">
+                  <section id="smart-search-insights" className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
                         <span className="text-xl">🔍</span>
                       </div>
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-foreground mb-3">Smart Search & Insights</h2>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <h2 className="text-lg md:text-xl font-semibold text-foreground mb-3">Smart Search & Insights</h2>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                         Ask questions in plain language like "When is the rent review date?" and Hobson instantly 
                         retrieves the answer from your documents. It's like having a specialist always ready to help.
                       </p>
@@ -323,15 +323,15 @@ const Learn = () => {
                   </section>
 
                   {/* Real-Time Analytics */}
-                  <section id="real-time-analytics" className="flex gap-6">
+                  <section id="real-time-analytics" className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
                         <span className="text-xl">📊</span>
                       </div>
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-foreground mb-3">Real-Time Analytics</h2>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <h2 className="text-lg md:text-xl font-semibold text-foreground mb-3">Real-Time Analytics</h2>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                         Hobson transforms unstructured text into clear summaries and dashboards. Spot trends, 
                         compare clauses, and access data that supports confident, evidence-based decisions.
                       </p>
@@ -339,15 +339,15 @@ const Learn = () => {
                   </section>
 
                   {/* Collaboration Ready */}
-                  <section id="collaboration-ready" className="flex gap-6">
+                  <section id="collaboration-ready" className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
                         <span className="text-xl">🤝</span>
                       </div>
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-foreground mb-3">Collaboration Ready</h2>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <h2 className="text-lg md:text-xl font-semibold text-foreground mb-3">Collaboration Ready</h2>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                         Insights can be shared across your team securely, creating a single source of truth. 
                         Everyone works from the same reliable information, reducing confusion and speeding up workflows.
                       </p>
@@ -355,15 +355,15 @@ const Learn = () => {
                   </section>
 
                   {/* Security & Compliance */}
-                  <section id="security-compliance" className="flex gap-6">
+                  <section id="security-compliance" className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
                         <span className="text-xl">🔐</span>
                       </div>
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-foreground mb-3">Security & Compliance</h2>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <h2 className="text-lg md:text-xl font-semibold text-foreground mb-3">Security & Compliance</h2>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                         Built with enterprise-grade encryption and strict data handling, Hobson keeps your information safe. 
                         Security and compliance are at the heart of everything we do.
                       </p>
@@ -372,7 +372,7 @@ const Learn = () => {
                 </div>
               </div>
 
-              {/* Table of Contents Sidebar */}
+              {/* Table of Contents Sidebar - Hidden on mobile */}
               <div className="hidden lg:block w-64 flex-shrink-0">
                 <div className="sticky top-8">
                   <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
@@ -419,30 +419,30 @@ const Learn = () => {
 
       return (
         <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
+          <div className="container mx-auto p-4 md:p-8 max-w-7xl">
+            <div className="lg:flex lg:gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
-                <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-foreground mb-4">Advanced Features of Hobson AI</h1>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
+                <div className="mb-6 md:mb-8">
+                  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Advanced Features of Hobson AI</h1>
+                  <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                     Beyond the core features, Hobson AI includes advanced capabilities that give professionals even deeper 
                     insights and time-saving tools. These features are designed to handle complexity, automate repetitive tasks, 
                     and uncover connections across your documents that would otherwise go unnoticed.
                   </p>
                 </div>
 
-                <div className="space-y-12">
+                <div className="space-y-8 md:space-y-12">
                   {/* AI-Powered Summarisation */}
-                  <section id="ai-powered-summarisation" className="flex gap-6">
+                  <section id="ai-powered-summarisation" className="flex flex-col sm:flex-row gap-4 sm:gap-6">
                     <div className="flex-shrink-0">
                       <div className="w-12 h-12 bg-gradient-to-r from-primary to-primary/70 rounded-lg flex items-center justify-center">
                         <span className="text-xl">🧠</span>
                       </div>
                     </div>
                     <div>
-                      <h2 className="text-xl font-semibold text-foreground mb-3">AI-Powered Summarisation</h2>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <h2 className="text-lg md:text-xl font-semibold text-foreground mb-3">AI-Powered Summarisation</h2>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                         Quickly understand long contracts or reports with plain-language summaries that highlight the most important details.
                       </p>
                     </div>
@@ -568,14 +568,14 @@ const Learn = () => {
                 </div>
 
                 {/* Comparison Table */}
-                <div id="comparison-table" className="mb-16">
-                  <h2 className="text-2xl font-bold text-foreground mb-8">Feature Comparison</h2>
+                <div id="comparison-table" className="mb-12 md:mb-16">
+                  <h2 className="text-xl md:text-2xl font-bold text-foreground mb-6 md:mb-8">Feature Comparison</h2>
                   <div className="bg-card border rounded-lg overflow-hidden">
                     <div className="overflow-x-auto">
-                      <table className="w-full">
+                      <table className="w-full min-w-[600px]">
                         <thead>
                           <tr className="border-b bg-muted/50">
-                            <th className="text-left p-4 font-semibold text-foreground">Feature</th>
+                            <th className="text-left p-3 md:p-4 font-semibold text-foreground text-sm md:text-base">Feature</th>
                             <th className="text-left p-4 font-semibold text-foreground">Manual Work</th>
                             <th className="text-left p-4 font-semibold text-foreground">Traditional Software</th>
                             <th className="text-left p-4 font-semibold text-foreground bg-primary/5">Hobson AI</th>
@@ -1512,9 +1512,9 @@ const Learn = () => {
                         All API requests must be authenticated using an API key. Include your API key 
                         in the Authorization header of each request.
                       </p>
-                      <div className="bg-card border rounded-lg p-4">
-                        <h4 className="font-medium text-foreground mb-2">Request Header</h4>
-                        <pre className="bg-muted p-3 rounded text-sm overflow-x-auto">
+                      <div className="bg-card border rounded-lg p-3 md:p-4">
+                        <h4 className="font-medium text-foreground mb-2 text-sm md:text-base">Request Header</h4>
+                        <pre className="bg-muted p-2 md:p-3 rounded text-xs md:text-sm overflow-x-auto">
                           <code>Authorization: Bearer YOUR_API_KEY</code>
                         </pre>
                       </div>
@@ -1566,9 +1566,9 @@ const Learn = () => {
                       <p className="text-muted-foreground mb-4">
                         Upload documents to extract structured data, generate summaries, and identify key clauses.
                       </p>
-                      <div className="bg-card border rounded-lg p-4">
-                        <h4 className="font-medium text-foreground mb-2">Upload Document</h4>
-                        <pre className="bg-muted p-3 rounded text-sm overflow-x-auto">
+                      <div className="bg-card border rounded-lg p-3 md:p-4">
+                        <h4 className="font-medium text-foreground mb-2 text-sm md:text-base">Upload Document</h4>
+                        <pre className="bg-muted p-2 md:p-3 rounded text-xs md:text-sm overflow-x-auto">
                           <code>{`POST /documents/upload
 Content-Type: multipart/form-data
 
@@ -1592,9 +1592,9 @@ Content-Type: multipart/form-data
                       <p className="text-muted-foreground mb-4">
                         Use natural language queries to extract specific information from your documents.
                       </p>
-                      <div className="bg-card border rounded-lg p-4">
-                        <h4 className="font-medium text-foreground mb-2">Natural Language Query</h4>
-                        <pre className="bg-muted p-3 rounded text-sm overflow-x-auto">
+                      <div className="bg-card border rounded-lg p-3 md:p-4">
+                        <h4 className="font-medium text-foreground mb-2 text-sm md:text-base">Natural Language Query</h4>
+                        <pre className="bg-muted p-2 md:p-3 rounded text-xs md:text-sm overflow-x-auto">
                           <code>{`POST /query
 
 {
@@ -1977,9 +1977,9 @@ Content-Type: multipart/form-data
                       Many messages cost less than 1 HEU, while more complex ones may cost more. This approach allows for more precise edits and greater efficiency per message, making Hobson more affordable overall.
                     </p>
                     
-                    <h3 className="text-lg font-medium text-foreground mb-4">Example tasks and their HEU cost:</h3>
+                    <h3 className="text-base md:text-lg font-medium text-foreground mb-4">Example tasks and their HEU cost:</h3>
                     <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
+                      <table className="w-full text-xs md:text-sm min-w-[500px]">
                         <thead>
                           <tr className="border-b border-border">
                             <th className="text-left py-2 text-foreground">Example Task</th>
@@ -2547,21 +2547,34 @@ Content-Type: multipart/form-data
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'welcome') {
       return (
         <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
-               {/* Welcome header above video - aligned with video left edge */}
-               <div className="mb-12" style={{ marginLeft: 'calc(50% - 507px * 1.0368 / 2)' }}>
-                 <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
-                 <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
+          <div className="container mx-auto p-4 md:p-8 max-w-6xl mt-[10px]">
+               {/* Welcome header above video - responsive alignment */}
+               <div className="mb-8 md:mb-12 text-center md:text-left" 
+                    style={{ 
+                      marginLeft: 'auto', 
+                      marginRight: 'auto',
+                      maxWidth: '100%'
+                    }}>
+                 <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Welcome</h1>
+                 <p className="text-base md:text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
                </div>
                
-                {/* Video container with extra spacing */}
-                <LearnIntroVideo />
+                {/* Video container - centered and responsive */}
+                <div className="w-full flex justify-center">
+                  <LearnIntroVideo />
+                </div>
                
-               {/* Description text below video - aligned with video container sides */}
-               <div className="text-left" style={{ marginLeft: 'calc(50% - 507px * 1.0368 / 2)', marginRight: 'calc(50% - 507px * 1.0368 / 2)', marginTop: 'calc(3rem - 35px)' }}>
-                 <p className="text-lg text-muted-foreground">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
+               {/* Description text below video - responsive alignment */}
+               <div className="text-center md:text-left mt-6 md:mt-12 px-4 md:px-0" 
+                    style={{ 
+                      marginLeft: 'auto', 
+                      marginRight: 'auto',
+                      maxWidth: '100%'
+                    }}>
+                 <p className="text-base md:text-lg text-muted-foreground">
+                   Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.
+                 </p>
                </div>
-
 
           </div>
         </div>
@@ -2583,13 +2596,13 @@ Content-Type: multipart/form-data
 
       return (
         <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
+          <div className="container mx-auto p-4 md:p-8 max-w-7xl">
+            <div className="lg:flex lg:gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
-                <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-foreground mb-2">Getting Started</h1>
-                  <p className="text-lg text-muted-foreground">From first document to confident decision</p>
+                <div className="mb-6 md:mb-8">
+                  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Getting Started</h1>
+                  <p className="text-base md:text-lg text-muted-foreground">From first document to confident decision</p>
                 </div>
 
 
@@ -3651,15 +3664,15 @@ Content-Type: multipart/form-data
 
     return (
       <div className="flex-1">
-        <div className="container mx-auto p-8 max-w-5xl">
-          <h1 className="text-3xl font-bold text-foreground mb-6">
+        <div className="container mx-auto p-4 md:p-8 max-w-5xl">
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4 md:mb-6">
             {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
           </h1>
-          <div className="p-8">
-            <p className="text-muted-foreground text-lg">
+          <div className="p-4 md:p-8">
+            <p className="text-muted-foreground text-base md:text-lg">
               Content for {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label} - {currentVerticalTabs.find(tab => tab.id === activeVerticalTab)?.label}
             </p>
-            <p className="text-muted-foreground mt-4">
+            <p className="text-muted-foreground mt-4 text-sm md:text-base">
               This is where the actual content will go for each section. The layout is now ready for you to populate with specific content for each combination of tabs.
             </p>
           </div>
@@ -3846,7 +3859,7 @@ Content-Type: multipart/form-data
             )}
           </div>
           
-          <div className="flex-1 min-h-[calc(100vh-8rem)] p-8">
+          <div className="flex-1 min-h-[calc(100vh-8rem)] p-4 md:p-8">
             {renderContent()}
           </div>
         </div>
