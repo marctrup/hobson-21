@@ -63,7 +63,7 @@ const Pricing = () => {
             </div>
             
             {/* All 6 Plans in Unified Grid */}
-            <div className="grid gap-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 max-w-8xl mx-auto pt-9 sm:pt-16 overflow-visible items-stretch">
+            <div className="grid gap-4 lg:grid-cols-6 md:grid-cols-3 sm:grid-cols-2 max-w-8xl mx-auto pt-4 sm:pt-16 overflow-visible items-stretch">
               
               {/* Free Plan */}
               <Card className="relative bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
