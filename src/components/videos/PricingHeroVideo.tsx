@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { X, ChevronRight } from "lucide-react";
+import { X, Play } from "lucide-react";
 
 export const PricingHeroVideo = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -43,56 +43,48 @@ export const PricingHeroVideo = () => {
               onMouseLeave={() => setIsHovered(false)}
               id="pricing-hero-video-container"
             >
-              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-                <img
-                  src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
-                  alt="HEU Coin - Hobson Energy Units"
-                  className="coin-animation"
-                  style={{
-                    width: '50%',
-                    height: 'auto'
-                  }}
-                />
-              </div>
-              <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center play-text-container" style={{ bottom: '8px' }}>
-                <div className="flex items-center gap-1 text-purple-800 font-semibold">
-                  <span className="text-xs">Play Video</span>
-                  <ChevronRight className="h-3 w-3" />
-                </div>
-              </div>
+              <img
+                src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
+                alt="HEU Coin - Hobson Energy Units"
+                className="absolute coin-animation"
+                style={{
+                  left: '50%',
+                  top: '50%',
+                  width: '50%',
+                  height: 'auto',
+                  transform: 'translate(-50%, calc(-50% - 10px)) scale(1.08)'
+                }}
+              />
               <style dangerouslySetInnerHTML={{
                 __html: `
                   .coin-animation {
                     animation: spinY 12s linear infinite;
                   }
-                  
-                  .play-text-container {
-                    transform: translateX(-50%) scale(2.2815);
-                  }
                 
                   @keyframes spinY {
-                    0% { transform: scale(2.376) rotateY(0deg); }
-                    25% { transform: scale(2.376) rotateY(90deg); }
-                    50% { transform: scale(2.376) rotateY(180deg); }
-                    75% { transform: scale(2.376) rotateY(270deg); }
-                    100% { transform: scale(2.376) rotateY(360deg); }
+                    0% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(0deg); }
+                    25% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(90deg); }
+                    50% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(180deg); }
+                    75% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(270deg); }
+                    100% { transform: translate(-50%, calc(-50% - 10px)) scale(1.08) rotateY(360deg); }
                   }
                   
                   @media (max-width: 640px) {
-                    .play-text-container {
-                      transform: translateX(-50%) scale(1.6);
-                    }
-                  
                     @keyframes spinY {
-                      0% { transform: scale(1.98) rotateY(0deg); }
-                      25% { transform: scale(1.98) rotateY(90deg); }
-                      50% { transform: scale(1.98) rotateY(180deg); }
-                      75% { transform: scale(1.98) rotateY(270deg); }
-                      100% { transform: scale(1.98) rotateY(360deg); }
+                      0% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(0deg); }
+                      25% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(90deg); }
+                      50% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(180deg); }
+                      75% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(270deg); }
+                      100% { transform: translate(-50%, calc(-50% - 10px)) scale(0.9) rotateY(360deg); }
                     }
                   }
                 `
               }} />
+              <div className="absolute left-1/2 bottom-2.5 sm:bottom-2 transform -translate-x-1/2 flex items-center justify-center">
+                <div className="bg-purple-500 hover:bg-purple-600 rounded-full p-3 sm:p-2.5 shadow-lg transition-all duration-300 hover:scale-110">
+                  <Play className="h-7 w-7 sm:h-6 sm:w-6 text-white fill-current" />
+                </div>
+              </div>
             </div>
           </DialogTrigger>
           <DialogContent 
@@ -122,7 +114,7 @@ export const PricingHeroVideo = () => {
             {videoDialogOpen && (
               <iframe
                 className="rounded-lg w-full h-full min-w-[320px] min-h-[180px] sm:min-w-[800px] sm:min-h-[450px]"
-                src="https://player.vimeo.com/video/1113596009?autoplay=1&muted=0&controls=1&byline=0&portrait=0&responsive=1"
+                src="https://player.vimeo.com/video/1113596009?autoplay=1&muted=0&byline=0&portrait=0&responsive=1"
                 title="HEU Coin - Hobson Energy Units Explained"
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
