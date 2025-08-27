@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { X } from "lucide-react";
+import { X, Play } from "lucide-react";
 
 export const PricingHeroVideo = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -48,6 +48,11 @@ export const PricingHeroVideo = () => {
                 alt="HEU Coin - Hobson Energy Units"
                 className="w-full h-full object-contain"
               />
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                <div className="bg-white/90 hover:bg-white rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110">
+                  <Play className="h-6 w-6 text-primary fill-current" />
+                </div>
+              </div>
             </div>
           </DialogTrigger>
           <DialogContent 
