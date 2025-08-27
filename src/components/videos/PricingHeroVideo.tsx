@@ -26,7 +26,7 @@ export const PricingHeroVideo = () => {
   }, []);
 
   return (
-    <div className="w-full max-w-[1051px] h-auto aspect-video">
+    <div className="w-full max-w-[1051px] md:max-w-[800px] sm:max-w-[600px] h-auto aspect-video">
       <div className="flex justify-center">
         <Dialog 
           open={videoDialogOpen} 
@@ -46,14 +46,14 @@ export const PricingHeroVideo = () => {
               <img
                 src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
                 alt="HEU Coin - Hobson Energy Units"
-                className="absolute left-1/2 top-1/2 w-1/2 h-auto object-contain"
-                style={{
-                  transform: 'translateX(-50%) translateY(calc(-50% - 10px)) scale(1.08)',
-                  animation: 'spinY 12s linear infinite'
-                }}
+                className="absolute left-1/2 top-1/2 w-1/2 sm:w-2/5 md:w-1/2 h-auto object-contain coin-animation"
               />
-               <style dangerouslySetInnerHTML={{
+              <style dangerouslySetInnerHTML={{
                 __html: `
+                  .coin-animation {
+                    animation: spinY 12s linear infinite;
+                  }
+                
                   @keyframes spinY {
                     0% { transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(1.08) rotateY(0deg); }
                     25% { transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(1.08) rotateY(90deg); }
@@ -61,11 +61,25 @@ export const PricingHeroVideo = () => {
                     75% { transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(1.08) rotateY(270deg); }
                     100% { transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(1.08) rotateY(360deg); }
                   }
+                  
+                  @media (max-width: 640px) {
+                    .coin-animation {
+                      animation: spinY-mobile 12s linear infinite;
+                    }
+                  
+                    @keyframes spinY-mobile {
+                      0% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(0deg); }
+                      25% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(90deg); }
+                      50% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(180deg); }
+                      75% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(270deg); }
+                      100% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(360deg); }
+                    }
+                  }
                 `
               }} />
-              <div className="absolute left-1/2 bottom-2.5 transform -translate-x-1/2 flex items-center justify-center">
-                <div className="bg-purple-500 hover:bg-purple-600 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110">
-                  <Play className="h-7 w-7 text-white fill-current" />
+              <div className="absolute left-1/2 bottom-2.5 sm:bottom-2 transform -translate-x-1/2 flex items-center justify-center">
+                <div className="bg-purple-500 hover:bg-purple-600 rounded-full p-3 sm:p-2.5 shadow-lg transition-all duration-300 hover:scale-110">
+                  <Play className="h-7 w-7 sm:h-6 sm:w-6 text-white fill-current" />
                 </div>
               </div>
             </div>
@@ -96,18 +110,12 @@ export const PricingHeroVideo = () => {
             </DialogDescription>
             {videoDialogOpen && (
               <iframe
-                className="rounded-lg"
+                className="rounded-lg w-full h-full min-w-[320px] min-h-[180px] sm:min-w-[800px] sm:min-h-[450px]"
                 src="https://player.vimeo.com/video/1113596009?autoplay=1&muted=0&byline=0&portrait=0&responsive=1"
                 title="HEU Coin - Hobson Energy Units Explained"
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
                 allowFullScreen
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  minWidth: '800px',
-                  minHeight: '450px'
-                }}
                 id="pricing-hero-video-iframe"
               />
             )}
