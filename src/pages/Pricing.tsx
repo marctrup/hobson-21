@@ -45,7 +45,7 @@ const Pricing = () => {
                 </div>
                 
                 {/* Right Container - Video Screen */}
-                <div className="flex justify-center">
+                <div className="flex justify-center scale-120">
                   <PricingHeroVideo />
                 </div>
              </div>
