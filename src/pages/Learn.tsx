@@ -2559,7 +2559,7 @@ Content-Type: multipart/form-data
                 <LearnIntroVideo />
                
                {/* Description text below video - aligned with video container sides */}
-               <div className="text-left" style={{ marginLeft: 'calc(50% - 507px * 1.0368 / 2)', marginRight: 'calc(50% - 507px * 1.0368 / 2)', marginTop: 'calc(3rem - 40px)' }}>
+               <div className="text-left" style={{ marginLeft: 'calc(50% - 507px * 1.0368 / 2)', marginRight: 'calc(50% - 507px * 1.0368 / 2)', marginTop: 'calc(3rem - 35px)' }}>
                  <p className="text-lg text-muted-foreground">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
                </div>
 
