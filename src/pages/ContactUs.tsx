@@ -4,11 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Link, useNavigate } from "react-router-dom";
-import { useState, lazy, Suspense, FormEvent } from "react";
+import { useState, FormEvent } from "react";
 import { toast } from "@/hooks/use-toast";
-
-// Lazy load the Header to reduce initial bundle size for contact page
-const HomepageHeader = lazy(() => import("@/components/homepage/HomepageHeader").then(module => ({ default: module.HomepageHeader })));
+import { GlobalHeader } from "@/components/GlobalHeader";
 
 const ContactUs = () => {
   const navigate = useNavigate();
@@ -144,10 +142,8 @@ const ContactUs = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Suspense fallback={<div className="h-16 bg-background border-b"></div>}>
-        <HomepageHeader />
-      </Suspense>
-      <div className="container mx-auto px-4 py-8">        
+      <GlobalHeader />
+      <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
           
