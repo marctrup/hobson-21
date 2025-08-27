@@ -20,7 +20,7 @@ export const ScrollVideoPlayer = ({ videoId, title = "Video", description = "Wat
       >
         <DialogTrigger asChild>
           <div
-            className={`cursor-pointer relative w-[461px] h-[288px] bg-black rounded-lg overflow-hidden shadow-lg transition-all duration-700 transform ${
+            className={`cursor-pointer relative w-[507px] h-[317px] bg-black rounded-lg overflow-hidden shadow-lg transition-all duration-700 transform ${
               isHovered ? 'scale-110 shadow-2xl' : 'scale-100 opacity-100'
             }`}
             style={{ border: '10px solid #f0f0f0' }}
