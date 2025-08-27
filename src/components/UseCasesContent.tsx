@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { X } from 'lucide-react';
 
 interface UseCaseVideo {
   id: string;
@@ -16,6 +18,7 @@ interface UseCaseVideo {
 export const UseCasesContent = () => {
   const [videos, setVideos] = useState<UseCaseVideo[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedVideo, setSelectedVideo] = useState<UseCaseVideo | null>(null);
 
   useEffect(() => {
     fetchVideos();
@@ -84,7 +87,7 @@ export const UseCasesContent = () => {
                 <div 
                   key={video.id} 
                   className="bg-card border rounded-lg shadow-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg group cursor-pointer"
-                  onClick={() => window.open(video.vimeo_url, '_blank')}
+                  onClick={() => setSelectedVideo(video)}
                 >
                   {vimeoId ? (
                     <div className="aspect-video bg-muted relative overflow-hidden">
@@ -146,6 +149,47 @@ export const UseCasesContent = () => {
             Some clients don't want to be on camera, so we share their words through others.
           </p>
         </div>
+
+        {/* Video Modal */}
+        <Dialog open={!!selectedVideo} onOpenChange={() => setSelectedVideo(null)}>
+          <DialogContent className="max-w-4xl w-full p-0 bg-black">
+            <div className="relative">
+              <button
+                onClick={() => setSelectedVideo(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-black/50 rounded-full text-white hover:bg-black/70 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+              {selectedVideo && (
+                <div className="aspect-video">
+                  <iframe
+                    src={`https://player.vimeo.com/video/${extractVimeoId(selectedVideo.vimeo_url)}?autoplay=1&title=0&byline=0&portrait=0`}
+                    className="w-full h-full"
+                    frameBorder="0"
+                    allow="autoplay; fullscreen; picture-in-picture"
+                    allowFullScreen
+                    title={selectedVideo.title}
+                  />
+                </div>
+              )}
+              {selectedVideo && (
+                <div className="p-6 bg-card">
+                  <h3 className="text-xl font-semibold text-foreground mb-2">{selectedVideo.title}</h3>
+                  {selectedVideo.description && (
+                    <p className="text-muted-foreground mb-3">"{selectedVideo.description}"</p>
+                  )}
+                  {(selectedVideo.client_name || selectedVideo.client_role) && (
+                    <p className="text-sm text-muted-foreground">
+                      — {selectedVideo.client_name && selectedVideo.client_name}
+                      {selectedVideo.client_name && selectedVideo.client_role && ', '}
+                      {selectedVideo.client_role && selectedVideo.client_role}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
