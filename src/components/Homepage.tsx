@@ -260,25 +260,6 @@ export const Homepage = () => {
           {/* Scroll Video */}
           <HomepagePilotVideo />
 
-          {/* Security Badges */}
-          <section className="py-4 md:py-12">
-            <div className="container mx-auto px-4">
-              <div className="flex justify-center items-center gap-16 max-w-2xl mx-auto">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Shield className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-muted-foreground">Enterprise-grade security</span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                    <Users className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-muted-foreground">Trusted by industry leaders</span>
-                </div>
-              </div>
-            </div>
-          </section>
 
           {/* Footer */}
           <footer className="py-5 md:py-16 border-t bg-muted/20">
