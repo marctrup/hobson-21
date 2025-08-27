@@ -12,6 +12,7 @@ import { CreatePostDialog } from '@/components/features/CreatePostDialog';
 import { Button } from '@/components/ui/button';
 import { UseCasesContent } from '@/components/UseCasesContent';
 import { LearnIntroVideo } from '@/components/videos/LearnIntroVideo';
+import { HomepageHeader } from '@/components/homepage/HomepageHeader';
 
 const Learn = () => {
   const { user } = useAuth();
@@ -3676,52 +3677,17 @@ Content-Type: multipart/form-data
         <meta name="description" content="Learn how to use Hobson's Choice AI with our comprehensive guides, tutorials, and documentation." />
       </Helmet>
       
+      <HomepageHeader />
+      
       <div className="min-h-screen">
-        {/* Header */}
-        <header className="border-b border-border">
-          <div className="w-full px-4 py-4">
-            <div className="flex justify-between items-center w-full">
-              <div className="flex items-center">
-                <Link to="/" className="flex items-center">
-                  <img 
-                    src={hobsonLogo} 
-                    alt="Hobson AI - AI-powered property management software company logo" 
-                    className="h-12 md:h-16" 
-                    loading="eager"
-                  />
-                </Link>
-              </div>
-              
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50"
-              >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-              
-               <nav className="hidden md:flex items-center gap-6">
-                <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Blog
-                </a>
-                <a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
-                </a>
-                <a href="/learn" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Learn
-                </a>
-               </nav>
-            </div>
-          </div>
-        </header>
-
-        {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 md:hidden">
-            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
-            <div className="fixed left-0 top-16 bottom-0 w-80 bg-background border-r border-border p-4 overflow-y-auto">
-              {/* Mobile Global Navigation */}
-              <div className="mb-6">
+        
+        {/* Desktop Main Layout with Sidebar and Content */}
+        <div className="flex">
+          {/* Desktop Left Navigation Panel */}
+          <aside className="w-80 min-h-[calc(100vh-8rem)]">
+            <div className="p-4 pt-[38px]">
+              {/* Global Navigation Section */}
+              <div className="mb-8">
                 <nav className="space-y-1">
                   {staticVerticalTabs.map((tab) => {
                     const Icon = tab.icon;
@@ -3731,7 +3697,6 @@ Content-Type: multipart/form-data
                         onClick={() => {
                           setActiveVerticalTab(tab.id);
                           setIsGlobalPageActive(true);
-                          setIsMobileMenuOpen(false);
                         }}
                         className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                           activeVerticalTab === tab.id && isGlobalPageActive
@@ -3747,38 +3712,56 @@ Content-Type: multipart/form-data
                 </nav>
               </div>
 
-              {/* Mobile Topics Navigation */}
-              <div className="mb-6">
-                <div className="px-3 pb-3 mb-2 border-b border-border/50">
-                  <h3 className="text-sm font-medium text-foreground tracking-wide">TOPICS</h3>
+              {/* Visual Separator */}
+              {!isGlobalPageActive && (
+                <div className="relative mb-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-border"></div>
+                  </div>
+                  <div className="relative flex justify-center">
+                    <div className="bg-background px-3">
+                      <div className="w-2 h-2 bg-muted-foreground/40 rounded-full"></div>
+                    </div>
+                  </div>
                 </div>
-                <nav className="space-y-1">
-                  {horizontalTabs.map((tab) => {
-                    const Icon = tab.icon;
-                    return (
-                      <button
-                        key={tab.id}
-                        onClick={() => {
-                          setActiveHorizontalTab(tab.id);
-                          setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
-                          setIsGlobalPageActive(false);
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                          activeHorizontalTab === tab.id && !isGlobalPageActive
-                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                        }`}
-                      >
-                        <Icon className="w-4 h-4 flex-shrink-0" />
-                        <span className="text-sm font-medium">{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
+              )}
 
-              {/* Mobile Submenu */}
+              {/* Topics Section */}
+              {!isGlobalPageActive && (
+                <div className="mb-6">
+                  <div className="px-3 pb-3 mb-2">
+                    <h3 className="text-xs font-medium text-muted-foreground tracking-wider uppercase">Topics</h3>
+                  </div>
+                  <nav className="space-y-1">
+                    {horizontalTabs.map((tab) => {
+                      const Icon = tab.icon;
+                      return (
+                        <button
+                          key={tab.id}
+                          onClick={() => {
+                            setActiveHorizontalTab(tab.id);
+                            const firstVerticalTab = getContextualVerticalTabs(tab.id)[0];
+                            if (firstVerticalTab) {
+                              setActiveVerticalTab(firstVerticalTab.id);
+                            }
+                            setIsGlobalPageActive(false);
+                          }}
+                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
+                            activeHorizontalTab === tab.id
+                              ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
+                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                          }`}
+                        >
+                          <Icon className="w-4 h-4 flex-shrink-0" />
+                          <span className="text-sm font-medium">{tab.label}</span>
+                        </button>
+                      );
+                    })}
+                  </nav>
+                </div>
+              )}
+
+              {/* Contextual Section - Only show when not on global pages */}
               {!isGlobalPageActive && (
                 <div>
                   <div className="px-3 pb-4 mb-4 bg-primary/5 rounded-lg border-l-4 border-primary">
@@ -3802,7 +3785,6 @@ Content-Type: multipart/form-data
                           onClick={() => {
                             setActiveVerticalTab(tab.id);
                             setIsGlobalPageActive(false);
-                            setIsMobileMenuOpen(false);
                           }}
                           className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                             activeVerticalTab === tab.id && !isGlobalPageActive
@@ -3819,45 +3801,20 @@ Content-Type: multipart/form-data
                 </div>
               )}
             </div>
-          </div>
-        )}
+          </aside>
 
-        {/* Desktop Layout */}
-        <div className="hidden md:flex flex-col">
-          {/* Horizontal Topics Navigation */}
-          <div className="mt-8">
-            <div className="w-full px-4">
-              <nav className="flex space-x-8 overflow-x-auto">
-                {horizontalTabs.map((tab) => {
-                  const Icon = tab.icon;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => {
-                        setActiveHorizontalTab(tab.id);
-                        setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
-                        setIsGlobalPageActive(false);
-                      }}
-                      className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
-                        activeHorizontalTab === tab.id && !isGlobalPageActive
-                          ? 'border-primary text-primary'
-                          : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'
-                      }`}
-                    >
-                      <Icon className="w-4 h-4" />
-                      <span className="text-sm font-medium">{tab.label}</span>
-                    </button>
-                  );
-                })}
-              </nav>
-            </div>
+          {/* Desktop Main Content Area */}
+          <div className="flex-1 min-h-[calc(100vh-8rem)]">
+            {renderContent()}
           </div>
+        </div>
 
-          {/* Desktop Main Layout with Sidebar and Content */}
-          <div className="flex">
-            {/* Desktop Left Navigation Panel */}
-            <aside className="w-80 min-h-[calc(100vh-8rem)]">
-              <div className="p-4 pt-[38px]">
+        {/* Mobile Layout */}
+        <div className="md:hidden">
+          <div className="flex-1 min-h-[calc(100vh-8rem)] p-8">
+            {renderContent()}
+          </div>
+        </div>
                 {/* Global Navigation Section */}
                 <div className="mb-8">
                   <nav className="space-y-1">
