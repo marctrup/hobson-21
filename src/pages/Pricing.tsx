@@ -44,7 +44,7 @@ const Pricing = () => {
                 {/* Right Container - Video Screen */}
                 <div className="flex justify-center lg:justify-end">
                   <LazyScrollVideo
-                    videoId="1113473075"
+                    videoId="1113482209"
                     title="HEU Coin - Hobson Energy Units Explained"
                     description="Learn about Hobson Energy Units and our revolutionary pricing model"
                     className="w-[507px] h-[317px]"
