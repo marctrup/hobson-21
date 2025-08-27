@@ -21,15 +21,8 @@ const Pricing = () => {
       backgroundImage: 'none'
     }}>
         {/* Hero Section - 2 Column */}
-        <section className="relative overflow-hidden py-24 lg:py-32 min-h-[72vh]" style={{
-        backgroundColor: '#ffffff',
-        backgroundImage: 'none',
-        background: '#ffffff'
-      }}>
-          <div className="container relative mx-auto px-2 h-full flex items-center border-2 border-red-500 md:border-0" style={{
-          backgroundColor: '#ffffff',
-          backgroundImage: 'none'
-        }}>
+        <section className="relative overflow-hidden py-24 lg:py-32 min-h-[72vh]">
+          <div className="container relative mx-auto px-2 h-full flex items-center border-2 border-red-500 md:border-0">
              <div className="grid lg:grid-cols-[1fr,1.5fr] gap-4 lg:gap-8 items-center w-full mx-auto">
                 {/* Left Container - Content */}
                 <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
