@@ -37,10 +37,8 @@ export const Homepage = () => {
         <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
         <link rel="canonical" href="https://hobsonschoice.ai/" />
         
-        {/* Preload critical assets */}
+        {/* Preload critical assets - only above-the-fold logo */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
-        <link rel="preload" href="/lovable-uploads/2cabb871-e6fa-4afe-80ea-21ccf0053048.png" as="image" />
-        <link rel="preload" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" as="image" />
       </Helmet>
 
       <div className="min-h-screen bg-background overflow-x-hidden">
