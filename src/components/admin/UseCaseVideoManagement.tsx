@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,9 +6,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Pencil, Trash2, Plus, ArrowUp, ArrowDown, Eye, EyeOff } from 'lucide-react';
+import { Pencil, Trash2, Plus, ArrowUp, ArrowDown, Eye, EyeOff, Upload, X, Smartphone, Monitor } from 'lucide-react';
 import { toast } from 'sonner';
-import { ImageUpload } from '@/components/blog/ImageUpload';
+import { uploadImageToStorage, deleteImageFromStorage } from '@/utils/uploadImageToStorage';
 
 interface UseCaseVideo {
   id: string;
@@ -203,10 +203,6 @@ export default function UseCaseVideoManagement() {
     setIsDialogOpen(true);
   };
 
-  const handleThumbnailChange = (imageUrl: string) => {
-    setFormData({ ...formData, thumbnail_url: imageUrl });
-  };
-
   if (loading) {
     return <div className="flex justify-center py-8">Loading videos...</div>;
   }
@@ -275,11 +271,130 @@ export default function UseCaseVideoManagement() {
                 </div>
               </div>
               <div>
-                <label className="text-sm font-medium mb-1 block">Thumbnail Image</label>
-                <ImageUpload 
-                  currentImageUrl={formData.thumbnail_url}
-                  onImageChange={handleThumbnailChange}
-                />
+                <label className="text-sm font-medium mb-2 block">Thumbnail Image</label>
+                <div className="grid grid-cols-2 gap-4">
+                  {/* Portrait Upload - Phone */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Smartphone className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">Portrait (Mobile)</span>
+                    </div>
+                    <div 
+                      className="w-full h-40 border-2 border-dashed border-muted-foreground/25 rounded-lg flex items-center justify-center cursor-pointer hover:border-muted-foreground/50 transition-colors"
+                      onClick={() => document.getElementById('portrait-upload')?.click()}
+                    >
+                      {formData.thumbnail_url ? (
+                        <div className="relative w-full h-full">
+                          <img
+                            src={formData.thumbnail_url}
+                            alt="Portrait preview"
+                            className="w-full h-full object-contain rounded-lg"
+                          />
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setFormData({ ...formData, thumbnail_url: '' });
+                            }}
+                            className="absolute top-2 right-2 h-6 w-6 p-0"
+                          >
+                            <X className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="text-center">
+                          <Smartphone className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                          <p className="text-sm text-muted-foreground">Upload portrait image</p>
+                          <p className="text-xs text-muted-foreground/70">Best for mobile views</p>
+                        </div>
+                      )}
+                    </div>
+                    <input
+                      id="portrait-upload"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        
+                        try {
+                          const fileExt = file.name.split('.').pop();
+                          const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+                          const publicUrl = await uploadImageToStorage(file, fileName);
+                          setFormData({ ...formData, thumbnail_url: publicUrl });
+                          toast.success('Portrait image uploaded successfully');
+                        } catch (error) {
+                          console.error('Upload error:', error);
+                          toast.error('Failed to upload image');
+                        }
+                      }}
+                    />
+                  </div>
+
+                  {/* Landscape Upload - Screen */}
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Monitor className="h-4 w-4 text-muted-foreground" />
+                      <span className="text-sm font-medium">Landscape (Desktop)</span>
+                    </div>
+                    <div 
+                      className="w-full h-40 border-2 border-dashed border-muted-foreground/25 rounded-lg flex items-center justify-center cursor-pointer hover:border-muted-foreground/50 transition-colors"
+                      onClick={() => document.getElementById('landscape-upload')?.click()}
+                    >
+                      {formData.thumbnail_url ? (
+                        <div className="relative w-full h-full">
+                          <img
+                            src={formData.thumbnail_url}
+                            alt="Landscape preview"
+                            className="w-full h-full object-contain rounded-lg"
+                          />
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            size="sm"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setFormData({ ...formData, thumbnail_url: '' });
+                            }}
+                            className="absolute top-2 right-2 h-6 w-6 p-0"
+                          >
+                            <X className="w-3 h-3" />
+                          </Button>
+                        </div>
+                      ) : (
+                        <div className="text-center">
+                          <Monitor className="w-8 h-8 mx-auto mb-2 text-muted-foreground" />
+                          <p className="text-sm text-muted-foreground">Upload landscape image</p>
+                          <p className="text-xs text-muted-foreground/70">Best for desktop views</p>
+                        </div>
+                      )}
+                    </div>
+                    <input
+                      id="landscape-upload"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        
+                        try {
+                          const fileExt = file.name.split('.').pop();
+                          const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+                          const publicUrl = await uploadImageToStorage(file, fileName);
+                          setFormData({ ...formData, thumbnail_url: publicUrl });
+                          toast.success('Landscape image uploaded successfully');
+                        } catch (error) {
+                          console.error('Upload error:', error);
+                          toast.error('Failed to upload image');
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium mb-1 block">Thumbnail Alt Text</label>
