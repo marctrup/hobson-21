@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NAVIGATION_LINKS } from "@/config/navigation";
 import hobsonLogo from "/lovable-uploads/270231d1-a007-4b5e-82c2-696ea7ccf2f5.png";
 
 export const GlobalHeader = () => {
@@ -32,22 +33,16 @@ export const GlobalHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-              Pricing
-            </Link>
-            <Link 
-              to="/blog" 
-              className="text-base text-muted-foreground hover:text-foreground transition-colors"
-              title="Property Management Insights - Expert perspectives on AI and real estate technology"
-            >
-              Blog
-            </Link>
-            <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-              Contact
-            </Link>
-            <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-              Learn
-            </Link>
+            {NAVIGATION_LINKS.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                title={link.title}
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -70,38 +65,17 @@ export const GlobalHeader = () => {
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4">
             <div className="flex flex-col gap-4">
-              <Link 
-                to="/pricing" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-                title="Pricing Information"
-              >
-                Pricing
-              </Link>
-              <Link 
-                to="/blog" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-                title="Property Management Insights"
-              >
-                Blog
-              </Link>
-              <Link 
-                to="/contact" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-                title="Contact Real Estate Software Support"
-              >
-                Contact
-              </Link>
-              <Link 
-                to="/learn" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-                title="Learning Resources"
-              >
-                Learn
-              </Link>
+              {NAVIGATION_LINKS.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  onClick={closeMobileMenu}
+                  title={link.title}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </nav>
         )}

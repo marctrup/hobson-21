@@ -11,6 +11,7 @@ import { PropertyManagementVisualization } from "@/components/homepage/PropertyM
 import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { HomepagePilotVideo } from "@/components/videos/HomepagePilotVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
+import { NAVIGATION_LINKS } from "@/config/navigation";
 // Lazy load video only when needed
 
 export const Homepage = () => {
@@ -284,15 +285,16 @@ export const Homepage = () => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-foreground">Company</h4>
                   <div className="space-y-3">
-                    <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Blog
-                    </Link>
-                    <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Contact
-                    </Link>
-                    <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Learn
-                    </Link>
+                    {NAVIGATION_LINKS.map((link) => (
+                      <Link
+                        key={link.to}
+                        to={link.to}
+                        className="block text-muted-foreground hover:text-foreground transition-colors"
+                        title={link.title}
+                      >
+                        {link.label}
+                      </Link>
+                    ))}
                     <Link to="/data-protection" className="block text-muted-foreground hover:text-foreground transition-colors">
                       AI Privacy & Data Protection Policy
                     </Link>

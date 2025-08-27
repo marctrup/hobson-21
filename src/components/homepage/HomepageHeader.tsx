@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NAVIGATION_LINKS } from "@/config/navigation";
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 
 export const HomepageHeader = () => {
@@ -33,18 +34,16 @@ export const HomepageHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-            <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-              Blog
-            </Link>
-            <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-              Contact
-            </Link>
-            <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-              Pricing
-            </Link>
-            <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-              Learn
-            </Link>
+            {NAVIGATION_LINKS.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                title={link.title}
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -67,34 +66,17 @@ export const HomepageHeader = () => {
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
             <div className="flex flex-col gap-4">
-              <Link 
-                to="/blog" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-              >
-                Blog
-              </Link>
-              <Link 
-                to="/contact" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-              >
-                Contact
-              </Link>
-              <Link 
-                to="/pricing" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-              >
-                Pricing
-              </Link>
-              <Link 
-                to="/learn" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-              >
-                Learn
-              </Link>
+              {NAVIGATION_LINKS.map((link) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  onClick={closeMobileMenu}
+                  title={link.title}
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </nav>
         )}
