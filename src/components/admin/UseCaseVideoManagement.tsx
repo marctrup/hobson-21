@@ -320,26 +320,17 @@ export default function UseCaseVideoManagement() {
                 <div className="flex justify-between items-start">
                   <div className="flex-1 flex gap-4">
                     {video.thumbnail_url && (
-                      <div className="flex-shrink-0 space-y-2">
-                        {/* Portrait Container */}
-                        <div className="w-16 h-24 overflow-hidden rounded border-2 border-dashed border-muted-foreground/20 bg-muted/10 flex items-center justify-center">
+                      <div className="flex-shrink-0">
+                        {/* Portrait Container - as it will appear in /learn/use-cases */}
+                        <div className="w-20 h-28 overflow-hidden rounded bg-muted/10 flex items-center justify-center border">
                           <img
                             src={video.thumbnail_url}
-                            alt={video.thumbnail_alt || `${video.title} - Portrait`}
-                            className="max-w-full max-h-full object-contain"
+                            alt={video.thumbnail_alt || video.title}
+                            className="w-full h-full object-cover"
+                            style={{ aspectRatio: '3/4' }}
                           />
                         </div>
-                        <p className="text-xs text-muted-foreground text-center">Portrait</p>
-                        
-                        {/* Landscape Container */}
-                        <div className="w-24 h-16 overflow-hidden rounded border-2 border-dashed border-muted-foreground/20 bg-muted/10 flex items-center justify-center">
-                          <img
-                            src={video.thumbnail_url}
-                            alt={video.thumbnail_alt || `${video.title} - Landscape`}
-                            className="max-w-full max-h-full object-contain"
-                          />
-                        </div>
-                        <p className="text-xs text-muted-foreground text-center">Landscape</p>
+                        <p className="text-xs text-muted-foreground text-center mt-1">Portrait View</p>
                       </div>
                     )}
                     <div>
