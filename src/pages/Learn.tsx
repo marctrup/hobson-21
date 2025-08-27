@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
-import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X, Plus } from 'lucide-react';
-import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
+import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Plus } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HEUBarVisualization } from '@/components/HEUBarVisualization';
 import ChatCostExample from '@/components/features/ChatCostExample';
@@ -12,13 +11,13 @@ import { CreatePostDialog } from '@/components/features/CreatePostDialog';
 import { Button } from '@/components/ui/button';
 import { UseCasesContent } from '@/components/UseCasesContent';
 import { LearnIntroVideo } from '@/components/videos/LearnIntroVideo';
+import { GlobalHeader } from '@/components/GlobalHeader';
 
 const Learn = () => {
   const { user } = useAuth();
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeTocSection, setActiveTocSection] = useState('getting-started');
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
@@ -3676,152 +3675,9 @@ Content-Type: multipart/form-data
         <meta name="description" content="Learn how to use Hobson's Choice AI with our comprehensive guides, tutorials, and documentation." />
       </Helmet>
       
+      <GlobalHeader />
+      
       <div className="min-h-screen">
-        {/* Header */}
-        <header className="border-b border-border">
-          <div className="w-full px-4 py-4">
-            <div className="flex justify-between items-center w-full">
-              <div className="flex items-center">
-                <Link to="/" className="flex items-center">
-                  <img 
-                    src={hobsonLogo} 
-                    alt="Hobson AI - AI-powered property management software company logo" 
-                    className="h-12 md:h-16" 
-                    loading="eager"
-                  />
-                </Link>
-              </div>
-              
-              {/* Mobile Menu Button */}
-              <button
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50"
-              >
-                {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-              
-               <nav className="hidden md:flex items-center gap-6">
-                <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Blog
-                </a>
-                <a href="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
-                </a>
-                <a href="/learn" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Learn
-                </a>
-               </nav>
-            </div>
-          </div>
-        </header>
-
-        {/* Mobile Menu Overlay */}
-        {isMobileMenuOpen && (
-          <div className="fixed inset-0 z-50 md:hidden">
-            <div className="fixed inset-0 bg-background/80 backdrop-blur-sm" onClick={() => setIsMobileMenuOpen(false)} />
-            <div className="fixed left-0 top-16 bottom-0 w-80 bg-background border-r border-border p-4 overflow-y-auto">
-              {/* Mobile Global Navigation */}
-              <div className="mb-6">
-                <nav className="space-y-1">
-                  {staticVerticalTabs.map((tab) => {
-                    const Icon = tab.icon;
-                    return (
-                      <button
-                        key={tab.id}
-                        onClick={() => {
-                          setActiveVerticalTab(tab.id);
-                          setIsGlobalPageActive(true);
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                          activeVerticalTab === tab.id && isGlobalPageActive
-                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                        }`}
-                      >
-                        <Icon className="w-4 h-4 flex-shrink-0" />
-                        <span className="text-sm font-medium">{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
-
-              {/* Mobile Topics Navigation */}
-              <div className="mb-6">
-                <div className="px-3 pb-3 mb-2 border-b border-border/50">
-                  <h3 className="text-sm font-medium text-foreground tracking-wide">TOPICS</h3>
-                </div>
-                <nav className="space-y-1">
-                  {horizontalTabs.map((tab) => {
-                    const Icon = tab.icon;
-                    return (
-                      <button
-                        key={tab.id}
-                        onClick={() => {
-                          setActiveHorizontalTab(tab.id);
-                          setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
-                          setIsGlobalPageActive(false);
-                          setIsMobileMenuOpen(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                          activeHorizontalTab === tab.id && !isGlobalPageActive
-                            ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                        }`}
-                      >
-                        <Icon className="w-4 h-4 flex-shrink-0" />
-                        <span className="text-sm font-medium">{tab.label}</span>
-                      </button>
-                    );
-                  })}
-                </nav>
-              </div>
-
-              {/* Mobile Submenu */}
-              {!isGlobalPageActive && (
-                <div>
-                  <div className="px-3 pb-4 mb-4 bg-primary/5 rounded-lg border-l-4 border-primary">
-                    <div className="flex items-center gap-2 mb-2">
-                      {(() => {
-                        const ActiveIcon = horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.icon;
-                        return ActiveIcon ? <ActiveIcon className="w-5 h-5 text-primary" /> : null;
-                      })()}
-                      <h3 className="text-lg font-medium text-foreground">
-                        {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
-                      </h3>
-                    </div>
-                    <p className="text-sm text-muted-foreground pl-7">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
-                  </div>
-                  <nav className="space-y-1">
-                    {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
-                      const Icon = tab.icon;
-                      return (
-                        <button
-                          key={tab.id}
-                          onClick={() => {
-                            setActiveVerticalTab(tab.id);
-                            setIsGlobalPageActive(false);
-                            setIsMobileMenuOpen(false);
-                          }}
-                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                            activeVerticalTab === tab.id && !isGlobalPageActive
-                              ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
-                          }`}
-                        >
-                          <Icon className="w-4 h-4 flex-shrink-0" />
-                          <span className="text-sm font-medium">{tab.label}</span>
-                        </button>
-                      );
-                    })}
-                  </nav>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
-
         {/* Desktop Layout */}
         <div className="hidden md:flex flex-col">
           {/* Horizontal Topics Navigation */}
