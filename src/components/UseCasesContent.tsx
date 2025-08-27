@@ -61,7 +61,7 @@ export const UseCasesContent = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-4">Use Cases</h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Some clients don't want to be on camera, so we share their words through others.
+            Every organisation has unique needs. These use cases highlight just some of the ways Hobson AI can bring value.
           </p>
         </div>
 
@@ -143,12 +143,9 @@ export const UseCasesContent = () => {
           </div>
         )}
 
-        <div className="mt-12 text-center space-y-4">
+        <div className="mt-12 text-center">
           <p className="text-muted-foreground">
             Some clients don't want to be on camera, so we share their words through others.
-          </p>
-          <p className="text-muted-foreground">
-            Every organisation has unique needs. These use cases highlight just some of the ways Hobson AI can bring value.
           </p>
         </div>
       </div>
