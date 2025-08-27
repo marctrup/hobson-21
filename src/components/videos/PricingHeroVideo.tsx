@@ -66,16 +66,12 @@ export const PricingHeroVideo = () => {
                   }
                   
                   @media (max-width: 640px) {
-                    .coin-animation {
-                      animation: spinY-mobile 12s linear infinite;
-                    }
-                  
-                    @keyframes spinY-mobile {
-                      0% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(0deg); }
-                      25% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(90deg); }
-                      50% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(180deg); }
-                      75% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(270deg); }
-                      100% { transform: translateX(-50%) translateY(calc(-50% - 5px)) scale(0.9) rotateY(360deg); }
+                    @keyframes spinY {
+                      0% { transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(0.9) rotateY(0deg); }
+                      25% { transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(0.9) rotateY(90deg); }
+                      50% { transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(0.9) rotateY(180deg); }
+                      75% { transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(0.9) rotateY(270deg); }
+                      100% { transform: translateX(-50%) translateY(calc(-50% - 10px)) scale(0.9) rotateY(360deg); }
                     }
                   }
                 `
