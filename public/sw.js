@@ -59,8 +59,8 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(() => caches.match(request))
     );
-  } else if (request.destination === 'image' || request.destination === 'script' || request.destination === 'style' || request.destination === 'font') {
-    // Cache first for static assets (images, JS, CSS, fonts)
+  } else if (request.destination === 'image' || request.destination === 'script' || request.destination === 'style' || request.destination === 'font' || request.url.includes('/blog-images/')) {
+    // Cache first for static assets (images, JS, CSS, fonts, blog images)
     event.respondWith(
       caches.match(request)
         .then((response) => {
