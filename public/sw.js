@@ -1,11 +1,15 @@
 // Service Worker for caching and performance
-const CACHE_NAME = 'hobson-ai-v4';
+const CACHE_NAME = 'hobson-ai-v5';
 const urlsToCache = [
   '/',
   '/src/main.tsx',
   '/src/index.css',
-  // Critical images only
+  // Critical images
   '/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png', // Logo
+  '/lovable-uploads/270231d1-a007-4b5e-82c2-696ea7ccf2f5.png', // Header logo
+  // Key static assets
+  '/robots.txt',
+  '/sitemap.xml',
 ];
 
 // Install Service Worker
@@ -55,8 +59,8 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(() => caches.match(request))
     );
-  } else if (request.destination === 'image' || request.destination === 'script' || request.destination === 'style') {
-    // Cache first for static assets
+  } else if (request.destination === 'image' || request.destination === 'script' || request.destination === 'style' || request.destination === 'font') {
+    // Cache first for static assets (images, JS, CSS, fonts)
     event.respondWith(
       caches.match(request)
         .then((response) => {
@@ -64,7 +68,26 @@ self.addEventListener('fetch', (event) => {
             return response;
           }
           return fetch(request).then((response) => {
-            // Cache successful responses
+            // Cache successful responses for static assets
+            if (response.status === 200) {
+              const responseClone = response.clone();
+              caches.open(CACHE_NAME).then((cache) => {
+                cache.put(request, responseClone);
+              });
+            }
+            return response;
+          });
+        })
+    );
+  } else if (request.url.includes('.json') || request.url.includes('robots.txt') || request.url.includes('sitemap.xml')) {
+    // Cache first for static data files
+    event.respondWith(
+      caches.match(request)
+        .then((response) => {
+          if (response) {
+            return response;
+          }
+          return fetch(request).then((response) => {
             if (response.status === 200) {
               const responseClone = response.clone();
               caches.open(CACHE_NAME).then((cache) => {
