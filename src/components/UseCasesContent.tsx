@@ -86,7 +86,7 @@ export const UseCasesContent = () => {
                   className="bg-card border rounded-lg shadow-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg group cursor-pointer"
                 >
                   {vimeoId ? (
-                    <div className="aspect-[3/4] bg-muted relative overflow-hidden">
+                    <div className="aspect-video bg-muted relative overflow-hidden">
                       {video.thumbnail_url ? (
                         <img
                           src={video.thumbnail_url}
@@ -110,7 +110,7 @@ export const UseCasesContent = () => {
                       </div>
                     </div>
                   ) : (
-                    <div className="aspect-[3/4] bg-muted flex items-center justify-center">
+                    <div className="aspect-video bg-muted flex items-center justify-center">
                       <div className="text-center">
                         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                           <div className="w-0 h-0 border-l-[12px] border-l-primary border-y-[8px] border-y-transparent ml-1"></div>
