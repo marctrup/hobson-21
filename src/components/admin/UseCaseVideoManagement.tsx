@@ -320,12 +320,26 @@ export default function UseCaseVideoManagement() {
                 <div className="flex justify-between items-start">
                   <div className="flex-1 flex gap-4">
                     {video.thumbnail_url && (
-                      <div className="flex-shrink-0 overflow-hidden rounded max-w-20 max-h-20">
-                        <img
-                          src={video.thumbnail_url}
-                          alt={video.thumbnail_alt || video.title}
-                          className="max-w-full max-h-full object-contain"
-                        />
+                      <div className="flex-shrink-0 space-y-2">
+                        {/* Portrait Container */}
+                        <div className="w-16 h-24 overflow-hidden rounded border-2 border-dashed border-muted-foreground/20">
+                          <img
+                            src={video.thumbnail_url}
+                            alt={video.thumbnail_alt || `${video.title} - Portrait`}
+                            className="w-full h-full object-cover"
+                          />
+                          <p className="text-xs text-muted-foreground mt-1 text-center">Portrait</p>
+                        </div>
+                        
+                        {/* Landscape Container */}
+                        <div className="w-24 h-16 overflow-hidden rounded border-2 border-dashed border-muted-foreground/20">
+                          <img
+                            src={video.thumbnail_url}
+                            alt={video.thumbnail_alt || `${video.title} - Landscape`}
+                            className="w-full h-full object-cover"
+                          />
+                          <p className="text-xs text-muted-foreground mt-1 text-center">Landscape</p>
+                        </div>
                       </div>
                     )}
                     <div>
