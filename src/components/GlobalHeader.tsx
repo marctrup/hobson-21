@@ -32,6 +32,9 @@ export const GlobalHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
+            <Link to="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Pricing
+            </Link>
             <Link 
               to="/blog" 
               className="text-sm text-muted-foreground hover:text-foreground transition-colors"
@@ -44,9 +47,6 @@ export const GlobalHeader = () => {
             </Link>
             <Link to="/learn" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Learn
-            </Link>
-            <Link to="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Pricing
             </Link>
           </nav>
 
@@ -71,6 +71,14 @@ export const GlobalHeader = () => {
           <nav className="md:hidden mt-4 pb-4 border-t pt-4">
             <div className="flex flex-col gap-4">
               <Link 
+                to="/pricing" 
+                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                onClick={closeMobileMenu}
+                title="Pricing Information"
+              >
+                Pricing
+              </Link>
+              <Link 
                 to="/blog" 
                 className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
                 onClick={closeMobileMenu}
@@ -93,14 +101,6 @@ export const GlobalHeader = () => {
                 title="Learning Resources"
               >
                 Learn
-              </Link>
-              <Link 
-                to="/pricing" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-                title="Pricing Information"
-              >
-                Pricing
               </Link>
             </div>
           </nav>
