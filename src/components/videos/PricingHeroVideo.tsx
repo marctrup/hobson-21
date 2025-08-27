@@ -122,7 +122,7 @@ export const PricingHeroVideo = () => {
             {videoDialogOpen && (
               <iframe
                 className="rounded-lg w-full h-full min-w-[320px] min-h-[180px] sm:min-w-[800px] sm:min-h-[450px]"
-                src="https://player.vimeo.com/video/1113596009?autoplay=1&muted=0&byline=0&portrait=0&responsive=1"
+                src="https://player.vimeo.com/video/1113596009?autoplay=1&muted=0&controls=1&byline=0&portrait=0&responsive=1"
                 title="HEU Coin - Hobson Energy Units Explained"
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
