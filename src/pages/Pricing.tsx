@@ -26,7 +26,7 @@ const Pricing = () => {
         backgroundImage: 'none',
         background: '#ffffff'
       }}>
-          <div className="container relative mx-auto px-2 h-full flex items-center" style={{
+          <div className="container relative mx-auto px-2 h-full flex items-center border-2 border-red-500 md:border-0" style={{
           backgroundColor: '#ffffff',
           backgroundImage: 'none'
         }}>
