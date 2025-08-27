@@ -49,7 +49,9 @@ export const PricingHeroVideo = () => {
                 className="w-full h-full object-contain transform -translate-y-[15px]"
               />
               <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                <Play className="h-8 w-8 text-primary fill-current hover:scale-110 transition-transform duration-300" />
+                <div className="bg-gray-200 hover:bg-gray-300 rounded-full p-3 shadow-lg transition-all duration-300 hover:scale-110">
+                  <Play className="h-6 w-6 text-primary fill-current" />
+                </div>
               </div>
             </div>
           </DialogTrigger>
@@ -80,7 +82,7 @@ export const PricingHeroVideo = () => {
             {videoDialogOpen && (
               <iframe
                 className="rounded-lg"
-                src="https://player.vimeo.com/video/1113596009?autoplay=1&muted=1&byline=0&portrait=0&responsive=1"
+                src="https://player.vimeo.com/video/1113482209?autoplay=1&muted=1&byline=0&portrait=0&responsive=1"
                 title="HEU Coin - Hobson Energy Units Explained"
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
