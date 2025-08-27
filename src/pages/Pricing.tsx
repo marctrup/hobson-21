@@ -34,7 +34,7 @@ const Pricing = () => {
                     videoId="1113473075"
                     title="HEU Coin - Hobson Energy Units Explained"
                     description="Learn about Hobson Energy Units and our revolutionary pricing model"
-                    className="w-full max-w-4xl"
+                    className="w-full max-w-5xl"
                   />
                 </div>
                 
