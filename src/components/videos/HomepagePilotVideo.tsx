@@ -44,7 +44,7 @@ export const HomepagePilotVideo = () => {
               id="homepage-pilot-video-container"
             >
               <img
-                src="/lovable-uploads/05bec858-f1cc-43ad-9d2c-08d06c0abf8c.png"
+                src="/lovable-uploads/a1a372bb-1649-43e9-ad51-c41d6fc762a1.png"
                 alt="Hobson AI Pilot Program"
                 className="w-full h-full object-cover"
               />
