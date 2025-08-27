@@ -55,7 +55,7 @@ export const PricingHeroVideo = () => {
                 />
               </div>
               <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center play-text-container" style={{ bottom: '5px' }}>
-                <div className="flex items-center gap-1 text-purple-800 font-semibold" style={{ transform: 'scale(1.755)' }}>
+                <div className="flex items-center gap-1 text-purple-800 font-semibold" style={{ transform: 'scale(2.2815)' }}>
                   <span className="text-xs">Play Video</span>
                   <ChevronRight className="h-3 w-3" />
                 </div>
