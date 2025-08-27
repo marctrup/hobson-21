@@ -78,7 +78,6 @@ export type Database = {
         Row: {
           author_id: string
           content: string
-          content_type: string | null
           created_at: string
           excerpt: string | null
           featured_image_alt: string | null
@@ -95,14 +94,10 @@ export type Database = {
           status: string
           title: string
           updated_at: string
-          video_thumbnail_alt: string | null
-          video_thumbnail_url: string | null
-          video_url: string | null
         }
         Insert: {
           author_id: string
           content: string
-          content_type?: string | null
           created_at?: string
           excerpt?: string | null
           featured_image_alt?: string | null
@@ -119,14 +114,10 @@ export type Database = {
           status?: string
           title: string
           updated_at?: string
-          video_thumbnail_alt?: string | null
-          video_thumbnail_url?: string | null
-          video_url?: string | null
         }
         Update: {
           author_id?: string
           content?: string
-          content_type?: string | null
           created_at?: string
           excerpt?: string | null
           featured_image_alt?: string | null
@@ -143,9 +134,6 @@ export type Database = {
           status?: string
           title?: string
           updated_at?: string
-          video_thumbnail_alt?: string | null
-          video_thumbnail_url?: string | null
-          video_url?: string | null
         }
         Relationships: [
           {
@@ -492,6 +480,8 @@ export type Database = {
           id: string
           is_active: boolean
           sort_order: number | null
+          thumbnail_alt: string | null
+          thumbnail_url: string | null
           title: string
           updated_at: string
           vimeo_url: string
@@ -504,6 +494,8 @@ export type Database = {
           id?: string
           is_active?: boolean
           sort_order?: number | null
+          thumbnail_alt?: string | null
+          thumbnail_url?: string | null
           title: string
           updated_at?: string
           vimeo_url: string
@@ -516,6 +508,8 @@ export type Database = {
           id?: string
           is_active?: boolean
           sort_order?: number | null
+          thumbnail_alt?: string | null
+          thumbnail_url?: string | null
           title?: string
           updated_at?: string
           vimeo_url?: string

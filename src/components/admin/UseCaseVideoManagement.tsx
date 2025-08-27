@@ -8,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Pencil, Trash2, Plus, ArrowUp, ArrowDown, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
+import { ImageUpload } from '@/components/blog/ImageUpload';
 
 interface UseCaseVideo {
   id: string;
@@ -16,6 +17,8 @@ interface UseCaseVideo {
   description: string | null;
   client_name: string | null;
   client_role: string | null;
+  thumbnail_url: string | null;
+  thumbnail_alt: string | null;
   sort_order: number;
   is_active: boolean;
   created_at: string;
@@ -32,7 +35,9 @@ export default function UseCaseVideoManagement() {
     vimeo_url: '',
     description: '',
     client_name: '',
-    client_role: ''
+    client_role: '',
+    thumbnail_url: '',
+    thumbnail_alt: ''
   });
 
   useEffect(() => {
@@ -68,6 +73,8 @@ export default function UseCaseVideoManagement() {
             description: formData.description || null,
             client_name: formData.client_name || null,
             client_role: formData.client_role || null,
+            thumbnail_url: formData.thumbnail_url || null,
+            thumbnail_alt: formData.thumbnail_alt || null,
           })
           .eq('id', editingVideo.id);
 
@@ -84,6 +91,8 @@ export default function UseCaseVideoManagement() {
             description: formData.description || null,
             client_name: formData.client_name || null,
             client_role: formData.client_role || null,
+            thumbnail_url: formData.thumbnail_url || null,
+            thumbnail_alt: formData.thumbnail_alt || null,
             sort_order: maxSortOrder + 1
           });
 
@@ -168,7 +177,9 @@ export default function UseCaseVideoManagement() {
       vimeo_url: '',
       description: '',
       client_name: '',
-      client_role: ''
+      client_role: '',
+      thumbnail_url: '',
+      thumbnail_alt: ''
     });
     setEditingVideo(null);
   };
@@ -180,7 +191,9 @@ export default function UseCaseVideoManagement() {
       vimeo_url: video.vimeo_url,
       description: video.description || '',
       client_name: video.client_name || '',
-      client_role: video.client_role || ''
+      client_role: video.client_role || '',
+      thumbnail_url: video.thumbnail_url || '',
+      thumbnail_alt: video.thumbnail_alt || ''
     });
     setIsDialogOpen(true);
   };
@@ -188,6 +201,10 @@ export default function UseCaseVideoManagement() {
   const openCreateDialog = () => {
     resetForm();
     setIsDialogOpen(true);
+  };
+
+  const handleThumbnailChange = (imageUrl: string) => {
+    setFormData({ ...formData, thumbnail_url: imageUrl });
   };
 
   if (loading) {
@@ -257,6 +274,21 @@ export default function UseCaseVideoManagement() {
                   />
                 </div>
               </div>
+              <div>
+                <label className="text-sm font-medium mb-1 block">Thumbnail Image</label>
+                <ImageUpload 
+                  currentImageUrl={formData.thumbnail_url}
+                  onImageChange={handleThumbnailChange}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-1 block">Thumbnail Alt Text</label>
+                <Input
+                  value={formData.thumbnail_alt}
+                  onChange={(e) => setFormData({ ...formData, thumbnail_alt: e.target.value })}
+                  placeholder="Describe the thumbnail image for accessibility"
+                />
+              </div>
               <div className="flex gap-2 pt-4">
                 <Button type="submit" className="flex-1">
                   {editingVideo ? 'Update Video' : 'Create Video'}
@@ -286,20 +318,29 @@ export default function UseCaseVideoManagement() {
             <Card key={video.id}>
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <CardTitle className="text-lg">{video.title}</CardTitle>
-                      <Badge variant={video.is_active ? "default" : "secondary"}>
-                        {video.is_active ? "Active" : "Inactive"}
-                      </Badge>
-                    </div>
-                    {(video.client_name || video.client_role) && (
-                      <p className="text-sm text-muted-foreground">
-                        {video.client_name && `${video.client_name}`}
-                        {video.client_name && video.client_role && ', '}
-                        {video.client_role && video.client_role}
-                      </p>
+                  <div className="flex-1 flex gap-4">
+                    {video.thumbnail_url && (
+                      <img
+                        src={video.thumbnail_url}
+                        alt={video.thumbnail_alt || video.title}
+                        className="w-20 h-20 object-cover rounded"
+                      />
                     )}
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <CardTitle className="text-lg">{video.title}</CardTitle>
+                        <Badge variant={video.is_active ? "default" : "secondary"}>
+                          {video.is_active ? "Active" : "Inactive"}
+                        </Badge>
+                      </div>
+                      {(video.client_name || video.client_role) && (
+                        <p className="text-sm text-muted-foreground">
+                          {video.client_name && `${video.client_name}`}
+                          {video.client_name && video.client_role && ', '}
+                          {video.client_role && video.client_role}
+                        </p>
+                      )}
+                    </div>
                   </div>
                   <div className="flex gap-1">
                     <Button
