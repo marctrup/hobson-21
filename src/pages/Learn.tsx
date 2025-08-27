@@ -2570,7 +2570,7 @@ Content-Type: multipart/form-data
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
                {/* Welcome header above video - aligned with video left edge */}
-               <div className="mb-12" style={{ marginLeft: 'calc(50% - 320px * 2.0736 / 2)' }}>
+               <div className="mb-12" style={{ marginLeft: 'calc(50% - 320px * 1.0368 / 2)' }}>
                  <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
                  <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
                </div>
@@ -2584,7 +2584,7 @@ Content-Type: multipart/form-data
                        ? 'animate-scale-in scale-100' 
                        : 'scale-95'
                    }`}
-                   style={{ transform: 'scale(2.0736)', transformOrigin: 'center' }}
+                   style={{ transform: 'scale(1.0368)', transformOrigin: 'center' }}
                  >
                    <ScrollVideoPlayer 
                      videoId="1108183128"
@@ -2595,7 +2595,7 @@ Content-Type: multipart/form-data
                </div>
                
                {/* Description text below video - aligned with video container sides */}
-               <div className="text-left" style={{ marginLeft: 'calc(50% - 320px * 2.0736 / 2)', marginRight: 'calc(50% - 320px * 2.0736 / 2)', marginTop: 'calc(3rem + 80px)' }}>
+               <div className="text-left" style={{ marginLeft: 'calc(50% - 320px * 1.0368 / 2)', marginRight: 'calc(50% - 320px * 1.0368 / 2)', marginTop: 'calc(3rem + 80px)' }}>
                  <p className="text-lg text-muted-foreground">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
                </div>
 
