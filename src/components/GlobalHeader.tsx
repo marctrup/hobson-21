@@ -45,6 +45,9 @@ export const GlobalHeader = () => {
             <Link to="/learn" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Learn
             </Link>
+            <Link to="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+              Pricing
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -90,6 +93,14 @@ export const GlobalHeader = () => {
                 title="Learning Resources"
               >
                 Learn
+              </Link>
+              <Link 
+                to="/pricing" 
+                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                onClick={closeMobileMenu}
+                title="Pricing Information"
+              >
+                Pricing
               </Link>
             </div>
           </nav>
