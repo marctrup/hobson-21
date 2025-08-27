@@ -23,7 +23,7 @@ export const HEUBarVisualization: React.FC<HEUBarVisualizationProps> = ({
             <img 
               src="/lovable-uploads/3e86ba63-c616-4cf5-883f-237b6295efcd.png" 
               alt="HEU Coin" 
-              className="w-4 h-4 object-contain"
+              className="w-3 h-3 object-contain"
             />
             <span className="text-muted-foreground">HEU Usage This Period</span>
           </div>
@@ -51,7 +51,7 @@ export const HEUBarVisualization: React.FC<HEUBarVisualizationProps> = ({
             <img 
               src="/lovable-uploads/3e86ba63-c616-4cf5-883f-237b6295efcd.png" 
               alt="HEU Coin" 
-              className="w-3 h-3 object-contain opacity-80"
+              className="w-2.5 h-2.5 object-contain opacity-80"
             />
           </div>
           
@@ -90,7 +90,7 @@ export const HEUBarVisualization: React.FC<HEUBarVisualizationProps> = ({
                 <img 
                   src="/lovable-uploads/3e86ba63-c616-4cf5-883f-237b6295efcd.png" 
                   alt="HEU Coin" 
-                  className="w-2.5 h-2.5 object-contain"
+                  className="w-2 h-2 object-contain"
                 />
                 <span className="font-medium text-foreground">{remainingHEUs}</span>
               </div>
