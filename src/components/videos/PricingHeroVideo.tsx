@@ -80,7 +80,7 @@ export const PricingHeroVideo = () => {
                   
                   @media (max-width: 640px) {
                     .play-text-container {
-                      transform: translateX(-50%) scale(1.9);
+                      transform: translateX(-50%) scale(1.6);
                     }
                   
                     @keyframes spinY {
