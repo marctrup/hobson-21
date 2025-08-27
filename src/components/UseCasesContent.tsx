@@ -76,7 +76,7 @@ export const UseCasesContent = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4">
             {videos.map((video) => {
               const vimeoId = extractVimeoId(video.vimeo_url);
               
