@@ -320,11 +320,13 @@ export default function UseCaseVideoManagement() {
                 <div className="flex justify-between items-start">
                   <div className="flex-1 flex gap-4">
                     {video.thumbnail_url && (
-                      <img
-                        src={video.thumbnail_url}
-                        alt={video.thumbnail_alt || video.title}
-                        className="w-20 h-20 object-cover rounded"
-                      />
+                      <div className="w-20 h-20 flex-shrink-0 overflow-hidden rounded">
+                        <img
+                          src={video.thumbnail_url}
+                          alt={video.thumbnail_alt || video.title}
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
                     )}
                     <div>
                       <div className="flex items-center gap-2 mb-1">
