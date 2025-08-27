@@ -2570,13 +2570,13 @@ Content-Type: multipart/form-data
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
                {/* Welcome header above video - aligned with video left edge */}
-               <div className="mb-12" style={{ marginLeft: 'calc(50% - 320px * 1.0368 / 2)' }}>
+               <div className="mb-12" style={{ marginLeft: 'calc(50% - 320px * 1.0368 / 2)', border: '2px solid red' }}>
                  <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
                  <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
                </div>
                
                {/* Video container with extra spacing */}
-               <div className="flex justify-center" style={{ marginTop: 'calc(6rem - 65px)' }}>
+               <div className="flex justify-center" style={{ marginTop: 'calc(6rem - 65px)', border: '2px solid red' }}>
                  <div 
                    ref={videoRef}
                    className={`transition-all duration-700 ${
@@ -2595,7 +2595,7 @@ Content-Type: multipart/form-data
                </div>
                
                {/* Description text below video - aligned with video container sides */}
-               <div className="text-left" style={{ marginLeft: 'calc(50% - 320px * 1.0368 / 2)', marginRight: 'calc(50% - 320px * 1.0368 / 2)', marginTop: 'calc(3rem + 80px)' }}>
+               <div className="text-left" style={{ marginLeft: 'calc(50% - 320px * 1.0368 / 2)', marginRight: 'calc(50% - 320px * 1.0368 / 2)', marginTop: 'calc(3rem + 80px)', border: '2px solid red' }}>
                  <p className="text-lg text-muted-foreground">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
                </div>
 
