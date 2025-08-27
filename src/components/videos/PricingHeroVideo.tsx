@@ -49,7 +49,7 @@ export const PricingHeroVideo = () => {
                 className="absolute right-4 top-1/2 w-1/2 h-auto object-contain animate-spin-y"
                 style={{
                   transform: 'translateY(-50%) scale(1.25)',
-                  animation: 'rotateZ 3s linear infinite'
+                  animation: 'rotateZ 8s linear infinite'
                 }}
               />
               <style dangerouslySetInnerHTML={{
