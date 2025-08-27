@@ -54,10 +54,10 @@ export const PricingHeroVideo = () => {
                   }}
                 />
               </div>
-              <div className="absolute left-1/2 bottom-1/4 transform -translate-x-1/2 flex items-center justify-center play-text-container">
-                <div className="flex items-center gap-2 text-purple-500 font-semibold">
-                  <span className="text-lg">Play Video</span>
-                  <ChevronRight className="h-5 w-5" />
+              <div className="absolute left-1/2 bottom-1/5 transform -translate-x-1/2 flex items-center justify-center play-text-container">
+                <div className="flex items-center gap-1 text-purple-500 font-semibold">
+                  <span className="text-sm">Play Video</span>
+                  <ChevronRight className="h-4 w-4" />
                 </div>
               </div>
               <style dangerouslySetInnerHTML={{
