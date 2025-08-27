@@ -51,7 +51,7 @@ export const LearnIntroVideo = () => {
               onMouseLeave={() => setIsHovered(false)}
             >
               <img
-                src="/lovable-uploads/05bec858-f1cc-43ad-9d2c-08d06c0abf8c.png"
+                src="/lovable-uploads/773893a3-1536-4e6c-9c3d-2138464a82c4.png"
                 alt="Getting Started with Hobson AI"
                 className="w-full h-full object-cover"
               />
