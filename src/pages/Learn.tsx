@@ -3805,6 +3805,47 @@ Content-Type: multipart/form-data
 
         {/* Mobile Layout */}
         <div className="md:hidden">
+          {/* Mobile Topics Navigation */}
+          <div className="border-b bg-background sticky top-16 z-40">
+            <div className="px-4 py-3">
+              <select 
+                value={activeHorizontalTab}
+                onChange={(e) => {
+                  setActiveHorizontalTab(e.target.value);
+                  setActiveVerticalTab(getContextualVerticalTabs(e.target.value)[0]?.id || 'overview');
+                  setIsGlobalPageActive(false);
+                }}
+                className="w-full p-2 border border-border rounded-lg bg-background text-foreground"
+              >
+                {horizontalTabs.map((tab) => (
+                  <option key={tab.id} value={tab.id}>
+                    {tab.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+            
+            {/* Mobile Subtopic Navigation */}
+            {!isGlobalPageActive && getContextualVerticalTabs(activeHorizontalTab).length > 0 && (
+              <div className="px-4 pb-3">
+                <select 
+                  value={activeVerticalTab}
+                  onChange={(e) => {
+                    setActiveVerticalTab(e.target.value);
+                    setIsGlobalPageActive(false);
+                  }}
+                  className="w-full p-2 border border-border rounded-lg bg-background text-foreground text-sm"
+                >
+                  {getContextualVerticalTabs(activeHorizontalTab).map((tab) => (
+                    <option key={tab.id} value={tab.id}>
+                      {tab.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+          
           <div className="flex-1 min-h-[calc(100vh-8rem)] p-8">
             {renderContent()}
           </div>
