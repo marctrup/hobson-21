@@ -46,20 +46,11 @@ export const PricingHeroVideo = () => {
               <img
                 src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
                 alt="HEU Coin - Hobson Energy Units"
-                className="absolute right-4 top-1/2 w-1/2 h-auto object-contain animate-spin-y"
+                className="absolute right-4 top-1/2 w-1/2 h-auto object-contain"
                 style={{
-                  transform: 'translateY(-50%) scale(1.25)',
-                  animation: 'rotateZ 15s linear infinite'
+                  transform: 'translateY(-50%) scale(1.25)'
                 }}
               />
-              <style dangerouslySetInnerHTML={{
-                __html: `
-                  @keyframes rotateZ {
-                    from { transform: translateY(-50%) scale(1.25) rotate(0deg); }
-                    to { transform: translateY(-50%) scale(1.25) rotate(360deg); }
-                  }
-                `
-              }} />
               <div className="absolute left-[74px] top-1/2 transform -translate-y-1/2 flex items-center justify-center">
                 <div className="bg-gray-200 hover:bg-gray-300 rounded-full p-6 shadow-lg transition-all duration-300 hover:scale-110">
                   <Play className="h-12 w-12 text-primary fill-current" />
