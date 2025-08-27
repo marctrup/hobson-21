@@ -42,9 +42,6 @@ export const GlobalHeader = () => {
             <Link to="/contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Contact
             </Link>
-            <Link to="/pricing" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-              Pricing
-            </Link>
             <Link to="/learn" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
               Learn
             </Link>
@@ -85,14 +82,6 @@ export const GlobalHeader = () => {
                 title="Contact Real Estate Software Support"
               >
                 Contact
-              </Link>
-              <Link 
-                to="/pricing" 
-                className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
-                onClick={closeMobileMenu}
-                title="Pricing Information"
-              >
-                Pricing
               </Link>
               <Link 
                 to="/learn" 
