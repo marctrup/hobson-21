@@ -84,7 +84,7 @@ export const LearnIntroVideo = () => {
             {videoDialogOpen && (
               <iframe
                 className="rounded-lg"
-                src="https://player.vimeo.com/video/1116394421?autoplay=1&muted=1&byline=0&portrait=0&responsive=1"
+                src="https://player.vimeo.com/video/1108183128?autoplay=1&muted=1&byline=0&portrait=0&responsive=1"
                 title="Getting Started with Hobson AI"
                 frameBorder="0"
                 allow="autoplay; fullscreen; picture-in-picture"
