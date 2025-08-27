@@ -64,8 +64,8 @@ export const PricingHeroVideo = () => {
                 `
               }} />
               <div className="absolute left-[74px] top-1/2 transform -translate-y-1/2 flex items-center justify-center">
-                <div className="bg-red-500 hover:bg-red-600 rounded-full p-4 shadow-lg transition-all duration-300 hover:scale-110">
-                  <Play className="h-10 w-10 text-white fill-current" />
+                <div className="bg-red-500 hover:bg-red-600 rounded-full p-3.5 shadow-lg transition-all duration-300 hover:scale-110">
+                  <Play className="h-9 w-9 text-white fill-current" />
                 </div>
               </div>
             </div>
