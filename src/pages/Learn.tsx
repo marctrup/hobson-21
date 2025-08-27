@@ -2576,7 +2576,7 @@ Content-Type: multipart/form-data
                </div>
                
                {/* Video container with extra spacing */}
-               <div className="flex justify-center" style={{ marginTop: 'calc(6rem - 65px)', border: '2px solid red' }}>
+               <div className="flex justify-center" style={{ marginTop: 'calc(6rem - 65px)' }}>
                  <div 
                    ref={videoRef}
                    className={`transition-all duration-700 ${
@@ -2584,7 +2584,7 @@ Content-Type: multipart/form-data
                        ? 'animate-scale-in scale-100' 
                        : 'scale-95'
                    }`}
-                   style={{ transform: 'scale(1.0368)', transformOrigin: 'center' }}
+                   style={{ transform: 'scale(1.0368)', transformOrigin: 'center', border: '2px solid red' }}
                  >
                    <ScrollVideoPlayer 
                      videoId="1108183128"
