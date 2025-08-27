@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CheckCircle2, MessageSquare, Cog, CreditCard, Briefcase, Building2, TrendingUp } from "lucide-react";
 import { Helmet } from "react-helmet-async";
-import { LazyScrollVideo } from "@/components/LazyScrollVideo";
+import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
 const Pricing = () => {
   return <>
       <Helmet>
@@ -43,12 +43,7 @@ const Pricing = () => {
                 
                 {/* Right Container - Video Screen */}
                 <div className="flex justify-center">
-                  <LazyScrollVideo
-                    videoId="1113482209"
-                    title="HEU Coin - Hobson Energy Units Explained"
-                    description="Learn about Hobson Energy Units and our revolutionary pricing model"
-                    className="w-full max-w-[507px] h-auto aspect-video"
-                  />
+                  <PricingHeroVideo />
                 </div>
              </div>
           </div>

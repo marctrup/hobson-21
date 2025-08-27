@@ -8,8 +8,8 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
-import { LazyVideoDialog } from "@/components/LazyVideoDialog";
-import { LazyScrollVideo } from "@/components/LazyScrollVideo";
+import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
+import { HomepagePilotVideo } from "@/components/videos/HomepagePilotVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 // Lazy load video only when needed
 
@@ -193,7 +193,7 @@ export const Homepage = () => {
                   <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden relative" style={{
                   border: '10px solid #f0f0f0'
                 }}>
-                    <LazyVideoDialog thumbnailSrc="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" thumbnailAlt="Georgia - Hobson AI Assistant" videoId="1108183128" title="Meet Georgia - Property AI Assistant" description="Need more information? Meet Georgia" />
+                     <HomepageGeorgiaVideo />
                   </div>
                 </div>
 
@@ -258,14 +258,7 @@ export const Homepage = () => {
           </section>
 
           {/* Scroll Video */}
-          <LazyScrollVideo videoId="1108176938" title="Hobson AI Pilot Program" description="Learn more about our pilot program" className="container mx-auto px-4 mb-5" style={{
-          marginTop: '-40px'
-        }} />
-          <div className="container mx-auto px-4">
-            <div className="text-center mt-4">
-              <p className="text-lg text-muted-foreground">Want to know more about the pilot?</p>
-            </div>
-          </div>
+          <HomepagePilotVideo />
 
           {/* Security Badges */}
           <section className="py-4 md:py-12">

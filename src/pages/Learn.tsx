@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Menu, X, Plus } from 'lucide-react';
@@ -11,7 +11,7 @@ import { AuthDialog } from '@/components/features/AuthDialog';
 import { CreatePostDialog } from '@/components/features/CreatePostDialog';
 import { Button } from '@/components/ui/button';
 import { UseCasesContent } from '@/components/UseCasesContent';
-import { ScrollVideoPlayer } from '@/components/ScrollVideoPlayer';
+import { LearnIntroVideo } from '@/components/videos/LearnIntroVideo';
 
 const Learn = () => {
   const { user } = useAuth();
@@ -19,26 +19,6 @@ const Learn = () => {
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isVideoVisible, setIsVideoVisible] = useState(true);
-  const videoRef = useRef<HTMLDivElement>(null);
-
-  // Intersection observer for video pop animation
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVideoVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    if (videoRef.current) {
-      observer.observe(videoRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
   const [activeTocSection, setActiveTocSection] = useState('getting-started');
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
@@ -2575,24 +2555,8 @@ Content-Type: multipart/form-data
                  <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
                </div>
                
-               {/* Video container with extra spacing */}
-               <div className="flex justify-center" style={{ marginTop: 'calc(6rem - 105px)' }}>
-                  <div 
-                    ref={videoRef}
-                    className={`transition-all duration-700 w-[507px] ${
-                      isVideoVisible 
-                        ? 'animate-scale-in scale-100' 
-                        : 'scale-95'
-                    }`}
-                    style={{ transform: 'scale(1.0368)', transformOrigin: 'center', border: '2px solid red' }}
-                  >
-                   <ScrollVideoPlayer 
-                     videoId="1108183128"
-                     title="Getting Started with Hobson AI"
-                     description="Learn how to transform your property management with AI-powered document analysis"
-                   />
-                 </div>
-               </div>
+                {/* Video container with extra spacing */}
+                <LearnIntroVideo />
                
                {/* Description text below video - aligned with video container sides */}
                <div className="text-left" style={{ marginLeft: 'calc(50% - 507px * 1.0368 / 2)', marginRight: 'calc(50% - 507px * 1.0368 / 2)', marginTop: 'calc(3rem - 40px)', border: '2px solid red' }}>
