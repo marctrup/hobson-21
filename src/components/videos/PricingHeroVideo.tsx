@@ -43,15 +43,14 @@ export const PricingHeroVideo = () => {
               onMouseLeave={() => setIsHovered(false)}
               id="pricing-hero-video-container"
             >
-              <div className="absolute inset-0 flex items-center justify-center">
+              <div className="absolute left-1/2 top-1/3 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
                 <img
                   src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
                   alt="HEU Coin - Hobson Energy Units"
                   className="coin-animation"
                   style={{
                     width: '50%',
-                    height: 'auto',
-                    marginTop: '-5vh'
+                    height: 'auto'
                   }}
                 />
               </div>
@@ -80,7 +79,7 @@ export const PricingHeroVideo = () => {
                   }
                 `
               }} />
-              <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center" style={{ bottom: '3vh' }}>
+              <div className="absolute left-1/2 bottom-1/4 transform -translate-x-1/2 flex items-center justify-center">
                 <div className="bg-purple-500 hover:bg-purple-600 rounded-full p-2 sm:p-2.5 md:p-3 shadow-lg transition-all duration-300 hover:scale-110">
                   <Play className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-white fill-current" />
                 </div>
