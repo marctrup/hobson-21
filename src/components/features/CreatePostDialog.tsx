@@ -19,10 +19,15 @@ import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { PostSurvey } from './PostSurvey';
+import { sanitizeInput, sanitizeRichText } from '@/utils/security';
 
 const postSchema = z.object({
-  title: z.string().min(5, "Title must be at least 5 characters"),
-  description: z.string().optional(),
+  title: z.string()
+    .min(5, "Title must be at least 5 characters")
+    .max(200, "Title must be less than 200 characters"),
+  description: z.string()
+    .max(5000, "Description must be less than 5000 characters")
+    .optional(),
   category: z.enum([
     'feedback',
     'feature-request', 
@@ -94,11 +99,15 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
 
       const authorName = profile?.display_name || user.email || 'Anonymous';
 
+      // Sanitize inputs before saving
+      const sanitizedTitle = sanitizeInput(data.title);
+      const sanitizedDescription = data.description ? sanitizeRichText(data.description) : '';
+
       const { data: newPost, error } = await supabase
         .from('feature_requests')
         .insert({
-          title: data.title,
-          description: data.description || '',
+          title: sanitizedTitle,
+          description: sanitizedDescription,
           category: data.category,
           author_id: user.id,
           author_name: authorName
@@ -112,8 +121,8 @@ export function CreatePostDialog({ open, onOpenChange, onPostCreated }: CreatePo
       try {
         await supabase.functions.invoke('notify-feature-request', {
           body: {
-            title: data.title,
-            description: data.description || '',
+            title: sanitizedTitle,
+            description: sanitizedDescription,
             category: data.category,
             author_name: authorName,
             author_id: user.id

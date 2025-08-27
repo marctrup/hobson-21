@@ -134,7 +134,7 @@ const Blog = () => {
           featured_image_url: post.featured_image_url,
           published_at: post.published_at || post.updated_at,
           reading_time: post.reading_time,
-          author: { display_name: 'Admin' }, // Default author
+          author: { display_name: 'Hobson\'s Choice Team' }, // Official blog author
           categories: post.blog_post_categories?.map(pc => pc.blog_categories).filter(Boolean) || []
         })) || [];
         

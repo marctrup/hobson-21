@@ -16,9 +16,15 @@ import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
+import { sanitizeInput, isDisplayNameAllowed, getDisplayNameError } from '@/utils/security';
 
 const profileSchema = z.object({
-  display_name: z.string().min(2, "Display name must be at least 2 characters"),
+  display_name: z.string()
+    .min(2, "Display name must be at least 2 characters")
+    .max(50, "Display name must be less than 50 characters")
+    .refine((value) => isDisplayNameAllowed(value), {
+      message: "This display name is not allowed. Please choose a different name that doesn't impersonate staff or system accounts."
+    }),
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
@@ -56,10 +62,13 @@ export function ProfileUpdateDialog({ open, onOpenChange, onSuccess }: ProfileUp
     setIsLoading(true);
     
     try {
+      // Sanitize the input before saving
+      const sanitizedDisplayName = sanitizeInput(data.display_name);
+      
       const { error } = await supabase
         .from('profiles')
         .update({
-          display_name: data.display_name
+          display_name: sanitizedDisplayName
         })
         .eq('user_id', user.id);
 

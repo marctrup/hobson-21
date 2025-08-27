@@ -8,11 +8,18 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { sanitizeInput, isDisplayNameAllowed } from "@/utils/security";
 
 const authSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
   password: z.string().min(6, "Password must be at least 6 characters"),
-  username: z.string().min(2, "Username must be at least 2 characters").optional(),
+  username: z.string()
+    .min(2, "Username must be at least 2 characters")
+    .max(50, "Username must be less than 50 characters")
+    .refine((value) => !value || isDisplayNameAllowed(value), {
+      message: "This username is not allowed. Please choose a different name that doesn't impersonate staff or system accounts."
+    })
+    .optional(),
 });
 
 type AuthFormData = z.infer<typeof authSchema>;
@@ -42,13 +49,15 @@ export function AuthForm({ mode, onToggleMode, onSuccess }: AuthFormProps) {
       if (mode === "signup") {
         const redirectUrl = `${window.location.origin}/`;
         
+        const sanitizedUsername = data.username ? sanitizeInput(data.username) : data.email.split('@')[0];
+        
         const { error } = await supabase.auth.signUp({
           email: data.email,
           password: data.password,
           options: {
             emailRedirectTo: redirectUrl,
             data: {
-              display_name: data.username || data.email.split('@')[0]
+              display_name: sanitizedUsername
             }
           }
         });
