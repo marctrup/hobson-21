@@ -2550,7 +2550,7 @@ Content-Type: multipart/form-data
         <div className="flex-1">
           <div className="container mx-auto p-8 max-w-6xl mt-[10px]">
                {/* Welcome header above video - aligned with video left edge */}
-               <div className="mb-12" style={{ marginLeft: 'calc(50% - 507px * 1.0368 / 2)', border: '2px solid red' }}>
+               <div className="mb-12" style={{ marginLeft: 'calc(50% - 507px * 1.0368 / 2)' }}>
                  <h1 className="text-3xl font-bold text-foreground mb-2">Welcome</h1>
                  <p className="text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
                </div>
@@ -2559,7 +2559,7 @@ Content-Type: multipart/form-data
                 <LearnIntroVideo />
                
                {/* Description text below video - aligned with video container sides */}
-               <div className="text-left" style={{ marginLeft: 'calc(50% - 507px * 1.0368 / 2)', marginRight: 'calc(50% - 507px * 1.0368 / 2)', marginTop: 'calc(3rem - 40px)', border: '2px solid red' }}>
+               <div className="text-left" style={{ marginLeft: 'calc(50% - 507px * 1.0368 / 2)', marginRight: 'calc(50% - 507px * 1.0368 / 2)', marginTop: 'calc(3rem - 40px)' }}>
                  <p className="text-lg text-muted-foreground">Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.</p>
                </div>
 

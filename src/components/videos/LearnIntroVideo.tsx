@@ -34,7 +34,7 @@ export const LearnIntroVideo = () => {
             ? 'animate-scale-in scale-100' 
             : 'scale-95'
         }`}
-        style={{ transform: 'scale(1.0368)', transformOrigin: 'center', border: '2px solid red' }}
+        style={{ transform: 'scale(1.0368)', transformOrigin: 'center' }}
         id="learn-intro-video-container"
       >
         <Dialog 
