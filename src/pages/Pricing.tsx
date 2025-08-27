@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { CheckCircle2, MessageSquare, Cog, CreditCard, Briefcase, Building2, TrendingUp } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
+import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 const Pricing = () => {
   return <>
       <Helmet>
@@ -13,6 +14,8 @@ const Pricing = () => {
         <meta name="keywords" content="AI pricing, property management pricing, per-task billing, CRM alternative" />
       </Helmet>
 
+      <HomepageHeader />
+      
       <div className="min-h-screen" style={{
       backgroundColor: '#ffffff',
       backgroundImage: 'none'
