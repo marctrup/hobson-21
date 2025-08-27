@@ -32,7 +32,7 @@ const Pricing = () => {
         }}>
              <div className="grid lg:grid-cols-[1fr,1.5fr] gap-4 lg:gap-8 items-center w-full mx-auto">
                 {/* Left Container - Content */}
-                <div className="space-y-6 lg:space-y-8 text-center lg:text-left border-4 border-red-500">
+                <div className="space-y-6 lg:space-y-8 text-center lg:text-left">
                    <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-foreground lg:text-5xl xl:text-6xl">
                      From Energy to Outcomes —{" "}
                      <span className="bg-gradient-to-r from-purple-600 to-purple-700 bg-clip-text text-transparent">that's the Hobson way.</span>
