@@ -48,18 +48,18 @@ export const PricingHeroVideo = () => {
                 alt="HEU Coin - Hobson Energy Units"
                 className="absolute left-1/2 top-1/2 w-1/2 h-auto object-contain"
                 style={{
-                  transform: 'translateX(-50%) translateY(-50%) scale(1.35)',
+                  transform: 'translateX(-50%) translateY(-50%) scale(1.08)',
                   animation: 'spinY 12s linear infinite'
                 }}
               />
                <style dangerouslySetInnerHTML={{
                 __html: `
                   @keyframes spinY {
-                    0% { transform: translateX(-50%) translateY(-50%) scale(1.35) rotateY(0deg); }
-                    25% { transform: translateX(-50%) translateY(-50%) scale(1.35) rotateY(90deg); }
-                    50% { transform: translateX(-50%) translateY(-50%) scale(1.35) rotateY(180deg); }
-                    75% { transform: translateX(-50%) translateY(-50%) scale(1.35) rotateY(270deg); }
-                    100% { transform: translateX(-50%) translateY(-50%) scale(1.35) rotateY(360deg); }
+                    0% { transform: translateX(-50%) translateY(-50%) scale(1.08) rotateY(0deg); }
+                    25% { transform: translateX(-50%) translateY(-50%) scale(1.08) rotateY(90deg); }
+                    50% { transform: translateX(-50%) translateY(-50%) scale(1.08) rotateY(180deg); }
+                    75% { transform: translateX(-50%) translateY(-50%) scale(1.08) rotateY(270deg); }
+                    100% { transform: translateX(-50%) translateY(-50%) scale(1.08) rotateY(360deg); }
                   }
                 `
               }} />
