@@ -84,6 +84,7 @@ export const UseCasesContent = () => {
                 <div 
                   key={video.id} 
                   className="bg-card border rounded-lg shadow-sm overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-lg group cursor-pointer"
+                  onClick={() => window.open(video.vimeo_url, '_blank')}
                 >
                   {vimeoId ? (
                     <div className="aspect-video bg-muted relative overflow-hidden">
