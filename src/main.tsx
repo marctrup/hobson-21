@@ -4,39 +4,34 @@ import App from './App.tsx'
 import './index.css'
 import { env } from "@huggingface/transformers";
 
-async function resetHuggingFaceBrowserCacheOnce() {
-  // 1) Bypass cache for this run (so we fetch fresh files)
-  env.useBrowserCache = false;      // stops using the browser cache
-  env.allowLocalModels = false;     // ensures we fetch from HF hub/CDN
+async function resetHfCache() {
+  // Bypass cache for a clean fetch
+  env.useBrowserCache = false;      // stop reading from browser cache
+  env.allowLocalModels = false;     // force network fetch
 
-  // 2) Delete any existing Cache Storage entries related to transformers/models
+  // Clear Cache Storage
   if ("caches" in window) {
     const keys = await caches.keys();
     await Promise.all(
       keys
-        .filter((k) =>
-          /transformers|onnx|huggingface|models/i.test(k)
-        )
+        .filter((k) => /transformers|onnx|huggingface|models/i.test(k))
         .map((k) => caches.delete(k))
     );
   }
 
-  // 3) (Optional) Nuke specific IndexedDB databases if they exist
-  // Safe: only targets likely names used by libs; wrapped in try/catch.
-  const maybeDBs = ["transformers-cache", "models", "onnx-cache"];
-  for (const name of maybeDBs) {
+  // Clear likely IndexedDB databases (safe tries)
+  for (const name of ["transformers-cache", "models", "onnx-cache"]) {
     try { indexedDB.deleteDatabase(name); } catch {}
   }
 }
 
-// Run it ONCE, then mark done so it won't slow future loads.
-(async () => {
-  const FLAG = "hf_cache_reset_v1";
-  if (!localStorage.getItem(FLAG)) {
-    await resetHuggingFaceBrowserCacheOnce();
-    localStorage.setItem(FLAG, "1");
-  }
-})();
+// Run ONCE then remember we did it
+const HF_FLAG = "hf_cache_reset_v1";
+if (typeof window !== "undefined" && !localStorage.getItem(HF_FLAG)) {
+  window.addEventListener("load", () => {
+    resetHfCache().finally(() => localStorage.setItem(HF_FLAG, "1"));
+  });
+}
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
