@@ -163,7 +163,7 @@ export const UseCasesContent = () => {
               {selectedVideo && (
                 <div className="aspect-video">
                   <iframe
-                    src={`https://player.vimeo.com/video/${extractVimeoId(selectedVideo.vimeo_url)}?autoplay=1&title=0&byline=0&portrait=0`}
+                    src={`https://player.vimeo.com/video/${extractVimeoId(selectedVideo.vimeo_url)}?autoplay=1&muted=0&title=0&byline=0&portrait=0`}
                     className="w-full h-full"
                     frameBorder="0"
                     allow="autoplay; fullscreen; picture-in-picture"
