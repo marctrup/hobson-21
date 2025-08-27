@@ -43,6 +43,11 @@ export const PricingHeroVideo = () => {
               onMouseLeave={() => setIsHovered(false)}
               id="pricing-hero-video-container"
             >
+              <img
+                src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
+                alt="HEU Coin - Hobson Energy Units"
+                className="w-full h-full object-contain"
+              />
             </div>
           </DialogTrigger>
           <DialogContent 
