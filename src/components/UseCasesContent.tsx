@@ -61,7 +61,7 @@ export const UseCasesContent = () => {
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-4">Use Cases</h1>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Real feedback from our clients. These videos share honest stories about how Hobson AI is being used day to day.
+            Some clients don't want to be on camera, so we share their words through others.
           </p>
         </div>
 
