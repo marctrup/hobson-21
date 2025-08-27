@@ -49,14 +49,17 @@ export const PricingHeroVideo = () => {
                 className="absolute right-4 top-1/2 w-1/2 h-auto object-contain"
                 style={{
                   transform: 'translateY(-50%) scale(1.35)',
-                  animation: 'rotateY 12s linear infinite'
+                  animation: 'spinY 12s linear infinite'
                 }}
               />
               <style dangerouslySetInnerHTML={{
                 __html: `
-                  @keyframes rotateY {
-                    from { transform: translateY(-50%) scale(1.35) rotateY(0deg); }
-                    to { transform: translateY(-50%) scale(1.35) rotateY(360deg); }
+                  @keyframes spinY {
+                    0% { transform: translateY(-50%) scale(1.35) rotateY(0deg); }
+                    25% { transform: translateY(-50%) scale(1.35) rotateY(90deg); }
+                    50% { transform: translateY(-50%) scale(1.35) rotateY(180deg); }
+                    75% { transform: translateY(-50%) scale(1.35) rotateY(270deg); }
+                    100% { transform: translateY(-50%) scale(1.35) rotateY(360deg); }
                   }
                 `
               }} />
