@@ -51,7 +51,7 @@ export const PricingHeroVideo = () => {
                   style={{
                     width: '50%',
                     height: 'auto',
-                    marginTop: '-10px'
+                    marginTop: '-5vh'
                   }}
                 />
               </div>
@@ -80,7 +80,7 @@ export const PricingHeroVideo = () => {
                   }
                 `
               }} />
-              <div className="absolute left-1/2 bottom-2.5 sm:bottom-3 transform -translate-x-1/2 flex items-center justify-center">
+              <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center" style={{ bottom: '3vh' }}>
                 <div className="bg-purple-500 hover:bg-purple-600 rounded-full p-2 sm:p-2.5 md:p-3 shadow-lg transition-all duration-300 hover:scale-110">
                   <Play className="h-5 w-5 sm:h-6 sm:w-6 md:h-7 md:w-7 text-white fill-current" />
                 </div>
