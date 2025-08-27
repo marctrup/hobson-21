@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { X } from "lucide-react";
+import { X, ChevronRight } from "lucide-react";
 
 export const PricingHeroVideo = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -54,10 +54,20 @@ export const PricingHeroVideo = () => {
                   }}
                 />
               </div>
+              <div className="absolute left-1/2 bottom-1/4 transform -translate-x-1/2 flex items-center justify-center play-text-container">
+                <div className="flex items-center gap-2 text-purple-500 font-semibold">
+                  <span className="text-lg">Play Video</span>
+                  <ChevronRight className="h-5 w-5" />
+                </div>
+              </div>
               <style dangerouslySetInnerHTML={{
                 __html: `
                   .coin-animation {
                     animation: spinY 12s linear infinite;
+                  }
+                  
+                  .play-text-container {
+                    transform: translateX(-50%) scale(2.376);
                   }
                 
                   @keyframes spinY {
@@ -69,6 +79,10 @@ export const PricingHeroVideo = () => {
                   }
                   
                   @media (max-width: 640px) {
+                    .play-text-container {
+                      transform: translateX(-50%) scale(1.98);
+                    }
+                  
                     @keyframes spinY {
                       0% { transform: scale(1.98) rotateY(0deg); }
                       25% { transform: scale(1.98) rotateY(90deg); }
