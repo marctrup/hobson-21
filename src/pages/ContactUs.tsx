@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, FormEvent } from "react";
 import { toast } from "@/hooks/use-toast";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import { Helmet } from "react-helmet-async";
 
 const ContactUs = () => {
   const navigate = useNavigate();
@@ -142,6 +143,14 @@ const ContactUs = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Contact Us - Hobson's Choice AI | Get Property Intelligence Support</title>
+        <meta name="description" content="Contact Hobson's Choice AI for property management support, questions about our AI document intelligence platform, or to discuss your property technology needs." />
+        <meta name="keywords" content="contact Hobson AI, property management support, AI document analysis contact, real estate technology help" />
+        <meta property="og:title" content="Contact Us - Hobson's Choice AI" />
+        <meta property="og:description" content="Get support and answers for your property management AI needs. Contact our team today." />
+        <meta property="og:type" content="website" />
+      </Helmet>
       <GlobalHeader />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
