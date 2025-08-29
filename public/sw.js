@@ -70,10 +70,21 @@ self.addEventListener('fetch', (event) => {
           return fetch(request).then((response) => {
             // Cache successful responses for static assets
             if (response.status === 200) {
-              const responseClone = response.clone();
-              caches.open(CACHE_NAME).then((cache) => {
-                cache.put(request, responseClone);
+              // Add cache headers for better performance
+              const headers = new Headers(response.headers);
+              headers.set('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year for images
+              
+              const responseClone = new Response(response.body, {
+                status: response.status,
+                statusText: response.statusText,
+                headers: headers
               });
+              
+              caches.open(CACHE_NAME).then((cache) => {
+                cache.put(request, responseClone.clone());
+              });
+              
+              return responseClone;
             }
             return response;
           });
