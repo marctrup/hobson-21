@@ -4,9 +4,11 @@ const urlsToCache = [
   '/',
   '/src/main.tsx',
   '/src/index.css',
-  // Critical images
+  // Critical images with explicit caching
   '/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png', // Logo
   '/lovable-uploads/270231d1-a007-4b5e-82c2-696ea7ccf2f5.png', // Header logo
+  '/lovable-uploads/4351fb54-1d77-416e-9474-3c80e483a83c.png', // Large image 1
+  '/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png', // Large image 2
   // Key static assets
   '/robots.txt',
   '/sitemap.xml',
@@ -67,7 +69,10 @@ self.addEventListener('fetch', (event) => {
     request.url.includes('/blog-images/') ||
     request.url.includes('/lovable-uploads/') ||
     request.url.includes('/assets/') ||
-    /\.(png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|otf|css|js)$/i.test(request.url)
+    request.url.match(/\.(png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|otf|css|js)$/i) ||
+    // Explicit handling for problematic large images
+    request.url.includes('4351fb54-1d77-416e-9474-3c80e483a83c.png') ||
+    request.url.includes('b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png')
   ) {
     // Cache first for all static assets with long cache times
     event.respondWith(

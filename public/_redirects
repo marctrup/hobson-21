@@ -1,0 +1,9 @@
+# Netlify redirects and headers
+
+# SPA fallback
+/*    /index.html   200
+
+# Cache headers for static assets
+/lovable-uploads/*  200  Cache-Control: public,max-age=31536000,immutable
+/blog-images/*      200  Cache-Control: public,max-age=31536000,immutable
+/assets/*           200  Cache-Control: public,max-age=31536000,immutable
