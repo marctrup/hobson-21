@@ -4,11 +4,13 @@ const urlsToCache = [
   '/',
   '/src/main.tsx',
   '/src/index.css',
-  // Critical images with explicit caching
+  // Critical images with explicit caching - Add ALL the problematic ones
   '/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png', // Logo
   '/lovable-uploads/270231d1-a007-4b5e-82c2-696ea7ccf2f5.png', // Header logo
   '/lovable-uploads/4351fb54-1d77-416e-9474-3c80e483a83c.png', // Large image 1
   '/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png', // Large image 2
+  '/lovable-uploads/a1a372bb-1649-43e9-ad51-c41d6fc762a1.png', // Image 3
+  '/blog-images/boy-praying-with-bible.png', // Blog image
   // Key static assets
   '/robots.txt',
   '/sitemap.xml',
@@ -38,30 +40,18 @@ self.addEventListener('activate', (event) => {
   );
 });
 
-// Fetch with Network First strategy for HTML, Cache First for assets
+// Fetch with Cache First strategy for all assets, Network First for HTML
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   const url = new URL(request.url);
 
-  // Skip cross-origin requests
+  // Skip cross-origin requests except for same-site
   if (url.origin !== location.origin) {
     return;
   }
 
-  if (request.destination === 'document') {
-    // Network first for HTML documents
-    event.respondWith(
-      fetch(request)
-        .then((response) => {
-          const responseClone = response.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(request, responseClone);
-          });
-          return response;
-        })
-        .catch(() => caches.match(request))
-    );
-  } else if (
+  // Cache-first strategy for ALL static assets
+  if (
     request.destination === 'image' || 
     request.destination === 'script' || 
     request.destination === 'style' || 
@@ -70,64 +60,65 @@ self.addEventListener('fetch', (event) => {
     request.url.includes('/lovable-uploads/') ||
     request.url.includes('/assets/') ||
     request.url.match(/\.(png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|otf|css|js)$/i) ||
-    // Explicit handling for problematic large images
+    // Explicit handling for problematic large images and JS files
     request.url.includes('4351fb54-1d77-416e-9474-3c80e483a83c.png') ||
-    request.url.includes('b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png')
+    request.url.includes('b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png') ||
+    request.url.includes('boy-praying-with-bible.png') ||
+    request.url.includes('a1a372bb-1649-43e9-ad51-c41d6fc762a1.png') ||
+    request.url.includes('transformers.web-') ||
+    request.url.includes('react-vendor-') ||
+    request.url.includes('-BxAcWvgF.js') ||
+    request.url.includes('-WFf3rrDU.js')
   ) {
-    // Cache first for all static assets with long cache times
     event.respondWith(
-      caches.match(request)
-        .then((cachedResponse) => {
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.match(request).then(cachedResponse => {
           if (cachedResponse) {
-            return cachedResponse;
+            // Return cached version with proper headers
+            const response = cachedResponse.clone();
+            return response;
           }
           
-          return fetch(request).then((fetchResponse) => {
-            // Only cache successful responses
-            if (fetchResponse.status === 200) {
-              // Clone response and add long cache headers
-              const responseHeaders = new Headers(fetchResponse.headers);
+          // Fetch from network and cache
+          return fetch(request).then(networkResponse => {
+            if (networkResponse.status === 200) {
+              // Clone and add cache headers
+              const responseHeaders = new Headers(networkResponse.headers);
               responseHeaders.set('Cache-Control', 'public, max-age=31536000, immutable');
               responseHeaders.set('Expires', new Date(Date.now() + 31536000000).toUTCString());
               
-              const cachedResponse = new Response(fetchResponse.body, {
-                status: fetchResponse.status,
-                statusText: fetchResponse.statusText,
+              const cachedResponse = new Response(networkResponse.body, {
+                status: networkResponse.status,
+                statusText: networkResponse.statusText,
                 headers: responseHeaders
               });
               
               // Cache the response
-              caches.open(CACHE_NAME).then((cache) => {
-                cache.put(request, cachedResponse.clone());
-              });
-              
+              cache.put(request, cachedResponse.clone());
               return cachedResponse;
             }
-            return fetchResponse;
+            return networkResponse;
           }).catch(() => {
             // Return cached version if network fails
-            return caches.match(request);
+            return cache.match(request) || fetch(request);
           });
-        })
+        });
+      })
     );
-  } else if (request.url.includes('.json') || request.url.includes('robots.txt') || request.url.includes('sitemap.xml')) {
-    // Cache first for static data files
+  } else if (request.destination === 'document') {
+    // Network first for HTML documents
     event.respondWith(
-      caches.match(request)
+      fetch(request)
         .then((response) => {
-          if (response) {
-            return response;
+          if (response.status === 200) {
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(request, responseClone);
+            });
           }
-          return fetch(request).then((response) => {
-            if (response.status === 200) {
-              const responseClone = response.clone();
-              caches.open(CACHE_NAME).then((cache) => {
-                cache.put(request, responseClone);
-              });
-            }
-            return response;
-          });
+          return response;
         })
+        .catch(() => caches.match(request))
     );
   }
 });
