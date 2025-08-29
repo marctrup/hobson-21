@@ -1,5 +1,5 @@
 // Service Worker for caching and performance
-const CACHE_NAME = 'hobson-ai-v5';
+const CACHE_NAME = 'hobson-ai-v6';
 const urlsToCache = [
   '/',
   '/src/main.tsx',
@@ -59,34 +59,49 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(() => caches.match(request))
     );
-  } else if (request.destination === 'image' || request.destination === 'script' || request.destination === 'style' || request.destination === 'font' || request.url.includes('/blog-images/')) {
-    // Cache first for static assets (images, JS, CSS, fonts, blog images)
+  } else if (
+    request.destination === 'image' || 
+    request.destination === 'script' || 
+    request.destination === 'style' || 
+    request.destination === 'font' ||
+    request.url.includes('/blog-images/') ||
+    request.url.includes('/lovable-uploads/') ||
+    request.url.includes('/assets/') ||
+    /\.(png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|ttf|otf|css|js)$/i.test(request.url)
+  ) {
+    // Cache first for all static assets with long cache times
     event.respondWith(
       caches.match(request)
-        .then((response) => {
-          if (response) {
-            return response;
+        .then((cachedResponse) => {
+          if (cachedResponse) {
+            return cachedResponse;
           }
-          return fetch(request).then((response) => {
-            // Cache successful responses for static assets
-            if (response.status === 200) {
-              // Add cache headers for better performance
-              const headers = new Headers(response.headers);
-              headers.set('Cache-Control', 'public, max-age=31536000, immutable'); // 1 year for images
+          
+          return fetch(request).then((fetchResponse) => {
+            // Only cache successful responses
+            if (fetchResponse.status === 200) {
+              // Clone response and add long cache headers
+              const responseHeaders = new Headers(fetchResponse.headers);
+              responseHeaders.set('Cache-Control', 'public, max-age=31536000, immutable');
+              responseHeaders.set('Expires', new Date(Date.now() + 31536000000).toUTCString());
               
-              const responseClone = new Response(response.body, {
-                status: response.status,
-                statusText: response.statusText,
-                headers: headers
+              const cachedResponse = new Response(fetchResponse.body, {
+                status: fetchResponse.status,
+                statusText: fetchResponse.statusText,
+                headers: responseHeaders
               });
               
+              // Cache the response
               caches.open(CACHE_NAME).then((cache) => {
-                cache.put(request, responseClone.clone());
+                cache.put(request, cachedResponse.clone());
               });
               
-              return responseClone;
+              return cachedResponse;
             }
-            return response;
+            return fetchResponse;
+          }).catch(() => {
+            // Return cached version if network fails
+            return caches.match(request);
           });
         })
     );
