@@ -1,9 +1,9 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
@@ -54,6 +54,31 @@ const queryClient = new QueryClient({
   },
 });
 
+// Declare global dataLayer for GTM
+declare global {
+  interface Window {
+    dataLayer: any[];
+  }
+}
+
+// GTM Page Tracking Component
+const GTMPageTracker = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Track page views for GTM
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        event: 'page_view',
+        page_path: location.pathname + location.search,
+        page_title: document.title
+      });
+    }
+  }, [location]);
+
+  return null;
+};
+
 const App = () => {
   return (
   <HelmetProvider>
@@ -71,6 +96,7 @@ const App = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <GTMPageTracker />
           <Suspense fallback={<PageLoader />}>
             <Routes>
               {/* Check if we're on pilot subdomain */}
