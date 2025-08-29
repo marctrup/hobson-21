@@ -234,6 +234,7 @@ const LandingPageA = () => {
                    size="lg" 
                    className="text-lg px-8 py-6 bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70"
                    onClick={() => document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' })}
+                   id="landing-a-hero-cta"
                  >
                    {CONTENT.hero.ctaButton}
                  </Button>
@@ -687,7 +688,7 @@ const LandingPageA = () => {
                 className="mt-2"
               />
             </div>
-            <Button onClick={handleAntiBotSubmit} className="w-full">
+            <Button onClick={handleAntiBotSubmit} className="w-full" id="landing-a-antibot-submit">
               {CONTENT.dialogs.antiBot.submitButton}
             </Button>
           </div>

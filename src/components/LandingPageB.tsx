@@ -172,6 +172,7 @@ const LandingPageB = () => {
           size="lg" 
           className="text-lg px-8 py-6"
           onClick={() => document.getElementById('pilot-form')?.scrollIntoView({ behavior: 'smooth' })}
+          id="landing-b-hero-cta"
         >
           {CONTENT.hero.ctaButton}
         </Button>
@@ -504,7 +505,7 @@ const LandingPageB = () => {
                 className="mt-2"
               />
             </div>
-            <Button onClick={handleAntiBotSubmit} className="w-full">
+            <Button onClick={handleAntiBotSubmit} className="w-full" id="landing-b-antibot-submit">
               Submit
             </Button>
           </div>

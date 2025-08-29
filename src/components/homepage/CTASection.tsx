@@ -23,6 +23,7 @@ export const CTASection = () => {
                 <Link 
                   to="/contact"
                   title="Get in touch to start your real estate ai journey"
+                  id="cta-section-join-pilot"
                 >
                   Join our pilot
                   <ArrowRight className="ml-2 w-5 h-5" />

@@ -110,7 +110,7 @@ export const Homepage = () => {
                     A 24/7 assistant that answers property questions with citations from your documents — delivering accuracy and insights you can trust.
                   </p>
                   
-                  <a href="#pilot-section" className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group">
+                  <a href="#pilot-section" className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group" id="homepage-hero-assistant-cta">
                     <div className="inline-flex items-center gap-2 text-purple-600 hover:text-purple-700 font-medium text-lg">
                       Your Free AI Property Assistant
                       <ArrowRight className="h-5 w-5 transition-transform duration-200 group-hover:translate-x-1" />
@@ -249,7 +249,7 @@ export const Homepage = () => {
                 </p>
                 <div className="mb-8">
                   <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                    <Link to="/pilot_form">Apply to join our Pilot →</Link>
+                    <Link to="/pilot_form" id="homepage-pilot-apply-cta">Apply to join our Pilot →</Link>
                   </SimpleButton>
                 </div>
               </div>

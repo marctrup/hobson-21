@@ -116,6 +116,7 @@ const LandingPageC = () => {
                   formSection?.scrollIntoView({ behavior: 'smooth' });
                 }}
                 className="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-4 text-lg rounded-lg shadow-lg transition-all duration-300 hover:shadow-xl"
+                id="landing-c-apply-pilot-cta"
               >
                 Apply for the Free Pilot
               </Button>
