@@ -175,39 +175,6 @@ export type Database = {
         }
         Relationships: []
       }
-      contact_messages_encrypted: {
-        Row: {
-          created_at: string
-          email_encrypted: string | null
-          email_hash: string | null
-          id: string
-          message_encrypted: string | null
-          name_encrypted: string | null
-          phone_encrypted: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          email_encrypted?: string | null
-          email_hash?: string | null
-          id?: string
-          message_encrypted?: string | null
-          name_encrypted?: string | null
-          phone_encrypted?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          email_encrypted?: string | null
-          email_hash?: string | null
-          id?: string
-          message_encrypted?: string | null
-          name_encrypted?: string | null
-          phone_encrypted?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
       feature_request_comments: {
         Row: {
           author_name: string
@@ -448,6 +415,7 @@ export type Database = {
         Row: {
           created_at: string
           display_name: string | null
+          email: string | null
           id: string
           updated_at: string
           user_id: string
@@ -455,6 +423,7 @@ export type Database = {
         Insert: {
           created_at?: string
           display_name?: string | null
+          email?: string | null
           id?: string
           updated_at?: string
           user_id: string
@@ -462,78 +431,10 @@ export type Database = {
         Update: {
           created_at?: string
           display_name?: string | null
+          email?: string | null
           id?: string
           updated_at?: string
           user_id?: string
-        }
-        Relationships: []
-      }
-      rate_limits: {
-        Row: {
-          action: string
-          attempts: number
-          blocked_until: string | null
-          first_attempt: string
-          id: string
-          identifier: string
-          last_attempt: string
-        }
-        Insert: {
-          action: string
-          attempts?: number
-          blocked_until?: string | null
-          first_attempt?: string
-          id?: string
-          identifier: string
-          last_attempt?: string
-        }
-        Update: {
-          action?: string
-          attempts?: number
-          blocked_until?: string | null
-          first_attempt?: string
-          id?: string
-          identifier?: string
-          last_attempt?: string
-        }
-        Relationships: []
-      }
-      security_audit_log: {
-        Row: {
-          action: string
-          created_at: string
-          id: string
-          ip_address: unknown | null
-          new_values: Json | null
-          old_values: Json | null
-          record_id: string | null
-          table_name: string
-          user_agent: string | null
-          user_id: string | null
-        }
-        Insert: {
-          action: string
-          created_at?: string
-          id?: string
-          ip_address?: unknown | null
-          new_values?: Json | null
-          old_values?: Json | null
-          record_id?: string | null
-          table_name: string
-          user_agent?: string | null
-          user_id?: string | null
-        }
-        Update: {
-          action?: string
-          created_at?: string
-          id?: string
-          ip_address?: unknown | null
-          new_values?: Json | null
-          old_values?: Json | null
-          record_id?: string | null
-          table_name?: string
-          user_agent?: string | null
-          user_id?: string | null
         }
         Relationships: []
       }
@@ -641,40 +542,9 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      check_contact_email_exists: {
-        Args: { p_email: string }
-        Returns: boolean
-      }
-      check_rate_limit: {
-        Args: {
-          p_action: string
-          p_identifier: string
-          p_max_attempts?: number
-          p_window_minutes?: number
-        }
-        Returns: boolean
-      }
       get_current_user_role: {
         Args: Record<PropertyKey, never>
         Returns: Database["public"]["Enums"]["app_role"]
-      }
-      get_decrypted_contact_messages: {
-        Args: Record<PropertyKey, never>
-        Returns: {
-          created_at: string
-          email: string
-          id: string
-          message: string
-          name: string
-          phone: string
-          updated_at: string
-        }[]
-      }
-      get_safe_author_info: {
-        Args: { author_user_id: string }
-        Returns: {
-          display_name: string
-        }[]
       }
       get_safe_profile_data: {
         Args: { profile_user_id: string }
@@ -692,25 +562,6 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
-      }
-      insert_encrypted_contact_message: {
-        Args: {
-          p_email: string
-          p_message: string
-          p_name: string
-          p_phone?: string
-        }
-        Returns: string
-      }
-      log_security_event: {
-        Args: {
-          p_action: string
-          p_new_values?: Json
-          p_old_values?: Json
-          p_record_id?: string
-          p_table_name: string
-        }
-        Returns: undefined
       }
       make_user_admin: {
         Args: { user_email: string }

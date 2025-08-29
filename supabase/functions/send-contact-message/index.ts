@@ -41,42 +41,29 @@ serve(async (req) => {
       emailExistsMessage = '\n\nNote: This email has previously submitted a pilot application.'
     }
 
-    // Insert into encrypted contact_messages table using secure function
-    console.log('Attempting to insert encrypted contact message for:', email)
-    const { data: contactId, error: dbError } = await supabase
-      .rpc('insert_encrypted_contact_message', {
-        p_name: name,
-        p_email: email,
-        p_message: reason,
-        p_phone: phone || null
+    // Insert into contact_messages table
+    console.log('Attempting to insert contact message for:', email)
+    const { error: dbError } = await supabase
+      .from('contact_messages')
+      .insert({
+        name,
+        email,
+        phone: phone || null,
+        message: reason
       })
 
     let isDuplicate = false;
     if (dbError) {
       console.error('Database insert error:', dbError)
-      // Handle encryption key not configured error gracefully
-      if (dbError.message && dbError.message.includes('Encryption key not configured')) {
-        console.log('Encryption not configured - falling back to unencrypted storage')
-        // Fallback to original table for now
-        const { error: fallbackError } = await supabase
-          .from('contact_messages')
-          .insert({
-            name,
-            email,
-            phone: phone || null,
-            message: reason
-          })
-        
-        if (fallbackError && fallbackError.code === '23505') {
-          isDuplicate = true;
-        } else if (fallbackError) {
-          throw new Error(`Database error: ${fallbackError.message}`)
-        }
+      // If it's a unique constraint violation, handle it gracefully
+      if (dbError.code === '23505') {
+        console.log('Unique constraint violation detected - duplicate contact message')
+        isDuplicate = true;
       } else {
         throw new Error(`Database error: ${dbError.message}`)
       }
     } else {
-      console.log('New encrypted contact message saved to database with ID:', contactId)
+      console.log('New contact message saved to database')
     }
 
     // Create HTML template with unsubscribe link
