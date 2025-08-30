@@ -1,5 +1,6 @@
 import { StrictMode } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 function Ok() { 
   return <button>ok</button>; 
@@ -8,11 +9,13 @@ function Ok() {
 export default function App() {
   return (
     <StrictMode>
-      <BrowserRouter>
-        <Routes>
-          <Route path="*" element={<Ok />} />
-        </Routes>
-      </BrowserRouter>
+      <HelmetProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="*" element={<Ok />} />
+          </Routes>
+        </BrowserRouter>
+      </HelmetProvider>
     </StrictMode>
   );
 }
