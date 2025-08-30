@@ -1,54 +1,36 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
+import { ThemeProvider } from "next-themes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/sonner";
+import { Homepage } from "@/components/Homepage";
+import Blog from "@/pages/Blog";
+import Pricing from "@/pages/Pricing";
+import ContactUs from "@/pages/ContactUs";
+import Learn from "@/pages/Learn";
 
-function BasicHomepage() { 
-  return (
-    <div className="min-h-screen bg-background">
-      {/* Simple Header */}
-      <header className="border-b bg-background/95 backdrop-blur sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <div className="text-xl font-bold">Hobson AI</div>
-            <nav className="flex items-center gap-6">
-              <Link to="/pricing" className="text-muted-foreground hover:text-foreground">Pricing</Link>
-              <Link to="/blog" className="text-muted-foreground hover:text-foreground">Blog</Link>
-              <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
-              <Link to="/learn" className="text-muted-foreground hover:text-foreground">Learn</Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-      
-      {/* Simple Hero */}
-      <main className="container mx-auto px-4 py-16">
-        <div className="text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              AI-powered document insights
-            </span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8">
-            Transform your property documents with intelligent analysis
-          </p>
-        </div>
-      </main>
-    </div>
-  );
-}
-
-function TestPage() { 
-  return <div>Test page placeholder</div>; 
-}
+const queryClient = new QueryClient();
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<BasicHomepage />} />
-        <Route path="/blog" element={<TestPage />} />
-        <Route path="/pricing" element={<TestPage />} />
-        <Route path="/contact" element={<TestPage />} />
-        <Route path="/learn" element={<TestPage />} />
-      </Routes>
-    </BrowserRouter>
+    <React.StrictMode>
+      <HelmetProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/learn" element={<Learn />} />
+              </Routes>
+              <Toaster />
+            </BrowserRouter>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </HelmetProvider>
+    </React.StrictMode>
   );
 }
