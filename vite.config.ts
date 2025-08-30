@@ -18,7 +18,6 @@ export default defineConfig(({ mode }) => ({
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
-    dedupe: ["react", "react-dom"],
   },
   build: {
     target: 'esnext',
@@ -26,10 +25,6 @@ export default defineConfig(({ mode }) => ({
     cssMinify: true,
     sourcemap: false,
     chunkSizeWarningLimit: 1000,
-    commonjsOptions: {
-      include: [/node_modules/],
-      transformMixedEsModules: true,
-    },
     rollupOptions: {
       output: {
         manualChunks: (id) => {

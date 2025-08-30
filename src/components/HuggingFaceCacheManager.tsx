@@ -1,4 +1,3 @@
-import React from 'react';
 import { useHuggingFaceCacheReset } from '../hooks/useHuggingFaceCacheReset';
 
 export const HuggingFaceCacheManager = () => {

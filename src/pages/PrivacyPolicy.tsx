@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Privacy Policy | Hobson AI - Real Estate AI</title>
+        <title>Privacy Policy | Hobson AI - Property Management Software</title>
         <meta name="description" content="Privacy Policy for Hobson AI - Learn how we protect and handle your personal information and business data." />
         <meta name="keywords" content="privacy policy, data protection, security, AI property management, GDPR compliance" />
         <meta property="og:title" content="Privacy Policy | Hobson AI" />

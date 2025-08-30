@@ -1,7 +1,7 @@
 export const CONTENT_VARIANT = {
   // SEO and Meta
   seo: {
-    title: "Hobson AI - Real Estate AI with AI Document Intelligence",
+    title: "Hobson AI - Property Management Software with AI Document Intelligence",
     description: "Stop wasting time on manual document review. Our AI-powered platform instantly extracts insights from a tenancy docuemnt and delivers answers that drive decisions.",
   },
 

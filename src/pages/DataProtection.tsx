@@ -6,7 +6,7 @@ const DataProtection = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Data Protection & Security Policy | Hobson AI - Real Estate AI</title>
+        <title>Data Protection & Security Policy | Hobson AI - Property Management Software</title>
         <meta name="description" content="Learn about Hobson AI's data protection and security measures including GDPR compliance, encryption, and secure hosting." />
         <meta name="keywords" content="data protection, security policy, GDPR compliance, data encryption, secure hosting, AI property management" />
         <meta property="og:title" content="Data Protection & Security Policy | Hobson AI" />
