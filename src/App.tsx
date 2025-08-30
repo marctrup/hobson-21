@@ -84,10 +84,12 @@ const App = () => {
     <HelmetProvider>
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
+          <Toaster />
+          <Sonner />
           <div className="min-h-screen flex items-center justify-center bg-white">
             <div className="text-center">
-              <h1 className="text-2xl font-bold text-black">Step 3: + QueryClient</h1>
-              <p className="text-gray-600">Testing QueryClient...</p>
+              <h1 className="text-2xl font-bold text-black">Step 4: + Toaster Components</h1>
+              <p className="text-gray-600">Testing Toaster/Sonner - likely culprit...</p>
             </div>
           </div>
         </QueryClientProvider>
