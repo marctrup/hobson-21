@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { CheckCircle2, MessageSquare, Cog, CreditCard, Briefcase, Building2, TrendingUp } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
@@ -314,7 +313,7 @@ const Pricing = () => {
         </section>
 
 
-        {/* FAQ Section */}
+        {/* FAQ Section - TEMPORARILY DISABLED FOR DEBUGGING */}
         <section className="py-24 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-16">
@@ -323,276 +322,26 @@ const Pricing = () => {
             </div>
             
             <div className="max-w-3xl mx-auto">
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger>What does the free plan include?</AccordionTrigger>
-                  <AccordionContent>
-                    On the free plan, you get 1 HEU per day, with a total limit of 5 HEUs per month. Example: If you use all 1 HEU every day for 5 days (5 HEUs total), you'll reach the monthly limit and won't be able to use any more credits until it resets at the end of the 1-month period.
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-2">
-                  <AccordionTrigger>What is a HEU?</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-4">
-                      <p>
-                        HEUs are Hobson's currency. You spend them whenever Hobson works on something for you. The amount of HEUs used depends on how complex the task is — simple jobs use fewer HEUs, complex jobs use more.
-                      </p>
-                      
-                      <p>This means you only spend what you need:</p>
-                      
-                      <ul className="list-disc list-inside space-y-1 ml-4">
-                        <li>Small, quick answers cost very little.</li>
-                        <li>Bigger, more detailed work costs more.</li>
-                      </ul>
-                      
-                      <div className="mt-6">
-                        <h4 className="font-semibold mb-3">Here are some example tasks and their HEU cost:</h4>
-                        <div className="overflow-x-auto">
-                          <table className="w-full border-collapse border border-border rounded-lg">
-                            <thead>
-                              <tr className="bg-muted/50">
-                                <th className="border border-border p-3 text-left font-medium">Example Task</th>
-                                <th className="border border-border p-3 text-left font-medium">Work Done</th>
-                                <th className="border border-border p-3 text-left font-medium">HEUs</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td className="border border-border p-3">Reading a simple document (e.g. certificate)</td>
-                                <td className="border border-border p-3">Scans and summarises</td>
-                                <td className="border border-border p-3 font-medium">0.5</td>
-                              </tr>
-                              <tr className="bg-muted/20">
-                                <td className="border border-border p-3">Reading a medium document (e.g. deed)</td>
-                                <td className="border border-border p-3">Reviews, extracts key info</td>
-                                <td className="border border-border p-3 font-medium">1.4</td>
-                              </tr>
-                              <tr>
-                                <td className="border border-border p-3">Reading a complex document (e.g. lease)</td>
-                                <td className="border border-border p-3">Full detailed review and breakdown</td>
-                                <td className="border border-border p-3 font-medium">16.9</td>
-                              </tr>
-                              <tr className="bg-muted/20">
-                                <td className="border border-border p-3">Asking a simple query (e.g. "What is the rent?")</td>
-                                <td className="border border-border p-3">Finds and returns one fact</td>
-                                <td className="border border-border p-3 font-medium">0.05</td>
-                              </tr>
-                              <tr>
-                                <td className="border border-border p-3">Asking a medium query (e.g. "List all rents")</td>
-                                <td className="border border-border p-3">Searches and compiles several data points</td>
-                                <td className="border border-border p-3 font-medium">0.26</td>
-                              </tr>
-                              <tr className="bg-muted/20">
-                                <td className="border border-border p-3">Asking a complex query (e.g. "Build a tenancy report")</td>
-                                <td className="border border-border p-3">Gathers multiple details, formats a full report</td>
-                                <td className="border border-border p-3 font-medium">0.54</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-3">
-                  <AccordionTrigger>What document types does Hobson understand?</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-6">
-                      <p className="text-muted-foreground leading-relaxed">
-                        Hobson works with a wide range of property-related documents — and this list is growing every week.
-                      </p>
-                      
-                      <div className="space-y-5">
-                        <div className="border-l-4 border-primary pl-4">
-                          <h4 className="font-semibold text-foreground mb-2">1. Right to Occupy (RTO) Documents</h4>
-                          <p className="text-sm text-muted-foreground mb-3">
-                            These are the main agreements that give someone the legal right to occupy a property.
-                          </p>
-                          <div className="text-sm">
-                            <p className="font-medium text-foreground mb-1">Examples:</p>
-                            <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
-                              <li>Residential leases</li>
-                              <li>Commercial leases</li>
-                              <li>Licences to occupy</li>
-                            </ul>
-                          </div>
-                          <p className="text-xs text-muted-foreground mt-2 italic">
-                            If there's an RTO in place, most other property documents relate back to it.
-                          </p>
-                        </div>
-
-                        <div className="border-l-4 border-secondary pl-4">
-                          <h4 className="font-semibold text-foreground mb-2">2. Amending Documents (AMD)</h4>
-                          <p className="text-sm text-muted-foreground mb-3">
-                            These are documents that change an existing RTO — either by altering its terms, the people involved, or the rules in it. You have to read them alongside the RTO to know its current form.
-                          </p>
-                          <div className="text-sm">
-                            <p className="font-medium text-foreground mb-1">Examples:</p>
-                            <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
-                              <li>Deeds (variation, recification etc)</li>
-                              <li>Addendums</li>
-                              <li>Memoranda</li>
-                              <li>Assignments & Novations</li>
-                              
-                              <li>Surrenders & Regrants</li>
-                              
-                              <li>Formal notices that alter rights or terms</li>
-                              <li>etc</li>
-                            </ul>
-                          </div>
-                        </div>
-
-                        <div className="border-l-4 border-accent pl-4">
-                          <h4 className="font-semibold text-foreground mb-2">3. Accompanying Documents (ACD)</h4>
-                          <p className="text-sm text-muted-foreground mb-3">
-                            These support or explain an RTO but don't change its terms. They're often needed for compliance or reference, not for altering the legal agreement itself.
-                          </p>
-                          <div className="text-sm">
-                            <p className="font-medium text-foreground mb-1">Examples:</p>
-                            <ul className="list-disc list-inside text-muted-foreground space-y-1 ml-2">
-                              <li>Drawings</li>
-                              <li>Compliance certificates</li>
-                              <li>Inventory & schedule of condition</li>
-                              <li>Statutory disclosures</li>
-                              <li>etc</li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="mt-6 p-4 bg-muted rounded-lg border">
-                        <p className="text-sm text-muted-foreground">
-                          <strong>Not sure about a document type?</strong> Please check with us if you're unsure whether Hobson can work with a specific document format or type. Hobson is continually growing its knowledge.
-                        </p>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="item-4">
-                  <AccordionTrigger>What is the Starter Pack?</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-6">
-                      <div>
-                        <h4 className="font-semibold mb-3">What's the Starter Pack for?</h4>
-                        <p className="text-sm text-muted-foreground">
-                          It's a one-time bundle to help you load your documents into the platform fast. It covers the heavy lifting: upload, extract key data, and index for search.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">Why do I need this before a plan?</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Most of the cost happens up front when we process your files. The Starter Pack gives you extra credit to finish onboarding without worrying about limits.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">What do I get?</h4>
-                        <p className="text-sm text-muted-foreground">
-                          1000 HEUs (Hobson Energy Units — our usage credits). You can spend HEUs on document extraction, storage, and initial Q&A.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">Do Starter Pack HEUs expire?</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Unused HEUs roll over for 2 months. (Other plan rollovers last 1 month.)
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">Is it a subscription?</h4>
-                        <p className="text-sm text-muted-foreground">
-                          No. It's a one-time purchase made for onboarding. Pick a plan later, or right away—your Starter HEUs still apply to the same account.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">How is this different from Free/Essential?</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Free/Essential include ongoing monthly usage. The Starter Pack front-loads generous HEUs so you can complete document onboarding quickly.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">Will this unlock the full platform?</h4>
-                        <p className="text-sm text-muted-foreground">
-                          Yes. You can try the full platform while you import and set everything up.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">What happens when I run out of HEUs?</h4>
-                        <p className="text-sm text-muted-foreground">
-                          You can move to a plan or buy top-ups to finish the process.
-                        </p>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-5" className="bg-background border-border">
-                  <AccordionTrigger className="text-foreground hover:text-primary">What is the knowledgebase?</AccordionTrigger>
-                  <AccordionContent className="bg-background text-foreground">
-                    <div className="space-y-6 bg-background p-4 rounded-lg">
-                      <div>
-                        <p className="mb-4 text-foreground">
-                          A private space where Hobson learns your people, rules, and ways of working — so answers are personalised, not generic.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">Why use it?</h4>
-                        <p className="mb-3 text-foreground">Hobson can act like part of your team. Example:</p>
-                        <div className="mb-4 p-3 bg-muted rounded-lg border">
-                          <p className="text-sm italic">"Gas certificate expired — email John Higgins?"</p>
-                          <p className="text-sm italic">"Guardian breach — escalate to Paul Evans?"</p>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">What do we provide?</h4>
-                        <p className="mb-3 text-foreground">Just a one-page template:</p>
-                        <ul className="list-disc list-inside space-y-1 ml-4 text-foreground">
-                          <li>A short business overview</li>
-                          <li>Key people & contacts</li>
-                          <li>A few quick-win business rules</li>
-                        </ul>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">How is it used?</h4>
-                        <p className="text-foreground">
-                          We store this securely in MongoDB. Hobson checks it before answering, so replies are tailored to your company.
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">Is it secure?</h4>
-                        <p className="text-foreground">Yes. Your data stays private, encrypted, and never shared.</p>
-                      </div>
-
-                      <div>
-                        <h4 className="font-semibold mb-3">Does it cost extra?</h4>
-                        <p className="text-foreground">No — included with Enterprise plans only.</p>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-
-                <AccordionItem value="item-6">
-                  <AccordionTrigger>Can I change plans anytime?</AccordionTrigger>
-                  <AccordionContent>
-                    Absolutely! You can upgrade or downgrade your plan at any time. Changes take effect at your next billing cycle. Any benefits by downgrading will be lost.
-                  </AccordionContent>
-                </AccordionItem>
-                
-                
-                
-              </Accordion>
+              <div className="space-y-4">
+                <div className="p-6 bg-card rounded-lg border">
+                  <h3 className="font-semibold mb-2">What does the free plan include?</h3>
+                  <p className="text-sm text-muted-foreground">
+                    On the free plan, you get 1 HEU per day, with a total limit of 5 HEUs per month.
+                  </p>
+                </div>
+                <div className="p-6 bg-card rounded-lg border">
+                  <h3 className="font-semibold mb-2">What is a HEU?</h3>
+                  <p className="text-sm text-muted-foreground">
+                    HEUs are Hobson's currency. You spend them whenever Hobson works on something for you.
+                  </p>
+                </div>
+                <div className="p-6 bg-card rounded-lg border">
+                  <h3 className="font-semibold mb-2">FAQ temporarily simplified</h3>
+                  <p className="text-sm text-muted-foreground">
+                    Testing React context fix - full FAQ will be restored after debugging.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
