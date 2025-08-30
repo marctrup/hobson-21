@@ -14,7 +14,7 @@ import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 // Lazy load video only when needed
 
-const Homepage = () => {
+export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -25,15 +25,15 @@ const Homepage = () => {
   return <>
       <Helmet>
         <title>AI Real Estate AI | Document Intelligence | Hobson AI</title>
-        <meta name="description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
-        <meta name="keywords" content="document intelligence, real estate ai, property management software, ai document analysis, AI learning resources, tenancy agreement" />
+        <meta name="description" content="Transform a tenancy document with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
+        <meta name="keywords" content="AI property management, document intelligence, property AI software, real estate automation, property document analysis, AI learning resources" />
         <meta property="og:title" content="AI-Document Intelligence for the Property Industry | Hobson AI" />
-        <meta property="og:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
+        <meta property="og:description" content="Transform a tenancy document with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
         <meta property="og:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@HobsonAI" />
         <meta name="twitter:title" content="AI-Document Intelligence for the Property Industry" />
-        <meta name="twitter:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
+        <meta name="twitter:description" content="Transform a tenancy document with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
         <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
         <link rel="canonical" href="https://hobsonschoice.ai/" />
         
@@ -305,5 +305,3 @@ const Homepage = () => {
       </div>
     </>;
 };
-
-export default Homepage;
