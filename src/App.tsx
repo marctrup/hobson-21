@@ -2,9 +2,12 @@ import { StrictMode } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "next-themes";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function Ok() { 
-  return <div>Testing ThemeProvider</div>; 
+  return <div>Testing QueryClientProvider</div>; 
 }
 
 export default function App() {
@@ -12,11 +15,13 @@ export default function App() {
     <StrictMode>
       <HelmetProvider>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <BrowserRouter>
-            <Routes>
-              <Route path="*" element={<Ok />} />
-            </Routes>
-          </BrowserRouter>
+          <QueryClientProvider client={queryClient}>
+            <BrowserRouter>
+              <Routes>
+                <Route path="*" element={<Ok />} />
+              </Routes>
+            </BrowserRouter>
+          </QueryClientProvider>
         </ThemeProvider>
       </HelmetProvider>
     </StrictMode>
