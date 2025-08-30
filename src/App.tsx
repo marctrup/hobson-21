@@ -81,12 +81,14 @@ const GTMPageTracker = () => {
 
 const App = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold text-black">Minimal Test</h1>
-        <p className="text-gray-600">Testing basic React without any providers</p>
+    <HelmetProvider>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-black">Step 1: HelmetProvider</h1>
+          <p className="text-gray-600">Testing HelmetProvider...</p>
+        </div>
       </div>
-    </div>
+    </HelmetProvider>
   );
 };
 
