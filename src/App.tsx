@@ -1,13 +1,11 @@
 import { Suspense, lazy, useEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
-import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
+import { ClientProviders } from "@/components/ClientProviders";
 
 // Lazy load all pages for optimal bundle splitting
 const Homepage = lazy(() => import("./components/Homepage").then(module => ({ default: module.Homepage })));
@@ -85,12 +83,7 @@ const App = () => {
   <HelmetProvider>
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ClientProviders>
           <AuthProvider>
             <HuggingFaceCacheManager />
             {/* Skip Navigation Links for Accessibility */}
@@ -100,8 +93,6 @@ const App = () => {
             >
               Skip to main content
             </a>
-            <Toaster />
-            <Sonner />
           <BrowserRouter>
             <GTMPageTracker />
           <Suspense fallback={<PageLoader />}>
@@ -160,7 +151,7 @@ const App = () => {
           </Suspense>
         </BrowserRouter>
           </AuthProvider>
-        </ThemeProvider>
+        </ClientProviders>
       </QueryClientProvider>
     </ErrorBoundary>
   </HelmetProvider>
