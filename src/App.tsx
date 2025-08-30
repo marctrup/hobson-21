@@ -83,12 +83,14 @@ const App = () => {
   return (
     <HelmetProvider>
       <ErrorBoundary>
-        <div className="min-h-screen flex items-center justify-center bg-white">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-black">Step 2: + ErrorBoundary</h1>
-            <p className="text-gray-600">Testing ErrorBoundary...</p>
+        <QueryClientProvider client={queryClient}>
+          <div className="min-h-screen flex items-center justify-center bg-white">
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-black">Step 3: + QueryClient</h1>
+              <p className="text-gray-600">Testing QueryClient...</p>
+            </div>
           </div>
-        </div>
+        </QueryClientProvider>
       </ErrorBoundary>
     </HelmetProvider>
   );
