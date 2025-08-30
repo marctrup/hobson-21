@@ -16,7 +16,7 @@ function BasicHomepage() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <div className="text-xl font-bold">Hobson AI</div>
-            <nav className="hidden md:flex items-center gap-6">
+            <nav className="flex items-center gap-6">
               <Link to="/pricing" className="text-muted-foreground hover:text-foreground">Pricing</Link>
               <Link to="/blog" className="text-muted-foreground hover:text-foreground">Blog</Link>
               <Link to="/contact" className="text-muted-foreground hover:text-foreground">Contact</Link>
