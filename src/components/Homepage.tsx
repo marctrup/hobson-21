@@ -14,7 +14,7 @@ import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 // Lazy load video only when needed
 
-export const Homepage = () => {
+const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -305,3 +305,5 @@ export const Homepage = () => {
       </div>
     </>;
 };
+
+export default Homepage;

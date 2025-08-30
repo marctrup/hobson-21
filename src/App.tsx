@@ -8,7 +8,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { BasicHomepage } from "@/components/BasicHomepage";
 
 // Lazy load all pages for optimal bundle splitting
-const Homepage = lazy(() => import("./components/Homepage").then(module => ({ default: module.Homepage })));
+const Homepage = lazy(() => import("./components/Homepage"));
 const SimpleHomepage = lazy(() => import("./components/SimpleHomepage").then(module => ({ default: module.SimpleHomepage })));
 const LandingPageA = lazy(() => import("./pages/LandingPageA"));
 const LandingPageB = lazy(() => import("./pages/LandingPageB"));
