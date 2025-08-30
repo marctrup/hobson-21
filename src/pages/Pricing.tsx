@@ -1,6 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Badge } from "@/components/ui/badge";
+import { HomepageHeader } from "@/components/homepage/HomepageHeader";
+import { HomepageFooter } from "@/components/homepage/HomepageFooter";
+import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
+import { HEUBarVisualization } from "@/components/HEUBarVisualization";
 
 const Pricing = () => {
   return (
@@ -16,28 +19,7 @@ const Pricing = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
-        {/* Simple Header */}
-        <header className="border-b bg-background/95 backdrop-blur sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <Link to="/">
-                  <img 
-                    src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
-                    alt="Hobson AI" 
-                    className="h-12 md:h-16" 
-                  />
-                </Link>
-              </div>
-              <nav className="hidden md:flex items-center gap-6">
-                <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
-                <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
-                <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
-                <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">Learn</Link>
-              </nav>
-            </div>
-          </div>
-        </header>
+        <HomepageHeader />
 
         {/* Hero Section */}
         <section className="pt-16 pb-8 bg-background">
@@ -53,15 +35,9 @@ const Pricing = () => {
               </p>
             </div>
             
-            {/* Simple Video Placeholder */}
+            {/* Hero Video */}
             <div className="flex justify-center mb-16">
-              <div className="w-full max-w-2xl aspect-video bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl border-2 border-primary/20 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="text-6xl mb-4">🪙</div>
-                  <h3 className="text-2xl font-bold text-foreground mb-2">HEU Coin</h3>
-                  <p className="text-muted-foreground">Hobson Energy Units Explained</p>
-                </div>
-              </div>
+              <PricingHeroVideo />
             </div>
           </div>
         </section>
@@ -77,7 +53,12 @@ const Pricing = () => {
                 Hobson Energy Units (HEUs) are our way of measuring AI work. Different tasks use different amounts of HEUs based on their complexity.
               </p>
               
-              {/* Simple HEU Examples */}
+              {/* HEU Visualization */}
+              <div className="mb-12">
+                <HEUBarVisualization totalHEUs={500} usedHEUs={280} />
+              </div>
+              
+              {/* HEU Examples */}
               <div className="grid gap-4 md:grid-cols-3 max-w-3xl mx-auto">
                 <div className="bg-card rounded-lg p-6 border">
                   <div className="text-2xl mb-2">📄</div>
@@ -300,43 +281,7 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* Simple Footer */}
-        <footer className="bg-muted/30 border-t py-16">
-          <div className="container mx-auto px-4">
-            <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-              <div className="col-span-2">
-                <div className="mb-4">
-                  <img src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" alt="Hobson's AI" className="h-16" />
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-foreground mb-4">Product</h4>
-                <div className="space-y-2">
-                  <Link to="/pricing" className="block text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
-                  <a href="https://pilot.hobsonschoice.ai" target="_blank" rel="noopener noreferrer" className="block text-muted-foreground hover:text-foreground transition-colors">
-                    Join our pilot programme
-                  </a>
-                </div>
-              </div>
-              
-              <div>
-                <h4 className="font-semibold text-foreground mb-4">Company</h4>
-                <div className="space-y-2">
-                  <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
-                  <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
-                  <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors">Learn</Link>
-                </div>
-              </div>
-            </div>
-            
-            <div className="border-t mt-12 pt-8 text-center">
-              <p className="text-muted-foreground">
-                © 2024 Hobson's Choice AI. All rights reserved.
-              </p>
-            </div>
-          </div>
-        </footer>
+        <HomepageFooter />
       </div>
     </>
   );
