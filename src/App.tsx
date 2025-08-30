@@ -84,12 +84,14 @@ const App = () => {
     <HelmetProvider>
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
-          <div className="min-h-screen flex items-center justify-center bg-background">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold">Step 2: + QueryClientProvider</h1>
-              <p>Testing QueryClient...</p>
+          <AuthProvider>
+            <div className="min-h-screen flex items-center justify-center bg-background">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold">Step 3: + AuthProvider</h1>
+                <p>Testing AuthProvider - this is likely the culprit...</p>
+              </div>
             </div>
-          </div>
+          </AuthProvider>
         </QueryClientProvider>
       </ErrorBoundary>
     </HelmetProvider>
