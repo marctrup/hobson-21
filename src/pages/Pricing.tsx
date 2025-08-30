@@ -10,7 +10,7 @@ const Pricing = () => {
   return <>
       <Helmet>
         <title>Pricing - Pay for Work, Not Seats | Hobson's Choice AI</title>
-        <meta name="description" content="Revolutionary pricing that charges for actual AI work, not users or properties." />
+        <meta name="description" content="Revolutionary pricing that charges for actual AI work, not users or properties. Start from £18.50/month with Hobson Energy Units (HEUs)." />
         <meta name="keywords" content="AI pricing, per-task billing, real estate ai, property management software" />
       </Helmet>
 
