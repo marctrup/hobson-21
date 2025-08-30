@@ -4,6 +4,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { BlogHero } from "@/components/blog/BlogHero";
 import { BlogGrid } from "@/components/blog/BlogGrid";
+import { FeaturedPost } from "@/components/blog/FeaturedPost";
+import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { CategoryFilter } from "@/components/blog/CategoryFilter";
 import { LoadingSkeleton } from "@/components/LoadingSkeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -155,6 +157,9 @@ const Blog = () => {
     return <LoadingSkeleton />;
   }
 
+  const featuredPost = posts[0];
+  const remainingPosts = posts.slice(1);
+
   return (
     <HelmetProvider>
       <div className="min-h-screen bg-background">
@@ -176,6 +181,9 @@ const Blog = () => {
           {/* Performance optimizations */}
           <link rel="dns-prefetch" href="//hobsonschoice.ai" />
           <link rel="preconnect" href="https://hobsonschoice.ai" />
+          {featuredPost?.featured_image_url && (
+            <link rel="preload" as="image" href={featuredPost.featured_image_url} />
+          )}
         </Helmet>
         
         <GlobalHeader />
@@ -189,7 +197,19 @@ const Blog = () => {
           />
           
           {posts.length > 0 ? (
-            <BlogGrid posts={posts} />
+            <div className="grid grid-cols-1 gap-3">
+              {featuredPost && (
+                <FeaturedPost post={featuredPost} />
+              )}
+              
+              {remainingPosts.length > 0 && (
+                <>
+                  {remainingPosts.map((post) => (
+                    <BlogPostCard key={post.id} post={post} />
+                  ))}
+                </>
+              )}
+            </div>
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground text-lg">
