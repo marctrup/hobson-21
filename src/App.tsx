@@ -96,7 +96,7 @@ const App = () => {
             <GTMPageTracker />
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              <Route path="/" element={<BasicHomepage />} />
+              <Route path="/" element={<Homepage />} />
               
               {/* Authentication */}
               <Route path="/auth" element={<Auth />} />
@@ -108,6 +108,7 @@ const App = () => {
               <Route path="/learn" element={<Learn />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/pilot" element={<PilotForm />} />
+              <Route path="/pilot_form" element={<PilotForm />} />
               
               {/* Legal Pages */}
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
