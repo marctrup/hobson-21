@@ -80,14 +80,17 @@ const GTMPageTracker = () => {
 };
 
 const App = () => {
-  // Temporary minimal app to test React initialization
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold">React Test</h1>
-        <p>If you see this, React is working</p>
-      </div>
-    </div>
+    <HelmetProvider>
+      <ErrorBoundary>
+        <div className="min-h-screen flex items-center justify-center bg-background">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold">Step 1: HelmetProvider + ErrorBoundary</h1>
+            <p>Testing basic providers...</p>
+          </div>
+        </div>
+      </ErrorBoundary>
+    </HelmetProvider>
   );
 };
 
