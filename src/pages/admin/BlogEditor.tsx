@@ -172,6 +172,7 @@ const BlogEditor = () => {
     setPost(prev => ({
       ...prev,
       title,
+      slug: generateSlug(title),
       meta_title: title
     }));
   };
