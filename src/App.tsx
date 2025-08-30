@@ -4,9 +4,12 @@ import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
-import { Homepage } from "@/components/Homepage";
 
 const queryClient = new QueryClient();
+
+function MinimalHomepage() { 
+  return <div>Minimal Homepage - testing if Homepage component import is the issue</div>; 
+}
 
 function TestPage() { 
   return <div>Test page placeholder</div>; 
@@ -20,7 +23,7 @@ export default function App() {
           <QueryClientProvider client={queryClient}>
             <BrowserRouter>
               <Routes>
-                <Route path="/" element={<Homepage />} />
+                <Route path="/" element={<MinimalHomepage />} />
                 <Route path="/blog" element={<TestPage />} />
                 <Route path="/pricing" element={<TestPage />} />
                 <Route path="/contact" element={<TestPage />} />
