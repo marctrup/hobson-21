@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { AuthProvider } from "@/hooks/useAuth";
+// import { AuthProvider } from "@/hooks/useAuth";
 import { Toaster } from "@/components/ui/sonner";
 import { Toaster as ShadcnToaster } from "@/components/ui/toaster";
 import { Homepage } from "@/components/Homepage";
@@ -20,19 +20,17 @@ export default function App() {
       <HelmetProvider>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-              <BrowserRouter>
-                <Routes>
-                  <Route path="/" element={<Homepage />} />
-                  <Route path="/blog" element={<Blog />} />
-                  <Route path="/pricing" element={<Pricing />} />
-                  <Route path="/contact" element={<ContactUs />} />
-                  <Route path="/learn" element={<Learn />} />
-                </Routes>
-                <Toaster />
-                <ShadcnToaster />
-              </BrowserRouter>
-            </AuthProvider>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Homepage />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/pricing" element={<Pricing />} />
+                <Route path="/contact" element={<ContactUs />} />
+                <Route path="/learn" element={<Learn />} />
+              </Routes>
+              <Toaster />
+              <ShadcnToaster />
+            </BrowserRouter>
           </QueryClientProvider>
         </ThemeProvider>
       </HelmetProvider>
