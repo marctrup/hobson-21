@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
+import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
@@ -84,18 +85,19 @@ const App = () => {
   <HelmetProvider>
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <AuthProvider>
-          <HuggingFaceCacheManager />
-          {/* Skip Navigation Links for Accessibility */}
-          <a 
-            href="#main-content" 
-            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-          >
-            Skip to main content
-          </a>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <AuthProvider>
+            <HuggingFaceCacheManager />
+            {/* Skip Navigation Links for Accessibility */}
+            <a 
+              href="#main-content" 
+              className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+            >
+              Skip to main content
+            </a>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
             <GTMPageTracker />
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -153,6 +155,7 @@ const App = () => {
           </Suspense>
         </BrowserRouter>
       </AuthProvider>
+    </ThemeProvider>
     </QueryClientProvider>
     </ErrorBoundary>
   </HelmetProvider>
