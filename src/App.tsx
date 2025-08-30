@@ -1,12 +1,4 @@
-import { StrictMode } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HelmetProvider } from "react-helmet-async";
-import { ThemeProvider } from "next-themes";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/sonner";
-import { Link } from "react-router-dom";
-
-const queryClient = new QueryClient();
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function BasicHomepage() { 
   return (
@@ -49,23 +41,14 @@ function TestPage() {
 
 export default function App() {
   return (
-    <StrictMode>
-      <HelmetProvider>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <QueryClientProvider client={queryClient}>
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<BasicHomepage />} />
-                <Route path="/blog" element={<TestPage />} />
-                <Route path="/pricing" element={<TestPage />} />
-                <Route path="/contact" element={<TestPage />} />
-                <Route path="/learn" element={<TestPage />} />
-              </Routes>
-              <Toaster />
-            </BrowserRouter>
-          </QueryClientProvider>
-        </ThemeProvider>
-      </HelmetProvider>
-    </StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<BasicHomepage />} />
+        <Route path="/blog" element={<TestPage />} />
+        <Route path="/pricing" element={<TestPage />} />
+        <Route path="/contact" element={<TestPage />} />
+        <Route path="/learn" element={<TestPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
