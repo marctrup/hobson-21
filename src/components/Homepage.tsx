@@ -33,7 +33,7 @@ export const Homepage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@HobsonAI" />
         <meta name="twitter:title" content="AI-Document Intelligence for the Property Industry" />
-        <meta name="twitter:description" content="Transform a tenancy document with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
+        <meta name="twitter:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
         <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
         <link rel="canonical" href="https://hobsonschoice.ai/" />
         
