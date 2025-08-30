@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { AuthProvider } from "@/hooks/useAuth";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
+import { ThemeProvider } from "next-themes";
 
 // Lazy load all pages for optimal bundle splitting
 const Homepage = lazy(() => import("./components/Homepage").then(module => ({ default: module.Homepage })));
@@ -83,14 +84,18 @@ const App = () => {
   return (
     <HelmetProvider>
       <ErrorBoundary>
-        <QueryClientProvider client={queryClient}>
-          <div className="min-h-screen flex items-center justify-center bg-white">
-            <div className="text-center">
-              <h1 className="text-2xl font-bold text-black">Step 4b: No Toaster</h1>
-              <p className="text-gray-600">Testing without Toaster component...</p>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          <QueryClientProvider client={queryClient}>
+            <Toaster />
+            <Sonner />
+            <div className="min-h-screen flex items-center justify-center bg-white">
+              <div className="text-center">
+                <h1 className="text-2xl font-bold text-black">Step 5: + ThemeProvider + Toasters</h1>
+                <p className="text-gray-600">Testing with ThemeProvider for Toaster components...</p>
+              </div>
             </div>
-          </div>
-        </QueryClientProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
       </ErrorBoundary>
     </HelmetProvider>
   );
