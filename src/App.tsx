@@ -1,6 +1,4 @@
 import { Suspense, lazy, useEffect } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
 import { HelmetProvider } from "react-helmet-async";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
@@ -95,8 +93,6 @@ const App = () => {
             >
               Skip to main content
             </a>
-            <Toaster />
-            <Sonner />
             <BrowserRouter>
             <GTMPageTracker />
           <Suspense fallback={<PageLoader />}>
