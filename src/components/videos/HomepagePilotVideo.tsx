@@ -1,5 +1,3 @@
-"use client"
-
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { X } from "lucide-react";
