@@ -1,7 +1,7 @@
 export const getHomepageStructuredData = () => ({
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Hobson's Choice AI Property Management Software",
+  "name": "Hobson's Choice AI Real Estate AI",
   "description": "AI-powered document intelligence for property management. Transform property documents with intelligent analysis, automated insights, and instant answers to complex property questions.",
   "url": "https://hobsonschoice.ai/property-management-software",
   "applicationCategory": "BusinessApplication",

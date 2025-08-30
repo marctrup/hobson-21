@@ -2272,7 +2272,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="connect-systems">
                         <AccordionTrigger className="text-left">Can Hobson connect to our systems?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. We support exports and, on Enterprise, bespoke integrations with CRMs/property management software. Talk to us.</p>
+                          <p className="text-muted-foreground text-sm">Yes. We support exports and, on Enterprise, bespoke integrations with CRMs/Real Estate AI. Talk to us.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="control-access">

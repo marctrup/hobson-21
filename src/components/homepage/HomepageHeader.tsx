@@ -25,7 +25,7 @@ export const HomepageHeader = () => {
             <Link to="/" onClick={closeMobileMenu}>
               <img 
                 src={hobsonLogo} 
-                alt="Hobson AI - AI-powered property management software company logo" 
+                alt="Hobson AI - AI-powered Real Estate AI company logo" 
                 className="h-12 md:h-16" 
                 loading="eager"
               />

@@ -25,7 +25,7 @@ export const GlobalHeader = () => {
             <Link to="/" onClick={closeMobileMenu}>
               <img 
                 src={hobsonLogo} 
-                alt="Hobson AI property management software logo" 
+                alt="Hobson AI Real Estate AI logo" 
                 className="h-12 md:h-16 hover:opacity-80 transition-opacity" 
               />
             </Link>

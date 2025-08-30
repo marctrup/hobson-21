@@ -24,7 +24,7 @@ export const Homepage = () => {
   };
   return <>
       <Helmet>
-        <title>AI Property Management Software | Document Intelligence | Hobson AI</title>
+        <title>AI Real Estate AI | Document Intelligence | Hobson AI</title>
         <meta name="description" content="Transform a tenancy document with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
         <meta name="keywords" content="AI property management, document intelligence, property AI software, real estate automation, property document analysis, AI learning resources" />
         <meta property="og:title" content="AI-Document Intelligence for the Property Industry | Hobson AI" />
@@ -49,7 +49,7 @@ export const Homepage = () => {
               {/* Logo */}
               <div className="relative">
                 <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" alt="Hobson AI - AI-powered property management software company logo" className="h-12 md:h-16 w-auto" priority />
+                  <OptimizedImage src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" alt="Hobson AI - AI-powered Real Estate AI company logo" className="h-12 md:h-16 w-auto" priority />
                 </Link>
               </div>
 
