@@ -28,7 +28,7 @@ export const Homepage = () => {
         <meta name="description" content="Transform a tenancy document with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
         <meta name="keywords" content="Real Estate Ai,  property management software, real estate automation, AI document analysis, " />
         <meta property="og:title" content="AI-Document Intelligence for the Property Industry | Hobson AI" />
-        <meta property="og:description" content="Transform a tenancy document with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
+        <meta property="og:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. " />
         <meta property="og:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@HobsonAI" />
