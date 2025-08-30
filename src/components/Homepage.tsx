@@ -25,7 +25,7 @@ export const Homepage = () => {
   return <>
       <Helmet>
         <title>AI Real Estate AI | Document Intelligence | Hobson AI</title>
-        <meta name="description" content="Transform a tenancy document with intelligent analysis, automated insights, and instant answers. Learn with comprehensive guides and documentation." />
+        <meta name="description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. " />
         <meta name="keywords" content="Real Estate Ai,  property management software, real estate automation, AI document analysis, " />
         <meta property="og:title" content="AI-Document Intelligence for the Property Industry | Hobson AI" />
         <meta property="og:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. " />
