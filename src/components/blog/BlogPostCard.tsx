@@ -40,24 +40,25 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
 
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
-      <div className="grid md:grid-cols-4 gap-0">
-        <div className="aspect-[3/2]">
+      <div className="flex flex-col">
+        <div className="aspect-[16/10] w-full">
           {post.featured_image_url ? (
             <LazyImage
               src={post.featured_image_url}
               alt={post.title}
               className="w-full h-full object-cover"
-              width={243}
-              height={162}
-              sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, 243px"
+              width={400}
+              height={250}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
             <div className="w-full h-full bg-muted flex items-center justify-center">
-              <Tag className="w-8 h-8 text-muted-foreground" />
+              <Tag className="w-12 h-12 text-muted-foreground" />
             </div>
           )}
         </div>
-        <div className="md:col-span-3 p-4 flex flex-col justify-center">
+        
+        <CardContent className="p-6">
           <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground">
             <Calendar className="w-4 h-4" />
             {format(new Date(post.published_at), 'MMM dd')}
@@ -65,20 +66,11 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
             {post.reading_time}m
           </div>
           
-          <h3 className="text-lg font-semibold mb-1 line-clamp-2 leading-tight">{post.title}</h3>
-          <p className="text-muted-foreground mb-2 text-sm line-clamp-2">{post.excerpt}</p>
-          
-          <div className="flex items-center justify-end mb-3">
-            <button
-              onClick={handleReadMore}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
-            >
-              Read More <ArrowRight className="w-3 h-3" />
-            </button>
-          </div>
+          <h3 className="text-xl font-semibold mb-3 line-clamp-2 leading-tight">{post.title}</h3>
+          <p className="text-muted-foreground mb-4 text-sm line-clamp-3">{post.excerpt}</p>
           
           {post.categories.length > 0 && (
-            <div className="flex flex-wrap gap-1 -mt-1">
+            <div className="flex flex-wrap gap-2 mb-4">
               {post.categories.slice(0, 2).map((category) => (
                 <Badge key={category.slug} variant="outline" className="text-xs">
                   {category.name}
@@ -86,7 +78,16 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
               ))}
             </div>
           )}
-        </div>
+          
+          <div className="flex justify-end">
+            <button
+              onClick={handleReadMore}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+            >
+              Read More <ArrowRight className="w-3 h-3" />
+            </button>
+          </div>
+        </CardContent>
       </div>
     </Card>
   );
