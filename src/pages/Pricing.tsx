@@ -1,11 +1,5 @@
-import { useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { HomepageHeader } from "@/components/homepage/HomepageHeader";
-import { HomepageFooter } from "@/components/homepage/HomepageFooter";
-import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
-import { HEUBarVisualization } from "@/components/HEUBarVisualization";
-import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 
 const Pricing = () => {
@@ -22,8 +16,28 @@ const Pricing = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background">
-        {/* Header */}
-        <HomepageHeader />
+        {/* Simple Header */}
+        <header className="border-b bg-background/95 backdrop-blur sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex justify-between items-center">
+              <div className="flex items-center gap-3">
+                <Link to="/">
+                  <img 
+                    src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
+                    alt="Hobson AI" 
+                    className="h-12 md:h-16" 
+                  />
+                </Link>
+              </div>
+              <nav className="hidden md:flex items-center gap-6">
+                <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
+                <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
+                <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
+                <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">Learn</Link>
+              </nav>
+            </div>
+          </div>
+        </header>
 
         {/* Hero Section */}
         <section className="pt-16 pb-8 bg-background">
@@ -39,9 +53,15 @@ const Pricing = () => {
               </p>
             </div>
             
-            {/* Video Section */}
+            {/* Simple Video Placeholder */}
             <div className="flex justify-center mb-16">
-              <PricingHeroVideo />
+              <div className="w-full max-w-2xl aspect-video bg-gradient-to-br from-primary/20 to-primary/10 rounded-2xl border-2 border-primary/20 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-6xl mb-4">🪙</div>
+                  <h3 className="text-2xl font-bold text-foreground mb-2">HEU Coin</h3>
+                  <p className="text-muted-foreground">Hobson Energy Units Explained</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -56,7 +76,25 @@ const Pricing = () => {
               <p className="text-lg text-muted-foreground mb-8">
                 Hobson Energy Units (HEUs) are our way of measuring AI work. Different tasks use different amounts of HEUs based on their complexity.
               </p>
-              <HEUBarVisualization />
+              
+              {/* Simple HEU Examples */}
+              <div className="grid gap-4 md:grid-cols-3 max-w-3xl mx-auto">
+                <div className="bg-card rounded-lg p-6 border">
+                  <div className="text-2xl mb-2">📄</div>
+                  <h4 className="font-semibold text-foreground mb-2">Document Scan</h4>
+                  <p className="text-sm text-muted-foreground">1-3 HEUs</p>
+                </div>
+                <div className="bg-card rounded-lg p-6 border">
+                  <div className="text-2xl mb-2">❓</div>
+                  <h4 className="font-semibold text-foreground mb-2">Simple Question</h4>
+                  <p className="text-sm text-muted-foreground">2-5 HEUs</p>
+                </div>
+                <div className="bg-card rounded-lg p-6 border">
+                  <div className="text-2xl mb-2">📊</div>
+                  <h4 className="font-semibold text-foreground mb-2">Complex Analysis</h4>
+                  <p className="text-sm text-muted-foreground">5-15 HEUs</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -81,7 +119,9 @@ const Pricing = () => {
                     <h3 className="text-2xl font-bold mb-2 text-foreground">Starter</h3>
                     <div className="text-4xl font-bold mb-2 text-foreground">£18.50</div>
                     <div className="text-muted-foreground mb-4">per month</div>
-                    <Badge variant="secondary" className="mb-6">100 HEUs included</Badge>
+                    <div className="inline-block bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-sm font-medium mb-6">
+                      100 HEUs included
+                    </div>
                   </div>
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-start gap-3">
@@ -101,21 +141,25 @@ const Pricing = () => {
                       <span className="text-foreground">Web dashboard access</span>
                     </li>
                   </ul>
-                  <SimpleButton className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground">
+                  <button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground h-12 px-4 py-2 rounded-lg font-medium transition-colors">
                     Get Started
-                  </SimpleButton>
+                  </button>
                 </div>
 
                 {/* Professional Plan */}
                 <div className="bg-card rounded-2xl border-2 border-primary p-8 relative transform scale-105">
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <Badge className="bg-primary text-primary-foreground px-4 py-1">Most Popular</Badge>
+                    <div className="bg-primary text-primary-foreground px-4 py-1 rounded-full text-sm font-medium">
+                      Most Popular
+                    </div>
                   </div>
                   <div className="text-center mb-8">
                     <h3 className="text-2xl font-bold mb-2 text-foreground">Professional</h3>
                     <div className="text-4xl font-bold mb-2 text-foreground">£75</div>
                     <div className="text-muted-foreground mb-4">per month</div>
-                    <Badge variant="secondary" className="mb-6">500 HEUs included</Badge>
+                    <div className="inline-block bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-sm font-medium mb-6">
+                      500 HEUs included
+                    </div>
                   </div>
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-start gap-3">
@@ -139,9 +183,9 @@ const Pricing = () => {
                       <span className="text-foreground">API access</span>
                     </li>
                   </ul>
-                  <SimpleButton className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground h-12 px-4 py-2 rounded-lg font-medium transition-colors">
                     Start Free Trial
-                  </SimpleButton>
+                  </button>
                 </div>
 
                 {/* Enterprise Plan */}
@@ -150,7 +194,9 @@ const Pricing = () => {
                     <h3 className="text-2xl font-bold mb-2 text-foreground">Enterprise</h3>
                     <div className="text-4xl font-bold mb-2 text-foreground">Custom</div>
                     <div className="text-muted-foreground mb-4">pricing</div>
-                    <Badge variant="secondary" className="mb-6">Unlimited HEUs</Badge>
+                    <div className="inline-block bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-sm font-medium mb-6">
+                      Unlimited HEUs
+                    </div>
                   </div>
                   <ul className="space-y-4 mb-8">
                     <li className="flex items-start gap-3">
@@ -174,9 +220,12 @@ const Pricing = () => {
                       <span className="text-foreground">Custom training</span>
                     </li>
                   </ul>
-                  <SimpleButton className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" asChild>
-                    <Link to="/contact">Contact Sales</Link>
-                  </SimpleButton>
+                  <Link 
+                    to="/contact" 
+                    className="w-full inline-flex items-center justify-center bg-secondary hover:bg-secondary/90 text-secondary-foreground h-12 px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    Contact Sales
+                  </Link>
                 </div>
               </div>
             </div>
@@ -237,19 +286,57 @@ const Pricing = () => {
                 Join thousands of property professionals already using Hobson AI
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+                <button className="bg-primary hover:bg-primary/90 text-primary-foreground h-12 px-8 py-2 rounded-lg font-medium transition-colors">
                   Start Free Trial
-                </SimpleButton>
-                <SimpleButton size="lg" variant="outline" asChild>
-                  <Link to="/contact">Talk to Sales</Link>
-                </SimpleButton>
+                </button>
+                <Link 
+                  to="/contact"
+                  className="inline-flex items-center justify-center border border-input bg-background hover:bg-accent hover:text-accent-foreground h-12 px-8 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Talk to Sales
+                </Link>
               </div>
             </div>
           </div>
         </section>
 
-        {/* Footer */}
-        <HomepageFooter />
+        {/* Simple Footer */}
+        <footer className="bg-muted/30 border-t py-16">
+          <div className="container mx-auto px-4">
+            <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              <div className="col-span-2">
+                <div className="mb-4">
+                  <img src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" alt="Hobson's AI" className="h-16" />
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold text-foreground mb-4">Product</h4>
+                <div className="space-y-2">
+                  <Link to="/pricing" className="block text-muted-foreground hover:text-foreground transition-colors">Pricing</Link>
+                  <a href="https://pilot.hobsonschoice.ai" target="_blank" rel="noopener noreferrer" className="block text-muted-foreground hover:text-foreground transition-colors">
+                    Join our pilot programme
+                  </a>
+                </div>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold text-foreground mb-4">Company</h4>
+                <div className="space-y-2">
+                  <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors">Blog</Link>
+                  <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">Contact</Link>
+                  <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors">Learn</Link>
+                </div>
+              </div>
+            </div>
+            
+            <div className="border-t mt-12 pt-8 text-center">
+              <p className="text-muted-foreground">
+                © 2024 Hobson's Choice AI. All rights reserved.
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     </>
   );
