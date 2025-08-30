@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { SimpleApp } from "@/components/SimpleApp";
+import { BasicHomepage } from "@/components/BasicHomepage";
 
 // Lazy load all pages for optimal bundle splitting
 const Homepage = lazy(() => import("./components/Homepage").then(module => ({ default: module.Homepage })));
@@ -96,9 +96,9 @@ const App = () => {
             <GTMPageTracker />
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              {/* Simplified routes for testing */}
-              <Route path="/" element={<SimpleApp />} />
-              <Route path="*" element={<SimpleApp />} />
+              {/* Basic homepage for testing */}
+              <Route path="/" element={<BasicHomepage />} />
+              <Route path="*" element={<BasicHomepage />} />
             </Routes>
           </Suspense>
         </BrowserRouter>
