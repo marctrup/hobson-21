@@ -1,7 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Calendar, Clock, Tag, ArrowRight } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { LazyImage } from "@/components/LazyImage";
@@ -41,7 +40,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow h-full">
       <div className="flex flex-col h-full">
-        <div className="w-full aspect-[4/3] bg-muted">
+        <div className="w-full h-64 bg-muted relative overflow-hidden">
           {post.featured_image_url ? (
             <LazyImage
               src={post.featured_image_url}
