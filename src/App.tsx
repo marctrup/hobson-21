@@ -4,12 +4,11 @@ import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/sonner";
-import { Toaster as ShadcnToaster } from "@/components/ui/toaster";
 
 const queryClient = new QueryClient();
 
 function Ok() { 
-  return <div>Testing fixed toasters</div>; 
+  return <div>Testing only Sonner toaster</div>; 
 }
 
 export default function App() {
@@ -23,7 +22,6 @@ export default function App() {
                 <Route path="*" element={<Ok />} />
               </Routes>
               <Toaster />
-              <ShadcnToaster />
             </BrowserRouter>
           </QueryClientProvider>
         </ThemeProvider>
