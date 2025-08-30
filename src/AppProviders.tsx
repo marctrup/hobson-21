@@ -1,3 +1,4 @@
+import React from "react";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
