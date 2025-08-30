@@ -81,18 +81,6 @@ const GTMPageTracker = () => {
 };
 
 const App = () => {
-  // ISOLATED PRICING TEST - Check if we're on /pricing route
-  if (window.location.pathname === '/pricing') {
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="*" element={<div>Isolated pricing test - navigate to /pricing</div>} />
-        </Routes>
-      </BrowserRouter>
-    );
-  }
-
   return (
     <HelmetProvider>
       <ErrorBoundary>
