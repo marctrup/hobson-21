@@ -197,17 +197,13 @@ const Blog = () => {
           />
           
           {posts.length > 0 ? (
-            <div className="grid grid-cols-1 gap-3">
+            <div className="space-y-8">
               {featuredPost && (
                 <FeaturedPost post={featuredPost} />
               )}
               
               {remainingPosts.length > 0 && (
-                <>
-                  {remainingPosts.map((post) => (
-                    <BlogPostCard key={post.id} post={post} />
-                  ))}
-                </>
+                <BlogGrid posts={remainingPosts} />
               )}
             </div>
           ) : (
