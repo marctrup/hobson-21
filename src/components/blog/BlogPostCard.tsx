@@ -39,16 +39,16 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   };
 
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow">
-      <div className="flex flex-col">
-        <div className="aspect-[16/10] w-full">
+    <Card className="overflow-hidden hover:shadow-md transition-shadow h-full">
+      <div className="flex flex-col h-full">
+        <div className="w-full aspect-[4/3] bg-muted">
           {post.featured_image_url ? (
             <LazyImage
               src={post.featured_image_url}
               alt={post.title}
               className="w-full h-full object-cover"
               width={400}
-              height={250}
+              height={300}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
@@ -58,7 +58,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
           )}
         </div>
         
-        <CardContent className="p-6">
+        <div className="p-6 flex-1 flex flex-col">
           <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground">
             <Calendar className="w-4 h-4" />
             {format(new Date(post.published_at), 'MMM dd')}
@@ -67,7 +67,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
           </div>
           
           <h3 className="text-xl font-semibold mb-3 line-clamp-2 leading-tight">{post.title}</h3>
-          <p className="text-muted-foreground mb-4 text-sm line-clamp-3">{post.excerpt}</p>
+          <p className="text-muted-foreground mb-4 text-sm line-clamp-3 flex-1">{post.excerpt}</p>
           
           {post.categories.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
@@ -79,7 +79,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
             </div>
           )}
           
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-auto">
             <button
               onClick={handleReadMore}
               className="inline-flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
@@ -87,7 +87,7 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
               Read More <ArrowRight className="w-3 h-3" />
             </button>
           </div>
-        </CardContent>
+        </div>
       </div>
     </Card>
   );
