@@ -82,12 +82,14 @@ const GTMPageTracker = () => {
 const App = () => {
   return (
     <HelmetProvider>
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-black">Step 1: HelmetProvider</h1>
-          <p className="text-gray-600">Testing HelmetProvider...</p>
+      <ErrorBoundary>
+        <div className="min-h-screen flex items-center justify-center bg-white">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-black">Step 2: + ErrorBoundary</h1>
+            <p className="text-gray-600">Testing ErrorBoundary...</p>
+          </div>
         </div>
-      </div>
+      </ErrorBoundary>
     </HelmetProvider>
   );
 };
