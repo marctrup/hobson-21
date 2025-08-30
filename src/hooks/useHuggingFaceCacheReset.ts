@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 const HF_FLAG = "hf_cache_reset_v1";
 
