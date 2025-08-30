@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route, Navigate, useLocation } from "react-route
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
-import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
 
 // Lazy load all pages for optimal bundle splitting
 const Homepage = lazy(() => import("./components/Homepage").then(module => ({ default: module.Homepage })));
@@ -85,7 +84,6 @@ const App = () => {
       <QueryClientProvider client={queryClient}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <AuthProvider>
-            <HuggingFaceCacheManager />
             {/* Skip Navigation Links for Accessibility */}
             <a 
               href="#main-content" 
