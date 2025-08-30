@@ -85,15 +85,9 @@
     <link rel="preload" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" as="image" media="(min-width: 769px)" fetchpriority="high" />
     <link rel="preload" href="/blog-images/too-good-to-be-true.png" as="image" media="(min-width: 769px)" />
     
-    <!-- Enhanced preloading strategy -->
+    <!-- Safe critical script preloading -->
     <link rel="modulepreload" href="/src/main.tsx" fetchpriority="high" />
     <link rel="modulepreload" href="/src/App.tsx" fetchpriority="high" />
-    <link rel="modulepreload" href="/src/components/Homepage.tsx" fetchpriority="high" />
-    <link rel="modulepreload" href="/src/components/OptimizedImage.tsx" fetchpriority="high" />
-    
-    <!-- Async load non-critical modules -->
-    <link rel="modulepreload" href="/src/pages/Blog.tsx" fetchpriority="low" />
-    <link rel="modulepreload" href="/src/components/blog/BlogHero.tsx" fetchpriority="low" />
     
     <!-- Font optimization - inline critical font CSS -->
     <style>
