@@ -37,9 +37,7 @@ export const OptimizedImage = memo<OptimizedImageProps>(({
       style={{
         aspectRatio: width && height ? `${width}/${height}` : undefined,
         contentVisibility: 'auto',
-        containIntrinsicSize: width && height ? `${width}px ${height}px` : '400px 300px',
-        objectFit: 'cover',
-        transition: 'opacity 0.2s ease'
+        containIntrinsicSize: width && height ? `${width}px ${height}px` : '400px 300px'
       }}
     />
   );
