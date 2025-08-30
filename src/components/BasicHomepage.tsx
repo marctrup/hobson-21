@@ -38,9 +38,9 @@ export const BasicHomepage = () => {
                 <a href="/pricing" className="text-foreground hover:text-primary transition-colors font-medium">Pricing</a>
                 <a href="/learn" className="text-foreground hover:text-primary transition-colors font-medium">Learn</a>
                 <a href="/contact" className="text-foreground hover:text-primary transition-colors font-medium">Contact</a>
-                <button className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors">
+                <a href="/auth" className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors">
                   Get Started
-                </button>
+                </a>
               </nav>
 
               {/* Mobile Menu Button */}
@@ -61,9 +61,9 @@ export const BasicHomepage = () => {
                   <a href="/pricing" className="text-foreground hover:text-primary transition-colors font-medium">Pricing</a>
                   <a href="/learn" className="text-foreground hover:text-primary transition-colors font-medium">Learn</a>
                   <a href="/contact" className="text-foreground hover:text-primary transition-colors font-medium">Contact</a>
-                  <button className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors text-left">
+                  <a href="/auth" className="bg-primary text-primary-foreground px-4 py-2 rounded-lg font-medium hover:bg-primary/90 transition-colors text-left">
                     Get Started
-                  </button>
+                  </a>
                 </div>
               </nav>
             )}
@@ -80,12 +80,12 @@ export const BasicHomepage = () => {
               Transform your property documents with intelligent analysis, automated insights, and instant answers.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors">
+              <a href="/auth" className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors text-center">
                 Get Started
-              </button>
-              <button className="border border-border px-8 py-3 rounded-lg font-semibold hover:bg-accent transition-colors">
+              </a>
+              <a href="/learn" className="border border-border px-8 py-3 rounded-lg font-semibold hover:bg-accent transition-colors text-center">
                 Learn More
-              </button>
+              </a>
             </div>
           </div>
 
@@ -187,13 +187,13 @@ export const BasicHomepage = () => {
               Join property professionals who are already using AI to streamline their document analysis and gain valuable insights.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors inline-flex items-center gap-2">
+              <a href="/auth" className="bg-primary text-primary-foreground px-8 py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors inline-flex items-center justify-center gap-2">
                 Start Free Trial
                 <ArrowRight className="h-4 w-4" />
-              </button>
-              <button className="border border-border px-8 py-3 rounded-lg font-semibold hover:bg-accent transition-colors">
+              </a>
+              <a href="/contact" className="border border-border px-8 py-3 rounded-lg font-semibold hover:bg-accent transition-colors text-center">
                 Schedule Demo
-              </button>
+              </a>
             </div>
           </div>
         </main>

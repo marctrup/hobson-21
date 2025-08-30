@@ -96,9 +96,45 @@ const App = () => {
             <GTMPageTracker />
           <Suspense fallback={<PageLoader />}>
             <Routes>
-              {/* Basic homepage for testing */}
               <Route path="/" element={<BasicHomepage />} />
-              <Route path="*" element={<BasicHomepage />} />
+              
+              {/* Authentication */}
+              <Route path="/auth" element={<Auth />} />
+              
+              {/* Main Pages */}
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              <Route path="/pricing" element={<Pricing />} />
+              <Route path="/learn" element={<Learn />} />
+              <Route path="/contact" element={<ContactUs />} />
+              <Route path="/pilot" element={<PilotForm />} />
+              
+              {/* Legal Pages */}
+              <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="/data-protection" element={<DataProtection />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={<Admin />} />
+              <Route path="/admin/blog" element={<BlogManagement />} />
+              <Route path="/admin/blog/new" element={<BlogEditor />} />
+              <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
+              
+              {/* Other Pages */}
+              <Route path="/status" element={<Status />} />
+              <Route path="/announcements" element={<Announcements />} />
+              <Route path="/announcements/:slug" element={<AnnouncementPost />} />
+              <Route path="/feature-requests" element={<FeatureRequests />} />
+              
+              {/* Alternative Landings */}
+              <Route path="/homepage" element={<Homepage />} />
+              <Route path="/simple" element={<SimpleHomepage />} />
+              <Route path="/landing-a" element={<LandingPageA />} />
+              <Route path="/landing-b" element={<LandingPageB />} />
+              <Route path="/landing-c" element={<LandingPageC />} />
+              <Route path="/email-preview" element={<EmailPreview />} />
+              
+              {/* Catch all */}
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
         </BrowserRouter>
