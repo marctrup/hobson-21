@@ -4,7 +4,7 @@ export const uploadImageToStorage = async (file: File, path: string): Promise<st
   const { data, error } = await supabase.storage
     .from('blog-images')
     .upload(path, file, {
-      cacheControl: '31536000', // 1 year cache for images
+      cacheControl: '3600',
       upsert: true
     });
 

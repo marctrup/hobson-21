@@ -92,9 +92,8 @@
     <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" fetchpriority="high" media="(max-width: 768px)" />
     <link rel="preload" href="/blog-images/boy-praying-with-bible.png" as="image" fetchpriority="high" media="(max-width: 768px)" />
     
-    <!-- Desktop preloading with specific cache headers -->
-    <link rel="preload" href="/lovable-uploads/4351fb54-1d77-416e-9474-3c80e483a83c.png" as="image" media="(min-width: 769px)" fetchpriority="high" />
-    <link rel="preload" href="/lovable-uploads/b21f796e-20aa-4a56-ad42-9d8e9c3189ba.png" as="image" media="(min-width: 769px)" fetchpriority="high" />
+    <!-- Desktop preloading -->
+    <link rel="preload" href="/lovable-uploads/4351fb54-1d77-416e-9474-3c80e483a83c.png" as="image" media="(min-width: 769px)" />
     <link rel="preload" href="/blog-images/too-good-to-be-true.png" as="image" media="(min-width: 769px)" />
     
     <!-- Aggressive critical script preloading -->
@@ -118,31 +117,10 @@
     <!-- Standard CSS loading -->
     <link rel="stylesheet" href="/src/index.css" />
     
-    <!-- Simplified Service Worker registration with cache clearing -->
+    <!-- Simplified Service Worker registration -->
     <script>
-      if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js', { scope: '/' })
-            .then((registration) => {
-              // Force update to use new cache version
-              registration.update();
-              console.log('SW registered');
-            })
-            .catch((error) => {
-              console.log('SW registration failed');
-            });
-        });
-        
-        // Clear old caches immediately
-        if ('caches' in window) {
-          caches.keys().then((cacheNames) => {
-            cacheNames.forEach((cacheName) => {
-              if (cacheName.startsWith('hobson-ai-v') && !cacheName.includes('v6')) {
-                caches.delete(cacheName);
-              }
-            });
-          });
-        }
+      if ('serviceWorker' in navigator && 'loading' !== document.readyState) {
+        navigator.serviceWorker.register('/sw.js', { scope: '/' });
       }
     </script>
   </head>
