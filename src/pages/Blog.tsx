@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { BlogHero } from "@/components/blog/BlogHero";
@@ -161,8 +161,7 @@ const Blog = () => {
   const remainingPosts = posts.slice(1);
 
   return (
-    <HelmetProvider>
-      <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background">
         <Helmet>
           <title>Property Management AI Blog | Industry Insights & Tips | Hobson AI</title>
           <meta name="description" content="Latest insights, updates, and expert tips for property management professionals using AI-powered document intelligence and automation tools." />
@@ -222,7 +221,6 @@ const Blog = () => {
           )}
         </div>
       </div>
-    </HelmetProvider>
   );
 };
 
