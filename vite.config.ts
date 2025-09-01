@@ -10,7 +10,15 @@ export default defineConfig(({ mode }) => ({
     port: 8080,
   },
   optimizeDeps: {
-    include: ["react", "react-dom", "react-router-dom"],
+    include: [
+      "react", 
+      "react-dom", 
+      "react-router-dom",
+      "react/jsx-runtime",
+      "@tanstack/react-query",
+      "react-helmet-async"
+    ],
+    force: true
   },
   plugins: [
     react(),
