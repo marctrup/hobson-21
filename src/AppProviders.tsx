@@ -6,10 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ToastPortal } from "@/components/ToastPortal";
 
-// Debug React instance in AppProviders
-console.log('AppProviders.tsx - React instance:', React);
-console.log('AppProviders.tsx - BrowserRouter:', BrowserRouter);
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -21,8 +17,6 @@ const queryClient = new QueryClient({
 });
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
-  console.log('AppProviders rendering - React still available:', !!React);
-  
   return (
     <HelmetProvider>
       <BrowserRouter>
