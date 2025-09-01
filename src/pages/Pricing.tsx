@@ -60,7 +60,7 @@ const Pricing = () => {
             }}
           >
             <div className={`absolute top-1 w-4 h-4 sm:w-3 sm:h-3 sm:top-0.5 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${
-              isAnnual ? 'transform translate-x-7 sm:translate-x-6' : 'left-1 sm:left-0.5'
+              isAnnual ? 'transform translate-x-8 sm:translate-x-7' : 'left-1 sm:left-0.5'
             }`}></div>
           </div>
         </div>
