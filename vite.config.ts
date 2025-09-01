@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   ssr: {
-    noExternal: ['react', 'react-dom', 'sonner']
+    noExternal: ['react', 'react-dom', 'sonner', 'react-router-dom', '@radix-ui/react-dialog']
   },
   plugins: [
     react(),
@@ -48,7 +48,12 @@ export default defineConfig(({ mode }) => ({
       "react/jsx-runtime", 
       "react/jsx-dev-runtime",
       "react-router-dom",
-      "sonner"
+      "react-router",
+      "sonner",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-select",
+      "@tanstack/react-query",
+      "react-helmet-async"
     ],
     alias: {
       "@": path.resolve(__dirname, "./src"),
