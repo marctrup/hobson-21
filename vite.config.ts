@@ -17,9 +17,13 @@ export default defineConfig(({ mode }) => ({
       "react/jsx-runtime",
       "@tanstack/react-query",
       "react-helmet-async",
-      "sonner"
+      "sonner",
+      "next-themes"
     ],
-    force: true
+    force: true,
+    esbuildOptions: {
+      target: 'esnext'
+    }
   },
   plugins: [
     react(),
@@ -27,10 +31,14 @@ export default defineConfig(({ mode }) => ({
     componentTagger(),
   ].filter(Boolean),
   resolve: {
-    dedupe: ["react", "react-dom"],
+    dedupe: ["react", "react-dom", "react/jsx-runtime"],
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
+  },
+  define: {
+    // Ensure React is available globally
+    'global.React': 'React'
   },
   build: {
     target: 'esnext',
