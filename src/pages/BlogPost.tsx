@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Helmet } from "react-helmet-async";
 import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { SecureContentRenderer } from "@/components/SecureContentRenderer";
 import { format } from "date-fns";
 
 interface BlogPost {
@@ -346,17 +347,12 @@ const BlogPost = () => {
           </header>
 
           {/* Article Content */}
-          <div 
-            ref={contentRef}
-            className="prose-headings:text-foreground prose-strong:text-foreground [&_a]:text-blue-600 [&_a]:underline [&_a:hover]:text-blue-800 [&_a:hover]:no-underline [&_ul]:!list-disc [&_ul]:!pl-6 [&_ol]:!list-decimal [&_ol]:!pl-6 [&_li]:leading-relaxed text-foreground text-lg max-w-none"
-            dangerouslySetInnerHTML={{ 
-              __html: post.content
-                // Handle links - add target="_blank" only for http/https links, not mailto
-                .replace(/<a\s+([^>]*href=["'](?:https?:\/\/[^"']+)["'][^>]*)>/gi, '<a $1 target="_blank" rel="noopener noreferrer">')
-                // Convert line breaks to <br> tags but respect existing HTML
-                .replace(/\n/g, '<br>')
-            }}
-          />
+          <div ref={contentRef}>
+            <SecureContentRenderer
+              content={post.content.replace(/\n/g, '<br>')}
+              className="prose-headings:text-foreground prose-strong:text-foreground [&_a]:text-blue-600 [&_a]:underline [&_a:hover]:text-blue-800 [&_a:hover]:no-underline [&_ul]:!list-disc [&_ul]:!pl-6 [&_ol]:!list-decimal [&_ol]:!pl-6 [&_li]:leading-relaxed text-foreground text-lg max-w-none"
+            />
+          </div>
 
           {/* Article Footer */}
           <footer className="mt-12 pt-8 border-t">

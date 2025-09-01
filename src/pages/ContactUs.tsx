@@ -6,6 +6,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Link, useNavigate } from "react-router-dom";
 import React, { useState, FormEvent } from "react";
 import { toast } from "@/hooks/use-toast";
+import { checkRateLimit, sanitizeInput } from "@/utils/security";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Helmet } from "react-helmet-async";
 
@@ -38,6 +39,17 @@ const ContactUs = () => {
     
     if (isSubmitting) return; // Prevent double submission
     
+    // Rate limiting check
+    const clientId = `${formData.email}_${Date.now()}`;
+    if (!checkRateLimit(clientId, 3, 300000)) { // 3 requests per 5 minutes
+      toast({
+        title: "Too Many Requests",
+        description: "Please wait a few minutes before submitting another message.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     // Basic validation
     if (!formData.name || !formData.email || !formData.confirmEmail || !formData.reason) {
       toast({
@@ -58,8 +70,17 @@ const ContactUs = () => {
       return;
     }
 
+    // Sanitize inputs to prevent XSS
+    const sanitizedFormData = {
+      name: sanitizeInput(formData.name),
+      email: sanitizeInput(formData.email),
+      phone: sanitizeInput(formData.phone),
+      reason: sanitizeInput(formData.reason),
+      confirmEmail: sanitizeInput(formData.confirmEmail)
+    };
+
     // Show anti-bot verification
-    setPendingFormData(formData);
+    setPendingFormData(sanitizedFormData);
     const problem = generateMathProblem();
     setMathProblem(problem);
     setUserAnswer("");

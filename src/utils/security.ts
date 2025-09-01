@@ -42,6 +42,70 @@ export function sanitizeRichText(input: string): string {
   }).trim();
 }
 
+// Sanitize blog content with safe HTML tags for rich content
+export function sanitizeBlogContent(input: string): string {
+  return DOMPurify.sanitize(input, {
+    ALLOWED_TAGS: [
+      'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'ol', 'ul', 'li', 'blockquote', 'code', 'pre', 'a', 'img', 'div', 'span'
+    ],
+    ALLOWED_ATTR: {
+      'a': ['href', 'title', 'target', 'rel'],
+      'img': ['src', 'alt', 'title', 'width', 'height', 'loading', 'decoding', 'sizes'],
+      'code': ['class'],
+      'pre': ['class'],
+      'div': ['class'],
+      'span': ['class']
+    },
+    ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+    ADD_ATTR: {
+      'a': {
+        'rel': 'noopener noreferrer',
+        'target': '_blank'
+      }
+    },
+    FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input', 'button', 'select', 'textarea'],
+    FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur', 'style']
+  });
+}
+
+// Rate limiting for client-side requests
+const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
+
+export function checkRateLimit(identifier: string, maxRequests = 5, windowMs = 60000): boolean {
+  const now = Date.now();
+  const key = `rate_limit_${identifier}`;
+  
+  const current = rateLimitStore.get(key);
+  
+  if (!current || now > current.resetTime) {
+    rateLimitStore.set(key, { count: 1, resetTime: now + windowMs });
+    return true;
+  }
+  
+  if (current.count >= maxRequests) {
+    return false;
+  }
+  
+  current.count++;
+  return true;
+}
+
+// Input validation for search queries to prevent injection
+export function validateSearchQuery(query: string): string {
+  if (!query || typeof query !== 'string') {
+    return '';
+  }
+  
+  // Remove potentially dangerous characters and limit length
+  const sanitized = query
+    .replace(/[<>'";&\\]/g, '') // Remove dangerous characters
+    .trim()
+    .slice(0, 100); // Limit length
+  
+  return sanitized;
+}
+
 // Check if user has admin role based on user roles data
 export function isActualAdmin(userRoles: Array<{ role: string }> | null): boolean {
   return userRoles?.some(role => role.role === 'admin') ?? false;

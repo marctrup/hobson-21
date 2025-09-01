@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { SecureContentRenderer } from '@/components/SecureContentRenderer';
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -233,9 +234,9 @@ const AnnouncementPost = () => {
 
                 {/* Article Content */}
                 <Card className="p-4 md:p-6 flex-1 bg-gray-50 dark:bg-gray-900/20">
-                  <div 
+                  <SecureContentRenderer
+                    content={post.content}
                     className="prose prose-sm md:prose-lg max-w-none dark:prose-invert prose-ul:list-disc prose-ol:list-decimal prose-li:marker:text-current"
-                    dangerouslySetInnerHTML={{ __html: post.content }}
                   />
                 </Card>
               </div>

@@ -30,6 +30,7 @@ import { AuthDialog } from '@/components/features/AuthDialog';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { validateSearchQuery } from '@/utils/security';
 
 const FeatureRequests = () => {
   const [activeFilter, setActiveFilter] = useState('new');
@@ -92,9 +93,16 @@ const FeatureRequests = () => {
         query = query.order('votes', { ascending: false }).order('created_at', { ascending: false });
       }
 
-      // Apply search filter
+      // Apply search filter with proper sanitization
       if (searchQuery) {
-        query = query.or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%`);
+        const sanitizedQuery = validateSearchQuery(searchQuery);
+        if (sanitizedQuery) {
+          // Use parameterized query to prevent SQL injection
+          query = query.textSearch('fts', sanitizedQuery, {
+            type: 'websearch',
+            config: 'english'
+          });
+        }
       }
 
       const { data: postsData, error: postsError } = await query;
