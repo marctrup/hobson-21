@@ -1,4 +1,4 @@
-import { Suspense, ReactNode } from 'react';
+import React, { Suspense, ReactNode } from 'react';
 
 interface LazyComponentProps {
   children: ReactNode;

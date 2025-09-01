@@ -1,5 +1,5 @@
 import { Search, Calendar, BarChart3, Shield, Zap, CheckCircle } from "lucide-react";
-import { memo } from "react";
+import React, { memo } from "react";
 
 const CapabilitiesList = memo(() => {
   const capabilities = [

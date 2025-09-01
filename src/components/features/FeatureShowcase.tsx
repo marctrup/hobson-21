@@ -1,6 +1,6 @@
 import { MessageCircle } from "lucide-react";
 import PropertyMap from "./PropertyMap";
-import { memo } from "react";
+import React, { memo } from "react";
 
 // Updated with Features heading
 const FeatureShowcase = memo(() => {

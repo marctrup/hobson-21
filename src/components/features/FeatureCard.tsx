@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, LucideIcon } from "lucide-react";
-import { memo } from "react";
+import React, { memo } from "react";
 
 interface FeatureCardProps {
   feature: {

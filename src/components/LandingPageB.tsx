@@ -11,7 +11,7 @@ import { Search, Zap, Building2, TrendingUp, MapPin, PenTool, CreditCard, Shield
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import documentAiIcon from "/lovable-uploads/807ac70f-d32b-415b-a7ac-e51d33f140d7.png";

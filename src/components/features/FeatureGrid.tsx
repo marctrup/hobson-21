@@ -1,6 +1,6 @@
 import { MessageCircle, Map, FileText, Brain } from "lucide-react";
 import FeatureCard from "./FeatureCard";
-import { memo } from "react";
+import React, { memo } from "react";
 
 const FeatureGrid = memo(() => {
   const mainFeatures = [
