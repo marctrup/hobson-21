@@ -30,6 +30,9 @@ export default defineConfig(({ mode }) => ({
       target: 'esnext'
     }
   },
+  ssr: {
+    noExternal: ['react', 'react-dom']
+  },
   plugins: [
     react(),
     mode === 'development' &&
