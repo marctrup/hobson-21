@@ -97,11 +97,8 @@ const FeatureRequests = () => {
       if (searchQuery) {
         const sanitizedQuery = validateSearchQuery(searchQuery);
         if (sanitizedQuery) {
-          // Use parameterized query to prevent SQL injection
-          query = query.textSearch('fts', sanitizedQuery, {
-            type: 'websearch',
-            config: 'english'
-          });
+          // Use the FTS column for secure full-text search
+          query = query.textSearch('fts', sanitizedQuery);
         }
       }
 
