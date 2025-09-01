@@ -34,8 +34,8 @@ const Pricing = () => {
     return price.toFixed(2);
   };
 
-  const PricingToggle = ({ planKey }: { planKey: keyof typeof pricingData }) => (
-    <div className="space-y-2 mb-4">
+  const GlobalPricingToggle = () => (
+    <div className="space-y-2 mb-8 flex flex-col items-center">
       <div className="flex items-center justify-center gap-3">
         <span className={`text-xs sm:text-sm ${!isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Monthly</span>
         <div className="relative">
@@ -46,7 +46,7 @@ const Pricing = () => {
             onChange={(e) => setIsAnnual(e.target.checked)}
           />
           <div 
-            className={`w-12 h-6 sm:w-10 sm:h-5 rounded-full cursor-pointer transition-all duration-300 ease-in-out ${
+            className={`w-12 h-6 sm:w-14 sm:h-7 rounded-full cursor-pointer transition-all duration-300 ease-in-out ${
               isAnnual ? 'bg-purple-500 shadow-md' : 'bg-purple-200'
             } touch-manipulation`}
             onClick={() => setIsAnnual(!isAnnual)}
@@ -59,16 +59,16 @@ const Pricing = () => {
               }
             }}
           >
-            <div className={`absolute top-1 w-4 h-4 sm:w-3 sm:h-3 sm:top-0.5 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${
-              isAnnual ? 'transform translate-x-8 sm:translate-x-7' : 'left-1 sm:left-0.5'
+            <div className={`absolute top-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${
+              isAnnual ? 'transform translate-x-6 sm:translate-x-7' : 'left-0.5'
             }`}></div>
           </div>
         </div>
         <span className={`text-xs sm:text-sm ${isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Annual</span>
       </div>
-      <div className="flex justify-center">
-        <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 px-2 py-1">Save 20%</Badge>
-      </div>
+      {isAnnual && (
+        <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 px-2 py-1">Save 20% annually</Badge>
+      )}
     </div>
   );
 
@@ -115,9 +115,10 @@ const Pricing = () => {
           <div className="container mx-auto px-4 overflow-visible">
             <div className="text-center mb-8">
               <h2 className="text-4xl font-bold text-foreground mb-4">Choose Your AI Journey</h2>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
                 Scale seamlessly. Every plan includes unlimited users, properties, and features.
               </p>
+              <GlobalPricingToggle />
             </div>
             
             {/* All 6 Plans in Unified Grid */}
@@ -216,17 +217,16 @@ const Pricing = () => {
                     <p className="text-xs text-muted-foreground mb-4">
                       For steady monthly workloads.
                     </p>
-                    <div className="space-y-3 mb-4">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
-                        <span className="text-xs">Everything in Free</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
-                        <span className="text-xs">Priority support</span>
-                      </div>
-                    </div>
-                    <PricingToggle planKey="essential" />
+                     <div className="space-y-3 mb-6">
+                       <div className="flex items-center gap-2">
+                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                         <span className="text-xs">Everything in Free</span>
+                       </div>
+                       <div className="flex items-center gap-2">
+                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
+                         <span className="text-xs">Priority support</span>
+                       </div>
+                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
                     Choose Essential
@@ -255,13 +255,12 @@ const Pricing = () => {
                     <p className="text-xs text-muted-foreground mb-4">
                       For heavy, frequent use.
                     </p>
-                    <div className="space-y-3 mb-4">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
-                        <span className="text-xs">Everything in Essential</span>
-                      </div>
-                    </div>
-                    <PricingToggle planKey="essentialPlus" />
+                     <div className="space-y-3 mb-6">
+                       <div className="flex items-center gap-2">
+                         <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
+                         <span className="text-xs">Everything in Essential</span>
+                       </div>
+                     </div>
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm mt-auto">
                     Choose Essential +
@@ -285,7 +284,7 @@ const Pricing = () => {
                     <p className="text-xs text-muted-foreground mb-4">
                       For high-volume, daily demands.
                     </p>
-                    <div className="space-y-3 mb-4">
+                    <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-2">
                         <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
                         <span className="text-xs">Everything in Plus</span>
@@ -299,7 +298,6 @@ const Pricing = () => {
                         <span className="text-xs">Dedicated support</span>
                       </div>
                     </div>
-                    <PricingToggle planKey="enterprise" />
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
                     Contact Sales
