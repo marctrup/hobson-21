@@ -29,8 +29,6 @@ export default defineConfig(({ mode }) => ({
     force: true,
     esbuildOptions: {
       target: 'esnext',
-      // Ensure React is treated as external global
-      external: [],
     }
   },
   ssr: {
@@ -57,16 +55,21 @@ export default defineConfig(({ mode }) => ({
     ],
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      // Force single React instance - use directory paths
+      // Force ALL React packages to use same instance
       "react": path.resolve(__dirname, "./node_modules/react"),
       "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
+      "react-dom/client": path.resolve(__dirname, "./node_modules/react-dom/client"),
+      "react/jsx-runtime": path.resolve(__dirname, "./node_modules/react/jsx-runtime"),
+      "react/jsx-dev-runtime": path.resolve(__dirname, "./node_modules/react/jsx-dev-runtime"),
     },
   },
   define: {
-    // Ensure React is available globally
+    // Global React availability
     'global.React': 'React',
     'global.window.React': 'React',
-    'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development')
+    'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
+    // Force React context availability
+    '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({})',
   },
   clearScreen: false,
   build: {
