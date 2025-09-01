@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,6 +8,62 @@ import { Helmet } from "react-helmet-async";
 import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
 import { GlobalHeader } from "@/components/GlobalHeader";
 const Pricing = () => {
+  const [isAnnual, setIsAnnual] = useState(false);
+  
+  // Pricing data with monthly and annual amounts (20% discount for annual)
+  const pricingData = {
+    essential: {
+      monthly: 19.50,
+      annual: 15.60, // 20% discount
+      heus: 275
+    },
+    essentialPlus: {
+      monthly: 49.75,
+      annual: 39.80, // 20% discount
+      heus: 700
+    },
+    enterprise: {
+      monthly: 148.50,
+      annual: 118.80, // 20% discount
+      heus: 2000
+    }
+  };
+
+  const formatPrice = (plan: keyof typeof pricingData) => {
+    const price = isAnnual ? pricingData[plan].annual : pricingData[plan].monthly;
+    return price.toFixed(2);
+  };
+
+  const PricingToggle = ({ planKey }: { planKey: keyof typeof pricingData }) => (
+    <div className="space-y-2 mb-4">
+      <div className="flex items-center justify-center gap-2">
+        <span className={`text-xs ${!isAnnual ? 'font-medium' : 'text-muted-foreground'}`}>Monthly</span>
+        <div className="relative">
+          <input 
+            type="checkbox" 
+            className="sr-only" 
+            checked={isAnnual}
+            onChange={(e) => setIsAnnual(e.target.checked)}
+          />
+          <div 
+            className={`w-8 h-4 rounded-full cursor-pointer transition-colors ${
+              isAnnual ? 'bg-purple-500' : 'bg-purple-200'
+            }`}
+            onClick={() => setIsAnnual(!isAnnual)}
+          >
+            <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full shadow transition-transform ${
+              isAnnual ? 'transform translate-x-4' : 'left-0.5'
+            }`}></div>
+          </div>
+        </div>
+        <span className={`text-xs ${isAnnual ? 'font-medium' : 'text-muted-foreground'}`}>Annual</span>
+      </div>
+      <div className="flex justify-center">
+        <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
+      </div>
+    </div>
+  );
+
   return <>
       <Helmet>
         <title>Pricing - Pay for Work, Not Seats | Hobson's Choice AI</title>
@@ -140,7 +197,10 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-4 flex-shrink-0">
                   <CardTitle className="text-lg font-bold">Essential</CardTitle>
-                  <div className="text-3xl font-bold text-purple-600 mt-2">£19.50<span className="text-sm font-normal">/month</span></div>
+                  <div className="text-3xl font-bold text-purple-600 mt-2">
+                    £{formatPrice('essential')}<span className="text-sm font-normal">/month</span>
+                    {isAnnual && <div className="text-xs text-muted-foreground line-through">£{pricingData.essential.monthly.toFixed(2)}</div>}
+                  </div>
                   <div className="text-sm text-purple-600 font-medium mt-1">275 HEUs</div>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
@@ -158,20 +218,7 @@ const Pricing = () => {
                         <span className="text-xs">Priority support</span>
                       </div>
                     </div>
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center justify-center gap-2">
-                        <span className="text-xs text-muted-foreground">Monthly</span>
-                        <div className="relative">
-                          <input type="checkbox" className="sr-only" />
-                          <div className="w-8 h-4 bg-purple-200 rounded-full cursor-pointer"></div>
-                          <div className="absolute left-0.5 top-0.5 bg-purple-500 w-3 h-3 rounded-full shadow transition-transform"></div>
-                        </div>
-                        <span className="text-xs font-medium">Annual</span>
-                      </div>
-                      <div className="flex justify-center">
-                        <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
-                      </div>
-                    </div>
+                    <PricingToggle planKey="essential" />
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
                     Choose Essential
@@ -189,7 +236,10 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
                 <CardHeader className="text-center pb-4 pt-6 flex-shrink-0">
                   <CardTitle className="text-lg font-bold">Essential Plus</CardTitle>
-                  <div className="text-3xl font-bold text-purple-700 mt-2">£49.75<span className="text-sm font-normal">/month</span></div>
+                  <div className="text-3xl font-bold text-purple-700 mt-2">
+                    £{formatPrice('essentialPlus')}<span className="text-sm font-normal">/month</span>
+                    {isAnnual && <div className="text-xs text-muted-foreground line-through">£{pricingData.essentialPlus.monthly.toFixed(2)}</div>}
+                  </div>
                   <div className="text-sm text-purple-700 font-medium mt-1">700 HEUs</div>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
@@ -203,20 +253,7 @@ const Pricing = () => {
                         <span className="text-xs">Everything in Essential</span>
                       </div>
                     </div>
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center justify-center gap-2">
-                        <span className="text-xs text-muted-foreground">Monthly</span>
-                        <div className="relative">
-                          <input type="checkbox" className="sr-only" />
-                          <div className="w-8 h-4 bg-purple-300 rounded-full cursor-pointer"></div>
-                          <div className="absolute left-0.5 top-0.5 bg-purple-600 w-3 h-3 rounded-full shadow transition-transform"></div>
-                        </div>
-                        <span className="text-xs font-medium">Annual</span>
-                      </div>
-                      <div className="flex justify-center">
-                        <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
-                      </div>
-                    </div>
+                    <PricingToggle planKey="essentialPlus" />
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm mt-auto">
                     Choose Essential +
@@ -229,7 +266,10 @@ const Pricing = () => {
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
                 <CardHeader className="text-center pb-4 flex-shrink-0">
                   <CardTitle className="text-lg font-bold">Enterprise</CardTitle>
-                  <div className="text-3xl font-bold text-purple-600 mt-2">£148.50<span className="text-sm font-normal">/month</span></div>
+                  <div className="text-3xl font-bold text-purple-600 mt-2">
+                    £{formatPrice('enterprise')}<span className="text-sm font-normal">/month</span>
+                    {isAnnual && <div className="text-xs text-muted-foreground line-through">£{pricingData.enterprise.monthly.toFixed(2)}</div>}
+                  </div>
                   <div className="text-sm text-purple-600 font-medium mt-1">2,000 HEUs</div>
                 </CardHeader>
                 <CardContent className="flex flex-col flex-grow">
@@ -251,20 +291,7 @@ const Pricing = () => {
                         <span className="text-xs">Dedicated support</span>
                       </div>
                     </div>
-                    <div className="space-y-2 mb-4">
-                      <div className="flex items-center justify-center gap-2">
-                        <span className="text-xs text-muted-foreground">Monthly</span>
-                        <div className="relative">
-                          <input type="checkbox" className="sr-only" />
-                          <div className="w-8 h-4 bg-purple-200 rounded-full cursor-pointer"></div>
-                          <div className="absolute left-0.5 top-0.5 bg-purple-500 w-3 h-3 rounded-full shadow transition-transform"></div>
-                        </div>
-                        <span className="text-xs font-medium">Annual</span>
-                      </div>
-                      <div className="flex justify-center">
-                        <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
-                      </div>
-                    </div>
+                    <PricingToggle planKey="enterprise" />
                   </div>
                   <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
                     Contact Sales
