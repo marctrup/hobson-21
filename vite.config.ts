@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => ({
       "react-dom", 
       "react-router-dom",
       "react/jsx-runtime",
+      "react/jsx-dev-runtime",
       "@tanstack/react-query",
       "react-helmet-async",
       "sonner",
@@ -27,7 +28,9 @@ export default defineConfig(({ mode }) => ({
     ],
     force: true,
     esbuildOptions: {
-      target: 'esnext'
+      target: 'esnext',
+      // Ensure React is treated as external global
+      external: [],
     }
   },
   ssr: {
@@ -39,19 +42,29 @@ export default defineConfig(({ mode }) => ({
     componentTagger(),
   ].filter(Boolean),
   resolve: {
-    dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
+    dedupe: [
+      "react", 
+      "react-dom", 
+      "react/jsx-runtime", 
+      "react/jsx-dev-runtime",
+      "@types/react",
+      "@types/react-dom",
+      "react-router-dom"
+    ],
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      // Force single React instance
-      "react": path.resolve(__dirname, "./node_modules/react"),
-      "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
-      "react/jsx-runtime": path.resolve(__dirname, "./node_modules/react/jsx-runtime"),
-      "react/jsx-dev-runtime": path.resolve(__dirname, "./node_modules/react/jsx-dev-runtime"),
+      // Force single React instance - absolute paths
+      "react": path.resolve(__dirname, "./node_modules/react/index.js"),
+      "react-dom": path.resolve(__dirname, "./node_modules/react-dom/index.js"),
+      "react/jsx-runtime": path.resolve(__dirname, "./node_modules/react/jsx-runtime.js"),
+      "react/jsx-dev-runtime": path.resolve(__dirname, "./node_modules/react/jsx-dev-runtime.js"),
+      "react-router-dom": path.resolve(__dirname, "./node_modules/react-router-dom/dist/index.js"),
     },
   },
   define: {
     // Ensure React is available globally
     'global.React': 'React',
+    'global.window.React': 'React',
     'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development')
   },
   clearScreen: false,
