@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
+    hmr: {
+      overlay: false
+    }
   },
   optimizeDeps: {
     include: [
@@ -18,7 +21,9 @@ export default defineConfig(({ mode }) => ({
       "@tanstack/react-query",
       "react-helmet-async",
       "sonner",
-      "next-themes"
+      "next-themes",
+      "@radix-ui/react-dialog",
+      "lucide-react"
     ],
     force: true,
     esbuildOptions: {
@@ -40,6 +45,7 @@ export default defineConfig(({ mode }) => ({
     // Ensure React is available globally
     'global.React': 'React'
   },
+  clearScreen: false,
   build: {
     target: 'esnext',
     minify: 'esbuild',
