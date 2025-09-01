@@ -32,7 +32,17 @@ export default defineConfig(({ mode }) => ({
     }
   },
   ssr: {
-    noExternal: ['react', 'react-dom', 'sonner', 'react-router-dom', '@radix-ui/react-dialog']
+    noExternal: [
+      'react', 
+      'react-dom', 
+      'sonner', 
+      'react-router-dom', 
+      '@radix-ui/react-dialog',
+      '@radix-ui/react-select',
+      '@radix-ui/react-label',
+      'react-helmet-async',
+      'next-themes'
+    ]
   },
   plugins: [
     react(),
@@ -50,8 +60,10 @@ export default defineConfig(({ mode }) => ({
       "sonner",
       "@radix-ui/react-dialog",
       "@radix-ui/react-select",
+      "@radix-ui/react-label",
       "@tanstack/react-query",
-      "react-helmet-async"
+      "react-helmet-async",
+      "next-themes"
     ],
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -64,8 +76,8 @@ export default defineConfig(({ mode }) => ({
     },
   },
   define: {
-    // Global React availability
-    'global.React': 'React',
+    // Global React availability - using proper JSON string format
+    'global.React': '"React"',
     'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
   },
   clearScreen: false,
