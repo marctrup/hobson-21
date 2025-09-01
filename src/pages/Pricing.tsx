@@ -50,9 +50,9 @@ const Pricing = () => {
     const isAnnual = billingCycles[planKey];
     
     return (
-      <div className="space-y-2 mb-4">
-        <div className="flex items-center justify-center gap-3">
-          <span className={`text-xs sm:text-sm ${!isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Monthly</span>
+      <div className="space-y-2 mb-4 px-4">
+        <div className="flex items-center justify-center gap-2">
+          <span className={`text-xs ${!isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Monthly</span>
           <div className="relative">
             <input 
               type="checkbox" 
@@ -61,7 +61,7 @@ const Pricing = () => {
               onChange={(e) => toggleBilling(planKey)}
             />
             <div 
-              className={`w-12 h-6 sm:w-14 sm:h-7 rounded-full cursor-pointer transition-all duration-300 ease-in-out ${
+              className={`w-9 h-5 rounded-full cursor-pointer transition-all duration-300 ease-in-out ${
                 isAnnual ? 'bg-purple-500 shadow-md' : 'bg-purple-200'
               } touch-manipulation`}
               onClick={() => toggleBilling(planKey)}
@@ -74,12 +74,12 @@ const Pricing = () => {
                 }
               }}
             >
-              <div className={`absolute top-0.5 w-5 h-5 sm:w-6 sm:h-6 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${
-                isAnnual ? 'transform translate-x-6 sm:translate-x-7' : 'left-0.5'
+              <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${
+                isAnnual ? 'transform translate-x-4' : 'left-0.5'
               }`}></div>
             </div>
           </div>
-          <span className={`text-xs sm:text-sm ${isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Annual</span>
+          <span className={`text-xs ${isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Annual</span>
         </div>
         {isAnnual && (
           <div className="flex justify-center">
