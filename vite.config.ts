@@ -66,10 +66,7 @@ export default defineConfig(({ mode }) => ({
   define: {
     // Global React availability
     'global.React': 'React',
-    'global.window.React': 'React',
     'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
-    // Force React context availability
-    '__REACT_DEVTOOLS_GLOBAL_HOOK__': '({})',
   },
   clearScreen: false,
   build: {
