@@ -36,8 +36,8 @@ const Pricing = () => {
 
   const PricingToggle = ({ planKey }: { planKey: keyof typeof pricingData }) => (
     <div className="space-y-2 mb-4">
-      <div className="flex items-center justify-center gap-2">
-        <span className={`text-xs ${!isAnnual ? 'font-medium' : 'text-muted-foreground'}`}>Monthly</span>
+      <div className="flex items-center justify-center gap-3">
+        <span className={`text-xs sm:text-sm ${!isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Monthly</span>
         <div className="relative">
           <input 
             type="checkbox" 
@@ -46,20 +46,28 @@ const Pricing = () => {
             onChange={(e) => setIsAnnual(e.target.checked)}
           />
           <div 
-            className={`w-8 h-4 rounded-full cursor-pointer transition-colors ${
-              isAnnual ? 'bg-purple-500' : 'bg-purple-200'
-            }`}
+            className={`w-12 h-6 sm:w-10 sm:h-5 rounded-full cursor-pointer transition-all duration-300 ease-in-out ${
+              isAnnual ? 'bg-purple-500 shadow-md' : 'bg-purple-200'
+            } touch-manipulation`}
             onClick={() => setIsAnnual(!isAnnual)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setIsAnnual(!isAnnual);
+              }
+            }}
           >
-            <div className={`absolute top-0.5 w-3 h-3 bg-white rounded-full shadow transition-transform ${
-              isAnnual ? 'transform translate-x-4' : 'left-0.5'
+            <div className={`absolute top-1 w-4 h-4 sm:w-3 sm:h-3 sm:top-0.5 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${
+              isAnnual ? 'transform translate-x-6 sm:translate-x-4' : 'left-1 sm:left-0.5'
             }`}></div>
           </div>
         </div>
-        <span className={`text-xs ${isAnnual ? 'font-medium' : 'text-muted-foreground'}`}>Annual</span>
+        <span className={`text-xs sm:text-sm ${isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Annual</span>
       </div>
       <div className="flex justify-center">
-        <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700">Save 20%</Badge>
+        <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 px-2 py-1">Save 20%</Badge>
       </div>
     </div>
   );
