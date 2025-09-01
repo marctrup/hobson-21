@@ -16,7 +16,8 @@ export default defineConfig(({ mode }) => ({
       "react-router-dom",
       "react/jsx-runtime",
       "@tanstack/react-query",
-      "react-helmet-async"
+      "react-helmet-async",
+      "sonner"
     ],
     force: true
   },
