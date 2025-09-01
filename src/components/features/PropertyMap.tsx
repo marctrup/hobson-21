@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Map } from "lucide-react";
-import { memo } from "react";
+import React, { memo } from "react";
 
 const PropertyMap = memo(() => {
   return (
