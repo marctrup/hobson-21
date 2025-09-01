@@ -31,7 +31,7 @@ export function sanitizeInput(input: string): string {
   return DOMPurify.sanitize(input, {
     ALLOWED_TAGS: [], // Remove all HTML tags
     ALLOWED_ATTR: [] // Remove all attributes
-  }).trim();
+  }).toString().trim();
 }
 
 // Sanitize rich text content (for descriptions, posts, etc.)
@@ -39,7 +39,7 @@ export function sanitizeRichText(input: string): string {
   return DOMPurify.sanitize(input, {
     ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'ol', 'ul', 'li'],
     ALLOWED_ATTR: []
-  }).trim();
+  }).toString().trim();
 }
 
 // Sanitize blog content with safe HTML tags for rich content
@@ -49,11 +49,18 @@ export function sanitizeBlogContent(input: string): string {
       'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'ol', 'ul', 'li', 'blockquote', 'code', 'pre', 'a', 'img', 'div', 'span'
     ],
-    ALLOWED_ATTR: ['href', 'title', 'target', 'rel', 'src', 'alt', 'width', 'height', 'loading', 'decoding', 'sizes', 'class'],
+    ALLOWED_ATTR: {
+      'a': ['href', 'title', 'target', 'rel'],
+      'img': ['src', 'alt', 'title', 'width', 'height', 'loading', 'decoding', 'sizes'],
+      'code': ['class'],
+      'pre': ['class'],
+      'div': ['class'],
+      'span': ['class']
+    },
     ALLOWED_URI_REGEXP: /^(?:(?:(?:f|ht)tps?|mailto|tel|callto|sms|cid|xmpp):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
     FORBID_TAGS: ['script', 'object', 'embed', 'form', 'input', 'button', 'select', 'textarea'],
     FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover', 'onfocus', 'onblur', 'style']
-  });
+  } as any).toString();
 }
 
 // Rate limiting for client-side requests
