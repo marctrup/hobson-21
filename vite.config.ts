@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => ({
     }
   },
   ssr: {
-    noExternal: ['react', 'react-dom']
+    noExternal: ['react', 'react-dom', 'sonner']
   },
   plugins: [
     react(),
@@ -47,7 +47,8 @@ export default defineConfig(({ mode }) => ({
       "react-dom", 
       "react/jsx-runtime", 
       "react/jsx-dev-runtime",
-      "react-router-dom"
+      "react-router-dom",
+      "sonner"
     ],
     alias: {
       "@": path.resolve(__dirname, "./src"),
