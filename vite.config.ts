@@ -48,7 +48,8 @@ export default defineConfig(({ mode }) => ({
   },
   define: {
     // Ensure React is available globally
-    'global.React': 'React'
+    'global.React': 'React',
+    'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development')
   },
   clearScreen: false,
   build: {
