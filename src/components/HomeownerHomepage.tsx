@@ -192,7 +192,7 @@ export const HomeownerHomepage = () => {
                   Ready to integrate AI into your home?
                 </h2>
                 <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-                  Join our exclusive pilot program and be among the first to experience the future of property intelligence.
+                  No need to look for anymore for those documents.
                 </p>
                 <div className="mb-8">
                   <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
