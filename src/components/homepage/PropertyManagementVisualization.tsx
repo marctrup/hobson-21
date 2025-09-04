@@ -4,7 +4,7 @@ export const PropertyManagementVisualization = () => {
       {/* Main Header */}
       <div className="text-center mb-8">
         <h1 className="text-2xl leading-relaxed font-bold mb-2">
-          <span className="text-gray-500 font-semibold">So many docs, one key date — here's how to find it</span>
+          <span className="text-gray-500 font-semibold">So many docs, one warranty end date — here's how to find it</span>
         </h1>
       </div>
 
