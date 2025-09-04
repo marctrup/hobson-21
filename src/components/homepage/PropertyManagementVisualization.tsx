@@ -4,7 +4,7 @@ export const PropertyManagementVisualization = () => {
       {/* Main Header */}
       <div className="text-center mb-8">
         <h1 className="text-2xl leading-relaxed font-bold mb-2">
-          <span className="text-gray-500 font-semibold">So many places to look — here's how to find it</span>
+          <span className="text-gray-500 font-semibold">So many docs, one key date — here's how to find it</span>
         </h1>
       </div>
 
@@ -586,6 +586,15 @@ export const PropertyManagementVisualization = () => {
               </div>
             </div>
           </div>
+          
+          <div className="text-xs text-muted-foreground font-bold mt-3 space-y-1">
+            <div className="whitespace-nowrap">20 × Lease Agreements</div>
+            <div className="whitespace-nowrap">12 × Deeds of Variation</div>
+            <div className="whitespace-nowrap">3 × Reversionary Leases</div>
+            <div className="whitespace-nowrap mt-2 text-green-600">
+              Total = 49 Review dates
+            </div>
+          </div>
         </div>
 
         {/* Right: The Future (Hobson) */}
@@ -607,14 +616,18 @@ export const PropertyManagementVisualization = () => {
           padding: 'clamp(15px, 4vw, 22px)'
         }}>
             <div className="text-sm font-normal text-muted-foreground mb-3 font-sans text-left">
-              The principal rent for the property at 64-70 Camden High Street, London NW1 0LT is £135,000 per annum,
+              The next rent review date is 26/06/26 for Knight Frank 23 Hampstead High Street NW3
             </div>
             
             <div className="text-left space-y-2 mb-4">
               <div className="text-xs text-muted-foreground font-bold mb-2">Sources:</div>
               <div className="flex items-start gap-2 text-xs text-muted-foreground">
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
-                <span>Deed of Variation 26th November 2020<br />(Page 1)</span>
+                <span>Lease Agreement<br />(Page 5, Clause 3.2)</span>
+              </div>
+              <div className="flex items-start gap-2 text-xs text-muted-foreground">
+                <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
+                <span>Deed of Variation<br />(Page 2, Clause 1.1)</span>
               </div>
             </div>
             

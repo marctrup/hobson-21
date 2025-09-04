@@ -10,7 +10,7 @@ const PropertyMap = memo(() => {
         <div className="flex items-center justify-between bg-background/95 backdrop-blur-sm rounded-lg p-3 border border-primary/10 shadow-lg">
           <div className="flex items-center gap-2">
             <Map className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium">Home Map</span>
+            <span className="text-sm font-medium">Portfolio Map</span>
           </div>
           <div className="flex items-center gap-2">
             <Badge variant="outline" className="text-xs">London</Badge>
@@ -109,8 +109,11 @@ const PropertyMap = memo(() => {
         
         {/* Property Markers */}
         {[
-          { top: 48, left: 60, name: "Home", delay: 300 },
-          { top: 68, left: 45, name: "Southwark Units", delay: 1000 }
+          { top: 32, left: 25, name: "Pure Gym", delay: 0 },
+          { top: 48, left: 60, name: "Sainsburys", delay: 300 },
+          { top: 28, left: 20, name: "Stanley House", delay: 700 },
+          { top: 68, left: 45, name: "Southwark Units", delay: 1000 },
+          { top: 38, left: 72, name: "Shoreditch Space", delay: 1500 }
         ].map((marker, i) => (
           <div key={i} className="absolute flex flex-col items-center z-20" style={{ top: `${marker.top}%`, left: `${marker.left}%` }}>
             <div 
