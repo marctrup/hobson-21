@@ -103,7 +103,7 @@ export const HomeownerHomepage = () => {
                 <div className="space-y-6 -mt-[20px]">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">AI-powered home document insights, </span>
-                    <span className="text-foreground">provided with your own home documents.</span>
+                    <span className="text-foreground">We're bringing our service straight to your home.</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
                     Your very own home assistant that answers questions from your home documents — No need to search for a lost bill or re read a mortgage document.
