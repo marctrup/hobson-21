@@ -196,7 +196,7 @@ export const HomeownerHomepage = () => {
                 </p>
                 <div className="mb-8">
                   <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                    <Link to="/pilot_form" id="homepage-pilot-apply-cta">Apply to join our Pilot →</Link>
+                    <Link to="/pilot_form" id="homepage-pilot-apply-cta">Join Today and Pay Nothing</Link>
                   </SimpleButton>
                 </div>
               </div>
