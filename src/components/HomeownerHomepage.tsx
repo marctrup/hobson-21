@@ -10,7 +10,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } 
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
 import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { HomepagePilotVideo } from "@/components/videos/HomepagePilotVideo";
-import { FeaturesSection } from "@/components/homepage/FeaturesSection";
+import { HomeownerFeaturesSection } from "@/components/homepage/HomeownerFeaturesSection";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 
 export const HomeownerHomepage = () => {
@@ -181,7 +181,7 @@ export const HomeownerHomepage = () => {
           </section>
 
           {/* Features Section */}
-          <FeaturesSection />
+          <HomeownerFeaturesSection />
 
 
           {/* CTA Section - Clean layout without card */}

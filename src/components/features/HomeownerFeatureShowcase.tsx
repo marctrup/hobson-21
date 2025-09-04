@@ -2,8 +2,8 @@ import { MessageCircle } from "lucide-react";
 import PropertyMap from "./PropertyMap";
 import React, { memo } from "react";
 
-// Updated with Features heading
-const FeatureShowcase = memo(() => {
+// Homeowner-specific version with "home" instead of "portfolio"
+const HomeownerFeatureShowcase = memo(() => {
   return (
     <div className="mb-20 overflow-hidden">
       <div className="text-center mb-12">
@@ -11,7 +11,7 @@ const FeatureShowcase = memo(() => {
           Features
         </h2>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Chat with Hobson on the left, visualize your portfolio on the right. Everything you need in one seamless interface.
+          Chat with Hobson on the left, visualise your home on the right. Everything you need in one seamless interface.
         </p>
       </div>
       
@@ -67,6 +67,6 @@ const FeatureShowcase = memo(() => {
   );
 });
 
-FeatureShowcase.displayName = 'FeatureShowcase';
+HomeownerFeatureShowcase.displayName = 'HomeownerFeatureShowcase';
 
-export default FeatureShowcase;
+export default HomeownerFeatureShowcase;
