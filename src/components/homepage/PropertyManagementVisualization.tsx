@@ -614,7 +614,7 @@ export const PropertyManagementVisualization = () => {
               <div className="text-xs text-muted-foreground font-bold mb-2">Sources:</div>
               <div className="flex items-start gap-2 text-xs text-muted-foreground">
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
-                <span>Siemens fridge warranty<br />(Page 1)</span>
+                <span>Deed of Variation 26th November 2020<br />(Page 1)</span>
               </div>
             </div>
             
