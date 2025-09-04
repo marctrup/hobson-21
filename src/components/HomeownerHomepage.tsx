@@ -217,25 +217,6 @@ export const HomeownerHomepage = () => {
             </div>
           </section>
 
-          {/* CTA Section - Clean layout without card */}
-          <section id="pilot-section" className="py-8 md:py-24">
-            <div className="container mx-auto px-4">
-              <div className="text-center max-w-4xl mx-auto">
-                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground leading-tight">
-                  Ready to integrate AI into your business?
-                </h2>
-                <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-                  Join our exclusive pilot program and be among the first to experience the future of property intelligence.
-                </p>
-                <div className="mb-8">
-                  <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                    <Link to="/pilot_form" id="homepage-pilot-apply-cta">Apply to join our Pilot →</Link>
-                  </SimpleButton>
-                </div>
-              </div>
-            </div>
-          </section>
-
           {/* Scroll Video */}
           <HomepagePilotVideo />
 
