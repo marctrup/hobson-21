@@ -105,7 +105,7 @@ export const HomeownerHomepage = () => {
                     <span className="text-foreground">We're bringing our service straight to your home</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    Your very own home assistant that answers questions from your home documents — No need to search for a lost bill or re read a mortgage document.
+                    With our AI-powered assistant, you can get quick answers from your own home documents — like bills, warranties, or mortgage papers. No more digging through drawers or re-reading long contracts. Everything you need, right at your fingertips.
                   </p>
                   
                   <a href="#pilot-section" className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group" id="homepage-hero-assistant-cta">
