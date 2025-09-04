@@ -47,8 +47,7 @@ const FeatureShowcase = memo(() => {
                 <div className="flex-1 space-y-4 mb-6">
                   <div className="bg-primary/10 rounded-lg p-4 max-w-[85%] animate-fade-in">
                     <p className="text-sm">👋 Hi there!</p>
-                    <p className="text-sm">Ready to streamline your workload?</p>
-                    <p className="text-sm">Let's make your tasks effortless.</p>
+                    <p className="text-sm">Would you like me to find something?</p>
                   </div>
                   
                   {/* Suggested Actions */}
