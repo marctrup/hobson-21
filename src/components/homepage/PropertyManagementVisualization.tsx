@@ -607,7 +607,7 @@ export const PropertyManagementVisualization = () => {
           padding: 'clamp(15px, 4vw, 22px)'
         }}>
             <div className="text-sm font-normal text-muted-foreground mb-3 font-sans text-left">
-              The warranty on your Siemens fridge fitted on 20/08/2025, ends on the 21/08/2026
+              The principal rent for the property at 64-70 Camden High Street, London NW1 0LT is £135,000 per annum,
             </div>
             
             <div className="text-left space-y-2 mb-4">
