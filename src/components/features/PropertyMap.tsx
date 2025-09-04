@@ -10,7 +10,7 @@ const PropertyMap = memo(() => {
         <div className="flex items-center justify-between bg-background/95 backdrop-blur-sm rounded-lg p-3 border border-primary/10 shadow-lg">
           <div className="flex items-center gap-2">
             <Map className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium">Portfolio Map</span>
+            <span className="text-sm font-medium">Home Map</span>
           </div>
           <div className="flex items-center gap-2">
             <Badge variant="outline" className="text-xs">London</Badge>
