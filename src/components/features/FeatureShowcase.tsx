@@ -11,7 +11,7 @@ const FeatureShowcase = memo(() => {
           Features
         </h2>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Chat with Hobson on the left, visualize your portfolio on the right. Everything you need in one seamless interface.
+          Chat with Hobson on the left, visualise your home on the right. Everything you need in one seamless interface.
         </p>
       </div>
       
