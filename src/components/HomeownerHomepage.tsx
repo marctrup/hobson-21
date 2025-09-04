@@ -84,7 +84,7 @@ export const HomeownerHomepage = () => {
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-6 -mt-[20px]">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                    <span className="text-foreground">We're bringing our service straight to your <span className="text-purple-600">home</span></span>
+                    <span className="text-foreground">We're bringing our AI assistant straight to your <span className="text-purple-600">home</span></span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
                     With our AI-powered assistant, you can get quick answers from your own home documents — like bills, warranties, or mortgage papers. No more digging through drawers or re-reading long contracts. Everything you need, right at your fingertips.
