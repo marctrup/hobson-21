@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } 
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
 import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { HomepagePilotVideo } from "@/components/videos/HomepagePilotVideo";
+import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 
 export const HomeownerHomepage = () => {
@@ -175,6 +176,62 @@ export const HomeownerHomepage = () => {
                   </div>
                 </div>
 
+              </div>
+            </div>
+          </section>
+
+          {/* Features Section */}
+          <FeaturesSection />
+
+          {/* Current Focus Section */}
+          <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-muted/30">
+            <div className="container mx-auto px-4">
+              {/* Section Header */}
+              <div className="text-center mb-16">
+                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
+                  Our Current Focus
+                </h2>
+                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                  Starting strong, expanding further.
+                </p>
+              </div>
+
+              <div className="max-w-6xl mx-auto">
+                {/* Main Content Text */}
+                <div className="text-center mb-16">
+                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
+                    <span className="text-primary font-semibold">Right Now</span>, Hobson is already trained to understand a wide range of property documents — from tenancy agreements and commercial leases to licences, deeds, and addendums — and we're continually broadening its horizon.
+                  </p>
+                </div>
+
+                {/* Our Approach - Full Width Card */}
+                <div className="max-w-4xl mx-auto mb-16">
+                  <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border border-primary/20">
+                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center">
+                      Hobson recognises that documents don't exist in isolation — they often need to be read together to get the full picture.
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          {/* CTA Section - Clean layout without card */}
+          <section id="pilot-section" className="py-8 md:py-24">
+            <div className="container mx-auto px-4">
+              <div className="text-center max-w-4xl mx-auto">
+                <h2 className="text-2xl md:text-3xl font-bold mb-6 text-foreground leading-tight">
+                  Ready to integrate AI into your business?
+                </h2>
+                <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
+                  Join our exclusive pilot program and be among the first to experience the future of property intelligence.
+                </p>
+                <div className="mb-8">
+                  <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
+                    <Link to="/pilot_form" id="homepage-pilot-apply-cta">Apply to join our Pilot →</Link>
+                  </SimpleButton>
+                </div>
               </div>
             </div>
           </section>
