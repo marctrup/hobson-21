@@ -134,7 +134,7 @@ export const HomeownerHomepage = () => {
                       <div>
                         <h3 className="text-xl font-bold mb-2 text-foreground">Upload & Connect</h3>
                         <p className="text-muted-foreground leading-relaxed">
-                          Upload your documents or connect your existing systems. Our AI instantly begins processing and indexing your content.
+                          Upload your documents. Our AI instantly begins processing and indexing your content for now or later when needed.
                         </p>
                       </div>
                     </div>
