@@ -49,22 +49,6 @@ const FeatureShowcase = memo(() => {
                     <p className="text-sm">👋 Hi there!</p>
                     <p className="text-sm">Would you like me to find something?</p>
                   </div>
-                  
-                  {/* Suggested Actions */}
-                  <div className="space-y-2 animate-fade-in delay-500">
-                    <p className="text-sm font-medium text-muted-foreground mb-3">Suggested actions:</p>
-                    <div className="space-y-2">
-                      <button className="w-full text-left p-3 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors text-sm">
-                        List key dates for Unit 2, Technology Park
-                      </button>
-                      <button className="w-full text-left p-3 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors text-sm">
-                        Summarise the rent review clause for Unit 2 Finchley Road
-                      </button>
-                      <button className="w-full text-left p-3 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors text-sm">
-                        Which leases have break clauses coming up?
-                      </button>
-                    </div>
-                  </div>
                 </div>
                 
                 {/* Chat Input */}
