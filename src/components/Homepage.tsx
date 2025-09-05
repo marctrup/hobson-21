@@ -107,7 +107,8 @@ export const Homepage = () => {
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">clarity, simplicity, and affordable AI</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    AI-powered document insights from the only reliable source of truth—your documents. Hobson, your AI assistant is trained on many property documents, delivering quick, clear and trusted answers.
+                    Your documents. Your truth. AI-powered clarity in seconds.<br />
+                    Hobson, built on property documents, delivers quick, clear, and trusted answers every time.
                   </p>
                   
                   <a href="#pilot-section" className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group" id="homepage-hero-assistant-cta">
