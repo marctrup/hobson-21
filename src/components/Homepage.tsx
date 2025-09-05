@@ -107,7 +107,7 @@ export const Homepage = () => {
                     <span className="text-foreground">provided with your own property documents.</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    Hobson delivers quick, clear answers with simplicity—saving real estate professionals time compared to bulkier, more costly alternatives.
+                    Hobson delivers quick, clear answers with simplicity—saving property professionals time compared to bulkier, more costly alternatives.
                   </p>
                   
                   <a href="#pilot-section" className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group" id="homepage-hero-assistant-cta">
