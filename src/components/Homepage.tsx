@@ -105,9 +105,9 @@ export const Homepage = () => {
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">AI-powered document insights, </span>
                     <span className="text-foreground">from the only source of truth.</span>
-                    <span className="relative inline-block ml-2">
+                    <span className="inline-flex items-center justify-center ml-2 relative">
                       <FileText className="h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 text-primary/70" />
-                      <Smile className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 lg:h-6 lg:w-6 text-primary" />
+                      <Smile className="absolute h-3 w-3 md:h-4 md:w-4 lg:h-5 lg:w-5 text-primary" style={{ top: '35%', left: '50%', transform: 'translateX(-50%)' }} />
                     </span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
