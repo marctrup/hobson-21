@@ -108,7 +108,7 @@ export const Homepage = () => {
                     <FileHeart className="inline ml-2 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 text-primary/70" />
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
-                    AI-powered document insights from the only reliable source of truth—your documents. <span className="text-primary font-semibold">Hobson</span> delivers quick, clear, trusted answers with simplicity, saving property professionals time versus bulkier, more complex and costly alternatives.
+                    AI-powered document insights from the only reliable source of truth—your documents. <span className="text-primary font-semibold">Hobson</span> trained on many property documents, delivers quick, clear and trusted answers
                   </p>
                   
                   <a href="#pilot-section" className="bg-purple-50 border border-purple-200 rounded-lg p-4 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-sm transition-all duration-200 group" id="homepage-hero-assistant-cta">
