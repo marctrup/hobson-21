@@ -105,7 +105,6 @@ export const Homepage = () => {
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="text-foreground">Trade complex, costly, bloated systems for </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">clarity, simplicity, and affordable AI.</span>
-                    <FileHeart className="inline ml-2 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 text-primary/70" />
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
                     AI-powered document insights from the only reliable source of truth—your documents. <span className="text-primary font-semibold">Hobson</span> trained on many property documents, delivers quick, clear and trusted answers
