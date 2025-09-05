@@ -104,7 +104,7 @@ export const Homepage = () => {
                 <div className="space-y-6 -mt-[20px]">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">AI-powered document insights, </span>
-                    <span className="text-foreground">provided with your own property documents.</span>
+                    <span className="text-foreground">from the only source of truth.</span>
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
                     Hobson delivers quick, clear answers with simplicity—saving property professionals time compared to bulkier, more costly alternatives.
