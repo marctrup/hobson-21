@@ -104,7 +104,7 @@ export const Homepage = () => {
                 <div className="space-y-6 -mt-[20px]">
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Skip bulky, overly complex, expensive systems—</span>
-                    <span className="text-foreground">choose the simplicity of Hobson.</span>
+                    <span className="text-foreground">choose the simplicity of AI.</span>
                     <FileHeart className="inline ml-2 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 text-primary/70" />
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
