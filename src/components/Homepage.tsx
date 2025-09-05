@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight, MessageCircle, FileText, Lightbulb, Target, CheckCircle, FileHeart } from "lucide-react";
+import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight, MessageCircle, FileText, Lightbulb, Target, CheckCircle } from "lucide-react";
+import { SmilingDocument } from "@/components/SmilingDocument";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
@@ -105,7 +106,7 @@ export const Homepage = () => {
                   <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">AI-powered document insights, </span>
                     <span className="text-foreground">from the only source of truth.</span>
-                    <FileHeart className="inline ml-2 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12 text-primary/70" />
+                    <SmilingDocument className="inline ml-2 h-8 w-8 md:h-10 md:w-10 lg:h-12 lg:w-12" />
                   </h1>
                   <p className="text-xl text-muted-foreground leading-relaxed">
                     Hobson delivers quick, clear, trusted answers with simplicity—saving property professionals time compared to the bulkier, overly complex and more costly alternatives.
