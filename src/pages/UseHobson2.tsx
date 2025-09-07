@@ -279,12 +279,12 @@ export const UseHobson2 = () => {
                     <DialogHeader>
                       <DialogTitle className="flex items-center justify-center gap-2 text-xl">
                         <FileText className="w-5 h-5 text-primary" />
-                        Why "{selectedAnswer}" IS Found in Property Leases
+                        Why "{selectedAnswer}" is Found in Property Leases
                       </DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4 py-4">
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <p className="text-blue-800 font-medium mb-2">Actually, this term IS used in property leases!</p>
+                        <p className="text-blue-800 font-medium mb-2">What it refers to when used in leases:</p>
                         <p className="text-blue-700 text-sm leading-relaxed">
                           {wrongAnswerExplanation}
                         </p>
