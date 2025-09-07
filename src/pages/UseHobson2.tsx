@@ -374,7 +374,148 @@ export const UseHobson2 = () => {
             </div>
           </section>
 
+          {/* Why Property Professionals Choose Hobson */}
+          <section className="py-20 bg-muted/20">
+            <div className="container mx-auto px-4">
+              <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-16">
+                  <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                    Why Property Professionals Choose Hobson
+                  </h2>
+                  <p className="text-xl text-muted-foreground">
+                    Transform how you work with property documents
+                  </p>
+                </div>
 
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="text-center">
+                    <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                      <Clock className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">Save Hours Daily</h3>
+                    <p className="text-muted-foreground">
+                      Get instant answers instead of spending hours searching through documents
+                    </p>
+                  </div>
+
+                  <div className="text-center">
+                    <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                      <FileText className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">All Document Types</h3>
+                    <p className="text-muted-foreground">
+                      Works with tenancy agreements, leases, contracts, and all property documents
+                    </p>
+                  </div>
+
+                  <div className="text-center">
+                    <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
+                      <CheckCircle className="w-8 h-8 text-primary" />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4">Trusted Accuracy</h3>
+                    <p className="text-muted-foreground">
+                      AI trained specifically on property documents for reliable, accurate answers
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Testimonials Section */}
+          <section className="py-20 bg-background">
+            <div className="container mx-auto px-4">
+              <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-16">
+                  <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                    Trusted by Property Professionals
+                  </h2>
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <Star key={i} className="w-6 h-6 fill-primary text-primary" />
+                    ))}
+                  </div>
+                  <p className="text-xl text-muted-foreground">4.9/5 from 200+ users</p>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-8">
+                  <Card className="p-6">
+                    <CardContent className="p-0">
+                      <div className="mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-primary text-primary inline mr-1" />
+                        ))}
+                      </div>
+                      <p className="text-muted-foreground mb-4 italic">
+                        "Hobson has revolutionized how we handle tenancy agreements. What used to take hours now takes minutes."
+                      </p>
+                      <div>
+                        <p className="font-semibold">Sarah Johnson</p>
+                        <p className="text-sm text-muted-foreground">Property Manager, ABC Estates</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="p-6">
+                    <CardContent className="p-0">
+                      <div className="mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-primary text-primary inline mr-1" />
+                        ))}
+                      </div>
+                      <p className="text-muted-foreground mb-4 italic">
+                        "The accuracy is incredible. Hobson understands complex lease terms better than most humans."
+                      </p>
+                      <div>
+                        <p className="font-semibold">Michael Chen</p>
+                        <p className="text-sm text-muted-foreground">Legal Advisor, Property Solutions</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="p-6">
+                    <CardContent className="p-0">
+                      <div className="mb-4">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-4 h-4 fill-primary text-primary inline mr-1" />
+                        ))}
+                      </div>
+                      <p className="text-muted-foreground mb-4 italic">
+                        "Game-changing for our team. We can now provide instant responses to client queries."
+                      </p>
+                      <div>
+                        <p className="font-semibold">Emma Thompson</p>
+                        <p className="text-sm text-muted-foreground">Director, Urban Properties</p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Ready to Transform Section */}
+          <section className="py-20 bg-gradient-to-r from-primary/5 to-primary/10">
+            <div className="container mx-auto px-4">
+              <div className="max-w-4xl mx-auto text-center">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                  Ready to Transform Your Property Business?
+                </h2>
+                <p className="text-xl text-muted-foreground mb-12">
+                  Join hundreds of property professionals who are already saving time with Hobson AI.
+                </p>
+                
+                <Button size="lg" className="text-lg px-12 py-6 bg-primary hover:bg-primary/90">
+                  Start Your Free Trial Today
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+
+                <p className="text-sm text-muted-foreground mt-6">
+                  No credit card required • 2,000 free HEUs • Setup in under 2 minutes
+                </p>
+              </div>
+            </div>
+          </section>
 
           {/* Final CTA */}
           <section className="py-20 bg-gradient-to-r from-primary/5 to-primary/10">
