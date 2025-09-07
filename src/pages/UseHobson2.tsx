@@ -53,6 +53,7 @@ export const UseHobson2 = () => {
   const { toast } = useToast();
 
   const handleAnswerSubmit = () => {
+    console.log("handleAnswerSubmit called with:", selectedAnswer);
     if (selectedAnswer === "Casement") {
       setIsCorrect(true);
       setGameCompleted(true);
