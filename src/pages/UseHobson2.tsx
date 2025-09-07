@@ -512,12 +512,12 @@ export const UseHobson2 = () => {
                 </p>
                 
                 <Button size="lg" className="text-lg px-12 py-6 bg-primary hover:bg-primary/90">
-                  Start Your Free Trial Today
+                  Start today for Free
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
 
                 <p className="text-sm text-muted-foreground mt-6">
-                  No credit card required • 2,000 free HEUs • Setup in under 2 minutes
+                  No credit card required • 18 free HEUs • Setup in under 2 minutes
                 </p>
               </div>
             </div>
