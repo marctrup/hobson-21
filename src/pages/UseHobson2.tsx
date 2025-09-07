@@ -425,9 +425,9 @@ export const UseHobson2 = () => {
                       <CheckCircle className="w-8 h-8 text-primary" />
                     </div>
                     <h3 className="text-2xl font-bold mb-4">Trusted Accuracy</h3>
-                    <p className="text-muted-foreground">
-                      AI trained specifically on property documents for reliable, accurate answers
-                    </p>
+                     <p className="text-muted-foreground">
+                       Hobson is achieving 98% accuracy
+                     </p>
                   </div>
                 </div>
               </div>
