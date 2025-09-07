@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
-import { Star, CheckCircle, Users, Clock, ArrowRight, FileText, Sparkles, Trophy, Target, Zap, Award } from "lucide-react";
+import { Star, CheckCircle, Users, Clock, ArrowRight, FileText, Sparkles, Trophy, Target, Zap, Award, Mail } from "lucide-react";
 import confetti from 'canvas-confetti';
+import { useToast } from "@/hooks/use-toast";
 
 const propertyTerms = [
   "Fee simple",
@@ -29,12 +31,17 @@ export const UseHobson2 = () => {
   const [gameCompleted, setGameCompleted] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [showEmailForm, setShowEmailForm] = useState(false);
+  const [email, setEmail] = useState("");
+  const [rewardsUnlocked, setRewardsUnlocked] = useState(false);
+  const { toast } = useToast();
 
   const handleAnswerSubmit = () => {
     if (selectedAnswer === "Casement") {
       setIsCorrect(true);
       setGameCompleted(true);
       setShowResult(true);
+      setShowEmailForm(true);
       // Trigger confetti
       confetti({
         particleCount: 100,
@@ -51,6 +58,24 @@ export const UseHobson2 = () => {
     }
   };
 
+  const handleEmailSubmit = () => {
+    if (!email || !email.includes('@')) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive"
+      });
+      return;
+    }
+    
+    setRewardsUnlocked(true);
+    setShowEmailForm(false);
+    toast({
+      title: "Success!",
+      description: "Your expert rewards have been unlocked!",
+    });
+  };
+
   const resetGame = () => {
     setGameStarted(false);
     setSelectedAnswer("");
@@ -58,6 +83,9 @@ export const UseHobson2 = () => {
     setGameCompleted(false);
     setShowResult(false);
     setIsCorrect(false);
+    setShowEmailForm(false);
+    setEmail("");
+    setRewardsUnlocked(false);
   };
 
   return (
@@ -219,8 +247,44 @@ export const UseHobson2 = () => {
                   </div>
                 )}
 
+                {/* Email Collection Form */}
+                {(gameCompleted && isCorrect && showEmailForm && !rewardsUnlocked) && (
+                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-2xl p-8 mb-8">
+                    <div className="flex items-center justify-center gap-2 mb-4">
+                      <Mail className="w-6 h-6 text-primary" />
+                      <h3 className="text-2xl font-bold">Unlock Your Expert Rewards</h3>
+                    </div>
+                    <p className="text-muted-foreground mb-6 text-center">
+                      You've proven your property expertise! Enter your email to unlock your exclusive rewards:
+                    </p>
+                    <div className="max-w-md mx-auto space-y-4">
+                      <div className="flex flex-col gap-2">
+                        <Input
+                          type="email"
+                          placeholder="Enter your email address"
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
+                          className="text-center"
+                        />
+                      </div>
+                      <Button 
+                        size="lg" 
+                        onClick={handleEmailSubmit}
+                        disabled={!email}
+                        className="w-full text-lg py-6"
+                      >
+                        Unlock My Expert Rewards
+                        <ArrowRight className="ml-2 w-5 h-5" />
+                      </Button>
+                      <p className="text-xs text-muted-foreground text-center">
+                        We'll send your rewards and expert status confirmation to this email
+                      </p>
+                    </div>
+                  </div>
+                )}
+
                 {/* Reward Section */}
-                {(gameCompleted && isCorrect) && (
+                {(gameCompleted && isCorrect && rewardsUnlocked) && (
                   <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-8 mb-8">
                     <div className="flex items-center justify-center gap-2 mb-4">
                       <Award className="w-6 h-6 text-green-600" />
@@ -276,13 +340,15 @@ export const UseHobson2 = () => {
                 </p>
                 
                 <Button size="lg" className="text-lg px-12 py-6 bg-primary hover:bg-primary/90">
-                  {gameCompleted && isCorrect ? 'Claim Your Expert Account' : 'Start Your Journey'}
+                  {rewardsUnlocked ? 'Claim Your Expert Account' : gameCompleted && isCorrect ? 'Complete Email to Unlock' : 'Start Your Journey'}
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
 
                 <p className="text-sm text-muted-foreground mt-6">
-                  {gameCompleted && isCorrect 
+                  {rewardsUnlocked 
                     ? 'Expert status • 2,000 Free HEUs • Priority support included'
+                    : gameCompleted && isCorrect
+                    ? 'Provide your email above to unlock expert benefits'
                     : 'Complete the challenge to unlock expert benefits'
                   }
                 </p>
