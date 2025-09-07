@@ -142,7 +142,7 @@ export const UseHobson2 = () => {
                     </div>
                     <h3 className="text-2xl font-bold mb-4">Property Terminology Challenge</h3>
                     <p className="text-muted-foreground mb-6">
-                      Find the term that is <strong>NOT</strong> commonly found in property leases. You have 3 attempts to get it right!
+                      Find the term that is <strong>NOT</strong> found in property leases. You have 3 attempts to get it right!
                     </p>
                     <Button 
                       size="lg" 
@@ -156,7 +156,7 @@ export const UseHobson2 = () => {
                 ) : (
                   <div className="bg-background rounded-2xl p-8 border shadow-lg mb-8">
                     <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-xl font-bold">Which term is NOT commonly found in property leases?</h3>
+                      <h3 className="text-xl font-bold">Which term is NOT found in property leases?</h3>
                       <div className="flex items-center gap-2">
                         <Target className="w-5 h-5 text-primary" />
                         <span className="text-sm font-semibold">Attempts: {attempts}/3</span>
