@@ -49,9 +49,18 @@ const handler = async (req: Request): Promise<Response> => {
 
     // Get client info from headers
     const userAgent = req.headers.get("user-agent") || null;
-    const clientIP = req.headers.get("x-forwarded-for") || 
-                    req.headers.get("x-real-ip") || 
-                    "unknown";
+    
+    // Extract the first IP address from x-forwarded-for (which can contain multiple IPs)
+    const forwardedFor = req.headers.get("x-forwarded-for");
+    const realIP = req.headers.get("x-real-ip");
+    
+    let clientIP = "unknown";
+    if (forwardedFor) {
+      // Take the first IP address from the comma-separated list
+      clientIP = forwardedFor.split(",")[0].trim();
+    } else if (realIP) {
+      clientIP = realIP.trim();
+    }
 
     console.log(`Storing reward email: ${email} for challenge: ${challengeType}`);
 
