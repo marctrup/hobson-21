@@ -519,33 +519,6 @@ export const UseHobson2 = () => {
             </div>
           </section>
 
-          {/* Final CTA */}
-          <section className="py-20 bg-gradient-to-r from-primary/5 to-primary/10">
-            <div className="container mx-auto px-4">
-              <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-4xl font-bold mb-6">
-                  Ready to Dominate Property Document Analysis?
-                </h2>
-                <p className="text-xl text-muted-foreground mb-12">
-                  Join the elite group of property professionals using AI to accelerate their practice.
-                </p>
-                
-                <Button size="lg" className="text-lg px-12 py-6 bg-primary hover:bg-primary/90">
-                  {rewardsUnlocked ? 'Claim Your Expert Account' : gameCompleted && isCorrect ? 'Complete Email to Unlock' : 'Start Your Journey'}
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-
-                <p className="text-sm text-muted-foreground mt-6">
-                  {rewardsUnlocked 
-                    ? 'Expert status • 2,000 Free HEUs • Priority support included'
-                    : gameCompleted && isCorrect
-                    ? 'Provide your email above to unlock expert benefits'
-                    : 'Complete the challenge to unlock expert benefits'
-                  }
-                </p>
-              </div>
-            </div>
-          </section>
         </main>
 
         {/* Simple Footer */}
