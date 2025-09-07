@@ -416,7 +416,7 @@ export const UseHobson2 = () => {
                     </div>
                     <h3 className="text-2xl font-bold mb-4">All Document Types</h3>
                      <p className="text-muted-foreground">
-                       Trained on 100's of document types
+                       Trained on 100's of property document types
                      </p>
                   </div>
 
