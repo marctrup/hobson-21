@@ -225,7 +225,7 @@ export const UseHobson2 = () => {
                               Congratulations! You're a property expert!
                             </div>
                             <p className="text-green-600 text-sm">
-                              "Casement" refers to a type of window, not a property lease term. Well done!
+                              "Casement" refers to a type of window, not a property lease term. A casement is a type of window that is attached to its frame by side hinges. It swings open like a door, usually outwards. Well done!
                             </p>
                           </div>
                         ) : (
