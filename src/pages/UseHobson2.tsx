@@ -110,6 +110,16 @@ export const UseHobson2 = () => {
 
       console.log('Successfully stored reward email:', data);
       
+      // Check if email already claimed the prize
+      if (data?.alreadyExists) {
+        toast({
+          title: "Already Claimed",
+          description: "This email has already claimed the expert rewards for this challenge.",
+          variant: "destructive"
+        });
+        return;
+      }
+      
       setRewardsUnlocked(true);
       setShowEmailForm(false);
       toast({
