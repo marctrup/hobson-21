@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Star, CheckCircle, Users, Clock, ArrowRight, FileText, Sparkles, Trophy, Target, Zap, Award, Mail } from "lucide-react";
 import confetti from 'canvas-confetti';
 import { useToast } from "@/hooks/use-toast";
@@ -51,6 +51,7 @@ export const UseHobson2 = () => {
   const [showEducationalPopup, setShowEducationalPopup] = useState(false);
   const [wrongAnswerExplanation, setWrongAnswerExplanation] = useState("");
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const handleAnswerSubmit = () => {
     console.log("handleAnswerSubmit called with:", selectedAnswer);
@@ -94,6 +95,11 @@ export const UseHobson2 = () => {
       title: "Success!",
       description: "Your expert rewards have been unlocked!",
     });
+    
+    // Navigate to homepage with a slight delay to show the success message
+    setTimeout(() => {
+      navigate('/');
+    }, 1500);
   };
 
   const resetGame = () => {
