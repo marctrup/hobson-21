@@ -126,6 +126,11 @@ export const UseHobson2 = () => {
         title: "Success!",
         description: "Your expert rewards have been unlocked and email registered!",
       });
+      
+      // Refresh the page to return to landing state after a brief delay
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
     } catch (error) {
       console.error('Error in handleEmailSubmit:', error);
       toast({
