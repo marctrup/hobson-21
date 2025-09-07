@@ -183,7 +183,7 @@ export const UseHobson2 = () => {
                     </div>
                     <h3 className="text-2xl font-bold mb-4">Property Terminology Challenge</h3>
                     <p className="text-muted-foreground mb-6">
-                      Find the term that is <strong>NOT</strong> found in property leases. You have 3 attempts to get it right!
+                      Find the term that is <strong>NOT</strong> found in property leases. Good Luck!
                     </p>
                     <Button 
                       size="lg" 
