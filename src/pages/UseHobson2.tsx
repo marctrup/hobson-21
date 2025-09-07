@@ -543,8 +543,8 @@ export const UseHobson2 = () => {
                 className="h-8 w-auto" 
               />
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                <Link to="/privacy-policy" className="hover:text-foreground transition-colors">
-                  Privacy Policy
+                <Link to="/data-protection" className="hover:text-foreground transition-colors">
+                  AI Privacy & Data Protection Policy
                 </Link>
                 <Link to="/contact" className="hover:text-foreground transition-colors">
                   Contact Support
