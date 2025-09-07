@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
@@ -247,18 +248,20 @@ export const UseHobson2 = () => {
                   </div>
                 )}
 
-                {/* Email Collection Form */}
-                {(gameCompleted && isCorrect && showEmailForm && !rewardsUnlocked) && (
-                  <div className="bg-gradient-to-r from-primary/10 to-primary/5 border border-primary/20 rounded-2xl p-8 mb-8">
-                    <div className="flex items-center justify-center gap-2 mb-4">
-                      <Mail className="w-6 h-6 text-primary" />
-                      <h3 className="text-2xl font-bold">Unlock Your Expert Rewards</h3>
-                    </div>
-                    <p className="text-muted-foreground mb-6 text-center">
-                      You've proven your property expertise! Enter your email to unlock your exclusive rewards:
-                    </p>
-                    <div className="max-w-md mx-auto space-y-4">
-                      <div className="flex flex-col gap-2">
+                {/* Email Collection Dialog */}
+                <Dialog open={showEmailForm && !rewardsUnlocked} onOpenChange={(open) => !open && setShowEmailForm(false)}>
+                  <DialogContent className="sm:max-w-md">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center justify-center gap-2 text-2xl">
+                        <Mail className="w-6 h-6 text-primary" />
+                        Unlock Your Expert Rewards
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <p className="text-muted-foreground text-center">
+                        You've proven your property expertise! Enter your email to unlock your exclusive rewards:
+                      </p>
+                      <div className="space-y-4">
                         <Input
                           type="email"
                           placeholder="Enter your email address"
@@ -266,22 +269,22 @@ export const UseHobson2 = () => {
                           onChange={(e) => setEmail(e.target.value)}
                           className="text-center"
                         />
+                        <Button 
+                          size="lg" 
+                          onClick={handleEmailSubmit}
+                          disabled={!email}
+                          className="w-full text-lg py-6"
+                        >
+                          Unlock My Expert Rewards
+                          <ArrowRight className="ml-2 w-5 h-5" />
+                        </Button>
+                        <p className="text-xs text-muted-foreground text-center">
+                          We'll send your rewards and expert status confirmation to this email
+                        </p>
                       </div>
-                      <Button 
-                        size="lg" 
-                        onClick={handleEmailSubmit}
-                        disabled={!email}
-                        className="w-full text-lg py-6"
-                      >
-                        Unlock My Expert Rewards
-                        <ArrowRight className="ml-2 w-5 h-5" />
-                      </Button>
-                      <p className="text-xs text-muted-foreground text-center">
-                        We'll send your rewards and expert status confirmation to this email
-                      </p>
                     </div>
-                  </div>
-                )}
+                  </DialogContent>
+                </Dialog>
 
                 {/* Reward Section */}
                 {(gameCompleted && isCorrect && rewardsUnlocked) && (
