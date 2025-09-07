@@ -10,6 +10,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Star, CheckCircle, Users, Clock, ArrowRight, FileText, Sparkles, Trophy, Target, Zap, Award, Mail } from "lucide-react";
 import confetti from 'canvas-confetti';
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const propertyTerms = [
   "Fee simple",
@@ -79,7 +80,7 @@ export const UseHobson2 = () => {
     }
   };
 
-  const handleEmailSubmit = () => {
+  const handleEmailSubmit = async () => {
     if (!email || !email.includes('@')) {
       toast({
         title: "Invalid Email",
@@ -89,17 +90,46 @@ export const UseHobson2 = () => {
       return;
     }
     
-    setRewardsUnlocked(true);
-    setShowEmailForm(false);
-    toast({
-      title: "Success!",
-      description: "Your expert rewards have been unlocked!",
-    });
-    
-    // Navigate to homepage with a slight delay to show the success message
-    setTimeout(() => {
-      navigate('/');
-    }, 1500);
+    try {
+      // Store the email in the rewards database
+      const { data, error } = await supabase.functions.invoke('store-reward-email', {
+        body: {
+          email,
+          challengeType: 'property_quiz'
+        }
+      });
+
+      if (error) {
+        console.error('Error storing reward email:', error);
+        toast({
+          title: "Error",
+          description: "Failed to register for rewards. Please try again.",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      console.log('Successfully stored reward email:', data);
+      
+      setRewardsUnlocked(true);
+      setShowEmailForm(false);
+      toast({
+        title: "Success!",
+        description: "Your expert rewards have been unlocked and email registered!",
+      });
+      
+      // Navigate to homepage with a slight delay to show the success message
+      setTimeout(() => {
+        navigate('/');
+      }, 1500);
+    } catch (error) {
+      console.error('Error in handleEmailSubmit:', error);
+      toast({
+        title: "Error",
+        description: "Failed to register for rewards. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const resetGame = () => {

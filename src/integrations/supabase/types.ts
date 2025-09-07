@@ -501,6 +501,36 @@ export type Database = {
         }
         Relationships: []
       }
+      rewards: {
+        Row: {
+          challenge_type: string
+          created_at: string
+          email: string
+          id: string
+          ip_address: unknown | null
+          updated_at: string
+          user_agent: string | null
+        }
+        Insert: {
+          challenge_type?: string
+          created_at?: string
+          email: string
+          id?: string
+          ip_address?: unknown | null
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Update: {
+          challenge_type?: string
+          created_at?: string
+          email?: string
+          id?: string
+          ip_address?: unknown | null
+          updated_at?: string
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       security_audit_log: {
         Row: {
           action: string
