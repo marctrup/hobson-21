@@ -25,6 +25,19 @@ const propertyTerms = [
   "Class E"
 ];
 
+const termExplanations = {
+  "Fee simple": "You own it outright, forever. This may appear in the landlord's title documents.",
+  "Heriditament": "Any property (land or rights) that can be inherited. In leases, it may be included in descriptions of what is being let.",
+  "Easement": "A right to use someone else's land (like a right of way or to run pipes). Found in the 'Rights Granted' or 'Rights Reserved' section.",
+  "Peppercorn": "A token rent (often just £1 a year) to make the lease legally binding. Seen in the 'Rent' clause.",
+  "Alienable": "Means the lease can be transferred or assigned to someone else. Found in clauses about 'Alienation' (assignment, subletting).",
+  "Yield up": "The obligation for the tenant to hand the property back at the end of the lease in a certain condition. Found near the 'End of Term' or 'Tenant's Covenants' section.",
+  "Section 146": "It's the legal notice a landlord must serve before forfeiting (ending) a lease because of a breach. A forfeiture clause may reference it.",
+  "Lien": "A right to keep someone's property until a debt is paid. Rare in modern leases but may appear in relation to goods left behind or the landlord's rights over fixtures.",
+  "Sui generis": "Used in planning law to describe uses that don't fit into standard use classes (e.g., nightclubs, petrol stations). May be referenced in 'Permitted Use.'",
+  "Class E": "A planning use class in England (covers commercial, business and service uses, like shops, offices, gyms). Found in the 'Permitted Use' section of a lease."
+};
+
 export const UseHobson2 = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
@@ -35,6 +48,8 @@ export const UseHobson2 = () => {
   const [showEmailForm, setShowEmailForm] = useState(false);
   const [email, setEmail] = useState("");
   const [rewardsUnlocked, setRewardsUnlocked] = useState(false);
+  const [showEducationalPopup, setShowEducationalPopup] = useState(false);
+  const [wrongAnswerExplanation, setWrongAnswerExplanation] = useState("");
   const { toast } = useToast();
 
   const handleAnswerSubmit = () => {
@@ -53,6 +68,9 @@ export const UseHobson2 = () => {
     } else {
       setAttempts(prev => prev - 1);
       setShowResult(true);
+      // Show educational popup for wrong answers
+      setWrongAnswerExplanation(termExplanations[selectedAnswer as keyof typeof termExplanations] || "");
+      setShowEducationalPopup(true);
       if (attempts <= 1) {
         setGameCompleted(true);
       }
@@ -87,6 +105,8 @@ export const UseHobson2 = () => {
     setShowEmailForm(false);
     setEmail("");
     setRewardsUnlocked(false);
+    setShowEducationalPopup(false);
+    setWrongAnswerExplanation("");
   };
 
   return (
@@ -247,6 +267,35 @@ export const UseHobson2 = () => {
                     </div>
                   </div>
                 )}
+
+                {/* Educational Popup for Wrong Answers */}
+                <Dialog open={showEducationalPopup} onOpenChange={setShowEducationalPopup}>
+                  <DialogContent className="sm:max-w-lg">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center justify-center gap-2 text-xl">
+                        <FileText className="w-5 h-5 text-primary" />
+                        Why "{selectedAnswer}" IS Found in Property Leases
+                      </DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <p className="text-blue-800 font-medium mb-2">Actually, this term IS used in property leases!</p>
+                        <p className="text-blue-700 text-sm leading-relaxed">
+                          {wrongAnswerExplanation}
+                        </p>
+                      </div>
+                      <p className="text-muted-foreground text-center text-sm">
+                        Remember: We're looking for the term that is <strong>NOT</strong> found in property leases.
+                      </p>
+                      <Button 
+                        onClick={() => setShowEducationalPopup(false)}
+                        className="w-full"
+                      >
+                        Got it! Try Again
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
 
                 {/* Email Collection Dialog */}
                 <Dialog open={showEmailForm && !rewardsUnlocked} onOpenChange={(open) => !open && setShowEmailForm(false)}>
