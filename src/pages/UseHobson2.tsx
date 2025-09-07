@@ -69,7 +69,11 @@ export const UseHobson2 = () => {
       setAttempts(prev => prev - 1);
       setShowResult(true);
       // Show educational popup for wrong answers
-      setWrongAnswerExplanation(termExplanations[selectedAnswer as keyof typeof termExplanations] || "");
+      const explanation = termExplanations[selectedAnswer as keyof typeof termExplanations] || "";
+      console.log("Selected answer:", selectedAnswer);
+      console.log("Explanation found:", explanation);
+      console.log("Setting popup to show");
+      setWrongAnswerExplanation(explanation);
       setShowEducationalPopup(true);
       if (attempts <= 1) {
         setGameCompleted(true);
