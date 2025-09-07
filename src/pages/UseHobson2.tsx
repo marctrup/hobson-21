@@ -213,7 +213,7 @@ export const UseHobson2 = () => {
                 </h1>
                 
                 <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-4 sm:px-0">
-                  Complete our property law challenge to unlock exclusive Hobson AI benefits and see how AI can enhance your professional practice.
+                  Complete our property law challenge to unlock exclusive Hobson AI benefits and see how AI can enhance your property business.
                 </p>
 
                 {!gameStarted ? (
