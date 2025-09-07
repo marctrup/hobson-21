@@ -225,9 +225,7 @@ export const UseHobson2 = () => {
                               Congratulations! You're a property expert!
                             </div>
                             <p className="text-green-600 text-sm leading-relaxed">
-                              <strong>"Casement"</strong> refers to a type of window, not a property lease term.<br />
-                              A casement is a type of window that is attached to its frame by side hinges. It swings open like a door, usually outwards.<br />
-                              <span className="text-green-700 font-medium">Well done!</span>
+                              Congratulations! You got the right answer.
                             </p>
                           </div>
                         ) : (
@@ -304,10 +302,16 @@ export const UseHobson2 = () => {
                         Unlock Your Expert Rewards
                       </DialogTitle>
                     </DialogHeader>
-                    <div className="space-y-4 py-4">
-                      <p className="text-muted-foreground text-center">
-                        You've proven your property expertise! Enter your email to unlock your exclusive rewards:
-                      </p>
+                     <div className="space-y-4 py-4">
+                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+                         <p className="text-blue-800 font-medium mb-2">Correct Answer!</p>
+                         <p className="text-blue-700 text-sm leading-relaxed">
+                           <strong>"Casement"</strong> refers to a type of window, not a property lease term. A casement is a type of window that is attached to its frame by side hinges. It swings open like a door, usually outwards.
+                         </p>
+                       </div>
+                       <p className="text-muted-foreground text-center">
+                         You've proven your property expertise! Enter your email to unlock your exclusive rewards:
+                       </p>
                       <div className="space-y-4">
                         <Input
                           type="email"
