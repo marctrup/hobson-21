@@ -311,7 +311,7 @@ export const UseHobson2 = () => {
                     </DialogHeader>
                     <div className="space-y-4 py-4">
                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                        <p className="text-blue-800 font-medium mb-2">What it refers to when used in leases:</p>
+                        <p className="text-blue-800 font-medium mb-2">What it refers to in leases:</p>
                         <p className="text-blue-700 text-sm leading-relaxed">
                           {wrongAnswerExplanation}
                         </p>
