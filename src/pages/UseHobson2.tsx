@@ -367,45 +367,6 @@ export const UseHobson2 = () => {
                   </DialogContent>
                 </Dialog>
 
-                {/* Reward Section */}
-                {(gameCompleted && isCorrect && rewardsUnlocked) && (
-                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-2xl p-8 mb-8">
-                    <div className="flex items-center justify-center gap-2 mb-4">
-                      <Award className="w-6 h-6 text-green-600" />
-                      <h3 className="text-2xl font-bold text-green-800">Challenge Completed!</h3>
-                    </div>
-                    <p className="text-green-700 mb-6">
-                      You've proven your property expertise! Claim your exclusive rewards below:
-                    </p>
-                    <div className="grid md:grid-cols-3 gap-4 mb-6">
-                      <div className="bg-white rounded-lg p-4 border border-green-200">
-                        <div className="text-center">
-                          <Sparkles className="w-8 h-8 text-primary mx-auto mb-2" />
-                          <h4 className="font-semibold text-green-800">2,000 Free HEUs</h4>
-                          <p className="text-sm text-green-600">Double the standard offer</p>
-                        </div>
-                      </div>
-                      <div className="bg-white rounded-lg p-4 border border-green-200">
-                        <div className="text-center">
-                          <Trophy className="w-8 h-8 text-primary mx-auto mb-2" />
-                          <h4 className="font-semibold text-green-800">Expert Badge</h4>
-                          <p className="text-sm text-green-600">Property Professional status</p>
-                        </div>
-                      </div>
-                      <div className="bg-white rounded-lg p-4 border border-green-200">
-                        <div className="text-center">
-                          <FileText className="w-8 h-8 text-primary mx-auto mb-2" />
-                          <h4 className="font-semibold text-green-800">Priority Support</h4>
-                          <p className="text-sm text-green-600">Expert assistance</p>
-                        </div>
-                      </div>
-                    </div>
-                    <Button size="lg" className="text-lg px-12 py-6 bg-green-600 hover:bg-green-700 text-white">
-                      Claim Your Expert Rewards
-                      <ArrowRight className="ml-2 w-5 h-5" />
-                    </Button>
-                  </div>
-                )}
               </div>
             </div>
           </section>
