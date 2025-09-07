@@ -41,7 +41,7 @@ const termExplanations = {
 export const UseHobson2 = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
-  const [attempts, setAttempts] = useState(3);
+  
   const [gameCompleted, setGameCompleted] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
@@ -67,7 +67,6 @@ export const UseHobson2 = () => {
         colors: ['#8B5CF6', '#A855F7', '#C084FC', '#DDD6FE']
       });
     } else {
-      setAttempts(prev => prev - 1);
       setShowResult(true);
       // Show educational popup for wrong answers
       const explanation = termExplanations[selectedAnswer as keyof typeof termExplanations] || "";
@@ -76,9 +75,6 @@ export const UseHobson2 = () => {
       console.log("Setting popup to show");
       setWrongAnswerExplanation(explanation);
       setShowEducationalPopup(true);
-      if (attempts <= 1) {
-        setGameCompleted(true);
-      }
     }
   };
 
@@ -103,7 +99,6 @@ export const UseHobson2 = () => {
   const resetGame = () => {
     setGameStarted(false);
     setSelectedAnswer("");
-    setAttempts(3);
     setGameCompleted(false);
     setShowResult(false);
     setIsCorrect(false);
@@ -201,12 +196,8 @@ export const UseHobson2 = () => {
                   </div>
                 ) : (
                   <div className="bg-background rounded-2xl p-8 border shadow-lg mb-8">
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-xl font-bold">Which term is NOT found in property leases?</h3>
-                      <div className="flex items-center gap-2">
-                        <Target className="w-5 h-5 text-primary" />
-                        <span className="text-sm font-semibold">Attempts: {attempts}/3</span>
-                      </div>
+                    <div className="mb-6">
+                      <h3 className="text-xl font-bold text-center">Which term is NOT found in property leases?</h3>
                     </div>
                     
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
@@ -240,10 +231,10 @@ export const UseHobson2 = () => {
                         ) : (
                           <div className="text-center">
                             <p className="text-red-700 font-semibold mb-1">
-                              {attempts > 0 ? 'Not quite right. Try again!' : 'Challenge complete! The answer was "Casement"'}
+                              Not quite right. Try again!
                             </p>
                             <p className="text-red-600 text-sm">
-                              {attempts > 0 ? `You have ${attempts} attempts remaining.` : '"Casement" is a type of window, not a property lease term.'}
+                              Keep trying - you'll get it!
                             </p>
                           </div>
                         )}
