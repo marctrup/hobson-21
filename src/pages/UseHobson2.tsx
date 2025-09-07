@@ -415,9 +415,9 @@ export const UseHobson2 = () => {
                       <FileText className="w-8 h-8 text-primary" />
                     </div>
                     <h3 className="text-2xl font-bold mb-4">All Document Types</h3>
-                    <p className="text-muted-foreground">
-                      Works with tenancy agreements, leases, contracts, and all property documents
-                    </p>
+                     <p className="text-muted-foreground">
+                       Trained on 100's of document types
+                     </p>
                   </div>
 
                   <div className="text-center">
