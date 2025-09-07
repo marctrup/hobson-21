@@ -84,14 +84,6 @@ export const UseHobson2 = () => {
                   priority 
                 />
               </Link>
-              <nav className="hidden md:flex items-center gap-6">
-                <Link to="/pricing" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Pricing
-                </Link>
-                <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
-                </Link>
-              </nav>
             </div>
           </div>
         </header>
