@@ -32,6 +32,7 @@ const Status = lazy(() => import("./pages/Status"));
 const Announcements = lazy(() => import("./pages/Announcements"));
 const AnnouncementPost = lazy(() => import("./pages/AnnouncementPost"));
 const FeatureRequests = lazy(() => import("./pages/FeatureRequests"));
+const UseHobson = lazy(() => import("./pages/UseHobson").then(module => ({ default: module.UseHobson })));
 
 // Loading component
 const PageLoader = () => (
@@ -114,6 +115,7 @@ const App = () => {
                 <Route path="/announcements" element={<Announcements />} />
                 <Route path="/announcement/:slug" element={<AnnouncementPost />} />
                 <Route path="/feature-requests" element={<FeatureRequests />} />
+                <Route path="/usehobson" element={<UseHobson />} />
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<Admin />} />
                 <Route path="/admin/blog" element={<BlogManagement />} />
