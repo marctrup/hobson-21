@@ -508,7 +508,7 @@ export const UseHobson2 = () => {
                   Ready to Transform Your Property Business?
                 </h2>
                 <p className="text-xl text-muted-foreground mb-12">
-                  Join hundreds of property professionals who are already saving time with Hobson AI.
+                  Fed up with bloated, complex and expensive systems?
                 </p>
                 
                 <Button size="lg" className="text-lg px-12 py-6 bg-primary hover:bg-primary/90">
