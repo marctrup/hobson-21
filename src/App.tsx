@@ -118,7 +118,7 @@ const App = () => {
                 <Route path="/announcement/:slug" element={<AnnouncementPost />} />
                 <Route path="/feature-requests" element={<FeatureRequests />} />
             <Route path="/usehobson" element={<UseHobson />} />
-            <Route path="/usehobson2" element={<UseHobson2 />} />
+            <Route path="/quiz1" element={<UseHobson2 />} />
             
                 <Route path="/auth" element={<Auth />} />
                 <Route path="/admin" element={<Admin />} />
