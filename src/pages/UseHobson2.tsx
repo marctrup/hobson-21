@@ -155,6 +155,7 @@ export const UseHobson2 = () => {
         <title>Unlock Property Expertise - Hobson AI Challenge | Test Your Knowledge</title>
         <meta name="description" content="Test your property law knowledge and unlock exclusive Hobson AI benefits. Play our expert challenge and discover how AI can enhance your practice." />
         <meta name="keywords" content="property law, legal challenge, Hobson AI, property expertise, legal AI assistant" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content="Unlock Property Expertise - Hobson AI Challenge" />
         <meta property="og:description" content="Test your property law knowledge and unlock exclusive Hobson AI benefits. Play our expert challenge." />
         <link rel="canonical" href="https://hobsonschoice.ai/usehobson2" />
@@ -163,13 +164,13 @@ export const UseHobson2 = () => {
       <div className="min-h-screen bg-background">
         {/* Header */}
         <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
+          <div className="container mx-auto px-4 py-3 sm:py-4">
             <div className="flex justify-between items-center">
               <Link to="/">
                 <OptimizedImage 
                   src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
                   alt="Hobson AI Logo" 
-                  className="h-12 w-auto" 
+                  className="h-10 sm:h-12 w-auto" 
                   priority 
                 />
               </Link>
@@ -181,74 +182,75 @@ export const UseHobson2 = () => {
           {/* Achievement Banner */}
           <div className="bg-gradient-to-r from-primary/10 to-primary/5 py-3 border-b">
             <div className="container mx-auto px-4">
-              <div className="flex items-center justify-center gap-2 text-sm font-medium">
-                <Trophy className="w-4 h-4 text-primary" />
-                <span>Property Expert Challenge: Test Your Knowledge & Unlock Exclusive Benefits</span>
-                <Trophy className="w-4 h-4 text-primary" />
+              <div className="flex items-center justify-center gap-2 text-xs sm:text-sm font-medium text-center">
+                <Trophy className="w-4 h-4 text-primary flex-shrink-0" />
+                <span className="hidden sm:inline">Property Expert Challenge: Test Your Knowledge & Unlock Exclusive Benefits</span>
+                <span className="sm:hidden">Expert Challenge: Test & Unlock Benefits</span>
+                <Trophy className="w-4 h-4 text-primary flex-shrink-0" />
               </div>
             </div>
           </div>
 
           {/* Hero/Game Section */}
-          <section className="pt-16 pb-20">
-            <div className="container mx-auto px-4">
+          <section className="pt-8 sm:pt-16 pb-12 sm:pb-20 px-4">
+            <div className="container mx-auto">
               <div className="max-w-4xl mx-auto text-center">
-                <Badge variant="secondary" className="mb-6 px-4 py-2">
-                  <Target className="w-4 h-4 mr-2" />
+                <Badge variant="secondary" className="mb-4 sm:mb-6 px-3 sm:px-4 py-1 sm:py-2 text-xs sm:text-sm">
+                  <Target className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
                   Property Professional Challenge
                 </Badge>
                 
-                <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 sm:mb-8 leading-tight">
                   Prove Your Property
-                  <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent block mt-2">
+                  <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent block mt-1 sm:mt-2">
                     Expertise
                   </span>
                 </h1>
                 
-                <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
+                <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed px-4 sm:px-0">
                   Complete our property law challenge to unlock exclusive Hobson AI benefits and see how AI can enhance your professional practice.
                 </p>
 
                 {!gameStarted ? (
-                  <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-8 mb-8 border">
-                    <div className="flex items-center justify-center gap-4 mb-6">
+                  <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-4 sm:p-8 mb-8 border mx-4 sm:mx-0">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 mb-4 sm:mb-6">
                       <div className="flex items-center gap-2">
-                        <Zap className="w-5 h-5 text-primary" />
-                        <span className="text-lg font-semibold">Quick Challenge</span>
+                        <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                        <span className="text-sm sm:text-lg font-semibold">Quick Challenge</span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <Award className="w-5 h-5 text-primary" />
-                        <span className="text-lg font-semibold">Unlock Rewards</span>
+                        <Award className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                        <span className="text-sm sm:text-lg font-semibold">Unlock Rewards</span>
                       </div>
                     </div>
-                    <h3 className="text-2xl font-bold mb-4">Property Terminology Challenge</h3>
-                    <p className="text-muted-foreground mb-6">
+                    <h3 className="text-xl sm:text-2xl font-bold mb-4">Property Terminology Challenge</h3>
+                    <p className="text-muted-foreground mb-6 text-sm sm:text-base px-2 sm:px-0">
                       Find the term that is <strong>NOT</strong> found in property leases. Good Luck!
                     </p>
                     <Button 
                       size="lg" 
                       onClick={() => setGameStarted(true)}
-                      className="text-lg px-12 py-6 bg-primary hover:bg-primary/90"
+                      className="text-base sm:text-lg px-6 sm:px-12 py-4 sm:py-6 bg-primary hover:bg-primary/90 w-full sm:w-auto"
                     >
                       Start Challenge
-                      <ArrowRight className="ml-2 w-5 h-5" />
+                      <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                     </Button>
                   </div>
                 ) : (
-                  <div className="bg-background rounded-2xl p-8 border shadow-lg mb-8">
+                  <div className="bg-background rounded-2xl p-4 sm:p-8 border shadow-lg mb-8 mx-4 sm:mx-0">
                     <div className="mb-6">
-                      <h3 className="text-xl font-bold text-center">Which term is NOT found in property leases?</h3>
+                      <h3 className="text-lg sm:text-xl font-bold text-center px-2 sm:px-0">Which term is NOT found in property leases?</h3>
                     </div>
                     
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-3 mb-6">
+                    <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3 mb-6">
                       {propertyTerms.map((term, index) => (
                         <button
                           key={index}
                           onClick={() => setSelectedAnswer(term)}
-                          className={`p-3 text-sm font-medium rounded-md border transition-all ${
+                          className={`p-3 sm:p-4 text-sm sm:text-base font-medium rounded-md border transition-all touch-manipulation ${
                             selectedAnswer === term
                               ? 'bg-primary text-primary-foreground border-primary'
-                              : 'bg-background hover:bg-muted border-border'
+                              : 'bg-background hover:bg-muted border-border active:bg-muted'
                           }`}
                         >
                           {term}
@@ -286,7 +288,7 @@ export const UseHobson2 = () => {
                         <Button 
                           onClick={handleAnswerSubmit}
                           disabled={!selectedAnswer}
-                          className="min-w-[150px]"
+                          className="min-w-[120px] sm:min-w-[150px] w-full sm:w-auto"
                         >
                           Submit Answer
                         </Button>
@@ -295,7 +297,7 @@ export const UseHobson2 = () => {
                         <Button 
                           onClick={resetGame}
                           variant="outline"
-                          className="min-w-[150px]"
+                          className="min-w-[120px] sm:min-w-[150px] w-full sm:w-auto"
                         >
                           Try Again
                         </Button>
@@ -335,21 +337,21 @@ export const UseHobson2 = () => {
 
                 {/* Email Collection Dialog */}
                 <Dialog open={showEmailForm && !rewardsUnlocked} onOpenChange={(open) => !open && setShowEmailForm(false)}>
-                  <DialogContent className="sm:max-w-md">
-                    <DialogHeader>
-                      <DialogTitle className="flex items-center justify-center gap-2 text-2xl">
-                        <Mail className="w-6 h-6 text-primary" />
+                  <DialogContent className="sm:max-w-md mx-4 max-w-[calc(100vw-2rem)] w-full">
+                    <DialogHeader className="text-center">
+                      <DialogTitle className="flex items-center justify-center gap-2 text-xl sm:text-2xl">
+                        <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                         Unlock Your Expert Rewards
                       </DialogTitle>
                     </DialogHeader>
                      <div className="space-y-4 py-4">
-                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-                         <p className="text-blue-800 font-medium mb-2">Correct Answer!</p>
-                         <p className="text-blue-700 text-sm leading-relaxed">
+                       <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 sm:p-4 mb-4">
+                         <p className="text-blue-800 font-medium mb-2 text-sm sm:text-base">Correct Answer!</p>
+                         <p className="text-blue-700 text-xs sm:text-sm leading-relaxed">
                            <strong>"Casement"</strong> refers to a type of window, not a property lease term. A casement is a type of window that is attached to its frame by side hinges. It swings open like a door, usually outwards.
                          </p>
                        </div>
-                       <p className="text-muted-foreground text-center">
+                       <p className="text-muted-foreground text-center text-sm sm:text-base px-2 sm:px-0">
                          You've proven your property expertise! Enter your email to unlock your exclusive rewards:
                        </p>
                       <div className="space-y-4">
@@ -358,16 +360,16 @@ export const UseHobson2 = () => {
                           placeholder="Enter your email address"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          className="text-center"
+                          className="text-center text-sm sm:text-base"
                         />
                         <Button 
                           size="lg" 
                           onClick={handleEmailSubmit}
                           disabled={!email}
-                          className="w-full text-lg py-6"
+                          className="w-full text-base sm:text-lg py-4 sm:py-6"
                         >
                           Unlock My Expert Rewards
-                          <ArrowRight className="ml-2 w-5 h-5" />
+                          <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                         </Button>
                         <p className="text-xs text-muted-foreground text-center">
                           We'll send your rewards and expert status confirmation to this email
@@ -382,45 +384,45 @@ export const UseHobson2 = () => {
           </section>
 
           {/* Why Property Professionals Choose Hobson */}
-          <section className="py-20 bg-muted/20">
+          <section className="py-12 sm:py-20 bg-muted/20">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-16">
-                  <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                <div className="text-center mb-12 sm:mb-16">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
                     Why Property Professionals Choose Hobson
                   </h2>
-                  <p className="text-xl text-muted-foreground">
+                  <p className="text-lg sm:text-xl text-muted-foreground px-4 sm:px-0">
                     Transform how you work with property documents
                   </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8">
-                  <div className="text-center">
-                    <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                      <Clock className="w-8 h-8 text-primary" />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                  <div className="text-center px-4 sm:px-0">
+                    <div className="bg-primary/10 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                      <Clock className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                     </div>
-                    <h3 className="text-2xl font-bold mb-4">Save Hours Daily</h3>
-                    <p className="text-muted-foreground">
+                    <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Save Hours Daily</h3>
+                    <p className="text-muted-foreground text-sm sm:text-base">
                       Get instant answers instead of spending hours searching through documents
                     </p>
                   </div>
 
-                  <div className="text-center">
-                    <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                      <FileText className="w-8 h-8 text-primary" />
+                  <div className="text-center px-4 sm:px-0">
+                    <div className="bg-primary/10 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                      <FileText className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                     </div>
-                    <h3 className="text-2xl font-bold mb-4">All Document Types</h3>
-                     <p className="text-muted-foreground">
+                    <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">All Document Types</h3>
+                     <p className="text-muted-foreground text-sm sm:text-base">
                        Trained on 100's of property document types
                      </p>
                   </div>
 
-                  <div className="text-center">
-                    <div className="bg-primary/10 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6">
-                      <CheckCircle className="w-8 h-8 text-primary" />
+                  <div className="text-center px-4 sm:px-0">
+                    <div className="bg-primary/10 rounded-full w-12 h-12 sm:w-16 sm:h-16 flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                      <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-primary" />
                     </div>
-                    <h3 className="text-2xl font-bold mb-4">Trusted Accuracy</h3>
-                     <p className="text-muted-foreground">
+                    <h3 className="text-xl sm:text-2xl font-bold mb-3 sm:mb-4">Trusted Accuracy</h3>
+                     <p className="text-muted-foreground text-sm sm:text-base">
                        Hobson is achieving 98% accuracy
                      </p>
                   </div>
@@ -430,69 +432,69 @@ export const UseHobson2 = () => {
           </section>
 
           {/* Testimonials Section */}
-          <section className="py-20 bg-background">
+          <section className="py-12 sm:py-20 bg-background">
             <div className="container mx-auto px-4">
               <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-16">
-                  <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                <div className="text-center mb-12 sm:mb-16">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
                     Trusted by Property Professionals
                   </h2>
-                  <div className="flex items-center justify-center gap-2 mb-2">
+                  <div className="flex items-center justify-center gap-1 sm:gap-2 mb-2">
                     {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-6 h-6 fill-primary text-primary" />
+                      <Star key={i} className="w-5 h-5 sm:w-6 sm:h-6 fill-primary text-primary" />
                     ))}
                   </div>
-                  <p className="text-xl text-muted-foreground">4.9/5 from 200+ users</p>
+                  <p className="text-lg sm:text-xl text-muted-foreground">4.9/5 from 200+ users</p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-8">
-                  <Card className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+                  <Card className="p-4 sm:p-6">
                     <CardContent className="p-0">
-                      <div className="mb-4">
+                      <div className="mb-3 sm:mb-4">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-primary text-primary inline mr-1" />
+                          <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-primary text-primary inline mr-1" />
                         ))}
                       </div>
-                      <p className="text-muted-foreground mb-4 italic">
+                      <p className="text-muted-foreground mb-3 sm:mb-4 italic text-sm sm:text-base">
                         "Hobson has revolutionized how we handle tenancy agreements. What used to take hours now takes minutes."
                       </p>
                       <div>
-                        <p className="font-semibold">Sarah Johnson</p>
-                        <p className="text-sm text-muted-foreground">Property Manager, ABC Estates</p>
+                        <p className="font-semibold text-sm sm:text-base">Sarah Johnson</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground">Property Manager, ABC Estates</p>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="p-6">
+                  <Card className="p-4 sm:p-6">
                     <CardContent className="p-0">
-                      <div className="mb-4">
+                      <div className="mb-3 sm:mb-4">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-primary text-primary inline mr-1" />
+                          <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-primary text-primary inline mr-1" />
                         ))}
                       </div>
-                      <p className="text-muted-foreground mb-4 italic">
+                      <p className="text-muted-foreground mb-3 sm:mb-4 italic text-sm sm:text-base">
                         "The accuracy is incredible. Hobson understands complex lease terms better than most humans."
                       </p>
                       <div>
-                        <p className="font-semibold">Michael Chen</p>
-                        <p className="text-sm text-muted-foreground">Legal Advisor, Property Solutions</p>
+                        <p className="font-semibold text-sm sm:text-base">Michael Chen</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground">Legal Advisor, Property Solutions</p>
                       </div>
                     </CardContent>
                   </Card>
 
-                  <Card className="p-6">
+                  <Card className="p-4 sm:p-6">
                     <CardContent className="p-0">
-                      <div className="mb-4">
+                      <div className="mb-3 sm:mb-4">
                         {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-4 h-4 fill-primary text-primary inline mr-1" />
+                          <Star key={i} className="w-3 h-3 sm:w-4 sm:h-4 fill-primary text-primary inline mr-1" />
                         ))}
                       </div>
-                      <p className="text-muted-foreground mb-4 italic">
+                      <p className="text-muted-foreground mb-3 sm:mb-4 italic text-sm sm:text-base">
                         "Game-changing for our team. We can now provide instant responses to client queries."
                       </p>
                       <div>
-                        <p className="font-semibold">Emma Thompson</p>
-                        <p className="text-sm text-muted-foreground">Director, Urban Properties</p>
+                        <p className="font-semibold text-sm sm:text-base">Emma Thompson</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground">Director, Urban Properties</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -502,22 +504,22 @@ export const UseHobson2 = () => {
           </section>
 
           {/* Ready to Transform Section */}
-          <section className="py-20 bg-gradient-to-r from-primary/5 to-primary/10">
+          <section className="py-12 sm:py-20 bg-gradient-to-r from-primary/5 to-primary/10">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6 px-4 sm:px-0">
                   Ready to Transform Your Property Business?
                 </h2>
-                <p className="text-xl text-muted-foreground mb-12">
+                <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 sm:mb-12 px-4 sm:px-0">
                   Fed up with bloated, complex and expensive systems?
                 </p>
                 
-                <Button size="lg" className="text-lg px-12 py-6 bg-primary hover:bg-primary/90">
+                <Button size="lg" className="text-base sm:text-lg px-8 sm:px-12 py-4 sm:py-6 bg-primary hover:bg-primary/90 w-full sm:w-auto max-w-xs sm:max-w-none mx-auto">
                   Start today for Free
-                  <ArrowRight className="ml-2 w-5 h-5" />
+                  <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
 
-                <p className="text-sm text-muted-foreground mt-6">
+                <p className="text-xs sm:text-sm text-muted-foreground mt-4 sm:mt-6 px-4 sm:px-0">
                   No credit card required • 18 free HEUs • Setup in under 2 minutes
                 </p>
               </div>
