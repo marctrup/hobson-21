@@ -176,202 +176,253 @@ export const UseHobson4 = () => {
         <link rel="canonical" href="https://hobsonschoice.ai/quiz3" />
       </Helmet>
 
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-gray-900 dark:to-gray-800">
-        {/* Clean Header */}
-        <header className="border-b border-slate-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-            <Link to="/" className="flex items-center gap-3">
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 relative overflow-hidden">
+        {/* Futuristic Background Effects */}
+        <div className="absolute inset-0 bg-gradient-radial from-cyan-900/20 via-transparent to-purple-900/20"></div>
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 25% 25%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+                           radial-gradient(circle at 75% 75%, rgba(147, 51, 234, 0.1) 0%, transparent 50%)`
+        }}></div>
+        
+        {/* Animated Grid Overlay */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="h-full w-full bg-gradient-to-r from-transparent via-cyan-500/10 to-transparent animate-pulse"></div>
+        </div>
+        
+        {/* Futuristic Header */}
+        <header className="border-b border-cyan-400/20 bg-black/40 backdrop-blur-xl sticky top-0 z-50 relative">
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-purple-500/5"></div>
+          <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between relative">
+            <Link to="/" className="flex items-center gap-3 group">
               <OptimizedImage 
                 src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
                 alt="Hobson AI Logo" 
-                className="h-8 w-auto" 
+                className="h-8 w-auto filter brightness-150 group-hover:brightness-200 transition-all duration-300" 
                 priority 
               />
             </Link>
-            <Badge variant="secondary" className="hidden sm:flex items-center gap-2">
+            <Badge className="hidden sm:flex items-center gap-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-100 hover:from-cyan-500/30 hover:to-purple-500/30 transition-all duration-300">
               <GraduationCap className="w-4 h-4" />
-              Expert Assessment
+              Neural Assessment
             </Badge>
           </div>
         </header>
 
-        <main className="max-w-4xl mx-auto px-4 py-8 sm:py-12">
+        <main className="max-w-4xl mx-auto px-4 py-8 sm:py-12 relative z-10">
           {!gameStarted ? (
-            /* Clean Landing Design */
+            /* Futuristic Landing Design */
             <div className="text-center space-y-8">
-              {/* Hero Section */}
+              {/* Cyber Hero Section */}
               <div className="space-y-6">
-                <div className="inline-flex items-center gap-2 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 px-4 py-2 rounded-full text-sm font-medium border border-emerald-200 dark:border-emerald-800">
+                <div className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 text-cyan-300 px-6 py-3 rounded-full text-sm font-medium border border-cyan-400/30 backdrop-blur-sm">
                   <Eye className="w-4 h-4" />
-                  Professional Assessment
+                  <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Neural Assessment Protocol</span>
                 </div>
                 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white leading-tight">
-                  Property Knowledge
-                  <span className="block text-emerald-600 dark:text-emerald-400">Assessment</span>
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight">
+                  <span className="bg-gradient-to-r from-white via-cyan-200 to-white bg-clip-text text-transparent">Property Knowledge</span>
+                  <span className="block bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent animate-pulse">Neural Scan</span>
                 </h1>
                 
-                <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto leading-relaxed">
-                  Demonstrate your expertise in property terminology and unlock access to advanced Hobson AI features designed for professionals.
+                <p className="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                  Advanced AI-powered assessment system designed to evaluate your expertise in property terminology and unlock <span className="text-cyan-400 font-semibold">next-generation</span> Hobson AI features.
                 </p>
               </div>
 
-              {/* Assessment Info Cards */}
+              {/* Futuristic Assessment Cards */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-                <Card className="border border-slate-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300">
-                  <CardContent className="p-6 text-center space-y-3">
-                    <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center mx-auto">
-                      <Timer className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-                    </div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Quick Assessment</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Complete in under 2 minutes</p>
-                  </CardContent>
-                </Card>
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+                  <Card className="relative border border-cyan-400/30 bg-black/40 backdrop-blur-xl hover:border-cyan-400/50 transition-all duration-300 transform group-hover:scale-105">
+                    <CardContent className="p-6 text-center space-y-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-cyan-400/20 to-blue-500/20 rounded-full flex items-center justify-center mx-auto border border-cyan-400/30">
+                        <Timer className="w-6 h-6 text-cyan-400" />
+                      </div>
+                      <h3 className="font-semibold text-white">Quantum Speed</h3>
+                      <p className="text-sm text-gray-400">Neural processing in 120 seconds</p>
+                    </CardContent>
+                  </Card>
+                </div>
 
-                <Card className="border border-slate-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300">
-                  <CardContent className="p-6 text-center space-y-3">
-                    <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto">
-                      <Target className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
-                    </div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Expert Level</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Professional terminology focus</p>
-                  </CardContent>
-                </Card>
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+                  <Card className="relative border border-purple-400/30 bg-black/40 backdrop-blur-xl hover:border-purple-400/50 transition-all duration-300 transform group-hover:scale-105">
+                    <CardContent className="p-6 text-center space-y-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-purple-400/20 to-pink-500/20 rounded-full flex items-center justify-center mx-auto border border-purple-400/30">
+                        <Target className="w-6 h-6 text-purple-400" />
+                      </div>
+                      <h3 className="font-semibold text-white">AI Precision</h3>
+                      <p className="text-sm text-gray-400">Advanced pattern recognition</p>
+                    </CardContent>
+                  </Card>
+                </div>
 
-                <Card className="border border-slate-200 dark:border-gray-700 hover:shadow-lg transition-all duration-300">
-                  <CardContent className="p-6 text-center space-y-3">
-                    <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center mx-auto">
-                      <Award className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+                  <Card className="relative border border-emerald-400/30 bg-black/40 backdrop-blur-xl hover:border-emerald-400/50 transition-all duration-300 transform group-hover:scale-105">
+                    <CardContent className="p-6 text-center space-y-3">
+                      <div className="w-12 h-12 bg-gradient-to-br from-emerald-400/20 to-teal-500/20 rounded-full flex items-center justify-center mx-auto border border-emerald-400/30">
+                        <Award className="w-6 h-6 text-emerald-400" />
+                      </div>
+                      <h3 className="font-semibold text-white">Neural Rewards</h3>
+                      <p className="text-sm text-gray-400">Unlock advanced protocols</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+
+              {/* Cyber Challenge Brief */}
+              <div className="relative max-w-2xl mx-auto">
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl blur-xl"></div>
+                <Card className="relative border-l-4 border-l-amber-400 bg-gradient-to-r from-amber-500/5 to-orange-500/5 border border-amber-400/30 backdrop-blur-sm">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-8 h-8 bg-gradient-to-br from-amber-400/20 to-orange-500/20 rounded-full flex items-center justify-center flex-shrink-0 border border-amber-400/30">
+                        <AlertCircle className="w-5 h-5 text-amber-400" />
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-semibold text-amber-200 mb-2">Neural Protocol Briefing</h3>
+                        <p className="text-amber-100/80">
+                          Identify which term is <strong className="text-amber-300">NOT</strong> commonly found in property lease documents. This neural scan tests your pattern recognition capabilities with standard property law terminology.
+                        </p>
+                      </div>
                     </div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">Unlock Benefits</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Access professional features</p>
                   </CardContent>
                 </Card>
               </div>
-
-              {/* Challenge Brief */}
-              <Card className="max-w-2xl mx-auto border-l-4 border-l-amber-500 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800">
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900/40 rounded-full flex items-center justify-center flex-shrink-0">
-                      <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-400" />
-                    </div>
-                    <div className="text-left">
-                      <h3 className="font-semibold text-amber-900 dark:text-amber-200 mb-2">Assessment Task</h3>
-                      <p className="text-amber-800 dark:text-amber-300">
-                        Identify which term is <strong>NOT</strong> commonly found in property lease documents. This assessment tests your familiarity with standard property law terminology.
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
               
-              <Button 
-                size="lg" 
-                onClick={() => setGameStarted(true)}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
-              >
-                Begin Assessment
-                <ChevronRight className="ml-2 w-5 h-5" />
-              </Button>
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/30 to-purple-500/30 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+                <Button 
+                  size="lg" 
+                  onClick={() => setGameStarted(true)}
+                  className="relative bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-10 py-4 text-lg font-bold rounded-xl shadow-2xl border border-cyan-400/30 hover:border-cyan-300/50 transform hover:scale-105 transition-all duration-300 backdrop-blur-sm"
+                >
+                  <Zap className="mr-3 w-5 h-5" />
+                  Initialize Neural Scan
+                  <ChevronRight className="ml-3 w-5 h-5" />
+                </Button>
+              </div>
             </div>
           ) : (
-            /* Clean Quiz Interface */
+            /* Futuristic Quiz Interface */
             <div className="space-y-8">
-              {/* Progress Header */}
+              {/* Cyber Progress Header */}
               <div className="text-center space-y-4">
-                <Badge variant="outline" className="inline-flex items-center gap-2">
+                <Badge className="inline-flex items-center gap-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-100 backdrop-blur-sm">
                   <BookOpen className="w-4 h-4" />
-                  Assessment in Progress
+                  Neural Scan Active
                 </Badge>
-                <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-                  Which term is <span className="text-red-500">NOT</span> found in property leases?
+                <h2 className="text-2xl sm:text-3xl font-bold text-white">
+                  Which term is <span className="text-red-400 animate-pulse">NOT</span> found in property leases?
                 </h2>
+                <div className="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                  <div className="h-full w-1/3 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full animate-pulse"></div>
+                </div>
               </div>
 
-              {/* Terms Selection Grid */}
-              <Card className="border border-slate-200 dark:border-gray-700">
-                <CardHeader>
-                  <CardTitle className="text-lg text-gray-800 dark:text-gray-200 text-center">
-                    Select your answer from the terms below:
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                    {propertyTerms.map((term, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setSelectedAnswer(term)}
-                        className={`group p-4 rounded-lg border-2 transition-all duration-200 text-left hover:scale-[1.02] ${
-                          selectedAnswer === term
-                            ? 'bg-emerald-50 dark:bg-emerald-900/30 border-emerald-500 text-emerald-700 dark:text-emerald-300'
-                            : 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-600 hover:border-gray-300 dark:hover:border-gray-500'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between">
-                          <span className="font-medium">{term}</span>
+              {/* Futuristic Terms Selection */}
+              <div className="relative group">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-xl blur-xl"></div>
+                <Card className="relative border border-cyan-400/30 bg-black/40 backdrop-blur-xl">
+                  <CardHeader>
+                    <CardTitle className="text-lg text-cyan-100 text-center flex items-center justify-center gap-2">
+                      <Brain className="w-5 h-5 text-cyan-400" />
+                      Select neural pattern match:
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                      {propertyTerms.map((term, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setSelectedAnswer(term)}
+                          className={`group relative p-4 rounded-lg border-2 transition-all duration-300 text-left hover:scale-[1.02] ${
+                            selectedAnswer === term
+                              ? 'bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border-cyan-400 text-cyan-100 shadow-lg shadow-cyan-400/20'
+                              : 'bg-black/60 hover:bg-gray-900/80 border-gray-600 hover:border-cyan-400/50 text-gray-300 hover:text-cyan-100 backdrop-blur-sm'
+                          }`}
+                        >
+                          <div className="flex items-center justify-between">
+                            <span className="font-medium">{term}</span>
+                            {selectedAnswer === term && (
+                              <CheckCircle className="w-5 h-5 text-cyan-400 animate-pulse" />
+                            )}
+                          </div>
                           {selectedAnswer === term && (
-                            <CheckCircle className="w-5 h-5 text-emerald-500" />
+                            <div className="absolute inset-0 border border-cyan-400 rounded-lg animate-pulse opacity-50"></div>
                           )}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Result Display */}
-              {showResult && (
-                <Card className={`border-2 ${
-                  isCorrect 
-                    ? 'border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-900/20' 
-                    : 'border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20'
-                }`}>
-                  <CardContent className="p-6 text-center">
-                    {isCorrect ? (
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-center gap-3 text-emerald-700 dark:text-emerald-300">
-                          <Trophy className="w-8 h-8" />
-                          <span className="text-2xl font-bold">Assessment Complete!</span>
-                        </div>
-                        <p className="text-emerald-600 dark:text-emerald-400 text-lg">
-                          Excellent! You've demonstrated professional-level property knowledge.
-                        </p>
-                      </div>
-                    ) : (
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-center gap-2 text-red-700 dark:text-red-300">
-                          <span className="text-xl font-semibold">Not quite right</span>
-                        </div>
-                        <p className="text-red-600 dark:text-red-400">
-                          Please review and try again. Consider the context of lease documents.
-                        </p>
-                      </div>
-                    )}
+                        </button>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
+              </div>
+
+              {/* Cyber Result Display */}
+              {showResult && (
+                <div className="relative group">
+                  <div className={`absolute inset-0 rounded-xl blur-xl transition-all duration-500 ${
+                    isCorrect 
+                      ? 'bg-gradient-to-r from-emerald-500/30 to-teal-500/30' 
+                      : 'bg-gradient-to-r from-red-500/30 to-pink-500/30'
+                  }`}></div>
+                  <Card className={`relative border-2 backdrop-blur-xl ${
+                    isCorrect 
+                      ? 'border-emerald-400/50 bg-gradient-to-br from-emerald-500/10 to-teal-500/10' 
+                      : 'border-red-400/50 bg-gradient-to-br from-red-500/10 to-pink-500/10'
+                  }`}>
+                    <CardContent className="p-6 text-center">
+                      {isCorrect ? (
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-center gap-3">
+                            <Trophy className="w-8 h-8 text-emerald-400 animate-bounce" />
+                            <span className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Neural Scan Complete!</span>
+                          </div>
+                          <p className="text-emerald-300 text-lg">
+                            Excellence achieved! Neural patterns successfully recognized.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-center gap-2 text-red-400">
+                            <span className="text-xl font-semibold">Pattern mismatch detected</span>
+                          </div>
+                          <p className="text-red-300">
+                            Neural recalibration required. Analyze lease document context patterns.
+                          </p>
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+                </div>
               )}
 
-              {/* Action Buttons */}
+              {/* Cyber Action Buttons */}
               <div className="flex gap-4 justify-center">
                 {!gameCompleted && (
-                  <Button 
-                    onClick={handleAnswerSubmit}
-                    disabled={!selectedAnswer}
-                    className="bg-emerald-600 hover:bg-emerald-700 text-white px-8 py-3 font-semibold rounded-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    Submit Assessment
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                  </Button>
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/30 to-purple-500/30 rounded-xl blur-xl group-hover:blur-2xl transition-all duration-300"></div>
+                    <Button 
+                      onClick={handleAnswerSubmit}
+                      disabled={!selectedAnswer}
+                      className="relative bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white px-8 py-3 font-bold rounded-xl shadow-2xl border border-cyan-400/30 hover:border-cyan-300/50 disabled:opacity-50 disabled:cursor-not-allowed backdrop-blur-sm transform hover:scale-105 transition-all duration-300"
+                    >
+                      Execute Neural Scan
+                      <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                  </div>
                 )}
                 {gameCompleted && (
-                  <Button 
-                    onClick={resetGame}
-                    variant="outline"
-                    className="px-8 py-3 font-semibold rounded-lg border-2"
-                  >
-                    Retake Assessment
-                  </Button>
+                  <div className="relative group">
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-500/20 to-slate-500/20 rounded-xl blur-xl"></div>
+                    <Button 
+                      onClick={resetGame}
+                      className="relative bg-gradient-to-r from-gray-700 to-slate-800 hover:from-gray-600 hover:to-slate-700 text-white px-8 py-3 font-bold rounded-xl border border-gray-500/30 hover:border-gray-400/50 backdrop-blur-sm transform hover:scale-105 transition-all duration-300"
+                    >
+                      Reinitialize System
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>
