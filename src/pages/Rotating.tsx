@@ -166,7 +166,7 @@ const Rotating = () => {
         {/* LinkedIn-optimized square format */}
         <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden aspect-square">
           {/* Header */}
-          <div className="absolute top-0 -left-2.5 -right-2.5 bg-gradient-to-r from-primary to-primary-light p-2 sm:p-3 z-10 rounded-t-2xl sm:rounded-t-3xl">
+          <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary to-primary-light p-3 sm:p-4 z-10">
             <div className="flex items-center justify-between">
               <div className="text-white">
                 <div className="text-xs sm:text-sm font-medium opacity-90">
@@ -188,7 +188,7 @@ const Rotating = () => {
           </div>
 
           {/* Main content */}
-          <div className="pt-12 sm:pt-16 pb-16 sm:pb-20 px-4 sm:px-8 h-full flex flex-col">
+          <div className="pt-14 sm:pt-18 pb-16 sm:pb-20 px-4 sm:px-8 h-full flex flex-col">
             <div className="text-center mb-4 sm:mb-6 mt-4 sm:mt-8">
               <h1 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2 leading-tight">
                 {slides[currentSlide].title}
