@@ -11,7 +11,7 @@ const Rotating = () => {
     {
       id: 'cover',
       title: 'Traditional Systems vs. Hobson',
-      subtitle: 'The smart choice for real estate professionals',
+      subtitle: 'AI - The smart choice for property professionals',
       content: (
         <div className="text-center space-y-4">
           <div className="w-full max-w-sm mx-auto">
