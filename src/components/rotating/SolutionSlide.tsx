@@ -1,9 +1,9 @@
 import React from 'react';
-import { Zap, CheckCircle, FileText, Users } from 'lucide-react';
+import { Wallet, CheckCircle, FileText, Users } from 'lucide-react';
 
 export const SolutionSlide = () => {
   const solutions = [
-    { icon: Zap, text: 'Instant answers from documents', color: 'text-primary' },
+    { icon: Wallet, text: 'Budget-friendly plans', color: 'text-primary' },
     { icon: CheckCircle, text: 'AI-powered accuracy', color: 'text-primary' },
     { icon: FileText, text: 'Source-referenced responses', color: 'text-primary' },
     { icon: Users, text: 'Simple, lightweight interface', color: 'text-primary' }
