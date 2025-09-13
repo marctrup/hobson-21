@@ -13,7 +13,7 @@ const Rotating = () => {
       title: 'Traditional Systems vs. Hobson',
       subtitle: 'AI - The smart choice for property professionals',
       content: (
-        <div className="text-center space-y-4">
+        <div className="text-center">
           <div className="w-full max-w-sm mx-auto">
             <img 
               src={splitScreenImage} 
@@ -21,7 +21,7 @@ const Rotating = () => {
               className="w-full h-auto rounded-lg shadow-lg"
             />
           </div>
-          <div className="flex justify-between text-xs text-muted-foreground max-w-sm mx-auto">
+          <div className="flex justify-between text-xs text-muted-foreground max-w-sm mx-auto mt-2">
             <span>Complex & Overwhelming</span>
             <span>Simple & Organized</span>
           </div>
