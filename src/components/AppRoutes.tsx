@@ -51,7 +51,7 @@ declare global {
   }
 }
 
-// GTM Page Tracker Component
+// GTM Page Tracker Component - MUST be inside BrowserRouter context
 const GTMPageTracker = () => {
   const location = useLocation();
 
@@ -72,17 +72,10 @@ const GTMPageTracker = () => {
   return null;
 };
 
-export const AppRoutes = () => {
+// Component that uses router hooks - must be inside BrowserRouter
+const AppContent = () => {
   return (
-    <ErrorBoundary>
-      <HuggingFaceCacheManager />
-      {/* Skip Navigation Links for Accessibility */}
-      <a 
-        href="#main-content" 
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-      >
-        Skip to main content
-      </a>
+    <>
       <GTMPageTracker />
       <Suspense fallback={<PageLoader />}>
         <Routes>
@@ -145,6 +138,22 @@ export const AppRoutes = () => {
           )}
         </Routes>
       </Suspense>
+    </>
+  );
+};
+
+export const AppRoutes = () => {
+  return (
+    <ErrorBoundary>
+      <HuggingFaceCacheManager />
+      {/* Skip Navigation Links for Accessibility */}
+      <a 
+        href="#main-content" 
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+      >
+        Skip to main content
+      </a>
+      <AppContent />
     </ErrorBoundary>
   );
 };
