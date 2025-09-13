@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Clock, DollarSign, FileText, Zap, CheckCircle, X, CreditCard, Users } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import splitScreenImage from "@/assets/split-screen-comparison.png";
+import { CoverSlide, ProblemSlide, SolutionSlide, FreePlanSlide, CTASlide } from "@/components/rotating";
 
 const Rotating = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -12,126 +12,31 @@ const Rotating = () => {
       id: 'cover',
       title: 'Traditional Systems vs Hobson',
       subtitle: 'AI - The smart choice for property professionals',
-      content: (
-        <div className="text-center">
-          <div className="w-full max-w-xs sm:max-w-sm mx-auto -mt-5">
-            <img 
-              src={splitScreenImage} 
-              alt="Split screen comparison showing chaos of traditional systems versus calm simplicity of Hobson"
-              className="w-full h-auto rounded-lg shadow-lg object-contain max-h-48 sm:max-h-none"
-            />
-          </div>
-        </div>
-      )
+      content: <CoverSlide />
     },
     {
       id: 'problem',
       title: 'Traditional Systems',
       subtitle: 'The painful reality',
-      content: (
-        <div className="space-y-3 sm:space-y-6">
-          <div className="grid grid-cols-1 gap-2 sm:gap-4">
-            {[
-              { icon: DollarSign, text: 'Expensive monthly subscriptions', color: 'text-red-500' },
-              { icon: Clock, text: 'Hours spent searching documents', color: 'text-red-500' },
-              { icon: FileText, text: 'Manual information extraction', color: 'text-red-500' },
-              { icon: X, text: 'Complex, bloated interfaces', color: 'text-red-500' }
-            ].map((item, idx) => (
-              <div key={idx} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-red-50 rounded-lg border border-red-200">
-                <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${item.color} flex-shrink-0`} />
-                <span className="text-foreground font-medium text-xs sm:text-sm">{item.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
+      content: <ProblemSlide />
     },
     {
       id: 'solution',
       title: 'Hobson AI',
       subtitle: 'The intelligent solution',
-      content: (
-        <div className="space-y-3 sm:space-y-6">
-          <div className="grid grid-cols-1 gap-2 sm:gap-4">
-            {[
-              { icon: Zap, text: 'Instant answers from documents', color: 'text-primary' },
-              { icon: CheckCircle, text: 'AI-powered accuracy', color: 'text-primary' },
-              { icon: FileText, text: 'Source-referenced responses', color: 'text-primary' },
-              { icon: Users, text: 'Simple, lightweight interface', color: 'text-primary' }
-            ].map((item, idx) => (
-              <div key={idx} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-primary/5 rounded-lg border border-primary/20">
-                <item.icon className={`w-4 h-4 sm:w-5 sm:h-5 ${item.color} flex-shrink-0`} />
-                <span className="text-foreground font-medium text-xs sm:text-sm">{item.text}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )
+      content: <SolutionSlide />
     },
     {
       id: 'free-plan',
       title: 'Free Plan Benefits',
       subtitle: 'All features. No credit card.',
-      content: (
-        <div className="space-y-4 sm:space-y-6">
-          <div className="bg-gradient-to-br from-primary/10 to-primary-light/10 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-primary/20">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-              <div className="w-8 h-8 sm:w-12 sm:h-12 bg-primary rounded-lg sm:rounded-xl flex items-center justify-center flex-shrink-0">
-                <CheckCircle className="w-4 h-4 sm:w-6 sm:h-6 text-white" />
-              </div>
-              <div>
-                <h3 className="font-bold text-foreground text-sm sm:text-base">Free Forever</h3>
-                <p className="text-xs sm:text-sm text-muted-foreground">Perfect for low-usage professionals</p>
-              </div>
-            </div>
-            <div className="space-y-2 sm:space-y-3">
-              {[
-                'All core AI features included',
-                'Document analysis & extraction',
-                'Instant Q&A capabilities',
-                'Source-referenced answers'
-              ].map((feature, idx) => (
-                <div key={idx} className="flex items-center gap-2">
-                  <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 text-primary flex-shrink-0" />
-                  <span className="text-xs sm:text-sm text-foreground">{feature}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex items-center justify-center gap-2 text-xs sm:text-sm text-muted-foreground">
-            <CreditCard className="w-3 h-3 sm:w-4 sm:h-4" />
-            <span>No credit card required</span>
-          </div>
-        </div>
-      )
+      content: <FreePlanSlide />
     },
     {
       id: 'cta',
       title: 'Ready to Transform?',
       subtitle: 'Join thousands of real estate professionals',
-      content: (
-        <div className="text-center space-y-4 sm:space-y-6">
-          <div className="space-y-3 sm:space-y-4">
-            <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-brand-orange to-brand-orange/80 rounded-xl sm:rounded-2xl flex items-center justify-center">
-              <Zap className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-            </div>
-            <p className="text-muted-foreground max-w-sm mx-auto text-xs sm:text-sm px-2">
-              Start getting instant answers from your documents today. No setup, no hassle.
-            </p>
-          </div>
-          <Button 
-            size="lg" 
-            variant="cta"
-            className="w-full max-w-xs mx-auto text-sm sm:text-lg py-4 sm:py-6"
-            onClick={() => window.open('https://hobsonschoice.ai', '_blank')}
-          >
-            Try Hobson Free
-          </Button>
-          <p className="text-xs text-muted-foreground">
-            Free plan • No credit card • Instant access
-          </p>
-        </div>
-      )
+      content: <CTASlide />
     }
   ];
 
