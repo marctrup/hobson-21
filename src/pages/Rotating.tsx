@@ -14,7 +14,7 @@ const Rotating = () => {
       subtitle: 'AI - The smart choice for property professionals',
       content: (
         <div className="text-center">
-          <div className="w-full max-w-xs sm:max-w-sm mx-auto">
+          <div className="w-full max-w-xs sm:max-w-sm mx-auto -mt-5">
             <img 
               src={splitScreenImage} 
               alt="Split screen comparison showing chaos of traditional systems versus calm simplicity of Hobson"
