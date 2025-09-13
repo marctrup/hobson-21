@@ -34,7 +34,7 @@ const Rotating = () => {
     },
     {
       id: 'cta',
-      title: 'Ready to Transform?',
+      title: 'Ready to Transform your Business?',
       subtitle: 'Join thousands of real estate professionals',
       content: <CTASlide />
     }
