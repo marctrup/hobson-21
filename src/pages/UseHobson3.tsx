@@ -156,6 +156,20 @@ export const UseHobson3 = () => {
   return (
     <>
       <Helmet>
+        {/* Initialize dataLayer before GTM */}
+        <script>
+          {`window.dataLayer = window.dataLayer || [];`}
+        </script>
+        
+        {/* Google Tag Manager */}
+        <script>
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M7JNNWVM');`}
+        </script>
+        
         <title>Property Expert Challenge - Interactive Quiz | Hobson AI</title>
         <meta name="description" content="Test your property expertise in our interactive quiz and unlock exclusive Hobson AI benefits. Fun, engaging challenge for property professionals." />
         <meta name="keywords" content="property quiz, legal challenge, Hobson AI, property expertise, interactive quiz" />
@@ -163,6 +177,11 @@ export const UseHobson3 = () => {
         <meta property="og:title" content="Property Expert Challenge - Interactive Quiz" />
         <meta property="og:description" content="Test your property expertise in our interactive quiz and unlock exclusive Hobson AI benefits." />
         <link rel="canonical" href="https://hobsonschoice.ai/quiz2" />
+        
+        {/* GTM noscript fallback */}
+        <noscript>
+          {`<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M7JNNWVM" height="0" width="0" style="display:none;visibility:hidden"></iframe>`}
+        </noscript>
       </Helmet>
 
       <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-100 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20">
