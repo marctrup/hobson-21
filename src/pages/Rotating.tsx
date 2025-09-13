@@ -216,10 +216,10 @@ const Rotating = () => {
             
             <div className="flex items-center gap-2">
               <Button
-                variant={isAutoPlaying ? "default" : "outline"}
+                variant="outline"
                 size="sm"
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="text-xs scale-95 px-2 py-1"
+                className="text-xs scale-95 px-2 py-1 bg-muted hover:bg-muted/80"
               >
                 {isAutoPlaying ? 'Pause' : 'Play'}
               </Button>
