@@ -1,10 +1,10 @@
 import React from 'react';
-import { TrendingDown, PoundSterling, FileText, X } from 'lucide-react';
+import { TrendingUp, PoundSterling, FileText, X } from 'lucide-react';
 
 export const ProblemSlide = () => {
   const problems = [
     { icon: PoundSterling, text: 'Expensive monthly subscriptions', color: 'text-red-500' },
-    { icon: TrendingDown, text: 'Pricing that punishes growth', color: 'text-red-500' },
+    { icon: TrendingUp, text: 'Pricing that punishes growth', color: 'text-red-500' },
     { icon: FileText, text: 'Manual information extraction', color: 'text-red-500' },
     { icon: X, text: 'Complex, bloated interfaces', color: 'text-red-500' }
   ];
