@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { CoverSlide, ProblemSlide, SolutionSlide, FreePlanSlide, CTASlide } from "@/components/rotating";
+import { Helmet } from "react-helmet-async";
 
 const Rotating = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -67,6 +68,26 @@ const Rotating = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-2 sm:p-4">
+      <Helmet>
+        {/* Initialize dataLayer before GTM */}
+        <script>
+          {`window.dataLayer = window.dataLayer || [];`}
+        </script>
+        
+        {/* Google Tag Manager */}
+        <script>
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-M7JNNWVM');`}
+        </script>
+        
+        {/* GTM noscript fallback */}
+        <noscript>
+          {`<iframe src="https://www.googletagmanager.com/ns.html?id=GTM-M7JNNWVM" height="0" width="0" style="display:none;visibility:hidden"></iframe>`}
+        </noscript>
+      </Helmet>
       <div className="w-full max-w-sm sm:max-w-lg">
         {/* LinkedIn-optimized square format */}
         <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden aspect-square">
