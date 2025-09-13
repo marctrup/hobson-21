@@ -109,22 +109,22 @@ const Rotating = () => {
           </div>
 
           {/* Navigation */}
-          <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 flex items-center justify-between">
+          <div className="absolute bottom-3 sm:bottom-4 left-0 right-0 flex items-center justify-between px-3 sm:px-4 pointer-events-none">
             <Button
               variant="outline"
               size="icon"
               onClick={prevSlide}
-              className="rounded-full bg-white/90 hover:bg-white w-8 h-8 sm:w-10 sm:h-10"
+              className="rounded-full bg-white/90 hover:bg-white w-8 h-8 sm:w-10 sm:h-10 pointer-events-auto"
             >
               <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
             </Button>
             
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 pointer-events-auto">
               <Button
                 variant="outline"
                 size="sm"
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="text-xs scale-95 px-2 py-1 bg-muted hover:bg-muted/80"
+                className="text-xs scale-95 px-2 py-1 bg-muted hover:bg-muted/80 min-w-[60px]"
               >
                 {isAutoPlaying ? 'Pause' : 'Play'}
               </Button>
@@ -134,7 +134,7 @@ const Rotating = () => {
               variant="outline"
               size="icon"
               onClick={nextSlide}
-              className="rounded-full bg-white/90 hover:bg-white w-8 h-8 sm:w-10 sm:h-10"
+              className="rounded-full bg-white/90 hover:bg-white w-8 h-8 sm:w-10 sm:h-10 pointer-events-auto"
             >
               <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
             </Button>
