@@ -188,8 +188,8 @@ const Rotating = () => {
           </div>
 
           {/* Main content */}
-          <div className="pt-12 sm:pt-16 pb-16 sm:pb-20 px-4 sm:px-8 h-full flex flex-col justify-center">
-            <div className="text-center mb-3 sm:mb-4" style={{ marginTop: '50px' }}>
+          <div className="pt-12 sm:pt-16 pb-16 sm:pb-20 px-4 sm:px-8 h-full flex flex-col">
+            <div className="text-center mb-4 sm:mb-6 mt-4 sm:mt-8">
               <h1 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2 leading-tight">
                 {slides[currentSlide].title}
               </h1>
