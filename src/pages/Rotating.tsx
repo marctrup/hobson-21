@@ -14,11 +14,11 @@ const Rotating = () => {
       subtitle: 'AI - The smart choice for property professionals',
       content: (
         <div className="text-center">
-          <div className="w-full max-w-sm mx-auto" style={{ marginTop: '-5px' }}>
+          <div className="w-full max-w-xs sm:max-w-sm mx-auto">
             <img 
               src={splitScreenImage} 
               alt="Split screen comparison showing chaos of traditional systems versus calm simplicity of Hobson"
-              className="w-full h-auto rounded-lg shadow-lg"
+              className="w-full h-auto rounded-lg shadow-lg object-contain max-h-48 sm:max-h-none"
             />
           </div>
         </div>
