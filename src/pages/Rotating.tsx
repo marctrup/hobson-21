@@ -21,10 +21,6 @@ const Rotating = () => {
               className="w-full h-auto rounded-lg shadow-lg"
             />
           </div>
-          <div className="flex justify-between text-xs text-muted-foreground max-w-sm mx-auto mt-2">
-            <span>Complex & Overwhelming</span>
-            <span>Simple & Organized</span>
-          </div>
         </div>
       )
     },
