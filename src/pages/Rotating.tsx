@@ -10,7 +10,7 @@ const Rotating = () => {
   const slides = [
     {
       id: 'cover',
-      title: 'Traditional Systems vs. Hobson',
+      title: 'Traditional Systems vs Hobson',
       subtitle: 'AI - The smart choice for property professionals',
       content: (
         <div className="text-center">
