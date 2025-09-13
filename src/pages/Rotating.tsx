@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Clock, DollarSign, FileText, Zap, CheckCircle, X, CreditCard, Users } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import splitScreenImage from "@/assets/split-screen-comparison.png";
 
 const Rotating = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -12,13 +13,23 @@ const Rotating = () => {
       title: 'Traditional Systems vs. Hobson',
       subtitle: 'The smart choice for real estate professionals',
       content: (
-        <div className="text-center space-y-6">
-          <div className="w-20 h-20 mx-auto bg-gradient-to-br from-primary to-primary-light rounded-2xl flex items-center justify-center">
-            <FileText className="w-10 h-10 text-white" />
+        <div className="text-center space-y-4">
+          <div className="w-full max-w-sm mx-auto">
+            <img 
+              src={splitScreenImage} 
+              alt="Split screen comparison showing chaos of traditional systems versus calm simplicity of Hobson"
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
           </div>
-          <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            Stop wrestling with bloated systems. Get instant answers from your documents.
-          </p>
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs text-muted-foreground max-w-sm mx-auto">
+              <span>Complex & Overwhelming</span>
+              <span>Simple & Organized</span>
+            </div>
+            <p className="text-sm text-muted-foreground max-w-md mx-auto">
+              Stop wrestling with bloated systems. Get instant answers from your documents.
+            </p>
+          </div>
         </div>
       )
     },
