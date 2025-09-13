@@ -8,7 +8,7 @@ export const CoverSlide = () => {
         <img 
           src={splitScreenImage} 
           alt="Split screen comparison showing chaos of traditional systems versus calm simplicity of Hobson"
-          className="w-full h-auto rounded-lg shadow-lg object-contain max-h-48 sm:max-h-none border-2 border-red-500"
+          className="w-full h-auto rounded-lg shadow-lg object-contain max-h-48 sm:max-h-none"
         />
       </div>
     </div>
