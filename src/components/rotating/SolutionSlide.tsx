@@ -4,7 +4,7 @@ import { Wallet, CheckCircle, FileText, Users } from 'lucide-react';
 export const SolutionSlide = () => {
   const solutions = [
     { icon: Wallet, text: 'Budget-friendly plans', color: 'text-primary' },
-    { icon: CheckCircle, text: 'AI-powered accuracy', color: 'text-primary' },
+    { icon: CheckCircle, text: 'Pricing that rewards growth', color: 'text-primary' },
     { icon: FileText, text: 'Source-referenced responses', color: 'text-primary' },
     { icon: Users, text: 'Simple, lightweight interface', color: 'text-primary' }
   ];
