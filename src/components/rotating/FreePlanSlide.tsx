@@ -18,7 +18,7 @@ export const FreePlanSlide = () => {
           </div>
           <div>
             <h3 className="font-bold text-foreground text-sm sm:text-base">Free Forever</h3>
-            <p className="text-xs sm:text-sm text-muted-foreground">Perfect for low-usage professionals</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">Great for occasional use</p>
           </div>
         </div>
         <div className="space-y-2 sm:space-y-3">
