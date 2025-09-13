@@ -166,7 +166,7 @@ const Rotating = () => {
         {/* LinkedIn-optimized square format */}
         <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden aspect-square">
           {/* Header */}
-          <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary to-primary-light p-2 sm:p-3 z-10">
+          <div className="absolute top-0 -left-2.5 -right-2.5 bg-gradient-to-r from-primary to-primary-light p-2 sm:p-3 z-10 rounded-t-2xl sm:rounded-t-3xl">
             <div className="flex items-center justify-between">
               <div className="text-white">
                 <div className="text-xs sm:text-sm font-medium opacity-90">
