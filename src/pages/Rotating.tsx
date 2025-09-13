@@ -198,7 +198,7 @@ const Rotating = () => {
               </p>
             </div>
             
-            <div className="flex-1 flex items-center justify-center -mt-8 border-2 border-red-400 p-2">
+            <div className="flex-1 flex items-center justify-center mt-5 border-2 border-red-400 p-2">
               {slides[currentSlide].content}
             </div>
           </div>
