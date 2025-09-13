@@ -219,7 +219,7 @@ const Rotating = () => {
                 variant={isAutoPlaying ? "default" : "outline"}
                 size="sm"
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="text-xs"
+                className="text-xs scale-90"
               >
                 {isAutoPlaying ? 'Pause' : 'Play'}
               </Button>
