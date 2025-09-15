@@ -11,8 +11,8 @@ const Rotating = () => {
   const slides = [
     {
       id: 'cover',
-      title: 'Traditional Systems vs Hobson',
-      subtitle: 'AI - The smart choice for property professionals',
+      title: 'AI - The smart choice for property professionals',
+      subtitle: 'Transform your property business with intelligent automation',
       content: <CoverSlide />
     },
     {
