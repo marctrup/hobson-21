@@ -4,9 +4,9 @@ import { TrendingUp, PoundSterling, FileText, X } from 'lucide-react';
 export const ProblemSlide = () => {
   const problems = [
     { icon: PoundSterling, text: 'Expensive monthly subscriptions', color: 'text-red-500' },
-    { icon: TrendingUp, text: 'Pricing that punishes growth', color: 'text-red-500' },
-    { icon: FileText, text: 'Manual information extraction', color: 'text-red-500' },
-    { icon: X, text: 'Complex, menu-driven interface', color: 'text-red-500' }
+    { icon: FileText, text: 'Manual, time-consuming data extraction', color: 'text-red-500' },
+    { icon: X, text: 'Clunky, menu-driven interfaces', color: 'text-red-500' },
+    { icon: TrendingUp, text: 'Slow onboarding and steep learning curve', color: 'text-red-500' }
   ];
 
   return (
