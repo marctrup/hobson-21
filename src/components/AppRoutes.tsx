@@ -114,7 +114,7 @@ const AppContent = () => {
               <Route path="/usehobson" element={<UseHobson />} />
               <Route path="/quiz1" element={<UseHobson2 />} />
               <Route path="/quiz2" element={<UseHobson3 />} />
-              <Route path="/rotating" element={<Rotating />} />
+              <Route path="/carousel" element={<Rotating />} />
               
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
