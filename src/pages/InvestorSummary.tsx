@@ -24,7 +24,7 @@ const InvestorSummary = () => {
     {
       id: 'market-opportunity',
       title: 'By 2030, Property Will Pour $1.8T into AI',
-      subtitle: '',
+      subtitle: 'Legacy systems can\'t deliver the efficiency the market demands.',
       content: <MarketOpportunitySlide />
     },
     {
