@@ -12,7 +12,7 @@ export const InvestorCTASlide = () => {
             The Perfect Storm for AI Disruption
           </h3>
           <p className="text-muted-foreground text-xs sm:text-sm mb-4 leading-relaxed">
-            Market pressure for efficiency and AI capability are converging — Now is the time.
+            By 2030, Property Will Pour $1.8T into AI for Inefficiency meets innovation — change is inevitable.
           </p>
           
           <Button 
