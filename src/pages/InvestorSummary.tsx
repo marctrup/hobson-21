@@ -12,7 +12,7 @@ const InvestorSummary = () => {
     {
       id: 'cover',
       title: 'Hobson AI',
-      subtitle: 'Disrupting property tech with intelligent automation',
+      subtitle: 'Capturing a $1.8T AI-in-Property opportunity by 2030',
       content: <InvestorCoverSlide />
     },
     {
