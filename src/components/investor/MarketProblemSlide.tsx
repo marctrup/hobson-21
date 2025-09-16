@@ -11,10 +11,6 @@ export const MarketProblemSlide = () => {
 
   return (
     <div className="space-y-3 sm:space-y-6">
-      <div className="text-center mb-4">
-        <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2">Market Opportunity</h3>
-        <p className="text-xs text-muted-foreground">The $1.8T AI-in-Property market is ripe for simple, trusted, scalable tools.</p>
-      </div>
       <div className="grid grid-cols-1 gap-2 sm:gap-3">
         {problems.map((item, idx) => (
           <div key={idx} className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-red-50 rounded-lg border border-red-200">
