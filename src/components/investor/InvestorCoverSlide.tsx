@@ -4,7 +4,7 @@ import investorSplitScreenImage from '@/assets/investor-split-screen-v2.png';
 
 export const InvestorCoverSlide = () => {
   return (
-    <div className="text-center space-y-4 sm:space-y-6">
+    <div className="text-center space-y-2 sm:space-y-3 -mt-1">
       <div className="flex justify-center">
         <OptimizedImage
           src={investorSplitScreenImage}
