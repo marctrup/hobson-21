@@ -10,10 +10,10 @@ export const InvestorCTASlide = () => {
           <Handshake className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
         </div>
         <h3 className="text-lg sm:text-xl font-bold text-foreground">
-          Join the Revolution
+          Investment Opportunity
         </h3>
         <p className="text-muted-foreground max-w-sm mx-auto text-xs sm:text-sm px-2">
-          Partner with us to transform the property industry with intelligent AI solutions
+          Be part of the $1.8T AI-in-Property transformation.
         </p>
       </div>
       
