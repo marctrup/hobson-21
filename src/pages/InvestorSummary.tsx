@@ -18,7 +18,7 @@ const InvestorSummary = () => {
     {
       id: 'market-problem',
       title: 'Market Problem',
-      subtitle: 'Bloated systems, manual processes, high costs',
+      subtitle: 'Property professionals are stuck with outdated tools that are costly, slow, and hard to adopt.',
       content: <MarketProblemSlide />
     },
     {
