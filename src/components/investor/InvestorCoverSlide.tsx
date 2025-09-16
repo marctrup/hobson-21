@@ -6,7 +6,7 @@ export const InvestorCoverSlide = () => {
   return (
     <div className="flex flex-col items-center justify-center h-full space-y-4">
       <div className="text-center text-lg font-semibold text-foreground px-4">
-        By 2030 $1.8T to be spent by the property industry on AI
+        By 2030, the property industry will spend $1.8T on AI.
       </div>
       <div className="flex items-end justify-center" style={{ marginBottom: '-107px' }}>
         <OptimizedImage
