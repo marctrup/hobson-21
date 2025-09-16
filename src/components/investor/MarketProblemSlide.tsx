@@ -10,7 +10,7 @@ export const MarketProblemSlide = () => {
             Why Old Systems Can't Keep Up
           </h3>
           <p className="text-sm sm:text-base text-muted-foreground font-medium">
-            Manual workflows and complexity kill adoption and profits.
+            Outdated systems are costly, complex, and ripe for disruption
           </p>
         </div>
       </div>
