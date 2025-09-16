@@ -5,18 +5,6 @@ import { Button } from "@/components/ui/button";
 export const InvestorCTASlide = () => {
   return (
     <div className="text-center space-y-6 sm:space-y-8 p-4">
-      {/* Why Now Header */}
-      <div className="space-y-2" style={{ marginTop: '10px' }}>
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
-          <Zap className="w-3 h-3 text-primary" />
-          <span className="text-xs font-semibold text-primary">Why Now</span>
-        </div>
-        <h2 className="text-lg sm:text-xl font-bold text-foreground text-center">
-          An inflexion point — where efficiency meets disruption.
-        </h2>
-      </div>
-
-
       {/* CTA Section */}
       <div className="space-y-4">
         <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4">
