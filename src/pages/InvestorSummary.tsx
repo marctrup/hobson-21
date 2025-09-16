@@ -11,8 +11,8 @@ const InvestorSummary = () => {
   const slides = [
     {
       id: 'cover',
-      title: 'Hobson AI',
-      subtitle: 'A $1.8T global opportunity for AI in the Property industry by 2030',
+      title: '',
+      subtitle: '',
       content: <InvestorCoverSlide />
     },
     {
@@ -102,13 +102,17 @@ const InvestorSummary = () => {
 
           {/* Main content */}
           <div className="pt-16 sm:pt-20 pb-16 sm:pb-20 px-4 sm:px-8 h-full flex flex-col">
-            <div className="text-center mb-3 sm:mb-4 flex-shrink-0 min-h-[60px] sm:min-h-[70px] flex flex-col justify-center">
-              <h1 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2 leading-tight">
-                {slides[currentSlide].title}
-              </h1>
-              <p className="text-muted-foreground text-xs sm:text-sm">
-                {slides[currentSlide].subtitle}
-              </p>
+            <div className={`text-center flex-shrink-0 ${slides[currentSlide].title || slides[currentSlide].subtitle ? 'mb-3 sm:mb-4 min-h-[60px] sm:min-h-[70px] flex flex-col justify-center' : 'mb-0 min-h-0'}`}>
+              {slides[currentSlide].title && (
+                <h1 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2 leading-tight">
+                  {slides[currentSlide].title}
+                </h1>
+              )}
+              {slides[currentSlide].subtitle && (
+                <p className="text-muted-foreground text-xs sm:text-sm">
+                  {slides[currentSlide].subtitle}
+                </p>
+              )}
             </div>
             
             <div className="flex-1 flex items-center justify-center min-h-0">
