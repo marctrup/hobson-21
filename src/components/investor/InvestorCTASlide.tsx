@@ -12,7 +12,7 @@ export const InvestorCTASlide = () => {
             The Perfect Storm for AI Disruption
           </h3>
           <p className="text-muted-foreground text-xs sm:text-sm mb-4 leading-relaxed">
-            Market pressure and AI capability are converging — property is next.
+            Market pressure for efficiency and AI capability are converging — Now is the time.
           </p>
           
           <Button 
