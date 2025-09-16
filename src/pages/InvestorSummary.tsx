@@ -17,8 +17,8 @@ const InvestorSummary = () => {
     },
     {
       id: 'market-problem',
-      title: 'Why Old Systems Can\'t Keep Up',
-      subtitle: 'Manual workflows and complexity kill adoption and profits.',
+      title: '',
+      subtitle: '',
       content: <MarketProblemSlide />
     },
     {
