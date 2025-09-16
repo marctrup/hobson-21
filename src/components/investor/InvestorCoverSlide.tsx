@@ -25,7 +25,7 @@ export const InvestorCoverSlide = () => {
         <div className="space-y-1 text-xs sm:text-sm text-muted-foreground">
           <p className="font-semibold">$1.8T AI-in-Property market by 2030</p>
           <p>£708B in global efficiency savings potential</p>
-          <p className="text-primary font-medium">Positioned to capture outsized value in a trillion-dollar transformation</p>
+          <p className="text-primary font-medium">Well-placed to win big in a $1.8T market shift</p>
         </div>
       </div>
     </div>
