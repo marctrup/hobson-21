@@ -18,7 +18,7 @@ const InvestorSummary = () => {
     {
       id: 'market-problem',
       title: 'Why Old Systems Can\'t Keep Up',
-      subtitle: 'Legacy systems bleed money, waste time, and block adoption.',
+      subtitle: 'Manual workflows and complexity kill adoption and profits.',
       content: <MarketProblemSlide />
     },
     {
