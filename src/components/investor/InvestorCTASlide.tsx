@@ -26,7 +26,7 @@ export const InvestorCTASlide = () => {
           size="lg" 
           variant="cta"
           className="w-full max-w-xs mx-auto text-sm sm:text-base py-3 sm:py-4"
-          onClick={() => window.open('mailto:investors@hobsonschoice.ai?subject=Investment Opportunity', '_blank')}
+          onClick={() => window.open('mailto:rochelle.t@hobsonschoice.ai?subject=Investment Opportunity', '_blank')}
         >
           <Mail className="w-4 h-4 mr-2" />
           Contact Us
