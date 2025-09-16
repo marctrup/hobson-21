@@ -3,13 +3,6 @@ import React from 'react';
 export const InvestorCoverSlide = () => {
   return (
     <div className="space-y-4 sm:space-y-6 text-center">
-      {/* Market Opportunity Banner */}
-      <div className="bg-gradient-to-r from-primary/10 to-primary-light/10 rounded-xl p-3 sm:p-4 border border-primary/20">
-        <p className="text-sm sm:text-base font-bold text-primary leading-tight">
-          Capturing a $1.8T AI-in-Property opportunity by 2030
-        </p>
-      </div>
-
       {/* Key Points */}
       <div className="space-y-3">
         <div className="flex items-center justify-center space-x-2">
