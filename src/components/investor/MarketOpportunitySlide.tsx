@@ -33,7 +33,7 @@ export const MarketOpportunitySlide = () => {
           <Rocket className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
         </div>
         <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2">Market Opportunity</h3>
-        <p className="text-xs text-muted-foreground">The $1.8T AI-in-Property market is ripe for simple, trusted, scalable tools.</p>
+        <p className="text-xs text-muted-foreground">A massive $1.8T AI-in-Property market, primed for efficiency-driven disruption.</p>
       </div>
       
       <div className="flex items-center justify-center gap-2 sm:gap-4 overflow-x-auto pb-2">
