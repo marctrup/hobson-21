@@ -1,50 +1,31 @@
 import React from 'react';
-import { Rocket } from 'lucide-react';
 
 export const MarketOpportunitySlide = () => {
-  const markets = [
-    { 
-      title: 'UK MARKET', 
-      value: '£6B', 
-      subtitle: 'Efficiency savings',
-      gradient: 'from-teal-400 to-green-500',
-      size: 'w-16 h-16 sm:w-20 sm:h-20'
-    },
-    { 
-      title: 'EUROPEAN MARKET', 
-      value: '£66B', 
-      subtitle: 'Efficiency Savings',
-      gradient: 'from-cyan-400 to-blue-500',
-      size: 'w-20 h-20 sm:w-24 sm:h-24'
-    },
-    { 
-      title: 'GLOBAL MARKET', 
-      value: '£708B', 
-      subtitle: 'Efficiency Savings',
-      gradient: 'from-purple-400 to-pink-500',
-      size: 'w-24 h-24 sm:w-28 sm:h-28'
-    }
-  ];
-
   return (
     <div className="space-y-4 sm:space-y-6">
-      <div className="flex items-center justify-center gap-2 sm:gap-4 overflow-x-auto pb-2">
-        {markets.map((market, idx) => (
-          <div key={idx} className="flex items-center gap-2">
-            <div className="text-center flex-shrink-0">
-              <div className={`${market.size} mx-auto bg-gradient-to-br ${market.gradient} rounded-full flex flex-col items-center justify-center text-white mb-1`}>
-                <div className="text-[6px] sm:text-[8px] font-medium opacity-75 leading-tight">{market.title}</div>
-                <div className="text-xs sm:text-sm font-bold leading-none">{market.value}</div>
-                <div className="text-[5px] sm:text-[7px] opacity-75 leading-tight">{market.subtitle}</div>
-              </div>
-            </div>
-            {idx < markets.length - 1 && (
-              <div className="flex-shrink-0">
-                <div className="w-3 h-0.5 sm:w-4 sm:h-0.5 bg-gradient-to-r from-muted-foreground to-primary/50 rounded"></div>
-              </div>
-            )}
+      <div className="text-center space-y-4">
+        <h3 className="text-sm sm:text-base font-semibold text-foreground">Efficiency Savings Potential</h3>
+        
+        <div className="space-y-3">
+          <div className="flex justify-between items-center p-2 bg-gradient-to-r from-teal-50 to-green-50 rounded-lg border border-teal-200">
+            <span className="text-xs sm:text-sm font-medium text-foreground">UK:</span>
+            <span className="text-sm sm:text-base font-bold text-teal-700">£6B</span>
           </div>
-        ))}
+          
+          <div className="flex justify-between items-center p-2 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-lg border border-cyan-200">
+            <span className="text-xs sm:text-sm font-medium text-foreground">Europe:</span>
+            <span className="text-sm sm:text-base font-bold text-cyan-700">£66B</span>
+          </div>
+          
+          <div className="flex justify-between items-center p-2 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
+            <span className="text-xs sm:text-sm font-medium text-foreground">Global:</span>
+            <span className="text-sm sm:text-base font-bold text-purple-700">£708B</span>
+          </div>
+        </div>
+        
+        <p className="text-xs text-muted-foreground leading-relaxed px-2">
+          Lightweight, accurate AI tools unlock billions in cost and time savings across property markets worldwide.
+        </p>
       </div>
     </div>
   );
