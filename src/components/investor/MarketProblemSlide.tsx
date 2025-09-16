@@ -12,8 +12,8 @@ export const MarketProblemSlide = () => {
   return (
     <div className="space-y-3 sm:space-y-6">
       <div className="text-center mb-4">
-        <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2">Market Pain Points</h3>
-        <p className="text-xs text-muted-foreground">£15B+ market ripe for disruption</p>
+        <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2">Market Opportunity</h3>
+        <p className="text-xs text-muted-foreground">AI-in-Property is projected to become a $1.8T market by 2030 — primed for solutions that are lightweight, accurate, and scalable.</p>
       </div>
       <div className="grid grid-cols-1 gap-2 sm:gap-3">
         {problems.map((item, idx) => (
