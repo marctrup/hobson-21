@@ -30,7 +30,7 @@ const InvestorSummary = () => {
     {
       id: 'market-opportunity',
       title: 'Market Opportunity',
-      subtitle: 'Massive addressable market with strong growth',
+      subtitle: 'A massive $1.8T AI-in-Property market, primed for efficiency-driven disruption.',
       content: <MarketOpportunitySlide />
     },
     {
