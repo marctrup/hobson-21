@@ -102,7 +102,7 @@ const InvestorSummary = () => {
 
           {/* Main content */}
           <div className="pt-16 sm:pt-20 pb-16 sm:pb-20 px-4 sm:px-8 h-full flex flex-col">
-            <div className="text-center mb-3 sm:mb-4 flex-shrink-0">
+            <div className="text-center mb-3 sm:mb-4 flex-shrink-0 min-h-[60px] sm:min-h-[70px] flex flex-col justify-center">
               <h1 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2 leading-tight">
                 {slides[currentSlide].title}
               </h1>
@@ -111,8 +111,10 @@ const InvestorSummary = () => {
               </p>
             </div>
             
-            <div className="flex-1 flex items-center justify-center -mt-4">
-              {slides[currentSlide].content}
+            <div className="flex-1 flex items-center justify-center min-h-0">
+              <div className="w-full max-w-full">
+                {slides[currentSlide].content}
+              </div>
             </div>
           </div>
 
