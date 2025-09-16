@@ -12,7 +12,7 @@ export const InvestorCTASlide = () => {
           <span className="text-xs font-semibold text-primary">Why Now</span>
         </div>
         <h2 className="text-lg sm:text-xl font-bold text-foreground">
-          The Perfect Storm for AI Disruption
+          An inflexion point — where efficiency meets disruption.
         </h2>
       </div>
 
