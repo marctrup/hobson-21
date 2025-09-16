@@ -17,7 +17,7 @@ const InvestorSummary = () => {
     },
     {
       id: 'market-problem',
-      title: 'Legacy Systems Are Draining the Industry',
+      title: 'Stuck in the Past, Paying the Price',
       subtitle: 'Legacy systems bleed money, waste time, and block adoption.',
       content: <MarketProblemSlide />
     },
