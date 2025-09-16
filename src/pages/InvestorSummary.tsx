@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { InvestorCoverSlide, MarketProblemSlide, ValuePropositionSlide, MarketOpportunitySlide, InvestorCTASlide } from "@/components/investor";
+import { InvestorCoverSlide, MarketProblemSlide, MarketOpportunitySlide, InvestorCTASlide } from "@/components/investor";
 import { Helmet } from "react-helmet-async";
 
 const InvestorSummary = () => {
@@ -20,12 +20,6 @@ const InvestorSummary = () => {
       title: '',
       subtitle: '',
       content: <MarketProblemSlide />
-    },
-    {
-      id: 'value-proposition',
-      title: 'Our Solution',
-      subtitle: 'Lightweight AI replacing expensive legacy systems',
-      content: <ValuePropositionSlide />
     },
     {
       id: 'market-opportunity',
