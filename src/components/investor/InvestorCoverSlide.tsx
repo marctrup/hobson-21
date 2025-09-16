@@ -12,7 +12,7 @@ export const InvestorCoverSlide = () => {
           Property Tech Revolution
         </h2>
         <p className="text-muted-foreground max-w-xs mx-auto text-xs sm:text-sm px-2">
-          Positioned to disrupt a rapidly growing AI-in-Property market, projected to hit $1.8T by 2030
+          Capturing a $1.8T AI-in-Property opportunity by 2030
         </p>
       </div>
     </div>
