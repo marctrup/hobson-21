@@ -30,7 +30,7 @@ export const InvestorCTASlide = () => {
         
         <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
           <span>• Scalable SaaS model</span>
-          <span>• Proven traction</span>
+          <span>• Proven track record</span>
           <span>• Growing market</span>
         </div>
       </div>
