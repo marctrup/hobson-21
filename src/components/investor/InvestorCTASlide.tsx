@@ -1,23 +1,27 @@
 import React from 'react';
-import { Handshake, Mail } from 'lucide-react';
+import { Mail } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 export const InvestorCTASlide = () => {
   return (
     <div className="text-center space-y-4 sm:space-y-6">
       <div className="space-y-3 sm:space-y-4">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-primary to-primary-light rounded-xl sm:rounded-2xl flex items-center justify-center">
-          <Handshake className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-        </div>
         <h3 className="text-lg sm:text-xl font-bold text-foreground">
-          Investment Opportunity
+          Why Now
         </h3>
-        <p className="text-muted-foreground max-w-sm mx-auto text-xs sm:text-sm px-2">
-          Be part of the $1.8T AI-in-Property transformation.
-        </p>
+        <div className="space-y-2 text-xs sm:text-sm text-muted-foreground">
+          <p>Massive market growth → $1.8T by 2030</p>
+          <p>Proven inefficiencies → £708B global savings potential</p>
+          <p>Lightweight AI solutions poised to scale fast</p>
+        </div>
       </div>
       
       <div className="space-y-3">
+        <h4 className="text-base sm:text-lg font-semibold text-foreground">Join Us</h4>
+        <p className="text-muted-foreground max-w-sm mx-auto text-xs sm:text-sm px-2">
+          Partner with us to redefine property with intelligent AI.
+        </p>
+        
         <Button 
           size="lg" 
           variant="cta"
@@ -25,14 +29,8 @@ export const InvestorCTASlide = () => {
           onClick={() => window.open('mailto:investors@hobsonschoice.ai?subject=Investment Opportunity', '_blank')}
         >
           <Mail className="w-4 h-4 mr-2" />
-          Contact Investors
+          Contact Us
         </Button>
-        
-        <div className="flex items-center justify-center gap-4 text-xs text-muted-foreground">
-          <span>• Disruptive pricing</span>
-          <span>• Proven track record</span>
-          <span>• Growing market</span>
-        </div>
       </div>
     </div>
   );
