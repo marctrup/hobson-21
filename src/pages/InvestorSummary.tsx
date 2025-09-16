@@ -18,7 +18,7 @@ const InvestorSummary = () => {
     {
       id: 'market-problem',
       title: 'Market Problem',
-      subtitle: 'Property professionals are stuck with outdated tools that are costly, slow, and hard to adopt.',
+      subtitle: 'Legacy systems bleed money, waste time, and block adoption.',
       content: <MarketProblemSlide />
     },
     {
