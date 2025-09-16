@@ -19,7 +19,7 @@ export const InvestorCTASlide = () => {
       <div className="space-y-3">
         <h4 className="text-base sm:text-lg font-semibold text-foreground">Join Us</h4>
         <p className="text-muted-foreground max-w-sm mx-auto text-xs sm:text-sm px-2">
-          Simple AI. Massive impact. Trillion-dollar market.
+          Join us at the inflection point — where efficiency meets disruption.
         </p>
         
         <Button 
