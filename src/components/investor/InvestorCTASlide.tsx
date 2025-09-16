@@ -9,7 +9,7 @@ export const InvestorCTASlide = () => {
       <div className="space-y-4">
         <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4">
           <h3 className="text-base sm:text-lg font-bold text-foreground mb-2">
-            Back the AI revolution reshaping property
+            Back the AI revolution reshaping the industry
           </h3>
           <p className="text-muted-foreground text-xs sm:text-sm mb-4 leading-relaxed">
           </p>
