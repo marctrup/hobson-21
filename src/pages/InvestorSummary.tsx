@@ -24,7 +24,7 @@ const InvestorSummary = () => {
     {
       id: 'market-opportunity',
       title: 'Market Opportunity',
-      subtitle: 'A massive $1.8T AI-in-Property market, primed for efficiency-driven disruption.',
+      subtitle: 'By 2030, Property Will Pour $1.8T into AI',
       content: <MarketOpportunitySlide />
     },
     {
