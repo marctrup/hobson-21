@@ -6,7 +6,7 @@ export const InvestorCTASlide = () => {
   return (
     <div className="text-center space-y-6 sm:space-y-8 p-4">
       {/* Why Now Header */}
-      <div className="space-y-2" style={{ marginTop: '7px' }}>
+      <div className="space-y-2" style={{ marginTop: '10px' }}>
         <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
           <Zap className="w-3 h-3 text-primary" />
           <span className="text-xs font-semibold text-primary">Why Now</span>
