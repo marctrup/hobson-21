@@ -17,7 +17,7 @@ const InvestorSummary = () => {
     },
     {
       id: 'market-problem',
-      title: 'Stuck in the Past, Paying the Price',
+      title: 'Why Old Systems Can\'t Keep Up',
       subtitle: 'Legacy systems bleed money, waste time, and block adoption.',
       content: <MarketProblemSlide />
     },
