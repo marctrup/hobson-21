@@ -19,7 +19,7 @@ export const MarketProblemSlide = () => {
       <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-4 sm:p-6 rounded-lg border border-primary/20">
         <div className="text-center">
           <h3 className="text-lg sm:text-xl font-bold text-primary mb-2 sm:mb-3">
-            Our Solution
+            Hobson Unlocks the Future
           </h3>
           <p className="text-sm sm:text-base text-muted-foreground font-medium">
             Lightweight AI replacing expensive legacy systems
