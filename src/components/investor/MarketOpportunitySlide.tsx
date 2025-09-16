@@ -28,14 +28,6 @@ export const MarketOpportunitySlide = () => {
 
   return (
     <div className="space-y-4 sm:space-y-6">
-      <div className="text-center">
-        <div className="w-12 h-12 sm:w-16 sm:h-16 mx-auto bg-gradient-to-br from-primary to-primary-light rounded-xl mb-3 flex items-center justify-center">
-          <Rocket className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
-        </div>
-        <h3 className="text-sm sm:text-base font-semibold text-foreground mb-2">Market Opportunity</h3>
-        <p className="text-xs text-muted-foreground">A massive $1.8T AI-in-Property market, primed for efficiency-driven disruption.</p>
-      </div>
-      
       <div className="flex items-center justify-center gap-2 sm:gap-4 overflow-x-auto pb-2">
         {markets.map((market, idx) => (
           <div key={idx} className="flex items-center gap-2">
