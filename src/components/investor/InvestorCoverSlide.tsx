@@ -9,7 +9,7 @@ export const InvestorCoverSlide = () => {
         <OptimizedImage
           src={investorSplitScreenImage}
           alt="Split-screen comparison showing transformation from chaotic paperwork to organized digital workspace with AI-powered property management"
-          className="rounded-lg shadow-lg max-w-full h-auto"
+          className="rounded-lg shadow-lg max-w-full h-auto border-2 border-red-500"
           width={400}
           height={400}
           priority={true}
