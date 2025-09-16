@@ -24,7 +24,7 @@ export const InvestorCTASlide = () => {
             The Perfect Storm for AI Disruption
           </h3>
           <p className="text-muted-foreground text-xs sm:text-sm mb-4 leading-relaxed">
-            Join us at the inflection point — where efficiency meets disruption.
+            Market pressure and AI capability are converging — property is next.
           </p>
           
           <Button 
