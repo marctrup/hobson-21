@@ -12,14 +12,8 @@ export const InvestorCoverSlide = () => {
           Property Tech Revolution
         </h2>
         <p className="text-muted-foreground max-w-xs mx-auto text-xs sm:text-sm px-2">
-          Disrupting a £15B+ market with lightweight AI solutions for property professionals
+          Positioned to disrupt a rapidly growing AI-in-Real-Estate market, projected to hit $1.8T by 2030
         </p>
-      </div>
-      <div className="flex items-center justify-center gap-4 text-xs sm:text-sm">
-        <div className="flex items-center gap-1">
-          <DollarSign className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
-          <span className="text-muted-foreground">Scalable Revenue</span>
-        </div>
       </div>
     </div>
   );
