@@ -4,71 +4,70 @@ import { Button } from "@/components/ui/button";
 
 export const InvestorCTASlide = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 via-background to-secondary/10 flex flex-col justify-center items-center p-6 sm:p-8">
-      {/* Main Content Card */}
-      <div className="max-w-4xl w-full space-y-8 sm:space-y-12">
-        
-        {/* Why Now Section */}
-        <div className="text-center space-y-6 sm:space-y-8">
-          <div className="space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20">
-              <Zap className="w-4 h-4 text-primary" />
-              <span className="text-sm font-semibold text-primary">Why Now</span>
-            </div>
-            <h2 className="text-2xl sm:text-4xl font-bold text-foreground leading-tight">
-              The Perfect Storm for
-              <span className="block text-primary">AI-Driven Disruption</span>
-            </h2>
-          </div>
+    <div className="text-center space-y-6 sm:space-y-8 p-4">
+      {/* Why Now Header */}
+      <div className="space-y-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 border border-primary/20">
+          <Zap className="w-3 h-3 text-primary" />
+          <span className="text-xs font-semibold text-primary">Why Now</span>
+        </div>
+        <h2 className="text-lg sm:text-xl font-bold text-foreground">
+          The Perfect Storm for AI Disruption
+        </h2>
+      </div>
 
-          {/* Key Points Grid */}
-          <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
-            <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-4">
-                <TrendingUp className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">Market Growth</h3>
-              <p className="text-sm text-muted-foreground">$1.8T by 2030</p>
-            </div>
-            
-            <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-4">
-                <DollarSign className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">Savings Potential</h3>
-              <p className="text-sm text-muted-foreground">£708B globally</p>
-            </div>
-            
-            <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="flex items-center justify-center w-12 h-12 bg-primary/10 rounded-lg mx-auto mb-4">
-                <Zap className="w-6 h-6 text-primary" />
-              </div>
-              <h3 className="font-semibold text-foreground mb-2">AI Solutions</h3>
-              <p className="text-sm text-muted-foreground">Ready to scale fast</p>
-            </div>
+      {/* Key Points */}
+      <div className="grid grid-cols-1 gap-3 max-w-sm mx-auto">
+        <div className="flex items-center gap-3 bg-card border border-border rounded-lg p-3">
+          <div className="flex items-center justify-center w-8 h-8 bg-primary/10 rounded-md">
+            <TrendingUp className="w-4 h-4 text-primary" />
+          </div>
+          <div className="text-left">
+            <p className="text-xs font-medium text-foreground">Market Growth</p>
+            <p className="text-xs text-muted-foreground">$1.8T by 2030</p>
           </div>
         </div>
-
-        {/* CTA Section */}
-        <div className="text-center space-y-6">
-          <div className="bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 border border-primary/20 rounded-2xl p-8 sm:p-10">
-            <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-4">
-              Ready to Transform Property?
-            </h3>
-            <p className="text-muted-foreground max-w-md mx-auto text-sm sm:text-base mb-6 leading-relaxed">
-              Join us at the inflection point — where efficiency meets disruption.
-            </p>
-            
-            <Button 
-              size="lg" 
-              variant="cta"
-              className="text-base sm:text-lg px-8 py-4 h-auto font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              onClick={() => window.open('mailto:rochelle.t@hobsonschoice.ai?subject=Investment Opportunity', '_blank')}
-            >
-              <Mail className="w-5 h-5 mr-3" />
-              Start the Conversation
-            </Button>
+        
+        <div className="flex items-center gap-3 bg-card border border-border rounded-lg p-3">
+          <div className="flex items-center justify-center w-8 h-8 bg-primary/10 rounded-md">
+            <DollarSign className="w-4 h-4 text-primary" />
           </div>
+          <div className="text-left">
+            <p className="text-xs font-medium text-foreground">Savings Potential</p>
+            <p className="text-xs text-muted-foreground">£708B globally</p>
+          </div>
+        </div>
+        
+        <div className="flex items-center gap-3 bg-card border border-border rounded-lg p-3">
+          <div className="flex items-center justify-center w-8 h-8 bg-primary/10 rounded-md">
+            <Zap className="w-4 h-4 text-primary" />
+          </div>
+          <div className="text-left">
+            <p className="text-xs font-medium text-foreground">AI Solutions</p>
+            <p className="text-xs text-muted-foreground">Ready to scale</p>
+          </div>
+        </div>
+      </div>
+
+      {/* CTA Section */}
+      <div className="space-y-4">
+        <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-4">
+          <h3 className="text-base sm:text-lg font-bold text-foreground mb-2">
+            Ready to Transform Property?
+          </h3>
+          <p className="text-muted-foreground text-xs sm:text-sm mb-4 leading-relaxed">
+            Join us at the inflection point — where efficiency meets disruption.
+          </p>
+          
+          <Button 
+            size="lg" 
+            variant="cta"
+            className="text-sm sm:text-base px-6 py-3 font-semibold shadow-md hover:shadow-lg transition-all duration-300"
+            onClick={() => window.open('mailto:rochelle.t@hobsonschoice.ai?subject=Investment Opportunity', '_blank')}
+          >
+            <Mail className="w-4 h-4 mr-2" />
+            Start the Conversation
+          </Button>
         </div>
       </div>
     </div>
