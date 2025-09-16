@@ -4,7 +4,7 @@ import investorSplitScreenImage from '@/assets/investor-split-screen-v2.png';
 
 export const InvestorCoverSlide = () => {
   return (
-    <div className="flex items-center justify-center -mt-3">
+    <div className="flex items-center justify-center mt-2">
       <OptimizedImage
         src={investorSplitScreenImage}
         alt="Split-screen comparison showing transformation from chaotic paperwork to organized digital workspace with AI-powered property management"
