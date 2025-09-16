@@ -12,7 +12,7 @@ export const InvestorCTASlide = () => {
             The Perfect Storm for AI Disruption
           </h3>
           <p className="text-muted-foreground text-xs sm:text-sm mb-4 leading-relaxed">
-            By 2030, Property Will Pour $1.8T into AI for Inefficiency meets innovation — change is inevitable.
+            Inefficiency meets innovation — change is inevitable.
           </p>
           
           <Button 
