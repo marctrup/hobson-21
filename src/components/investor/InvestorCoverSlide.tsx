@@ -2,31 +2,19 @@ import React from 'react';
 
 export const InvestorCoverSlide = () => {
   return (
-    <div className="space-y-3 sm:space-y-4 text-center">
-      {/* The Problem */}
-      <div className="space-y-2">
-        <h3 className="text-sm sm:text-base font-bold text-destructive">The Problem</h3>
-        <p className="text-xs sm:text-sm text-muted-foreground leading-tight">
-          Property professionals waste billions on bloated, slow, and costly systems. Manual processes drain time, cut margins, and stall adoption.
+    <div className="space-y-4 sm:space-y-6 text-center">
+      <div className="space-y-3 sm:space-y-4">
+        <p className="text-sm sm:text-base text-destructive font-semibold leading-tight">
+          Manual processes waste billions in time & costs
         </p>
-      </div>
-
-      {/* The Solution */}
-      <div className="space-y-2">
-        <h3 className="text-sm sm:text-base font-bold text-primary">The Solution</h3>
-        <p className="text-xs sm:text-sm text-muted-foreground leading-tight">
-          Hobson AI transforms source-of-truth documents into instant, accurate answers. Lightweight, low-cost, and easy to adopt — designed for trust and scale.
+        
+        <p className="text-sm sm:text-base text-primary font-semibold leading-tight">
+          AI can unlock £708B+ global efficiency savings
         </p>
-      </div>
-
-      {/* The Prize */}
-      <div className="space-y-2">
-        <h3 className="text-sm sm:text-base font-bold text-primary">The Prize</h3>
-        <div className="space-y-1 text-xs sm:text-sm text-muted-foreground">
-          <p className="font-semibold">$1.8T AI-in-Property market by 2030</p>
-          <p>£708B in global efficiency savings potential</p>
-          <p className="text-primary font-medium">Well-placed to win big in a $1.8T market shift</p>
-        </div>
+        
+        <p className="text-sm sm:text-base text-foreground font-bold leading-tight">
+          Hobson: lightweight, accurate, scalable AI for property
+        </p>
       </div>
     </div>
   );
