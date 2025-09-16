@@ -36,7 +36,7 @@ const InvestorSummary = () => {
     {
       id: 'investor-cta',
       title: 'Investment Opportunity',
-      subtitle: 'Partner with us to transform property tech',
+      subtitle: 'Be part of the $1.8T AI-in-Property transformation.',
       content: <InvestorCTASlide />
     }
   ];
