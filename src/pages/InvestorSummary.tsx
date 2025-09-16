@@ -23,8 +23,8 @@ const InvestorSummary = () => {
     },
     {
       id: 'market-opportunity',
-      title: 'Market Opportunity',
-      subtitle: 'By 2030, Property Will Pour $1.8T into AI',
+      title: 'By 2030, Property Will Pour $1.8T into AI',
+      subtitle: '',
       content: <MarketOpportunitySlide />
     },
     {
