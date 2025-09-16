@@ -3,10 +3,10 @@ import { AlertTriangle, DollarSign, Clock, Users } from 'lucide-react';
 
 export const MarketProblemSlide = () => {
   const problems = [
-    { icon: DollarSign, text: 'Bloated, expensive systems drain budgets', color: 'text-red-500' },
-    { icon: Clock, text: 'Manual document processing wastes time', color: 'text-red-500' },
-    { icon: AlertTriangle, text: 'Inefficient workflows reduce profitability', color: 'text-red-500' },
-    { icon: Users, text: 'Complex systems limit user adoption', color: 'text-red-500' }
+    { icon: DollarSign, text: 'Budgets drained by bloated, expensive systems', color: 'text-red-500' },
+    { icon: Clock, text: 'Hours lost to manual document handling', color: 'text-red-500' },
+    { icon: AlertTriangle, text: 'Profitability reduced by inefficient workflows', color: 'text-red-500' },
+    { icon: Users, text: 'Low adoption due to unnecessary complexity', color: 'text-red-500' }
   ];
 
   return (
