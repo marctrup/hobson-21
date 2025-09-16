@@ -22,7 +22,7 @@ export const MarketProblemSlide = () => {
             Hobson Unlocks the Future
           </h3>
           <p className="text-sm sm:text-base text-muted-foreground font-medium">
-            Lightweight AI replacing expensive legacy systems
+            Smarter, faster, and leaner AI built for professionals.
           </p>
         </div>
       </div>
