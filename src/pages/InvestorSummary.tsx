@@ -155,7 +155,7 @@ const InvestorSummary = () => {
             Confidential investor presentation • For qualified investors only
           </p>
           <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
-            <Button variant="outline" size="sm" onClick={() => window.open('mailto:investors@hobsonschoice.ai', '_blank')} className="text-xs sm:text-sm">
+            <Button variant="outline" size="sm" onClick={() => window.open('mailto:rochelle.t@hobsonschoice.ai', '_blank')} className="text-xs sm:text-sm">
               Contact Team
             </Button>
             <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs sm:text-sm">
