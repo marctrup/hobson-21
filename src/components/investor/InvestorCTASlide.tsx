@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, TrendingUp, Zap, DollarSign } from 'lucide-react';
+import { Mail, Zap } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 export const InvestorCTASlide = () => {
@@ -16,38 +16,6 @@ export const InvestorCTASlide = () => {
         </h2>
       </div>
 
-      {/* Key Points */}
-      <div className="grid grid-cols-1 gap-3 max-w-sm mx-auto">
-        <div className="flex items-center gap-3 bg-card border border-border rounded-lg p-3">
-          <div className="flex items-center justify-center w-8 h-8 bg-primary/10 rounded-md">
-            <TrendingUp className="w-4 h-4 text-primary" />
-          </div>
-          <div className="text-left">
-            <p className="text-xs font-medium text-foreground">Market Growth</p>
-            <p className="text-xs text-muted-foreground">$1.8T by 2030</p>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-3 bg-card border border-border rounded-lg p-3">
-          <div className="flex items-center justify-center w-8 h-8 bg-primary/10 rounded-md">
-            <DollarSign className="w-4 h-4 text-primary" />
-          </div>
-          <div className="text-left">
-            <p className="text-xs font-medium text-foreground">Savings Potential</p>
-            <p className="text-xs text-muted-foreground">£708B globally</p>
-          </div>
-        </div>
-        
-        <div className="flex items-center gap-3 bg-card border border-border rounded-lg p-3">
-          <div className="flex items-center justify-center w-8 h-8 bg-primary/10 rounded-md">
-            <Zap className="w-4 h-4 text-primary" />
-          </div>
-          <div className="text-left">
-            <p className="text-xs font-medium text-foreground">AI Solutions</p>
-            <p className="text-xs text-muted-foreground">Ready to scale</p>
-          </div>
-        </div>
-      </div>
 
       {/* CTA Section */}
       <div className="space-y-4">
