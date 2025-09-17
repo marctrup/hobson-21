@@ -11,7 +11,7 @@ export const InvestorCTASlide = () => {
       {/* Centered heading in available white space */}
       <div className="flex-1 flex items-center justify-center px-4">
         <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground leading-tight max-w-[320px]" style={{backgroundColor: 'yellow'}}>
-          TESTING - Back the AI revolution reshaping the property industry
+          Back the AI revolution reshaping the property industry
         </h3>
       </div>
       
