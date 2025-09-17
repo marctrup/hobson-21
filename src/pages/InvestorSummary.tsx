@@ -24,7 +24,7 @@ const InvestorSummary = () => {
     {
       id: 'market-opportunity',
       title: 'Inefficiency meets innovation — change is inevitable.',
-      subtitle: 'Legacy systems can\'t deliver the efficiency the market demands.',
+      subtitle: '',
       content: <MarketOpportunitySlide />
     },
     {
