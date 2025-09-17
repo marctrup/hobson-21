@@ -8,11 +8,8 @@ export const InvestorCTASlide = () => {
       {/* Top spacing for purple border */}
       <div className="pt-12 sm:pt-16"></div>
       
-      {/* Centered heading in available white space */}
+      {/* Centered content in available white space */}
       <div className="flex-1 flex items-center justify-center px-4">
-        <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground leading-tight max-w-[320px]" style={{backgroundColor: 'yellow'}}>
-          Back the AI revolution reshaping the property industry
-        </h3>
       </div>
       
       {/* Bottom spacing before CTA */}
