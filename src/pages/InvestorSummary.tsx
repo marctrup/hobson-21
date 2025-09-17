@@ -30,8 +30,8 @@ const InvestorSummary = () => {
     },
     {
       id: 'investor-cta',
-      title: 'Investment Opportunity',
-      subtitle: 'Be part of the $1.8T AI-in-Property transformation.',
+      title: '',
+      subtitle: '',
       content: <InvestorCTASlide />
     }
   ];

@@ -7,7 +7,14 @@ export const InvestorCTASlide = () => {
     <div className="h-full flex flex-col text-center" style={{ height: '100%', minHeight: '200px' }}>
       {/* Centered content area */}
       <div className="flex-1 flex flex-col items-center justify-center px-2">
-        {/* Add any header/strapline content here when needed */}
+        <div className="text-center space-y-2 sm:space-y-3">
+          <h1 className="text-sm sm:text-lg md:text-xl font-bold text-foreground leading-tight">
+            Investment Opportunity
+          </h1>
+          <p className="text-muted-foreground text-xs sm:text-sm md:text-base leading-relaxed max-w-xs">
+            Be part of the $1.8T AI-in-Property transformation.
+          </p>
+        </div>
       </div>
       
       {/* Fixed CTA Section at bottom */}
