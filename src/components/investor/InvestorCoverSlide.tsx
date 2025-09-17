@@ -5,7 +5,7 @@ import investorSplitScreenImage from '@/assets/investor-split-screen-v2.png';
 export const InvestorCoverSlide = () => {
   return (
     <div className="flex flex-col items-center justify-center h-full px-1">
-      <div className="text-center text-xs sm:text-lg font-semibold text-foreground px-2 leading-tight border-2 border-red-500" style={{ marginTop: '63px', marginBottom: '-9px' }}>
+      <div className="text-center text-xs sm:text-lg font-semibold text-foreground px-2 leading-tight" style={{ marginTop: '63px', marginBottom: '-9px' }}>
         By 2030, the property industry will spend $1.8T on AI - <span className="text-primary">Enter Hobson AI</span>
       </div>
       <div className="flex items-center justify-center w-full" style={{ marginTop: '10px' }}>
