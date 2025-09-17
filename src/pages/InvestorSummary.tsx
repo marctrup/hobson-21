@@ -62,7 +62,7 @@ const InvestorSummary = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-3 sm:p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-2 sm:p-4">
       <Helmet>
         <title>Hobson AI - Investor Summary | Property Tech Investment Opportunity</title>
         <meta name="description" content="Investment opportunity in Hobson AI - disrupting the £15B+ property tech market with lightweight AI solutions. Scalable SaaS model with proven traction." />
@@ -70,24 +70,24 @@ const InvestorSummary = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
       
-      <div className="w-full max-w-xs sm:max-w-sm md:max-w-lg">
-        {/* LinkedIn-optimized square format */}
-        <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden aspect-square">
+      <div className="w-full max-w-[340px] sm:max-w-md md:max-w-lg">
+        {/* Mobile-optimized format */}
+        <div className="relative bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden aspect-square max-h-[90vh]">
           {/* Header */}
-          <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary to-primary-light p-3 sm:p-4 z-10">
+          <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary to-primary-light p-2 sm:p-4 z-10">
             <div className="flex items-center justify-between">
               <div className="text-white">
-                <div className="text-xs sm:text-sm font-medium opacity-90">
+                <div className="text-xs font-medium opacity-90">
                   {currentSlide + 1} of {slides.length}
                 </div>
-                <div className="text-xs opacity-75">Investor Summary</div>
+                <div className="text-[10px] sm:text-xs opacity-75">Investor Summary</div>
               </div>
               <div className="flex gap-1">
                 {slides.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => goToSlide(idx)}
-                    className={`w-2 h-2 rounded-full transition-all ${
+                    className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all ${
                       idx === currentSlide ? 'bg-white' : 'bg-white/40'
                     }`}
                   />
@@ -97,10 +97,10 @@ const InvestorSummary = () => {
           </div>
 
           {/* Main content */}
-          <div className="pt-16 sm:pt-20 pb-16 sm:pb-20 px-4 sm:px-8 h-full flex flex-col">
-            <div className={`text-center flex-shrink-0 ${slides[currentSlide].title || slides[currentSlide].subtitle ? 'mb-3 sm:mb-4 min-h-[60px] sm:min-h-[70px] flex flex-col justify-center' : 'mb-0 min-h-0'}`}>
+          <div className="pt-12 sm:pt-20 pb-12 sm:pb-20 px-2 sm:px-8 h-full flex flex-col">
+            <div className={`text-center flex-shrink-0 ${slides[currentSlide].title || slides[currentSlide].subtitle ? 'mb-2 sm:mb-4 min-h-[40px] sm:min-h-[70px] flex flex-col justify-center' : 'mb-0 min-h-0'}`}>
               {slides[currentSlide].title && (
-                <h1 className="text-lg sm:text-2xl font-bold text-foreground mb-1 sm:mb-2 leading-tight">
+                <h1 className="text-sm sm:text-2xl font-bold text-foreground mb-1 leading-tight">
                   {slides[currentSlide].title}
                 </h1>
               )}
@@ -119,12 +119,12 @@ const InvestorSummary = () => {
           </div>
 
           {/* Navigation */}
-          <div className="absolute bottom-3 sm:bottom-4 left-0 right-0 flex items-center justify-between px-3 sm:px-4 pointer-events-none">
+          <div className="absolute bottom-2 sm:bottom-4 left-0 right-0 flex items-center justify-between px-2 sm:px-4 pointer-events-none">
             <Button
               variant="outline"
               size="icon"
               onClick={prevSlide}
-              className="rounded-full bg-white/90 hover:bg-white w-8 h-8 sm:w-10 sm:h-10 pointer-events-auto"
+              className="rounded-full bg-white/90 hover:bg-white w-7 h-7 sm:w-10 sm:h-10 pointer-events-auto"
             >
               <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
             </Button>
@@ -134,7 +134,7 @@ const InvestorSummary = () => {
                 variant="outline"
                 size="sm"
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="text-xs scale-95 px-2 py-1 bg-muted hover:bg-muted/80 min-w-[60px]"
+                className="text-xs scale-90 sm:scale-95 px-1.5 sm:px-2 py-1 bg-muted hover:bg-muted/80 min-w-[50px] sm:min-w-[60px]"
               >
                 {isAutoPlaying ? 'Pause' : 'Play'}
               </Button>
@@ -144,7 +144,7 @@ const InvestorSummary = () => {
               variant="outline"
               size="icon"
               onClick={nextSlide}
-              className="rounded-full bg-white/90 hover:bg-white w-8 h-8 sm:w-10 sm:h-10 pointer-events-auto"
+              className="rounded-full bg-white/90 hover:bg-white w-7 h-7 sm:w-10 sm:h-10 pointer-events-auto"
             >
               <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
             </Button>
@@ -152,15 +152,15 @@ const InvestorSummary = () => {
         </div>
 
         {/* Footer info */}
-        <div className="mt-4 sm:mt-6 text-center">
+        <div className="mt-3 sm:mt-6 text-center">
           <div className="flex justify-center">
             <img 
               src={hobsonLogo} 
               alt="Hobson Logo" 
-              className="h-8 sm:h-10 w-auto"
+              className="h-6 sm:h-10 w-auto"
             />
           </div>
-          <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
+          <div className="mt-2 sm:mt-4 flex flex-col space-y-2 sm:space-y-0 sm:flex-row justify-center sm:gap-4">
             <Button variant="outline" size="sm" onClick={() => window.open('mailto:rochelle.t@hobsonschoice.ai', '_blank')} className="text-xs sm:text-sm">
               Contact Team
             </Button>
