@@ -24,7 +24,7 @@ export const MarketOpportunitySlide = () => {
         </div>
         
         <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed px-2 max-w-[300px] mx-auto">
-          Lightweight, accurate AI tools unlock billions in cost and time savings across property markets worldwide.
+          AI tools unlock billions in savings across property markets worldwide.
         </p>
       </div>
     </div>
