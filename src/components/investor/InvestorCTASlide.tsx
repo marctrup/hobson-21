@@ -11,7 +11,7 @@ export const InvestorCTASlide = () => {
             Investment Opportunity
           </h1>
           <p className="text-muted-foreground text-xs sm:text-sm md:text-base leading-relaxed max-w-xs mx-auto">
-            Be part of the $1.8T AI-in-Property transformation.
+            Be part of the £1.4T AI-in-Property transformation.
           </p>
         </div>
         
