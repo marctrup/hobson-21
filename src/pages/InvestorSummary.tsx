@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { InvestorCoverSlide, MarketProblemSlide, MarketOpportunitySlide, InvestorCTASlide } from "@/components/investor";
 import { Helmet } from "react-helmet-async";
+import hobsonLogo from "@/assets/hobson-investor-logo.png";
 
 const InvestorSummary = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -152,9 +153,13 @@ const InvestorSummary = () => {
 
         {/* Footer info */}
         <div className="mt-4 sm:mt-6 text-center">
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            Confidential investor presentation • For qualified investors only
-          </p>
+          <div className="flex justify-center">
+            <img 
+              src={hobsonLogo} 
+              alt="Hobson Logo" 
+              className="h-8 sm:h-10 w-auto"
+            />
+          </div>
           <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
             <Button variant="outline" size="sm" onClick={() => window.open('mailto:rochelle.t@hobsonschoice.ai', '_blank')} className="text-xs sm:text-sm">
               Contact Team
