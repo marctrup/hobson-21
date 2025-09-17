@@ -62,7 +62,7 @@ const InvestorSummary = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-2 sm:p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-1 sm:p-4">
       <Helmet>
         <title>Hobson AI - Investor Summary | Property Tech Investment Opportunity</title>
         <meta name="description" content="Investment opportunity in Hobson AI - disrupting the £15B+ property tech market with lightweight AI solutions. Scalable SaaS model with proven traction." />
@@ -70,11 +70,11 @@ const InvestorSummary = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
       
-      <div className="w-full max-w-[340px] sm:max-w-md md:max-w-lg">
+      <div className="w-full max-w-[360px] sm:max-w-md md:max-w-lg mx-auto">
         {/* Mobile-optimized format */}
-        <div className="relative bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden aspect-square max-h-[90vh]">
+        <div className="relative bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden aspect-square max-h-[95vh] min-h-[320px] sm:min-h-[400px]">
           {/* Header */}
-          <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary to-primary-light p-2 sm:p-4 z-10">
+          <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary to-primary-light p-2 sm:p-3 z-10">
             <div className="flex items-center justify-between">
               <div className="text-white">
                 <div className="text-xs font-medium opacity-90">
@@ -97,22 +97,22 @@ const InvestorSummary = () => {
           </div>
 
           {/* Main content */}
-          <div className="pt-12 sm:pt-20 pb-12 sm:pb-20 px-2 sm:px-8 h-full flex flex-col">
-            <div className={`text-center flex-shrink-0 ${slides[currentSlide].title || slides[currentSlide].subtitle ? 'mb-2 sm:mb-4 min-h-[40px] sm:min-h-[70px] flex flex-col justify-center' : 'mb-0 min-h-0'}`}>
+          <div className="pt-10 sm:pt-16 pb-10 sm:pb-16 px-3 sm:px-6 h-full flex flex-col">
+            <div className={`text-center flex-shrink-0 ${slides[currentSlide].title || slides[currentSlide].subtitle ? 'mb-2 sm:mb-3 min-h-[30px] sm:min-h-[50px] flex flex-col justify-center' : 'mb-0 min-h-0'}`}>
               {slides[currentSlide].title && (
-                <h1 className="text-sm sm:text-2xl font-bold text-foreground mb-1 leading-tight">
+                <h1 className="text-xs sm:text-lg md:text-xl font-bold text-foreground mb-1 leading-tight">
                   {slides[currentSlide].title}
                 </h1>
               )}
               {slides[currentSlide].subtitle && (
-                <p className="text-muted-foreground text-xs sm:text-sm">
+                <p className="text-muted-foreground text-[10px] sm:text-xs md:text-sm">
                   {slides[currentSlide].subtitle}
                 </p>
               )}
             </div>
             
-            <div className="flex-1 flex items-center justify-center min-h-0">
-              <div className="w-full max-w-full">
+            <div className="flex-1 flex items-center justify-center min-h-0 overflow-hidden">
+              <div className="w-full h-full max-w-full">
                 {slides[currentSlide].content}
               </div>
             </div>
