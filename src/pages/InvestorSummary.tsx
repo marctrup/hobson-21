@@ -61,14 +61,15 @@ const InvestorSummary = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-2 sm:p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-3 sm:p-4">
       <Helmet>
         <title>Hobson AI - Investor Summary | Property Tech Investment Opportunity</title>
         <meta name="description" content="Investment opportunity in Hobson AI - disrupting the £15B+ property tech market with lightweight AI solutions. Scalable SaaS model with proven traction." />
         <meta name="robots" content="noindex, nofollow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
       
-      <div className="w-full max-w-sm sm:max-w-lg">
+      <div className="w-full max-w-xs sm:max-w-sm md:max-w-lg">
         {/* LinkedIn-optimized square format */}
         <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden aspect-square">
           {/* Header */}
