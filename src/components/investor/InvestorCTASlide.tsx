@@ -4,11 +4,13 @@ import { Button } from "@/components/ui/button";
 
 export const InvestorCTASlide = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center space-y-4 sm:space-y-6 p-2 sm:p-4">
+    <div className="flex flex-col items-center justify-start h-full text-center pt-8 sm:pt-12 p-2 sm:p-4">
       {/* Centered heading in white space */}
-      <h3 className="text-sm sm:text-lg md:text-xl font-bold text-foreground leading-tight max-w-[280px] sm:max-w-sm">
-        Back the AI revolution reshaping the property industry
-      </h3>
+      <div className="flex-1 flex flex-col items-center justify-center mb-6 sm:mb-8">
+        <h3 className="text-sm sm:text-lg md:text-xl font-bold text-foreground leading-tight max-w-[280px] sm:max-w-sm">
+          Back the AI revolution reshaping the property industry
+        </h3>
+      </div>
       
       {/* CTA Section */}
       <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-xl p-3 sm:p-6 w-full max-w-[300px] sm:max-w-sm">
