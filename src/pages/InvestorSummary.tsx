@@ -157,7 +157,7 @@ const InvestorSummary = () => {
             <img 
               src={hobsonLogo} 
               alt="Hobson Logo" 
-              className="h-6 sm:h-10 w-auto"
+              className="h-7 sm:h-11 w-auto"
             />
           </div>
           <div className="mt-2 sm:mt-4 flex flex-col space-y-2 sm:space-y-0 sm:flex-row justify-center sm:gap-4">
