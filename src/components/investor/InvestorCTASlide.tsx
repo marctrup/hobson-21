@@ -4,16 +4,14 @@ import { Button } from "@/components/ui/button";
 
 export const InvestorCTASlide = () => {
   return (
-    <div className="flex flex-col h-full text-center">
+    <div className="flex flex-col h-full text-center justify-between">
       {/* Top spacing for purple border */}
-      <div className="pt-12 sm:pt-16"></div>
+      <div className="pt-8 sm:pt-12"></div>
       
-      {/* Centered content in available white space */}
-      <div className="flex-1 flex items-center justify-center px-4">
+      {/* Centered content - properly centered between purple and CTA */}
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-8">
+        {/* Add any header/strapline content here when needed */}
       </div>
-      
-      {/* Bottom spacing before CTA */}
-      <div className="pb-4"></div>
       
       {/* CTA Section */}
       <div className="flex justify-center pb-8">
