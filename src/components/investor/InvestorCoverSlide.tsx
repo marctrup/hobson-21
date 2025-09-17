@@ -7,7 +7,9 @@ export const InvestorCoverSlide = () => {
     <div className="h-full flex flex-col justify-center px-2 sm:px-4" style={{ height: '100%', minHeight: '200px' }}>
       <div className="text-center h-full flex flex-col">
         <div className="text-xs sm:text-sm md:text-base font-semibold text-foreground px-2 leading-tight flex-shrink-0 py-2 min-h-[60px] sm:min-h-[50px] flex items-center justify-center">
-          By 2030, the property industry will spend £1.4T on AI - <span className="text-primary">Enter Hobson AI</span>
+          <span className="text-center">
+            By 2030, the property industry will spend £1.4T on AI - <span className="text-primary">Enter Hobson AI</span>
+          </span>
         </div>
         <div className="flex items-center justify-center flex-1 min-h-0 px-2">
           <div className="w-full max-w-[180px] sm:max-w-[240px] md:max-w-[300px]">
