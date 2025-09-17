@@ -2,9 +2,12 @@ import React from 'react';
 
 export const MarketOpportunitySlide = () => {
   return (
-    <div className="h-full flex items-center justify-center" style={{ height: '100%', minHeight: '200px' }}>
+    <div className="h-full flex items-center justify-center" style={{ height: '100%', minHeight: '200px', position: 'relative' }}>
       <div className="w-full max-w-xs mx-auto">
-        <div className="text-center space-y-2 sm:space-y-3">
+        <div className="text-center space-y-3 sm:space-y-4">
+          <h2 className="text-sm sm:text-lg font-bold text-foreground px-2 mb-2 sm:mb-3">
+            Inefficiency meets innovation.
+          </h2>
           <h3 className="text-xs sm:text-sm font-semibold text-foreground px-2">Efficiency Savings Potential</h3>
           
           <div className="space-y-1.5 sm:space-y-2">

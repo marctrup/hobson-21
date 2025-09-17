@@ -24,7 +24,7 @@ const InvestorSummary = () => {
     },
     {
       id: 'market-opportunity',
-      title: 'Inefficiency meets innovation.',
+      title: '',
       subtitle: '',
       content: <MarketOpportunitySlide />
     },

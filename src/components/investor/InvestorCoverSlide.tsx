@@ -4,11 +4,11 @@ import investorSplitScreenImage from '@/assets/investor-split-screen-v2.png';
 
 export const InvestorCoverSlide = () => {
   return (
-    <div className="h-full flex flex-col px-2 sm:px-4" style={{ height: '100%', minHeight: '200px' }}>
-      <div className="text-center text-xs sm:text-sm md:text-base font-semibold text-foreground px-2 leading-tight pt-2 sm:pt-4 pb-2 sm:pb-3">
+    <div className="h-full flex flex-col px-2 sm:px-4 relative" style={{ height: '100%', minHeight: '200px', position: 'relative' }}>
+      <div className="absolute top-1/4 left-0 right-0 text-center text-xs sm:text-sm md:text-base font-semibold text-foreground px-2 leading-tight">
         By 2030, the property industry will spend $1.8T on AI - <span className="text-primary">Enter Hobson AI</span>
       </div>
-      <div className="flex-1 flex items-center justify-center">
+      <div className="flex-1 flex items-center justify-center pt-8 sm:pt-12">
         <OptimizedImage
           src={investorSplitScreenImage}
           alt="Split-screen comparison showing transformation from chaotic paperwork to organized digital workspace with AI-powered property management"
