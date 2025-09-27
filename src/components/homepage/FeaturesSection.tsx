@@ -5,7 +5,7 @@ import FeatureShowcase from "@/components/features/FeatureShowcase";
 
 export const FeaturesSection = () => {
   return (
-    <section className="pt-8 pb-2 bg-background">
+    <section className="pt-8 pb-0 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Angled Feature Showcase with Grid Map */}
