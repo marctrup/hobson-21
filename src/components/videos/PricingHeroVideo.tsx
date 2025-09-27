@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { X, ChevronRight } from "lucide-react";
+import { X, ChevronRight, Play } from "lucide-react";
 
 export const PricingHeroVideo = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -56,8 +56,7 @@ export const PricingHeroVideo = () => {
               </div>
               <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center play-text-container" style={{ bottom: '8px' }}>
                 <div className="flex items-center gap-1 text-white font-semibold">
-                  <span className="text-xs">Play Video</span>
-                  <ChevronRight className="h-3 w-3" />
+                  <Play className="h-4 w-4" fill="white" />
                 </div>
               </div>
               <style dangerouslySetInnerHTML={{
