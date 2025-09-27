@@ -22,7 +22,8 @@ export const Homepage = () => {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
-  return <>
+  return (
+    <>
       <Helmet>
         <title>AI Property Management Software | Document Intelligence | Hobson AI</title>
         <meta name="description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ." />
@@ -73,7 +74,8 @@ export const Homepage = () => {
             </div>
 
             {/* Mobile Navigation Menu */}
-            {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
+            {isMobileMenuOpen && (
+              <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Blog
@@ -85,24 +87,25 @@ export const Homepage = () => {
                     Learn
                   </Link>
                 </div>
-              </nav>}
+              </nav>
+            )}
           </div>
         </header>
 
         <main id="main-content" className="min-h-screen bg-background" role="main">
           {/* Hero Section - Two Column Layout */}
-          <section className="pt-16 pb-4" aria-labelledby="hero-heading">
-            <div className="container mx-auto px-4 -mt-[10px]">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center py-4 lg:py-12 -mt-[5px]">
+          <section className="pt-12 sm:pt-16 pb-4" aria-labelledby="hero-heading">
+            <div className="container mx-auto px-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center py-6 sm:py-8 lg:py-12">
                 {/* Left Container - H1 and Strap Line */}
-                <div className="space-y-6 -mt-[20px]">
-                  <h1 id="hero-heading" className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
+                  <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="text-foreground">Replace costly, complex menu-driven systems for </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">clarity, simplicity, and affordable AI</span>
                   </h1>
-                  <p className="text-xl text-muted-foreground leading-relaxed">
-                    Your documents. Your truth. AI-powered clarity in seconds.<br />
-                    Hobson, built on property documents, delivers quick, clear, and trusted answers every time.
+                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
+                    Your documents. Your truth. AI-powered clarity in seconds.<br className="hidden sm:block" />
+                    <span className="sm:hidden"> </span>Hobson, built on property documents, delivers quick, clear, and trusted answers every time.
                   </p>
                   
                   <a href="#pricing-section" className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group" id="homepage-hero-pricing-cta">
@@ -115,12 +118,12 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-[5px] font-space transition-transform duration-300 border-[3px] border-gray-500 rounded-lg" style={{
-                transform: 'perspective(1000px) rotateY(-10deg)',
-                transformStyle: 'preserve-3d',
-                boxShadow: '25px 25px 60px rgba(0, 0, 0, 0.08), 15px 15px 40px rgba(0, 0, 0, 0.05), 8px 8px 25px rgba(0, 0, 0, 0.04), 0 -10px 30px rgba(0, 0, 0, 0.04), 0 20px 40px rgba(0, 0, 0, 0.06)',
-                filter: 'drop-shadow(10px 10px 30px rgba(0, 0, 0, 0.06))'
-              }}>
+                <div className="relative mt-8 lg:mt-[5px] font-space transition-transform duration-300 border-[2px] sm:border-[3px] border-gray-500 rounded-lg order-first lg:order-last" style={{
+                  transform: 'perspective(1000px) rotateY(-10deg)',
+                  transformStyle: 'preserve-3d',
+                  boxShadow: '15px 15px 40px rgba(0, 0, 0, 0.06), 8px 8px 25px rgba(0, 0, 0, 0.04), 0 -5px 20px rgba(0, 0, 0, 0.03), 0 10px 30px rgba(0, 0, 0, 0.05)',
+                  filter: 'drop-shadow(5px 5px 20px rgba(0, 0, 0, 0.04))'
+                }}>
                   <PropertyManagementVisualization />
                 </div>
 
@@ -129,52 +132,52 @@ export const Homepage = () => {
           </section>
 
           {/* How It Works & Video Section - Separated Headers and Content */}
-          <section className="py-8 md:py-16 bg-muted/30">
+          <section className="py-6 sm:py-8 md:py-16 bg-muted/30">
             <div className="container mx-auto px-4">
               {/* Content Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start">
                 
                 {/* Left Content - How It Works Steps */}
                 <div>
-                  <div className="mb-8">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
-                    <p className="text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
+                  <div className="mb-6 sm:mb-8">
+                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
+                    <p className="text-lg sm:text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
                   </div>
-                  <div className="space-y-8">
+                  <div className="space-y-6 sm:space-y-8">
                     {/* Step 1 */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg font-bold flex-shrink-0">
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">
                         1
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold mb-2 text-foreground">Upload & Connect</h3>
-                        <p className="text-muted-foreground leading-relaxed">
+                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">Upload & Connect</h3>
+                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                           Upload your documents or connect your existing systems. Our AI instantly begins processing and indexing your content.
                         </p>
                       </div>
                     </div>
                     
                     {/* Step 2 */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg font-bold flex-shrink-0">
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">
                         2
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold mb-2 text-foreground">Ask Questions</h3>
-                        <p className="text-muted-foreground leading-relaxed">
+                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">Ask Questions</h3>
+                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                           Ask natural language questions about your properties, leases, contracts, or any document content.
                         </p>
                       </div>
                     </div>
                     
                     {/* Step 3 */}
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg font-bold flex-shrink-0">
+                    <div className="flex items-start gap-3 sm:gap-4">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">
                         3
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold mb-2 text-foreground">Get Insights</h3>
-                        <p className="text-muted-foreground leading-relaxed">
+                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">Get Insights</h3>
+                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                           Receive instant, accurate answers with full source citations and actionable recommendations.
                         </p>
                       </div>
@@ -183,10 +186,10 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Content - Georgia Video */}
-                <div>
+                <div className="mt-6 lg:mt-0">
                   <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden relative" style={{
-                  border: '10px solid #f0f0f0'
-                }}>
+                    border: '6px solid #f0f0f0'
+                  }}>
                      <HomepageGeorgiaVideo />
                   </div>
                 </div>
@@ -244,5 +247,6 @@ export const Homepage = () => {
           </footer>
         </main>
       </div>
-    </>;
+    </>
+  );
 };
