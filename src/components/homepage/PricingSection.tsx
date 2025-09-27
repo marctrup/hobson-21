@@ -250,7 +250,7 @@ export const PricingSection = () => {
         {/* CTA Section with Video */}
         <div className="text-center mt-16">
           <p className="text-lg text-muted-foreground mb-6">
-            Ready to get started? All plans include unlimited users, properties, and features.
+            Understand more about our pricing philosophy
           </p>
           <div className="flex justify-center max-w-md mx-auto">
             <PricingHeroVideo />
