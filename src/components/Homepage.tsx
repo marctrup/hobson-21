@@ -205,7 +205,7 @@ export const Homepage = () => {
           <PricingSection />
 
           {/* Footer */}
-          <footer className="py-5 md:py-16 border-t bg-muted/20">
+          <footer className="py-5 md:py-16 border-t bg-white">
             <div className="container mx-auto px-4">
               <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
