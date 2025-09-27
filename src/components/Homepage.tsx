@@ -220,7 +220,7 @@ export const Homepage = () => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-foreground">Product</h4>
                   <div className="space-y-3">
-                    <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">
+                    <Link to="/pilot" className="block text-muted-foreground hover:text-foreground transition-colors">
                       Join our pilot programme
                     </Link>
                   </div>
