@@ -90,7 +90,7 @@ export const PricingSection = () => {
 
   return (
     <section id="pricing-section" className="pt-0 pb-16 md:pt-0 md:pb-24 bg-muted/30">
-      <div className="container mx-auto px-4 border-2 border-red-500">
+      <div className="container mx-auto px-4">
         <div className="text-center mb-12 sm:mb-16 mt-[30px]">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">Choose Your AI Journey</h2>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0">
