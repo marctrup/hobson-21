@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
+import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
 
 export const PricingSection = () => {
   const [billingCycles, setBillingCycles] = useState({
@@ -246,51 +247,12 @@ export const PricingSection = () => {
           </Card>
         </div>
 
-        {/* CTA Section */}
+        {/* CTA Section with Video */}
         <div className="text-center mt-16">
           <p className="text-lg text-muted-foreground mb-6">
             Understand more about our pricing philosophy
           </p>
-          <div className="max-w-md mx-auto">
-            <div className="aspect-video bg-black rounded-lg overflow-hidden shadow-lg" style={{ border: '10px solid #f0f0f0' }}>
-              <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center justify-center">
-                <img
-                  src="/lovable-uploads/9ce85eaf-86cd-42aa-be7f-9fa1494b7af9.png"
-                  alt="HEU Coin - Hobson Energy Units"
-                  className="coin-animation"
-                  style={{
-                    width: '50%',
-                    height: 'auto'
-                  }}
-                />
-              </div>
-              <style dangerouslySetInnerHTML={{
-                __html: `
-                  .coin-animation {
-                    animation: spinY 12s linear infinite;
-                  }
-                
-                  @keyframes spinY {
-                    0% { transform: scale(2.376) rotateY(0deg); }
-                    25% { transform: scale(2.376) rotateY(90deg); }
-                    50% { transform: scale(2.376) rotateY(180deg); }
-                    75% { transform: scale(2.376) rotateY(270deg); }
-                    100% { transform: scale(2.376) rotateY(360deg); }
-                  }
-                  
-                  @media (max-width: 640px) {
-                    @keyframes spinY {
-                      0% { transform: scale(1.98) rotateY(0deg); }
-                      25% { transform: scale(1.98) rotateY(90deg); }
-                      50% { transform: scale(1.98) rotateY(180deg); }
-                      75% { transform: scale(1.98) rotateY(270deg); }
-                      100% { transform: scale(1.98) rotateY(360deg); }
-                    }
-                  }
-                `
-              }} />
-            </div>
-          </div>
+          <PricingHeroVideo />
         </div>
       </div>
     </section>
