@@ -33,7 +33,7 @@ export const BenefitsSection = () => {
               Simple. Powerful. Intuitive.
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Chat with Hobson on the left, visualize your portfolio on the right. Everything you need in one seamless interface.
+              Talk to your documents on the left. See your portfolio come alive on the right. No menus, just flow
             </p>
           </div>
           
