@@ -13,6 +13,7 @@ const LandingPageC = lazy(() => import("../pages/LandingPageC"));
 const EmailPreview = lazy(() => import("../pages/EmailPreview"));
 
 const PilotForm = lazy(() => import("../pages/PilotForm"));
+const Pilot = lazy(() => import("../pages/Pilot"));
 const Auth = lazy(() => import("../pages/Auth"));
 const Admin = lazy(() => import("../pages/Admin"));
 const NotFound = lazy(() => import("../pages/NotFound"));
@@ -104,6 +105,7 @@ const AppContent = () => {
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<ContactUs />} />
+              <Route path="/pilot" element={<Pilot />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/data-protection" element={<DataProtection />} />
