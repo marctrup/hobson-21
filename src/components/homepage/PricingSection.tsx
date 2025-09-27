@@ -250,7 +250,7 @@ export const PricingSection = () => {
         {/* CTA Section with Video */}
         <div className="text-center mt-16">
           <p className="text-lg text-muted-foreground mb-6">
-            Understand more about our pricing philosophy
+            Understand more about our pricing philosophy with Sarah
           </p>
           <PricingHeroVideo />
         </div>
