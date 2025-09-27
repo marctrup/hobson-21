@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle2, ArrowRight, Users, Zap, Shield, Target } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import { SimpleButton } from "@/components/ui/simple-button";
+import { HomepagePilotVideo } from "@/components/videos/HomepagePilotVideo";
 
 const Pilot = () => {
   return (
@@ -20,29 +22,27 @@ const Pilot = () => {
       <GlobalHeader />
       
       <div className="min-h-screen bg-background">
-        {/* Hero Section */}
-        <section className="pt-24 pb-16">
+        {/* Hero Section - From Homepage CTA */}
+        <section className="py-8 md:py-24">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                <span className="text-foreground">Join Our Exclusive </span>
-                <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Pilot Program</span>
+            <div className="text-center max-w-4xl mx-auto">
+              <h1 className="text-2xl md:text-3xl font-bold mb-6 text-foreground leading-tight">
+                Ready to integrate AI into your business?
               </h1>
-              <p className="text-xl text-muted-foreground leading-relaxed mb-8 max-w-3xl mx-auto">
-                Be among the first to experience the future of property intelligence. Help us shape the next generation of AI-powered property management while getting early access to groundbreaking features.
+              <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
+                Join our exclusive pilot program and be among the first to experience the future of property intelligence.
               </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                  <Link to="/pilot_form">Apply Now →</Link>
-                </Button>
-                <Button variant="outline" size="lg" className="px-8 py-4 text-lg font-medium" asChild>
-                  <Link to="/contact">Learn More</Link>
-                </Button>
+              <div className="mb-8">
+                <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
+                  <Link to="/pilot_form" id="pilot-page-apply-cta">Apply to join our Pilot →</Link>
+                </SimpleButton>
               </div>
             </div>
           </div>
         </section>
+
+        {/* Pilot Video from Homepage */}
+        <HomepagePilotVideo />
 
         {/* Benefits Section */}
         <section className="py-16 bg-muted/30">
