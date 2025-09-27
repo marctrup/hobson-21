@@ -208,40 +208,6 @@ export const Homepage = () => {
           {/* Pricing Section */}
           <PricingSection />
 
-          {/* Current Focus Section */}
-          <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-muted/30">
-            <div className="container mx-auto px-4">
-              {/* Section Header */}
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
-                  Our Current Focus
-                </h2>
-                <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                  Starting strong, expanding further.
-                </p>
-              </div>
-
-              <div className="max-w-6xl mx-auto">
-                {/* Main Content Text */}
-                <div className="text-center mb-16">
-                  <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-                    <span className="text-primary font-semibold">Right Now</span>, Hobson is already trained to understand a wide range of property documents — from tenancy agreements and commercial leases to licences, deeds, and addendums — and we're continually broadening its horizon.
-                  </p>
-                </div>
-
-                {/* Our Approach - Full Width Card */}
-                <div className="max-w-4xl mx-auto mb-16">
-                  <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-2xl p-6 md:p-8 border border-primary/20">
-                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed text-center">
-                      Hobson recognises that documents don't exist in isolation — they often need to be read together to get the full picture.
-                    </p>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          </section>
-
           {/* CTA Section - Clean layout without card */}
           <section id="pilot-section" className="py-8 md:py-24">
             <div className="container mx-auto px-4">
