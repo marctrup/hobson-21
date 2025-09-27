@@ -10,7 +10,6 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } 
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
 import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
-import { PricingSection } from "@/components/homepage/PricingSection";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 // Lazy load video only when needed
 
@@ -55,9 +54,6 @@ export const Homepage = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-                <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Pricing
-                </Link>
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </Link>
@@ -78,9 +74,6 @@ export const Homepage = () => {
             {/* Mobile Navigation Menu */}
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
-                  <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Pricing
-                  </Link>
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Blog
                   </Link>
@@ -203,9 +196,6 @@ export const Homepage = () => {
 
           {/* Features Section */}
           <FeaturesSection />
-
-          {/* Pricing Section */}
-          <PricingSection />
 
           {/* Footer */}
           <footer className="py-5 md:py-16 border-t bg-muted/20">

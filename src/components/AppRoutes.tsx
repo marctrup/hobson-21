@@ -24,7 +24,6 @@ const Blog = lazy(() => import("../pages/Blog"));
 const BlogPost = lazy(() => import("../pages/BlogPost"));
 const BlogManagement = lazy(() => import("../pages/admin/BlogManagement"));
 const BlogEditor = lazy(() => import("../pages/admin/BlogEditor"));
-const Pricing = lazy(() => import("../pages/Pricing"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 const DataProtection = lazy(() => import("../pages/DataProtection"));
 const Learn = lazy(() => import("../pages/Learn"));
@@ -106,7 +105,6 @@ const AppContent = () => {
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<ContactUs />} />
               <Route path="/pilot" element={<Pilot />} />
-              <Route path="/pricing" element={<Pricing />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/data-protection" element={<DataProtection />} />
               <Route path="/learn" element={<Learn />} />

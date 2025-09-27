@@ -1,10 +1,5 @@
 export const NAVIGATION_LINKS = [
   {
-    to: "/pricing",
-    label: "Pricing",
-    title: "Pricing Information"
-  },
-  {
     to: "/blog", 
     label: "Blog",
     title: "Property Management Insights - Expert perspectives on AI and real estate technology"
