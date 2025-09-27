@@ -11,6 +11,7 @@ import { PropertyManagementVisualization } from "@/components/homepage/PropertyM
 import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { HomepagePilotVideo } from "@/components/videos/HomepagePilotVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
+import { PricingSection } from "@/components/homepage/PricingSection";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 // Lazy load video only when needed
 
@@ -203,6 +204,9 @@ export const Homepage = () => {
 
           {/* Features Section */}
           <FeaturesSection />
+
+          {/* Pricing Section */}
+          <PricingSection />
 
           {/* Current Focus Section */}
           <section className="pt-8 pb-16 md:pt-12 md:pb-24 bg-muted/30">
