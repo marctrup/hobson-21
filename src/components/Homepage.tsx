@@ -118,7 +118,7 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-8 lg:mt-[5px] font-space transition-transform duration-300 border-[2px] sm:border-[3px] border-gray-500 rounded-lg order-first lg:order-last" style={{
+                <div className="relative mt-8 lg:mt-[5px] font-space transition-transform duration-300 border-[2px] sm:border-[3px] border-gray-500 rounded-lg" style={{
                   transform: 'perspective(1000px) rotateY(-10deg)',
                   transformStyle: 'preserve-3d',
                   boxShadow: '15px 15px 40px rgba(0, 0, 0, 0.06), 8px 8px 25px rgba(0, 0, 0, 0.04), 0 -5px 20px rgba(0, 0, 0, 0.03), 0 10px 30px rgba(0, 0, 0, 0.05)',
