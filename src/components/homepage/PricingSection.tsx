@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
+import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
 
 export const PricingSection = () => {
   const [billingCycles, setBillingCycles] = useState({
@@ -246,14 +247,14 @@ export const PricingSection = () => {
           </Card>
         </div>
 
-        {/* CTA Section */}
+        {/* CTA Section with Video */}
         <div className="text-center mt-16">
           <p className="text-lg text-muted-foreground mb-6">
             Ready to get started? All plans include unlimited users, properties, and features.
           </p>
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-            <a href="/pricing">View Full Pricing Details →</a>
-          </Button>
+          <div className="flex justify-center max-w-md mx-auto">
+            <PricingHeroVideo />
+          </div>
         </div>
       </div>
     </section>
