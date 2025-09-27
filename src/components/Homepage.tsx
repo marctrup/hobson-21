@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } 
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
 import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
+import { PricingSection } from "@/components/homepage/PricingSection";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 // Lazy load video only when needed
 
@@ -196,6 +197,9 @@ export const Homepage = () => {
 
           {/* Features Section */}
           <FeaturesSection />
+
+          {/* Pricing Section */}
+          <PricingSection />
 
           {/* Footer */}
           <footer className="py-5 md:py-16 border-t bg-muted/20">
