@@ -54,11 +54,6 @@ export const PricingHeroVideo = () => {
                   }}
                 />
               </div>
-              <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center justify-center play-text-container" style={{ bottom: '8px' }}>
-                <div className="flex items-center justify-center w-4 h-4 bg-purple-600 rounded-full">
-                  <Play className="h-2 w-2 text-white" fill="white" />
-                </div>
-              </div>
               <style dangerouslySetInnerHTML={{
                 __html: `
                   .coin-animation {
