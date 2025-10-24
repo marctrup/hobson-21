@@ -1,4 +1,4 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,16 +19,28 @@ export const PilotApplicationForm = ({ showForm, setShowForm }: PilotApplication
     isCheckingEmail,
     handleEmailChange,
     onSubmit,
+    showAntiBotDialog,
+    setShowAntiBotDialog,
+    mathProblem,
+    userAnswer,
+    setUserAnswer,
+    handleAntiBotSubmit,
+    showSuccessDialog,
+    setShowSuccessDialog,
   } = usePilotApplication();
 
   return (
-    <Dialog open={showForm} onOpenChange={setShowForm}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-center">
-            Start Free Property AI Pilot
-          </DialogTitle>
-        </DialogHeader>
+    <>
+      <Dialog open={showForm} onOpenChange={setShowForm}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-center">
+              Start Free Property AI Pilot
+            </DialogTitle>
+            <DialogDescription className="text-center">
+              Fill out the form below to apply for our free pilot program
+            </DialogDescription>
+          </DialogHeader>
         
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-4">
@@ -215,5 +227,56 @@ export const PilotApplicationForm = ({ showForm, setShowForm }: PilotApplication
         </form>
       </DialogContent>
     </Dialog>
+
+    {/* Anti-Bot Dialog */}
+    <Dialog open={showAntiBotDialog} onOpenChange={setShowAntiBotDialog}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Quick Security Check</DialogTitle>
+          <DialogDescription>
+            Please solve this simple math problem to continue
+          </DialogDescription>
+        </DialogHeader>
+        <div className="space-y-4">
+          <div>
+            <Label>What is {mathProblem.question}?</Label>
+            <Input
+              type="number"
+              value={userAnswer}
+              onChange={(e) => setUserAnswer(e.target.value)}
+              placeholder="Enter your answer"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleAntiBotSubmit();
+                }
+              }}
+            />
+          </div>
+          <Button onClick={handleAntiBotSubmit} className="w-full">
+            Submit
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+
+    {/* Success Dialog */}
+    <Dialog open={showSuccessDialog} onOpenChange={setShowSuccessDialog}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Application Submitted Successfully!</DialogTitle>
+          <DialogDescription>
+            Thank you for applying to our pilot program. We'll be in touch soon.
+          </DialogDescription>
+        </DialogHeader>
+        <Button onClick={() => {
+          setShowSuccessDialog(false);
+          setShowForm(false);
+        }}>
+          Close
+        </Button>
+      </DialogContent>
+    </Dialog>
+    </>
   );
 };
