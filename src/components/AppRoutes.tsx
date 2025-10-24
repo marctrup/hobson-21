@@ -37,6 +37,7 @@ const UseHobson2 = lazy(() => import("../pages/UseHobson2").then(module => ({ de
 const UseHobson3 = lazy(() => import("../pages/UseHobson3").then(module => ({ default: module.UseHobson3 })));
 const Rotating = lazy(() => import("../pages/Rotating"));
 const InvestorSummary = lazy(() => import("../pages/InvestorSummary"));
+const Banners = lazy(() => import("../pages/Banners"));
 
 // Loading component
 const PageLoader = () => (
@@ -119,6 +120,7 @@ const AppContent = () => {
               <Route path="/quiz2" element={<UseHobson3 />} />
               <Route path="/carousel" element={<Rotating />} />
               <Route path="/investorsummary" element={<InvestorSummary />} />
+              <Route path="/banners" element={<Banners />} />
               
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
