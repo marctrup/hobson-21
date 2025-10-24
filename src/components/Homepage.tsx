@@ -11,11 +11,13 @@ import { PropertyManagementVisualization } from "@/components/homepage/PropertyM
 import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { PricingSection } from "@/components/homepage/PricingSection";
+import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 // Lazy load video only when needed
 
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [showPilotForm, setShowPilotForm] = useState(false);
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -203,6 +205,27 @@ export const Homepage = () => {
 
           {/* Pricing Section */}
           <PricingSection />
+
+          {/* CTA Section */}
+          <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10">
+            <div className="container mx-auto px-4 text-center">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
+                Ready to Transform Your Property Management?
+              </h2>
+              <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
+                Join our free pilot program and experience the power of AI-driven property intelligence
+              </p>
+              <SimpleButton 
+                onClick={() => setShowPilotForm(true)}
+                size="lg"
+                className="bg-primary text-primary-foreground hover:bg-primary/90 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto"
+              >
+                Join our free pilot
+              </SimpleButton>
+            </div>
+          </section>
+
+          <PilotApplicationForm showForm={showPilotForm} setShowForm={setShowPilotForm} />
 
           {/* Footer */}
           <footer className="py-5 md:py-16 border-t bg-white">
