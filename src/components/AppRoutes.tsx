@@ -5,6 +5,7 @@ import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
 
 // Lazy load all pages for optimal bundle splitting
 const Homepage = lazy(() => import("./Homepage").then(module => ({ default: module.Homepage })));
+const HomepageABTest = lazy(() => import("./HomepageABTest").then(module => ({ default: module.HomepageABTest })));
 const HomepageHomeowner = lazy(() => import("./HomepageHomeowner").then(module => ({ default: module.HomepageHomeowner })));
 const SimpleHomepage = lazy(() => import("./SimpleHomepage").then(module => ({ default: module.SimpleHomepage })));
 const LandingPageA = lazy(() => import("../pages/LandingPageA"));
@@ -94,6 +95,7 @@ const AppContent = () => {
             <>
               {/* Main website routes */}
               <Route path="/" element={<Homepage />} />
+              <Route path="/abtest" element={<HomepageABTest />} />
               <Route path="/homeowner" element={<HomepageHomeowner />} />
               <Route path="/property-management-software" element={<Navigate to="/" replace />} />
               <Route path="/home/property-management-software" element={<Navigate to="/" replace />} />
