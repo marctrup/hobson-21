@@ -68,6 +68,21 @@ const GTMPageTracker = () => {
         page_path: location.pathname + location.search,
         page_title: document.title,
       });
+
+      // Track homepage variant for A/B testing
+      if (location.pathname === '/') {
+        window.dataLayer.push({
+          event: 'homepage_variant_view',
+          variant: 'control',
+          page_path: '/',
+        });
+      } else if (location.pathname === '/abtest') {
+        window.dataLayer.push({
+          event: 'homepage_variant_view',
+          variant: 'test',
+          page_path: '/abtest',
+        });
+      }
     }
   }, [location]);
 
