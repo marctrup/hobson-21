@@ -210,7 +210,7 @@ export const Homepage = () => {
           <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10">
             <div className="container mx-auto px-4 text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
-                Ready to Transform Your Property Management?
+                Ready to introduce AI into your business?
               </h2>
               <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
                 Join our free pilot program and experience the power of AI-driven property intelligence
