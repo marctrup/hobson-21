@@ -26,7 +26,7 @@ export const HomepageHeader = () => {
               <img 
                 src={hobsonLogo} 
                 alt="Hobson AI - AI-powered property management software company logo" 
-                className="h-[116px] md:h-[140px]" 
+                className="h-[90px] md:h-[110px]" 
                 loading="eager"
               />
             </Link>
