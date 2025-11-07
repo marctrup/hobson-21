@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 import { ArrowLeft, Calendar, Clock, User } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { SecureContentRenderer } from '@/components/SecureContentRenderer';
-import hobsonLogo from "/lovable-uploads/hobson-new-logo.png";
+import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { LoadingSkeleton } from '@/components/LoadingSkeleton';
