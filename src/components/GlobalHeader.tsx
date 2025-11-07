@@ -26,7 +26,7 @@ export const GlobalHeader = () => {
               <OptimizedImage 
                 src="/lovable-uploads/hobson-new-logo.png" 
                 alt="Hobson AI - AI-powered property management software company logo" 
-                className="h-[154px] md:h-[185px] w-auto" 
+                className="h-[169px] md:h-[204px] w-auto" 
                 priority
               />
             </Link>

@@ -52,7 +52,7 @@ export const Homepage = () => {
               {/* Logo */}
               <div className="relative -my-4">
                 <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-[154px] md:h-[185px] w-auto" priority />
+                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-[169px] md:h-[204px] w-auto" priority />
                 </Link>
               </div>
 
