@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import React, { useState, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
+import hobsonLogo from "/lovable-uploads/hobson-new-logo.png";
 import documentAiIcon from "/lovable-uploads/807ac70f-d32b-415b-a7ac-e51d33f140d7.png";
 import { CONTENT } from "@/config/content";
 

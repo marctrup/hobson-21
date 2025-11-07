@@ -18,7 +18,7 @@ export const SimpleHomepage = () => {
             <div className="flex items-center gap-3">
               <Link to="/">
                 <img 
-                  src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
+                  src="/lovable-uploads/hobson-new-logo.png" 
                   alt="Hobson AI Logo" 
                   className="h-12 md:h-16" 
                 />

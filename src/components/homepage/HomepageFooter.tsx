@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
+import hobsonLogo from "/lovable-uploads/hobson-new-logo.png";
 
 export const HomepageFooter = () => {
   return (

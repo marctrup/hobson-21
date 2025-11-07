@@ -19,7 +19,7 @@ import {
   Settings,
   Trash2
 } from 'lucide-react';
-import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
+import hobsonLogo from "/lovable-uploads/hobson-new-logo.png";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
