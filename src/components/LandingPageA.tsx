@@ -16,7 +16,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Building2, TrendingUp, MapPin, PenTool, CreditCard, Shield } from "lucide-react";
 import { CONTENT_VARIANT as CONTENT } from "@/config/content-variant";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import hobsonLogo from "/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png";
+import hobsonLogo from "/lovable-uploads/hobson-new-logo.png";
 
 // Form schema using the variant content
 const formSchema = z.object({
