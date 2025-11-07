@@ -21,12 +21,12 @@ export const GlobalHeader = () => {
       <div className="container mx-auto px-4 py-1">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="relative -my-4">
+          <div className="relative">
             <Link to="/" onClick={closeMobileMenu}>
               <OptimizedImage 
                 src="/lovable-uploads/hobson-new-logo.png" 
                 alt="Hobson AI - AI-powered property management software company logo" 
-                className="h-[70px] md:h-[85px] w-auto" 
+                className="h-[60px] md:h-[70px] w-auto" 
                 priority
               />
             </Link>
