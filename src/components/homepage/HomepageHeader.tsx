@@ -18,7 +18,7 @@ export const HomepageHeader = () => {
 
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50" role="banner">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-2">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-3">
@@ -26,7 +26,7 @@ export const HomepageHeader = () => {
               <img 
                 src={hobsonLogo} 
                 alt="Hobson AI - AI-powered property management software company logo" 
-                className="h-12 md:h-16" 
+                className="h-20 md:h-24" 
                 loading="eager"
               />
             </Link>
