@@ -50,9 +50,9 @@ export const Homepage = () => {
           <div className="container mx-auto px-4 py-1">
             <div className="flex justify-between items-center">
               {/* Logo */}
-              <div className="relative -my-3">
+              <div className="relative -my-4">
                 <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-[117px] md:h-[140px] w-auto" priority />
+                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-[140px] md:h-[168px] w-auto" priority />
                 </Link>
               </div>
 
