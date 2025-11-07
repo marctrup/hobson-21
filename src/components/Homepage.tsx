@@ -47,12 +47,12 @@ export const Homepage = () => {
       <div className="min-h-screen bg-background overflow-x-hidden">
         {/* Header */}
         <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50" role="banner">
-          <div className="container mx-auto px-4 py-4">
+          <div className="container mx-auto px-4 py-1">
             <div className="flex justify-between items-center">
               {/* Logo */}
-              <div className="relative">
+              <div className="relative -my-2">
                 <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-24 md:h-32 w-auto" priority />
+                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-[106px] md:h-[127px] w-auto" priority />
                 </Link>
               </div>
 
