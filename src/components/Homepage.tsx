@@ -51,7 +51,7 @@ export const Homepage = () => {
             <div className="flex justify-between items-center">
               {/* Logo */}
               <Link to="/" onClick={closeMobileMenu}>
-                <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-28 md:h-40 w-auto" priority />
+                <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-28 md:h-40 w-auto border border-border" priority />
               </Link>
 
               {/* Desktop Navigation */}
