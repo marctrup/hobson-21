@@ -230,7 +230,7 @@ export const Homepage = () => {
             <div className="container mx-auto px-4">
               <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
-                <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson's AI logo" className="h-28 w-auto" />
+                <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson's AI logo" className="h-28 w-auto border border-border" />
                 
                 {/* Product Column */}
                 <div>
