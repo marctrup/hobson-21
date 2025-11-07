@@ -50,9 +50,11 @@ export const Homepage = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
               {/* Logo */}
-              <Link to="/" onClick={closeMobileMenu}>
-                <OptimizedImage src="/lovable-uploads/hobson-new-logo-transparent.png" alt="Hobson AI - AI-powered property management software company logo" className="h-28 md:h-40 w-auto border border-border" priority />
-              </Link>
+              <div className="relative">
+                <Link to="/" onClick={closeMobileMenu}>
+                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-24 md:h-32 w-auto" priority />
+                </Link>
+              </div>
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
@@ -230,7 +232,9 @@ export const Homepage = () => {
             <div className="container mx-auto px-4">
               <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
-                <OptimizedImage src="/lovable-uploads/hobson-new-logo-transparent.png" alt="Hobson's AI logo" className="h-28 w-auto border border-border" />
+                <div>
+                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson's AI logo" className="h-24 w-auto" />
+                </div>
                 
                 {/* Product Column */}
                 <div>
