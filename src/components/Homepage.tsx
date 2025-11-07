@@ -51,7 +51,7 @@ export const Homepage = () => {
             <div className="flex justify-between items-center">
               {/* Logo */}
               <Link to="/" onClick={closeMobileMenu}>
-                <OptimizedImage src="/lovable-uploads/hobson-new-logo-cropped.png" alt="Hobson AI - AI-powered property management software company logo" className="h-28 md:h-40 w-auto border border-border" priority />
+                <OptimizedImage src="/lovable-uploads/hobson-new-logo-transparent.png" alt="Hobson AI - AI-powered property management software company logo" className="h-28 md:h-40 w-auto border border-border" priority />
               </Link>
 
               {/* Desktop Navigation */}
@@ -230,7 +230,7 @@ export const Homepage = () => {
             <div className="container mx-auto px-4">
               <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
-                <OptimizedImage src="/lovable-uploads/hobson-new-logo-cropped.png" alt="Hobson's AI logo" className="h-28 w-auto border border-border" />
+                <OptimizedImage src="/lovable-uploads/hobson-new-logo-transparent.png" alt="Hobson's AI logo" className="h-28 w-auto border border-border" />
                 
                 {/* Product Column */}
                 <div>
