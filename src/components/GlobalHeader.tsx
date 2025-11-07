@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NAVIGATION_LINKS } from "@/config/navigation";
-import hobsonLogo from "/lovable-uploads/270231d1-a007-4b5e-82c2-696ea7ccf2f5.png";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 export const GlobalHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -18,15 +18,16 @@ export const GlobalHeader = () => {
 
   return (
     <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-1">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center gap-3">
+          <div className="relative -my-4">
             <Link to="/" onClick={closeMobileMenu}>
-              <img 
-                src={hobsonLogo} 
-                alt="Hobson AI property management software logo" 
-                className="h-12 md:h-16 hover:opacity-80 transition-opacity" 
+              <OptimizedImage 
+                src="/lovable-uploads/hobson-new-logo.png" 
+                alt="Hobson AI - AI-powered property management software company logo" 
+                className="h-[140px] md:h-[168px] w-auto" 
+                priority
               />
             </Link>
           </div>
