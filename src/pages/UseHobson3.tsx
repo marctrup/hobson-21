@@ -189,7 +189,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <header className="fixed top-2 left-1/2 transform -translate-x-1/2 z-50 bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-full px-4 sm:px-6 py-2 sm:py-3 shadow-xl border border-white/20 w-auto max-w-[calc(100vw-1rem)]">
           <Link to="/">
             <OptimizedImage 
-              src="/lovable-uploads/hobson-new-logo.png"
+              src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
               alt="Hobson AI Logo" 
               className="h-6 sm:h-8 w-auto" 
               priority 
@@ -585,7 +585,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <div className="container mx-auto px-3 sm:px-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <OptimizedImage 
-                src="/lovable-uploads/hobson-new-logo.png" 
+                src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
                 alt="Hobson AI Logo" 
                 className="h-6 sm:h-8 w-auto" 
               />

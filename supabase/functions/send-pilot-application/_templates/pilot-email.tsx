@@ -29,7 +29,7 @@ export const PilotEmail = ({
     <Body style={main}>
       <Container style={container}>
         <Img
-          src="https://hobsonschoice.ai/lovable-uploads/hobson-new-logo.png"
+          src="https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
           alt="Hobson AI Logo"
           style={logo}
         />
