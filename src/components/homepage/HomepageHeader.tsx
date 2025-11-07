@@ -21,12 +21,12 @@ export const HomepageHeader = () => {
       <div className="container mx-auto px-4 py-1">
         <div className="flex justify-between items-center">
           {/* Logo */}
-          <div className="flex items-center gap-3 -my-2">
+          <div className="flex items-center gap-3">
             <Link to="/" onClick={closeMobileMenu}>
               <img 
                 src={hobsonLogo} 
                 alt="Hobson AI - AI-powered property management software company logo" 
-                className="h-[90px] md:h-[110px]" 
+                className="h-[70px] md:h-[85px]" 
                 loading="eager"
               />
             </Link>
