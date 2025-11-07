@@ -52,7 +52,7 @@ export const Homepage = () => {
               {/* Logo */}
               <div className="relative">
                 <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-28 md:h-40 w-auto" priority />
+                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-32 md:h-48 w-auto" priority />
                 </Link>
               </div>
 
@@ -233,7 +233,7 @@ export const Homepage = () => {
               <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
                 <div>
-                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson's AI logo" className="h-28 w-auto" />
+                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson's AI logo" className="h-32 w-auto" />
                 </div>
                 
                 {/* Product Column */}
