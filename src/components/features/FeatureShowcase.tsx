@@ -1,15 +1,19 @@
 import { MessageCircle } from "lucide-react";
 import PropertyMap from "./PropertyMap";
 import React, { memo } from "react";
+import owlMascot from "@/assets/owl-mascot.png";
 
 // Updated with Features heading
 const FeatureShowcase = memo(() => {
   return (
     <div className="mb-20 overflow-hidden">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-foreground mb-4">
-          Features
-        </h2>
+        <div className="flex items-center justify-center gap-4 mb-4">
+          <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+          <h2 className="text-4xl font-bold text-foreground">
+            Features
+          </h2>
+        </div>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Talk to your documents on the left. See your portfolio come alive on the right. No menus, just flow
         </p>
