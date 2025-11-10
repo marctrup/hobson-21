@@ -104,7 +104,7 @@ export const Homepage = () => {
                 <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
                   <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                     <span className="text-foreground">Replace costly, complex menu-driven systems for </span>
-                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent inline-flex items-center gap-2">clarity, simplicity, and affordable AI<img src={owlMascot} alt="Owl mascot" className="w-8 h-8 sm:w-10 sm:h-10 inline-block" /></span>
+                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">clarity, simplicity, and affordable AI</span>
                   </h1>
                   <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
                     Your documents. Your truth. AI-powered clarity in seconds.<br className="hidden sm:block" />
