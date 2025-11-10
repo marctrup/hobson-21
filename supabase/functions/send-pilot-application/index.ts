@@ -1,9 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { Resend } from "npm:resend@4.0.0";
-import React from 'npm:react@18.3.1';
-import { renderAsync } from 'npm:@react-email/components@0.0.22';
-import { PilotEmail } from './_templates/pilot-email.tsx';
+import { pilotApplicationSchema, escapeHtml } from '../_shared/validation.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -18,7 +16,25 @@ serve(async (req) => {
   }
 
   try {
-    const { name, company, role, email, phone, preferredContact, businessTypes, website, help } = await req.json()
+    const rawData = await req.json()
+    
+    // Validate input
+    const validationResult = pilotApplicationSchema.safeParse(rawData)
+    if (!validationResult.success) {
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: 'Invalid input data',
+          details: validationResult.error.errors.map(e => ({ field: e.path.join('.'), message: e.message }))
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        },
+      )
+    }
+    
+    const { name, company, role, email, phone, preferredContact, businessTypes, website, help } = validationResult.data
     
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
@@ -52,6 +68,7 @@ serve(async (req) => {
       })
 
     if (dbError) {
+      console.error('Database insert error:', dbError)
       if (dbError.code === '23505') { // Unique constraint violation
         return new Response(
           JSON.stringify({ success: false, error: 'This email has already been used for a pilot application.' }),
@@ -61,13 +78,19 @@ serve(async (req) => {
           },
         )
       }
-      throw new Error(`Database error: ${dbError.message}`)
+      return new Response(
+        JSON.stringify({ success: false, error: 'Unable to process your application. Please try again.' }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 500,
+        },
+      )
     }
 
-    // Parse name for React Email template
+    // Parse name for React Email template (escape for security)
     const nameParts = name.split(' ');
-    const firstName = nameParts[0];
-    const lastName = nameParts.slice(1).join(' ');
+    const firstName = escapeHtml(nameParts[0]);
+    const safeEmail = escapeHtml(email)
 
     // Create HTML template with unsubscribe link
     const htmlTemplate = `
@@ -121,18 +144,19 @@ serve(async (req) => {
 
     console.log("Confirmation email sent successfully:", confirmationResponse);
 
+    // For team notification, escape user inputs
     const emailContent = `
 New Hobson AI Pilot Application
 
-Name: ${name}
-Company: ${company}
-Role: ${role}
-Email: ${email}
-Phone: ${phone || 'Not provided'}
-Preferred Contact: ${preferredContact || 'Not specified'}
-Business Types: ${businessTypes ? businessTypes.join(', ') : 'Not specified'}
-${formattedWebsite ? `Website: ${formattedWebsite}` : ''}
-${help ? `\nWhat they'd like help with:\n${help}` : ''}
+Name: ${escapeHtml(name)}
+Company: ${escapeHtml(company)}
+Role: ${escapeHtml(role)}
+Email: ${escapeHtml(email)}
+Phone: ${phone ? escapeHtml(phone) : 'Not provided'}
+Preferred Contact: ${preferredContact ? escapeHtml(preferredContact) : 'Not specified'}
+Business Types: ${businessTypes ? businessTypes.map(escapeHtml).join(', ') : 'Not specified'}
+${formattedWebsite ? `Website: ${escapeHtml(formattedWebsite)}` : ''}
+${help ? `\nWhat they'd like help with:\n${escapeHtml(help)}` : ''}
 
 ---
 Submitted at: ${new Date().toISOString()}
@@ -142,7 +166,7 @@ Submitted at: ${new Date().toISOString()}
     const notificationResponse = await resend.emails.send({
       from: 'Hobson AI <noreply@hobsonschoice.ai>',
       to: ['info@hobsonschoice.ai'],
-      subject: `New Pilot Application - ${name} from ${company}`,
+      subject: `New Pilot Application - ${escapeHtml(name)} from ${escapeHtml(company)}`,
       text: emailContent,
     });
 
@@ -158,7 +182,7 @@ Submitted at: ${new Date().toISOString()}
   } catch (error) {
     console.error('Error processing application:', error)
     return new Response(
-      JSON.stringify({ success: false, error: error.message }),
+      JSON.stringify({ success: false, error: 'Unable to process your application. Please try again.' }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 500,

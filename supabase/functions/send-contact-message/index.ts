@@ -1,9 +1,7 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { Resend } from "npm:resend@4.0.0";
-import React from 'npm:react@18.3.1';
-import { renderAsync } from 'npm:@react-email/components@0.0.22';
-import { ContactEmail } from './_templates/contact-email.tsx';
+import { contactFormSchema, escapeHtml } from '../_shared/validation.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -18,12 +16,30 @@ serve(async (req) => {
   }
 
   try {
-    const { name, email, phone, reason } = await req.json()
+    const rawData = await req.json()
+    
+    // Validate input
+    const validationResult = contactFormSchema.safeParse(rawData)
+    if (!validationResult.success) {
+      return new Response(
+        JSON.stringify({ 
+          success: false, 
+          error: 'Invalid input data',
+          details: validationResult.error.errors.map(e => ({ field: e.path.join('.'), message: e.message }))
+        }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 400,
+        },
+      )
+    }
+    
+    const { name, email, phone, reason } = validationResult.data
     
     // Initialize Supabase client
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-    const supabaseKey = Deno.env.get('SUPABASE_ANON_KEY')!
-    const supabase = createClient(supabaseUrl, supabaseKey)
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const supabase = createClient(supabaseUrl, supabaseServiceKey)
     
     console.log('Processing contact message for:', email)
     
@@ -41,15 +57,14 @@ serve(async (req) => {
       emailExistsMessage = '\n\nNote: This email has previously submitted a pilot application.'
     }
 
-    // Insert into contact_messages table
-    console.log('Attempting to insert contact message for:', email)
-    const { error: dbError } = await supabase
-      .from('contact_messages')
-      .insert({
-        name,
-        email,
-        phone: phone || null,
-        message: reason
+    // Insert into encrypted contact_messages table using secure function
+    console.log('Attempting to insert encrypted contact message for:', email)
+    const { data: contactId, error: dbError } = await supabase
+      .rpc('insert_encrypted_contact_message', {
+        p_name: name,
+        p_email: email,
+        p_phone: phone || null,
+        p_message: reason
       })
 
     let isDuplicate = false;
@@ -60,13 +75,23 @@ serve(async (req) => {
         console.log('Unique constraint violation detected - duplicate contact message')
         isDuplicate = true;
       } else {
-        throw new Error(`Database error: ${dbError.message}`)
+        console.error('Failed to store encrypted contact message:', dbError)
+        return new Response(
+          JSON.stringify({ success: false, error: 'Unable to process your request. Please try again.' }),
+          {
+            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+            status: 500,
+          },
+        )
       }
     } else {
-      console.log('New contact message saved to database')
+      console.log('New encrypted contact message saved to database')
     }
 
-    // Create HTML template with unsubscribe link
+    // Create HTML template with unsubscribe link (escape user input to prevent XSS)
+    const safeName = escapeHtml(name)
+    const safeEmail = escapeHtml(email)
+    
     const htmlTemplate = `
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +103,7 @@ serve(async (req) => {
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
     
     <div style="margin-bottom: 30px;">
-        <p style="margin-bottom: 20px;">Hi ${name},</p>
+        <p style="margin-bottom: 20px;">Hi ${safeName},</p>
         
         <p style="margin-bottom: 20px;">Thank you for contacting Hobson AI! We have received your message and will get back to you as soon as possible.</p>
         
@@ -118,13 +143,14 @@ serve(async (req) => {
 
     console.log("Confirmation email sent successfully:", confirmationResponse);
 
+    // For team notification, escape user inputs
     const emailContent = `
 New Contact Message from Hobson AI Website
 
-Name: ${name}
-Email: ${email}
-Phone: ${phone || 'Not provided'}
-Reason for Enquiry: ${reason}${emailExistsMessage}
+Name: ${escapeHtml(name)}
+Email: ${escapeHtml(email)}
+Phone: ${phone ? escapeHtml(phone) : 'Not provided'}
+Reason for Enquiry: ${escapeHtml(reason)}${emailExistsMessage}
 
 ---
 Submitted at: ${new Date().toISOString()}
@@ -134,7 +160,7 @@ Submitted at: ${new Date().toISOString()}
     const notificationResponse = await resend.emails.send({
       from: 'Hobson AI <noreply@hobsonschoice.ai>',
       to: ['info@hobsonschoice.ai'],
-      subject: `Contact Message - ${name}`,
+      subject: `Contact Message - ${escapeHtml(name)}`,
       text: emailContent,
     });
 
@@ -155,7 +181,7 @@ Submitted at: ${new Date().toISOString()}
   } catch (error) {
     console.error('Error processing contact message:', error)
     return new Response(
-      JSON.stringify({ success: false, error: error.message }),
+      JSON.stringify({ success: false, error: 'Unable to process your request. Please try again.' }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
         status: 500,

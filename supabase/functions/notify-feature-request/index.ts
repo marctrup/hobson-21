@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.53.0';
 import { Resend } from "npm:resend@2.0.0";
+import { featureRequestSchema, escapeHtml } from '../_shared/validation.ts';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -22,7 +23,21 @@ const handler = async (req: Request): Promise<Response> => {
   }
 
   try {
-    const { title, description, category, author_name, author_id }: FeatureRequestNotification = await req.json();
+    const rawData = await req.json();
+    
+    // Validate input
+    const validationResult = featureRequestSchema.safeParse(rawData);
+    if (!validationResult.success) {
+      return new Response(
+        JSON.stringify({ error: "Invalid input data" }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+    
+    const { title, description, category, author_name, author_id } = validationResult.data;
 
     console.log('Feature request notification for:', title);
 
@@ -40,8 +55,14 @@ const handler = async (req: Request): Promise<Response> => {
 
     const userEmail = profile?.email || 'Unknown';
 
-    // Send notification email using Resend
+    // Send notification email using Resend (escape all user inputs)
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
+    
+    const safeTitle = escapeHtml(title);
+    const safeDescription = escapeHtml(description || 'No description provided');
+    const safeCategory = escapeHtml(category.replace('-', ' '));
+    const safeAuthorName = escapeHtml(author_name);
+    const safeUserEmail = escapeHtml(userEmail);
     
     const htmlTemplate = `
 <!DOCTYPE html>
@@ -61,29 +82,29 @@ const handler = async (req: Request): Promise<Response> => {
     <div style="margin-bottom: 30px;">
         <div style="background: white; border: 1px solid #e9ecef; border-radius: 8px; padding: 20px; margin-bottom: 20px;">
             <h2 style="color: #333; margin: 0 0 15px 0; font-size: 18px; border-bottom: 2px solid #007bff; padding-bottom: 10px;">
-                ${title}
+                ${safeTitle}
             </h2>
             
             <div style="margin-bottom: 15px;">
                 <strong style="color: #495057;">Category:</strong> 
                 <span style="background: #007bff; color: white; padding: 4px 8px; border-radius: 4px; font-size: 12px; text-transform: capitalize;">
-                    ${category.replace('-', ' ')}
+                    ${safeCategory}
                 </span>
             </div>
             
             <div style="margin-bottom: 15px;">
                 <strong style="color: #495057;">Description:</strong>
                 <p style="margin: 10px 0; padding: 15px; background: #f8f9fa; border-left: 4px solid #007bff; border-radius: 4px;">
-                    ${description || 'No description provided'}
+                    ${safeDescription}
                 </p>
             </div>
             
             <div style="margin-bottom: 15px;">
-                <strong style="color: #495057;">Submitted by:</strong> ${author_name}
+                <strong style="color: #495057;">Submitted by:</strong> ${safeAuthorName}
             </div>
             
             <div style="margin-bottom: 15px;">
-                <strong style="color: #495057;">User email:</strong> ${userEmail}
+                <strong style="color: #495057;">User email:</strong> ${safeUserEmail}
             </div>
             
             <div style="margin-bottom: 0;">
@@ -113,7 +134,7 @@ const handler = async (req: Request): Promise<Response> => {
     const { error: emailError } = await resend.emails.send({
       from: 'Hobson AI <noreply@hobsonschoice.ai>',
       to: ['info@hobsonschoice.ai'],
-      subject: `🚀 New Feature Request: ${title}`,
+      subject: `🚀 New Feature Request: ${safeTitle}`,
       html: htmlTemplate,
     });
 
