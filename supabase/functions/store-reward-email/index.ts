@@ -62,6 +62,30 @@ const handler = async (req: Request): Promise<Response> => {
       clientIP = realIP.trim();
     }
 
+    // Rate limiting check (10 submissions per IP per hour)
+    const { data: rateLimitOk, error: rateLimitError } = await supabase
+      .rpc('check_server_rate_limit', {
+        p_identifier: clientIP,
+        p_action_type: 'reward_submission',
+        p_max_requests: 10,
+        p_window_minutes: 60
+      });
+
+    if (rateLimitError) {
+      console.error('Rate limit check error:', rateLimitError);
+    }
+
+    if (rateLimitOk === false) {
+      console.log(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     console.log(`Storing reward email: ${email} for challenge: ${challengeType}`);
 
     // Check if email already exists for this challenge type
@@ -127,8 +151,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.error("Error in store-reward-email function:", error);
     return new Response(
       JSON.stringify({ 
-        error: "Failed to store reward email",
-        details: error.message 
+        error: "Unable to process your request. Please try again."
       }),
       {
         status: 500,

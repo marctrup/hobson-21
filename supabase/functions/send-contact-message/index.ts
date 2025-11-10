@@ -41,6 +41,39 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     const supabase = createClient(supabaseUrl, supabaseServiceKey)
     
+    // Rate limiting check (5 submissions per IP per hour)
+    const forwardedFor = req.headers.get("x-forwarded-for");
+    const realIP = req.headers.get("x-real-ip");
+    let clientIP = "unknown";
+    if (forwardedFor) {
+      clientIP = forwardedFor.split(",")[0].trim();
+    } else if (realIP) {
+      clientIP = realIP.trim();
+    }
+
+    const { data: rateLimitOk, error: rateLimitError } = await supabase
+      .rpc('check_server_rate_limit', {
+        p_identifier: clientIP,
+        p_action_type: 'contact_submission',
+        p_max_requests: 5,
+        p_window_minutes: 60
+      });
+
+    if (rateLimitError) {
+      console.error('Rate limit check error:', rateLimitError);
+    }
+
+    if (rateLimitOk === false) {
+      console.log(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ success: false, error: 'Too many requests. Please try again later.' }),
+        {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+          status: 429,
+        },
+      )
+    }
+    
     console.log('Processing contact message for:', email)
     
     // Check if email already exists in pilot_applications (for cross-reference)

@@ -42,6 +42,39 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    // Rate limiting check (5 subscriptions per IP per hour)
+    const forwardedFor = req.headers.get("x-forwarded-for");
+    const realIP = req.headers.get("x-real-ip");
+    let clientIP = "unknown";
+    if (forwardedFor) {
+      clientIP = forwardedFor.split(",")[0].trim();
+    } else if (realIP) {
+      clientIP = realIP.trim();
+    }
+
+    const { data: rateLimitOk, error: rateLimitError } = await supabase
+      .rpc('check_server_rate_limit', {
+        p_identifier: clientIP,
+        p_action_type: 'newsletter_subscribe',
+        p_max_requests: 5,
+        p_window_minutes: 60
+      });
+
+    if (rateLimitError) {
+      console.error('Rate limit check error:', rateLimitError);
+    }
+
+    if (rateLimitOk === false) {
+      console.log(`Rate limit exceeded for IP: ${clientIP}`);
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     // Check if email already exists
     const { data: existingSubscription } = await supabase
       .from('newsletter_subscriptions')

@@ -46,6 +46,30 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    // Rate limiting check (10 submissions per user per hour)
+    const { data: rateLimitOk, error: rateLimitError } = await supabase
+      .rpc('check_server_rate_limit', {
+        p_identifier: author_id,
+        p_action_type: 'feature_request',
+        p_max_requests: 10,
+        p_window_minutes: 60
+      });
+
+    if (rateLimitError) {
+      console.error('Rate limit check error:', rateLimitError);
+    }
+
+    if (rateLimitOk === false) {
+      console.log(`Rate limit exceeded for user: ${author_id}`);
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     // Get user profile for email
     const { data: profile } = await supabase
       .from('profiles')
