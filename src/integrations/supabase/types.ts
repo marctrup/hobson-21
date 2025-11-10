@@ -343,7 +343,7 @@ export type Database = {
           category: Database["public"]["Enums"]["feature_request_category"]
           created_at: string
           description: string | null
-          fts: unknown | null
+          fts: unknown
           id: string
           title: string
           updated_at: string
@@ -355,7 +355,7 @@ export type Database = {
           category?: Database["public"]["Enums"]["feature_request_category"]
           created_at?: string
           description?: string | null
-          fts?: unknown | null
+          fts?: unknown
           id?: string
           title: string
           updated_at?: string
@@ -367,7 +367,7 @@ export type Database = {
           category?: Database["public"]["Enums"]["feature_request_category"]
           created_at?: string
           description?: string | null
-          fts?: unknown | null
+          fts?: unknown
           id?: string
           title?: string
           updated_at?: string
@@ -507,7 +507,7 @@ export type Database = {
           created_at: string
           email: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           updated_at: string
           user_agent: string | null
         }
@@ -516,7 +516,7 @@ export type Database = {
           created_at?: string
           email: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           updated_at?: string
           user_agent?: string | null
         }
@@ -525,7 +525,7 @@ export type Database = {
           created_at?: string
           email?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           updated_at?: string
           user_agent?: string | null
         }
@@ -536,7 +536,7 @@ export type Database = {
           action: string
           created_at: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           new_values: Json | null
           old_values: Json | null
           record_id: string | null
@@ -548,7 +548,7 @@ export type Database = {
           action: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_values?: Json | null
           old_values?: Json | null
           record_id?: string | null
@@ -560,7 +560,7 @@ export type Database = {
           action?: string
           created_at?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           new_values?: Json | null
           old_values?: Json | null
           record_id?: string | null
@@ -727,11 +727,11 @@ export type Database = {
         Returns: boolean
       }
       get_current_user_role: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: Database["public"]["Enums"]["app_role"]
       }
       get_decrypted_contact_messages: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           created_at: string
           email: string
@@ -784,10 +784,7 @@ export type Database = {
         }
         Returns: undefined
       }
-      make_user_admin: {
-        Args: { user_email: string }
-        Returns: undefined
-      }
+      make_user_admin: { Args: { user_email: string }; Returns: undefined }
     }
     Enums: {
       app_role: "admin" | "user"

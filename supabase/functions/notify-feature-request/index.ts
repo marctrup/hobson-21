@@ -70,14 +70,14 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Get user profile for email
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('email')
-      .eq('user_id', author_id)
-      .single();
+    // Get user email from auth.users (single source of truth)
+    const { data: { user }, error: userError } = await supabase.auth.admin.getUserById(author_id);
+    
+    if (userError) {
+      console.error('Error fetching user:', userError);
+    }
 
-    const userEmail = profile?.email || 'Unknown';
+    const userEmail = user?.email || 'Unknown';
 
     // Send notification email using Resend (escape all user inputs)
     const resend = new Resend(Deno.env.get('RESEND_API_KEY'));
