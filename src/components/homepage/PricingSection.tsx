@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
 import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
+import owlMascot from "@/assets/owl-mascot.png";
 
 export const PricingSection = () => {
   const [billingCycles, setBillingCycles] = useState({
@@ -92,7 +93,10 @@ export const PricingSection = () => {
     <section id="pricing-section" className="pt-9 pb-16 md:pt-9 md:pb-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">Choose Your AI Journey</h2>
+          <div className="flex items-center justify-center gap-4 mb-4">
+            <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">Choose Your AI Journey</h2>
+          </div>
           <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0">
             Revolutionary pricing that charges for actual AI work, not users or properties. Scale seamlessly with unlimited users, properties, and features.
           </p>

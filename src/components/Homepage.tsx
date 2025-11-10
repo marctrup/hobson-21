@@ -13,6 +13,7 @@ import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { PricingSection } from "@/components/homepage/PricingSection";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 import { NAVIGATION_LINKS } from "@/config/navigation";
+import owlMascot from "@/assets/owl-mascot.png";
 // Lazy load video only when needed
 
 export const Homepage = () => {
@@ -141,9 +142,12 @@ export const Homepage = () => {
                 
                 {/* Left Content - How It Works Steps */}
                 <div>
-                  <div className="mb-6 sm:mb-8">
-                    <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
-                    <p className="text-lg sm:text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
+                  <div className="mb-6 sm:mb-8 flex items-center gap-4">
+                    <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+                    <div>
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
+                      <p className="text-lg sm:text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
+                    </div>
                   </div>
                   <div className="space-y-6 sm:space-y-8">
                     {/* Step 1 */}
