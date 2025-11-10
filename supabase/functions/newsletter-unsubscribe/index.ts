@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.53.0';
+import { escapeHtml } from '../_shared/validation.ts';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -48,6 +49,31 @@ const handler = async (req: Request): Promise<Response> => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+    // Rate limiting check (5 unsubscribe requests per IP per hour)
+    const clientIp = req.headers.get('x-forwarded-for') || req.headers.get('x-real-ip') || 'unknown';
+    const { data: rateLimitOk, error: rateLimitError } = await supabase
+      .rpc('check_server_rate_limit', {
+        p_identifier: clientIp,
+        p_action_type: 'newsletter_unsubscribe',
+        p_max_requests: 5,
+        p_window_minutes: 60
+      });
+
+    if (rateLimitError) {
+      console.error('Rate limit check error:', rateLimitError);
+    }
+
+    if (rateLimitOk === false) {
+      console.log(`Rate limit exceeded for IP: ${clientIp}`);
+      return new Response(
+        JSON.stringify({ error: "Too many requests. Please try again later." }),
+        {
+          status: 429,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     // Deactivate all subscriptions for this email
     const { error: updateError } = await supabase
       .from('newsletter_subscriptions')
@@ -64,6 +90,9 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log('Successfully unsubscribed:', email);
+
+    // Escape email for safe HTML rendering
+    const safeEmail = escapeHtml(email);
 
     // Return HTML response for browser-friendly unsubscribe page
     const htmlResponse = `
@@ -117,7 +146,7 @@ const handler = async (req: Request): Promise<Response> => {
     <div class="container">
         <div class="success-icon">✓</div>
         <h1>Successfully Unsubscribed</h1>
-        <p>The email address <span class="email">${email}</span> has been successfully unsubscribed from all Hobson AI updates.</p>
+        <p>The email address <span class="email">${safeEmail}</span> has been successfully unsubscribed from all Hobson AI updates.</p>
         <p>You will no longer receive announcements, newsletters, or promotional emails from us.</p>
         <p>If you change your mind, you can always subscribe again by visiting our website.</p>
         
