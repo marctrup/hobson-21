@@ -253,8 +253,11 @@ export const PricingSection = () => {
 
         {/* CTA Section with Video */}
         <div className="text-center mt-12 sm:mt-16">
-          <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6 px-4 sm:px-0">
+          <p className="text-base sm:text-lg text-muted-foreground mb-2 px-4 sm:px-0">
             Understand more about our pricing philosophy with Sarah
+          </p>
+          <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 px-4 sm:px-0">
+            (click on the HEU to play)
           </p>
           <div className="px-4 sm:px-0">
             <PricingHeroVideo />
