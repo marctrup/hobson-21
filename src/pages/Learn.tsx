@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import { UseCasesContent } from '@/components/UseCasesContent';
 import { LearnIntroVideo } from '@/components/videos/LearnIntroVideo';
 import { GlobalHeader } from '@/components/GlobalHeader';
+import owlMascot from "@/assets/owl-mascot.png";
 
 const Learn = () => {
   const { user } = useAuth();
@@ -2555,7 +2556,10 @@ Content-Type: multipart/form-data
                       marginRight: 'auto',
                       maxWidth: '100%'
                     }}>
-                 <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Welcome</h1>
+                 <div className="flex items-center justify-center md:justify-start gap-4 mb-2">
+                   <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+                   <h1 className="text-2xl md:text-3xl font-bold text-foreground">Welcome</h1>
+                 </div>
                  <p className="text-base md:text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
                </div>
                
