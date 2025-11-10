@@ -213,9 +213,12 @@ export const Homepage = () => {
           {/* CTA Section */}
           <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10">
             <div className="container mx-auto px-4 text-center">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
-                Ready to introduce AI into your business?
-              </h2>
+              <div className="flex items-center justify-center gap-4 mb-4 sm:mb-6">
+                <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+                <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
+                  Ready to introduce AI into your business?
+                </h2>
+              </div>
               <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
                 Join our free pilot program and experience the power of AI-driven property intelligence
               </p>
