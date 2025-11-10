@@ -41,8 +41,9 @@ export const Homepage = () => {
         <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
         <link rel="canonical" href="https://hobsonschoice.ai/" />
         
-        {/* Preload critical assets - only above-the-fold logo */}
+        {/* Preload critical assets - logo and owl mascot */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
+        <link rel="preload" href={owlMascot} as="image" />
       </Helmet>
 
       <div className="min-h-screen bg-background overflow-x-hidden">
@@ -143,7 +144,15 @@ export const Homepage = () => {
                 {/* Left Content - How It Works Steps */}
                 <div>
                   <div className="mb-6 sm:mb-8 flex items-center gap-4">
-                    <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+                    <OptimizedImage 
+                      src={owlMascot} 
+                      alt="Hobson AI Owl Mascot" 
+                      className="w-16 h-16 sm:w-20 sm:h-20 object-contain" 
+                      width={80}
+                      height={80}
+                      priority={true}
+                      fetchPriority="high"
+                    />
                     <div>
                       <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
                       <p className="text-lg sm:text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
@@ -214,7 +223,13 @@ export const Homepage = () => {
           <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10">
             <div className="container mx-auto px-4 text-center">
               <div className="flex items-center justify-center gap-4 mb-4 sm:mb-6">
-                <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
+                <OptimizedImage 
+                  src={owlMascot} 
+                  alt="Hobson AI Owl Mascot" 
+                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
+                  width={80}
+                  height={80}
+                />
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
                   Ready to introduce AI into your business?
                 </h2>
