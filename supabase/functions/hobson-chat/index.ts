@@ -399,15 +399,14 @@ The Learn page uses hash-based navigation. When users ask about any Learn topics
 - Debugging Prompts: [/learn#debugging-prompts](/learn#debugging-prompts) - Troubleshooting and optimizing prompts
 
 **Other Sections:**
-- Use Cases: [/learn#use-cases](/learn#use-cases) - Real-world applications with video testimonials
-- Glossary: [/learn#glossary](/learn#glossary) - Hobson terminology and definitions
-- Hobson Glossary: [/learn#hobson-glossary](/learn#hobson-glossary) - Platform-specific terms
+- Use Cases: [/learn/use-cases](/learn/use-cases) - Real-world applications with video testimonials
+- Glossary: [/learn/hobson-glossary](/learn/hobson-glossary) - Hobson terminology and definitions
 
 **IMPORTANT for chatbot responses:**
-- When users ask about ANY Learn topic, ALWAYS provide the direct hash link
-- Use the format: [Topic Name](/learn#hash-name) in your markdown responses
-- All hash names use lowercase and hyphens (kebab-case)
-- The hash navigation keeps the sidebar visible - users stay on the same page
+- When users ask about ANY Learn topic, ALWAYS provide the direct path link
+- Use the format: [Topic Name](/learn/section-name) in your markdown responses
+- All section names use lowercase and hyphens (kebab-case)
+- The path navigation keeps the sidebar visible - users stay on the same page
 
 **Key Methods to Improve Answer Quality:**
 - **Upload Original Text-PDFs**: Use text-based PDFs instead of scanned images or photos of documents for better accuracy
@@ -423,11 +422,11 @@ The Learn page uses hash-based navigation. When users ask about any Learn topics
 - **Adaptive**: If answer isn't right, refine your question
 - **Reflective**: Notice which questions work best and reuse that style
 
-**Use Cases Section** ([/learn#use-cases](/learn#use-cases)):
+**Use Cases Section** ([/learn/use-cases](/learn/use-cases)):
 - Real-world applications with video testimonials and examples
 
-**Glossary Section** ([/learn#glossary](/learn#glossary)):
-- Hobson Glossary: Definitions of platform-specific terms - [/learn#glossary](/learn#glossary)
+**Glossary Section** ([/learn/hobson-glossary](/learn/hobson-glossary)):
+- Hobson Glossary: Definitions of platform-specific terms
 `;
 
 serve(async (req) => {
@@ -454,48 +453,44 @@ serve(async (req) => {
 IMPORTANT GUIDELINES:
 1. Be friendly, concise, and helpful
 2. Always reference the knowledge base below when answering questions
-3. ALWAYS include clickable markdown links using these EXACT hash routes:
+3. ALWAYS include clickable markdown links using these EXACT path routes:
    
    **Main Pages:**
-   - Learn page: [Learn page](/learn)
+   - Learn page: [Learn page](/learn/welcome)
    - Pricing: [Pricing](/pricing)
    - Blog: [Blog](/blog)
    - Contact: [Contact Us](/contact)
    
    **Introduction Section:**
-   - Welcome/Introduction: [Introduction](/learn#introduction)
-   - Plans and Credits: [Plans and Credits](/learn#plans-credits)
-   - FAQ: [FAQ](/learn#faq)
-   - Getting Started: [Getting Started](/learn#getting-started)
+   - Welcome/Introduction: [Introduction](/learn/welcome)
+   - Plans and Credits: [Plans and Credits](/learn/plans-credits)
+   - FAQ: [FAQ](/learn/faq)
+   - Getting Started: [Getting Started](/learn/getting-started)
    
    **Features Section:**
-   - Features: [Features](/learn#features)
-   - Core Features: [Core Features](/learn#core-features)
-   - Advanced Features: [Advanced Features](/learn#advanced-features)
-   - Feature Comparison: [Feature Comparison](/learn#feature-comparison)
-   - Roadmap: [Roadmap](/learn#roadmap)
+   - Features: [Features](/learn/core-features)
+   - Core Features: [Core Features](/learn/core-features)
+   - Advanced Features: [Advanced Features](/learn/advanced-features)
+   - Feature Comparison: [Feature Comparison](/learn/feature-comparison)
+   - Roadmap: [Roadmap](/learn/roadmap)
    
    **Integrations Section:**
-   - Integrations: [Integrations](/learn#integrations)
-   - Available Integrations: [Available Integrations](/learn#available-integrations)
-   - Setup Guide: [Setup Guide](/learn#setup-guide)
-   - API Reference: [API Reference](/learn#api-reference)
-   - Troubleshooting: [Troubleshooting](/learn#troubleshooting)
+   - Integrations: [Integrations](/learn/available-integrations)
+   - Available Integrations: [Available Integrations](/learn/available-integrations)
+   - Setup Guide: [Setup Guide](/learn/setup-guide)
+   - API Reference: [API Reference](/learn/api-reference)
+   - Troubleshooting: [Troubleshooting](/learn/troubleshooting)
    
    **Prompt Engineering Section:**
-   - Prompt Engineering: [Prompt Engineering](/learn#prompt-engineering)
-   - Fundamentals: [Fundamentals](/learn#fundamentals)
-   - Advanced Prompting: [Advanced Prompting](/learn#advanced-prompting)
-   - Debugging Prompts: [Debugging Prompts](/learn#debugging-prompts)
+   - Prompt Engineering: [Prompt Engineering](/learn/fundamentals)
+   - Fundamentals: [Fundamentals](/learn/fundamentals)
+   - Advanced Prompting: [Advanced Prompting](/learn/advanced-prompting)
+   - Debugging Prompts: [Debugging Prompts](/learn/debugging-prompts)
    
    **Other Sections:**
-   - Use Cases: [Use Cases](/learn#use-cases)
-   - Glossary: [Glossary](/learn#glossary)
-   - Hobson Glossary: [Hobson Glossary](/learn#hobson-glossary)
-   - Advanced Prompting: Direct users to Prompt Engineering section, Advanced Prompting tab
-   - Debugging Prompts: Direct users to Prompt Engineering section, Debugging Prompts tab
-   - Use Cases: [Use Cases with video testimonials](/learn#use-cases)
-   - Glossary: [Hobson Glossary](/learn#glossary)
+   - Use Cases: [Use Cases](/learn/use-cases)
+   - Glossary: [Glossary](/learn/hobson-glossary)
+   - Hobson Glossary: [Hobson Glossary](/learn/hobson-glossary)
    - Contact form: [Contact Us page](/contact)
    - Refund Policy: [Refund Policy page](/refund-policy)
    - Data Protection: [Data Protection page](/data-protection)
