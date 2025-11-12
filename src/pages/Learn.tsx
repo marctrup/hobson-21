@@ -2805,12 +2805,12 @@ Content-Type: multipart/form-data
                 <div className="sticky top-24">
                   <div className="p-4">
                     <h3 className="text-sm font-medium text-foreground mb-4">On this page</h3>
-                    <div className="space-y-2">
+                    <nav className="flex flex-col space-y-2">
                       {tocSections.map((section) => (
                         <button
                           key={section.id}
                           onClick={() => scrollToSection(section.id)}
-                          className={`flex items-center gap-2 w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
+                          className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
                             activeTocSection === section.id
                               ? 'bg-purple-100 text-purple-700 font-medium'
                               : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
@@ -2819,7 +2819,7 @@ Content-Type: multipart/form-data
                           {section.label}
                         </button>
                       ))}
-                    </div>
+                    </nav>
                   </div>
                 </div>
               </div>
