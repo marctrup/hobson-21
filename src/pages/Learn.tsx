@@ -2948,7 +2948,7 @@ Content-Type: multipart/form-data
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-foreground mb-2">Prompting</h1>
+                  <h1 className="text-3xl font-bold text-foreground mb-2">Prompting Fundamentals</h1>
                   <p className="text-lg text-muted-foreground">Master the fundamentals of effective prompting with Hobson</p>
                 </div>
 
