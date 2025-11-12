@@ -206,24 +206,35 @@ export const HobsonChatbot = () => {
       }
       
       // Add the clickable link
-      elements.push(
-        <a
-          key={`link-${matchStart}`}
-          href={linkUrl}
-          className="text-primary hover:underline font-medium cursor-pointer"
-          onClick={(e) => {
-            e.preventDefault();
-            if (linkUrl.startsWith('/')) {
+      if (linkUrl.startsWith('/')) {
+        // Internal link - use button styled as link
+        elements.push(
+          <button
+            key={`link-${matchStart}`}
+            className="text-primary hover:underline font-medium cursor-pointer inline"
+            onClick={(e) => {
+              e.preventDefault();
               navigate(linkUrl);
               setIsOpen(false);
-            } else if (linkUrl.startsWith('http')) {
-              window.open(linkUrl, '_blank', 'noopener,noreferrer');
-            }
-          }}
-        >
-          {linkText}
-        </a>
-      );
+            }}
+          >
+            {linkText}
+          </button>
+        );
+      } else {
+        // External link - use anchor
+        elements.push(
+          <a
+            key={`link-${matchStart}`}
+            href={linkUrl}
+            className="text-primary hover:underline font-medium cursor-pointer"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {linkText}
+          </a>
+        );
+      }
       
       lastIndex = matchStart + fullMatch.length;
     }
