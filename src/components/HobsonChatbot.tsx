@@ -181,57 +181,63 @@ export const HobsonChatbot = () => {
 
   // Convert markdown-style links to HTML links
   const renderMessage = (content: string) => {
+    console.log('Rendering message content:', content);
+    
+    // If no markdown links found, return plain text
+    if (!content.includes('[')) {
+      return <span>{content}</span>;
+    }
+
     const elements: React.ReactNode[] = [];
     let lastIndex = 0;
     const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+    
     let match;
-
     while ((match = linkRegex.exec(content)) !== null) {
-      const matchIndex = match.index;
-      const [fullMatch, text, url] = match;
+      console.log('Found link match:', match);
+      const [fullMatch, linkText, linkUrl] = match;
+      const matchStart = match.index;
       
-      // Add text before the link
-      if (matchIndex > lastIndex) {
-        elements.push(
-          <span key={`text-${lastIndex}`}>
-            {content.substring(lastIndex, matchIndex)}
-          </span>
-        );
+      // Add any text before this link
+      if (matchStart > lastIndex) {
+        elements.push(content.substring(lastIndex, matchStart));
       }
       
-      // Add the link
+      // Add the clickable link
       elements.push(
         <a
-          key={`link-${matchIndex}`}
-          href={url}
+          key={`link-${matchStart}`}
+          href={linkUrl}
           className="text-primary hover:underline font-medium"
           onClick={(e) => {
-            if (url.startsWith('/')) {
+            if (linkUrl.startsWith('/')) {
               e.preventDefault();
-              window.location.href = url;
+              window.location.href = linkUrl;
               setIsOpen(false);
             }
           }}
-          target={url.startsWith('http') ? '_blank' : undefined}
-          rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
+          target={linkUrl.startsWith('http') ? '_blank' : undefined}
+          rel={linkUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
         >
-          {text}
+          {linkText}
         </a>
       );
       
-      lastIndex = matchIndex + fullMatch.length;
+      lastIndex = matchStart + fullMatch.length;
     }
     
-    // Add remaining text after last link
+    // Add any remaining text after the last link
     if (lastIndex < content.length) {
-      elements.push(
-        <span key={`text-${lastIndex}`}>
-          {content.substring(lastIndex)}
-        </span>
-      );
+      elements.push(content.substring(lastIndex));
     }
     
-    return <>{elements}</>;
+    // If no links were found, return the original content
+    if (elements.length === 0) {
+      return <span>{content}</span>;
+    }
+    
+    console.log('Rendered elements count:', elements.length);
+    return <>{elements.map((el, i) => <React.Fragment key={i}>{el}</React.Fragment>)}</>;
   };
 
   return (
