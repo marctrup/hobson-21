@@ -128,6 +128,7 @@ const AppContent = () => {
               <Route path="/data-protection" element={<DataProtection />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/learn" element={<Learn />} />
+              <Route path="/learn/:section" element={<Learn />} />
               <Route path="/status" element={<Status />} />
               <Route path="/announcements" element={<Announcements />} />
               <Route path="/announcement/:slug" element={<AnnouncementPost />} />
