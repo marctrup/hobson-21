@@ -7,45 +7,198 @@ const corsHeaders = {
 
 // Website content knowledge base for the AI
 const WEBSITE_CONTENT = `
-# Hobson's Choice AI - Website Content Knowledge Base
+# Hobson's Choice AI - Complete Knowledge Base
 
 ## About Hobson AI
-Hobson's Choice AI is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.
+Hobson's Choice AI is an AI-powered business assistant designed for property professionals. It reads documents, extracts key data, stores it securely, and answers questions using your content.
+
+## What Can Hobson Do?
+- Search leases and tenancy agreements (ASTs)
+- Pull key terms and dates automatically
+- Answer clause questions with citations
+- Create document summaries
+- Spot renewals and break clauses
+- Track important dates and deadlines (85+ review dates)
+- Include contacts and schedule in answers (Essential Plus plan)
 
 ## How Hobson Works - Step by Step
 
 **1. Upload your documents**
-Simply drag your property documents into Hobson. This is the first step to unlocking intelligent insights.
+Simply drag your property documents into Hobson. Supports PDF, DOCX, and common text files. CSV/Excel for tabular data. Text-PDFs work best; scanned PDFs work if text is readable.
 
 **2. Hobson reads and understands**
-Hobson uses AI to carefully read through each document. This process takes some time depending on the size and complexity of your files. The information is securely stored on our servers so you can access it anytime.
+Hobson uses AI to carefully read through each document through extraction and indexing. Processing time depends on file size and complexity.
 
 **3. Get notified when ready**
-Once Hobson has finished reading and understanding your documents, you'll receive an email notification letting you know everything is ready.
+You'll receive an email notification when document processing is complete.
 
 **4. Ask questions, get instant answers**
-With your documents processed, you can ask Hobson anything. AI powers the entire process—from reading and extracting key information to delivering accurate, cited answers instantly.
+Ask Hobson anything in plain English. Get accurate, cited answers instantly from your documents.
 
-**Coming soon:** Hobson will connect directly to Dropbox, Google Drive, and other cloud storage platforms, making it even easier to access your documents.
+**Coming soon:** Direct connection to Dropbox, Google Drive, OneDrive, and other cloud storage platforms.
 
 ## Key Features
-- AI Document Analysis: Automatically extract key information from property documents
-- Natural Language Query: Ask questions about your properties in plain English
-- Property Intelligence: Get instant insights from leases, tenancy agreements, and more
-- Automated Insights: Identify important dates, clauses, and obligations automatically
-- Enterprise Security: Bank-level encryption and data protection
-- 24/7 Availability: Access your property intelligence anytime, anywhere
-- Email Notifications: Get notified when your documents are ready
 
-## Supported Documents
-Hobson AI can analyze:
+### Core Features
+**Intelligent Document Processing**
+Automatically reads and extracts key details from leases, contracts, and reports. Removes need for manual searching.
+
+**Smart Search & Insights**
+Ask questions in plain language like "When is the rent review date?" and get instant answers with source citations.
+
+**Real-Time Analytics**
+Transform unstructured text into clear summaries and dashboards. Spot trends and compare clauses.
+
+**Collaboration Ready**
+- Invite teammates and set roles
+- Share saved views and queries
+- Role-based access control (admin/standard/view)
+- Per-workspace permissions
+
+**Security & Compliance**
+- Enterprise-grade encryption
+- Bank-level security standards
+- Compliance with data protection regulations
+- Audit logs for uploads, edits, and queries
+
+### Advanced Features
+- **AI-Powered Summarisation:** Transform lengthy documents into actionable summaries
+- **Cross-Document Insights:** Compare terms and find connections across multiple documents
+- **Automated Report Generation:** Create structured reports from document data
+- **Clause & Obligation Tracking:** Automatically identify and track critical clauses, dates, and obligations
+- **Bulk Import:** Upload from cloud drives or folder upload
+- **Data Export:** Export extracted fields and logs (CSV/JSON)
+- **Saved Prompts (Playbooks):** Reusable prompt sets for common tasks
+- **Usage Analytics:** View HEU usage, document counts, and query history
+
+## Document Support
 - Tenancy agreements
 - Leases
-- Deeds of variation (12× in portfolio)
-- Reversionary leases (3× in portfolio)
+- Deeds of variation
+- Reversionary leases
 - Property schedules
 - Rent review documentation
-- Over 85 different review dates tracked automatically
+- Contracts and reports
+- Text-PDFs and DOCX (best quality)
+- Scanned PDFs (if text is readable)
+- CSV/Excel for tabular data
+
+## Getting Started
+
+### No Coding Required
+Upload documents and ask questions in plain English.
+
+### Onboarding Process
+1. (Optional) Buy Starter Pack to cover initial document processing costs
+2. Upload your documents
+3. Hobson extracts and indexes them
+4. Ask questions and invite your team
+5. On Essential Plus: connect contacts and calendar
+
+### Onboarding Time
+- Small document sets: Hours
+- Large portfolios: A few days (depending on volume and file quality)
+
+## Working with Hobson
+
+### Efficient Workflow
+- Batch document uploads for efficiency
+- Occasionally check document labels are correct
+- Ensure proper Geo Locations and document types
+
+### Structuring Prompts for Best Results
+**Be Specific:** Include property/tenant, date range, and the field you want.
+**Example:** "For 12 King St, what's the break clause and notice period? Cite the clause."
+**("Cite" = show the source text)**
+
+**The C.L.E.A.R. Method for Prompting:**
+- **Concise:** Be brief but direct
+- **Logical:** Break requests down step by step  
+- **Explicit:** Tell Hobson exactly what you want
+- **Adaptive:** If answer isn't right, refine your question
+- **Reflective:** Notice which questions work best and reuse that style
+
+### When You Hit Errors
+1. Retry once
+2. Check file type and size
+3. If persists, contact support with file name and timestamp
+
+### Data Cleanup
+Ensure correct Geo Locations and document type labels. These are extracted by Hobson but may need updating if source documents are poorly written.
+
+### Improving Answer Quality
+- Upload original text-PDFs (not photos/scans)
+- Keep documents complete
+- Ask focused questions
+- Save frequent prompts for reuse
+- Request citations for important information
+
+## Integrations
+
+### Current Status
+**Integrations are not yet available** - all listed integrations are coming soon.
+
+### Planned Integrations
+- **Calendar:** Access calendar events and scheduling
+- **Email:** Surface insights from email threads
+- **Dropbox:** Direct document access
+- **Google Drive:** Seamless cloud storage integration
+- **OneDrive:** Microsoft cloud integration
+- **CRM Systems:** Client and contract insights within CRM
+- **API Access:** Custom workflows
+- **Single Sign-On (SSO):** Secure, easy access
+
+### Why Integrations Matter
+Hobson will plug directly into existing tools so insights flow automatically without switching systems.
+
+### Benefits
+- Less manual exporting and importing
+- Centralised insights across platforms
+- Faster, more consistent decision-making
+- Reduced risk of missed details
+
+### API Reference (Coming Soon)
+Future API will include:
+- Document upload and analysis endpoints
+- Natural language query interface
+- Webhooks for processing notifications
+- Rate limits by plan tier
+- Full authentication and error handling
+
+## Frequently Asked Questions
+
+### Account Management
+**Can I change my login email?** Yes, in Account Settings.
+**Can I delete my account?** Yes, request deletion in Settings. Export data first.
+**Can I change workspace owner?** Admins can transfer ownership in Workspace Settings.
+
+### Features & Functionality
+**Where are Company Settings?** In the app under Settings (company, users, billing, HEUs).
+**Can I change data visibility?** Yes, control who can view, upload, and query per workspace.
+**Can I duplicate saved views/queries?** Yes, duplicate saved filters and prompts.
+**Can I delete documents or workspaces?** Yes, admins can delete; deletions are logged.
+**What are Playbooks?** Reusable prompt sets for common tasks (e.g., renewal checks).
+**Can my team collaborate?** Yes, invite teammates, set roles, share saved views.
+**How do I share results?** Share within workspace, export tables, or copy cited answers.
+**Can I connect Google Drive/SharePoint/Dropbox?** Yes, connectors available; Enterprise can add more.
+**Do you show usage analytics?** Yes, view HEU usage, document counts, query history.
+**Can I upload scans or images?** Text-PDFs best; scanned PDFs work if text readable.
+**Can I bulk import from cloud drives?** Yes, via connected drives or folder upload.
+**Can I export my data?** Yes, export extracted fields and logs (CSV/JSON).
+**Can I see history/audit logs?** Yes, we log uploads, edits, and queries.
+
+### Support & Policies
+**How can I get support?** Use in-app chat or email support@hobsonschoice.ai
+**Privacy Policy and Terms?** Available at https://hobsonschoice.ai/privacy-policy
+**Refund policy?** See https://hobsonschoice.ai/refund-policy
+**Is Hobson compliant?** Yes, adheres to data protection and security standards.
+**Where is my data stored?** Securely stored with encryption and protection.
+**Can I control what data Hobson can see?** Yes, per-workspace and role-based controls.
+
+### Technical Questions  
+**What file formats are supported?** PDF, DOCX, common text files, CSV/Excel for data.
+**Does Hobson work on mobile?** Yes, runs in browser and works on mobile for core tasks.
+**How does Hobson remember context?** Uses RAG (retrieval-augmented generation). On Essential Plus, can add contacts and schedule for richer context.
 
 ## HEUs (Hobson Energy Units) - Complete Guide
 
