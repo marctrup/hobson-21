@@ -83,6 +83,7 @@ export const HobsonChatbot = () => {
     if (!text.trim() || isLoading) return;
 
     const userMessage = text.trim();
+    setInput(''); // Clear input field
     
     // Add user message
     const newMessages = [...messages, { role: 'user' as const, content: userMessage }];
