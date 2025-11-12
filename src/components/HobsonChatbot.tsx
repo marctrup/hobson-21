@@ -11,11 +11,46 @@ interface Message {
   content: string;
 }
 
+const FOLLOW_UP_QUESTIONS = [
+  "What can I do with Hobson?",
+  "How do I get started?",
+  "How do I work efficiently with Hobson?",
+  "How should I structure my prompts for the best results?",
+  "What should I do when I hit an error?",
+  "Can Hobson connect to our systems?",
+  "Can I control who has access?",
+  "How can I improve answer quality?",
+  "How long does onboarding take?",
+  "Can I change data visibility?",
+  "Can I delete documents or a workspace?",
+  "What are Playbooks?",
+  "Can my team collaborate?",
+  "How do I share results?",
+  "Can I connect Google Drive/SharePoint/Dropbox?",
+  "Do you show usage analytics?",
+  "Can I upload scans or images?",
+  "Can I bulk import from cloud drives?",
+  "Can I export my data?",
+  "Can I see history/audit?",
+  "Which file types are supported?",
+  "Does Hobson work on mobile?",
+  "How does Hobson remember context?",
+  "Who owns the data and outputs?",
+  "Is Hobson GDPR compliant?",
+  "Where can I find Hobson's Privacy Policy and Terms of Service?",
+  "What is Hobson's refund policy?",
+];
+
+const getRandomFollowUpQuestion = () => {
+  return FOLLOW_UP_QUESTIONS[Math.floor(Math.random() * FOLLOW_UP_QUESTIONS.length)];
+};
+
 export const HobsonChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [followUpQuestion, setFollowUpQuestion] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -68,6 +103,8 @@ export const HobsonChatbot = () => {
       
       if (assistantMessage) {
         setMessages([...newMessages, { role: 'assistant', content: assistantMessage }]);
+        // Generate a new random follow-up question after the response
+        setFollowUpQuestion(getRandomFollowUpQuestion());
       } else {
         throw new Error('No response from AI');
       }
@@ -285,6 +322,19 @@ export const HobsonChatbot = () => {
                       className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
                     >
                       Document types?
+                    </button>
+                  </div>
+                )}
+                
+                {/* Follow-up question - show after each answer except the welcome message */}
+                {message.role === 'assistant' && index > 0 && index === messages.length - 1 && followUpQuestion && !isLoading && (
+                  <div className="mt-3 px-2">
+                    <button
+                      onClick={() => handleQuickQuestion(followUpQuestion)}
+                      disabled={isLoading}
+                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50 w-full text-left"
+                    >
+                      {followUpQuestion}
                     </button>
                   </div>
                 )}
