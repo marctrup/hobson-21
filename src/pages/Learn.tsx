@@ -22,6 +22,44 @@ const Learn = () => {
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
 
+  // Handle hash navigation on mount and hash change
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1); // Remove the # symbol
+      if (hash) {
+        // Map hash to horizontal tab
+        const tabMap: Record<string, string> = {
+          'use-cases': 'use-cases',
+          'features': 'features',
+          'roadmap': 'features',
+          'integrations': 'integrations',
+          'introduction': 'introduction',
+          'prompt-engineering': 'prompt-engineering',
+          'glossary': 'glossary',
+        };
+        
+        if (tabMap[hash]) {
+          setActiveHorizontalTab(tabMap[hash]);
+          
+          // Set vertical tab for specific sections
+          if (hash === 'roadmap') {
+            setActiveVerticalTab('roadmap');
+          }
+        }
+      }
+    };
+
+    // Run on mount
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
   // Set initial active section based on current tab
   useEffect(() => {
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
