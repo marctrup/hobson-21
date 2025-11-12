@@ -3824,11 +3824,12 @@ Content-Type: multipart/form-data
                     <button
                       key={tab.id}
                       onClick={() => {
-                        const newVerticalTab = getContextualVerticalTabs(tab.id)[0]?.id || 'overview';
+                        const contextualTabs = getContextualVerticalTabs(tab.id);
+                        const newVerticalTab = contextualTabs[0]?.id || tab.id;
                         setActiveHorizontalTab(tab.id);
                         setActiveVerticalTab(newVerticalTab);
                         setIsGlobalPageActive(false);
-                        navigate(`/learn/${newVerticalTab}`, { replace: true });
+                        navigate(`/learn/${tab.id === 'use-cases' ? 'use-cases' : newVerticalTab}`, { replace: true });
                       }}
                       className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
                         activeHorizontalTab === tab.id && !isGlobalPageActive
