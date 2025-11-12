@@ -25,25 +25,55 @@ const Learn = () => {
   // Handle hash navigation on mount and hash change
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.substring(1); // Remove the # symbol
+      const hash = window.location.hash.substring(1).toLowerCase(); // Remove # and lowercase
       if (hash) {
-        // Map hash to horizontal tab
-        const tabMap: Record<string, string> = {
-          'use-cases': 'use-cases',
-          'features': 'features',
-          'roadmap': 'features',
-          'integrations': 'integrations',
-          'introduction': 'introduction',
-          'prompt-engineering': 'prompt-engineering',
-          'glossary': 'glossary',
+        // Map hash to horizontal and vertical tabs
+        const hashMap: Record<string, { horizontal: string; vertical?: string }> = {
+          // Introduction section
+          'introduction': { horizontal: 'introduction', vertical: 'welcome' },
+          'welcome': { horizontal: 'introduction', vertical: 'welcome' },
+          'plans-credits': { horizontal: 'introduction', vertical: 'plans-credits' },
+          'plans-and-credit': { horizontal: 'introduction', vertical: 'plans-credits' }, // Handle typo
+          'faq': { horizontal: 'introduction', vertical: 'faq' },
+          'getting-started': { horizontal: 'introduction', vertical: 'getting-started' },
+          
+          // Features section
+          'features': { horizontal: 'features', vertical: 'core-features' },
+          'core-features': { horizontal: 'features', vertical: 'core-features' },
+          'corefeatures': { horizontal: 'features', vertical: 'core-features' }, // Handle no-dash version
+          'advanced-features': { horizontal: 'features', vertical: 'advanced-features' },
+          'feature-comparison': { horizontal: 'features', vertical: 'feature-comparison' },
+          'roadmap': { horizontal: 'features', vertical: 'roadmap' },
+          
+          // Integrations section
+          'integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
+          'intergrations': { horizontal: 'integrations', vertical: 'available-integrations' }, // Handle typo
+          'available-integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
+          'setup-guide': { horizontal: 'integrations', vertical: 'setup-guide' },
+          'set-up-guide': { horizontal: 'integrations', vertical: 'setup-guide' }, // Handle dash variation
+          'api-reference': { horizontal: 'integrations', vertical: 'api-reference' },
+          'troubleshooting': { horizontal: 'integrations', vertical: 'troubleshooting' },
+          
+          // Prompt Engineering section
+          'prompt-engineering': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
+          'fundamentals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
+          'fundementals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' }, // Handle typo
+          'advanced-prompting': { horizontal: 'prompt-engineering', vertical: 'advanced-prompting' },
+          'debugging-prompts': { horizontal: 'prompt-engineering', vertical: 'debugging-prompts' },
+          
+          // Use Cases section
+          'use-cases': { horizontal: 'use-cases' },
+          
+          // Glossary section
+          'glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
+          'hobson-glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
         };
         
-        if (tabMap[hash]) {
-          setActiveHorizontalTab(tabMap[hash]);
-          
-          // Set vertical tab for specific sections
-          if (hash === 'roadmap') {
-            setActiveVerticalTab('roadmap');
+        const mapping = hashMap[hash];
+        if (mapping) {
+          setActiveHorizontalTab(mapping.horizontal);
+          if (mapping.vertical) {
+            setActiveVerticalTab(mapping.vertical);
           }
         }
       }
