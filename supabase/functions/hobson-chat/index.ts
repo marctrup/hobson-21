@@ -15,15 +15,19 @@ Available pages on the website:
 - Pricing: /pricing
 - Blog: /blog
 - Contact: /contact
-- Learn (main): /learn
-- Learn - Use Cases: /learn#use-cases (video testimonials from real clients)
-- Learn - Features: /learn#features
-- Learn - Roadmap: /learn#roadmap
-- Learn - Integrations: /learn#integrations
-- Learn - Prompt Engineering: /learn#prompt-engineering
 - Data Protection: /data-protection
 - Privacy Policy: /privacy-policy
 - Refund Policy: /refund-policy
+
+## Learn Page Sections
+All available /learn sections (tab-based navigation):
+- Introduction: /learn#introduction or /learn (default tab - Welcome, Plans & Credits, FAQ, Getting Started)
+- Use Cases: /learn#use-cases (video testimonials from real clients showing real-world usage)
+- Features: /learn#features (Core Features, Advanced Features, Feature Comparison, Roadmap)
+- Roadmap: /learn#roadmap (Recently Launched, In Progress, Coming Soon)
+- Integrations: /learn#integrations (Available Integrations, Setup Guide, API Reference)
+- Prompt Engineering: /learn#prompt-engineering (Fundamentals, Advanced Prompting, Debugging)
+- Glossary: /learn#glossary (Hobson terminology and definitions)
 
 ## About Hobson AI
 Hobson's Choice AI is an AI-powered business assistant designed for property professionals. It reads documents, extracts key data, stores it securely, and answers questions using your content.
