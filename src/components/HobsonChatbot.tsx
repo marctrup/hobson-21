@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, RotateCcw } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
@@ -53,6 +54,7 @@ export const HobsonChatbot = () => {
   const [followUpQuestion, setFollowUpQuestion] = useState<string>('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
+  const navigate = useNavigate();
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -208,16 +210,16 @@ export const HobsonChatbot = () => {
         <a
           key={`link-${matchStart}`}
           href={linkUrl}
-          className="text-primary hover:underline font-medium"
+          className="text-primary hover:underline font-medium cursor-pointer"
           onClick={(e) => {
+            e.preventDefault();
             if (linkUrl.startsWith('/')) {
-              e.preventDefault();
-              window.location.href = linkUrl;
+              navigate(linkUrl);
               setIsOpen(false);
+            } else if (linkUrl.startsWith('http')) {
+              window.open(linkUrl, '_blank', 'noopener,noreferrer');
             }
           }}
-          target={linkUrl.startsWith('http') ? '_blank' : undefined}
-          rel={linkUrl.startsWith('http') ? 'noopener noreferrer' : undefined}
         >
           {linkText}
         </a>
