@@ -332,7 +332,7 @@ export const HobsonChatbot = () => {
                     <button
                       onClick={() => handleQuickQuestion(followUpQuestion)}
                       disabled={isLoading}
-                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50 w-full text-left"
+                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow w-full text-left"
                     >
                       {followUpQuestion}
                     </button>
