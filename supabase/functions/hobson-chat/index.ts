@@ -24,7 +24,7 @@ All available /learn sections (tab-based navigation):
 - Introduction: /learn#introduction or /learn (default tab - Welcome, Plans & Credits, FAQ, Getting Started)
 - Use Cases: /learn#use-cases (video testimonials from real clients showing real-world usage)
 - Features: /learn#features (Core Features, Advanced Features, Feature Comparison, Roadmap)
-- Roadmap: /learn#roadmap (Recently Launched, In Progress, Coming Soon)
+- Roadmap: /learn#roadmap (Recently Launched, In Progress, Wish List)
 - Integrations: /learn#integrations (Available Integrations, Setup Guide, API Reference)
 - Prompt Engineering: /learn#prompt-engineering (Fundamentals, Advanced Prompting, Debugging)
 - Glossary: /learn#glossary (Hobson terminology and definitions)
@@ -347,7 +347,7 @@ Hobson AI works on mobile devices:
 - Cross-document insights and comparisons: Compare terms across multiple documents simultaneously
 - Improved accuracy for complex property documents: Enhanced AI models trained on property and legal documents
 
-### Wishlist (Coming Soon)
+### Wish List
 - Integrations with document management systems (DMS) and CRMs: Seamless connection to existing tools
 - Predictive insights: Proactive alerts about potential issues and opportunities
 - Expanded compliance automation: Automated compliance checks and reporting
