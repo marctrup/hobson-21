@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link, useLocation, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Plus } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HEUBarVisualization } from '@/components/HEUBarVisualization';
@@ -15,18 +15,144 @@ import owlMascot from "@/assets/owl-mascot.png";
 
 const Learn = () => {
   const { user } = useAuth();
-  const location = useLocation();
+  const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
+  const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
+  const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
+  const [activeTocSection, setActiveTocSection] = useState('getting-started');
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
-  
-  // Determine active tabs from URL
-  const pathParts = location.pathname.split('/').filter(Boolean);
-  const activeHorizontalTab = pathParts[1] || 'introduction';
-  const activeVerticalTab = pathParts[2] || 'welcome';
-  const isGlobalPageActive = ['announcements', 'status', 'feature-requests'].includes(activeVerticalTab);
 
   // Handle hash navigation on mount and hash change
   useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1); // Remove the # symbol
+      if (hash) {
+        // Map hash to horizontal tab
+        const tabMap: Record<string, string> = {
+          'use-cases': 'use-cases',
+          'features': 'features',
+          'roadmap': 'features',
+          'integrations': 'integrations',
+          'introduction': 'introduction',
+          'prompt-engineering': 'prompt-engineering',
+          'glossary': 'glossary',
+        };
+        
+        if (tabMap[hash]) {
+          setActiveHorizontalTab(tabMap[hash]);
+          
+          // Set vertical tab for specific sections
+          if (hash === 'roadmap') {
+            setActiveVerticalTab('roadmap');
+          }
+        }
+      }
+    };
+
+    // Run on mount
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
+  // Set initial active section based on current tab
+  useEffect(() => {
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
+      setActiveTocSection('getting-started');
+    } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
+      setActiveTocSection('overview');
+    } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
+      setActiveTocSection('hobson-platform-overview');
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') {
+      setActiveTocSection('what-is-prompting');
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') {
+      setActiveTocSection('prompt-library');
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts') {
+      setActiveTocSection('quick-fixes');
+    }
+  }, [activeHorizontalTab, activeVerticalTab]);
+
+  // Scroll spy effect - moved to top level to avoid hook order issues
+  useEffect(() => {
+    let tocSections: string[] = [];
+    
+    // Only run scroll spy for pages that have table of contents
+    if ((activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') || 
+        (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') ||
+        (activeHorizontalTab === 'features' && ['core-features', 'advanced-features', 'feature-comparison', 'roadmap'].includes(activeVerticalTab)) ||
+        (activeHorizontalTab === 'integrations' && ['available-integrations', 'setup-guide', 'api-reference', 'troubleshooting'].includes(activeVerticalTab)) ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts')) {
+      
+      if (activeHorizontalTab === 'introduction') {
+        if (activeVerticalTab === 'faq') {
+          tocSections = ['getting-started', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
+        } else if (activeVerticalTab === 'plans-credits') {
+          tocSections = ['overview', 'starter-pack', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
+        }
+      } else if (activeHorizontalTab === 'features') {
+        if (activeVerticalTab === 'core-features') {
+          tocSections = ['intelligent-document-processing', 'smart-search-insights', 'real-time-analytics', 'collaboration-ready', 'security-compliance'];
+        } else if (activeVerticalTab === 'advanced-features') {
+          tocSections = ['ai-powered-summarisation', 'cross-document-insights', 'automated-report-generation', 'clause-obligation-tracking', 'integration-ready'];
+        } else if (activeVerticalTab === 'feature-comparison') {
+          tocSections = ['comparison-table', 'key-differentiators'];
+        } else if (activeVerticalTab === 'roadmap') {
+          tocSections = ['recently-launched', 'in-progress', 'coming-soon'];
+        }
+      } else if (activeHorizontalTab === 'integrations') {
+        if (activeVerticalTab === 'available-integrations' || !activeVerticalTab) {
+          tocSections = ['planned-integrations', 'why-integrations-matter', 'what-were-working-towards', 'benefit-for-you'];
+        } else if (activeVerticalTab === 'setup-guide') {
+          tocSections = ['coming-soon-notice', 'what-to-expect'];
+        } else if (activeVerticalTab === 'api-reference') {
+          tocSections = ['overview', 'authentication', 'endpoints', 'document-analysis', 'query-interface', 'webhooks', 'rate-limits', 'error-handling', 'examples'];
+        } else if (activeVerticalTab === 'troubleshooting') {
+          tocSections = ['coming-soon-notice', 'what-to-expect'];
+        }
+      } else if (activeHorizontalTab === 'prompt-engineering') {
+        if (activeVerticalTab === 'fundamentals') {
+          tocSections = ['what-is-prompting', 'why-prompting-matters', 'how-hobson-thinks', 'clear-method', 'advanced-tactics'];
+        } else if (activeVerticalTab === 'advanced-prompting') {
+          tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building'];
+        } else if (activeVerticalTab === 'debugging-prompts') {
+          tocSections = ['quick-fixes', 'deep-reviews', 'fragile-areas', 'performance-issues', 'persistent-problems', 'debugging-flows', 'root-cause', 'pro-tips'];
+        }
+      }
+
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY + 150; // offset for header and better accuracy
+
+        for (let i = tocSections.length - 1; i >= 0; i--) {
+          const element = document.getElementById(tocSections[i]);
+          if (element && element.offsetTop <= scrollPosition) {
+            setActiveTocSection(tocSections[i]);
+            break;
+          }
+        }
+      };
+
+      const handleClick = () => {
+        // Re-run scroll detection after any click to ensure proper highlighting
+        setTimeout(handleScroll, 100);
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('click', handleClick);
+      handleScroll(); // Set initial active section
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('click', handleClick);
+      };
+    }
+  }, [activeHorizontalTab, activeVerticalTab]);
     const handleHashChange = () => {
       const hash = window.location.hash.substring(1); // Remove the # symbol
       if (hash) {
@@ -176,59 +302,59 @@ const Learn = () => {
   // Dynamic submenu items based on horizontal selection
   const getContextualVerticalTabs = (horizontalTab: string) => {
     const baseItems = [
-      { id: 'overview', label: 'Overview', icon: Heart, path: '/learn/overview' },
-      { id: 'documentation', label: 'Documentation', icon: FileText, path: '/learn/documentation' },
-      { id: 'examples', label: 'Examples', icon: Play, path: '/learn/examples' },
-      { id: 'faq', label: 'FAQ', icon: HelpCircle, path: '/learn/faq' },
+      { id: 'overview', label: 'Overview', icon: Heart },
+      { id: 'documentation', label: 'Documentation', icon: FileText },
+      { id: 'examples', label: 'Examples', icon: Play },
+      { id: 'faq', label: 'FAQ', icon: HelpCircle },
     ];
 
     switch (horizontalTab) {
       case 'introduction':
         return [
-          { id: 'welcome', label: 'Welcome', icon: Heart, path: '/learn/introduction/welcome' },
-          { id: 'plans-credits', label: 'Plans and Credits', icon: CreditCard, path: '/learn/introduction/plans-credits' },
-          { id: 'faq', label: 'FAQ', icon: HelpCircle, path: '/learn/introduction/faq' },
-          { id: 'getting-started', label: 'Getting started', icon: Play, path: '/learn/introduction/getting-started' },
+          { id: 'welcome', label: 'Welcome', icon: Heart },
+          { id: 'plans-credits', label: 'Plans and Credits', icon: CreditCard },
+          { id: 'faq', label: 'FAQ', icon: HelpCircle },
+          { id: 'getting-started', label: 'Getting started', icon: Play },
         ];
       case 'features':
         return [
-          { id: 'core-features', label: 'Core Features', icon: Heart, path: '/learn/features/core-features' },
-          { id: 'advanced-features', label: 'Advanced Features', icon: Wand2, path: '/learn/features/advanced-features' },
-          { id: 'feature-comparison', label: 'Feature Comparison', icon: FileText, path: '/learn/features/feature-comparison' },
-          { id: 'roadmap', label: 'Roadmap', icon: Clock, path: '/learn/features/roadmap' },
+          { id: 'core-features', label: 'Core Features', icon: Heart },
+          { id: 'advanced-features', label: 'Advanced Features', icon: Wand2 },
+          { id: 'feature-comparison', label: 'Feature Comparison', icon: FileText },
+          { id: 'roadmap', label: 'Roadmap', icon: Clock },
         ];
       case 'integrations':
         return [
-          { id: 'available-integrations', label: 'Available Integrations', icon: Puzzle, path: '/learn/integrations/available-integrations' },
-          { id: 'setup-guide', label: 'Setup Guide', icon: Play, path: '/learn/integrations/setup-guide' },
-          { id: 'api-reference', label: 'API Reference', icon: FileText, path: '/learn/integrations/api-reference' },
-          { id: 'troubleshooting', label: 'Troubleshooting', icon: HelpCircle, path: '/learn/integrations/troubleshooting' },
+          { id: 'available-integrations', label: 'Available Integrations', icon: Puzzle },
+          { id: 'setup-guide', label: 'Setup Guide', icon: Play },
+          { id: 'api-reference', label: 'API Reference', icon: FileText },
+          { id: 'troubleshooting', label: 'Troubleshooting', icon: HelpCircle },
         ];
       case 'tips-tricks':
         return [
-          { id: 'best-practices', label: 'Best Practices', icon: Heart, path: '/learn/tips-tricks/best-practices' },
-          { id: 'productivity-tips', label: 'Productivity Tips', icon: Lightbulb, path: '/learn/tips-tricks/productivity-tips' },
-          { id: 'common-mistakes', label: 'Common Mistakes', icon: HelpCircle, path: '/learn/tips-tricks/common-mistakes' },
-          { id: 'advanced-techniques', label: 'Advanced Techniques', icon: Wand2, path: '/learn/tips-tricks/advanced-techniques' },
+          { id: 'best-practices', label: 'Best Practices', icon: Heart },
+          { id: 'productivity-tips', label: 'Productivity Tips', icon: Lightbulb },
+          { id: 'common-mistakes', label: 'Common Mistakes', icon: HelpCircle },
+          { id: 'advanced-techniques', label: 'Advanced Techniques', icon: Wand2 },
         ];
       case 'prompt-engineering':
         return [
-          { id: 'fundamentals', label: 'Fundamentals', icon: Users, path: '/learn/prompt-engineering/fundamentals' },
-          { id: 'advanced-prompting', label: 'Advanced Prompting', icon: Wand2, path: '/learn/prompt-engineering/advanced-prompting' },
-          { id: 'debugging-prompts', label: 'Debugging Prompts', icon: FileText, path: '/learn/prompt-engineering/debugging-prompts' },
+          { id: 'fundamentals', label: 'Fundamentals', icon: Users },
+          { id: 'advanced-prompting', label: 'Advanced Prompting', icon: Wand2 },
+          { id: 'debugging-prompts', label: 'Debugging Prompts', icon: FileText },
         ];
       case 'use-cases':
         return [];
       case 'glossary':
         return [
-          { id: 'hobson-glossary', label: 'Hobson Glossary', icon: FileText, path: '/learn/glossary/hobson-glossary' },
+          { id: 'hobson-glossary', label: 'Hobson Glossary', icon: FileText },
         ];
       case 'changelog':
         return [
-          { id: 'latest-updates', label: 'Latest Updates', icon: Clock, path: '/learn/changelog/latest-updates' },
-          { id: 'release-notes', label: 'Release Notes', icon: FileText, path: '/learn/changelog/release-notes' },
-          { id: 'version-history', label: 'Version History', icon: Activity, path: '/learn/changelog/version-history' },
-          { id: 'upcoming-changes', label: 'Upcoming Changes', icon: Bell, path: '/learn/changelog/upcoming-changes' },
+          { id: 'latest-updates', label: 'Latest Updates', icon: Clock },
+          { id: 'release-notes', label: 'Release Notes', icon: FileText },
+          { id: 'version-history', label: 'Version History', icon: Activity },
+          { id: 'upcoming-changes', label: 'Upcoming Changes', icon: Bell },
         ];
       default:
         return baseItems;
