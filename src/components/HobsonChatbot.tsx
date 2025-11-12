@@ -263,28 +263,28 @@ export const HobsonChatbot = () => {
                       disabled={isLoading}
                       className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
                     >
-                      Pricing & HEUs
+                      Pricing & HEUs?
                     </button>
                     <button
                       onClick={() => handleQuickQuestion('How does Hobson work?')}
                       disabled={isLoading}
                       className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
                     >
-                      How it works
+                      How it works?
                     </button>
                     <button
                       onClick={() => handleQuickQuestion('Tell me about security')}
                       disabled={isLoading}
                       className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
                     >
-                      Security
+                      Security?
                     </button>
                     <button
                       onClick={() => handleQuickQuestion('What document types do you support?')}
                       disabled={isLoading}
                       className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
                     >
-                      Document types
+                      Document types?
                     </button>
                   </div>
                 )}
