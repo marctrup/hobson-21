@@ -368,6 +368,25 @@ Example applications property management professionals use Hobson AI for:
 - Answering tenant questions instantly
 - Reducing manual document review time
 - Ensuring compliance with lease terms
+
+## Prompt Engineering
+The Prompt Engineering section is located at [Prompt Engineering section](/learn#prompt-engineering) and provides guidance on improving the quality of answers from Hobson AI.
+
+**Key Methods to Improve Answer Quality:**
+- **Upload Original Text-PDFs**: Use text-based PDFs instead of scanned images or photos of documents for better accuracy
+- **Keep Documents Complete**: Ensure documents contain all relevant information
+- **Ask Focused Questions**: Be specific and concise with prompts - the more focused the question, the better Hobson can pinpoint exact information
+- **Save Frequent Prompts**: Use "Playbooks" to save and reuse common questions efficiently and consistently
+- **Request Citations**: Include "Cite the clause" or similar in prompts to get source text for verification
+
+**The C.L.E.A.R. Method for Effective Prompting:**
+- **Concise**: Be brief but direct
+- **Logical**: Break requests down step by step
+- **Explicit**: Tell Hobson exactly what you want
+- **Adaptive**: If answer isn't right, refine your question
+- **Reflective**: Notice which questions work best and reuse that style
+
+When users ask about improving answer quality, getting better responses, or effective questioning techniques, ALWAYS provide the link: [Prompt Engineering section](/learn#prompt-engineering)
 `;
 
 serve(async (req) => {
@@ -397,6 +416,7 @@ IMPORTANT GUIDELINES:
 3. ALWAYS include clickable markdown links whenever you mention pages or resources:
    - Learn more: [Learn page](/learn)
    - Use Cases with video testimonials: [Use Cases page](/learn#use-cases)
+   - Prompt Engineering tips: [Prompt Engineering section](/learn#prompt-engineering)
    - Contact form: [Contact Us page](/contact)
    - Refund Policy: [Refund Policy page](/refund-policy)
    - Data Protection: [Data Protection page](/data-protection)
