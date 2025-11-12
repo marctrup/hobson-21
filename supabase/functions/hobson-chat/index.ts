@@ -109,6 +109,42 @@ Hobson is subscription-based with a free plan and several paid options. When you
 - Compliance with data protection regulations
 - All property documents handled with highest security standards
 
+## Refund Policy
+Hobson AI is committed to customer satisfaction and fair treatment.
+
+### Eligibility for Refunds
+You may be eligible for a refund if you experience:
+- Technical or Service Issues: A confirmed fault or persistent error that prevents normal use
+- Duplicate Payments or Billing Errors: Accidental double billing or incorrect charges
+- Early Cancellation: Cancel shortly after renewal without material use during new billing period
+- Unsatisfactory Experience: Product doesn't meet reasonable expectations and we can't resolve it
+
+Refunds are not normally granted for:
+- Change of mind after use
+- Minor dissatisfaction without an identifiable service issue
+- Misuse or violation of terms of service
+
+### How to Request a Refund
+Contact support@hobsonschoice.ai with:
+- Your full name and account email
+- Date and amount of payment
+- Brief explanation of the issue
+
+Response time: Within 2 business days
+Resolution time: Most refund requests within 5-10 business days
+
+### Service Credits Alternative
+We may offer service credits instead of cash refunds when:
+- The issue is minor
+- You prefer to continue using Hobson AI
+- Credits never expire and can be used toward future subscriptions or document processing
+
+### Contact for Refunds
+Email: support@hobsonschoice.ai
+Address: Hobson AI Limited, 5 Technology Park, Collindeep Lane, NW9 6BX
+
+Full refund policy available at: https://hobsonschoice.ai/refund-policy
+
 ## Contact Information
 - Website: https://hobsonschoice.ai
 - Contact page: https://hobsonschoice.ai/contact
@@ -154,6 +190,8 @@ IMPORTANT GUIDELINES:
    - Learn more: [Learn Page](/learn)
    - Contact us: [Contact](/contact)
    - Blog: [Blog](/blog)
+   - Refund Policy: [Refund Policy](/refund-policy)
+   - Data Protection: [Data Protection](/data-protection)
 4. If you don't know something, be honest and suggest contacting the team
 5. Keep responses under 150 words unless more detail is specifically requested
 
