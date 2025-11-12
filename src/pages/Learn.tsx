@@ -10,7 +10,6 @@ import { AuthDialog } from '@/components/features/AuthDialog';
 import { CreatePostDialog } from '@/components/features/CreatePostDialog';
 import { Button } from '@/components/ui/button';
 import { UseCasesContent } from '@/components/UseCasesContent';
-import { LearnIntroVideo } from '@/components/videos/LearnIntroVideo';
 import { GlobalHeader } from '@/components/GlobalHeader';
 import owlMascot from "@/assets/owl-mascot.png";
 
@@ -2561,13 +2560,8 @@ Content-Type: multipart/form-data
                    <h1 className="text-2xl md:text-3xl font-bold text-foreground">Welcome</h1>
                  </div>
                  <p className="text-base md:text-lg text-muted-foreground">Learn about Hobson and how to get started</p>
-               </div>
-               
-                {/* Video container - centered and responsive */}
-                <div className="w-full flex justify-center">
-                  <LearnIntroVideo />
                 </div>
-               
+                
                {/* Description text below video - responsive alignment */}
                <div className="text-center md:text-left mt-6 md:mt-12 px-4 md:px-0" 
                     style={{ 
