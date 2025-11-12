@@ -157,6 +157,29 @@ For those interested in learning more about Hobson AI:
 - Speak directly with Marc, our Director: +447973735706
 - We're happy to answer any questions and discuss how Hobson AI can help your property management needs
 
+## Mobile Compatibility
+Hobson AI works on mobile devices:
+- **Current capability**: Hobson runs in the browser and works on mobile for core tasks
+- **Future plans**: We will be implementing native mobile apps and the ability to access Hobson through WhatsApp and Microsoft Teams (on our wishlist)
+
+## Product Roadmap
+
+### Recently Launched
+- AI-powered document summarisation: Transform lengthy documents into clear, actionable summaries
+- Chat interface for natural-language queries: Ask questions in plain language and get instant answers
+- Clause and obligation tracking: Automatically track key dates, deadlines, and obligations
+
+### In Progress
+- Smarter follow-up questioning in chat: Enhanced conversational AI with better context understanding
+- Cross-document insights and comparisons: Compare terms across multiple documents simultaneously
+- Improved accuracy for complex property documents: Enhanced AI models trained on property and legal documents
+
+### Wishlist (Coming Soon)
+- Integrations with document management systems (DMS) and CRMs: Seamless connection to existing tools
+- Predictive insights: Proactive alerts about potential issues and opportunities
+- Expanded compliance automation: Automated compliance checks and reporting
+- Mobile app and messaging platform integrations: Native mobile apps, WhatsApp, and Microsoft Teams access
+
 ## Use Cases
 Property management professionals use Hobson AI to:
 - Quickly find information in large document portfolios
