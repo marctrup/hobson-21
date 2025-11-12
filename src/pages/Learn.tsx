@@ -1282,7 +1282,7 @@ const Learn = () => {
                 <div className="flex items-center gap-2">
                   <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                   <p className="text-orange-700 dark:text-orange-300 font-medium">
-                    Integrations are not yet available in Hobson AI — all integrations listed here are coming soon.
+                    Integrations are not yet available in Hobson AI — all integrations listed here are on our wish list to be done.
                   </p>
                 </div>
               </div>
