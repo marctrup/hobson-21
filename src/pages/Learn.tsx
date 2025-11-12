@@ -3824,9 +3824,11 @@ Content-Type: multipart/form-data
                     <button
                       key={tab.id}
                       onClick={() => {
+                        const newVerticalTab = getContextualVerticalTabs(tab.id)[0]?.id || 'overview';
                         setActiveHorizontalTab(tab.id);
-                        setActiveVerticalTab(getContextualVerticalTabs(tab.id)[0]?.id || 'overview');
+                        setActiveVerticalTab(newVerticalTab);
                         setIsGlobalPageActive(false);
+                        navigate(`/learn/${newVerticalTab}`, { replace: true });
                       }}
                       className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
                         activeHorizontalTab === tab.id && !isGlobalPageActive
