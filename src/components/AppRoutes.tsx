@@ -118,7 +118,7 @@ const AppContent = () => {
               <Route path="/home/property-management-software" element={<Navigate to="/" replace />} />
               <Route path="/real-estate-ai" element={<Navigate to="/" replace />} />
               <Route path="/tenancy-document" element={<Navigate to="/blog/making-light-work-of-a-tenancy-document" replace />} />
-              <Route path="/features" element={<Navigate to="/" replace />} />
+              <Route path="/features" element={<Navigate to="/learn/core-features" replace />} />
               <Route path="/features/real_estate_ai" element={<Navigate to="/" replace />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
