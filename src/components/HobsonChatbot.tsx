@@ -68,7 +68,7 @@ export const HobsonChatbot = () => {
       setMessages([
         {
           role: 'assistant',
-          content: "Hey there! What would you like to know more about?",
+          content: "Hey there! What would you like to know about?",
         },
       ]);
     }
@@ -169,7 +169,7 @@ export const HobsonChatbot = () => {
     setMessages([
       {
         role: 'assistant',
-        content: "Hey there! What would you like to know more about?",
+        content: "Hey there! What would you like to know about?",
       },
     ]);
     toast({
