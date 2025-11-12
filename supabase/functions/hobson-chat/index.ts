@@ -151,6 +151,12 @@ Full refund policy available at: https://hobsonschoice.ai/refund-policy
 - Learn more: https://hobsonschoice.ai/learn
 - Pricing details: https://hobsonschoice.ai/pricing
 
+### How to Get in Touch
+For those interested in learning more about Hobson AI:
+- Fill out our contact form: [Contact Us](/contact)
+- Speak directly with Marc, our Director: +447973735706
+- We're happy to answer any questions and discuss how Hobson AI can help your property management needs
+
 ## Use Cases
 Property management professionals use Hobson AI to:
 - Quickly find information in large document portfolios
@@ -190,8 +196,11 @@ IMPORTANT GUIDELINES:
    - Contact us: [Contact](/contact)
    - Refund Policy: [Refund Policy](/refund-policy)
    - Data Protection: [Data Protection](/data-protection)
-4. If you don't know something, be honest and suggest contacting the team
-5. Keep responses under 150 words unless more detail is specifically requested
+4. When users ask how to contact or want to speak with someone, always mention:
+   - The contact form at [Contact Us](/contact)
+   - Marc (our Director) is available at +447973735706 for interested prospects
+5. If you don't know something, be honest and suggest contacting the team
+6. Keep responses under 150 words unless more detail is specifically requested
 
 KNOWLEDGE BASE:
 ${WEBSITE_CONTENT}
