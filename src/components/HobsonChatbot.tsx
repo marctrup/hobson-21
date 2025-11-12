@@ -181,42 +181,57 @@ export const HobsonChatbot = () => {
 
   // Convert markdown-style links to HTML links
   const renderMessage = (content: string) => {
-    // Convert [text](/link) to clickable links
+    const elements: React.ReactNode[] = [];
+    let lastIndex = 0;
     const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-    const parts = content.split(linkRegex);
+    let match;
+
+    while ((match = linkRegex.exec(content)) !== null) {
+      const matchIndex = match.index;
+      const [fullMatch, text, url] = match;
+      
+      // Add text before the link
+      if (matchIndex > lastIndex) {
+        elements.push(
+          <span key={`text-${lastIndex}`}>
+            {content.substring(lastIndex, matchIndex)}
+          </span>
+        );
+      }
+      
+      // Add the link
+      elements.push(
+        <a
+          key={`link-${matchIndex}`}
+          href={url}
+          className="text-primary hover:underline font-medium"
+          onClick={(e) => {
+            if (url.startsWith('/')) {
+              e.preventDefault();
+              window.location.href = url;
+              setIsOpen(false);
+            }
+          }}
+          target={url.startsWith('http') ? '_blank' : undefined}
+          rel={url.startsWith('http') ? 'noopener noreferrer' : undefined}
+        >
+          {text}
+        </a>
+      );
+      
+      lastIndex = matchIndex + fullMatch.length;
+    }
     
-    return (
-      <>
-        {parts.map((part, index) => {
-          // Every 3rd item starting from index 2 is a link URL
-          if ((index - 2) % 3 === 0 && index > 0) {
-            const text = parts[index - 1];
-            const url = part;
-            return (
-              <a
-                key={index}
-                href={url}
-                className="text-primary hover:underline font-medium"
-                onClick={(e) => {
-                  if (url.startsWith('/')) {
-                    e.preventDefault();
-                    window.location.href = url;
-                    setIsOpen(false);
-                  }
-                }}
-              >
-                {text}
-              </a>
-            );
-          }
-          // Skip the text parts that are part of links
-          if ((index - 1) % 3 === 0 && index > 0) {
-            return null;
-          }
-          return <span key={index}>{part}</span>;
-        })}
-      </>
-    );
+    // Add remaining text after last link
+    if (lastIndex < content.length) {
+      elements.push(
+        <span key={`text-${lastIndex}`}>
+          {content.substring(lastIndex)}
+        </span>
+      );
+    }
+    
+    return <>{elements}</>;
   };
 
   return (
