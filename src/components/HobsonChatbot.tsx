@@ -199,8 +199,13 @@ export const HobsonChatbot = () => {
                     e.stopPropagation();
                     setIsOpen(false);
                     
-                    // Use window.location for hash navigation to ensure hashchange event fires
-                    window.location.href = href;
+                    // Use navigate for React Router navigation
+                    navigate(href);
+                    
+                    // Manually trigger hashchange event for pages that listen to it
+                    setTimeout(() => {
+                      window.dispatchEvent(new HashChangeEvent('hashchange'));
+                    }, 50);
                   }}
                 >
                   {children}
