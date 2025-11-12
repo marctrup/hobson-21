@@ -29,7 +29,6 @@ const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 const DataProtection = lazy(() => import("../pages/DataProtection"));
 const RefundPolicy = lazy(() => import("../pages/RefundPolicy"));
 const Learn = lazy(() => import("../pages/Learn"));
-const LearnIntroduction = lazy(() => import("../pages/LearnIntroduction"));
 const Status = lazy(() => import("../pages/Status"));
 const Announcements = lazy(() => import("../pages/Announcements"));
 const AnnouncementPost = lazy(() => import("../pages/AnnouncementPost"));
@@ -129,7 +128,6 @@ const AppContent = () => {
               <Route path="/data-protection" element={<DataProtection />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/learn" element={<Learn />} />
-              <Route path="/learn/introduction" element={<LearnIntroduction />} />
               <Route path="/status" element={<Status />} />
               <Route path="/announcements" element={<Announcements />} />
               <Route path="/announcement/:slug" element={<AnnouncementPost />} />
