@@ -233,13 +233,13 @@ export const HobsonChatbot = () => {
             {messages.map((message, index) => (
               <div key={index}>
                 <div
-                  className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  className={`flex items-start gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   {message.role === 'assistant' && (
                     <img 
                       src={owlMascotChat} 
                       alt="Hobson Owl" 
-                      className="w-12 h-12 object-contain flex-shrink-0 mb-1"
+                      className="w-16 h-auto object-contain flex-shrink-0"
                     />
                   )}
                   <div
@@ -291,11 +291,11 @@ export const HobsonChatbot = () => {
               </div>
             ))}
             {isLoading && (
-              <div className="flex items-end gap-2 justify-start">
+              <div className="flex items-start gap-2 justify-start">
                 <img 
                   src={owlMascotChat} 
                   alt="Hobson Owl" 
-                  className="w-12 h-12 object-contain flex-shrink-0"
+                  className="w-16 h-auto object-contain flex-shrink-0"
                 />
                 <div className="bg-purple-100 dark:bg-purple-900/30 text-foreground rounded-2xl rounded-bl-sm px-4 py-3">
                   <Loader2 className="w-4 h-4 animate-spin" />
