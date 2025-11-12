@@ -1774,12 +1774,12 @@ Content-Type: multipart/form-data
                 <div className="text-center mb-8">
                   <h1 className="text-3xl font-bold text-foreground mb-6">Troubleshooting</h1>
                   
-                  {/* Coming Soon Banner */}
+                  {/* Notice Banner */}
                   <div id="coming-soon-notice" className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
                     <div className="flex items-center justify-center gap-2">
                       <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
                       <p className="text-orange-700 dark:text-orange-300 font-medium">
-                        This resource is not yet available — Coming Soon.
+                        This resource is not yet available.
                       </p>
                     </div>
                   </div>
