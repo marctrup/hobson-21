@@ -3824,11 +3824,12 @@ Content-Type: multipart/form-data
                     <button
                       key={tab.id}
                       onClick={() => {
-                        const newVerticalTab = getContextualVerticalTabs(tab.id)[0]?.id || 'overview';
+                        const contextualTabs = getContextualVerticalTabs(tab.id);
+                        const newVerticalTab = contextualTabs[0]?.id || tab.id;
                         setActiveHorizontalTab(tab.id);
                         setActiveVerticalTab(newVerticalTab);
                         setIsGlobalPageActive(false);
-                        navigate(`/learn/${newVerticalTab}`, { replace: true });
+                        navigate(`/learn/${tab.id === 'use-cases' ? 'use-cases' : newVerticalTab}`, { replace: true });
                       }}
                       className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
                         activeHorizontalTab === tab.id && !isGlobalPageActive
@@ -3948,11 +3949,12 @@ Content-Type: multipart/form-data
                <select 
                  value={activeHorizontalTab}
                  onChange={(e) => {
-                   const newVerticalTab = getContextualVerticalTabs(e.target.value)[0]?.id || 'overview';
+                   const contextualTabs = getContextualVerticalTabs(e.target.value);
+                   const newVerticalTab = contextualTabs[0]?.id || e.target.value;
                    setActiveHorizontalTab(e.target.value);
                    setActiveVerticalTab(newVerticalTab);
                    setIsGlobalPageActive(false);
-                   navigate(`/learn/${newVerticalTab}`, { replace: true });
+                   navigate(`/learn/${e.target.value === 'use-cases' ? 'use-cases' : newVerticalTab}`, { replace: true });
                  }}
                 className="w-full p-2 border border-border rounded-lg bg-background text-foreground"
               >
