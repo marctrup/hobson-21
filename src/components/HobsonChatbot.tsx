@@ -196,21 +196,11 @@ export const HobsonChatbot = () => {
                   className="text-primary hover:underline font-medium cursor-pointer inline"
                   onClick={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     setIsOpen(false);
                     
-                    // Navigate to the path
-                    navigate(href);
-                    
-                    // If there's a hash, scroll to it after a brief delay
-                    const hash = href.split('#')[1];
-                    if (hash) {
-                      setTimeout(() => {
-                        const element = document.getElementById(hash);
-                        if (element) {
-                          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }
-                      }, 150);
-                    }
+                    // Use window.location for hash navigation to ensure hashchange event fires
+                    window.location.href = href;
                   }}
                 >
                   {children}

@@ -354,16 +354,20 @@ Hobson AI works on mobile devices:
 - Mobile app and messaging platform integrations: Native mobile apps, WhatsApp, and Microsoft Teams access
 
 ## Use Cases
-Property management professionals use Hobson AI to:
-- Quickly find information in large document portfolios
-- Track important dates and deadlines
-- Understand complex lease clauses
-- Answer tenant questions instantly
-- Reduce manual document review time
-- Ensure compliance with lease terms
+The Use Cases section is located at [Use Cases page](/learn#use-cases) and features **video testimonials from real clients** showing how they use Hobson AI in their daily work.
 
-**Learn more about real client use cases:**
-Visit our [Use Cases page](/learn#use-cases) to see video testimonials from clients showing how they use Hobson AI in their daily work. Every organisation has unique needs, and these use cases highlight just some of the ways Hobson AI brings value.
+**Important:** Use case videos are stored dynamically in our database and managed by administrators. The number and content of videos changes over time as we add new client testimonials. When users ask about use cases:
+- Always direct them to [Use Cases page](/learn#use-cases) to see the current video testimonials
+- Explain that these are real client stories showing practical applications
+- Note that every organization has unique needs, and the videos showcase different ways clients use Hobson AI
+
+Example applications property management professionals use Hobson AI for:
+- Quickly finding information in large document portfolios
+- Tracking important dates and deadlines
+- Understanding complex lease clauses
+- Answering tenant questions instantly
+- Reducing manual document review time
+- Ensuring compliance with lease terms
 `;
 
 serve(async (req) => {
@@ -397,7 +401,7 @@ IMPORTANT GUIDELINES:
    - Refund Policy: [Refund Policy page](/refund-policy)
    - Data Protection: [Data Protection page](/data-protection)
    - Privacy Policy: [Privacy Policy page](/privacy-policy)
-4. When users ask about use cases, examples, or testimonials, ALWAYS provide a direct link: [Use Cases page](/learn#use-cases)
+4. When users ask about use cases, examples, or testimonials, ALWAYS provide a direct link: [Use Cases page](/learn#use-cases) and explain these are real video testimonials from clients
 5. When users ask how to contact or want to speak with someone, ALWAYS include the link [Contact Us page](/contact) and mention Marc (Director) at +447973735706
 6. If you don't know something, be honest and suggest contacting the team via [Contact Us page](/contact)
 7. Keep responses under 150 words unless more detail is specifically requested
