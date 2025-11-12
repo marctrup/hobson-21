@@ -458,19 +458,19 @@ const Learn = () => {
                 </div>
               </div>
 
-              {/* Table of Contents Sidebar - Hidden on mobile */}
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-8">
-                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
-                  <nav className="space-y-1">
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
@@ -596,19 +596,19 @@ const Learn = () => {
                 </div>
               </div>
 
-              {/* Table of Contents Sidebar */}
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-8">
-                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
-                  <nav className="space-y-1">
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
@@ -787,19 +787,19 @@ const Learn = () => {
                 </div>
               </div>
 
-              {/* Table of Contents Sidebar */}
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-8">
-                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
-                  <nav className="space-y-1">
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
@@ -932,19 +932,19 @@ const Learn = () => {
                 </div>
               </div>
 
-              {/* Table of Contents Sidebar */}
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-8">
-                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
-                  <nav className="space-y-1">
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
@@ -1123,19 +1123,19 @@ const Learn = () => {
                 </div>
               </div>
 
-              {/* Table of Contents Sidebar */}
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-8">
-                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
-                  <nav className="space-y-1">
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
@@ -1196,19 +1196,19 @@ const Learn = () => {
               </div>
             </div>
 
-            {/* Table of Contents - On This Page */}
-            <div className="hidden lg:block w-64 flex-shrink-0">
-              <div className="sticky top-8">
-                <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
-                <nav className="space-y-1">
+            {/* Table of Contents - Right Sidebar */}
+            <div className="hidden lg:block w-64 sticky top-8 h-fit">
+              <div className="border border-border rounded-lg p-4">
+                <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                <nav className="space-y-2">
                   {tocSections.map((section) => (
                     <button
                       key={section.id}
                       onClick={() => scrollToSection(section.id)}
-                      className={`block w-full text-left px-3 py-2 text-sm rounded-lg transition-colors ${
+                      className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                         activeTocSection === section.id
-                          ? 'text-primary bg-primary/10 font-medium'
-                          : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                          ? 'bg-purple-100 text-purple-700 font-medium'
+                          : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                       }`}
                     >
                       {section.label}
@@ -1414,19 +1414,19 @@ const Learn = () => {
                 </div>
               </div>
 
-              {/* Table of Contents Sidebar */}
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-8">
-                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
-                  <nav className="space-y-1">
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
@@ -1723,19 +1723,19 @@ Content-Type: multipart/form-data
                 </div>
               </div>
 
-              {/* Table of Contents Sidebar */}
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-8">
-                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
-                  <nav className="space-y-1">
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
@@ -1793,19 +1793,19 @@ Content-Type: multipart/form-data
                 </div>
               </div>
 
-              {/* Table of Contents Sidebar */}
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-8">
-                  <div className="text-sm font-medium text-foreground mb-4">On This Page</div>
-                  <nav className="space-y-1">
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded-md transition-colors ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-primary/10 text-primary border-l-2 border-primary'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
@@ -2130,27 +2130,25 @@ Content-Type: multipart/form-data
                 </div>
               </div>
 
-              {/* Table of Contents */}
-              <div className="w-64 flex-shrink-0 hidden lg:block">
-                <div className="sticky top-24">
-                  <div className="p-4">
-                    <h3 className="text-sm font-medium text-foreground mb-4">On this page</h3>
-                    <div className="space-y-2">
-                      {tocSections.map((section) => (
-                        <button
-                          key={section.id}
-                          onClick={() => scrollToSection(section.id)}
-                          className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
-                            activeTocSection === section.id
-                              ? 'bg-purple-100 text-purple-700 font-medium'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
-                          }`}
-                        >
-                          {section.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
                 </div>
               </div>
             </div>
@@ -2509,26 +2507,25 @@ Content-Type: multipart/form-data
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 flex-shrink-0">
-                <div className="sticky top-8">
-                  <div className="p-4">
-                    <h3 className="text-sm font-semibold text-foreground mb-4 tracking-wide">ON THIS PAGE</h3>
-                    <nav className="space-y-2">
-                      {tocSections.map((section) => (
-                        <button
-                          key={section.id}
-                          onClick={() => scrollToSection(section.id)}
-                          className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
-                            activeTocSection === section.id
-                              ? 'bg-purple-100 text-purple-700 border-l-2 border-purple-500 font-medium'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                          }`}
-                        >
-                          {section.label}
-                        </button>
-                      ))}
-                    </nav>
-                  </div>
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
                 </div>
               </div>
             </div>
@@ -2800,27 +2797,25 @@ Content-Type: multipart/form-data
                 </div>
               </div>
 
-              {/* Table of Contents */}
-              <div className="w-64 flex-shrink-0 hidden lg:block">
-                <div className="sticky top-24">
-                  <div className="p-4">
-                    <h3 className="text-sm font-medium text-foreground mb-4">On this page</h3>
-                    <nav className="flex flex-col space-y-2">
-                      {tocSections.map((section) => (
-                        <button
-                          key={section.id}
-                          onClick={() => scrollToSection(section.id)}
-                          className={`block w-full text-left text-sm transition-colors py-2 px-3 rounded-md ${
-                            activeTocSection === section.id
-                              ? 'bg-purple-100 text-purple-700 font-medium'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
-                          }`}
-                        >
-                          {section.label}
-                        </button>
-                      ))}
-                    </nav>
-                  </div>
+              {/* Table of Contents - Right Sidebar */}
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
+                    {tocSections.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => scrollToSection(section.id)}
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+                          activeTocSection === section.id
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
+                        }`}
+                      >
+                        {section.label}
+                      </button>
+                    ))}
+                  </nav>
                 </div>
               </div>
             </div>
