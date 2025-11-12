@@ -3949,11 +3949,12 @@ Content-Type: multipart/form-data
                <select 
                  value={activeHorizontalTab}
                  onChange={(e) => {
-                   const newVerticalTab = getContextualVerticalTabs(e.target.value)[0]?.id || 'overview';
+                   const contextualTabs = getContextualVerticalTabs(e.target.value);
+                   const newVerticalTab = contextualTabs[0]?.id || e.target.value;
                    setActiveHorizontalTab(e.target.value);
                    setActiveVerticalTab(newVerticalTab);
                    setIsGlobalPageActive(false);
-                   navigate(`/learn/${newVerticalTab}`, { replace: true });
+                   navigate(`/learn/${e.target.value === 'use-cases' ? 'use-cases' : newVerticalTab}`, { replace: true });
                  }}
                 className="w-full p-2 border border-border rounded-lg bg-background text-foreground"
               >
