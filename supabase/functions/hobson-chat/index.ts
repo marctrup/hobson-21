@@ -369,8 +369,32 @@ Example applications property management professionals use Hobson AI for:
 - Reducing manual document review time
 - Ensuring compliance with lease terms
 
-## Prompt Engineering
-The Prompt Engineering section is located at [Prompt Engineering section](/learn#prompt-engineering) and provides guidance on improving the quality of answers from Hobson AI.
+## Learn Page - Complete Navigation Guide
+
+The Learn page contains comprehensive documentation organized into sections. ALWAYS use these exact links when directing users:
+
+**Introduction Section** ([/learn#introduction](/learn#introduction)):
+- Welcome: Overview and getting started - [/learn#introduction](/learn#introduction) (default view)
+- Plans and Credits: Subscription tiers and credit system - Navigate to Introduction, then select "Plans and Credits" tab
+- FAQ: Frequently asked questions - Navigate to Introduction, then select "FAQ" tab
+- Getting Started: Platform setup and onboarding - Navigate to Introduction, then select "Getting Started" tab
+
+**Features Section** ([/learn#features](/learn#features)):
+- Core Features: Essential platform capabilities - [/learn#features](/learn#features) (default view shows core features)
+- Advanced Features: Premium and advanced functionality - Navigate to Features, then select "Advanced Features" tab
+- Feature Comparison: Compare feature tiers and capabilities - Navigate to Features, then select "Feature Comparison" tab
+- Roadmap: Development timeline and upcoming features - [/learn#roadmap](/learn#roadmap) (direct link)
+
+**Integrations Section** ([/learn#integrations](/learn#integrations)):
+- Available Integrations: Current and planned integrations - [/learn#integrations](/learn#integrations) (default view)
+- Setup Guide: Integration configuration instructions - Navigate to Integrations, then select "Setup Guide" tab
+- API Reference: Developer documentation and endpoints - Navigate to Integrations, then select "API Reference" tab
+- Troubleshooting: Integration debugging and solutions - Navigate to Integrations, then select "Troubleshooting" tab
+
+**Prompt Engineering Section** ([/learn#prompt-engineering](/learn#prompt-engineering)):
+- Fundamentals: Basic prompting concepts and C.L.E.A.R. method - [/learn#prompt-engineering](/learn#prompt-engineering) (default view)
+- Advanced Prompting: Advanced techniques and prompt library - Navigate to Prompt Engineering, then select "Advanced Prompting" tab
+- Debugging Prompts: Troubleshooting and optimizing prompts - Navigate to Prompt Engineering, then select "Debugging Prompts" tab
 
 **Key Methods to Improve Answer Quality:**
 - **Upload Original Text-PDFs**: Use text-based PDFs instead of scanned images or photos of documents for better accuracy
@@ -386,7 +410,11 @@ The Prompt Engineering section is located at [Prompt Engineering section](/learn
 - **Adaptive**: If answer isn't right, refine your question
 - **Reflective**: Notice which questions work best and reuse that style
 
-When users ask about improving answer quality, getting better responses, or effective questioning techniques, ALWAYS provide the link: [Prompt Engineering section](/learn#prompt-engineering)
+**Use Cases Section** ([/learn#use-cases](/learn#use-cases)):
+- Real-world applications with video testimonials and examples
+
+**Glossary Section** ([/learn#glossary](/learn#glossary)):
+- Hobson Glossary: Definitions of platform-specific terms - [/learn#glossary](/learn#glossary)
 `;
 
 serve(async (req) => {
@@ -414,9 +442,26 @@ IMPORTANT GUIDELINES:
 1. Be friendly, concise, and helpful
 2. Always reference the knowledge base below when answering questions
 3. ALWAYS include clickable markdown links whenever you mention pages or resources:
-   - Learn more: [Learn page](/learn)
-   - Use Cases with video testimonials: [Use Cases page](/learn#use-cases)
-   - Prompt Engineering tips: [Prompt Engineering section](/learn#prompt-engineering)
+   - Learn page: [Learn page](/learn)
+   - Introduction & Welcome: [Introduction](/learn#introduction)
+   - Plans and Credits info: Direct users to Introduction section, Plans and Credits tab
+   - FAQ: Direct users to Introduction section, FAQ tab
+   - Getting Started guide: Direct users to Introduction section, Getting Started tab
+   - Core Features: [Core Features](/learn#features)
+   - Advanced Features: Direct users to Features section, Advanced Features tab
+   - Feature Comparison: Direct users to Features section, Feature Comparison tab
+   - Roadmap: [Roadmap](/learn#roadmap)
+   - Integrations: [Integrations](/learn#integrations)
+   - Available Integrations: [Available Integrations](/learn#integrations)
+   - Integration Setup: Direct users to Integrations section, Setup Guide tab
+   - API Reference: Direct users to Integrations section, API Reference tab
+   - Integration Troubleshooting: Direct users to Integrations section, Troubleshooting tab
+   - Prompt Engineering: [Prompt Engineering](/learn#prompt-engineering)
+   - Fundamentals of Prompting: [Prompt Engineering Fundamentals](/learn#prompt-engineering)
+   - Advanced Prompting: Direct users to Prompt Engineering section, Advanced Prompting tab
+   - Debugging Prompts: Direct users to Prompt Engineering section, Debugging Prompts tab
+   - Use Cases: [Use Cases with video testimonials](/learn#use-cases)
+   - Glossary: [Hobson Glossary](/learn#glossary)
    - Contact form: [Contact Us page](/contact)
    - Refund Policy: [Refund Policy page](/refund-policy)
    - Data Protection: [Data Protection page](/data-protection)
