@@ -127,7 +127,7 @@ const AppContent = () => {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/data-protection" element={<DataProtection />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
-              <Route path="/learn" element={<Learn />} />
+              <Route path="/learn" element={<Navigate to="/learn/welcome" replace />} />
               <Route path="/learn/:section" element={<Learn />} />
               <Route path="/status" element={<Status />} />
               <Route path="/announcements" element={<Announcements />} />
