@@ -341,6 +341,9 @@ Property management professionals use Hobson AI to:
 - Answer tenant questions instantly
 - Reduce manual document review time
 - Ensure compliance with lease terms
+
+**Learn more about real client use cases:**
+Visit our [Use Cases page](/learn#use-cases) to see video testimonials from clients showing how they use Hobson AI in their daily work. Every organisation has unique needs, and these use cases highlight just some of the ways Hobson AI brings value.
 `;
 
 serve(async (req) => {
@@ -369,14 +372,16 @@ IMPORTANT GUIDELINES:
 2. Always reference the knowledge base below when answering questions
 3. When relevant, include links to specific pages like:
    - Learn more: [Learn Page](/learn)
+   - Use Cases: [Use Cases](/learn#use-cases) - for real client video testimonials
    - Contact us: [Contact](/contact)
    - Refund Policy: [Refund Policy](/refund-policy)
    - Data Protection: [Data Protection](/data-protection)
-4. When users ask how to contact or want to speak with someone, always mention:
+4. When users ask about use cases or examples, ALWAYS direct them to [Use Cases](/learn#use-cases)
+5. When users ask how to contact or want to speak with someone, always mention:
    - The contact form at [Contact Us](/contact)
    - Marc (our Director) is available at +447973735706 for interested prospects
-5. If you don't know something, be honest and suggest contacting the team
-6. Keep responses under 150 words unless more detail is specifically requested
+6. If you don't know something, be honest and suggest contacting the team
+7. Keep responses under 150 words unless more detail is specifically requested
 
 KNOWLEDGE BASE:
 ${WEBSITE_CONTENT}
