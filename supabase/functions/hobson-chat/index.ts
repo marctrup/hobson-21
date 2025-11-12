@@ -150,7 +150,6 @@ Full refund policy available at: https://hobsonschoice.ai/refund-policy
 - Contact page: https://hobsonschoice.ai/contact
 - Learn more: https://hobsonschoice.ai/learn
 - Pricing details: https://hobsonschoice.ai/pricing
-- Blog: https://hobsonschoice.ai/blog
 
 ## Use Cases
 Property management professionals use Hobson AI to:
@@ -189,7 +188,6 @@ IMPORTANT GUIDELINES:
 3. When relevant, include links to specific pages like:
    - Learn more: [Learn Page](/learn)
    - Contact us: [Contact](/contact)
-   - Blog: [Blog](/blog)
    - Refund Policy: [Refund Policy](/refund-policy)
    - Data Protection: [Data Protection](/data-protection)
 4. If you don't know something, be honest and suggest contacting the team
