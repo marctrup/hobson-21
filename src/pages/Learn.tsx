@@ -159,7 +159,7 @@ const Learn = () => {
         if (activeVerticalTab === 'available-integrations' || !activeVerticalTab) {
           tocSections = ['planned-integrations', 'why-integrations-matter', 'what-were-working-towards', 'benefit-for-you'];
         } else if (activeVerticalTab === 'setup-guide') {
-          tocSections = ['coming-soon-notice', 'what-to-expect'];
+          tocSections = ['what-to-expect'];
         } else if (activeVerticalTab === 'api-reference') {
           tocSections = ['overview', 'authentication', 'endpoints', 'document-analysis', 'query-interface', 'webhooks', 'rate-limits', 'error-handling', 'examples'];
         } else if (activeVerticalTab === 'troubleshooting') {
@@ -1374,7 +1374,6 @@ const Learn = () => {
     // Handle Setup Guide content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'setup-guide') {
       const tocSections = [
-        { id: 'coming-soon-notice', label: 'Coming Soon Notice' },
         { id: 'what-to-expect', label: 'What to Expect' },
       ];
 
@@ -1394,16 +1393,6 @@ const Learn = () => {
               <div className="flex-1 max-w-4xl">
                 <div className="text-center mb-8">
                   <h1 className="text-3xl font-bold text-foreground mb-6">Setup Guide</h1>
-                  
-                  {/* Coming Soon Banner */}
-                  <div id="coming-soon-notice" className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-lg p-4 mb-8">
-                    <div className="flex items-center justify-center gap-2">
-                      <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
-                      <p className="text-orange-700 dark:text-orange-300 font-medium">
-                        This resource is not yet available — Coming Soon.
-                      </p>
-                    </div>
-                  </div>
 
                   <section id="what-to-expect">
                     <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
