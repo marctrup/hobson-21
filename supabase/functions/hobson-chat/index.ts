@@ -370,33 +370,33 @@ Example applications property management professionals use Hobson AI for:
 
 ## Learn Page - Complete Navigation Guide
 
-The Learn page uses hash-based navigation. When users ask about any Learn topics, use these EXACT hash links:
+The Learn page uses path-based navigation with a sidebar. When users ask about any Learn topics, use these EXACT path links:
 
 **Introduction Section:**
-- Welcome/Introduction: [/learn#introduction](/learn#introduction) - Overview and getting started (default view)
-- Plans and Credits: [/learn#plans-credits](/learn#plans-credits) - Subscription tiers and HEU credit system
-- FAQ: [/learn#faq](/learn#faq) - Frequently asked questions
-- Getting Started: [/learn#getting-started](/learn#getting-started) - Platform setup and onboarding guide
+- Welcome/Introduction: [/learn/welcome](/learn/welcome) - Overview and getting started (default view)
+- Plans and Credits: [/learn/plans-credits](/learn/plans-credits) - Subscription tiers and HEU credit system
+- FAQ: [/learn/faq](/learn/faq) - Frequently asked questions
+- Getting Started: [/learn/getting-started](/learn/getting-started) - Platform setup and onboarding guide
 
 **Features Section:**
-- Features Overview: [/learn#features](/learn#features) - Main features page (shows core features by default)
-- Core Features: [/learn#core-features](/learn#core-features) - Essential platform capabilities
-- Advanced Features: [/learn#advanced-features](/learn#advanced-features) - Premium functionality
-- Feature Comparison: [/learn#feature-comparison](/learn#feature-comparison) - Compare tiers and capabilities
-- Roadmap: [/learn#roadmap](/learn#roadmap) - Development timeline and upcoming features
+- Features Overview: [/learn/core-features](/learn/core-features) - Main features page (default)
+- Core Features: [/learn/core-features](/learn/core-features) - Essential platform capabilities
+- Advanced Features: [/learn/advanced-features](/learn/advanced-features) - Premium functionality
+- Feature Comparison: [/learn/feature-comparison](/learn/feature-comparison) - Compare tiers and capabilities
+- Roadmap: [/learn/roadmap](/learn/roadmap) - Development timeline and upcoming features
 
 **Integrations Section:**
-- Integrations Overview: [/learn#integrations](/learn#integrations) - All integrations info (shows available integrations by default)
-- Available Integrations: [/learn#available-integrations](/learn#available-integrations) - Current and planned integrations
-- Setup Guide: [/learn#setup-guide](/learn#setup-guide) - Integration configuration instructions
-- API Reference: [/learn#api-reference](/learn#api-reference) - Developer documentation and endpoints
-- Troubleshooting: [/learn#troubleshooting](/learn#troubleshooting) - Integration debugging and solutions
+- Integrations Overview: [/learn/available-integrations](/learn/available-integrations) - All integrations info (default)
+- Available Integrations: [/learn/available-integrations](/learn/available-integrations) - Current and planned integrations
+- Setup Guide: [/learn/setup-guide](/learn/setup-guide) - Integration configuration instructions
+- API Reference: [/learn/api-reference](/learn/api-reference) - Developer documentation and endpoints
+- Troubleshooting: [/learn/troubleshooting](/learn/troubleshooting) - Integration debugging and solutions
 
 **Prompt Engineering Section:**
-- Prompt Engineering Overview: [/learn#prompt-engineering](/learn#prompt-engineering) - All prompting info (shows fundamentals by default)
-- Fundamentals: [/learn#fundamentals](/learn#fundamentals) - Basic prompting concepts and C.L.E.A.R. method
-- Advanced Prompting: [/learn#advanced-prompting](/learn#advanced-prompting) - Advanced techniques and prompt library
-- Debugging Prompts: [/learn#debugging-prompts](/learn#debugging-prompts) - Troubleshooting and optimizing prompts
+- Prompt Engineering Overview: [/learn/fundamentals](/learn/fundamentals) - All prompting info (default)
+- Fundamentals: [/learn/fundamentals](/learn/fundamentals) - Basic prompting concepts and C.L.E.A.R. method
+- Advanced Prompting: [/learn/advanced-prompting](/learn/advanced-prompting) - Advanced techniques and prompt library
+- Debugging Prompts: [/learn/debugging-prompts](/learn/debugging-prompts) - Troubleshooting and optimizing prompts
 
 **Other Sections:**
 - Use Cases: [/learn/use-cases](/learn/use-cases) - Real-world applications with video testimonials
