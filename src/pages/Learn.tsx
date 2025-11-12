@@ -153,6 +153,135 @@ const Learn = () => {
       };
     }
   }, [activeHorizontalTab, activeVerticalTab]);
+    const handleHashChange = () => {
+      const hash = window.location.hash.substring(1); // Remove the # symbol
+      if (hash) {
+        // Map hash to horizontal tab
+        const tabMap: Record<string, string> = {
+          'use-cases': 'use-cases',
+          'features': 'features',
+          'roadmap': 'features',
+          'integrations': 'integrations',
+          'introduction': 'introduction',
+          'prompt-engineering': 'prompt-engineering',
+          'glossary': 'glossary',
+        };
+        
+        if (tabMap[hash]) {
+          setActiveHorizontalTab(tabMap[hash]);
+          
+          // Set vertical tab for specific sections
+          if (hash === 'roadmap') {
+            setActiveVerticalTab('roadmap');
+          }
+        }
+      }
+    };
+
+    // Run on mount
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
+  // Set initial active section based on current tab
+  useEffect(() => {
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
+      setActiveTocSection('getting-started');
+    } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
+      setActiveTocSection('overview');
+    } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
+      setActiveTocSection('hobson-platform-overview');
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') {
+      setActiveTocSection('what-is-prompting');
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') {
+      setActiveTocSection('prompt-library');
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts') {
+      setActiveTocSection('quick-fixes');
+    }
+  }, [activeHorizontalTab, activeVerticalTab]);
+
+  // Scroll spy effect - moved to top level to avoid hook order issues
+  useEffect(() => {
+    let tocSections: string[] = [];
+    
+    // Only run scroll spy for pages that have table of contents
+    if ((activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') || 
+        (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') ||
+        (activeHorizontalTab === 'features' && ['core-features', 'advanced-features', 'feature-comparison', 'roadmap'].includes(activeVerticalTab)) ||
+        (activeHorizontalTab === 'integrations' && ['available-integrations', 'setup-guide', 'api-reference', 'troubleshooting'].includes(activeVerticalTab)) ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts')) {
+      
+      if (activeHorizontalTab === 'introduction') {
+        if (activeVerticalTab === 'faq') {
+          tocSections = ['getting-started', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
+        } else if (activeVerticalTab === 'plans-credits') {
+          tocSections = ['overview', 'starter-pack', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
+        }
+      } else if (activeHorizontalTab === 'features') {
+        if (activeVerticalTab === 'core-features') {
+          tocSections = ['intelligent-document-processing', 'smart-search-insights', 'real-time-analytics', 'collaboration-ready', 'security-compliance'];
+        } else if (activeVerticalTab === 'advanced-features') {
+          tocSections = ['ai-powered-summarisation', 'cross-document-insights', 'automated-report-generation', 'clause-obligation-tracking', 'integration-ready'];
+        } else if (activeVerticalTab === 'feature-comparison') {
+          tocSections = ['comparison-table', 'key-differentiators'];
+        } else if (activeVerticalTab === 'roadmap') {
+          tocSections = ['recently-launched', 'in-progress', 'coming-soon'];
+        }
+      } else if (activeHorizontalTab === 'integrations') {
+        if (activeVerticalTab === 'available-integrations' || !activeVerticalTab) {
+          tocSections = ['planned-integrations', 'why-integrations-matter', 'what-were-working-towards', 'benefit-for-you'];
+        } else if (activeVerticalTab === 'setup-guide') {
+          tocSections = ['coming-soon-notice', 'what-to-expect'];
+        } else if (activeVerticalTab === 'api-reference') {
+          tocSections = ['overview', 'authentication', 'endpoints', 'document-analysis', 'query-interface', 'webhooks', 'rate-limits', 'error-handling', 'examples'];
+        } else if (activeVerticalTab === 'troubleshooting') {
+          tocSections = ['coming-soon-notice', 'what-to-expect'];
+        }
+      } else if (activeHorizontalTab === 'prompt-engineering') {
+        if (activeVerticalTab === 'fundamentals') {
+          tocSections = ['what-is-prompting', 'why-prompting-matters', 'how-hobson-thinks', 'clear-method', 'advanced-tactics'];
+        } else if (activeVerticalTab === 'advanced-prompting') {
+          tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building'];
+        } else if (activeVerticalTab === 'debugging-prompts') {
+          tocSections = ['quick-fixes', 'deep-reviews', 'fragile-areas', 'performance-issues', 'persistent-problems', 'debugging-flows', 'root-cause', 'pro-tips'];
+        }
+      }
+
+      const handleScroll = () => {
+        const scrollPosition = window.scrollY + 150; // offset for header and better accuracy
+
+        for (let i = tocSections.length - 1; i >= 0; i--) {
+          const element = document.getElementById(tocSections[i]);
+          if (element && element.offsetTop <= scrollPosition) {
+            setActiveTocSection(tocSections[i]);
+            break;
+          }
+        }
+      };
+
+      const handleClick = () => {
+        // Re-run scroll detection after any click to ensure proper highlighting
+        setTimeout(handleScroll, 100);
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      window.addEventListener('click', handleClick);
+      handleScroll(); // Set initial active section
+
+      return () => {
+        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('click', handleClick);
+      };
+    }
+  }, [activeHorizontalTab, activeVerticalTab]);
 
   const horizontalTabs = [
     { id: 'introduction', label: 'Introduction', icon: Book },
