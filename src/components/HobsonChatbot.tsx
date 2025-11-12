@@ -225,11 +225,11 @@ export const HobsonChatbot = () => {
       {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-4 shadow-lg transition-all hover:scale-110 group"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-3 sm:p-4 shadow-lg transition-all hover:scale-110 group"
             aria-label="Open chat"
           >
-            <MessageCircle className="w-6 h-6" />
-            <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-background border border-border rounded-lg shadow-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
+            <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-background border border-border rounded-lg shadow-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
               Need help? Chat with Hobson!
             </span>
           </button>
@@ -237,7 +237,7 @@ export const HobsonChatbot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-[380px] h-[500px] bg-background border border-border rounded-lg shadow-2xl flex flex-col">
+        <div className="fixed bottom-6 right-6 z-50 w-[95vw] sm:w-[380px] h-[85vh] sm:h-[500px] max-h-[600px] bg-background border border-border rounded-lg shadow-2xl flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border bg-muted/50">
             <div className="flex items-center gap-2">
