@@ -2569,9 +2569,41 @@ Content-Type: multipart/form-data
                       marginRight: 'auto',
                       maxWidth: '100%'
                     }}>
-                 <p className="text-base md:text-lg text-muted-foreground">
+                 <p className="text-base md:text-lg text-muted-foreground mb-6">
                    Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.
                  </p>
+                 
+                 <div className="space-y-4 text-muted-foreground">
+                   <h3 className="text-lg font-semibold text-foreground">How Hobson works:</h3>
+                   
+                   <div className="space-y-3">
+                     <p>
+                       <strong className="text-foreground">1. Upload your documents</strong><br />
+                       Simply drag your property documents into Hobson. This is the first step to unlocking intelligent insights.
+                     </p>
+                     
+                     <p>
+                       <strong className="text-foreground">2. Hobson reads and understands</strong><br />
+                       Hobson uses AI to carefully read through each document. This process takes some time depending on the size and complexity of your files. The information is securely stored on our servers so you can access it anytime.
+                     </p>
+                     
+                     <p>
+                       <strong className="text-foreground">3. Get notified when ready</strong><br />
+                       Once Hobson has finished reading and understanding your documents, you'll receive an email notification letting you know everything is ready.
+                     </p>
+                     
+                     <p>
+                       <strong className="text-foreground">4. Ask questions, get instant answers</strong><br />
+                       With your documents processed, you can ask Hobson anything. AI powers the entire process—from reading and extracting key information to delivering accurate, cited answers instantly.
+                     </p>
+                   </div>
+                   
+                   <div className="mt-6 p-4 bg-muted/50 rounded-lg border border-border">
+                     <p className="text-sm">
+                       <strong className="text-foreground">Coming soon:</strong> Hobson will connect directly to Dropbox, Google Drive, and other cloud storage platforms, making it even easier to access your documents.
+                     </p>
+                   </div>
+                 </div>
                </div>
 
           </div>

@@ -10,8 +10,23 @@ const WEBSITE_CONTENT = `
 # Hobson's Choice AI - Website Content Knowledge Base
 
 ## About Hobson AI
-Hobson's Choice AI is an AI-powered document intelligence platform for property management professionals. 
-We transform property documents with intelligent analysis, automated insights, and instant answers to complex property questions.
+Hobson's Choice AI is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.
+
+## How Hobson Works - Step by Step
+
+**1. Upload your documents**
+Simply drag your property documents into Hobson. This is the first step to unlocking intelligent insights.
+
+**2. Hobson reads and understands**
+Hobson uses AI to carefully read through each document. This process takes some time depending on the size and complexity of your files. The information is securely stored on our servers so you can access it anytime.
+
+**3. Get notified when ready**
+Once Hobson has finished reading and understanding your documents, you'll receive an email notification letting you know everything is ready.
+
+**4. Ask questions, get instant answers**
+With your documents processed, you can ask Hobson anything. AI powers the entire process—from reading and extracting key information to delivering accurate, cited answers instantly.
+
+**Coming soon:** Hobson will connect directly to Dropbox, Google Drive, and other cloud storage platforms, making it even easier to access your documents.
 
 ## Key Features
 - AI Document Analysis: Automatically extract key information from property documents
@@ -20,6 +35,7 @@ We transform property documents with intelligent analysis, automated insights, a
 - Automated Insights: Identify important dates, clauses, and obligations automatically
 - Enterprise Security: Bank-level encryption and data protection
 - 24/7 Availability: Access your property intelligence anytime, anywhere
+- Email Notifications: Get notified when your documents are ready
 
 ## Supported Documents
 Hobson AI can analyze:
