@@ -31,6 +31,36 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://hobsonschoice.ai/learn#use-cases</loc>
+    <lastmod>2025-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://hobsonschoice.ai/learn#features</loc>
+    <lastmod>2025-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hobsonschoice.ai/learn#roadmap</loc>
+    <lastmod>2025-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://hobsonschoice.ai/learn#integrations</loc>
+    <lastmod>2025-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://hobsonschoice.ai/learn#prompt-engineering</loc>
+    <lastmod>2025-01-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://hobsonschoice.ai/data-protection</loc>
     <lastmod>2025-01-28</lastmod>
     <changefreq>monthly</changefreq>
