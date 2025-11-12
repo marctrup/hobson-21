@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, Outlet } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Plus } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HEUBarVisualization } from '@/components/HEUBarVisualization';
@@ -15,12 +15,15 @@ import owlMascot from "@/assets/owl-mascot.png";
 
 const Learn = () => {
   const { user } = useAuth();
-  const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
-  const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
-  const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
-  const [activeTocSection, setActiveTocSection] = useState('getting-started');
+  const location = useLocation();
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
+  
+  // Determine active tabs from URL
+  const pathParts = location.pathname.split('/').filter(Boolean);
+  const activeHorizontalTab = pathParts[1] || 'introduction';
+  const activeVerticalTab = pathParts[2] || 'welcome';
+  const isGlobalPageActive = ['announcements', 'status', 'feature-requests'].includes(activeVerticalTab);
 
   // Handle hash navigation on mount and hash change
   useEffect(() => {
@@ -173,59 +176,59 @@ const Learn = () => {
   // Dynamic submenu items based on horizontal selection
   const getContextualVerticalTabs = (horizontalTab: string) => {
     const baseItems = [
-      { id: 'overview', label: 'Overview', icon: Heart },
-      { id: 'documentation', label: 'Documentation', icon: FileText },
-      { id: 'examples', label: 'Examples', icon: Play },
-      { id: 'faq', label: 'FAQ', icon: HelpCircle },
+      { id: 'overview', label: 'Overview', icon: Heart, path: '/learn/overview' },
+      { id: 'documentation', label: 'Documentation', icon: FileText, path: '/learn/documentation' },
+      { id: 'examples', label: 'Examples', icon: Play, path: '/learn/examples' },
+      { id: 'faq', label: 'FAQ', icon: HelpCircle, path: '/learn/faq' },
     ];
 
     switch (horizontalTab) {
       case 'introduction':
         return [
-          { id: 'welcome', label: 'Welcome', icon: Heart },
-          { id: 'plans-credits', label: 'Plans and Credits', icon: CreditCard },
-          { id: 'faq', label: 'FAQ', icon: HelpCircle },
-          { id: 'getting-started', label: 'Getting started', icon: Play },
+          { id: 'welcome', label: 'Welcome', icon: Heart, path: '/learn/introduction/welcome' },
+          { id: 'plans-credits', label: 'Plans and Credits', icon: CreditCard, path: '/learn/introduction/plans-credits' },
+          { id: 'faq', label: 'FAQ', icon: HelpCircle, path: '/learn/introduction/faq' },
+          { id: 'getting-started', label: 'Getting started', icon: Play, path: '/learn/introduction/getting-started' },
         ];
       case 'features':
         return [
-          { id: 'core-features', label: 'Core Features', icon: Heart },
-          { id: 'advanced-features', label: 'Advanced Features', icon: Wand2 },
-          { id: 'feature-comparison', label: 'Feature Comparison', icon: FileText },
-          { id: 'roadmap', label: 'Roadmap', icon: Clock },
+          { id: 'core-features', label: 'Core Features', icon: Heart, path: '/learn/features/core-features' },
+          { id: 'advanced-features', label: 'Advanced Features', icon: Wand2, path: '/learn/features/advanced-features' },
+          { id: 'feature-comparison', label: 'Feature Comparison', icon: FileText, path: '/learn/features/feature-comparison' },
+          { id: 'roadmap', label: 'Roadmap', icon: Clock, path: '/learn/features/roadmap' },
         ];
       case 'integrations':
         return [
-          { id: 'available-integrations', label: 'Available Integrations', icon: Puzzle },
-          { id: 'setup-guide', label: 'Setup Guide', icon: Play },
-          { id: 'api-reference', label: 'API Reference', icon: FileText },
-          { id: 'troubleshooting', label: 'Troubleshooting', icon: HelpCircle },
+          { id: 'available-integrations', label: 'Available Integrations', icon: Puzzle, path: '/learn/integrations/available-integrations' },
+          { id: 'setup-guide', label: 'Setup Guide', icon: Play, path: '/learn/integrations/setup-guide' },
+          { id: 'api-reference', label: 'API Reference', icon: FileText, path: '/learn/integrations/api-reference' },
+          { id: 'troubleshooting', label: 'Troubleshooting', icon: HelpCircle, path: '/learn/integrations/troubleshooting' },
         ];
       case 'tips-tricks':
         return [
-          { id: 'best-practices', label: 'Best Practices', icon: Heart },
-          { id: 'productivity-tips', label: 'Productivity Tips', icon: Lightbulb },
-          { id: 'common-mistakes', label: 'Common Mistakes', icon: HelpCircle },
-          { id: 'advanced-techniques', label: 'Advanced Techniques', icon: Wand2 },
+          { id: 'best-practices', label: 'Best Practices', icon: Heart, path: '/learn/tips-tricks/best-practices' },
+          { id: 'productivity-tips', label: 'Productivity Tips', icon: Lightbulb, path: '/learn/tips-tricks/productivity-tips' },
+          { id: 'common-mistakes', label: 'Common Mistakes', icon: HelpCircle, path: '/learn/tips-tricks/common-mistakes' },
+          { id: 'advanced-techniques', label: 'Advanced Techniques', icon: Wand2, path: '/learn/tips-tricks/advanced-techniques' },
         ];
       case 'prompt-engineering':
         return [
-          { id: 'fundamentals', label: 'Fundamentals', icon: Users },
-          { id: 'advanced-prompting', label: 'Advanced Prompting', icon: Wand2 },
-          { id: 'debugging-prompts', label: 'Debugging Prompts', icon: FileText },
+          { id: 'fundamentals', label: 'Fundamentals', icon: Users, path: '/learn/prompt-engineering/fundamentals' },
+          { id: 'advanced-prompting', label: 'Advanced Prompting', icon: Wand2, path: '/learn/prompt-engineering/advanced-prompting' },
+          { id: 'debugging-prompts', label: 'Debugging Prompts', icon: FileText, path: '/learn/prompt-engineering/debugging-prompts' },
         ];
       case 'use-cases':
         return [];
       case 'glossary':
         return [
-          { id: 'hobson-glossary', label: 'Hobson Glossary', icon: FileText },
+          { id: 'hobson-glossary', label: 'Hobson Glossary', icon: FileText, path: '/learn/glossary/hobson-glossary' },
         ];
       case 'changelog':
         return [
-          { id: 'latest-updates', label: 'Latest Updates', icon: Clock },
-          { id: 'release-notes', label: 'Release Notes', icon: FileText },
-          { id: 'version-history', label: 'Version History', icon: Activity },
-          { id: 'upcoming-changes', label: 'Upcoming Changes', icon: Bell },
+          { id: 'latest-updates', label: 'Latest Updates', icon: Clock, path: '/learn/changelog/latest-updates' },
+          { id: 'release-notes', label: 'Release Notes', icon: FileText, path: '/learn/changelog/release-notes' },
+          { id: 'version-history', label: 'Version History', icon: Activity, path: '/learn/changelog/version-history' },
+          { id: 'upcoming-changes', label: 'Upcoming Changes', icon: Bell, path: '/learn/changelog/upcoming-changes' },
         ];
       default:
         return baseItems;
