@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, RotateCcw } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
@@ -207,19 +207,16 @@ export const HobsonChatbot = () => {
       
       // Add the clickable link
       if (linkUrl.startsWith('/')) {
-        // Internal link - use button styled as link
+        // Internal link - use React Router Link
         elements.push(
-          <button
+          <Link
             key={`link-${matchStart}`}
-            className="text-primary hover:underline font-medium cursor-pointer inline"
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(linkUrl);
-              setIsOpen(false);
-            }}
+            to={linkUrl}
+            className="text-primary hover:underline font-medium cursor-pointer"
+            onClick={() => setIsOpen(false)}
           >
             {linkText}
-          </button>
+          </Link>
         );
       } else {
         // External link - use anchor
