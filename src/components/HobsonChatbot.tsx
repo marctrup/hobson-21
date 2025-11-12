@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, RotateCcw } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
+import ReactMarkdown from 'react-markdown';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
@@ -181,91 +182,81 @@ export const HobsonChatbot = () => {
     });
   };
 
-  // Convert markdown-style links to HTML links
+  // Render markdown with custom link handling
   const renderMessage = (content: string) => {
-    console.log('Rendering message content:', content);
-    
-    // If no markdown links found, return plain text
-    if (!content.includes('[')) {
-      return <span>{content}</span>;
-    }
-
-    const elements: React.ReactNode[] = [];
-    let lastIndex = 0;
-    const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
-    
-    let match;
-    while ((match = linkRegex.exec(content)) !== null) {
-      console.log('Found link match:', match);
-      const [fullMatch, linkText, linkUrl] = match;
-      const matchStart = match.index;
-      
-      // Add any text before this link
-      if (matchStart > lastIndex) {
-        elements.push(content.substring(lastIndex, matchStart));
-      }
-      
-      // Add the clickable link
-      if (linkUrl.startsWith('/')) {
-        // Internal link - handle with navigate
-        elements.push(
-          <button
-            key={`link-${matchStart}`}
-            className="text-primary hover:underline font-medium cursor-pointer inline"
-            onClick={(e) => {
-              e.preventDefault();
-              setIsOpen(false);
-              
-              // Parse path and hash
-              const [path, hash] = linkUrl.split('#');
-              
-              // Navigate to the path
-              navigate(linkUrl);
-              
-              // If there's a hash, scroll to it after a brief delay
-              if (hash) {
-                setTimeout(() => {
-                  const element = document.getElementById(hash);
-                  if (element) {
-                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                  }
-                }, 150);
-              }
-            }}
-          >
-            {linkText}
-          </button>
-        );
-      } else {
-        // External link - use anchor
-        elements.push(
-          <a
-            key={`link-${matchStart}`}
-            href={linkUrl}
-            className="text-primary hover:underline font-medium cursor-pointer"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {linkText}
-          </a>
-        );
-      }
-      
-      lastIndex = matchStart + fullMatch.length;
-    }
-    
-    // Add any remaining text after the last link
-    if (lastIndex < content.length) {
-      elements.push(content.substring(lastIndex));
-    }
-    
-    // If no links were found, return the original content
-    if (elements.length === 0) {
-      return <span>{content}</span>;
-    }
-    
-    console.log('Rendered elements count:', elements.length);
-    return <>{elements.map((el, i) => <React.Fragment key={i}>{el}</React.Fragment>)}</>;
+    return (
+      <ReactMarkdown
+        components={{
+          // Custom link renderer for internal navigation
+          a: ({ node, href, children, ...props }) => {
+            if (href?.startsWith('/')) {
+              // Internal link
+              return (
+                <button
+                  className="text-primary hover:underline font-medium cursor-pointer inline"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsOpen(false);
+                    
+                    // Navigate to the path
+                    navigate(href);
+                    
+                    // If there's a hash, scroll to it after a brief delay
+                    const hash = href.split('#')[1];
+                    if (hash) {
+                      setTimeout(() => {
+                        const element = document.getElementById(hash);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }, 150);
+                    }
+                  }}
+                >
+                  {children}
+                </button>
+              );
+            }
+            // External link
+            return (
+              <a
+                href={href}
+                className="text-primary hover:underline font-medium"
+                target="_blank"
+                rel="noopener noreferrer"
+                {...props}
+              >
+                {children}
+              </a>
+            );
+          },
+          // Style lists
+          ul: ({ node, ...props }) => (
+            <ul className="list-disc list-inside space-y-1 my-2" {...props} />
+          ),
+          ol: ({ node, ...props }) => (
+            <ol className="list-decimal list-inside space-y-1 my-2" {...props} />
+          ),
+          li: ({ node, ...props }) => (
+            <li className="text-sm" {...props} />
+          ),
+          // Style paragraphs
+          p: ({ node, ...props }) => (
+            <p className="mb-2 last:mb-0" {...props} />
+          ),
+          // Style strong/bold
+          strong: ({ node, ...props }) => (
+            <strong className="font-semibold" {...props} />
+          ),
+          // Style emphasis/italic
+          em: ({ node, ...props }) => (
+            <em className="italic" {...props} />
+          ),
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    );
   };
 
   return (
