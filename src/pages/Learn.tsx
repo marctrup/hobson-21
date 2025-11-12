@@ -2608,6 +2608,9 @@ Content-Type: multipart/form-data
     // Handle Getting Started content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
       const tocSections = [
+        { id: 'dashboard-navigation', label: 'Navigate the Hobson dashboard' },
+        { id: 'upload-documents', label: 'Upload and organize documents' },
+        { id: 'ai-analysis', label: 'Understand AI analysis results' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -2636,7 +2639,7 @@ Content-Type: multipart/form-data
                     <div className="space-y-6">
                       
                       {/* Learning Objective Template 1 */}
-                      <div>
+                      <section id="dashboard-navigation">
                         <Accordion type="multiple" className="w-full">
                           <AccordionItem value="dashboard-navigation">
                             <AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>div>span:first-child]:rotate-90 [&>svg]:hidden">
@@ -2670,10 +2673,10 @@ Content-Type: multipart/form-data
                             </AccordionContent>
                           </AccordionItem>
                         </Accordion>
-                      </div>
+                      </section>
 
                       {/* Learning Objective Template 2 */}
-                      <div>
+                      <section id="upload-documents">
                         <Accordion type="multiple" className="w-full">
                           <AccordionItem value="upload-documents">
                             <AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>div>span:first-child]:rotate-90 [&>svg]:hidden">
@@ -2712,10 +2715,10 @@ Content-Type: multipart/form-data
                             </AccordionContent>
                           </AccordionItem>
                         </Accordion>
-                      </div>
+                      </section>
 
                       {/* Learning Objective Template 3 */}
-                      <div>
+                      <section id="ai-analysis">
                         <Accordion type="multiple" className="w-full">
                           <AccordionItem value="ai-analysis">
                             <AccordionTrigger className="text-left hover:no-underline [&[data-state=open]>div>span:first-child]:rotate-90 [&>svg]:hidden">
@@ -2761,7 +2764,7 @@ Content-Type: multipart/form-data
                             </AccordionContent>
                           </AccordionItem>
                         </Accordion>
-                      </div>
+                      </section>
 
                       {/* 
                       TEMPLATE FOR ADDITIONAL LEARNING OBJECTIVES:
