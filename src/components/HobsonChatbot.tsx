@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
@@ -84,6 +84,19 @@ export const HobsonChatbot = () => {
     }
   };
 
+  const clearChat = () => {
+    setMessages([
+      {
+        role: 'assistant',
+        content: "Hi! I'm here to help you understand more about Hobson AI. What would you like to know?",
+      },
+    ]);
+    toast({
+      title: 'Chat cleared',
+      description: 'Starting fresh conversation',
+    });
+  };
+
   // Convert markdown-style links to HTML links
   const renderMessage = (content: string) => {
     // Convert [text](/link) to clickable links
@@ -149,14 +162,25 @@ export const HobsonChatbot = () => {
               <MessageCircle className="w-5 h-5 text-primary" />
               <h3 className="font-semibold text-foreground">Hobson AI Help</h3>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(false)}
-              className="h-8 w-8"
-            >
-              <X className="w-4 h-4" />
-            </Button>
+            <div className="flex items-center gap-1">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={clearChat}
+                className="h-8 w-8"
+                title="Clear chat"
+              >
+                <RotateCcw className="w-4 h-4" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setIsOpen(false)}
+                className="h-8 w-8"
+              >
+                <X className="w-4 h-4" />
+              </Button>
+            </div>
           </div>
 
           {/* Messages */}
