@@ -39,76 +39,52 @@ const Learn = () => {
           'introduction': { horizontal: 'introduction', vertical: 'welcome' },
           'welcome': { horizontal: 'introduction', vertical: 'welcome' },
           'plans-credits': { horizontal: 'introduction', vertical: 'plans-credits' },
-          'plans-and-credit': { horizontal: 'introduction', vertical: 'plans-credits' }, // Handle typo
-          'faq': { horizontal: 'introduction', vertical: 'faq' },
-          'getting-started': { horizontal: 'introduction', vertical: 'getting-started' },
-          
-          // Features section
-          'features': { horizontal: 'features', vertical: 'core-features' },
-          'core-features': { horizontal: 'features', vertical: 'core-features' },
-          'corefeatures': { horizontal: 'features', vertical: 'core-features' }, // Handle no-dash version
-          'advanced-features': { horizontal: 'features', vertical: 'advanced-features' },
-          'feature-comparison': { horizontal: 'features', vertical: 'feature-comparison' },
-          'roadmap': { horizontal: 'features', vertical: 'roadmap' },
-          
-          // Integrations section
-          'integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
-          'intergrations': { horizontal: 'integrations', vertical: 'available-integrations' }, // Handle typo
-          'available-integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
-          'setup-guide': { horizontal: 'integrations', vertical: 'setup-guide' },
-          'set-up-guide': { horizontal: 'integrations', vertical: 'setup-guide' }, // Handle dash variation
-          'api-reference': { horizontal: 'integrations', vertical: 'api-reference' },
-          'troubleshooting': { horizontal: 'integrations', vertical: 'troubleshooting' },
-          
-          // Prompt Engineering section
-          'prompt-engineering': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
-          'fundamentals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
-          'fundementals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' }, // Handle typo
-          'advanced-prompting': { horizontal: 'prompt-engineering', vertical: 'advanced-prompting' },
-          'debugging-prompts': { horizontal: 'prompt-engineering', vertical: 'debugging-prompts' },
-          
-          // Use Cases section
-          'use-cases': { horizontal: 'use-cases' },
-          
-          // Glossary section
-          'glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
-          'hobson-glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
-          // Normalized versions without dashes for URL param matching
-          'introduction': { horizontal: 'introduction', vertical: 'welcome' },
-          'welcome': { horizontal: 'introduction', vertical: 'welcome' },
           'planscredits': { horizontal: 'introduction', vertical: 'plans-credits' },
+          'plans-and-credit': { horizontal: 'introduction', vertical: 'plans-credits' },
           'plansandcredit': { horizontal: 'introduction', vertical: 'plans-credits' },
           'faq': { horizontal: 'introduction', vertical: 'faq' },
+          'getting-started': { horizontal: 'introduction', vertical: 'getting-started' },
           'gettingstarted': { horizontal: 'introduction', vertical: 'getting-started' },
           
           // Features section
           'features': { horizontal: 'features', vertical: 'core-features' },
+          'core-features': { horizontal: 'features', vertical: 'core-features' },
           'corefeatures': { horizontal: 'features', vertical: 'core-features' },
+          'advanced-features': { horizontal: 'features', vertical: 'advanced-features' },
           'advancedfeatures': { horizontal: 'features', vertical: 'advanced-features' },
+          'feature-comparison': { horizontal: 'features', vertical: 'feature-comparison' },
           'featurecomparison': { horizontal: 'features', vertical: 'feature-comparison' },
           'roadmap': { horizontal: 'features', vertical: 'roadmap' },
           
           // Integrations section
           'integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
           'intergrations': { horizontal: 'integrations', vertical: 'available-integrations' },
+          'available-integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
           'availableintegrations': { horizontal: 'integrations', vertical: 'available-integrations' },
+          'setup-guide': { horizontal: 'integrations', vertical: 'setup-guide' },
           'setupguide': { horizontal: 'integrations', vertical: 'setup-guide' },
-          'setupguide': { horizontal: 'integrations', vertical: 'setup-guide' },
+          'set-up-guide': { horizontal: 'integrations', vertical: 'setup-guide' },
+          'api-reference': { horizontal: 'integrations', vertical: 'api-reference' },
           'apireference': { horizontal: 'integrations', vertical: 'api-reference' },
           'troubleshooting': { horizontal: 'integrations', vertical: 'troubleshooting' },
           
           // Prompt Engineering section
+          'prompt-engineering': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
           'promptengineering': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
           'fundamentals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
           'fundementals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
+          'advanced-prompting': { horizontal: 'prompt-engineering', vertical: 'advanced-prompting' },
           'advancedprompting': { horizontal: 'prompt-engineering', vertical: 'advanced-prompting' },
+          'debugging-prompts': { horizontal: 'prompt-engineering', vertical: 'debugging-prompts' },
           'debuggingprompts': { horizontal: 'prompt-engineering', vertical: 'debugging-prompts' },
           
           // Use Cases section
+          'use-cases': { horizontal: 'use-cases' },
           'usecases': { horizontal: 'use-cases' },
           
           // Glossary section
           'glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
+          'hobson-glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
           'hobsonglossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
         };
         
