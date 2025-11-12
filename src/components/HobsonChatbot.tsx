@@ -33,7 +33,7 @@ export const HobsonChatbot = () => {
       setMessages([
         {
           role: 'assistant',
-          content: "Hi! I'm here to help you understand more about Hobson AI. What would you like to know?",
+          content: "Hey there! What would you like me to check for you?",
         },
       ]);
     }
@@ -89,7 +89,7 @@ export const HobsonChatbot = () => {
     setMessages([
       {
         role: 'assistant',
-        content: "Hi! I'm here to help you understand more about Hobson AI. What would you like to know?",
+        content: "Hey there! What would you like me to check for you?",
       },
     ]);
     toast({
@@ -142,16 +142,16 @@ export const HobsonChatbot = () => {
     <>
       {/* Chat Button */}
       {!isOpen && (
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-4 shadow-lg transition-all hover:scale-110 group"
-          aria-label="Open chat"
-        >
-          <MessageCircle className="w-6 h-6" />
-          <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-background border border-border rounded-lg shadow-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-            Need help understanding more about Hobson?
-          </span>
-        </button>
+          <button
+            onClick={() => setIsOpen(true)}
+            className="fixed bottom-6 right-6 z-50 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-4 shadow-lg transition-all hover:scale-110 group"
+            aria-label="Open chat"
+          >
+            <MessageCircle className="w-6 h-6" />
+            <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-background border border-border rounded-lg shadow-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+              Need help? Chat with Hobson!
+            </span>
+          </button>
       )}
 
       {/* Chat Window */}
@@ -189,36 +189,36 @@ export const HobsonChatbot = () => {
             {messages.map((message, index) => (
               <div
                 key={index}
-                className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
                 {message.role === 'assistant' && (
                   <img 
                     src={owlMascotChat} 
                     alt="Hobson Owl" 
-                    className="w-8 h-8 rounded-full mr-2 flex-shrink-0 self-end"
+                    className="w-12 h-12 object-contain flex-shrink-0 mb-1"
                   />
                 )}
                 <div
-                  className={`max-w-[80%] rounded-lg px-4 py-2 ${
+                  className={`max-w-[75%] rounded-2xl px-4 py-3 ${
                     message.role === 'user'
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-foreground'
+                      ? 'bg-primary text-primary-foreground rounded-br-sm'
+                      : 'bg-purple-100 dark:bg-purple-900/30 text-foreground rounded-bl-sm'
                   }`}
                 >
-                  <p className="text-sm whitespace-pre-wrap">
+                  <p className="text-sm leading-relaxed whitespace-pre-wrap">
                     {renderMessage(message.content)}
                   </p>
                 </div>
               </div>
             ))}
             {isLoading && (
-              <div className="flex justify-start">
+              <div className="flex items-end gap-2 justify-start">
                 <img 
                   src={owlMascotChat} 
                   alt="Hobson Owl" 
-                  className="w-8 h-8 rounded-full mr-2 flex-shrink-0"
+                  className="w-12 h-12 object-contain flex-shrink-0"
                 />
-                <div className="bg-muted text-foreground rounded-lg px-4 py-2">
+                <div className="bg-purple-100 dark:bg-purple-900/30 text-foreground rounded-2xl rounded-bl-sm px-4 py-3">
                   <Loader2 className="w-4 h-4 animate-spin" />
                 </div>
               </div>
