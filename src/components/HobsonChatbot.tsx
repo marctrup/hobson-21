@@ -39,6 +39,50 @@ export const HobsonChatbot = () => {
     }
   }, [isOpen]);
 
+  const handleQuickQuestion = (question: string) => {
+    setInput(question);
+    // Auto-send the question
+    sendMessageWithText(question);
+  };
+
+  const sendMessageWithText = async (text: string) => {
+    if (!text.trim() || isLoading) return;
+
+    const userMessage = text.trim();
+    
+    // Add user message
+    const newMessages = [...messages, { role: 'user' as const, content: userMessage }];
+    setMessages(newMessages);
+    setIsLoading(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke('hobson-chat', {
+        body: { messages: newMessages },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      const assistantMessage = data.choices?.[0]?.message?.content;
+      
+      if (assistantMessage) {
+        setMessages([...newMessages, { role: 'assistant', content: assistantMessage }]);
+      } else {
+        throw new Error('No response from AI');
+      }
+    } catch (error) {
+      console.error('Chat error:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to get response. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -187,28 +231,63 @@ export const HobsonChatbot = () => {
           {/* Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-              >
-                {message.role === 'assistant' && (
-                  <img 
-                    src={owlMascotChat} 
-                    alt="Hobson Owl" 
-                    className="w-12 h-12 object-contain flex-shrink-0 mb-1"
-                  />
-                )}
+              <div key={index}>
                 <div
-                  className={`max-w-[75%] rounded-2xl px-4 py-3 ${
-                    message.role === 'user'
-                      ? 'bg-primary text-primary-foreground rounded-br-sm'
-                      : 'bg-purple-100 dark:bg-purple-900/30 text-foreground rounded-bl-sm'
-                  }`}
+                  className={`flex items-end gap-2 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                    {renderMessage(message.content)}
-                  </p>
+                  {message.role === 'assistant' && (
+                    <img 
+                      src={owlMascotChat} 
+                      alt="Hobson Owl" 
+                      className="w-12 h-12 object-contain flex-shrink-0 mb-1"
+                    />
+                  )}
+                  <div
+                    className={`max-w-[75%] rounded-2xl px-4 py-3 ${
+                      message.role === 'user'
+                        ? 'bg-primary text-primary-foreground rounded-br-sm'
+                        : 'bg-purple-100 dark:bg-purple-900/30 text-foreground rounded-bl-sm'
+                    }`}
+                  >
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                      {renderMessage(message.content)}
+                    </p>
+                  </div>
                 </div>
+                
+                {/* Quick action buttons - only show after welcome message */}
+                {message.role === 'assistant' && index === 0 && messages.length === 1 && (
+                  <div className="grid grid-cols-2 gap-2 mt-4 px-2">
+                    <button
+                      onClick={() => handleQuickQuestion('Tell me about pricing and HEUs')}
+                      disabled={isLoading}
+                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
+                    >
+                      Pricing & HEUs
+                    </button>
+                    <button
+                      onClick={() => handleQuickQuestion('How does Hobson work?')}
+                      disabled={isLoading}
+                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
+                    >
+                      How it works
+                    </button>
+                    <button
+                      onClick={() => handleQuickQuestion('Tell me about security')}
+                      disabled={isLoading}
+                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
+                    >
+                      Security
+                    </button>
+                    <button
+                      onClick={() => handleQuickQuestion('What document types do you support?')}
+                      disabled={isLoading}
+                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
+                    >
+                      Document types
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
             {isLoading && (
