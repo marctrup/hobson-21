@@ -298,28 +298,28 @@ export const HobsonChatbot = () => {
                     <button
                       onClick={() => handleQuickQuestion('Tell me about pricing and HEUs')}
                       disabled={isLoading}
-                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
+                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
                     >
                       Pricing & HEUs?
                     </button>
                     <button
                       onClick={() => handleQuickQuestion('How does Hobson work?')}
                       disabled={isLoading}
-                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
+                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
                     >
                       How it works?
                     </button>
                     <button
                       onClick={() => handleQuickQuestion('Tell me about security')}
                       disabled={isLoading}
-                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
+                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
                     >
                       Security?
                     </button>
                     <button
                       onClick={() => handleQuickQuestion('What document types do you support?')}
                       disabled={isLoading}
-                      className="bg-background border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors disabled:opacity-50"
+                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
                     >
                       Document types?
                     </button>
