@@ -829,6 +829,10 @@ const Learn = () => {
                         <h3 className="font-semibold text-foreground mb-2">Expanded compliance automation</h3>
                         <p className="text-muted-foreground text-sm">Automated compliance checks and reporting across regulatory requirements.</p>
                       </div>
+                      <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
+                        <h3 className="font-semibold text-foreground mb-2">Mobile app and messaging platform integrations</h3>
+                        <p className="text-muted-foreground text-sm">Whilst not available today, we will be implementing mobile versions and the ability to access Hobson through WhatsApp and Microsoft Teams.</p>
+                      </div>
                     </div>
                   </section>
                 </div>
