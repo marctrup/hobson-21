@@ -734,7 +734,7 @@ const Learn = () => {
       const tocSections = [
         { id: 'recently-launched', label: 'Recently Launched' },
         { id: 'in-progress', label: 'In Progress' },
-        { id: 'coming-soon', label: 'Coming Soon' },
+        { id: 'coming-soon', label: 'Wish list' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -809,13 +809,13 @@ const Learn = () => {
                     </div>
                   </section>
 
-                  {/* Coming Soon */}
+                  {/* Wish list */}
                   <section id="coming-soon">
                     <div className="flex items-center gap-3 mb-6">
                       <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
                         <span className="text-lg">🌟</span>
                       </div>
-                      <h2 className="text-2xl font-bold text-foreground">Coming Soon</h2>
+                      <h2 className="text-2xl font-bold text-foreground">Wish list</h2>
                     </div>
                     <div className="ml-11 space-y-4">
                       <div className="bg-muted/30 border rounded-lg p-6 border-dashed">
