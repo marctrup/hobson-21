@@ -9,6 +9,7 @@ import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { CategoryFilter } from "@/components/blog/CategoryFilter";
 import { LoadingSkeleton } from "@/components/LoadingSkeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { getBlogStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 
 // Request deduplication
 const pendingRequests = new Map<string, Promise<any>>();
@@ -167,15 +168,24 @@ const Blog = () => {
           <title>Property Management AI Blog | Industry Insights & Tips | Hobson AI</title>
           <meta name="description" content="Latest insights, updates, and expert tips for property management professionals using AI-powered document intelligence and automation tools." />
           <meta name="keywords" content="property management blog, real estate AI insights, property technology news, AI automation tips, property management trends" />
+          
+          {/* OpenAI/ChatGPT optimization */}
+          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+          
+          {/* Open Graph */}
           <meta property="og:title" content="Property Management AI Blog | Hobson AI" />
           <meta property="og:description" content="Latest insights, updates, and expert tips for property management professionals using AI-powered document intelligence." />
           <meta property="og:type" content="website" />
+          <meta property="og:url" content="https://hobsonschoice.ai/blog" />
           <meta property="og:image" content="https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" />
+          
+          {/* Twitter */}
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@HobsonAI" />
           <meta name="twitter:title" content="Property Management AI Blog | Hobson AI" />
           <meta name="twitter:description" content="Latest insights and tips for property management professionals using AI." />
           <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" />
+          
           <link rel="canonical" href="https://hobsonschoice.ai/blog" />
           
           {/* Performance optimizations */}
@@ -184,6 +194,17 @@ const Blog = () => {
           {featuredPost?.featured_image_url && (
             <link rel="preload" as="image" href={featuredPost.featured_image_url} />
           )}
+          
+          {/* Structured Data */}
+          <script type="application/ld+json">
+            {JSON.stringify(getBlogStructuredData())}
+          </script>
+          <script type="application/ld+json">
+            {JSON.stringify(getBreadcrumbStructuredData([
+              { name: "Home", url: "https://hobsonschoice.ai/" },
+              { name: "Blog", url: "https://hobsonschoice.ai/blog" }
+            ]))}
+          </script>
         </Helmet>
         
         <GlobalHeader />

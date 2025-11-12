@@ -9,6 +9,7 @@ import { HomepageHeader } from "@/components/homepage/HomepageHeader";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { SecureContentRenderer } from "@/components/SecureContentRenderer";
 import { format } from "date-fns";
+import { getBreadcrumbStructuredData } from "@/utils/seo-data";
 
 interface BlogPost {
   id: string;
@@ -232,7 +233,13 @@ const BlogPost = () => {
       <Helmet>
         <title>{post.meta_title || post.title} | Hobson's Choice AI Blog</title>
         <meta name="description" content={post.meta_description || post.excerpt} />
-        <meta name="keywords" content="property management, real estate AI, property technology" />
+        <meta name="keywords" content="property management, real estate AI, property technology, AI document analysis" />
+        
+        {/* OpenAI/ChatGPT optimization */}
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+        <meta name="author" content={post.author.display_name} />
+        <meta name="article:published_time" content={post.published_at} />
+        <meta name="article:author" content={post.author.display_name} />
         
         {/* Open Graph */}
         <meta property="og:title" content={post.meta_title || post.title} />
@@ -267,26 +274,46 @@ const BlogPost = () => {
             "image": post.featured_image_url ? {
               "@type": "ImageObject",
               "url": post.featured_image_url,
-              "description": post.featured_image_alt || post.title
+              "description": post.featured_image_alt || post.title,
+              "width": 800,
+              "height": 450
             } : undefined,
             "author": {
               "@type": "Person",
-              "name": post.author.display_name
+              "name": post.author.display_name,
+              "url": "https://hobsonschoice.ai"
             },
             "publisher": {
               "@type": "Organization",
               "name": "Hobson's Choice AI",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png"
-              }
+                "url": "https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png",
+                "width": 200,
+                "height": 200
+              },
+              "url": "https://hobsonschoice.ai"
             },
             "datePublished": post.published_at,
+            "dateModified": post.published_at,
             "mainEntityOfPage": {
               "@type": "WebPage",
               "@id": `https://hobsonschoice.ai/blog/${slug}`
-            }
+            },
+            "keywords": post.categories.map(c => c.name).join(", "),
+            "articleSection": post.categories.length > 0 ? post.categories[0].name : "Property Management",
+            "wordCount": Math.ceil(post.content.split(' ').length),
+            "inLanguage": "en"
           })}
+        </script>
+        
+        {/* Breadcrumb structured data */}
+        <script type="application/ld+json">
+          {JSON.stringify(getBreadcrumbStructuredData([
+            { name: "Home", url: "https://hobsonschoice.ai/" },
+            { name: "Blog", url: "https://hobsonschoice.ai/blog" },
+            { name: post.title, url: `https://hobsonschoice.ai/blog/${slug}` }
+          ]))}
         </script>
       </Helmet>
 

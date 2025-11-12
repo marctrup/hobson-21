@@ -14,6 +14,7 @@ import { PricingSection } from "@/components/homepage/PricingSection";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 import owlMascot from "@/assets/owl-mascot.png";
+import { getOrganizationStructuredData, getHomepageStructuredData, getHomepageFAQStructuredData } from "@/utils/seo-data";
 // Lazy load video only when needed
 
 export const Homepage = () => {
@@ -29,21 +30,43 @@ export const Homepage = () => {
     <>
       <Helmet>
         <title>AI Property Management Software | Document Intelligence | Hobson AI</title>
-        <meta name="description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ." />
-        <meta name="keywords" content="Real Estate AI, tenancy agreement analysis, property AI, automation, " />
-        <meta property="og:title" content="AI-Document Intelligence for the Property Industry | Hobson AI" />
-        <meta property="og:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ." />
+        <meta name="description" content="Transform tenancy agreements with intelligent AI analysis, automated insights, and instant answers. Property document intelligence for modern property management." />
+        <meta name="keywords" content="AI property management, tenancy agreement analysis, property AI, document automation, real estate AI, property technology, AI document analysis" />
+        
+        {/* OpenAI/ChatGPT specific meta tags */}
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="googlebot" content="index, follow" />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content="AI Document Intelligence for Property Management | Hobson AI" />
+        <meta property="og:description" content="Transform tenancy agreements with intelligent AI analysis, automated insights, and instant answers to complex property questions." />
         <meta property="og:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://hobsonschoice.ai/" />
+        
+        {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@HobsonAI" />
-        <meta name="twitter:title" content="AI-Document Intelligence for the Property Industry" />
-        <meta name="twitter:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ." />
+        <meta name="twitter:title" content="AI Document Intelligence for Property Management" />
+        <meta name="twitter:description" content="Transform tenancy agreements with intelligent AI analysis and automated insights." />
         <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
+        
         <link rel="canonical" href="https://hobsonschoice.ai/" />
         
-        {/* Preload critical assets - logo and owl mascot */}
+        {/* Preload critical assets */}
         <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
         <link rel="preload" href={owlMascot} as="image" />
+        
+        {/* Structured Data for AI Crawlers */}
+        <script type="application/ld+json">
+          {JSON.stringify(getOrganizationStructuredData())}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(getHomepageStructuredData())}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify(getHomepageFAQStructuredData())}
+        </script>
       </Helmet>
 
       <div className="min-h-screen bg-background overflow-x-hidden">

@@ -10,5 +10,16 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
 User-agent: *
 Allow: /
+
+Sitemap: https://hobsonschoice.ai/sitemap.xml
