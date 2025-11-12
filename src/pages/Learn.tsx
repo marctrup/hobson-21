@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Plus } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HEUBarVisualization } from '@/components/HEUBarVisualization';
@@ -15,6 +15,8 @@ import owlMascot from "@/assets/owl-mascot.png";
 
 const Learn = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+  const { section } = useParams<{ section?: string }>();
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
@@ -22,54 +24,71 @@ const Learn = () => {
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
 
-  // Handle hash navigation on mount and hash change
+  // Handle both URL param and hash navigation
   useEffect(() => {
-    const handleHashChange = () => {
+    const handleNavigation = () => {
+      // Prioritize URL param over hash
+      const urlSection = section?.toLowerCase().replace(/-/g, '');
       const hash = window.location.hash.substring(1).toLowerCase(); // Remove # and lowercase
-      if (hash) {
-        // Map hash to horizontal and vertical tabs
-        const hashMap: Record<string, { horizontal: string; vertical?: string }> = {
+      const activeSection = urlSection || hash;
+      
+      if (activeSection) {
+        // Map section/hash to horizontal and vertical tabs
+        const sectionMap: Record<string, { horizontal: string; vertical?: string }> = {
           // Introduction section
           'introduction': { horizontal: 'introduction', vertical: 'welcome' },
           'welcome': { horizontal: 'introduction', vertical: 'welcome' },
           'plans-credits': { horizontal: 'introduction', vertical: 'plans-credits' },
-          'plans-and-credit': { horizontal: 'introduction', vertical: 'plans-credits' }, // Handle typo
+          'planscredits': { horizontal: 'introduction', vertical: 'plans-credits' },
+          'plans-and-credit': { horizontal: 'introduction', vertical: 'plans-credits' },
+          'plansandcredit': { horizontal: 'introduction', vertical: 'plans-credits' },
           'faq': { horizontal: 'introduction', vertical: 'faq' },
           'getting-started': { horizontal: 'introduction', vertical: 'getting-started' },
+          'gettingstarted': { horizontal: 'introduction', vertical: 'getting-started' },
           
           // Features section
           'features': { horizontal: 'features', vertical: 'core-features' },
           'core-features': { horizontal: 'features', vertical: 'core-features' },
-          'corefeatures': { horizontal: 'features', vertical: 'core-features' }, // Handle no-dash version
+          'corefeatures': { horizontal: 'features', vertical: 'core-features' },
           'advanced-features': { horizontal: 'features', vertical: 'advanced-features' },
+          'advancedfeatures': { horizontal: 'features', vertical: 'advanced-features' },
           'feature-comparison': { horizontal: 'features', vertical: 'feature-comparison' },
+          'featurecomparison': { horizontal: 'features', vertical: 'feature-comparison' },
           'roadmap': { horizontal: 'features', vertical: 'roadmap' },
           
           // Integrations section
           'integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
-          'intergrations': { horizontal: 'integrations', vertical: 'available-integrations' }, // Handle typo
+          'intergrations': { horizontal: 'integrations', vertical: 'available-integrations' },
           'available-integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
+          'availableintegrations': { horizontal: 'integrations', vertical: 'available-integrations' },
           'setup-guide': { horizontal: 'integrations', vertical: 'setup-guide' },
-          'set-up-guide': { horizontal: 'integrations', vertical: 'setup-guide' }, // Handle dash variation
+          'setupguide': { horizontal: 'integrations', vertical: 'setup-guide' },
+          'set-up-guide': { horizontal: 'integrations', vertical: 'setup-guide' },
           'api-reference': { horizontal: 'integrations', vertical: 'api-reference' },
+          'apireference': { horizontal: 'integrations', vertical: 'api-reference' },
           'troubleshooting': { horizontal: 'integrations', vertical: 'troubleshooting' },
           
           // Prompt Engineering section
           'prompt-engineering': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
+          'promptengineering': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
           'fundamentals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
-          'fundementals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' }, // Handle typo
+          'fundementals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
           'advanced-prompting': { horizontal: 'prompt-engineering', vertical: 'advanced-prompting' },
+          'advancedprompting': { horizontal: 'prompt-engineering', vertical: 'advanced-prompting' },
           'debugging-prompts': { horizontal: 'prompt-engineering', vertical: 'debugging-prompts' },
+          'debuggingprompts': { horizontal: 'prompt-engineering', vertical: 'debugging-prompts' },
           
           // Use Cases section
           'use-cases': { horizontal: 'use-cases' },
+          'usecases': { horizontal: 'use-cases' },
           
           // Glossary section
           'glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
           'hobson-glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
+          'hobsonglossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
         };
         
-        const mapping = hashMap[hash];
+        const mapping = sectionMap[activeSection];
         if (mapping) {
           setActiveHorizontalTab(mapping.horizontal);
           if (mapping.vertical) {
@@ -79,16 +98,16 @@ const Learn = () => {
       }
     };
 
-    // Run on mount
-    handleHashChange();
+    // Run on mount and when section changes
+    handleNavigation();
     
     // Listen for hash changes
-    window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('hashchange', handleNavigation);
     
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('hashchange', handleNavigation);
     };
-  }, []);
+  }, [section]);
 
   // Set initial active section based on current tab
   useEffect(() => {
@@ -3885,15 +3904,16 @@ Content-Type: multipart/form-data
                       <p className="text-sm text-muted-foreground pl-7">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
                     </div>
                     <nav className="space-y-1">
-                      {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
-                        const Icon = tab.icon;
-                        return (
-                          <button
-                            key={tab.id}
-                            onClick={() => {
-                              setActiveVerticalTab(tab.id);
-                              setIsGlobalPageActive(false);
-                            }}
+                       {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
+                         const Icon = tab.icon;
+                         return (
+                           <button
+                             key={tab.id}
+                             onClick={() => {
+                               setActiveVerticalTab(tab.id);
+                               setIsGlobalPageActive(false);
+                               navigate(`/learn/${tab.id}`, { replace: true });
+                             }}
                             className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
                               activeVerticalTab === tab.id && !isGlobalPageActive
                                 ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
@@ -3923,13 +3943,15 @@ Content-Type: multipart/form-data
           {/* Mobile Topics Navigation */}
           <div className="border-b bg-background sticky top-16 z-40">
             <div className="px-4 py-3">
-              <select 
-                value={activeHorizontalTab}
-                onChange={(e) => {
-                  setActiveHorizontalTab(e.target.value);
-                  setActiveVerticalTab(getContextualVerticalTabs(e.target.value)[0]?.id || 'overview');
-                  setIsGlobalPageActive(false);
-                }}
+               <select 
+                 value={activeHorizontalTab}
+                 onChange={(e) => {
+                   const newVerticalTab = getContextualVerticalTabs(e.target.value)[0]?.id || 'overview';
+                   setActiveHorizontalTab(e.target.value);
+                   setActiveVerticalTab(newVerticalTab);
+                   setIsGlobalPageActive(false);
+                   navigate(`/learn/${newVerticalTab}`, { replace: true });
+                 }}
                 className="w-full p-2 border border-border rounded-lg bg-background text-foreground"
               >
                 {horizontalTabs.map((tab) => (
@@ -3943,12 +3965,13 @@ Content-Type: multipart/form-data
             {/* Mobile Subtopic Navigation */}
             {!isGlobalPageActive && getContextualVerticalTabs(activeHorizontalTab).length > 0 && (
               <div className="px-4 pb-3">
-                <select 
-                  value={activeVerticalTab}
-                  onChange={(e) => {
-                    setActiveVerticalTab(e.target.value);
-                    setIsGlobalPageActive(false);
-                  }}
+                 <select 
+                   value={activeVerticalTab}
+                   onChange={(e) => {
+                     setActiveVerticalTab(e.target.value);
+                     setIsGlobalPageActive(false);
+                     navigate(`/learn/${e.target.value}`, { replace: true });
+                   }}
                   className="w-full p-2 border border-border rounded-lg bg-background text-foreground text-sm"
                 >
                   {getContextualVerticalTabs(activeHorizontalTab).map((tab) => (
