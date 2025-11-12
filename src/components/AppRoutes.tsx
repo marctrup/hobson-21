@@ -127,8 +127,8 @@ const AppContent = () => {
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/data-protection" element={<DataProtection />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
-              <Route path="/learn" element={<Navigate to="/learn/welcome" replace />} />
-              <Route path="/learn/introduction" element={<Navigate to="/learn/welcome" replace />} />
+              <Route path="/learn" element={<Navigate to="/learn/getting-started" replace />} />
+              <Route path="/learn/introduction" element={<Navigate to="/learn/getting-started" replace />} />
               <Route path="/learn/integrations" element={<Navigate to="/learn/available-integrations" replace />} />
               <Route path="/learn/prompt-engineering" element={<Navigate to="/learn/fundamentals" replace />} />
               <Route path="/learn/:section" element={<Learn />} />

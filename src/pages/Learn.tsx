@@ -36,15 +36,14 @@ const Learn = () => {
         // Map section/hash to horizontal and vertical tabs
         const sectionMap: Record<string, { horizontal: string; vertical?: string }> = {
           // Introduction section
-          'introduction': { horizontal: 'introduction', vertical: 'welcome' },
-          'welcome': { horizontal: 'introduction', vertical: 'welcome' },
+          'introduction': { horizontal: 'introduction', vertical: 'getting-started' },
+          'getting-started': { horizontal: 'introduction', vertical: 'getting-started' },
+          'gettingstarted': { horizontal: 'introduction', vertical: 'getting-started' },
           'plans-credits': { horizontal: 'introduction', vertical: 'plans-credits' },
           'planscredits': { horizontal: 'introduction', vertical: 'plans-credits' },
           'plans-and-credit': { horizontal: 'introduction', vertical: 'plans-credits' },
           'plansandcredit': { horizontal: 'introduction', vertical: 'plans-credits' },
           'faq': { horizontal: 'introduction', vertical: 'faq' },
-          'getting-started': { horizontal: 'introduction', vertical: 'getting-started' },
-          'gettingstarted': { horizontal: 'introduction', vertical: 'getting-started' },
           
           // Features section
           'features': { horizontal: 'features', vertical: 'core-features' },
@@ -231,10 +230,9 @@ const Learn = () => {
     switch (horizontalTab) {
       case 'introduction':
         return [
-          { id: 'welcome', label: 'Welcome', icon: Heart },
+          { id: 'getting-started', label: 'Getting started', icon: Play },
           { id: 'plans-credits', label: 'Plans and Credits', icon: CreditCard },
           { id: 'faq', label: 'FAQ', icon: HelpCircle },
-          { id: 'getting-started', label: 'Getting started', icon: Play },
         ];
       case 'features':
         return [

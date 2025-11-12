@@ -21,7 +21,7 @@ Available pages on the website:
 
 ## Learn Page Sections
 All available /learn sections (path-based navigation with sidebar):
-- Introduction: /learn/welcome (default), /learn/plans-credits, /learn/faq, /learn/getting-started
+- Introduction: /learn/getting-started (default), /learn/plans-credits, /learn/faq
 - Use Cases: /learn/use-cases (video testimonials from real clients showing real-world usage)
 - Features: /learn/core-features (default), /learn/advanced-features, /learn/feature-comparison, /learn/roadmap
 - Integrations: /learn/available-integrations, /learn/setup-guide, /learn/api-reference, /learn/troubleshooting
@@ -373,10 +373,9 @@ Example applications property management professionals use Hobson AI for:
 The Learn page uses path-based navigation with a sidebar. When users ask about any Learn topics, use these EXACT path links:
 
 **Introduction Section:**
-- Welcome/Introduction: [/learn/welcome](/learn/welcome) - Overview and getting started (default view)
+- Getting Started: [/learn/getting-started](/learn/getting-started) - Platform setup and onboarding guide (default view)
 - Plans and Credits: [/learn/plans-credits](/learn/plans-credits) - Subscription tiers and HEU credit system
 - FAQ: [/learn/faq](/learn/faq) - Frequently asked questions
-- Getting Started: [/learn/getting-started](/learn/getting-started) - Platform setup and onboarding guide
 
 **Features Section:**
 - Features Overview: [/learn/core-features](/learn/core-features) - Main features page (default)
