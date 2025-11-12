@@ -75,8 +75,7 @@ export const HobsonChatbot = () => {
   }, [isOpen]);
 
   const handleQuickQuestion = (question: string) => {
-    setInput(question);
-    // Auto-send the question
+    // Auto-send the question without setting input
     sendMessageWithText(question);
   };
 
