@@ -101,7 +101,7 @@ export const getHomepageFAQStructuredData = () => ({
       "name": "How much does Hobson AI cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Hobson AI offers a free pilot program for property management professionals. Contact us to learn about our pricing plans and get started with transforming your property document management."
+        "text": "Hobson AI offers a free package, or monthly payments based on usage for property management professionals. Contact us to learn about our pricing plans and get started with transforming your property document management."
       }
     }
   ]
