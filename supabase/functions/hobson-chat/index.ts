@@ -9,6 +9,22 @@ const corsHeaders = {
 const WEBSITE_CONTENT = `
 # Hobson's Choice AI - Complete Knowledge Base
 
+## Site Structure (from sitemap)
+Available pages on the website:
+- Homepage: /
+- Pricing: /pricing
+- Blog: /blog
+- Contact: /contact
+- Learn (main): /learn
+- Learn - Use Cases: /learn#use-cases (video testimonials from real clients)
+- Learn - Features: /learn#features
+- Learn - Roadmap: /learn#roadmap
+- Learn - Integrations: /learn#integrations
+- Learn - Prompt Engineering: /learn#prompt-engineering
+- Data Protection: /data-protection
+- Privacy Policy: /privacy-policy
+- Refund Policy: /refund-policy
+
 ## About Hobson AI
 Hobson's Choice AI is an AI-powered business assistant designed for property professionals. It reads documents, extracts key data, stores it securely, and answers questions using your content.
 
