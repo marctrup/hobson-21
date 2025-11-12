@@ -213,7 +213,19 @@ export const HobsonChatbot = () => {
             key={`link-${matchStart}`}
             to={linkUrl}
             className="text-primary hover:underline font-medium cursor-pointer"
-            onClick={() => setIsOpen(false)}
+            onClick={() => {
+              setIsOpen(false);
+              // Handle hash scrolling after navigation
+              if (linkUrl.includes('#')) {
+                setTimeout(() => {
+                  const hash = linkUrl.split('#')[1];
+                  const element = document.getElementById(hash);
+                  if (element) {
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }, 100);
+              }
+            }}
           >
             {linkText}
           </Link>
