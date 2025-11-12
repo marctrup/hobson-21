@@ -353,10 +353,10 @@ Hobson AI works on mobile devices:
 - Mobile app and messaging platform integrations: Native mobile apps, WhatsApp, and Microsoft Teams access
 
 ## Use Cases
-The Use Cases section is located at [Use Cases page](/learn#use-cases) and features **video testimonials from real clients** showing how they use Hobson AI in their daily work.
+The Use Cases section is located at [Use Cases page](/learn/use-cases) and features **video testimonials from real clients** showing how they use Hobson AI in their daily work.
 
 **Important:** Use case videos are stored dynamically in our database and managed by administrators. The number and content of videos changes over time as we add new client testimonials. When users ask about use cases:
-- Always direct them to [Use Cases page](/learn#use-cases) to see the current video testimonials
+- Always direct them to [Use Cases page](/learn/use-cases) to see the current video testimonials
 - Explain that these are real client stories showing practical applications
 - Note that every organization has unique needs, and the videos showcase different ways clients use Hobson AI
 
