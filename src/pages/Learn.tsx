@@ -2689,11 +2689,11 @@ Content-Type: multipart/form-data
                      </p>
                    </div>
                    
-                   <div className="mt-6 p-4 bg-muted/50 rounded-lg border border-border">
-                     <p className="text-sm">
-                       <strong className="text-foreground">Coming soon:</strong> Hobson will connect directly to Dropbox, Google Drive, and other cloud storage platforms, making it even easier to access your documents.
-                     </p>
-                   </div>
+                    <div className="mt-6 p-4 bg-muted/50 rounded-lg border border-border">
+                      <p className="text-sm">
+                        <strong className="text-foreground">Wish list:</strong> Hobson will connect directly to Dropbox, Google Drive, and other cloud storage platforms, making it even easier to access your documents.
+                      </p>
+                    </div>
                  </div>
                </div>
 
