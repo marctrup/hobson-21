@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ToastPortal } from "@/components/ToastPortal";
 import { AppRoutes } from "@/components/AppRoutes";
+import { HobsonChatbot } from "@/components/HobsonChatbot";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,6 +27,7 @@ export function AppProviders() {
             <AuthProvider>
               <ToastPortal />
               <AppRoutes />
+              <HobsonChatbot />
             </AuthProvider>
           </QueryClientProvider>
         </ThemeProvider>
