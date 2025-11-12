@@ -31,10 +31,61 @@ Hobson AI can analyze:
 - Rent review documentation
 - Over 85 different review dates tracked automatically
 
-## Pricing
-- Free package available
-- Monthly payments based on usage
-- Contact us for detailed pricing: https://hobsonschoice.ai/contact
+## HEUs (Hobson Energy Units) - Complete Guide
+
+### What are HEUs?
+HEU stands for "Hobson Energy Unit" - it's the currency/credit system used to buy effort in Hobson AI. You need HEUs to interact with Hobson, and they are deducted when you send messages or process documents. The cost depends on the complexity of the work being done.
+
+### HEU Pricing by Plan
+- **Free Plan**: 18 HEUs per month + Unlimited members + Unlimited documents
+- **Essential Plan**: 275 HEUs per month + Everything in Free + Priority Support
+- **Essential Plus**: 700 HEUs per month + Everything in Essential
+- **Enterprise**: 2000 HEUs per month + Everything in Essential Plus + Support person + Business Knowledgebase + Bespoke integrations
+
+### Starter Pack
+- One-time bundle with 1000 HEUs to help load documents into the platform
+- Covers document upload, extraction, and indexing
+- Unspent HEUs roll over for two months
+- Designed to handle the heavy initial processing costs
+
+### Top-up Option
+- £15 one-off purchase (no subscription required)
+- Adds 150 HEUs to your balance instantly
+- Works with any paid plan
+- No rollover - unused HEUs expire at end of current billing period
+
+### HEU Cost Examples
+Understanding how much different tasks cost:
+
+**Document Processing:**
+- Simple document (certificate): 0.5 HEUs - Scans and summarises
+- Medium document (deed): 1.4 HEUs - Reviews and extracts key info
+- Complex document (lease): 16.9 HEUs - Full detailed review and breakdown
+
+**Queries:**
+- Simple query ("What is the rent?"): 0.05 HEUs - Finds and returns one fact
+- Medium query ("List all rents"): 0.26 HEUs - Searches and compiles several data points
+- Complex query ("Build a tenancy report"): 0.54 HEUs - Gathers multiple details and formats full report
+
+**Key Point**: Many messages cost less than 1 HEU. The system charges based on actual complexity, so you only pay for what you use.
+
+### Credit Rollovers
+- Unused HEUs automatically roll over for active paid subscriptions
+- **Monthly plans**: Rollover accumulates up to the monthly credit limit
+- **Annual plans**: Rollover accumulates up to 12× monthly limit (annual limit)
+- **Monthly plan expiration**: Rollover credits valid for 1 month after being added
+- **Annual plan expiration**: Rollover credits valid for 12 months after being added
+- **Upon cancellation**: All unused and rollover HEUs expire at end of billing period
+- **Daily HEUs do NOT roll over** (applies to free tier)
+
+### Viewing HEU Usage
+- The HEU bar shows visual representation of usage:
+  - Grey part: HEUs already used this billing period
+  - Blue part: Remaining HEUs available
+- Click the three dots (⋯) beneath any message in chat to see the exact HEU cost of that message
+
+## Pricing & Plans
+Hobson is subscription-based with a free plan and several paid options. When you upgrade, you get additional support and more HEUs.
 
 ## Security & Data Protection
 - Enterprise-grade security with encryption
@@ -46,6 +97,7 @@ Hobson AI can analyze:
 - Website: https://hobsonschoice.ai
 - Contact page: https://hobsonschoice.ai/contact
 - Learn more: https://hobsonschoice.ai/learn
+- Pricing details: https://hobsonschoice.ai/pricing
 - Blog: https://hobsonschoice.ai/blog
 
 ## Use Cases
