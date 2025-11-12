@@ -225,7 +225,7 @@ export const HobsonChatbot = () => {
       {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-2 sm:p-3 shadow-lg transition-all hover:scale-110 group relative"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-primary hover:bg-primary/90 rounded-full shadow-lg transition-all hover:scale-105 group relative w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center"
             aria-label="Open chat"
           >
             <img 
@@ -233,8 +233,8 @@ export const HobsonChatbot = () => {
               alt="Chat with Hobson" 
               className="w-10 h-10 sm:w-12 sm:h-12 object-contain"
             />
-            <div className="absolute -bottom-1 -right-1 bg-background rounded-full p-1 shadow-md border-2 border-primary">
-              <MessageCircle className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+            <div className="absolute bottom-0 right-0 bg-white dark:bg-background rounded-full p-1 shadow-md border-2 border-primary">
+              <MessageCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-primary" />
             </div>
             <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-background border border-border rounded-lg shadow-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
               Need help? Chat with Hobson!
