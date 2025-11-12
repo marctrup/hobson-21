@@ -20,14 +20,13 @@ Available pages on the website:
 - Refund Policy: /refund-policy
 
 ## Learn Page Sections
-All available /learn sections (tab-based navigation):
-- Introduction: /learn#introduction or /learn (default tab - Welcome, Plans & Credits, FAQ, Getting Started)
-- Use Cases: /learn#use-cases (video testimonials from real clients showing real-world usage)
-- Features: /learn#features (Core Features, Advanced Features, Feature Comparison, Roadmap)
-- Roadmap: /learn#roadmap (Recently Launched, In Progress, Wish List)
-- Integrations: /learn#integrations (Available Integrations, Setup Guide, API Reference)
-- Prompt Engineering: /learn#prompt-engineering (Fundamentals, Advanced Prompting, Debugging)
-- Glossary: /learn#glossary (Hobson terminology and definitions)
+All available /learn sections (path-based navigation with sidebar):
+- Introduction: /learn/welcome (default), /learn/plans-credits, /learn/faq, /learn/getting-started
+- Use Cases: /learn/use-cases (video testimonials from real clients showing real-world usage)
+- Features: /learn/core-features (default), /learn/advanced-features, /learn/feature-comparison, /learn/roadmap
+- Integrations: /learn/available-integrations, /learn/setup-guide, /learn/api-reference, /learn/troubleshooting
+- Prompt Engineering: /learn/fundamentals, /learn/advanced-prompting, /learn/debugging-prompts
+- Glossary: /learn/hobson-glossary (Hobson terminology and definitions)
 
 ## About Hobson AI
 Hobson's Choice AI is an AI-powered business assistant designed for property professionals. It reads documents, extracts key data, stores it securely, and answers questions using your content.
