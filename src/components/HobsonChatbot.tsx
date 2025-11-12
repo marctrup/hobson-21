@@ -207,28 +207,34 @@ export const HobsonChatbot = () => {
       
       // Add the clickable link
       if (linkUrl.startsWith('/')) {
-        // Internal link - use React Router Link
+        // Internal link - handle with navigate
         elements.push(
-          <Link
+          <button
             key={`link-${matchStart}`}
-            to={linkUrl}
-            className="text-primary hover:underline font-medium cursor-pointer"
-            onClick={() => {
+            className="text-primary hover:underline font-medium cursor-pointer inline"
+            onClick={(e) => {
+              e.preventDefault();
               setIsOpen(false);
-              // Handle hash scrolling after navigation
-              if (linkUrl.includes('#')) {
+              
+              // Parse path and hash
+              const [path, hash] = linkUrl.split('#');
+              
+              // Navigate to the path
+              navigate(linkUrl);
+              
+              // If there's a hash, scroll to it after a brief delay
+              if (hash) {
                 setTimeout(() => {
-                  const hash = linkUrl.split('#')[1];
                   const element = document.getElementById(hash);
                   if (element) {
                     element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
-                }, 100);
+                }, 150);
               }
             }}
           >
             {linkText}
-          </Link>
+          </button>
         );
       } else {
         // External link - use anchor
