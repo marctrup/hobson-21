@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import owlMascotChat from '@/assets/owl-mascot-chat.png';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -190,6 +191,13 @@ export const HobsonChatbot = () => {
                 key={index}
                 className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
               >
+                {message.role === 'assistant' && (
+                  <img 
+                    src={owlMascotChat} 
+                    alt="Hobson Owl" 
+                    className="w-8 h-8 rounded-full mr-2 flex-shrink-0 self-end"
+                  />
+                )}
                 <div
                   className={`max-w-[80%] rounded-lg px-4 py-2 ${
                     message.role === 'user'
@@ -205,6 +213,11 @@ export const HobsonChatbot = () => {
             ))}
             {isLoading && (
               <div className="flex justify-start">
+                <img 
+                  src={owlMascotChat} 
+                  alt="Hobson Owl" 
+                  className="w-8 h-8 rounded-full mr-2 flex-shrink-0"
+                />
                 <div className="bg-muted text-foreground rounded-lg px-4 py-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
                 </div>
