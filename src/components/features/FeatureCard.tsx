@@ -30,7 +30,7 @@ const FeatureCard = memo(({ feature, index }: FeatureCardProps) => {
                   Beta
                 </Badge>
               ) : (
-                <Badge variant="outline" className="text-primary border-primary/20 bg-primary/5">
+                <Badge variant="outline" className="text-primary border-primary/20 bg-primary/5 text-center">
                   On our wish list
                 </Badge>
               )}

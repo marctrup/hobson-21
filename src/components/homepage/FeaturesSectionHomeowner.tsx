@@ -57,7 +57,7 @@ export const FeaturesSectionHomeowner = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h4 className="text-xl font-semibold">Interactive Property Mapping</h4>
-                      <Badge variant="secondary" className="text-xs">On our wish list</Badge>
+                      <Badge variant="secondary" className="text-xs text-center">On our wish list</Badge>
                     </div>
                     <p className="text-primary font-medium mb-3">Geospatial intelligence</p>
                   </div>
@@ -123,7 +123,7 @@ export const FeaturesSectionHomeowner = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                       <h4 className="text-xl font-semibold">Predictive Analytics</h4>
-                      <Badge variant="outline" className="text-xs border-primary text-primary">On our wish list</Badge>
+                      <Badge variant="outline" className="text-xs border-primary text-primary text-center">On our wish list</Badge>
                     </div>
                     <p className="text-primary font-medium mb-3">Future-focused insights</p>
                   </div>
