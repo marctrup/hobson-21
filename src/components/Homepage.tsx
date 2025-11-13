@@ -71,9 +71,9 @@ export const Homepage = () => {
 
       <div className="min-h-screen bg-background overflow-x-hidden">
         {/* Header */}
-        <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50" role="banner">
-          <div className="container mx-auto px-4 py-1">
-            <div className="flex justify-between items-center">
+        <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full" role="banner">
+          <div className="container mx-auto px-4 py-1 max-w-full">
+            <div className="flex justify-between items-center gap-4">
               {/* Logo */}
               <div className="flex items-center">
                 <Link to="/" onClick={closeMobileMenu}>
@@ -119,10 +119,10 @@ export const Homepage = () => {
           </div>
         </header>
 
-        <main id="main-content" className="min-h-screen bg-background" role="main">
+        <main id="main-content" className="min-h-screen bg-background w-full" role="main">
           {/* Hero Section - Two Column Layout */}
-          <section className="pt-12 sm:pt-16 pb-4" aria-labelledby="hero-heading">
-            <div className="container mx-auto px-4">
+          <section className="pt-12 sm:pt-16 pb-4 w-full" aria-labelledby="hero-heading">
+            <div className="container mx-auto px-4 max-w-full">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center py-6 sm:py-8 lg:py-12">
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
@@ -145,7 +145,7 @@ export const Homepage = () => {
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
-                <div className="relative mt-8 lg:mt-[5px] font-space transition-transform duration-300 border-[2px] sm:border-[3px] border-gray-500 rounded-lg" style={{
+                <div className="relative mt-8 lg:mt-[5px] font-space transition-transform duration-300 border-[2px] sm:border-[3px] border-gray-500 rounded-lg max-w-full overflow-hidden" style={{
                   transform: 'perspective(1000px) rotateY(-10deg)',
                   transformStyle: 'preserve-3d',
                   boxShadow: '15px 15px 40px rgba(0, 0, 0, 0.06), 8px 8px 25px rgba(0, 0, 0, 0.04), 0 -5px 20px rgba(0, 0, 0, 0.03), 0 10px 30px rgba(0, 0, 0, 0.05)',
@@ -159,8 +159,8 @@ export const Homepage = () => {
           </section>
 
           {/* How It Works & Video Section - Separated Headers and Content */}
-          <section className="py-6 sm:py-8 md:py-16 bg-muted/30">
-            <div className="container mx-auto px-4">
+          <section className="py-6 sm:py-8 md:py-16 bg-muted/30 w-full">
+            <div className="container mx-auto px-4 max-w-full">
               {/* Content Row */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start">
                 
