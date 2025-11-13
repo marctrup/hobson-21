@@ -11,8 +11,7 @@ const WEBSITE_CONTENT = `
 
 ## Site Structure (from sitemap)
 Available pages on the website:
-- Homepage: /
-- Pricing: /pricing
+- Homepage: / (includes pricing information)
 - Blog: /blog
 - Contact: /contact
 - Data Protection: /data-protection
@@ -321,7 +320,7 @@ Full refund policy available at: https://hobsonschoice.ai/refund-policy
 - Website: https://hobsonschoice.ai
 - Contact page: https://hobsonschoice.ai/contact
 - Learn more: https://hobsonschoice.ai/learn
-- Pricing details: https://hobsonschoice.ai/pricing
+- Pricing details: https://hobsonschoice.ai/ (pricing section on homepage)
 
 ### How to Get in Touch
 For those interested in learning more about Hobson AI:
@@ -456,7 +455,7 @@ IMPORTANT GUIDELINES:
    
    **Main Pages:**
    - Learn page: [Learn page](/learn/welcome)
-   - Pricing: [Pricing](/pricing)
+   - Pricing: [Pricing](/) (pricing section on homepage)
    - Blog: [Blog](/blog)
    - Contact: [Contact Us](/contact)
    
