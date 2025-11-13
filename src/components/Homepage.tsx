@@ -69,7 +69,7 @@ export const Homepage = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-background overflow-x-hidden">
+      <div className="min-h-screen bg-background overflow-x-hidden max-w-[100vw]">
         {/* Header */}
         <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 w-full" role="banner">
           <div className="container mx-auto px-4 py-1 max-w-full">
