@@ -272,7 +272,7 @@ export const HobsonChatbot = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-0 left-0 right-0 sm:bottom-6 sm:left-auto sm:right-6 sm:translate-x-0 z-50 w-full sm:w-[380px] h-[100dvh] sm:h-[500px] max-h-[100dvh] sm:max-h-[600px] overflow-hidden bg-background border-t sm:border border-border sm:rounded-lg shadow-2xl flex flex-col">
+        <div className="fixed bottom-4 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:bottom-6 sm:right-6 z-50 w-[95vw] sm:w-[380px] h-[85vh] sm:h-[500px] max-h-[600px] bg-background border border-border rounded-lg shadow-2xl flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-4 border-b border-border bg-muted/50">
             <div className="flex items-center gap-2">
@@ -301,7 +301,7 @@ export const HobsonChatbot = () => {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto overflow-x-hidden p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((message, index) => (
               <div key={index}>
                 <div
@@ -315,13 +315,13 @@ export const HobsonChatbot = () => {
                     />
                   )}
                   <div
-                    className={`max-w-[75%] rounded-2xl px-4 py-3 break-words ${
+                    className={`max-w-[75%] rounded-2xl px-4 py-3 ${
                       message.role === 'user'
                         ? 'bg-primary text-primary-foreground rounded-br-sm'
                         : 'bg-purple-50 dark:bg-purple-950/20 text-foreground rounded-bl-sm'
                     }`}
                   >
-                    <p className="text-sm leading-relaxed whitespace-pre-wrap break-words">
+                    <p className="text-sm leading-relaxed whitespace-pre-wrap">
                       {renderMessage(message.content)}
                     </p>
                   </div>
@@ -391,21 +391,20 @@ export const HobsonChatbot = () => {
           </div>
 
           {/* Input */}
-          <div className="p-4 border-t border-border bg-background">
-            <div className="flex gap-2 w-full">
+          <div className="p-4 border-t border-border">
+            <div className="flex gap-2">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about Hobson AI..."
                 disabled={isLoading}
-                className="flex-1 min-w-0 text-base"
+                className="flex-1"
               />
               <Button
                 onClick={sendMessage}
                 disabled={isLoading || !input.trim()}
                 size="icon"
-                className="flex-shrink-0"
               >
                 <Send className="w-4 h-4" />
               </Button>
