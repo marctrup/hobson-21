@@ -286,7 +286,7 @@ export const HobsonChatbot = () => {
             <img 
               src={owlChatBubble} 
               alt="Chat with Hobson" 
-              className="w-[94px] h-[94px] sm:w-[118px] sm:h-[118px] drop-shadow-lg"
+              className="w-[89px] h-[89px] sm:w-[112px] sm:h-[112px] drop-shadow-lg"
             />
             <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-background border border-border rounded-lg shadow-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
               Need help? Chat with Hobson!
