@@ -399,7 +399,8 @@ export const HobsonChatbot = () => {
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about Hobson AI..."
                 disabled={isLoading}
-                className="flex-1"
+                className="flex-1 text-base"
+                style={{ fontSize: '16px' }}
               />
               <Button
                 onClick={sendMessage}
