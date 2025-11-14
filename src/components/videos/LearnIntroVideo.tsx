@@ -53,6 +53,7 @@ export const LearnIntroVideo = () => {
                 src="/lovable-uploads/773893a3-1536-4e6c-9c3d-2138464a82c4.png"
                 alt="Getting Started with Hobson AI"
                 className="w-full h-full object-cover"
+                loading="lazy"
               />
             </div>
           </DialogTrigger>
