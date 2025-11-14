@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import owlMascotChat from '@/assets/owl-mascot-chat.png';
+import owlChatBubble from '@/assets/owl-chat-bubble.png';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -279,10 +280,14 @@ export const HobsonChatbot = () => {
       {!isOpen && (
           <button
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-primary hover:bg-primary/90 text-primary-foreground rounded-full p-3 sm:p-4 shadow-lg transition-all hover:scale-110 group"
+            className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50 bg-transparent hover:scale-110 transition-all group p-0"
             aria-label="Open chat"
           >
-            <MessageCircle className="w-5 h-5 sm:w-6 sm:h-6" />
+            <img 
+              src={owlChatBubble} 
+              alt="Chat with Hobson" 
+              className="w-16 h-16 sm:w-20 sm:h-20 drop-shadow-lg"
+            />
             <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-background border border-border rounded-lg shadow-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
               Need help? Chat with Hobson!
             </span>
