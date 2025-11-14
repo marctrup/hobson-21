@@ -77,6 +77,25 @@ export const HobsonChatbot = () => {
     }
   }, [isOpen]);
 
+  // Prevent body scroll when chat is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.width = '100%';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    }
+    
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.position = '';
+      document.body.style.width = '';
+    };
+  }, [isOpen]);
+
   const handleQuickQuestion = (question: string) => {
     // Auto-send the question without setting input
     sendMessageWithText(question);
@@ -301,7 +320,7 @@ export const HobsonChatbot = () => {
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          <div className="flex-1 overflow-y-auto p-4 space-y-4 overscroll-contain touch-pan-y">
             {messages.map((message, index) => (
               <div key={index}>
                 <div
