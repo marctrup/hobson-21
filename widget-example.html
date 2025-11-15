@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hobson Chat Widget - Example</title>
+  
+  <!-- Tailwind CSS for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  
+  <!-- Your website content -->
+  <div class="container mx-auto px-4 py-12">
+    <header class="text-center mb-12">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4">
+        Welcome to My Website
+      </h1>
+      <p class="text-lg text-gray-600">
+        This is an example page showing the Hobson AI chat widget.
+      </p>
+    </header>
+
+    <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8">
+      <h2 class="text-2xl font-semibold mb-4">About the Chat Widget</h2>
+      <p class="text-gray-700 mb-4">
+        Look for the owl icon in the bottom-right corner! Click it to start chatting 
+        with Hobson AI, your intelligent assistant.
+      </p>
+      
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <h3 class="font-semibold text-blue-900 mb-2">Try asking:</h3>
+        <ul class="list-disc list-inside text-blue-800 space-y-1">
+          <li>What can Hobson AI do?</li>
+          <li>Tell me about pricing plans</li>
+          <li>How does document processing work?</li>
+          <li>What integrations are available?</li>
+        </ul>
+      </div>
+
+      <p class="text-gray-700">
+        The widget connects to the same backend as the main Hobson AI application, 
+        providing consistent answers and functionality across all platforms.
+      </p>
+    </div>
+  </div>
+
+  <!-- Load React dependencies from CDN -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  
+  <!-- Load the Hobson Chat Widget -->
+  <!-- REPLACE 'YOUR_HOSTED_WIDGET_URL' with your actual hosted widget URL -->
+  <script src="YOUR_HOSTED_WIDGET_URL/hobson-chat-widget.js"></script>
+  
+  <!-- Initialize the widget -->
+  <script>
+    // Wait for the page to load, then initialize the widget
+    window.addEventListener('DOMContentLoaded', function() {
+      if (window.HobsonChatWidget) {
+        window.HobsonChatWidget.init();
+        console.log('Hobson Chat Widget initialized successfully!');
+      } else {
+        console.error('Failed to load Hobson Chat Widget');
+      }
+    });
+  </script>
+
+</body>
+</html>
