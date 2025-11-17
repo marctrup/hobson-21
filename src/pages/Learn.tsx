@@ -2305,9 +2305,33 @@ Content-Type: multipart/form-data
                       <AccordionItem value="upload-documents">
                         <AccordionTrigger className="text-left">What happens when I upload documents?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">
-                            Content for this section coming soon.
-                          </p>
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <p>
+                              When you upload documents, Hobson reads and processes them so they're ready for future queries. This can take some time, depending on how complex the documents are. Once everything has been processed, you'll receive an email confirming that all documents have been read.
+                            </p>
+
+                            <div className="space-y-3 pt-2">
+                              <p className="font-medium text-foreground text-base">What happens next?</p>
+                              
+                              <div className="bg-muted/30 p-4 rounded-lg border border-border/50 space-y-3">
+                                <p>
+                                  Hobson extracts key details such as <strong className="text-foreground">addresses</strong> and <strong className="text-foreground">postcodes</strong>.
+                                </p>
+                                
+                                <div className="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-md">
+                                  <p className="text-foreground">
+                                    It's a good idea to check that the postcodes are correct — an incorrect postcode will appear in the wrong place on the map.
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="bg-primary/5 p-3 rounded-md">
+                              <p className="text-foreground font-medium">
+                                Once this step is done, your documents are fully searchable and ready to use.
+                              </p>
+                            </div>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="ask-question">
