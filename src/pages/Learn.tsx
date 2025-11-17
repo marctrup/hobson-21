@@ -2479,12 +2479,6 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="data-cleanup">
-                        <AccordionTrigger className="text-left">What is "data cleanup," and why is it important?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Ensure that there are no incorrect Geo Locations or incorrectly labelled document types. These are extracted by Hobson but they can be poorly written on the document so may need updating.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="connect-systems">
                         <AccordionTrigger className="text-left">Can Hobson connect to our systems?</AccordionTrigger>
                         <AccordionContent>
