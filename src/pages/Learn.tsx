@@ -2302,12 +2302,6 @@ Content-Type: multipart/form-data
                   <section id="features">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting the best out of Hobson</h2>
                     <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="work-efficiently">
-                        <AccordionTrigger className="text-left">How do I work efficiently with Hobson?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Batch uploads. Occasionally some documents may be poorly labelled, so check the correct label has been applied.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="structure-prompts">
                         <AccordionTrigger className="text-left">How should I structure my prompts for the best results?</AccordionTrigger>
                         <AccordionContent>
