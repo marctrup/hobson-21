@@ -2243,7 +2243,7 @@ Content-Type: multipart/form-data
                                   <p className="text-sm text-muted-foreground">
                                     Documents that <strong className="text-foreground">modify</strong>, <strong className="text-foreground">extend</strong>, or{" "}
                                     <strong className="text-foreground">support</strong> an RTO. This includes formal amendments (such as deeds of 
-                                    variation or rent memorandums) and supporting documents (such as notices, identity documents, or bank statements).
+                                    variation or rent memorandums) and supporting documents (such as notices, identity documents, or funding documents).
                                   </p>
                                 </div>
                                 
