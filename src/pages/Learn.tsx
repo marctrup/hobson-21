@@ -2283,9 +2283,9 @@ Content-Type: multipart/form-data
                     </Accordion>
                   </section>
 
-                  {/* Using Hobson day-to-day */}
+                  {/* Getting the best out of Hobson */}
                   <section id="features">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Using Hobson day-to-day</h2>
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting the best out of Hobson</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="work-efficiently">
                         <AccordionTrigger className="text-left">How do I work efficiently with Hobson?</AccordionTrigger>
