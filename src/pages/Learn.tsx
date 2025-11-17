@@ -2305,9 +2305,55 @@ Content-Type: multipart/form-data
                       <AccordionItem value="ask-question">
                         <AccordionTrigger className="text-left">How should I choose the right level to ask my question?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">
-                            Content for this section coming soon.
-                          </p>
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <p>
+                              You can ask Hobson questions at three levels — <strong className="text-foreground">Portfolio</strong>, <strong className="text-foreground">Unit Group</strong>, and <strong className="text-foreground">Unit</strong>. The higher the level, the broader the search. The lower the level, the more focused the answer.
+                            </p>
+                            
+                            <div className="space-y-3">
+                              <p className="font-medium text-foreground">To get the best results:</p>
+                              <ul className="space-y-2 pl-4">
+                                <li className="flex gap-2">
+                                  <span className="text-primary">•</span>
+                                  <span><strong className="text-foreground">Use Portfolio</strong> for broad questions that cover everything you manage.</span>
+                                </li>
+                                <li className="flex gap-2">
+                                  <span className="text-primary">•</span>
+                                  <span><strong className="text-foreground">Use Unit Group</strong> when your question relates to a set of linked units.</span>
+                                </li>
+                                <li className="flex gap-2">
+                                  <span className="text-primary">•</span>
+                                  <span><strong className="text-foreground">Use Unit</strong> when you need details about a specific space.</span>
+                                </li>
+                              </ul>
+                            </div>
+
+                            <div className="space-y-3 pt-2">
+                              <p className="font-medium text-foreground">Asking your question at the right level matters for three reasons:</p>
+                              
+                              <div className="space-y-3">
+                                <div className="pl-4 border-l-2 border-primary/20">
+                                  <p className="font-medium text-foreground mb-1">1. You use fewer credits</p>
+                                  <p>A broad search means Hobson needs to look through a larger set of documents. Dropping down a level keeps the search small and saves credits.</p>
+                                </div>
+                                
+                                <div className="pl-4 border-l-2 border-primary/20">
+                                  <p className="font-medium text-foreground mb-1">2. You reduce the chance of errors</p>
+                                  <p>Big searches require more processing. Focused questions give Hobson less to sift through, which means cleaner, more accurate answers.</p>
+                                </div>
+                                
+                                <div className="pl-4 border-l-2 border-primary/20">
+                                  <p className="font-medium text-foreground mb-1">3. You see the right context automatically</p>
+                                  <p>When you move down a level, Hobson shows you the address, tenant names, and other details for that space. This helps you frame your question without needing to remember everything yourself.</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="bg-muted/50 p-3 rounded-md mt-4">
+                              <p className="font-medium text-foreground">In short:</p>
+                              <p className="mt-1">Ask high-level questions at the Portfolio level, and move down a level when you need specific answers.</p>
+                            </div>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="structure-prompts">
