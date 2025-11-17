@@ -145,6 +145,27 @@ export type Database = {
           },
         ]
       }
+      chatbot_knowledge_base: {
+        Row: {
+          content: string
+          id: string
+          last_updated: string | null
+          version: number | null
+        }
+        Insert: {
+          content: string
+          id?: string
+          last_updated?: string | null
+          version?: number | null
+        }
+        Update: {
+          content?: string
+          id?: string
+          last_updated?: string | null
+          version?: number | null
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string

@@ -1,100 +1,40 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.39.3';
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Condensed website content for the AI chatbot
-const WEBSITE_CONTENT = `
-# Hobson's Choice AI - Knowledge Base
-
-## Site Navigation
-- Homepage: / (includes pricing)
-- Blog: /blog
-- Contact: /contact
-- Learn: /learn/* (sections: getting-started, plans-credits, use-cases, core-features, integrations, fundamentals, hobson-glossary)
-- Policies: /data-protection, /privacy-policy, /refund-policy
-
-## About Hobson AI
-AI-powered business assistant for property professionals. Reads documents, extracts data, stores securely, and answers questions using your content.
-
-## Core Capabilities
-- Search leases and tenancy agreements (ASTs)
-- Extract key terms, dates, and clauses automatically
-- Answer questions with source citations
-- Create document summaries
-- Track deadlines and review dates (85+ types)
-- Supports PDF, DOCX, CSV, Excel
-
-## Key Features
-- Intelligent document processing
-- Smart search in plain language
-- Real-time analytics and dashboards
-- Team collaboration with role-based access
-- Enterprise-grade security and encryption
-- Bulk import and data export
-
-## Pricing (HEU System)
-HEUs (Hobson Energy Units) are credits used for messages and document processing.
-
-Plans:
-- Free: 20 HEUs/month
-- Starter: 100 HEUs/month (£5.99)
-- Essential: 500 HEUs/month (£24.99)
-- Essential Plus: 1200 HEUs/month (£49.99) - includes contacts & calendar integration
-- Professional: 2500 HEUs/month (£99.99) - advanced integrations
-- Enterprise: Custom pricing and features
-
-HEU costs vary by task complexity. Simple queries use fewer HEUs than complex document processing.
-
-## FAQ (Frequently Asked Questions)
-
-### How should I choose the right level to ask my question?
-You can ask Hobson questions at three levels: Portfolio, Unit Group, and Unit.
-- Use Portfolio for broad questions that cover everything you manage
-- Use Unit Group when your question relates to a set of linked units
-- Use Unit when you need details about a specific space
-
-Benefits of choosing the right level:
-1. You use fewer credits (smaller search = fewer HEUs)
-2. You reduce the chance of errors (focused questions give cleaner answers)
-3. You see the right context automatically
-
-### Can I use Hobson without uploading documents?
-No. You need at least one portfolio, one unit group, one unit, and one document uploaded before you can ask questions. Hobson reads your documents to provide answers.
-
-### What documents can I upload?
-Hobson supports: PDF, DOCX, CSV, Excel, and other common business document formats.
-
-### I uploaded documents, but they still say "pending". What do I do?
-This means the documents are processing. Wait a few minutes and refresh the page. If they remain pending after several minutes, contact support.
-
-### How do I get the best answers from Hobson?
-- Choose the right level first (Portfolio for broad, Unit for specific)
-- Be direct and clear with your questions
-- Use names or addresses when needed to guide the search
-- Ask one thing at a time for cleaner answers
-
-### Can Hobson connect to our systems?
-Currently, we don't offer bespoke integrations, but talk to us about what you want to achieve and whether it will be possible in the future.
-
-### Can I control who has access?
-Yes. Admin users can invite new users and choose exactly which units and which document classes they can access. This lets you control who sees what within Hobson.
-
-### How does billing/HEUs work?
-HEU = Hobson Energy Unit (your usage credit). You spend HEUs on extraction, indexing, and Q&A.
-Plans: monthly HEUs; unused plan HEUs roll over for 1 month.
-You can Top-Up for busy periods, no rollover (use within your current billing period).
-
-## Contact & Support
-- Website: https://hobsonschoice.ai
-- Contact: https://hobsonschoice.ai/contact
-- Learn: https://hobsonschoice.ai/learn
-- Pricing: https://hobsonschoice.ai/ (pricing section on homepage)
-
-For more information, direct users to relevant pages listed above.
-`;
+// Function to get the latest knowledge base from database
+async function getKnowledgeBase(): Promise<string> {
+  try {
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY")!;
+    
+    const supabase = createClient(supabaseUrl, supabaseAnonKey);
+    
+    const { data, error } = await supabase
+      .from('chatbot_knowledge_base')
+      .select('content')
+      .order('last_updated', { ascending: false })
+      .limit(1)
+      .single();
+    
+    if (error || !data) {
+      console.error("Error fetching knowledge base:", error);
+      // Fallback to basic content if database query fails
+      return `# Hobson AI - Basic Knowledge
+Visit https://hobsonschoice.ai/learn for more information.`;
+    }
+    
+    return data.content;
+  } catch (err) {
+    console.error("Exception fetching knowledge base:", err);
+    return `# Hobson AI - Basic Knowledge
+Visit https://hobsonschoice.ai/learn for more information.`;
+  }
+}
 
 serve(async (req) => {
   // Handle CORS preflight requests
@@ -115,6 +55,9 @@ serve(async (req) => {
       throw new Error("AI service not configured");
     }
 
+    // Get the latest knowledge base content
+    const WEBSITE_CONTENT = await getKnowledgeBase();
+    
     const systemPrompt = `You are a helpful AI assistant for Hobson's Choice AI website. Your role is to help visitors understand what Hobson AI does, its features, pricing, and use cases.
 
 IMPORTANT GUIDELINES:

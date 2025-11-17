@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.hobson-chat]
 verify_jwt = false
+
+[functions.update-chatbot-knowledge]
+verify_jwt = false
