@@ -20,12 +20,46 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Fetch the Learn page to extract FAQ content
-    const learnPageUrl = `${supabaseUrl.replace('.supabase.co', '')}.lovable.app/learn/faq`;
+    // Fetch the Learn FAQ page to extract content
+    const learnPageUrl = `https://hobsonschoice.ai/learn/faq`;
     console.log(`Fetching content from: ${learnPageUrl}`);
     
-    // For now, we'll build the knowledge base from our known FAQ structure
-    // In a production system, you might use a web scraper or maintain FAQ content in the database
+    let faqContent = "";
+    try {
+      const pageResponse = await fetch(learnPageUrl);
+      const htmlContent = await pageResponse.text();
+      
+      // Extract text content from FAQ sections
+      // This is a basic extraction - in production, you might want to use a proper HTML parser
+      const faqMatches = htmlContent.matchAll(/<AccordionTrigger[^>]*>([^<]+)<\/AccordionTrigger>[\s\S]*?<AccordionContent[^>]*>([\s\S]*?)<\/AccordionContent>/gi);
+      
+      const faqs: string[] = [];
+      for (const match of faqMatches) {
+        const question = match[1].trim();
+        // Remove HTML tags and clean up the answer
+        const answer = match[2]
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .replace(/&quot;/g, '"')
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .trim();
+        
+        if (question && answer) {
+          faqs.push(`### ${question}\n${answer}\n`);
+        }
+      }
+      
+      if (faqs.length > 0) {
+        faqContent = faqs.join('\n');
+        console.log(`Extracted ${faqs.length} FAQ items from live page`);
+      }
+    } catch (error) {
+      console.error("Error fetching FAQ page:", error);
+      faqContent = "FAQ content could not be fetched. Please visit https://hobsonschoice.ai/learn/faq";
+    }
+    
     const knowledgeBase = `# Hobson's Choice AI - Knowledge Base
 
 ## Site Navigation
@@ -69,42 +103,7 @@ HEU costs vary by task complexity. Simple queries use fewer HEUs than complex do
 
 ## FAQ (Frequently Asked Questions)
 
-### How should I choose the right level to ask my question?
-You can ask Hobson questions at three levels: Portfolio, Unit Group, and Unit.
-- Use Portfolio for broad questions that cover everything you manage
-- Use Unit Group when your question relates to a set of linked units
-- Use Unit when you need details about a specific space
-
-Benefits of choosing the right level:
-1. You use fewer credits (smaller search = fewer HEUs)
-2. You reduce the chance of errors (focused questions give cleaner answers)
-3. You see the right context automatically
-
-### Can I use Hobson without uploading documents?
-No. You need at least one portfolio, one unit group, one unit, and one document uploaded before you can ask questions. Hobson reads your documents to provide answers.
-
-### What documents can I upload?
-Hobson supports: PDF, DOCX, CSV, Excel, and other common business document formats.
-
-### I uploaded documents, but they still say "pending". What do I do?
-This means the documents are processing. Wait a few minutes and refresh the page. If they remain pending after several minutes, contact support.
-
-### How do I get the best answers from Hobson?
-- Choose the right level first (Portfolio for broad, Unit for specific)
-- Be direct and clear with your questions
-- Use names or addresses when needed to guide the search
-- Ask one thing at a time for cleaner answers
-
-### Can Hobson connect to our systems?
-Currently, we don't offer bespoke integrations, but talk to us about what you want to achieve and whether it will be possible in the future.
-
-### Can I control who has access?
-Yes. Admin users can invite new users and choose exactly which units and which document classes they can access. This lets you control who sees what within Hobson.
-
-### How does billing/HEUs work?
-HEU = Hobson Energy Unit (your usage credit). You spend HEUs on extraction, indexing, and Q&A.
-Plans: monthly HEUs; unused plan HEUs roll over for 1 month.
-You can Top-Up for busy periods, no rollover (use within your current billing period).
+${faqContent || "Visit https://hobsonschoice.ai/learn/faq for frequently asked questions."}
 
 ## Glossary Terms
 
