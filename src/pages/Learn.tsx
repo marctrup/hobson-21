@@ -2212,8 +2212,8 @@ Content-Type: multipart/form-data
                                 <div className="bg-muted/30 border border-border rounded-lg p-5">
                                   <h5 className="text-base font-semibold text-foreground mb-2">Unit Group</h5>
                                   <p className="text-sm text-muted-foreground">
-                                    A set of units linked <strong className="text-foreground">either</strong> by a shared location 
-                                    (for example, flats in one block or offices on a single floor) <strong className="text-foreground">or</strong> by 
+                                    A set of units linked <span className="text-primary">either</span> by a shared location 
+                                    (for example, flats in one block or offices on a single floor) <span className="text-primary">or</span> by 
                                     a shared document (for example, one lease covering multiple units in one or more locations).
                                   </p>
                                 </div>
