@@ -2303,7 +2303,7 @@ Content-Type: multipart/form-data
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting the best out of Hobson</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="ask-question">
-                        <AccordionTrigger className="text-left">How to best ask a question</AccordionTrigger>
+                        <AccordionTrigger className="text-left">How should I choose the right level to ask my question?</AccordionTrigger>
                         <AccordionContent>
                           <p className="text-muted-foreground text-sm">
                             Content for this section coming soon.
