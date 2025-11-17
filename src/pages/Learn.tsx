@@ -2261,7 +2261,10 @@ Content-Type: multipart/form-data
                       <AccordionItem value="file-types">
                         <AccordionTrigger className="text-left">Which file types are supported?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">PDF, DOCX, and common text files. CSV/Excel for tabular data.</p>
+                          <p className="text-muted-foreground text-sm">
+                            Hobson currently supports changes to PDFs, DOCX, and common text files, as well as CSV/Excel for tabular data. 
+                            We will be extending the document type list in due course to include Word documents, tabular data, and images.
+                          </p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="mobile-support">
