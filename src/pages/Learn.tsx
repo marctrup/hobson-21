@@ -2160,12 +2160,12 @@ Content-Type: multipart/form-data
     // Handle FAQ content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
       const tocSections = [
+        { id: 'how-hobson-works', label: 'How Hobson works' },
         { id: 'getting-started', label: 'Getting started' },
         { id: 'building-with-hobson', label: 'Using Hobson day-to-day' },
         { id: 'features', label: 'Features' },
         { id: 'managing-account', label: 'Managing your account' },
         { id: 'policies-security', label: 'Policies and Security' },
-        { id: 'how-hobson-works', label: 'How Hobson works' },
         { id: 'about-hobson', label: 'About Hobson' },
       ];
 
@@ -2190,6 +2190,37 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="space-y-12">
+                  {/* How Hobson works */}
+                  <section id="how-hobson-works">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">How Hobson works</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="file-types">
+                        <AccordionTrigger className="text-left">Which file types are supported?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">PDF, DOCX, and common text files. CSV/Excel for tabular data.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="mobile-support">
+                        <AccordionTrigger className="text-left">Does Hobson work on mobile?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Yes—Hobson runs in the browser and works on mobile for core tasks.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="remember-context">
+                        <AccordionTrigger className="text-left">How does Hobson remember context?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Hobson uses light RAG (retrieval-augmented generation). It retrieves the most relevant snippets from your private knowledgebase before answering. On Essential Plus, you can add contacts and schedule for richer context.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="data-ownership">
+                        <AccordionTrigger className="text-left">Who owns the data and outputs?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You do. Your documents, extracted data, and answers belong to your company.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+
                   {/* What is Hobson */}
                   <section id="getting-started">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">What is Hobson?</h2>
@@ -2418,7 +2449,7 @@ Content-Type: multipart/form-data
                   </section>
 
                   {/* Policies and security */}
-                  <section id="how-hobson-works">
+                  <section id="policies-security">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Policies and security</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="get-support">
@@ -2454,39 +2485,8 @@ Content-Type: multipart/form-data
                     </Accordion>
                   </section>
 
-                  {/* How Hobson works */}
-                  <section id="about-hobson">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">How Hobson works</h2>
-                    <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="file-types">
-                        <AccordionTrigger className="text-left">Which file types are supported?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">PDF, DOCX, and common text files. CSV/Excel for tabular data.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="mobile-support">
-                        <AccordionTrigger className="text-left">Does Hobson work on mobile?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes—Hobson runs in the browser and works on mobile for core tasks.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="remember-context">
-                        <AccordionTrigger className="text-left">How does Hobson remember context?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson uses light RAG (retrieval-augmented generation). It retrieves the most relevant snippets from your private knowledgebase before answering. On Essential Plus, you can add contacts and schedule for richer context.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="data-ownership">
-                        <AccordionTrigger className="text-left">Who owns the data and outputs?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">You do. Your documents, extracted data, and answers belong to your company.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </section>
-
                   {/* About Hobson */}
-                  <section>
+                  <section id="about-hobson">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">About Hobson</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="where-based">
