@@ -2488,7 +2488,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="control-access">
                         <AccordionTrigger className="text-left">Can I control who has access?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. Role-based access (admin/standard/view) and per-workspace permissions.</p>
+                          <p className="text-muted-foreground text-sm">Yes. Admin users can invite new users and choose exactly which units and which document classes they can access. This lets you control who sees what within Hobson.</p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="billing-heus">
