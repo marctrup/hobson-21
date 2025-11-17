@@ -2283,37 +2283,6 @@ Content-Type: multipart/form-data
                     </Accordion>
                   </section>
 
-                  {/* Getting started */}
-                  <section id="building-with-hobson">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting started</h2>
-                    <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="what-can-do">
-                        <AccordionTrigger className="text-left">What can I do with Hobson?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Search leases/ASTs, pull key terms and dates, answer clause questions, create summaries, spot renewals/breaks, and (on Essential Plus) include contacts and schedule in answers.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="coding-experience">
-                        <AccordionTrigger className="text-left">Do I need coding experience?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">No. Upload documents and ask questions in plain English.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="get-started">
-                        <AccordionTrigger className="text-left">How do I get started?</AccordionTrigger>
-                        <AccordionContent>
-                          <div className="text-muted-foreground text-sm space-y-2">
-                            <p>(Optional) Buy the Starter Pack to cover onboarding.</p>
-                            <p>Upload your documents.</p>
-                            <p>Hobson extracts and indexes them (prepares for search).</p>
-                            <p>Ask questions; invite your team.</p>
-                            <p>On Essential Plus, connect contacts and calendar.</p>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </section>
-
                   {/* Using Hobson day-to-day */}
                   <section id="features">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Using Hobson day-to-day</h2>
