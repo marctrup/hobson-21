@@ -2337,9 +2337,14 @@ Content-Type: multipart/form-data
                       <AccordionItem value="add-unit-manually">
                         <AccordionTrigger className="text-left">Can I add a unit manually without uploading a document?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">
-                            Content for this section coming soon.
-                          </p>
+                          <div className="text-muted-foreground text-sm space-y-3">
+                            <p>
+                              <strong className="text-foreground">Yes.</strong> Just ask Hobson <span className="inline-block bg-muted px-2 py-1 rounded font-mono text-xs">"Add Unit"</span>.
+                            </p>
+                            <p>
+                              Hobson will then prompt you to enter the full address, and the unit will be created without needing any documents.
+                            </p>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="ask-question">
