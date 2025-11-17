@@ -2269,7 +2269,9 @@ Content-Type: multipart/form-data
                       <AccordionItem value="mobile-support">
                         <AccordionTrigger className="text-left">Does Hobson work on mobile?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes—Hobson runs in the browser and works on mobile for core tasks.</p>
+                          <p className="text-muted-foreground text-sm">
+                            No. We are planning to introduce a mobile version and the ability to integrate it with other common apps, such as WhatsApp.
+                          </p>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="remember-context">
