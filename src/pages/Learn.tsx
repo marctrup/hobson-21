@@ -2359,9 +2359,43 @@ Content-Type: multipart/form-data
                       <AccordionItem value="poor-answer">
                         <AccordionTrigger className="text-left">What should I do if I get a poor answer?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">
-                            Content for this section coming soon.
-                          </p>
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <p>
+                              If Hobson gives you an answer like <span className="italic">"No information is available"</span> but you know the information exists, try these steps:
+                            </p>
+
+                            <div className="space-y-4">
+                              <div className="bg-muted/30 p-4 rounded-lg border border-border/50">
+                                <div className="flex items-start gap-3">
+                                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                                    1
+                                  </div>
+                                  <div className="flex-1">
+                                    <h4 className="font-semibold text-foreground mb-1">Go back to the level you were on</h4>
+                                    <p>Return to the Portfolio, Unit Group, or Unit level you were using and ask the question again. A fresh query at the correct level often fixes the issue.</p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div className="bg-muted/30 p-4 rounded-lg border border-border/50">
+                                <div className="flex items-start gap-3">
+                                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                                    2
+                                  </div>
+                                  <div className="flex-1">
+                                    <h4 className="font-semibold text-foreground mb-1">Check that the documents are actually uploaded</h4>
+                                    <p>Open the Documents area in Admin and make sure the files you expect are there. If a document is missing or unreadable, Hobson won't be able to use it.</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <div className="bg-primary/5 border-l-4 border-primary p-3 rounded-r-md mt-4">
+                              <p className="text-foreground font-medium">
+                                Most issues come from asking at too high a level or missing documents, and both are easy to correct.
+                              </p>
+                            </div>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="structure-prompts">
