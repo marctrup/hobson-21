@@ -2266,6 +2266,14 @@ Content-Type: multipart/form-data
                           </p>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="get-documents">
+                        <AccordionTrigger className="text-left">How to get documents to Hobson</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">
+                            Upload your documents directly through the Hobson interface. Simply drag and drop your files or use the upload button to add PDFs to your knowledge base.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="mobile-support">
                         <AccordionTrigger className="text-left">Does Hobson work on mobile?</AccordionTrigger>
                         <AccordionContent>
