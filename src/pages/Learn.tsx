@@ -2334,6 +2334,14 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="add-unit-manually">
+                        <AccordionTrigger className="text-left">Can I add a unit manually without uploading a document?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">
+                            Content for this section coming soon.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="ask-question">
                         <AccordionTrigger className="text-left">How should I choose the right level to ask my question?</AccordionTrigger>
                         <AccordionContent>
