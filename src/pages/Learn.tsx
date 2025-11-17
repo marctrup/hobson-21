@@ -2269,9 +2269,16 @@ Content-Type: multipart/form-data
                       <AccordionItem value="get-documents">
                         <AccordionTrigger className="text-left">How to get documents to Hobson</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm">
-                            Upload your documents directly through the Hobson interface. Simply drag and drop your files or use the upload button to add PDFs to your knowledge base.
-                          </p>
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <div>
+                              <h5 className="font-semibold text-foreground mb-2">For Today</h5>
+                              <p>Hobson allows for batch uploads via our drag-and-drop upload feature.</p>
+                            </div>
+                            <div>
+                              <h5 className="font-semibold text-foreground mb-2">In the Future</h5>
+                              <p>Once we are happy that Hobson can access drives such as Dropbox and Google Drive, we will provide that feature.</p>
+                            </div>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="mobile-support">
