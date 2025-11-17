@@ -2356,6 +2356,14 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="poor-answer">
+                        <AccordionTrigger className="text-left">What should I do if I get a poor answer?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">
+                            Content for this section coming soon.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="structure-prompts">
                         <AccordionTrigger className="text-left">How should I structure my prompts for the best results?</AccordionTrigger>
                         <AccordionContent>
