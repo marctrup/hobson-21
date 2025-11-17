@@ -2234,7 +2234,7 @@ Content-Type: multipart/form-data
                                 <div className="bg-muted/30 border border-border rounded-lg p-5">
                                   <h5 className="text-base font-semibold text-foreground mb-2">Right-to-Occupy (RTO) Documents</h5>
                                   <p className="text-sm text-muted-foreground">
-                                    Documents that give an entity the right to use or occupy a space, such as a lease or a mortgage.
+                                    Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.
                                   </p>
                                 </div>
                                 
