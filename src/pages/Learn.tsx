@@ -2194,6 +2194,22 @@ Content-Type: multipart/form-data
                   <section id="how-hobson-works">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">How Hobson works</h2>
                     <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="organize-units-documents">
+                        <AccordionTrigger className="text-left">How Hobson Organises Units and Documents</AccordionTrigger>
+                        <AccordionContent>
+                          <div className="text-muted-foreground text-sm space-y-3">
+                            <p>Hobson uses an intelligent organizational structure to manage your property portfolio efficiently:</p>
+                            <ul className="list-disc list-inside space-y-2 ml-2">
+                              <li><strong className="text-foreground">Unit-Based Organization:</strong> Each property unit (apartment, house, commercial space) is treated as a distinct entity with its own document repository.</li>
+                              <li><strong className="text-foreground">Automatic Document Classification:</strong> Documents are automatically categorized by type (leases, maintenance records, certificates, correspondence) and tagged with relevant metadata.</li>
+                              <li><strong className="text-foreground">Hierarchical Structure:</strong> Properties are organized in a logical hierarchy - Portfolio → Building → Unit → Document Type → Individual Documents.</li>
+                              <li><strong className="text-foreground">Smart Linking:</strong> Related documents across different units are intelligently linked, making it easy to track patterns and cross-reference information.</li>
+                              <li><strong className="text-foreground">Version Control:</strong> All document revisions are tracked automatically, ensuring you always have access to the complete history of any document.</li>
+                              <li><strong className="text-foreground">Secure Access:</strong> Role-based permissions ensure that team members only see documents relevant to their responsibilities.</li>
+                            </ul>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="file-types">
                         <AccordionTrigger className="text-left">Which file types are supported?</AccordionTrigger>
                         <AccordionContent>
