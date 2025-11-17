@@ -2262,7 +2262,7 @@ Content-Type: multipart/form-data
                         <AccordionTrigger className="text-left">Which file types are supported?</AccordionTrigger>
                         <AccordionContent>
                           <p className="text-muted-foreground text-sm">
-                            Hobson currently supports changes to PDFs. Common text files, as well as CSV/Excel for tabular data, will be added in due course.
+                            Hobson currently supports PDFs. Common text files, as well as CSV/Excel for tabular data, will be added in due course.
                           </p>
                         </AccordionContent>
                       </AccordionItem>
