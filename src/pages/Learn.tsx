@@ -2241,8 +2241,8 @@ Content-Type: multipart/form-data
                                 <div className="bg-muted/30 border border-border rounded-lg p-5">
                                   <h5 className="text-base font-semibold text-foreground mb-2">Amending Documents (AMDs)</h5>
                                   <p className="text-sm text-muted-foreground">
-                                    Documents that <strong className="text-foreground">modify</strong>, <strong className="text-foreground">extend</strong>, or{" "}
-                                    <strong className="text-foreground">support</strong> an RTO. This includes formal amendments (such as deeds of 
+                                    Documents that <span className="text-primary">modify</span>, <span className="text-primary">extend</span>, or{" "}
+                                    <span className="text-primary">support</span> an RTO. This includes formal amendments (such as deeds of 
                                     variation or rent memorandums) and supporting documents (such as notices, identity documents, or funding documents).
                                   </p>
                                 </div>
