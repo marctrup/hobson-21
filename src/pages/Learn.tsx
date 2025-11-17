@@ -2197,53 +2197,61 @@ Content-Type: multipart/form-data
                       <AccordionItem value="organize-units-documents">
                         <AccordionTrigger className="text-left">How Hobson Organises Units and Documents</AccordionTrigger>
                         <AccordionContent>
-                          <div className="text-muted-foreground text-sm space-y-6">
+                          <div className="space-y-8">
                             {/* How Spaces and Groups Are Defined */}
                             <div>
-                              <h4 className="text-base font-semibold text-foreground mb-4">How Spaces and Groups Are Defined</h4>
-                              <div className="space-y-4 pl-4 border-l-2 border-border">
-                                <div className="pl-4">
-                                  <h5 className="font-semibold text-foreground mb-1.5">Unit</h5>
-                                  <p>A single physical space, such as a flat, office, or piece of land.</p>
+                              <h4 className="text-lg font-semibold text-foreground mb-6">How Spaces and Groups Are Defined</h4>
+                              <div className="grid gap-4">
+                                <div className="bg-muted/30 border border-border rounded-lg p-5">
+                                  <h5 className="text-base font-semibold text-foreground mb-2">Unit</h5>
+                                  <p className="text-sm text-muted-foreground">
+                                    A single physical space, such as a flat, office, or piece of land.
+                                  </p>
                                 </div>
                                 
-                                <div className="pl-4">
-                                  <h5 className="font-semibold text-foreground mb-1.5">Unit Group</h5>
-                                  <p>
+                                <div className="bg-muted/30 border border-border rounded-lg p-5">
+                                  <h5 className="text-base font-semibold text-foreground mb-2">Unit Group</h5>
+                                  <p className="text-sm text-muted-foreground">
                                     A set of units linked <strong className="text-foreground">either</strong> by a shared location 
                                     (for example, flats in one block or offices on a single floor) <strong className="text-foreground">or</strong> by 
                                     a shared document (for example, one lease covering multiple units in one or more locations).
                                   </p>
                                 </div>
                                 
-                                <div className="pl-4">
-                                  <h5 className="font-semibold text-foreground mb-1.5">Portfolio</h5>
-                                  <p>A collection of units grouped by ownership, management, or another organisational structure.</p>
+                                <div className="bg-muted/30 border border-border rounded-lg p-5">
+                                  <h5 className="text-base font-semibold text-foreground mb-2">Portfolio</h5>
+                                  <p className="text-sm text-muted-foreground">
+                                    A collection of units grouped by ownership, management, or another organisational structure.
+                                  </p>
                                 </div>
                               </div>
                             </div>
 
                             {/* How Document Types Work */}
                             <div>
-                              <h4 className="text-base font-semibold text-foreground mb-4">How Document Types Work</h4>
-                              <div className="space-y-4 pl-4 border-l-2 border-border">
-                                <div className="pl-4">
-                                  <h5 className="font-semibold text-foreground mb-1.5">Right-to-Occupy (RTO) Documents</h5>
-                                  <p>Documents that give an entity the right to use or occupy a space, such as a lease or a mortgage.</p>
+                              <h4 className="text-lg font-semibold text-foreground mb-6">How Document Types Work</h4>
+                              <div className="grid gap-4">
+                                <div className="bg-muted/30 border border-border rounded-lg p-5">
+                                  <h5 className="text-base font-semibold text-foreground mb-2">Right-to-Occupy (RTO) Documents</h5>
+                                  <p className="text-sm text-muted-foreground">
+                                    Documents that give an entity the right to use or occupy a space, such as a lease or a mortgage.
+                                  </p>
                                 </div>
                                 
-                                <div className="pl-4">
-                                  <h5 className="font-semibold text-foreground mb-1.5">Amending Documents (AMDs)</h5>
-                                  <p>
+                                <div className="bg-muted/30 border border-border rounded-lg p-5">
+                                  <h5 className="text-base font-semibold text-foreground mb-2">Amending Documents (AMDs)</h5>
+                                  <p className="text-sm text-muted-foreground">
                                     Documents that <strong className="text-foreground">modify</strong>, <strong className="text-foreground">extend</strong>, or{" "}
                                     <strong className="text-foreground">support</strong> an RTO. This includes formal amendments (such as deeds of 
                                     variation or rent memorandums) and supporting documents (such as notices, identity documents, or bank statements).
                                   </p>
                                 </div>
                                 
-                                <div className="pl-4">
-                                  <h5 className="font-semibold text-foreground mb-1.5">Accompanying Documents (ACDs)</h5>
-                                  <p>Documents linked to a specific unit or unit group, such as compliance certificates.</p>
+                                <div className="bg-muted/30 border border-border rounded-lg p-5">
+                                  <h5 className="text-base font-semibold text-foreground mb-2">Accompanying Documents (ACDs)</h5>
+                                  <p className="text-sm text-muted-foreground">
+                                    Documents linked to a specific unit or unit group, such as compliance certificates.
+                                  </p>
                                 </div>
                               </div>
                             </div>
