@@ -2501,12 +2501,6 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="onboarding-time">
-                        <AccordionTrigger className="text-left">How long does onboarding take?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Small sets: hours. Large portfolios: a few days, depending on volume and file quality.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                     </Accordion>
                   </section>
 
