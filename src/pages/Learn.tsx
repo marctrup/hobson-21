@@ -2446,10 +2446,36 @@ Content-Type: multipart/form-data
                       <AccordionItem value="structure-prompts">
                         <AccordionTrigger className="text-left">How should I structure my prompts for the best results?</AccordionTrigger>
                         <AccordionContent>
-                          <div className="text-muted-foreground text-sm space-y-2">
-                            <p>Be specific: include property/tenant, date range, and the field you want.</p>
-                            <p>Example: "For 12 King St, what's the break clause and notice period? Cite the clause."</p>
-                            <p>("Cite" = show the source text.)</p>
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <p className="text-foreground">To get the best answers from Hobson, try the following:</p>
+                            
+                            <div className="space-y-3">
+                              <div>
+                                <p className="font-medium text-foreground mb-1">Choose the right level first</p>
+                                <p>Start at the Portfolio, Unit Group, or Unit level depending on how specific your question is. The more specific the question, the lower the level you should use.</p>
+                              </div>
+                              
+                              <div>
+                                <p className="font-medium text-foreground mb-1">Be direct and clear</p>
+                                <p>Ask for exactly what you need. Short, simple questions work better than long or vague ones.</p>
+                              </div>
+                              
+                              <div>
+                                <p className="font-medium text-foreground mb-1">Use names or addresses when needed</p>
+                                <p>If you're at the wrong level, Hobson may not know which space you mean. Adding the unit address or tenant name helps guide the search.</p>
+                              </div>
+                              
+                              <div>
+                                <p className="font-medium text-foreground mb-1">Ask one thing at a time</p>
+                                <p>If you have several questions, ask them separately. This reduces errors and gives cleaner answers.</p>
+                              </div>
+                            </div>
+                            
+                            <div className="bg-primary/5 border-l-4 border-primary p-3 rounded-r-md mt-4">
+                              <p className="text-foreground font-medium">
+                                In short: Pick the right level, keep it simple, and be specific when needed.
+                              </p>
+                            </div>
                           </div>
                         </AccordionContent>
                       </AccordionItem>
