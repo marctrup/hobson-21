@@ -2479,12 +2479,6 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="hit-error">
-                        <AccordionTrigger className="text-left">What should I do when I hit an error?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Retry once, then check file type/size. If it persists, contact support with the file name and timestamp.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="data-cleanup">
                         <AccordionTrigger className="text-left">What is "data cleanup," and why is it important?</AccordionTrigger>
                         <AccordionContent>
