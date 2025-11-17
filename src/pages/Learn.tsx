@@ -2283,14 +2283,6 @@ Content-Type: multipart/form-data
                     </Accordion>
                   </section>
 
-                  {/* What is Hobson */}
-                  <section id="getting-started">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">What is Hobson?</h2>
-                    <div className="mb-6">
-                      <p className="text-muted-foreground text-sm">Hobson is your AI business assistant. It reads your documents, pulls out key data, stores it safely, and answers questions using your own content.</p>
-                    </div>
-                  </section>
-
                   {/* Getting started */}
                   <section id="building-with-hobson">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting started</h2>
