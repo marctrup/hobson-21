@@ -2197,16 +2197,56 @@ Content-Type: multipart/form-data
                       <AccordionItem value="organize-units-documents">
                         <AccordionTrigger className="text-left">How Hobson Organises Units and Documents</AccordionTrigger>
                         <AccordionContent>
-                          <div className="text-muted-foreground text-sm space-y-3">
-                            <p>Hobson uses an intelligent organizational structure to manage your property portfolio efficiently:</p>
-                            <ul className="list-disc list-inside space-y-2 ml-2">
-                              <li><strong className="text-foreground">Unit-Based Organization:</strong> Each property unit (apartment, house, commercial space) is treated as a distinct entity with its own document repository.</li>
-                              <li><strong className="text-foreground">Automatic Document Classification:</strong> Documents are automatically categorized by type (leases, maintenance records, certificates, correspondence) and tagged with relevant metadata.</li>
-                              <li><strong className="text-foreground">Hierarchical Structure:</strong> Properties are organized in a logical hierarchy - Portfolio → Building → Unit → Document Type → Individual Documents.</li>
-                              <li><strong className="text-foreground">Smart Linking:</strong> Related documents across different units are intelligently linked, making it easy to track patterns and cross-reference information.</li>
-                              <li><strong className="text-foreground">Version Control:</strong> All document revisions are tracked automatically, ensuring you always have access to the complete history of any document.</li>
-                              <li><strong className="text-foreground">Secure Access:</strong> Role-based permissions ensure that team members only see documents relevant to their responsibilities.</li>
-                            </ul>
+                          <div className="text-muted-foreground text-sm space-y-6">
+                            {/* How Spaces and Groups Are Defined */}
+                            <div>
+                              <h4 className="text-base font-semibold text-foreground mb-4">How Spaces and Groups Are Defined</h4>
+                              <div className="space-y-4 pl-4 border-l-2 border-border">
+                                <div className="pl-4">
+                                  <h5 className="font-semibold text-foreground mb-1.5">Unit</h5>
+                                  <p>A single physical space, such as a flat, office, or piece of land.</p>
+                                </div>
+                                
+                                <div className="pl-4">
+                                  <h5 className="font-semibold text-foreground mb-1.5">Unit Group</h5>
+                                  <p>
+                                    A set of units linked <strong className="text-foreground">either</strong> by a shared location 
+                                    (for example, flats in one block or offices on a single floor) <strong className="text-foreground">or</strong> by 
+                                    a shared document (for example, one lease covering multiple units in one or more locations).
+                                  </p>
+                                </div>
+                                
+                                <div className="pl-4">
+                                  <h5 className="font-semibold text-foreground mb-1.5">Portfolio</h5>
+                                  <p>A collection of units grouped by ownership, management, or another organisational structure.</p>
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* How Document Types Work */}
+                            <div>
+                              <h4 className="text-base font-semibold text-foreground mb-4">How Document Types Work</h4>
+                              <div className="space-y-4 pl-4 border-l-2 border-border">
+                                <div className="pl-4">
+                                  <h5 className="font-semibold text-foreground mb-1.5">Right-to-Occupy (RTO) Documents</h5>
+                                  <p>Documents that give an entity the right to use or occupy a space, such as a lease or a mortgage.</p>
+                                </div>
+                                
+                                <div className="pl-4">
+                                  <h5 className="font-semibold text-foreground mb-1.5">Amending Documents (AMDs)</h5>
+                                  <p>
+                                    Documents that <strong className="text-foreground">modify</strong>, <strong className="text-foreground">extend</strong>, or{" "}
+                                    <strong className="text-foreground">support</strong> an RTO. This includes formal amendments (such as deeds of 
+                                    variation or rent memorandums) and supporting documents (such as notices, identity documents, or bank statements).
+                                  </p>
+                                </div>
+                                
+                                <div className="pl-4">
+                                  <h5 className="font-semibold text-foreground mb-1.5">Accompanying Documents (ACDs)</h5>
+                                  <p>Documents linked to a specific unit or unit group, such as compliance certificates.</p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </AccordionContent>
                       </AccordionItem>
