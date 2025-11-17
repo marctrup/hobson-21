@@ -2501,12 +2501,6 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="improve-quality">
-                        <AccordionTrigger className="text-left">How can I improve answer quality?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Upload original text-PDFs (not photos), keep documents complete, ask focused questions, and save frequent prompts for reuse.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="onboarding-time">
                         <AccordionTrigger className="text-left">How long does onboarding take?</AccordionTrigger>
                         <AccordionContent>
