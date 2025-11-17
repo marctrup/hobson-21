@@ -2274,12 +2274,6 @@ Content-Type: multipart/form-data
                           </p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="remember-context">
-                        <AccordionTrigger className="text-left">How does Hobson remember context?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Hobson uses light RAG (retrieval-augmented generation). It retrieves the most relevant snippets from your private knowledgebase before answering. On Essential Plus, you can add contacts and schedule for richer context.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="data-ownership">
                         <AccordionTrigger className="text-left">Who owns the data and outputs?</AccordionTrigger>
                         <AccordionContent>
