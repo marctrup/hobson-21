@@ -248,6 +248,60 @@ Documents that modify, extend, or support an RTO. This includes formal amendment
 ### Accompanying Documents (ACDs)
 Documents related to a space but not directly tied to occupancy rights, such as building insurance policies, maintenance records, or utility bills.
 
+## How Hobson Models Your Data
+
+### Hierarchical Structure
+Hobson uses a three-tier hierarchical model derived from real estate industry practices:
+
+**1. Portfolio (Top Level)**
+- Represents your entire property collection
+- Organized by ownership, management, or organizational structure
+- Example: "London Commercial Properties" or "Smith Family Investments"
+
+**2. Unit Groups (Middle Level)**
+- Collections of units linked by:
+  - Shared location (e.g., all flats in one building)
+  - Shared documents (e.g., one lease covering multiple units)
+- Simplifies management of related properties
+- Example: "Riverside Tower Apartments" or "High Street Retail Units"
+
+**3. Units (Base Level)**
+- Individual physical spaces (flat, office, land parcel)
+- Each has its own documents and details
+- Example: "Flat 3B" or "Office Suite 201"
+
+### Document Classification
+Hobson automatically categorizes documents into three types:
+
+**Right-to-Occupy (RTO)**
+- Core occupancy documents (leases, titles)
+- Establishes legal right to use the space
+- Forms the foundation of each unit's data
+
+**Amending Documents (AMD)**
+- Modifications to RTOs (variations, rent reviews)
+- Supporting documents (notices, IDs, funding docs)
+- Tracked as they change over time
+
+**Accompanying Documents (ACD)**
+- Related but not occupancy-critical (insurance, maintenance, utilities)
+- Provides context without affecting occupancy status
+
+### Data Extraction Process
+1. **Upload**: You upload documents to a unit or unit group
+2. **Classification**: Hobson identifies document type (RTO/AMD/ACD)
+3. **Extraction**: AI reads and extracts key data (dates, parties, amounts, clauses)
+4. **Structuring**: Data is organized within the hierarchical model
+5. **Indexing**: Information becomes searchable and queryable
+6. **Linking**: Related documents and data points are connected
+
+### How It Helps You
+- **Quick Answers**: Ask questions across all documents ("What are all my rent review dates?")
+- **Context Preservation**: Documents remain linked to their physical spaces
+- **Scalability**: Works for single properties or thousands of units
+- **Accuracy**: Source citations let you verify every answer
+- **Time Savings**: No manual data entry or searching through files
+
 ## Contact & Support
 - Website: https://hobsonschoice.ai
 - Contact: https://hobsonschoice.ai/contact
