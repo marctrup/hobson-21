@@ -149,10 +149,10 @@ export function HobsonChatWidget() {
     setFollowUpQuestions([]);
     const welcomeMessage: Message = {
       role: 'assistant',
-      content: "Hi! I'm Hobson, your AI assistant. I can help you learn about Hobson AI's features, pricing, and use cases. What would you like to know?"
+      content: "Hey there! What would you like to know about?"
     };
     setMessages([welcomeMessage]);
-    setFollowUpQuestions([getRandomFollowUpQuestion(), getRandomFollowUpQuestion()]);
+    setQuickQuestions(getRandomQuickQuestions()); // Refresh questions on clear
   };
 
   const renderMessage = (message: Message) => {
