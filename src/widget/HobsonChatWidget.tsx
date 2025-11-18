@@ -13,9 +13,10 @@ const CHAT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/hobson-chat`;
 
 const OWL_CHAT_BUBBLE = '/lovable-uploads/owl-chat-bubble.png';
 
-// FAQ questions from /learn/faq - ONLY actual questions that exist on the FAQ page
-// IMPORTANT: These must match the exact questions on https://hobsonschoice.ai/learn/faq
+// FAQ questions from ALL sections in /learn/faq
+// Mix questions from "How Hobson works", "Getting the best out of Hobson", and "Hobson Credits"
 const FAQ_QUESTIONS = [
+  // How Hobson works
   { full: "How are units, groups, portfolios, and documents arranged in Hobson?", short: "Organization?" },
   { full: "Which file types are supported?", short: "File types?" },
   { full: "What types of documents can Hobson read?", short: "Doc types?" },
@@ -32,16 +33,27 @@ const FAQ_QUESTIONS = [
   { full: "How does Hobson protect my data when using OpenAI?", short: "Protection?" },
   { full: "Does OpenAI know who I am or hold details of my property holdings?", short: "Privacy?" },
   { full: "What happens technically when a document is uploaded?", short: "Upload process?" },
-  { full: "How does Hobson model my data?", short: "Data model?" },
-  { full: "What can Hobson do?", short: "Capabilities?" },
-  { full: "Can Hobson remember a previous chat?", short: "Chat history?" },
+  { full: "What happens when I ask a question?", short: "Question process?" },
+  // Getting the best out of Hobson
+  { full: "How long does Hobson take to read a document?", short: "Processing time?" },
+  { full: "Can I add a unit manually without uploading a document?", short: "Manual units?" },
+  { full: "Which level should I use when asking a question?", short: "Question levels?" },
+  { full: "What should I do if I get a poor answer?", short: "Poor answers?" },
+  { full: "How should I structure my prompts for the best results?", short: "Prompt tips?" },
+  { full: "Can Hobson connect to our systems?", short: "Integrations?" },
   { full: "Can I control who has access?", short: "Access control?" },
-  { full: "Can I delete documents or a workspace?", short: "Delete?" },
-  { full: "Can my team collaborate?", short: "Team features?" },
-  { full: "Can I export my data?", short: "Export?" },
-  { full: "Where can I find Hobson's Privacy Policy and Terms of Service?", short: "Privacy & Terms?" },
-  { full: "What is Hobson's refund policy?", short: "Refunds?" },
-  { full: "Is Hobson GDPR compliant?", short: "GDPR?" },
+  // Hobson Credits
+  { full: "What is a HEU?", short: "HEU?" },
+  { full: "How much do different tasks cost in HEUs?", short: "HEU costs?" },
+  { full: "How can I upgrade my subscription?", short: "Upgrade?" },
+  { full: "How can I downgrade my subscription?", short: "Downgrade?" },
+  { full: "How can I cancel my subscription?", short: "Cancel?" },
+  { full: "How can I change my billing information?", short: "Billing?" },
+  { full: "How do I download my invoices?", short: "Invoices?" },
+  { full: "How do I get more credits?", short: "More credits?" },
+  { full: "When does my credit limit reset?", short: "Credit reset?" },
+  { full: "How do I see the remaining credits in a workspace?", short: "Check credits?" },
+  { full: "Can I get free credits?", short: "Free credits?" },
 ];
 
 // Get 2 random FAQ questions for initial display
