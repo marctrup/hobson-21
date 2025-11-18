@@ -2990,7 +2990,7 @@ Content-Type: multipart/form-data
               </div>
               
               <div className="border-l-4 border-primary pl-6 md:pl-8 py-4">
-                <p className="text-lg md:text-xl leading-relaxed text-foreground">
+                <p className="font-montserrat text-lg md:text-xl leading-relaxed text-foreground">
                   For real estate professionals drained by bloated, expensive systems and the manual effort of pulling information from original documents, <span className="font-bold text-primary">Hobson is the AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is lightweight, simple to use, and low cost — saving time, ensuring accuracy, and building trust with fast, referenced responses.
                 </p>
               </div>
