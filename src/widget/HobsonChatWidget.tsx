@@ -13,28 +13,34 @@ const CHAT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/hobson-chat`;
 
 const OWL_CHAT_BUBBLE = '/lovable-uploads/owl-chat-bubble.png';
 
-// FAQ questions from /learn/faq with shortened versions
+// FAQ questions from /learn/faq - ONLY actual questions that exist on the FAQ page
+// IMPORTANT: These must match the exact questions on https://hobsonschoice.ai/learn/faq
 const FAQ_QUESTIONS = [
-  { full: "How are units, groups, portfolios, and documents arranged in Hobson?", short: "How's data organized?" },
-  { full: "Which file types are supported?", short: "Supported files?" },
-  { full: "How to get documents to Hobson", short: "Upload documents?" },
-  { full: "Does Hobson work on mobile?", short: "Mobile support?" },
+  { full: "How are units, groups, portfolios, and documents arranged in Hobson?", short: "Organization?" },
+  { full: "Which file types are supported?", short: "File types?" },
+  { full: "How to get documents to Hobson", short: "Upload docs?" },
+  { full: "Does Hobson work on mobile?", short: "Mobile?" },
   { full: "Who owns the data and outputs?", short: "Data ownership?" },
   { full: "How does Hobson use OpenAI?", short: "OpenAI usage?" },
-  { full: "Does OpenAI store my documents?", short: "OpenAI storage?" },
-  { full: "Does OpenAI use my data to train their models?", short: "Data for training?" },
-  { full: "What data does Hobson send to OpenAI?", short: "Data sent to AI?" },
-  { full: "Where are my documents actually stored?", short: "Where's my data?" },
-  { full: "Is Hobson GDPR compliant?", short: "GDPR compliance?" },
-  { full: "Tell me about pricing and HEUs", short: "Pricing & HEUs?" },
-  { full: "How does Hobson work?", short: "How it works?" },
-  { full: "Tell me about security", short: "Security?" },
-  { full: "What document types do you support?", short: "Document types?" },
+  { full: "Does OpenAI store my documents?", short: "Storage?" },
+  { full: "Does OpenAI use my data to train their models?", short: "Training?" },
+  { full: "What data does Hobson send to OpenAI?", short: "Data sent?" },
+  { full: "Where are my documents actually stored?", short: "Storage?" },
+  { full: "Why does Hobson need to send anything to OpenAI at all?", short: "Why OpenAI?" },
+  { full: "Who can see my documents?", short: "Access?" },
+  { full: "How does Hobson protect my data when using OpenAI?", short: "Protection?" },
+  { full: "Does OpenAI know who I am or what sites I have?", short: "Privacy?" },
+  { full: "What happens technically when a document is uploaded?", short: "Upload process?" },
+  { full: "How does Hobson model my data?", short: "Data model?" },
+  { full: "What can Hobson do?", short: "Capabilities?" },
+  { full: "Can Hobson remember a previous chat?", short: "Chat history?" },
   { full: "Can I control who has access?", short: "Access control?" },
-  { full: "Can I delete documents or a workspace?", short: "Delete data?" },
+  { full: "Can I delete documents or a workspace?", short: "Delete?" },
   { full: "Can my team collaborate?", short: "Team features?" },
-  { full: "Can I export my data?", short: "Data export?" },
+  { full: "Can I export my data?", short: "Export?" },
   { full: "Where can I find Hobson's Privacy Policy and Terms of Service?", short: "Privacy & Terms?" },
+  { full: "What is Hobson's refund policy?", short: "Refunds?" },
+  { full: "Is Hobson GDPR compliant?", short: "GDPR?" },
 ];
 
 // Get 4 random FAQ questions
