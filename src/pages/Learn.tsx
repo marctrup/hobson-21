@@ -1960,6 +1960,9 @@ Content-Type: multipart/form-data
                     
                     <div className="mt-8">
                       <h3 className="text-lg font-medium text-foreground mb-4">Example: How HEU costs appear in chat</h3>
+                      <p className="text-muted-foreground mb-4">
+                        You can see the cost of each message in the chat by pressing the three dots beneath a message.
+                      </p>
                       <ChatCostExample />
                     </div>
                   </section>
