@@ -2088,24 +2088,41 @@ Content-Type: multipart/form-data
 
 
       return (
-        <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-7xl">
+        <div className="flex-1 bg-gradient-to-b from-background to-muted/20">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
             <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
-                <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-foreground mb-2">FAQ</h1>
-                  <p className="text-lg text-muted-foreground">Frequently asked questions about Hobson</p>
+                {/* Hero Header */}
+                <div className="mb-12 text-center lg:text-left">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                    </span>
+                    Frequently Asked Questions
+                  </div>
+                  <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 tracking-tight">
+                    Everything you need to know
+                  </h1>
+                  <p className="text-lg text-muted-foreground max-w-2xl">
+                    Find answers to common questions about Hobson AI and how it can transform your property management workflow
+                  </p>
                 </div>
 
-                <div className="space-y-12">
+                <div className="space-y-16">
                   {/* How Hobson works */}
-                  <section id="how-hobson-works">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">How Hobson works</h2>
-                    <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="organize-units-documents">
-                        <AccordionTrigger className="text-left">How are units, groups, portfolios, and documents arranged in Hobson?</AccordionTrigger>
-                        <AccordionContent>
+                  <section id="how-hobson-works" className="scroll-mt-8">
+                    <div className="flex items-center gap-3 mb-8">
+                      <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full"></div>
+                      <h2 className="text-2xl font-bold text-foreground">How Hobson works</h2>
+                    </div>
+                    <Accordion type="multiple" className="w-full space-y-4">
+                      <AccordionItem value="organize-units-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How are units, groups, portfolios, and documents arranged in Hobson?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <div className="space-y-8">
                             {/* How Spaces and Groups Are Defined */}
                             <div>
@@ -2167,17 +2184,21 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="file-types">
-                        <AccordionTrigger className="text-left">Which file types are supported?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="file-types" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Which file types are supported?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
                             Hobson currently supports PDFs. Common text files, as well as CSV/Excel for tabular data, will be added in due course.
                           </p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="get-documents">
-                        <AccordionTrigger className="text-left">How to get documents to Hobson</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="get-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How to get documents to Hobson
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
                             <div>
                               <h5 className="font-semibold text-foreground mb-2">For Today</h5>
@@ -2190,17 +2211,21 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="mobile-support">
-                        <AccordionTrigger className="text-left">Does Hobson work on mobile?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="mobile-support" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Does Hobson work on mobile?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
                             No. We are planning to introduce a mobile version and the ability to integrate it with other common apps, such as WhatsApp.
                           </p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="data-ownership">
-                        <AccordionTrigger className="text-left">Who owns the data and outputs?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="data-ownership" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Who owns the data and outputs?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">You do. Your documents, extracted data, and answers belong to your company.</p>
                         </AccordionContent>
                       </AccordionItem>
@@ -2208,12 +2233,17 @@ Content-Type: multipart/form-data
                   </section>
 
                   {/* Getting the best out of Hobson */}
-                  <section id="features">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting the best out of Hobson</h2>
-                    <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="upload-documents">
-                        <AccordionTrigger className="text-left">How long does Hobson take to read a document?</AccordionTrigger>
-                        <AccordionContent>
+                  <section id="features" className="scroll-mt-8">
+                    <div className="flex items-center gap-3 mb-8">
+                      <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full"></div>
+                      <h2 className="text-2xl font-bold text-foreground">Getting the best out of Hobson</h2>
+                    </div>
+                    <Accordion type="multiple" className="w-full space-y-4">
+                      <AccordionItem value="upload-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How long does Hobson take to read a document?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
                             <p>
                               When you upload documents, Hobson reads and processes them so they're ready for future queries. This can take some time, depending on how complex the documents are. Once everything has been processed, you'll receive an email confirming that all documents have been read.
@@ -2246,9 +2276,11 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="add-unit-manually">
-                        <AccordionTrigger className="text-left">Can I add a unit manually without uploading a document?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="add-unit-manually" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Can I add a unit manually without uploading a document?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
                             <p>
                               <strong className="text-foreground">Yes.</strong> Just ask Hobson <span className="inline-block bg-muted px-2 py-1 rounded font-mono text-xs">"Add Unit"</span>.
@@ -2259,9 +2291,11 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="ask-question">
-                        <AccordionTrigger className="text-left">Which level should I use when asking a question?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="ask-question" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Which level should I use when asking a question?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
                             <p>
                               You can ask Hobson questions at three levels — <strong className="text-foreground">Portfolio</strong>, <strong className="text-foreground">Unit Group</strong>, and <strong className="text-foreground">Unit</strong>. The higher the level, the broader the search. The lower the level, the more focused the answer.
@@ -2313,9 +2347,11 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="poor-answer">
-                        <AccordionTrigger className="text-left">What should I do if I get a poor answer?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="poor-answer" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          What should I do if I get a poor answer?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
                             <p>
                               If Hobson gives you an answer like <span className="italic">"No information is available"</span> but you know the information exists, try these steps:
@@ -2355,9 +2391,11 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="structure-prompts">
-                        <AccordionTrigger className="text-left">How should I structure my prompts for the best results?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="structure-prompts" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How should I structure my prompts for the best results?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
                             <p className="text-foreground">To get the best answers from Hobson, try the following:</p>
                             
@@ -2391,15 +2429,19 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="connect-systems">
-                        <AccordionTrigger className="text-left">Can Hobson connect to our systems?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="connect-systems" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Can Hobson connect to our systems?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Currently, we don't offer bespoke integrations, but please talk to us so we can understand what you want to achieve and whether this will be possible at some point.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="control-access">
-                        <AccordionTrigger className="text-left">Can I control who has access?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="control-access" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Can I control who has access?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Yes. Admin users can invite new users and choose exactly which units and which document classes they can access. This lets you control who sees what within Hobson.</p>
                         </AccordionContent>
                       </AccordionItem>
@@ -2407,18 +2449,25 @@ Content-Type: multipart/form-data
                   </section>
 
                   {/* Plans & Credits */}
-                  <section id="plans-credits-faq">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Plans & Credits</h2>
-                    <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="what-is-credit">
-                        <AccordionTrigger className="text-left">What is a HEU?</AccordionTrigger>
-                        <AccordionContent>
+                  <section id="plans-credits-faq" className="scroll-mt-8">
+                    <div className="flex items-center gap-3 mb-8">
+                      <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full"></div>
+                      <h2 className="text-2xl font-bold text-foreground">Plans & Credits</h2>
+                    </div>
+                    <Accordion type="multiple" className="w-full space-y-4">
+                      <AccordionItem value="what-is-credit" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          What is a HEU?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">A HEU is the unit of energy measurement for using Hobson's AI features. Each message or action costs a certain number of HEUs based on its complexity</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="heu-task-costs">
-                        <AccordionTrigger className="text-left">How much do different tasks cost in HEUs?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="heu-task-costs" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How much do different tasks cost in HEUs?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <div className="space-y-4">
                             <p className="text-muted-foreground text-sm">
                               Hobson uses a usage-based credit system called HEU (Hobson Energy Unit). Each message you send deducts a small number of HEUs. The cost depends on how complex the task is, so you only pay for the work Hobson actually performs.
@@ -2480,57 +2529,75 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="upgrade-subscription">
-                        <AccordionTrigger className="text-left">How can I upgrade my subscription?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="upgrade-subscription" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How can I upgrade my subscription?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">You can upgrade your subscription through your workspace settings or by contacting our support team.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="downgrade-subscription">
-                        <AccordionTrigger className="text-left">How can I downgrade my subscription?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="downgrade-subscription" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How can I downgrade my subscription?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Subscription downgrades can be managed through your account settings or by reaching out to support.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="cancel-subscription">
-                        <AccordionTrigger className="text-left">How can I cancel my subscription?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="cancel-subscription" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How can I cancel my subscription?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">You can cancel your subscription at any time through your account settings. Your access will continue until the end of the current billing period.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="billing-info">
-                        <AccordionTrigger className="text-left">How can I change my billing information?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="billing-info" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How can I change my billing information?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Billing information can be updated in your account settings under the billing section.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="download-invoices">
-                        <AccordionTrigger className="text-left">How do I download my invoices?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="download-invoices" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How do I download my invoices?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Invoices are available for download in your account settings under billing history.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="get-more-credits">
-                        <AccordionTrigger className="text-left">How do I get more credits?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="get-more-credits" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How do I get more credits?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">You can get more HEUs by upgrading your plan or purchasing Top-ups.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="credit-reset">
-                        <AccordionTrigger className="text-left">When does my credit limit reset?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="credit-reset" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          When does my credit limit reset?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Your credit limit resets at the beginning of each billing cycle based on your subscription plan.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="remaining-credits">
-                        <AccordionTrigger className="text-left">How do I see the remaining credits in a workspace?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="remaining-credits" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How do I see the remaining credits in a workspace?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Click on your workspace name on the dashboard to view your remaining credits and usage statistics.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="free-credits">
-                        <AccordionTrigger className="text-left">Can I get free credits?</AccordionTrigger>
-                        <AccordionContent>
+                      <AccordionItem value="free-credits" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Can I get free credits?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Free credits are included with the free plan. Additional free credits may be available through promotional offers or referral programs.</p>
                         </AccordionContent>
                       </AccordionItem>
@@ -2540,19 +2607,23 @@ Content-Type: multipart/form-data
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
+              <div className="hidden lg:block w-72 sticky top-8 h-fit">
+                <div className="border border-border rounded-2xl p-6 bg-card/50 backdrop-blur-sm shadow-sm">
+                  <h3 className="font-bold text-foreground mb-6 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+                    </svg>
+                    On This Page
+                  </h3>
+                  <nav className="space-y-1">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
+                        className={`block w-full text-left px-4 py-3 text-sm rounded-lg transition-all ${
                           activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
+                            ? 'bg-primary text-primary-foreground font-semibold shadow-sm'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 font-medium'
                         }`}
                       >
                         {section.label}
