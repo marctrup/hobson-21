@@ -97,6 +97,77 @@ serve(async (req) => {
       console.error("Error fetching Plans & Credits page:", error);
       plansCreditsContent = "Plans & Credits content could not be fetched. Please visit https://hobsonschoice.ai/learn/plans-credits";
     }
+
+    // Fetch the Prompt Engineering page to extract content
+    const learnPromptEngineeringUrl = `https://hobsonschoice.ai/learn/prompt-engineering`;
+    console.log(`Fetching content from: ${learnPromptEngineeringUrl}`);
+    
+    let promptEngineeringContent = "";
+    try {
+      const pageResponse = await fetch(learnPromptEngineeringUrl);
+      const htmlContent = await pageResponse.text();
+      
+      // Extract text content from sections - look for h2/h3 headers and paragraphs
+      const headerMatches = htmlContent.matchAll(/<h[23][^>]*>([^<]+)<\/h[23]>/gi);
+      const sections: string[] = [];
+      
+      for (const match of headerMatches) {
+        const header = match[1]
+          .replace(/&quot;/g, '"')
+          .replace(/&amp;/g, '&')
+          .trim();
+        
+        if (header && !header.includes('svg') && header.length > 2) {
+          sections.push(`### ${header}`);
+        }
+      }
+      
+      if (sections.length > 0) {
+        promptEngineeringContent = sections.join('\n');
+        console.log(`Extracted ${sections.length} Prompt Engineering sections from live page`);
+      }
+    } catch (error) {
+      console.error("Error fetching Prompt Engineering page:", error);
+      promptEngineeringContent = "Prompt Engineering content could not be fetched. Please visit https://hobsonschoice.ai/learn/prompt-engineering";
+    }
+
+    // Fetch the Use Cases page to extract content
+    const learnUseCasesUrl = `https://hobsonschoice.ai/learn/use-cases`;
+    console.log(`Fetching content from: ${learnUseCasesUrl}`);
+    
+    let useCasesContent = "";
+    try {
+      const pageResponse = await fetch(learnUseCasesUrl);
+      const htmlContent = await pageResponse.text();
+      
+      // Extract text content from Use Cases sections
+      const useCasesMatches = htmlContent.matchAll(/<AccordionTrigger[^>]*>([^<]+)<\/AccordionTrigger>[\s\S]*?<AccordionContent[^>]*>([\s\S]*?)<\/AccordionContent>/gi);
+      
+      const useCases: string[] = [];
+      for (const match of useCasesMatches) {
+        const title = match[1].trim();
+        const content = match[2]
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .replace(/&quot;/g, '"')
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .trim();
+        
+        if (title && content) {
+          useCases.push(`### ${title}\n${content}\n`);
+        }
+      }
+      
+      if (useCases.length > 0) {
+        useCasesContent = useCases.join('\n');
+        console.log(`Extracted ${useCases.length} Use Cases from live page`);
+      }
+    } catch (error) {
+      console.error("Error fetching Use Cases page:", error);
+      useCasesContent = "Use Cases content could not be fetched. Please visit https://hobsonschoice.ai/learn/use-cases";
+    }
     
     const knowledgeBase = `# Hobson's Choice AI - Knowledge Base
 
@@ -146,6 +217,14 @@ ${faqContent || "Visit https://hobsonschoice.ai/learn/faq for frequently asked q
 ## Plans & Credits
 
 ${plansCreditsContent || "Visit https://hobsonschoice.ai/learn/plans-credits for plans and credits information."}
+
+## Prompt Engineering
+
+${promptEngineeringContent || "Visit https://hobsonschoice.ai/learn/prompt-engineering to learn about effective prompting techniques."}
+
+## Use Cases
+
+${useCasesContent || "Visit https://hobsonschoice.ai/learn/use-cases to explore real-world applications."}
 
 ## Glossary Terms
 
