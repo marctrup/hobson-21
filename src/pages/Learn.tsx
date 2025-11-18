@@ -1959,47 +1959,6 @@ Content-Type: multipart/form-data
                     <HEUBarVisualization />
                   </section>
 
-                  {/* Credit Usage */}
-                  <section id="credit-usage">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit usage</h2>
-                    <p className="text-muted-foreground mb-4">
-                      Hobson has a usage-based credit system called HEU (Hobson Energy Unit), where sending messages deducts HEUs. The cost of a message depends on its complexity to ensure you only pay for what you actually use.
-                    </p>
-                    <p className="text-muted-foreground mb-6">
-                      Many messages cost less than 1 HEU, while more complex ones may cost more. This approach allows for more precise edits and greater efficiency per message, making Hobson more affordable overall.
-                    </p>
-                    
-                    <h3 className="text-base md:text-lg font-medium text-foreground mb-4">Example tasks and their HEU cost:</h3>
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-xs md:text-sm min-w-[500px]">
-                        <thead>
-                          <tr className="border-b border-border">
-                            <th className="text-left py-2 text-foreground">Example Task</th>
-                            <th className="text-left py-2 text-foreground">Work Done</th>
-                            <th className="text-left py-2 text-foreground">HEUs</th>
-                          </tr>
-                        </thead>
-                        <tbody className="text-muted-foreground">
-                          <tr><td className="py-2">Reading a simple document (e.g. certificate)</td><td>Scans and summarises</td><td>0.5</td></tr>
-                          <tr><td className="py-2">Reading a medium document (e.g. deed)</td><td>Reviews, extracts key info</td><td>1.4</td></tr>
-                          <tr><td className="py-2">Reading a complex document (e.g. lease)</td><td>Full detailed review and breakdown</td><td>16.9</td></tr>
-                          <tr><td className="py-2">Asking a simple query (e.g. "What is the rent?")</td><td>Finds and returns one fact</td><td>0.05</td></tr>
-                          <tr><td className="py-2">Asking a medium query (e.g. "List all rents")</td><td>Searches and compiles several data points</td><td>0.26</td></tr>
-                          <tr><td className="py-2">Asking a complex query (e.g. "Build a tenancy report")</td><td>Gathers multiple details, formats a full report</td><td>0.54</td></tr>
-                        </tbody>
-                      </table>
-                    </div>
-
-                    <p className="text-muted-foreground mt-6">
-                      You can see the cost of each message in the chat by pressing the three dots beneath a message.
-                    </p>
-
-                    <div className="mt-8">
-                      <h3 className="text-lg font-medium text-foreground mb-4">Example: How HEU costs appear in chat</h3>
-                      <ChatCostExample />
-                    </div>
-                  </section>
-
                   {/* Credit Rollovers */}
                   <section id="credit-rollovers">
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Credit Rollovers</h2>
