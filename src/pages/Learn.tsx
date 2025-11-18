@@ -2041,7 +2041,7 @@ Content-Type: multipart/form-data
       const tocSections = [
         { id: 'how-hobson-works', label: 'How Hobson works' },
         { id: 'features', label: 'Getting the best out of Hobson' },
-        { id: 'plans-credits-faq', label: 'Plans & Credits' },
+        { id: 'plans-credits-faq', label: 'Hobson Credits' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -2747,11 +2747,11 @@ Content-Type: multipart/form-data
                     </Accordion>
                   </section>
 
-                  {/* Plans & Credits */}
+                  {/* Hobson Credits */}
                   <section id="plans-credits-faq" className="scroll-mt-8">
                     <div className="flex items-center gap-3 mb-8">
                       <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full"></div>
-                      <h2 className="text-2xl font-bold text-foreground">Plans & Credits</h2>
+                      <h2 className="text-2xl font-bold text-foreground">Hobson Credits</h2>
                     </div>
                     <Accordion type="multiple" className="w-full space-y-4">
                       <AccordionItem value="what-is-credit" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
