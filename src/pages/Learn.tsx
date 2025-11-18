@@ -2433,13 +2433,65 @@ Content-Type: multipart/form-data
                       <AccordionItem value="heu-task-costs">
                         <AccordionTrigger className="text-left">How much do different tasks cost in HEUs?</AccordionTrigger>
                         <AccordionContent>
-                          <p className="text-muted-foreground text-sm mb-3">Different tasks consume varying amounts of HEUs based on their complexity:</p>
-                          <ul className="list-disc pl-6 space-y-2 text-muted-foreground text-sm">
-                            <li><span className="font-medium">Simple queries:</span> 1-2 HEUs - Basic document questions and simple searches</li>
-                            <li><span className="font-medium">Document analysis:</span> 3-5 HEUs - Analyzing documents and extracting specific information</li>
-                            <li><span className="font-medium">Complex analysis:</span> 5-10 HEUs - Multi-document comparisons and advanced insights</li>
-                            <li><span className="font-medium">Bulk operations:</span> 10+ HEUs - Processing multiple documents simultaneously</li>
-                          </ul>
+                          <div className="space-y-4">
+                            <p className="text-muted-foreground text-sm">
+                              Hobson uses a usage-based credit system called HEU (Hobson Energy Unit). Each message you send deducts a small number of HEUs. The cost depends on how complex the task is, so you only pay for the work Hobson actually performs.
+                            </p>
+                            <p className="text-muted-foreground text-sm">
+                              Most messages cost less than 1 HEU, while more detailed tasks cost more. This keeps pricing fair and efficient.
+                            </p>
+                            
+                            <div className="mt-4">
+                              <h4 className="text-sm font-semibold text-foreground mb-3">Typical HEU costs:</h4>
+                              <div className="overflow-x-auto">
+                                <table className="w-full border-collapse text-sm">
+                                  <thead>
+                                    <tr className="border-b border-border">
+                                      <th className="text-left py-3 px-4 font-semibold text-foreground bg-muted/50">Task</th>
+                                      <th className="text-left py-3 px-4 font-semibold text-foreground bg-muted/50">What Hobson Does</th>
+                                      <th className="text-right py-3 px-4 font-semibold text-foreground bg-muted/50">HEUs</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody className="divide-y divide-border">
+                                    <tr className="hover:bg-muted/30 transition-colors">
+                                      <td className="py-3 px-4 text-muted-foreground">Reading a simple document (e.g. certificate)</td>
+                                      <td className="py-3 px-4 text-muted-foreground">Scans and summarises</td>
+                                      <td className="py-3 px-4 text-right font-medium text-foreground">0.5</td>
+                                    </tr>
+                                    <tr className="hover:bg-muted/30 transition-colors">
+                                      <td className="py-3 px-4 text-muted-foreground">Reading a medium document (e.g. deed)</td>
+                                      <td className="py-3 px-4 text-muted-foreground">Reviews and extracts key details</td>
+                                      <td className="py-3 px-4 text-right font-medium text-foreground">1.4</td>
+                                    </tr>
+                                    <tr className="hover:bg-muted/30 transition-colors">
+                                      <td className="py-3 px-4 text-muted-foreground">Reading a complex document (e.g. lease)</td>
+                                      <td className="py-3 px-4 text-muted-foreground">Full review and structured breakdown</td>
+                                      <td className="py-3 px-4 text-right font-medium text-foreground">16.9</td>
+                                    </tr>
+                                    <tr className="hover:bg-muted/30 transition-colors">
+                                      <td className="py-3 px-4 text-muted-foreground">Asking a simple question ("What is the rent?")</td>
+                                      <td className="py-3 px-4 text-muted-foreground">Finds one fact</td>
+                                      <td className="py-3 px-4 text-right font-medium text-foreground">0.05</td>
+                                    </tr>
+                                    <tr className="hover:bg-muted/30 transition-colors">
+                                      <td className="py-3 px-4 text-muted-foreground">Asking a medium question ("List all rents")</td>
+                                      <td className="py-3 px-4 text-muted-foreground">Searches and compiles several points</td>
+                                      <td className="py-3 px-4 text-right font-medium text-foreground">0.26</td>
+                                    </tr>
+                                    <tr className="hover:bg-muted/30 transition-colors">
+                                      <td className="py-3 px-4 text-muted-foreground">Asking a complex question ("Build a tenancy report")</td>
+                                      <td className="py-3 px-4 text-muted-foreground">Pulls multiple details and formats a report</td>
+                                      <td className="py-3 px-4 text-right font-medium text-foreground">0.54</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            
+                            <p className="text-muted-foreground text-sm italic mt-4">
+                              You can check the HEU cost of any message by opening the menu (three dots) under the message in the chat.
+                            </p>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="upgrade-subscription">
