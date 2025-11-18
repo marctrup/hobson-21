@@ -2329,9 +2329,12 @@ Content-Type: multipart/form-data
                           Why does Hobson need to send anything to OpenAI at all?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm">
+                          <div className="text-muted-foreground text-sm space-y-3">
                             <p>
-                              OpenAI provides the language understanding and generation capabilities that allow Hobson to interpret your questions and generate intelligent, contextual answers based on your documents. Without their AI models, Hobson would not be able to understand natural language queries or provide meaningful responses.
+                              When you ask a question, Hobson needs the AI to understand and interpret the text. To do this, we send only the relevant parts of your documents and the question.
+                            </p>
+                            <p>
+                              The rest—storage, indexing, permissions, access control—is entirely handled by Hobson.
                             </p>
                           </div>
                         </AccordionContent>
