@@ -2986,7 +2986,7 @@ Content-Type: multipart/form-data
             <div className="max-w-4xl mx-auto">
               <div className="mb-6 md:mb-8">
                 <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Positioning Statement</h1>
-                <p className="text-base md:text-lg text-muted-foreground">From first document to confident decision</p>
+                <p className="text-base md:text-lg text-muted-foreground">Giving your documents a voice</p>
               </div>
               
               <div className="border-l-4 border-primary pl-6 md:pl-8 py-4">
