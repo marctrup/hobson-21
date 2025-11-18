@@ -2579,12 +2579,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Yes. Admins can delete; deletions are logged.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="playbooks">
-                        <AccordionTrigger className="text-left">What are Playbooks?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Reusable prompt sets for common tasks (e.g., renewal checks).</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="team-collaborate">
                         <AccordionTrigger className="text-left">Can my team collaborate?</AccordionTrigger>
                         <AccordionContent>
