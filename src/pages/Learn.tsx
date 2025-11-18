@@ -2285,9 +2285,18 @@ Content-Type: multipart/form-data
                           What data does Hobson send to OpenAI?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm">
+                          <div className="text-muted-foreground text-sm space-y-3">
                             <p>
-                              Hobson sends only the specific text excerpts needed to answer your question. We do not send entire documents, metadata, or any identifying information about your company or users.
+                              Hobson sends only the minimum information required for the task. Examples include:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                              <li>A small text segment from a document</li>
+                              <li>A part of a lease needed for a query</li>
+                              <li>Keywords from your question</li>
+                              <li>A summary of extracted data</li>
+                            </ul>
+                            <p className="font-medium text-foreground">
+                              We never send full documents unless absolutely required.
                             </p>
                           </div>
                         </AccordionContent>
