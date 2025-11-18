@@ -2591,12 +2591,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Share within your workspace, export tables, or copy cited answers.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="cloud-connectors">
-                        <AccordionTrigger className="text-left">Can I connect Google Drive/SharePoint/Dropbox?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes—connectors are available; Enterprise can add others.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="usage-analytics">
                         <AccordionTrigger className="text-left">Do you show usage analytics?</AccordionTrigger>
                         <AccordionContent>
