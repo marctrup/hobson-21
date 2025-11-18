@@ -45,10 +45,10 @@ const FAQ_QUESTIONS = [
   { full: "Is Hobson GDPR compliant?", short: "GDPR?" },
 ];
 
-// Get 4 random FAQ questions
+// Get 2 random FAQ questions for initial display
 const getRandomQuickQuestions = () => {
   const shuffled = [...FAQ_QUESTIONS].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 4);
+  return shuffled.slice(0, 2);
 };
 
 const FOLLOW_UP_QUESTIONS = [
@@ -392,15 +392,15 @@ export const HobsonChatbot = () => {
                 
                 {/* Quick action buttons - only show after welcome message */}
                 {message.role === 'assistant' && index === 0 && messages.length === 1 && quickQuestions.length > 0 && (
-                  <div className="grid grid-cols-2 gap-2 mt-4 px-2">
+                  <div className="flex flex-col gap-2 mt-4 px-2">
                     {quickQuestions.map((question, qIndex) => (
                       <button
                         key={qIndex}
                         onClick={() => handleQuickQuestion(question.full)}
                         disabled={isLoading}
-                        className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
+                        className="bg-muted/50 border border-border rounded-lg px-4 py-3 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow text-left"
                       >
-                        {question.short}
+                        {question.full}
                       </button>
                     ))}
                   </div>
@@ -412,7 +412,7 @@ export const HobsonChatbot = () => {
                     <button
                       onClick={() => handleQuickQuestion(followUpQuestion)}
                       disabled={isLoading}
-                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow w-full text-left"
+                      className="bg-muted/50 border border-border rounded-lg px-4 py-3 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow w-full text-left"
                     >
                       {followUpQuestion}
                     </button>

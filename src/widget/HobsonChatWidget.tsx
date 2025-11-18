@@ -44,10 +44,10 @@ const FAQ_QUESTIONS = [
   { full: "Is Hobson GDPR compliant?", short: "GDPR?" },
 ];
 
-// Get 4 random FAQ questions
+// Get 2 random FAQ questions for initial display
 const getRandomQuickQuestions = () => {
   const shuffled = [...FAQ_QUESTIONS].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, 4);
+  return shuffled.slice(0, 2);
 };
 
 const getRandomFollowUpQuestion = () => {
@@ -287,14 +287,14 @@ export function HobsonChatWidget() {
                   
                   {/* Quick Questions - show after welcome message */}
                   {message.role === 'assistant' && index === 0 && messages.length === 1 && quickQuestions.length > 0 && !isLoading && (
-                    <div className="grid grid-cols-2 gap-2 mt-3">
+                    <div className="flex flex-col gap-2 mt-3">
                       {quickQuestions.map((question, qIndex) => (
                         <button
                           key={qIndex}
                           onClick={() => handleQuickQuestion(question.full)}
-                          className="text-xs px-3 py-2 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition-colors text-left"
+                          className="text-sm px-4 py-3 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition-colors text-left"
                         >
-                          {question.short}
+                          {question.full}
                         </button>
                       ))}
                     </div>
@@ -313,12 +313,12 @@ export function HobsonChatWidget() {
 
             {/* Follow-up Questions - show after answers */}
             {followUpQuestions.length > 0 && !isLoading && messages.length > 1 && (
-              <div className="px-4 pb-2 flex flex-wrap gap-2">
+              <div className="px-4 pb-2 flex flex-col gap-2">
                 {followUpQuestions.map((question, index) => (
                   <button
                     key={index}
                     onClick={() => handleQuickQuestion(question)}
-                    className="text-xs px-3 py-1.5 rounded-full border border-primary text-primary hover:bg-primary hover:text-white transition-colors"
+                    className="text-sm px-4 py-2 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition-colors text-left"
                   >
                     {question}
                   </button>
