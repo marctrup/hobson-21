@@ -2603,15 +2603,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Yes. See HEU usage, document counts, and query history.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="scans-images">
-                        <AccordionTrigger className="text-left">Can I upload scans or images?</AccordionTrigger>
-                        <AccordionContent>
-                          <div className="text-muted-foreground text-sm space-y-2">
-                            <p>Text-PDFs and DOCX work best. Scanned PDFs work if text is readable.</p>
-                            <p>(OCR = turning images into text.)</p>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="bulk-import">
                         <AccordionTrigger className="text-left">Can I bulk import from cloud drives?</AccordionTrigger>
                         <AccordionContent>
