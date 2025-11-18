@@ -2450,33 +2450,57 @@ Content-Type: multipart/form-data
                               At no point does OpenAI have access to everything—only what is needed to answer your specific question.
                             </p>
                             
-                            <div className="mt-4 bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
-                              <p className="font-semibold text-foreground mb-3">Example</p>
-                              <div className="space-y-2 text-sm">
-                                <p>
-                                  <span className="font-medium text-foreground">You ask:</span> "What is the rent for Flat 12?"
+                            <div className="mt-6 bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg">
+                              <p className="font-semibold text-foreground text-base mb-4">Example: What happens when I ask a question?</p>
+                              <div className="space-y-4 text-sm">
+                                <p className="text-muted-foreground">
+                                  Let's say you ask:<br />
+                                  <span className="font-medium text-foreground text-base mt-1 block">"What is the rent for 12 Market Street?"</span>
                                 </p>
-                                <p>
-                                  Hobson spots the key details — "rent" and "Flat 12."
-                                </p>
-                                <p>
-                                  We look only at the documents linked to Flat 12 — nothing else.
-                                </p>
-                                <p>
-                                  We pick the small parts of text that mention rent and send only those lines to OpenAI.
-                                </p>
-                                <p>
-                                  OpenAI reads that snippet and replies with the rent amount.
-                                </p>
-                                <p>
-                                  Hobson checks the answer to make sure it matches the documents.
-                                </p>
-                                <p>
-                                  If something looks off, we re-check using our own search system for accuracy.
-                                </p>
-                                <p className="font-medium text-foreground pt-2">
-                                  At all times, OpenAI only sees the tiny pieces needed to answer your question — never your full document library.
-                                </p>
+                                
+                                <p className="font-medium text-foreground">Here's what happens behind the scenes:</p>
+                                
+                                <div className="space-y-3 pl-2">
+                                  <div>
+                                    <p className="font-semibold text-foreground mb-1">1. Hobson reads your question</p>
+                                    <p className="text-muted-foreground">We pull out key terms like "rent" and "12 Market Street".</p>
+                                  </div>
+                                  
+                                  <div>
+                                    <p className="font-semibold text-foreground mb-1">2. We find your allowed documents</p>
+                                    <p className="text-muted-foreground">Hobson checks which units and document classes you're allowed to see, then limits the search to that subset only.</p>
+                                  </div>
+                                  
+                                  <div>
+                                    <p className="font-semibold text-foreground mb-1">3. We pick the relevant snippets</p>
+                                    <p className="text-muted-foreground">The system finds the exact sections of the lease or rent documents that mention rent for that unit.</p>
+                                  </div>
+                                  
+                                  <div>
+                                    <p className="font-semibold text-foreground mb-1">4. We send only the needed text to OpenAI</p>
+                                    <p className="text-muted-foreground">OpenAI sees only the small extracts required to answer the question — not your full documents or portfolio.</p>
+                                  </div>
+                                  
+                                  <div>
+                                    <p className="font-semibold text-foreground mb-1">5. OpenAI gives an answer</p>
+                                    <p className="text-muted-foreground">The model interprets the extracted text and returns a clear response.</p>
+                                  </div>
+                                  
+                                  <div>
+                                    <p className="font-semibold text-foreground mb-1">6. Hobson performs a quality check</p>
+                                    <p className="text-muted-foreground">We confirm the answer makes sense and matches what's in your documents.</p>
+                                  </div>
+                                  
+                                  <div>
+                                    <p className="font-semibold text-foreground mb-1">7. If something looks off, we double-check</p>
+                                    <p className="text-muted-foreground">Hobson falls back to our search system to confirm the facts directly from the stored data.</p>
+                                  </div>
+                                </div>
+                                
+                                <div className="pt-3 border-t border-primary/20">
+                                  <p className="font-semibold text-foreground mb-1">In short</p>
+                                  <p className="text-muted-foreground">Only the minimum, relevant text is ever shared with OpenAI — never your full documents. Hobson controls the entire process to keep your data safe and your answers accurate.</p>
+                                </div>
                               </div>
                             </div>
                           </div>
