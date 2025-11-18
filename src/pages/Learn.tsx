@@ -2303,7 +2303,7 @@ Content-Type: multipart/form-data
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Getting the best out of Hobson</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="upload-documents">
-                        <AccordionTrigger className="text-left">What happens when I upload documents?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">How long does Hobson take to read a document?</AccordionTrigger>
                         <AccordionContent>
                           <div className="text-muted-foreground text-sm space-y-4">
                             <p>
