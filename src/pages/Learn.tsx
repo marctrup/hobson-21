@@ -2398,9 +2398,26 @@ Content-Type: multipart/form-data
                           What happens technically when a document is uploaded?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm">
+                          <div className="text-muted-foreground text-sm space-y-3">
                             <p>
-                              When you upload a document, Hobson processes it through multiple stages including text extraction, indexing, and storage in our secure database and vector database for efficient search and retrieval.
+                              Your document is stored securely on Hobson.
+                            </p>
+                            <p>
+                              Hobson splits it into small usable pieces (called "chunks").
+                            </p>
+                            <p>
+                              These chunks are processed by an AI model to extract meaning.
+                            </p>
+                            <p className="font-medium text-foreground">
+                              Key information is stored inside Hobson's systems:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                              <li>Vector database (for search)</li>
+                              <li>Knowledge graph (for relationships)</li>
+                              <li>Internal database (for structured data)</li>
+                            </ul>
+                            <p>
+                              OpenAI only sees the text we send for extraction—never the full document storage process.
                             </p>
                           </div>
                         </AccordionContent>
