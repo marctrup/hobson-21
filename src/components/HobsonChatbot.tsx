@@ -76,11 +76,6 @@ export const HobsonChatbot = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  // Only show chatbot on allowed routes
-  if (!ALLOWED_ROUTES.includes(location.pathname)) {
-    return null;
-  }
-
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -296,6 +291,11 @@ export const HobsonChatbot = () => {
       </ReactMarkdown>
     );
   };
+
+  // Only show chatbot on allowed routes
+  if (!ALLOWED_ROUTES.includes(location.pathname)) {
+    return null;
+  }
 
   return (
     <>
