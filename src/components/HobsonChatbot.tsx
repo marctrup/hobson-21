@@ -228,6 +228,7 @@ export const HobsonChatbot = () => {
         content: "Hey there! What would you like to know about?",
       },
     ]);
+    setQuickQuestions(getRandomQuickQuestions()); // Refresh questions on clear
     toast({
       title: 'Chat cleared',
       description: 'Starting fresh conversation',
