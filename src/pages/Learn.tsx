@@ -2430,6 +2430,18 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">A HEU is the unit of energy measurement for using Hobson's AI features. Each message or action costs a certain number of HEUs based on its complexity</p>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="heu-task-costs">
+                        <AccordionTrigger className="text-left">How much do different tasks cost in HEUs?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm mb-3">Different tasks consume varying amounts of HEUs based on their complexity:</p>
+                          <ul className="list-disc pl-6 space-y-2 text-muted-foreground text-sm">
+                            <li><span className="font-medium">Simple queries:</span> 1-2 HEUs - Basic document questions and simple searches</li>
+                            <li><span className="font-medium">Document analysis:</span> 3-5 HEUs - Analyzing documents and extracting specific information</li>
+                            <li><span className="font-medium">Complex analysis:</span> 5-10 HEUs - Multi-document comparisons and advanced insights</li>
+                            <li><span className="font-medium">Bulk operations:</span> 10+ HEUs - Processing multiple documents simultaneously</li>
+                          </ul>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="upgrade-subscription">
                         <AccordionTrigger className="text-left">How can I upgrade my subscription?</AccordionTrigger>
                         <AccordionContent>
