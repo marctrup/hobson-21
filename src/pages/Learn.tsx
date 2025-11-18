@@ -69,10 +69,10 @@ const Learn = () => {
           'troubleshooting': { horizontal: 'integrations', vertical: 'troubleshooting' },
           
           // Prompt Engineering section
-          'prompt-engineering': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
-          'promptengineering': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
-          'fundamentals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
-          'fundementals': { horizontal: 'prompt-engineering', vertical: 'fundamentals' },
+          'prompt-engineering': { horizontal: 'prompt-engineering', vertical: 'prompt-engineering' },
+          'promptengineering': { horizontal: 'prompt-engineering', vertical: 'prompt-engineering' },
+          'fundamentals': { horizontal: 'prompt-engineering', vertical: 'prompt-engineering' },
+          'fundementals': { horizontal: 'prompt-engineering', vertical: 'prompt-engineering' },
           'advanced-prompting': { horizontal: 'prompt-engineering', vertical: 'advanced-prompting' },
           'advancedprompting': { horizontal: 'prompt-engineering', vertical: 'advanced-prompting' },
           'debugging-prompts': { horizontal: 'prompt-engineering', vertical: 'debugging-prompts' },
@@ -117,7 +117,7 @@ const Learn = () => {
       setActiveTocSection('overview');
     } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
       setActiveTocSection('hobson-platform-overview');
-    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') {
+    } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'prompt-engineering') {
       setActiveTocSection('what-is-prompting');
     } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') {
       setActiveTocSection('prompt-library');
@@ -135,7 +135,7 @@ const Learn = () => {
         (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') ||
         (activeHorizontalTab === 'features' && ['core-features', 'advanced-features', 'feature-comparison', 'roadmap'].includes(activeVerticalTab)) ||
         (activeHorizontalTab === 'integrations' && ['available-integrations', 'setup-guide', 'api-reference', 'troubleshooting'].includes(activeVerticalTab)) ||
-        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') ||
+        (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'prompt-engineering') ||
         (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'advanced-prompting') ||
         (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'debugging-prompts')) {
       
@@ -166,7 +166,7 @@ const Learn = () => {
           tocSections = ['coming-soon-notice', 'what-to-expect'];
         }
       } else if (activeHorizontalTab === 'prompt-engineering') {
-        if (activeVerticalTab === 'fundamentals') {
+        if (activeVerticalTab === 'prompt-engineering') {
           tocSections = ['what-is-prompting', 'why-prompting-matters', 'how-hobson-thinks', 'clear-method', 'advanced-tactics'];
         } else if (activeVerticalTab === 'advanced-prompting') {
           tocSections = ['prompt-library', 'lease-summaries', 'extracting-data', 'comparing-properties', 'risk-compliance', 'report-building'];
@@ -258,7 +258,7 @@ const Learn = () => {
         ];
       case 'prompt-engineering':
         return [
-          { id: 'fundamentals', label: 'Fundamentals', icon: Users },
+          { id: 'prompt-engineering', label: 'Fundamentals', icon: Users },
           { id: 'advanced-prompting', label: 'Advanced Prompting', icon: Wand2 },
           { id: 'debugging-prompts', label: 'Debugging Prompts', icon: FileText },
         ];
@@ -2800,7 +2800,7 @@ Content-Type: multipart/form-data
     }
 
     // Handle Prompt Engineering - Fundamentals content specifically
-    if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') {
+    if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'prompt-engineering') {
       const tocSections = [
         { id: 'what-is-prompting', label: 'What is Prompting?' },
         { id: 'why-prompting-matters', label: 'Why Prompting Matters' },

@@ -131,7 +131,7 @@ const AppContent = () => {
               <Route path="/learn/introduction" element={<Navigate to="/learn/Positioning-Statement" replace />} />
               <Route path="/learn/getting-started" element={<Navigate to="/learn/Positioning-Statement" replace />} />
               <Route path="/learn/integrations" element={<Navigate to="/learn/available-integrations" replace />} />
-              <Route path="/learn/prompt-engineering" element={<Navigate to="/learn/fundamentals" replace />} />
+              <Route path="/learn/fundamentals" element={<Navigate to="/learn/prompt-engineering" replace />} />
               <Route path="/learn/:section" element={<Learn />} />
               <Route path="/status" element={<Status />} />
               <Route path="/announcements" element={<Announcements />} />
