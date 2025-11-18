@@ -37,6 +37,7 @@ const FAQ_QUESTIONS = [
   { full: "What happens when I ask a question?", short: "Question process?" },
   // Getting the best out of Hobson
   { full: "How long does Hobson take to read a document?", short: "Processing time?" },
+  { full: "Can Hobson be trained on my company's information?", short: "Training?" },
   { full: "Can I add a unit manually without uploading a document?", short: "Manual units?" },
   { full: "Which level should I use when asking a question?", short: "Question levels?" },
   { full: "What should I do if I get a poor answer?", short: "Poor answers?" },
@@ -84,6 +85,7 @@ const FOLLOW_UP_QUESTIONS = [
   "What happens when I ask a question?",
   // Getting the best out of Hobson
   "How long does Hobson take to read a document?",
+  "Can Hobson be trained on my company's information?",
   "Can I add a unit manually without uploading a document?",
   "Which level should I use when asking a question?",
   "What should I do if I get a poor answer?",

@@ -2575,6 +2575,43 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="company-training" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Can Hobson be trained on my company's information?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <p>
+                              <strong className="text-foreground">Yes, through document upload.</strong> When you upload your company's documents to Hobson, the system processes and indexes them, making that information available for queries.
+                            </p>
+                            
+                            <p>
+                              Hobson learns from the documents you provide by:
+                            </p>
+                            
+                            <ul className="space-y-2 pl-4">
+                              <li className="flex items-start gap-2">
+                                <span className="text-primary mt-1">•</span>
+                                <span>Extracting and storing key information from your property documents</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="text-primary mt-1">•</span>
+                                <span>Building a searchable knowledge base specific to your portfolio</span>
+                              </li>
+                              <li className="flex items-start gap-2">
+                                <span className="text-primary mt-1">•</span>
+                                <span>Understanding the relationships between units, properties, and documents</span>
+                              </li>
+                            </ul>
+
+                            <div className="bg-primary/5 p-3 rounded-md">
+                              <p className="text-foreground font-medium">
+                                The more documents you upload, the more comprehensive Hobson's understanding of your specific properties and operations becomes.
+                              </p>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="add-unit-manually" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           Can I add a unit manually without uploading a document?
