@@ -13,17 +13,39 @@ const CHAT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/hobson-chat`;
 
 const OWL_CHAT_BUBBLE = '/lovable-uploads/owl-chat-bubble.png';
 
-const FOLLOW_UP_QUESTIONS = [
-  "What can Hobson AI do?",
-  "Tell me about pricing plans",
-  "How does document processing work?",
-  "What integrations are available?",
-  "Show me use cases"
+// FAQ questions from /learn/faq with shortened versions
+const FAQ_QUESTIONS = [
+  { full: "How are units, groups, portfolios, and documents arranged in Hobson?", short: "How's data organized?" },
+  { full: "Which file types are supported?", short: "Supported files?" },
+  { full: "How to get documents to Hobson", short: "Upload documents?" },
+  { full: "Does Hobson work on mobile?", short: "Mobile support?" },
+  { full: "Who owns the data and outputs?", short: "Data ownership?" },
+  { full: "How does Hobson use OpenAI?", short: "OpenAI usage?" },
+  { full: "Does OpenAI store my documents?", short: "OpenAI storage?" },
+  { full: "Does OpenAI use my data to train their models?", short: "Data for training?" },
+  { full: "What data does Hobson send to OpenAI?", short: "Data sent to AI?" },
+  { full: "Where are my documents actually stored?", short: "Where's my data?" },
+  { full: "Is Hobson GDPR compliant?", short: "GDPR compliance?" },
+  { full: "Tell me about pricing and HEUs", short: "Pricing & HEUs?" },
+  { full: "How does Hobson work?", short: "How it works?" },
+  { full: "Tell me about security", short: "Security?" },
+  { full: "What document types do you support?", short: "Document types?" },
+  { full: "Can I control who has access?", short: "Access control?" },
+  { full: "Can I delete documents or a workspace?", short: "Delete data?" },
+  { full: "Can my team collaborate?", short: "Team features?" },
+  { full: "Can I export my data?", short: "Data export?" },
+  { full: "Where can I find Hobson's Privacy Policy and Terms of Service?", short: "Privacy & Terms?" },
 ];
 
+// Get 4 random FAQ questions
+const getRandomQuickQuestions = () => {
+  const shuffled = [...FAQ_QUESTIONS].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 4);
+};
+
 const getRandomFollowUpQuestion = () => {
-  const randomIndex = Math.floor(Math.random() * FOLLOW_UP_QUESTIONS.length);
-  return FOLLOW_UP_QUESTIONS[randomIndex];
+  const randomIndex = Math.floor(Math.random() * FAQ_QUESTIONS.length);
+  return FAQ_QUESTIONS[randomIndex].full;
 };
 
 export function HobsonChatWidget() {
@@ -31,6 +53,7 @@ export function HobsonChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [quickQuestions, setQuickQuestions] = useState<Array<{full: string, short: string}>>([]);
   const [followUpQuestions, setFollowUpQuestions] = useState<string[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -46,10 +69,10 @@ export function HobsonChatWidget() {
     if (isOpen && messages.length === 0) {
       const welcomeMessage: Message = {
         role: 'assistant',
-        content: "Hi! I'm Hobson, your AI assistant. I can help you learn about Hobson AI's features, pricing, and use cases. What would you like to know?"
+        content: "Hey there! What would you like to know about?"
       };
       setMessages([welcomeMessage]);
-      setFollowUpQuestions([getRandomFollowUpQuestion(), getRandomFollowUpQuestion()]);
+      setQuickQuestions(getRandomQuickQuestions());
     }
   }, [isOpen, messages.length]);
 
@@ -238,21 +261,37 @@ export function HobsonChatWidget() {
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
+                <div key={index}>
                   <div
-                    className={`max-w-[85%] rounded-lg px-4 py-2 ${
-                      message.role === 'user'
-                        ? 'bg-primary text-white'
-                        : 'bg-gray-100 text-gray-900'
-                    }`}
+                    className={`flex ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    <div className="text-sm whitespace-pre-wrap break-words">
-                      {renderMessage(message)}
+                    <div
+                      className={`max-w-[85%] rounded-lg px-4 py-2 ${
+                        message.role === 'user'
+                          ? 'bg-primary text-white'
+                          : 'bg-gray-100 text-gray-900'
+                      }`}
+                    >
+                      <div className="text-sm whitespace-pre-wrap break-words">
+                        {renderMessage(message)}
+                      </div>
                     </div>
                   </div>
+                  
+                  {/* Quick Questions - show after welcome message */}
+                  {message.role === 'assistant' && index === 0 && messages.length === 1 && quickQuestions.length > 0 && !isLoading && (
+                    <div className="grid grid-cols-2 gap-2 mt-3">
+                      {quickQuestions.map((question, qIndex) => (
+                        <button
+                          key={qIndex}
+                          onClick={() => handleQuickQuestion(question.full)}
+                          className="text-xs px-3 py-2 rounded-lg border border-primary text-primary hover:bg-primary hover:text-white transition-colors text-left"
+                        >
+                          {question.short}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
               ))}
               {isLoading && (
@@ -265,8 +304,8 @@ export function HobsonChatWidget() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Quick Questions */}
-            {followUpQuestions.length > 0 && !isLoading && (
+            {/* Follow-up Questions - show after answers */}
+            {followUpQuestions.length > 0 && !isLoading && messages.length > 1 && (
               <div className="px-4 pb-2 flex flex-wrap gap-2">
                 {followUpQuestions.map((question, index) => (
                   <button
