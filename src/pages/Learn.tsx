@@ -2306,9 +2306,20 @@ Content-Type: multipart/form-data
                           Where are my documents actually stored?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm">
+                          <div className="text-muted-foreground text-sm space-y-3">
                             <p>
-                              All your documents are securely stored on Hobson's infrastructure with enterprise-grade security, encryption, and regular backups. We maintain full control over your data and never store it with third-party AI providers.
+                              Your documents are stored in Hobson's secure storage, not on OpenAI's servers.
+                            </p>
+                            <p className="font-medium text-foreground">
+                              From the diagram:
+                            </p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                              <li>We store structured data in our database.</li>
+                              <li>We store document text in our vector database (used for search).</li>
+                              <li>We store relationships in our knowledge graph.</li>
+                            </ul>
+                            <p className="font-medium text-foreground">
+                              OpenAI never hosts or controls any of this.
                             </p>
                           </div>
                         </AccordionContent>
