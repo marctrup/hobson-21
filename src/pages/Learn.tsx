@@ -3678,11 +3678,86 @@ Content-Type: multipart/form-data
     );
   };
 
+  // Dynamic SEO meta tags based on active section
+  const getPageMeta = () => {
+    if (activeHorizontalTab === 'introduction') {
+      if (activeVerticalTab === 'positioning-statement') {
+        return {
+          title: 'Positioning Statement - Hobson AI',
+          description: 'Learn about Hobson AI: the lightweight, AI-powered assistant that transforms source-of-truth files into instant, reliable answers for real estate professionals.'
+        };
+      }
+      if (activeVerticalTab === 'plans-credits') {
+        return {
+          title: 'Plans & Credits - Hobson AI',
+          description: 'Explore Hobson AI pricing plans and credit options. Find the perfect plan for your real estate document management needs.'
+        };
+      }
+    }
+    if (activeHorizontalTab === 'prompt-engineering') {
+      if (activeVerticalTab === 'prompt-engineering') {
+        return {
+          title: 'Prompt Engineering Fundamentals - Hobson AI',
+          description: 'Master the fundamentals of effective prompting with Hobson AI. Learn how to craft clear prompts for better AI-powered document analysis.'
+        };
+      }
+      if (activeVerticalTab === 'advanced-prompting') {
+        return {
+          title: 'Advanced Prompting - Hobson AI',
+          description: 'Advanced prompting techniques for Hobson AI. Learn expert strategies for lease summaries, data extraction, and property comparisons.'
+        };
+      }
+      if (activeVerticalTab === 'debugging-prompts') {
+        return {
+          title: 'Debugging Prompts - Hobson AI',
+          description: 'Learn how to troubleshoot and optimize your prompts with Hobson AI for better document analysis results.'
+        };
+      }
+    }
+    if (activeHorizontalTab === 'use-cases') {
+      return {
+        title: 'Use Cases - Hobson AI',
+        description: 'Discover real-world use cases and applications of Hobson AI for property management and real estate document analysis.'
+      };
+    }
+    if (activeHorizontalTab === 'features') {
+      return {
+        title: 'Features - Hobson AI',
+        description: 'Explore Hobson AI features for intelligent document processing, smart search, and automated property management.'
+      };
+    }
+    if (activeHorizontalTab === 'integrations') {
+      return {
+        title: 'Integrations - Hobson AI',
+        description: 'Learn about Hobson AI integrations with your existing tools and workflows for seamless property management.'
+      };
+    }
+    if (activeHorizontalTab === 'glossary') {
+      return {
+        title: 'Glossary - Hobson AI',
+        description: 'Comprehensive glossary of terms used in Hobson AI and real estate document management.'
+      };
+    }
+    if (activeHorizontalTab === 'faq') {
+      return {
+        title: 'FAQ - Hobson AI',
+        description: 'Frequently asked questions about Hobson AI: AI-powered assistant for real estate professionals.'
+      };
+    }
+    return {
+      title: 'Learn - Hobson\'s Choice AI',
+      description: 'Learn how to use Hobson\'s Choice AI with our comprehensive guides, tutorials, and documentation.'
+    };
+  };
+
+  const pageMeta = getPageMeta();
+
   return (
     <>
       <Helmet>
-        <title>Learn - Hobson's Choice AI</title>
-        <meta name="description" content="Learn how to use Hobson's Choice AI with our comprehensive guides, tutorials, and documentation." />
+        <title>{pageMeta.title}</title>
+        <meta name="description" content={pageMeta.description} />
+        <link rel="canonical" href={`https://hobsonschoice.ai/learn/${activeVerticalTab || ''}`} />
       </Helmet>
       
       <GlobalHeader />
