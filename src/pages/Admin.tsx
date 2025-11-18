@@ -27,6 +27,7 @@ export default function Admin() {
   const [applications, setApplications] = useState<PilotApplication[]>([]);
   const [loadingApplications, setLoadingApplications] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -145,6 +146,29 @@ export default function Admin() {
     document.body.removeChild(link);
   };
 
+  const updateKnowledgeBase = async () => {
+    setUpdatingKnowledge(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('update-chatbot-knowledge');
+      
+      if (error) throw error;
+      
+      toast({
+        title: "Knowledge Base Updated",
+        description: `Successfully updated to version ${data.message.split('version ')[1] || 'latest'}. The chatbot now has the latest FAQ content.`,
+      });
+    } catch (error: any) {
+      console.error("Error updating knowledge base:", error);
+      toast({
+        title: "Update Failed",
+        description: error.message || "Failed to update chatbot knowledge base.",
+        variant: "destructive",
+      });
+    } finally {
+      setUpdatingKnowledge(false);
+    }
+  };
+
   if (isLoading || !isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -173,6 +197,39 @@ export default function Admin() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
+        {/* Chatbot Knowledge Base Card */}
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Chatbot Knowledge Base</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex items-center justify-between">
+              <div className="space-y-1">
+                <p className="text-sm text-muted-foreground">
+                  Update the chatbot's knowledge base with the latest FAQ content from /learn/faq
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  Automatic updates run daily at 2 AM UTC. Use this button for immediate updates.
+                </p>
+              </div>
+              <Button 
+                onClick={updateKnowledgeBase} 
+                disabled={updatingKnowledge}
+                className="ml-4"
+              >
+                {updatingKnowledge ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                    Updating...
+                  </>
+                ) : (
+                  "Update Knowledge Base"
+                )}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
