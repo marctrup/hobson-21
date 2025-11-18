@@ -29,46 +29,73 @@ serve(async (req) => {
       const pageResponse = await fetch(learnFaqUrl);
       const htmlContent = await pageResponse.text();
       
-      // Extract text content from FAQ sections with better handling of nested content
+      // Extract text content from FAQ sections with comprehensive structure preservation
       const faqMatches = htmlContent.matchAll(/<AccordionTrigger[^>]*>([^<]+)<\/AccordionTrigger>[\s\S]*?<AccordionContent[^>]*>([\s\S]*?)<\/AccordionContent>/gi);
       
       const faqs: string[] = [];
       for (const match of faqMatches) {
         const question = match[1].trim();
         
-        // Better HTML parsing - preserve structure
+        // Comprehensive HTML parsing to preserve all structure and examples
         let answer = match[2];
         
         // Replace headings with markdown equivalents
-        answer = answer.replace(/<h4[^>]*>(.*?)<\/h4>/gi, '\n**$1**\n');
-        answer = answer.replace(/<h5[^>]*>(.*?)<\/h5>/gi, '\n*$1:* ');
+        answer = answer.replace(/<h4[^>]*>(.*?)<\/h4>/gi, '\n\n**$1**\n');
+        answer = answer.replace(/<h5[^>]*>(.*?)<\/h5>/gi, '\n**$1:**\n');
+        answer = answer.replace(/<h6[^>]*>(.*?)<\/h6>/gi, '\n*$1:*\n');
         
-        // Replace list items
-        answer = answer.replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1\n');
+        // Handle unordered lists - preserve list structure
+        answer = answer.replace(/<ul[^>]*>/gi, '\n');
+        answer = answer.replace(/<\/ul>/gi, '\n');
+        answer = answer.replace(/<li[^>]*>(.*?)<\/li>/gi, '• $1\n');
         
-        // Replace paragraphs with line breaks
+        // Handle ordered lists
+        let olCounter = 0;
+        answer = answer.replace(/<ol[^>]*>/gi, () => { olCounter = 0; return '\n'; });
+        answer = answer.replace(/<\/ol>/gi, '\n');
+        answer = answer.replace(/<li[^>]*>/gi, () => { olCounter++; return `${olCounter}. `; });
+        
+        // Handle code blocks
+        answer = answer.replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`');
+        answer = answer.replace(/<pre[^>]*>(.*?)<\/pre>/gi, '\n```\n$1\n```\n');
+        
+        // Handle paragraphs - preserve breaks between them
         answer = answer.replace(/<p[^>]*>/gi, '\n');
         answer = answer.replace(/<\/p>/gi, '\n');
         
-        // Replace divs with line breaks where appropriate
+        // Handle divs - add breaks for major sections
+        answer = answer.replace(/<div[^>]*class="[^"]*space-y[^"]*"[^>]*>/gi, '\n\n');
         answer = answer.replace(/<div[^>]*>/gi, '\n');
         answer = answer.replace(/<\/div>/gi, '');
         
-        // Handle spans (often used for emphasis)
+        // Handle emphasis and strong tags
+        answer = answer.replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**');
+        answer = answer.replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*');
+        answer = answer.replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**');
+        answer = answer.replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*');
+        
+        // Handle spans with specific classes (like text-primary for emphasis)
         answer = answer.replace(/<span[^>]*class="[^"]*text-primary[^"]*"[^>]*>(.*?)<\/span>/gi, '**$1**');
+        answer = answer.replace(/<span[^>]*class="[^"]*font-semibold[^"]*"[^>]*>(.*?)<\/span>/gi, '**$1**');
+        
+        // Handle links
+        answer = answer.replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)');
         
         // Remove remaining HTML tags
         answer = answer.replace(/<[^>]+>/g, ' ');
         
-        // Clean up entities and whitespace
+        // Clean up entities and whitespace while preserving structure
         answer = answer
           .replace(/&quot;/g, '"')
           .replace(/&amp;/g, '&')
           .replace(/&lt;/g, '<')
           .replace(/&gt;/g, '>')
-          .replace(/\s+/g, ' ')
-          .replace(/\n\s+/g, '\n')
-          .replace(/\n{3,}/g, '\n\n')
+          .replace(/&nbsp;/g, ' ')
+          .replace(/\t/g, '  ')
+          .replace(/ +/g, ' ')  // Multiple spaces to single
+          .replace(/\n +/g, '\n')  // Remove leading spaces on lines
+          .replace(/ +\n/g, '\n')  // Remove trailing spaces on lines
+          .replace(/\n{4,}/g, '\n\n\n')  // Max 3 newlines
           .trim();
         
         if (question && answer) {
@@ -77,45 +104,109 @@ serve(async (req) => {
       }
       
       if (faqs.length > 0) {
-        faqContent = faqs.join('\n');
-        console.log(`Extracted ${faqs.length} FAQ items with improved structure from live page`);
+        faqContent = faqs.join('\n---\n\n');
+        console.log(`Extracted ${faqs.length} FAQ items with examples and structure preserved from live page`);
       } else {
-        console.log("No FAQs extracted, using fallback content");
-        // Fallback with key FAQ content
+        console.log("No FAQs extracted, using comprehensive fallback content");
+        // Comprehensive fallback with key FAQ content and examples
         faqContent = `### How are units, groups, portfolios, and documents arranged in Hobson?
 
 **How Spaces and Groups Are Defined**
-*Unit:* A single physical space, such as a flat, office, or piece of land.
-*Unit Group:* A set of units linked either by a shared location (flats in one block) or by a shared document (one lease covering multiple units).
-*Portfolio:* A collection of units grouped by ownership, management, or organisational structure.
+
+**Unit:**
+A single physical space, such as a flat, office, or piece of land.
+
+**Unit Group:**
+A set of units linked **either** by a shared location (for example, flats in one block or offices on a single floor) **or** by a shared document (for example, one lease covering multiple units in one or more locations).
+
+**Portfolio:**
+A collection of units grouped by ownership, management, or another organisational structure.
 
 **How Document Types Work**
-*Right-to-Occupy (RTO) Documents:* Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.
-*Amending Documents (AMDs):* Documents that modify, extend, or support an RTO (deeds of variation, rent memorandums, notices, identity documents).
-*Accompanying Documents (ACDs):* Documents related to a space but not tied to occupancy rights (building insurance, maintenance records, utility bills).
+
+**Right-to-Occupy (RTO) Documents:**
+Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.
+
+**Amending Documents (AMDs):**
+Documents that **modify**, **extend**, or **support** an RTO. This includes:
+• Formal amendments (deeds of variation, rent memorandums)
+• Supporting documents (notices, identity documents, funding documents)
+
+**Accompanying Documents (ACDs):**
+Documents related to a space but not tied to occupancy rights, such as:
+• Building insurance policies
+• Maintenance records
+• Utility bills
+
+---
 
 ### How does Hobson model my data?
 
-Hobson uses a three-tier hierarchical model:
+Hobson uses a three-tier hierarchical model derived from real estate industry practices:
 
-**Portfolio (Top Level)** - Your entire property collection organized by ownership or management
-**Unit Groups (Middle Level)** - Collections of units linked by shared location or documents
-**Units (Base Level)** - Individual physical spaces with their own documents
+**1. Portfolio (Top Level)**
+• Represents your entire property collection
+• Organized by ownership, management, or organizational structure
+• Example: "London Commercial Properties" or "Smith Family Investments"
 
-**Document Classification:**
-- RTO (Right-to-Occupy): Core occupancy documents establishing legal rights
-- AMD (Amending Documents): Modifications and supporting documents
-- ACD (Accompanying Documents): Related but not occupancy-critical documents
+**2. Unit Groups (Middle Level)**
+• Collections of units linked by:
+  - Shared location (e.g., all flats in one building)
+  - Shared documents (e.g., one lease covering multiple units)
+• Simplifies management of related properties
+• Example: "Riverside Tower Apartments" or "High Street Retail Units"
+
+**3. Units (Base Level)**
+• Individual physical spaces (flat, office, land parcel)
+• Each has its own documents and details
+• Example: "Flat 3B" or "Office Suite 201"
+
+**Document Classification Process:**
+
+RTO (Right-to-Occupy):
+• Core occupancy documents (leases, titles)
+• Establishes legal right to use the space
+• Forms the foundation of each unit's data
+
+AMD (Amending Documents):
+• Modifications to RTOs (variations, rent reviews)
+• Supporting documents (notices, IDs, funding docs)
+• Tracked as they change over time
+
+ACD (Accompanying Documents):
+• Related but not occupancy-critical (insurance, maintenance, utilities)
+• Provides context without affecting occupancy status
 
 **Data Extraction Process:**
-1. Upload documents to a unit or unit group
-2. Hobson identifies document type (RTO/AMD/ACD)
-3. AI extracts key data (dates, parties, amounts, clauses)
-4. Data is organized within the hierarchical model
-5. Information becomes searchable and queryable
-6. Related documents and data points are linked
+1. **Upload:** You upload documents to a unit or unit group
+2. **Classification:** Hobson identifies document type (RTO/AMD/ACD)
+3. **Extraction:** AI reads and extracts key data (dates, parties, amounts, clauses)
+4. **Structuring:** Data is organized within the hierarchical model
+5. **Indexing:** Information becomes searchable and queryable
+6. **Linking:** Related documents and data points are connected
 
-This structure allows for quick answers across all documents, preserves context, scales from single properties to thousands of units, provides accuracy with source citations, and saves time by eliminating manual data entry.`;
+**How It Helps You:**
+• **Quick Answers:** Ask questions across all documents ("What are all my rent review dates?")
+• **Context Preservation:** Documents remain linked to their physical spaces
+• **Scalability:** Works for single properties or thousands of units
+• **Accuracy:** Source citations let you verify every answer
+• **Time Savings:** No manual data entry or searching through files
+
+---
+
+### What data does Hobson send to OpenAI?
+
+Hobson sends only the minimum information required for the task. Examples include:
+• A small text segment from a document
+• A part of a lease needed for a query
+• Keywords from your question
+
+We never send:
+• Complete documents unnecessarily
+• Data unrelated to your query
+• Personal metadata (names, contact details) unless essential for the answer
+
+Example: If you ask "What is the rent?", we send only the relevant clause from the lease, not the entire document.`;
       }
     } catch (error) {
       console.error("Error fetching FAQ page:", error);
