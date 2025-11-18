@@ -2607,23 +2607,18 @@ Content-Type: multipart/form-data
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-72 sticky top-8 h-fit">
-                <div className="border border-border rounded-2xl p-6 bg-card/50 backdrop-blur-sm shadow-sm">
-                  <h3 className="font-bold text-foreground mb-6 flex items-center gap-2">
-                    <svg className="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
-                    </svg>
-                    On This Page
-                  </h3>
-                  <nav className="space-y-1">
+              <div className="hidden lg:block w-64 sticky top-8 h-fit">
+                <div className="border border-border rounded-lg p-4">
+                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
+                  <nav className="space-y-2">
                     {tocSections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-4 py-3 text-sm rounded-lg transition-all ${
+                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
                           activeTocSection === section.id
-                            ? 'bg-primary text-primary-foreground font-semibold shadow-sm'
-                            : 'text-muted-foreground hover:text-foreground hover:bg-muted/50 font-medium'
+                            ? 'bg-purple-100 text-purple-700 font-medium'
+                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
                         }`}
                       >
                         {section.label}
