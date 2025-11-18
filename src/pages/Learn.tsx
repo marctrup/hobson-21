@@ -2357,6 +2357,18 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="data-protection-openai" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does Hobson protect my data when using OpenAI?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm">
+                            <p>
+                              Hobson uses enterprise-grade security measures including encryption in transit, zero data retention policies with OpenAI, and sends only the minimum necessary information. We maintain strict API agreements ensuring your data is never used for training or stored by OpenAI.
+                            </p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
 
