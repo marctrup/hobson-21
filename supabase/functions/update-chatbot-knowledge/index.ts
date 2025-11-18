@@ -179,7 +179,9 @@ serve(async (req) => {
 - Policies: /data-protection, /privacy-policy, /refund-policy
 
 ## About Hobson AI
-AI-powered business assistant for property professionals. Reads documents, extracts data, stores securely, and answers questions using your content.
+Giving your documents a voice.
+
+For real estate professionals drained by bloated, expensive systems and the manual effort of pulling information from original documents, Hobson is the AI-powered assistant that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is lightweight, simple to use, and low cost — saving time, ensuring accuracy, and building trust with fast, referenced responses.
 
 ## Core Capabilities
 - Search leases and tenancy agreements (ASTs)
@@ -208,7 +210,7 @@ Plans:
 - Professional: 2500 HEUs/month (£99.99) - advanced integrations
 - Enterprise: Custom pricing and features
 
-HEU costs vary by task complexity. Simple queries use fewer HEUs than complex document processing.
+HEU costs vary by task complexity. The HEU bar visualization shows remaining and used credits. You can see the cost of each message in the chat by pressing the three dots beneath any message to view detailed usage information.
 
 ## FAQ (Frequently Asked Questions)
 
