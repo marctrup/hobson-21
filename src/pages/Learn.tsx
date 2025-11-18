@@ -2165,9 +2165,55 @@ Content-Type: multipart/form-data
                           What types of documents can Hobson read?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <p className="text-muted-foreground text-sm">
-                            Hobson can read and understand various property-related documents including leases, tenancy agreements, contracts, deeds, rent schedules, property plans, lending agreements, valuations, and Land Registry titles.
-                          </p>
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <p>
+                              Hobson has been trained to understand a wide range of documents used across residential and commercial real estate. These fall into three main categories:
+                            </p>
+                            
+                            <div>
+                              <h5 className="font-semibold text-foreground mb-2">Right-to-Occupy (RTO) Documents</h5>
+                              <p className="mb-2">Documents that give an entity the right to use or occupy a space.</p>
+                              <p>Examples include:</p>
+                              <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Residential leases</li>
+                                <li>Commercial leases</li>
+                                <li>Licences to occupy</li>
+                                <li>Title deeds</li>
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h5 className="font-semibold text-foreground mb-2">Amending Documents (AMDs)</h5>
+                              <p className="mb-2">Documents that modify, extend, or support an RTO. This includes both formal amendments and supporting paperwork.</p>
+                              <p>Examples include:</p>
+                              <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Deeds of variation</li>
+                                <li>Rent memorandums</li>
+                                <li>Notices</li>
+                                <li>Works agreements</li>
+                                <li>Deposit deeds</li>
+                                <li>Identity or supporting documents</li>
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h5 className="font-semibold text-foreground mb-2">Accompanying Documents (ACDs)</h5>
+                              <p className="mb-2">Documents linked to a specific unit or unit group and used for context, compliance, or verification.</p>
+                              <p>Examples include:</p>
+                              <ul className="list-disc list-inside space-y-1 ml-2">
+                                <li>Compliance certificates</li>
+                                <li>Works reports</li>
+                                <li>Funding agreements</li>
+                              </ul>
+                            </div>
+
+                            <div>
+                              <h5 className="font-semibold text-foreground mb-2">Hobson continues to grow.</h5>
+                              <p>
+                                We add new document types regularly, and if you use a document we haven&apos;t trained on yet, we&apos;re happy to include it.
+                              </p>
+                            </div>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="get-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
