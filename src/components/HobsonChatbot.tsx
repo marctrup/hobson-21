@@ -14,6 +14,36 @@ interface Message {
   content: string;
 }
 
+// FAQ questions from /learn/faq with shortened versions for buttons
+const FAQ_QUESTIONS = [
+  { full: "How are units, groups, portfolios, and documents arranged in Hobson?", short: "How's data organized?" },
+  { full: "Which file types are supported?", short: "Supported files?" },
+  { full: "How to get documents to Hobson", short: "Upload documents?" },
+  { full: "Does Hobson work on mobile?", short: "Mobile support?" },
+  { full: "Who owns the data and outputs?", short: "Data ownership?" },
+  { full: "How does Hobson use OpenAI?", short: "OpenAI usage?" },
+  { full: "Does OpenAI store my documents?", short: "OpenAI storage?" },
+  { full: "Does OpenAI use my data to train their models?", short: "Data for training?" },
+  { full: "What data does Hobson send to OpenAI?", short: "Data sent to AI?" },
+  { full: "Where are my documents actually stored?", short: "Where's my data?" },
+  { full: "Is Hobson GDPR compliant?", short: "GDPR compliance?" },
+  { full: "Tell me about pricing and HEUs", short: "Pricing & HEUs?" },
+  { full: "How does Hobson work?", short: "How it works?" },
+  { full: "Tell me about security", short: "Security?" },
+  { full: "What document types do you support?", short: "Document types?" },
+  { full: "Can I control who has access?", short: "Access control?" },
+  { full: "Can I delete documents or a workspace?", short: "Delete data?" },
+  { full: "Can my team collaborate?", short: "Team features?" },
+  { full: "Can I export my data?", short: "Data export?" },
+  { full: "Where can I find Hobson's Privacy Policy and Terms of Service?", short: "Privacy & Terms?" },
+];
+
+// Get 4 random FAQ questions
+const getRandomQuickQuestions = () => {
+  const shuffled = [...FAQ_QUESTIONS].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 4);
+};
+
 const FOLLOW_UP_QUESTIONS = [
   "What can I do with Hobson?",
   "How do I get started?",
@@ -54,6 +84,7 @@ export const HobsonChatbot = () => {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [followUpQuestion, setFollowUpQuestion] = useState<string>('');
+  const [quickQuestions, setQuickQuestions] = useState<Array<{full: string, short: string}>>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -68,13 +99,14 @@ export const HobsonChatbot = () => {
 
   useEffect(() => {
     if (isOpen && messages.length === 0) {
-      // Add welcome message when chat opens
+      // Add welcome message and randomize quick questions when chat opens
       setMessages([
         {
           role: 'assistant',
           content: "Hey there! What would you like to know about?",
         },
       ]);
+      setQuickQuestions(getRandomQuickQuestions());
     }
   }, [isOpen]);
 
@@ -352,36 +384,18 @@ export const HobsonChatbot = () => {
                 </div>
                 
                 {/* Quick action buttons - only show after welcome message */}
-                {message.role === 'assistant' && index === 0 && messages.length === 1 && (
+                {message.role === 'assistant' && index === 0 && messages.length === 1 && quickQuestions.length > 0 && (
                   <div className="grid grid-cols-2 gap-2 mt-4 px-2">
-                    <button
-                      onClick={() => handleQuickQuestion('Tell me about pricing and HEUs')}
-                      disabled={isLoading}
-                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
-                    >
-                      Pricing & HEUs?
-                    </button>
-                    <button
-                      onClick={() => handleQuickQuestion('How does Hobson work?')}
-                      disabled={isLoading}
-                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
-                    >
-                      How it works?
-                    </button>
-                    <button
-                      onClick={() => handleQuickQuestion('Tell me about security')}
-                      disabled={isLoading}
-                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
-                    >
-                      Security?
-                    </button>
-                    <button
-                      onClick={() => handleQuickQuestion('What document types do you support?')}
-                      disabled={isLoading}
-                      className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
-                    >
-                      Document types?
-                    </button>
+                    {quickQuestions.map((question, qIndex) => (
+                      <button
+                        key={qIndex}
+                        onClick={() => handleQuickQuestion(question.full)}
+                        disabled={isLoading}
+                        className="bg-muted/50 border border-border rounded-lg px-3 py-2 text-sm font-medium text-foreground hover:bg-muted transition-all disabled:opacity-50 shadow-sm hover:shadow"
+                      >
+                        {question.short}
+                      </button>
+                    ))}
                   </div>
                 )}
                 
