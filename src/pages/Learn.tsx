@@ -2422,6 +2422,18 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="question-process" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          What happens when I ask a question?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm">
+                            <p>
+                              When you ask a question, Hobson searches your documents, retrieves relevant information, and uses AI to generate an intelligent answer based on your specific data.
+                            </p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
 
