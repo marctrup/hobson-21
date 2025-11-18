@@ -141,7 +141,7 @@ const Learn = () => {
       
       if (activeHorizontalTab === 'introduction') {
         if (activeVerticalTab === 'faq') {
-          tocSections = ['positioning-statement', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
+          tocSections = ['positioning-statement', 'building-with-hobson', 'features', 'plans-credits-faq', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
         } else if (activeVerticalTab === 'plans-credits') {
           tocSections = ['overview', 'starter-pack', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
         }
@@ -2502,6 +2502,73 @@ Content-Type: multipart/form-data
                             <p>Plans: monthly HEUs; unused plan HEUs roll over for 1 month.</p>
                             <p>You can Top-Up for those busy periods, no rollover (use within your current billing period).</p>
                           </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                    </Accordion>
+                  </section>
+
+                  {/* Plans & Credits */}
+                  <section id="plans-credits-faq">
+                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Plans & Credits</h2>
+                    <Accordion type="multiple" className="w-full">
+                      <AccordionItem value="what-is-credit">
+                        <AccordionTrigger className="text-left">What is a HEU?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">A HEU is the unit of energy measurement for using Hobson's AI features. Each message or action costs a certain number of HEUs based on its complexity</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="upgrade-subscription">
+                        <AccordionTrigger className="text-left">How can I upgrade my subscription?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You can upgrade your subscription through your workspace settings or by contacting our support team.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="downgrade-subscription">
+                        <AccordionTrigger className="text-left">How can I downgrade my subscription?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Subscription downgrades can be managed through your account settings or by reaching out to support.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="cancel-subscription">
+                        <AccordionTrigger className="text-left">How can I cancel my subscription?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You can cancel your subscription at any time through your account settings. Your access will continue until the end of the current billing period.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="billing-info">
+                        <AccordionTrigger className="text-left">How can I change my billing information?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Billing information can be updated in your account settings under the billing section.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="download-invoices">
+                        <AccordionTrigger className="text-left">How do I download my invoices?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Invoices are available for download in your account settings under billing history.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="get-more-credits">
+                        <AccordionTrigger className="text-left">How do I get more credits?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">You can get more HEUs by upgrading your plan or purchasing Top-ups.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="credit-reset">
+                        <AccordionTrigger className="text-left">When does my credit limit reset?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Your credit limit resets at the beginning of each billing cycle based on your subscription plan.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="remaining-credits">
+                        <AccordionTrigger className="text-left">How do I see the remaining credits in a workspace?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Click on your workspace name on the dashboard to view your remaining credits and usage statistics.</p>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="free-credits">
+                        <AccordionTrigger className="text-left">Can I get free credits?</AccordionTrigger>
+                        <AccordionContent>
+                          <p className="text-muted-foreground text-sm">Free credits are included with the free plan. Additional free credits may be available through promotional offers or referral programs.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
