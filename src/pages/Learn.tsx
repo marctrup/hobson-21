@@ -2207,9 +2207,9 @@ Content-Type: multipart/form-data
                               </ul>
                             </div>
 
-                            <div>
+                            <div className="mt-6 p-4 bg-primary/5 border-l-4 border-primary rounded-r-lg">
                               <h5 className="font-semibold text-foreground mb-2">Hobson continues to grow.</h5>
-                              <p>
+                              <p className="text-foreground">
                                 We add new document types regularly, and if you use a document we haven&apos;t trained on yet, we&apos;re happy to include it.
                               </p>
                             </div>
