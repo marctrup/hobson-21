@@ -2449,6 +2449,36 @@ Content-Type: multipart/form-data
                             <p className="font-medium text-foreground">
                               At no point does OpenAI have access to everything—only what is needed to answer your specific question.
                             </p>
+                            
+                            <div className="mt-4 bg-primary/5 border-l-4 border-primary p-4 rounded-r-lg">
+                              <p className="font-semibold text-foreground mb-3">Example</p>
+                              <div className="space-y-2 text-sm">
+                                <p>
+                                  <span className="font-medium text-foreground">You ask:</span> "What is the rent for Flat 12?"
+                                </p>
+                                <p>
+                                  Hobson spots the key details — "rent" and "Flat 12."
+                                </p>
+                                <p>
+                                  We look only at the documents linked to Flat 12 — nothing else.
+                                </p>
+                                <p>
+                                  We pick the small parts of text that mention rent and send only those lines to OpenAI.
+                                </p>
+                                <p>
+                                  OpenAI reads that snippet and replies with the rent amount.
+                                </p>
+                                <p>
+                                  Hobson checks the answer to make sure it matches the documents.
+                                </p>
+                                <p>
+                                  If something looks off, we re-check using our own search system for accuracy.
+                                </p>
+                                <p className="font-medium text-foreground pt-2">
+                                  At all times, OpenAI only sees the tiny pieces needed to answer your question — never your full document library.
+                                </p>
+                              </div>
+                            </div>
                           </div>
                         </AccordionContent>
                       </AccordionItem>
