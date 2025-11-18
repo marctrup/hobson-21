@@ -2195,7 +2195,7 @@ Content-Type: multipart/form-data
                     <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">How Hobson works</h2>
                     <Accordion type="multiple" className="w-full">
                       <AccordionItem value="organize-units-documents">
-                        <AccordionTrigger className="text-left">How Hobson Organises Units and Documents</AccordionTrigger>
+                        <AccordionTrigger className="text-left">How are units, groups, portfolios, and documents arranged in Hobson?</AccordionTrigger>
                         <AccordionContent>
                           <div className="space-y-8">
                             {/* How Spaces and Groups Are Defined */}
