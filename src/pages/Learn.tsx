@@ -2339,6 +2339,18 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="document-visibility" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Who can see my documents?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm">
+                            <p>
+                              Only users within your organization who have been granted access through your workspace permissions can see your documents. You control exactly who has access through role-based permissions and access controls.
+                            </p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
 
