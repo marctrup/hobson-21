@@ -30,7 +30,7 @@ const FAQ_QUESTIONS = [
   { full: "Why does Hobson need to send anything to OpenAI at all?", short: "Why OpenAI?" },
   { full: "Who can see my documents?", short: "Access?" },
   { full: "How does Hobson protect my data when using OpenAI?", short: "Protection?" },
-  { full: "Does OpenAI know who I am or what sites I have?", short: "Privacy?" },
+  { full: "Does OpenAI know who I am or hold details of my property holdings?", short: "Privacy?" },
   { full: "What happens technically when a document is uploaded?", short: "Upload process?" },
   { full: "How does Hobson model my data?", short: "Data model?" },
   { full: "What can Hobson do?", short: "Capabilities?" },
