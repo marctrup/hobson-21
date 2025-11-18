@@ -2078,8 +2078,6 @@ Content-Type: multipart/form-data
         { id: 'building-with-hobson', label: 'Using Hobson day-to-day' },
         { id: 'features', label: 'Features' },
         { id: 'managing-account', label: 'Managing your account' },
-        { id: 'policies-security', label: 'Policies and Security' },
-        { id: 'about-hobson', label: 'About Hobson' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -2626,62 +2624,6 @@ Content-Type: multipart/form-data
                         <AccordionTrigger className="text-left">How can I transfer a workspace to someone else?</AccordionTrigger>
                         <AccordionContent>
                           <p className="text-muted-foreground text-sm">Use Transfer Ownership in Settings or contact support.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </section>
-
-                  {/* Policies and security */}
-                  <section id="policies-security">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Policies and security</h2>
-                    <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="get-support">
-                        <AccordionTrigger className="text-left">How can I get support?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Use in-app chat or email [support@yourdomain].</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="privacy-terms">
-                        <AccordionTrigger className="text-left">Where can I find Hobson's Privacy Policy and Terms of Service?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">See [link to Privacy Policy] and [link to Terms].</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="refund-policy">
-                        <AccordionTrigger className="text-left">What is Hobson's refund policy?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">See [link to Refunds]; we'll always try to make things right.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="security-compliance">
-                        <AccordionTrigger className="text-left">Is Hobson compliant with security standards?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">We use encryption in transit and at rest, role-based access, and tenant isolation (your data is kept separate from other customers). See [Security Overview] for details.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="gdpr-compliance">
-                        <AccordionTrigger className="text-left">Is Hobson GDPR compliant?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. We support GDPR rights (access, export, deletion). A Data Processing Addendum (DPA) is available—contact us.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </section>
-
-                  {/* About Hobson */}
-                  <section id="about-hobson">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">About Hobson</h2>
-                    <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="where-based">
-                        <AccordionTrigger className="text-left">Where is Hobson based?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">[Add your location].</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="hiring">
-                        <AccordionTrigger className="text-left">Is Hobson hiring?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Check our careers page [link] or email [careers@yourdomain].</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
