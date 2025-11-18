@@ -2380,9 +2380,15 @@ Content-Type: multipart/form-data
                           Does OpenAI know who I am or what sites I have?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm">
+                          <div className="text-muted-foreground text-sm space-y-3">
+                            <p className="font-semibold text-foreground">
+                              No.
+                            </p>
                             <p>
-                              No. OpenAI does not receive any information about your identity, company name, site addresses, or any other identifying details. We only send anonymous text excerpts needed for processing your queries.
+                              We do not send personal details, addresses, ownership data, or any identifying information unless required for a specific task—and even then, only the small slice needed.
+                            </p>
+                            <p>
+                              OpenAI has no visibility into your identity or portfolio.
                             </p>
                           </div>
                         </AccordionContent>
