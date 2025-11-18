@@ -2160,6 +2160,16 @@ Content-Type: multipart/form-data
                           </p>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="document-types" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          What types of documents can Hobson read?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            Hobson can read and understand various property-related documents including leases, tenancy agreements, contracts, deeds, rent schedules, property plans, lending agreements, valuations, and Land Registry titles.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="get-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           How to get documents to Hobson

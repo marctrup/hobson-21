@@ -19,6 +19,7 @@ interface Message {
 const FAQ_QUESTIONS = [
   { full: "How are units, groups, portfolios, and documents arranged in Hobson?", short: "Organization?" },
   { full: "Which file types are supported?", short: "File types?" },
+  { full: "What types of documents can Hobson read?", short: "Doc types?" },
   { full: "How to get documents to Hobson", short: "Upload docs?" },
   { full: "Does Hobson work on mobile?", short: "Mobile?" },
   { full: "Who owns the data and outputs?", short: "Data ownership?" },
@@ -53,6 +54,7 @@ const getRandomQuickQuestions = () => {
 const FOLLOW_UP_QUESTIONS = [
   "How are units, groups, portfolios, and documents arranged in Hobson?",
   "Which file types are supported?",
+  "What types of documents can Hobson read?",
   "How to get documents to Hobson",
   "Does Hobson work on mobile?",
   "Who owns the data and outputs?",
