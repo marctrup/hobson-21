@@ -2280,6 +2280,18 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="data-sent-openai" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          What data does Hobson send to OpenAI?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm">
+                            <p>
+                              Hobson sends only the specific text excerpts needed to answer your question. We do not send entire documents, metadata, or any identifying information about your company or users.
+                            </p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
 
