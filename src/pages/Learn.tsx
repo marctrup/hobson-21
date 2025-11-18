@@ -112,7 +112,7 @@ const Learn = () => {
   // Set initial active section based on current tab
   useEffect(() => {
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
-      setActiveTocSection('positioning-statement');
+      setActiveTocSection('how-hobson-works');
     } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       setActiveTocSection('overview');
     } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
@@ -141,7 +141,7 @@ const Learn = () => {
       
       if (activeHorizontalTab === 'introduction') {
         if (activeVerticalTab === 'faq') {
-          tocSections = ['positioning-statement', 'building-with-hobson', 'features', 'plans-credits-faq', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
+          tocSections = ['how-hobson-works', 'features', 'plans-credits-faq'];
         } else if (activeVerticalTab === 'plans-credits') {
           tocSections = ['overview', 'starter-pack', 'feature-comparison', 'available-plans', 'credit-display', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
         }
@@ -2040,8 +2040,8 @@ Content-Type: multipart/form-data
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
       const tocSections = [
         { id: 'how-hobson-works', label: 'How Hobson works' },
-        { id: 'positioning-statement', label: 'Positioning Statement' },
-        { id: 'building-with-hobson', label: 'Using Hobson day-to-day' },
+        { id: 'features', label: 'Getting the best out of Hobson' },
+        { id: 'plans-credits-faq', label: 'Plans & Credits' },
       ];
 
       const scrollToSection = (id: string) => {
