@@ -3724,7 +3724,7 @@ Content-Type: multipart/form-data
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Unit Group</h3>
-                  <p className="text-muted-foreground">A set of units linked either by a shared location (for example, flats in one block or offices on a single floor) or by a shared document (for example, one lease covering multiple units in one or more locations).</p>
+                  <p className="text-muted-foreground">A set of units linked <span className="text-purple-600 font-medium">either</span> by a shared location (for example, flats in one block <span className="text-purple-600 font-medium">or</span> offices on a single floor) <span className="text-purple-600 font-medium">or</span> by a shared document (for example, one lease covering multiple units in one <span className="text-purple-600 font-medium">or</span> more locations).</p>
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
