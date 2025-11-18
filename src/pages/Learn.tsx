@@ -2236,20 +2236,11 @@ Content-Type: multipart/form-data
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
                             <p>
-                              Hobson uses OpenAI's GPT models to power its AI capabilities, enabling document understanding, question answering, and data extraction. We leverage OpenAI's API to process your queries and generate intelligent responses based on your uploaded documents.
+                              Hobson uses OpenAI to understand text in documents and generate answers to questions. OpenAI only provides the "AI brain" that processes the text we send, nothing more.
                             </p>
                             <p>
-                              All data sent to OpenAI is processed securely and in accordance with OpenAI's enterprise privacy standards. Your documents and queries are not used to train OpenAI's models, and we maintain strict data protection measures throughout the process.
+                              We handle everything else, including storage, security, access control, and document management.
                             </p>
-                            <p className="font-medium text-foreground">
-                              Key points about our OpenAI integration:
-                            </p>
-                            <ul className="list-disc list-inside space-y-1 ml-2">
-                              <li>Your data remains confidential and is not shared with third parties</li>
-                              <li>We use enterprise-grade API access with enhanced security</li>
-                              <li>All communications are encrypted in transit</li>
-                              <li>You retain full ownership of your data and outputs</li>
-                            </ul>
                           </div>
                         </AccordionContent>
                       </AccordionItem>
