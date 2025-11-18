@@ -2324,6 +2324,18 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="why-openai" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Why does Hobson need to send anything to OpenAI at all?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm">
+                            <p>
+                              OpenAI provides the language understanding and generation capabilities that allow Hobson to interpret your questions and generate intelligent, contextual answers based on your documents. Without their AI models, Hobson would not be able to understand natural language queries or provide meaningful responses.
+                            </p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
 
