@@ -2582,33 +2582,12 @@ Content-Type: multipart/form-data
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
                             <p>
-                              <strong className="text-foreground">Yes, through document upload.</strong> When you upload your company's documents to Hobson, the system processes and indexes them, making that information available for queries.
+                              <strong className="text-foreground">Yes.</strong> For enterprise clients, Hobson can be trained on your organisation's own documents, processes, and team details. We create a private knowledge base built from your company information, which Hobson uses to give personalised and context-aware answers.
                             </p>
                             
                             <p>
-                              Hobson learns from the documents you provide by:
+                              This tailored setup means Hobson can understand your structures, terminology, and workflows, while remaining fully restricted to your data only. None of your company information is shared outside your private environment.
                             </p>
-                            
-                            <ul className="space-y-2 pl-4">
-                              <li className="flex items-start gap-2">
-                                <span className="text-primary mt-1">•</span>
-                                <span>Extracting and storing key information from your property documents</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <span className="text-primary mt-1">•</span>
-                                <span>Building a searchable knowledge base specific to your portfolio</span>
-                              </li>
-                              <li className="flex items-start gap-2">
-                                <span className="text-primary mt-1">•</span>
-                                <span>Understanding the relationships between units, properties, and documents</span>
-                              </li>
-                            </ul>
-
-                            <div className="bg-primary/5 p-3 rounded-md">
-                              <p className="text-foreground font-medium">
-                                The more documents you upload, the more comprehensive Hobson's understanding of your specific properties and operations becomes.
-                              </p>
-                            </div>
                           </div>
                         </AccordionContent>
                       </AccordionItem>
