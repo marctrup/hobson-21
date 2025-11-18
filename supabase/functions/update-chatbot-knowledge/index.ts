@@ -29,30 +29,93 @@ serve(async (req) => {
       const pageResponse = await fetch(learnFaqUrl);
       const htmlContent = await pageResponse.text();
       
-      // Extract text content from FAQ sections
+      // Extract text content from FAQ sections with better handling of nested content
       const faqMatches = htmlContent.matchAll(/<AccordionTrigger[^>]*>([^<]+)<\/AccordionTrigger>[\s\S]*?<AccordionContent[^>]*>([\s\S]*?)<\/AccordionContent>/gi);
       
       const faqs: string[] = [];
       for (const match of faqMatches) {
         const question = match[1].trim();
-        // Remove HTML tags and clean up the answer
-        const answer = match[2]
-          .replace(/<[^>]+>/g, ' ')
-          .replace(/\s+/g, ' ')
+        
+        // Better HTML parsing - preserve structure
+        let answer = match[2];
+        
+        // Replace headings with markdown equivalents
+        answer = answer.replace(/<h4[^>]*>(.*?)<\/h4>/gi, '\n**$1**\n');
+        answer = answer.replace(/<h5[^>]*>(.*?)<\/h5>/gi, '\n*$1:* ');
+        
+        // Replace list items
+        answer = answer.replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1\n');
+        
+        // Replace paragraphs with line breaks
+        answer = answer.replace(/<p[^>]*>/gi, '\n');
+        answer = answer.replace(/<\/p>/gi, '\n');
+        
+        // Replace divs with line breaks where appropriate
+        answer = answer.replace(/<div[^>]*>/gi, '\n');
+        answer = answer.replace(/<\/div>/gi, '');
+        
+        // Handle spans (often used for emphasis)
+        answer = answer.replace(/<span[^>]*class="[^"]*text-primary[^"]*"[^>]*>(.*?)<\/span>/gi, '**$1**');
+        
+        // Remove remaining HTML tags
+        answer = answer.replace(/<[^>]+>/g, ' ');
+        
+        // Clean up entities and whitespace
+        answer = answer
           .replace(/&quot;/g, '"')
           .replace(/&amp;/g, '&')
           .replace(/&lt;/g, '<')
           .replace(/&gt;/g, '>')
+          .replace(/\s+/g, ' ')
+          .replace(/\n\s+/g, '\n')
+          .replace(/\n{3,}/g, '\n\n')
           .trim();
         
         if (question && answer) {
-          faqs.push(`### ${question}\n${answer}\n`);
+          faqs.push(`### ${question}\n\n${answer}\n`);
         }
       }
       
       if (faqs.length > 0) {
         faqContent = faqs.join('\n');
-        console.log(`Extracted ${faqs.length} FAQ items from live page`);
+        console.log(`Extracted ${faqs.length} FAQ items with improved structure from live page`);
+      } else {
+        console.log("No FAQs extracted, using fallback content");
+        // Fallback with key FAQ content
+        faqContent = `### How are units, groups, portfolios, and documents arranged in Hobson?
+
+**How Spaces and Groups Are Defined**
+*Unit:* A single physical space, such as a flat, office, or piece of land.
+*Unit Group:* A set of units linked either by a shared location (flats in one block) or by a shared document (one lease covering multiple units).
+*Portfolio:* A collection of units grouped by ownership, management, or organisational structure.
+
+**How Document Types Work**
+*Right-to-Occupy (RTO) Documents:* Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.
+*Amending Documents (AMDs):* Documents that modify, extend, or support an RTO (deeds of variation, rent memorandums, notices, identity documents).
+*Accompanying Documents (ACDs):* Documents related to a space but not tied to occupancy rights (building insurance, maintenance records, utility bills).
+
+### How does Hobson model my data?
+
+Hobson uses a three-tier hierarchical model:
+
+**Portfolio (Top Level)** - Your entire property collection organized by ownership or management
+**Unit Groups (Middle Level)** - Collections of units linked by shared location or documents
+**Units (Base Level)** - Individual physical spaces with their own documents
+
+**Document Classification:**
+- RTO (Right-to-Occupy): Core occupancy documents establishing legal rights
+- AMD (Amending Documents): Modifications and supporting documents
+- ACD (Accompanying Documents): Related but not occupancy-critical documents
+
+**Data Extraction Process:**
+1. Upload documents to a unit or unit group
+2. Hobson identifies document type (RTO/AMD/ACD)
+3. AI extracts key data (dates, parties, amounts, clauses)
+4. Data is organized within the hierarchical model
+5. Information becomes searchable and queryable
+6. Related documents and data points are linked
+
+This structure allows for quick answers across all documents, preserves context, scales from single properties to thousands of units, provides accuracy with source citations, and saves time by eliminating manual data entry.`;
       }
     } catch (error) {
       console.error("Error fetching FAQ page:", error);
