@@ -2040,8 +2040,8 @@ Content-Type: multipart/form-data
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
       const tocSections = [
         { id: 'how-hobson-works', label: 'How Hobson works' },
-        { id: 'positioning-statement', label: 'Positioning Statement' },
-        { id: 'building-with-hobson', label: 'Using Hobson day-to-day' },
+        { id: 'features', label: 'Getting the best out of Hobson' },
+        { id: 'plans-credits-faq', label: 'Plans & Credits' },
       ];
 
       const scrollToSection = (id: string) => {
