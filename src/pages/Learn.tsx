@@ -2311,24 +2311,27 @@ Content-Type: multipart/form-data
                             </p>
 
                             <div className="space-y-3 pt-2">
-                              <p className="font-medium text-foreground text-base">What happens next?</p>
+                              <p className="font-medium text-foreground text-base">Typical processing times:</p>
                               
-                              <div className="bg-muted/30 p-4 rounded-lg border border-border/50 space-y-3">
-                                <p>
-                                  Hobson extracts key details such as <strong className="text-foreground">addresses</strong> and <strong className="text-foreground">postcodes</strong>.
-                                </p>
-                                
-                                <div className="bg-amber-500/10 border-l-4 border-amber-500 p-3 rounded-r-md">
-                                  <p className="text-foreground">
-                                    It's a good idea to check that the postcodes are correct — an incorrect postcode will appear in the wrong place on the map.
-                                  </p>
-                                </div>
-                              </div>
+                              <ul className="space-y-2 pl-4">
+                                <li className="flex items-start gap-2">
+                                  <span className="text-primary mt-1">•</span>
+                                  <span><strong className="text-foreground">Complex documents</strong> (for example, leases): around 8–9 minutes</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="text-primary mt-1">•</span>
+                                  <span><strong className="text-foreground">Medium-complexity documents</strong> (for example, deeds): around 2–3 minutes</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="text-primary mt-1">•</span>
+                                  <span><strong className="text-foreground">Low-complexity documents</strong> (for example, notices): around 30 seconds to 1 minute</span>
+                                </li>
+                              </ul>
                             </div>
 
                             <div className="bg-primary/5 p-3 rounded-md">
                               <p className="text-foreground font-medium">
-                                Once this step is done, your documents are fully searchable and ready to use.
+                                Once processing is complete, your documents become fully searchable and ready to use.
                               </p>
                             </div>
                           </div>
