@@ -21,7 +21,7 @@ const Learn = () => {
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
-  const [activeTocSection, setActiveTocSection] = useState('getting-started');
+  const [activeTocSection, setActiveTocSection] = useState('positioning-statement');
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
 
@@ -37,9 +37,9 @@ const Learn = () => {
         // Map section/hash to horizontal and vertical tabs
         const sectionMap: Record<string, { horizontal: string; vertical?: string }> = {
           // Introduction section
-          'introduction': { horizontal: 'introduction', vertical: 'getting-started' },
-          'getting-started': { horizontal: 'introduction', vertical: 'getting-started' },
-          'gettingstarted': { horizontal: 'introduction', vertical: 'getting-started' },
+          'introduction': { horizontal: 'introduction', vertical: 'positioning-statement' },
+          'positioning-statement': { horizontal: 'introduction', vertical: 'positioning-statement' },
+          'positioningstatement': { horizontal: 'introduction', vertical: 'positioning-statement' },
           'plans-credits': { horizontal: 'introduction', vertical: 'plans-credits' },
           'planscredits': { horizontal: 'introduction', vertical: 'plans-credits' },
           'plans-and-credit': { horizontal: 'introduction', vertical: 'plans-credits' },
@@ -112,10 +112,10 @@ const Learn = () => {
   // Set initial active section based on current tab
   useEffect(() => {
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
-      setActiveTocSection('getting-started');
+      setActiveTocSection('positioning-statement');
     } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       setActiveTocSection('overview');
-    } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
+    } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
       setActiveTocSection('hobson-platform-overview');
     } else if (activeHorizontalTab === 'prompt-engineering' && activeVerticalTab === 'fundamentals') {
       setActiveTocSection('what-is-prompting');
@@ -141,7 +141,7 @@ const Learn = () => {
       
       if (activeHorizontalTab === 'introduction') {
         if (activeVerticalTab === 'faq') {
-          tocSections = ['getting-started', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
+          tocSections = ['positioning-statement', 'building-with-hobson', 'features', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
         } else if (activeVerticalTab === 'plans-credits') {
           tocSections = ['overview', 'starter-pack', 'feature-comparison', 'available-plans', 'credit-display', 'credit-usage', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
         }
@@ -231,7 +231,7 @@ const Learn = () => {
     switch (horizontalTab) {
       case 'introduction':
         return [
-          { id: 'getting-started', label: 'Getting started', icon: Play },
+          { id: 'positioning-statement', label: 'Positioning Statement', icon: Play },
           { id: 'plans-credits', label: 'Plans and Credits', icon: CreditCard },
           { id: 'faq', label: 'FAQ', icon: HelpCircle },
         ];
@@ -2161,7 +2161,7 @@ Content-Type: multipart/form-data
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
       const tocSections = [
         { id: 'how-hobson-works', label: 'How Hobson works' },
-        { id: 'getting-started', label: 'Getting started' },
+        { id: 'positioning-statement', label: 'Positioning Statement' },
         { id: 'building-with-hobson', label: 'Using Hobson day-to-day' },
         { id: 'features', label: 'Features' },
         { id: 'managing-account', label: 'Managing your account' },
@@ -2777,8 +2777,8 @@ Content-Type: multipart/form-data
       );
     }
 
-    // Handle Getting Started content specifically
-    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'getting-started') {
+    // Handle Positioning Statement content specifically
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
       const tocSections = [
         { id: 'dashboard-navigation', label: 'Navigate the Hobson dashboard' },
         { id: 'upload-documents', label: 'Upload and organize documents' },
@@ -2800,7 +2800,7 @@ Content-Type: multipart/form-data
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-6 md:mb-8">
-                  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Getting Started</h1>
+                  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Positioning Statement</h1>
                   <p className="text-base md:text-lg text-muted-foreground">From first document to confident decision</p>
                 </div>
 
