@@ -1957,6 +1957,11 @@ Content-Type: multipart/form-data
                     
                     {/* HEU Bar Visualization */}
                     <HEUBarVisualization />
+                    
+                    <div className="mt-8">
+                      <h3 className="text-lg font-medium text-foreground mb-4">Example: How HEU costs appear in chat</h3>
+                      <ChatCostExample />
+                    </div>
                   </section>
 
                   {/* Credit Usage */}
@@ -1993,11 +1998,6 @@ Content-Type: multipart/form-data
                     <p className="text-muted-foreground mt-6">
                       You can see the cost of each message in the chat by pressing the three dots beneath a message.
                     </p>
-
-                    <div className="mt-8">
-                      <h3 className="text-lg font-medium text-foreground mb-4">Example: How HEU costs appear in chat</h3>
-                      <ChatCostExample />
-                    </div>
                   </section>
 
                   {/* Credit Rollovers */}
