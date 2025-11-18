@@ -2782,10 +2782,125 @@ Content-Type: multipart/form-data
       return (
         <div className="flex-1">
           <div className="container mx-auto p-4 md:p-8 max-w-7xl">
-            <div className="max-w-4xl mx-auto">
-              <div className="mb-6 md:mb-8">
-                <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Positioning Statement</h1>
-                <p className="text-base md:text-lg text-muted-foreground">From first document to confident decision</p>
+            <div className="max-w-5xl mx-auto">
+              {/* Hero Section */}
+              <div className="mb-12 md:mb-16 text-center">
+                <h1 className="text-3xl md:text-5xl font-bold text-foreground mb-6 leading-tight">
+                  Positioning Statement
+                </h1>
+                <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-background border border-primary/20 rounded-2xl p-8 md:p-12 shadow-lg">
+                  <p className="text-xl md:text-2xl text-foreground leading-relaxed font-medium">
+                    For real estate professionals drained by bloated, expensive systems and the manual effort of pulling information from original documents, <span className="text-primary font-semibold">Hobson is the AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers.
+                  </p>
+                  <div className="mt-8 pt-8 border-t border-border/50">
+                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                      Unlike complex platforms, Hobson is <span className="text-foreground font-semibold">lightweight, simple to use, and low cost</span> — saving time, ensuring accuracy, and building trust with fast, referenced responses.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Key Elements Grid */}
+              <div className="grid md:grid-cols-2 gap-6 mb-12">
+                {/* Target Audience */}
+                <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 p-3 rounded-lg">
+                      <Users className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-foreground mb-2">Who We Serve</h3>
+                      <p className="text-muted-foreground">
+                        Real estate professionals drained by bloated, expensive systems and manual document extraction
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* What We Do */}
+                <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-primary/10 p-3 rounded-lg">
+                      <Wand2 className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-foreground mb-2">What We Do</h3>
+                      <p className="text-muted-foreground">
+                        Transform source-of-truth files into instant, reliable answers with AI-powered intelligence
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Differentiators Section */}
+              <div className="mb-12">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-6 text-center">
+                  What Sets Us Apart
+                </h2>
+                <div className="grid md:grid-cols-3 gap-4">
+                  <div className="bg-gradient-to-br from-card to-card/50 border border-border rounded-lg p-6 text-center">
+                    <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl font-bold text-primary">1</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Lightweight</h3>
+                    <p className="text-sm text-muted-foreground">No bloat, no complexity — just what you need</p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-card to-card/50 border border-border rounded-lg p-6 text-center">
+                    <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl font-bold text-primary">2</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Simple to Use</h3>
+                    <p className="text-sm text-muted-foreground">Intuitive interface that anyone can master</p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-card to-card/50 border border-border rounded-lg p-6 text-center">
+                    <div className="bg-primary/10 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <span className="text-2xl font-bold text-primary">3</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-foreground mb-2">Low Cost</h3>
+                    <p className="text-sm text-muted-foreground">Affordable pricing that makes sense</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Benefits Section */}
+              <div className="bg-gradient-to-br from-primary/5 to-background border border-primary/10 rounded-2xl p-8 md:p-10">
+                <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-8 text-center">
+                  The Hobson Advantage
+                </h2>
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="bg-primary/20 p-2 rounded-lg flex-shrink-0">
+                      <Clock className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-1">Save Time</h3>
+                      <p className="text-muted-foreground">Get answers in seconds instead of hours of manual document review</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="bg-primary/20 p-2 rounded-lg flex-shrink-0">
+                      <Activity className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-1">Ensure Accuracy</h3>
+                      <p className="text-muted-foreground">Every answer comes with references to source documents for complete confidence</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="bg-primary/20 p-2 rounded-lg flex-shrink-0">
+                      <Heart className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground mb-1">Build Trust</h3>
+                      <p className="text-muted-foreground">Fast, referenced responses that clients and stakeholders can rely on</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
