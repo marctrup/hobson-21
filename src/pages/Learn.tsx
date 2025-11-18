@@ -2603,18 +2603,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Yes. Bulk import from connected drives or via folder upload.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="export-data">
-                        <AccordionTrigger className="text-left">Can I export my data?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. Export extracted fields and logs (CSV/JSON). Contact us for full exports.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="history-audit">
-                        <AccordionTrigger className="text-left">Can I see history/audit?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. We log uploads, edits, and queries.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                     </Accordion>
                   </section>
 
