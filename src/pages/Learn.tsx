@@ -2076,8 +2076,6 @@ Content-Type: multipart/form-data
         { id: 'how-hobson-works', label: 'How Hobson works' },
         { id: 'positioning-statement', label: 'Positioning Statement' },
         { id: 'building-with-hobson', label: 'Using Hobson day-to-day' },
-        { id: 'features', label: 'Features' },
-        { id: 'managing-account', label: 'Managing your account' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -2544,86 +2542,6 @@ Content-Type: multipart/form-data
                         <AccordionTrigger className="text-left">Can I get free credits?</AccordionTrigger>
                         <AccordionContent>
                           <p className="text-muted-foreground text-sm">Free credits are included with the free plan. Additional free credits may be available through promotional offers or referral programs.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </section>
-
-                  {/* Features */}
-                  <section id="managing-account">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Features</h2>
-                    <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="company-settings">
-                        <AccordionTrigger className="text-left">Where are Company Settings?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">In the app under Settings (company, users, billing, HEUs).</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="data-visibility">
-                        <AccordionTrigger className="text-left">Can I change data visibility?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. Control who can view, upload, and query per workspace.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="duplicate-query">
-                        <AccordionTrigger className="text-left">Can I duplicate a saved view or query?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. Duplicate saved filters and saved prompts.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="delete-workspace">
-                        <AccordionTrigger className="text-left">Can I delete documents or a workspace?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. Admins can delete; deletions are logged.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="team-collaborate">
-                        <AccordionTrigger className="text-left">Can my team collaborate?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. Invite teammates, set roles, and share saved views.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="usage-analytics">
-                        <AccordionTrigger className="text-left">Do you show usage analytics?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. See HEU usage, document counts, and query history.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="bulk-import">
-                        <AccordionTrigger className="text-left">Can I bulk import from cloud drives?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. Bulk import from connected drives or via folder upload.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                    </Accordion>
-                  </section>
-
-                  {/* Managing your account */}
-                  <section id="policies-security">
-                    <h2 className="text-xl font-semibold text-foreground mb-6 pb-2">Managing your account</h2>
-                    <Accordion type="multiple" className="w-full">
-                      <AccordionItem value="change-email">
-                        <AccordionTrigger className="text-left">Can I change the email I use to log in?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes, in Account Settings.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="delete-account">
-                        <AccordionTrigger className="text-left">Can I delete my account?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Yes. Request deletion in Settings; we'll guide you on exporting data first.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="change-workspace-owner">
-                        <AccordionTrigger className="text-left">Can I change the workspace owner?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Admins can transfer ownership in Workspace Settings.</p>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="transfer-workspace">
-                        <AccordionTrigger className="text-left">How can I transfer a workspace to someone else?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Use Transfer Ownership in Settings or contact support.</p>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
