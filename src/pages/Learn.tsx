@@ -2344,9 +2344,15 @@ Content-Type: multipart/form-data
                           Who can see my documents?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm">
-                            <p>
-                              Only users within your organization who have been granted access through your workspace permissions can see your documents. You control exactly who has access through role-based permissions and access controls.
+                          <div className="text-muted-foreground text-sm space-y-3">
+                            <p className="font-medium text-foreground">Only:</p>
+                            <ul className="list-disc list-inside space-y-1 ml-2">
+                              <li>You</li>
+                              <li>Your team members with access</li>
+                              <li>Hobson's internal processing systems</li>
+                            </ul>
+                            <p className="font-medium text-foreground">
+                              Neither OpenAI nor any third parties have access.
                             </p>
                           </div>
                         </AccordionContent>
