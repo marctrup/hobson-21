@@ -2403,16 +2403,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Yes. Admin users can invite new users and choose exactly which units and which document classes they can access. This lets you control who sees what within Hobson.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="billing-heus">
-                        <AccordionTrigger className="text-left">How does billing/HEUs work?</AccordionTrigger>
-                        <AccordionContent>
-                          <div className="text-muted-foreground text-sm space-y-2">
-                            <p>HEU = Hobson Energy Unit (your usage credit). You spend HEUs on extraction, indexing, and Q&A.</p>
-                            <p>Plans: monthly HEUs; unused plan HEUs roll over for 1 month.</p>
-                            <p>You can Top-Up for those busy periods, no rollover (use within your current billing period).</p>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
                     </Accordion>
                   </section>
 
