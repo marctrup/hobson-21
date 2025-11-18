@@ -3718,6 +3718,36 @@ Content-Type: multipart/form-data
             <div className="space-y-8">
               <div className="grid gap-6">
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Unit</h3>
+                  <p className="text-muted-foreground">A single physical space, such as a flat, office, or piece of land.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Unit Group</h3>
+                  <p className="text-muted-foreground">A set of units linked either by a shared location (for example, flats in one block or offices on a single floor) or by a shared document (for example, one lease covering multiple units in one or more locations).</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Portfolio</h3>
+                  <p className="text-muted-foreground">A collection of units grouped by ownership, management, or another organisational structure.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Right-to-Occupy (RTO) Documents</h3>
+                  <p className="text-muted-foreground">Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Amending Documents (AMDs)</h3>
+                  <p className="text-muted-foreground">Documents that modify, extend, or support an RTO. This includes formal amendments (such as deeds of variation or rent memorandums) and supporting documents (such as notices, identity documents, or funding documents).</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Accompanying Documents (ACDs)</h3>
+                  <p className="text-muted-foreground">Documents linked to a specific unit or unit group, such as compliance certificates.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">AI (Artificial Intelligence)</h3>
                   <p className="text-muted-foreground">The technology that powers Hobson. It enables Hobson to read your documents, answer questions, and generate reports.</p>
                 </div>
