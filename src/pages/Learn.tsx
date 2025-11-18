@@ -2267,9 +2267,15 @@ Content-Type: multipart/form-data
                           Does OpenAI use my data to train their models?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm">
+                          <div className="text-muted-foreground text-sm space-y-3">
+                            <p className="font-semibold text-foreground">
+                              No.
+                            </p>
                             <p>
-                              No. OpenAI does not use your data to train their models. All data sent through our enterprise API agreement is strictly processed for your queries only and is not retained or used for any training purposes.
+                              For API usage, OpenAI does not use your data to train its models.
+                            </p>
+                            <p>
+                              Anything Hobson sends to OpenAI stays private and is not used for training, improving, or fine-tuning their systems.
                             </p>
                           </div>
                         </AccordionContent>
