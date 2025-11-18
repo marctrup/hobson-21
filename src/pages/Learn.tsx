@@ -2585,12 +2585,6 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Yes. Invite teammates, set roles, and share saved views.</p>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="share-results">
-                        <AccordionTrigger className="text-left">How do I share results?</AccordionTrigger>
-                        <AccordionContent>
-                          <p className="text-muted-foreground text-sm">Share within your workspace, export tables, or copy cited answers.</p>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="usage-analytics">
                         <AccordionTrigger className="text-left">Do you show usage analytics?</AccordionTrigger>
                         <AccordionContent>
