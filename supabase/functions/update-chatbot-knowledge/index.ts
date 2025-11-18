@@ -322,6 +322,45 @@ Example: If you ask "What is the rent?", we send only the relevant clause from t
       console.error("Error fetching Use Cases page:", error);
       useCasesContent = "Use Cases content could not be fetched. Please visit https://hobsonschoice.ai/learn/use-cases";
     }
+
+    // Fetch the Hobson Glossary page to extract content
+    const learnGlossaryUrl = `https://hobsonschoice.ai/learn/hobson-glossary`;
+    console.log(`Fetching content from: ${learnGlossaryUrl}`);
+    
+    let glossaryContent = "";
+    try {
+      const pageResponse = await fetch(learnGlossaryUrl);
+      const htmlContent = await pageResponse.text();
+      
+      // Extract glossary terms - look for h3 headers followed by paragraphs in the glossary cards
+      const termMatches = htmlContent.matchAll(/<h3[^>]*class="[^"]*text-lg font-semibold[^"]*"[^>]*>([^<]+)<\/h3>[\s\S]*?<p[^>]*class="[^"]*text-muted-foreground[^"]*"[^>]*>([\s\S]*?)<\/p>/gi);
+      
+      const glossaryTerms: string[] = [];
+      for (const match of termMatches) {
+        const term = match[1].trim();
+        let definition = match[2]
+          .replace(/<span[^>]*class="[^"]*text-purple[^"]*"[^>]*>([^<]+)<\/span>/gi, '**$1**')
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .replace(/&quot;/g, '"')
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .trim();
+        
+        if (term && definition) {
+          glossaryTerms.push(`### ${term}\n${definition}\n`);
+        }
+      }
+      
+      if (glossaryTerms.length > 0) {
+        glossaryContent = glossaryTerms.join('\n');
+        console.log(`Extracted ${glossaryTerms.length} glossary terms from live page`);
+      }
+    } catch (error) {
+      console.error("Error fetching Glossary page:", error);
+      glossaryContent = "Glossary content could not be fetched. Please visit https://hobsonschoice.ai/learn/hobson-glossary";
+    }
     
     const knowledgeBase = `# Hobson's Choice AI - Knowledge Base
 
@@ -384,23 +423,7 @@ ${useCasesContent || "Visit https://hobsonschoice.ai/learn/use-cases to explore 
 
 ## Glossary Terms
 
-### Unit
-A single physical space, such as a flat, office, or piece of land.
-
-### Unit Group
-A set of units linked either by a shared location (for example, flats in one block or offices on a single floor) or by a shared document (for example, one lease covering multiple units in one or more locations).
-
-### Portfolio
-A collection of units grouped by ownership, management, or another organisational structure.
-
-### Right-to-Occupy (RTO) Documents
-Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.
-
-### Amending Documents (AMDs)
-Documents that modify, extend, or support an RTO. This includes formal amendments (such as deeds of variation or rent memorandums) and supporting documents (such as notices, identity documents, or funding documents).
-
-### Accompanying Documents (ACDs)
-Documents related to a space but not directly tied to occupancy rights, such as building insurance policies, maintenance records, or utility bills.
+${glossaryContent || "Visit https://hobsonschoice.ai/learn/hobson-glossary for key terms and definitions."}
 
 ## How Hobson Models Your Data
 
