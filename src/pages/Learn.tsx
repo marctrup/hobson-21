@@ -2787,6 +2787,12 @@ Content-Type: multipart/form-data
                 <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">Positioning Statement</h1>
                 <p className="text-base md:text-lg text-muted-foreground">From first document to confident decision</p>
               </div>
+              
+              <div className="bg-purple-50 dark:bg-purple-950/20 border border-purple-200 dark:border-purple-800/30 rounded-lg p-6 md:p-8">
+                <p className="text-base md:text-lg leading-relaxed text-foreground">
+                  For real estate professionals drained by bloated, expensive systems and the manual effort of pulling information from original documents, <span className="font-semibold">Hobson is the AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is lightweight, simple to use, and low cost — saving time, ensuring accuracy, and building trust with fast, referenced responses.
+                </p>
+              </div>
             </div>
           </div>
         </div>
