@@ -3718,6 +3718,11 @@ Content-Type: multipart/form-data
             <div className="space-y-8">
               <div className="grid gap-6">
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">HEU</h3>
+                  <p className="text-muted-foreground">A HEU is the unit of energy measurement for using Hobson's AI features. Each message or action costs a certain number of HEUs based on its complexity.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Unit</h3>
                   <p className="text-muted-foreground">A single physical space, such as a flat, office, or piece of land.</p>
                 </div>
