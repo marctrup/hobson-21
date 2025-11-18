@@ -21,16 +21,15 @@ serve(async (req) => {
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // Fetch the Learn FAQ page to extract content
-    const learnPageUrl = `https://hobsonschoice.ai/learn/faq`;
-    console.log(`Fetching content from: ${learnPageUrl}`);
+    const learnFaqUrl = `https://hobsonschoice.ai/learn/faq`;
+    console.log(`Fetching content from: ${learnFaqUrl}`);
     
     let faqContent = "";
     try {
-      const pageResponse = await fetch(learnPageUrl);
+      const pageResponse = await fetch(learnFaqUrl);
       const htmlContent = await pageResponse.text();
       
       // Extract text content from FAQ sections
-      // This is a basic extraction - in production, you might want to use a proper HTML parser
       const faqMatches = htmlContent.matchAll(/<AccordionTrigger[^>]*>([^<]+)<\/AccordionTrigger>[\s\S]*?<AccordionContent[^>]*>([\s\S]*?)<\/AccordionContent>/gi);
       
       const faqs: string[] = [];
@@ -58,6 +57,45 @@ serve(async (req) => {
     } catch (error) {
       console.error("Error fetching FAQ page:", error);
       faqContent = "FAQ content could not be fetched. Please visit https://hobsonschoice.ai/learn/faq";
+    }
+
+    // Fetch the Plans & Credits page to extract content
+    const learnPlansUrl = `https://hobsonschoice.ai/learn/plans-credits`;
+    console.log(`Fetching content from: ${learnPlansUrl}`);
+    
+    let plansCreditsContent = "";
+    try {
+      const pageResponse = await fetch(learnPlansUrl);
+      const htmlContent = await pageResponse.text();
+      
+      // Extract text content from Plans & Credits sections
+      const plansMatches = htmlContent.matchAll(/<AccordionTrigger[^>]*>([^<]+)<\/AccordionTrigger>[\s\S]*?<AccordionContent[^>]*>([\s\S]*?)<\/AccordionContent>/gi);
+      
+      const plans: string[] = [];
+      for (const match of plansMatches) {
+        const question = match[1].trim();
+        // Remove HTML tags and clean up the answer
+        const answer = match[2]
+          .replace(/<[^>]+>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .replace(/&quot;/g, '"')
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .trim();
+        
+        if (question && answer) {
+          plans.push(`### ${question}\n${answer}\n`);
+        }
+      }
+      
+      if (plans.length > 0) {
+        plansCreditsContent = plans.join('\n');
+        console.log(`Extracted ${plans.length} Plans & Credits items from live page`);
+      }
+    } catch (error) {
+      console.error("Error fetching Plans & Credits page:", error);
+      plansCreditsContent = "Plans & Credits content could not be fetched. Please visit https://hobsonschoice.ai/learn/plans-credits";
     }
     
     const knowledgeBase = `# Hobson's Choice AI - Knowledge Base
@@ -104,6 +142,10 @@ HEU costs vary by task complexity. Simple queries use fewer HEUs than complex do
 ## FAQ (Frequently Asked Questions)
 
 ${faqContent || "Visit https://hobsonschoice.ai/learn/faq for frequently asked questions."}
+
+## Plans & Credits
+
+${plansCreditsContent || "Visit https://hobsonschoice.ai/learn/plans-credits for plans and credits information."}
 
 ## Glossary Terms
 
