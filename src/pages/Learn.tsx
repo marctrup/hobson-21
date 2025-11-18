@@ -2362,10 +2362,16 @@ Content-Type: multipart/form-data
                           How does Hobson protect my data when using OpenAI?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm">
+                          <div className="text-muted-foreground text-sm space-y-3">
                             <p>
-                              Hobson uses enterprise-grade security measures including encryption in transit, zero data retention policies with OpenAI, and sends only the minimum necessary information. We maintain strict API agreements ensuring your data is never used for training or stored by OpenAI.
+                              We protect your data in several ways:
                             </p>
+                            <ul className="list-disc list-inside space-y-2 ml-2">
+                              <li><span className="font-medium text-foreground">Minimal data transfer</span> – We only send the text absolutely needed.</li>
+                              <li><span className="font-medium text-foreground">Data isolation</span> – Your data is deleted immediately after OpenAI processes it.</li>
+                              <li><span className="font-medium text-foreground">Encrypted transport</span> – All communication is encrypted.</li>
+                              <li><span className="font-medium text-foreground">Strict access control</span> – Only your approved users can see your units and documents.</li>
+                            </ul>
                           </div>
                         </AccordionContent>
                       </AccordionItem>
