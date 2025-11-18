@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2, RotateCcw } from 'lucide-react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -48,7 +48,25 @@ const getRandomFollowUpQuestion = () => {
   return FOLLOW_UP_QUESTIONS[Math.floor(Math.random() * FOLLOW_UP_QUESTIONS.length)];
 };
 
+const ALLOWED_ROUTES = [
+  '/learn/faq',
+  '/learn/positioning-statement',
+  '/learn/plans-credits',
+  '/learn/core-features',
+  '/learn/advanced-feature',
+  '/learn/roadmap',
+  '/learn/prompt-engineering',
+  '/learn/advanced-prompting',
+  '/learn/debugging-prompts',
+  '/learn/use-cases',
+  '/learn/hobson-glossary',
+  '/contact',
+  '/data-protection',
+  '/refund-policy',
+];
+
 export const HobsonChatbot = () => {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -57,6 +75,11 @@ export const HobsonChatbot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  // Only show chatbot on allowed routes
+  if (!ALLOWED_ROUTES.includes(location.pathname)) {
+    return null;
+  }
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
