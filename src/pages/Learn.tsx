@@ -2264,7 +2264,7 @@ Content-Type: multipart/form-data
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="ask-question">
-                        <AccordionTrigger className="text-left">How should I choose the right level to ask my question?</AccordionTrigger>
+                        <AccordionTrigger className="text-left">Which level should I use when asking a question?</AccordionTrigger>
                         <AccordionContent>
                           <div className="text-muted-foreground text-sm space-y-4">
                             <p>
