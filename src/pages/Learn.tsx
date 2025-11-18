@@ -2244,6 +2244,21 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="openai-storage" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Does OpenAI store my documents?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm space-y-3">
+                            <p>
+                              No. OpenAI does not store your documents or use them for training their models. We only send the specific text needed to answer your question, and OpenAI processes it in real-time without keeping any copies.
+                            </p>
+                            <p>
+                              All document storage, management, and security is handled entirely by Hobson on our own secure infrastructure.
+                            </p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
 
