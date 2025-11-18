@@ -2427,9 +2427,27 @@ Content-Type: multipart/form-data
                           What happens when I ask a question?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm">
+                          <div className="text-muted-foreground text-sm space-y-3">
                             <p>
-                              When you ask a question, Hobson searches your documents, retrieves relevant information, and uses AI to generate an intelligent answer based on your specific data.
+                              Hobson reads your question and extracts keywords.
+                            </p>
+                            <p>
+                              We search only your allowed units and documents.
+                            </p>
+                            <p>
+                              We choose the relevant text to send to OpenAI for interpretation.
+                            </p>
+                            <p>
+                              The AI gives an answer.
+                            </p>
+                            <p>
+                              Hobson performs a quality check.
+                            </p>
+                            <p>
+                              If needed, we fall back to our search system to confirm accuracy.
+                            </p>
+                            <p className="font-medium text-foreground">
+                              At no point does OpenAI have access to everything—only what is needed to answer your specific question.
                             </p>
                           </div>
                         </AccordionContent>
