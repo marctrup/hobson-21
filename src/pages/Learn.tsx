@@ -141,7 +141,7 @@ const Learn = () => {
       
       if (activeHorizontalTab === 'introduction') {
         if (activeVerticalTab === 'faq') {
-          tocSections = ['positioning-statement', 'building-with-hobson', 'features', 'plans-credits-faq', 'managing-account', 'policies-security', 'how-hobson-works', 'about-hobson'];
+          tocSections = ['how-hobson-works', 'features', 'plans-credits-faq'];
         } else if (activeVerticalTab === 'plans-credits') {
           tocSections = ['overview', 'starter-pack', 'feature-comparison', 'available-plans', 'credit-display', 'credit-rollovers', 'faq-plans', 'troubleshooting'];
         }
