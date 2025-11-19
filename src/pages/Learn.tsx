@@ -3970,6 +3970,16 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">System Prompt</h3>
+                  <p className="text-muted-foreground">A System Prompt is the set of instructions that guides how Hobson behaves. It tells the AI its role, rules, and boundaries so it answers questions consistently and safely.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Extraction Prompt</h3>
+                  <p className="text-muted-foreground">An Extraction Prompt is the instruction Hobson uses to pull key information from a document. It tells the AI what details to look for so data is captured accurately and in a structured way.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Prompt Library</h3>
                   <p className="text-muted-foreground">A set of example prompts you can copy or adapt for common tasks (e.g. summarising leases, creating rent reports, preparing lender packs).</p>
                 </div>
