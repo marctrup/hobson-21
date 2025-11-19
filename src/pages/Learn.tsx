@@ -3923,6 +3923,46 @@ Content-Type: multipart/form-data
                   <p className="text-muted-foreground">The background information Hobson needs to give accurate answers. If you don't provide enough, the response may be vague.</p>
                 </div>
 
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Embeddings</h3>
+                  <p className="text-muted-foreground">A method of turning words or sentences into numbers that capture their meaning. These numbers let Hobson compare ideas and find connections between different pieces of text.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">JSON</h3>
+                  <p className="text-muted-foreground">A way of structuring data so both people and computers can read it. Think of it like a digital "spreadsheet" written in text, with labels and values. Hobson often uses JSON behind the scenes to organise information.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Knowledge Base</h3>
+                  <p className="text-muted-foreground">A space where your business can add important background information (e.g. standard reporting formats, preferred output styles) that Hobson uses to stay consistent.</p>
+                </div>
+
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Prompt</h3>
+                  <p className="text-muted-foreground">A question or instruction you give to Hobson. Clearer prompts = more useful answers.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">System Prompt</h3>
+                  <p className="text-muted-foreground">A System Prompt is the set of instructions that guides how Hobson behaves. It tells the AI its role, rules, and boundaries so it answers questions consistently and safely.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Extraction Prompt</h3>
+                  <p className="text-muted-foreground">An Extraction Prompt is the instruction Hobson uses to pull key information from a document. It tells the AI what details to look for so data is captured accurately and in a structured way.</p>
+                </div>
+
+                <div className="p-6 bg-muted/50 rounded-lg border border-border">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Meta Prompting</h3>
+                  <p className="text-muted-foreground mb-3">Asking Hobson how to improve your question for a clearer answer.</p>
+                  <div className="p-3 bg-background rounded border border-border text-sm">
+                    <strong>Example:</strong> "How should I phrase this to get a better summary of this lease?"
+                  </div>
+                </div>
+
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Debugging</h3>
                   <p className="text-muted-foreground">Fixing or refining a prompt when Hobson's answer isn't right. This might mean rephrasing the question, narrowing the focus, or asking Hobson to explain its reasoning.</p>
@@ -3942,41 +3982,8 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Embeddings</h3>
-                  <p className="text-muted-foreground">A method of turning words or sentences into numbers that capture their meaning. These numbers let Hobson compare ideas and find connections between different pieces of text.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">JSON</h3>
-                  <p className="text-muted-foreground">A way of structuring data so both people and computers can read it. Think of it like a digital "spreadsheet" written in text, with labels and values. Hobson often uses JSON behind the scenes to organise information.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Knowledge Base</h3>
-                  <p className="text-muted-foreground">A space where your business can add important background information (e.g. standard reporting formats, preferred output styles) that Hobson uses to stay consistent.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Meta Prompting</h3>
-                  <p className="text-muted-foreground mb-3">Asking Hobson how to improve your question for a clearer answer.</p>
-                  <div className="p-3 bg-background rounded border border-border text-sm">
-                    <strong>Example:</strong> "How should I phrase this to get a better summary of this lease?"
-                  </div>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Prompt</h3>
-                  <p className="text-muted-foreground">A question or instruction you give to Hobson. Clearer prompts = more useful answers.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">System Prompt</h3>
-                  <p className="text-muted-foreground">A System Prompt is the set of instructions that guides how Hobson behaves. It tells the AI its role, rules, and boundaries so it answers questions consistently and safely.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Extraction Prompt</h3>
-                  <p className="text-muted-foreground">An Extraction Prompt is the instruction Hobson uses to pull key information from a document. It tells the AI what details to look for so data is captured accurately and in a structured way.</p>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">Reverse Prompting</h3>
+                  <p className="text-muted-foreground">Asking Hobson to explain how it arrived at an answer, so you can check the logic.</p>
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
@@ -3989,10 +3996,6 @@ Content-Type: multipart/form-data
                   <p className="text-muted-foreground">A structured output created by Hobson — for example, a portfolio summary, cashflow projection, or lender briefing.</p>
                 </div>
 
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Reverse Prompting</h3>
-                  <p className="text-muted-foreground">Asking Hobson to explain how it arrived at an answer, so you can check the logic.</p>
-                </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Vector Search</h3>
