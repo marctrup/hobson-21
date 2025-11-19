@@ -2255,7 +2255,7 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="get-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How to get documents to Hobson
+                          How to get documents to Hobson?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
