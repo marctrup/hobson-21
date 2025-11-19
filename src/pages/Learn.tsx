@@ -3988,12 +3988,6 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Report</h3>
-                  <p className="text-muted-foreground">A structured output created by Hobson — for example, a portfolio summary, cashflow projection, or lender briefing.</p>
-                </div>
-
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Vector Search</h3>
                   <p className="text-muted-foreground">A smart way of finding information. Instead of matching exact words, it looks for meanings and similarities. This means Hobson can find the right answer even if you phrase your question differently from how it's written in the document.</p>
                 </div>
