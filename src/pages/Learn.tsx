@@ -3038,6 +3038,17 @@ Content-Type: multipart/form-data
                           </p>
                         </AccordionContent>
                       </AccordionItem>
+
+                      <AccordionItem value="context-formatting" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does Hobson decide what context and formatting to show in its answers?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            Hobson looks at the type of question you ask and the information available, then chooses the most suitable format — such as a short list, a table, or a brief summary. If a question relates to a specific lease or unit, Hobson includes key details like the occupier, the document, and the effective date. For broader queries, it shows only the context that actually exists in your documents, without adding assumptions. Before returning the answer, Hobson also performs checks to ensure the structure is complete, outdated data is removed, and any related documents are listed cleanly.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
                 </div>
