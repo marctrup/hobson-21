@@ -3980,11 +3980,6 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Prompt Library</h3>
-                  <p className="text-muted-foreground">A set of example prompts you can copy or adapt for common tasks (e.g. summarising leases, creating rent reports, preparing lender packs).</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">RAG</h3>
                   <p className="text-muted-foreground">Short for Retrieval-Augmented Generation. It's a way Hobson answers questions more accurately by first finding relevant information from your documents, then using that information to generate a better response.</p>
                 </div>
