@@ -3027,6 +3027,17 @@ Content-Type: multipart/form-data
                           </p>
                         </AccordionContent>
                       </AccordionItem>
+
+                      <AccordionItem value="answer-structure" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Why does every Hobson answer follow the same three-part structure?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            Hobson formats every response using a fixed sequence — the main answer, a short follow-up prompt, and a list of related documents. This structure ensures consistency, makes outputs easy to scan, and guarantees that all relevant documents are clearly identified.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
                 </div>
