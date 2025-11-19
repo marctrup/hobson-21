@@ -3016,6 +3016,17 @@ Content-Type: multipart/form-data
                           </p>
                         </AccordionContent>
                       </AccordionItem>
+
+                      <AccordionItem value="fresh-data" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does Hobson ensure fresh data when answering questions?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            Hobson re-analyses the relevant information from your documents each time you submit a query. It does not reuse earlier results or rely on previous answers; instead, it retrieves the necessary information afresh so the output always reflects the most current and reliable data available in the system.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
                 </div>
