@@ -3005,6 +3005,17 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+
+                      <AccordionItem value="core-function" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          What is Hobson's core function when answering questions?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            Hobson reads structured data from your documents and uses it to generate evidence-based answers to property questions. It always follows strict rules on accuracy, validation, and fallback behaviour.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
                 </div>
