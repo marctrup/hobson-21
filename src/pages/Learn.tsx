@@ -3977,19 +3977,6 @@ Content-Type: multipart/form-data
                 </div>
 
                 <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Debugging Flow</h3>
-                  <p className="text-muted-foreground mb-3">A step-by-step process for refining prompts if Hobson misunderstands.</p>
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-foreground">Example:</p>
-                    <ol className="text-sm text-muted-foreground space-y-1 ml-4">
-                      <li>1. Point out what's missing ("You didn't include service charges").</li>
-                      <li>2. Ask for a correction.</li>
-                      <li>3. Confirm or refine further.</li>
-                    </ol>
-                  </div>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
                   <h3 className="text-lg font-semibold text-foreground mb-2">Reverse Prompting</h3>
                   <p className="text-muted-foreground">Asking Hobson to explain how it arrived at an answer, so you can check the logic.</p>
                 </div>
