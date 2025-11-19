@@ -2217,6 +2217,16 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="document-latest" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does Hobson decide which document is the "latest" or most accurate?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            Hobson uses a combination of document metadata, timestamps, and contextual analysis to determine which version is most current. When multiple versions of a document exist, Hobson prioritizes based on upload date, explicit version numbers in filenames, and document content indicating amendments or supersession. If you need to ensure a specific document is treated as authoritative, you can mark it accordingly during upload or update its metadata in your document library.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="get-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           How to get documents to Hobson
