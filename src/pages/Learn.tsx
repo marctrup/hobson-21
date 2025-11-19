@@ -2932,7 +2932,41 @@ Content-Type: multipart/form-data
                           What technology platforms does Hobson use?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <p className="text-muted-foreground text-sm">Hobson is built on a modern, enterprise-grade technology stack to ensure reliability, security, and performance. Our platform combines advanced AI models with robust cloud infrastructure to deliver fast and accurate results for your property management needs.</p>
+                          <div className="space-y-4">
+                            <p className="text-muted-foreground text-sm">Hobson runs on trusted, industry-standard platforms that keep your data secure and ensure the system performs reliably. Here's what each part does:</p>
+                            
+                            <div className="space-y-3">
+                              <div>
+                                <h4 className="text-sm font-semibold text-foreground mb-1">OVH Cloud</h4>
+                                <p className="text-muted-foreground text-sm">Stores your uploaded files and documents. OVH provides secure UK/EU-based cloud storage designed to protect sensitive data.</p>
+                              </div>
+                              
+                              <div>
+                                <h4 className="text-sm font-semibold text-foreground mb-1">Vercel</h4>
+                                <p className="text-muted-foreground text-sm">Runs the Hobson web app. This keeps the interface fast, stable, and able to handle traffic as your team grows.</p>
+                              </div>
+                              
+                              <div>
+                                <h4 className="text-sm font-semibold text-foreground mb-1">MongoDB</h4>
+                                <p className="text-muted-foreground text-sm">Handles structured data such as units, portfolios, users, and document metadata. It's our primary operational database.</p>
+                              </div>
+                              
+                              <div>
+                                <h4 className="text-sm font-semibold text-foreground mb-1">Neo4j</h4>
+                                <p className="text-muted-foreground text-sm">Used for knowledge-graph structures. This helps Hobson understand relationships between units, documents, and entities in a more connected way.</p>
+                              </div>
+                              
+                              <div>
+                                <h4 className="text-sm font-semibold text-foreground mb-1">Pinecone</h4>
+                                <p className="text-muted-foreground text-sm">Stores vector embeddings. This allows Hobson to find relevant passages in documents quickly and improves the quality of answers.</p>
+                              </div>
+                              
+                              <div>
+                                <h4 className="text-sm font-semibold text-foreground mb-1">Google Workspace (G Suite)</h4>
+                                <p className="text-muted-foreground text-sm">Supports email delivery, team communication, and secure internal admin processes.</p>
+                              </div>
+                            </div>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                     </Accordion>
