@@ -2927,7 +2927,14 @@ Content-Type: multipart/form-data
                       <h2 className="text-2xl font-bold text-foreground">Hobson Technology</h2>
                     </div>
                     <Accordion type="multiple" className="w-full space-y-4">
-                      {/* Add technology-related questions here */}
+                      <AccordionItem value="technology-platforms" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          What technology platforms does Hobson use?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">Hobson is built on a modern, enterprise-grade technology stack to ensure reliability, security, and performance. Our platform combines advanced AI models with robust cloud infrastructure to deliver fast and accurate results for your property management needs.</p>
+                        </AccordionContent>
+                      </AccordionItem>
                     </Accordion>
                   </section>
                 </div>
