@@ -2222,9 +2222,35 @@ Content-Type: multipart/form-data
                           How does Hobson decide which document is the "latest" or most accurate?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
-                          <p className="text-muted-foreground text-sm">
-                            Hobson uses a combination of document metadata, timestamps, and contextual analysis to determine which version is most current. When multiple versions of a document exist, Hobson prioritizes based on upload date, explicit version numbers in filenames, and document content indicating amendments or supersession. If you need to ensure a specific document is treated as authoritative, you can mark it accordingly during upload or update its metadata in your document library.
-                          </p>
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <p>
+                              Hobson follows a simple rule when working out which document should be treated as the current version. It looks at documents in this order:
+                            </p>
+                            
+                            <ul className="list-disc list-inside space-y-2 ml-2">
+                              <li><strong className="text-foreground">RTO (Right-to-Occupy documents)</strong> – leases, titles, licences</li>
+                              <li><strong className="text-foreground">AMD (Amending documents)</strong> – deeds of variation, rent memos, notices, funding docs</li>
+                              <li><strong className="text-foreground">ACD (Accompanying documents)</strong> – certificates, reports, anything that supports but does not change terms</li>
+                            </ul>
+
+                            <div>
+                              <h5 className="font-semibold text-foreground mb-2">Here's how Hobson chooses the right one:</h5>
+                              <ul className="list-disc list-inside space-y-2 ml-2">
+                                <li><strong className="text-foreground">The newest RTO always wins.</strong> If you have more than one lease or title, the most recent one is the one that applies.</li>
+                                <li><strong className="text-foreground">AMDs update the RTO.</strong> If an amendment changes rent, dates, or clauses, Hobson replaces the old details with the updated ones.</li>
+                                <li><strong className="text-foreground">ACDs never override anything.</strong> They add context but don't change the legal terms.</li>
+                                <li>If Hobson can't link documents correctly, it will warn you that it can't find a valid chain.</li>
+                                <li>Stronger or newer evidence always beats older or weaker documents.</li>
+                              </ul>
+                            </div>
+
+                            <div className="mt-4 p-4 bg-primary/5 border-l-4 border-primary rounded-r-lg">
+                              <p className="font-semibold text-foreground">In short:</p>
+                              <p className="text-foreground mt-2">
+                                RTO sets the base → AMD updates it → ACD adds helpful context.
+                              </p>
+                            </div>
+                          </div>
                         </AccordionContent>
                       </AccordionItem>
                       <AccordionItem value="get-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
