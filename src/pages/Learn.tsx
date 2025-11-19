@@ -2042,6 +2042,7 @@ Content-Type: multipart/form-data
         { id: 'how-hobson-works', label: 'How Hobson works' },
         { id: 'features', label: 'Getting the best out of Hobson' },
         { id: 'plans-credits-faq', label: 'Hobson Credits' },
+        { id: 'hobson-technology', label: 'Hobson Technology' },
       ];
 
       const scrollToSection = (id: string) => {
@@ -2916,6 +2917,17 @@ Content-Type: multipart/form-data
                           <p className="text-muted-foreground text-sm">Free credits are included with the free plan. Additional free credits may be available through promotional offers or referral programs.</p>
                         </AccordionContent>
                       </AccordionItem>
+                    </Accordion>
+                  </section>
+
+                  {/* Hobson Technology */}
+                  <section id="hobson-technology" className="scroll-mt-8">
+                    <div className="flex items-center gap-3 mb-8">
+                      <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full"></div>
+                      <h2 className="text-2xl font-bold text-foreground">Hobson Technology</h2>
+                    </div>
+                    <Accordion type="multiple" className="w-full space-y-4">
+                      {/* Add technology-related questions here */}
                     </Accordion>
                   </section>
                 </div>
