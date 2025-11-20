@@ -384,6 +384,14 @@ For real estate professionals drained by bloated, expensive systems and the manu
 - Track deadlines and review dates (85+ types)
 - Supports PDF, DOCX, CSV, Excel
 
+## Document Processing Speed
+Hobson AI processes documents rapidly. Most documents are analyzed and indexed within seconds to a few minutes, depending on:
+- Document length (number of pages)
+- Document complexity (tables, images, formatting)
+- File format (PDF, DOCX, CSV, Excel)
+
+Simple documents (1-10 pages) typically process in seconds, while larger, more complex documents may take a few minutes. Once processed, you can immediately query the document and get instant answers with source citations.
+
 ## Key Features
 - Intelligent document processing
 - Smart search in plain language
