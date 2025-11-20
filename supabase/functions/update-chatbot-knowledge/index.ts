@@ -29,14 +29,26 @@ serve(async (req) => {
       const pageResponse = await fetch(learnFaqUrl);
       const htmlContent = await pageResponse.text();
       
-      // Extract text content from FAQ sections with comprehensive structure preservation
-      const faqMatches = htmlContent.matchAll(/<AccordionTrigger[^>]*>([^<]+)<\/AccordionTrigger>[\s\S]*?<AccordionContent[^>]*>([\s\S]*?)<\/AccordionContent>/gi);
+      // React renders Accordion components as divs with data attributes
+      // Look for the pattern: button with accordion trigger, followed by div with accordion content
+      const accordionPattern = /<button[^>]*data-state="[^"]*"[^>]*data-radix-collection-item[^>]*>([\s\S]*?)<\/button>[\s\S]*?<div[^>]*data-state="[^"]*"[^>]*role="region"[^>]*>([\s\S]*?)<\/div>/gi;
       
       const faqs: string[] = [];
-      for (const match of faqMatches) {
-        const question = match[1].trim();
+      let match;
+      
+      while ((match = accordionPattern.exec(htmlContent)) !== null) {
+        // Extract question from button content (remove SVG icons)
+        let question = match[1]
+          .replace(/<svg[\s\S]*?<\/svg>/gi, '')
+          .replace(/<[^>]+>/g, '')
+          .replace(/&quot;/g, '"')
+          .replace(/&amp;/g, '&')
+          .replace(/&lt;/g, '<')
+          .replace(/&gt;/g, '>')
+          .replace(/&nbsp;/g, ' ')
+          .trim();
         
-        // Comprehensive HTML parsing to preserve all structure and examples
+        // Extract and clean answer content
         let answer = match[2];
         
         // Replace headings with markdown equivalents
@@ -98,115 +110,18 @@ serve(async (req) => {
           .replace(/\n{4,}/g, '\n\n\n')  // Max 3 newlines
           .trim();
         
-        if (question && answer) {
+        if (question && answer && question.length > 5) {
           faqs.push(`### ${question}\n\n${answer}\n`);
         }
       }
       
       if (faqs.length > 0) {
         faqContent = faqs.join('\n---\n\n');
-        console.log(`Extracted ${faqs.length} FAQ items with examples and structure preserved from live page`);
+        console.log(`Extracted ${faqs.length} FAQ items from live page`);
       } else {
-        console.log("No FAQs extracted, using comprehensive fallback content");
-        // Comprehensive fallback with key FAQ content and examples
-        faqContent = `### How are units, groups, portfolios, and documents arranged in Hobson?
-
-**How Spaces and Groups Are Defined**
-
-**Unit:**
-A single physical space, such as a flat, office, or piece of land.
-
-**Unit Group:**
-A set of units linked **either** by a shared location (for example, flats in one block or offices on a single floor) **or** by a shared document (for example, one lease covering multiple units in one or more locations).
-
-**Portfolio:**
-A collection of units grouped by ownership, management, or another organisational structure.
-
-**How Document Types Work**
-
-**Right-to-Occupy (RTO) Documents:**
-Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.
-
-**Amending Documents (AMDs):**
-Documents that **modify**, **extend**, or **support** an RTO. This includes:
-• Formal amendments (deeds of variation, rent memorandums)
-• Supporting documents (notices, identity documents, funding documents)
-
-**Accompanying Documents (ACDs):**
-Documents related to a space but not tied to occupancy rights, such as:
-• Building insurance policies
-• Maintenance records
-• Utility bills
-
----
-
-### How does Hobson model my data?
-
-Hobson uses a three-tier hierarchical model derived from real estate industry practices:
-
-**1. Portfolio (Top Level)**
-• Represents your entire property collection
-• Organized by ownership, management, or organizational structure
-• Example: "London Commercial Properties" or "Smith Family Investments"
-
-**2. Unit Groups (Middle Level)**
-• Collections of units linked by:
-  - Shared location (e.g., all flats in one building)
-  - Shared documents (e.g., one lease covering multiple units)
-• Simplifies management of related properties
-• Example: "Riverside Tower Apartments" or "High Street Retail Units"
-
-**3. Units (Base Level)**
-• Individual physical spaces (flat, office, land parcel)
-• Each has its own documents and details
-• Example: "Flat 3B" or "Office Suite 201"
-
-**Document Classification Process:**
-
-RTO (Right-to-Occupy):
-• Core occupancy documents (leases, titles)
-• Establishes legal right to use the space
-• Forms the foundation of each unit's data
-
-AMD (Amending Documents):
-• Modifications to RTOs (variations, rent reviews)
-• Supporting documents (notices, IDs, funding docs)
-• Tracked as they change over time
-
-ACD (Accompanying Documents):
-• Related but not occupancy-critical (insurance, maintenance, utilities)
-• Provides context without affecting occupancy status
-
-**Data Extraction Process:**
-1. **Upload:** You upload documents to a unit or unit group
-2. **Classification:** Hobson identifies document type (RTO/AMD/ACD)
-3. **Extraction:** AI reads and extracts key data (dates, parties, amounts, clauses)
-4. **Structuring:** Data is organized within the hierarchical model
-5. **Indexing:** Information becomes searchable and queryable
-6. **Linking:** Related documents and data points are connected
-
-**How It Helps You:**
-• **Quick Answers:** Ask questions across all documents ("What are all my rent review dates?")
-• **Context Preservation:** Documents remain linked to their physical spaces
-• **Scalability:** Works for single properties or thousands of units
-• **Accuracy:** Source citations let you verify every answer
-• **Time Savings:** No manual data entry or searching through files
-
----
-
-### What data does Hobson send to OpenAI?
-
-Hobson sends only the minimum information required for the task. Examples include:
-• A small text segment from a document
-• A part of a lease needed for a query
-• Keywords from your question
-
-We never send:
-• Complete documents unnecessarily
-• Data unrelated to your query
-• Personal metadata (names, contact details) unless essential for the answer
-
-Example: If you ask "What is the rent?", we send only the relevant clause from the lease, not the entire document.`;
+        console.log("No FAQs extracted - scraper may need updating for new HTML structure");
+        // Minimal fallback - just direct users to the page
+        faqContent = "For frequently asked questions, please visit https://hobsonschoice.ai/learn/faq";
       }
     } catch (error) {
       console.error("Error fetching FAQ page:", error);
