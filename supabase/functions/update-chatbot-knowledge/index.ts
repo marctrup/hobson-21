@@ -161,7 +161,12 @@ Yes. For enterprise clients, Hobson can be trained on your organisation's own do
 
 ---
 
-**22. Can I add a unit manually without uploading a document?**
+**22. Can I end a tenancy agreement?**
+Yes. Enter "End Tenancy agreement" at the unit level.
+
+---
+
+**23. Can I add a unit manually without uploading a document?**
 Yes. Just ask Hobson "Add Unit". Hobson will then prompt you to enter the full address, and the unit will be created without needing any documents.
 
 ---

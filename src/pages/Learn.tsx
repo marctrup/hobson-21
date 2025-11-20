@@ -2790,10 +2790,25 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
-                      <AccordionItem value="add-unit-manually" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                      <AccordionItem value="end-tenancy" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
                             <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">22</span>
+                            <span>Can I end a tenancy agreement?</span>
+                          </span>
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm">
+                            <p>
+                              <strong className="text-foreground">Yes.</strong> Enter "End Tenancy agreement" at the unit level.
+                            </p>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="add-unit-manually" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">23</span>
                             <span>Can I add a unit manually without uploading a document?</span>
                           </span>
                         </AccordionTrigger>
@@ -2811,7 +2826,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="ask-question" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">23</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">24</span>
                             <span>Which level should I use when asking a question?</span>
                           </span>
                         </AccordionTrigger>
@@ -2870,7 +2885,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="poor-answer" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">24</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">25</span>
                             <span>What should I do if I get a poor answer?</span>
                           </span>
                         </AccordionTrigger>
@@ -2917,7 +2932,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="structure-prompts" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">25</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">26</span>
                             <span>How should I structure my prompts for the best results?</span>
                           </span>
                         </AccordionTrigger>
@@ -2958,7 +2973,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="connect-systems" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">26</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">27</span>
                             <span>Can Hobson connect to our systems?</span>
                           </span>
                         </AccordionTrigger>
@@ -2990,7 +3005,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="what-is-credit" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">28</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">29</span>
                             <span>What is a HEU?</span>
                           </span>
                         </AccordionTrigger>
@@ -3001,7 +3016,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="heu-task-costs" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">29</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">30</span>
                             <span>How much do different tasks cost in HEUs?</span>
                           </span>
                         </AccordionTrigger>
@@ -3070,7 +3085,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="upgrade-subscription" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">30</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">31</span>
                             <span>How can I upgrade my subscription?</span>
                           </span>
                         </AccordionTrigger>
@@ -3081,7 +3096,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="downgrade-subscription" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">31</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">32</span>
                             <span>How can I downgrade my subscription?</span>
                           </span>
                         </AccordionTrigger>
@@ -3092,7 +3107,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="cancel-subscription" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">32</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">33</span>
                             <span>How can I cancel my subscription?</span>
                           </span>
                         </AccordionTrigger>
@@ -3103,7 +3118,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="billing-info" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">33</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">34</span>
                             <span>How can I change my billing information?</span>
                           </span>
                         </AccordionTrigger>
@@ -3114,7 +3129,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="download-invoices" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">34</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">35</span>
                             <span>How do I download my invoices?</span>
                           </span>
                         </AccordionTrigger>
@@ -3125,7 +3140,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="get-more-credits" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">35</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">36</span>
                             <span>How do I get more credits?</span>
                           </span>
                         </AccordionTrigger>
@@ -3136,7 +3151,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="credit-reset" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">36</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">37</span>
                             <span>When does my credit limit reset?</span>
                           </span>
                         </AccordionTrigger>
@@ -3147,7 +3162,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="remaining-credits" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">37</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">38</span>
                             <span>How do I see the remaining credits in a workspace?</span>
                           </span>
                         </AccordionTrigger>
@@ -3158,7 +3173,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="free-credits" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">38</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">39</span>
                             <span>Can I get free credits?</span>
                           </span>
                         </AccordionTrigger>
@@ -3179,7 +3194,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="technology-platforms" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">39</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">40</span>
                             <span>What technology platforms does Hobson use?</span>
                           </span>
                         </AccordionTrigger>
@@ -3225,7 +3240,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="tool-detection" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">40</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">41</span>
                             <span>How does the system decide which tools to run for a query?</span>
                           </span>
                         </AccordionTrigger>
@@ -3239,7 +3254,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="missing-tool" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">41</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">42</span>
                             <span>What happens if a tool should have been run but wasn't?</span>
                           </span>
                         </AccordionTrigger>
@@ -3253,7 +3268,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="stale-data" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">42</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">43</span>
                             <span>What does the system do if a tool runs but the data is from a previous turn?</span>
                           </span>
                         </AccordionTrigger>
@@ -3267,7 +3282,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="filtering-order" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">43</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">44</span>
                             <span>How does the system filter tool results before generating the Answer?</span>
                           </span>
                         </AccordionTrigger>
@@ -3281,7 +3296,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="format-selection" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">44</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">45</span>
                             <span>How does the model choose between a table, a list, or structured sections?</span>
                           </span>
                         </AccordionTrigger>
@@ -3295,7 +3310,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="grouping-logic" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">45</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">46</span>
                             <span>How does grouping work for units, unit groups, and portfolios?</span>
                           </span>
                         </AccordionTrigger>
@@ -3309,7 +3324,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="followup-generation" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">46</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">47</span>
                             <span>How are Follow-Up questions generated?</span>
                           </span>
                         </AccordionTrigger>
@@ -3323,7 +3338,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="missing-data" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">47</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">48</span>
                             <span>How does the system handle missing or incomplete data?</span>
                           </span>
                         </AccordionTrigger>
@@ -3337,7 +3352,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="plain-language" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">48</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">49</span>
                             <span>How does the system ensure plain-language compliance?</span>
                           </span>
                         </AccordionTrigger>
