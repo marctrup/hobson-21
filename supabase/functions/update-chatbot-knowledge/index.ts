@@ -170,8 +170,6 @@ We never send:
 
 Example: If you ask "What is the rent?", we send only the relevant clause from the lease, not the entire document.`;
 
-    const plansCreditsContent = "";
-
     // Fetch the Plans & Credits page to extract content
     const learnPlansUrl = `https://hobsonschoice.ai/learn/plans-credits`;
     console.log(`Fetching content from: ${learnPlansUrl}`);
