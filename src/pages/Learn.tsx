@@ -2347,6 +2347,23 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="get-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How to get documents to Hobson?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <div>
+                              <h5 className="font-semibold text-foreground mb-2">For Today</h5>
+                              <p>Hobson allows for batch uploads via our drag-and-drop upload feature.</p>
+                            </div>
+                            <div>
+                              <h5 className="font-semibold text-foreground mb-2">In the Future</h5>
+                              <p>Once we are happy that Hobson can access drives such as Dropbox and Google Drive, we will provide that feature.</p>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="document-latest" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           How does Hobson identify the newest information?
@@ -2379,23 +2396,6 @@ Content-Type: multipart/form-data
                               <p className="text-foreground mt-2">
                                 RTO sets the base → AMD updates it → ACD adds helpful context.
                               </p>
-                            </div>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="get-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
-                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How to get documents to Hobson?
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm space-y-4">
-                            <div>
-                              <h5 className="font-semibold text-foreground mb-2">For Today</h5>
-                              <p>Hobson allows for batch uploads via our drag-and-drop upload feature.</p>
-                            </div>
-                            <div>
-                              <h5 className="font-semibold text-foreground mb-2">In the Future</h5>
-                              <p>Once we are happy that Hobson can access drives such as Dropbox and Google Drive, we will provide that feature.</p>
                             </div>
                           </div>
                         </AccordionContent>
