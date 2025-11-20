@@ -442,7 +442,17 @@ For more information, direct users to relevant pages listed above.
       JSON.stringify({ 
         success: true, 
         message: `Knowledge base updated to version ${newVersion}`,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        stats: {
+          faqCount: faqContent ? faqContent.split('###').length - 1 : 0,
+          plansCreditsCount: plansCreditsContent ? plansCreditsContent.split('###').length - 1 : 0,
+          useCasesCount: useCasesContent ? useCasesContent.split('###').length - 1 : 0,
+          glossaryCount: glossaryContent ? glossaryContent.split('###').length - 1 : 0,
+        },
+        preview: {
+          firstFaq: faqContent ? faqContent.split('###')[1]?.split('\n')[0]?.trim() : 'None',
+          lastFaq: faqContent ? faqContent.split('###').slice(-1)[0]?.split('\n')[0]?.trim() : 'None'
+        }
       }),
       { 
         headers: { ...corsHeaders, "Content-Type": "application/json" },

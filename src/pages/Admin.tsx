@@ -153,9 +153,16 @@ export default function Admin() {
       
       if (error) throw error;
       
+      // Show detailed update information
+      const stats = data?.stats || {};
+      const preview = data?.preview || {};
+      
+      const description = `Version ${data.message?.split('version ')[1] || 'latest'}\n📝 ${stats.faqCount || 0} FAQ questions\n💳 ${stats.plansCreditsCount || 0} Plans & Credits\n💡 ${stats.useCasesCount || 0} Use Cases\n📖 ${stats.glossaryCount || 0} Glossary terms${preview.firstFaq ? `\n\nFirst FAQ: ${preview.firstFaq}` : ''}`;
+      
       toast({
-        title: "Knowledge Base Updated",
-        description: `Successfully updated to version ${data.message.split('version ')[1] || 'latest'}. The chatbot now has the latest FAQ content.`,
+        title: "Knowledge Base Updated ✓",
+        description,
+        duration: 8000,
       });
     } catch (error: any) {
       console.error("Error updating knowledge base:", error);
