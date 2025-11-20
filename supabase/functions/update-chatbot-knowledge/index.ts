@@ -6,6 +6,84 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
+// CRITICAL: Since the FAQ page is a React SPA, HTML scraping won't work.
+// Instead, we'll maintain the FAQ content directly in this function.
+// This content MUST be manually updated when FAQ changes are made to the Learn page.
+
+const getFaqContent = () => {
+  // This is a direct copy of the FAQ structure from Learn.tsx
+  // Update this manually when FAQs change, or the user can trigger an update
+  return `
+### How are units, groups, portfolios, and documents arranged in Hobson?
+
+**How Spaces and Groups Are Defined**
+
+**Unit:**
+A single physical space, such as a flat, office, or piece of land.
+
+**Unit Group:**
+A set of units linked **either** by a shared location (for example, flats in one block or offices on a single floor) **or** by a shared document (for example, one lease covering multiple units in one or more locations).
+
+**Portfolio:**
+A collection of units grouped by ownership, management, or another organisational structure.
+
+**How Document Types Work**
+
+**Right-to-Occupy (RTO) Documents:**
+Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.
+
+**Amending Documents (AMDs):**
+Documents that **modify**, **extend**, or **support** an RTO. This includes:
+• Formal amendments (deeds of variation, rent memorandums)
+• Supporting documents (notices, identity documents, funding documents)
+
+**Accompanying Documents (ACDs):**
+Documents related to a space but not tied to occupancy rights, such as:
+• Building insurance policies
+• Maintenance records
+• Utility bills
+
+---
+
+### How does Hobson model my data?
+
+Hobson uses a three-tier hierarchical model derived from real estate industry practices:
+
+**1. Portfolio (Top Level)**
+• Represents your entire property collection
+• Organized by ownership, management, or organizational structure
+• Example: "London Commercial Properties" or "Smith Family Investments"
+
+**2. Unit Groups (Middle Level)**
+• Collections of units linked by:
+  - Shared location (e.g., all flats in one building)
+  - Shared documents (e.g., one lease covering multiple units)
+• Simplifies management of related properties
+• Example: "Riverside Tower Apartments" or "High Street Retail Units"
+
+**3. Units (Base Level)**
+• Individual physical spaces (flat, office, land parcel)
+• Each has its own documents and details
+• Example: "Flat 3B" or "Office Suite 201"
+
+---
+
+### What data does Hobson send to OpenAI?
+
+Hobson sends only the minimum information required for the task. Examples include:
+• A small text segment from a document
+• A part of a lease needed for a query
+• Keywords from your question
+
+We never send:
+• Complete documents unnecessarily
+• Data unrelated to your query
+• Personal metadata (names, contact details) unless essential for the answer
+
+Example: If you ask "What is the rent?", we send only the relevant clause from the lease, not the entire document.
+`.trim();
+};
+
 // This function scrapes the Learn page FAQ content and updates the chatbot knowledge base
 serve(async (req) => {
   if (req.method === "OPTIONS") {
@@ -20,113 +98,79 @@ serve(async (req) => {
     
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Fetch the Learn FAQ page to extract content
-    const learnFaqUrl = `https://hobsonschoice.ai/learn/faq`;
-    console.log(`Fetching content from: ${learnFaqUrl}`);
+    // CRITICAL: The FAQ page is a React SPA, so we can't scrape the rendered HTML via fetch.
+    // Instead, maintain FAQ content here manually. When you update FAQs in Learn.tsx,
+    // copy the same content here to keep the chatbot in sync.
     
-    let faqContent = "";
-    try {
-      const pageResponse = await fetch(learnFaqUrl);
-      const htmlContent = await pageResponse.text();
-      
-      // React renders Accordion components as divs with data attributes
-      // Look for the pattern: button with accordion trigger, followed by div with accordion content
-      const accordionPattern = /<button[^>]*data-state="[^"]*"[^>]*data-radix-collection-item[^>]*>([\s\S]*?)<\/button>[\s\S]*?<div[^>]*data-state="[^"]*"[^>]*role="region"[^>]*>([\s\S]*?)<\/div>/gi;
-      
-      const faqs: string[] = [];
-      let match;
-      
-      while ((match = accordionPattern.exec(htmlContent)) !== null) {
-        // Extract question from button content (remove SVG icons)
-        let question = match[1]
-          .replace(/<svg[\s\S]*?<\/svg>/gi, '')
-          .replace(/<[^>]+>/g, '')
-          .replace(/&quot;/g, '"')
-          .replace(/&amp;/g, '&')
-          .replace(/&lt;/g, '<')
-          .replace(/&gt;/g, '>')
-          .replace(/&nbsp;/g, ' ')
-          .trim();
-        
-        // Extract and clean answer content
-        let answer = match[2];
-        
-        // Replace headings with markdown equivalents
-        answer = answer.replace(/<h4[^>]*>(.*?)<\/h4>/gi, '\n\n**$1**\n');
-        answer = answer.replace(/<h5[^>]*>(.*?)<\/h5>/gi, '\n**$1:**\n');
-        answer = answer.replace(/<h6[^>]*>(.*?)<\/h6>/gi, '\n*$1:*\n');
-        
-        // Handle unordered lists - preserve list structure
-        answer = answer.replace(/<ul[^>]*>/gi, '\n');
-        answer = answer.replace(/<\/ul>/gi, '\n');
-        answer = answer.replace(/<li[^>]*>(.*?)<\/li>/gi, '• $1\n');
-        
-        // Handle ordered lists
-        let olCounter = 0;
-        answer = answer.replace(/<ol[^>]*>/gi, () => { olCounter = 0; return '\n'; });
-        answer = answer.replace(/<\/ol>/gi, '\n');
-        answer = answer.replace(/<li[^>]*>/gi, () => { olCounter++; return `${olCounter}. `; });
-        
-        // Handle code blocks
-        answer = answer.replace(/<code[^>]*>(.*?)<\/code>/gi, '`$1`');
-        answer = answer.replace(/<pre[^>]*>(.*?)<\/pre>/gi, '\n```\n$1\n```\n');
-        
-        // Handle paragraphs - preserve breaks between them
-        answer = answer.replace(/<p[^>]*>/gi, '\n');
-        answer = answer.replace(/<\/p>/gi, '\n');
-        
-        // Handle divs - add breaks for major sections
-        answer = answer.replace(/<div[^>]*class="[^"]*space-y[^"]*"[^>]*>/gi, '\n\n');
-        answer = answer.replace(/<div[^>]*>/gi, '\n');
-        answer = answer.replace(/<\/div>/gi, '');
-        
-        // Handle emphasis and strong tags
-        answer = answer.replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**');
-        answer = answer.replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*');
-        answer = answer.replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**');
-        answer = answer.replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*');
-        
-        // Handle spans with specific classes (like text-primary for emphasis)
-        answer = answer.replace(/<span[^>]*class="[^"]*text-primary[^"]*"[^>]*>(.*?)<\/span>/gi, '**$1**');
-        answer = answer.replace(/<span[^>]*class="[^"]*font-semibold[^"]*"[^>]*>(.*?)<\/span>/gi, '**$1**');
-        
-        // Handle links
-        answer = answer.replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)');
-        
-        // Remove remaining HTML tags
-        answer = answer.replace(/<[^>]+>/g, ' ');
-        
-        // Clean up entities and whitespace while preserving structure
-        answer = answer
-          .replace(/&quot;/g, '"')
-          .replace(/&amp;/g, '&')
-          .replace(/&lt;/g, '<')
-          .replace(/&gt;/g, '>')
-          .replace(/&nbsp;/g, ' ')
-          .replace(/\t/g, '  ')
-          .replace(/ +/g, ' ')  // Multiple spaces to single
-          .replace(/\n +/g, '\n')  // Remove leading spaces on lines
-          .replace(/ +\n/g, '\n')  // Remove trailing spaces on lines
-          .replace(/\n{4,}/g, '\n\n\n')  // Max 3 newlines
-          .trim();
-        
-        if (question && answer && question.length > 5) {
-          faqs.push(`### ${question}\n\n${answer}\n`);
-        }
-      }
-      
-      if (faqs.length > 0) {
-        faqContent = faqs.join('\n---\n\n');
-        console.log(`Extracted ${faqs.length} FAQ items from live page`);
-      } else {
-        console.log("No FAQs extracted - scraper may need updating for new HTML structure");
-        // Minimal fallback - just direct users to the page
-        faqContent = "For frequently asked questions, please visit https://hobsonschoice.ai/learn/faq";
-      }
-    } catch (error) {
-      console.error("Error fetching FAQ page:", error);
-      faqContent = "FAQ content could not be fetched. Please visit https://hobsonschoice.ai/learn/faq";
-    }
+    const faqContent = `### How are units, groups, portfolios, and documents arranged in Hobson?
+
+**How Spaces and Groups Are Defined**
+
+**Unit:**
+A single physical space, such as a flat, office, or piece of land.
+
+**Unit Group:**
+A set of units linked **either** by a shared location (for example, flats in one block or offices on a single floor) **or** by a shared document (for example, one lease covering multiple units in one or more locations).
+
+**Portfolio:**
+A collection of units grouped by ownership, management, or another organisational structure.
+
+**How Document Types Work**
+
+**Right-to-Occupy (RTO) Documents:**
+Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.
+
+**Amending Documents (AMDs):**
+Documents that **modify**, **extend**, or **support** an RTO. This includes:
+• Formal amendments (deeds of variation, rent memorandums)
+• Supporting documents (notices, identity documents, funding documents)
+
+**Accompanying Documents (ACDs):**
+Documents related to a space but not tied to occupancy rights, such as:
+• Building insurance policies
+• Maintenance records
+• Utility bills
+
+---
+
+### How does Hobson model my data?
+
+Hobson uses a three-tier hierarchical model derived from real estate industry practices:
+
+**1. Portfolio (Top Level)**
+• Represents your entire property collection
+• Organized by ownership, management, or organizational structure
+• Example: "London Commercial Properties" or "Smith Family Investments"
+
+**2. Unit Groups (Middle Level)**
+• Collections of units linked by:
+  - Shared location (e.g., all flats in one building)
+  - Shared documents (e.g., one lease covering multiple units)
+• Simplifies management of related properties
+• Example: "Riverside Tower Apartments" or "High Street Retail Units"
+
+**3. Units (Base Level)**
+• Individual physical spaces (flat, office, land parcel)
+• Each has its own documents and details
+• Example: "Flat 3B" or "Office Suite 201"
+
+---
+
+### What data does Hobson send to OpenAI?
+
+Hobson sends only the minimum information required for the task. Examples include:
+• A small text segment from a document
+• A part of a lease needed for a query
+• Keywords from your question
+
+We never send:
+• Complete documents unnecessarily
+• Data unrelated to your query
+• Personal metadata (names, contact details) unless essential for the answer
+
+Example: If you ask "What is the rent?", we send only the relevant clause from the lease, not the entire document.`;
+
+    const plansCreditsContent = "";
 
     // Fetch the Plans & Credits page to extract content
     const learnPlansUrl = `https://hobsonschoice.ai/learn/plans-credits`;

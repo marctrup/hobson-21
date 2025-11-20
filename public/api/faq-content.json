@@ -1,0 +1,14 @@
+[
+  {
+    "question": "How are units, groups, portfolios, and documents arranged in Hobson?",
+    "answer": "**How Spaces and Groups Are Defined**\n\n**Unit:** A single physical space, such as a flat, office, or piece of land.\n\n**Unit Group:** A set of units linked **either** by a shared location (for example, flats in one block or offices on a single floor) **or** by a shared document (for example, one lease covering multiple units in one or more locations).\n\n**Portfolio:** A collection of units grouped by ownership, management, or another organisational structure.\n\n**How Document Types Work**\n\n**Right-to-Occupy (RTO) Documents:** Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.\n\n**Amending Documents (AMDs):** Documents that **modify**, **extend**, or **support** an RTO. This includes:\n• Formal amendments (deeds of variation, rent memorandums)\n• Supporting documents (notices, identity documents, funding documents)\n\n**Accompanying Documents (ACDs):** Documents related to a space but not tied to occupancy rights, such as:\n• Building insurance policies\n• Maintenance records\n• Utility bills"
+  },
+  {
+    "question": "How does Hobson model my data?",
+    "answer": "Hobson uses a three-tier hierarchical model derived from real estate industry practices:\n\n**1. Portfolio (Top Level)**\n• Represents your entire property collection\n• Organized by ownership, management, or organizational structure\n• Example: \"London Commercial Properties\" or \"Smith Family Investments\"\n\n**2. Unit Groups (Middle Level)**\n• Collections of units linked by:\n  - Shared location (e.g., all flats in one building)\n  - Shared documents (e.g., one lease covering multiple units)\n• Simplifies management of related properties\n• Example: \"Riverside Tower Apartments\" or \"High Street Retail Units\"\n\n**3. Units (Base Level)**\n• Individual physical spaces (flat, office, land parcel)\n• Each has its own documents and details\n• Example: \"Flat 3B\" or \"Office Suite 201\""
+  },
+  {
+    "question": "What data does Hobson send to OpenAI?",
+    "answer": "Hobson sends only the minimum information required for the task. Examples include:\n• A small text segment from a document\n• A part of a lease needed for a query\n• Keywords from your question\n\nWe never send:\n• Complete documents unnecessarily\n• Data unrelated to your query\n• Personal metadata (names, contact details) unless essential for the answer\n\nExample: If you ask \"What is the rent?\", we send only the relevant clause from the lease, not the entire document."
+  }
+]
