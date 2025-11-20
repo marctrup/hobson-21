@@ -2234,6 +2234,37 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="document-read-time" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How long does Hobson take to read a document?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <p>
+                              The time it takes to read depends on the type and size of the document you upload. The timing works like this:
+                            </p>
+
+                            <div className="space-y-2">
+                              <ul className="space-y-2 pl-2">
+                                <li className="flex items-start gap-2">
+                                  <span className="text-primary mt-1">•</span>
+                                  <span><strong className="text-foreground">High-complexity legal documents</strong> (for example, leases or deeds): around 2 to 5 minutes</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="text-primary mt-1">•</span>
+                                  <span><strong className="text-foreground">Low-complexity documents</strong> (for example, notices): around 30 seconds to 1 minute</span>
+                                </li>
+                              </ul>
+                            </div>
+
+                            <div className="bg-primary/5 p-3 rounded-md">
+                              <p className="text-foreground font-medium">
+                                Once processing is complete, your documents become fully searchable and ready to use.
+                              </p>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="upload-process" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           What happens technically when a document is uploaded?
@@ -2676,43 +2707,6 @@ Content-Type: multipart/form-data
                       <h2 className="text-2xl font-bold text-foreground">Getting the best out of Hobson</h2>
                     </div>
                     <Accordion type="multiple" className="w-full space-y-4">
-                      <AccordionItem value="upload-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
-                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How long does Hobson take to read a document?
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm space-y-4">
-                            <p>
-                              When you upload documents, Hobson reads and processes them so they're ready for future queries. This can take some time, depending on how complex the documents are. Once everything has been processed, you'll receive an email confirming that all documents have been read.
-                            </p>
-
-                            <div className="space-y-3 pt-2">
-                              <p className="font-medium text-foreground text-base">Typical processing times:</p>
-                              
-                              <ul className="space-y-2 pl-4">
-                                <li className="flex items-start gap-2">
-                                  <span className="text-primary mt-1">•</span>
-                                  <span><strong className="text-foreground">Complex documents</strong> (for example, leases): around 8–9 minutes</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="text-primary mt-1">•</span>
-                                  <span><strong className="text-foreground">Medium-complexity documents</strong> (for example, deeds): around 2–3 minutes</span>
-                                </li>
-                                <li className="flex items-start gap-2">
-                                  <span className="text-primary mt-1">•</span>
-                                  <span><strong className="text-foreground">Low-complexity documents</strong> (for example, notices): around 30 seconds to 1 minute</span>
-                                </li>
-                              </ul>
-                            </div>
-
-                            <div className="bg-primary/5 p-3 rounded-md">
-                              <p className="text-foreground font-medium">
-                                Once processing is complete, your documents become fully searchable and ready to use.
-                              </p>
-                            </div>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
                       <AccordionItem value="company-training" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           Can Hobson be trained on my company's information?
