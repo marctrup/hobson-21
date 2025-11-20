@@ -27,6 +27,7 @@ const BlogManagement = lazy(() => import("../pages/admin/BlogManagement"));
 const BlogEditor = lazy(() => import("../pages/admin/BlogEditor"));
 const PrivacyPolicy = lazy(() => import("../pages/PrivacyPolicy"));
 const DataProtection = lazy(() => import("../pages/DataProtection"));
+const BreachProtocol = lazy(() => import("../pages/BreachProtocol"));
 const RefundPolicy = lazy(() => import("../pages/RefundPolicy"));
 const Learn = lazy(() => import("../pages/Learn"));
 const Status = lazy(() => import("../pages/Status"));
@@ -126,6 +127,7 @@ const AppContent = () => {
               <Route path="/pilot" element={<Pilot />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/data-protection" element={<DataProtection />} />
+              <Route path="/breach-protocol" element={<BreachProtocol />} />
               <Route path="/refund-policy" element={<RefundPolicy />} />
               <Route path="/learn" element={<Navigate to="/learn/Positioning-Statement" replace />} />
               <Route path="/learn/introduction" element={<Navigate to="/learn/Positioning-Statement" replace />} />
