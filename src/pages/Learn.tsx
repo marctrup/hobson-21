@@ -2984,7 +2984,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="control-access" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">27</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">28</span>
                             <span>Can I control who has access?</span>
                           </span>
                         </AccordionTrigger>
@@ -3366,7 +3366,7 @@ Content-Type: multipart/form-data
                       <AccordionItem value="final-verification" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           <span className="flex items-center gap-3">
-                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">49</span>
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">50</span>
                             <span>What must the system verify before returning the final response?</span>
                           </span>
                         </AccordionTrigger>
