@@ -2087,7 +2087,10 @@ Content-Type: multipart/form-data
                     <Accordion type="multiple" className="w-full space-y-4">
                       <AccordionItem value="organize-units-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How are units, groups, portfolios, and documents arranged in Hobson?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">1</span>
+                            <span>How are units, groups, portfolios, and documents arranged in Hobson?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="space-y-8">
@@ -2153,7 +2156,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="file-types" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Which file types are supported?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">2</span>
+                            <span>Which file types are supported?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -2163,7 +2169,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="document-types" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What types of documents can Hobson read?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">3</span>
+                            <span>What types of documents can Hobson read?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
@@ -2219,7 +2228,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="get-documents" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How to get documents to Hobson?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">4</span>
+                            <span>How to get documents to Hobson?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
@@ -2236,7 +2248,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="document-read-time" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How long does Hobson take to read a document?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">5</span>
+                            <span>How long does Hobson take to read a document?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
@@ -2271,7 +2286,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="upload-process" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What happens technically when a document is uploaded?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">6</span>
+                            <span>What happens technically when a document is uploaded?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2325,7 +2343,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="extraction-cost" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Why is extraction more expensive than retrieval?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">7</span>
+                            <span>Why is extraction more expensive than retrieval?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
@@ -2401,7 +2422,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="document-latest" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does Hobson identify the newest information?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">8</span>
+                            <span>How does Hobson identify the newest information?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
@@ -2437,7 +2461,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="mobile-support" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Does Hobson work on mobile?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">9</span>
+                            <span>Does Hobson work on mobile?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -2447,7 +2474,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="data-ownership" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Who owns the data and outputs?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">10</span>
+                            <span>Who owns the data and outputs?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">You do. Your documents, extracted data, and answers belong to your company.</p>
@@ -2455,7 +2485,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="openai-usage" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does Hobson use OpenAI?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">11</span>
+                            <span>How does Hobson use OpenAI?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2470,7 +2503,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="openai-storage" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Does OpenAI store my documents?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">12</span>
+                            <span>Does OpenAI store my documents?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2488,7 +2524,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="openai-training" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Does OpenAI use my data to train their models?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">13</span>
+                            <span>Does OpenAI use my data to train their models?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2506,7 +2545,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="data-sent-openai" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What data does Hobson send to OpenAI?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">14</span>
+                            <span>What data does Hobson send to OpenAI?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2527,7 +2569,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="document-storage" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Where are my documents actually stored?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">15</span>
+                            <span>Where are my documents actually stored?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2550,7 +2595,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="why-openai" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Why does Hobson need to send anything to OpenAI at all?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">16</span>
+                            <span>Why does Hobson need to send anything to OpenAI at all?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2565,7 +2613,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="document-visibility" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Who can see my documents?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">17</span>
+                            <span>Who can see my documents?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2583,7 +2634,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="data-protection-openai" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does Hobson protect my data when using OpenAI?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">18</span>
+                            <span>How does Hobson protect my data when using OpenAI?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2601,7 +2655,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="openai-user-knowledge" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Does OpenAI know who I am or hold details of my property holdings?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">19</span>
+                            <span>Does OpenAI know who I am or hold details of my property holdings?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2619,7 +2676,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="question-process" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What happens when I ask a question?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">20</span>
+                            <span>What happens when I ask a question?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
