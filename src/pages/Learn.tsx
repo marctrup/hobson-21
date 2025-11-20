@@ -3107,7 +3107,7 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="tool-detection" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does the system decide which deterministic tools to run for a query?
+                          How does the system decide which tools to run for a query?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
