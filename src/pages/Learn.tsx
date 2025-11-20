@@ -2773,7 +2773,10 @@ Content-Type: multipart/form-data
                     <Accordion type="multiple" className="w-full space-y-4">
                       <AccordionItem value="company-training" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Can Hobson be trained on my company's information?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">21</span>
+                            <span>Can Hobson be trained on my company's information?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
@@ -2789,7 +2792,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="add-unit-manually" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Can I add a unit manually without uploading a document?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">22</span>
+                            <span>Can I add a unit manually without uploading a document?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
@@ -2804,7 +2810,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="ask-question" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Which level should I use when asking a question?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">23</span>
+                            <span>Which level should I use when asking a question?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
@@ -2860,7 +2869,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="poor-answer" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What should I do if I get a poor answer?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">24</span>
+                            <span>What should I do if I get a poor answer?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
@@ -2904,7 +2916,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="structure-prompts" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How should I structure my prompts for the best results?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">25</span>
+                            <span>How should I structure my prompts for the best results?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-4">
@@ -2942,7 +2957,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="connect-systems" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Can Hobson connect to our systems?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">26</span>
+                            <span>Can Hobson connect to our systems?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Currently, we don't offer bespoke integrations, but please talk to us so we can understand what you want to achieve and whether this will be possible at some point.</p>
@@ -2950,7 +2968,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="control-access" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Can I control who has access?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">27</span>
+                            <span>Can I control who has access?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Yes. Admin users can invite new users and choose exactly which units and which document classes they can access. This lets you control who sees what within Hobson.</p>
@@ -2968,7 +2989,10 @@ Content-Type: multipart/form-data
                     <Accordion type="multiple" className="w-full space-y-4">
                       <AccordionItem value="what-is-credit" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What is a HEU?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">28</span>
+                            <span>What is a HEU?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">A HEU is the unit of energy measurement for using Hobson's AI features. Each message or action costs a certain number of HEUs based on its complexity</p>
@@ -2976,7 +3000,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="heu-task-costs" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How much do different tasks cost in HEUs?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">29</span>
+                            <span>How much do different tasks cost in HEUs?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="space-y-4">
@@ -3042,7 +3069,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="upgrade-subscription" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How can I upgrade my subscription?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">30</span>
+                            <span>How can I upgrade my subscription?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">You can upgrade your subscription through your workspace settings or by contacting our support team.</p>
@@ -3050,7 +3080,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="downgrade-subscription" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How can I downgrade my subscription?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">31</span>
+                            <span>How can I downgrade my subscription?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Subscription downgrades can be managed through your account settings or by reaching out to support.</p>
@@ -3058,7 +3091,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="cancel-subscription" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How can I cancel my subscription?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">32</span>
+                            <span>How can I cancel my subscription?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">You can cancel your subscription at any time through your account settings. Your access will continue until the end of the current billing period.</p>
@@ -3066,7 +3102,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="billing-info" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How can I change my billing information?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">33</span>
+                            <span>How can I change my billing information?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Billing information can be updated in your account settings under the billing section.</p>
@@ -3074,7 +3113,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="download-invoices" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How do I download my invoices?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">34</span>
+                            <span>How do I download my invoices?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Invoices are available for download in your account settings under billing history.</p>
@@ -3082,7 +3124,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="get-more-credits" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How do I get more credits?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">35</span>
+                            <span>How do I get more credits?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">You can get more HEUs by upgrading your plan or purchasing Top-ups.</p>
@@ -3090,7 +3135,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="credit-reset" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          When does my credit limit reset?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">36</span>
+                            <span>When does my credit limit reset?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Your credit limit resets at the beginning of each billing cycle based on your subscription plan.</p>
@@ -3098,7 +3146,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="remaining-credits" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How do I see the remaining credits in a workspace?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">37</span>
+                            <span>How do I see the remaining credits in a workspace?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Click on your workspace name on the dashboard to view your remaining credits and usage statistics.</p>
@@ -3106,7 +3157,10 @@ Content-Type: multipart/form-data
                       </AccordionItem>
                       <AccordionItem value="free-credits" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Can I get free credits?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">38</span>
+                            <span>Can I get free credits?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">Free credits are included with the free plan. Additional free credits may be available through promotional offers or referral programs.</p>
@@ -3124,7 +3178,10 @@ Content-Type: multipart/form-data
                     <Accordion type="multiple" className="w-full space-y-4">
                       <AccordionItem value="technology-platforms" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What technology platforms does Hobson use?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">39</span>
+                            <span>What technology platforms does Hobson use?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <div className="space-y-4">
@@ -3167,7 +3224,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="tool-detection" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does the system decide which tools to run for a query?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">40</span>
+                            <span>How does the system decide which tools to run for a query?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -3178,7 +3238,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="missing-tool" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What happens if a tool should have been run but wasn't?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">41</span>
+                            <span>What happens if a tool should have been run but wasn't?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -3189,7 +3252,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="stale-data" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What does the system do if a tool runs but the data is from a previous turn?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">42</span>
+                            <span>What does the system do if a tool runs but the data is from a previous turn?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -3200,7 +3266,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="filtering-order" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does the system filter tool results before generating the Answer?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">43</span>
+                            <span>How does the system filter tool results before generating the Answer?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -3211,7 +3280,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="format-selection" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does the model choose between a table, a list, or structured sections?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">44</span>
+                            <span>How does the model choose between a table, a list, or structured sections?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -3222,7 +3294,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="grouping-logic" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does grouping work for units, unit groups, and portfolios?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">45</span>
+                            <span>How does grouping work for units, unit groups, and portfolios?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -3233,7 +3308,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="followup-generation" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How are Follow-Up questions generated?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">46</span>
+                            <span>How are Follow-Up questions generated?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -3244,7 +3322,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="missing-data" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does the system handle missing or incomplete data?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">47</span>
+                            <span>How does the system handle missing or incomplete data?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -3255,7 +3336,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="plain-language" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does the system ensure plain-language compliance?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">48</span>
+                            <span>How does the system ensure plain-language compliance?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
@@ -3266,7 +3350,10 @@ Content-Type: multipart/form-data
 
                       <AccordionItem value="final-verification" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What must the system verify before returning the final response?
+                          <span className="flex items-center gap-3">
+                            <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">49</span>
+                            <span>What must the system verify before returning the final response?</span>
+                          </span>
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
