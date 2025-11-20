@@ -2217,6 +2217,136 @@ Content-Type: multipart/form-data
                           </div>
                         </AccordionContent>
                       </AccordionItem>
+                      <AccordionItem value="upload-process" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          What happens technically when a document is uploaded?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm space-y-3">
+                            <p>
+                              When you upload a lease, deed, or notice, three things happen automatically behind the scenes:
+                            </p>
+                            
+                            <div className="space-y-4 mt-4">
+                              <div>
+                                <p className="font-medium text-foreground mb-2">
+                                  1. The system reads the whole document
+                                </p>
+                                <p className="ml-4">
+                                  The file is opened and its text is pulled out so the AI can understand it.
+                                  This includes paragraphs, tables, schedules, footnotes, and any key numbers or dates.
+                                </p>
+                              </div>
+
+                              <div>
+                                <p className="font-medium text-foreground mb-2">
+                                  2. The AI converts the document into structured data
+                                </p>
+                                <p className="ml-4 mb-2">
+                                  A specialised extraction model goes through the text carefully and identifies the important information, such as:
+                                </p>
+                                <ul className="list-disc list-inside space-y-1 ml-8">
+                                  <li>tenant and landlord names</li>
+                                  <li>rent amounts and rent-review cycles</li>
+                                  <li>break dates</li>
+                                  <li>term dates</li>
+                                  <li>notices and obligations</li>
+                                </ul>
+                                <p className="ml-4 mt-2">
+                                  It then turns this into clean, standardised JSON — essentially a well-organised digital summary.
+                                </p>
+                              </div>
+
+                              <div>
+                                <p className="font-medium text-foreground mb-2">
+                                  3. The structured data is saved for future use
+                                </p>
+                                <p className="ml-4">
+                                  The JSON is stored in our database (MongoDB).
+                                  Once it's saved, the AI doesn't need to read the full document again.
+                                  Future questions simply look up the stored information instead of re-processing the file.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
+                      <AccordionItem value="extraction-cost" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          Why is extraction more expensive than retrieval?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <div className="text-muted-foreground text-sm space-y-4">
+                            <p>
+                              Extraction costs more because it is the stage where Hobson does the heavy thinking.
+                            </p>
+
+                            <div>
+                              <p className="font-medium text-foreground mb-2">
+                                1. Extraction = Hobson reads the entire document
+                              </p>
+                              <p className="mb-2">
+                                When a lease or deed is uploaded, Hobson must:
+                              </p>
+                              <ul className="list-disc list-inside space-y-1 ml-4 mb-3">
+                                <li>read every page</li>
+                                <li>understand every clause</li>
+                                <li>identify all key details (rent, breaks, dates, parties, reviews, obligations)</li>
+                                <li>apply all of your domain-specific rules and interpretation guidelines</li>
+                                <li>produce a complete, structured JSON summary</li>
+                              </ul>
+                              <p className="mb-2">
+                                This is the most intensive part of the process.
+                                It is like asking a specialist to read a long legal document from start to finish and summarise everything accurately.
+                              </p>
+
+                              <p className="font-medium text-foreground mb-2">
+                                Why it is more expensive
+                              </p>
+                              <ul className="list-disc list-inside space-y-1 ml-4 mb-2">
+                                <li>Hobson processes a very large amount of text</li>
+                                <li>It uses your full set of legal rules (Sections 1–17)</li>
+                                <li>The output is detailed and structured</li>
+                                <li>The AI is doing deep interpretation, not simple search</li>
+                              </ul>
+                              <p>
+                                This only needs to be done once per document, but it uses more computing power — and therefore costs more.
+                              </p>
+                            </div>
+
+                            <div>
+                              <p className="font-medium text-foreground mb-2">
+                                2. Retrieval = Hobson answers questions using the stored data
+                              </p>
+                              <p className="mb-2">
+                                After extraction, all the important information is already stored in structured JSON.
+                              </p>
+                              <p className="mb-2">
+                                When a user asks a question ("What is the current rent?", "When is the next break date?"), Hobson:
+                              </p>
+                              <ul className="list-disc list-inside space-y-1 ml-4 mb-3">
+                                <li>Finds the relevant JSON in the database</li>
+                                <li>Reads only a small piece of text</li>
+                                <li>Applies the domain rules for formatting</li>
+                                <li>Generates a short answer</li>
+                              </ul>
+                              <p className="mb-2">
+                                Hobson does not read the full document again.
+                              </p>
+
+                              <p className="font-medium text-foreground mb-2">
+                                Why it is cheaper
+                              </p>
+                              <ul className="list-disc list-inside space-y-1 ml-4">
+                                <li>Hobson reads only a small amount of data</li>
+                                <li>It does not re-analyse the whole lease</li>
+                                <li>It performs light reasoning instead of full document interpretation</li>
+                                <li>Answers are short</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </AccordionContent>
+                      </AccordionItem>
                       <AccordionItem value="document-latest" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           How does Hobson identify the newest information?
@@ -2449,136 +2579,6 @@ Content-Type: multipart/form-data
                             <p>
                               OpenAI has no visibility into your identity or portfolio.
                             </p>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="upload-process" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
-                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What happens technically when a document is uploaded?
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm space-y-3">
-                            <p>
-                              When you upload a lease, deed, or notice, three things happen automatically behind the scenes:
-                            </p>
-                            
-                            <div className="space-y-4 mt-4">
-                              <div>
-                                <p className="font-medium text-foreground mb-2">
-                                  1. The system reads the whole document
-                                </p>
-                                <p className="ml-4">
-                                  The file is opened and its text is pulled out so the AI can understand it.
-                                  This includes paragraphs, tables, schedules, footnotes, and any key numbers or dates.
-                                </p>
-                              </div>
-
-                              <div>
-                                <p className="font-medium text-foreground mb-2">
-                                  2. The AI converts the document into structured data
-                                </p>
-                                <p className="ml-4 mb-2">
-                                  A specialised extraction model goes through the text carefully and identifies the important information, such as:
-                                </p>
-                                <ul className="list-disc list-inside space-y-1 ml-8">
-                                  <li>tenant and landlord names</li>
-                                  <li>rent amounts and rent-review cycles</li>
-                                  <li>break dates</li>
-                                  <li>term dates</li>
-                                  <li>notices and obligations</li>
-                                </ul>
-                                <p className="ml-4 mt-2">
-                                  It then turns this into clean, standardised JSON — essentially a well-organised digital summary.
-                                </p>
-                              </div>
-
-                              <div>
-                                <p className="font-medium text-foreground mb-2">
-                                  3. The structured data is saved for future use
-                                </p>
-                                <p className="ml-4">
-                                  The JSON is stored in our database (MongoDB).
-                                  Once it's saved, the AI doesn't need to read the full document again.
-                                  Future questions simply look up the stored information instead of re-processing the file.
-                                </p>
-                              </div>
-                            </div>
-                          </div>
-                        </AccordionContent>
-                      </AccordionItem>
-                      <AccordionItem value="extraction-cost" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
-                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Why is extraction more expensive than retrieval?
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-6 pt-2">
-                          <div className="text-muted-foreground text-sm space-y-4">
-                            <p>
-                              Extraction costs more because it is the stage where Hobson does the heavy thinking.
-                            </p>
-
-                            <div>
-                              <p className="font-medium text-foreground mb-2">
-                                1. Extraction = Hobson reads the entire document
-                              </p>
-                              <p className="mb-2">
-                                When a lease or deed is uploaded, Hobson must:
-                              </p>
-                              <ul className="list-disc list-inside space-y-1 ml-4 mb-3">
-                                <li>read every page</li>
-                                <li>understand every clause</li>
-                                <li>identify all key details (rent, breaks, dates, parties, reviews, obligations)</li>
-                                <li>apply all of your domain-specific rules and interpretation guidelines</li>
-                                <li>produce a complete, structured JSON summary</li>
-                              </ul>
-                              <p className="mb-2">
-                                This is the most intensive part of the process.
-                                It is like asking a specialist to read a long legal document from start to finish and summarise everything accurately.
-                              </p>
-
-                              <p className="font-medium text-foreground mb-2">
-                                Why it is more expensive
-                              </p>
-                              <ul className="list-disc list-inside space-y-1 ml-4 mb-2">
-                                <li>Hobson processes a very large amount of text</li>
-                                <li>It uses your full set of legal rules (Sections 1–17)</li>
-                                <li>The output is detailed and structured</li>
-                                <li>The AI is doing deep interpretation, not simple search</li>
-                              </ul>
-                              <p>
-                                This only needs to be done once per document, but it uses more computing power — and therefore costs more.
-                              </p>
-                            </div>
-
-                            <div>
-                              <p className="font-medium text-foreground mb-2">
-                                2. Retrieval = Hobson answers questions using the stored data
-                              </p>
-                              <p className="mb-2">
-                                After extraction, all the important information is already stored in structured JSON.
-                              </p>
-                              <p className="mb-2">
-                                When a user asks a question ("What is the current rent?", "When is the next break date?"), Hobson:
-                              </p>
-                              <ul className="list-disc list-inside space-y-1 ml-4 mb-3">
-                                <li>Finds the relevant JSON in the database</li>
-                                <li>Reads only a small piece of text</li>
-                                <li>Applies the domain rules for formatting</li>
-                                <li>Generates a short answer</li>
-                              </ul>
-                              <p className="mb-2">
-                                Hobson does not read the full document again.
-                              </p>
-
-                              <p className="font-medium text-foreground mb-2">
-                                Why it is cheaper
-                              </p>
-                              <ul className="list-disc list-inside space-y-1 ml-4">
-                                <li>Hobson reads only a small amount of data</li>
-                                <li>It does not re-analyse the whole lease</li>
-                                <li>It performs light reasoning instead of full document interpretation</li>
-                                <li>Answers are short</li>
-                              </ul>
-                            </div>
                           </div>
                         </AccordionContent>
                       </AccordionItem>
