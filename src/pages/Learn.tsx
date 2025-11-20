@@ -3149,61 +3149,6 @@ Content-Type: multipart/form-data
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem value="headlease-rule" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
-                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does the headlease-only rule work?
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-6 pt-2">
-                          <p className="text-muted-foreground text-sm">
-                            By default, the system returns only headleases. A document is treated as a sublease/underlease if any of the name or type fields contain "sublease" or "underlease". These records are removed unless the user explicitly opts in. If sublease data appears without permission, the output fails with SV-Hx.
-                          </p>
-                        </AccordionContent>
-                      </AccordionItem>
-
-                      <AccordionItem value="tenant-filtering" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
-                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does tenant-specific filtering work when a tenant is named?
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-6 pt-2">
-                          <p className="text-muted-foreground text-sm">
-                            The system keeps data only for that tenant. Matching ignores case and corporate suffixes like "Ltd" or "PLC". Events from other tenants must be removed. If the Answer mixes tenants, it triggers SV-Tx (tenant-scope violation).
-                          </p>
-                        </AccordionContent>
-                      </AccordionItem>
-
-                      <AccordionItem value="document-chains" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
-                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does the system merge RTO, AMD, and ACD documents when resolving chains?
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-6 pt-2">
-                          <p className="text-muted-foreground text-sm">
-                            Chains are resolved in this order: RTO (the main lease), AMD (amendments, variations, memoranda), Supersession (newer overrides older), ACD (certificates or supporting documents; provide context only). AMDs replace the terms they modify. ACDs never override key lease terms.
-                          </p>
-                        </AccordionContent>
-                      </AccordionItem>
-
-                      <AccordionItem value="ranking-rules" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
-                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does the system decide which rent amounts, review dates, or events to show?
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-6 pt-2">
-                          <p className="text-muted-foreground text-sm">
-                            It applies ranking rules: Amounts are shown highest first (peppercorn is lowest). Dates are shown earliest first. Rent reviews build a schedule from review clauses, then pick earliest upcoming or most recent. Date windows include all matching items; never compress tied dates.
-                          </p>
-                        </AccordionContent>
-                      </AccordionItem>
-
-                      <AccordionItem value="stepped-rent" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
-                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does stepped or indexed rent handling work?
-                        </AccordionTrigger>
-                        <AccordionContent className="pb-6 pt-2">
-                          <p className="text-muted-foreground text-sm">
-                            If the lease shows stepped or indexed rents, the system creates internal "sub-rows" for each rent period. Only the step that applies to today's date is shown unless the user asks for full history.
-                          </p>
-                        </AccordionContent>
-                      </AccordionItem>
-
                       <AccordionItem value="format-selection" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                           How does the model choose between a table, a list, or structured sections?
