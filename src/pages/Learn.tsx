@@ -2459,25 +2459,50 @@ Content-Type: multipart/form-data
                         <AccordionContent className="pb-6 pt-2">
                           <div className="text-muted-foreground text-sm space-y-3">
                             <p>
-                              Your document is stored securely on Hobson.
+                              When you upload a lease, deed, or notice, three things happen automatically behind the scenes:
                             </p>
-                            <p>
-                              Hobson splits it into small usable pieces (called "chunks").
-                            </p>
-                            <p>
-                              These chunks are processed by an AI model to extract meaning.
-                            </p>
-                            <p className="font-medium text-foreground">
-                              Key information is stored inside Hobson's systems:
-                            </p>
-                            <ul className="list-disc list-inside space-y-1 ml-2">
-                              <li>Vector database (for search)</li>
-                              <li>Knowledge graph (for relationships)</li>
-                              <li>Internal database (for structured data)</li>
-                            </ul>
-                            <p>
-                              OpenAI only sees the text we send for extraction—never the full document storage process.
-                            </p>
+                            
+                            <div className="space-y-4 mt-4">
+                              <div>
+                                <p className="font-medium text-foreground mb-2">
+                                  1. The system reads the whole document
+                                </p>
+                                <p className="ml-4">
+                                  The file is opened and its text is pulled out so the AI can understand it.
+                                  This includes paragraphs, tables, schedules, footnotes, and any key numbers or dates.
+                                </p>
+                              </div>
+
+                              <div>
+                                <p className="font-medium text-foreground mb-2">
+                                  2. The AI converts the document into structured data
+                                </p>
+                                <p className="ml-4 mb-2">
+                                  A specialised extraction model goes through the text carefully and identifies the important information, such as:
+                                </p>
+                                <ul className="list-disc list-inside space-y-1 ml-8">
+                                  <li>tenant and landlord names</li>
+                                  <li>rent amounts and rent-review cycles</li>
+                                  <li>break dates</li>
+                                  <li>term dates</li>
+                                  <li>notices and obligations</li>
+                                </ul>
+                                <p className="ml-4 mt-2">
+                                  It then turns this into clean, standardised JSON — essentially a well-organised digital summary.
+                                </p>
+                              </div>
+
+                              <div>
+                                <p className="font-medium text-foreground mb-2">
+                                  3. The structured data is saved for future use
+                                </p>
+                                <p className="ml-4">
+                                  The JSON is stored in our database (MongoDB).
+                                  Once it's saved, the AI doesn't need to read the full document again.
+                                  Future questions simply look up the stored information instead of re-processing the file.
+                                </p>
+                              </div>
+                            </div>
                           </div>
                         </AccordionContent>
                       </AccordionItem>
