@@ -369,7 +369,7 @@ Example: If you ask "What is the rent?", we send only the relevant clause from t
 - Blog: /blog
 - Contact: /contact
 - Learn: /learn/* (sections: getting-started, plans-credits, use-cases, core-features, integrations, fundamentals, hobson-glossary)
-- Policies: /data-protection, /privacy-policy, /refund-policy
+- Policies: /data-protection, /breach-protocol, /privacy-policy, /refund-policy
 
 ## About Hobson AI
 Giving your documents a voice.
