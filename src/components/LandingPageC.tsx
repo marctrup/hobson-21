@@ -378,6 +378,12 @@ const LandingPageC = () => {
             <Link to="/data-protection" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
               AI Privacy & Data Protection Policy
             </Link>
+            <Link to="/breach-protocol" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+              Data Breach Protocol
+            </Link>
+            <Link to="/refund-policy" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
+              Refund Policy
+            </Link>
             <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors text-sm">
               Contact
             </Link>
