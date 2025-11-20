@@ -308,6 +308,9 @@ export const Homepage = () => {
                     <Link to="/data-protection" className="block text-muted-foreground hover:text-foreground transition-colors">
                       AI Privacy & Data Protection Policy
                     </Link>
+                    <Link to="/breach-protocol" className="block text-muted-foreground hover:text-foreground transition-colors">
+                      Data Breach Protocol
+                    </Link>
                     <Link to="/refund-policy" className="block text-muted-foreground hover:text-foreground transition-colors">
                       Refund Policy
                     </Link>
