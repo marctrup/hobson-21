@@ -3006,46 +3006,167 @@ Content-Type: multipart/form-data
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem value="core-function" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                      <AccordionItem value="tool-detection" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          What is Hobson's core function when answering questions?
+                          How does the system decide which deterministic tools to run for a query?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
-                            Hobson reads structured data from your documents and uses it to generate evidence-based answers to property questions. It always follows strict rules on accuracy, validation, and fallback behaviour.
+                            It detects keywords in the user's question. Each keyword group maps to a specific tool. If the query contains more than one topic (for example, rent + break), all matching tools must run in the same turn. Only data from this turn may be used.
                           </p>
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem value="fresh-data" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                      <AccordionItem value="missing-tool" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does Hobson ensure fresh data when answering questions?
+                          What happens if a tool should have been run but wasn't?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
-                            Hobson re-analyses the relevant information from your documents each time you submit a query. It does not reuse earlier results or rely on previous answers; instead, it retrieves the necessary information afresh so the output always reflects the most current and reliable data available in the system.
+                            This is a validation failure called EV-01 (missing fresh tool call). The model must produce the fallback message and cannot reuse earlier results. The response must be rebuilt using a fresh tool call.
                           </p>
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem value="answer-structure" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                      <AccordionItem value="stale-data" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          Why does every Hobson answer follow the same three-part structure?
+                          What does the system do if a tool runs but the data is from a previous turn?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
-                            Hobson formats every response using a fixed sequence — the main answer, a short follow-up prompt, and a list of related documents. This structure ensures consistency, makes outputs easy to scan, and guarantees that all relevant documents are clearly identified.
+                            This triggers EV-02 (missing provenance). Each Answer line must link to a run_id from the current turn. If not, the system must discard the draft and return the fallback.
                           </p>
                         </AccordionContent>
                       </AccordionItem>
 
-                      <AccordionItem value="context-formatting" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                      <AccordionItem value="filtering-order" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                         <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
-                          How does Hobson decide what context and formatting to show in its answers?
+                          How does the system filter tool results before generating the Answer?
                         </AccordionTrigger>
                         <AccordionContent className="pb-6 pt-2">
                           <p className="text-muted-foreground text-sm">
-                            Hobson looks at the type of question you ask and the information available, then chooses the most suitable format — such as a short list, a table, or a brief summary. If a question relates to a specific lease or unit, Hobson includes key details like the occupier, the document, and the effective date. For broader queries, it shows only the context that actually exists in your documents, without adding assumptions. Before returning the answer, Hobson also performs checks to ensure the structure is complete, outdated data is removed, and any related documents are listed cleanly.
+                            Filtering follows a strict order: Headlease-only rule, excluded-type removal (review_type = excluded, consideration_type = excluded), removal of superseded and reversionary records, ranking and time window filtering. Only valid records remaining after these steps can appear in the Answer block.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="headlease-rule" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does the headlease-only rule work?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            By default, the system returns only headleases. A document is treated as a sublease/underlease if any of the name or type fields contain "sublease" or "underlease". These records are removed unless the user explicitly opts in. If sublease data appears without permission, the output fails with SV-Hx.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="tenant-filtering" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does tenant-specific filtering work when a tenant is named?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            The system keeps data only for that tenant. Matching ignores case and corporate suffixes like "Ltd" or "PLC". Events from other tenants must be removed. If the Answer mixes tenants, it triggers SV-Tx (tenant-scope violation).
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="document-chains" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does the system merge RTO, AMD, and ACD documents when resolving chains?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            Chains are resolved in this order: RTO (the main lease), AMD (amendments, variations, memoranda), Supersession (newer overrides older), ACD (certificates or supporting documents; provide context only). AMDs replace the terms they modify. ACDs never override key lease terms.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="ranking-rules" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does the system decide which rent amounts, review dates, or events to show?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            It applies ranking rules: Amounts are shown highest first (peppercorn is lowest). Dates are shown earliest first. Rent reviews build a schedule from review clauses, then pick earliest upcoming or most recent. Date windows include all matching items; never compress tied dates.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="stepped-rent" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does stepped or indexed rent handling work?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            If the lease shows stepped or indexed rents, the system creates internal "sub-rows" for each rent period. Only the step that applies to today's date is shown unless the user asks for full history.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="format-selection" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does the model choose between a table, a list, or structured sections?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            The choice depends on the number of records and question type: 3+ records use a markdown table, 1–2 records use a short list, rental history uses structured headings (rent, premium, review), unit or unit-group history uses grouped sections, and portfolio summaries use a table with totals. Formatting happens after all filtering steps.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="grouping-logic" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does grouping work for units, unit groups, and portfolios?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            Grouping follows query scope: Unit queries group by tenancy, including historical and current. Unit group/building queries group by unit group → unit → tenancy. Portfolio queries group by property → unit. Within each group, sort by effective date (ascending). Groups get their own headers for clarity.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="followup-generation" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How are Follow-Up questions generated?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            The system must output one Follow-Up. It chooses a template based on intent: Further detail, Comparative, Temporal, Document-related, Actionable, or Missing context. If no suitable question exists, it uses the fallback. Duplicate or misplaced Follow-Ups trigger SV-FUx.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="missing-data" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does the system handle missing or incomplete data?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            It must not guess. Missing values are shown as "—" with a short note such as "evidence incomplete". If all context is missing, all three blocks must show "No information available". Debug or internal identifiers must never appear.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="plain-language" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          How does the system ensure plain-language compliance?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            The Answer must avoid technical terms like "rows", "objects", "arrays", or references to JSON structure. If such terms appear, this triggers SV-Px (plain-language breach) and the response must be regenerated.
+                          </p>
+                        </AccordionContent>
+                      </AccordionItem>
+
+                      <AccordionItem value="final-verification" className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
+                        <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
+                          What must the system verify before returning the final response?
+                        </AccordionTrigger>
+                        <AccordionContent className="pb-6 pt-2">
+                          <p className="text-muted-foreground text-sm">
+                            Before returning anything, the system checks: All three blocks are present and in order, only current-turn tool data is used, headlease-only and tenant-specific rules are followed, excluded/superseded/reversionary data is removed, no debug information appears, formatting follows Section 7, and Follow-Up is valid and unique. If any rule fails, the system outputs the fallback message instead.
                           </p>
                         </AccordionContent>
                       </AccordionItem>
