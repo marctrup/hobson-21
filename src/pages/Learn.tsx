@@ -2248,7 +2248,11 @@ Content-Type: multipart/form-data
                               <ul className="space-y-2 pl-2">
                                 <li className="flex items-start gap-2">
                                   <span className="text-primary mt-1">•</span>
-                                  <span><strong className="text-foreground">High-complexity legal documents</strong> (for example, leases or deeds): around 2 to 5 minutes</span>
+                                  <span><strong className="text-foreground">High-complexity legal documents</strong> (for example, leases): around 8-9 minutes</span>
+                                </li>
+                                <li className="flex items-start gap-2">
+                                  <span className="text-primary mt-1">•</span>
+                                  <span><strong className="text-foreground">Medium-complexity legal documents</strong> (for example, Deeds): around 2-3 minutes</span>
                                 </li>
                                 <li className="flex items-start gap-2">
                                   <span className="text-primary mt-1">•</span>
