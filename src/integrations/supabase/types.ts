@@ -429,6 +429,39 @@ export type Database = {
         }
         Relationships: []
       }
+      glossary_items: {
+        Row: {
+          category: string
+          created_at: string
+          definition: string
+          id: string
+          is_active: boolean
+          sort_order: number
+          term: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          created_at?: string
+          definition: string
+          id?: string
+          is_active?: boolean
+          sort_order: number
+          term: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          definition?: string
+          id?: string
+          is_active?: boolean
+          sort_order?: number
+          term?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       newsletter_subscriptions: {
         Row: {
           created_at: string
