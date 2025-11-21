@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.update-chatbot-knowledge]
 verify_jwt = false
+
+[functions.import-legacy-faqs]
+verify_jwt = true
