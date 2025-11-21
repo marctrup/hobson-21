@@ -72,8 +72,7 @@ export default function FaqManagement() {
       const { data, error } = await supabase
         .from("faq_items")
         .select("*")
-        .order("category")
-        .order("sort_order");
+        .order("sort_order", { ascending: true });
 
       if (error) throw error;
       setFaqs(data || []);
@@ -320,7 +319,7 @@ export default function FaqManagement() {
             ) : (
               faqs.map((faq) => (
                 <TableRow key={faq.id}>
-                  <TableCell>{faq.sort_order}</TableCell>
+                  <TableCell className="font-mono text-sm">{faq.sort_order}</TableCell>
                   <TableCell className="text-sm">{faq.category}</TableCell>
                   <TableCell className="max-w-md truncate">
                     {faq.question}
