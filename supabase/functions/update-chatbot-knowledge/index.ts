@@ -12,9 +12,9 @@ const corsHeaders = {
 
 const getFaqContent = () => {
   // This is a direct copy of the FAQ structure from Learn.tsx
-  // Currently has 49 questions - Update this manually when FAQs change
+  // Currently has 50 questions - Update this manually when FAQs change
   return `
-## Frequently Asked Questions (49 Questions)
+## Frequently Asked Questions (50 Questions)
 
 ### How Hobson Works (Questions 1-20)
 
@@ -154,7 +154,7 @@ When you ask Hobson a question:
 
 ---
 
-### Getting the Best Out of Hobson (Questions 21-27)
+### Getting the Best Out of Hobson (Questions 21-28)
 
 **21. Can Hobson be trained on my company's information?**
 Yes. For enterprise clients, Hobson can be trained on your organisation's own documents, processes, and team details. We create a private knowledge base built from your company information, which Hobson uses to give personalised and context-aware answers. None of your company information is shared outside your private environment.
@@ -171,7 +171,7 @@ Yes. Just ask Hobson "Add Unit". Hobson will then prompt you to enter the full a
 
 ---
 
-**23. Which level should I use when asking a question?**
+**24. Which level should I use when asking a question?**
 You can ask Hobson questions at three levels—Portfolio, Unit Group, and Unit. The higher the level, the broader the search. The lower the level, the more focused the answer.
 
 **To get the best results:**
@@ -186,7 +186,7 @@ Asking your question at the right level matters for three reasons:
 
 ---
 
-**24. What should I do if I get a poor answer?**
+**25. What should I do if I get a poor answer?**
 If Hobson gives you an answer like "No information is available" but you know the information exists:
 1. Go back to the level you were on - Return to the Portfolio, Unit Group, or Unit level and ask the question again
 2. Check that the documents are actually uploaded - Open the Documents area in Admin and make sure the files you expect are there
@@ -195,7 +195,7 @@ Most issues come from asking at too high a level or missing documents, and both 
 
 ---
 
-**25. How should I structure my prompts for the best results?**
+**26. How should I structure my prompts for the best results?**
 To get the best answers from Hobson:
 • Choose the right level first - Start at the Portfolio, Unit Group, or Unit level depending on how specific your question is
 • Be direct and clear - Ask for exactly what you need. Short, simple questions work better
@@ -204,24 +204,24 @@ To get the best answers from Hobson:
 
 ---
 
-**26. Can Hobson connect to our systems?**
+**27. Can Hobson connect to our systems?**
 Currently, we don't offer bespoke integrations, but please talk to us so we can understand what you want to achieve and whether this will be possible at some point.
 
 ---
 
-**27. Can I control who has access?**
+**28. Can I control who has access?**
 Yes. Admin users can invite new users and choose exactly which units and which document classes they can access. This lets you control who sees what within Hobson.
 
 ---
 
-### Hobson Credits (Questions 28-38)
+### Hobson Credits (Questions 29-39)
 
-**28. What is a HEU?**
+**29. What is a HEU?**
 A HEU is the unit of energy measurement for using Hobson's AI features. Each message or action costs a certain number of HEUs based on its complexity.
 
 ---
 
-**29. How much do different tasks cost in HEUs?**
+**30. How much do different tasks cost in HEUs?**
 Hobson uses a usage-based credit system called HEU (Hobson Energy Unit). Most messages cost less than 1 HEU, while more detailed tasks cost more.
 
 **Typical HEU costs:**
@@ -236,54 +236,54 @@ You can check the HEU cost of any message by opening the menu (three dots) under
 
 ---
 
-**30. How can I upgrade my subscription?**
+**31. How can I upgrade my subscription?**
 You can upgrade your subscription through your workspace settings or by contacting our support team.
 
 ---
 
-**31. How can I downgrade my subscription?**
+**32. How can I downgrade my subscription?**
 Subscription downgrades can be managed through your account settings or by reaching out to support.
 
 ---
 
-**32. How can I cancel my subscription?**
+**33. How can I cancel my subscription?**
 You can cancel your subscription at any time through your account settings. Your access will continue until the end of the current billing period.
 
 ---
 
-**33. How can I change my billing information?**
+**34. How can I change my billing information?**
 Billing information can be updated in your account settings under the billing section.
 
 ---
 
-**34. How do I download my invoices?**
+**35. How do I download my invoices?**
 Invoices are available for download in your account settings under billing history.
 
 ---
 
-**35. How do I get more credits?**
+**36. How do I get more credits?**
 You can get more HEUs by upgrading your plan or purchasing Top-ups.
 
 ---
 
-**36. When does my credit limit reset?**
+**37. When does my credit limit reset?**
 Your credit limit resets at the beginning of each billing cycle based on your subscription plan.
 
 ---
 
-**37. How do I see the remaining credits in a workspace?**
+**38. How do I see the remaining credits in a workspace?**
 Click on your workspace name on the dashboard to view your remaining credits and usage statistics.
 
 ---
 
-**38. Can I get free credits?**
+**39. Can I get free credits?**
 Free credits are included with the free plan. Additional free credits may be available through promotional offers or referral programs.
 
 ---
 
-### Hobson Technology (Questions 39-49)
+### Hobson Technology (Questions 40-50)
 
-**39. What technology platforms does Hobson use?**
+**40. What technology platforms does Hobson use?**
 Hobson runs on trusted, industry-standard platforms:
 • **OVH Cloud** - Stores your uploaded files and documents (secure UK/EU-based cloud storage)
 • **Vercel** - Runs the Hobson web app (fast, stable interface)
@@ -294,27 +294,27 @@ Hobson runs on trusted, industry-standard platforms:
 
 ---
 
-**40. How does the system decide which tools to run for a query?**
+**41. How does the system decide which tools to run for a query?**
 It detects keywords in the user's question. Each keyword group maps to a specific tool. If the query contains more than one topic (for example, rent + break), all matching tools must run in the same turn.
 
 ---
 
-**41. What happens if a tool should have been run but wasn't?**
+**42. What happens if a tool should have been run but wasn't?**
 This is a validation failure called EV-01 (missing fresh tool call). The model must produce the fallback message and cannot reuse earlier results.
 
 ---
 
-**42. What does the system do if a tool runs but the data is from a previous turn?**
+**43. What does the system do if a tool runs but the data is from a previous turn?**
 This triggers EV-02 (missing provenance). Each Answer line must link to a run_id from the current turn. If not, the system must discard the draft and return the fallback.
 
 ---
 
-**43. How does the system filter tool results before generating the Answer?**
+**44. How does the system filter tool results before generating the Answer?**
 Filtering follows a strict order: Headlease-only rule, excluded-type removal, removal of superseded and reversionary records, ranking and time window filtering. Only valid records remaining after these steps can appear in the Answer block.
 
 ---
 
-**44. How does the model choose between a table, a list, or structured sections?**
+**45. How does the model choose between a table, a list, or structured sections?**
 The choice depends on the number of records and question type:
 • 3+ records use a markdown table
 • 1–2 records use a short list
@@ -324,7 +324,7 @@ The choice depends on the number of records and question type:
 
 ---
 
-**45. How does grouping work for units, unit groups, and portfolios?**
+**46. How does grouping work for units, unit groups, and portfolios?**
 Grouping follows query scope:
 • Unit queries group by tenancy, including historical and current
 • Unit group/building queries group by unit group → unit → tenancy
@@ -334,22 +334,22 @@ Within each group, sort by effective date (ascending). Groups get their own head
 
 ---
 
-**46. How are Follow-Up questions generated?**
+**47. How are Follow-Up questions generated?**
 The system must output one Follow-Up. It chooses a template based on intent: Further detail, Comparative, Temporal, Document-related, Actionable, or Missing context.
 
 ---
 
-**47. How does the system handle missing or incomplete data?**
+**48. How does the system handle missing or incomplete data?**
 It must not guess. Missing values are shown as "—" with a short note such as "evidence incomplete". If all context is missing, all three blocks must show "No information available". Debug or internal identifiers must never appear.
 
 ---
 
-**48. How does the system ensure plain-language compliance?**
+**49. How does the system ensure plain-language compliance?**
 The Answer must avoid technical terms like "rows", "objects", "arrays", or references to JSON structure. If such terms appear, this triggers SV-Px (plain-language breach) and the response must be regenerated.
 
 ---
 
-**49. What must the system verify before returning the final response?**
+**50. What must the system verify before returning the final response?**
 Before returning anything, the system checks:
 • All three blocks are present and in order
 • Only current-turn tool data is used
