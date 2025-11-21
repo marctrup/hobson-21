@@ -1836,7 +1836,7 @@ Content-Type: multipart/form-data
                 </div>
                 
                 {/* Title */}
-                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 leading-tight">
+                <h1 className="text-3xl md:text-4xl font-bold text-muted-foreground mb-8 leading-tight">
                   Positioning Statement
                 </h1>
                 
@@ -1844,12 +1844,12 @@ Content-Type: multipart/form-data
                 <div className="relative">
                   <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-primary to-accent rounded-full" />
                   <blockquote className="pl-8 space-y-6">
-                    <p className="text-xl md:text-2xl lg:text-3xl text-foreground leading-relaxed font-medium">
+                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                       For real estate professionals drained by bloated, expensive systems and the manual effort of pulling information from original documents, 
                       <span className="text-primary font-semibold"> Hobson is the AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers.
                     </p>
-                    <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground leading-relaxed">
-                      Unlike complex platforms, Hobson is <span className="text-foreground font-semibold">lightweight, simple to use, and low cost</span> — saving time, ensuring accuracy, and building trust with fast, referenced responses.
+                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+                      Unlike complex platforms, Hobson is <span className="text-foreground/80 font-semibold">lightweight, simple to use, and low cost</span> — saving time, ensuring accuracy, and building trust with fast, referenced responses.
                     </p>
                   </blockquote>
                 </div>
