@@ -23,3 +23,6 @@ verify_jwt = false
 
 [functions.import-legacy-faqs]
 verify_jwt = true
+
+[functions.import-legacy-glossary]
+verify_jwt = true
