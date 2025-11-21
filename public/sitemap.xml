@@ -91,24 +91,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://hobsonschoice.ai/learn/fundamentals</loc>
-    <lastmod>2025-01-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://hobsonschoice.ai/learn/advanced-prompting</loc>
-    <lastmod>2025-01-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://hobsonschoice.ai/learn/debugging-prompts</loc>
-    <lastmod>2025-01-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://hobsonschoice.ai/learn/use-cases</loc>
     <lastmod>2025-01-28</lastmod>
     <changefreq>weekly</changefreq>
