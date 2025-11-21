@@ -26,6 +26,7 @@ const Learn = () => {
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
   const [faqItems, setFaqItems] = useState<any[]>([]);
+  const [glossaryItems, setGlossaryItems] = useState<any[]>([]);
 
   // Fetch FAQs from database
   useEffect(() => {
@@ -38,6 +39,19 @@ const Learn = () => {
       setFaqItems(data || []);
     };
     fetchFaqs();
+  }, []);
+
+  // Fetch Glossary items from database
+  useEffect(() => {
+    const fetchGlossary = async () => {
+      const { data } = await supabase
+        .from('glossary_items')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order');
+      setGlossaryItems(data || []);
+    };
+    fetchGlossary();
   }, []);
 
   // Handle both URL param and hash navigation
@@ -2757,131 +2771,25 @@ Content-Type: multipart/form-data
             </div>
 
             <div className="space-y-8">
-              <div className="grid gap-6">
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">HEU</h3>
-                  <p className="text-muted-foreground">A HEU is the unit of energy measurement for using Hobson's AI features. Each message or action costs a certain number of HEUs based on its complexity.</p>
+              {glossaryItems.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">No glossary items found. Please import glossary terms from the admin panel.</p>
                 </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Unit</h3>
-                  <p className="text-muted-foreground">A single physical space, such as a flat, office, or piece of land.</p>
+              ) : (
+                <div className="grid gap-6">
+                  {glossaryItems.map((item, index) => (
+                    <div key={item.id} className="p-6 bg-muted/50 rounded-lg border border-border">
+                      <h3 className="text-lg font-semibold text-foreground mb-2">
+                        {item.sort_order}. {item.term}
+                      </h3>
+                      <p className="text-muted-foreground">{item.definition}</p>
+                      <span className="text-xs text-muted-foreground/60 mt-2 inline-block">
+                        Category: {item.category}
+                      </span>
+                    </div>
+                  ))}
                 </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Unit Group</h3>
-                  <p className="text-muted-foreground">A set of units linked <span className="text-purple-600 font-medium">either</span> by a shared location (for example, flats in one block <span className="text-purple-600 font-medium">or</span> offices on a single floor) <span className="text-purple-600 font-medium">or</span> by a shared document (for example, one lease covering multiple units in one <span className="text-purple-600 font-medium">or</span> more locations).</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Portfolio</h3>
-                  <p className="text-muted-foreground">A collection of units grouped by ownership, management, or another organisational structure.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Right-to-Occupy (RTO) Documents</h3>
-                  <p className="text-muted-foreground">Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Amending Documents (AMDs)</h3>
-                  <p className="text-muted-foreground">Documents that modify, extend, or support an RTO. This includes formal amendments (such as deeds of variation or rent memorandums) and supporting documents (such as notices, identity documents, or funding documents).</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Accompanying Documents (ACDs)</h3>
-                  <p className="text-muted-foreground">Documents linked to a specific unit or unit group, such as compliance certificates.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">AI (Artificial Intelligence)</h3>
-                  <p className="text-muted-foreground">The technology that powers Hobson. It enables Hobson to read your documents, answer questions, and generate reports.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Context</h3>
-                  <p className="text-muted-foreground">The background information Hobson needs to give accurate answers. If you don't provide enough, the response may be vague.</p>
-                </div>
-
-
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Knowledge Base</h3>
-                  <p className="text-muted-foreground">A space where your business can add important background information (e.g. standard reporting formats, preferred output styles) that Hobson uses to stay consistent.</p>
-                </div>
-
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Prompt</h3>
-                  <p className="text-muted-foreground">A question or instruction you give to Hobson. Clearer prompts = more useful answers.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">System Prompt</h3>
-                  <p className="text-muted-foreground">A System Prompt is the set of instructions that guides how Hobson behaves. It tells the AI its role, rules, and boundaries so it answers questions consistently and safely.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Extraction Prompt</h3>
-                  <p className="text-muted-foreground">An Extraction Prompt is the instruction Hobson uses to pull key information from a document. It tells the AI what details to look for so data is captured accurately and in a structured way.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Meta Prompting</h3>
-                  <p className="text-muted-foreground mb-3">Asking Hobson how to improve your question for a clearer answer.</p>
-                  <div className="p-3 bg-background rounded border border-border text-sm">
-                    <strong>Example:</strong> "How should I phrase this to get a better summary of this lease?"
-                  </div>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Debugging Prompts</h3>
-                  <p className="text-muted-foreground mb-3">A step-by-step process for refining prompts if Hobson misunderstands.</p>
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-foreground">Example:</p>
-                    <ol className="text-sm text-muted-foreground space-y-1 ml-4">
-                      <li>1. Point out what's missing ("You didn't include service charges").</li>
-                      <li>2. Ask for a correction.</li>
-                      <li>3. Confirm or refine further.</li>
-                    </ol>
-                  </div>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Reverse Prompting</h3>
-                  <p className="text-muted-foreground">Asking Hobson to explain how it arrived at an answer, so you can check the logic.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Embeddings</h3>
-                  <p className="text-muted-foreground">A method of turning words or sentences into numbers that capture their meaning. These numbers let Hobson compare ideas and find connections between different pieces of text.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">JSON</h3>
-                  <p className="text-muted-foreground">A way of structuring data so both people and computers can read it. Think of it like a digital "spreadsheet" written in text, with labels and values. Hobson often uses JSON behind the scenes to organise information.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">RAG</h3>
-                  <p className="text-muted-foreground">Short for Retrieval-Augmented Generation. It's a way Hobson answers questions more accurately by first finding relevant information from your documents, then using that information to generate a better response.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Vector Search</h3>
-                  <p className="text-muted-foreground">A smart way of finding information. Instead of matching exact words, it looks for meanings and similarities. This means Hobson can find the right answer even if you phrase your question differently from how it's written in the document.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Knowledge Graph</h3>
-                  <p className="text-muted-foreground">A Knowledge Graph is like a map of information. It shows facts (people, places, documents) as points and connects them with relationships (like "tenant of" or "owns"). This helps Hobson AI understand context and give smarter, more accurate answers.</p>
-                </div>
-
-                <div className="p-6 bg-muted/50 rounded-lg border border-border">
-                  <h3 className="text-lg font-semibold text-foreground mb-2">Session</h3>
-                  <p className="text-muted-foreground">A continuous conversation with Hobson. Within a session, Hobson remembers your earlier questions and answers.</p>
-                </div>
-              </div>
+              )}
 
               <div className="mt-8 p-6 bg-primary/10 rounded-lg border border-primary/20">
                 <h4 className="text-lg font-semibold text-foreground mb-3">👉 In short</h4>
