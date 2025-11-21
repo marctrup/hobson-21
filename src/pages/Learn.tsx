@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Plus } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HEUBarVisualization } from '@/components/HEUBarVisualization';
 import ChatCostExample from '@/components/features/ChatCostExample';
@@ -2285,7 +2286,7 @@ Content-Type: multipart/form-data
                                 </AccordionTrigger>
                                 <AccordionContent className="pb-6 pt-2">
                                   <div className="text-muted-foreground text-sm prose prose-sm max-w-none">
-                                    {faq.answer.split('\n').map((line: string, i: number) => <p key={i} className="mb-2">{line}</p>)}
+                                    <ReactMarkdown>{faq.answer}</ReactMarkdown>
                                   </div>
                                 </AccordionContent>
                               </AccordionItem>)}
@@ -2338,7 +2339,9 @@ Content-Type: multipart/form-data
                       <h3 className="text-lg font-semibold text-foreground mb-2">
                         {item.sort_order}. {item.term}
                       </h3>
-                      <p className="text-muted-foreground">{item.definition}</p>
+                      <p className="text-muted-foreground prose prose-sm max-w-none">
+                        <ReactMarkdown>{item.definition}</ReactMarkdown>
+                      </p>
                       <span className="text-xs text-muted-foreground/60 mt-2 inline-block">
                         Category: {item.category}
                       </span>
