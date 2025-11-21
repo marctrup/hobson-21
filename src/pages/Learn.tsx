@@ -2285,8 +2285,17 @@ Content-Type: multipart/form-data
                                   </span>
                                 </AccordionTrigger>
                                 <AccordionContent className="pb-6 pt-2">
-                                  <div className="text-muted-foreground text-sm prose prose-sm max-w-none">
-                                    <ReactMarkdown>{faq.answer}</ReactMarkdown>
+                                  <div className="text-muted-foreground text-sm prose prose-sm max-w-none [&>p]:mb-4 [&>ul]:mb-4 [&>ul]:ml-6">
+                                    <ReactMarkdown
+                                      components={{
+                                        p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
+                                        ul: ({ children }) => <ul className="list-disc mb-4 ml-6">{children}</ul>,
+                                        li: ({ children }) => <li className="mb-1">{children}</li>,
+                                        strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>
+                                      }}
+                                    >
+                                      {faq.answer}
+                                    </ReactMarkdown>
                                   </div>
                                 </AccordionContent>
                               </AccordionItem>)}
@@ -2339,9 +2348,18 @@ Content-Type: multipart/form-data
                       <h3 className="text-lg font-semibold text-foreground mb-2">
                         {item.sort_order}. {item.term}
                       </h3>
-                      <p className="text-muted-foreground prose prose-sm max-w-none">
-                        <ReactMarkdown>{item.definition}</ReactMarkdown>
-                      </p>
+                      <div className="text-muted-foreground prose prose-sm max-w-none [&>p]:mb-4 [&>ul]:mb-4 [&>ul]:ml-6">
+                        <ReactMarkdown
+                          components={{
+                            p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
+                            ul: ({ children }) => <ul className="list-disc mb-4 ml-6">{children}</ul>,
+                            li: ({ children }) => <li className="mb-1">{children}</li>,
+                            strong: ({ children }) => <strong className="font-semibold text-foreground">{children}</strong>
+                          }}
+                        >
+                          {item.definition}
+                        </ReactMarkdown>
+                      </div>
                       <span className="text-xs text-muted-foreground/60 mt-2 inline-block">
                         Category: {item.category}
                       </span>
