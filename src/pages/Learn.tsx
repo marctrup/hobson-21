@@ -1849,6 +1849,25 @@ Content-Type: multipart/form-data
       );
     }
 
+    // Handle Positioning Statement content
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
+      return (
+        <div className="flex-1">
+          <div className="container mx-auto p-8 max-w-4xl">
+            <div className="mb-8">
+              <h1 className="text-3xl font-bold text-foreground mb-6">Positioning Statement</h1>
+            </div>
+
+            <div className="prose prose-gray max-w-none">
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                For real estate professionals drained by bloated, expensive systems and the manual effort of pulling information from original documents, Hobson is the AI-powered assistant that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is lightweight, simple to use, and low cost — saving time, ensuring accuracy, and building trust with fast, referenced responses.
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
     // Handle Plans and Credits content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
       const tocSections = [
