@@ -41,6 +41,7 @@ const Rotating = lazy(() => import("../pages/Rotating"));
 const InvestorSummary = lazy(() => import("../pages/InvestorSummary"));
 const Banners = lazy(() => import("../pages/Banners"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
+const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
 
 // Loading component
 const PageLoader = () => (
@@ -150,6 +151,7 @@ const AppContent = () => {
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/faq-management" element={<FaqManagement />} />
+              <Route path="/admin/glossary-management" element={<GlossaryManagement />} />
               <Route path="/admin/blog" element={<BlogManagement />} />
               <Route path="/admin/blog/new" element={<BlogEditor />} />
               <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />

@@ -210,7 +210,26 @@ export default function FaqManagement() {
   return (
     <div className="container mx-auto py-8 space-y-6">
       <div className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold">FAQ Management</h1>
+        <div>
+          <h1 className="text-3xl font-bold">FAQ Management</h1>
+          <div className="flex gap-2 mt-2">
+            <Button
+              variant="link"
+              className="h-auto p-0 text-sm"
+              onClick={() => window.location.href = '/admin'}
+            >
+              ← Back to Admin
+            </Button>
+            <span className="text-muted-foreground">|</span>
+            <Button
+              variant="link"
+              className="h-auto p-0 text-sm"
+              onClick={() => window.location.href = '/admin/glossary-management'}
+            >
+              Glossary Management →
+            </Button>
+          </div>
+        </div>
         <div className="flex gap-2">
           <Button onClick={handleImportLegacyFaqs} variant="outline">
             <Upload className="mr-2 h-4 w-4" />

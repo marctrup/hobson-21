@@ -176,6 +176,37 @@ export default function Admin() {
         <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
+              <CardTitle>Content Management</CardTitle>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="grid gap-4">
+              <div className="flex flex-col gap-2">
+                <h3 className="font-semibold">Knowledge Base</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Button variant="outline" onClick={() => navigate("/admin/faq-management")}>
+                    Manage FAQs
+                  </Button>
+                  <Button variant="outline" onClick={() => navigate("/admin/glossary-management")}>
+                    Manage Glossary
+                  </Button>
+                </div>
+              </div>
+              <div className="flex flex-col gap-2">
+                <h3 className="font-semibold">Content</h3>
+                <div className="flex flex-wrap gap-2">
+                  <Button variant="outline" onClick={() => navigate("/admin/blog")}>
+                    Manage Blog
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="mt-6">
+          <CardHeader>
+            <div className="flex justify-between items-center">
               <CardTitle>Pilot Applications ({applications.length})</CardTitle>
               <Button onClick={exportToCSV} variant="outline">
                 Export to CSV
