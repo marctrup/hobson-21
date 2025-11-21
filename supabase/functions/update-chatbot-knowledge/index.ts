@@ -458,38 +458,40 @@ serve(async (req) => {
       useCasesContent = "Use Cases information not available";
     }
 
-    // Fetch Glossary page
-    const glossaryUrl = `https://hobsonschoice.ai/learn/glossary`;
-    console.log(`Fetching content from: ${glossaryUrl}`);
-    
-    let glossaryContent = "";
-    try {
-      const glossaryResponse = await fetch(glossaryUrl);
-      const glossaryHtml = await glossaryResponse.text();
-      
-      // Extract Glossary content
-      const glossaryMatches = glossaryHtml.match(/<h1[^>]*>Hobson Glossary<\/h1>([\s\S]*?)<\/div>/i);
-      if (glossaryMatches && glossaryMatches[1]) {
-        glossaryContent = glossaryMatches[1]
-          .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-          .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '')
-          .replace(/<[^>]+>/g, ' ')
-          .replace(/\s+/g, ' ')
-          .trim();
-        
-        // Count glossary terms (they usually start with a capitalized word followed by colon or dash)
-        const glossaryTermCount = (glossaryContent.match(/\b[A-Z][a-zA-Z\s]+:/g) || []).length;
-        console.log(`Extracted Glossary content with approximately ${glossaryTermCount} terms`);
-      }
-    } catch (error) {
-      console.error('Error fetching Glossary content:', error);
-      glossaryContent = "Glossary information not available";
+    // Fetch Glossary content from database
+    const { data: glossaryData, error: glossaryError } = await supabase
+      .from('glossary_items')
+      .select('*')
+      .eq('is_active', true)
+      .order('category')
+      .order('sort_order');
+
+    if (glossaryError) {
+      console.error('Error fetching glossary:', glossaryError);
     }
+
+    // Format Glossary content
+    const glossaryByCategory = (glossaryData || []).reduce((acc: any, item: any) => {
+      if (!acc[item.category]) acc[item.category] = [];
+      acc[item.category].push(item);
+      return acc;
+    }, {});
+
+    let glossaryContent = `## Hobson Glossary (${glossaryData?.length || 0} Terms)\n\n`;
+    
+    Object.entries(glossaryByCategory).forEach(([category, items]: [string, any]) => {
+      glossaryContent += `### ${category}\n\n`;
+      items.forEach((item: any) => {
+        glossaryContent += `**${item.term}:** ${item.definition}\n\n`;
+      });
+    });
+
+    console.log(`Glossary content loaded with ${glossaryData?.length || 0} terms`);
 
     // Count items for the response
     const plansCreditsCount = plansCreditsContent.length > 100 ? 1 : 0;
     const useCasesCount = useCasesContent.length > 100 ? 1 : 0;
-    const glossaryTermCount = (glossaryContent.match(/\b[A-Z][a-zA-Z\s]+:/g) || []).length;
+    const glossaryTermCount = glossaryData?.length || 0;
 
     // Construct comprehensive knowledge base
     const knowledgeBase = `
