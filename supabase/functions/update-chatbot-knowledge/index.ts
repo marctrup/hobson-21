@@ -565,15 +565,16 @@ The system processes documents using OpenAI's API but stores them securely on OV
     return new Response(
       JSON.stringify({
         success: true,
-        version: newVersion,
+        message: `Knowledge base updated to version ${newVersion}`,
         stats: {
-          faqCount: faqQuestionCount,
+          faqCount: faqData?.length || 0,
           plansCreditsCount: plansCreditsCount,
           useCasesCount: useCasesCount,
-          glossaryTermCount: glossaryTermCount
+          glossaryCount: glossaryTermCount
         },
-        preview: knowledgeBase.substring(0, 500) + '...',
-        firstFaq: faqContent.match(/\*\*1\.\s+([^\*]+)\*\*/)?.[1] || 'Not found'
+        preview: {
+          firstFaq: faqContent.match(/\*\*1\.\s+([^\*]+)\*\*/)?.[1] || 'Not found'
+        }
       }),
       { headers: { ...corsHeaders, "Content-Type": "application/json" } }
     );
