@@ -14,11 +14,16 @@ import { GlobalHeader } from '@/components/GlobalHeader';
 import { IntegrationCards } from '@/components/learn/IntegrationCards';
 import owlMascot from "@/assets/owl-mascot.png";
 import { supabase } from "@/integrations/supabase/client";
-
 const Learn = () => {
-  const { user } = useAuth();
+  const {
+    user
+  } = useAuth();
   const navigate = useNavigate();
-  const { section } = useParams<{ section?: string }>();
+  const {
+    section
+  } = useParams<{
+    section?: string;
+  }>();
   const [activeHorizontalTab, setActiveHorizontalTab] = useState('introduction');
   const [activeVerticalTab, setActiveVerticalTab] = useState('welcome');
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
@@ -31,11 +36,9 @@ const Learn = () => {
   // Fetch FAQs from database
   useEffect(() => {
     const fetchFaqs = async () => {
-      const { data } = await supabase
-        .from('faq_items')
-        .select('*')
-        .eq('is_active', true)
-        .order('sort_order');
+      const {
+        data
+      } = await supabase.from('faq_items').select('*').eq('is_active', true).order('sort_order');
       setFaqItems(data || []);
     };
     fetchFaqs();
@@ -44,11 +47,9 @@ const Learn = () => {
   // Fetch Glossary items from database
   useEffect(() => {
     const fetchGlossary = async () => {
-      const { data } = await supabase
-        .from('glossary_items')
-        .select('*')
-        .eq('is_active', true)
-        .order('sort_order');
+      const {
+        data
+      } = await supabase.from('glossary_items').select('*').eq('is_active', true).order('sort_order');
       setGlossaryItems(data || []);
     };
     fetchGlossary();
@@ -61,52 +62,140 @@ const Learn = () => {
       const urlSection = section?.toLowerCase().replace(/-/g, '');
       const hash = window.location.hash.substring(1).toLowerCase(); // Remove # and lowercase
       const activeSection = urlSection || hash;
-      
       if (activeSection) {
         // Map section/hash to horizontal and vertical tabs
-        const sectionMap: Record<string, { horizontal: string; vertical?: string }> = {
+        const sectionMap: Record<string, {
+          horizontal: string;
+          vertical?: string;
+        }> = {
           // Introduction section
-          'introduction': { horizontal: 'introduction', vertical: 'positioning-statement' },
-          'positioning-statement': { horizontal: 'introduction', vertical: 'positioning-statement' },
-          'positioningstatement': { horizontal: 'introduction', vertical: 'positioning-statement' },
-          'plans-credits': { horizontal: 'introduction', vertical: 'plans-credits' },
-          'planscredits': { horizontal: 'introduction', vertical: 'plans-credits' },
-          'plans-and-credit': { horizontal: 'introduction', vertical: 'plans-credits' },
-          'plansandcredit': { horizontal: 'introduction', vertical: 'plans-credits' },
-          'faq': { horizontal: 'introduction', vertical: 'faq' },
-          
+          'introduction': {
+            horizontal: 'introduction',
+            vertical: 'positioning-statement'
+          },
+          'positioning-statement': {
+            horizontal: 'introduction',
+            vertical: 'positioning-statement'
+          },
+          'positioningstatement': {
+            horizontal: 'introduction',
+            vertical: 'positioning-statement'
+          },
+          'plans-credits': {
+            horizontal: 'introduction',
+            vertical: 'plans-credits'
+          },
+          'planscredits': {
+            horizontal: 'introduction',
+            vertical: 'plans-credits'
+          },
+          'plans-and-credit': {
+            horizontal: 'introduction',
+            vertical: 'plans-credits'
+          },
+          'plansandcredit': {
+            horizontal: 'introduction',
+            vertical: 'plans-credits'
+          },
+          'faq': {
+            horizontal: 'introduction',
+            vertical: 'faq'
+          },
           // Features section
-          'features': { horizontal: 'features', vertical: 'core-features' },
-          'core-features': { horizontal: 'features', vertical: 'core-features' },
-          'corefeatures': { horizontal: 'features', vertical: 'core-features' },
-          'advanced-features': { horizontal: 'features', vertical: 'advanced-features' },
-          'advancedfeatures': { horizontal: 'features', vertical: 'advanced-features' },
-          'feature-comparison': { horizontal: 'features', vertical: 'feature-comparison' },
-          'featurecomparison': { horizontal: 'features', vertical: 'feature-comparison' },
-          'roadmap': { horizontal: 'features', vertical: 'roadmap' },
-          
+          'features': {
+            horizontal: 'features',
+            vertical: 'core-features'
+          },
+          'core-features': {
+            horizontal: 'features',
+            vertical: 'core-features'
+          },
+          'corefeatures': {
+            horizontal: 'features',
+            vertical: 'core-features'
+          },
+          'advanced-features': {
+            horizontal: 'features',
+            vertical: 'advanced-features'
+          },
+          'advancedfeatures': {
+            horizontal: 'features',
+            vertical: 'advanced-features'
+          },
+          'feature-comparison': {
+            horizontal: 'features',
+            vertical: 'feature-comparison'
+          },
+          'featurecomparison': {
+            horizontal: 'features',
+            vertical: 'feature-comparison'
+          },
+          'roadmap': {
+            horizontal: 'features',
+            vertical: 'roadmap'
+          },
           // Integrations section
-          'integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
-          'intergrations': { horizontal: 'integrations', vertical: 'available-integrations' },
-          'available-integrations': { horizontal: 'integrations', vertical: 'available-integrations' },
-          'availableintegrations': { horizontal: 'integrations', vertical: 'available-integrations' },
-          'setup-guide': { horizontal: 'integrations', vertical: 'setup-guide' },
-          'setupguide': { horizontal: 'integrations', vertical: 'setup-guide' },
-          'set-up-guide': { horizontal: 'integrations', vertical: 'setup-guide' },
-          'api-reference': { horizontal: 'integrations', vertical: 'api-reference' },
-          'apireference': { horizontal: 'integrations', vertical: 'api-reference' },
-          'troubleshooting': { horizontal: 'integrations', vertical: 'troubleshooting' },
-          
+          'integrations': {
+            horizontal: 'integrations',
+            vertical: 'available-integrations'
+          },
+          'intergrations': {
+            horizontal: 'integrations',
+            vertical: 'available-integrations'
+          },
+          'available-integrations': {
+            horizontal: 'integrations',
+            vertical: 'available-integrations'
+          },
+          'availableintegrations': {
+            horizontal: 'integrations',
+            vertical: 'available-integrations'
+          },
+          'setup-guide': {
+            horizontal: 'integrations',
+            vertical: 'setup-guide'
+          },
+          'setupguide': {
+            horizontal: 'integrations',
+            vertical: 'setup-guide'
+          },
+          'set-up-guide': {
+            horizontal: 'integrations',
+            vertical: 'setup-guide'
+          },
+          'api-reference': {
+            horizontal: 'integrations',
+            vertical: 'api-reference'
+          },
+          'apireference': {
+            horizontal: 'integrations',
+            vertical: 'api-reference'
+          },
+          'troubleshooting': {
+            horizontal: 'integrations',
+            vertical: 'troubleshooting'
+          },
           // Use Cases section
-          'use-cases': { horizontal: 'use-cases' },
-          'usecases': { horizontal: 'use-cases' },
-          
+          'use-cases': {
+            horizontal: 'use-cases'
+          },
+          'usecases': {
+            horizontal: 'use-cases'
+          },
           // Glossary section
-          'glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
-          'hobson-glossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
-          'hobsonglossary': { horizontal: 'glossary', vertical: 'hobson-glossary' },
+          'glossary': {
+            horizontal: 'glossary',
+            vertical: 'hobson-glossary'
+          },
+          'hobson-glossary': {
+            horizontal: 'glossary',
+            vertical: 'hobson-glossary'
+          },
+          'hobsonglossary': {
+            horizontal: 'glossary',
+            vertical: 'hobson-glossary'
+          }
         };
-        
         const mapping = sectionMap[activeSection];
         if (mapping) {
           setActiveHorizontalTab(mapping.horizontal);
@@ -119,10 +208,9 @@ const Learn = () => {
 
     // Run on mount and when section changes
     handleNavigation();
-    
+
     // Listen for hash changes
     window.addEventListener('hashchange', handleNavigation);
-    
     return () => {
       window.removeEventListener('hashchange', handleNavigation);
     };
@@ -142,13 +230,9 @@ const Learn = () => {
   // Scroll spy effect - moved to top level to avoid hook order issues
   useEffect(() => {
     let tocSections: string[] = [];
-    
+
     // Only run scroll spy for pages that have table of contents
-    if ((activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') || 
-        (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') ||
-        (activeHorizontalTab === 'features' && ['core-features', 'advanced-features', 'feature-comparison', 'roadmap'].includes(activeVerticalTab)) ||
-        (activeHorizontalTab === 'integrations' && ['available-integrations', 'setup-guide', 'api-reference', 'troubleshooting'].includes(activeVerticalTab))) {
-      
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq' || activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits' || activeHorizontalTab === 'features' && ['core-features', 'advanced-features', 'feature-comparison', 'roadmap'].includes(activeVerticalTab) || activeHorizontalTab === 'integrations' && ['available-integrations', 'setup-guide', 'api-reference', 'troubleshooting'].includes(activeVerticalTab)) {
       if (activeHorizontalTab === 'introduction') {
         if (activeVerticalTab === 'faq') {
           tocSections = ['how-hobson-works', 'features', 'plans-credits-faq'];
@@ -176,7 +260,6 @@ const Learn = () => {
           tocSections = ['coming-soon-notice', 'what-to-expect'];
         }
       }
-
       const handleScroll = () => {
         const scrollPosition = window.scrollY + 150; // offset for header and better accuracy
 
@@ -188,12 +271,10 @@ const Learn = () => {
           }
         }
       };
-
       const handleClick = () => {
         // Re-run scroll detection after any click to ensure proper highlighting
         setTimeout(handleScroll, 100);
       };
-
       window.addEventListener('scroll', handleScroll);
       window.addEventListener('click', handleClick);
       handleScroll(); // Set initial active section
@@ -204,79 +285,164 @@ const Learn = () => {
       };
     }
   }, [activeHorizontalTab, activeVerticalTab]);
-
-  const horizontalTabs = [
-    { id: 'introduction', label: 'Introduction', icon: Book },
-    { id: 'features', label: 'Features', icon: Lightbulb },
-    { id: 'integrations', label: 'Integrations', icon: Puzzle },
-    { id: 'use-cases', label: 'Use Cases', icon: Library },
-    { id: 'glossary', label: 'Glossary', icon: FileText },
-  ];
+  const horizontalTabs = [{
+    id: 'introduction',
+    label: 'Introduction',
+    icon: Book
+  }, {
+    id: 'features',
+    label: 'Features',
+    icon: Lightbulb
+  }, {
+    id: 'integrations',
+    label: 'Integrations',
+    icon: Puzzle
+  }, {
+    id: 'use-cases',
+    label: 'Use Cases',
+    icon: Library
+  }, {
+    id: 'glossary',
+    label: 'Glossary',
+    icon: FileText
+  }];
 
   // Static top menu items (separate pages)
-  const staticVerticalTabs = [
-    { id: 'announcements', label: 'Announcements', icon: Bell, href: '/announcements' },
-    { id: 'status', label: 'Status', icon: Activity, href: '/status' },
-    { id: 'feature-requests', label: 'Feature requests', icon: MessageSquare },
-  ];
+  const staticVerticalTabs = [{
+    id: 'announcements',
+    label: 'Announcements',
+    icon: Bell,
+    href: '/announcements'
+  }, {
+    id: 'status',
+    label: 'Status',
+    icon: Activity,
+    href: '/status'
+  }, {
+    id: 'feature-requests',
+    label: 'Feature requests',
+    icon: MessageSquare
+  }];
 
   // Dynamic submenu items based on horizontal selection
   const getContextualVerticalTabs = (horizontalTab: string) => {
-    const baseItems = [
-      { id: 'overview', label: 'Overview', icon: Heart },
-      { id: 'documentation', label: 'Documentation', icon: FileText },
-      { id: 'examples', label: 'Examples', icon: Play },
-      { id: 'faq', label: 'FAQ', icon: HelpCircle },
-    ];
-
+    const baseItems = [{
+      id: 'overview',
+      label: 'Overview',
+      icon: Heart
+    }, {
+      id: 'documentation',
+      label: 'Documentation',
+      icon: FileText
+    }, {
+      id: 'examples',
+      label: 'Examples',
+      icon: Play
+    }, {
+      id: 'faq',
+      label: 'FAQ',
+      icon: HelpCircle
+    }];
     switch (horizontalTab) {
       case 'introduction':
-        return [
-          { id: 'positioning-statement', label: 'Positioning Statement', icon: Play },
-          { id: 'plans-credits', label: 'Plans and Credits', icon: CreditCard },
-          { id: 'faq', label: 'FAQ', icon: HelpCircle },
-        ];
+        return [{
+          id: 'positioning-statement',
+          label: 'Positioning Statement',
+          icon: Play
+        }, {
+          id: 'plans-credits',
+          label: 'Plans and Credits',
+          icon: CreditCard
+        }, {
+          id: 'faq',
+          label: 'FAQ',
+          icon: HelpCircle
+        }];
       case 'features':
-        return [
-          { id: 'core-features', label: 'Core Features', icon: Heart },
-          { id: 'advanced-features', label: 'Advanced Features', icon: Wand2 },
-          { id: 'feature-comparison', label: 'Feature Comparison', icon: FileText },
-          { id: 'roadmap', label: 'Roadmap', icon: Clock },
-        ];
+        return [{
+          id: 'core-features',
+          label: 'Core Features',
+          icon: Heart
+        }, {
+          id: 'advanced-features',
+          label: 'Advanced Features',
+          icon: Wand2
+        }, {
+          id: 'feature-comparison',
+          label: 'Feature Comparison',
+          icon: FileText
+        }, {
+          id: 'roadmap',
+          label: 'Roadmap',
+          icon: Clock
+        }];
       case 'integrations':
-        return [
-          { id: 'available-integrations', label: 'Available Integrations', icon: Puzzle },
-          { id: 'setup-guide', label: 'Setup Guide', icon: Play },
-          { id: 'api-reference', label: 'API Reference', icon: FileText },
-          { id: 'troubleshooting', label: 'Troubleshooting', icon: HelpCircle },
-        ];
+        return [{
+          id: 'available-integrations',
+          label: 'Available Integrations',
+          icon: Puzzle
+        }, {
+          id: 'setup-guide',
+          label: 'Setup Guide',
+          icon: Play
+        }, {
+          id: 'api-reference',
+          label: 'API Reference',
+          icon: FileText
+        }, {
+          id: 'troubleshooting',
+          label: 'Troubleshooting',
+          icon: HelpCircle
+        }];
       case 'tips-tricks':
-        return [
-          { id: 'best-practices', label: 'Best Practices', icon: Heart },
-          { id: 'productivity-tips', label: 'Productivity Tips', icon: Lightbulb },
-          { id: 'common-mistakes', label: 'Common Mistakes', icon: HelpCircle },
-          { id: 'advanced-techniques', label: 'Advanced Techniques', icon: Wand2 },
-        ];
+        return [{
+          id: 'best-practices',
+          label: 'Best Practices',
+          icon: Heart
+        }, {
+          id: 'productivity-tips',
+          label: 'Productivity Tips',
+          icon: Lightbulb
+        }, {
+          id: 'common-mistakes',
+          label: 'Common Mistakes',
+          icon: HelpCircle
+        }, {
+          id: 'advanced-techniques',
+          label: 'Advanced Techniques',
+          icon: Wand2
+        }];
       case 'use-cases':
         return [];
       case 'glossary':
-        return [
-          { id: 'hobson-glossary', label: 'Hobson Glossary', icon: FileText },
-        ];
+        return [{
+          id: 'hobson-glossary',
+          label: 'Hobson Glossary',
+          icon: FileText
+        }];
       case 'changelog':
-        return [
-          { id: 'latest-updates', label: 'Latest Updates', icon: Clock },
-          { id: 'release-notes', label: 'Release Notes', icon: FileText },
-          { id: 'version-history', label: 'Version History', icon: Activity },
-          { id: 'upcoming-changes', label: 'Upcoming Changes', icon: Bell },
-        ];
+        return [{
+          id: 'latest-updates',
+          label: 'Latest Updates',
+          icon: Clock
+        }, {
+          id: 'release-notes',
+          label: 'Release Notes',
+          icon: FileText
+        }, {
+          id: 'version-history',
+          label: 'Version History',
+          icon: Activity
+        }, {
+          id: 'upcoming-changes',
+          label: 'Upcoming Changes',
+          icon: Bell
+        }];
       default:
         return baseItems;
     }
   };
-
   const currentVerticalTabs = [...staticVerticalTabs, ...getContextualVerticalTabs(activeHorizontalTab)];
-
   const handleCreatePost = () => {
     if (!user) {
       setIsAuthDialogOpen(true);
@@ -284,37 +450,33 @@ const Learn = () => {
       setIsCreatePostDialogOpen(true);
     }
   };
-
   const handleAuthSuccess = () => {
     setIsCreatePostDialogOpen(true);
   };
-
   const renderContent = () => {
     // Check if it's the announcements page - redirect to dedicated page
     if (activeVerticalTab === 'announcements') {
       window.location.href = '/announcements';
       return null;
     }
-    
+
     // Check if it's the feature requests page - redirect to dedicated page
     if (activeVerticalTab === 'feature-requests') {
       window.location.href = '/feature-requests';
       return null;
     }
-    
+
     // Check if it's the status page - redirect to dedicated page
     if (activeVerticalTab === 'status') {
       window.location.href = '/status';
       return null;
     }
-    
+
     // Check if it's a global navigation item
     const isGlobalPage = staticVerticalTabs.some(tab => tab.id === activeVerticalTab && !['announcements', 'feature-requests', 'status'].includes(tab.id));
-    
     if (isGlobalPage) {
       const activeTab = staticVerticalTabs.find(tab => tab.id === activeVerticalTab);
-      return (
-        <div className="flex-1 p-8">
+      return <div className="flex-1 p-8">
           <div className="max-w-4xl mx-auto">
             <div className="text-center py-20">
               <div className="mb-6">
@@ -333,30 +495,38 @@ const Learn = () => {
               </p>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Core Features content
     if (activeHorizontalTab === 'features' && activeVerticalTab === 'core-features') {
-      const tocSections = [
-        { id: 'intelligent-document-processing', label: 'Intelligent Document Processing' },
-        { id: 'smart-search-insights', label: 'Smart Search & Insights' },
-        { id: 'real-time-analytics', label: 'Real-Time Analytics' },
-        { id: 'collaboration-ready', label: 'Collaboration Ready' },
-        { id: 'security-compliance', label: 'Security & Compliance' },
-      ];
-
+      const tocSections = [{
+        id: 'intelligent-document-processing',
+        label: 'Intelligent Document Processing'
+      }, {
+        id: 'smart-search-insights',
+        label: 'Smart Search & Insights'
+      }, {
+        id: 'real-time-analytics',
+        label: 'Real-Time Analytics'
+      }, {
+        id: 'collaboration-ready',
+        label: 'Collaboration Ready'
+      }, {
+        id: 'security-compliance',
+        label: 'Security & Compliance'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-4 md:p-8 max-w-7xl">
             <div className="lg:flex lg:gap-8">
               {/* Main Content */}
@@ -458,48 +628,46 @@ const Learn = () => {
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Advanced Features content
     if (activeHorizontalTab === 'features' && activeVerticalTab === 'advanced-features') {
-      const tocSections = [
-        { id: 'ai-powered-summarisation', label: 'AI-Powered Summarisation' },
-        { id: 'cross-document-insights', label: 'Cross-Document Insights' },
-        { id: 'automated-report-generation', label: 'Automated Report Generation' },
-        { id: 'clause-obligation-tracking', label: 'Clause & Obligation Tracking' },
-        { id: 'integration-ready', label: 'Integration Ready' },
-      ];
-
+      const tocSections = [{
+        id: 'ai-powered-summarisation',
+        label: 'AI-Powered Summarisation'
+      }, {
+        id: 'cross-document-insights',
+        label: 'Cross-Document Insights'
+      }, {
+        id: 'automated-report-generation',
+        label: 'Automated Report Generation'
+      }, {
+        id: 'clause-obligation-tracking',
+        label: 'Clause & Obligation Tracking'
+      }, {
+        id: 'integration-ready',
+        label: 'Integration Ready'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-4 md:p-8 max-w-7xl">
             <div className="lg:flex lg:gap-8">
               {/* Main Content */}
@@ -596,45 +764,37 @@ const Learn = () => {
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Feature Comparison content
     if (activeHorizontalTab === 'features' && activeVerticalTab === 'feature-comparison') {
-      const tocSections = [
-        { id: 'comparison-table', label: 'Comparison Table' },
-        { id: 'key-differentiators', label: 'Key Differentiators' },
-      ];
-
+      const tocSections = [{
+        id: 'comparison-table',
+        label: 'Comparison Table'
+      }, {
+        id: 'key-differentiators',
+        label: 'Key Differentiators'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
             <div className="flex gap-8">
               {/* Main Content */}
@@ -787,46 +947,40 @@ const Learn = () => {
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Product Roadmap content
     if (activeHorizontalTab === 'features' && activeVerticalTab === 'roadmap') {
-      const tocSections = [
-        { id: 'recently-launched', label: 'Recently Launched' },
-        { id: 'in-progress', label: 'In Progress' },
-        { id: 'coming-soon', label: 'Wish list' },
-      ];
-
+      const tocSections = [{
+        id: 'recently-launched',
+        label: 'Recently Launched'
+      }, {
+        id: 'in-progress',
+        label: 'In Progress'
+      }, {
+        id: 'coming-soon',
+        label: 'Wish list'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
             <div className="flex gap-8">
               {/* Main Content */}
@@ -932,47 +1086,43 @@ const Learn = () => {
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Integrations content
     if (activeHorizontalTab === 'integrations' && (!activeVerticalTab || activeVerticalTab === 'available-integrations')) {
-      const tocSections = [
-        { id: 'planned-integrations', label: 'Planned Integrations' },
-        { id: 'why-integrations-matter', label: 'Why Integrations Matter' },
-        { id: 'what-were-working-towards', label: 'What We\'re Working Towards' },
-        { id: 'benefit-for-you', label: 'The Benefit for You' },
-      ];
-
+      const tocSections = [{
+        id: 'planned-integrations',
+        label: 'Planned Integrations'
+      }, {
+        id: 'why-integrations-matter',
+        label: 'Why Integrations Matter'
+      }, {
+        id: 'what-were-working-towards',
+        label: 'What We\'re Working Towards'
+      }, {
+        id: 'benefit-for-you',
+        label: 'The Benefit for You'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
             <div className="flex gap-8">
               {/* Main Content */}
@@ -1123,52 +1273,57 @@ const Learn = () => {
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle API Reference content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'api-reference') {
-      const tocSections = [
-        { id: 'overview', label: 'Overview' },
-        { id: 'authentication', label: 'Authentication' },
-        { id: 'endpoints', label: 'Endpoints' },
-        { id: 'document-analysis', label: 'Document Analysis' },
-        { id: 'query-interface', label: 'Query Interface' },
-        { id: 'webhooks', label: 'Webhooks' },
-        { id: 'rate-limits', label: 'Rate Limits' },
-        { id: 'error-handling', label: 'Error Handling' },
-        { id: 'examples', label: 'Examples' }
-      ];
-
+      const tocSections = [{
+        id: 'overview',
+        label: 'Overview'
+      }, {
+        id: 'authentication',
+        label: 'Authentication'
+      }, {
+        id: 'endpoints',
+        label: 'Endpoints'
+      }, {
+        id: 'document-analysis',
+        label: 'Document Analysis'
+      }, {
+        id: 'query-interface',
+        label: 'Query Interface'
+      }, {
+        id: 'webhooks',
+        label: 'Webhooks'
+      }, {
+        id: 'rate-limits',
+        label: 'Rate Limits'
+      }, {
+        id: 'error-handling',
+        label: 'Error Handling'
+      }, {
+        id: 'examples',
+        label: 'Examples'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
+          element.scrollIntoView({
+            behavior: 'smooth'
+          });
         }
       };
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="flex gap-8">
             <div className="flex-1 p-8">
               <div className="max-w-4xl mx-auto">
@@ -1196,31 +1351,19 @@ const Learn = () => {
               <div className="border border-border rounded-lg p-4">
                 <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                 <nav className="space-y-2">
-                  {tocSections.map((section) => (
-                    <button
-                      key={section.id}
-                      onClick={() => scrollToSection(section.id)}
-                      className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                        activeTocSection === section.id
-                          ? 'bg-purple-100 text-purple-700 font-medium'
-                          : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                      }`}
-                    >
+                  {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                       {section.label}
-                    </button>
-                  ))}
+                    </button>)}
                 </nav>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Integrations content
     if (activeHorizontalTab === 'integrations' && (!activeVerticalTab || activeVerticalTab === 'available-integrations')) {
-      return (
-        <div className="flex-1 p-8">
+      return <div className="flex-1 p-8">
           <div className="max-w-4xl mx-auto">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-foreground mb-6">Integrations with Hobson AI</h1>
@@ -1362,27 +1505,29 @@ const Learn = () => {
               </p>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Setup Guide content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'setup-guide') {
-      const tocSections = [
-        { id: 'coming-soon-notice', label: 'Notice' },
-        { id: 'what-to-expect', label: 'What to Expect' },
-      ];
-
+      const tocSections = [{
+        id: 'coming-soon-notice',
+        label: 'Notice'
+      }, {
+        id: 'what-to-expect',
+        label: 'What to Expect'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
             <div className="flex gap-8">
               {/* Main Content */}
@@ -1414,52 +1559,58 @@ const Learn = () => {
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle API Reference content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'api-reference') {
-      const tocSections = [
-        { id: 'overview', label: 'Overview' },
-        { id: 'authentication', label: 'Authentication' },
-        { id: 'endpoints', label: 'Endpoints' },
-        { id: 'document-analysis', label: 'Document Analysis' },
-        { id: 'query-interface', label: 'Query Interface' },
-        { id: 'webhooks', label: 'Webhooks' },
-        { id: 'rate-limits', label: 'Rate Limits' },
-        { id: 'error-handling', label: 'Error Handling' },
-        { id: 'examples', label: 'Examples' },
-      ];
-
+      const tocSections = [{
+        id: 'overview',
+        label: 'Overview'
+      }, {
+        id: 'authentication',
+        label: 'Authentication'
+      }, {
+        id: 'endpoints',
+        label: 'Endpoints'
+      }, {
+        id: 'document-analysis',
+        label: 'Document Analysis'
+      }, {
+        id: 'query-interface',
+        label: 'Query Interface'
+      }, {
+        id: 'webhooks',
+        label: 'Webhooks'
+      }, {
+        id: 'rate-limits',
+        label: 'Rate Limits'
+      }, {
+        id: 'error-handling',
+        label: 'Error Handling'
+      }, {
+        id: 'examples',
+        label: 'Examples'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
             <div className="flex gap-8">
               {/* Main Content */}
@@ -1723,45 +1874,37 @@ Content-Type: multipart/form-data
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Troubleshooting content
     if (activeHorizontalTab === 'integrations' && activeVerticalTab === 'troubleshooting') {
-      const tocSections = [
-        { id: 'coming-soon-notice', label: 'Coming Soon Notice' },
-        { id: 'what-to-expect', label: 'What to Expect' },
-      ];
-
+      const tocSections = [{
+        id: 'coming-soon-notice',
+        label: 'Coming Soon Notice'
+      }, {
+        id: 'what-to-expect',
+        label: 'What to Expect'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
             <div className="flex gap-8">
               {/* Main Content */}
@@ -1793,32 +1936,20 @@ Content-Type: multipart/form-data
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Positioning Statement content
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
-      return (
-        <div className="flex-1 py-8 px-4">
+      return <div className="flex-1 py-8 px-4">
           <div className="container mx-auto max-w-5xl">
             <div className="relative">
               {/* Decorative background elements */}
@@ -1845,7 +1976,7 @@ Content-Type: multipart/form-data
                   <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-primary to-accent rounded-full" />
                   <blockquote className="pl-8 space-y-6">
                     <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                      For real estate professionals drained by bloated, expensive systems and the manual effort of pulling information from original documents, 
+                      For real estate professionals drained by large, expensive systems and the manual effort of pulling information from original documents, Hobson is the AI-powered assistant that transforms source-of-truth files into instant, reliable answers. 
                       <span className="text-primary font-semibold"> Hobson is the AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers.
                     </p>
                     <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
@@ -1862,32 +1993,41 @@ Content-Type: multipart/form-data
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Plans and Credits content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'plans-credits') {
-      const tocSections = [
-        { id: 'overview', label: 'Overview' },
-        { id: 'starter-pack', label: 'Starter pack' },
-        { id: 'feature-comparison', label: 'Feature comparison' },
-        { id: 'available-plans', label: 'Available Paid Plans' },
-        { id: 'credit-display', label: 'Credit display' },
-        { id: 'credit-rollovers', label: 'Credit Rollovers' },
-      ];
-
+      const tocSections = [{
+        id: 'overview',
+        label: 'Overview'
+      }, {
+        id: 'starter-pack',
+        label: 'Starter pack'
+      }, {
+        id: 'feature-comparison',
+        label: 'Feature comparison'
+      }, {
+        id: 'available-plans',
+        label: 'Available Paid Plans'
+      }, {
+        id: 'credit-display',
+        label: 'Credit display'
+      }, {
+        id: 'credit-rollovers',
+        label: 'Credit Rollovers'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
             <div className="flex gap-8">
               {/* Main Content */}
@@ -2060,48 +2200,43 @@ Content-Type: multipart/form-data
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle FAQ content specifically
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
-      const tocSections = [
-        { id: 'how-hobson-works', label: 'How Hobson works' },
-        { id: 'features', label: 'Getting the best out of Hobson' },
-        { id: 'plans-credits-faq', label: 'Hobson Credits' },
-        { id: 'hobson-technology', label: 'Hobson Technology' },
-      ];
-
+      const tocSections = [{
+        id: 'how-hobson-works',
+        label: 'How Hobson works'
+      }, {
+        id: 'features',
+        label: 'Getting the best out of Hobson'
+      }, {
+        id: 'plans-credits-faq',
+        label: 'Hobson Credits'
+      }, {
+        id: 'hobson-technology',
+        label: 'Hobson Technology'
+      }];
       const scrollToSection = (id: string) => {
         setActiveTocSection(id);
         const element = document.getElementById(id);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
         }
       };
-
-
-      return (
-        <div className="flex-1 bg-gradient-to-b from-background to-muted/20">
+      return <div className="flex-1 bg-gradient-to-b from-background to-muted/20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
             <div className="flex gap-8">
               {/* Main Content */}
@@ -2125,32 +2260,21 @@ Content-Type: multipart/form-data
 
                 <div className="space-y-16">
                   {/* Dynamic FAQ Sections from Database */}
-                  {faqItems.length === 0 ? (
-                    <div className="text-center py-12">
+                  {faqItems.length === 0 ? <div className="text-center py-12">
                       <p className="text-muted-foreground">Loading FAQs...</p>
-                    </div>
-                  ) : (
-                    Object.entries(
-                      faqItems.reduce((acc: any, faq: any) => {
-                        if (!acc[faq.category]) acc[faq.category] = [];
-                        acc[faq.category].push(faq);
-                        return acc;
-                      }, {})
-                    ).map(([category, faqs]: [string, any], catIndex) => {
-                      const sectionId = category.toLowerCase().replace(/ /g, '-').replace(/'/g, '');
-                      return (
-                        <section key={catIndex} id={sectionId} className="scroll-mt-8">
+                    </div> : Object.entries(faqItems.reduce((acc: any, faq: any) => {
+                  if (!acc[faq.category]) acc[faq.category] = [];
+                  acc[faq.category].push(faq);
+                  return acc;
+                }, {})).map(([category, faqs]: [string, any], catIndex) => {
+                  const sectionId = category.toLowerCase().replace(/ /g, '-').replace(/'/g, '');
+                  return <section key={catIndex} id={sectionId} className="scroll-mt-8">
                           <div className="flex items-center gap-3 mb-8">
                             <div className="h-1 w-12 bg-gradient-to-r from-primary to-primary/50 rounded-full"></div>
                             <h2 className="text-2xl font-bold text-foreground">{category}</h2>
                           </div>
                           <Accordion type="multiple" className="w-full space-y-4">
-                            {faqs.map((faq: any) => (
-                              <AccordionItem 
-                                key={faq.id} 
-                                value={`faq-${faq.id}`} 
-                                className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow"
-                              >
+                            {faqs.map((faq: any) => <AccordionItem key={faq.id} value={`faq-${faq.id}`} className="border border-border rounded-xl px-6 bg-card shadow-sm hover:shadow-md transition-shadow">
                                 <AccordionTrigger className="text-left py-6 text-base font-semibold hover:text-primary">
                                   <span className="flex items-center gap-3">
                                     <span className="flex-shrink-0 w-7 h-7 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">
@@ -2161,18 +2285,13 @@ Content-Type: multipart/form-data
                                 </AccordionTrigger>
                                 <AccordionContent className="pb-6 pt-2">
                                   <div className="text-muted-foreground text-sm prose prose-sm max-w-none">
-                                    {faq.answer.split('\n').map((line: string, i: number) => (
-                                      <p key={i} className="mb-2">{line}</p>
-                                    ))}
+                                    {faq.answer.split('\n').map((line: string, i: number) => <p key={i} className="mb-2">{line}</p>)}
                                   </div>
                                 </AccordionContent>
-                              </AccordionItem>
-                            ))}
+                              </AccordionItem>)}
                           </Accordion>
-                        </section>
-                      );
-                     })
-                   )}
+                        </section>;
+                })}
 
                   {/* Summary */}
                   <section>
@@ -2191,32 +2310,20 @@ Content-Type: multipart/form-data
                 <div className="border border-border rounded-lg p-4">
                   <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
                   <nav className="space-y-2">
-                    {tocSections.map((section) => (
-                      <button
-                        key={section.id}
-                        onClick={() => scrollToSection(section.id)}
-                        className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${
-                          activeTocSection === section.id
-                            ? 'bg-purple-100 text-purple-700 font-medium'
-                            : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'
-                        }`}
-                      >
+                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? 'bg-purple-100 text-purple-700 font-medium' : 'text-muted-foreground hover:text-purple-700 hover:bg-accent/5'}`}>
                         {section.label}
-                      </button>
-                    ))}
+                      </button>)}
                   </nav>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Hobson Glossary specifically
     if (activeHorizontalTab === 'glossary' && activeVerticalTab === 'hobson-glossary') {
-      return (
-        <div className="flex-1">
+      return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-4xl">
             <div className="mb-8">
               <h1 className="text-3xl font-bold text-foreground mb-2">Hobson Glossary</h1>
@@ -2224,14 +2331,10 @@ Content-Type: multipart/form-data
             </div>
 
             <div className="space-y-8">
-              {glossaryItems.length === 0 ? (
-                <div className="text-center py-8">
+              {glossaryItems.length === 0 ? <div className="text-center py-8">
                   <p className="text-muted-foreground">No glossary items found. Please import glossary terms from the admin panel.</p>
-                </div>
-              ) : (
-                <div className="grid gap-6">
-                  {glossaryItems.map((item, index) => (
-                    <div key={item.id} className="p-6 bg-muted/50 rounded-lg border border-border">
+                </div> : <div className="grid gap-6">
+                  {glossaryItems.map((item, index) => <div key={item.id} className="p-6 bg-muted/50 rounded-lg border border-border">
                       <h3 className="text-lg font-semibold text-foreground mb-2">
                         {item.sort_order}. {item.term}
                       </h3>
@@ -2239,10 +2342,8 @@ Content-Type: multipart/form-data
                       <span className="text-xs text-muted-foreground/60 mt-2 inline-block">
                         Category: {item.category}
                       </span>
-                    </div>
-                  ))}
-                </div>
-              )}
+                    </div>)}
+                </div>}
 
               <div className="mt-8 p-6 bg-primary/10 rounded-lg border border-primary/20">
                 <h4 className="text-lg font-semibold text-foreground mb-3">👉 In short</h4>
@@ -2252,17 +2353,14 @@ Content-Type: multipart/form-data
               </div>
             </div>
           </div>
-        </div>
-      );
+        </div>;
     }
 
     // Handle Use Cases content
     if (activeHorizontalTab === 'use-cases') {
       return <UseCasesContent />;
     }
-
-    return (
-      <div className="flex-1">
+    return <div className="flex-1">
         <div className="container mx-auto p-4 md:p-8 max-w-5xl">
           <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4 md:mb-6">
             {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
@@ -2276,8 +2374,7 @@ Content-Type: multipart/form-data
             </p>
           </div>
         </div>
-      </div>
-    );
+      </div>;
   };
 
   // Dynamic SEO meta tags based on active section
@@ -2331,11 +2428,8 @@ Content-Type: multipart/form-data
       description: 'Learn how to use Hobson\'s Choice AI with our comprehensive guides, tutorials, and documentation.'
     };
   };
-
   const pageMeta = getPageMeta();
-
-  return (
-    <>
+  return <>
       <Helmet>
         <title>{pageMeta.title}</title>
         <meta name="description" content={pageMeta.description} />
@@ -2351,30 +2445,22 @@ Content-Type: multipart/form-data
           <div className="mt-8">
             <div className="w-full px-4">
               <nav className="flex space-x-8 overflow-x-auto">
-                {horizontalTabs.map((tab) => {
-                  const Icon = tab.icon;
-                  return (
-                    <button
-                      key={tab.id}
-                      onClick={() => {
-                        const contextualTabs = getContextualVerticalTabs(tab.id);
-                        const newVerticalTab = contextualTabs[0]?.id || tab.id;
-                        setActiveHorizontalTab(tab.id);
-                        setActiveVerticalTab(newVerticalTab);
-                        setIsGlobalPageActive(false);
-                        navigate(`/learn/${tab.id === 'use-cases' ? 'use-cases' : newVerticalTab}`, { replace: true });
-                      }}
-                      className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${
-                        activeHorizontalTab === tab.id && !isGlobalPageActive
-                          ? 'border-primary text-primary'
-                          : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'
-                      }`}
-                    >
+                {horizontalTabs.map(tab => {
+                const Icon = tab.icon;
+                return <button key={tab.id} onClick={() => {
+                  const contextualTabs = getContextualVerticalTabs(tab.id);
+                  const newVerticalTab = contextualTabs[0]?.id || tab.id;
+                  setActiveHorizontalTab(tab.id);
+                  setActiveVerticalTab(newVerticalTab);
+                  setIsGlobalPageActive(false);
+                  navigate(`/learn/${tab.id === 'use-cases' ? 'use-cases' : newVerticalTab}`, {
+                    replace: true
+                  });
+                }} className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${activeHorizontalTab === tab.id && !isGlobalPageActive ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50'}`}>
                       <Icon className="w-4 h-4" />
                       <span className="text-sm font-medium">{tab.label}</span>
-                    </button>
-                  );
-                })}
+                    </button>;
+              })}
               </nav>
             </div>
           </div>
@@ -2387,32 +2473,21 @@ Content-Type: multipart/form-data
                 {/* Global Navigation Section */}
                 <div className="mb-8">
                   <nav className="space-y-1">
-                    {staticVerticalTabs.map((tab) => {
-                      const Icon = tab.icon;
-                      return (
-                        <button
-                          key={tab.id}
-                          onClick={() => {
-                            setActiveVerticalTab(tab.id);
-                            setIsGlobalPageActive(true);
-                          }}
-                          className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                            activeVerticalTab === tab.id && isGlobalPageActive
-                              ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm'
-                              : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
-                          }`}
-                        >
+                    {staticVerticalTabs.map(tab => {
+                    const Icon = tab.icon;
+                    return <button key={tab.id} onClick={() => {
+                      setActiveVerticalTab(tab.id);
+                      setIsGlobalPageActive(true);
+                    }} className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${activeVerticalTab === tab.id && isGlobalPageActive ? 'bg-primary/10 text-primary border border-primary/20 shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}>
                           <Icon className="w-4 h-4 flex-shrink-0" />
                           <span className="text-sm font-medium">{tab.label}</span>
-                        </button>
-                      );
-                    })}
+                        </button>;
+                  })}
                   </nav>
                 </div>
 
                 {/* Visual Separator */}
-                {!isGlobalPageActive && (
-                  <div className="relative mb-6">
+                {!isGlobalPageActive && <div className="relative mb-6">
                     <div className="absolute inset-0 flex items-center">
                       <div className="w-full border-t border-border"></div>
                     </div>
@@ -2421,18 +2496,16 @@ Content-Type: multipart/form-data
                         <div className="w-2 h-2 bg-muted-foreground/40 rounded-full"></div>
                       </div>
                     </div>
-                  </div>
-                )}
+                  </div>}
 
                 {/* Contextual Section - Only show when not on global pages */}
-                {!isGlobalPageActive && (
-                  <div>
+                {!isGlobalPageActive && <div>
                     <div className="px-3 pb-4 mb-4 bg-primary/5 rounded-lg border-l-4 border-primary">
                       <div className="flex items-center gap-2 mb-2">
                         {(() => {
-                          const ActiveIcon = horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.icon;
-                          return ActiveIcon ? <ActiveIcon className="w-5 h-5 text-primary" /> : null;
-                        })()}
+                      const ActiveIcon = horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.icon;
+                      return ActiveIcon ? <ActiveIcon className="w-5 h-5 text-primary" /> : null;
+                    })()}
                         <h3 className="text-lg font-medium text-foreground">
                           {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
                         </h3>
@@ -2440,30 +2513,21 @@ Content-Type: multipart/form-data
                       <p className="text-sm text-muted-foreground pl-7">Navigate through {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content</p>
                     </div>
                     <nav className="space-y-1">
-                       {getContextualVerticalTabs(activeHorizontalTab).map((tab) => {
-                         const Icon = tab.icon;
-                         return (
-                           <button
-                             key={tab.id}
-                             onClick={() => {
-                               setActiveVerticalTab(tab.id);
-                               setIsGlobalPageActive(false);
-                               navigate(`/learn/${tab.id}`, { replace: true });
-                             }}
-                            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${
-                              activeVerticalTab === tab.id && !isGlobalPageActive
-                                ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm'
-                                : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'
-                            }`}
-                          >
+                       {getContextualVerticalTabs(activeHorizontalTab).map(tab => {
+                    const Icon = tab.icon;
+                    return <button key={tab.id} onClick={() => {
+                      setActiveVerticalTab(tab.id);
+                      setIsGlobalPageActive(false);
+                      navigate(`/learn/${tab.id}`, {
+                        replace: true
+                      });
+                    }} className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${activeVerticalTab === tab.id && !isGlobalPageActive ? 'bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-accent/5'}`}>
                             <Icon className="w-4 h-4 flex-shrink-0" />
                             <span className="text-sm font-medium">{tab.label}</span>
-                          </button>
-                        );
-                      })}
+                          </button>;
+                  })}
                     </nav>
-                  </div>
-                )}
+                  </div>}
               </div>
             </aside>
 
@@ -2479,46 +2543,36 @@ Content-Type: multipart/form-data
           {/* Mobile Topics Navigation */}
           <div className="border-b bg-background sticky top-16 z-40">
             <div className="px-4 py-3">
-               <select 
-                 value={activeHorizontalTab}
-                 onChange={(e) => {
-                   const contextualTabs = getContextualVerticalTabs(e.target.value);
-                   const newVerticalTab = contextualTabs[0]?.id || e.target.value;
-                   setActiveHorizontalTab(e.target.value);
-                   setActiveVerticalTab(newVerticalTab);
-                   setIsGlobalPageActive(false);
-                   navigate(`/learn/${e.target.value === 'use-cases' ? 'use-cases' : newVerticalTab}`, { replace: true });
-                 }}
-                className="w-full p-2 border border-border rounded-lg bg-background text-foreground"
-              >
-                {horizontalTabs.map((tab) => (
-                  <option key={tab.id} value={tab.id}>
+               <select value={activeHorizontalTab} onChange={e => {
+              const contextualTabs = getContextualVerticalTabs(e.target.value);
+              const newVerticalTab = contextualTabs[0]?.id || e.target.value;
+              setActiveHorizontalTab(e.target.value);
+              setActiveVerticalTab(newVerticalTab);
+              setIsGlobalPageActive(false);
+              navigate(`/learn/${e.target.value === 'use-cases' ? 'use-cases' : newVerticalTab}`, {
+                replace: true
+              });
+            }} className="w-full p-2 border border-border rounded-lg bg-background text-foreground">
+                {horizontalTabs.map(tab => <option key={tab.id} value={tab.id}>
                     {tab.label}
-                  </option>
-                ))}
+                  </option>)}
               </select>
             </div>
             
             {/* Mobile Subtopic Navigation */}
-            {!isGlobalPageActive && getContextualVerticalTabs(activeHorizontalTab).length > 0 && (
-              <div className="px-4 pb-3">
-                 <select 
-                   value={activeVerticalTab}
-                   onChange={(e) => {
-                     setActiveVerticalTab(e.target.value);
-                     setIsGlobalPageActive(false);
-                     navigate(`/learn/${e.target.value}`, { replace: true });
-                   }}
-                  className="w-full p-2 border border-border rounded-lg bg-background text-foreground text-sm"
-                >
-                  {getContextualVerticalTabs(activeHorizontalTab).map((tab) => (
-                    <option key={tab.id} value={tab.id}>
+            {!isGlobalPageActive && getContextualVerticalTabs(activeHorizontalTab).length > 0 && <div className="px-4 pb-3">
+                 <select value={activeVerticalTab} onChange={e => {
+              setActiveVerticalTab(e.target.value);
+              setIsGlobalPageActive(false);
+              navigate(`/learn/${e.target.value}`, {
+                replace: true
+              });
+            }} className="w-full p-2 border border-border rounded-lg bg-background text-foreground text-sm">
+                  {getContextualVerticalTabs(activeHorizontalTab).map(tab => <option key={tab.id} value={tab.id}>
                       {tab.label}
-                    </option>
-                  ))}
+                    </option>)}
                 </select>
-              </div>
-            )}
+              </div>}
           </div>
           
           <div className="flex-1 min-h-[calc(100vh-8rem)] p-4 md:p-8">
@@ -2528,22 +2582,12 @@ Content-Type: multipart/form-data
       </div>
 
       {/* Auth Dialog */}
-      <AuthDialog
-        open={isAuthDialogOpen}
-        onOpenChange={setIsAuthDialogOpen}
-        onSuccess={handleAuthSuccess}
-      />
+      <AuthDialog open={isAuthDialogOpen} onOpenChange={setIsAuthDialogOpen} onSuccess={handleAuthSuccess} />
 
       {/* Create Post Dialog */}
-      <CreatePostDialog
-        open={isCreatePostDialogOpen}
-        onOpenChange={setIsCreatePostDialogOpen}
-        onPostCreated={() => {
-          setIsCreatePostDialogOpen(false);
-        }}
-      />
-    </>
-  );
+      <CreatePostDialog open={isCreatePostDialogOpen} onOpenChange={setIsCreatePostDialogOpen} onPostCreated={() => {
+      setIsCreatePostDialogOpen(false);
+    }} />
+    </>;
 };
-
 export default Learn;
