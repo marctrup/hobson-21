@@ -1857,7 +1857,7 @@ Content-Type: multipart/form-data
                 {/* Bottom accent */}
                 <div className="mt-12 pt-8 border-t border-border flex items-center justify-center gap-2 text-muted-foreground">
                   <Heart className="w-5 h-5 text-primary" />
-                  <span className="text-sm">Built for real estate professionals</span>
+                  <span className="text-sm">Built for property professionals</span>
                 </div>
               </div>
             </div>
