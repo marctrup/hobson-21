@@ -376,10 +376,36 @@ serve(async (req) => {
 
     console.log('Starting knowledge base update...');
 
-    // Get FAQ content (hardcoded, not scraped)
-    const faqContent = getFaqContent();
-    const faqQuestionCount = (faqContent.match(/\*\*\d+\./g) || []).length;
-    console.log(`FAQ content loaded with ${faqQuestionCount} questions`);
+    // Fetch FAQ content from database
+    const { data: faqData, error: faqError } = await supabase
+      .from('faq_items')
+      .select('*')
+      .eq('is_active', true)
+      .order('category')
+      .order('sort_order');
+
+    if (faqError) {
+      console.error('Error fetching FAQs:', faqError);
+      throw faqError;
+    }
+
+    // Format FAQ content
+    const faqsByCategory = (faqData || []).reduce((acc: any, faq: any) => {
+      if (!acc[faq.category]) acc[faq.category] = [];
+      acc[faq.category].push(faq);
+      return acc;
+    }, {});
+
+    let faqContent = `## Frequently Asked Questions (${faqData?.length || 0} Questions)\n\n`;
+    
+    Object.entries(faqsByCategory).forEach(([category, faqs]: [string, any]) => {
+      faqContent += `### ${category}\n\n`;
+      faqs.forEach((faq: any) => {
+        faqContent += `**${faq.sort_order}. ${faq.question}**\n\n${faq.answer}\n\n---\n\n`;
+      });
+    });
+
+    console.log(`FAQ content loaded with ${faqData?.length || 0} questions`);
 
     // Fetch the Plans & Credits page to extract content
     const learnPlansUrl = `https://hobsonschoice.ai/learn/plans-credits`;
