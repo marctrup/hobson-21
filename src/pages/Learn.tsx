@@ -34,7 +34,6 @@ const Learn = () => {
         .from('faq_items')
         .select('*')
         .eq('is_active', true)
-        .order('category')
         .order('sort_order');
       setFaqItems(data || []);
     };
