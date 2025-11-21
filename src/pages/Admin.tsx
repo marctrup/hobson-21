@@ -27,7 +27,6 @@ export default function Admin() {
   const [applications, setApplications] = useState<PilotApplication[]>([]);
   const [loadingApplications, setLoadingApplications] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -146,36 +145,6 @@ export default function Admin() {
     document.body.removeChild(link);
   };
 
-  const updateKnowledgeBase = async () => {
-    setUpdatingKnowledge(true);
-    try {
-      const { data, error } = await supabase.functions.invoke('update-chatbot-knowledge');
-      
-      if (error) throw error;
-      
-      // Show detailed update information
-      const stats = data?.stats || {};
-      const preview = data?.preview || {};
-      
-      const description = `Version ${data.message?.split('version ')[1] || 'latest'}\n📝 ${stats.faqCount || 0} FAQ questions\n💳 ${stats.plansCreditsCount || 0} Plans & Credits\n💡 ${stats.useCasesCount || 0} Use Cases\n📖 ${stats.glossaryCount || 0} Glossary terms${preview.firstFaq ? `\n\nFirst FAQ: ${preview.firstFaq}` : ''}`;
-      
-      toast({
-        title: "Knowledge Base Updated ✓",
-        description,
-        duration: 8000,
-      });
-    } catch (error: any) {
-      console.error("Error updating knowledge base:", error);
-      toast({
-        title: "Update Failed",
-        description: error.message || "Failed to update chatbot knowledge base.",
-        variant: "destructive",
-      });
-    } finally {
-      setUpdatingKnowledge(false);
-    }
-  };
-
   if (isLoading || !isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -204,33 +173,6 @@ export default function Admin() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
-        {/* Chatbot Knowledge Base Card */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Chatbot Knowledge Base</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex flex-col gap-4">
-              <div className="space-y-1">
-                <p className="text-sm text-muted-foreground">
-                  Update the chatbot's knowledge base with the latest FAQ content from the database
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  Automatic updates run daily at 2 AM UTC. Use this button for immediate updates.
-                </p>
-              </div>
-              <div className="flex gap-2">
-                <Button onClick={updateKnowledgeBase} disabled={updatingKnowledge}>
-                  {updatingKnowledge ? "Updating..." : "Update Knowledge Base"}
-                </Button>
-                <Button variant="outline" onClick={() => navigate("/admin/faq-management")}>
-                  Manage FAQs
-                </Button>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
         <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
