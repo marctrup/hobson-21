@@ -28,7 +28,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Pencil, Trash2, Plus, Upload } from "lucide-react";
 
 interface GlossaryItem {
   id: string;
@@ -54,6 +54,7 @@ export default function GlossaryManagement() {
   const [loading, setLoading] = useState(true);
   const [editingItem, setEditingItem] = useState<GlossaryItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -160,6 +161,53 @@ export default function GlossaryManagement() {
     });
   };
 
+  const handleImportLegacyGlossary = async () => {
+    if (!confirm("This will import 24 glossary terms. Continue?")) return;
+
+    try {
+      const { error } = await supabase.functions.invoke("import-legacy-glossary");
+
+      if (error) throw error;
+      toast({ title: "Glossary terms imported successfully" });
+      fetchGlossaryItems();
+    } catch (error: any) {
+      toast({
+        title: "Error importing glossary terms",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
+  const updateKnowledgeBase = async () => {
+    setUpdatingKnowledge(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('update-chatbot-knowledge');
+      
+      if (error) throw error;
+      
+      const stats = data?.stats || {};
+      const preview = data?.preview || {};
+      
+      const description = `Version ${data.message?.split('version ')[1] || 'latest'}\n📝 ${stats.faqCount || 0} FAQ questions\n💳 ${stats.plansCreditsCount || 0} Plans & Credits\n💡 ${stats.useCasesCount || 0} Use Cases\n📖 ${stats.glossaryCount || 0} Glossary terms${preview.firstFaq ? `\n\nFirst FAQ: ${preview.firstFaq}` : ''}`;
+      
+      toast({
+        title: "Knowledge Base Updated ✓",
+        description,
+        duration: 8000,
+      });
+    } catch (error: any) {
+      console.error("Error updating knowledge base:", error);
+      toast({
+        title: "Update Failed",
+        description: error.message || "Failed to update chatbot knowledge base.",
+        variant: "destructive",
+      });
+    } finally {
+      setUpdatingKnowledge(false);
+    }
+  };
+
   return (
     <div className="container mx-auto py-8 space-y-6">
       <div className="flex justify-between items-center">
@@ -183,14 +231,26 @@ export default function GlossaryManagement() {
             </Button>
           </div>
         </div>
-        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={resetForm}>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Term
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="flex gap-2">
+          <Button onClick={handleImportLegacyGlossary} variant="outline">
+            <Upload className="mr-2 h-4 w-4" />
+            Import Legacy Glossary
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={updateKnowledgeBase} 
+            disabled={updatingKnowledge}
+          >
+            {updatingKnowledge ? "Updating..." : "Update Knowledge Base"}
+          </Button>
+          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={resetForm}>
+                <Plus className="mr-2 h-4 w-4" />
+                Add Term
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>
                 {editingItem ? "Edit Glossary Term" : "Add New Glossary Term"}
@@ -288,6 +348,7 @@ export default function GlossaryManagement() {
             </form>
           </DialogContent>
         </Dialog>
+        </div>
       </div>
 
       <Card className="p-6">
