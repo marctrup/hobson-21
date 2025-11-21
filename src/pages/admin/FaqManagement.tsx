@@ -29,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Pencil, Trash2, Plus, Upload } from "lucide-react";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 
 interface FaqItem {
   id: string;
@@ -268,14 +269,13 @@ export default function FaqManagement() {
                   />
                 </div>
                 <div>
-                  <Label htmlFor="answer">Answer (Markdown supported)</Label>
-                  <Textarea
+                  <Label htmlFor="answer">Answer</Label>
+                  <RichTextEditor
                     id="answer"
                     value={formData.answer}
-                    onChange={(e) =>
-                      setFormData({ ...formData, answer: e.target.value })
+                    onChange={(answer) =>
+                      setFormData({ ...formData, answer })
                     }
-                    required
                     rows={10}
                   />
                 </div>
