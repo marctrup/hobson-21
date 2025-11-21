@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet-async';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, CreditCard, HelpCircle, Play, Plus } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import remarkBreaks from 'remark-breaks';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { HEUBarVisualization } from '@/components/HEUBarVisualization';
 import ChatCostExample from '@/components/features/ChatCostExample';
@@ -2287,6 +2288,7 @@ Content-Type: multipart/form-data
                                 <AccordionContent className="pb-6 pt-2">
                                   <div className="text-muted-foreground text-sm prose prose-sm max-w-none [&>p]:mb-4 [&>ul]:mb-4 [&>ul]:ml-6">
                                     <ReactMarkdown
+                                      remarkPlugins={[remarkBreaks]}
                                       components={{
                                         p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
                                         ul: ({ children }) => <ul className="list-disc mb-4 ml-6">{children}</ul>,
@@ -2350,6 +2352,7 @@ Content-Type: multipart/form-data
                       </h3>
                       <div className="text-muted-foreground prose prose-sm max-w-none [&>p]:mb-4 [&>ul]:mb-4 [&>ul]:ml-6">
                         <ReactMarkdown
+                          remarkPlugins={[remarkBreaks]}
                           components={{
                             p: ({ children }) => <p className="mb-4 last:mb-0">{children}</p>,
                             ul: ({ children }) => <ul className="list-disc mb-4 ml-6">{children}</ul>,
