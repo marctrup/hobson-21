@@ -1836,7 +1836,7 @@ Content-Type: multipart/form-data
                 </div>
                 
                 {/* Title */}
-                <h1 className="text-3xl md:text-4xl font-extrabold text-muted-foreground mb-8 leading-tight">
+                <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8 leading-tight">
                   Positioning Statement
                 </h1>
                 
