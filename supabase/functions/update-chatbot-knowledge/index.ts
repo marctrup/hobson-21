@@ -499,7 +499,7 @@ serve(async (req) => {
 
 ## Site Navigation
 The Hobson AI website has the following main sections:
-- Learn (with subsections: Introduction, FAQ, Features, Integrations, Prompt Engineering, Use Cases, Glossary)
+- Learn (with subsections: Introduction, FAQ, Features, Integrations, Use Cases, Glossary)
 - Blog
 - Status
 - Contact Us
