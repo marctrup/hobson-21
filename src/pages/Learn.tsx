@@ -1818,7 +1818,7 @@ Content-Type: multipart/form-data
     // Handle Positioning Statement content
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
       return (
-        <div className="flex-1 min-h-screen flex items-center justify-center py-16 px-4">
+        <div className="flex-1 py-8 px-4">
           <div className="container mx-auto max-w-5xl">
             <div className="relative">
               {/* Decorative background elements */}
