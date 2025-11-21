@@ -53,6 +53,7 @@ export default function FaqManagement() {
   const [loading, setLoading] = useState(true);
   const [editingFaq, setEditingFaq] = useState<FaqItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -177,6 +178,35 @@ export default function FaqManagement() {
     }
   };
 
+  const updateKnowledgeBase = async () => {
+    setUpdatingKnowledge(true);
+    try {
+      const { data, error } = await supabase.functions.invoke('update-chatbot-knowledge');
+      
+      if (error) throw error;
+      
+      const stats = data?.stats || {};
+      const preview = data?.preview || {};
+      
+      const description = `Version ${data.message?.split('version ')[1] || 'latest'}\n📝 ${stats.faqCount || 0} FAQ questions\n💳 ${stats.plansCreditsCount || 0} Plans & Credits\n💡 ${stats.useCasesCount || 0} Use Cases\n📖 ${stats.glossaryCount || 0} Glossary terms${preview.firstFaq ? `\n\nFirst FAQ: ${preview.firstFaq}` : ''}`;
+      
+      toast({
+        title: "Knowledge Base Updated ✓",
+        description,
+        duration: 8000,
+      });
+    } catch (error: any) {
+      console.error("Error updating knowledge base:", error);
+      toast({
+        title: "Update Failed",
+        description: error.message || "Failed to update chatbot knowledge base.",
+        variant: "destructive",
+      });
+    } finally {
+      setUpdatingKnowledge(false);
+    }
+  };
+
   return (
     <div className="container mx-auto py-8 space-y-6">
       <div className="flex justify-between items-center">
@@ -185,6 +215,13 @@ export default function FaqManagement() {
           <Button onClick={handleImportLegacyFaqs} variant="outline">
             <Upload className="mr-2 h-4 w-4" />
             Import Legacy FAQs
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={updateKnowledgeBase} 
+            disabled={updatingKnowledge}
+          >
+            {updatingKnowledge ? "Updating..." : "Update Knowledge Base"}
           </Button>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
