@@ -1818,16 +1818,48 @@ Content-Type: multipart/form-data
     // Handle Positioning Statement content
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
       return (
-        <div className="flex-1">
-          <div className="container mx-auto p-8 max-w-4xl">
-            <div className="mb-8">
-              <h1 className="text-3xl font-bold text-foreground mb-6">Positioning Statement</h1>
-            </div>
-
-            <div className="prose prose-gray max-w-none">
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                For real estate professionals drained by bloated, expensive systems and the manual effort of pulling information from original documents, Hobson is the AI-powered assistant that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is lightweight, simple to use, and low cost — saving time, ensuring accuracy, and building trust with fast, referenced responses.
-              </p>
+        <div className="flex-1 min-h-screen flex items-center justify-center py-16 px-4">
+          <div className="container mx-auto max-w-5xl">
+            <div className="relative">
+              {/* Decorative background elements */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 rounded-3xl blur-3xl" />
+              
+              {/* Main content card */}
+              <div className="relative bg-card border-2 border-primary/20 rounded-2xl p-8 md:p-12 lg:p-16 shadow-xl hover:shadow-2xl transition-all duration-300 animate-fade-in">
+                {/* Accent line */}
+                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary rounded-t-2xl" />
+                
+                {/* Icon/Badge */}
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-8">
+                  <Lightbulb className="w-5 h-5 text-primary" />
+                  <span className="text-sm font-semibold text-primary">Our Mission</span>
+                </div>
+                
+                {/* Title */}
+                <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-8 leading-tight">
+                  Positioning Statement
+                </h1>
+                
+                {/* Statement content */}
+                <div className="relative">
+                  <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-primary to-accent rounded-full" />
+                  <blockquote className="pl-8 space-y-6">
+                    <p className="text-xl md:text-2xl lg:text-3xl text-foreground leading-relaxed font-medium">
+                      For real estate professionals drained by bloated, expensive systems and the manual effort of pulling information from original documents, 
+                      <span className="text-primary font-semibold"> Hobson is the AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers.
+                    </p>
+                    <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground leading-relaxed">
+                      Unlike complex platforms, Hobson is <span className="text-foreground font-semibold">lightweight, simple to use, and low cost</span> — saving time, ensuring accuracy, and building trust with fast, referenced responses.
+                    </p>
+                  </blockquote>
+                </div>
+                
+                {/* Bottom accent */}
+                <div className="mt-12 pt-8 border-t border-border flex items-center justify-center gap-2 text-muted-foreground">
+                  <Heart className="w-5 h-5 text-primary" />
+                  <span className="text-sm">Built for real estate professionals</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
