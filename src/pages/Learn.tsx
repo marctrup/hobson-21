@@ -24,6 +24,21 @@ const Learn = () => {
   const [activeTocSection, setActiveTocSection] = useState('positioning-statement');
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
+  const [faqItems, setFaqItems] = useState<any[]>([]);
+
+  // Fetch FAQs from database
+  useEffect(() => {
+    const fetchFaqs = async () => {
+      const { data } = await supabase
+        .from('faq_items')
+        .select('*')
+        .eq('is_active', true)
+        .order('category')
+        .order('sort_order');
+      setFaqItems(data || []);
+    };
+    fetchFaqs();
+  }, []);
 
   // Handle both URL param and hash navigation
   useEffect(() => {

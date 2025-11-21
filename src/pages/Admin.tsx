@@ -210,29 +210,23 @@ export default function Admin() {
             <CardTitle>Chatbot Knowledge Base</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-4">
               <div className="space-y-1">
                 <p className="text-sm text-muted-foreground">
-                  Update the chatbot's knowledge base with the latest FAQ content from /learn/faq
+                  Update the chatbot's knowledge base with the latest FAQ content from the database
                 </p>
                 <p className="text-xs text-muted-foreground">
                   Automatic updates run daily at 2 AM UTC. Use this button for immediate updates.
                 </p>
               </div>
-              <Button 
-                onClick={updateKnowledgeBase} 
-                disabled={updatingKnowledge}
-                className="ml-4"
-              >
-                {updatingKnowledge ? (
-                  <>
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Updating...
-                  </>
-                ) : (
-                  "Update Knowledge Base"
-                )}
-              </Button>
+              <div className="flex gap-2">
+                <Button onClick={updateKnowledgeBase} disabled={updatingKnowledge}>
+                  {updatingKnowledge ? "Updating..." : "Update Knowledge Base"}
+                </Button>
+                <Button variant="outline" onClick={() => navigate("/admin/faq-management")}>
+                  Manage FAQs
+                </Button>
+              </div>
             </div>
           </CardContent>
         </Card>
