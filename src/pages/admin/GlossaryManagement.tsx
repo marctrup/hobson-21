@@ -55,6 +55,7 @@ export default function GlossaryManagement() {
   const [editingItem, setEditingItem] = useState<GlossaryItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
+  const [initialFormData, setInitialFormData] = useState<typeof formData | null>(null);
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -64,6 +65,10 @@ export default function GlossaryManagement() {
     sort_order: 1,
     is_active: true,
   });
+
+  const hasFormChanged = initialFormData ? 
+    JSON.stringify(formData) !== JSON.stringify(initialFormData) : 
+    (formData.term.trim() !== "" || formData.definition.trim() !== "");
 
   useEffect(() => {
     fetchGlossaryItems();
@@ -122,13 +127,15 @@ export default function GlossaryManagement() {
 
   const handleEdit = (item: GlossaryItem) => {
     setEditingItem(item);
-    setFormData({
+    const itemData = {
       term: item.term,
       definition: item.definition,
       category: item.category,
       sort_order: item.sort_order,
       is_active: item.is_active,
-    });
+    };
+    setFormData(itemData);
+    setInitialFormData(itemData);
     setIsDialogOpen(true);
   };
 
@@ -152,6 +159,7 @@ export default function GlossaryManagement() {
 
   const resetForm = () => {
     setEditingItem(null);
+    setInitialFormData(null);
     setFormData({
       term: "",
       definition: "",
@@ -341,7 +349,7 @@ export default function GlossaryManagement() {
                 >
                   Cancel
                 </Button>
-                <Button type="submit">
+                <Button type="submit" disabled={!hasFormChanged}>
                   {editingItem ? "Update" : "Create"}
                 </Button>
               </div>
