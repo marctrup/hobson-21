@@ -312,17 +312,17 @@ export const HobsonChatbot = () => {
           },
           // Style lists
           ul: ({ node, ...props }) => (
-            <ul className="list-disc list-inside space-y-1 my-2" {...props} />
+            <ul className="list-disc list-inside space-y-0.5 my-1" {...props} />
           ),
           ol: ({ node, ...props }) => (
-            <ol className="list-decimal list-inside space-y-1 my-2" {...props} />
+            <ol className="list-decimal list-inside space-y-0.5 my-1" {...props} />
           ),
           li: ({ node, ...props }) => (
             <li className="text-sm" {...props} />
           ),
           // Style paragraphs
           p: ({ node, ...props }) => (
-            <p className="mb-2 last:mb-0" {...props} />
+            <p className="mb-1 last:mb-0" {...props} />
           ),
           // Style strong/bold
           strong: ({ node, ...props }) => (
