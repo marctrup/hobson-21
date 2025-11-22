@@ -159,14 +159,15 @@ export default function GlossaryManagement() {
 
   const resetForm = () => {
     setEditingItem(null);
-    setInitialFormData(null);
-    setFormData({
+    const defaultFormData = {
       term: "",
       definition: "",
       category: "General",
       sort_order: 1,
       is_active: true,
-    });
+    };
+    setFormData(defaultFormData);
+    setInitialFormData(defaultFormData);
   };
 
   const handleImportLegacyGlossary = async () => {
