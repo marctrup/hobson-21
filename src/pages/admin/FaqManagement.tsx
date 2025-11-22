@@ -159,15 +159,14 @@ export default function FaqManagement() {
 
   const resetForm = () => {
     setEditingFaq(null);
-    const defaultFormData = {
+    setInitialFormData(null);
+    setFormData({
       question: "",
       answer: "",
       category: "How Hobson works",
       sort_order: 1,
       is_active: true,
-    };
-    setFormData(defaultFormData);
-    setInitialFormData(defaultFormData);
+    });
   };
 
   const handleImportLegacyFaqs = async () => {
