@@ -55,6 +55,7 @@ export default function FaqManagement() {
   const [editingFaq, setEditingFaq] = useState<FaqItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
+  const [initialFormData, setInitialFormData] = useState<typeof formData | null>(null);
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -64,6 +65,10 @@ export default function FaqManagement() {
     sort_order: 1,
     is_active: true,
   });
+
+  const hasFormChanged = initialFormData ? 
+    JSON.stringify(formData) !== JSON.stringify(initialFormData) : 
+    (formData.question.trim() !== "" || formData.answer.trim() !== "");
 
   useEffect(() => {
     fetchFaqs();
@@ -122,13 +127,15 @@ export default function FaqManagement() {
 
   const handleEdit = (faq: FaqItem) => {
     setEditingFaq(faq);
-    setFormData({
+    const faqData = {
       question: faq.question,
       answer: faq.answer,
       category: faq.category,
       sort_order: faq.sort_order,
       is_active: faq.is_active,
-    });
+    };
+    setFormData(faqData);
+    setInitialFormData(faqData);
     setIsDialogOpen(true);
   };
 
@@ -152,6 +159,7 @@ export default function FaqManagement() {
 
   const resetForm = () => {
     setEditingFaq(null);
+    setInitialFormData(null);
     setFormData({
       question: "",
       answer: "",
@@ -338,7 +346,7 @@ export default function FaqManagement() {
                   >
                     Cancel
                   </Button>
-                  <Button type="submit">
+                  <Button type="submit" disabled={!hasFormChanged}>
                     {editingFaq ? "Update" : "Create"}
                   </Button>
                 </div>
