@@ -135,7 +135,7 @@ export default function FaqManagement() {
       is_active: faq.is_active,
     };
     setFormData(faqData);
-    setInitialFormData(faqData);
+    setInitialFormData({ ...faqData });
     setIsDialogOpen(true);
   };
 

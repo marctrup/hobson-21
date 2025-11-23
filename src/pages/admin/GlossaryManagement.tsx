@@ -135,7 +135,7 @@ export default function GlossaryManagement() {
       is_active: item.is_active,
     };
     setFormData(itemData);
-    setInitialFormData(itemData);
+    setInitialFormData({ ...itemData });
     setIsDialogOpen(true);
   };
 
