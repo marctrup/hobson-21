@@ -2004,7 +2004,7 @@ Content-Type: multipart/form-data
             </div>
             
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Hobson will help you achieve the best answers by helping you understand why it does what it does.
+              Hobson will help you achieve the best answers by helping you understand these three levels.
             </p>
           </div>
 
