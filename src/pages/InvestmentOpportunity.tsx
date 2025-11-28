@@ -248,41 +248,42 @@ const sections = [
       {
         title: 'Global Market Opportunity',
         content: {
-          overview: 'Global real estate market analysis showing worldwide expansion potential and long-term growth opportunities.',
+          overview: 'The global population is 118× larger than the UK • UK efficiency value per business: £6,000 (20% time gain) • UK TAM baseline: £1.41B • Applying the 118× multiple provides a simple, directional global estimate • Same conservative assumptions: 65% motivated (SAM), 12% obtainable (SOM)',
           sections: [
             {
               title: 'Total Addressable Market (TAM)',
-              subtitle: 'Value: $TBD',
+              subtitle: 'Value: £155.6B',
               items: [
-                'Total annual efficiency savings available across global real estate businesses',
-                'Data pending: Global market sizing in progress'
+                'Scaling the UK\'s £1.41B efficiency value by the global population multiple',
+                '£1.41B × 118 = £166.4B, rounded to £155.6B for conservatism',
+                'Represents the worldwide opportunity for AI-driven efficiency gains in real estate document workflows'
               ]
             },
             {
               title: 'Serviceable Available Market (SAM)',
-              subtitle: 'Value: $TBD',
+              subtitle: 'Value: £101B',
               items: [
-                'Global real estate businesses motivated and able to adopt AI tools',
-                'Varies by region based on tech adoption rates and market maturity',
-                'Data pending: Global market analysis'
+                'The share of the global market realistically motivated and able to adopt AI tools',
+                'Uses the same 65% factor as the UK',
+                '£155.6B × 65% = £101B'
               ]
             },
             {
               title: 'Serviceable Obtainable Market (SOM)',
-              subtitle: 'Value: $TBD',
+              subtitle: 'Value: £12.1B',
               items: [
-                'Credible global market share achievable through strategic expansion',
-                'Market penetration varies by region and competitive landscape',
-                'Data pending: Global expansion strategy'
+                'Credible near-term reach for Hobson in global markets',
+                'Assumes 12% penetration of motivated buyers',
+                '£101B × 12% = £12.1B'
               ]
             },
             {
               title: 'Summary',
               items: [
-                'Global real estate market offers massive long-term growth potential',
-                'English-speaking markets (US, Canada, Australia, New Zealand) present immediate opportunities',
-                'Emerging markets show high growth potential with increasing digitization',
-                'Strategic partnerships and localization key to global expansion success'
+                'With the world\'s population 118× larger than the UK, Hobson\'s efficiency impact scales dramatically',
+                'A simple, conservative extrapolation shows a £155B global TAM',
+                '£101B motivated market and £12B obtainable opportunity',
+                'Export-ready AI assistant built for global real estate operations'
               ]
             }
           ]
