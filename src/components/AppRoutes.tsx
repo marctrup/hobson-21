@@ -42,6 +42,7 @@ const InvestorSummary = lazy(() => import("../pages/InvestorSummary"));
 const Banners = lazy(() => import("../pages/Banners"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
+const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 
 // Loading component
 const PageLoader = () => (
@@ -147,6 +148,7 @@ const AppContent = () => {
               <Route path="/carousel" element={<Rotating />} />
               <Route path="/investorsummary" element={<InvestorSummary />} />
               <Route path="/banners" element={<Banners />} />
+              <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
