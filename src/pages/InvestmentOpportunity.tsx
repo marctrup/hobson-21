@@ -107,7 +107,7 @@ const sections = [
   {
     id: 'market',
     title: 'Market & Customers',
-    subtitle: 'Customer Segmentation, Market Size & Competitive Landscape',
+    subtitle: 'Customer Segmentation, Market Size, Competitive Landscape & Efficiency Savings',
     icon: Users,
     color: 'from-purple-500/10 to-purple-600/10',
     iconColor: 'text-purple-600',
@@ -130,6 +130,13 @@ const sections = [
         title: 'Competitive Landscape',
         content: {
           overview: 'Analysis of current market players and our competitive positioning.',
+          sections: []
+        }
+      },
+      {
+        title: 'Efficiency Savings (UK & Global)',
+        content: {
+          overview: 'Quantified efficiency gains and cost savings potential across UK, European, and global markets.',
           sections: []
         }
       }
