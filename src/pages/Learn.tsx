@@ -2026,7 +2026,7 @@ Content-Type: multipart/form-data
                   <span className="text-2xl">🏛️</span>
                 </div>
                 <h3 className="font-bold text-lg mb-2">Unit-Group</h3>
-                <p className="text-sm text-muted-foreground">One building or parade.</p>
+                <p className="text-sm text-muted-foreground">Multiple units</p>
               </div>
               
               <div className="bg-purple-500/5 border-2 border-purple-500/20 rounded-xl p-6 text-center">
