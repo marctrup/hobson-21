@@ -486,6 +486,8 @@ const sections = [
     pages: [
       {
         title: 'HEU & Pricing',
+        showCustomVisual: true,
+        customVisualComponent: 'heuPricing',
         content: {
           overview: '',
           sections: []
