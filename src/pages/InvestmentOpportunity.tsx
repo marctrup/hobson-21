@@ -146,7 +146,7 @@ const sections = [
   {
     id: 'roadmap',
     title: 'Roadmap & Product',
-    subtitle: 'Timeline, Milestones, Partnership Programme & Development Philosophy',
+    subtitle: 'Timeline, Milestones, Pilot clients & Development Philosophy',
     icon: Map,
     color: 'from-green-500/10 to-green-600/10',
     iconColor: 'text-green-600',
@@ -194,7 +194,7 @@ const sections = [
         }
       },
       {
-        title: 'Partnership Programme',
+        title: 'Pilot clients',
         content: {
           overview: 'Our approach to building strategic partnerships and pilot validation.',
           sections: []
