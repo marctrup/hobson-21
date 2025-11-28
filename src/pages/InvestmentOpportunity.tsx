@@ -173,9 +173,9 @@ const sections = [
         }
       },
       {
-        title: 'MVP AI Architecture & Workflow',
+        title: 'AI Architecture',
         image: mvpArchitecture,
-        imageAlt: 'MVP AI Architecture workflow diagram showing document parsing and AI-driven query resolver with two main processing steps',
+        imageAlt: 'AI Architecture workflow diagram showing document parsing and AI-driven query resolver with two main processing steps',
         content: {
           overview: 'Hobson\'s technical architecture leverages cutting-edge AI components to transform unstructured property documents into queryable, structured knowledge.',
           sections: [
