@@ -253,31 +253,31 @@ const sections = [
     ]
   },
   {
-    id: 'appendices',
-    title: 'Appendices',
-    subtitle: 'Detailed Personas, Efficiency Savings & Source Data',
+    id: 'marketing',
+    title: 'Marketing Strategy',
+    subtitle: 'Go-to-Market Plan & Customer Acquisition',
     icon: BookOpen,
     color: 'from-teal-500/10 to-teal-600/10',
     iconColor: 'text-teal-600',
     pages: [
       {
-        title: 'Detailed Personas',
+        title: 'Go-to-Market Strategy',
         content: {
-          overview: 'In-depth profiles of target customer segments.',
+          overview: 'Our comprehensive approach to market entry and customer acquisition.',
           sections: []
         }
       },
       {
-        title: 'Efficiency Savings',
+        title: 'Customer Acquisition',
         content: {
-          overview: 'Market size calculations and efficiency gain projections.',
+          overview: 'Strategies and channels for acquiring and retaining customers.',
           sections: []
         }
       },
       {
-        title: 'Source Data',
+        title: 'Market Positioning',
         content: {
-          overview: 'References and market research sources.',
+          overview: 'How we differentiate and position Hobson in the competitive landscape.',
           sections: []
         }
       }
