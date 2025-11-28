@@ -2406,13 +2406,6 @@ Content-Type: multipart/form-data
                     <p className="text-sm text-muted-foreground">This is by design to ensure accuracy</p>
                   </div>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">💬</span>
-                  <div>
-                    <p className="font-semibold">If you're unsure, just ask</p>
-                    <p className="text-sm text-muted-foreground">"Which level should I use for this question?"</p>
-                  </div>
-                </li>
               </ul>
             </div>
           </div>
