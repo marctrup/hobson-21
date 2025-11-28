@@ -289,17 +289,16 @@ const InvestmentOpportunity = () => {
                 {sections.map((section) => (
                   <Card
                     key={section.id}
-                    onClick={() => setSelectedSection(section)}
-                    className="group cursor-pointer hover:shadow-xl transition-all duration-300 overflow-hidden border-2 hover:border-primary/50"
+                    className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-2 hover:border-primary/50"
                   >
                     <div className={`h-2 bg-gradient-to-r ${section.color}`}></div>
                     <div className="p-6">
-                      <div className="flex items-start gap-4 mb-4">
+                      <div className="flex items-start gap-4 mb-6">
                         <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
                           <section.icon className={`w-7 h-7 ${section.iconColor}`} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-lg text-foreground mb-1 group-hover:text-primary transition-colors">
+                          <h3 className="font-bold text-lg text-foreground mb-1">
                             {section.title}
                           </h3>
                           <p className="text-sm text-muted-foreground line-clamp-2">
@@ -307,11 +306,35 @@ const InvestmentOpportunity = () => {
                           </p>
                         </div>
                       </div>
-                      <div className="flex items-center text-sm text-primary font-medium group-hover:translate-x-1 transition-transform">
-                        View Details
-                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                        </svg>
+                      <div className="flex gap-2">
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedSection(section);
+                          }}
+                          variant="default"
+                          size="sm"
+                          className="flex-1 gap-2 h-9"
+                        >
+                          <FileText className="w-4 h-4" />
+                          View
+                        </Button>
+                        <Button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            // Download functionality would go here
+                            toast({
+                              title: 'Download Started',
+                              description: `Downloading ${section.title}...`,
+                            });
+                          }}
+                          variant="outline"
+                          size="sm"
+                          className="flex-1 gap-2 h-9"
+                        >
+                          <Download className="w-4 h-4" />
+                          Download
+                        </Button>
                       </div>
                     </div>
                   </Card>
