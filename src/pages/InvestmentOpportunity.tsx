@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { GlobalHeader } from '@/components/GlobalHeader';
 import { HomepageFooter } from '@/components/homepage/HomepageFooter';
-import { Lock, FileText, Download, BarChart, TrendingUp, Code, Users, Target, Map, DollarSign, PieChart, Briefcase, BookOpen, X } from 'lucide-react';
+import { Lock, FileText, Download, BarChart, TrendingUp, Code, Users, Target, Map, DollarSign, PieChart, Briefcase, BookOpen, X, FileSpreadsheet } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { OptimizedImage } from '@/components/OptimizedImage';
 import hobsonLogo from '/hobson-logo.png';
@@ -585,6 +585,49 @@ const sections = [
         }
       }
     ]
+  },
+  {
+    id: 'financial-downloads',
+    title: 'Financial Downloads',
+    subtitle: 'Detailed Financial Spreadsheets & Models',
+    icon: FileSpreadsheet,
+    color: 'from-emerald-500/10 to-emerald-600/10',
+    iconColor: 'text-emerald-600',
+    pages: [
+      {
+        title: 'Available Downloads',
+        content: {
+          overview: 'Download detailed financial models and spreadsheets for comprehensive analysis.',
+          sections: [
+            {
+              title: 'Financial Models',
+              items: [
+                'Revenue Projections (5-Year)',
+                'Operating Expense Breakdown',
+                'Cash Flow Analysis',
+                'Break-even Analysis',
+                'Unit Economics Model'
+              ]
+            },
+            {
+              title: 'Supporting Documents',
+              items: [
+                'Cost of Product Analysis',
+                'Staffing Plan & Costs',
+                'Customer Acquisition Cost (CAC) Model',
+                'Lifetime Value (LTV) Calculations'
+              ]
+            }
+          ]
+        },
+        downloads: [
+          { name: 'Financial Projections 2025-2030.xlsx', path: '/financials/projections.xlsx' },
+          { name: 'Operating Expenses Breakdown.xlsx', path: '/financials/opex.xlsx' },
+          { name: 'Revenue Model.xlsx', path: '/financials/revenue.xlsx' },
+          { name: 'Unit Economics.xlsx', path: '/financials/unit-economics.xlsx' }
+        ]
+      }
+    ]
   }
 ];
 
@@ -996,6 +1039,48 @@ const InvestmentOpportunity = () => {
                         </div>
                       ))
                     }
+                    
+                    {/* Downloads Section */}
+                    {(selectedSection.pages[currentPageIndex] as any).downloads && (
+                      <div className="space-y-4 mt-8">
+                        <h3 className="text-xl font-bold text-primary flex items-center gap-2">
+                          <span className="w-1 h-6 bg-primary rounded-full"></span>
+                          Download Files
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          {(selectedSection.pages[currentPageIndex] as any).downloads.map((download: any, idx: number) => (
+                            <div key={idx} className="bg-background border border-border rounded-lg p-4 hover:border-primary/50 transition-colors">
+                              <div className="flex items-start gap-3">
+                                <FileSpreadsheet className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                                <div className="flex-1 min-w-0">
+                                  <p className="text-sm font-medium text-foreground mb-1">{download.name}</p>
+                                  <Button
+                                    onClick={() => {
+                                      const link = document.createElement('a');
+                                      link.href = download.path;
+                                      link.download = download.name;
+                                      document.body.appendChild(link);
+                                      link.click();
+                                      document.body.removeChild(link);
+                                      
+                                      toast({
+                                        title: 'Download Started',
+                                        description: `Downloading ${download.name}`,
+                                      });
+                                    }}
+                                    size="sm"
+                                    className="gap-2"
+                                  >
+                                    <Download className="w-3 h-3" />
+                                    Download
+                                  </Button>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </>
                 )}
               </div>
