@@ -275,7 +275,7 @@ const sections = [
         }
       },
       {
-        title: 'Market Overview',
+        title: 'Market Landscape',
         showCustomVisual: true,
         content: {
           overview: 'The next winners in real estate tech will be AI-native. Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.',
@@ -327,7 +327,7 @@ const sections = [
         }
       },
       {
-        title: 'Market Landscape',
+        title: 'Market Overview',
         showCustomVisual: true,
         customVisualComponent: 'matrix',
         content: {
@@ -932,13 +932,13 @@ const InvestmentOpportunity = () => {
               <div className="flex-1 overflow-y-auto mt-6 space-y-8">
                 {selectedSection.pages[currentPageIndex] && (
                   <>
-                    {/* Custom Visual Component for Market Overview */}
+                    {/* Custom Visual Component for Market Landscape */}
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual && 
                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== 'matrix' && (
                       <CompetitiveLandscapeVisual />
                     )}
                     
-                    {/* Custom Visual Component for Market Landscape */}
+                    {/* Custom Visual Component for Market Overview */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === 'matrix' && (
                       <CompetitiveMatrixVisual />
                     )}

@@ -50,14 +50,19 @@ export const CompetitiveLandscapeVisual = () => {
           {/* Dense logo cluster - faded and crowded */}
           <div className="relative bg-slate-50 rounded-xl p-6 border border-slate-200 min-h-[400px] overflow-hidden">
             <div className="grid grid-cols-4 gap-2">
-              {traditionalCompanies.slice(0, 48).map((company, idx) => (
-                <div 
-                  key={idx}
-                  className="bg-slate-200 rounded px-2 py-1.5 text-[10px] text-slate-600 text-center truncate border border-slate-300"
-                >
-                  {company}
-                </div>
-              ))}
+              {traditionalCompanies.slice(0, 48).map((company, idx) => {
+                const row = Math.floor(idx / 4);
+                const opacity = Math.max(0.2, 1 - (row * 0.15));
+                return (
+                  <div 
+                    key={idx}
+                    className="bg-slate-200 rounded px-2 py-1.5 text-[10px] text-slate-600 text-center truncate border border-slate-300"
+                    style={{ opacity }}
+                  >
+                    {company}
+                  </div>
+                );
+              })}
             </div>
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-100/60 pointer-events-none"></div>
           </div>
