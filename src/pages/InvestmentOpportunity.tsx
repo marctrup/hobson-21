@@ -175,8 +175,40 @@ const sections = [
       {
         title: 'MVP AI Architecture & Workflow',
         content: {
-          overview: 'Technical architecture and AI workflow powering the Hobson MVP.',
-          sections: []
+          overview: 'Our MVP AI architecture consists of two main components: Document Parsing and AI-Driven Query Resolution, designed for accuracy, speed, and scalability.',
+          sections: [
+            {
+              title: 'Step 1: Document Parsing',
+              items: [
+                'Documents (Leases, Rent agreements, etc.) are uploaded to the system',
+                'Text is chunked into meaningful segments for processing',
+                'Specialized prompt extracts key data (Property Name, Address, Rent, Owner, etc.)',
+                'Embedding model (EB) generates knowledge graph',
+                'Entities and relationships stored in Vector DB and Knowledge Graph DB'
+              ]
+            },
+            {
+              title: 'Step 2: AI-Driven Query Resolver',
+              items: [
+                'User query parsed to extract keywords and context (User, Property ID)',
+                'Query engine determines most relevant data and documents',
+                'Quality check validates response accuracy',
+                'LLM generates natural language answer',
+                'Fallback to RAG system if quality check fails'
+              ]
+            },
+            {
+              title: 'Architecture Components',
+              items: [
+                'AI (LLM or Proprietary): Core intelligence using language models',
+                'Proprietary Logic: Custom business rules and processing',
+                'Storage: MongoDB for structured data, Vector DB for embeddings',
+                'Notes: Fine-tuned prompts for optimal data extraction'
+              ]
+            }
+          ],
+          image: mvpArchitecture,
+          imageAlt: 'Hobson MVP AI Architecture and Workflow Diagram'
         }
       },
       {
