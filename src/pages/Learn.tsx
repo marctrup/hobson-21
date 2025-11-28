@@ -2281,25 +2281,25 @@ Content-Type: multipart/form-data
                     </td>
                     <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
-                  <tr className="border-b">
+                  <tr className="border-b bg-red-500/5">
                     <td className="p-4">Property</td>
                     <td className="p-4">Portfolio</td>
                     <td className="p-4">
-                      <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
-                        Recommended
+                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                        Required
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson asks permission</td>
+                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
-                  <tr>
+                  <tr className="bg-red-500/5">
                     <td className="p-4">Unit</td>
                     <td className="p-4">Portfolio</td>
                     <td className="p-4">
-                      <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
-                        Recommended
+                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                        Required
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson asks permission</td>
+                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
                 </tbody>
               </table>
