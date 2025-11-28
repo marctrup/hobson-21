@@ -56,8 +56,6 @@ export const HEUPricingVisual = () => {
               <h4 className="font-bold text-lg text-black mb-2">Free</h4>
               <div className="space-y-1 text-sm text-gray-800">
                 <p className="font-semibold text-blue-600">18 HEUs/month</p>
-                <p>Unlimited members</p>
-                <p>Unlimited documents</p>
               </div>
             </div>
 
