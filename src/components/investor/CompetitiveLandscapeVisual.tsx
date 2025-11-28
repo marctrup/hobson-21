@@ -27,13 +27,13 @@ export const CompetitiveLandscapeVisual = () => {
   ];
 
   return (
-    <div className="w-full bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-8 md:p-12 shadow-2xl border border-slate-700">
+    <div className="w-full bg-white rounded-2xl p-8 md:p-12 shadow-xl border border-slate-200">
       {/* Header */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
           The Next Winners in Real Estate Tech Will Be AI-Native
         </h2>
-        <p className="text-lg text-slate-300 max-w-3xl mx-auto">
+        <p className="text-lg text-slate-600 max-w-3xl mx-auto">
           Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.
         </p>
       </div>
@@ -43,37 +43,37 @@ export const CompetitiveLandscapeVisual = () => {
         {/* Left Side - Traditional Cloud Solutions */}
         <div className="relative">
           <div className="mb-6">
-            <h3 className="text-xl font-bold text-slate-300 mb-2">Traditional Cloud Solutions</h3>
-            <p className="text-sm text-slate-400">The Overcrowded "Before"</p>
+            <h3 className="text-xl font-bold text-slate-700 mb-2">Traditional Cloud Solutions</h3>
+            <p className="text-sm text-slate-500">The Overcrowded "Before"</p>
           </div>
 
           {/* Dense logo cluster - faded and crowded */}
-          <div className="relative bg-slate-800/40 rounded-xl p-6 border border-slate-700/50 backdrop-blur-sm min-h-[400px] overflow-hidden">
-            <div className="grid grid-cols-4 gap-2 opacity-40">
+          <div className="relative bg-slate-50 rounded-xl p-6 border border-slate-200 min-h-[400px] overflow-hidden">
+            <div className="grid grid-cols-4 gap-2 opacity-50">
               {traditionalCompanies.slice(0, 48).map((company, idx) => (
                 <div 
                   key={idx}
-                  className="bg-slate-700/50 rounded px-2 py-1.5 text-[9px] text-slate-400 text-center truncate border border-slate-600/30"
+                  className="bg-slate-200 rounded px-2 py-1.5 text-[9px] text-slate-500 text-center truncate border border-slate-300"
                 >
                   {company}
                 </div>
               ))}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-800/20 to-slate-800/60 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/50 to-slate-100/80 pointer-events-none"></div>
           </div>
 
           {/* Key Issues */}
-          <ul className="mt-4 space-y-2 text-sm text-slate-400">
+          <ul className="mt-4 space-y-2 text-sm text-slate-600">
             <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></span>
               <span>Overcrowded market</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></span>
               <span>High cost, slow innovation</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 mt-1.5 flex-shrink-0"></span>
               <span>Still reliant on manual information retrieval</span>
             </li>
           </ul>
@@ -81,42 +81,42 @@ export const CompetitiveLandscapeVisual = () => {
 
         {/* Center Divider */}
         <div className="hidden md:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-3 z-10">
-          <div className="flex flex-col items-center gap-2 bg-slate-800 px-4 py-3 rounded-full border-2 border-emerald-500/50 shadow-lg shadow-emerald-500/20">
-            <ArrowRight className="w-6 h-6 text-emerald-400" />
-            <span className="text-xs font-semibold text-emerald-400 whitespace-nowrap">Industry Transition</span>
+          <div className="flex flex-col items-center gap-2 bg-white px-4 py-3 rounded-full border-2 border-emerald-600 shadow-lg">
+            <ArrowRight className="w-6 h-6 text-emerald-600" />
+            <span className="text-xs font-semibold text-emerald-700 whitespace-nowrap">Industry Transition</span>
           </div>
         </div>
 
         {/* Right Side - AI-Native Solutions */}
         <div className="relative">
           <div className="mb-6">
-            <h3 className="text-xl font-bold text-emerald-400 mb-2 flex items-center gap-2">
+            <h3 className="text-xl font-bold text-emerald-700 mb-2 flex items-center gap-2">
               Next-Generation AI Solutions
-              <Sparkles className="w-5 h-5 text-emerald-400" />
+              <Sparkles className="w-5 h-5 text-emerald-600" />
             </h3>
-            <p className="text-sm text-slate-300">The Emerging "After"</p>
+            <p className="text-sm text-slate-600">The Emerging "After"</p>
           </div>
 
           {/* Clean, spacious AI-native logos */}
-          <div className="bg-gradient-to-br from-emerald-950/40 to-slate-800/40 rounded-xl p-8 border-2 border-emerald-500/30 backdrop-blur-sm min-h-[400px] flex flex-col justify-center gap-6 shadow-xl shadow-emerald-500/10">
+          <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-8 border-2 border-emerald-300 min-h-[400px] flex flex-col justify-center gap-6 shadow-lg">
             {aiNativeCompanies.map((company, idx) => (
               <div 
                 key={idx}
                 className={`
                   ${company.leader 
-                    ? 'bg-gradient-to-r from-emerald-500/20 to-emerald-600/20 border-2 border-emerald-400 shadow-lg shadow-emerald-500/20' 
-                    : 'bg-slate-700/50 border border-slate-600'
+                    ? 'bg-gradient-to-r from-emerald-100 to-emerald-200 border-2 border-emerald-600 shadow-md' 
+                    : 'bg-white border border-slate-300'
                   }
                   rounded-lg px-6 py-4 flex items-center justify-between transition-all hover:scale-[1.02]
                 `}
               >
                 <span className={`
-                  ${company.leader ? 'text-emerald-300 text-xl font-bold' : 'text-slate-300 text-lg font-medium'}
+                  ${company.leader ? 'text-emerald-900 text-xl font-bold' : 'text-slate-700 text-lg font-medium'}
                 `}>
                   {company.name}
                 </span>
                 {company.leader && (
-                  <span className="text-xs font-semibold text-emerald-400 bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-400/50">
+                  <span className="text-xs font-semibold text-emerald-700 bg-emerald-200 px-3 py-1 rounded-full border border-emerald-600">
                     Category Leader
                   </span>
                 )}
@@ -125,17 +125,17 @@ export const CompetitiveLandscapeVisual = () => {
           </div>
 
           {/* Key Benefits */}
-          <ul className="mt-4 space-y-2 text-sm text-slate-300">
+          <ul className="mt-4 space-y-2 text-sm text-slate-700">
             <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 flex-shrink-0"></span>
               <span>Instant, referenced answers from source documents</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 flex-shrink-0"></span>
               <span>Simple, lightweight, and low cost</span>
             </li>
             <li className="flex items-start gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></span>
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-1.5 flex-shrink-0"></span>
               <span>Designed for accuracy and automation</span>
             </li>
           </ul>
@@ -144,9 +144,9 @@ export const CompetitiveLandscapeVisual = () => {
 
       {/* Mobile Transition Arrow */}
       <div className="md:hidden flex justify-center my-8">
-        <div className="flex flex-col items-center gap-2 bg-slate-800 px-6 py-3 rounded-full border-2 border-emerald-500/50 shadow-lg shadow-emerald-500/20">
-          <ArrowRight className="w-6 h-6 text-emerald-400 rotate-90" />
-          <span className="text-xs font-semibold text-emerald-400">Industry Transition</span>
+        <div className="flex flex-col items-center gap-2 bg-white px-6 py-3 rounded-full border-2 border-emerald-600 shadow-lg">
+          <ArrowRight className="w-6 h-6 text-emerald-600 rotate-90" />
+          <span className="text-xs font-semibold text-emerald-700">Industry Transition</span>
         </div>
       </div>
     </div>
