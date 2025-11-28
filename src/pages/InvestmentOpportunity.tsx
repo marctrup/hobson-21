@@ -646,6 +646,19 @@ const InvestmentOpportunity = () => {
     if (authenticated === 'true') {
       setIsAuthenticated(true);
     }
+
+    // Clear authentication when navigating away or closing the page
+    const handleBeforeUnload = () => {
+      sessionStorage.removeItem('investment_authenticated');
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+
+    // Cleanup: Remove auth when component unmounts (user navigates away)
+    return () => {
+      sessionStorage.removeItem('investment_authenticated');
+      window.removeEventListener('beforeunload', handleBeforeUnload);
+    };
   }, []);
 
   const handlePasswordSubmit = async (e: React.FormEvent) => {
