@@ -396,7 +396,7 @@ const sections = [
             {
               title: '2026: Prepare for Launch',
               items: [
-                'Launch MVP to our pilot clients'
+                'Launch MVP to our pilot clients Q1'
               ]
             }
           ]
