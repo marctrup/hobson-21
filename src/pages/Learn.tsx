@@ -2049,36 +2049,36 @@ Content-Type: multipart/form-data
               <div className="flex border-b">
                 <button
                   onClick={() => setSmartNavTab('portfolio')}
-                  className={`flex-1 px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base font-semibold transition-colors ${
+                  className={`flex-1 px-2 sm:px-4 md:px-6 py-3 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base font-semibold transition-colors flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 ${
                     smartNavTab === 'portfolio'
                       ? 'bg-blue-500/10 text-blue-700 border-b-2 border-blue-500'
                       : 'text-muted-foreground hover:bg-accent/50'
                   }`}
                 >
-                  <span className="hidden sm:inline">🏢 Portfolio Page</span>
-                  <span className="sm:hidden">🏢 Portfolio</span>
+                  <span className="text-lg sm:text-base">🏢</span>
+                  <span className="text-center">Portfolio Page</span>
                 </button>
                 <button
                   onClick={() => setSmartNavTab('property')}
-                  className={`flex-1 px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base font-semibold transition-colors ${
+                  className={`flex-1 px-2 sm:px-4 md:px-6 py-3 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base font-semibold transition-colors flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 ${
                     smartNavTab === 'property'
                       ? 'bg-green-500/10 text-green-700 border-b-2 border-green-500'
                       : 'text-muted-foreground hover:bg-accent/50'
                   }`}
                 >
-                  <span className="hidden sm:inline">🏛️ Unit-Group Page</span>
-                  <span className="sm:hidden">🏛️ Unit-Group</span>
+                  <span className="text-lg sm:text-base">🏛️</span>
+                  <span className="text-center">Unit-Group Page</span>
                 </button>
                 <button
                   onClick={() => setSmartNavTab('unit')}
-                  className={`flex-1 px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base font-semibold transition-colors ${
+                  className={`flex-1 px-2 sm:px-4 md:px-6 py-3 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base font-semibold transition-colors flex flex-col sm:flex-row items-center justify-center gap-1 sm:gap-2 ${
                     smartNavTab === 'unit'
                       ? 'bg-purple-500/10 text-purple-700 border-b-2 border-purple-500'
                       : 'text-muted-foreground hover:bg-accent/50'
                   }`}
                 >
-                  <span className="hidden sm:inline">🚪 Unit Page</span>
-                  <span className="sm:hidden">🚪 Unit</span>
+                  <span className="text-lg sm:text-base">🚪</span>
+                  <span className="text-center">Unit Page</span>
                 </button>
               </div>
               
