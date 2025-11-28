@@ -445,7 +445,23 @@ const InvestmentOpportunity = () => {
                 </div>
                 
                 <div className="flex flex-col sm:flex-row gap-3">
-                  <Button size="lg" className="gap-2">
+                  <Button 
+                    size="lg" 
+                    className="gap-2"
+                    onClick={() => {
+                      const link = document.createElement('a');
+                      link.href = '/documents/full-business-plan.pdf';
+                      link.download = 'Hobson-Full-Business-Plan.pdf';
+                      document.body.appendChild(link);
+                      link.click();
+                      document.body.removeChild(link);
+                      
+                      toast({
+                        title: 'Download Started',
+                        description: 'Downloading Full Business Plan.pdf',
+                      });
+                    }}
+                  >
                     <Download className="w-4 h-4" />
                     Download Full Business Plan
                   </Button>
@@ -511,10 +527,17 @@ const InvestmentOpportunity = () => {
                         <Button
                           onClick={(e) => {
                             e.stopPropagation();
-                            // Download functionality would go here
+                            // Download PDF functionality
+                            const link = document.createElement('a');
+                            link.href = `/documents/${section.id}.pdf`; // Path to PDF file
+                            link.download = `${section.title}.pdf`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            
                             toast({
                               title: 'Download Started',
-                              description: `Downloading ${section.title}...`,
+                              description: `Downloading ${section.title}.pdf`,
                             });
                           }}
                           variant="outline"
@@ -522,7 +545,7 @@ const InvestmentOpportunity = () => {
                           className="flex-1 gap-2 h-9"
                         >
                           <Download className="w-4 h-4" />
-                          Download
+                          Download PDF
                         </Button>
                       </div>
                     </div>
