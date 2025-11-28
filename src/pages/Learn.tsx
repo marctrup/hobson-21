@@ -1973,74 +1973,74 @@ Content-Type: multipart/form-data
       return <div className="flex-1 py-8 px-4">
         <div className="container mx-auto max-w-6xl">
           {/* Hero Section */}
-          <div id="hero" className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <div id="hero" className="text-center mb-12 sm:mb-16 px-4">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-3 sm:mb-4">
               How Hobson Decides What to Answer
             </h1>
-            <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto">
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground mb-6 sm:mb-8 max-w-3xl mx-auto">
               A quick guide to how the assistant understands portfolio, unit-group, and unit questions.
             </p>
             
             {/* Three Level Icons */}
-            <div className="flex justify-center gap-8 mb-8">
+            <div className="flex justify-center gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
               <div className="text-center">
-                <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mb-2 mx-auto">
-                  <span className="text-3xl">🏢</span>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-blue-500/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 mx-auto">
+                  <span className="text-xl sm:text-2xl md:text-3xl">🏢</span>
                 </div>
-                <p className="font-semibold text-sm">Portfolio</p>
+                <p className="font-semibold text-xs sm:text-sm">Portfolio</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mb-2 mx-auto">
-                  <span className="text-3xl">🏛️</span>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-green-500/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 mx-auto">
+                  <span className="text-xl sm:text-2xl md:text-3xl">🏛️</span>
                 </div>
-                <p className="font-semibold text-sm">Unit-Group</p>
+                <p className="font-semibold text-xs sm:text-sm">Unit-Group</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mb-2 mx-auto">
-                  <span className="text-3xl">🚪</span>
+                <div className="w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-purple-500/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 mx-auto">
+                  <span className="text-xl sm:text-2xl md:text-3xl">🚪</span>
                 </div>
-                <p className="font-semibold text-sm">Unit</p>
+                <p className="font-semibold text-xs sm:text-sm">Unit</p>
               </div>
             </div>
             
-            <p className="text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base text-muted-foreground max-w-2xl mx-auto">
               Hobson will help you achieve the best answers by helping you understand these three levels.
             </p>
           </div>
 
           {/* Visual Diagram */}
-          <div id="diagram" className="mb-16">
-            <h2 className="text-2xl font-bold text-foreground mb-6 text-center">The Three Levels</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="bg-blue-500/5 border-2 border-blue-500/20 rounded-xl p-6 text-center">
-                <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-2xl">🏢</span>
+          <div id="diagram" className="mb-12 sm:mb-16 px-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6 text-center">The Three Levels</h2>
+            <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+              <div className="bg-blue-500/5 border-2 border-blue-500/20 rounded-xl p-4 sm:p-6 text-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500/10 rounded-full flex items-center justify-center mb-2 sm:mb-3 mx-auto">
+                  <span className="text-xl sm:text-2xl">🏢</span>
                 </div>
-                <h3 className="font-bold text-lg mb-2">Portfolio</h3>
-                <p className="text-sm text-muted-foreground">Everything — all unit-groups and units.</p>
+                <h3 className="font-bold text-base sm:text-lg mb-1 sm:mb-2">Portfolio</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">Everything — all unit-groups and units.</p>
               </div>
               
-              <div className="bg-green-500/5 border-2 border-green-500/20 rounded-xl p-6 text-center">
-                <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-2xl">🏛️</span>
+              <div className="bg-green-500/5 border-2 border-green-500/20 rounded-xl p-4 sm:p-6 text-center">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-500/10 rounded-full flex items-center justify-center mb-2 sm:mb-3 mx-auto">
+                  <span className="text-xl sm:text-2xl">🏛️</span>
                 </div>
-                <h3 className="font-bold text-lg mb-2">Unit-Group</h3>
-                <p className="text-sm text-muted-foreground">Linked-units</p>
+                <h3 className="font-bold text-base sm:text-lg mb-1 sm:mb-2">Unit-Group</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">Linked-units</p>
               </div>
               
-              <div className="bg-purple-500/5 border-2 border-purple-500/20 rounded-xl p-6 text-center">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mb-3 mx-auto">
-                  <span className="text-2xl">🚪</span>
+              <div className="bg-purple-500/5 border-2 border-purple-500/20 rounded-xl p-4 sm:p-6 text-center sm:col-span-2 md:col-span-1">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-500/10 rounded-full flex items-center justify-center mb-2 sm:mb-3 mx-auto">
+                  <span className="text-xl sm:text-2xl">🚪</span>
                 </div>
-                <h3 className="font-bold text-lg mb-2">Unit</h3>
-                <p className="text-sm text-muted-foreground">One lettable space.</p>
+                <h3 className="font-bold text-base sm:text-lg mb-1 sm:mb-2">Unit</h3>
+                <p className="text-xs sm:text-sm text-muted-foreground">One lettable space.</p>
               </div>
             </div>
           </div>
 
           {/* Interactive Tabs */}
-          <div id="tabs" className="mb-16">
-            <h2 className="text-2xl font-bold text-foreground mb-6 text-center">
+          <div id="tabs" className="mb-12 sm:mb-16 px-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6 text-center">
               What Happens When You're On This Page?
             </h2>
             
@@ -2049,145 +2049,148 @@ Content-Type: multipart/form-data
               <div className="flex border-b">
                 <button
                   onClick={() => setSmartNavTab('portfolio')}
-                  className={`flex-1 px-6 py-4 font-semibold transition-colors ${
+                  className={`flex-1 px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base font-semibold transition-colors ${
                     smartNavTab === 'portfolio'
                       ? 'bg-blue-500/10 text-blue-700 border-b-2 border-blue-500'
                       : 'text-muted-foreground hover:bg-accent/50'
                   }`}
                 >
-                  🏢 Portfolio Page
+                  <span className="hidden sm:inline">🏢 Portfolio Page</span>
+                  <span className="sm:hidden">🏢 Portfolio</span>
                 </button>
                 <button
                   onClick={() => setSmartNavTab('property')}
-                  className={`flex-1 px-6 py-4 font-semibold transition-colors ${
+                  className={`flex-1 px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base font-semibold transition-colors ${
                     smartNavTab === 'property'
                       ? 'bg-green-500/10 text-green-700 border-b-2 border-green-500'
                       : 'text-muted-foreground hover:bg-accent/50'
                   }`}
                 >
-                  🏛️ Unit-Group Page
+                  <span className="hidden sm:inline">🏛️ Unit-Group Page</span>
+                  <span className="sm:hidden">🏛️ Unit-Group</span>
                 </button>
                 <button
                   onClick={() => setSmartNavTab('unit')}
-                  className={`flex-1 px-6 py-4 font-semibold transition-colors ${
+                  className={`flex-1 px-2 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base font-semibold transition-colors ${
                     smartNavTab === 'unit'
                       ? 'bg-purple-500/10 text-purple-700 border-b-2 border-purple-500'
                       : 'text-muted-foreground hover:bg-accent/50'
                   }`}
                 >
-                  🚪 Unit Page
+                  <span className="hidden sm:inline">🚪 Unit Page</span>
+                  <span className="sm:hidden">🚪 Unit</span>
                 </button>
               </div>
               
               {/* Tab Content */}
-              <div className="p-6">
+              <div className="p-3 sm:p-4 md:p-6">
                 {smartNavTab === 'portfolio' && (
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3 p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
-                      <span className="text-2xl">✅</span>
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">✅</span>
                       <div>
-                        <p className="font-semibold">Ask about portfolio → answered directly</p>
+                        <p className="font-semibold text-sm sm:text-base">Ask about portfolio → answered directly</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
-                      <span className="text-2xl">💡</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">💡</span>
                       <div>
-                        <p className="font-semibold">Ask about a unit-group → switch recommended</p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="font-semibold text-sm sm:text-base">Ask about a unit-group → switch recommended</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                           Switch is optional — Hobson can try at this level if you confirm.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
-                      <span className="text-2xl">💡</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">💡</span>
                       <div>
-                        <p className="font-semibold">Ask about a unit → switch recommended</p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="font-semibold text-sm sm:text-base">Ask about a unit → switch recommended</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                           Switch is optional — Hobson can try at this level if you confirm.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-blue-500/5 border border-blue-500/20 rounded-lg">
-                      <span className="text-2xl">ℹ️</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-blue-500/5 border border-blue-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">ℹ️</span>
                       <div>
-                        <p className="font-semibold">No mandatory switches at this level</p>
+                        <p className="font-semibold text-sm sm:text-base">No mandatory switches at this level</p>
                       </div>
                     </div>
                   </div>
                 )}
                 
                 {smartNavTab === 'property' && (
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3 p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
-                      <span className="text-2xl">✅</span>
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">✅</span>
                       <div>
-                        <p className="font-semibold">Ask about same unit-group → answered directly</p>
+                        <p className="font-semibold text-sm sm:text-base">Ask about same unit-group → answered directly</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
-                      <span className="text-2xl">💡</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">💡</span>
                       <div>
-                        <p className="font-semibold">Ask about a unit <em>in same unit-group</em> → switch recommended</p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="font-semibold text-sm sm:text-base">Ask about a unit <em>in same unit-group</em> → switch recommended</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                           Hobson can continue at unit-group level if you prefer.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
-                      <span className="text-2xl">🚫</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about a different unit-group → switch required</p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="font-semibold text-sm sm:text-base">Ask about a different unit-group → switch required</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                           Hobson cannot answer without switching.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
-                      <span className="text-2xl">🚫</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about a unit in another unit-group → switch required</p>
-                        <p className="text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
+                        <p className="font-semibold text-sm sm:text-base">Ask about a unit in another unit-group → switch required</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
-                      <span className="text-2xl">🚫</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about portfolio → switch required</p>
-                        <p className="text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
+                        <p className="font-semibold text-sm sm:text-base">Ask about portfolio → switch required</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
                       </div>
                     </div>
                   </div>
                 )}
                 
                 {smartNavTab === 'unit' && (
-                  <div className="space-y-4">
-                    <div className="flex items-start gap-3 p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
-                      <span className="text-2xl">✅</span>
+                  <div className="space-y-3 sm:space-y-4">
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">✅</span>
                       <div>
-                        <p className="font-semibold">Ask about same unit → answered directly</p>
+                        <p className="font-semibold text-sm sm:text-base">Ask about same unit → answered directly</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
-                      <span className="text-2xl">🚫</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about any other unit → switch required</p>
-                        <p className="text-sm text-muted-foreground mt-1">
+                        <p className="font-semibold text-sm sm:text-base">Ask about any other unit → switch required</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                           Hobson blocks the answer if you decline a required switch.
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
-                      <span className="text-2xl">🚫</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about any unit-group → switch required</p>
-                        <p className="text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
+                        <p className="font-semibold text-sm sm:text-base">Ask about any unit-group → switch required</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
-                      <span className="text-2xl">🚫</span>
+                    <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about portfolio → switch required</p>
-                        <p className="text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
+                        <p className="font-semibold text-sm sm:text-base">Ask about portfolio → switch required</p>
+                        <p className="text-xs sm:text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
                       </div>
                     </div>
                   </div>
@@ -2197,108 +2200,108 @@ Content-Type: multipart/form-data
           </div>
 
           {/* Quick Reference Table */}
-          <div id="table" className="mb-16">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Visual Quick-Reference Table</h2>
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse bg-card border rounded-lg overflow-hidden">
+          <div id="table" className="mb-12 sm:mb-16 px-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Visual Quick-Reference Table</h2>
+            <div className="overflow-x-auto -mx-4 px-4">
+              <table className="w-full min-w-[600px] border-collapse bg-card border rounded-lg overflow-hidden">
                 <thead>
                   <tr className="bg-muted/50">
-                    <th className="border-b p-4 text-left font-semibold">From</th>
-                    <th className="border-b p-4 text-left font-semibold">To</th>
-                    <th className="border-b p-4 text-left font-semibold">Switch Type</th>
-                    <th className="border-b p-4 text-left font-semibold">What Happens</th>
+                    <th className="border-b p-2 sm:p-3 md:p-4 text-left font-semibold text-xs sm:text-sm">From</th>
+                    <th className="border-b p-2 sm:p-3 md:p-4 text-left font-semibold text-xs sm:text-sm">To</th>
+                    <th className="border-b p-2 sm:p-3 md:p-4 text-left font-semibold text-xs sm:text-sm">Switch Type</th>
+                    <th className="border-b p-2 sm:p-3 md:p-4 text-left font-semibold text-xs sm:text-sm">What Happens</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr className="border-b">
-                    <td className="p-4">Portfolio</td>
-                    <td className="p-4">Unit-Group</td>
-                    <td className="p-4">
-                      <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Portfolio</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group</td>
+                    <td className="p-2 sm:p-3 md:p-4">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-amber-500/10 text-amber-700 rounded-full text-xs font-medium whitespace-nowrap">
                         Recommended
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson asks permission</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">Hobson asks permission</td>
                   </tr>
                   <tr className="border-b">
-                    <td className="p-4">Portfolio</td>
-                    <td className="p-4">Unit</td>
-                    <td className="p-4">
-                      <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Portfolio</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit</td>
+                    <td className="p-2 sm:p-3 md:p-4">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-amber-500/10 text-amber-700 rounded-full text-xs font-medium whitespace-nowrap">
                         Recommended
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson asks permission</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">Hobson asks permission</td>
                   </tr>
                   <tr className="border-b bg-red-500/5">
-                    <td className="p-4">Unit-Group A</td>
-                    <td className="p-4">Unit-Group B</td>
-                    <td className="p-4">
-                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group A</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group B</td>
+                    <td className="p-2 sm:p-3 md:p-4">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
                         Required
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
                   <tr className="border-b">
-                    <td className="p-4">Unit-Group</td>
-                    <td className="p-4">Unit (same unit-group)</td>
-                    <td className="p-4">
-                      <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit (same unit-group)</td>
+                    <td className="p-2 sm:p-3 md:p-4">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-amber-500/10 text-amber-700 rounded-full text-xs font-medium whitespace-nowrap">
                         Recommended
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson can continue</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">Hobson can continue</td>
                   </tr>
                   <tr className="border-b bg-red-500/5">
-                    <td className="p-4">Unit-Group A</td>
-                    <td className="p-4">Unit in Unit-Group B</td>
-                    <td className="p-4">
-                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group A</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit in Unit-Group B</td>
+                    <td className="p-2 sm:p-3 md:p-4">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
                         Required
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
                   <tr className="border-b bg-red-500/5">
-                    <td className="p-4">Unit A</td>
-                    <td className="p-4">Unit B</td>
-                    <td className="p-4">
-                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit A</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit B</td>
+                    <td className="p-2 sm:p-3 md:p-4">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
                         Required
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
                   <tr className="bg-red-500/5">
-                    <td className="p-4">Unit</td>
-                    <td className="p-4">Unit-Group</td>
-                    <td className="p-4">
-                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group</td>
+                    <td className="p-2 sm:p-3 md:p-4">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
                         Required
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
                   <tr className="border-b bg-red-500/5">
-                    <td className="p-4">Unit-Group</td>
-                    <td className="p-4">Portfolio</td>
-                    <td className="p-4">
-                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Portfolio</td>
+                    <td className="p-2 sm:p-3 md:p-4">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
                         Required
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
                   <tr className="bg-red-500/5">
-                    <td className="p-4">Unit</td>
-                    <td className="p-4">Portfolio</td>
-                    <td className="p-4">
-                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Portfolio</td>
+                    <td className="p-2 sm:p-3 md:p-4">
+                      <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
                         Required
                       </span>
                     </td>
-                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                    <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
                 </tbody>
               </table>
@@ -2306,26 +2309,26 @@ Content-Type: multipart/form-data
           </div>
 
           {/* What Happens If I Say No */}
-          <div id="say-no" className="mb-16">
-            <div className="bg-blue-500/5 border-2 border-blue-500/20 rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-foreground mb-4">What Happens If I Say No?</h2>
-              <div className="space-y-4">
+          <div id="say-no" className="mb-12 sm:mb-16 px-4">
+            <div className="bg-blue-500/5 border-2 border-blue-500/20 rounded-xl p-4 sm:p-6 md:p-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-3 sm:mb-4">What Happens If I Say No?</h2>
+              <div className="space-y-3 sm:space-y-4">
                 <div>
-                  <p className="font-semibold text-lg mb-2">
+                  <p className="font-semibold text-base sm:text-lg mb-2">
                     <span className="text-amber-500">💡</span> If the switch is recommended:
                   </p>
-                  <p className="text-muted-foreground">
+                  <p className="text-sm sm:text-base text-muted-foreground">
                     Hobson can stay where it is — but will warn accuracy may be lower.
                   </p>
                 </div>
                 <div>
-                  <p className="font-semibold text-lg mb-2">
+                  <p className="font-semibold text-base sm:text-lg mb-2">
                     <span className="text-red-500">🚫</span> If the switch is required:
                   </p>
-                  <p className="text-muted-foreground mb-2">
+                  <p className="text-sm sm:text-base text-muted-foreground mb-2">
                     Hobson cannot answer. Message shown:
                   </p>
-                  <div className="bg-card border border-border rounded-lg p-4 italic">
+                  <div className="bg-card border border-border rounded-lg p-3 sm:p-4 italic text-sm sm:text-base">
                     "I can't answer that from this level without switching."
                   </div>
                 </div>
@@ -2334,28 +2337,28 @@ Content-Type: multipart/form-data
           </div>
 
           {/* Why Is This Needed */}
-          <div id="why" className="mb-16">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Why Is This Needed?</h2>
-            <div className="bg-card border rounded-lg p-6">
-              <p className="text-muted-foreground leading-relaxed mb-4">
+          <div id="why" className="mb-12 sm:mb-16 px-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Why Is This Needed?</h2>
+            <div className="bg-card border rounded-lg p-4 sm:p-6">
+              <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3 sm:mb-4">
                 These scope rules exist to protect the quality and reliability of Hobson's answers. By ensuring 
                 questions are answered at the right level, the system can:
               </p>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="flex items-start gap-3">
-                  <span className="text-green-500 mt-1">✓</span>
+              <ul className="space-y-2 sm:space-y-3 text-sm sm:text-base text-muted-foreground">
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="text-green-500 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
                   <span>Ensure the right data is pulled from the correct documents</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-green-500 mt-1">✓</span>
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="text-green-500 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
                   <span>Prevent "wrong unit" or "wrong unit-group" mistakes</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-green-500 mt-1">✓</span>
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="text-green-500 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
                   <span>Keep conversations clean and contextually accurate</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-green-500 mt-1">✓</span>
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="text-green-500 mt-0.5 sm:mt-1 flex-shrink-0">✓</span>
                   <span>Make Hobson predictable and consistent in its responses</span>
                 </li>
               </ul>
@@ -2363,15 +2366,15 @@ Content-Type: multipart/form-data
           </div>
 
           {/* Download Section */}
-          <div id="download" className="mb-16 text-center">
-            <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl p-8">
-              <h2 className="text-2xl font-bold text-foreground mb-4">Quick Reference Guide</h2>
-              <p className="text-muted-foreground mb-6">
+          <div id="download" className="mb-12 sm:mb-16 px-4 text-center">
+            <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl p-6 sm:p-8">
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-3 sm:mb-4">Quick Reference Guide</h2>
+              <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6">
                 Download the one-page cheat sheet for easy reference
               </p>
               <Button 
                 size="lg" 
-                className="gap-2"
+                className="gap-2 text-sm sm:text-base"
                 onClick={() => window.open('/Hobson_Cheat_Sheet.pdf', '_blank')}
               >
                 📥 Download the One-Page Cheat Sheet
@@ -2380,29 +2383,29 @@ Content-Type: multipart/form-data
           </div>
 
           {/* Final Tips */}
-          <div id="tips" className="mb-8">
-            <h2 className="text-2xl font-bold text-foreground mb-6">Final Tips</h2>
-            <div className="bg-card border rounded-lg p-6">
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">🎯</span>
+          <div id="tips" className="mb-6 sm:mb-8 px-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Final Tips</h2>
+            <div className="bg-card border rounded-lg p-4 sm:p-6">
+              <ul className="space-y-3 sm:space-y-4">
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="text-xl sm:text-2xl flex-shrink-0">🎯</span>
                   <div>
-                    <p className="font-semibold">Hobson always knows what page you're on</p>
-                    <p className="text-sm text-muted-foreground">The system tracks your current context automatically</p>
+                    <p className="font-semibold text-sm sm:text-base">Hobson always knows what page you're on</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">The system tracks your current context automatically</p>
                   </div>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">🔒</span>
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="text-xl sm:text-2xl flex-shrink-0">🔒</span>
                   <div>
-                    <p className="font-semibold">It will never switch levels without permission</p>
-                    <p className="text-sm text-muted-foreground">You're always in control of navigation</p>
+                    <p className="font-semibold text-sm sm:text-base">It will never switch levels without permission</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">You're always in control of navigation</p>
                   </div>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="text-2xl">⚠️</span>
+                <li className="flex items-start gap-2 sm:gap-3">
+                  <span className="text-xl sm:text-2xl flex-shrink-0">⚠️</span>
                   <div>
-                    <p className="font-semibold">Some questions simply can't be answered at the wrong level</p>
-                    <p className="text-sm text-muted-foreground">This is by design to ensure accuracy</p>
+                    <p className="font-semibold text-sm sm:text-base">Some questions simply can't be answered at the wrong level</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground">This is by design to ensure accuracy</p>
                   </div>
                 </li>
               </ul>
@@ -2410,9 +2413,9 @@ Content-Type: multipart/form-data
           </div>
 
           {/* Got Questions */}
-          <div className="text-center">
-            <p className="text-muted-foreground mb-4">Got Questions?</p>
-            <Button variant="outline" asChild>
+          <div className="text-center px-4 pb-8">
+            <p className="text-sm sm:text-base text-muted-foreground mb-3 sm:mb-4">Got Questions?</p>
+            <Button variant="outline" asChild className="text-sm sm:text-base">
               <Link to="/contact">Contact Support</Link>
             </Button>
           </div>
