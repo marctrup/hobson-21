@@ -10,6 +10,7 @@ import { Lock, FileText, Download, BarChart, TrendingUp, Code, Users, Target, Ma
 import { useToast } from '@/hooks/use-toast';
 import { OptimizedImage } from '@/components/OptimizedImage';
 import hobsonLogo from '/hobson-logo.png';
+import mvpArchitecture from '@/assets/mvp-ai-architecture.png';
 import {
   Dialog,
   DialogContent,
