@@ -6,7 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { Eye, EyeOff } from "lucide-react";
 
 interface PilotApplication {
   id: string;
@@ -27,6 +29,10 @@ export default function Admin() {
   const [applications, setApplications] = useState<PilotApplication[]>([]);
   const [loadingApplications, setLoadingApplications] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -145,6 +151,57 @@ export default function Admin() {
     document.body.removeChild(link);
   };
 
+  const handleUpdatePassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (newPassword !== confirmPassword) {
+      toast({
+        title: "Passwords Don't Match",
+        description: "Please make sure both passwords are identical.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (newPassword.length < 8) {
+      toast({
+        title: "Password Too Short",
+        description: "Password must be at least 8 characters long.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsUpdatingPassword(true);
+
+    try {
+      // Update the password in the database
+      const { error } = await supabase
+        .from('investment_page_settings')
+        .update({ password_hash: newPassword })
+        .eq('id', (await supabase.from('investment_page_settings').select('id').single()).data?.id);
+
+      if (error) throw error;
+
+      toast({
+        title: "Password Updated",
+        description: "Investment page password has been successfully updated.",
+      });
+
+      setNewPassword('');
+      setConfirmPassword('');
+    } catch (error) {
+      console.error('Error updating password:', error);
+      toast({
+        title: "Update Failed",
+        description: "Failed to update the password. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUpdatingPassword(false);
+    }
+  };
+
   if (isLoading || !isAdmin) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -201,6 +258,62 @@ export default function Admin() {
                 </div>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Investment Page Password</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleUpdatePassword} className="space-y-4 max-w-md">
+              <div>
+                <label htmlFor="newPassword" className="text-sm font-medium mb-2 block">
+                  New Password
+                </label>
+                <div className="relative">
+                  <Input
+                    id="newPassword"
+                    type={showPassword ? 'text' : 'password'}
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Enter new password"
+                    required
+                    minLength={8}
+                    disabled={isUpdatingPassword}
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="absolute right-0 top-0"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </Button>
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="confirmPassword" className="text-sm font-medium mb-2 block">
+                  Confirm Password
+                </label>
+                <Input
+                  id="confirmPassword"
+                  type={showPassword ? 'text' : 'password'}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm new password"
+                  required
+                  minLength={8}
+                  disabled={isUpdatingPassword}
+                />
+              </div>
+
+              <Button type="submit" disabled={isUpdatingPassword}>
+                {isUpdatingPassword ? 'Updating...' : 'Update Password'}
+              </Button>
+            </form>
           </CardContent>
         </Card>
 
