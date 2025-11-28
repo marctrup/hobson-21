@@ -163,6 +163,27 @@ const sections = [
           overview: 'Core principles guiding our product development and AI architecture.',
           sections: []
         }
+      },
+      {
+        title: 'MVP AI Architecture & Workflow',
+        content: {
+          overview: 'Technical architecture and AI workflow powering the Hobson MVP.',
+          sections: []
+        }
+      },
+      {
+        title: 'Phase 1 Features (Current)',
+        content: {
+          overview: 'Current feature set and capabilities available in the MVP release.',
+          sections: []
+        }
+      },
+      {
+        title: 'Phase 2 Roadmap (Oct 2025 Onward)',
+        content: {
+          overview: 'Planned features and enhancements for Phase 2 including mobile, API, and deeper AI capabilities.',
+          sections: []
+        }
       }
     ]
   },
