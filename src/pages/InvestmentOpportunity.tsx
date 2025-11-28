@@ -190,7 +190,7 @@ const sections = [
   {
     id: 'commercials',
     title: 'Commercials',
-    subtitle: 'Pricing Philosophy, HEU Model & Sample Scenarios',
+    subtitle: 'Pricing Philosophy, HEU Model, Sample Scenarios & Revenue Model',
     icon: DollarSign,
     color: 'from-amber-500/10 to-amber-600/10',
     iconColor: 'text-amber-600',
@@ -210,9 +210,16 @@ const sections = [
         }
       },
       {
-        title: 'Sample Scenarios',
+        title: 'Sample Pricing Scenarios',
         content: {
           overview: 'Real-world pricing examples and cost projections.',
+          sections: []
+        }
+      },
+      {
+        title: 'Revenue Model',
+        content: {
+          overview: 'Comprehensive revenue model and growth projections based on usage patterns.',
           sections: []
         }
       }
