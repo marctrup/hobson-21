@@ -287,7 +287,8 @@ const sections = [
               items: [
                 'With the world\'s population 118× larger than the UK, Hobson\'s efficiency impact scales dramatically',
                 'A simple, conservative extrapolation shows a £155B global TAM',
-                '£101B motivated market and £12B obtainable opportunity'
+                '£101B motivated market and £12B obtainable opportunity',
+                'Strong potential for AI-driven real estate tools in Global markets'
               ]
             }
           ]
