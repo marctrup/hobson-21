@@ -327,15 +327,6 @@ const sections = [
         }
       },
       {
-        title: 'Market Overview',
-        showCustomVisual: true,
-        customVisualComponent: 'matrix',
-        content: {
-          overview: 'A landscape of traditional software, standalone AI, and generic tools—Hobson stands out as an integrated real estate AI solution.',
-          sections: []
-        }
-      },
-      {
         title: 'Efficiency Savings (UK & Global)',
         content: {
           overview: 'Quantified efficiency gains and cost savings potential across UK, European, and global markets.',
