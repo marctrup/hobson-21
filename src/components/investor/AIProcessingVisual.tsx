@@ -111,10 +111,6 @@ export const AIProcessingVisual = () => {
                   <span>1 Lease:</span>
                   <span className="font-medium">~$0.41</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>Tokens per lease:</span>
-                  <span className="font-medium">~1,005,262</span>
-                </div>
               </div>
             </div>
           </div>
