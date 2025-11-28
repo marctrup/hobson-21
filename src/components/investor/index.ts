@@ -5,3 +5,6 @@ export { MarketOpportunitySlide } from './MarketOpportunitySlide';
 export { InvestorCTASlide } from './InvestorCTASlide';
 export { CompetitiveLandscapeVisual } from './CompetitiveLandscapeVisual';
 export { CompetitiveMatrixVisual } from './CompetitiveMatrixVisual';
+export { EuropeanGlobalVisual } from './EuropeanGlobalVisual';
+export { HEUPricingVisual } from './HEUPricingVisual';
+export { AIProcessingVisual } from './AIProcessingVisual';
