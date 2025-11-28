@@ -629,19 +629,6 @@ const InvestmentOpportunity = () => {
                         </ul>
                       </div>
                     ))}
-
-                    {/* Download Section */}
-                    <div className="pt-6 border-t">
-                      <div className="flex flex-col sm:flex-row gap-4">
-                        <Button className="flex-1 gap-2">
-                          <Download className="w-4 h-4" />
-                          Download {selectedSection.pages[currentPageIndex].title}
-                        </Button>
-                        <Button variant="outline" className="flex-1">
-                          View Related Documents
-                        </Button>
-                      </div>
-                    </div>
                   </>
                 )}
               </div>
