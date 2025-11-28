@@ -305,6 +305,9 @@ export const Homepage = () => {
                         {link.label}
                       </Link>
                     ))}
+                    <Link to="/investment-opportunity" className="block text-muted-foreground hover:text-foreground transition-colors" title="Investment Opportunity">
+                      Investment Opportunity
+                    </Link>
                     <Link to="/data-protection" className="block text-muted-foreground hover:text-foreground transition-colors">
                       AI Privacy & Data Protection Policy
                     </Link>
