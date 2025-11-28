@@ -31,12 +31,12 @@ export const HomepageABTest = () => {
         <meta name="keywords" content="Real Estate AI, tenancy agreement analysis, property AI, automation, " />
         <meta property="og:title" content="AI-Document Intelligence for the Property Industry | Hobson AI" />
         <meta property="og:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ." />
-        <meta property="og:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
+        <meta property="og:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@HobsonAI" />
         <meta name="twitter:title" content="AI-Document Intelligence for the Property Industry" />
         <meta name="twitter:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ." />
-        <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
+        <meta name="twitter:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
         <link rel="canonical" href="https://hobsonschoice.ai/" />
         
         {/* Preload critical assets - only above-the-fold logo */}

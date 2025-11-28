@@ -40,7 +40,7 @@ export const Homepage = () => {
         {/* Open Graph */}
         <meta property="og:title" content="AI Document Intelligence for Property Management | Hobson AI" />
         <meta property="og:description" content="Transform tenancy agreements with intelligent AI analysis, automated insights, and instant answers to complex property questions." />
-        <meta property="og:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
+        <meta property="og:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://hobsonschoice.ai/" />
         
@@ -49,7 +49,7 @@ export const Homepage = () => {
         <meta name="twitter:site" content="@HobsonAI" />
         <meta name="twitter:title" content="AI Document Intelligence for Property Management" />
         <meta name="twitter:description" content="Transform tenancy agreements with intelligent AI analysis and automated insights." />
-        <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png" />
+        <meta name="twitter:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
         
         <link rel="canonical" href="https://hobsonschoice.ai/" />
         

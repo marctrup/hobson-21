@@ -177,14 +177,14 @@ const Blog = () => {
           <meta property="og:description" content="Latest insights, updates, and expert tips for property management professionals using AI-powered document intelligence." />
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://hobsonschoice.ai/blog" />
-          <meta property="og:image" content="https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" />
+          <meta property="og:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
           
           {/* Twitter */}
           <meta name="twitter:card" content="summary_large_image" />
           <meta name="twitter:site" content="@HobsonAI" />
           <meta name="twitter:title" content="Property Management AI Blog | Hobson AI" />
           <meta name="twitter:description" content="Latest insights and tips for property management professionals using AI." />
-          <meta name="twitter:image" content="https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" />
+          <meta name="twitter:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
           
           <link rel="canonical" href="https://hobsonschoice.ai/blog" />
           
