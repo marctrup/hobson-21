@@ -82,12 +82,12 @@ export const AIProcessingVisual = () => {
             </div>
           </div>
 
-          {/* Draper Example */}
+          {/* Drapers Example */}
           <div className="bg-background border border-border rounded-lg p-6">
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h4 className="font-semibold text-foreground mb-1">Draper Example</h4>
-                <p className="text-sm text-muted-foreground">19 Documents (Primarily Leases)</p>
+                <h4 className="font-semibold text-foreground mb-1">Drapers Example</h4>
+                <p className="text-sm text-muted-foreground">19 Documents (Head Leases)</p>
               </div>
               <FileText className="w-5 h-5 text-muted-foreground" />
             </div>
@@ -106,7 +106,11 @@ export const AIProcessingVisual = () => {
                 <span className="font-semibold text-foreground">$0.41</span>
               </div>
               
-              <div className="text-xs text-muted-foreground pt-2">
+              <div className="text-xs text-muted-foreground space-y-2 pt-2">
+                <div className="flex justify-between">
+                  <span>1 Lease:</span>
+                  <span className="font-medium">~$0.38</span>
+                </div>
                 <div className="flex justify-between">
                   <span>Tokens per lease:</span>
                   <span className="font-medium">~1,005,262</span>
