@@ -11,6 +11,7 @@ import { useToast } from '@/hooks/use-toast';
 import { OptimizedImage } from '@/components/OptimizedImage';
 import hobsonLogo from '/hobson-logo.png';
 import mvpArchitecture from '@/assets/mvp-ai-architecture.png';
+import { CompetitiveLandscapeVisual } from '@/components/investor/CompetitiveLandscapeVisual';
 import {
   Dialog,
   DialogContent,
@@ -274,6 +275,7 @@ const sections = [
       },
       {
         title: 'Competitive Landscape',
+        showCustomVisual: true,
         content: {
           overview: 'The next winners in real estate tech will be AI-native. Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.',
           sections: [
@@ -920,12 +922,19 @@ const InvestmentOpportunity = () => {
               <div className="flex-1 overflow-y-auto mt-6 space-y-8">
                 {selectedSection.pages[currentPageIndex] && (
                   <>
+                    {/* Custom Visual Component (for Competitive Landscape) */}
+                    {(selectedSection.pages[currentPageIndex] as any).showCustomVisual && (
+                      <CompetitiveLandscapeVisual />
+                    )}
+
                     {/* Overview */}
-                    <div className="prose prose-sm max-w-none">
-                      <p className="text-lg text-foreground leading-relaxed">
-                        {selectedSection.pages[currentPageIndex].content.overview}
-                      </p>
-                    </div>
+                    {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual && (
+                      <div className="prose prose-sm max-w-none">
+                        <p className="text-lg text-foreground leading-relaxed">
+                          {selectedSection.pages[currentPageIndex].content.overview}
+                        </p>
+                      </div>
+                    )}
 
                     {/* Image (if present) */}
                     {(selectedSection.pages[currentPageIndex] as any).image && (
@@ -939,22 +948,24 @@ const InvestmentOpportunity = () => {
                     )}
 
                     {/* Content Sections */}
-                    {selectedSection.pages[currentPageIndex].content.sections.map((contentSection, idx) => (
-                      <div key={idx} className="space-y-4">
-                        <h3 className="text-xl font-bold text-primary flex items-center gap-2">
-                          <span className="w-1 h-6 bg-primary rounded-full"></span>
-                          {contentSection.title}
-                        </h3>
-                        <ul className="space-y-3 pl-4">
-                          {contentSection.items.map((item, itemIdx) => (
-                            <li key={itemIdx} className="flex items-start gap-3 text-foreground">
-                              <span className="w-2 h-2 rounded-full bg-primary/60 mt-2 flex-shrink-0"></span>
-                              <span className="text-base leading-relaxed">{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
+                    {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual && 
+                      selectedSection.pages[currentPageIndex].content.sections.map((contentSection, idx) => (
+                        <div key={idx} className="space-y-4">
+                          <h3 className="text-xl font-bold text-primary flex items-center gap-2">
+                            <span className="w-1 h-6 bg-primary rounded-full"></span>
+                            {contentSection.title}
+                          </h3>
+                          <ul className="space-y-3 pl-4">
+                            {contentSection.items.map((item, itemIdx) => (
+                              <li key={itemIdx} className="flex items-start gap-3 text-foreground">
+                                <span className="w-2 h-2 rounded-full bg-primary/60 mt-2 flex-shrink-0"></span>
+                                <span className="text-base leading-relaxed">{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))
+                    }
                   </>
                 )}
               </div>
