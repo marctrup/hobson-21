@@ -223,13 +223,6 @@ const sections = [
         }
       },
       {
-        title: 'Development Philosophy',
-        content: {
-          overview: 'Core principles guiding our product development and AI architecture.',
-          sections: []
-        }
-      },
-      {
         title: 'AI Architecture',
         image: mvpArchitecture,
         imageAlt: 'AI Architecture workflow diagram showing document parsing and AI-driven query resolver with two main processing steps',
@@ -269,20 +262,6 @@ const sections = [
               ]
             }
           ]
-        }
-      },
-      {
-        title: 'Phase 1 Features (Current)',
-        content: {
-          overview: 'Current feature set and capabilities available in the MVP release.',
-          sections: []
-        }
-      },
-      {
-        title: 'Phase 2 Roadmap (Oct 2025 Onward)',
-        content: {
-          overview: 'Planned features and enhancements for Phase 2 including mobile, API, and deeper AI capabilities.',
-          sections: []
         }
       }
     ]
