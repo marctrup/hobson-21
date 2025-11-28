@@ -192,8 +192,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <div className="flex justify-between items-center">
               <Link to="/">
                 <OptimizedImage 
-                  src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
-                  alt="Hobson AI Logo" 
+                  src="/hobson-logo.png" 
+                  alt="Hobson AI Logo"
                   className="h-10 sm:h-12 w-auto" 
                   priority 
                 />
@@ -557,8 +557,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <OptimizedImage 
-                src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
-                alt="Hobson AI Logo" 
+                src="/hobson-logo.png" 
+                alt="Hobson AI Logo"
                 className="h-8 w-auto" 
               />
               <div className="flex items-center gap-6 text-sm text-muted-foreground">

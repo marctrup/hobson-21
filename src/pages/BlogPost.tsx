@@ -288,7 +288,7 @@ const BlogPost = () => {
               "name": "Hobson's Choice AI",
               "logo": {
                 "@type": "ImageObject",
-                "url": "https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png",
+                "url": "https://hobsonschoice.ai/hobson-logo.png",
                 "width": 200,
                 "height": 200
               },

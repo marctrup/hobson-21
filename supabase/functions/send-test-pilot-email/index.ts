@@ -31,7 +31,7 @@ const PilotEmail = ({
     React.createElement(Body, { style: main },
       React.createElement(Container, { style: container },
         React.createElement(Img, {
-          src: "https://hobsonschoice.ai/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png",
+          src: "https://hobsonschoice.ai/hobson-logo.png",
           alt: "Hobson AI Logo",
           style: logo
         }),
