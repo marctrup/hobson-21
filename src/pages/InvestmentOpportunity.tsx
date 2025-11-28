@@ -15,6 +15,7 @@ import { CompetitiveLandscapeVisual } from '@/components/investor/CompetitiveLan
 import { CompetitiveMatrixVisual } from '@/components/investor/CompetitiveMatrixVisual';
 import { EuropeanGlobalVisual } from '@/components/investor/EuropeanGlobalVisual';
 import { HEUPricingVisual } from '@/components/investor/HEUPricingVisual';
+import { AIProcessingVisual } from '@/components/investor/AIProcessingVisual';
 import {
   Dialog,
   DialogContent,
@@ -495,71 +496,7 @@ const sections = [
       },
       {
         title: 'AI Processing Time & Cost Examples',
-        content: {
-          overview: 'Real-world processing times and cost examples demonstrating efficiency.',
-          sections: [
-            {
-              title: 'AI Processing Time (Per Document Type)',
-              items: [
-                'Realistic averages based on real-world usage:'
-              ]
-            },
-            {
-              title: 'Complex Documents (e.g., Leases)',
-              items: [
-                '~8–9 minutes to fully read, interpret, and structure'
-              ]
-            },
-            {
-              title: 'Medium Complexity (e.g., Deeds, Licences)',
-              items: [
-                '~2–3 minutes'
-              ]
-            },
-            {
-              title: 'Low Complexity (e.g., Notices, Letters)',
-              items: [
-                '~30 seconds – 1 minute'
-              ]
-            },
-            {
-              title: 'AI Processing Cost Examples (Token-Based Pricing)',
-              items: [
-                'Real customer data from EPAM and Draper extractions'
-              ]
-            },
-            {
-              title: 'EPAM Example — 29 Documents (Leases + Deeds)',
-              items: [
-                'Total tokens: 17,626,896',
-                'Total cost: $10.51',
-                'Average per document: $0.36',
-                'Breakdown:',
-                '• 1 Lease: ~$0.38 (Tokens used: ~607,824)',
-                '• 1 Deed: ~$0.12 (Tokens used: ~607,824)',
-                '(Leases cost more because processing time + internal reasoning steps are higher.)'
-              ]
-            },
-            {
-              title: 'Draper Example — 19 Documents (Primarily Leases)',
-              items: [
-                'Total tokens: 19,099,980',
-                'Total cost: $7.77',
-                'Average per document: $0.41',
-                'Tokens per lease: ~1,005,262'
-              ]
-            },
-            {
-              title: 'What This Means for Hobson Users',
-              items: [
-                'Document processing is fast, predictable, and inexpensive',
-                'AI can read an entire lease for less than 50 cents',
-                'Even heavy portfolios cost single-digit dollars to index',
-                'This efficiency underpins Hobson\'s HEU model and competitive pricing'
-              ]
-            }
-          ]
-        }
+        isVisual: true
       }
     ]
   },
@@ -1012,9 +949,15 @@ const InvestmentOpportunity = () => {
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === 'heuPricing' && (
                       <HEUPricingVisual />
                     )}
+                    
+                    {/* Custom Visual Component for AI Processing */}
+                    {(selectedSection.pages[currentPageIndex] as any).isVisual && (
+                      <AIProcessingVisual />
+                    )}
 
                     {/* Overview */}
-                    {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual && (
+                    {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual && 
+                     !(selectedSection.pages[currentPageIndex] as any).isVisual && (
                       <div className="prose prose-sm max-w-none">
                         <p className="text-lg text-foreground leading-relaxed">
                           {selectedSection.pages[currentPageIndex].content.overview}
@@ -1035,6 +978,7 @@ const InvestmentOpportunity = () => {
 
                     {/* Content Sections */}
                     {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual && 
+                      !(selectedSection.pages[currentPageIndex] as any).isVisual && 
                       selectedSection.pages[currentPageIndex].content.sections.map((contentSection, idx) => (
                         <div key={idx} className="space-y-4">
                           <h3 className="text-xl font-bold text-primary flex items-center gap-2">
