@@ -6,8 +6,10 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { GlobalHeader } from '@/components/GlobalHeader';
 import { HomepageFooter } from '@/components/homepage/HomepageFooter';
-import { Lock } from 'lucide-react';
+import { Lock, FileText, Download, BarChart, TrendingUp, Code } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { OptimizedImage } from '@/components/OptimizedImage';
+import hobsonLogo from '/hobson-logo.png';
 
 const InvestmentOpportunity = () => {
   const [password, setPassword] = useState('');
@@ -111,57 +113,285 @@ const InvestmentOpportunity = () => {
 
   return (
     <>
-      <GlobalHeader />
-      <div className="min-h-screen bg-background">
-        <div className="container mx-auto px-4 py-16">
-          <div className="max-w-4xl mx-auto">
-            <h1 className="text-4xl font-bold text-foreground mb-6">
-              Investment Opportunity
-            </h1>
-            
-            <div className="prose prose-lg max-w-none">
-              <p className="text-muted-foreground mb-6">
-                Welcome to our exclusive investment opportunity page. Here you can find detailed
-                information about investment possibilities with Hobson AI.
+      <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
+        {/* Header */}
+        <header className="border-b bg-background/95 backdrop-blur">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between max-w-6xl mx-auto">
+              <OptimizedImage 
+                src={hobsonLogo} 
+                alt="Hobson AI Logo" 
+                className="h-14"
+              />
+              <h1 className="text-xl font-semibold text-muted-foreground">
+                Investor Resources
+              </h1>
+            </div>
+          </div>
+        </header>
+
+        {/* Hero Section */}
+        <section className="py-16 border-b">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
+                To go beyond simple data access by giving property professionals instant, accurate information enriched with AI judgement, context, and connected insight.
+              </h2>
+              <p className="text-sm text-muted-foreground italic">
+                Materials on this page are confidential and intended for authorised investors only
               </p>
+            </div>
+          </div>
+        </section>
 
-              <Card className="p-8 mb-6">
-                <h2 className="text-2xl font-bold mb-4">Why Invest in Hobson AI?</h2>
-                <ul className="space-y-3">
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">✓</span>
-                    <span>Cutting-edge AI technology for the property industry</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">✓</span>
-                    <span>Proven market demand and early customer adoption</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">✓</span>
-                    <span>Experienced leadership team with property industry expertise</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-primary mt-1">✓</span>
-                    <span>Clear path to profitability and scalable business model</span>
-                  </li>
-                </ul>
-              </Card>
-
-              <Card className="p-8 mb-6">
-                <h2 className="text-2xl font-bold mb-4">Investment Details</h2>
-                <p className="mb-4">
-                  For detailed investment information, financial projections, and to discuss
-                  partnership opportunities, please contact our investment relations team.
+        {/* Product Positioning Section */}
+        <section className="py-12 border-b bg-muted/20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <Card className="p-8 bg-background/80 backdrop-blur border-primary/20">
+                <p className="text-lg leading-relaxed text-foreground">
+                  For real estate professionals drained by large, expensive systems and the manual effort of pulling information from original documents, Hobson is a <span className="font-semibold text-primary">specialised AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is <span className="font-semibold">lightweight, simple to use, and low cost</span> — saving time, ensuring accuracy, and building trust with fast, referenced responses.
                 </p>
-                <Button onClick={() => navigate('/contact')} size="lg">
-                  Contact Investment Team
-                </Button>
               </Card>
             </div>
           </div>
-        </div>
+        </section>
+
+        {/* Business Plan Section */}
+        <section className="py-12 border-b">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-foreground mb-3">Business Plan</h3>
+              <p className="text-muted-foreground mb-6">
+                Comprehensive overview of our strategy, market analysis, and growth roadmap.
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <FileText className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground mb-1">Executive Summary</h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        PDF • 2.4 MB
+                      </p>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Download className="w-4 h-4" />
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <FileText className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground mb-1">Full Business Plan</h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        PDF • 8.7 MB
+                      </p>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Download className="w-4 h-4" />
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Financials Section */}
+        <section className="py-12 border-b bg-muted/20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-foreground mb-3">Financials</h3>
+              <p className="text-muted-foreground mb-6">
+                Financial projections, metrics, and revenue models for the next 5 years.
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <BarChart className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground mb-1">Financial Model</h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        XLSX • 1.8 MB
+                      </p>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Download className="w-4 h-4" />
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <TrendingUp className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground mb-1">Revenue Projections</h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        PDF • 1.2 MB
+                      </p>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Download className="w-4 h-4" />
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Marketing Plan Section */}
+        <section className="py-12 border-b">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-foreground mb-3">Marketing Plan</h3>
+              <p className="text-muted-foreground mb-6">
+                Go-to-market strategy, customer acquisition plans, and brand positioning.
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <FileText className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground mb-1">Marketing Strategy</h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        PDF • 3.5 MB
+                      </p>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Download className="w-4 h-4" />
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <TrendingUp className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground mb-1">Customer Acquisition</h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        PDF • 2.1 MB
+                      </p>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Download className="w-4 h-4" />
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Tech Architecture Section */}
+        <section className="py-12 border-b bg-muted/20">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <h3 className="text-2xl font-bold text-foreground mb-3">Tech Architecture</h3>
+              <p className="text-muted-foreground mb-6">
+                Technical infrastructure, AI models, scalability plan, and system diagrams.
+              </p>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <Code className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground mb-1">System Architecture</h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        PDF • 4.2 MB
+                      </p>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Download className="w-4 h-4" />
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <FileText className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground mb-1">Technical Roadmap</h4>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        PDF • 1.9 MB
+                      </p>
+                      <Button variant="outline" size="sm" className="gap-2">
+                        <Download className="w-4 h-4" />
+                        Download
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Security Notice */}
+        <section className="py-8">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto">
+              <Card className="p-6 bg-muted/50 border-muted">
+                <div className="flex items-start gap-3">
+                  <Lock className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
+                  <p className="text-sm text-muted-foreground">
+                    <span className="font-semibold">Confidential Information:</span> This page and its documents are confidential and intended only for authorised investors. Any distribution, copying, or disclosure of these materials without written consent is strictly prohibited.
+                  </p>
+                </div>
+              </Card>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="border-t bg-background py-12">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <OptimizedImage 
+                src={hobsonLogo} 
+                alt="Hobson AI Logo" 
+                className="h-12 mx-auto mb-4"
+              />
+              <p className="text-sm text-muted-foreground mb-2">
+                © 2024 Hobson's Choice AI. All rights reserved.
+              </p>
+              <p className="text-sm text-muted-foreground">
+                Investor Relations: <a href="mailto:investors@hobsonschoice.ai" className="text-primary hover:underline">investors@hobsonschoice.ai</a>
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
-      <HomepageFooter />
     </>
   );
 };
