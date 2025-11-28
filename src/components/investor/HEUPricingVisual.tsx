@@ -70,10 +70,7 @@ export const HEUPricingVisual = () => {
 
             {/* Essential Plus Plan */}
             <div className="border-2 border-blue-600 rounded-lg p-4 bg-white">
-              <div className="flex items-center justify-between mb-2">
-                <h4 className="font-bold text-lg text-black">Essential Plus</h4>
-                <span className="text-xs bg-blue-600 text-white px-2 py-1 rounded">Most Popular</span>
-              </div>
+              <h4 className="font-bold text-lg text-black mb-2">Essential Plus</h4>
               <div className="space-y-1 text-sm text-gray-800">
                 <p className="font-semibold text-blue-600">£49.75/month</p>
                 <p className="font-semibold text-blue-600">700 HEUs/month</p>
