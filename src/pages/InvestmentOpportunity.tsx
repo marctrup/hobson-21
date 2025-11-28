@@ -238,10 +238,12 @@ const sections = [
             {
               title: 'Europe Summary',
               items: [
-                'With Europe\'s population 11× larger than the UK, Hobson\'s efficiency gains scale into a substantial export opportunity',
-                'A conservative model shows a £15.5B TAM',
-                '£1.2B obtainable opportunity makes Europe a high-value early expansion region',
-                'Strong potential for AI-driven real estate tools in European markets'
+                'Europe\'s population is 11× larger than the UK, creating a major expansion opportunity.',
+                'Using the UK\'s £6,000 efficiency saving per business and £1.41B TAM as the baseline, Europe represents a £15.5B TAM.',
+                'With 65% of operators realistically motivated to adopt AI, the SAM is £10.1B.',
+                'Assuming 12% penetration, Hobson\'s near-term obtainable market (SOM) is £1.2B.',
+                'Europe\'s fragmented systems, compliance demands, and multilingual documentation make AI-native assistants especially valuable.',
+                'Represents a high-potential early export region for Hobson.'
               ]
             },
             {
@@ -285,10 +287,12 @@ const sections = [
             {
               title: 'Global Summary',
               items: [
-                'With the world\'s population 118× larger than the UK, Hobson\'s efficiency impact scales dramatically',
-                'A simple, conservative extrapolation shows a £155B global TAM',
-                '£101B motivated market and £12B obtainable opportunity',
-                'Strong potential for AI-driven real estate tools in Global markets'
+                'The global population is 118× larger than the UK, giving Hobson exceptional international scalability.',
+                'Applying the UK\'s £6,000 efficiency saving and £1.41B TAM, the global TAM reaches £155.6B.',
+                'With 65% global motivation to adopt AI, the SAM is £101B.',
+                'At 12% penetration, Hobson\'s obtainable global market (SOM) is £12.1B.',
+                'Highlights a massive, underserved global opportunity for AI-driven document and workflow automation.',
+                'Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.'
               ]
             }
           ]
