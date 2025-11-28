@@ -111,6 +111,9 @@ export const AIProcessingVisual = () => {
                   <span>1 Lease:</span>
                   <span className="font-medium">~$0.41</span>
                 </div>
+                <p className="text-xs italic mt-3">
+                  Leases cost more due to increased complexity and internal reasoning steps.
+                </p>
               </div>
             </div>
           </div>
