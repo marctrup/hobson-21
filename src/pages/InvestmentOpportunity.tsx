@@ -187,11 +187,7 @@ const sections = [
             {
               title: 'Jan - March 2026: Scale',
               items: [
-                'Launch MVP to wider market',
-                'Complete Build Phase 2 development',
-                'Launch Phase 2 with advanced features',
-                'Scale infrastructure for growth',
-                'Expand customer acquisition efforts'
+                'Launch MVP to wider market'
               ]
             }
           ]
