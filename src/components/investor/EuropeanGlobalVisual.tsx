@@ -210,7 +210,7 @@ export const EuropeanGlobalVisual = () => {
             </li>
             <li className="flex items-start gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-              <span>A conservative model shows a £15.5B TAM and £10.1B motivated market</span>
+              <span>A conservative model shows a £15.5B TAM</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
