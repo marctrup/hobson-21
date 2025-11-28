@@ -66,24 +66,37 @@ const sections = [
       {
         title: 'Approach',
         content: {
-          overview: 'Our strategic approach combines AI innovation with deep property industry expertise to deliver unprecedented value.',
+          overview: 'Our strategic approach combines AI innovation with deep property industry expertise to deliver unprecedented value through three key focus areas.',
           sections: [
             {
-              title: 'Development Philosophy',
+              title: 'Brand Focus',
               items: [
-                'AI-first architecture built for trust and accuracy',
-                'Zero onboarding friction for property professionals',
-                'Continuous learning from real-world usage',
-                'Proactive operations co-pilot capabilities'
+                'Personalisation – Deliver relevant, context-aware experiences',
+                'Integrity – Be transparent and set clear expectations',
+                'Expectations – Meet essentials first, then exceed over time',
+                'Resolution – Act on feedback and data to improve fast',
+                'Time & Effort – Make every interaction simple and efficient',
+                'Empathy – Design for real-world client challenges'
               ]
             },
             {
-              title: 'Market Strategy',
+              title: 'Product Focus',
               items: [
-                'Focus on underserved small to medium operators',
-                'Partnership-driven growth with pilot validation',
-                'Usage-based pricing eliminates adoption barriers',
-                'Phase 2 expansion into mobile and API integration'
+                'Helps users retrieve and unify information they already have, even if scattered across documents or systems',
+                'Simple interface with no learning curve',
+                'Works alongside existing tools, with a gentle adoption curve',
+                'Designed to be a trust-building assistant, becoming more proactive and helpful over time',
+                'Future vision: anticipates user needs, takes initiative, supports workflows'
+              ]
+            },
+            {
+              title: 'Business Focus',
+              items: [
+                'No license, per-user, or per-asset pricing',
+                'Users pay based on usage, measured in Hobson\'s Energy Units',
+                'Transparent way to account for effort put into tasks (answering questions, reading documents, building reports)',
+                'Flexible billing that matches real usage',
+                'Low base cost to grab market share'
               ]
             }
           ]
