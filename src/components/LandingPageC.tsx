@@ -10,7 +10,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { usePilotApplication } from "@/hooks/usePilotApplication";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import hobsonLogo from "/lovable-uploads/6f92c6e9-3e74-495f-a6a5-c8cdab8d6b29.png";
+import hobsonLogo from "/hobson-logo.png";
 
 const LandingPageC = () => {
   const [isVideoOpen, setIsVideoOpen] = useState(false);

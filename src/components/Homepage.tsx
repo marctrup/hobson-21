@@ -54,7 +54,7 @@ export const Homepage = () => {
         <link rel="canonical" href="https://hobsonschoice.ai/" />
         
         {/* Preload critical assets */}
-        <link rel="preload" href="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" as="image" />
+        <link rel="preload" href="/hobson-logo.png" as="image" />
         <link rel="preload" href={owlMascot} as="image" />
         
         {/* Structured Data for AI Crawlers */}
@@ -77,7 +77,7 @@ export const Homepage = () => {
               {/* Logo */}
               <div className="relative">
                 <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-[59px] w-auto" priority />
+                  <OptimizedImage src="/hobson-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-[59px] w-auto" priority />
                 </Link>
               </div>
 
@@ -278,7 +278,7 @@ export const Homepage = () => {
               <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
                 <div>
-                  <OptimizedImage src="/lovable-uploads/hobson-new-logo.png" alt="Hobson's AI logo" className="h-[59px] w-auto" />
+                  <OptimizedImage src="/hobson-logo.png" alt="Hobson's AI logo" className="h-[59px] w-auto" />
                 </div>
                 
                 {/* Product Column */}
