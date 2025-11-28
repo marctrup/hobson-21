@@ -49,7 +49,9 @@ export const HEUPricingVisual = () => {
           <div className="border border-gray-300 rounded-lg p-4 bg-white">
             <h4 className="font-bold text-base text-gray-900 mb-3 pb-2 border-b border-gray-200">Free</h4>
             <div className="space-y-1 text-center">
-              <p className="text-xl font-bold text-purple-600">18</p>
+              <p className="text-base font-bold text-gray-900">£0.00</p>
+              <p className="text-xs text-gray-500">/month</p>
+              <p className="text-xl font-bold text-purple-600 mt-2">18</p>
               <p className="text-xs text-gray-600">HEUs/month</p>
             </div>
           </div>
@@ -101,14 +103,9 @@ export const HEUPricingVisual = () => {
               <p className="text-xs text-gray-600">One-time purchase</p>
             </div>
           </div>
-          <div className="flex gap-6 items-center">
-            <div className="text-right">
-              <p className="text-base font-bold text-gray-900">£15</p>
-            </div>
-            <div className="text-right">
-              <p className="text-base font-bold text-purple-600">150</p>
-              <p className="text-xs text-gray-600">HEUs</p>
-            </div>
+          <div className="flex gap-8 items-center whitespace-nowrap">
+            <p className="text-base font-bold text-gray-900">£15</p>
+            <p className="text-base font-bold text-purple-600">150 HEUs</p>
           </div>
         </div>
       </div>
