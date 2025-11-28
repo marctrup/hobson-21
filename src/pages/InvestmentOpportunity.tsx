@@ -13,6 +13,7 @@ import hobsonLogo from '/hobson-logo.png';
 import mvpArchitecture from '@/assets/mvp-ai-architecture.png';
 import { CompetitiveLandscapeVisual } from '@/components/investor/CompetitiveLandscapeVisual';
 import { CompetitiveMatrixVisual } from '@/components/investor/CompetitiveMatrixVisual';
+import { EuropeanGlobalVisual } from '@/components/investor/EuropeanGlobalVisual';
 import {
   Dialog,
   DialogContent,
@@ -190,13 +191,26 @@ const sections = [
         }
       },
       {
-        title: 'Europe Market Opportunity',
+        title: 'European & Global Opportunities',
+        showCustomVisual: true,
+        customVisualComponent: 'europeanGlobal',
         content: {
-          overview: 'Europe\'s population is 11× larger than the UK • UK efficiency value per business: £6,000 (20% time gain) • UK TAM baseline: £1.41B • Applying the 11× multiple gives a simple, directional estimate of the European opportunity • Same conservative assumptions: 65% motivated (SAM), 12% obtainable (SOM)',
+          overview: 'Market expansion opportunities across European and Global markets',
           sections: [
             {
-              title: 'Total Addressable Market (TAM)',
-              subtitle: 'Value: £15.5B',
+              title: 'Europe Overview',
+              subtitle: '11× UK Population Multiple',
+              items: [
+                'Europe\'s population is 11× larger than the UK',
+                'UK efficiency value per business: £6,000 (20% time gain)',
+                'UK TAM baseline: £1.41B',
+                'Applying the 11× multiple gives a simple, directional estimate',
+                'Same conservative assumptions: 65% motivated (SAM), 12% obtainable (SOM)'
+              ]
+            },
+            {
+              title: 'Europe TAM',
+              subtitle: '£15.5B',
               items: [
                 'Scaling the UK\'s £1.41B efficiency value by Europe\'s 11× population multiple',
                 '£1.41B × 11 = £15.51B, rounded to £15.5B',
@@ -204,8 +218,8 @@ const sections = [
               ]
             },
             {
-              title: 'Serviceable Available Market (SAM)',
-              subtitle: 'Value: £10.1B',
+              title: 'Europe SAM',
+              subtitle: '£10.1B',
               items: [
                 'The proportion of European real estate operators realistically motivated and ready to adopt AI tools',
                 'Uses the same 65% factor as the UK',
@@ -213,8 +227,8 @@ const sections = [
               ]
             },
             {
-              title: 'Serviceable Obtainable Market (SOM)',
-              subtitle: 'Value: £1.2B',
+              title: 'Europe SOM',
+              subtitle: '£1.2B',
               items: [
                 'A credible near-term reach for Hobson within Europe',
                 'Assumes 12% penetration of motivated organisations',
@@ -222,25 +236,28 @@ const sections = [
               ]
             },
             {
-              title: 'Summary',
+              title: 'Europe Summary',
               items: [
                 'With Europe\'s population 11× larger than the UK, Hobson\'s efficiency gains scale into a substantial export opportunity',
                 'A conservative model shows a £15.5B TAM and £10.1B motivated market',
                 '£1.2B obtainable opportunity makes Europe a high-value early expansion region',
                 'Strong potential for AI-driven real estate tools in European markets'
               ]
-            }
-          ]
-        }
-      },
-      {
-        title: 'Global Market Opportunity',
-        content: {
-          overview: 'The global population is 118× larger than the UK • UK efficiency value per business: £6,000 (20% time gain) • UK TAM baseline: £1.41B • Applying the 118× multiple provides a simple, directional global estimate • Same conservative assumptions: 65% motivated (SAM), 12% obtainable (SOM)',
-          sections: [
+            },
             {
-              title: 'Total Addressable Market (TAM)',
-              subtitle: 'Value: £155.6B',
+              title: 'Global Overview',
+              subtitle: '118× UK Population Multiple',
+              items: [
+                'The global population is 118× larger than the UK',
+                'UK efficiency value per business: £6,000 (20% time gain)',
+                'UK TAM baseline: £1.41B',
+                'Applying the 118× multiple provides a simple, directional global estimate',
+                'Same conservative assumptions: 65% motivated (SAM), 12% obtainable (SOM)'
+              ]
+            },
+            {
+              title: 'Global TAM',
+              subtitle: '£155.6B',
               items: [
                 'Scaling the UK\'s £1.41B efficiency value by the global population multiple',
                 '£1.41B × 118 = £166.4B, rounded to £155.6B for conservatism',
@@ -248,8 +265,8 @@ const sections = [
               ]
             },
             {
-              title: 'Serviceable Available Market (SAM)',
-              subtitle: 'Value: £101B',
+              title: 'Global SAM',
+              subtitle: '£101B',
               items: [
                 'The share of the global market realistically motivated and able to adopt AI tools',
                 'Uses the same 65% factor as the UK',
@@ -257,8 +274,8 @@ const sections = [
               ]
             },
             {
-              title: 'Serviceable Obtainable Market (SOM)',
-              subtitle: 'Value: £12.1B',
+              title: 'Global SOM',
+              subtitle: '£12.1B',
               items: [
                 'Credible near-term reach for Hobson in global markets',
                 'Assumes 12% penetration of motivated buyers',
@@ -266,12 +283,11 @@ const sections = [
               ]
             },
             {
-              title: 'Summary',
+              title: 'Global Summary',
               items: [
                 'With the world\'s population 118× larger than the UK, Hobson\'s efficiency impact scales dramatically',
                 'A simple, conservative extrapolation shows a £155B global TAM',
-                '£101B motivated market and £12B obtainable opportunity',
-                'Export-ready AI assistant built for global real estate operations'
+                '£101B motivated market and £12B obtainable opportunity'
               ]
             }
           ]
@@ -921,13 +937,19 @@ const InvestmentOpportunity = () => {
                   <>
                     {/* Custom Visual Component for Market Landscape */}
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual && 
-                     (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== 'matrix' && (
+                     (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== 'matrix' && 
+                     (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== 'europeanGlobal' && (
                       <CompetitiveLandscapeVisual />
                     )}
                     
                     {/* Custom Visual Component for Market Overview */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === 'matrix' && (
                       <CompetitiveMatrixVisual />
+                    )}
+                    
+                    {/* Custom Visual Component for European & Global */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === 'europeanGlobal' && (
+                      <EuropeanGlobalVisual />
                     )}
 
                     {/* Overview */}
