@@ -2373,11 +2373,10 @@ Content-Type: multipart/form-data
                 Download the one-page cheat sheet for easy reference
               </p>
               <Button 
-                className="gap-2 text-xs sm:text-sm md:text-base px-4 py-2 sm:px-6 sm:py-3 w-full sm:w-auto"
+                className="text-xs sm:text-sm md:text-base px-4 py-2 sm:px-6 sm:py-3 w-full sm:w-auto"
                 onClick={() => window.open('/Hobson_Cheat_Sheet.pdf', '_blank')}
               >
-                <span className="inline">📥</span>
-                <span className="inline">Download Cheat Sheet</span>
+                Download Cheat Sheet
               </Button>
             </div>
           </div>
