@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NAVIGATION_LINKS } from "@/config/navigation";
-import hobsonLogo from "/lovable-uploads/hobson-new-logo.png";
+import hobsonLogo from "/hobson-logo.png";
 
 export const HomepageHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
