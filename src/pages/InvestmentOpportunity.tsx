@@ -23,7 +23,7 @@ const sections = [
   {
     id: 'strategy',
     title: 'Strategy & Positioning',
-    subtitle: 'Executive Summary, Positioning Statement & Approach',
+    subtitle: 'Executive Summary & Approach',
     icon: Target,
     color: 'from-blue-500/10 to-blue-600/10',
     iconColor: 'text-blue-600',
