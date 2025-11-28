@@ -185,7 +185,7 @@ const sections = [
               ]
             },
             {
-              title: 'Jan - March 2026: Prepare for Launch Q4',
+              title: '2026: Prepare for Launch',
               items: [
                 'Launch MVP to our pilot clients'
               ]
