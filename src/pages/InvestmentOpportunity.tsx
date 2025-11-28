@@ -293,8 +293,52 @@ const sections = [
       {
         title: 'Competitive Landscape',
         content: {
-          overview: 'Analysis of current market players and our competitive positioning.',
-          sections: []
+          overview: 'The next winners in real estate tech will be AI-native. Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.',
+          sections: [
+            {
+              title: 'Traditional Cloud Solutions',
+              subtitle: 'The Overcrowded "Before"',
+              items: [
+                'Overcrowded market with 100+ competitors',
+                'High cost, slow innovation cycles',
+                'Still reliant on manual information retrieval',
+                'Complex interfaces requiring extensive training',
+                'Heavy infrastructure with long implementation times'
+              ]
+            },
+            {
+              title: 'Next-Generation AI Solutions',
+              subtitle: 'The Emerging "After"',
+              items: [
+                'Hobson (Category Leader) - AI-native assistant for property documents',
+                'EliseAI - Conversational AI for property management',
+                'Trudi - AI compliance assistant',
+                'StanAI - Real estate document analysis',
+                'Kendal AI - Property operations automation'
+              ]
+            },
+            {
+              title: 'Hobson\'s Competitive Advantages',
+              items: [
+                'Instant, referenced answers from source documents',
+                'Simple, lightweight, and low cost entry point',
+                'Designed for accuracy with citation-backed responses',
+                'Zero onboarding required - works immediately',
+                'Usage-based pricing eliminates adoption barriers',
+                'Built for trust and continuous learning from user feedback'
+              ]
+            },
+            {
+              title: 'Market Transition',
+              items: [
+                'The industry is shifting from passive cloud storage to active AI assistance',
+                'Traditional PropTech focuses on data capture; AI-native tools deliver insights',
+                'Winner-takes-most dynamics emerging in AI category',
+                'Early movers building defensible positions through data and user trust',
+                'Hobson positioned at the forefront of this category transition'
+              ]
+            }
+          ]
         }
       },
       {
