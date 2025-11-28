@@ -925,7 +925,8 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Market Landscape */}
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual && 
                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== 'matrix' && 
-                     (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== 'europeanGlobal' && (
+                     (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== 'europeanGlobal' && 
+                     (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== 'heuPricing' && (
                       <CompetitiveLandscapeVisual />
                     )}
                     
