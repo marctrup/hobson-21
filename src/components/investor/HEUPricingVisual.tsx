@@ -29,11 +29,7 @@ export const HEUPricingVisual = () => {
           <ul className="space-y-3 text-gray-800">
             <li className="flex items-start gap-3">
               <span className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0"></span>
-              <span>An HEU measures how much AI processing is used for each action.</span>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0"></span>
-              <span>Every search, extraction, summary, or query consumes a small number of HEUs based on complexity.</span>
+              <span>an HEU, Hobson's currency measures how much AI processing is used for each action.</span>
             </li>
             <li className="flex items-start gap-3">
               <span className="w-2 h-2 rounded-full bg-blue-600 mt-2 flex-shrink-0"></span>
