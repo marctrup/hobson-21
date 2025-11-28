@@ -2004,8 +2004,7 @@ Content-Type: multipart/form-data
             </div>
             
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Hobson answers differently depending on the page you're on. Understanding these levels 
-              helps you get accurate answers quickly.
+              Hobson will help you achieve the best answers by helping you understand why it does what it does.
             </p>
           </div>
 
