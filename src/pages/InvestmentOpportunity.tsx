@@ -699,6 +699,20 @@ const InvestmentOpportunity = () => {
                       </p>
                     </div>
 
+                    {/* Architecture Diagram Image */}
+                    {selectedSection.pages[currentPageIndex].content.image && (
+                      <div className="my-8 bg-muted/30 rounded-lg p-6 border">
+                        <img 
+                          src={selectedSection.pages[currentPageIndex].content.image}
+                          alt={selectedSection.pages[currentPageIndex].content.imageAlt || 'Architecture Diagram'}
+                          className="w-full h-auto rounded-lg"
+                        />
+                        <p className="text-xs text-muted-foreground text-center mt-4 italic">
+                          {selectedSection.pages[currentPageIndex].content.imageAlt || 'Technical Architecture Diagram'}
+                        </p>
+                      </div>
+                    )}
+
                     {/* Content Sections */}
                     {selectedSection.pages[currentPageIndex].content.sections.map((contentSection, idx) => (
                       <div key={idx} className="space-y-4">
