@@ -1978,7 +1978,7 @@ Content-Type: multipart/form-data
               How Hobson Decides What to Answer
             </h1>
             <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto">
-              A quick guide to how the assistant understands portfolio, property, and unit questions.
+              A quick guide to how the assistant understands portfolio, unit-group, and unit questions.
             </p>
             
             {/* Three Level Icons */}
@@ -1993,7 +1993,7 @@ Content-Type: multipart/form-data
                 <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mb-2 mx-auto">
                   <span className="text-3xl">🏛️</span>
                 </div>
-                <p className="font-semibold text-sm">Property</p>
+                <p className="font-semibold text-sm">Unit-Group</p>
               </div>
               <div className="text-center">
                 <div className="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mb-2 mx-auto">
@@ -2018,14 +2018,14 @@ Content-Type: multipart/form-data
                   <span className="text-2xl">🏢</span>
                 </div>
                 <h3 className="font-bold text-lg mb-2">Portfolio</h3>
-                <p className="text-sm text-muted-foreground">Everything — all properties and units.</p>
+                <p className="text-sm text-muted-foreground">Everything — all unit-groups and units.</p>
               </div>
               
               <div className="bg-green-500/5 border-2 border-green-500/20 rounded-xl p-6 text-center">
                 <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mb-3 mx-auto">
                   <span className="text-2xl">🏛️</span>
                 </div>
-                <h3 className="font-bold text-lg mb-2">Property</h3>
+                <h3 className="font-bold text-lg mb-2">Unit-Group</h3>
                 <p className="text-sm text-muted-foreground">One building or parade.</p>
               </div>
               
@@ -2066,7 +2066,7 @@ Content-Type: multipart/form-data
                       : 'text-muted-foreground hover:bg-accent/50'
                   }`}
                 >
-                  🏛️ Property Page
+                  🏛️ Unit-Group Page
                 </button>
                 <button
                   onClick={() => setSmartNavTab('unit')}
@@ -2093,7 +2093,7 @@ Content-Type: multipart/form-data
                     <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
                       <span className="text-2xl">💡</span>
                       <div>
-                        <p className="font-semibold">Ask about a property → switch recommended</p>
+                        <p className="font-semibold">Ask about a unit-group → switch recommended</p>
                         <p className="text-sm text-muted-foreground mt-1">
                           Switch is optional — Hobson can try at this level if you confirm.
                         </p>
@@ -2122,22 +2122,22 @@ Content-Type: multipart/form-data
                     <div className="flex items-start gap-3 p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
                       <span className="text-2xl">✅</span>
                       <div>
-                        <p className="font-semibold">Ask about same property → answered directly</p>
+                        <p className="font-semibold">Ask about same unit-group → answered directly</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
                       <span className="text-2xl">💡</span>
                       <div>
-                        <p className="font-semibold">Ask about a unit <em>in same property</em> → switch recommended</p>
+                        <p className="font-semibold">Ask about a unit <em>in same unit-group</em> → switch recommended</p>
                         <p className="text-sm text-muted-foreground mt-1">
-                          Hobson can continue at property level if you prefer.
+                          Hobson can continue at unit-group level if you prefer.
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
                       <span className="text-2xl">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about a different property → switch required</p>
+                        <p className="font-semibold">Ask about a different unit-group → switch required</p>
                         <p className="text-sm text-muted-foreground mt-1">
                           Hobson cannot answer without switching.
                         </p>
@@ -2146,7 +2146,7 @@ Content-Type: multipart/form-data
                     <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
                       <span className="text-2xl">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about a unit in another property → switch required</p>
+                        <p className="font-semibold">Ask about a unit in another unit-group → switch required</p>
                         <p className="text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
                       </div>
                     </div>
@@ -2180,7 +2180,7 @@ Content-Type: multipart/form-data
                     <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
                       <span className="text-2xl">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about any property → switch required</p>
+                        <p className="font-semibold">Ask about any unit-group → switch required</p>
                         <p className="text-sm text-muted-foreground mt-1">Hobson blocks the answer if you decline a required switch.</p>
                       </div>
                     </div>
@@ -2213,7 +2213,7 @@ Content-Type: multipart/form-data
                 <tbody>
                   <tr className="border-b">
                     <td className="p-4">Portfolio</td>
-                    <td className="p-4">Property</td>
+                    <td className="p-4">Unit-Group</td>
                     <td className="p-4">
                       <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
                         Recommended
@@ -2232,8 +2232,8 @@ Content-Type: multipart/form-data
                     <td className="p-4 text-sm text-muted-foreground">Hobson asks permission</td>
                   </tr>
                   <tr className="border-b bg-red-500/5">
-                    <td className="p-4">Property A</td>
-                    <td className="p-4">Property B</td>
+                    <td className="p-4">Unit-Group A</td>
+                    <td className="p-4">Unit-Group B</td>
                     <td className="p-4">
                       <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
                         Required
@@ -2242,8 +2242,8 @@ Content-Type: multipart/form-data
                     <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
                   <tr className="border-b">
-                    <td className="p-4">Property</td>
-                    <td className="p-4">Unit (same property)</td>
+                    <td className="p-4">Unit-Group</td>
+                    <td className="p-4">Unit (same unit-group)</td>
                     <td className="p-4">
                       <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
                         Recommended
@@ -2252,8 +2252,8 @@ Content-Type: multipart/form-data
                     <td className="p-4 text-sm text-muted-foreground">Hobson can continue</td>
                   </tr>
                   <tr className="border-b bg-red-500/5">
-                    <td className="p-4">Property A</td>
-                    <td className="p-4">Unit in Property B</td>
+                    <td className="p-4">Unit-Group A</td>
+                    <td className="p-4">Unit in Unit-Group B</td>
                     <td className="p-4">
                       <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
                         Required
@@ -2273,7 +2273,7 @@ Content-Type: multipart/form-data
                   </tr>
                   <tr className="bg-red-500/5">
                     <td className="p-4">Unit</td>
-                    <td className="p-4">Property</td>
+                    <td className="p-4">Unit-Group</td>
                     <td className="p-4">
                       <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
                         Required
@@ -2282,7 +2282,7 @@ Content-Type: multipart/form-data
                     <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
                   </tr>
                   <tr className="border-b bg-red-500/5">
-                    <td className="p-4">Property</td>
+                    <td className="p-4">Unit-Group</td>
                     <td className="p-4">Portfolio</td>
                     <td className="p-4">
                       <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
@@ -2349,7 +2349,7 @@ Content-Type: multipart/form-data
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-green-500 mt-1">✓</span>
-                  <span>Prevent "wrong unit" or "wrong property" mistakes</span>
+                  <span>Prevent "wrong unit" or "wrong unit-group" mistakes</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <span className="text-green-500 mt-1">✓</span>
@@ -2885,7 +2885,7 @@ Content-Type: multipart/form-data
       if (activeVerticalTab === 'smart-navigation') {
         return {
           title: 'Smart Navigation Guide - Hobson AI',
-          description: 'Learn how Hobson\'s AI navigation works across portfolio, property, and unit levels. Understand scope rules and switch behavior for accurate answers.'
+          description: 'Learn how Hobson\'s AI navigation works across portfolio, unit-group, and unit levels. Understand scope rules and switch behavior for accurate answers.'
         };
       }
       if (activeVerticalTab === 'plans-credits') {
