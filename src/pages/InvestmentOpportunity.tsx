@@ -444,7 +444,7 @@ const InvestmentOpportunity = () => {
                   </div>
                 </div>
                 
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex justify-center">
                   <Button 
                     size="lg" 
                     className="gap-2"
@@ -464,10 +464,6 @@ const InvestmentOpportunity = () => {
                   >
                     <Download className="w-4 h-4" />
                     Download Full Business Plan
-                  </Button>
-                  <Button size="lg" variant="outline" className="gap-2">
-                    <FileText className="w-4 h-4" />
-                    View Summary
                   </Button>
                 </div>
               </div>
