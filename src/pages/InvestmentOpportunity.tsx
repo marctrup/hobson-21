@@ -180,11 +180,39 @@ const InvestmentOpportunity = () => {
                   <h3 className="text-xl font-bold text-foreground">Business Plan</h3>
                   <p className="text-sm text-muted-foreground">Strategy, market analysis, and growth roadmap</p>
                 </div>
+                
+                {/* Full Business Plan - Featured */}
+                <Card className="p-5 mb-4 border-primary/40 bg-primary/5 hover:shadow-md transition-all cursor-pointer group">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/30 transition-colors">
+                      <FileText className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h4 className="font-bold text-base text-foreground">Full Business Plan</h4>
+                        <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">Complete</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Complete document including all sections below
+                      </p>
+                      <div className="flex items-center justify-between">
+                        <p className="text-xs text-muted-foreground">PDF • 8.7 MB</p>
+                        <Button variant="default" size="sm" className="gap-2 h-8 text-xs">
+                          <Download className="w-3 h-3" />
+                          Download Complete Plan
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </Card>
+
+                {/* Individual Sections */}
+                <p className="text-xs text-muted-foreground mb-3 pl-1">Individual sections:</p>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <FileText className="w-5 h-5 text-primary" />
+                      <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                        <FileText className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h4 className="font-semibold text-sm text-foreground truncate">Executive Summary</h4>
@@ -199,12 +227,12 @@ const InvestmentOpportunity = () => {
 
                   <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <FileText className="w-5 h-5 text-primary" />
+                      <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                        <TrendingUp className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Full Business Plan</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 8.7 MB</p>
+                        <h4 className="font-semibold text-sm text-foreground truncate">Market Analysis</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 3.1 MB</p>
                       </div>
                     </div>
                     <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
@@ -215,12 +243,12 @@ const InvestmentOpportunity = () => {
 
                   <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
                     <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <TrendingUp className="w-5 h-5 text-primary" />
+                      <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
+                        <FileText className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Market Analysis</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 3.1 MB</p>
+                        <h4 className="font-semibold text-sm text-foreground truncate">Growth Strategy</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 2.8 MB</p>
                       </div>
                     </div>
                     <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
