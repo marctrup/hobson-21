@@ -265,16 +265,54 @@ const InvestmentOpportunity = () => {
         </header>
 
         {/* Hero Section */}
-        <section className="py-16 border-b">
+        <section className="py-12 border-b bg-gradient-to-b from-background to-muted/30">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto text-center">
-              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-                Discover the Hobson Opportunity
-              </h2>
-              <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto">
-                Explore our comprehensive business plan, market analysis, product roadmap, and financial projections.
-              </p>
-              <p className="text-sm text-muted-foreground italic">
+            <div className="max-w-5xl mx-auto">
+              {/* Mission Statement */}
+              <div className="mb-8">
+                <h2 className="text-xs font-semibold text-primary uppercase tracking-wider mb-3 text-center">
+                  Mission Statement
+                </h2>
+                <p className="text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
+                  To go beyond simple data access by giving property professionals instant, accurate information enriched with AI judgement, context, and connected insight.
+                </p>
+              </div>
+
+              {/* Positioning Statement */}
+              <div className="mb-8 pb-8 border-b">
+                <h2 className="text-xs font-semibold text-primary uppercase tracking-wider mb-3 text-center">
+                  Positioning Statement
+                </h2>
+                <p className="text-base text-muted-foreground leading-relaxed text-center max-w-4xl mx-auto">
+                  For real estate professionals drained by large, expensive systems and the manual effort of pulling information from original documents, Hobson is a <span className="font-semibold text-foreground">specialised AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is <span className="font-semibold text-foreground">lightweight, simple to use, and low cost</span> — saving time, ensuring accuracy, and building trust with fast, referenced responses.
+                </p>
+              </div>
+
+              {/* Funding & Download Section */}
+              <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-primary/5 border border-primary/20 rounded-lg p-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground mb-1">Funding Requirement</p>
+                    <p className="text-2xl font-bold text-foreground">£750,000</p>
+                  </div>
+                </div>
+                
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button size="lg" className="gap-2">
+                    <Download className="w-4 h-4" />
+                    Download Full Business Plan
+                  </Button>
+                  <Button size="lg" variant="outline" className="gap-2">
+                    <FileText className="w-4 h-4" />
+                    View Summary
+                  </Button>
+                </div>
+              </div>
+
+              <p className="text-xs text-muted-foreground italic text-center mt-6">
                 Materials on this page are confidential and intended for authorised investors only
               </p>
             </div>
@@ -282,9 +320,16 @@ const InvestmentOpportunity = () => {
         </section>
 
         {/* Section Cards Grid */}
-        <section className="py-16">
+        <section className="py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-6xl mx-auto">
+              <h2 className="text-2xl font-bold text-foreground mb-2 text-center">
+                Explore Detailed Sections
+              </h2>
+              <p className="text-muted-foreground mb-8 text-center">
+                Click any section below to view detailed information or download individual documents
+              </p>
+              
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {sections.map((section) => (
                   <Card
@@ -339,32 +384,6 @@ const InvestmentOpportunity = () => {
                     </div>
                   </Card>
                 ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Funding CTA Section */}
-        <section className="py-16 border-t bg-primary/5">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
-                <TrendingUp className="w-10 h-10 text-primary" />
-              </div>
-              <h2 className="text-3xl font-bold text-foreground mb-4">
-                Seeking £750,000
-              </h2>
-              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
-                To complete Phase 2 build, hire sales & AI team, and expand data connectors, alerts, and automation
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="gap-2">
-                  <Download className="w-5 h-5" />
-                  Download Full Deck
-                </Button>
-                <Button size="lg" variant="outline">
-                  Schedule Meeting
-                </Button>
               </div>
             </div>
           </div>
