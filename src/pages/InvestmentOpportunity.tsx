@@ -479,7 +479,7 @@ const sections = [
   {
     id: 'commercials',
     title: 'Commercials',
-    subtitle: 'HEU & Pricing, Sample Scenarios & Revenue Model',
+    subtitle: 'HEU System, Pricing, and Transparent Usage',
     icon: DollarSign,
     color: 'from-amber-500/10 to-amber-600/10',
     iconColor: 'text-amber-600',
@@ -490,20 +490,6 @@ const sections = [
         customVisualComponent: 'heuPricing',
         content: {
           overview: 'Usage-based pricing model with Hobson Energy Units and cost structure.',
-          sections: []
-        }
-      },
-      {
-        title: 'Sample Pricing Scenarios',
-        content: {
-          overview: 'Real-world pricing examples and cost projections.',
-          sections: []
-        }
-      },
-      {
-        title: 'Revenue Model',
-        content: {
-          overview: 'Comprehensive revenue model and growth projections based on usage patterns.',
           sections: []
         }
       }
