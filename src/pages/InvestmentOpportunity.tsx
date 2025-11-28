@@ -205,41 +205,42 @@ const sections = [
       {
         title: 'Europe Market Opportunity',
         content: {
-          overview: 'European real estate market analysis with TAM/SAM/SOM breakdown for regional expansion opportunities.',
+          overview: 'Europe\'s population is 11× larger than the UK • UK efficiency value per business: £6,000 (20% time gain) • UK TAM baseline: £1.41B • Applying the 11× multiple gives a simple, directional estimate of the European opportunity • Same conservative assumptions: 65% motivated (SAM), 12% obtainable (SOM)',
           sections: [
             {
               title: 'Total Addressable Market (TAM)',
-              subtitle: 'Value: €TBD',
+              subtitle: 'Value: £15.5B',
               items: [
-                'Total annual efficiency savings available across European real estate businesses',
-                'Data pending: European market sizing in progress'
+                'Scaling the UK\'s £1.41B efficiency value by Europe\'s 11× population multiple',
+                '£1.41B × 11 = £15.51B, rounded to £15.5B',
+                'Represents the annual efficiency value across Europe for AI-driven document and information workflows in real estate'
               ]
             },
             {
               title: 'Serviceable Available Market (SAM)',
-              subtitle: 'Value: €TBD',
+              subtitle: 'Value: £10.1B',
               items: [
-                'European real estate businesses motivated and able to adopt AI tools',
-                'Assumes similar 65% adoption motivation as UK market',
-                'Data pending: European market analysis'
+                'The proportion of European real estate operators realistically motivated and ready to adopt AI tools',
+                'Uses the same 65% factor as the UK',
+                '£15.5B × 65% = £10.1B'
               ]
             },
             {
               title: 'Serviceable Obtainable Market (SOM)',
-              subtitle: 'Value: €TBD',
+              subtitle: 'Value: £1.2B',
               items: [
-                'Credible early-stage European market share Hobson can capture',
-                'Assumes 12% market penetration within motivated segment',
-                'Data pending: European expansion projections'
+                'A credible near-term reach for Hobson within Europe',
+                'Assumes 12% penetration of motivated organisations',
+                '£10.1B × 12% = £1.21B, rounded to £1.2B'
               ]
             },
             {
               title: 'Summary',
               items: [
-                'European real estate markets present significant expansion opportunity',
-                'Similar operational challenges as UK with document-heavy workflows',
-                'Multi-language support required for broader adoption',
-                'Regulatory variations across countries create both challenges and moats'
+                'With Europe\'s population 11× larger than the UK, Hobson\'s efficiency gains scale into a substantial export opportunity',
+                'A conservative model shows a £15.5B TAM and £10.1B motivated market',
+                '£1.2B obtainable opportunity makes Europe a high-value early expansion region',
+                'Strong potential for AI-driven real estate tools in European markets'
               ]
             }
           ]
