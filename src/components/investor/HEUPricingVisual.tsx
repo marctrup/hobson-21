@@ -97,22 +97,13 @@ export const HEUPricingVisual = () => {
               <Zap className="w-6 h-6 text-blue-600" />
             </div>
             <div className="flex-1">
-              <h3 className="text-xl font-bold text-black mb-3">Top-Up Pack</h3>
-              <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-sm text-gray-800">
+              <h3 className="text-xl font-bold text-black mb-3">Top-Up</h3>
+              <div className="flex gap-8 text-sm text-gray-800">
                 <div>
-                  <p className="font-semibold text-blue-600 mb-1">£15 one-off purchase</p>
+                  <p className="font-semibold text-blue-600">£15</p>
                 </div>
                 <div>
-                  <p className="font-semibold mb-1">Adds 150 HEUs</p>
-                </div>
-                <div>
-                  <p>Covers extraction, indexing, and Q&A</p>
-                </div>
-                <div>
-                  <p>Non-rollover (expires at end of billing period)</p>
-                </div>
-                <div>
-                  <p>Works instantly with any paid plan</p>
+                  <p className="font-semibold text-blue-600">150 HEUs</p>
                 </div>
               </div>
             </div>
