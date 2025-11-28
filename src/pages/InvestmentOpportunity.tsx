@@ -187,7 +187,7 @@ const sections = [
             {
               title: 'Jan - March 2026: Scale',
               items: [
-                'Launch MVP to wider market'
+                'Launch MVP to our pilot clients'
               ]
             }
           ]
