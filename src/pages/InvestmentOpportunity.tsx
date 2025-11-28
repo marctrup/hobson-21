@@ -328,13 +328,6 @@ const sections = [
             }
           ]
         }
-      },
-      {
-        title: 'Efficiency Savings (UK & Global)',
-        content: {
-          overview: 'Quantified efficiency gains and cost savings potential across UK, European, and global markets.',
-          sections: []
-        }
       }
     ]
   },
