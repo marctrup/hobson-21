@@ -2346,7 +2346,11 @@ Content-Type: multipart/form-data
               <p className="text-muted-foreground mb-6">
                 Download the one-page cheat sheet for easy reference
               </p>
-              <Button size="lg" className="gap-2">
+              <Button 
+                size="lg" 
+                className="gap-2"
+                onClick={() => window.open('/Hobson_Cheat_Sheet.pdf', '_blank')}
+              >
                 📥 Download the One-Page Cheat Sheet
               </Button>
             </div>
