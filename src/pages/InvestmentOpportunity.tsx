@@ -119,39 +119,21 @@ const sections = [
           overview: 'Our target market spans three distinct customer segments with unique needs and pain points.',
           sections: [
             {
-              title: 'Segment A — Large Portfolio Operators',
+              title: 'Large Operators (50–250 employees)',
               items: [
-                'Slow, bureaucratic environments with scattered documents',
-                'Use Hobson to instantly pull clauses, dates, and details from leases and service agreements',
-                'Helps teams answer queries, support reporting, and speed up junior staff',
-                'Key Insight: "It takes too long to find even simple information."'
+                'High-admin organisations struggling with scattered data and slow information retrieval, needing automation and accuracy at scale.'
               ]
             },
             {
-              title: 'Segment B — Medium Property Companies',
+              title: 'Medium Operators (10–49 employees)',
               items: [
-                'Fast-moving teams with mid-sized portfolios',
-                'Information spread across inboxes and shared drives',
-                'Hobson gives quick access to key terms and summaries during audits, onboarding, and reporting',
-                'Key Insight: They need clarity without a heavy system.'
+                'Agile teams overwhelmed by inboxes and shared drives, looking for efficient, low-overhead tools that remove manual searching.'
               ]
             },
             {
-              title: 'Segment C — Small Portfolio Owner-Managers',
+              title: 'Small Operators (1–9 employees)',
               items: [
-                'Hands-on operators with limited time and no tech stack',
-                'Hobson acts as a simple digital assistant to find and summarise lease details',
-                'Supports renewals and organises portfolio info',
-                'Key Insight: "I just want something simple that works."'
-              ]
-            },
-            {
-              title: 'Summary',
-              items: [
-                'Across all segments, the core problem is the same: valuable information is buried in documents',
-                'Hobson retrieves and summarises it instantly, reducing effort and improving accuracy',
-                'The MVP is shaped directly by these pain points',
-                'Future features will continue to follow customer feedback'
+                'Time-poor owner-operators needing a simple, low-cost assistant that works instantly without onboarding or a tech stack.'
               ]
             }
           ]
