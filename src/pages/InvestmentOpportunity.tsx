@@ -478,22 +478,15 @@ const sections = [
   {
     id: 'commercials',
     title: 'Commercials',
-    subtitle: 'Pricing Philosophy, HEU Model, Sample Scenarios & Revenue Model',
+    subtitle: 'HEU & Pricing, Sample Scenarios & Revenue Model',
     icon: DollarSign,
     color: 'from-amber-500/10 to-amber-600/10',
     iconColor: 'text-amber-600',
     pages: [
       {
-        title: 'Pricing Philosophy',
+        title: 'HEU & Pricing',
         content: {
-          overview: 'Usage-based pricing model designed to eliminate barriers to adoption.',
-          sections: []
-        }
-      },
-      {
-        title: 'HEU Model',
-        content: {
-          overview: 'How Hobson Energy Units work and their cost structure.',
+          overview: 'Usage-based pricing model with Hobson Energy Units and cost structure.',
           sections: []
         }
       },
