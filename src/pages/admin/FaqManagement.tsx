@@ -107,6 +107,27 @@ export default function FaqManagement() {
         if (error) throw error;
         toast({ title: "FAQ updated successfully" });
       } else {
+        // First, get all FAQs with same or higher sort_order
+        const { data: faqsToShift, error: fetchError } = await supabase
+          .from("faq_items")
+          .select("id, sort_order")
+          .gte("sort_order", formData.sort_order);
+
+        if (fetchError) throw fetchError;
+
+        // Shift each FAQ up by 1
+        if (faqsToShift && faqsToShift.length > 0) {
+          for (const faq of faqsToShift) {
+            const { error: updateError } = await supabase
+              .from("faq_items")
+              .update({ sort_order: faq.sort_order + 1 })
+              .eq("id", faq.id);
+            
+            if (updateError) throw updateError;
+          }
+        }
+
+        // Then insert the new FAQ
         const { error } = await supabase.from("faq_items").insert([formData]);
 
         if (error) throw error;
