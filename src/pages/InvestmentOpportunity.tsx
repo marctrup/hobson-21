@@ -1049,35 +1049,37 @@ const InvestmentOpportunity = () => {
                           <span className="w-1 h-5 sm:h-6 bg-primary rounded-full"></span>
                           Download Files
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                           {(selectedSection.pages[currentPageIndex] as any).downloads.map((download: any, idx: number) => (
-                            <div key={idx} className="bg-background border border-border rounded-lg p-3 sm:p-4 hover:border-primary/50 transition-colors">
-                              <div className="flex items-start gap-2 sm:gap-3">
-                                <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                            <div key={idx} className="bg-background border border-border rounded-lg p-4 sm:p-5 hover:border-primary/50 transition-colors flex flex-col">
+                              <div className="flex items-start gap-3 mb-4">
+                                <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
+                                  <FileSpreadsheet className="w-5 h-5 text-emerald-600" />
+                                </div>
                                 <div className="flex-1 min-w-0">
-                                  <p className="text-xs sm:text-sm font-medium text-foreground mb-2 line-clamp-2">{download.name}</p>
-                                  <Button
-                                    onClick={() => {
-                                      const link = document.createElement('a');
-                                      link.href = download.path;
-                                      link.download = download.name;
-                                      document.body.appendChild(link);
-                                      link.click();
-                                      document.body.removeChild(link);
-                                      
-                                      toast({
-                                        title: 'Download Started',
-                                        description: `Downloading ${download.name}`,
-                                      });
-                                    }}
-                                    size="sm"
-                                    className="gap-1.5 sm:gap-2 text-xs w-full sm:w-auto"
-                                  >
-                                    <Download className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                                    Download
-                                  </Button>
+                                  <p className="text-sm font-medium text-foreground leading-relaxed">{download.name}</p>
                                 </div>
                               </div>
+                              <Button
+                                onClick={() => {
+                                  const link = document.createElement('a');
+                                  link.href = download.path;
+                                  link.download = download.name;
+                                  document.body.appendChild(link);
+                                  link.click();
+                                  document.body.removeChild(link);
+                                  
+                                  toast({
+                                    title: 'Download Started',
+                                    description: `Downloading ${download.name}`,
+                                  });
+                                }}
+                                size="sm"
+                                className="gap-2 text-xs w-full"
+                              >
+                                <Download className="w-4 h-4" />
+                                Download File
+                              </Button>
                             </div>
                           ))}
                         </div>
