@@ -238,6 +238,41 @@ export default function FaqManagement() {
     }
   };
 
+  const fixDuplicateOrders = async () => {
+    try {
+      // Get all FAQs ordered by sort_order and created_at
+      const { data: allFaqs, error: fetchError } = await supabase
+        .from("faq_items")
+        .select("id, sort_order, created_at")
+        .order("sort_order", { ascending: true })
+        .order("created_at", { ascending: true });
+
+      if (fetchError) throw fetchError;
+
+      // Reassign sort orders sequentially
+      for (let i = 0; i < allFaqs.length; i++) {
+        const newOrder = i + 1;
+        if (allFaqs[i].sort_order !== newOrder) {
+          const { error: updateError } = await supabase
+            .from("faq_items")
+            .update({ sort_order: newOrder })
+            .eq("id", allFaqs[i].id);
+
+          if (updateError) throw updateError;
+        }
+      }
+
+      toast({ title: "Duplicate orders fixed successfully" });
+      fetchFaqs();
+    } catch (error: any) {
+      toast({
+        title: "Error fixing orders",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="container mx-auto py-8 space-y-6">
       <div className="flex justify-between items-center">
@@ -265,6 +300,9 @@ export default function FaqManagement() {
           <Button onClick={handleImportLegacyFaqs} variant="outline">
             <Upload className="mr-2 h-4 w-4" />
             Import Legacy FAQs
+          </Button>
+          <Button onClick={fixDuplicateOrders} variant="outline">
+            Fix Duplicate Orders
           </Button>
           <Button 
             variant="outline" 
