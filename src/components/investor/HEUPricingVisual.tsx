@@ -2,32 +2,32 @@ import { CreditCard, Zap, BarChart3, Eye } from 'lucide-react';
 
 export const HEUPricingVisual = () => {
   return (
-    <div className="space-y-12 bg-white p-10 rounded-xl">
+    <div className="space-y-8 bg-purple-50 p-8 rounded-xl">
       {/* Header */}
-      <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-black mb-3">
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
           HEU System, Pricing, and Transparent Usage
         </h2>
-        <p className="text-xl text-gray-600">
+        <p className="text-sm text-gray-600">
           Fair, predictable pricing with complete transparency
         </p>
       </div>
 
-      {/* HEU Explanation - Full Width Banner */}
-      <div className="bg-gradient-to-r from-blue-50 to-blue-100 border-l-4 border-blue-600 rounded-xl p-8">
-        <div className="flex items-start gap-6">
-          <div className="w-16 h-16 rounded-xl bg-blue-600 flex items-center justify-center flex-shrink-0">
-            <Zap className="w-8 h-8 text-white" />
+      {/* HEU Explanation - Compact Banner */}
+      <div className="bg-white border border-purple-200 rounded-lg p-5">
+        <div className="flex items-start gap-4">
+          <div className="w-10 h-10 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
+            <Zap className="w-5 h-5 text-purple-600" />
           </div>
           <div className="flex-1">
-            <h3 className="text-2xl font-bold text-black mb-4">
+            <h3 className="text-base font-bold text-gray-900 mb-2">
               What is an HEU (Hobson Energy Unit)?
             </h3>
-            <div className="space-y-3 text-lg text-gray-800">
-              <p className="leading-relaxed">
+            <div className="space-y-1 text-sm text-gray-700">
+              <p>
                 <strong>An HEU, Hobson's currency</strong> measures how much AI processing is used for each action.
               </p>
-              <p className="leading-relaxed">
+              <p>
                 This ensures <strong>fair, predictable pricing</strong> tied directly to value delivered.
               </p>
             </div>
@@ -35,158 +35,156 @@ export const HEUPricingVisual = () => {
         </div>
       </div>
 
-      {/* Pricing Plans - Centered Grid */}
-      <div className="max-w-5xl mx-auto">
-        <div className="flex items-center gap-4 mb-8">
-          <div className="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center">
-            <CreditCard className="w-7 h-7 text-blue-600" />
+      {/* Pricing Plans - Compact Grid */}
+      <div>
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+            <CreditCard className="w-4 h-4 text-purple-600" />
           </div>
-          <h3 className="text-3xl font-bold text-black">Pricing Plans</h3>
+          <h3 className="text-lg font-bold text-gray-900">Pricing Plans</h3>
         </div>
         
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-4 gap-4">
           {/* Free Plan */}
-          <div className="border-3 border-gray-300 rounded-xl p-6 hover:border-blue-600 transition-all hover:shadow-lg bg-white">
-            <h4 className="font-bold text-2xl text-black mb-4 pb-3 border-b border-gray-200">Free</h4>
-            <div className="space-y-2 text-center">
-              <p className="text-3xl font-bold text-blue-600">18</p>
-              <p className="text-sm text-gray-600">HEUs/month</p>
+          <div className="border border-gray-300 rounded-lg p-4 bg-white">
+            <h4 className="font-bold text-base text-gray-900 mb-3 pb-2 border-b border-gray-200">Free</h4>
+            <div className="space-y-1 text-center">
+              <p className="text-xl font-bold text-purple-600">18</p>
+              <p className="text-xs text-gray-600">HEUs/month</p>
             </div>
           </div>
 
           {/* Essential Plan */}
-          <div className="border-3 border-gray-300 rounded-xl p-6 hover:border-blue-600 transition-all hover:shadow-lg bg-white">
-            <h4 className="font-bold text-2xl text-black mb-4 pb-3 border-b border-gray-200">Essential</h4>
-            <div className="space-y-2 text-center">
-              <p className="text-2xl font-bold text-black">£19.50</p>
-              <p className="text-xs text-gray-500 mb-3">/month</p>
-              <p className="text-3xl font-bold text-blue-600">275</p>
-              <p className="text-sm text-gray-600">HEUs/month</p>
+          <div className="border border-gray-300 rounded-lg p-4 bg-white">
+            <h4 className="font-bold text-base text-gray-900 mb-3 pb-2 border-b border-gray-200">Essential</h4>
+            <div className="space-y-1 text-center">
+              <p className="text-base font-bold text-gray-900">£19.50</p>
+              <p className="text-xs text-gray-500">/month</p>
+              <p className="text-xl font-bold text-purple-600 mt-2">275</p>
+              <p className="text-xs text-gray-600">HEUs/month</p>
             </div>
           </div>
 
           {/* Essential Plus Plan */}
-          <div className="border-3 border-blue-600 rounded-xl p-6 bg-white shadow-lg transform scale-105">
-            <h4 className="font-bold text-2xl text-black mb-4 pb-3 border-b border-blue-600">Essential Plus</h4>
-            <div className="space-y-2 text-center">
-              <p className="text-2xl font-bold text-black">£49.75</p>
-              <p className="text-xs text-gray-500 mb-3">/month</p>
-              <p className="text-3xl font-bold text-blue-600">700</p>
-              <p className="text-sm text-gray-600">HEUs/month</p>
+          <div className="border-2 border-purple-400 rounded-lg p-4 bg-white">
+            <h4 className="font-bold text-base text-gray-900 mb-3 pb-2 border-b border-purple-400">Essential Plus</h4>
+            <div className="space-y-1 text-center">
+              <p className="text-base font-bold text-gray-900">£49.75</p>
+              <p className="text-xs text-gray-500">/month</p>
+              <p className="text-xl font-bold text-purple-600 mt-2">700</p>
+              <p className="text-xs text-gray-600">HEUs/month</p>
             </div>
           </div>
 
           {/* Enterprise Plan */}
-          <div className="border-3 border-gray-300 rounded-xl p-6 hover:border-blue-600 transition-all hover:shadow-lg bg-white">
-            <h4 className="font-bold text-2xl text-black mb-4 pb-3 border-b border-gray-200">Enterprise</h4>
-            <div className="space-y-2 text-center">
-              <p className="text-2xl font-bold text-black">£148.50</p>
-              <p className="text-xs text-gray-500 mb-3">/month</p>
-              <p className="text-3xl font-bold text-blue-600">2000</p>
-              <p className="text-sm text-gray-600">HEUs/month</p>
+          <div className="border border-gray-300 rounded-lg p-4 bg-white">
+            <h4 className="font-bold text-base text-gray-900 mb-3 pb-2 border-b border-gray-200">Enterprise</h4>
+            <div className="space-y-1 text-center">
+              <p className="text-base font-bold text-gray-900">£148.50</p>
+              <p className="text-xs text-gray-500">/month</p>
+              <p className="text-xl font-bold text-purple-600 mt-2">2000</p>
+              <p className="text-xs text-gray-600">HEUs/month</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Top-Up - Compact Banner */}
-      <div className="max-w-3xl mx-auto">
-        <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                <Zap className="w-6 h-6 text-blue-600" />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-black">Top-Up</h3>
-                <p className="text-sm text-gray-600">One-time purchase</p>
-              </div>
+      {/* Top-Up - Compact */}
+      <div className="bg-white border border-purple-200 rounded-lg p-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+              <Zap className="w-4 h-4 text-purple-600" />
             </div>
-            <div className="flex gap-8 items-center">
-              <div className="text-right">
-                <p className="text-2xl font-bold text-black">£15</p>
-              </div>
-              <div className="text-right">
-                <p className="text-2xl font-bold text-blue-600">150</p>
-                <p className="text-sm text-gray-600">HEUs</p>
-              </div>
+            <div>
+              <h3 className="text-sm font-bold text-gray-900">Top-Up</h3>
+              <p className="text-xs text-gray-600">One-time purchase</p>
+            </div>
+          </div>
+          <div className="flex gap-6 items-center">
+            <div className="text-right">
+              <p className="text-base font-bold text-gray-900">£15</p>
+            </div>
+            <div className="text-right">
+              <p className="text-base font-bold text-purple-600">150</p>
+              <p className="text-xs text-gray-600">HEUs</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Transparency Section - Two Column */}
-      <div className="pt-8 border-t-2 border-gray-200">
-        <h3 className="text-3xl font-bold text-black mb-8 text-center">Complete Usage Transparency</h3>
+      {/* Transparency Section */}
+      <div className="pt-4 border-t border-purple-200">
+        <h3 className="text-lg font-bold text-gray-900 mb-4 text-center">Complete Usage Transparency</h3>
         
-        <div className="grid grid-cols-2 gap-8 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 gap-4">
           {/* HEU Bar Visual */}
-          <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                <BarChart3 className="w-6 h-6 text-blue-600" />
+          <div className="bg-white border border-purple-200 rounded-lg p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+                <BarChart3 className="w-4 h-4 text-purple-600" />
               </div>
-              <h4 className="text-xl font-bold text-black">Real-Time HEU Bar</h4>
+              <h4 className="text-sm font-bold text-gray-900">Real-Time HEU Bar</h4>
             </div>
             
-            <div className="space-y-6">
-              <div className="relative w-full h-16 bg-gray-200 rounded-xl overflow-hidden border-2 border-gray-300 shadow-inner">
+            <div className="space-y-3">
+              <div className="relative w-full h-10 bg-gray-200 rounded-lg overflow-hidden border border-gray-300">
                 <div 
-                  className="absolute left-0 top-0 h-full bg-gray-400 flex items-center justify-center transition-all"
+                  className="absolute left-0 top-0 h-full bg-gray-400 flex items-center justify-center"
                   style={{ width: '60%' }}
                 >
-                  <span className="text-sm font-bold text-white">420 used</span>
+                  <span className="text-xs font-semibold text-white">420 used</span>
                 </div>
                 <div 
-                  className="absolute right-0 top-0 h-full bg-blue-600 flex items-center justify-center transition-all"
+                  className="absolute right-0 top-0 h-full bg-purple-500 flex items-center justify-center"
                   style={{ width: '40%' }}
                 >
-                  <span className="text-sm font-bold text-white">280 remaining</span>
+                  <span className="text-xs font-semibold text-white">280 remaining</span>
                 </div>
               </div>
               
-              <div className="text-center py-2">
-                <p className="text-lg font-bold text-black">700 total HEUs</p>
+              <div className="text-center">
+                <p className="text-xs font-semibold text-gray-900">700 total HEUs</p>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
-                <p className="text-sm text-gray-800 leading-relaxed">
-                  <strong className="text-black">Real-time tracking</strong> shows exactly how much you've used and what remains—no surprises.
+              <div className="bg-purple-50 rounded-lg p-3 border border-purple-100">
+                <p className="text-xs text-gray-700 leading-relaxed">
+                  <strong>Real-time tracking</strong> shows exactly how much you've used and what remains.
                 </p>
               </div>
             </div>
           </div>
 
           {/* Per-Message Transparency */}
-          <div className="bg-gray-50 border-2 border-gray-200 rounded-xl p-8">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
-                <Eye className="w-6 h-6 text-blue-600" />
+          <div className="bg-white border border-purple-200 rounded-lg p-5">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+                <Eye className="w-4 h-4 text-purple-600" />
               </div>
-              <h4 className="text-xl font-bold text-black">Per-Message Cost</h4>
+              <h4 className="text-sm font-bold text-gray-900">Per-Message Cost</h4>
             </div>
 
-            <div className="space-y-6">
-              <div className="bg-white border-2 border-gray-300 rounded-lg p-5 shadow-sm">
-                <h5 className="font-bold text-black mb-4 text-sm uppercase tracking-wide">Message Usage Details</h5>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between items-center py-2 border-b border-gray-200">
+            <div className="space-y-3">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
+                <h5 className="font-semibold text-gray-900 mb-2 text-xs">Message Usage Details</h5>
+                <div className="space-y-1 text-xs">
+                  <div className="flex justify-between items-center py-1 border-b border-gray-200">
                     <span className="text-gray-600">HEU Cost:</span>
-                    <span className="font-bold text-blue-600 text-lg">0.05</span>
+                    <span className="font-bold text-purple-600">0.05</span>
                   </div>
-                  <div className="flex justify-between py-1">
+                  <div className="flex justify-between py-0.5">
                     <span className="text-gray-600">Query Type:</span>
-                    <span className="text-gray-900 font-medium">Simple extraction</span>
+                    <span className="text-gray-900">Simple extraction</span>
                   </div>
-                  <div className="flex justify-between py-1">
+                  <div className="flex justify-between py-0.5">
                     <span className="text-gray-600">Processing Time:</span>
-                    <span className="text-gray-900 font-medium">1.2s</span>
+                    <span className="text-gray-900">1.2s</span>
                   </div>
-                  <div className="flex justify-between py-1">
-                    <span className="text-gray-600">Documents Searched:</span>
-                    <span className="text-gray-900 font-medium">3 files</span>
+                  <div className="flex justify-between py-0.5">
+                    <span className="text-gray-600">Documents:</span>
+                    <span className="text-gray-900">3 files</span>
                   </div>
-                  <div className="border-t-2 border-gray-300 pt-3 mt-3 space-y-2">
+                  <div className="border-t border-gray-200 pt-1 mt-1 space-y-0.5">
                     <div className="flex justify-between">
                       <span className="text-gray-600">Before:</span>
                       <span className="text-gray-900 font-mono">420.45</span>
@@ -199,9 +197,9 @@ export const HEUPricingVisual = () => {
                 </div>
               </div>
 
-              <div className="bg-blue-50 rounded-lg p-5 border border-blue-200">
-                <p className="text-sm text-gray-800 leading-relaxed">
-                  Click <strong className="text-black">⋯</strong> on any message for detailed cost breakdown. <strong className="text-black">Every action is itemised</strong> for complete visibility.
+              <div className="bg-purple-50 rounded-lg p-3 border border-purple-100">
+                <p className="text-xs text-gray-700 leading-relaxed">
+                  Click <strong>⋯</strong> on any message for detailed breakdown. <strong>Every action is itemised</strong>.
                 </p>
               </div>
             </div>
