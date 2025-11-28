@@ -169,202 +169,239 @@ const InvestmentOpportunity = () => {
           </div>
         </section>
 
-        {/* Business Plan Section */}
-        <section className="py-12 border-b">
+        {/* Document Sections - Compact Grid Layout */}
+        <section className="py-12">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-foreground mb-3">Business Plan</h3>
-              <p className="text-muted-foreground mb-6">
-                Comprehensive overview of our strategy, market analysis, and growth roadmap.
-              </p>
+            <div className="max-w-6xl mx-auto space-y-12">
               
-              <div className="grid md:grid-cols-2 gap-4">
-                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <FileText className="w-6 h-6 text-primary" />
+              {/* Business Plan */}
+              <div>
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-foreground">Business Plan</h3>
+                  <p className="text-sm text-muted-foreground">Strategy, market analysis, and growth roadmap</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <FileText className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Executive Summary</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 2.4 MB</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground mb-1">Executive Summary</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        PDF • 2.4 MB
-                      </p>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <Download className="w-4 h-4" />
-                        Download
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
 
-                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <FileText className="w-6 h-6 text-primary" />
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <FileText className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Full Business Plan</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 8.7 MB</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground mb-1">Full Business Plan</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        PDF • 8.7 MB
-                      </p>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <Download className="w-4 h-4" />
-                        Download
-                      </Button>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
+
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <TrendingUp className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Market Analysis</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 3.1 MB</p>
+                      </div>
                     </div>
-                  </div>
-                </Card>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Financials Section */}
-        <section className="py-12 border-b bg-muted/20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-foreground mb-3">Financials</h3>
-              <p className="text-muted-foreground mb-6">
-                Financial projections, metrics, and revenue models for the next 5 years.
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <BarChart className="w-6 h-6 text-primary" />
+              {/* Financials */}
+              <div>
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-foreground">Financials</h3>
+                  <p className="text-sm text-muted-foreground">Projections, metrics, and revenue models</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <BarChart className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Financial Model</h4>
+                        <p className="text-xs text-muted-foreground">XLSX • 1.8 MB</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground mb-1">Financial Model</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        XLSX • 1.8 MB
-                      </p>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <Download className="w-4 h-4" />
-                        Download
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
 
-                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <TrendingUp className="w-6 h-6 text-primary" />
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <TrendingUp className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Revenue Projections</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 1.2 MB</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground mb-1">Revenue Projections</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        PDF • 1.2 MB
-                      </p>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <Download className="w-4 h-4" />
-                        Download
-                      </Button>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
+
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <BarChart className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Cash Flow Analysis</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 2.6 MB</p>
+                      </div>
                     </div>
-                  </div>
-                </Card>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Marketing Plan Section */}
-        <section className="py-12 border-b">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-foreground mb-3">Marketing Plan</h3>
-              <p className="text-muted-foreground mb-6">
-                Go-to-market strategy, customer acquisition plans, and brand positioning.
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <FileText className="w-6 h-6 text-primary" />
+              {/* Marketing Plan */}
+              <div>
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-foreground">Marketing Plan</h3>
+                  <p className="text-sm text-muted-foreground">Go-to-market strategy and customer acquisition</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <FileText className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Marketing Strategy</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 3.5 MB</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground mb-1">Marketing Strategy</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        PDF • 3.5 MB
-                      </p>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <Download className="w-4 h-4" />
-                        Download
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
 
-                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <TrendingUp className="w-6 h-6 text-primary" />
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <TrendingUp className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Customer Acquisition</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 2.1 MB</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground mb-1">Customer Acquisition</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        PDF • 2.1 MB
-                      </p>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <Download className="w-4 h-4" />
-                        Download
-                      </Button>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
+
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <FileText className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Brand Positioning</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 1.9 MB</p>
+                      </div>
                     </div>
-                  </div>
-                </Card>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
+                </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Tech Architecture Section */}
-        <section className="py-12 border-b bg-muted/20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h3 className="text-2xl font-bold text-foreground mb-3">Tech Architecture</h3>
-              <p className="text-muted-foreground mb-6">
-                Technical infrastructure, AI models, scalability plan, and system diagrams.
-              </p>
-              
-              <div className="grid md:grid-cols-2 gap-4">
-                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <Code className="w-6 h-6 text-primary" />
+              {/* Tech Architecture */}
+              <div>
+                <div className="mb-4">
+                  <h3 className="text-xl font-bold text-foreground">Tech Architecture</h3>
+                  <p className="text-sm text-muted-foreground">Infrastructure, AI models, and scalability</p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <Code className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">System Architecture</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 4.2 MB</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground mb-1">System Architecture</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        PDF • 4.2 MB
-                      </p>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <Download className="w-4 h-4" />
-                        Download
-                      </Button>
-                    </div>
-                  </div>
-                </Card>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
 
-                <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                      <FileText className="w-6 h-6 text-primary" />
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <FileText className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Technical Roadmap</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 1.9 MB</p>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground mb-1">Technical Roadmap</h4>
-                      <p className="text-sm text-muted-foreground mb-3">
-                        PDF • 1.9 MB
-                      </p>
-                      <Button variant="outline" size="sm" className="gap-2">
-                        <Download className="w-4 h-4" />
-                        Download
-                      </Button>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
+
+                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <Code className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-semibold text-sm text-foreground truncate">Security Overview</h4>
+                        <p className="text-xs text-muted-foreground">PDF • 2.3 MB</p>
+                      </div>
                     </div>
-                  </div>
-                </Card>
+                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
+                      <Download className="w-3 h-3" />
+                      Download
+                    </Button>
+                  </Card>
+                </div>
               </div>
+
             </div>
           </div>
         </section>
