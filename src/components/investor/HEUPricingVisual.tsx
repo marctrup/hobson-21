@@ -84,11 +84,8 @@ export const HEUPricingVisual = () => {
             <div className="border-2 border-gray-300 rounded-lg p-4 hover:border-blue-600 transition-colors bg-white">
               <h4 className="font-bold text-lg text-black mb-2">Enterprise</h4>
               <div className="space-y-1 text-sm text-gray-800">
+                <p className="font-semibold text-blue-600">£148.50/month</p>
                 <p className="font-semibold text-blue-600">2000 HEUs/month</p>
-                <p>Everything in Essential Plus</p>
-                <p>Dedicated support</p>
-                <p>Business knowledgebase</p>
-                <p>Bespoke integrations</p>
               </div>
             </div>
           </div>
