@@ -107,15 +107,16 @@ export default function FaqManagement() {
         if (error) throw error;
         toast({ title: "FAQ updated successfully" });
       } else {
-        // First, get all FAQs with same or higher sort_order
+        // First, get all FAQs with same or higher sort_order, ordered DESC to avoid conflicts
         const { data: faqsToShift, error: fetchError } = await supabase
           .from("faq_items")
           .select("id, sort_order")
-          .gte("sort_order", formData.sort_order);
+          .gte("sort_order", formData.sort_order)
+          .order("sort_order", { ascending: false });
 
         if (fetchError) throw fetchError;
 
-        // Shift each FAQ up by 1
+        // Shift each FAQ up by 1, starting from highest to avoid conflicts
         if (faqsToShift && faqsToShift.length > 0) {
           for (const faq of faqsToShift) {
             const { error: updateError } = await supabase
