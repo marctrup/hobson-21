@@ -274,7 +274,7 @@ const sections = [
         }
       },
       {
-        title: 'Competitive Landscape',
+        title: 'Market Overview',
         showCustomVisual: true,
         content: {
           overview: 'The next winners in real estate tech will be AI-native. Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.',
