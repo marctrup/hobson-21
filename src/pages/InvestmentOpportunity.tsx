@@ -14,6 +14,7 @@ import mvpArchitecture from '@/assets/mvp-ai-architecture.png';
 import { CompetitiveLandscapeVisual } from '@/components/investor/CompetitiveLandscapeVisual';
 import { CompetitiveMatrixVisual } from '@/components/investor/CompetitiveMatrixVisual';
 import { EuropeanGlobalVisual } from '@/components/investor/EuropeanGlobalVisual';
+import { HEUPricingVisual } from '@/components/investor/HEUPricingVisual';
 import {
   Dialog,
   DialogContent,
@@ -485,6 +486,8 @@ const sections = [
     pages: [
       {
         title: 'HEU & Pricing',
+        showCustomVisual: true,
+        customVisualComponent: 'heuPricing',
         content: {
           overview: 'Usage-based pricing model with Hobson Energy Units and cost structure.',
           sections: []
@@ -948,6 +951,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for European & Global */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === 'europeanGlobal' && (
                       <EuropeanGlobalVisual />
+                    )}
+                    
+                    {/* Custom Visual Component for HEU & Pricing */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === 'heuPricing' && (
+                      <HEUPricingVisual />
                     )}
 
                     {/* Overview */}
