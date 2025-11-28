@@ -2149,10 +2149,10 @@ Content-Type: multipart/form-data
                         <p className="font-semibold">Ask about a unit in another property → switch required</p>
                       </div>
                     </div>
-                    <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
-                      <span className="text-2xl">💡</span>
+                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-2xl">🚫</span>
                       <div>
-                        <p className="font-semibold">Ask about portfolio → switch recommended</p>
+                        <p className="font-semibold">Ask about portfolio → switch required</p>
                       </div>
                     </div>
                   </div>
