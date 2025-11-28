@@ -216,6 +216,41 @@ export default function GlossaryManagement() {
     }
   };
 
+  const fixDuplicateOrders = async () => {
+    try {
+      // Get all glossary items ordered by sort_order and created_at
+      const { data: allItems, error: fetchError } = await supabase
+        .from("glossary_items")
+        .select("id, sort_order, created_at")
+        .order("sort_order", { ascending: true })
+        .order("created_at", { ascending: true });
+
+      if (fetchError) throw fetchError;
+
+      // Reassign sort orders sequentially
+      for (let i = 0; i < allItems.length; i++) {
+        const newOrder = i + 1;
+        if (allItems[i].sort_order !== newOrder) {
+          const { error: updateError } = await supabase
+            .from("glossary_items")
+            .update({ sort_order: newOrder })
+            .eq("id", allItems[i].id);
+
+          if (updateError) throw updateError;
+        }
+      }
+
+      toast({ title: "Duplicate orders fixed successfully" });
+      fetchGlossaryItems();
+    } catch (error: any) {
+      toast({
+        title: "Error fixing orders",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="container mx-auto py-8 space-y-6">
       <div className="flex justify-between items-center">
@@ -243,6 +278,9 @@ export default function GlossaryManagement() {
           <Button onClick={handleImportLegacyGlossary} variant="outline">
             <Upload className="mr-2 h-4 w-4" />
             Import Legacy Glossary
+          </Button>
+          <Button onClick={fixDuplicateOrders} variant="outline">
+            Fix Duplicate Orders
           </Button>
           <Button 
             variant="outline" 
