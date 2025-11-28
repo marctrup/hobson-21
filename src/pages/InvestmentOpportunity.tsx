@@ -12,6 +12,7 @@ import { OptimizedImage } from '@/components/OptimizedImage';
 import hobsonLogo from '/hobson-logo.png';
 import mvpArchitecture from '@/assets/mvp-ai-architecture.png';
 import { CompetitiveLandscapeVisual } from '@/components/investor/CompetitiveLandscapeVisual';
+import { CompetitiveMatrixVisual } from '@/components/investor/CompetitiveMatrixVisual';
 import {
   Dialog,
   DialogContent,
@@ -323,6 +324,15 @@ const sections = [
               ]
             }
           ]
+        }
+      },
+      {
+        title: 'Market Landscape',
+        showCustomVisual: true,
+        customVisualComponent: 'matrix',
+        content: {
+          overview: 'A landscape of traditional software, standalone AI, and generic tools—Hobson stands out as an integrated real estate AI solution.',
+          sections: []
         }
       },
       {
@@ -922,9 +932,15 @@ const InvestmentOpportunity = () => {
               <div className="flex-1 overflow-y-auto mt-6 space-y-8">
                 {selectedSection.pages[currentPageIndex] && (
                   <>
-                    {/* Custom Visual Component (for Competitive Landscape) */}
-                    {(selectedSection.pages[currentPageIndex] as any).showCustomVisual && (
+                    {/* Custom Visual Component for Market Overview */}
+                    {(selectedSection.pages[currentPageIndex] as any).showCustomVisual && 
+                     (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== 'matrix' && (
                       <CompetitiveLandscapeVisual />
+                    )}
+                    
+                    {/* Custom Visual Component for Market Landscape */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === 'matrix' && (
+                      <CompetitiveMatrixVisual />
                     )}
 
                     {/* Overview */}
