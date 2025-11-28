@@ -154,8 +154,47 @@ const sections = [
       {
         title: 'Timeline & Milestones',
         content: {
-          overview: 'Strategic product development timeline from MVP to Phase 2 and beyond.',
-          sections: []
+          overview: 'Strategic product development timeline from MVP to Phase 2 and beyond, structured across four key phases.',
+          sections: [
+            {
+              title: 'May - Aug 2024: Discover',
+              items: [
+                'Client discovery calls with property professionals',
+                'Establish the core problem being solved',
+                'Identify pain points in existing systems',
+                'Define target market segments'
+              ]
+            },
+            {
+              title: 'Sept-Dec 2024: Validate',
+              items: [
+                'Establish 4 working partnerships with real estate firms',
+                'No-code concepts validation',
+                'Scope the MVP (Phase 1) based on partner feedback',
+                'Refine value proposition and feature set'
+              ]
+            },
+            {
+              title: 'Jan - Dec 2025: Develop',
+              items: [
+                'Build MVP: Phase 1 with core AI capabilities',
+                'Testing Phase 1 with key clients in real-world scenarios',
+                'Finalise pricing strategy based on usage data',
+                'Build Phase 2 with enhanced features',
+                'Develop go-to-market strategy for broader launch'
+              ]
+            },
+            {
+              title: 'Jan - March 2026: Scale',
+              items: [
+                'Launch MVP to wider market',
+                'Complete Build Phase 2 development',
+                'Launch Phase 2 with advanced features',
+                'Scale infrastructure for growth',
+                'Expand customer acquisition efforts'
+              ]
+            }
+          ]
         }
       },
       {
