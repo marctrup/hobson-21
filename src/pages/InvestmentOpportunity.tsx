@@ -738,16 +738,16 @@ const InvestmentOpportunity = () => {
       <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
         {/* Header */}
         <header className="border-b bg-background/95 backdrop-blur sticky top-0 z-40">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between max-w-7xl mx-auto">
+          <div className="container mx-auto px-3 sm:px-4 py-3 sm:py-4">
+            <div className="flex items-center justify-between max-w-7xl mx-auto gap-2">
               <Link to="/" className="transition-opacity hover:opacity-80">
                 <OptimizedImage 
                   src={hobsonLogo} 
                   alt="Hobson AI Logo" 
-                  className="h-12"
+                  className="h-8 sm:h-10 md:h-12"
                 />
               </Link>
-              <h1 className="text-xl font-semibold text-foreground">
+              <h1 className="text-sm sm:text-lg md:text-xl font-semibold text-foreground">
                 Investment Opportunity
               </h1>
             </div>
@@ -755,45 +755,45 @@ const InvestmentOpportunity = () => {
         </header>
 
         {/* Hero Section */}
-        <section className="py-12 border-b bg-gradient-to-b from-background to-muted/30">
-          <div className="container mx-auto px-4">
+        <section className="py-6 sm:py-8 md:py-12 border-b bg-gradient-to-b from-background to-muted/30">
+          <div className="container mx-auto px-3 sm:px-4">
             <div className="max-w-5xl mx-auto">
               {/* Mission Statement */}
-              <div className="mb-8">
-                <h2 className="text-xs font-semibold text-primary uppercase tracking-wider mb-3 text-center">
+              <div className="mb-6 sm:mb-8">
+                <h2 className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 sm:mb-3 text-center">
                   Mission Statement
                 </h2>
-                <p className="text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
+                <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
                   To go beyond simple data access by giving property professionals instant, accurate information enriched with AI judgement, context, and connected insight.
                 </p>
               </div>
 
               {/* Positioning Statement */}
-              <div className="mb-8 pb-8 border-b">
-                <h2 className="text-xs font-semibold text-primary uppercase tracking-wider mb-3 text-center">
+              <div className="mb-6 sm:mb-8 pb-6 sm:pb-8 border-b">
+                <h2 className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 sm:mb-3 text-center">
                   Positioning Statement
                 </h2>
-                <p className="text-base text-muted-foreground leading-relaxed text-center max-w-4xl mx-auto">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-center max-w-4xl mx-auto">
                   For real estate professionals drained by large, expensive systems and the manual effort of pulling information from original documents, Hobson is a <span className="font-semibold text-foreground">specialised AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is <span className="font-semibold text-foreground">lightweight, simple to use, and low cost</span> — saving time, ensuring accuracy, and building trust with fast, referenced responses.
                 </p>
               </div>
 
               {/* Funding & Download Section */}
-              <div className="flex flex-col md:flex-row items-center justify-between gap-6 bg-primary/5 border border-primary/20 rounded-lg p-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="w-6 h-6 text-primary" />
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 bg-primary/5 border border-primary/20 rounded-lg p-4 sm:p-6">
+                <div className="flex items-center gap-3 sm:gap-4">
+                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Funding Requirement</p>
-                    <p className="text-2xl font-bold text-foreground">£750,000</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground mb-0.5 sm:mb-1">Funding Requirement</p>
+                    <p className="text-xl sm:text-2xl font-bold text-foreground">£750,000</p>
                   </div>
                 </div>
                 
-                <div className="flex justify-center">
+                <div className="flex justify-center w-full md:w-auto">
                   <Button 
                     size="lg" 
-                    className="gap-2"
+                    className="gap-2 w-full md:w-auto"
                     onClick={() => {
                       const link = document.createElement('a');
                       link.href = '/documents/full-business-plan.pdf';
@@ -822,33 +822,33 @@ const InvestmentOpportunity = () => {
         </section>
 
         {/* Section Cards Grid */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
+        <section className="py-8 sm:py-10 md:py-12">
+          <div className="container mx-auto px-3 sm:px-4">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-2xl font-bold text-foreground mb-2 text-center">
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-1 sm:mb-2 text-center">
                 Explore Detailed Sections
               </h2>
-              <p className="text-muted-foreground mb-8 text-center">
+              <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 text-center px-2">
                 Click any section below to view detailed information or download individual documents
               </p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {sections.map((section) => (
                   <Card
                     key={section.id}
                     className="group hover:shadow-xl transition-all duration-300 overflow-hidden border-2 hover:border-primary/50"
                   >
                     <div className={`h-2 bg-gradient-to-r ${section.color}`}></div>
-                    <div className="p-6">
-                      <div className="flex items-start gap-4 mb-6">
-                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
-                          <section.icon className={`w-7 h-7 ${section.iconColor}`} />
+                    <div className="p-4 sm:p-6">
+                      <div className="flex items-start gap-3 sm:gap-4 mb-4 sm:mb-6">
+                        <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                          <section.icon className={`w-6 h-6 sm:w-7 sm:h-7 ${section.iconColor}`} />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h3 className="font-bold text-lg text-foreground mb-1">
+                          <h3 className="font-bold text-base sm:text-lg text-foreground mb-1">
                             {section.title}
                           </h3>
-                          <p className="text-sm text-muted-foreground line-clamp-2">
+                          <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">
                             {section.subtitle}
                           </p>
                         </div>
@@ -861,10 +861,11 @@ const InvestmentOpportunity = () => {
                           }}
                           variant="default"
                           size="sm"
-                          className="flex-1 gap-2 h-9"
+                          className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
                         >
-                          <FileText className="w-4 h-4" />
-                          View
+                          <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                          <span className="hidden xs:inline">View</span>
+                          <span className="xs:hidden">View</span>
                         </Button>
                         <Button
                           onClick={(e) => {
@@ -884,10 +885,11 @@ const InvestmentOpportunity = () => {
                           }}
                           variant="outline"
                           size="sm"
-                          className="flex-1 gap-2 h-9"
+                          className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
                         >
-                          <Download className="w-4 h-4" />
-                          Download PDF
+                          <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                          <span className="hidden xs:inline">Download PDF</span>
+                          <span className="xs:hidden">PDF</span>
                         </Button>
                       </div>
                     </div>
@@ -928,17 +930,17 @@ const InvestmentOpportunity = () => {
         setSelectedSection(null);
         setCurrentPageIndex(0);
       }}>
-        <DialogContent className="max-w-5xl max-h-[85vh] overflow-hidden flex flex-col">
+        <DialogContent className="max-w-[95vw] sm:max-w-3xl md:max-w-4xl lg:max-w-5xl max-h-[90vh] sm:max-h-[85vh] overflow-hidden flex flex-col p-4 sm:p-6">
           {selectedSection && (
             <>
-              <DialogHeader>
-                <div className="flex items-center gap-4 mb-2">
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${selectedSection.color} flex items-center justify-center flex-shrink-0`}>
-                    <selectedSection.icon className={`w-6 h-6 ${selectedSection.iconColor}`} />
+              <DialogHeader className="pb-3 sm:pb-4">
+                <div className="flex items-center gap-3 sm:gap-4 mb-2">
+                  <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br ${selectedSection.color} flex items-center justify-center flex-shrink-0`}>
+                    <selectedSection.icon className={`w-5 h-5 sm:w-6 sm:h-6 ${selectedSection.iconColor}`} />
                   </div>
-                  <div>
-                    <DialogTitle className="text-2xl">{selectedSection.title}</DialogTitle>
-                    <DialogDescription className="text-base mt-1">
+                  <div className="flex-1 min-w-0">
+                    <DialogTitle className="text-lg sm:text-xl md:text-2xl">{selectedSection.title}</DialogTitle>
+                    <DialogDescription className="text-xs sm:text-sm md:text-base mt-0.5 sm:mt-1">
                       {selectedSection.subtitle}
                     </DialogDescription>
                   </div>
@@ -947,13 +949,13 @@ const InvestmentOpportunity = () => {
 
               {/* Page Navigation Tabs */}
               {selectedSection.pages.length > 1 && (
-                <div className="border-b">
-                  <div className="flex gap-2 overflow-x-auto pb-2">
+                <div className="border-b -mx-4 sm:-mx-6 px-4 sm:px-6">
+                  <div className="flex gap-1 sm:gap-2 overflow-x-auto pb-2 scrollbar-thin">
                     {selectedSection.pages.map((page, idx) => (
                       <button
                         key={idx}
                         onClick={() => setCurrentPageIndex(idx)}
-                        className={`px-4 py-2 text-sm font-medium rounded-t-lg whitespace-nowrap transition-colors ${
+                        className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium rounded-t-lg whitespace-nowrap transition-colors flex-shrink-0 ${
                           currentPageIndex === idx
                             ? 'bg-primary text-primary-foreground'
                             : 'text-muted-foreground hover:text-foreground hover:bg-muted'
@@ -967,7 +969,7 @@ const InvestmentOpportunity = () => {
               )}
 
               {/* Page Content */}
-              <div className="flex-1 overflow-y-auto mt-6 space-y-8">
+              <div className="flex-1 overflow-y-auto mt-4 sm:mt-6 space-y-6 sm:space-y-8 -mx-4 sm:-mx-6 px-4 sm:px-6">
                 {selectedSection.pages[currentPageIndex] && (
                   <>
                     {/* Custom Visual Component for Market Landscape */}
@@ -1002,7 +1004,7 @@ const InvestmentOpportunity = () => {
                     {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual && 
                      !(selectedSection.pages[currentPageIndex] as any).isVisual && (
                       <div className="prose prose-sm max-w-none">
-                        <p className="text-lg text-foreground leading-relaxed">
+                        <p className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
                           {selectedSection.pages[currentPageIndex].content.overview}
                         </p>
                       </div>
@@ -1023,16 +1025,16 @@ const InvestmentOpportunity = () => {
                     {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual && 
                       !(selectedSection.pages[currentPageIndex] as any).isVisual && 
                       selectedSection.pages[currentPageIndex].content.sections.map((contentSection, idx) => (
-                        <div key={idx} className="space-y-4">
-                          <h3 className="text-xl font-bold text-primary flex items-center gap-2">
-                            <span className="w-1 h-6 bg-primary rounded-full"></span>
+                        <div key={idx} className="space-y-3 sm:space-y-4">
+                          <h3 className="text-base sm:text-lg md:text-xl font-bold text-primary flex items-center gap-2">
+                            <span className="w-1 h-5 sm:h-6 bg-primary rounded-full"></span>
                             {contentSection.title}
                           </h3>
-                          <ul className="space-y-3 pl-4">
+                          <ul className="space-y-2 sm:space-y-3 pl-3 sm:pl-4">
                             {contentSection.items.map((item, itemIdx) => (
-                              <li key={itemIdx} className="flex items-start gap-3 text-foreground">
-                                <span className="w-2 h-2 rounded-full bg-primary/60 mt-2 flex-shrink-0"></span>
-                                <span className="text-base leading-relaxed">{item}</span>
+                              <li key={itemIdx} className="flex items-start gap-2 sm:gap-3 text-foreground">
+                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary/60 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                                <span className="text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
                               </li>
                             ))}
                           </ul>
@@ -1042,18 +1044,18 @@ const InvestmentOpportunity = () => {
                     
                     {/* Downloads Section */}
                     {(selectedSection.pages[currentPageIndex] as any).downloads && (
-                      <div className="space-y-4 mt-8">
-                        <h3 className="text-xl font-bold text-primary flex items-center gap-2">
-                          <span className="w-1 h-6 bg-primary rounded-full"></span>
+                      <div className="space-y-3 sm:space-y-4 mt-6 sm:mt-8">
+                        <h3 className="text-base sm:text-lg md:text-xl font-bold text-primary flex items-center gap-2">
+                          <span className="w-1 h-5 sm:h-6 bg-primary rounded-full"></span>
                           Download Files
                         </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                           {(selectedSection.pages[currentPageIndex] as any).downloads.map((download: any, idx: number) => (
-                            <div key={idx} className="bg-background border border-border rounded-lg p-4 hover:border-primary/50 transition-colors">
-                              <div className="flex items-start gap-3">
-                                <FileSpreadsheet className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
+                            <div key={idx} className="bg-background border border-border rounded-lg p-3 sm:p-4 hover:border-primary/50 transition-colors">
+                              <div className="flex items-start gap-2 sm:gap-3">
+                                <FileSpreadsheet className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 flex-shrink-0 mt-0.5" />
                                 <div className="flex-1 min-w-0">
-                                  <p className="text-sm font-medium text-foreground mb-1">{download.name}</p>
+                                  <p className="text-xs sm:text-sm font-medium text-foreground mb-2 line-clamp-2">{download.name}</p>
                                   <Button
                                     onClick={() => {
                                       const link = document.createElement('a');
@@ -1069,9 +1071,9 @@ const InvestmentOpportunity = () => {
                                       });
                                     }}
                                     size="sm"
-                                    className="gap-2"
+                                    className="gap-1.5 sm:gap-2 text-xs w-full sm:w-auto"
                                   >
-                                    <Download className="w-3 h-3" />
+                                    <Download className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                                     Download
                                   </Button>
                                 </div>
@@ -1087,31 +1089,35 @@ const InvestmentOpportunity = () => {
 
               {/* Page Navigation Arrows */}
               {selectedSection.pages.length > 1 && (
-                <div className="flex items-center justify-between pt-4 border-t mt-4">
+                <div className="flex items-center justify-between pt-3 sm:pt-4 border-t mt-4 gap-2 -mx-4 sm:-mx-6 px-4 sm:px-6">
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPageIndex(Math.max(0, currentPageIndex - 1))}
                     disabled={currentPageIndex === 0}
-                    className="gap-2"
+                    size="sm"
+                    className="gap-1 sm:gap-2 text-xs sm:text-sm"
                   >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                     </svg>
-                    Previous
+                    <span className="hidden xs:inline">Previous</span>
+                    <span className="xs:hidden">Prev</span>
                   </Button>
                   
-                  <span className="text-sm text-muted-foreground">
-                    Page {currentPageIndex + 1} of {selectedSection.pages.length}
+                  <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
+                    {currentPageIndex + 1} / {selectedSection.pages.length}
                   </span>
                   
                   <Button
                     variant="outline"
                     onClick={() => setCurrentPageIndex(Math.min(selectedSection.pages.length - 1, currentPageIndex + 1))}
                     disabled={currentPageIndex === selectedSection.pages.length - 1}
-                    className="gap-2"
+                    size="sm"
+                    className="gap-1 sm:gap-2 text-xs sm:text-sm"
                   >
-                    Next
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <span className="hidden xs:inline">Next</span>
+                    <span className="xs:hidden">Next</span>
+                    <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Button>
