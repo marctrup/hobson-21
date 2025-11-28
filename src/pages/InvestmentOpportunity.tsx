@@ -116,26 +116,29 @@ const sections = [
     iconColor: 'text-purple-600',
     pages: [
       {
-        title: 'Customer Segmentation',
+        title: 'Customer Segmentation and Efficiency Gains',
         content: {
-          overview: 'Our target market spans three distinct customer segments with unique needs and pain points.',
+          overview: 'A 20% efficiency improvement = £6,000 saved per year per role, based on a UK junior admin salary of £30,000. This reflects time saved on searching, retrieving, and extracting information from leases and other documents.',
           sections: [
             {
               title: 'Large Operators (50–250 employees)',
               items: [
-                'High-admin organisations struggling with scattered data and slow information retrieval, needing automation and accuracy at scale.'
+                'High-admin organisations struggling with scattered data and slow information retrieval, needing automation and accuracy at scale.',
+                'Efficiency Gain: Typically £30,000–£120,000+ per year, as multiple staff perform document-heavy tasks.'
               ]
             },
             {
               title: 'Medium Operators (10–49 employees)',
               items: [
-                'Agile teams overwhelmed by inboxes and shared drives, looking for efficient, low-overhead tools that remove manual searching.'
+                'Agile teams overwhelmed by inboxes and shared drives, looking for efficient, low-overhead tools that eliminate manual searching.',
+                'Efficiency Gain: Usually £6,000–£30,000 per year, depending on staff involved in document workflows.'
               ]
             },
             {
               title: 'Small Operators (1–9 employees)',
               items: [
-                'Time-poor owner-operators needing a simple, low-cost assistant that works instantly without onboarding or a tech stack.'
+                'Time-poor owner-operators needing a simple, low-cost assistant that works instantly without onboarding or a tech stack.',
+                'Efficiency Gain: At least £6,000 per year even with just one person handling admin/document tasks.'
               ]
             }
           ]
