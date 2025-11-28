@@ -117,7 +117,44 @@ const sections = [
         title: 'Customer Segmentation',
         content: {
           overview: 'Our target market spans three distinct customer segments with unique needs and pain points.',
-          sections: []
+          sections: [
+            {
+              title: 'Segment A — Large Portfolio Operators',
+              items: [
+                'Slow, bureaucratic environments with scattered documents',
+                'Use Hobson to instantly pull clauses, dates, and details from leases and service agreements',
+                'Helps teams answer queries, support reporting, and speed up junior staff',
+                'Key Insight: "It takes too long to find even simple information."'
+              ]
+            },
+            {
+              title: 'Segment B — Medium Property Companies',
+              items: [
+                'Fast-moving teams with mid-sized portfolios',
+                'Information spread across inboxes and shared drives',
+                'Hobson gives quick access to key terms and summaries during audits, onboarding, and reporting',
+                'Key Insight: They need clarity without a heavy system.'
+              ]
+            },
+            {
+              title: 'Segment C — Small Portfolio Owner-Managers',
+              items: [
+                'Hands-on operators with limited time and no tech stack',
+                'Hobson acts as a simple digital assistant to find and summarise lease details',
+                'Supports renewals and organises portfolio info',
+                'Key Insight: "I just want something simple that works."'
+              ]
+            },
+            {
+              title: 'Summary',
+              items: [
+                'Across all segments, the core problem is the same: valuable information is buried in documents',
+                'Hobson retrieves and summarises it instantly, reducing effort and improving accuracy',
+                'The MVP is shaped directly by these pain points',
+                'Future features will continue to follow customer feedback'
+              ]
+            }
+          ]
         }
       },
       {
