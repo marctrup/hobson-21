@@ -49,17 +49,17 @@ export const CompetitiveLandscapeVisual = () => {
 
           {/* Dense logo cluster - faded and crowded */}
           <div className="relative bg-slate-50 rounded-xl p-6 border border-slate-200 min-h-[400px] overflow-hidden">
-            <div className="grid grid-cols-4 gap-2 opacity-50">
+            <div className="grid grid-cols-4 gap-2">
               {traditionalCompanies.slice(0, 48).map((company, idx) => (
                 <div 
                   key={idx}
-                  className="bg-slate-200 rounded px-2 py-1.5 text-[9px] text-slate-500 text-center truncate border border-slate-300"
+                  className="bg-slate-200 rounded px-2 py-1.5 text-[10px] text-slate-600 text-center truncate border border-slate-300"
                 >
                   {company}
                 </div>
               ))}
             </div>
-            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-slate-50/50 to-slate-100/80 pointer-events-none"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-100/60 pointer-events-none"></div>
           </div>
 
           {/* Key Issues */}
@@ -115,11 +115,6 @@ export const CompetitiveLandscapeVisual = () => {
                 `}>
                   {company.name}
                 </span>
-                {company.leader && (
-                  <span className="text-xs font-semibold text-emerald-700 bg-emerald-200 px-3 py-1 rounded-full border border-emerald-600">
-                    Category Leader
-                  </span>
-                )}
               </div>
             ))}
           </div>
