@@ -158,10 +158,48 @@ const sections = [
         }
       },
       {
-        title: 'Market Size & Opportunity',
+        title: 'UK Market Opportunity',
         content: {
-          overview: 'The global property management market presents significant opportunities for AI-powered solutions.',
-          sections: []
+          overview: 'UK real estate businesses: ≈235,200 • Average junior salary: £30,000 • 20% efficiency gain = £6,000 saved per employee • Assumes at least one admin/document-handling role per business (conservative)',
+          sections: [
+            {
+              title: 'Total Addressable Market (TAM)',
+              subtitle: 'Value: £1.41B',
+              items: [
+                'Total annual efficiency savings available across all UK real estate businesses from a 20% reduction in document-related admin time',
+                '235,200 × £6,000 = £1.41B'
+              ]
+            },
+            {
+              title: 'Serviceable Available Market (SAM)',
+              subtitle: 'Value: £917M',
+              items: [
+                'Real estate businesses motivated and able to adopt AI tools',
+                'Assumes 65% adoption motivation, reflecting a realistic level for this traditional sector',
+                '235,200 × 65% = 152,880 businesses',
+                '152,880 × £6,000 = £917M'
+              ]
+            },
+            {
+              title: 'Serviceable Obtainable Market (SOM)',
+              subtitle: 'Value: £110M',
+              items: [
+                'A credible early-stage share Hobson can capture based on simple onboarding, low cost, and strong user demand',
+                'Assumes 12% market penetration within the motivated segment',
+                '152,880 × 12% = 18,345 businesses',
+                '18,345 × £6,000 = £110M'
+              ]
+            },
+            {
+              title: 'Summary',
+              items: [
+                'The UK real estate market is large, fragmented, and admin-heavy',
+                'Even modest efficiency gains create a £1.41B TAM',
+                'Nearly £1B in realistic adoption potential',
+                'Clear £110M attainable early market for Hobson\'s AI assistant'
+              ]
+            }
+          ]
         }
       },
       {
