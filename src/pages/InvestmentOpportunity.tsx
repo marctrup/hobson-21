@@ -239,7 +239,7 @@ const sections = [
               title: 'Europe Summary',
               items: [
                 'With Europe\'s population 11× larger than the UK, Hobson\'s efficiency gains scale into a substantial export opportunity',
-                'A conservative model shows a £15.5B TAM and £10.1B motivated market',
+                'A conservative model shows a £15.5B TAM',
                 '£1.2B obtainable opportunity makes Europe a high-value early expansion region',
                 'Strong potential for AI-driven real estate tools in European markets'
               ]
