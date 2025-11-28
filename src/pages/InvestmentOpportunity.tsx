@@ -18,7 +18,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 
-// Section data with content
+// Section data with pages
 const sections = [
   {
     id: 'strategy',
@@ -27,46 +27,69 @@ const sections = [
     icon: Target,
     color: 'from-blue-500/10 to-blue-600/10',
     iconColor: 'text-blue-600',
-    content: {
-      overview: 'Hobson is an AI-native assistant tailored for the property industry. It automates insight extraction, decision support, and document understanding—built for trust, accuracy, and zero onboarding. Hobson becomes smarter over time, evolving into a proactive operations co-pilot.',
-      sections: [
-        {
-          title: 'Market Opportunity',
-          items: [
-            '£6B UK efficiency savings potential',
-            '£66B in Europe, £708B globally',
-            '134K+ UK real estate firms; 96% are small operators',
-            'PropTech is rapidly evolving from passive tools to intelligent assistants — Hobson leads this next wave'
-          ]
-        },
-        {
-          title: 'Traction & Milestones',
-          items: [
-            'MVP live, validated with 4 real-world partners',
-            'Partners include EPAM Asset Management, Live-in Guardians, and Landhold Investments',
-            'Document types: leases, deeds, floorplans, certificates',
-            'Phase 2 planned for Oct 2025: mobile, API, deeper AI'
-          ]
-        },
-        {
-          title: 'Revenue Model',
-          items: [
-            'Usage-based via Hobson Energy Units (HEUs)',
-            'No per-user or license fees',
-            'Plans: Free, Monthly (£20+VAT), Onboarding, Top-up',
-            'Typical cost: £0.54 for full lease extraction; ~£0.001 for simple queries'
-          ]
-        },
-        {
-          title: 'Funding requirement – Seeking £750,000',
-          items: [
-            'Complete Phase 2 build',
-            'Hire sales & AI team',
-            'Expand data connectors, alerts, and automation'
+    pages: [
+      {
+        title: 'Executive Summary',
+        content: {
+          overview: 'Hobson is an AI-native assistant tailored for the property industry. It automates insight extraction, decision support, and document understanding—built for trust, accuracy, and zero onboarding. Hobson becomes smarter over time, evolving into a proactive operations co-pilot.',
+          sections: [
+            {
+              title: 'Market Opportunity',
+              items: [
+                '£6B UK efficiency savings potential',
+                '£66B in Europe, £708B globally',
+                '134K+ UK real estate firms; 96% are small operators',
+                'PropTech is rapidly evolving from passive tools to intelligent assistants — Hobson leads this next wave'
+              ]
+            },
+            {
+              title: 'Traction & Milestones',
+              items: [
+                'MVP live, validated with 4 real-world partners',
+                'Partners include EPAM Asset Management, Live-in Guardians, and Landhold Investments',
+                'Document types: leases, deeds, floorplans, certificates',
+                'Phase 2 planned for Oct 2025: mobile, API, deeper AI'
+              ]
+            },
+            {
+              title: 'Revenue Model',
+              items: [
+                'Usage-based via Hobson Energy Units (HEUs)',
+                'No per-user or license fees',
+                'Plans: Free, Monthly (£20+VAT), Onboarding, Top-up',
+                'Typical cost: £0.54 for full lease extraction; ~£0.001 for simple queries'
+              ]
+            }
           ]
         }
-      ]
-    }
+      },
+      {
+        title: 'Approach',
+        content: {
+          overview: 'Our strategic approach combines AI innovation with deep property industry expertise to deliver unprecedented value.',
+          sections: [
+            {
+              title: 'Development Philosophy',
+              items: [
+                'AI-first architecture built for trust and accuracy',
+                'Zero onboarding friction for property professionals',
+                'Continuous learning from real-world usage',
+                'Proactive operations co-pilot capabilities'
+              ]
+            },
+            {
+              title: 'Market Strategy',
+              items: [
+                'Focus on underserved small to medium operators',
+                'Partnership-driven growth with pilot validation',
+                'Usage-based pricing eliminates adoption barriers',
+                'Phase 2 expansion into mobile and API integration'
+              ]
+            }
+          ]
+        }
+      }
+    ]
   },
   {
     id: 'market',
@@ -75,10 +98,29 @@ const sections = [
     icon: Users,
     color: 'from-purple-500/10 to-purple-600/10',
     iconColor: 'text-purple-600',
-    content: {
-      overview: 'Deep analysis of target customer segments, total addressable market, and competitive positioning.',
-      sections: []
-    }
+    pages: [
+      {
+        title: 'Customer Segmentation',
+        content: {
+          overview: 'Our target market spans three distinct customer segments with unique needs and pain points.',
+          sections: []
+        }
+      },
+      {
+        title: 'Market Size & Opportunity',
+        content: {
+          overview: 'The global property management market presents significant opportunities for AI-powered solutions.',
+          sections: []
+        }
+      },
+      {
+        title: 'Competitive Landscape',
+        content: {
+          overview: 'Analysis of current market players and our competitive positioning.',
+          sections: []
+        }
+      }
+    ]
   },
   {
     id: 'roadmap',
@@ -87,10 +129,29 @@ const sections = [
     icon: Map,
     color: 'from-green-500/10 to-green-600/10',
     iconColor: 'text-green-600',
-    content: {
-      overview: 'Product development timeline, feature roadmap, and strategic partnerships.',
-      sections: []
-    }
+    pages: [
+      {
+        title: 'Timeline & Milestones',
+        content: {
+          overview: 'Strategic product development timeline from MVP to Phase 2 and beyond.',
+          sections: []
+        }
+      },
+      {
+        title: 'Partnership Programme',
+        content: {
+          overview: 'Our approach to building strategic partnerships and pilot validation.',
+          sections: []
+        }
+      },
+      {
+        title: 'Development Philosophy',
+        content: {
+          overview: 'Core principles guiding our product development and AI architecture.',
+          sections: []
+        }
+      }
+    ]
   },
   {
     id: 'commercials',
@@ -99,10 +160,29 @@ const sections = [
     icon: DollarSign,
     color: 'from-amber-500/10 to-amber-600/10',
     iconColor: 'text-amber-600',
-    content: {
-      overview: 'Detailed pricing strategy, Hobson Energy Units model, and revenue projections.',
-      sections: []
-    }
+    pages: [
+      {
+        title: 'Pricing Philosophy',
+        content: {
+          overview: 'Usage-based pricing model designed to eliminate barriers to adoption.',
+          sections: []
+        }
+      },
+      {
+        title: 'HEU Model',
+        content: {
+          overview: 'How Hobson Energy Units work and their cost structure.',
+          sections: []
+        }
+      },
+      {
+        title: 'Sample Scenarios',
+        content: {
+          overview: 'Real-world pricing examples and cost projections.',
+          sections: []
+        }
+      }
+    ]
   },
   {
     id: 'financials',
@@ -111,10 +191,36 @@ const sections = [
     icon: PieChart,
     color: 'from-red-500/10 to-red-600/10',
     iconColor: 'text-red-600',
-    content: {
-      overview: 'Financial projections, operating expenses, cost of product, and staffing plans.',
-      sections: []
-    }
+    pages: [
+      {
+        title: 'Financial Forecast',
+        content: {
+          overview: 'Revenue projections and growth assumptions.',
+          sections: []
+        }
+      },
+      {
+        title: 'Operating Expenses',
+        content: {
+          overview: 'Detailed breakdown of operational costs.',
+          sections: []
+        }
+      },
+      {
+        title: 'Cost of Product',
+        content: {
+          overview: 'Infrastructure and AI cost analysis.',
+          sections: []
+        }
+      },
+      {
+        title: 'Staffing',
+        content: {
+          overview: 'Team growth plan and hiring roadmap.',
+          sections: []
+        }
+      }
+    ]
   },
   {
     id: 'team',
@@ -123,10 +229,15 @@ const sections = [
     icon: Briefcase,
     color: 'from-indigo-500/10 to-indigo-600/10',
     iconColor: 'text-indigo-600',
-    content: {
-      overview: 'Meet the team behind Hobson AI and our strategic advisors.',
-      sections: []
-    }
+    pages: [
+      {
+        title: 'Leadership Team',
+        content: {
+          overview: 'Meet the founders and executive team behind Hobson AI.',
+          sections: []
+        }
+      }
+    ]
   },
   {
     id: 'appendices',
@@ -135,10 +246,29 @@ const sections = [
     icon: BookOpen,
     color: 'from-teal-500/10 to-teal-600/10',
     iconColor: 'text-teal-600',
-    content: {
-      overview: 'Supporting documentation, detailed personas, market data, and technical breakdowns.',
-      sections: []
-    }
+    pages: [
+      {
+        title: 'Detailed Personas',
+        content: {
+          overview: 'In-depth profiles of target customer segments.',
+          sections: []
+        }
+      },
+      {
+        title: 'Efficiency Savings',
+        content: {
+          overview: 'Market size calculations and efficiency gain projections.',
+          sections: []
+        }
+      },
+      {
+        title: 'Source Data',
+        content: {
+          overview: 'References and market research sources.',
+          sections: []
+        }
+      }
+    ]
   }
 ];
 
@@ -147,6 +277,7 @@ const InvestmentOpportunity = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedSection, setSelectedSection] = useState<typeof sections[0] | null>(null);
+  const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -415,8 +546,11 @@ const InvestmentOpportunity = () => {
       </div>
 
       {/* Modal Dialog */}
-      <Dialog open={!!selectedSection} onOpenChange={() => setSelectedSection(null)}>
-        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
+      <Dialog open={!!selectedSection} onOpenChange={() => {
+        setSelectedSection(null);
+        setCurrentPageIndex(0);
+      }}>
+        <DialogContent className="max-w-5xl max-h-[85vh] overflow-hidden flex flex-col">
           {selectedSection && (
             <>
               <DialogHeader>
@@ -433,45 +567,104 @@ const InvestmentOpportunity = () => {
                 </div>
               </DialogHeader>
 
-              <div className="mt-6 space-y-8">
-                {/* Overview */}
-                <div className="prose prose-sm max-w-none">
-                  <p className="text-lg text-foreground leading-relaxed">
-                    {selectedSection.content.overview}
-                  </p>
-                </div>
-
-                {/* Content Sections */}
-                {selectedSection.content.sections.map((contentSection, idx) => (
-                  <div key={idx} className="space-y-4">
-                    <h3 className="text-xl font-bold text-primary flex items-center gap-2">
-                      <span className="w-1 h-6 bg-primary rounded-full"></span>
-                      {contentSection.title}
-                    </h3>
-                    <ul className="space-y-3 pl-4">
-                      {contentSection.items.map((item, itemIdx) => (
-                        <li key={itemIdx} className="flex items-start gap-3 text-foreground">
-                          <span className="w-2 h-2 rounded-full bg-primary/60 mt-2 flex-shrink-0"></span>
-                          <span className="text-base leading-relaxed">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-
-                {/* Download Section */}
-                <div className="pt-6 border-t">
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <Button className="flex-1 gap-2">
-                      <Download className="w-4 h-4" />
-                      Download Section PDF
-                    </Button>
-                    <Button variant="outline" className="flex-1">
-                      View Related Documents
-                    </Button>
+              {/* Page Navigation Tabs */}
+              {selectedSection.pages.length > 1 && (
+                <div className="border-b">
+                  <div className="flex gap-2 overflow-x-auto pb-2">
+                    {selectedSection.pages.map((page, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setCurrentPageIndex(idx)}
+                        className={`px-4 py-2 text-sm font-medium rounded-t-lg whitespace-nowrap transition-colors ${
+                          currentPageIndex === idx
+                            ? 'bg-primary text-primary-foreground'
+                            : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                        }`}
+                      >
+                        {page.title}
+                      </button>
+                    ))}
                   </div>
                 </div>
+              )}
+
+              {/* Page Content */}
+              <div className="flex-1 overflow-y-auto mt-6 space-y-8">
+                {selectedSection.pages[currentPageIndex] && (
+                  <>
+                    {/* Overview */}
+                    <div className="prose prose-sm max-w-none">
+                      <p className="text-lg text-foreground leading-relaxed">
+                        {selectedSection.pages[currentPageIndex].content.overview}
+                      </p>
+                    </div>
+
+                    {/* Content Sections */}
+                    {selectedSection.pages[currentPageIndex].content.sections.map((contentSection, idx) => (
+                      <div key={idx} className="space-y-4">
+                        <h3 className="text-xl font-bold text-primary flex items-center gap-2">
+                          <span className="w-1 h-6 bg-primary rounded-full"></span>
+                          {contentSection.title}
+                        </h3>
+                        <ul className="space-y-3 pl-4">
+                          {contentSection.items.map((item, itemIdx) => (
+                            <li key={itemIdx} className="flex items-start gap-3 text-foreground">
+                              <span className="w-2 h-2 rounded-full bg-primary/60 mt-2 flex-shrink-0"></span>
+                              <span className="text-base leading-relaxed">{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+
+                    {/* Download Section */}
+                    <div className="pt-6 border-t">
+                      <div className="flex flex-col sm:flex-row gap-4">
+                        <Button className="flex-1 gap-2">
+                          <Download className="w-4 h-4" />
+                          Download {selectedSection.pages[currentPageIndex].title}
+                        </Button>
+                        <Button variant="outline" className="flex-1">
+                          View Related Documents
+                        </Button>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
+
+              {/* Page Navigation Arrows */}
+              {selectedSection.pages.length > 1 && (
+                <div className="flex items-center justify-between pt-4 border-t mt-4">
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentPageIndex(Math.max(0, currentPageIndex - 1))}
+                    disabled={currentPageIndex === 0}
+                    className="gap-2"
+                  >
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    Previous
+                  </Button>
+                  
+                  <span className="text-sm text-muted-foreground">
+                    Page {currentPageIndex + 1} of {selectedSection.pages.length}
+                  </span>
+                  
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentPageIndex(Math.min(selectedSection.pages.length - 1, currentPageIndex + 1))}
+                    disabled={currentPageIndex === selectedSection.pages.length - 1}
+                    className="gap-2"
+                  >
+                    Next
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </Button>
+                </div>
+              )}
             </>
           )}
         </DialogContent>
