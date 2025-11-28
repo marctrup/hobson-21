@@ -34,6 +34,7 @@ const Learn = () => {
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
   const [faqItems, setFaqItems] = useState<any[]>([]);
   const [glossaryItems, setGlossaryItems] = useState<any[]>([]);
+  const [smartNavTab, setSmartNavTab] = useState<'portfolio' | 'property' | 'unit'>('portfolio');
 
   // Fetch FAQs from database
   useEffect(() => {
@@ -82,6 +83,18 @@ const Learn = () => {
           'positioningstatement': {
             horizontal: 'introduction',
             vertical: 'positioning-statement'
+          },
+          'smart-navigation': {
+            horizontal: 'introduction',
+            vertical: 'smart-navigation'
+          },
+          'smartnavigation': {
+            horizontal: 'introduction',
+            vertical: 'smart-navigation'
+          },
+          'smart-navigation-guide': {
+            horizontal: 'introduction',
+            vertical: 'smart-navigation'
           },
           'plans-credits': {
             horizontal: 'introduction',
@@ -218,7 +231,7 @@ const Learn = () => {
     };
   }, [section]);
 
-  // Set initial active section based on current tab
+    // Set initial active section based on current tab
   useEffect(() => {
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'faq') {
       setActiveTocSection('how-hobson-works');
@@ -226,6 +239,8 @@ const Learn = () => {
       setActiveTocSection('overview');
     } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
       setActiveTocSection('hobson-platform-overview');
+    } else if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'smart-navigation') {
+      setActiveTocSection('hero');
     }
   }, [activeHorizontalTab, activeVerticalTab]);
 
@@ -351,6 +366,10 @@ const Learn = () => {
           id: 'positioning-statement',
           label: 'Positioning Statement',
           icon: Play
+        }, {
+          id: 'smart-navigation',
+          label: 'Smart Navigation Guide',
+          icon: Users
         }, {
           id: 'plans-credits',
           label: 'Plans and Credits',
@@ -1949,6 +1968,438 @@ Content-Type: multipart/form-data
         </div>;
     }
 
+    // Handle Smart Navigation Guide content
+    if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'smart-navigation') {
+      return <div className="flex-1 py-8 px-4">
+        <div className="container mx-auto max-w-6xl">
+          {/* Hero Section */}
+          <div id="hero" className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+              How Hobson Decides What to Answer
+            </h1>
+            <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto">
+              A quick guide to how the assistant understands portfolio, property, and unit questions.
+            </p>
+            
+            {/* Three Level Icons */}
+            <div className="flex justify-center gap-8 mb-8">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-500/10 rounded-full flex items-center justify-center mb-2 mx-auto">
+                  <span className="text-3xl">🏢</span>
+                </div>
+                <p className="font-semibold text-sm">Portfolio</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mb-2 mx-auto">
+                  <span className="text-3xl">🏛️</span>
+                </div>
+                <p className="font-semibold text-sm">Property</p>
+              </div>
+              <div className="text-center">
+                <div className="w-16 h-16 bg-purple-500/10 rounded-full flex items-center justify-center mb-2 mx-auto">
+                  <span className="text-3xl">🚪</span>
+                </div>
+                <p className="font-semibold text-sm">Unit</p>
+              </div>
+            </div>
+            
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              Hobson answers differently depending on the page you're on. Understanding these levels 
+              helps you get accurate answers quickly.
+            </p>
+          </div>
+
+          {/* Visual Diagram */}
+          <div id="diagram" className="mb-16">
+            <h2 className="text-2xl font-bold text-foreground mb-6 text-center">The Three Levels</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="bg-blue-500/5 border-2 border-blue-500/20 rounded-xl p-6 text-center">
+                <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mb-3 mx-auto">
+                  <span className="text-2xl">🏢</span>
+                </div>
+                <h3 className="font-bold text-lg mb-2">Portfolio</h3>
+                <p className="text-sm text-muted-foreground">Everything — all properties and units.</p>
+              </div>
+              
+              <div className="bg-green-500/5 border-2 border-green-500/20 rounded-xl p-6 text-center">
+                <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mb-3 mx-auto">
+                  <span className="text-2xl">🏛️</span>
+                </div>
+                <h3 className="font-bold text-lg mb-2">Property</h3>
+                <p className="text-sm text-muted-foreground">One building or parade.</p>
+              </div>
+              
+              <div className="bg-purple-500/5 border-2 border-purple-500/20 rounded-xl p-6 text-center">
+                <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mb-3 mx-auto">
+                  <span className="text-2xl">🚪</span>
+                </div>
+                <h3 className="font-bold text-lg mb-2">Unit</h3>
+                <p className="text-sm text-muted-foreground">One lettable space.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Interactive Tabs */}
+          <div id="tabs" className="mb-16">
+            <h2 className="text-2xl font-bold text-foreground mb-6 text-center">
+              What Happens When You're On This Page?
+            </h2>
+            
+            <div className="bg-card border rounded-lg overflow-hidden">
+              {/* Tab Headers */}
+              <div className="flex border-b">
+                <button
+                  onClick={() => setSmartNavTab('portfolio')}
+                  className={`flex-1 px-6 py-4 font-semibold transition-colors ${
+                    smartNavTab === 'portfolio'
+                      ? 'bg-blue-500/10 text-blue-700 border-b-2 border-blue-500'
+                      : 'text-muted-foreground hover:bg-accent/50'
+                  }`}
+                >
+                  🏢 Portfolio Page
+                </button>
+                <button
+                  onClick={() => setSmartNavTab('property')}
+                  className={`flex-1 px-6 py-4 font-semibold transition-colors ${
+                    smartNavTab === 'property'
+                      ? 'bg-green-500/10 text-green-700 border-b-2 border-green-500'
+                      : 'text-muted-foreground hover:bg-accent/50'
+                  }`}
+                >
+                  🏛️ Property Page
+                </button>
+                <button
+                  onClick={() => setSmartNavTab('unit')}
+                  className={`flex-1 px-6 py-4 font-semibold transition-colors ${
+                    smartNavTab === 'unit'
+                      ? 'bg-purple-500/10 text-purple-700 border-b-2 border-purple-500'
+                      : 'text-muted-foreground hover:bg-accent/50'
+                  }`}
+                >
+                  🚪 Unit Page
+                </button>
+              </div>
+              
+              {/* Tab Content */}
+              <div className="p-6">
+                {smartNavTab === 'portfolio' && (
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3 p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
+                      <span className="text-2xl">✅</span>
+                      <div>
+                        <p className="font-semibold">Ask about portfolio → answered directly</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
+                      <span className="text-2xl">💡</span>
+                      <div>
+                        <p className="font-semibold">Ask about a property → switch recommended</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Switch is optional — Hobson can try at this level if you confirm.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
+                      <span className="text-2xl">💡</span>
+                      <div>
+                        <p className="font-semibold">Ask about a unit → switch recommended</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Switch is optional — Hobson can try at this level if you confirm.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-blue-500/5 border border-blue-500/20 rounded-lg">
+                      <span className="text-2xl">ℹ️</span>
+                      <div>
+                        <p className="font-semibold">No mandatory switches at this level</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {smartNavTab === 'property' && (
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3 p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
+                      <span className="text-2xl">✅</span>
+                      <div>
+                        <p className="font-semibold">Ask about same property → answered directly</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
+                      <span className="text-2xl">💡</span>
+                      <div>
+                        <p className="font-semibold">Ask about a unit <em>in same property</em> → switch recommended</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Hobson can continue at property level if you prefer.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-2xl">🚫</span>
+                      <div>
+                        <p className="font-semibold">Ask about a different property → switch required</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Hobson cannot answer without switching.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-2xl">🚫</span>
+                      <div>
+                        <p className="font-semibold">Ask about a unit in another property → switch required</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
+                      <span className="text-2xl">💡</span>
+                      <div>
+                        <p className="font-semibold">Ask about portfolio → switch recommended</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                
+                {smartNavTab === 'unit' && (
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3 p-4 bg-green-500/5 border border-green-500/20 rounded-lg">
+                      <span className="text-2xl">✅</span>
+                      <div>
+                        <p className="font-semibold">Ask about same unit → answered directly</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-2xl">🚫</span>
+                      <div>
+                        <p className="font-semibold">Ask about any other unit → switch required</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Hobson blocks the answer if you decline a required switch.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
+                      <span className="text-2xl">🚫</span>
+                      <div>
+                        <p className="font-semibold">Ask about any property → switch required</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-amber-500/5 border border-amber-500/20 rounded-lg">
+                      <span className="text-2xl">💡</span>
+                      <div>
+                        <p className="font-semibold">Ask about portfolio → switch recommended</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Quick Reference Table */}
+          <div id="table" className="mb-16">
+            <h2 className="text-2xl font-bold text-foreground mb-6">Visual Quick-Reference Table</h2>
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse bg-card border rounded-lg overflow-hidden">
+                <thead>
+                  <tr className="bg-muted/50">
+                    <th className="border-b p-4 text-left font-semibold">From</th>
+                    <th className="border-b p-4 text-left font-semibold">To</th>
+                    <th className="border-b p-4 text-left font-semibold">Switch Type</th>
+                    <th className="border-b p-4 text-left font-semibold">What Happens</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="border-b">
+                    <td className="p-4">Portfolio</td>
+                    <td className="p-4">Property</td>
+                    <td className="p-4">
+                      <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
+                        Recommended
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm text-muted-foreground">Hobson asks permission</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="p-4">Portfolio</td>
+                    <td className="p-4">Unit</td>
+                    <td className="p-4">
+                      <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
+                        Recommended
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm text-muted-foreground">Hobson asks permission</td>
+                  </tr>
+                  <tr className="border-b bg-red-500/5">
+                    <td className="p-4">Property A</td>
+                    <td className="p-4">Property B</td>
+                    <td className="p-4">
+                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                        Required
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                  </tr>
+                  <tr className="border-b">
+                    <td className="p-4">Property</td>
+                    <td className="p-4">Unit (same property)</td>
+                    <td className="p-4">
+                      <span className="px-3 py-1 bg-amber-500/10 text-amber-700 rounded-full text-sm font-medium">
+                        Recommended
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm text-muted-foreground">Hobson can continue</td>
+                  </tr>
+                  <tr className="border-b bg-red-500/5">
+                    <td className="p-4">Property A</td>
+                    <td className="p-4">Unit in Property B</td>
+                    <td className="p-4">
+                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                        Required
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                  </tr>
+                  <tr className="border-b bg-red-500/5">
+                    <td className="p-4">Unit A</td>
+                    <td className="p-4">Unit B</td>
+                    <td className="p-4">
+                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                        Required
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                  </tr>
+                  <tr className="bg-red-500/5">
+                    <td className="p-4">Unit</td>
+                    <td className="p-4">Property</td>
+                    <td className="p-4">
+                      <span className="px-3 py-1 bg-red-500/10 text-red-700 rounded-full text-sm font-medium">
+                        Required
+                      </span>
+                    </td>
+                    <td className="p-4 text-sm text-muted-foreground">Hobson blocks if declined</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* What Happens If I Say No */}
+          <div id="say-no" className="mb-16">
+            <div className="bg-blue-500/5 border-2 border-blue-500/20 rounded-xl p-8">
+              <h2 className="text-2xl font-bold text-foreground mb-4">What Happens If I Say No?</h2>
+              <div className="space-y-4">
+                <div>
+                  <p className="font-semibold text-lg mb-2">
+                    <span className="text-amber-500">💡</span> If the switch is recommended:
+                  </p>
+                  <p className="text-muted-foreground">
+                    Hobson can stay where it is — but will warn accuracy may be lower.
+                  </p>
+                </div>
+                <div>
+                  <p className="font-semibold text-lg mb-2">
+                    <span className="text-red-500">🚫</span> If the switch is required:
+                  </p>
+                  <p className="text-muted-foreground mb-2">
+                    Hobson cannot answer. Message shown:
+                  </p>
+                  <div className="bg-card border border-border rounded-lg p-4 italic">
+                    "I can't answer that from this level without switching."
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Why Is This Needed */}
+          <div id="why" className="mb-16">
+            <h2 className="text-2xl font-bold text-foreground mb-6">Why Is This Needed?</h2>
+            <div className="bg-card border rounded-lg p-6">
+              <p className="text-muted-foreground leading-relaxed mb-4">
+                These scope rules exist to protect the quality and reliability of Hobson's answers. By ensuring 
+                questions are answered at the right level, the system can:
+              </p>
+              <ul className="space-y-3 text-muted-foreground">
+                <li className="flex items-start gap-3">
+                  <span className="text-green-500 mt-1">✓</span>
+                  <span>Ensure the right data is pulled from the correct documents</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-green-500 mt-1">✓</span>
+                  <span>Prevent "wrong unit" or "wrong property" mistakes</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-green-500 mt-1">✓</span>
+                  <span>Keep conversations clean and contextually accurate</span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-green-500 mt-1">✓</span>
+                  <span>Make Hobson predictable and consistent in its responses</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Download Section */}
+          <div id="download" className="mb-16 text-center">
+            <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl p-8">
+              <h2 className="text-2xl font-bold text-foreground mb-4">Quick Reference Guide</h2>
+              <p className="text-muted-foreground mb-6">
+                Download the one-page cheat sheet for easy reference
+              </p>
+              <Button size="lg" className="gap-2">
+                📥 Download the One-Page Cheat Sheet
+              </Button>
+            </div>
+          </div>
+
+          {/* Final Tips */}
+          <div id="tips" className="mb-8">
+            <h2 className="text-2xl font-bold text-foreground mb-6">Final Tips</h2>
+            <div className="bg-card border rounded-lg p-6">
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">🎯</span>
+                  <div>
+                    <p className="font-semibold">Hobson always knows what page you're on</p>
+                    <p className="text-sm text-muted-foreground">The system tracks your current context automatically</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">🔒</span>
+                  <div>
+                    <p className="font-semibold">It will never switch levels without permission</p>
+                    <p className="text-sm text-muted-foreground">You're always in control of navigation</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">⚠️</span>
+                  <div>
+                    <p className="font-semibold">Some questions simply can't be answered on the wrong page</p>
+                    <p className="text-sm text-muted-foreground">This is by design to ensure accuracy</p>
+                  </div>
+                </li>
+                <li className="flex items-start gap-3">
+                  <span className="text-2xl">💬</span>
+                  <div>
+                    <p className="font-semibold">If you're unsure, just ask</p>
+                    <p className="text-sm text-muted-foreground">"Which level should I use for this question?"</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Got Questions */}
+          <div className="text-center">
+            <p className="text-muted-foreground mb-4">Got Questions?</p>
+            <Button variant="outline" asChild>
+              <Link to="/contact">Contact Support</Link>
+            </Button>
+          </div>
+        </div>
+      </div>;
+    }
+
     // Handle Positioning Statement content
     if (activeHorizontalTab === 'introduction' && activeVerticalTab === 'positioning-statement') {
       return <div className="flex-1 py-8 px-4">
@@ -2408,6 +2859,12 @@ Content-Type: multipart/form-data
         return {
           title: 'Positioning Statement - Hobson AI',
           description: 'Learn about Hobson AI: the lightweight, AI-powered assistant that transforms source-of-truth files into instant, reliable answers for real estate professionals.'
+        };
+      }
+      if (activeVerticalTab === 'smart-navigation') {
+        return {
+          title: 'Smart Navigation Guide - Hobson AI',
+          description: 'Learn how Hobson\'s AI navigation works across portfolio, property, and unit levels. Understand scope rules and switch behavior for accurate answers.'
         };
       }
       if (activeVerticalTab === 'plans-credits') {
