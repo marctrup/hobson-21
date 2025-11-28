@@ -486,10 +486,8 @@ const sections = [
     pages: [
       {
         title: 'HEU & Pricing',
-        showCustomVisual: true,
-        customVisualComponent: 'heuPricing',
         content: {
-          overview: 'Usage-based pricing model with Hobson Energy Units and cost structure.',
+          overview: '',
           sections: []
         }
       }
