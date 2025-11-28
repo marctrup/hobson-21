@@ -109,7 +109,7 @@ export const AIProcessingVisual = () => {
               <div className="text-xs text-muted-foreground space-y-2 pt-2">
                 <div className="flex justify-between">
                   <span>1 Lease:</span>
-                  <span className="font-medium">~$0.38</span>
+                  <span className="font-medium">~$0.41</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Tokens per lease:</span>
