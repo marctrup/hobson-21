@@ -2402,7 +2402,7 @@ Content-Type: multipart/form-data
                 <li className="flex items-start gap-3">
                   <span className="text-2xl">⚠️</span>
                   <div>
-                    <p className="font-semibold">Some questions simply can't be answered on the wrong page</p>
+                    <p className="font-semibold">Some questions simply can't be answered at the wrong level</p>
                     <p className="text-sm text-muted-foreground">This is by design to ensure accuracy</p>
                   </div>
                 </li>
