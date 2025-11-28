@@ -237,6 +237,10 @@ export const EuropeanGlobalVisual = () => {
               <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
               <span>£101B motivated market and £12B obtainable opportunity</span>
             </li>
+            <li className="flex items-start gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
+              <span>Strong potential for AI-driven real estate tools in Global markets</span>
+            </li>
           </ul>
         </div>
       </div>
