@@ -52,7 +52,7 @@ export const CompetitiveLandscapeVisual = () => {
             <div className="grid grid-cols-4 gap-2">
               {traditionalCompanies.slice(0, 48).map((company, idx) => {
                 const row = Math.floor(idx / 4);
-                const opacity = Math.max(0.2, 1 - (row * 0.15));
+                const opacity = Math.max(0.15, 1 - (row * 0.08));
                 return (
                   <div 
                     key={idx}
