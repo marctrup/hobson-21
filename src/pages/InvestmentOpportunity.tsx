@@ -130,24 +130,34 @@ const InvestmentOpportunity = () => {
           </div>
         </header>
 
-        {/* Hero Section */}
+        {/* Mission Statement Section */}
         <section className="py-16 border-b">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-6 leading-tight">
-                To go beyond simple data access by giving property professionals instant, accurate information enriched with AI judgement, context, and connected insight.
-              </h2>
-              <p className="text-sm text-muted-foreground italic">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-8">
+                <h2 className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
+                  Mission Statement
+                </h2>
+                <Card className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
+                  <p className="text-2xl md:text-3xl font-semibold text-foreground leading-relaxed">
+                    To go beyond simple data access by giving property professionals instant, accurate information enriched with AI judgement, context, and connected insight.
+                  </p>
+                </Card>
+              </div>
+              <p className="text-sm text-muted-foreground italic text-center">
                 Materials on this page are confidential and intended for authorised investors only
               </p>
             </div>
           </div>
         </section>
 
-        {/* Product Positioning Section */}
+        {/* Positioning Statement Section */}
         <section className="py-12 border-b bg-muted/20">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
+              <h2 className="text-sm font-semibold text-primary uppercase tracking-wider mb-6 text-center">
+                Our Positioning Statement
+              </h2>
               <Card className="p-8 bg-background/80 backdrop-blur border-primary/20">
                 <p className="text-lg leading-relaxed text-foreground">
                   For real estate professionals drained by large, expensive systems and the manual effort of pulling information from original documents, Hobson is a <span className="font-semibold text-primary">specialised AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is <span className="font-semibold">lightweight, simple to use, and low cost</span> — saving time, ensuring accuracy, and building trust with fast, referenced responses.
