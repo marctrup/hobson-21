@@ -6,15 +6,147 @@ import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { GlobalHeader } from '@/components/GlobalHeader';
 import { HomepageFooter } from '@/components/homepage/HomepageFooter';
-import { Lock, FileText, Download, BarChart, TrendingUp, Code } from 'lucide-react';
+import { Lock, FileText, Download, BarChart, TrendingUp, Code, Users, Target, Map, DollarSign, PieChart, Briefcase, BookOpen, X } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { OptimizedImage } from '@/components/OptimizedImage';
 import hobsonLogo from '/hobson-logo.png';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from '@/components/ui/dialog';
+
+// Section data with content
+const sections = [
+  {
+    id: 'strategy',
+    title: 'Strategy & Positioning',
+    subtitle: 'Executive Summary, Positioning Statement & Approach',
+    icon: Target,
+    color: 'from-blue-500/10 to-blue-600/10',
+    iconColor: 'text-blue-600',
+    content: {
+      overview: 'Hobson is an AI-native assistant tailored for the property industry. It automates insight extraction, decision support, and document understanding—built for trust, accuracy, and zero onboarding. Hobson becomes smarter over time, evolving into a proactive operations co-pilot.',
+      sections: [
+        {
+          title: 'Market Opportunity',
+          items: [
+            '£6B UK efficiency savings potential',
+            '£66B in Europe, £708B globally',
+            '134K+ UK real estate firms; 96% are small operators',
+            'PropTech is rapidly evolving from passive tools to intelligent assistants — Hobson leads this next wave'
+          ]
+        },
+        {
+          title: 'Traction & Milestones',
+          items: [
+            'MVP live, validated with 4 real-world partners',
+            'Partners include EPAM Asset Management, Live-in Guardians, and Landhold Investments',
+            'Document types: leases, deeds, floorplans, certificates',
+            'Phase 2 planned for Oct 2025: mobile, API, deeper AI'
+          ]
+        },
+        {
+          title: 'Revenue Model',
+          items: [
+            'Usage-based via Hobson Energy Units (HEUs)',
+            'No per-user or license fees',
+            'Plans: Free, Monthly (£20+VAT), Onboarding, Top-up',
+            'Typical cost: £0.54 for full lease extraction; ~£0.001 for simple queries'
+          ]
+        },
+        {
+          title: 'Funding requirement – Seeking £750,000',
+          items: [
+            'Complete Phase 2 build',
+            'Hire sales & AI team',
+            'Expand data connectors, alerts, and automation'
+          ]
+        }
+      ]
+    }
+  },
+  {
+    id: 'market',
+    title: 'Market & Customers',
+    subtitle: 'Customer Segmentation, Market Size & Competitive Landscape',
+    icon: Users,
+    color: 'from-purple-500/10 to-purple-600/10',
+    iconColor: 'text-purple-600',
+    content: {
+      overview: 'Deep analysis of target customer segments, total addressable market, and competitive positioning.',
+      sections: []
+    }
+  },
+  {
+    id: 'roadmap',
+    title: 'Roadmap & Product',
+    subtitle: 'Timeline, Milestones, Partnership Programme & Development Philosophy',
+    icon: Map,
+    color: 'from-green-500/10 to-green-600/10',
+    iconColor: 'text-green-600',
+    content: {
+      overview: 'Product development timeline, feature roadmap, and strategic partnerships.',
+      sections: []
+    }
+  },
+  {
+    id: 'commercials',
+    title: 'Commercials',
+    subtitle: 'Pricing Philosophy, HEU Model & Sample Scenarios',
+    icon: DollarSign,
+    color: 'from-amber-500/10 to-amber-600/10',
+    iconColor: 'text-amber-600',
+    content: {
+      overview: 'Detailed pricing strategy, Hobson Energy Units model, and revenue projections.',
+      sections: []
+    }
+  },
+  {
+    id: 'financials',
+    title: 'Financials',
+    subtitle: 'Forecast & Assumptions, OPEX, COP & Staffing',
+    icon: PieChart,
+    color: 'from-red-500/10 to-red-600/10',
+    iconColor: 'text-red-600',
+    content: {
+      overview: 'Financial projections, operating expenses, cost of product, and staffing plans.',
+      sections: []
+    }
+  },
+  {
+    id: 'team',
+    title: 'Team',
+    subtitle: 'Leadership & Key Personnel',
+    icon: Briefcase,
+    color: 'from-indigo-500/10 to-indigo-600/10',
+    iconColor: 'text-indigo-600',
+    content: {
+      overview: 'Meet the team behind Hobson AI and our strategic advisors.',
+      sections: []
+    }
+  },
+  {
+    id: 'appendices',
+    title: 'Appendices',
+    subtitle: 'Detailed Personas, Efficiency Savings & Source Data',
+    icon: BookOpen,
+    color: 'from-teal-500/10 to-teal-600/10',
+    iconColor: 'text-teal-600',
+    content: {
+      overview: 'Supporting documentation, detailed personas, market data, and technical breakdowns.',
+      sections: []
+    }
+  }
+];
 
 const InvestmentOpportunity = () => {
   const [password, setPassword] = useState('');
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedSection, setSelectedSection] = useState<typeof sections[0] | null>(null);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -113,339 +245,104 @@ const InvestmentOpportunity = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
+      <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
         {/* Header */}
-        <header className="border-b bg-background/95 backdrop-blur">
+        <header className="border-b bg-background/95 backdrop-blur sticky top-0 z-40">
           <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between max-w-6xl mx-auto">
+            <div className="flex items-center justify-between max-w-7xl mx-auto">
               <Link to="/" className="transition-opacity hover:opacity-80">
                 <OptimizedImage 
                   src={hobsonLogo} 
                   alt="Hobson AI Logo" 
-                  className="h-14"
+                  className="h-12"
                 />
               </Link>
-              <h1 className="text-xl font-semibold text-muted-foreground">
-                Investor Resources
+              <h1 className="text-xl font-semibold text-foreground">
+                Investment Opportunity
               </h1>
             </div>
           </div>
         </header>
 
-        {/* Mission Statement Section */}
+        {/* Hero Section */}
         <section className="py-16 border-b">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="text-center mb-8">
-                <h2 className="text-sm font-semibold text-primary uppercase tracking-wider mb-4">
-                  Mission Statement
-                </h2>
-                <Card className="p-8 bg-gradient-to-br from-primary/5 to-primary/10 border-primary/20">
-                  <p className="text-2xl md:text-3xl font-semibold text-foreground leading-relaxed">
-                    To go beyond simple data access by giving property professionals instant, accurate information enriched with AI judgement, context, and connected insight.
-                  </p>
-                </Card>
-              </div>
-              <p className="text-sm text-muted-foreground italic text-center">
+            <div className="max-w-5xl mx-auto text-center">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+                Discover the Hobson Opportunity
+              </h2>
+              <p className="text-xl text-muted-foreground mb-4 max-w-3xl mx-auto">
+                Explore our comprehensive business plan, market analysis, product roadmap, and financial projections.
+              </p>
+              <p className="text-sm text-muted-foreground italic">
                 Materials on this page are confidential and intended for authorised investors only
               </p>
             </div>
           </div>
         </section>
 
-        {/* Positioning Statement Section */}
-        <section className="py-12 border-b bg-muted/20">
+        {/* Section Cards Grid */}
+        <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="text-sm font-semibold text-primary uppercase tracking-wider mb-6 text-center">
-                Our Positioning Statement
+            <div className="max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {sections.map((section) => (
+                  <Card
+                    key={section.id}
+                    onClick={() => setSelectedSection(section)}
+                    className="group cursor-pointer hover:shadow-xl transition-all duration-300 overflow-hidden border-2 hover:border-primary/50"
+                  >
+                    <div className={`h-2 bg-gradient-to-r ${section.color}`}></div>
+                    <div className="p-6">
+                      <div className="flex items-start gap-4 mb-4">
+                        <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${section.color} flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform`}>
+                          <section.icon className={`w-7 h-7 ${section.iconColor}`} />
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-bold text-lg text-foreground mb-1 group-hover:text-primary transition-colors">
+                            {section.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground line-clamp-2">
+                            {section.subtitle}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center text-sm text-primary font-medium group-hover:translate-x-1 transition-transform">
+                        View Details
+                        <svg className="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Funding CTA Section */}
+        <section className="py-16 border-t bg-primary/5">
+          <div className="container mx-auto px-4">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-primary/10 mb-6">
+                <TrendingUp className="w-10 h-10 text-primary" />
+              </div>
+              <h2 className="text-3xl font-bold text-foreground mb-4">
+                Seeking £750,000
               </h2>
-              <Card className="p-8 bg-background/80 backdrop-blur border-primary/20">
-                <p className="text-lg leading-relaxed text-foreground">
-                  For real estate professionals drained by large, expensive systems and the manual effort of pulling information from original documents, Hobson is a <span className="font-semibold text-primary">specialised AI-powered assistant</span> that transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is <span className="font-semibold">lightweight, simple to use, and low cost</span> — saving time, ensuring accuracy, and building trust with fast, referenced responses.
-                </p>
-              </Card>
-            </div>
-          </div>
-        </section>
-
-        {/* Document Sections - Compact Grid Layout */}
-        <section className="py-12">
-          <div className="container mx-auto px-4">
-            <div className="max-w-6xl mx-auto space-y-12">
-              
-              {/* Business Plan */}
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-foreground">Business Plan</h3>
-                  <p className="text-sm text-muted-foreground">Strategy, market analysis, and growth roadmap</p>
-                </div>
-                
-                {/* Full Business Plan - Featured */}
-                <Card className="p-5 mb-4 border-primary/40 bg-primary/5 hover:shadow-md transition-all cursor-pointer group">
-                  <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/30 transition-colors">
-                      <FileText className="w-6 h-6 text-primary" />
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h4 className="font-bold text-base text-foreground">Full Business Plan</h4>
-                        <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">Complete</span>
-                      </div>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        Complete document including all sections below
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <p className="text-xs text-muted-foreground">PDF • 8.7 MB</p>
-                        <Button variant="default" size="sm" className="gap-2 h-8 text-xs">
-                          <Download className="w-3 h-3" />
-                          Download Complete Plan
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </Card>
-
-                {/* Individual Sections */}
-                <p className="text-xs text-muted-foreground mb-3 pl-1">Individual sections:</p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-                        <FileText className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Executive Summary</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 2.4 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-                        <TrendingUp className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Market Analysis</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 3.1 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-muted rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/10 transition-colors">
-                        <FileText className="w-5 h-5 text-muted-foreground group-hover:text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Growth Strategy</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 2.8 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-                </div>
+              <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+                To complete Phase 2 build, hire sales & AI team, and expand data connectors, alerts, and automation
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button size="lg" className="gap-2">
+                  <Download className="w-5 h-5" />
+                  Download Full Deck
+                </Button>
+                <Button size="lg" variant="outline">
+                  Schedule Meeting
+                </Button>
               </div>
-
-              {/* Financials */}
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-foreground">Financials</h3>
-                  <p className="text-sm text-muted-foreground">Projections, metrics, and revenue models</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <BarChart className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Financial Model</h4>
-                        <p className="text-xs text-muted-foreground">XLSX • 1.8 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <TrendingUp className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Revenue Projections</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 1.2 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <BarChart className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Cash Flow Analysis</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 2.6 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-                </div>
-              </div>
-
-              {/* Marketing Plan */}
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-foreground">Marketing Plan</h3>
-                  <p className="text-sm text-muted-foreground">Go-to-market strategy and customer acquisition</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <FileText className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Marketing Strategy</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 3.5 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <TrendingUp className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Customer Acquisition</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 2.1 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <FileText className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Brand Positioning</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 1.9 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-                </div>
-              </div>
-
-              {/* Tech Architecture */}
-              <div>
-                <div className="mb-4">
-                  <h3 className="text-xl font-bold text-foreground">Tech Architecture</h3>
-                  <p className="text-sm text-muted-foreground">Infrastructure, AI models, and scalability</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <Code className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">System Architecture</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 4.2 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <FileText className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Technical Roadmap</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 1.9 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-
-                  <Card className="p-4 hover:shadow-md transition-all cursor-pointer group hover:border-primary/40">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                        <Code className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="font-semibold text-sm text-foreground truncate">Security Overview</h4>
-                        <p className="text-xs text-muted-foreground">PDF • 2.3 MB</p>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm" className="w-full gap-2 h-8 text-xs">
-                      <Download className="w-3 h-3" />
-                      Download
-                    </Button>
-                  </Card>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-        {/* Security Notice */}
-        <section className="py-8">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <Card className="p-6 bg-muted/50 border-muted">
-                <div className="flex items-start gap-3">
-                  <Lock className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-muted-foreground">
-                    <span className="font-semibold">Confidential Information:</span> This page and its documents are confidential and intended only for authorised investors. Any distribution, copying, or disclosure of these materials without written consent is strictly prohibited.
-                  </p>
-                </div>
-              </Card>
             </div>
           </div>
         </section>
@@ -467,10 +364,76 @@ const InvestmentOpportunity = () => {
               <p className="text-sm text-muted-foreground">
                 Investor Relations: <a href="mailto:investors@hobsonschoice.ai" className="text-primary hover:underline">investors@hobsonschoice.ai</a>
               </p>
+              <p className="text-xs text-muted-foreground mt-4 italic">
+                Confidential and proprietary. Not for distribution.
+              </p>
             </div>
           </div>
         </footer>
       </div>
+
+      {/* Modal Dialog */}
+      <Dialog open={!!selectedSection} onOpenChange={() => setSelectedSection(null)}>
+        <DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto">
+          {selectedSection && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-4 mb-2">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${selectedSection.color} flex items-center justify-center flex-shrink-0`}>
+                    <selectedSection.icon className={`w-6 h-6 ${selectedSection.iconColor}`} />
+                  </div>
+                  <div>
+                    <DialogTitle className="text-2xl">{selectedSection.title}</DialogTitle>
+                    <DialogDescription className="text-base mt-1">
+                      {selectedSection.subtitle}
+                    </DialogDescription>
+                  </div>
+                </div>
+              </DialogHeader>
+
+              <div className="mt-6 space-y-8">
+                {/* Overview */}
+                <div className="prose prose-sm max-w-none">
+                  <p className="text-lg text-foreground leading-relaxed">
+                    {selectedSection.content.overview}
+                  </p>
+                </div>
+
+                {/* Content Sections */}
+                {selectedSection.content.sections.map((contentSection, idx) => (
+                  <div key={idx} className="space-y-4">
+                    <h3 className="text-xl font-bold text-primary flex items-center gap-2">
+                      <span className="w-1 h-6 bg-primary rounded-full"></span>
+                      {contentSection.title}
+                    </h3>
+                    <ul className="space-y-3 pl-4">
+                      {contentSection.items.map((item, itemIdx) => (
+                        <li key={itemIdx} className="flex items-start gap-3 text-foreground">
+                          <span className="w-2 h-2 rounded-full bg-primary/60 mt-2 flex-shrink-0"></span>
+                          <span className="text-base leading-relaxed">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+
+                {/* Download Section */}
+                <div className="pt-6 border-t">
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button className="flex-1 gap-2">
+                      <Download className="w-4 h-4" />
+                      Download Section PDF
+                    </Button>
+                    <Button variant="outline" className="flex-1">
+                      View Related Documents
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
     </>
   );
 };
