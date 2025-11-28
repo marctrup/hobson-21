@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -118,11 +118,13 @@ const InvestmentOpportunity = () => {
         <header className="border-b bg-background/95 backdrop-blur">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between max-w-6xl mx-auto">
-              <OptimizedImage 
-                src={hobsonLogo} 
-                alt="Hobson AI Logo" 
-                className="h-14"
-              />
+              <Link to="/" className="transition-opacity hover:opacity-80">
+                <OptimizedImage 
+                  src={hobsonLogo} 
+                  alt="Hobson AI Logo" 
+                  className="h-14"
+                />
+              </Link>
               <h1 className="text-xl font-semibold text-muted-foreground">
                 Investor Resources
               </h1>
@@ -387,11 +389,13 @@ const InvestmentOpportunity = () => {
         <footer className="border-t bg-background py-12">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto text-center">
-              <OptimizedImage 
-                src={hobsonLogo} 
-                alt="Hobson AI Logo" 
-                className="h-12 mx-auto mb-4"
-              />
+              <Link to="/" className="inline-block transition-opacity hover:opacity-80">
+                <OptimizedImage 
+                  src={hobsonLogo} 
+                  alt="Hobson AI Logo" 
+                  className="h-12 mx-auto mb-4"
+                />
+              </Link>
               <p className="text-sm text-muted-foreground mb-2">
                 © 2024 Hobson's Choice AI. All rights reserved.
               </p>
