@@ -203,6 +203,92 @@ const sections = [
         }
       },
       {
+        title: 'Europe Market Opportunity',
+        content: {
+          overview: 'European real estate market analysis with TAM/SAM/SOM breakdown for regional expansion opportunities.',
+          sections: [
+            {
+              title: 'Total Addressable Market (TAM)',
+              subtitle: 'Value: €TBD',
+              items: [
+                'Total annual efficiency savings available across European real estate businesses',
+                'Data pending: European market sizing in progress'
+              ]
+            },
+            {
+              title: 'Serviceable Available Market (SAM)',
+              subtitle: 'Value: €TBD',
+              items: [
+                'European real estate businesses motivated and able to adopt AI tools',
+                'Assumes similar 65% adoption motivation as UK market',
+                'Data pending: European market analysis'
+              ]
+            },
+            {
+              title: 'Serviceable Obtainable Market (SOM)',
+              subtitle: 'Value: €TBD',
+              items: [
+                'Credible early-stage European market share Hobson can capture',
+                'Assumes 12% market penetration within motivated segment',
+                'Data pending: European expansion projections'
+              ]
+            },
+            {
+              title: 'Summary',
+              items: [
+                'European real estate markets present significant expansion opportunity',
+                'Similar operational challenges as UK with document-heavy workflows',
+                'Multi-language support required for broader adoption',
+                'Regulatory variations across countries create both challenges and moats'
+              ]
+            }
+          ]
+        }
+      },
+      {
+        title: 'Global Market Opportunity',
+        content: {
+          overview: 'Global real estate market analysis showing worldwide expansion potential and long-term growth opportunities.',
+          sections: [
+            {
+              title: 'Total Addressable Market (TAM)',
+              subtitle: 'Value: $TBD',
+              items: [
+                'Total annual efficiency savings available across global real estate businesses',
+                'Data pending: Global market sizing in progress'
+              ]
+            },
+            {
+              title: 'Serviceable Available Market (SAM)',
+              subtitle: 'Value: $TBD',
+              items: [
+                'Global real estate businesses motivated and able to adopt AI tools',
+                'Varies by region based on tech adoption rates and market maturity',
+                'Data pending: Global market analysis'
+              ]
+            },
+            {
+              title: 'Serviceable Obtainable Market (SOM)',
+              subtitle: 'Value: $TBD',
+              items: [
+                'Credible global market share achievable through strategic expansion',
+                'Market penetration varies by region and competitive landscape',
+                'Data pending: Global expansion strategy'
+              ]
+            },
+            {
+              title: 'Summary',
+              items: [
+                'Global real estate market offers massive long-term growth potential',
+                'English-speaking markets (US, Canada, Australia, New Zealand) present immediate opportunities',
+                'Emerging markets show high growth potential with increasing digitization',
+                'Strategic partnerships and localization key to global expansion success'
+              ]
+            }
+          ]
+        }
+      },
+      {
         title: 'Competitive Landscape',
         content: {
           overview: 'Analysis of current market players and our competitive positioning.',
