@@ -18,8 +18,8 @@ export const SimpleHomepage = () => {
             <div className="flex items-center gap-3">
               <Link to="/">
                 <img 
-                  src="/lovable-uploads/0fa56bb9-7c7d-4f95-a81f-36a7f584ed7a.png" 
-                  alt="Hobson AI Logo" 
+                  src="/hobson-logo.png" 
+                  alt="Hobson AI Logo"
                   className="h-12 md:h-16" 
                 />
               </Link>
@@ -100,7 +100,7 @@ export const SimpleHomepage = () => {
 
                 <div className="relative w-80 h-52 rounded-2xl overflow-hidden shadow-xl border-4 border-white/20 mx-auto lg:mx-0">
                   <img
-                    src="/lovable-uploads/915c8f99-05e9-4948-aa5d-7704686f4175.png"
+                    src="/hobson-owl-social.png"
                     alt="Georgia explaining AI features"
                     className="w-full h-full object-cover"
                   />
