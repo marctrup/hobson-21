@@ -377,7 +377,7 @@ export default function FaqManagement() {
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          sort_order: parseInt(e.target.value),
+                          sort_order: parseInt(e.target.value) || 1,
                         })
                       }
                       required
