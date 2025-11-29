@@ -67,8 +67,12 @@ export default function FaqManagement() {
   });
 
   const hasFormChanged = initialFormData ? 
-    JSON.stringify(formData) !== JSON.stringify(initialFormData) : 
-    (formData.question.trim() !== "" || formData.answer.trim() !== "");
+    formData.question !== initialFormData.question ||
+    formData.answer !== initialFormData.answer ||
+    formData.category !== initialFormData.category ||
+    formData.sort_order !== initialFormData.sort_order ||
+    formData.is_active !== initialFormData.is_active
+    : (formData.question.trim() !== "" || formData.answer.trim() !== "");
 
   useEffect(() => {
     fetchFaqs();
