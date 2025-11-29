@@ -2599,131 +2599,128 @@ Content-Type: multipart/form-data
               <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">
                 Visual Quick-Reference Table
               </h2>
-              <div className="overflow-x-auto -mx-4 px-4">
-                <table className="w-full min-w-[600px] border-collapse bg-card border rounded-lg overflow-hidden">
-                  <thead>
-                    <tr className="bg-muted/50">
-                      <th className="border-b p-2 sm:p-3 md:p-4 text-left font-semibold text-xs sm:text-sm">From</th>
-                      <th className="border-b p-2 sm:p-3 md:p-4 text-left font-semibold text-xs sm:text-sm">To</th>
-                      <th className="border-b p-2 sm:p-3 md:p-4 text-left font-semibold text-xs sm:text-sm">
-                        Switch Type
-                      </th>
-                      <th className="border-b p-2 sm:p-3 md:p-4 text-left font-semibold text-xs sm:text-sm">
-                        What Happens
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Portfolio</td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group</td>
-                      <td className="p-2 sm:p-3 md:p-4">
+              <div className="space-y-6 sm:space-y-8">
+                {/* From Unit Level */}
+                <div className="bg-card border rounded-lg p-4 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-2">
+                    <span className="text-xl sm:text-2xl">🔄</span> From Unit level
+                  </h3>
+                  <div className="space-y-4 sm:space-y-5">
+                    <div className="border-l-4 border-red-500 pl-3 sm:pl-4 py-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <p className="font-semibold text-sm sm:text-base">Asking about a different unit (Unit A → Unit B)</p>
+                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
+                          Required
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-red-500 pl-3 sm:pl-4 py-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <p className="font-semibold text-sm sm:text-base">Asking about any unit-group (Unit → Unit-Group)</p>
+                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
+                          Required
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-red-500 pl-3 sm:pl-4 py-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <p className="font-semibold text-sm sm:text-base">Asking about the portfolio (Unit → Portfolio)</p>
+                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
+                          Required
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* From Unit-Group Level */}
+                <div className="bg-card border rounded-lg p-4 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-2">
+                    <span className="text-xl sm:text-2xl">🔄</span> From Unit-Group level
+                  </h3>
+                  <div className="space-y-4 sm:space-y-5">
+                    <div className="border-l-4 border-red-500 pl-3 sm:pl-4 py-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <p className="font-semibold text-sm sm:text-base">
+                          Asking about a different unit-group (Unit-Group A → Unit-Group B)
+                        </p>
+                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
+                          Required
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-amber-500 pl-3 sm:pl-4 py-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <p className="font-semibold text-sm sm:text-base">
+                          Asking about a unit in the same unit-group (Unit-Group → Unit in same unit-group)
+                        </p>
                         <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-amber-500/10 text-amber-700 rounded-full text-xs font-medium whitespace-nowrap">
                           Recommended
                         </span>
-                      </td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">
-                        Hobson asks permission
-                      </td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Portfolio</td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit</td>
-                      <td className="p-2 sm:p-3 md:p-4">
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson asks permission, can continue if declined</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-red-500 pl-3 sm:pl-4 py-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <p className="font-semibold text-sm sm:text-base">
+                          Asking about a unit in a different unit-group (Unit-Group A → Unit in Unit-Group B)
+                        </p>
+                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
+                          Required
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-red-500 pl-3 sm:pl-4 py-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <p className="font-semibold text-sm sm:text-base">Asking about the portfolio (Unit-Group → Portfolio)</p>
+                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
+                          Required
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson blocks if declined</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* From Portfolio Level */}
+                <div className="bg-card border rounded-lg p-4 sm:p-6">
+                  <h3 className="text-lg sm:text-xl font-bold text-foreground mb-4 sm:mb-6 flex items-center gap-2">
+                    <span className="text-xl sm:text-2xl">🔄</span> From Portfolio level
+                  </h3>
+                  <div className="space-y-4 sm:space-y-5">
+                    <div className="border-l-4 border-amber-500 pl-3 sm:pl-4 py-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <p className="font-semibold text-sm sm:text-base">
+                          Asking about a specific unit-group (Portfolio → Unit-Group)
+                        </p>
                         <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-amber-500/10 text-amber-700 rounded-full text-xs font-medium whitespace-nowrap">
                           Recommended
                         </span>
-                      </td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">
-                        Hobson asks permission
-                      </td>
-                    </tr>
-                    <tr className="border-b bg-red-500/5">
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group A</td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group B</td>
-                      <td className="p-2 sm:p-3 md:p-4">
-                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
-                          Required
-                        </span>
-                      </td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">
-                        Hobson blocks if declined
-                      </td>
-                    </tr>
-                    <tr className="border-b">
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group</td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit (same unit-group)</td>
-                      <td className="p-2 sm:p-3 md:p-4">
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson asks permission, can continue if declined</p>
+                    </div>
+                    
+                    <div className="border-l-4 border-amber-500 pl-3 sm:pl-4 py-2">
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <p className="font-semibold text-sm sm:text-base">Asking about a specific unit (Portfolio → Unit)</p>
                         <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-amber-500/10 text-amber-700 rounded-full text-xs font-medium whitespace-nowrap">
                           Recommended
                         </span>
-                      </td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">
-                        Hobson can continue
-                      </td>
-                    </tr>
-                    <tr className="border-b bg-red-500/5">
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group A</td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit in Unit-Group B</td>
-                      <td className="p-2 sm:p-3 md:p-4">
-                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
-                          Required
-                        </span>
-                      </td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">
-                        Hobson blocks if declined
-                      </td>
-                    </tr>
-                    <tr className="border-b bg-red-500/5">
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit A</td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit B</td>
-                      <td className="p-2 sm:p-3 md:p-4">
-                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
-                          Required
-                        </span>
-                      </td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">
-                        Hobson blocks if declined
-                      </td>
-                    </tr>
-                    <tr className="bg-red-500/5">
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit</td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group</td>
-                      <td className="p-2 sm:p-3 md:p-4">
-                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
-                          Required
-                        </span>
-                      </td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">
-                        Hobson blocks if declined
-                      </td>
-                    </tr>
-                    <tr className="border-b bg-red-500/5">
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit-Group</td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Portfolio</td>
-                      <td className="p-2 sm:p-3 md:p-4">
-                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
-                          Required
-                        </span>
-                      </td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">
-                        Hobson blocks if declined
-                      </td>
-                    </tr>
-                    <tr className="bg-red-500/5">
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Unit</td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm">Portfolio</td>
-                      <td className="p-2 sm:p-3 md:p-4">
-                        <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
-                          Required
-                        </span>
-                      </td>
-                      <td className="p-2 sm:p-3 md:p-4 text-xs sm:text-sm text-muted-foreground">
-                        Hobson blocks if declined
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                      </div>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson asks permission, can continue if declined</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
