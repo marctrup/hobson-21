@@ -789,8 +789,8 @@ const InvestmentOpportunity = () => {
                   Positioning Statement
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  For real estate professionals drained by large, expensive systems and the manual effort of pulling
-                  information from original documents, Hobson is a{" "}
+                  For real estate professionals dealing with costly CRMs, scattered spreadsheets and the manual work of
+                  digging through information from original documents, Hobson is a{" "}
                   <span className="font-semibold text-foreground">specialised AI-powered assistant</span> that
                   transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is{" "}
                   <span className="font-semibold text-foreground">lightweight, simple to use, and low cost</span> —
