@@ -10,7 +10,10 @@ interface HeroSectionProps {
 export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
   return (
     <section className="relative py-16 overflow-hidden" aria-labelledby="hero-heading">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5" aria-hidden="true"></div>
+      <div
+        className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-secondary/5"
+        aria-hidden="true"
+      ></div>
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh] max-w-6xl mx-auto">
           <div className="space-y-8">
@@ -19,20 +22,23 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
                 <Badge variant="outline" className="text-primary border-primary/20 mb-6 text-sm">
                   🚀 Now in Beta
                 </Badge>
-                 <h1 
-                   id="hero-heading" 
-                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1]"
-                 >
-                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">AI-powered document insights</span>, backed by your own property documents.
-                  </h1>
+                <h1
+                  id="hero-heading"
+                  className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1]"
+                >
+                  <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
+                    AI-powered document insights
+                  </span>
+                  , backed by your own real estate documents.
+                </h1>
               </div>
               <p className="text-xl text-muted-foreground leading-relaxed">
-                Transform your property documents with intelligent analysis, 
-                automated insights, and instant answers to complex property questions.
+                Transform your real estate documents with intelligent analysis, automated insights, and instant answers
+                to complex questions.
               </p>
             </div>
           </div>
-          
+
           <div className="border-8 border-red-500 rounded-lg p-8 bg-yellow-100 shadow-2xl">
             <div className="space-y-4">
               <div className="aspect-video bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg flex items-center justify-center shadow-lg border-2 border-blue-400">
@@ -44,7 +50,6 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
             </div>
           </div>
         </div>
-        
       </div>
     </section>
   );

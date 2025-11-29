@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { InvestorCoverSlide, MarketProblemSlide, MarketOpportunitySlide, InvestorCTASlide } from "@/components/investor";
+import {
+  InvestorCoverSlide,
+  MarketProblemSlide,
+  MarketOpportunitySlide,
+  InvestorCTASlide,
+} from "@/components/investor";
 import { Helmet } from "react-helmet-async";
 import hobsonLogo from "@/assets/hobson-investor-logo.png";
 
@@ -11,34 +16,34 @@ const InvestorSummary = () => {
 
   const slides = [
     {
-      id: 'cover',
-      title: '',
-      subtitle: '',
-      content: <InvestorCoverSlide />
+      id: "cover",
+      title: "",
+      subtitle: "",
+      content: <InvestorCoverSlide />,
     },
     {
-      id: 'market-problem',
-      title: '',
-      subtitle: '',
-      content: <MarketProblemSlide />
+      id: "market-problem",
+      title: "",
+      subtitle: "",
+      content: <MarketProblemSlide />,
     },
     {
-      id: 'market-opportunity',
-      title: '',
-      subtitle: '',
-      content: <MarketOpportunitySlide />
+      id: "market-opportunity",
+      title: "",
+      subtitle: "",
+      content: <MarketOpportunitySlide />,
     },
     {
-      id: 'investor-cta',
-      title: '',
-      subtitle: '',
-      content: <InvestorCTASlide />
-    }
+      id: "investor-cta",
+      title: "",
+      subtitle: "",
+      content: <InvestorCTASlide />,
+    },
   ];
 
   useEffect(() => {
     if (!isAutoPlaying) return;
-    
+
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000); // Slightly longer for investor content
@@ -64,12 +69,15 @@ const InvestorSummary = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-1 sm:p-4">
       <Helmet>
-        <title>Hobson AI - Investor Summary | Property Tech Investment Opportunity</title>
-        <meta name="description" content="Investment opportunity in Hobson AI - disrupting the £15B+ property tech market with lightweight AI solutions. Scalable SaaS model with proven traction." />
+        <title>Hobson AI - Investor Summary | Real Estate Tech Investment Opportunity</title>
+        <meta
+          name="description"
+          content="Investment opportunity in Hobson AI - disrupting the £15B+ real estate tech market with lightweight AI solutions. Scalable SaaS model with proven traction."
+        />
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </Helmet>
-      
+
       <div className="w-full max-w-[360px] sm:max-w-md md:max-w-lg mx-auto">
         {/* Mobile-optimized format */}
         <div className="relative bg-white rounded-xl sm:rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden aspect-square max-h-[95vh] min-h-[320px] sm:min-h-[400px]">
@@ -88,7 +96,7 @@ const InvestorSummary = () => {
                     key={idx}
                     onClick={() => goToSlide(idx)}
                     className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full transition-all ${
-                      idx === currentSlide ? 'bg-white' : 'bg-white/40'
+                      idx === currentSlide ? "bg-white" : "bg-white/40"
                     }`}
                   />
                 ))}
@@ -98,7 +106,9 @@ const InvestorSummary = () => {
 
           {/* Main content */}
           <div className="pt-10 sm:pt-16 pb-10 sm:pb-16 px-3 sm:px-6 h-full flex flex-col">
-            <div className={`text-center flex-shrink-0 ${slides[currentSlide].title || slides[currentSlide].subtitle ? 'mb-2 sm:mb-3 min-h-[30px] sm:min-h-[50px] flex flex-col justify-center' : 'mb-0 min-h-0'}`}>
+            <div
+              className={`text-center flex-shrink-0 ${slides[currentSlide].title || slides[currentSlide].subtitle ? "mb-2 sm:mb-3 min-h-[30px] sm:min-h-[50px] flex flex-col justify-center" : "mb-0 min-h-0"}`}
+            >
               {slides[currentSlide].title && (
                 <h1 className="text-xs sm:text-lg md:text-xl font-bold text-foreground mb-1 leading-tight">
                   {slides[currentSlide].title}
@@ -110,11 +120,9 @@ const InvestorSummary = () => {
                 </p>
               )}
             </div>
-            
+
             <div className="flex-1 flex items-center justify-center min-h-0 overflow-hidden">
-              <div className="w-full h-full max-w-full">
-                {slides[currentSlide].content}
-              </div>
+              <div className="w-full h-full max-w-full">{slides[currentSlide].content}</div>
             </div>
           </div>
 
@@ -128,7 +136,7 @@ const InvestorSummary = () => {
             >
               <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
             </Button>
-            
+
             <div className="flex items-center gap-2 pointer-events-auto">
               <Button
                 variant="outline"
@@ -136,7 +144,7 @@ const InvestorSummary = () => {
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
                 className="text-xs scale-90 sm:scale-95 px-1.5 sm:px-2 py-1 bg-muted hover:bg-muted/80 min-w-[50px] sm:min-w-[60px]"
               >
-                {isAutoPlaying ? 'Pause' : 'Play'}
+                {isAutoPlaying ? "Pause" : "Play"}
               </Button>
             </div>
 
@@ -154,14 +162,15 @@ const InvestorSummary = () => {
         {/* Footer info */}
         <div className="mt-3 sm:mt-6 text-center">
           <div className="flex justify-center">
-            <img 
-              src={hobsonLogo} 
-              alt="Hobson Logo" 
-              className="h-7 sm:h-11 w-auto"
-            />
+            <img src={hobsonLogo} alt="Hobson Logo" className="h-7 sm:h-11 w-auto" />
           </div>
           <div className="mt-2 sm:mt-4 flex flex-col space-y-2 sm:space-y-0 sm:flex-row justify-center sm:gap-4">
-            <Button variant="outline" size="sm" onClick={() => window.open('mailto:rochelle.t@hobsonschoice.ai', '_blank')} className="text-xs sm:text-sm">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => window.open("mailto:rochelle.t@hobsonschoice.ai", "_blank")}
+              className="text-xs sm:text-sm"
+            >
               Contact Team
             </Button>
             <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs sm:text-sm">

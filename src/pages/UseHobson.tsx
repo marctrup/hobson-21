@@ -12,10 +12,16 @@ export const UseHobson = () => {
     <>
       <Helmet>
         <title>Use Hobson AI - Get 1,000 Free HEUs | Property Document Intelligence</title>
-        <meta name="description" content="Start using Hobson AI today. Get 1,000 free HEUs to analyze your property documents with AI-powered clarity and instant answers." />
-        <meta name="keywords" content="Hobson AI, property documents, AI assistant, free trial, document analysis" />
-        <meta property="og:title" content="Use Hobson AI - Get 1,000 Free HEUs | Property Document Intelligence" />
-        <meta property="og:description" content="Start using Hobson AI today. Get 1,000 free HEUs to analyze your property documents with AI-powered clarity and instant answers." />
+        <meta
+          name="description"
+          content="Start using Hobson AI today. Get 1,000 free HEUs to analyze your property documents with AI-powered clarity and instant answers."
+        />
+        <meta name="keywords" content="Hobson AI, real estate documents, AI assistant, free trial, document analysis" />
+        <meta property="og:title" content="Use Hobson AI - Get 1,000 Free HEUs | Real Estate Document Intelligence" />
+        <meta
+          property="og:description"
+          content="Start using Hobson AI today. Get 1,000 free HEUs to analyze your documents with AI-powered clarity and instant answers."
+        />
         <link rel="canonical" href="https://hobsonschoice.ai/usehobson" />
       </Helmet>
 
@@ -25,12 +31,7 @@ export const UseHobson = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex justify-between items-center">
               <Link to="/">
-                <OptimizedImage 
-                  src="/hobson-logo.png" 
-                  alt="Hobson AI Logo"
-                  className="h-12 w-auto" 
-                  priority 
-                />
+                <OptimizedImage src="/hobson-logo.png" alt="Hobson AI Logo" className="h-12 w-auto" priority />
               </Link>
               <nav className="hidden md:flex items-center gap-6">
                 <Link to="/contact" className="text-muted-foreground hover:text-foreground transition-colors">
@@ -60,16 +61,17 @@ export const UseHobson = () => {
                 <Badge variant="secondary" className="mb-6 px-4 py-2">
                   AI-Powered Property Intelligence
                 </Badge>
-                
+
                 <h1 className="text-5xl md:text-6xl font-bold mb-8 leading-tight">
                   Turn Your Property Documents Into
                   <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent block mt-2">
                     Instant Answers
                   </span>
                 </h1>
-                
+
                 <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto leading-relaxed">
-                  Hobson, your AI assistant, is trained on property documents to deliver quick, clear, and trusted answers every time. No more endless searching through paperwork.
+                  Hobson, your AI assistant, is trained on property documents to deliver quick, clear, and trusted
+                  answers every time. No more endless searching through paperwork.
                 </p>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16">
@@ -176,7 +178,8 @@ export const UseHobson = () => {
                         ))}
                       </div>
                       <p className="text-muted-foreground">
-                        "Hobson has revolutionized how we handle tenancy agreements. What used to take hours now takes minutes."
+                        "Hobson has revolutionized how we handle tenancy agreements. What used to take hours now takes
+                        minutes."
                       </p>
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
@@ -242,13 +245,11 @@ export const UseHobson = () => {
           <section className="py-20 bg-gradient-to-r from-primary/5 to-primary/10">
             <div className="container mx-auto px-4">
               <div className="max-w-4xl mx-auto text-center">
-                <h2 className="text-4xl font-bold mb-6">
-                  Ready to Transform Your Property Business?
-                </h2>
+                <h2 className="text-4xl font-bold mb-6">Ready to Transform Your Property Business?</h2>
                 <p className="text-xl text-muted-foreground mb-12">
                   Join hundreds of property professionals who are already saving time with Hobson AI.
                 </p>
-                
+
                 <div className="bg-background rounded-2xl p-8 mb-8 border shadow-lg">
                   <div className="flex items-center justify-center gap-4 mb-6">
                     <Badge variant="secondary" className="text-lg px-4 py-2">
@@ -277,11 +278,7 @@ export const UseHobson = () => {
         <footer className="py-12 border-t bg-muted/20">
           <div className="container mx-auto px-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <OptimizedImage 
-                src="/hobson-logo.png" 
-                alt="Hobson AI Logo"
-                className="h-8 w-auto" 
-              />
+              <OptimizedImage src="/hobson-logo.png" alt="Hobson AI Logo" className="h-8 w-auto" />
               <div className="flex items-center gap-6 text-sm text-muted-foreground">
                 <Link to="/privacy-policy" className="hover:text-foreground transition-colors">
                   Privacy Policy

@@ -17,16 +17,19 @@ export const HomepageHeader = () => {
   };
 
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50" role="banner">
+    <header
+      className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50"
+      role="banner"
+    >
       <div className="container mx-auto px-4 py-1">
         <div className="flex justify-between items-center">
           {/* Logo */}
           <div className="flex items-center gap-3">
             <Link to="/" onClick={closeMobileMenu}>
-              <img 
-                src={hobsonLogo} 
-                alt="Hobson AI - AI-powered property management software company logo" 
-                className="h-[62px]" 
+              <img
+                src={hobsonLogo}
+                alt="Hobson AI - AI-powered real estate management software company logo"
+                className="h-[62px]"
                 loading="eager"
               />
             </Link>
