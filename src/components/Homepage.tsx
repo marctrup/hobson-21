@@ -128,7 +128,6 @@ export const Homepage = () => {
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">without replacing the tools you rely on.</span>
                   </h1>
                   <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">Your documents. Your truth. -  Hobson is a specialised AI assistant trained on real estate documents, that delivers quick, clear, and trusted answers every time.
-
                   <br className="hidden sm:block" />
                     <span className="sm:hidden"> </span>Hobson, built on property documents, delivers quick, clear, and trusted answers every time.
                   </p>
