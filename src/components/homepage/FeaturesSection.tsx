@@ -2,10 +2,8 @@
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Map, FileText, TrendingUp, CheckCircle } from "lucide-react";
 import FeatureShowcase from "@/components/features/FeatureShowcase";
-
 export const FeaturesSection = () => {
-  return (
-    <section className="pt-8 pb-0 bg-background">
+  return <section className="pt-8 pb-0 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Angled Feature Showcase with Grid Map */}
@@ -29,9 +27,7 @@ export const FeaturesSection = () => {
                     <p className="text-primary font-medium mb-3">Natural language queries</p>
                   </div>
                 </div>
-                <p className="text-muted-foreground mb-4">
-                  Ask Hobson anything about your properties. Get instant answers to complex questions with our conversational AI assistant.
-                </p>
+                <p className="text-muted-foreground mb-4">Ask Hobson anything about your assets. Get instant answers to complex questions with our conversational AI assistant.</p>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <CheckCircle className="w-4 h-4 text-primary" />
@@ -150,6 +146,5 @@ export const FeaturesSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };

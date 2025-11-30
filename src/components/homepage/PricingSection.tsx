@@ -5,101 +5,80 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
 import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
 import owlMascot from "@/assets/owl-mascot.png";
-
 export const PricingSection = () => {
   const [billingCycles, setBillingCycles] = useState({
     essential: false,
     essentialPlus: false,
     enterprise: false
   });
-  
+
   // Pricing data with monthly and annual amounts (20% discount for annual)
   const pricingData = {
     essential: {
       monthly: 19.50,
-      annual: 15.60, // 20% discount
+      annual: 15.60,
+      // 20% discount
       heus: 275
     },
     essentialPlus: {
       monthly: 49.75,
-      annual: 39.80, // 20% discount
+      annual: 39.80,
+      // 20% discount
       heus: 700
     },
     enterprise: {
       monthly: 148.50,
-      annual: 118.80, // 20% discount
+      annual: 118.80,
+      // 20% discount
       heus: 2000
     }
   };
-
   const formatPrice = (plan: keyof typeof pricingData) => {
     const isAnnual = billingCycles[plan];
     const price = isAnnual ? pricingData[plan].annual : pricingData[plan].monthly;
     return price.toFixed(2);
   };
-
   const toggleBilling = (plan: keyof typeof pricingData) => {
     setBillingCycles(prev => ({
       ...prev,
       [plan]: !prev[plan]
     }));
   };
-
-  const PricingToggle = ({ planKey }: { planKey: keyof typeof pricingData }) => {
+  const PricingToggle = ({
+    planKey
+  }: {
+    planKey: keyof typeof pricingData;
+  }) => {
     const isAnnual = billingCycles[planKey];
-    
-    return (
-      <div className="space-y-2 mb-4 px-4">
+    return <div className="space-y-2 mb-4 px-4">
         <div className="flex items-center justify-center gap-2">
           <span className={`text-xs ${!isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Monthly</span>
           <div className="relative">
-            <input 
-              type="checkbox" 
-              className="sr-only" 
-              checked={isAnnual}
-              onChange={(e) => toggleBilling(planKey)}
-            />
-            <div 
-              className={`w-9 h-5 rounded-full cursor-pointer transition-all duration-300 ease-in-out ${
-                isAnnual ? 'bg-purple-500 shadow-md' : 'bg-purple-200'
-              } touch-manipulation`}
-              onClick={() => toggleBilling(planKey)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  toggleBilling(planKey);
-                }
-              }}
-            >
-              <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${
-                isAnnual ? 'transform translate-x-4' : 'left-0.5'
-              }`}></div>
+            <input type="checkbox" className="sr-only" checked={isAnnual} onChange={e => toggleBilling(planKey)} />
+            <div className={`w-9 h-5 rounded-full cursor-pointer transition-all duration-300 ease-in-out ${isAnnual ? 'bg-purple-500 shadow-md' : 'bg-purple-200'} touch-manipulation`} onClick={() => toggleBilling(planKey)} role="button" tabIndex={0} onKeyDown={e => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              toggleBilling(planKey);
+            }
+          }}>
+              <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${isAnnual ? 'transform translate-x-4' : 'left-0.5'}`}></div>
             </div>
           </div>
           <span className={`text-xs ${isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>Annual</span>
         </div>
-        {isAnnual && (
-          <div className="flex justify-center">
+        {isAnnual && <div className="flex justify-center">
             <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 px-2 py-1">Save 20%</Badge>
-          </div>
-        )}
-      </div>
-    );
+          </div>}
+      </div>;
   };
-
-  return (
-    <section id="pricing-section" className="pt-9 pb-16 md:pt-9 md:pb-24 bg-muted/30">
+  return <section id="pricing-section" className="pt-9 pb-16 md:pt-9 md:pb-24 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-4 mb-4">
             <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">Choose Your AI Journey</h2>
           </div>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0">
-            Revolutionary pricing that charges for actual AI work, not users or properties. Scale seamlessly with unlimited users, properties, and features.
-          </p>
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0">Revolutionary pricing that charges for actual AI work, not users or properties. Scale seamlessly with unlimited users, assets and features.</p>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4 sm:px-0">
             Forget per-user fees. Forget per-property fees. Hobson charges for the actual work our AI does — measured in{" "}
             <span className="font-semibold text-primary">Hobson Energy Units (HEUs)</span>.
@@ -264,6 +243,5 @@ export const PricingSection = () => {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };

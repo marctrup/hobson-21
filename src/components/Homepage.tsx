@@ -26,8 +26,7 @@ export const Homepage = () => {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
-  return (
-    <>
+  return <>
       <Helmet>
         <title>AI Property Management Software | Document Intelligence | Hobson AI</title>
         <meta name="description" content="Transform tenancy agreements with intelligent AI analysis, automated insights, and instant answers. Property document intelligence for modern property management." />
@@ -101,8 +100,7 @@ export const Homepage = () => {
             </div>
 
             {/* Mobile Navigation Menu */}
-            {isMobileMenuOpen && (
-              <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
+            {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Blog
@@ -114,8 +112,7 @@ export const Homepage = () => {
                     Learn
                   </Link>
                 </div>
-              </nav>
-            )}
+              </nav>}
           </div>
         </header>
 
@@ -130,8 +127,8 @@ export const Homepage = () => {
                     <span className="text-foreground">Replace costly, complex menu-driven systems for </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">clarity, simplicity, and affordable AI</span>
                   </h1>
-                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
-                    Your documents. Your truth. AI-powered clarity in seconds.<br className="hidden sm:block" />
+                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">Your documents. Your truth. AI-powered clarity in seconds.
+Hobson, built on real estate documents, delivers quick, clear, and trusted answers every time.<br className="hidden sm:block" />
                     <span className="sm:hidden"> </span>Hobson, built on property documents, delivers quick, clear, and trusted answers every time.
                   </p>
                   
@@ -146,11 +143,11 @@ export const Homepage = () => {
 
                 {/* Right Container - Document to Insights Visualization */}
                 <div className="relative mt-8 lg:mt-[5px] font-space transition-transform duration-300 border-[2px] sm:border-[3px] border-gray-500 rounded-lg" style={{
-                  transform: 'perspective(1000px) rotateY(-10deg)',
-                  transformStyle: 'preserve-3d',
-                  boxShadow: '15px 15px 40px rgba(0, 0, 0, 0.06), 8px 8px 25px rgba(0, 0, 0, 0.04), 0 -5px 20px rgba(0, 0, 0, 0.03), 0 10px 30px rgba(0, 0, 0, 0.05)',
-                  filter: 'drop-shadow(5px 5px 20px rgba(0, 0, 0, 0.04))'
-                }}>
+                transform: 'perspective(1000px) rotateY(-10deg)',
+                transformStyle: 'preserve-3d',
+                boxShadow: '15px 15px 40px rgba(0, 0, 0, 0.06), 8px 8px 25px rgba(0, 0, 0, 0.04), 0 -5px 20px rgba(0, 0, 0, 0.03), 0 10px 30px rgba(0, 0, 0, 0.05)',
+                filter: 'drop-shadow(5px 5px 20px rgba(0, 0, 0, 0.04))'
+              }}>
                   <PropertyManagementVisualization />
                 </div>
 
@@ -167,15 +164,7 @@ export const Homepage = () => {
                 {/* Left Content - How It Works Steps */}
                 <div>
                   <div className="mb-6 sm:mb-8 flex items-center gap-4">
-                    <OptimizedImage 
-                      src={owlMascot} 
-                      alt="Hobson AI Owl Mascot" 
-                      className="w-16 h-16 sm:w-20 sm:h-20 object-contain" 
-                      width={80}
-                      height={80}
-                      priority={true}
-                      fetchPriority="high"
-                    />
+                    <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" width={80} height={80} priority={true} fetchPriority="high" />
                     <div>
                       <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
                       <p className="text-lg sm:text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
@@ -226,8 +215,8 @@ export const Homepage = () => {
                 {/* Right Content - Georgia Video */}
                 <div className="mt-6 lg:mt-0">
                   <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden relative" style={{
-                    border: '6px solid #f0f0f0'
-                  }}>
+                  border: '6px solid #f0f0f0'
+                }}>
                      <HomepageGeorgiaVideo />
                   </div>
                 </div>
@@ -246,13 +235,7 @@ export const Homepage = () => {
           <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10">
             <div className="container mx-auto px-4 text-center">
               <div className="flex items-center justify-center gap-4 mb-4 sm:mb-6">
-                <OptimizedImage 
-                  src={owlMascot} 
-                  alt="Hobson AI Owl Mascot" 
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain"
-                  width={80}
-                  height={80}
-                />
+                <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" width={80} height={80} />
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
                   Ready to introduce AI into your business?
                 </h2>
@@ -260,11 +243,7 @@ export const Homepage = () => {
               <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
                 Join our free pilot program and experience the power of AI-driven property intelligence
               </p>
-              <SimpleButton 
-                onClick={() => setShowPilotForm(true)}
-                size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto"
-              >
+              <SimpleButton onClick={() => setShowPilotForm(true)} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto">
                 Join our free pilot
               </SimpleButton>
             </div>
@@ -295,16 +274,9 @@ export const Homepage = () => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-foreground">Company</h4>
                   <div className="space-y-3">
-                    {NAVIGATION_LINKS.map((link) => (
-                      <Link
-                        key={link.to}
-                        to={link.to}
-                        className="block text-muted-foreground hover:text-foreground transition-colors"
-                        title={link.title}
-                      >
+                    {NAVIGATION_LINKS.map(link => <Link key={link.to} to={link.to} className="block text-muted-foreground hover:text-foreground transition-colors" title={link.title}>
                         {link.label}
-                      </Link>
-                    ))}
+                      </Link>)}
                     <Link to="/investment-opportunity" className="block text-muted-foreground hover:text-foreground transition-colors" title="Investment Opportunity">
                       Investment Opportunity
                     </Link>
@@ -324,6 +296,5 @@ export const Homepage = () => {
           </footer>
         </main>
       </div>
-    </>
-  );
+    </>;
 };
