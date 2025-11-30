@@ -124,8 +124,8 @@ export const Homepage = () => {
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
                   <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                    <span className="text-foreground">Replace costly, complex menu-driven systems for </span>
-                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">clarity, simplicity, and affordable AI</span>
+                    <span className="text-foreground">Move toward clarity, simplicity, and affordable AI, </span>
+                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">without replacing the tools you rely on.</span>
                   </h1>
                   <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">Your documents. Your truth. -  Hobson is a specialised AI assistant trained on real estate documents, that delivers quick, clear, and trusted answers every time.
 
