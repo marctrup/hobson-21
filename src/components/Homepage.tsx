@@ -127,8 +127,9 @@ export const Homepage = () => {
                     <span className="text-foreground">Replace costly, complex menu-driven systems for </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">clarity, simplicity, and affordable AI</span>
                   </h1>
-                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">Your documents. Your truth. AI-powered clarity in seconds.
-Hobson, built on real estate documents, delivers quick, clear, and trusted answers every time.<br className="hidden sm:block" />
+                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">Your documents. Your truth. AI-powered clarity in seconds. Hobson, a specialised AI assistant trained on real estate documents, delivers quick, clear, and trusted answers every time.
+
+                  <br className="hidden sm:block" />
                     <span className="sm:hidden"> </span>Hobson, built on property documents, delivers quick, clear, and trusted answers every time.
                   </p>
                   
