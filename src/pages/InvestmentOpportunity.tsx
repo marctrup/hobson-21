@@ -709,48 +709,36 @@ const InvestmentOpportunity = () => {
         doc.text(pageTitleLines, margin, yPosition);
         yPosition += pageTitleLines.length * 8 + 10;
         
-        // Add the image with fixed aspect ratio
-        // Using a reasonable width and calculated height
+        // Add the image with proper aspect ratio
         const imgWidth = maxWidth;
-        const imgHeight = imgWidth * 0.7; // Reasonable aspect ratio for architecture diagram
-        
-        // Center the image vertically if there's space
-        const availableHeight = pageHeight - yPosition - 40;
-        if (imgHeight < availableHeight) {
-          yPosition += (availableHeight - imgHeight) / 4; // Add some top spacing
-        }
+        const imgHeight = imgWidth * 0.5; // Better aspect ratio for wide architecture diagram
         
         try {
-          doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, Math.min(imgHeight, availableHeight));
+          doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, imgHeight);
+          yPosition += imgHeight + 15;
         } catch (error) {
           console.error('Error adding image to PDF:', error);
-          // Fallback: show overview text if image fails
-          if (page.content?.overview) {
-            doc.setTextColor(55, 65, 81);
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'normal');
-            const overviewLines = doc.splitTextToSize(page.content.overview, maxWidth);
-            doc.text(overviewLines, margin, yPosition);
-          }
         }
-        return;
+        
+        // Continue to render content sections below the image
+        // Don't return early - fall through to render the text content
+      } else {
+        // Page title - Purple (for non-image pages)
+        doc.setTextColor(124, 58, 237);
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
+        doc.text(pageTitleLines, margin, yPosition);
+        yPosition += pageTitleLines.length * 8 + 5;
+        
+        // Purple line under title
+        doc.setDrawColor(124, 58, 237);
+        doc.setLineWidth(0.5);
+        doc.line(margin, yPosition, pageWidth - margin, yPosition);
+        yPosition += 10;
       }
       
-      // Page title - Purple
-      doc.setTextColor(124, 58, 237);
-      doc.setFontSize(18);
-      doc.setFont('helvetica', 'bold');
-      const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
-      doc.text(pageTitleLines, margin, yPosition);
-      yPosition += pageTitleLines.length * 8 + 5;
-      
-      // Purple line under title
-      doc.setDrawColor(124, 58, 237);
-      doc.setLineWidth(0.5);
-      doc.line(margin, yPosition, pageWidth - margin, yPosition);
-      yPosition += 10;
-      
-      // Overview - Dark gray on light background
+      // Overview - Dark gray on light background (for all pages)
       if (page.content.overview) {
         doc.setFillColor(249, 250, 251);
         doc.rect(margin, yPosition, maxWidth, 0, 'F');
@@ -1025,11 +1013,11 @@ const InvestmentOpportunity = () => {
           return;
         }
         
+        doc.addPage();
+        let yPosition = margin;
+        
         // Handle pages with images specially
         if (page.image) {
-          doc.addPage();
-          let yPosition = margin;
-          
           // Page title - Purple
           doc.setTextColor(124, 58, 237);
           doc.setFontSize(18);
@@ -1038,49 +1026,32 @@ const InvestmentOpportunity = () => {
           doc.text(pageTitleLines, margin, yPosition);
           yPosition += pageTitleLines.length * 8 + 10;
           
-          // Add the image with fixed aspect ratio
+          // Add the image with proper aspect ratio
           const imgWidth = maxWidth;
-          const imgHeight = imgWidth * 0.7; // Reasonable aspect ratio for architecture diagram
-          
-          // Center the image vertically if there's space
-          const availableHeight = pageHeight - yPosition - 40;
-          if (imgHeight < availableHeight) {
-            yPosition += (availableHeight - imgHeight) / 4; // Add some top spacing
-          }
+          const imgHeight = imgWidth * 0.5; // Better aspect ratio for wide architecture diagram
           
           try {
-            doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, Math.min(imgHeight, availableHeight));
+            doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, imgHeight);
+            yPosition += imgHeight + 15;
           } catch (error) {
             console.error('Error adding image to PDF:', error);
-            // Fallback: show overview text if image fails
-            if (page.content?.overview) {
-              doc.setTextColor(55, 65, 81);
-              doc.setFontSize(10);
-              doc.setFont('helvetica', 'normal');
-              const overviewLines = doc.splitTextToSize(page.content.overview, maxWidth);
-              doc.text(overviewLines, margin, yPosition);
-            }
           }
-          return;
+        } else {
+          // Page title - Purple (for non-image pages)
+          doc.setTextColor(124, 58, 237);
+          doc.setFontSize(18);
+          doc.setFont('helvetica', 'bold');
+          const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
+          doc.text(pageTitleLines, margin, yPosition);
+          yPosition += pageTitleLines.length * 8 + 5;
+          
+          // Purple line under title
+          doc.setDrawColor(124, 58, 237);
+          doc.setLineWidth(0.5);
+          doc.line(margin, yPosition, pageWidth - margin, yPosition);
+          yPosition += 10;
         }
 
-        doc.addPage();
-        let yPosition = margin;
-        
-        // Page title - Purple
-        doc.setTextColor(124, 58, 237);
-        doc.setFontSize(18);
-        doc.setFont('helvetica', 'bold');
-        const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
-        doc.text(pageTitleLines, margin, yPosition);
-        yPosition += pageTitleLines.length * 8 + 5;
-        
-        // Purple line under title
-        doc.setDrawColor(124, 58, 237);
-        doc.setLineWidth(0.5);
-        doc.line(margin, yPosition, pageWidth - margin, yPosition);
-        yPosition += 10;
-        
         // Overview
         if (page.content.overview) {
           doc.setFillColor(249, 250, 251);
