@@ -1843,7 +1843,17 @@ const InvestmentOpportunity = () => {
                           contentSection.title.includes('Opportunity') ||
                           contentSection.title.includes('Model') ||
                           contentSection.title.includes('Traction') ||
-                          contentSection.title.includes('Milestones');
+                          contentSection.title.includes('Milestones') ||
+                          contentSection.title.includes('TAM') ||
+                          contentSection.title.includes('SAM') ||
+                          contentSection.title.includes('SOM') ||
+                          contentSection.title.includes('Overview') ||
+                          contentSection.title.includes('Summary') ||
+                          contentSection.title.includes('Traditional') ||
+                          contentSection.title.includes('Next-Generation') ||
+                          contentSection.title.includes('Competitive') ||
+                          contentSection.title.includes('Europe') ||
+                          contentSection.title.includes('Global');
                         
                         return (
                         <div key={idx} className="space-y-3 sm:space-y-4">
