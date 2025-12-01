@@ -12,7 +12,7 @@ export const ProductSlide = () => {
         <div className="flex items-center justify-center gap-3 sm:gap-4 py-6">
           <div className="flex flex-col items-center gap-2 px-4 py-3 rounded-lg bg-[#f1f5f9]">
             <Shield className="w-7 h-7 sm:w-10 sm:h-10 text-[#475569]" />
-            <span className="text-xs sm:text-sm text-[#475569] font-medium">Your CRMs</span>
+            <span className="text-xs sm:text-sm text-[#475569] font-medium">Your tools</span>
           </div>
           
           <Plus className="w-7 h-7 sm:w-10 sm:h-10 text-[#7c3aed]" strokeWidth={3} />
