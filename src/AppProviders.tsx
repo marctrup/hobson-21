@@ -21,7 +21,7 @@ const queryClient = new QueryClient({
 // Component to conditionally render chatbot based on route
 const ChatbotWrapper = () => {
   const location = useLocation();
-  const hideChatbotRoutes = ['/carousel_investments'];
+  const hideChatbotRoutes = ['/investment_carousel'];
   
   if (hideChatbotRoutes.includes(location.pathname)) {
     return null;
