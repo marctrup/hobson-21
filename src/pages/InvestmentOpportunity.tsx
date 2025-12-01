@@ -699,6 +699,44 @@ const InvestmentOpportunity = () => {
       doc.addPage();
       yPosition = margin;
       
+      // Handle pages with images specially
+      if (page.image) {
+        // Page title - Purple
+        doc.setTextColor(124, 58, 237);
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
+        doc.text(pageTitleLines, margin, yPosition);
+        yPosition += pageTitleLines.length * 8 + 10;
+        
+        // Add the image
+        const img = new Image();
+        img.src = page.image;
+        const imgWidth = maxWidth;
+        const imgHeight = (img.height / img.width) * imgWidth;
+        
+        // Center the image vertically if there's space
+        const availableHeight = pageHeight - yPosition - 40;
+        if (imgHeight < availableHeight) {
+          yPosition += (availableHeight - imgHeight) / 4; // Add some top spacing
+        }
+        
+        try {
+          doc.addImage(img, 'PNG', margin, yPosition, imgWidth, Math.min(imgHeight, availableHeight));
+        } catch (error) {
+          console.error('Error adding image to PDF:', error);
+          // Fallback: show overview text if image fails
+          if (page.content?.overview) {
+            doc.setTextColor(55, 65, 81);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'normal');
+            const overviewLines = doc.splitTextToSize(page.content.overview, maxWidth);
+            doc.text(overviewLines, margin, yPosition);
+          }
+        }
+        return;
+      }
+      
       // Page title - Purple
       doc.setTextColor(124, 58, 237);
       doc.setFontSize(18);
@@ -985,6 +1023,47 @@ const InvestmentOpportunity = () => {
       section.pages.forEach((page: any) => {
         // Skip pages without content or with custom visuals
         if (!page.content || page.showCustomVisual) {
+          return;
+        }
+        
+        // Handle pages with images specially
+        if (page.image) {
+          doc.addPage();
+          let yPosition = margin;
+          
+          // Page title - Purple
+          doc.setTextColor(124, 58, 237);
+          doc.setFontSize(18);
+          doc.setFont('helvetica', 'bold');
+          const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
+          doc.text(pageTitleLines, margin, yPosition);
+          yPosition += pageTitleLines.length * 8 + 10;
+          
+          // Add the image
+          const img = new Image();
+          img.src = page.image;
+          const imgWidth = maxWidth;
+          const imgHeight = (img.height / img.width) * imgWidth;
+          
+          // Center the image vertically if there's space
+          const availableHeight = pageHeight - yPosition - 40;
+          if (imgHeight < availableHeight) {
+            yPosition += (availableHeight - imgHeight) / 4; // Add some top spacing
+          }
+          
+          try {
+            doc.addImage(img, 'PNG', margin, yPosition, imgWidth, Math.min(imgHeight, availableHeight));
+          } catch (error) {
+            console.error('Error adding image to PDF:', error);
+            // Fallback: show overview text if image fails
+            if (page.content?.overview) {
+              doc.setTextColor(55, 65, 81);
+              doc.setFontSize(10);
+              doc.setFont('helvetica', 'normal');
+              const overviewLines = doc.splitTextToSize(page.content.overview, maxWidth);
+              doc.text(overviewLines, margin, yPosition);
+            }
+          }
           return;
         }
 
