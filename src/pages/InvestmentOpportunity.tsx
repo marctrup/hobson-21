@@ -1832,14 +1832,27 @@ const InvestmentOpportunity = () => {
                     {/* Content Sections */}
                     {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
                       !(selectedSection.pages[currentPageIndex] as any).isVisual &&
-                      selectedSection.pages[currentPageIndex].content.sections.map((contentSection: any, idx) => (
+                      selectedSection.pages[currentPageIndex].content.sections.map((contentSection: any, idx) => {
+                        // Determine if section should have white background
+                        const hasWhiteBg = contentSection.teamMembers || 
+                          /\d{4}:/.test(contentSection.title) || 
+                          contentSection.title.includes('Operator') || 
+                          contentSection.title.startsWith('Step') || 
+                          contentSection.title.includes('Technical Components') ||
+                          contentSection.title.includes('Focus') ||
+                          contentSection.title.includes('Opportunity') ||
+                          contentSection.title.includes('Model') ||
+                          contentSection.title.includes('Traction') ||
+                          contentSection.title.includes('Milestones');
+                        
+                        return (
                         <div key={idx} className="space-y-3 sm:space-y-4">
-                          <div className={`${contentSection.teamMembers || /\d{4}:/.test(contentSection.title) || contentSection.title.includes('Operator') || contentSection.title.startsWith('Step') || contentSection.title.includes('Technical Components') ? 'bg-white border-b-2 border-primary/20' : 'bg-primary'} rounded-lg px-4 py-3 mb-4`}>
-                            <h3 className={`text-base sm:text-lg md:text-xl font-bold ${contentSection.teamMembers || /\d{4}:/.test(contentSection.title) || contentSection.title.includes('Operator') || contentSection.title.startsWith('Step') || contentSection.title.includes('Technical Components') ? 'text-foreground' : 'text-white'}`}>
+                          <div className={`${hasWhiteBg ? 'bg-white border-b-2 border-primary/20' : 'bg-primary'} rounded-lg px-4 py-3 mb-4`}>
+                            <h3 className={`text-base sm:text-lg md:text-xl font-bold ${hasWhiteBg ? 'text-foreground' : 'text-white'}`}>
                               {contentSection.title}
                             </h3>
                             {contentSection.subtitle && (
-                              <p className={`text-xs sm:text-sm mt-1 ${contentSection.teamMembers || /\d{4}:/.test(contentSection.title) || contentSection.title.includes('Operator') || contentSection.title.startsWith('Step') || contentSection.title.includes('Technical Components') ? 'text-muted-foreground' : 'text-white/90'}`}>{contentSection.subtitle}</p>
+                              <p className={`text-xs sm:text-sm mt-1 ${hasWhiteBg ? 'text-muted-foreground' : 'text-white/90'}`}>{contentSection.subtitle}</p>
                             )}
                           </div>
                           
@@ -1891,7 +1904,8 @@ const InvestmentOpportunity = () => {
                             </ul>
                           )}
                         </div>
-                      ))}
+                        );
+                      })}
 
                     {/* Downloads Section */}
                     {(selectedSection.pages[currentPageIndex] as any).downloads && (
