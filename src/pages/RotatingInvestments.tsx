@@ -91,23 +91,32 @@ const RotatingInvestments = () => {
     });
 
     try {
+      // Get the actual dimensions of the slide container
+      const slideContainer = slideRef.current;
+      const slideWidth = slideContainer.offsetWidth;
+      const slideHeight = slideContainer.offsetHeight;
+      
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'px',
-        format: [800, 800], // Square format matching carousel
+        format: [slideWidth, slideHeight],
       });
 
       // Capture each slide
       for (let i = 0; i < slides.length; i++) {
         setCurrentSlide(i);
         
-        // Wait for slide to render
-        await new Promise(resolve => setTimeout(resolve, 500));
+        // Wait for slide to render and animations to complete
+        await new Promise(resolve => setTimeout(resolve, 800));
         
-        const canvas = await html2canvas(slideRef.current, {
+        const canvas = await html2canvas(slideContainer, {
           scale: 2,
           backgroundColor: '#ffffff',
           logging: false,
+          width: slideWidth,
+          height: slideHeight,
+          windowWidth: slideWidth,
+          windowHeight: slideHeight,
         });
 
         const imgData = canvas.toDataURL('image/png');
@@ -116,7 +125,8 @@ const RotatingInvestments = () => {
           pdf.addPage();
         }
         
-        pdf.addImage(imgData, 'PNG', 0, 0, 800, 800);
+        // Add image at actual size to maintain aspect ratio
+        pdf.addImage(imgData, 'PNG', 0, 0, slideWidth, slideHeight);
       }
 
       pdf.save('hobson-investor-carousel.pdf');
