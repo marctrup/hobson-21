@@ -599,7 +599,7 @@ const sections = [
                 {
                   name: "Nick Doffman",
                   role: "Commercial Advisor",
-                  linkedin: "https://www.linkedin.com/in/nick-doffman/",
+                  linkedin: "https://www.linkedin.com/in/nick-doffman-9180b887/",
                 },
                 {
                   name: "TBA",
