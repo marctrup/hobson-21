@@ -584,7 +584,7 @@ const sections = [
                 {
                   name: "Denis Kosenkov",
                   role: "Senior AI Developer",
-                  linkedin: "https://www.linkedin.com/in/denis-dmitrievich-kosenkov/",
+                  linkedin: "https://www.linkedin.com/in/denis-kosenkov-362412239/",
                 },
                 {
                   name: "Kumar Ankit",
