@@ -911,11 +911,21 @@ const InvestmentOpportunity = () => {
               doc.setTextColor(124, 58, 237);
               doc.setFontSize(7);
               doc.setFont('helvetica', 'normal');
+              const linkText = 'LinkedIn Profile';
               const linkY = finalYPos + 26;
-              doc.textWithLink('LinkedIn Profile ↗', xPos + cardWidth / 2, linkY, { 
-                align: 'center',
-                url: member.linkedin 
-              });
+              
+              // Render text first
+              doc.text(linkText, xPos + cardWidth / 2, linkY, { align: 'center' });
+              
+              // Add clickable link annotation over the text
+              const textWidth = doc.getTextWidth(linkText);
+              doc.link(
+                xPos + (cardWidth - textWidth) / 2, 
+                linkY - 3, 
+                textWidth, 
+                4, 
+                { url: member.linkedin }
+              );
             } else {
               doc.setTextColor(156, 163, 175);
               doc.setFontSize(7);
@@ -1326,11 +1336,21 @@ const InvestmentOpportunity = () => {
                   doc.setTextColor(124, 58, 237);
                   doc.setFontSize(7);
                   doc.setFont('helvetica', 'normal');
+                  const linkText = 'LinkedIn Profile';
                   const linkY = finalYPos + 26;
-                  doc.textWithLink('LinkedIn Profile ↗', xPos + cardWidth / 2, linkY, { 
-                    align: 'center',
-                    url: member.linkedin 
-                  });
+                  
+                  // Render text first
+                  doc.text(linkText, xPos + cardWidth / 2, linkY, { align: 'center' });
+                  
+                  // Add clickable link annotation over the text
+                  const textWidth = doc.getTextWidth(linkText);
+                  doc.link(
+                    xPos + (cardWidth - textWidth) / 2, 
+                    linkY - 3, 
+                    textWidth, 
+                    4, 
+                    { url: member.linkedin }
+                  );
                 } else {
                   doc.setTextColor(156, 163, 175);
                   doc.setFontSize(7);
