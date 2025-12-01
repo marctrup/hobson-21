@@ -38,6 +38,7 @@ const UseHobson = lazy(() => import("../pages/UseHobson").then(module => ({ defa
 const UseHobson2 = lazy(() => import("../pages/UseHobson2").then(module => ({ default: module.UseHobson2 })));
 const UseHobson3 = lazy(() => import("../pages/UseHobson3").then(module => ({ default: module.UseHobson3 })));
 const Rotating = lazy(() => import("../pages/Rotating"));
+const RotatingInvestments = lazy(() => import("../pages/RotatingInvestments"));
 const InvestorSummary = lazy(() => import("../pages/InvestorSummary"));
 const Banners = lazy(() => import("../pages/Banners"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
@@ -146,6 +147,7 @@ const AppContent = () => {
               <Route path="/quiz1" element={<UseHobson2 />} />
               <Route path="/quiz2" element={<UseHobson3 />} />
               <Route path="/carousel" element={<Rotating />} />
+              <Route path="/carousel_investments" element={<RotatingInvestments />} />
               <Route path="/investorsummary" element={<InvestorSummary />} />
               <Route path="/banners" element={<Banners />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
