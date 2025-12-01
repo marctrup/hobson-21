@@ -198,7 +198,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => setIsAutoPlaying(!isAutoPlaying)}
+                onClick={() => {
+                  if (!isAutoPlaying) {
+                    // If currently paused, advance immediately then resume auto-play
+                    setCurrentSlide((prev) => (prev + 1) % slides.length);
+                  }
+                  setIsAutoPlaying(!isAutoPlaying);
+                }}
                 aria-label={isAutoPlaying ? 'Pause carousel' : 'Play carousel'}
                 className="rounded-full bg-gray-100 hover:bg-gray-200 border-gray-200 w-10 h-10 pointer-events-auto touch-manipulation"
               >
