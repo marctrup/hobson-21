@@ -778,8 +778,7 @@ const InvestmentOpportunity = () => {
                   Mission Statement
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  To go beyond simple data access by giving real estate professionals instant, accurate information
-                  enriched with AI judgement, context, and connected insight.
+                  Innovation without disruption. To bring clarity and connected insight to real estate professionals by delivering instant, accurate, AI-enhanced answers that build on the systems and documents they already use.
                 </p>
               </div>
 
@@ -789,12 +788,7 @@ const InvestmentOpportunity = () => {
                   Positioning Statement
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  For real estate professionals dealing with costly CRMs, scattered spreadsheets and the manual work of
-                  digging through information from original documents, Hobson is a{" "}
-                  <span className="font-semibold text-foreground">specialised AI-powered assistant</span> that
-                  transforms source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is{" "}
-                  <span className="font-semibold text-foreground">lightweight, simple to use, and low cost</span> —
-                  saving time, ensuring accuracy, and building trust with fast, referenced responses.
+                  Disruption Without Displacement. Hobson brings AI clarity to real estate operations by transforming unstructured documents and fragmented data into immediate, trustworthy answers. It enhances — rather than replaces — existing CRMs and workflows, offering a lightweight, low-cost layer that delivers enterprise-grade accuracy. Hobson creates meaningful productivity gains, lowers operating costs, and provides a stepping stone for widespread AI adoption across the sector.
                 </p>
               </div>
 
