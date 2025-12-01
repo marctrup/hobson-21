@@ -720,10 +720,19 @@ const InvestmentOpportunity = () => {
     const maxWidth = pageWidth - (margin * 2);
     let yPosition = 20;
     
-    // Helper function to remove emojis from text
+    // Helper function to remove emojis and fix special characters for PDF
     const removeEmojis = (text: string) => {
-      // Comprehensive emoji removal regex
+      // Comprehensive emoji removal regex and special character replacements
       return text
+        .replace(/≈/g, '~') // Replace approximately equal with tilde
+        .replace(/×/g, 'x') // Replace multiplication sign
+        .replace(/—/g, '-') // Replace em dash
+        .replace(/–/g, '-') // Replace en dash
+        .replace(/'/g, "'") // Replace smart quote
+        .replace(/'/g, "'") // Replace smart quote
+        .replace(/"/g, '"') // Replace smart quote
+        .replace(/"/g, '"') // Replace smart quote
+        .replace(/…/g, '...') // Replace ellipsis
         .replace(/[\u{1F000}-\u{1F9FF}]/gu, '') // Emoticons, symbols, pictographs
         .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
         .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
@@ -787,7 +796,8 @@ const InvestmentOpportunity = () => {
         doc.setTextColor(124, 58, 237);
         doc.setFontSize(18);
         doc.setFont('helvetica', 'bold');
-        const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
+        const cleanedPageTitle = removeEmojis(page.title);
+        const pageTitleLines = doc.splitTextToSize(cleanedPageTitle, maxWidth);
         doc.text(pageTitleLines, margin, yPosition);
         yPosition += pageTitleLines.length * 8 + 10;
         
@@ -819,7 +829,8 @@ const InvestmentOpportunity = () => {
         doc.setTextColor(124, 58, 237);
         doc.setFontSize(18);
         doc.setFont('helvetica', 'bold');
-        const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
+        const cleanedPageTitle = removeEmojis(page.title);
+        const pageTitleLines = doc.splitTextToSize(cleanedPageTitle, maxWidth);
         doc.text(pageTitleLines, margin, yPosition);
         yPosition += pageTitleLines.length * 8 + 5;
         
@@ -838,7 +849,8 @@ const InvestmentOpportunity = () => {
         doc.setTextColor(55, 65, 81);
         doc.setFontSize(10);
         doc.setFont('helvetica', 'normal');
-        const overviewLines = doc.splitTextToSize(page.content.overview, maxWidth - 10);
+        const cleanedOverview = removeEmojis(page.content.overview);
+        const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 10);
         
         const boxHeight = overviewLines.length * 5 + 10;
         doc.rect(margin, yPosition, maxWidth, boxHeight, 'F');
@@ -993,7 +1005,8 @@ const InvestmentOpportunity = () => {
         doc.setTextColor(31, 41, 55);
         doc.setFontSize(14);
         doc.setFont('helvetica', 'bold');
-        const sectionTitleLines = doc.splitTextToSize(section.title, maxWidth);
+        const cleanedSectionTitle = removeEmojis(section.title);
+        const sectionTitleLines = doc.splitTextToSize(cleanedSectionTitle, maxWidth);
         doc.text(sectionTitleLines, margin, yPosition);
         yPosition += sectionTitleLines.length * 7 + 3;
         
@@ -1002,7 +1015,8 @@ const InvestmentOpportunity = () => {
           doc.setTextColor(124, 58, 237);
           doc.setFontSize(12);
           doc.setFont('helvetica', 'bold');
-          const subtitleLines = doc.splitTextToSize(section.subtitle, maxWidth);
+          const cleanedSubtitle = removeEmojis(section.subtitle);
+          const subtitleLines = doc.splitTextToSize(cleanedSubtitle, maxWidth);
           doc.text(subtitleLines, margin, yPosition);
           yPosition += subtitleLines.length * 6 + 5;
         }
