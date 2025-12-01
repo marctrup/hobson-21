@@ -846,6 +846,140 @@ const InvestmentOpportunity = () => {
         yPosition += boxHeight + 8;
       }
       
+      // Handle visual-only pages with fallback content
+      if ((page as any).isVisual && page.title === "AI Processing Time & Cost Examples") {
+        doc.setTextColor(75, 85, 99);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        
+        const visualContent = [
+          "AI Processing Time & Cost Examples:",
+          "",
+          "Document Complexity Estimates:",
+          "• Complex documents (leases with schedules): 15-30 seconds",
+          "• Medium complexity (standard leases): 8-15 seconds",
+          "• Low complexity (deeds, certificates): 3-8 seconds",
+          "",
+          "Real Customer Examples:",
+          "",
+          "EPAM Example:",
+          "• 29 documents (leases + deeds)",
+          "• Total tokens: 17.6M",
+          "• Total cost: $10.51",
+          "• Average: ~$0.36 per document",
+          "• Individual leases: ~$0.38 each",
+          "",
+          "Drapers Example:",
+          "• 19 head leases",
+          "• Total tokens: 19.1M",
+          "• Total cost: $7.77",
+          "• Average: ~$0.41 per lease",
+          "",
+          "Key Takeaways:",
+          "• Lease processing costs more than deeds due to complexity",
+          "• AI processing is fast, predictable, and inexpensive",
+          "• Even heavy portfolios cost single-digit dollars to index",
+          "• Processing time measured in seconds, not hours",
+          "• Transparent, usage-based pricing with no hidden costs"
+        ];
+        
+        visualContent.forEach((line) => {
+          if (yPosition > pageHeight - 40) {
+            doc.addPage();
+            yPosition = margin;
+          }
+          
+          if (line === "") {
+            yPosition += 5;
+          } else if (line.endsWith(":")) {
+            doc.setFont('helvetica', 'bold');
+            doc.text(line, margin, yPosition);
+            yPosition += 7;
+            doc.setFont('helvetica', 'normal');
+          } else {
+            doc.text(line, margin, yPosition);
+            yPosition += 5.5;
+          }
+        });
+        
+        yPosition += 10;
+      }
+      
+      // Handle HEU Pricing visual page
+      if ((page as any).showCustomVisual && (page as any).customVisualComponent === "heuPricing") {
+        doc.setTextColor(75, 85, 99);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        
+        const pricingContent = [
+          "Hobson Energy Units (HEUs) & Transparent Pricing:",
+          "",
+          "What are HEUs?",
+          "Hobson Energy Units measure AI effort. Every task (query, document read, report build) consumes HEUs based on complexity and computational resources required.",
+          "",
+          "Pricing Tiers:",
+          "",
+          "Free Plan: £0/month",
+          "• 18 HEUs per month",
+          "• Perfect for testing and light usage",
+          "",
+          "Essential: £19.50/month + VAT",
+          "• 275 HEUs per month",
+          "• Ideal for small operators",
+          "",
+          "Essential Plus: £49.75/month + VAT",
+          "• 700 HEUs per month",
+          "• Great for growing teams",
+          "",
+          "Enterprise: £148.50/month + VAT",
+          "• 2000 HEUs per month",
+          "• Designed for large operations",
+          "",
+          "Top-Up Pack: £15 (one-time)",
+          "• 150 additional HEUs",
+          "• Non-rollover, expires end of billing period",
+          "",
+          "Real-Time Transparency:",
+          "• Usage bars show HEU consumption in real-time",
+          "• Per-message cost breakdown visible in chat",
+          "• No hidden fees or surprise charges",
+          "• Users always know exactly what they're paying for",
+          "",
+          "Typical Costs:",
+          "• Full lease extraction: ~£0.54",
+          "• Simple query: ~£0.001",
+          "• Document indexing: varies by complexity",
+          "",
+          "Business Model Benefits:",
+          "• No license fees",
+          "• No per-user charges",
+          "• No per-asset pricing",
+          "• Pay only for actual usage",
+          "• Flexible billing that scales with your needs"
+        ];
+        
+        pricingContent.forEach((line) => {
+          if (yPosition > pageHeight - 40) {
+            doc.addPage();
+            yPosition = margin;
+          }
+          
+          if (line === "") {
+            yPosition += 5;
+          } else if (line.endsWith(":") || line.startsWith("Free Plan") || line.startsWith("Essential") || line.startsWith("Enterprise") || line.startsWith("Top-Up")) {
+            doc.setFont('helvetica', 'bold');
+            doc.text(line, margin, yPosition);
+            yPosition += 7;
+            doc.setFont('helvetica', 'normal');
+          } else {
+            doc.text(line, margin, yPosition);
+            yPosition += 5.5;
+          }
+        });
+        
+        yPosition += 10;
+      }
+      
       // Sections
       if (page.content?.sections) {
         page.content.sections.forEach((section: any) => {
