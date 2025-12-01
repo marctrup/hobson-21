@@ -78,7 +78,7 @@ export default function FaqManagement() {
     fetchFaqs();
   }, []);
 
-  // Set initialFormData when editing starts
+  // Set initialFormData when editing starts - only when FAQ id changes
   useEffect(() => {
     if (editingFaq && isDialogOpen) {
       const faqData = {
@@ -91,7 +91,7 @@ export default function FaqManagement() {
       setFormData(faqData);
       setInitialFormData({ ...faqData });
     }
-  }, [editingFaq, isDialogOpen]);
+  }, [editingFaq?.id, isDialogOpen]);
 
   const fetchFaqs = async () => {
     try {
