@@ -200,12 +200,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 size="icon"
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
                 aria-label={isAutoPlaying ? 'Pause carousel' : 'Play carousel'}
-                className="rounded-full bg-white/90 hover:bg-white w-8 h-8 pointer-events-auto touch-manipulation"
+                className="rounded-full bg-primary/10 hover:bg-primary/20 border-primary/30 w-8 h-8 pointer-events-auto touch-manipulation"
               >
                 {isAutoPlaying ? (
-                  <Pause className="w-3.5 h-3.5" />
+                  <Pause className="w-3.5 h-3.5 text-primary" />
                 ) : (
-                  <Play className="w-3.5 h-3.5" />
+                  <Play className="w-3.5 h-3.5 text-primary" />
                 )}
               </Button>
             </div>
