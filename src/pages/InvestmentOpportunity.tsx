@@ -1824,10 +1824,14 @@ const InvestmentOpportunity = () => {
                       !(selectedSection.pages[currentPageIndex] as any).isVisual &&
                       selectedSection.pages[currentPageIndex].content.sections.map((contentSection: any, idx) => (
                         <div key={idx} className="space-y-3 sm:space-y-4">
-                          <h3 className="text-base sm:text-lg md:text-xl font-bold text-primary flex items-center gap-2">
-                            <span className="w-1 h-5 sm:h-6 bg-primary rounded-full"></span>
-                            {contentSection.title}
-                          </h3>
+                          <div className="bg-primary rounded-lg px-4 py-3 mb-4">
+                            <h3 className="text-base sm:text-lg md:text-xl font-bold text-white">
+                              {contentSection.title}
+                            </h3>
+                            {contentSection.subtitle && (
+                              <p className="text-xs sm:text-sm text-white/90 mt-1">{contentSection.subtitle}</p>
+                            )}
+                          </div>
                           
                           {/* Team Members Grid */}
                           {contentSection.teamMembers ? (
@@ -1880,10 +1884,11 @@ const InvestmentOpportunity = () => {
                     {/* Downloads Section */}
                     {(selectedSection.pages[currentPageIndex] as any).downloads && (
                       <div className="space-y-3 sm:space-y-4 mt-6 sm:mt-8">
-                        <h3 className="text-base sm:text-lg md:text-xl font-bold text-primary flex items-center gap-2">
-                          <span className="w-1 h-5 sm:h-6 bg-primary rounded-full"></span>
-                          Download Files
-                        </h3>
+                        <div className="bg-primary rounded-lg px-4 py-3 mb-4">
+                          <h3 className="text-base sm:text-lg md:text-xl font-bold text-white">
+                            Download Files
+                          </h3>
+                        </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                           {(selectedSection.pages[currentPageIndex] as any).downloads.map(
                             (download: any, idx: number) => (
