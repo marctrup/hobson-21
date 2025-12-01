@@ -1850,8 +1850,8 @@ const InvestmentOpportunity = () => {
                                   className="border-2 border-primary/30 rounded-lg bg-white hover:border-primary transition-colors overflow-hidden"
                                 >
                                   <div className="text-center">
-                                    <div className="bg-primary px-4 py-3">
-                                      <span className="text-xs sm:text-sm font-semibold text-white uppercase tracking-wide">
+                                    <div className="bg-primary/20 px-4 py-3">
+                                      <span className="text-xs sm:text-sm font-semibold text-primary uppercase tracking-wide">
                                         {member.role}
                                       </span>
                                     </div>
