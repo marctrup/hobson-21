@@ -78,6 +78,21 @@ export default function FaqManagement() {
     fetchFaqs();
   }, []);
 
+  // Set initialFormData when editing starts
+  useEffect(() => {
+    if (editingFaq && isDialogOpen) {
+      const faqData = {
+        question: editingFaq.question,
+        answer: editingFaq.answer,
+        category: editingFaq.category,
+        sort_order: editingFaq.sort_order,
+        is_active: editingFaq.is_active,
+      };
+      setFormData(faqData);
+      setInitialFormData({ ...faqData });
+    }
+  }, [editingFaq, isDialogOpen]);
+
   const fetchFaqs = async () => {
     try {
       const { data, error } = await supabase
@@ -153,15 +168,6 @@ export default function FaqManagement() {
 
   const handleEdit = (faq: FaqItem) => {
     setEditingFaq(faq);
-    const faqData = {
-      question: faq.question,
-      answer: faq.answer,
-      category: faq.category,
-      sort_order: faq.sort_order,
-      is_active: faq.is_active,
-    };
-    setFormData(faqData);
-    setInitialFormData({ ...faqData });
     setIsDialogOpen(true);
   };
 
@@ -319,7 +325,12 @@ export default function FaqManagement() {
           >
             {updatingKnowledge ? "Updating..." : "Update Knowledge Base"}
           </Button>
-          <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <Dialog open={isDialogOpen} onOpenChange={(open) => {
+            setIsDialogOpen(open);
+            if (!open) {
+              resetForm();
+            }
+          }}>
             <DialogTrigger asChild>
               <Button onClick={resetForm}>
                 <Plus className="mr-2 h-4 w-4" />
