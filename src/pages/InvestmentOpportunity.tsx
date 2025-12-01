@@ -574,7 +574,7 @@ const sections = [
                 {
                   name: "Rochelle Trup",
                   role: "Commercial Lead",
-                  linkedin: "https://www.linkedin.com/in/rochelle-trup/",
+                  linkedin: "https://www.linkedin.com/in/rochelle-trup-1962641b/",
                 },
                 {
                   name: "Marc Trup",
