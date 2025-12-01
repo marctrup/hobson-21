@@ -1221,7 +1221,7 @@ const InvestmentOpportunity = () => {
           <div className="container mx-auto px-3 sm:px-4">
             <div className="max-w-5xl mx-auto">
               {/* Mission Statement */}
-              <div className="mb-6 sm:mb-8">
+              <div className="mb-10 sm:mb-12 pb-8 sm:pb-10 border-b border-border/40">
                 <h2 className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 sm:mb-3 text-center">
                   Mission Statement
                 </h2>
