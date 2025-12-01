@@ -24,15 +24,13 @@ export const InvitationSlide = () => {
         </p>
 
         <div className="pt-1">
-          <Button
-            size="sm"
-            className="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-3 py-1.5 text-xs sm:text-sm shadow-sm border border-gray-200 touch-manipulation"
+          <button
+            className="text-gray-700 hover:text-gray-900 transition-colors touch-manipulation"
             onClick={() => window.location.href = 'mailto:Rochelle.t@hobsonschoice.ai?subject=Investment Opportunity Inquiry'}
             aria-label="Email Us"
           >
-            <Mail className="w-3.5 h-3.5 mr-1.5" />
-            Us
-          </Button>
+            <Mail className="w-8 h-8" />
+          </button>
         </div>
       </div>
     </div>
