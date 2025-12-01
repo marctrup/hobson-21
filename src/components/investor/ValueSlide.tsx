@@ -9,16 +9,11 @@ export const ValueSlide = () => {
   ];
 
   return (
-    <div className="h-full flex items-center justify-center px-6 sm:px-8">
-      <div className="text-center max-w-2xl space-y-8">
-        <div className="space-y-3">
-          <div className="text-xs sm:text-sm font-semibold text-[#7c3aed] uppercase tracking-wider">
-            The Value
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-bold text-[#1e293b] leading-tight">
-            Clarity From Chaos
-          </h2>
-        </div>
+    <div className="h-full flex items-center justify-center px-6 sm:px-8 pb-20">
+      <div className="text-center max-w-2xl space-y-6">
+        <h2 className="text-2xl sm:text-3xl font-bold text-[#1e293b] leading-tight">
+          Clarity From Chaos
+        </h2>
         
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-6">
           {values.map((item, idx) => (
