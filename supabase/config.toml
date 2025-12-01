@@ -1,5 +1,8 @@
 project_id = "awfyhgeflakjhxtntokd"
 
+[functions.generate-blog-image]
+verify_jwt = true
+
 [functions.send-contact-message]
 verify_jwt = false
 
