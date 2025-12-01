@@ -569,7 +569,7 @@ const sections = [
                 {
                   name: "Julia Szaltoni",
                   role: "Product Lead",
-                  linkedin: "https://www.linkedin.com/in/julia-szaltontai/",
+                  linkedin: "https://www.linkedin.com/in/juliaszalontai/",
                 },
                 {
                   name: "Rochelle Trup",
