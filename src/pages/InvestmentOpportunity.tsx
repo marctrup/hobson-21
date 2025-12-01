@@ -663,7 +663,25 @@ const InvestmentOpportunity = () => {
     
     // Helper function to remove emojis from text
     const removeEmojis = (text: string) => {
-      return text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+      // Comprehensive emoji removal regex
+      return text
+        .replace(/[\u{1F000}-\u{1F9FF}]/gu, '') // Emoticons, symbols, pictographs
+        .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
+        .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
+        .replace(/[\u{FE00}-\u{FE0F}]/gu, '') // Variation Selectors
+        .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, '') // Regional Indicator Symbols (flags)
+        .replace(/[\u{1F300}-\u{1F5FF}]/gu, '') // Miscellaneous Symbols and Pictographs
+        .replace(/[\u{1F600}-\u{1F64F}]/gu, '') // Emoticons
+        .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // Transport and Map Symbols
+        .replace(/[\u{1F700}-\u{1F77F}]/gu, '') // Alchemical Symbols
+        .replace(/[\u{1F780}-\u{1F7FF}]/gu, '') // Geometric Shapes Extended
+        .replace(/[\u{1F800}-\u{1F8FF}]/gu, '') // Supplemental Arrows-C
+        .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Supplemental Symbols and Pictographs
+        .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '') // Chess Symbols
+        .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '') // Symbols and Pictographs Extended-A
+        .replace(/[\u{200D}]/gu, '') // Zero Width Joiner
+        .trim()
+        .replace(/\s+/g, ' '); // Normalize whitespace
     };
 
     // Cover Page - Purple gradient effect with white text
@@ -714,9 +732,9 @@ const InvestmentOpportunity = () => {
         doc.text(pageTitleLines, margin, yPosition);
         yPosition += pageTitleLines.length * 8 + 10;
         
-        // Add the image with proper aspect ratio
+        // Add the image with proper aspect ratio (tall vertical diagram)
         const imgWidth = maxWidth;
-        const imgHeight = imgWidth * 0.5; // Better aspect ratio for wide architecture diagram
+        const imgHeight = imgWidth * 1.7; // Correct aspect ratio for tall architecture diagram
         
         try {
           doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, imgHeight);
@@ -843,7 +861,25 @@ const InvestmentOpportunity = () => {
     
     // Helper function to remove emojis from text
     const removeEmojis = (text: string) => {
-      return text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+      // Comprehensive emoji removal regex
+      return text
+        .replace(/[\u{1F000}-\u{1F9FF}]/gu, '') // Emoticons, symbols, pictographs
+        .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
+        .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
+        .replace(/[\u{FE00}-\u{FE0F}]/gu, '') // Variation Selectors
+        .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, '') // Regional Indicator Symbols (flags)
+        .replace(/[\u{1F300}-\u{1F5FF}]/gu, '') // Miscellaneous Symbols and Pictographs
+        .replace(/[\u{1F600}-\u{1F64F}]/gu, '') // Emoticons
+        .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // Transport and Map Symbols
+        .replace(/[\u{1F700}-\u{1F77F}]/gu, '') // Alchemical Symbols
+        .replace(/[\u{1F780}-\u{1F7FF}]/gu, '') // Geometric Shapes Extended
+        .replace(/[\u{1F800}-\u{1F8FF}]/gu, '') // Supplemental Arrows-C
+        .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Supplemental Symbols and Pictographs
+        .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '') // Chess Symbols
+        .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '') // Symbols and Pictographs Extended-A
+        .replace(/[\u{200D}]/gu, '') // Zero Width Joiner
+        .trim()
+        .replace(/\s+/g, ' '); // Normalize whitespace
     };
     
     // Track page numbers for each section
@@ -1037,9 +1073,9 @@ const InvestmentOpportunity = () => {
           doc.text(pageTitleLines, margin, yPosition);
           yPosition += pageTitleLines.length * 8 + 10;
           
-          // Add the image with proper aspect ratio
+          // Add the image with proper aspect ratio (tall vertical diagram)
           const imgWidth = maxWidth;
-          const imgHeight = imgWidth * 0.75; // Better aspect ratio for architecture diagram
+          const imgHeight = imgWidth * 1.7; // Correct aspect ratio for tall architecture diagram
           
           try {
             doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, imgHeight);
