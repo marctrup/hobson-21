@@ -9,6 +9,11 @@ import hobsonLogo from "@/assets/hobson-carousel-logo.png";
 const RotatingInvestments = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  // Minimum swipe distance (in px)
+  const minSwipeDistance = 50;
 
   const slides = [
     {
@@ -68,6 +73,29 @@ const RotatingInvestments = () => {
     setCurrentSlide(index);
   };
 
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      nextSlide();
+    } else if (isRightSwipe) {
+      prevSlide();
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">
       {/* Header with Logo */}
@@ -82,6 +110,12 @@ const RotatingInvestments = () => {
       {/* Main Content */}
       <div className="flex-1 flex items-center justify-center p-2 sm:p-4">
       <Helmet>
+        {/* Mobile-optimized viewport */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        
         {/* Initialize dataLayer before GTM */}
         <script>
           {`window.dataLayer = window.dataLayer || [];`}
@@ -103,7 +137,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </Helmet>
       <div className="w-full max-w-sm sm:max-w-lg">
         {/* LinkedIn-optimized square format */}
-        <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden aspect-square">
+        <div 
+          className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden aspect-square select-none"
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
           {/* Header */}
           <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary to-primary-light p-3 sm:p-4 z-10">
             <div className="flex items-center justify-between">
@@ -112,12 +151,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                   {currentSlide + 1} of {slides.length}
                 </div>
               </div>
-              <div className="flex gap-1">
+              <div className="flex gap-1.5 sm:gap-1">
                 {slides.map((_, idx) => (
                   <button
                     key={idx}
                     onClick={() => goToSlide(idx)}
-                    className={`w-2 h-2 rounded-full transition-all ${
+                    aria-label={`Go to slide ${idx + 1}`}
+                    className={`w-2.5 h-2.5 sm:w-2 sm:h-2 rounded-full transition-all touch-manipulation ${
                       idx === currentSlide ? 'bg-white' : 'bg-white/40'
                     }`}
                   />
@@ -148,9 +188,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               variant="outline"
               size="icon"
               onClick={prevSlide}
-              className="rounded-full bg-white/90 hover:bg-white w-8 h-8 sm:w-10 sm:h-10 pointer-events-auto"
+              aria-label="Previous slide"
+              className="rounded-full bg-white/90 hover:bg-white w-10 h-10 sm:w-10 sm:h-10 pointer-events-auto touch-manipulation"
             >
-              <ChevronLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+              <ChevronLeft className="w-4 h-4 sm:w-4 sm:h-4" />
             </Button>
             
             <div className="flex items-center gap-2 pointer-events-auto">
@@ -158,7 +199,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 variant="outline"
                 size="sm"
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="text-xs scale-95 px-2 py-1 bg-muted hover:bg-muted/80 min-w-[60px]"
+                className="text-xs px-3 py-2 bg-muted hover:bg-muted/80 min-w-[70px] touch-manipulation"
               >
                 {isAutoPlaying ? 'Pause' : 'Play'}
               </Button>
@@ -168,9 +209,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               variant="outline"
               size="icon"
               onClick={nextSlide}
-              className="rounded-full bg-white/90 hover:bg-white w-8 h-8 sm:w-10 sm:h-10 pointer-events-auto"
+              aria-label="Next slide"
+              className="rounded-full bg-white/90 hover:bg-white w-10 h-10 sm:w-10 sm:h-10 pointer-events-auto touch-manipulation"
             >
-              <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
+              <ChevronRight className="w-4 h-4 sm:w-4 sm:h-4" />
             </Button>
           </div>
         </div>
@@ -178,10 +220,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Footer info */}
         <div className="mt-4 sm:mt-6 text-center">
           <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
-            <Button variant="outline" size="sm" onClick={() => window.open('https://hobsonschoice.ai', '_blank')} className="text-xs sm:text-sm">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => window.open('https://hobsonschoice.ai', '_blank')} 
+              className="text-xs sm:text-sm py-2 touch-manipulation"
+            >
               Visit Hobson
             </Button>
-            <Button variant="outline" size="sm" onClick={() => window.location.reload()} className="text-xs sm:text-sm">
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => window.location.reload()} 
+              className="text-xs sm:text-sm py-2 touch-manipulation"
+            >
               Restart Carousel
             </Button>
           </div>
