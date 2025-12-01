@@ -559,9 +559,9 @@ const sections = [
     iconColor: "text-indigo-600",
     pages: [
       {
-        title: "Core Team & Advisory Board",
+        title: "Core Team",
         content: {
-          overview: "Our collective experience, with guidance from trusted advisors, sets the stage for a groundbreaking AI future.",
+          overview: "Meet the core team driving Hobson's innovation and growth.",
           sections: [
             {
               title: "Core Team",
@@ -593,6 +593,14 @@ const sections = [
                 },
               ],
             },
+          ],
+        },
+      },
+      {
+        title: "Advisory Board",
+        content: {
+          overview: "Experienced advisors providing strategic guidance and industry expertise.",
+          sections: [
             {
               title: "Advisory Board",
               teamMembers: [
