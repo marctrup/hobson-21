@@ -810,6 +810,9 @@ const InvestmentOpportunity = () => {
     const margin = 20;
     const maxWidth = pageWidth - (margin * 2);
     
+    // Track page numbers for each section
+    const sectionPageNumbers: { [key: string]: number } = {};
+    
     // Cover Page - Purple gradient
     doc.setFillColor(124, 58, 237);
     doc.rect(0, 0, pageWidth, pageHeight, 'F');
@@ -836,6 +839,103 @@ const InvestmentOpportunity = () => {
     });
     doc.setFontSize(10);
     doc.text(currentDate, pageWidth / 2, pageHeight - 20, { align: 'center' });
+
+    // Add index page
+    doc.addPage();
+    let indexY = margin;
+    
+    doc.setTextColor(31, 41, 55);
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Contents', pageWidth / 2, indexY, { align: 'center' });
+    indexY += 15;
+    
+    doc.setDrawColor(124, 58, 237);
+    doc.setLineWidth(1);
+    doc.line(margin + 40, indexY, pageWidth - margin - 40, indexY);
+    indexY += 15;
+    
+    // Store index page number
+    const indexPageNum = doc.getNumberOfPages();
+    
+    // First pass: Calculate page numbers
+    let currentPageNum = indexPageNum + 1;
+    sections.forEach((section) => {
+      sectionPageNumbers[section.id] = currentPageNum;
+      section.pages.forEach((page: any) => {
+        if (!page.content || page.showCustomVisual) {
+          return;
+        }
+        currentPageNum++;
+      });
+    });
+    
+    // Draw index cards (2 columns)
+    const cardWidth = (pageWidth - margin * 2 - 10) / 2;
+    const cardHeight = 45;
+    const cardSpacing = 10;
+    let cardX = margin;
+    let cardY = indexY;
+    let cardCount = 0;
+    
+    sections.forEach((section, idx) => {
+      if (cardY + cardHeight > pageHeight - 30) {
+        doc.addPage();
+        cardY = margin;
+        cardX = margin;
+        cardCount = 0;
+      }
+      
+      // Card background with subtle gradient effect
+      doc.setFillColor(249, 250, 251);
+      doc.roundedRect(cardX, cardY, cardWidth, cardHeight, 3, 3, 'F');
+      
+      // Colored top border
+      const colors = [
+        [59, 130, 246], // blue
+        [168, 85, 247], // purple
+        [34, 197, 94],  // green
+        [234, 179, 8],  // yellow
+        [239, 68, 68],  // red
+        [236, 72, 153], // pink
+        [14, 165, 233], // cyan
+      ];
+      const color = colors[idx % colors.length];
+      doc.setFillColor(color[0], color[1], color[2]);
+      doc.roundedRect(cardX, cardY, cardWidth, 3, 1, 1, 'F');
+      
+      // Section title
+      doc.setTextColor(31, 41, 55);
+      doc.setFontSize(11);
+      doc.setFont('helvetica', 'bold');
+      const titleLines = doc.splitTextToSize(section.title, cardWidth - 10);
+      doc.text(titleLines, cardX + 5, cardY + 12);
+      
+      // Section subtitle
+      doc.setTextColor(107, 114, 128);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      const subtitleLines = doc.splitTextToSize(section.subtitle, cardWidth - 10);
+      doc.text(subtitleLines, cardX + 5, cardY + 12 + (titleLines.length * 5) + 3);
+      
+      // Page number
+      doc.setTextColor(124, 58, 237);
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.text(`Page ${sectionPageNumbers[section.id] - 1}`, cardX + cardWidth - 5, cardY + cardHeight - 5, { align: 'right' });
+      
+      // Add clickable link
+      doc.link(cardX, cardY, cardWidth, cardHeight, { pageNumber: sectionPageNumbers[section.id] });
+      
+      // Position for next card
+      cardCount++;
+      if (cardCount % 2 === 0) {
+        cardX = margin;
+        cardY += cardHeight + cardSpacing;
+      } else {
+        cardX = margin + cardWidth + cardSpacing;
+      }
+    });
 
     // Loop through all sections in order
     sections.forEach((section) => {
@@ -946,7 +1046,10 @@ const InvestmentOpportunity = () => {
         margin,
         pageHeight - 10
       );
-      doc.text(`Page ${i - 1} of ${totalPages - 1}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+      // Skip page number on index page
+      if (i !== indexPageNum) {
+        doc.text(`Page ${i - 2} of ${totalPages - 2}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+      }
     }
 
     // Save the combined PDF
