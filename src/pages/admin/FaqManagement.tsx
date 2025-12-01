@@ -244,6 +244,10 @@ export default function FaqManagement() {
 
   const fixDuplicateOrders = async () => {
     try {
+      // Close dialog and reset form to avoid stale data
+      setIsDialogOpen(false);
+      resetForm();
+      
       // Get all FAQs ordered by sort_order and created_at
       const { data: allFaqs, error: fetchError } = await supabase
         .from("faq_items")
