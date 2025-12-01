@@ -778,7 +778,7 @@ const InvestmentOpportunity = () => {
                   Mission Statement
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  Innovation without disruption. To bring clarity and connected insight to real estate professionals by delivering instant, accurate, AI-enhanced answers that build on the systems and documents they already use.
+                  <span className="text-primary font-semibold">Innovation without disruption.</span> To bring clarity and connected insight to real estate professionals by delivering instant, accurate, AI-enhanced answers that build on the systems and documents they already use.
                 </p>
               </div>
 
@@ -788,7 +788,7 @@ const InvestmentOpportunity = () => {
                   Positioning Statement
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  Disruption Without Displacement. Hobson brings AI clarity to real estate operations by transforming unstructured documents and fragmented data into immediate, trustworthy answers. It enhances — rather than replaces — existing CRMs and workflows, offering a lightweight, low-cost layer that delivers enterprise-grade accuracy. Hobson creates meaningful productivity gains, lowers operating costs, and provides a stepping stone for widespread AI adoption across the sector.
+                  <span className="text-primary font-semibold">Disruption Without Displacement.</span> Hobson brings AI clarity to real estate operations by transforming unstructured documents and fragmented data into immediate, trustworthy answers. It enhances — rather than replaces — existing CRMs and workflows, offering a lightweight, low-cost layer that delivers enterprise-grade accuracy. Hobson creates meaningful productivity gains, lowers operating costs, and provides a stepping stone for widespread AI adoption across the sector.
                 </p>
               </div>
 
