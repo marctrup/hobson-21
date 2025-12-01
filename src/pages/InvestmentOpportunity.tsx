@@ -829,8 +829,29 @@ const InvestmentOpportunity = () => {
     doc.setFont('helvetica', 'normal');
     doc.text('Investment Opportunity Document', pageWidth / 2, 130, { align: 'center' });
     
-    doc.setFontSize(14);
-    doc.text('Funding Requirement: £750,000', pageWidth / 2, 150, { align: 'center' });
+    // Add funding requirement with enhanced design
+    const fundingY = 165;
+    
+    // Add white background box with shadow effect
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(pageWidth / 2 - 65, fundingY - 18, 130, 40, 4, 4, 'F');
+    
+    // Add border
+    doc.setDrawColor(255, 255, 255);
+    doc.setLineWidth(0.5);
+    doc.roundedRect(pageWidth / 2 - 65, fundingY - 18, 130, 40, 4, 4, 'S');
+    
+    // Add funding label
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(124, 58, 237);
+    doc.text('FUNDING REQUIREMENT', pageWidth / 2, fundingY - 5, { align: 'center' });
+    
+    // Add funding amount
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(31, 41, 55);
+    doc.text('£750,000', pageWidth / 2, fundingY + 12, { align: 'center' });
     
     const currentDate = new Date().toLocaleDateString('en-GB', { 
       year: 'numeric', 
