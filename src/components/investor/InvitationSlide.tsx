@@ -5,7 +5,7 @@ import hobsonOwl from '@/assets/hobson-owl-mascot.png';
 
 export const InvitationSlide = () => {
   return (
-    <div className="h-full flex items-center justify-center px-4 sm:px-6 pb-12 sm:pb-20">
+    <div className="h-full flex items-center justify-center px-4 sm:px-6 pb-20 sm:pb-20">
       <div className="text-center max-w-2xl space-y-3 sm:space-y-4">
         <div className="flex justify-center mb-2 sm:mb-4">
           <img 
@@ -23,7 +23,7 @@ export const InvitationSlide = () => {
           If you're exploring early opportunities in this space, we'd love to talk.
         </p>
 
-        <div className="pt-1 pb-2">
+        <div className="pt-1">
           <Button
             size="sm"
             className="bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:from-[#6d28d9] hover:to-[#9333ea] text-white font-semibold px-4 py-2 text-xs sm:text-sm shadow-lg touch-manipulation"
