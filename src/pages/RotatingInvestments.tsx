@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { CoverSlide } from "@/components/rotating";
 import { ProblemSlide, ProductSlide, ValueSlide, InvitationSlide } from "@/components/investor";
@@ -197,11 +197,16 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             <div className="flex items-center gap-2 pointer-events-auto">
               <Button
                 variant="outline"
-                size="sm"
+                size="icon"
                 onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                className="text-xs px-3 py-2 bg-muted hover:bg-muted/80 min-w-[70px] touch-manipulation"
+                aria-label={isAutoPlaying ? 'Pause carousel' : 'Play carousel'}
+                className="rounded-full bg-white/90 hover:bg-white w-8 h-8 pointer-events-auto touch-manipulation"
               >
-                {isAutoPlaying ? 'Pause' : 'Play'}
+                {isAutoPlaying ? (
+                  <Pause className="w-3.5 h-3.5" />
+                ) : (
+                  <Play className="w-3.5 h-3.5" />
+                )}
               </Button>
             </div>
 
