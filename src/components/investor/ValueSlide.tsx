@@ -28,7 +28,7 @@ export const ValueSlide = () => {
           ))}
         </div>
 
-        <p className="text-base sm:text-xl text-[#475569] leading-relaxed font-light max-w-xl mx-auto">
+        <p className="text-base sm:text-xl text-primary leading-relaxed font-semibold max-w-xl mx-auto">
           Unlocking real AI value across the real estate stack
         </p>
       </div>
