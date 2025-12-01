@@ -152,9 +152,6 @@ export default function FaqManagement() {
   };
 
   const handleEdit = (faq: FaqItem) => {
-    // Ensure clean state before editing
-    resetForm();
-    
     setEditingFaq(faq);
     const faqData = {
       question: faq.question,
@@ -164,10 +161,7 @@ export default function FaqManagement() {
       is_active: faq.is_active,
     };
     setFormData(faqData);
-    // Use setTimeout to ensure state updates are processed
-    setTimeout(() => {
-      setInitialFormData({ ...faqData });
-    }, 0);
+    setInitialFormData({ ...faqData });
     setIsDialogOpen(true);
   };
 
