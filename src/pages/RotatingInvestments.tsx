@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { CoverSlide } from "@/components/rotating";
-import { ProblemSlide, ProductSlide, ValueSlide, ImpactSlide, InvitationSlide } from "@/components/investor";
+import { ProblemSlide, ProductSlide, ValueSlide, InvitationSlide } from "@/components/investor";
 import { Helmet } from "react-helmet-async";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -40,12 +40,6 @@ const RotatingInvestments = () => {
       title: '',
       subtitle: '',
       content: <ValueSlide />
-    },
-    {
-      id: 'impact',
-      title: '',
-      subtitle: '',
-      content: <ImpactSlide />
     },
     {
       id: 'invitation',
