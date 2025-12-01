@@ -660,6 +660,11 @@ const InvestmentOpportunity = () => {
     const margin = 20;
     const maxWidth = pageWidth - (margin * 2);
     let yPosition = 20;
+    
+    // Helper function to remove emojis from text
+    const removeEmojis = (text: string) => {
+      return text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+    };
 
     // Cover Page - Purple gradient effect with white text
     doc.setFillColor(124, 58, 237); // Purple background
@@ -799,7 +804,8 @@ const InvestmentOpportunity = () => {
           // Item text - Dark gray
           doc.setTextColor(75, 85, 99);
           doc.setFont('helvetica', 'normal');
-          const itemLines = doc.splitTextToSize(item, maxWidth - 10);
+          const cleanedItem = removeEmojis(item);
+          const itemLines = doc.splitTextToSize(cleanedItem, maxWidth - 10);
           doc.text(itemLines, margin + 8, yPosition);
           yPosition += itemLines.length * 5 + 3;
         });
@@ -834,6 +840,11 @@ const InvestmentOpportunity = () => {
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 20;
     const maxWidth = pageWidth - (margin * 2);
+    
+    // Helper function to remove emojis from text
+    const removeEmojis = (text: string) => {
+      return text.replace(/[\u{1F300}-\u{1F9FF}]|[\u{2600}-\u{26FF}]|[\u{2700}-\u{27BF}]/gu, '').trim();
+    };
     
     // Track page numbers for each section
     const sectionPageNumbers: { [key: string]: number } = {};
@@ -1028,7 +1039,7 @@ const InvestmentOpportunity = () => {
           
           // Add the image with proper aspect ratio
           const imgWidth = maxWidth;
-          const imgHeight = imgWidth * 0.5; // Better aspect ratio for wide architecture diagram
+          const imgHeight = imgWidth * 0.75; // Better aspect ratio for architecture diagram
           
           try {
             doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, imgHeight);
@@ -1112,7 +1123,8 @@ const InvestmentOpportunity = () => {
                 // Item text
                 doc.setTextColor(75, 85, 99);
                 doc.setFont('helvetica', 'normal');
-                const itemLines = doc.splitTextToSize(item, maxWidth - 10);
+                const cleanedItem = removeEmojis(item);
+                const itemLines = doc.splitTextToSize(cleanedItem, maxWidth - 10);
                 doc.text(itemLines, margin + 8, yPosition);
                 yPosition += itemLines.length * 5 + 3;
               });
