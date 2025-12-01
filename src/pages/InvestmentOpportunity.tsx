@@ -851,9 +851,15 @@ const InvestmentOpportunity = () => {
         const cleanedOverview = removeEmojis(page.content.overview);
         const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 10);
         
-        const boxHeight = overviewLines.length * 6.5 + 4;
+        const lineSpacing = 7;
+        const boxHeight = overviewLines.length * lineSpacing + 8;
         doc.rect(margin, yPosition, maxWidth, boxHeight, 'F');
-        doc.text(overviewLines, margin + 5, yPosition + 4);
+        
+        // Render each line with proper spacing
+        overviewLines.forEach((line: string, idx: number) => {
+          doc.text(line, margin + 5, yPosition + 6 + (idx * lineSpacing));
+        });
+        
         yPosition += boxHeight + 8;
       }
       
