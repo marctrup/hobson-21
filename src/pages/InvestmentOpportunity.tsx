@@ -939,6 +939,28 @@ const InvestmentOpportunity = () => {
 
     // Loop through all sections in order
     sections.forEach((section) => {
+      // Add purple section separator page
+      doc.addPage();
+      doc.setFillColor(124, 58, 237);
+      doc.rect(0, 0, pageWidth, pageHeight, 'F');
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(32);
+      doc.setFont('helvetica', 'bold');
+      
+      const titleLines = doc.splitTextToSize(section.title, pageWidth - 80);
+      const titleHeight = titleLines.length * 12;
+      const titleY = (pageHeight - titleHeight) / 2;
+      
+      doc.text(titleLines, pageWidth / 2, titleY, { align: 'center' });
+      
+      if (section.subtitle) {
+        doc.setFontSize(16);
+        doc.setFont('helvetica', 'normal');
+        const subtitleLines = doc.splitTextToSize(section.subtitle, pageWidth - 80);
+        doc.text(subtitleLines, pageWidth / 2, titleY + titleHeight + 15, { align: 'center' });
+      }
+      
       section.pages.forEach((page: any) => {
         // Skip pages without content or with custom visuals
         if (!page.content || page.showCustomVisual) {
