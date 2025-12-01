@@ -28,7 +28,7 @@ export const ImpactSlide = () => {
           ))}
         </div>
 
-        <p className="text-base sm:text-xl text-[#475569] leading-relaxed font-light max-w-xl mx-auto pb-2">
+        <p className="text-base sm:text-xl text-primary leading-relaxed font-semibold max-w-xl mx-auto pb-2">
           A lightweight layer that transforms operations
         </p>
       </div>
