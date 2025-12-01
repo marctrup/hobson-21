@@ -589,7 +589,7 @@ const sections = [
                 {
                   name: "Kumar Ankit",
                   role: "AI & Technical Lead",
-                  linkedin: "https://www.linkedin.com/in/kumar-ankit/",
+                  linkedin: "https://www.linkedin.com/in/kumarankit01/",
                 },
               ],
             },
