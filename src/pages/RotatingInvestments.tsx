@@ -36,7 +36,7 @@ const RotatingInvestments = () => {
     },
     {
       id: 'impact',
-      title: 'The Impact',
+      title: '',
       subtitle: '',
       content: <ImpactSlide />
     },
