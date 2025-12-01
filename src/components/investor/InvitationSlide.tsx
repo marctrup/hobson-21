@@ -25,12 +25,12 @@ export const InvitationSlide = () => {
 
         <div className="pt-1">
           <Button
-            size="sm"
-            className="bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold px-3 py-1.5 text-[10px] sm:text-xs md:text-sm shadow-sm border border-gray-200 touch-manipulation"
+            size="icon"
+            className="bg-gray-100 hover:bg-gray-200 text-gray-900 w-10 h-10 rounded-full shadow-sm border border-gray-200 touch-manipulation"
             onClick={() => window.location.href = 'mailto:Rochelle.t@hobsonschoice.ai?subject=Investment Opportunity Inquiry'}
+            aria-label="Start the Conversation"
           >
-            <Mail className="w-3 h-3 mr-1.5" />
-            Start the Conversation
+            <Mail className="w-5 h-5" />
           </Button>
         </div>
       </div>
