@@ -844,7 +844,6 @@ const InvestmentOpportunity = () => {
       // Overview - Dark gray on light background (for all pages)
       if (page.content?.overview) {
         doc.setFillColor(249, 250, 251);
-        doc.rect(margin, yPosition, maxWidth, 0, 'F');
         
         doc.setTextColor(55, 65, 81);
         doc.setFontSize(10);
@@ -852,9 +851,9 @@ const InvestmentOpportunity = () => {
         const cleanedOverview = removeEmojis(page.content.overview);
         const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 10);
         
-        const boxHeight = overviewLines.length * 7 + 10;
+        const boxHeight = overviewLines.length * 7 + 6;
         doc.rect(margin, yPosition, maxWidth, boxHeight, 'F');
-        doc.text(overviewLines, margin + 5, yPosition + 7);
+        doc.text(overviewLines, margin + 5, yPosition + 5);
         yPosition += boxHeight + 8;
       }
       
