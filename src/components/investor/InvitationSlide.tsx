@@ -6,7 +6,7 @@ import hobsonOwl from '@/assets/hobson-owl-mascot.png';
 export const InvitationSlide = () => {
   return (
     <div className="h-full flex items-center justify-center px-6 sm:px-8 pb-20">
-      <div className="text-center max-w-2xl space-y-6">
+      <div className="text-center max-w-2xl space-y-4">
         <div className="flex justify-center mb-4">
           <img 
             src={hobsonOwl} 
@@ -23,13 +23,13 @@ export const InvitationSlide = () => {
           If you're exploring early opportunities in this space, we'd love to talk.
         </p>
 
-        <div className="pt-2 pb-4">
+        <div className="pt-1 pb-2">
           <Button
-            size="lg"
-            className="bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:from-[#6d28d9] hover:to-[#9333ea] text-white font-semibold px-6 py-4 text-sm sm:text-base shadow-lg"
+            size="sm"
+            className="bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:from-[#6d28d9] hover:to-[#9333ea] text-white font-semibold px-4 py-2 text-xs sm:text-sm shadow-lg"
             onClick={() => window.location.href = 'mailto:Rochelle.t@hobsonschoice.ai?subject=Investment Opportunity Inquiry'}
           >
-            <Mail className="w-4 h-4 mr-2" />
+            <Mail className="w-3 h-3 mr-1.5" />
             Start the Conversation
           </Button>
         </div>
