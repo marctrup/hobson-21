@@ -42,7 +42,7 @@ const RotatingInvestments = () => {
     },
     {
       id: 'invitation',
-      title: 'The Invitation',
+      title: '',
       subtitle: '',
       content: <InvitationSlide />
     }
