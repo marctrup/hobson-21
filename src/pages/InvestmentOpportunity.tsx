@@ -1839,30 +1839,32 @@ const InvestmentOpportunity = () => {
                               {contentSection.teamMembers.map((member: any, memberIdx: number) => (
                                 <div
                                   key={memberIdx}
-                                  className="border-2 border-primary/30 rounded-lg p-4 sm:p-6 bg-background hover:border-primary transition-colors"
+                                  className="border-2 border-primary/30 rounded-lg bg-white hover:border-primary transition-colors overflow-hidden"
                                 >
-                                  <div className="text-center space-y-3">
-                                    <div className="border-b border-primary/20 pb-2">
-                                      <span className="text-xs sm:text-sm font-semibold text-primary uppercase tracking-wide">
+                                  <div className="text-center">
+                                    <div className="bg-primary px-4 py-3">
+                                      <span className="text-xs sm:text-sm font-semibold text-white uppercase tracking-wide">
                                         {member.role}
                                       </span>
                                     </div>
-                                    <h4 className="text-lg sm:text-xl font-bold text-foreground min-h-[3rem] flex items-center justify-center">
-                                      {member.name}
-                                    </h4>
-                                    {member.linkedin ? (
-                                      <a
-                                        href={member.linkedin}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="text-xs sm:text-sm text-primary hover:text-primary/80 underline inline-flex items-center gap-1 transition-colors"
-                                      >
-                                        <span>LinkedIn Profile</span>
-                                        <span className="text-[10px]">↗</span>
-                                      </a>
-                                    ) : (
-                                      <span className="text-xs sm:text-sm text-muted-foreground italic">Coming Soon</span>
-                                    )}
+                                    <div className="p-4 sm:p-6 space-y-3">
+                                      <h4 className="text-lg sm:text-xl font-bold text-foreground min-h-[3rem] flex items-center justify-center">
+                                        {member.name}
+                                      </h4>
+                                      {member.linkedin ? (
+                                        <a
+                                          href={member.linkedin}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          className="text-xs sm:text-sm text-primary hover:text-primary/80 underline inline-flex items-center gap-1 transition-colors"
+                                        >
+                                          <span>LinkedIn Profile</span>
+                                          <span className="text-[10px]">↗</span>
+                                        </a>
+                                      ) : (
+                                        <span className="text-xs sm:text-sm text-muted-foreground italic">Coming Soon</span>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               ))}
