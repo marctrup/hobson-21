@@ -1866,8 +1866,8 @@ const InvestmentOpportunity = () => {
               <p className="text-sm text-muted-foreground mb-2">© 2024 Hobson's Choice AI. All rights reserved.</p>
               <p className="text-sm text-muted-foreground">
                 Investor Relations:{" "}
-                <a href="mailto:investors@hobsonschoice.ai" className="text-primary hover:underline">
-                  investors@hobsonschoice.ai
+                <a href="mailto:rochelle.t@hobsonschoice.ai" className="text-primary hover:underline">
+                  rochelle.t@hobsonschoice.ai
                 </a>
               </p>
               <p className="text-xs text-muted-foreground mt-4 italic">
