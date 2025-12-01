@@ -1824,12 +1824,12 @@ const InvestmentOpportunity = () => {
                       !(selectedSection.pages[currentPageIndex] as any).isVisual &&
                       selectedSection.pages[currentPageIndex].content.sections.map((contentSection: any, idx) => (
                         <div key={idx} className="space-y-3 sm:space-y-4">
-                          <div className="bg-primary rounded-lg px-4 py-3 mb-4">
-                            <h3 className="text-base sm:text-lg md:text-xl font-bold text-white">
+                          <div className={`${contentSection.teamMembers ? 'bg-white border-b-2 border-primary/20' : 'bg-primary'} rounded-lg px-4 py-3 mb-4`}>
+                            <h3 className={`text-base sm:text-lg md:text-xl font-bold ${contentSection.teamMembers ? 'text-foreground' : 'text-white'}`}>
                               {contentSection.title}
                             </h3>
                             {contentSection.subtitle && (
-                              <p className="text-xs sm:text-sm text-white/90 mt-1">{contentSection.subtitle}</p>
+                              <p className={`text-xs sm:text-sm mt-1 ${contentSection.teamMembers ? 'text-muted-foreground' : 'text-white/90'}`}>{contentSection.subtitle}</p>
                             )}
                           </div>
                           
