@@ -11,6 +11,7 @@ const RotatingInvestments = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(false); // Start paused
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
@@ -52,7 +53,11 @@ const RotatingInvestments = () => {
     if (!isAutoPlaying) return;
     
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+        setIsTransitioning(false);
+      }, 300);
     }, 4000);
 
     return () => clearInterval(timer);
@@ -60,17 +65,29 @@ const RotatingInvestments = () => {
 
   const nextSlide = () => {
     setIsAutoPlaying(false);
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const prevSlide = () => {
     setIsAutoPlaying(false);
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const goToSlide = (index: number) => {
     setIsAutoPlaying(false);
-    setCurrentSlide(index);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      setCurrentSlide(index);
+      setIsTransitioning(false);
+    }, 300);
   };
 
   const onTouchStart = (e: React.TouchEvent) => {
@@ -177,7 +194,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               </p>
             </div>
             
-            <div className="flex-1 flex items-center justify-center -mt-3">
+            <div 
+              className={`flex-1 flex items-center justify-center -mt-3 transition-all duration-300 ${
+                isTransitioning ? 'opacity-0 scale-95 rotate-1' : 'opacity-100 scale-100 rotate-0'
+              }`}
+            >
               {slides[currentSlide].content}
             </div>
           </div>
@@ -201,7 +222,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
                 onClick={() => {
                   if (!isAutoPlaying) {
                     // If currently paused, advance immediately then resume auto-play
-                    setCurrentSlide((prev) => (prev + 1) % slides.length);
+                    setIsTransitioning(true);
+                    setTimeout(() => {
+                      setCurrentSlide((prev) => (prev + 1) % slides.length);
+                      setIsTransitioning(false);
+                    }, 300);
                   }
                   setIsAutoPlaying(!isAutoPlaying);
                 }}
