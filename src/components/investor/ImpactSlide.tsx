@@ -10,7 +10,7 @@ export const ImpactSlide = () => {
 
   return (
     <div className="h-full flex items-center justify-center px-6 sm:px-8 pb-20">
-      <div className="text-center max-w-2xl space-y-6">
+      <div className="text-center max-w-2xl space-y-4">
         <h2 className="text-2xl sm:text-3xl font-bold text-[#1e293b] leading-tight">
           Efficiency Without<br />Upheaval
         </h2>
@@ -28,7 +28,7 @@ export const ImpactSlide = () => {
           ))}
         </div>
 
-        <p className="text-base sm:text-xl text-[#475569] leading-relaxed font-light max-w-xl mx-auto">
+        <p className="text-base sm:text-xl text-[#475569] leading-relaxed font-light max-w-xl mx-auto pb-2">
           A lightweight layer that transforms operations
         </p>
       </div>
