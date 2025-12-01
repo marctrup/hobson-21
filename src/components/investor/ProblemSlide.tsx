@@ -28,7 +28,7 @@ export const ProblemSlide = () => {
           ))}
         </div>
 
-        <p className="text-lg sm:text-2xl text-[#7c3aed] leading-relaxed font-semibold max-w-xl mx-auto">
+        <p className="text-base sm:text-xl text-[#7c3aed] leading-relaxed font-semibold max-w-xl mx-auto">
           Making fast, accurate answers hard to get
         </p>
       </div>
