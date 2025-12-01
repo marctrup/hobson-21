@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet-async";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { useToast } from "@/hooks/use-toast";
+import hobsonLogo from "@/assets/hobson-logo.png";
 
 const RotatingInvestments = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -169,7 +170,18 @@ const RotatingInvestments = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-2 sm:p-4">
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">
+      {/* Header with Logo */}
+      <div className="w-full p-4 sm:p-6">
+        <img 
+          src={hobsonLogo} 
+          alt="Hobson AI" 
+          className="h-8 sm:h-10 w-auto"
+        />
+      </div>
+      
+      {/* Main Content */}
+      <div className="flex-1 flex items-center justify-center p-2 sm:p-4">
       <Helmet>
         {/* Initialize dataLayer before GTM */}
         <script>
@@ -266,10 +278,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         {/* Footer info */}
         <div className="mt-4 sm:mt-6 text-center">
-          <p className="text-xs sm:text-sm text-muted-foreground">
-            LinkedIn-optimized carousel • Share with your network
-          </p>
-          <div className="mt-3 sm:mt-4 flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
             <Button 
               variant="outline" 
               size="sm" 
@@ -288,6 +297,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </Button>
           </div>
         </div>
+      </div>
       </div>
     </div>
   );
