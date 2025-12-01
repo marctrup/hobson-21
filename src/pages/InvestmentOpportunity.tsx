@@ -832,26 +832,26 @@ const InvestmentOpportunity = () => {
     // Add funding requirement with enhanced design
     const fundingY = 165;
     
-    // Add white background box with shadow effect
-    doc.setFillColor(255, 255, 255);
-    doc.roundedRect(pageWidth / 2 - 65, fundingY - 18, 130, 40, 4, 4, 'F');
-    
-    // Add border
+    // Add decorative lines above
     doc.setDrawColor(255, 255, 255);
     doc.setLineWidth(0.5);
-    doc.roundedRect(pageWidth / 2 - 65, fundingY - 18, 130, 40, 4, 4, 'S');
+    doc.line(pageWidth / 2 - 80, fundingY - 15, pageWidth / 2 + 80, fundingY - 15);
     
-    // Add funding label
-    doc.setFontSize(9);
+    // Add funding label with opacity effect
+    doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(124, 58, 237);
-    doc.text('FUNDING REQUIREMENT', pageWidth / 2, fundingY - 5, { align: 'center' });
+    doc.setTextColor(255, 255, 255);
+    doc.text('FUNDING REQUIREMENT', pageWidth / 2, fundingY, { align: 'center' });
     
-    // Add funding amount
-    doc.setFontSize(24);
+    // Add funding amount - extra large and bold
+    doc.setFontSize(42);
     doc.setFont('helvetica', 'bold');
-    doc.setTextColor(31, 41, 55);
-    doc.text('£750,000', pageWidth / 2, fundingY + 12, { align: 'center' });
+    doc.setTextColor(255, 255, 255);
+    doc.text('£750,000', pageWidth / 2, fundingY + 20, { align: 'center' });
+    
+    // Add decorative lines below
+    doc.setLineWidth(0.5);
+    doc.line(pageWidth / 2 - 80, fundingY + 30, pageWidth / 2 + 80, fundingY + 30);
     
     const currentDate = new Date().toLocaleDateString('en-GB', { 
       year: 'numeric', 
