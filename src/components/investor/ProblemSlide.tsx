@@ -18,8 +18,8 @@ export const ProblemSlide = () => {
         <div className="grid grid-cols-3 gap-2 sm:gap-3 md:gap-4 py-2 sm:py-4">
           {problems.map((item, idx) => (
             <div key={idx} className="flex flex-col items-center gap-1.5 sm:gap-2">
-              <div className="w-14 h-14 sm:w-14 sm:h-14 md:w-20 md:h-20 rounded-full bg-[#f1f5f9] flex items-center justify-center">
-                <item.icon className="w-7 h-7 sm:w-7 sm:h-7 md:w-10 md:h-10 text-[#7c3aed]" />
+              <div className="w-16 h-16 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-[#f1f5f9] flex items-center justify-center">
+                <item.icon className="w-8 h-8 sm:w-8 sm:h-8 md:w-10 md:h-10 text-[#7c3aed]" />
               </div>
               <span className="text-[10px] sm:text-xs md:text-sm text-[#475569] font-medium leading-tight">
                 {item.label}
