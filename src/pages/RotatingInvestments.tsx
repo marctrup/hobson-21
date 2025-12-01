@@ -30,7 +30,7 @@ const RotatingInvestments = () => {
     },
     {
       id: 'value',
-      title: 'The Value',
+      title: '',
       subtitle: '',
       content: <ValueSlide />
     },
