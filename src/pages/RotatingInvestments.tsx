@@ -12,7 +12,7 @@ const RotatingInvestments = () => {
   const slides = [
     {
       id: 'cover',
-      title: 'AI - for property professionals',
+      title: 'AI - for real estate professionals',
       subtitle: 'Transform your property business with intelligent automation',
       content: <CoverSlide />
     },
