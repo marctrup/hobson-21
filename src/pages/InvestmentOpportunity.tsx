@@ -880,20 +880,48 @@ const InvestmentOpportunity = () => {
                           <span className="xs:hidden">View</span>
                         </Button>
                         <Button
-                          onClick={(e) => {
+                          onClick={async (e) => {
                             e.stopPropagation();
-                            // Download PDF functionality
-                            const link = document.createElement("a");
-                            link.href = `/documents/${section.id}.pdf`; // Path to PDF file
-                            link.download = `${section.title}.pdf`;
-                            document.body.appendChild(link);
-                            link.click();
-                            document.body.removeChild(link);
+                            
+                            try {
+                              toast({
+                                title: "Generating PDF",
+                                description: "Please wait while we prepare your document...",
+                              });
 
-                            toast({
-                              title: "Download Started",
-                              description: `Downloading ${section.title}.pdf`,
-                            });
+                              // Call edge function to generate PDF content
+                              const { data, error } = await supabase.functions.invoke('generate-investment-pdf', {
+                                body: { sectionData: section }
+                              });
+
+                              if (error) throw error;
+
+                              // Create a new window with the HTML content
+                              const printWindow = window.open('', '_blank');
+                              if (printWindow) {
+                                printWindow.document.write(data.html);
+                                printWindow.document.close();
+                                
+                                // Wait for content to load then trigger print
+                                printWindow.onload = () => {
+                                  setTimeout(() => {
+                                    printWindow.focus();
+                                    printWindow.print();
+                                    toast({
+                                      title: "PDF Ready",
+                                      description: "Use your browser's print dialog to save as PDF",
+                                    });
+                                  }, 500);
+                                };
+                              }
+                            } catch (error) {
+                              console.error('Error generating PDF:', error);
+                              toast({
+                                title: "Error",
+                                description: "Failed to generate PDF. Please try again.",
+                                variant: "destructive",
+                              });
+                            }
                           }}
                           variant="outline"
                           size="sm"
