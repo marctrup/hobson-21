@@ -1,20 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Download } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { CoverSlide } from "@/components/rotating";
 import { ProblemSlide, ProductSlide, ValueSlide, InvitationSlide } from "@/components/investor";
 import { Helmet } from "react-helmet-async";
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
-import { useToast } from "@/hooks/use-toast";
 import hobsonLogo from "@/assets/hobson-carousel-logo.png";
 
 const RotatingInvestments = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
-  const slideRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
 
   const slides = [
     {
@@ -74,95 +68,6 @@ const RotatingInvestments = () => {
     setCurrentSlide(index);
   };
 
-  const downloadPDF = async () => {
-    if (!slideRef.current) return;
-    
-    setIsGeneratingPDF(true);
-    setIsAutoPlaying(false);
-    
-    toast({
-      title: "Generating PDF",
-      description: "Capturing all slides... This may take a moment.",
-    });
-
-    try {
-      const slideContainer = slideRef.current;
-      
-      // Use standard square dimensions for consistent output
-      const pdfSize = 1080; // 1080x1080 square format (social media standard)
-      
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'px',
-        format: [pdfSize, pdfSize],
-      });
-
-      // Capture each slide
-      for (let i = 0; i < slides.length; i++) {
-        setCurrentSlide(i);
-        
-        // Wait for slide to render and animations to complete
-        await new Promise(resolve => setTimeout(resolve, 800));
-        
-        const canvas = await html2canvas(slideContainer, {
-          scale: 3, // Higher scale for better quality
-          backgroundColor: '#ffffff',
-          logging: false,
-          useCORS: true,
-        });
-
-        // Create a square canvas at exact dimensions
-        const squareCanvas = document.createElement('canvas');
-        squareCanvas.width = pdfSize;
-        squareCanvas.height = pdfSize;
-        const ctx = squareCanvas.getContext('2d');
-        
-        if (ctx) {
-          // Fill with white background
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(0, 0, pdfSize, pdfSize);
-          
-          // Calculate dimensions to fit the captured content
-          const sourceSize = Math.min(canvas.width, canvas.height);
-          const sourceX = (canvas.width - sourceSize) / 2;
-          const sourceY = (canvas.height - sourceSize) / 2;
-          
-          // Draw the content centered and properly sized
-          ctx.drawImage(
-            canvas,
-            sourceX, sourceY, sourceSize, sourceSize,
-            0, 0, pdfSize, pdfSize
-          );
-        }
-
-        const imgData = squareCanvas.toDataURL('image/png', 1.0);
-        
-        if (i > 0) {
-          pdf.addPage([pdfSize, pdfSize]);
-        }
-        
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfSize, pdfSize, undefined, 'FAST');
-      }
-
-      pdf.save('hobson-investor-carousel.pdf');
-      
-      toast({
-        title: "PDF Downloaded",
-        description: "Your investor carousel has been saved successfully.",
-      });
-    } catch (error) {
-      console.error('Error generating PDF:', error);
-      toast({
-        title: "Error",
-        description: "Failed to generate PDF. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsGeneratingPDF(false);
-      setCurrentSlide(0);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex flex-col">
       {/* Header with Logo */}
@@ -198,7 +103,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </Helmet>
       <div className="w-full max-w-sm sm:max-w-lg">
         {/* LinkedIn-optimized square format */}
-        <div ref={slideRef} className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden aspect-square">
+        <div className="relative bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden aspect-square">
           {/* Header */}
           <div className="absolute top-0 left-0 right-0 bg-gradient-to-r from-primary to-primary-light p-3 sm:p-4 z-10">
             <div className="flex items-center justify-between">
@@ -273,16 +178,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Footer info */}
         <div className="mt-4 sm:mt-6 text-center">
           <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={downloadPDF}
-              disabled={isGeneratingPDF}
-              className="text-xs sm:text-sm"
-            >
-              <Download className="w-3 h-3 sm:w-4 sm:h-4 mr-2" />
-              {isGeneratingPDF ? 'Generating...' : 'Download PDF'}
-            </Button>
             <Button variant="outline" size="sm" onClick={() => window.open('https://hobsonschoice.ai', '_blank')} className="text-xs sm:text-sm">
               Visit Hobson
             </Button>
