@@ -831,7 +831,7 @@ const InvestmentOpportunity = () => {
       }
       
       // Overview - Dark gray on light background (for all pages)
-      if (page.content.overview) {
+      if (page.content?.overview) {
         doc.setFillColor(249, 250, 251);
         doc.rect(margin, yPosition, maxWidth, 0, 'F');
         
@@ -847,7 +847,8 @@ const InvestmentOpportunity = () => {
       }
       
       // Sections
-      page.content.sections.forEach((section: any) => {
+      if (page.content?.sections) {
+        page.content.sections.forEach((section: any) => {
         // Check if we need a new page
         if (yPosition > pageHeight - 60) {
           doc.addPage();
@@ -976,6 +977,7 @@ const InvestmentOpportunity = () => {
         
         yPosition += 8;
       });
+      }
     });
 
     // Add footer to all pages except cover
