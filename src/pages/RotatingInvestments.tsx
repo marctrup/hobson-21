@@ -195,8 +195,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             </div>
             
             <div 
-              className={`flex-1 flex items-center justify-center -mt-3 transition-all duration-300 ${
-                isTransitioning ? 'opacity-0 scale-95 rotate-1' : 'opacity-100 scale-100 rotate-0'
+              className={`flex-1 flex items-center justify-center -mt-3 transition-opacity duration-300 ${
+                isTransitioning ? 'opacity-0' : 'opacity-100'
               }`}
             >
               {slides[currentSlide].content}
