@@ -33,6 +33,7 @@ import { EuropeanGlobalVisual } from "@/components/investor/EuropeanGlobalVisual
 import { HEUPricingVisual } from "@/components/investor/HEUPricingVisual";
 import { AIProcessingVisual } from "@/components/investor/AIProcessingVisual";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { jsPDF } from "jspdf";
 
 // Section data with pages
 const sections = [
@@ -651,6 +652,156 @@ const InvestmentOpportunity = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  // Function to generate PDF from section data
+  const generatePDF = (section: typeof sections[0]) => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20;
+    const maxWidth = pageWidth - (margin * 2);
+    let yPosition = 20;
+
+    // Cover Page - Purple gradient effect with white text
+    doc.setFillColor(124, 58, 237); // Purple background
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
+    
+    // HOBSON AI logo
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.text('HOBSON AI', pageWidth / 2, 80, { align: 'center' });
+    
+    // Section title
+    doc.setFontSize(32);
+    const titleLines = doc.splitTextToSize(section.title, maxWidth - 20);
+    doc.text(titleLines, pageWidth / 2, 110, { align: 'center' });
+    
+    // Subtitle
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'normal');
+    const subtitleLines = doc.splitTextToSize(section.subtitle, maxWidth - 20);
+    doc.text(subtitleLines, pageWidth / 2, 140, { align: 'center' });
+    
+    // Investment Opportunity Document label
+    doc.setFontSize(10);
+    doc.text('Investment Opportunity Document', pageWidth / 2, 170, { align: 'center' });
+    
+    // Date
+    const currentDate = new Date().toLocaleDateString('en-GB', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+    doc.text(currentDate, pageWidth / 2, pageHeight - 20, { align: 'center' });
+
+    // Content pages - white background with colored text
+    section.pages.forEach((page: any, pageIndex: number) => {
+      doc.addPage();
+      yPosition = margin;
+      
+      // Page title - Purple
+      doc.setTextColor(124, 58, 237);
+      doc.setFontSize(18);
+      doc.setFont('helvetica', 'bold');
+      const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
+      doc.text(pageTitleLines, margin, yPosition);
+      yPosition += pageTitleLines.length * 8 + 5;
+      
+      // Purple line under title
+      doc.setDrawColor(124, 58, 237);
+      doc.setLineWidth(0.5);
+      doc.line(margin, yPosition, pageWidth - margin, yPosition);
+      yPosition += 10;
+      
+      // Overview - Dark gray on light background
+      if (page.content.overview) {
+        doc.setFillColor(249, 250, 251);
+        doc.rect(margin, yPosition, maxWidth, 0, 'F');
+        
+        doc.setTextColor(55, 65, 81);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'normal');
+        const overviewLines = doc.splitTextToSize(page.content.overview, maxWidth - 10);
+        
+        const boxHeight = overviewLines.length * 5 + 10;
+        doc.rect(margin, yPosition, maxWidth, boxHeight, 'F');
+        doc.text(overviewLines, margin + 5, yPosition + 7);
+        yPosition += boxHeight + 8;
+      }
+      
+      // Sections
+      page.content.sections.forEach((section: any) => {
+        // Check if we need a new page
+        if (yPosition > pageHeight - 60) {
+          doc.addPage();
+          yPosition = margin;
+        }
+        
+        // Section title - Dark gray, bold
+        doc.setTextColor(31, 41, 55);
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        const sectionTitleLines = doc.splitTextToSize(section.title, maxWidth);
+        doc.text(sectionTitleLines, margin, yPosition);
+        yPosition += sectionTitleLines.length * 7 + 3;
+        
+        // Subtitle - Purple
+        if (section.subtitle) {
+          doc.setTextColor(124, 58, 237);
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'bold');
+          const subtitleLines = doc.splitTextToSize(section.subtitle, maxWidth);
+          doc.text(subtitleLines, margin, yPosition);
+          yPosition += subtitleLines.length * 6 + 5;
+        }
+        
+        // Items - Dark gray
+        doc.setTextColor(75, 85, 99);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'normal');
+        
+        section.items.forEach((item: string) => {
+          if (yPosition > pageHeight - 40) {
+            doc.addPage();
+            yPosition = margin;
+          }
+          
+          // Bullet point - Purple
+          doc.setTextColor(124, 58, 237);
+          doc.setFont('helvetica', 'bold');
+          doc.text('•', margin + 2, yPosition);
+          
+          // Item text - Dark gray
+          doc.setTextColor(75, 85, 99);
+          doc.setFont('helvetica', 'normal');
+          const itemLines = doc.splitTextToSize(item, maxWidth - 10);
+          doc.text(itemLines, margin + 8, yPosition);
+          yPosition += itemLines.length * 5 + 3;
+        });
+        
+        yPosition += 8;
+      });
+    });
+
+    // Add footer to all pages except cover
+    const totalPages = doc.getNumberOfPages();
+    for (let i = 2; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setTextColor(107, 114, 128);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(
+        `© ${new Date().getFullYear()} Hobson AI - Confidential Investment Materials`,
+        margin,
+        pageHeight - 10
+      );
+      doc.text(`Page ${i - 1} of ${totalPages - 1}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+    }
+
+    // Save the PDF
+    doc.save(`Hobson-${section.title.replace(/[^a-z0-9]/gi, '-')}.pdf`);
+  };
+
   // Check if user has already authenticated in this session
   useEffect(() => {
     const authenticated = sessionStorage.getItem("investment_authenticated");
@@ -880,40 +1031,21 @@ const InvestmentOpportunity = () => {
                           <span className="xs:hidden">View</span>
                         </Button>
                         <Button
-                          onClick={async (e) => {
+                          onClick={(e) => {
                             e.stopPropagation();
                             
                             try {
                               toast({
                                 title: "Generating PDF",
-                                description: "Please wait while we prepare your document...",
+                                description: "Creating your document...",
                               });
 
-                              // Call edge function to generate PDF content
-                              const { data, error } = await supabase.functions.invoke('generate-investment-pdf', {
-                                body: { sectionData: section }
+                              generatePDF(section);
+
+                              toast({
+                                title: "PDF Downloaded",
+                                description: `${section.title} PDF has been saved to your downloads folder`,
                               });
-
-                              if (error) throw error;
-
-                              // Create a new window with the HTML content
-                              const printWindow = window.open('', '_blank');
-                              if (printWindow) {
-                                printWindow.document.write(data.html);
-                                printWindow.document.close();
-                                
-                                // Wait for content to load then trigger print
-                                printWindow.onload = () => {
-                                  setTimeout(() => {
-                                    printWindow.focus();
-                                    printWindow.print();
-                                    toast({
-                                      title: "PDF Ready",
-                                      description: "Use your browser's print dialog to save as PDF",
-                                    });
-                                  }, 500);
-                                };
-                              }
                             } catch (error) {
                               console.error('Error generating PDF:', error);
                               toast({
