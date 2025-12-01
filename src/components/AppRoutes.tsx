@@ -147,7 +147,7 @@ const AppContent = () => {
               <Route path="/quiz1" element={<UseHobson2 />} />
               <Route path="/quiz2" element={<UseHobson3 />} />
               <Route path="/carousel" element={<Rotating />} />
-              <Route path="/investment_carousel" element={<RotatingInvestments />} />
+              <Route path="/investment-carousel" element={<RotatingInvestments />} />
               <Route path="/investorsummary" element={<InvestorSummary />} />
               <Route path="/banners" element={<Banners />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
