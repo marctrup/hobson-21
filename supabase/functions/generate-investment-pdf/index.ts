@@ -60,8 +60,8 @@ function generatePDFHTML(sectionData: any): string {
     const pageBreak = index < pages.length - 1 ? 'page-break-after: always;' : '';
     
     pagesHTML += `
-      <div style="${pageBreak} padding: 40px;">
-        <h2 style="color: #7c3aed; font-size: 24px; margin-bottom: 16px; border-bottom: 3px solid #7c3aed; padding-bottom: 12px;">
+      <div style="${pageBreak} padding: 40px; ${index === 0 ? '' : 'page-break-before: always;'}">
+        <h2 style="color: #1f2937; font-size: 28px; font-weight: 700; margin-bottom: 16px; border-bottom: 3px solid #7c3aed; padding-bottom: 12px;">
           ${page.title}
         </h2>
         
@@ -124,15 +124,18 @@ function generatePDFHTML(sectionData: any): string {
           text-align: center;
           padding: 60px;
           page-break-after: always;
+          break-after: page;
         }
         .cover h1 {
           font-size: 48px;
           margin-bottom: 24px;
           font-weight: 700;
+          color: white;
         }
         .cover p {
           font-size: 20px;
-          opacity: 0.9;
+          color: white;
+          opacity: 0.95;
           max-width: 600px;
         }
         .logo {
