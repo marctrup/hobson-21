@@ -840,6 +840,11 @@ const InvestmentOpportunity = () => {
     // Loop through all sections in order
     sections.forEach((section) => {
       section.pages.forEach((page: any) => {
+        // Skip pages without content or with custom visuals
+        if (!page.content || page.showCustomVisual) {
+          return;
+        }
+
         doc.addPage();
         let yPosition = margin;
         
@@ -872,56 +877,60 @@ const InvestmentOpportunity = () => {
         }
         
         // Sections
-        page.content.sections.forEach((section: any) => {
-          if (yPosition > pageHeight - 60) {
-            doc.addPage();
-            yPosition = margin;
-          }
-          
-          // Section title
-          doc.setTextColor(31, 41, 55);
-          doc.setFontSize(14);
-          doc.setFont('helvetica', 'bold');
-          const sectionTitleLines = doc.splitTextToSize(section.title, maxWidth);
-          doc.text(sectionTitleLines, margin, yPosition);
-          yPosition += sectionTitleLines.length * 7 + 3;
-          
-          // Subtitle
-          if (section.subtitle) {
-            doc.setTextColor(124, 58, 237);
-            doc.setFontSize(12);
-            doc.setFont('helvetica', 'bold');
-            const subtitleLines = doc.splitTextToSize(section.subtitle, maxWidth);
-            doc.text(subtitleLines, margin, yPosition);
-            yPosition += subtitleLines.length * 6 + 5;
-          }
-          
-          // Items
-          doc.setTextColor(75, 85, 99);
-          doc.setFontSize(9);
-          doc.setFont('helvetica', 'normal');
-          
-          section.items.forEach((item: string) => {
-            if (yPosition > pageHeight - 40) {
+        if (page.content.sections && Array.isArray(page.content.sections)) {
+          page.content.sections.forEach((section: any) => {
+            if (yPosition > pageHeight - 60) {
               doc.addPage();
               yPosition = margin;
             }
             
-            // Bullet point
-            doc.setTextColor(124, 58, 237);
+            // Section title
+            doc.setTextColor(31, 41, 55);
+            doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            doc.text('•', margin + 2, yPosition);
+            const sectionTitleLines = doc.splitTextToSize(section.title, maxWidth);
+            doc.text(sectionTitleLines, margin, yPosition);
+            yPosition += sectionTitleLines.length * 7 + 3;
             
-            // Item text
-            doc.setTextColor(75, 85, 99);
-            doc.setFont('helvetica', 'normal');
-            const itemLines = doc.splitTextToSize(item, maxWidth - 10);
-            doc.text(itemLines, margin + 8, yPosition);
-            yPosition += itemLines.length * 5 + 3;
+            // Subtitle
+            if (section.subtitle) {
+              doc.setTextColor(124, 58, 237);
+              doc.setFontSize(12);
+              doc.setFont('helvetica', 'bold');
+              const subtitleLines = doc.splitTextToSize(section.subtitle, maxWidth);
+              doc.text(subtitleLines, margin, yPosition);
+              yPosition += subtitleLines.length * 6 + 5;
+            }
+            
+            // Items
+            if (section.items && Array.isArray(section.items)) {
+              doc.setTextColor(75, 85, 99);
+              doc.setFontSize(9);
+              doc.setFont('helvetica', 'normal');
+              
+              section.items.forEach((item: string) => {
+                if (yPosition > pageHeight - 40) {
+                  doc.addPage();
+                  yPosition = margin;
+                }
+                
+                // Bullet point
+                doc.setTextColor(124, 58, 237);
+                doc.setFont('helvetica', 'bold');
+                doc.text('•', margin + 2, yPosition);
+                
+                // Item text
+                doc.setTextColor(75, 85, 99);
+                doc.setFont('helvetica', 'normal');
+                const itemLines = doc.splitTextToSize(item, maxWidth - 10);
+                doc.text(itemLines, margin + 8, yPosition);
+                yPosition += itemLines.length * 5 + 3;
+              });
+            }
+            
+            yPosition += 8;
           });
-          
-          yPosition += 8;
-        });
+        }
       });
     });
 
