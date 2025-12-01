@@ -12,8 +12,8 @@ const RotatingInvestments = () => {
   const slides = [
     {
       id: 'cover',
-      title: "Intelligence Shaping Real Estate's Next Chapter",
-      subtitle: 'Driving operational speed, clarity, and cost reduction.',
+      title: 'Smart AI for Real Estate',
+      subtitle: 'Delivering scalable gains and superior decision-making.',
       content: <CoverSlide />
     },
     {
