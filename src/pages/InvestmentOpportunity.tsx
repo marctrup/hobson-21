@@ -802,6 +802,148 @@ const InvestmentOpportunity = () => {
     doc.save(`Hobson-${section.title.replace(/[^a-z0-9]/gi, '-')}.pdf`);
   };
 
+  // Function to generate combined PDF with all sections
+  const generateFullBusinessPlan = () => {
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 20;
+    const maxWidth = pageWidth - (margin * 2);
+    
+    // Cover Page - Purple gradient
+    doc.setFillColor(124, 58, 237);
+    doc.rect(0, 0, pageWidth, pageHeight, 'F');
+    
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(24);
+    doc.setFont('helvetica', 'bold');
+    doc.text('HOBSON AI', pageWidth / 2, 60, { align: 'center' });
+    
+    doc.setFontSize(36);
+    doc.text('Full Business Plan', pageWidth / 2, 100, { align: 'center' });
+    
+    doc.setFontSize(16);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Investment Opportunity Document', pageWidth / 2, 130, { align: 'center' });
+    
+    doc.setFontSize(14);
+    doc.text('Funding Requirement: £750,000', pageWidth / 2, 150, { align: 'center' });
+    
+    const currentDate = new Date().toLocaleDateString('en-GB', { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
+    doc.setFontSize(10);
+    doc.text(currentDate, pageWidth / 2, pageHeight - 20, { align: 'center' });
+
+    // Loop through all sections in order
+    sections.forEach((section) => {
+      section.pages.forEach((page: any) => {
+        doc.addPage();
+        let yPosition = margin;
+        
+        // Page title - Purple
+        doc.setTextColor(124, 58, 237);
+        doc.setFontSize(18);
+        doc.setFont('helvetica', 'bold');
+        const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
+        doc.text(pageTitleLines, margin, yPosition);
+        yPosition += pageTitleLines.length * 8 + 5;
+        
+        // Purple line under title
+        doc.setDrawColor(124, 58, 237);
+        doc.setLineWidth(0.5);
+        doc.line(margin, yPosition, pageWidth - margin, yPosition);
+        yPosition += 10;
+        
+        // Overview
+        if (page.content.overview) {
+          doc.setFillColor(249, 250, 251);
+          doc.setTextColor(55, 65, 81);
+          doc.setFontSize(10);
+          doc.setFont('helvetica', 'normal');
+          const overviewLines = doc.splitTextToSize(page.content.overview, maxWidth - 10);
+          
+          const boxHeight = overviewLines.length * 5 + 10;
+          doc.rect(margin, yPosition, maxWidth, boxHeight, 'F');
+          doc.text(overviewLines, margin + 5, yPosition + 7);
+          yPosition += boxHeight + 8;
+        }
+        
+        // Sections
+        page.content.sections.forEach((section: any) => {
+          if (yPosition > pageHeight - 60) {
+            doc.addPage();
+            yPosition = margin;
+          }
+          
+          // Section title
+          doc.setTextColor(31, 41, 55);
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          const sectionTitleLines = doc.splitTextToSize(section.title, maxWidth);
+          doc.text(sectionTitleLines, margin, yPosition);
+          yPosition += sectionTitleLines.length * 7 + 3;
+          
+          // Subtitle
+          if (section.subtitle) {
+            doc.setTextColor(124, 58, 237);
+            doc.setFontSize(12);
+            doc.setFont('helvetica', 'bold');
+            const subtitleLines = doc.splitTextToSize(section.subtitle, maxWidth);
+            doc.text(subtitleLines, margin, yPosition);
+            yPosition += subtitleLines.length * 6 + 5;
+          }
+          
+          // Items
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
+          
+          section.items.forEach((item: string) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+            
+            // Bullet point
+            doc.setTextColor(124, 58, 237);
+            doc.setFont('helvetica', 'bold');
+            doc.text('•', margin + 2, yPosition);
+            
+            // Item text
+            doc.setTextColor(75, 85, 99);
+            doc.setFont('helvetica', 'normal');
+            const itemLines = doc.splitTextToSize(item, maxWidth - 10);
+            doc.text(itemLines, margin + 8, yPosition);
+            yPosition += itemLines.length * 5 + 3;
+          });
+          
+          yPosition += 8;
+        });
+      });
+    });
+
+    // Add footer to all pages except cover
+    const totalPages = doc.getNumberOfPages();
+    for (let i = 2; i <= totalPages; i++) {
+      doc.setPage(i);
+      doc.setTextColor(107, 114, 128);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.text(
+        `© ${new Date().getFullYear()} Hobson AI - Confidential Investment Materials`,
+        margin,
+        pageHeight - 10
+      );
+      doc.text(`Page ${i - 1} of ${totalPages - 1}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+    }
+
+    // Save the combined PDF
+    doc.save('Hobson-Full-Business-Plan.pdf');
+  };
+
   // Check if user has already authenticated in this session
   useEffect(() => {
     const authenticated = sessionStorage.getItem("investment_authenticated");
@@ -960,17 +1102,26 @@ const InvestmentOpportunity = () => {
                     size="lg"
                     className="gap-2 w-full md:w-auto"
                     onClick={() => {
-                      const link = document.createElement("a");
-                      link.href = "/documents/full-business-plan.pdf";
-                      link.download = "Hobson-Full-Business-Plan.pdf";
-                      document.body.appendChild(link);
-                      link.click();
-                      document.body.removeChild(link);
+                      try {
+                        toast({
+                          title: "Generating Full Business Plan",
+                          description: "Combining all sections into one PDF...",
+                        });
 
-                      toast({
-                        title: "Download Started",
-                        description: "Downloading Full Business Plan.pdf",
-                      });
+                        generateFullBusinessPlan();
+
+                        toast({
+                          title: "PDF Downloaded",
+                          description: "Full Business Plan has been saved to your downloads folder",
+                        });
+                      } catch (error) {
+                        console.error('Error generating full business plan:', error);
+                        toast({
+                          title: "Error",
+                          description: "Failed to generate PDF. Please try again.",
+                          variant: "destructive",
+                        });
+                      }
                     }}
                   >
                     <Download className="w-4 h-4" />
