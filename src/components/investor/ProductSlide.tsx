@@ -16,19 +16,19 @@ export const ProductSlide = () => {
 
         <div className="flex items-center justify-center gap-3 sm:gap-4 py-6">
           <div className="flex flex-col items-center gap-2 px-4 py-3 rounded-lg bg-[#f1f5f9]">
-            <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-[#475569]" />
+            <Shield className="w-7 h-7 sm:w-10 sm:h-10 text-[#475569]" />
             <span className="text-xs sm:text-sm text-[#475569] font-medium">Your CRMs</span>
           </div>
           
-          <Plus className="w-5 h-5 sm:w-6 sm:h-6 text-[#7c3aed]" strokeWidth={3} />
+          <Plus className="w-7 h-7 sm:w-10 sm:h-10 text-[#7c3aed]" strokeWidth={3} />
           
           <div className="flex flex-col items-center gap-2 px-4 py-3 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#a78bfa]">
-            <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+            <Zap className="w-7 h-7 sm:w-10 sm:h-10 text-white" />
             <span className="text-xs sm:text-sm text-white font-semibold">Hobson AI</span>
           </div>
         </div>
 
-        <p className="text-base sm:text-xl text-[#475569] leading-relaxed font-light max-w-xl mx-auto">
+        <p className="text-base sm:text-xl text-[#7c3aed] leading-relaxed font-semibold max-w-xl mx-auto">
           Enterprise-grade accuracy with zero workflow friction
         </p>
       </div>
