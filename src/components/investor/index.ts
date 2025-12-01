@@ -8,3 +8,8 @@ export { CompetitiveMatrixVisual } from './CompetitiveMatrixVisual';
 export { EuropeanGlobalVisual } from './EuropeanGlobalVisual';
 export { HEUPricingVisual } from './HEUPricingVisual';
 export { AIProcessingVisual } from './AIProcessingVisual';
+export { ProblemSlide } from './ProblemSlide';
+export { ProductSlide } from './ProductSlide';
+export { ValueSlide } from './ValueSlide';
+export { ImpactSlide } from './ImpactSlide';
+export { InvitationSlide } from './InvitationSlide';
