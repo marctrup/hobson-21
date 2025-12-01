@@ -23,13 +23,13 @@ export const InvitationSlide = () => {
           If you're exploring early opportunities in this space, we'd love to talk.
         </p>
 
-        <div className="pt-4">
+        <div className="pt-2 pb-4">
           <Button
             size="lg"
-            className="bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:from-[#6d28d9] hover:to-[#9333ea] text-white font-semibold px-8 py-6 text-base sm:text-lg shadow-lg"
+            className="bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:from-[#6d28d9] hover:to-[#9333ea] text-white font-semibold px-6 py-4 text-sm sm:text-base shadow-lg"
             onClick={() => window.location.href = 'mailto:Rochelle.t@hobsonschoice.ai?subject=Investment Opportunity Inquiry'}
           >
-            <Mail className="w-5 h-5 mr-2" />
+            <Mail className="w-4 h-4 mr-2" />
             Start the Conversation
           </Button>
         </div>
