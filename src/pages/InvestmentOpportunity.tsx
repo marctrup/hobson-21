@@ -1648,7 +1648,7 @@ const InvestmentOpportunity = () => {
                             e.stopPropagation();
                             setSelectedSection(section);
                           }}
-                          variant="default"
+                          variant="secondary"
                           size="sm"
                           className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
                         >
