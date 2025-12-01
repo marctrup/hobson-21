@@ -559,10 +559,61 @@ const sections = [
     iconColor: "text-indigo-600",
     pages: [
       {
-        title: "Leadership Team",
+        title: "Core Team & Advisory Board",
         content: {
-          overview: "Meet the founders and executive team behind Hobson AI.",
-          sections: [],
+          overview: "Our collective experience, with guidance from trusted advisors, sets the stage for a groundbreaking AI future.",
+          sections: [
+            {
+              title: "Core Team",
+              teamMembers: [
+                {
+                  name: "Julia Szaltoni",
+                  role: "Product Lead",
+                  linkedin: "https://www.linkedin.com/in/julia-szaltontai/",
+                },
+                {
+                  name: "Rochelle Trup",
+                  role: "Commercial Lead",
+                  linkedin: "https://www.linkedin.com/in/rochelle-trup/",
+                },
+                {
+                  name: "Marc Trup",
+                  role: "Commercial Lead",
+                  linkedin: "https://www.linkedin.com/in/marc-trup/",
+                },
+                {
+                  name: "Denis Kosenkov",
+                  role: "Senior AI Developer",
+                  linkedin: "https://www.linkedin.com/in/denis-dmitrievich-kosenkov/",
+                },
+                {
+                  name: "Kumar Ankit",
+                  role: "AI & Technical Lead",
+                  linkedin: "https://www.linkedin.com/in/kumar-ankit/",
+                },
+              ],
+            },
+            {
+              title: "Advisory Board",
+              teamMembers: [
+                {
+                  name: "Nick Doffman",
+                  role: "Commercial Advisor",
+                  linkedin: "https://www.linkedin.com/in/nick-doffman/",
+                },
+                {
+                  name: "TBA",
+                  role: "Advisor",
+                  linkedin: null,
+                },
+                {
+                  name: "TBA",
+                  role: "Advisor",
+                  linkedin: null,
+                },
+              ],
+            },
+          ],
         },
       },
     ],
@@ -813,30 +864,97 @@ const InvestmentOpportunity = () => {
           yPosition += subtitleLines.length * 6 + 5;
         }
         
-        // Items - Dark gray
-        doc.setTextColor(75, 85, 99);
-        doc.setFontSize(9);
-        doc.setFont('helvetica', 'normal');
+        // Handle Team Members
+        if (section.teamMembers && Array.isArray(section.teamMembers)) {
+          const membersPerRow = 3;
+          const cardWidth = (maxWidth - 10) / membersPerRow;
+          const cardHeight = 35;
+          const cardSpacing = 5;
+          
+          section.teamMembers.forEach((member: any, idx: number) => {
+            const col = idx % membersPerRow;
+            const row = Math.floor(idx / membersPerRow);
+            const xPos = margin + col * cardWidth;
+            const cardYPos = yPosition + row * (cardHeight + cardSpacing);
+            
+            // Check if we need a new page for this row
+            if (cardYPos > pageHeight - 60 && col === 0) {
+              doc.addPage();
+              yPosition = margin;
+              const newCardYPos = yPosition + (row - Math.floor(idx / membersPerRow)) * (cardHeight + cardSpacing);
+            }
+            
+            const finalYPos = col === 0 && row > 0 && yPosition < margin + 20 ? margin : cardYPos;
+            
+            // Draw card border
+            doc.setDrawColor(124, 58, 237);
+            doc.setLineWidth(0.5);
+            doc.rect(xPos + 2, finalYPos, cardWidth - 6, cardHeight);
+            
+            // Role (top section with background)
+            doc.setFillColor(124, 58, 237);
+            doc.rect(xPos + 2, finalYPos, cardWidth - 6, 8, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(7);
+            doc.setFont('helvetica', 'bold');
+            doc.text(member.role, xPos + cardWidth / 2, finalYPos + 5, { align: 'center' });
+            
+            // Name
+            doc.setTextColor(31, 41, 55);
+            doc.setFontSize(10);
+            doc.setFont('helvetica', 'bold');
+            const nameLines = doc.splitTextToSize(member.name, cardWidth - 12);
+            doc.text(nameLines, xPos + cardWidth / 2, finalYPos + 16, { align: 'center' });
+            
+            // LinkedIn link
+            if (member.linkedin) {
+              doc.setTextColor(124, 58, 237);
+              doc.setFontSize(7);
+              doc.setFont('helvetica', 'normal');
+              const linkY = finalYPos + 26;
+              doc.textWithLink('LinkedIn Profile ↗', xPos + cardWidth / 2, linkY, { 
+                align: 'center',
+                url: member.linkedin 
+              });
+            } else {
+              doc.setTextColor(156, 163, 175);
+              doc.setFontSize(7);
+              doc.setFont('helvetica', 'italic');
+              doc.text('Coming Soon', xPos + cardWidth / 2, finalYPos + 26, { align: 'center' });
+            }
+          });
+          
+          // Move position down after all team members
+          const totalRows = Math.ceil(section.teamMembers.length / membersPerRow);
+          yPosition += totalRows * (cardHeight + cardSpacing) + 5;
+        }
         
-        section.items.forEach((item: string) => {
-          if (yPosition > pageHeight - 40) {
-            doc.addPage();
-            yPosition = margin;
-          }
-          
-          // Bullet point - Purple
-          doc.setTextColor(124, 58, 237);
-          doc.setFont('helvetica', 'bold');
-          doc.text('•', margin + 2, yPosition);
-          
-          // Item text - Dark gray
+        // Handle regular items
+        if (section.items && Array.isArray(section.items)) {
           doc.setTextColor(75, 85, 99);
+          doc.setFontSize(9);
           doc.setFont('helvetica', 'normal');
-          const cleanedItem = removeEmojis(item);
-          const itemLines = doc.splitTextToSize(cleanedItem, maxWidth - 10);
-          doc.text(itemLines, margin + 8, yPosition);
-          yPosition += itemLines.length * 5 + 3;
-        });
+          
+          section.items.forEach((item: string) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+            
+            // Bullet point - Purple
+            doc.setTextColor(124, 58, 237);
+            doc.setFont('helvetica', 'bold');
+            doc.text('•', margin + 2, yPosition);
+            
+            // Item text - Dark gray
+            doc.setTextColor(75, 85, 99);
+            doc.setFont('helvetica', 'normal');
+            const cleanedItem = removeEmojis(item);
+            const itemLines = doc.splitTextToSize(cleanedItem, maxWidth - 10);
+            doc.text(itemLines, margin + 8, yPosition);
+            yPosition += itemLines.length * 5 + 3;
+          });
+        }
         
         yPosition += 8;
       });
@@ -1160,6 +1278,70 @@ const InvestmentOpportunity = () => {
               const subtitleLines = doc.splitTextToSize(section.subtitle, maxWidth);
               doc.text(subtitleLines, margin, yPosition);
               yPosition += subtitleLines.length * 6 + 5;
+            }
+            
+            // Handle Team Members
+            if (section.teamMembers && Array.isArray(section.teamMembers)) {
+              const membersPerRow = 3;
+              const cardWidth = (maxWidth - 10) / membersPerRow;
+              const cardHeight = 35;
+              const cardSpacing = 5;
+              
+              section.teamMembers.forEach((member: any, idx: number) => {
+                const col = idx % membersPerRow;
+                const row = Math.floor(idx / membersPerRow);
+                const xPos = margin + col * cardWidth;
+                const cardYPos = yPosition + row * (cardHeight + cardSpacing);
+                
+                // Check if we need a new page for this row
+                if (cardYPos > pageHeight - 60 && col === 0) {
+                  doc.addPage();
+                  yPosition = margin;
+                }
+                
+                const finalYPos = col === 0 && row > 0 && yPosition < margin + 20 ? margin : cardYPos;
+                
+                // Draw card border
+                doc.setDrawColor(124, 58, 237);
+                doc.setLineWidth(0.5);
+                doc.rect(xPos + 2, finalYPos, cardWidth - 6, cardHeight);
+                
+                // Role (top section with background)
+                doc.setFillColor(124, 58, 237);
+                doc.rect(xPos + 2, finalYPos, cardWidth - 6, 8, 'F');
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(7);
+                doc.setFont('helvetica', 'bold');
+                doc.text(member.role, xPos + cardWidth / 2, finalYPos + 5, { align: 'center' });
+                
+                // Name
+                doc.setTextColor(31, 41, 55);
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'bold');
+                const nameLines = doc.splitTextToSize(member.name, cardWidth - 12);
+                doc.text(nameLines, xPos + cardWidth / 2, finalYPos + 16, { align: 'center' });
+                
+                // LinkedIn link
+                if (member.linkedin) {
+                  doc.setTextColor(124, 58, 237);
+                  doc.setFontSize(7);
+                  doc.setFont('helvetica', 'normal');
+                  const linkY = finalYPos + 26;
+                  doc.textWithLink('LinkedIn Profile ↗', xPos + cardWidth / 2, linkY, { 
+                    align: 'center',
+                    url: member.linkedin 
+                  });
+                } else {
+                  doc.setTextColor(156, 163, 175);
+                  doc.setFontSize(7);
+                  doc.setFont('helvetica', 'italic');
+                  doc.text('Coming Soon', xPos + cardWidth / 2, finalYPos + 26, { align: 'center' });
+                }
+              });
+              
+              // Move position down after all team members
+              const totalRows = Math.ceil(section.teamMembers.length / membersPerRow);
+              yPosition += totalRows * (cardHeight + cardSpacing) + 5;
             }
             
             // Items
@@ -1620,20 +1802,58 @@ const InvestmentOpportunity = () => {
                     {/* Content Sections */}
                     {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
                       !(selectedSection.pages[currentPageIndex] as any).isVisual &&
-                      selectedSection.pages[currentPageIndex].content.sections.map((contentSection, idx) => (
+                      selectedSection.pages[currentPageIndex].content.sections.map((contentSection: any, idx) => (
                         <div key={idx} className="space-y-3 sm:space-y-4">
                           <h3 className="text-base sm:text-lg md:text-xl font-bold text-primary flex items-center gap-2">
                             <span className="w-1 h-5 sm:h-6 bg-primary rounded-full"></span>
                             {contentSection.title}
                           </h3>
-                          <ul className="space-y-2 sm:space-y-3 pl-3 sm:pl-4">
-                            {contentSection.items.map((item, itemIdx) => (
-                              <li key={itemIdx} className="flex items-start gap-2 sm:gap-3 text-foreground">
-                                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary/60 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                                <span className="text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
-                              </li>
-                            ))}
-                          </ul>
+                          
+                          {/* Team Members Grid */}
+                          {contentSection.teamMembers ? (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                              {contentSection.teamMembers.map((member: any, memberIdx: number) => (
+                                <div
+                                  key={memberIdx}
+                                  className="border-2 border-primary/30 rounded-lg p-4 sm:p-6 bg-background hover:border-primary transition-colors"
+                                >
+                                  <div className="text-center space-y-3">
+                                    <div className="border-b border-primary/20 pb-2">
+                                      <span className="text-xs sm:text-sm font-semibold text-primary uppercase tracking-wide">
+                                        {member.role}
+                                      </span>
+                                    </div>
+                                    <h4 className="text-lg sm:text-xl font-bold text-foreground min-h-[3rem] flex items-center justify-center">
+                                      {member.name}
+                                    </h4>
+                                    {member.linkedin ? (
+                                      <a
+                                        href={member.linkedin}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-xs sm:text-sm text-primary hover:text-primary/80 underline inline-flex items-center gap-1 transition-colors"
+                                      >
+                                        <span>LinkedIn Profile</span>
+                                        <span className="text-[10px]">↗</span>
+                                      </a>
+                                    ) : (
+                                      <span className="text-xs sm:text-sm text-muted-foreground italic">Coming Soon</span>
+                                    )}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          ) : (
+                            /* Regular Items List */
+                            <ul className="space-y-2 sm:space-y-3 pl-3 sm:pl-4">
+                              {contentSection.items?.map((item: string, itemIdx: number) => (
+                                <li key={itemIdx} className="flex items-start gap-2 sm:gap-3 text-foreground">
+                                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary/60 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                                  <span className="text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
                         </div>
                       ))}
 
