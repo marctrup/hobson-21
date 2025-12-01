@@ -851,9 +851,9 @@ const InvestmentOpportunity = () => {
         const cleanedOverview = removeEmojis(page.content.overview);
         const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 10);
         
-        const boxHeight = overviewLines.length * 7 + 6;
+        const boxHeight = overviewLines.length * 6.5 + 4;
         doc.rect(margin, yPosition, maxWidth, boxHeight, 'F');
-        doc.text(overviewLines, margin + 5, yPosition + 5);
+        doc.text(overviewLines, margin + 5, yPosition + 4);
         yPosition += boxHeight + 8;
       }
       
