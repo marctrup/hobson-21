@@ -1,6 +1,6 @@
 import React from "react";
 import { HelmetProvider } from "react-helmet-async";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useLocation } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/hooks/useAuth";
@@ -18,6 +18,18 @@ const queryClient = new QueryClient({
   },
 });
 
+// Component to conditionally render chatbot based on route
+const ChatbotWrapper = () => {
+  const location = useLocation();
+  const hideChatbotRoutes = ['/carousel_investments'];
+  
+  if (hideChatbotRoutes.includes(location.pathname)) {
+    return null;
+  }
+  
+  return <HobsonChatbot />;
+};
+
 export function AppProviders() {
   return (
     <HelmetProvider>
@@ -27,7 +39,7 @@ export function AppProviders() {
             <AuthProvider>
               <ToastPortal />
               <AppRoutes />
-              <HobsonChatbot />
+              <ChatbotWrapper />
             </AuthProvider>
           </QueryClientProvider>
         </ThemeProvider>
