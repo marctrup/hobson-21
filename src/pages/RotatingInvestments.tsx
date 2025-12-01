@@ -7,7 +7,7 @@ import { Helmet } from "react-helmet-async";
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 import { useToast } from "@/hooks/use-toast";
-import hobsonLogo from "@/assets/hobson-logo.png";
+import hobsonLogo from "@/assets/hobson-carousel-logo.png";
 
 const RotatingInvestments = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
