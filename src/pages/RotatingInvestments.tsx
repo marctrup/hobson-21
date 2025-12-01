@@ -183,7 +183,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           </div>
 
           {/* Navigation */}
-          <div className="absolute bottom-3 sm:bottom-4 left-0 right-0 flex items-center justify-between px-3 sm:px-4 pointer-events-none">
+          <div className="absolute bottom-2 sm:bottom-3 md:bottom-4 left-0 right-0 flex items-center justify-between px-2 sm:px-3 md:px-4 pointer-events-none">
             <Button
               variant="outline"
               size="icon"
