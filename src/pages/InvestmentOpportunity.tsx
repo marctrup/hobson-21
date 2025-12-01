@@ -734,20 +734,18 @@ const InvestmentOpportunity = () => {
         
         // Add the image with proper aspect ratio (tall vertical diagram)
         const imgWidth = maxWidth;
-        const targetHeight = imgWidth * 1.7; // Natural aspect ratio for tall architecture diagram
+        const imgHeight = imgWidth * 1.7; // Natural aspect ratio for tall architecture diagram
         const availableHeight = pageHeight - yPosition - 30; // Space available on page
         
-        // Scale down if image is taller than available space
-        let finalWidth = imgWidth;
-        let finalHeight = targetHeight;
-        if (targetHeight > availableHeight) {
-          finalHeight = availableHeight;
-          finalWidth = finalHeight / 1.7; // Maintain aspect ratio
+        // If image won't fit on current page, start a new page
+        if (imgHeight > availableHeight) {
+          doc.addPage();
+          yPosition = 40;
         }
         
         try {
-          doc.addImage(page.image, 'PNG', margin + (maxWidth - finalWidth) / 2, yPosition, finalWidth, finalHeight);
-          yPosition += finalHeight + 15;
+          doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, imgHeight);
+          yPosition += imgHeight + 15;
         } catch (error) {
           console.error('Error adding image to PDF:', error);
         }
@@ -1084,20 +1082,18 @@ const InvestmentOpportunity = () => {
           
           // Add the image with proper aspect ratio (tall vertical diagram)
           const imgWidth = maxWidth;
-          const targetHeight = imgWidth * 1.7; // Natural aspect ratio for tall architecture diagram
+          const imgHeight = imgWidth * 1.7; // Natural aspect ratio for tall architecture diagram
           const availableHeight = pageHeight - yPosition - 30; // Space available on page
           
-          // Scale down if image is taller than available space
-          let finalWidth = imgWidth;
-          let finalHeight = targetHeight;
-          if (targetHeight > availableHeight) {
-            finalHeight = availableHeight;
-            finalWidth = finalHeight / 1.7; // Maintain aspect ratio
+          // If image won't fit on current page, start a new page
+          if (imgHeight > availableHeight) {
+            doc.addPage();
+            yPosition = 40;
           }
           
           try {
-            doc.addImage(page.image, 'PNG', margin + (maxWidth - finalWidth) / 2, yPosition, finalWidth, finalHeight);
-            yPosition += finalHeight + 15;
+            doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, imgHeight);
+            yPosition += imgHeight + 15;
           } catch (error) {
             console.error('Error adding image to PDF:', error);
           }
