@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { CoverSlide, ProblemSlide, SolutionSlide, FreePlanSlide, CTASlide } from "@/components/rotating";
+import { CoverSlide } from "@/components/rotating";
+import { ProblemSlide, ProductSlide, ValueSlide, ImpactSlide, InvitationSlide } from "@/components/investor";
 import { Helmet } from "react-helmet-async";
 
 const RotatingInvestments = () => {
@@ -17,27 +18,33 @@ const RotatingInvestments = () => {
     },
     {
       id: 'problem',
-      title: 'Traditional Systems',
-      subtitle: 'The painful reality',
+      title: 'The Problem',
+      subtitle: '',
       content: <ProblemSlide />
     },
     {
-      id: 'solution',
-      title: 'Hobson AI',
-      subtitle: 'The intelligent solution',
-      content: <SolutionSlide />
+      id: 'product',
+      title: 'The Product',
+      subtitle: '',
+      content: <ProductSlide />
     },
     {
-      id: 'free-plan',
-      title: 'Free Plan Benefits',
-      subtitle: 'All features. No credit card.',
-      content: <FreePlanSlide />
+      id: 'value',
+      title: 'The Value',
+      subtitle: '',
+      content: <ValueSlide />
     },
     {
-      id: 'cta',
-      title: 'Ready to Transform your Business?',
-      subtitle: 'Join a growing community of property professionals',
-      content: <CTASlide />
+      id: 'impact',
+      title: 'The Impact',
+      subtitle: '',
+      content: <ImpactSlide />
+    },
+    {
+      id: 'invitation',
+      title: 'The Invitation',
+      subtitle: '',
+      content: <InvitationSlide />
     }
   ];
 
