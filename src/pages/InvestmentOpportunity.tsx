@@ -1847,7 +1847,7 @@ const InvestmentOpportunity = () => {
                                         {member.role}
                                       </span>
                                     </div>
-                                    <div className="p-4 sm:p-6 space-y-3">
+                                    <div className="pt-2 px-4 pb-4 sm:pt-3 sm:px-6 sm:pb-6 space-y-3">
                                       <h4 className="text-lg sm:text-xl font-bold text-foreground min-h-[3rem] flex items-center justify-center">
                                         {member.name}
                                       </h4>
