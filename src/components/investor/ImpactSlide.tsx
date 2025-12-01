@@ -17,9 +17,9 @@ export const ImpactSlide = () => {
 
         <div className="space-y-2 py-3">
           {impacts.map((item, idx) => (
-            <div key={idx} className="flex items-center gap-2 p-2 rounded-lg bg-[#f8fafc] border-l-4 border-[#7c3aed]">
-              <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm">
-                <item.icon className="w-4 h-4 text-[#7c3aed]" />
+            <div key={idx} className="flex items-center gap-3 p-2.5 rounded-lg bg-[#f8fafc] border-l-4 border-[#7c3aed]">
+              <div className="w-9 h-9 rounded-full bg-white flex items-center justify-center shadow-sm">
+                <item.icon className="w-4.5 h-4.5 text-[#7c3aed]" />
               </div>
               <span className="text-sm text-[#1e293b] font-medium">
                 {item.text}
