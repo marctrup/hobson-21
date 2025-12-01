@@ -1864,7 +1864,7 @@ const InvestmentOpportunity = () => {
                                           href={member.linkedin}
                                           target="_blank"
                                           rel="noopener noreferrer"
-                                          className="text-xs sm:text-sm text-primary hover:text-primary/80 underline inline-flex items-center gap-1 transition-colors"
+                                          className="text-xs sm:text-sm text-blue-600 hover:text-blue-700 underline inline-flex items-center gap-1 transition-colors"
                                         >
                                           <span>LinkedIn Profile</span>
                                           <span className="text-[10px]">↗</span>
