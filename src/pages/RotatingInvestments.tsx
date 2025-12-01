@@ -91,15 +91,15 @@ const RotatingInvestments = () => {
     });
 
     try {
-      // Get the actual dimensions of the slide container
       const slideContainer = slideRef.current;
-      const slideWidth = slideContainer.offsetWidth;
-      const slideHeight = slideContainer.offsetHeight;
+      
+      // Use standard square dimensions for consistent output
+      const pdfSize = 1080; // 1080x1080 square format (social media standard)
       
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'px',
-        format: [slideWidth, slideHeight],
+        format: [pdfSize, pdfSize],
       });
 
       // Capture each slide
@@ -110,23 +110,43 @@ const RotatingInvestments = () => {
         await new Promise(resolve => setTimeout(resolve, 800));
         
         const canvas = await html2canvas(slideContainer, {
-          scale: 2,
+          scale: 3, // Higher scale for better quality
           backgroundColor: '#ffffff',
           logging: false,
-          width: slideWidth,
-          height: slideHeight,
-          windowWidth: slideWidth,
-          windowHeight: slideHeight,
+          useCORS: true,
         });
 
-        const imgData = canvas.toDataURL('image/png');
+        // Create a square canvas at exact dimensions
+        const squareCanvas = document.createElement('canvas');
+        squareCanvas.width = pdfSize;
+        squareCanvas.height = pdfSize;
+        const ctx = squareCanvas.getContext('2d');
+        
+        if (ctx) {
+          // Fill with white background
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, pdfSize, pdfSize);
+          
+          // Calculate dimensions to fit the captured content
+          const sourceSize = Math.min(canvas.width, canvas.height);
+          const sourceX = (canvas.width - sourceSize) / 2;
+          const sourceY = (canvas.height - sourceSize) / 2;
+          
+          // Draw the content centered and properly sized
+          ctx.drawImage(
+            canvas,
+            sourceX, sourceY, sourceSize, sourceSize,
+            0, 0, pdfSize, pdfSize
+          );
+        }
+
+        const imgData = squareCanvas.toDataURL('image/png', 1.0);
         
         if (i > 0) {
-          pdf.addPage();
+          pdf.addPage([pdfSize, pdfSize]);
         }
         
-        // Add image at actual size to maintain aspect ratio
-        pdf.addImage(imgData, 'PNG', 0, 0, slideWidth, slideHeight);
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfSize, pdfSize, undefined, 'FAST');
       }
 
       pdf.save('hobson-investor-carousel.pdf');
