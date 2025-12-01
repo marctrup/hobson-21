@@ -16,13 +16,13 @@ export const ValueSlide = () => {
         </h2>
         
         {/* Mobile: Horizontal icons without boxes */}
-        <div className="flex sm:hidden items-center justify-center gap-4 py-3">
+        <div className="flex sm:hidden items-start justify-center gap-6 py-4">
           {values.map((item, idx) => (
-            <div key={idx} className="flex flex-col items-center gap-1.5">
-              <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center`}>
-                <item.icon className="w-5 h-5 text-white" />
+            <div key={idx} className="flex flex-col items-center gap-2">
+              <div className={`w-14 h-14 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center`}>
+                <item.icon className="w-7 h-7 text-white" />
               </div>
-              <span className="text-[9px] text-[#1e293b] font-semibold leading-tight text-center max-w-[60px]">
+              <span className="text-[10px] text-[#1e293b] font-semibold leading-tight text-center max-w-[70px]">
                 {item.label}
               </span>
             </div>
