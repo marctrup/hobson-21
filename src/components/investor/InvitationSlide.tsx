@@ -27,7 +27,7 @@ export const InvitationSlide = () => {
           <Button
             size="lg"
             className="bg-gradient-to-r from-[#7c3aed] to-[#a78bfa] hover:from-[#6d28d9] hover:to-[#9333ea] text-white font-semibold px-8 py-6 text-base sm:text-lg shadow-lg"
-            onClick={() => window.open('mailto:rochelle.t@hobsonschoice.ai?subject=Investment Opportunity Inquiry', '_blank')}
+            onClick={() => window.location.href = 'mailto:Rochelle.t@hobsonschoice.ai?subject=Investment Opportunity Inquiry'}
           >
             <Mail className="w-5 h-5 mr-2" />
             Start the Conversation
