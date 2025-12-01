@@ -787,7 +787,7 @@ const InvestmentOpportunity = () => {
                 <h2 className="text-xs font-semibold text-primary uppercase tracking-wider mb-2 sm:mb-3 text-center">
                   Positioning Statement
                 </h2>
-                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed text-center max-w-4xl mx-auto">
+                <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
                   <span className="text-primary font-semibold">Disruption Without Displacement.</span> Hobson brings AI clarity to real estate operations by transforming unstructured documents and fragmented data into immediate, trustworthy answers. It enhances — rather than replaces — existing CRMs and workflows, offering a lightweight, low-cost layer that delivers enterprise-grade accuracy. Hobson creates meaningful productivity gains, lowers operating costs, and provides a stepping stone for widespread AI adoption across the sector.
                 </p>
               </div>
