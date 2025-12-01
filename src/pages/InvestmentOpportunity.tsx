@@ -709,11 +709,10 @@ const InvestmentOpportunity = () => {
         doc.text(pageTitleLines, margin, yPosition);
         yPosition += pageTitleLines.length * 8 + 10;
         
-        // Add the image
-        const img = new Image();
-        img.src = page.image;
+        // Add the image with fixed aspect ratio
+        // Using a reasonable width and calculated height
         const imgWidth = maxWidth;
-        const imgHeight = (img.height / img.width) * imgWidth;
+        const imgHeight = imgWidth * 0.7; // Reasonable aspect ratio for architecture diagram
         
         // Center the image vertically if there's space
         const availableHeight = pageHeight - yPosition - 40;
@@ -722,7 +721,7 @@ const InvestmentOpportunity = () => {
         }
         
         try {
-          doc.addImage(img, 'PNG', margin, yPosition, imgWidth, Math.min(imgHeight, availableHeight));
+          doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, Math.min(imgHeight, availableHeight));
         } catch (error) {
           console.error('Error adding image to PDF:', error);
           // Fallback: show overview text if image fails
@@ -1039,11 +1038,9 @@ const InvestmentOpportunity = () => {
           doc.text(pageTitleLines, margin, yPosition);
           yPosition += pageTitleLines.length * 8 + 10;
           
-          // Add the image
-          const img = new Image();
-          img.src = page.image;
+          // Add the image with fixed aspect ratio
           const imgWidth = maxWidth;
-          const imgHeight = (img.height / img.width) * imgWidth;
+          const imgHeight = imgWidth * 0.7; // Reasonable aspect ratio for architecture diagram
           
           // Center the image vertically if there's space
           const availableHeight = pageHeight - yPosition - 40;
@@ -1052,7 +1049,7 @@ const InvestmentOpportunity = () => {
           }
           
           try {
-            doc.addImage(img, 'PNG', margin, yPosition, imgWidth, Math.min(imgHeight, availableHeight));
+            doc.addImage(page.image, 'PNG', margin, yPosition, imgWidth, Math.min(imgHeight, availableHeight));
           } catch (error) {
             console.error('Error adding image to PDF:', error);
             // Fallback: show overview text if image fails
