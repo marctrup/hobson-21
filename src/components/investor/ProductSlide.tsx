@@ -1,30 +1,47 @@
 import React from 'react';
-import { Plus, Shield, Zap } from 'lucide-react';
+import hobsonWeb from '@/assets/hobson-web-interface.png';
+import hobsonMobile from '@/assets/hobson-mobile-interface.png';
 
 export const ProductSlide = () => {
   return (
-    <div className="h-full flex items-center justify-center px-4 sm:px-6 pb-12 sm:pb-20">
-      <div className="text-center max-w-2xl space-y-4 sm:space-y-6">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#1e293b] leading-tight px-2">
-          Innovation That Fits,<br />Not Replaces
+    <div className="h-full flex items-center justify-center px-4 sm:px-6 pb-16 sm:pb-20">
+      <div className="text-center max-w-3xl space-y-3 sm:space-y-4">
+        <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-[#1e293b] leading-tight px-2">
+          Simple Interface.<br />Powerful Results.
         </h2>
 
-        <div className="flex items-center justify-center gap-2 sm:gap-3 md:gap-4 py-4 sm:py-6">
-          <div className="flex flex-col items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-lg bg-[#f1f5f9]">
-            <Shield className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10 text-[#475569]" />
-            <span className="text-[10px] sm:text-xs md:text-sm text-[#475569] font-medium">Your tools</span>
+        <p className="text-xs sm:text-sm md:text-base text-[#475569] max-w-lg mx-auto px-2">
+          No training required. Works where you already work.
+        </p>
+
+        <div className="flex items-center justify-center gap-3 sm:gap-6 py-2 sm:py-4">
+          {/* Web Interface */}
+          <div className="flex flex-col items-center gap-1.5 sm:gap-2">
+            <div className="rounded-lg overflow-hidden shadow-lg border border-[#e2e8f0] bg-white">
+              <img 
+                src={hobsonWeb} 
+                alt="Hobson web interface" 
+                className="w-36 sm:w-48 md:w-64 h-auto object-cover"
+              />
+            </div>
+            <span className="text-[10px] sm:text-xs text-[#64748b] font-medium">Web</span>
           </div>
-          
-          <Plus className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10 text-[#7c3aed]" strokeWidth={3} />
-          
-          <div className="flex flex-col items-center gap-1.5 sm:gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-lg bg-gradient-to-br from-[#7c3aed] to-[#a78bfa]">
-            <Zap className="w-6 h-6 sm:w-7 sm:h-7 md:w-10 md:h-10 text-white" />
-            <span className="text-[10px] sm:text-xs md:text-sm text-white font-semibold">Hobson AI</span>
+
+          {/* Mobile Interface */}
+          <div className="flex flex-col items-center gap-1.5 sm:gap-2">
+            <div className="rounded-xl overflow-hidden shadow-lg border border-[#e2e8f0] bg-white">
+              <img 
+                src={hobsonMobile} 
+                alt="Hobson mobile interface" 
+                className="w-20 sm:w-28 md:w-36 h-auto object-cover"
+              />
+            </div>
+            <span className="text-[10px] sm:text-xs text-[#64748b] font-medium">Mobile</span>
           </div>
         </div>
 
-        <p className="text-sm sm:text-base md:text-xl text-[#7c3aed] leading-relaxed font-semibold max-w-xl mx-auto px-2">
-          Enterprise-grade accuracy with zero workflow friction
+        <p className="text-xs sm:text-sm md:text-base text-[#7c3aed] leading-relaxed font-semibold max-w-md mx-auto px-2">
+          Ask questions. Get instant, referenced answers.
         </p>
       </div>
     </div>
