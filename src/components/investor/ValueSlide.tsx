@@ -13,7 +13,7 @@ export const ValueSlide = () => {
           Pay only for what you use with Hobson Energy Units
         </p>
 
-        <div className="flex items-center justify-center py-2 sm:py-4">
+        <div className="flex items-center justify-center py-2 sm:py-4 -mt-[3px]">
           <div className="flex flex-col items-center gap-1 sm:gap-2">
             <img 
               src={heuUsage} 
