@@ -27,7 +27,7 @@ export const ProductSlide = () => {
             <img 
               src={hobsonWeb} 
               alt="Hobson web interface" 
-              className="absolute top-[3%] left-[3%] w-[94%] h-[73%] object-cover"
+              className="absolute top-[4%] left-[4%] w-[92%] h-[70%] object-cover"
             />
           </div>
 
