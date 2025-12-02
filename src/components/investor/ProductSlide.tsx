@@ -16,7 +16,7 @@ export const ProductSlide = () => {
           No training required. Works where you already work.
         </p>
 
-        <div className="flex items-center justify-center gap-4 sm:gap-6 py-2 sm:py-4">
+        <div className="flex items-start justify-center gap-4 sm:gap-6 py-2 sm:py-4">
           {/* Desktop with screenshot */}
           <div className="relative">
             <img 
