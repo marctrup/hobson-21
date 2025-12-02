@@ -18,7 +18,7 @@ export const ProblemSlide = () => {
           {markets.map((item, idx) => (
             <div key={idx} className="flex flex-col items-center">
               <div className={`${item.size} rounded-full bg-gradient-to-br from-[#7c3aed] to-[#a78bfa] flex items-center justify-center shadow-lg`}>
-                <span className="text-[8px] sm:text-xs md:text-sm font-bold text-white">
+                <span className="text-[10px] sm:text-sm md:text-base font-bold text-white">
                   {item.value}
                 </span>
               </div>
