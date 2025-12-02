@@ -44,7 +44,7 @@ export const ProblemSlide = () => {
         </div>
 
         <p className="text-xs sm:text-sm md:text-base text-primary leading-relaxed max-w-md mx-auto px-2 pt-2">
-          Our AI knows no borders
+          Built in the UK. Designed for the world
         </p>
       </div>
     </div>
