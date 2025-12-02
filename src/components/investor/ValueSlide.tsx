@@ -1,5 +1,4 @@
 import React from 'react';
-import heuCoin from '@/assets/heu-coin.png';
 import heuUsage from '@/assets/heu-usage-display.png';
 
 export const ValueSlide = () => {
@@ -14,23 +13,12 @@ export const ValueSlide = () => {
           Pay only for what you use with Hobson Energy Units
         </p>
 
-        <div className="flex items-center justify-center gap-4 sm:gap-8 py-2 sm:py-4">
-          {/* HEU Coin */}
-          <div className="flex flex-col items-center gap-1 sm:gap-2">
-            <img 
-              src={heuCoin} 
-              alt="HEU Coin" 
-              className="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain"
-            />
-            <span className="text-[10px] sm:text-xs text-[#475569] font-medium">HEU Currency</span>
-          </div>
-
-          {/* Usage Display */}
+        <div className="flex items-center justify-center py-2 sm:py-4">
           <div className="flex flex-col items-center gap-1 sm:gap-2">
             <img 
               src={heuUsage} 
               alt="HEU Usage Display" 
-              className="w-28 h-auto sm:w-40 md:w-48 rounded-lg shadow-md"
+              className="w-36 h-auto sm:w-52 md:w-64 rounded-lg shadow-md"
             />
             <span className="text-[10px] sm:text-xs text-[#475569] font-medium">Real-time Usage</span>
           </div>
