@@ -16,7 +16,7 @@ export const ProductSlide = () => {
           No training required. Works where you already work.
         </p>
 
-        <div className="flex items-end justify-center gap-4 sm:gap-6 py-2 sm:py-4">
+        <div className="flex items-center justify-center gap-4 sm:gap-6 py-2 sm:py-4">
           {/* Desktop with screenshot */}
           <div className="relative">
             <img 
@@ -45,10 +45,6 @@ export const ProductSlide = () => {
             />
           </div>
         </div>
-
-        <p className="text-xs sm:text-sm md:text-base text-[#7c3aed] leading-relaxed font-semibold max-w-md mx-auto px-2">
-          Ask questions. Get instant, referenced answers.
-        </p>
       </div>
     </div>
   );
