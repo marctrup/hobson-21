@@ -18,7 +18,7 @@ export const ValueSlide = () => {
             <img 
               src={heuUsage} 
               alt="HEU Usage Display" 
-              className="w-28 h-auto sm:w-40 md:w-48 rounded-lg shadow-md"
+              className="w-32 h-auto sm:w-44 md:w-52 rounded-lg shadow-md"
             />
             <span className="text-[10px] sm:text-xs text-primary font-medium">Real-time Usage</span>
           </div>
