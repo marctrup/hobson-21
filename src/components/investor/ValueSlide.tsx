@@ -36,9 +36,6 @@ export const ValueSlide = () => {
           </div>
         </div>
 
-        <p className="text-xs sm:text-sm md:text-base lg:text-lg text-primary leading-snug font-semibold max-w-xl mx-auto px-2">
-          Full visibility into every query cost
-        </p>
       </div>
     </div>
   );
