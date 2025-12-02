@@ -32,7 +32,7 @@ export const ProductSlide = () => {
           </div>
 
           {/* Phone with screenshot */}
-          <div className="relative mt-[3px]">
+          <div className="relative mt-[6px]">
             <img 
               src={phoneFrame} 
               alt="Phone" 
