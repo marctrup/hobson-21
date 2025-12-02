@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Play, Pause } from 'lucide-react';
+import React, { useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { CoverSlide } from "@/components/rotating";
 import { ProblemSlide, ProductSlide, ValueSlide, InvitationSlide } from "@/components/investor";
@@ -8,7 +8,6 @@ import hobsonLogo from "@/assets/hobson-carousel-logo.png";
 
 const RotatingInvestments = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(false); // Start paused
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -49,22 +48,7 @@ const RotatingInvestments = () => {
     }
   ];
 
-  useEffect(() => {
-    if (!isAutoPlaying) return;
-    
-    const timer = setInterval(() => {
-      setIsTransitioning(true);
-      setTimeout(() => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
-        setIsTransitioning(false);
-      }, 300);
-    }, 4000);
-
-    return () => clearInterval(timer);
-  }, [isAutoPlaying, slides.length]);
-
   const nextSlide = () => {
-    setIsAutoPlaying(false);
     setIsTransitioning(true);
     setTimeout(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -73,7 +57,6 @@ const RotatingInvestments = () => {
   };
 
   const prevSlide = () => {
-    setIsAutoPlaying(false);
     setIsTransitioning(true);
     setTimeout(() => {
       setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
@@ -82,7 +65,6 @@ const RotatingInvestments = () => {
   };
 
   const goToSlide = (index: number) => {
-    setIsAutoPlaying(false);
     setIsTransitioning(true);
     setTimeout(() => {
       setCurrentSlide(index);
@@ -214,32 +196,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             >
               <ChevronLeft className="w-4 h-4 sm:w-4 sm:h-4" />
             </Button>
-            
-            <div className="flex items-center gap-2 pointer-events-auto">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => {
-                  if (!isAutoPlaying) {
-                    // If currently paused, advance immediately then resume auto-play
-                    setIsTransitioning(true);
-                    setTimeout(() => {
-                      setCurrentSlide((prev) => (prev + 1) % slides.length);
-                      setIsTransitioning(false);
-                    }, 300);
-                  }
-                  setIsAutoPlaying(!isAutoPlaying);
-                }}
-                aria-label={isAutoPlaying ? 'Pause carousel' : 'Play carousel'}
-                className="rounded-full bg-gray-100 hover:bg-gray-200 border-gray-200 w-10 h-10 pointer-events-auto touch-manipulation"
-              >
-                {isAutoPlaying ? (
-                  <Pause className="w-4 h-4 text-gray-700" />
-                ) : (
-                  <Play className="w-4 h-4 text-gray-700" />
-                )}
-              </Button>
-            </div>
 
             <Button
               variant="outline"
