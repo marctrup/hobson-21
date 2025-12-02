@@ -5,17 +5,17 @@ export const ProblemSlide = () => {
     region: 'UK',
     value: '£6B',
     size: 'w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16',
-    gradient: 'from-[#e2e8f0] to-[#cbd5e1]'
+    gradient: 'from-[#99f6e4] to-[#5eead4]'
   }, {
     region: 'Europe',
     value: '£66B',
     size: 'w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24',
-    gradient: 'from-[#cbd5e1] to-[#94a3b8]'
+    gradient: 'from-[#5eead4] to-[#2dd4bf]'
   }, {
     region: 'Global',
     value: '£708B',
     size: 'w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32',
-    gradient: 'from-[#94a3b8] to-[#64748b]'
+    gradient: 'from-[#2dd4bf] to-[#14b8a6]'
   }];
 
   return (
