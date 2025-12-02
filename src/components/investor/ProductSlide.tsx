@@ -1,6 +1,8 @@
 import React from 'react';
 import hobsonWeb from '@/assets/hobson-web-interface.png';
 import hobsonMobile from '@/assets/hobson-mobile-interface.png';
+import desktopFrame from '@/assets/desktop-frame.png';
+import phoneFrame from '@/assets/phone-frame.png';
 
 export const ProductSlide = () => {
   return (
@@ -14,29 +16,33 @@ export const ProductSlide = () => {
           No training required. Works where you already work.
         </p>
 
-        <div className="flex items-center justify-center gap-3 sm:gap-6 py-2 sm:py-4">
-          {/* Web Interface */}
-          <div className="flex flex-col items-center gap-1.5 sm:gap-2">
-            <div className="rounded-lg overflow-hidden shadow-lg border border-[#e2e8f0] bg-white">
-              <img 
-                src={hobsonWeb} 
-                alt="Hobson web interface" 
-                className="w-36 sm:w-48 md:w-64 h-auto object-cover"
-              />
-            </div>
-            <span className="text-[10px] sm:text-xs text-[#64748b] font-medium">Web</span>
+        <div className="flex items-end justify-center gap-4 sm:gap-6 py-2 sm:py-4">
+          {/* Desktop with screenshot */}
+          <div className="relative">
+            <img 
+              src={desktopFrame} 
+              alt="Desktop" 
+              className="w-44 sm:w-56 md:w-72 h-auto"
+            />
+            <img 
+              src={hobsonWeb} 
+              alt="Hobson web interface" 
+              className="absolute top-[3%] left-[3%] w-[94%] h-[73%] object-cover"
+            />
           </div>
 
-          {/* Mobile Interface */}
-          <div className="flex flex-col items-center gap-1.5 sm:gap-2">
-            <div className="rounded-xl overflow-hidden shadow-lg border border-[#e2e8f0] bg-white">
-              <img 
-                src={hobsonMobile} 
-                alt="Hobson mobile interface" 
-                className="w-20 sm:w-28 md:w-36 h-auto object-cover"
-              />
-            </div>
-            <span className="text-[10px] sm:text-xs text-[#64748b] font-medium">Mobile</span>
+          {/* Phone with screenshot */}
+          <div className="relative">
+            <img 
+              src={phoneFrame} 
+              alt="Phone" 
+              className="w-14 sm:w-20 md:w-24 h-auto"
+            />
+            <img 
+              src={hobsonMobile} 
+              alt="Hobson mobile interface" 
+              className="absolute top-[3%] left-[5%] w-[90%] h-[94%] object-cover rounded-xl"
+            />
           </div>
         </div>
 
