@@ -20,7 +20,7 @@ export const ValueSlide = () => {
               alt="HEU Usage Display" 
               className="w-28 h-auto sm:w-40 md:w-48 rounded-lg shadow-md"
             />
-            <span className="text-[10px] sm:text-xs text-[#475569] font-medium">Real-time Usage</span>
+            <span className="text-[10px] sm:text-xs text-primary font-medium">Real-time Usage</span>
           </div>
         </div>
 
