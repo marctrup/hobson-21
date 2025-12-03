@@ -1791,12 +1791,44 @@ const InvestmentOpportunity = () => {
         <section className="py-8 sm:py-10 md:py-12">
           <div className="container mx-auto px-3 sm:px-4">
             <div className="max-w-6xl mx-auto">
-              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-1 sm:mb-2 text-center">
-                Explore Detailed Sections
-              </h2>
-              <p className="text-sm sm:text-base text-muted-foreground mb-6 sm:mb-8 text-center px-2">
-                Click any section below to view detailed information or download individual documents
-              </p>
+              <div className="text-center mb-8 sm:mb-10">
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-3">
+                  Business Plan Sections
+                </h2>
+                <p className="text-sm sm:text-base text-muted-foreground mb-6 max-w-2xl mx-auto px-2">
+                  Explore individual sections below to view detailed information or download as separate documents
+                </p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                  <span className="text-sm text-muted-foreground">or</span>
+                  <Button
+                    size="lg"
+                    className="gap-2"
+                    onClick={() => {
+                      try {
+                        toast({
+                          title: "Generating Full Business Plan",
+                          description: "Combining all sections into one PDF...",
+                        });
+                        generateFullBusinessPlan();
+                        toast({
+                          title: "PDF Downloaded",
+                          description: "Full Business Plan has been saved to your downloads folder",
+                        });
+                      } catch (error) {
+                        console.error('Error generating full business plan:', error);
+                        toast({
+                          title: "Error",
+                          description: "Failed to generate PDF. Please try again.",
+                          variant: "destructive",
+                        });
+                      }
+                    }}
+                  >
+                    <Download className="w-4 h-4" />
+                    Download Complete Business Plan
+                  </Button>
+                </div>
+              </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {sections.map((section) => (
