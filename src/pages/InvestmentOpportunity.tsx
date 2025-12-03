@@ -219,12 +219,51 @@ const sections = [
       {
         title: "Global Validation",
         content: {
-          overview: "",
+          overview: "AI in Real Estate Is Scaling Fast",
           sections: [
             {
-              title: "Validation Overview",
+              title: "Explosive Global Growth (Verified by Independent Reports)",
+              items: [],
+            },
+            {
+              title: "1. AI in Real Estate Market Growth (Business Research Company)",
               items: [
-                "Global market validation content to be added.",
+                "Market growing from $222.65B in 2024 to $303.06B in 2025",
+                "36.1% CAGR",
+                "Source: Business Research Company — AI in Real Estate Global Market Report 2025",
+              ],
+            },
+            {
+              title: "2. Long-Term Forecast to 2030 (Maximize Market Research)",
+              items: [
+                "Global market projected to reach $1.8T by 2030",
+                "Sustained 35% CAGR",
+                "Source: Maximize Market Research — Artificial Intelligence (AI) in Real Estate Market Forecast 2023–2030",
+              ],
+            },
+            {
+              title: "3. Proven Efficiency & Cost Gains (McKinsey)",
+              items: [
+                "Real estate companies have achieved 10%+ increases in net operating income (NOI) through AI",
+                "Driven by automation and more efficient operating models",
+                "Source: McKinsey — The Power of Generative AI in Real Estate",
+              ],
+            },
+            {
+              title: "4. Real-World Adoption & Savings (Forbes)",
+              items: [
+                "49% of real estate business owners report clear cost reductions from AI adoption",
+                "Operational savings can reach up to 20%",
+                "Source: Forbes — How Artificial Intelligence Is Changing the Real Estate Market",
+              ],
+            },
+            {
+              title: "Why This Matters for Hobson",
+              items: [
+                "AI efficiency gains are a global norm, reinforcing UK opportunity",
+                "20% efficiency uplift is validated by global real estate data",
+                "Your UK £1.41B → £917M → £110M path sits inside a multi-trillion-dollar, fast-growing global market",
+                "Hobson enters a sector where adoption is rising and ROI is demonstrable",
               ],
             },
           ],
