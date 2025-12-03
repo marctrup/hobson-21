@@ -78,36 +78,6 @@ export const EuropeanGlobalVisual = () => {
             </ul>
           </div>
 
-          {/* Europe Summary */}
-          <div className="bg-muted/30 border border-border rounded-lg p-3 lg:p-4">
-            <h4 className="text-sm lg:text-base font-semibold text-foreground mb-2">Summary</h4>
-            <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Europe's population is 11× larger than the UK, creating a major expansion opportunity.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Using the UK's £6,000 efficiency saving per business and £1.41B TAM as the baseline, Europe represents a £15.5B TAM.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>With 65% of european motivation to adopt AI, the SAM is £10.1B.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Assuming 12% penetration, Hobson's near-term obtainable market (SOM) is £1.2B.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Highlights a massive, underserved european opportunity for AI-driven document and workflow automation.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.</span>
-              </li>
-            </ul>
-          </div>
         </div>
 
         {/* Global Column */}
@@ -184,37 +154,14 @@ export const EuropeanGlobalVisual = () => {
             </ul>
           </div>
 
-          {/* Global Summary */}
-          <div className="bg-muted/30 border border-border rounded-lg p-3 lg:p-4">
-            <h4 className="text-sm lg:text-base font-semibold text-foreground mb-2">Summary</h4>
-            <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>The global population is 118× larger than the UK, giving Hobson exceptional international scalability.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Applying the UK's £6,000 efficiency saving and £1.41B TAM, the global TAM reaches £155.6B.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>With 65% global motivation to adopt AI, the SAM is £101B.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>At 12% penetration, Hobson's obtainable global market (SOM) is £12.1B.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Highlights a massive, underserved global opportunity for AI-driven document and workflow automation.</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.</span>
-              </li>
-            </ul>
-          </div>
         </div>
+      </div>
+
+      {/* Single Summary */}
+      <div className="bg-muted/30 border border-border rounded-lg p-3 lg:p-4">
+        <p className="text-sm lg:text-base text-muted-foreground">
+          Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.
+        </p>
       </div>
     </div>;
 };
