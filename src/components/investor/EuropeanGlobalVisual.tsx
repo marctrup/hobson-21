@@ -12,32 +12,6 @@ export const EuropeanGlobalVisual = () => {
             <p className="text-xs lg:text-sm text-muted-foreground">11× UK Population Multiple</p>
           </div>
 
-          {/* Europe Overview */}
-          <div className="space-y-3">
-            <ul className="space-y-2 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>Europe's population is 11× larger than the UK</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>UK efficiency value per business: £6,000 (20% time gain)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>UK TAM baseline: £1.41B</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>Applying the 11× multiple gives a simple estimate</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>Same conservative assumptions: 65% motivated (SAM), 12% obtainable (SOM)</span>
-              </li>
-            </ul>
-          </div>
-
           {/* Europe TAM */}
           <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 lg:p-4 space-y-2">
             <div className="flex items-baseline justify-between">
@@ -142,32 +116,6 @@ export const EuropeanGlobalVisual = () => {
           <div className="pb-3 border-b-2 border-primary/20">
             <h3 className="text-xl lg:text-2xl font-bold text-primary mb-1">Global</h3>
             <p className="text-xs lg:text-sm text-muted-foreground">118× UK Population Multiple</p>
-          </div>
-
-          {/* Global Overview */}
-          <div className="space-y-3">
-            <ul className="space-y-2 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>The global population is 118× larger than the UK</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>UK efficiency value per business: £6,000 (20% time gain)</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>UK TAM baseline: £1.41B</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>Applying the 118× multiple provides a simple estimate</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>Same conservative assumptions: 65% motivated (SAM), 12% obtainable (SOM)</span>
-              </li>
-            </ul>
           </div>
 
           {/* Global TAM */}
