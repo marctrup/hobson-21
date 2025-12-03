@@ -9,6 +9,9 @@ export const CoverSlide = () => {
           src={splitScreenImage} 
           alt="Split screen comparison showing chaos of traditional systems versus calm simplicity of Hobson"
           className="w-full h-auto rounded-lg shadow-lg object-contain max-h-48 sm:max-h-none"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
         />
       </div>
     </div>
