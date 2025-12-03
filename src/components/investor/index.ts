@@ -13,3 +13,4 @@ export { ProductSlide } from './ProductSlide';
 export { ValueSlide } from './ValueSlide';
 export { ImpactSlide } from './ImpactSlide';
 export { InvitationSlide } from './InvitationSlide';
+export { SimpleUIVisual } from './SimpleUIVisual';
