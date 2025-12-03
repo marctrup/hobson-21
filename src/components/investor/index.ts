@@ -14,3 +14,4 @@ export { ValueSlide } from './ValueSlide';
 export { ImpactSlide } from './ImpactSlide';
 export { InvitationSlide } from './InvitationSlide';
 export { SimpleUIVisual } from './SimpleUIVisual';
+export { UKMarketVisual } from './UKMarketVisual';
