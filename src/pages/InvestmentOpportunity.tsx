@@ -56,28 +56,25 @@ const sections = [
             {
               title: "Market Opportunity",
               items: [
-                "£6B UK efficiency savings potential",
-                "£66B in Europe, £708B globally",
-                "134K+ UK real estate firms; 96% are small operators",
-                "PropTech is rapidly evolving from passive tools to intelligent assistants — Hobson leads this next wave",
+                "£6B efficiency-saving potential in the UK alone",
+                "£66B across Europe and £708B globally",
+                "PropTech is shifting from static software to intelligent automation — Hobson is positioned to lead this transition",
               ],
             },
             {
               title: "Traction & Milestones",
               items: [
-                "MVP live, validated with 4 real-world partners",
-                "Partners include EPAM Asset Management, Live-in Guardians, and Landhold Investments",
-                "Document types: leases, deeds, floorplans, certificates",
-                "Phase 2 planned for Oct 2025: mobile, API, deeper AI",
+                "MVP launching Q1 2026, validated with four real-world partners",
+                "Current model performance at 98% accuracy",
+                "Handles key document types: legal, compliance, reports, and more",
               ],
             },
             {
               title: "Revenue Model",
               items: [
-                "Usage-based via Hobson Energy Units (HEUs)",
-                "No per-user or license fees",
-                "Plans: Free, Monthly (£20+VAT), Onboarding, Top-up",
-                "Typical cost: £0.54 for full lease extraction; ~£0.001 for simple queries",
+                "Usage-based pricing through Hobson Energy Units (HEUs)",
+                "No per-user or per-asset fees",
+                "Built to integrate seamlessly with existing systems",
               ],
             },
           ],
