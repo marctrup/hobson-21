@@ -1,8 +1,5 @@
 import React from 'react';
-import desktopFrame from '@/assets/desktop-frame.png';
-import phoneFrame from '@/assets/phone-frame.png';
-import webInterface from '@/assets/hobson-web-interface.png';
-import mobileInterface from '@/assets/hobson-mobile-interface.png';
+import devicesCombined from '@/assets/hobson-devices-combined.png';
 
 export const SimpleUIVisual = () => {
   return (
@@ -17,66 +14,14 @@ export const SimpleUIVisual = () => {
         </p>
       </div>
 
-      {/* Device Mockups */}
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-6">
-        {/* Desktop Mockup */}
-        <div className="relative w-full max-w-xs lg:max-w-sm">
-          <div className="relative">
-            {/* Desktop Frame */}
-            <img 
-              src={desktopFrame} 
-              alt="Desktop computer frame" 
-              className="w-full h-auto"
-              loading="lazy"
-            />
-            {/* Web Interface inside frame */}
-            <img 
-              src={webInterface} 
-              alt="Hobson web interface showing satellite map view with property navigation" 
-              className="absolute object-cover"
-              style={{ 
-                top: '4.5%',
-                left: '4.5%',
-                width: '91%',
-                height: '65%',
-              }}
-              loading="lazy"
-            />
-          </div>
-          <p className="text-xs text-center text-foreground/70 mt-2">
-            Web Interface - Property Map View
-          </p>
-        </div>
-
-        {/* Mobile Mockup */}
-        <div className="relative w-32 sm:w-36 lg:w-44 flex-shrink-0">
-          <div className="relative">
-            {/* Phone Frame */}
-            <img 
-              src={phoneFrame} 
-              alt="Mobile phone frame" 
-              className="w-full h-auto"
-              loading="lazy"
-            />
-            {/* Mobile Interface inside frame */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <img 
-                src={mobileInterface} 
-                alt="Hobson mobile chat interface showing rent review query" 
-                className="w-[77%] h-[85%] object-cover rounded-[20px]"
-                style={{ 
-                  position: 'absolute',
-                  top: '7%',
-                  left: '11.5%',
-                }}
-                loading="lazy"
-              />
-            </div>
-          </div>
-          <p className="text-xs text-center text-foreground/70 mt-2">
-            Mobile Chat Interface
-          </p>
-        </div>
+      {/* Combined Device Image */}
+      <div className="flex justify-center">
+        <img 
+          src={devicesCombined} 
+          alt="Hobson interface on desktop and mobile showing property management and chat features" 
+          className="w-full max-w-2xl h-auto"
+          loading="lazy"
+        />
       </div>
 
       {/* Key Features */}
@@ -101,3 +46,6 @@ export const SimpleUIVisual = () => {
     </div>
   );
 };
+
+// Export the image path for PDF generation
+export const simpleUIImagePath = devicesCombined;

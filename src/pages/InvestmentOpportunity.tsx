@@ -27,6 +27,7 @@ import { useToast } from "@/hooks/use-toast";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import hobsonLogo from "/hobson-logo.png";
 import mvpArchitecture from "@/assets/mvp-ai-architecture.png";
+import hobsonDevicesCombined from "@/assets/hobson-devices-combined.png";
 import { CompetitiveLandscapeVisual } from "@/components/investor/CompetitiveLandscapeVisual";
 import { CompetitiveMatrixVisual } from "@/components/investor/CompetitiveMatrixVisual";
 import { EuropeanGlobalVisual } from "@/components/investor/EuropeanGlobalVisual";
@@ -492,6 +493,7 @@ const sections = [
         title: "Simple UI",
         showCustomVisual: true,
         customVisualComponent: "simpleUI",
+        image: hobsonDevicesCombined,
         content: {
           overview:
             "No Onboarding Required. Upload documents and start asking questions immediately. Simple, intuitive interfaces across all devices.",
@@ -1402,17 +1404,20 @@ const InvestmentOpportunity = () => {
           doc.text(pageTitleLines, margin, yPosition);
           yPosition += pageTitleLines.length * 8 + 10;
           
-          // Add the image with proper aspect ratio (tall vertical diagram)
+          // Determine aspect ratio based on image type
+          const isSimpleUI = page.customVisualComponent === "simpleUI";
+          const aspectRatio = isSimpleUI ? 0.75 : 1.7; // Landscape for simpleUI, tall for architecture
+          
           const imgWidth = maxWidth;
-          const targetHeight = imgWidth * 1.7; // Natural aspect ratio for tall architecture diagram
-          const availableHeight = pageHeight - yPosition - 30; // Space available on page
+          const targetHeight = imgWidth * aspectRatio;
+          const availableHeight = pageHeight - yPosition - 30;
           
           // Scale image to fit on current page if needed
           let finalWidth = imgWidth;
           let finalHeight = targetHeight;
           if (targetHeight > availableHeight) {
             finalHeight = availableHeight;
-            finalWidth = finalHeight / 1.7; // Maintain aspect ratio
+            finalWidth = finalHeight / aspectRatio;
           }
           
           try {
