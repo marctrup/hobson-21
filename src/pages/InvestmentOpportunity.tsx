@@ -2132,6 +2132,7 @@ const InvestmentOpportunity = () => {
                         // Determine if section should have white background
                         const hasWhiteBg = contentSection.teamMembers || 
                           /\d{4}:/.test(contentSection.title) || 
+                          /^\d+\./.test(contentSection.title) ||
                           contentSection.title.includes('Operator') || 
                           contentSection.title.startsWith('Step') || 
                           contentSection.title.includes('Technical Components') ||
@@ -2156,7 +2157,9 @@ const InvestmentOpportunity = () => {
                           contentSection.title.includes('AI &') ||
                           contentSection.title.includes('Baseline') ||
                           contentSection.title.includes('Assumptions') ||
-                          contentSection.title.includes('Why 12%');
+                          contentSection.title.includes('Why 12%') ||
+                          contentSection.title.includes('Why This Matters') ||
+                          contentSection.title.includes('Explosive');
                         
                         return (
                         <div key={idx} className="space-y-3 sm:space-y-4">
