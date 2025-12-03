@@ -494,33 +494,22 @@ const sections = [
         customVisualComponent: "simpleUI",
         content: {
           overview:
-            "Hobson's user interface is designed for simplicity and ease of use, requiring zero training and delivering instant value from day one.",
+            "No Onboarding Required. Upload documents and start asking questions immediately. Simple, intuitive interfaces across all devices.",
           sections: [
             {
-              title: "Design Philosophy",
+              title: "Cross-Platform Interfaces",
               items: [
-                "🎯 Zero Learning Curve: Intuitive chat interface that anyone can use immediately",
-                "💬 Conversational First: Natural language interactions, no complex menus or workflows",
-                "📱 Mobile-Ready: Responsive design works seamlessly across desktop, tablet, and mobile",
-                "🎨 Clean & Minimal: Distraction-free interface focused on getting answers fast",
+                "🖥️ Web Interface: Property Map View with satellite imagery and navigation",
+                "📱 Mobile Chat Interface: Conversational AI on the go",
               ],
             },
             {
-              title: "Key Interface Features",
+              title: "Key Benefits",
               items: [
-                "🔍 Smart Search: Ask questions in plain English and get instant, referenced answers",
-                "📄 Document Preview: View source documents directly within responses",
-                "📊 Usage Dashboard: Real-time HEU tracking with transparent cost visibility",
-                "🏢 Property Navigation: Easy switching between properties, portfolios, and units",
-              ],
-            },
-            {
-              title: "User Experience Benefits",
-              items: [
-                "⚡ Instant Onboarding: Upload documents and start asking questions in minutes",
-                "🎓 No Training Required: Designed for non-technical property professionals",
-                "✅ Trust Through Transparency: Every answer includes source citations",
-                "🔄 Continuous Improvement: Interface evolves based on user feedback and usage patterns",
+                "⚡ Instant Start: Begin using immediately with no setup required",
+                "🎯 Zero Training: Intuitive design anyone can use from day one",
+                "💬 Natural Language: Ask questions in plain English",
+                "📱 Any Device: Works seamlessly on desktop, tablet, and mobile",
               ],
             },
           ],
