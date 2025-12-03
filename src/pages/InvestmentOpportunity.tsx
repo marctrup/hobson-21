@@ -493,7 +493,7 @@ const sections = [
         title: "Simple UI",
         showCustomVisual: true,
         customVisualComponent: "simpleUI",
-        image: hobsonDevicesCombined,
+        pdfImage: hobsonDevicesCombined,
         content: {
           overview:
             "No Onboarding Required. Upload documents and start asking questions immediately. Simple, intuitive interfaces across all devices.",
@@ -1395,7 +1395,8 @@ const InvestmentOpportunity = () => {
         let yPosition = margin;
         
         // Handle pages with images specially
-        if (page.image) {
+        const pageImage = page.image || page.pdfImage;
+        if (pageImage) {
           // Page title - Purple
           doc.setTextColor(124, 58, 237);
           doc.setFontSize(18);
@@ -1421,7 +1422,7 @@ const InvestmentOpportunity = () => {
           }
           
           try {
-            doc.addImage(page.image, 'PNG', margin, yPosition, finalWidth, finalHeight);
+            doc.addImage(pageImage, 'PNG', margin, yPosition, finalWidth, finalHeight);
             yPosition += finalHeight + 15;
           } catch (error) {
             console.error('Error adding image to PDF:', error);
