@@ -821,7 +821,9 @@ const InvestmentOpportunity = () => {
       yPosition = margin;
       
       // Handle pages with images specially
-      if (page.image) {
+      const pageImage = page.image || page.pdfImage;
+      const isSimpleUI = page.customVisualComponent === "simpleUI";
+      if (pageImage) {
         // Page title - Purple
         doc.setTextColor(124, 58, 237);
         doc.setFontSize(18);
@@ -831,21 +833,22 @@ const InvestmentOpportunity = () => {
         doc.text(pageTitleLines, margin, yPosition);
         yPosition += pageTitleLines.length * 8 + 10;
         
-        // Add the image with proper aspect ratio (tall vertical diagram)
+        // Determine aspect ratio based on image type
+        const aspectRatio = isSimpleUI ? 0.75 : 1.7; // Landscape for simpleUI, tall for architecture
         const imgWidth = maxWidth;
-        const targetHeight = imgWidth * 1.7; // Natural aspect ratio for tall architecture diagram
-        const availableHeight = pageHeight - yPosition - 30; // Space available on page
+        const targetHeight = imgWidth * aspectRatio;
+        const availableHeight = pageHeight - yPosition - 30;
         
         // Scale image to fit on current page if needed
         let finalWidth = imgWidth;
         let finalHeight = targetHeight;
         if (targetHeight > availableHeight) {
           finalHeight = availableHeight;
-          finalWidth = finalHeight / 1.7; // Maintain aspect ratio
+          finalWidth = finalHeight / aspectRatio;
         }
         
         try {
-          doc.addImage(page.image, 'PNG', margin, yPosition, finalWidth, finalHeight);
+          doc.addImage(pageImage, 'PNG', margin, yPosition, finalWidth, finalHeight);
           yPosition += finalHeight + 15;
         } catch (error) {
           console.error('Error adding image to PDF:', error);
