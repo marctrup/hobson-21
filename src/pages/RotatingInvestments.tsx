@@ -212,10 +212,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         {/* Footer info */}
         <div className="mt-4 sm:mt-6 text-center">
           <Button 
-            variant="cta" 
             size="lg" 
             onClick={() => window.open('https://hobsonschoice.ai', '_blank')} 
-            className="text-sm sm:text-base px-8 py-3 touch-manipulation"
+            className="text-sm sm:text-base px-8 py-3 touch-manipulation bg-gradient-to-r from-[#0d9488] to-[#06b6d4] hover:from-[#0f766e] hover:to-[#0891b2] text-white border-0"
           >
             Visit Hobson
           </Button>
