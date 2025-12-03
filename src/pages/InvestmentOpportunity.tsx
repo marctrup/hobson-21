@@ -206,8 +206,8 @@ const sections = [
                 "below the midpoint of early AI/PropTech adoption,",
                 "aligned with SMB-heavy market behaviour,",
                 "supported by Hobson's advantages: zero onboarding, low pricing, and immediate ROI.",
-                "→ 12% is a conservative, evidence-aligned, credible assumption.",
               ],
+              conclusion: "→ 12% is a conservative, evidence-aligned, credible assumption.",
             },
           ],
         },
@@ -2289,6 +2289,12 @@ const InvestmentOpportunity = () => {
                                 </li>
                               ))}
                             </ul>
+                          )}
+                          {/* Conclusion without bullet */}
+                          {contentSection.conclusion && (
+                            <p className="text-xs sm:text-sm md:text-base leading-relaxed text-foreground font-medium mt-4 pl-3 sm:pl-4">
+                              {contentSection.conclusion}
+                            </p>
                           )}
                         </div>
                         );
