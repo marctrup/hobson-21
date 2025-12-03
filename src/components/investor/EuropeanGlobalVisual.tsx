@@ -126,11 +126,11 @@ export const EuropeanGlobalVisual = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Europe's fragmented systems, compliance demands, and multilingual documentation make AI-native assistants especially valuable.</span>
+                <span>Highlights a massive, underserved european opportunity for AI-driven document and workflow automation.</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Represents a high-potential early export region for Hobson.</span>
+                <span>Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.</span>
               </li>
             </ul>
           </div>
