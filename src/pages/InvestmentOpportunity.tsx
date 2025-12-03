@@ -219,12 +219,8 @@ const sections = [
       {
         title: "Global Validation",
         content: {
-          overview: "AI in Real Estate Is Scaling Fast",
+          overview: "Explosive Global Growth (Verified by Independent Reports)",
           sections: [
-            {
-              title: "Explosive Global Growth (Verified by Independent Reports)",
-              items: [],
-            },
             {
               title: "1. AI in Real Estate Market Growth (Business Research Company)",
               items: [
