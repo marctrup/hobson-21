@@ -38,7 +38,7 @@ export const SimpleUIVisual = () => {
                 top: '4.5%',
                 left: '4.5%',
                 width: '91%',
-                height: '66%',
+                height: '65%',
               }}
               loading="lazy"
             />
