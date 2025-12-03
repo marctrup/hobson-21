@@ -133,44 +133,58 @@ const sections = [
       {
         title: "UK Market Opportunity",
         content: {
-          overview:
-            "UK real estate businesses: ≈235,200 • Average junior salary: £30,000 • 20% efficiency gain = £6,000 saved per employee • Assumes at least one admin/document-handling role per business (conservative)",
+          overview: "",
           sections: [
             {
-              title: "Total Addressable Market (TAM)",
-              subtitle: "Value: £1.41B",
+              title: "Market Baseline (ONS-Verified)",
               items: [
-                "Total annual efficiency savings available across all UK real estate businesses from a 20% reduction in document-related admin time",
-                "235,200 × £6,000 = £1.41B",
+                "Total UK businesses (2023): 5.6 million (Source: ONS — UK Business: Activity, Size & Location)",
+                "Real estate activities = 4.2% of all UK businesses (Source: ONS — Real Estate Activities by Employment Size)",
+                "5.6M × 4.2% = 235,200 real estate businesses (Excludes architects, surveyors, finance — strictly 'real estate activities')",
+              ],
+            },
+            {
+              title: "Cost & Savings Assumptions (Verified)",
+              items: [
+                "Average junior real estate salary: £30,000 (Source: Macdonald & Company UK Salary Report 2023/24)",
+                "20% efficiency gain = £6,000 annual saving per admin/document-handling role",
+                "Conservative: Every real estate business has at least one admin/document-heavy role",
+              ],
+            },
+            {
+              title: "Total Addressable Market (TAM)",
+              subtitle: "£1.41B",
+              items: [
+                "Total UK efficiency savings from reducing document admin by 20%",
+                "235,200 businesses × £6,000 = £1.41B",
               ],
             },
             {
               title: "Serviceable Available Market (SAM)",
-              subtitle: "Value: £917M",
+              subtitle: "£917M",
               items: [
-                "Real estate businesses motivated and able to adopt AI tools",
-                "Assumes 65% adoption motivation, reflecting a realistic level for this traditional sector",
+                "Businesses motivated and able to adopt AI tools",
+                "Assumes 65% adoption readiness (realistic for a traditional sector)",
                 "235,200 × 65% = 152,880 businesses",
                 "152,880 × £6,000 = £917M",
               ],
             },
             {
-              title: "Serviceable Obtainable Market (SOM)",
-              subtitle: "Value: £110M",
+              title: "Why 12% Penetration Rate?",
               items: [
-                "A credible early-stage share Hobson can capture based on simple onboarding, low cost, and strong user demand",
-                "Assumes 12% market penetration within the motivated segment",
-                "152,880 × 12% = 18,345 businesses",
-                "18,345 × £6,000 = £110M",
+                "Chosen as a conservative early-stage target within the motivated segment",
+                "Reflects benchmarks from SaaS and AI tools in fragmented markets",
+                "Justified by Hobson's characteristics: Low friction, Low pricing, Zero onboarding, Immediate ROI through efficiency savings",
+                "Ensures credibility: not an aggressive market-grab assumption",
               ],
             },
             {
-              title: "Summary",
+              title: "Serviceable Obtainable Market (SOM)",
+              subtitle: "£110M",
               items: [
-                "The UK real estate market is large, fragmented, and admin-heavy",
-                "Even modest efficiency gains create a £1.41B TAM",
-                "Nearly £1B in realistic adoption potential",
-                "Clear £110M attainable early market for Hobson's AI assistant",
+                "Credible early revenue opportunity based on realistic penetration",
+                "152,880 motivated businesses × 12% = 18,345 businesses",
+                "18,345 × £6,000 = £110M",
               ],
             },
           ],
