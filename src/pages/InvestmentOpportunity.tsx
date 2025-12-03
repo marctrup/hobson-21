@@ -524,6 +524,12 @@ const sections = [
             "Hobson runs on trusted, industry-standard platforms designed for security, performance, and scalability.",
           sections: [
             {
+              title: "AI & Intelligence",
+              items: [
+                "🤖 OpenAI: Powers natural language understanding and AI-driven responses",
+              ],
+            },
+            {
               title: "Cloud Infrastructure",
               items: [
                 "☁️ OVH Cloud: Stores your uploaded files and documents (secure UK/EU-based cloud storage)",
@@ -2086,7 +2092,8 @@ const InvestmentOpportunity = () => {
                           contentSection.title.includes('Global') ||
                           contentSection.title.includes('Cloud') ||
                           contentSection.title.includes('Data') ||
-                          contentSection.title.includes('Communication');
+                          contentSection.title.includes('Communication') ||
+                          contentSection.title.includes('AI &');
                         
                         return (
                         <div key={idx} className="space-y-3 sm:space-y-4">
