@@ -3,8 +3,8 @@ import hobsonCarouselDevices from '@/assets/hobson-carousel-devices.png';
 
 export const ProductSlide = () => {
   return (
-    <div className="h-full flex items-center justify-center px-4 sm:px-6 pb-16 sm:pb-20">
-      <div className="text-center max-w-3xl space-y-3 sm:space-y-4">
+    <div className="h-full flex items-center justify-center px-4 sm:px-6 pb-12 sm:pb-16">
+      <div className="text-center max-w-3xl space-y-2 sm:space-y-3">
         <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-[#1e293b] leading-tight px-2">
           Simple Interface.<br />Powerful Results.
         </h2>
@@ -13,11 +13,11 @@ export const ProductSlide = () => {
           No training, instant referenced answers
         </p>
 
-        <div className="flex justify-center py-2 sm:py-4">
+        <div className="flex justify-center py-1 sm:py-2">
           <img 
             src={hobsonCarouselDevices} 
             alt="Hobson interface on desktop and mobile" 
-            className="w-full max-w-md sm:max-w-lg md:max-w-xl h-auto"
+            className="w-full max-w-xs sm:max-w-sm md:max-w-md h-auto"
           />
         </div>
       </div>
