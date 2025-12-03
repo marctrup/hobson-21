@@ -124,7 +124,7 @@ const sections = [
   },
   {
     id: "market",
-    title: "Market & Customers",
+    title: "Customers, Market & Opportunities",
     subtitle: "Customer Segmentation, Market Size, Competitive Landscape & Efficiency Savings",
     icon: Users,
     color: "from-purple-500/10 to-purple-600/10",
