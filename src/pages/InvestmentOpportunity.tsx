@@ -34,6 +34,7 @@ import { EuropeanGlobalVisual } from "@/components/investor/EuropeanGlobalVisual
 import { HEUPricingVisual } from "@/components/investor/HEUPricingVisual";
 import { AIProcessingVisual } from "@/components/investor/AIProcessingVisual";
 import { SimpleUIVisual } from "@/components/investor/SimpleUIVisual";
+import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { jsPDF } from "jspdf";
 
@@ -211,37 +212,11 @@ const sections = [
       },
       {
         title: "UK Market Opportunity",
+        showCustomVisual: true,
+        customVisualComponent: "ukMarket",
         content: {
-          overview: "",
-          sections: [
-            {
-              title: "Total Addressable Market (TAM)",
-              subtitle: "£1.41B",
-              items: [
-                "Total UK efficiency savings from reducing document admin by 20%",
-                "235,200 businesses × £6,000 = £1.41B",
-              ],
-            },
-            {
-              title: "Serviceable Available Market (SAM)",
-              subtitle: "£917M",
-              items: [
-                "Businesses motivated and able to adopt AI tools",
-                "Assumes 65% adoption readiness (realistic for a traditional sector)",
-                "235,200 × 65% = 152,880 businesses",
-                "152,880 × £6,000 = £917M",
-              ],
-            },
-            {
-              title: "Serviceable Obtainable Market (SOM)",
-              subtitle: "£110M",
-              items: [
-                "Credible early revenue opportunity based on realistic penetration",
-                "152,880 motivated businesses × 12% = 18,345 businesses",
-                "18,345 × £6,000 = £110M",
-              ],
-            },
-          ],
+          overview: "Market Opportunity Built Directly From Verified Assumptions",
+          sections: [],
         },
       },
       {
@@ -2156,7 +2131,8 @@ const InvestmentOpportunity = () => {
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "matrix" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "europeanGlobal" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "heuPricing" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "simpleUI" && (
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "simpleUI" &&
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ukMarket" && (
                         <CompetitiveLandscapeVisual />
                       )}
 
@@ -2168,6 +2144,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for European & Global */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "europeanGlobal" && (
                       <EuropeanGlobalVisual />
+                    )}
+
+                    {/* Custom Visual Component for UK Market */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "ukMarket" && (
+                      <UKMarketVisual />
                     )}
 
                     {/* Custom Visual Component for HEU & Pricing */}
