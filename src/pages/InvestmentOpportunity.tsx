@@ -32,6 +32,7 @@ import { CompetitiveMatrixVisual } from "@/components/investor/CompetitiveMatrix
 import { EuropeanGlobalVisual } from "@/components/investor/EuropeanGlobalVisual";
 import { HEUPricingVisual } from "@/components/investor/HEUPricingVisual";
 import { AIProcessingVisual } from "@/components/investor/AIProcessingVisual";
+import { SimpleUIVisual } from "@/components/investor/SimpleUIVisual";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { jsPDF } from "jspdf";
 
@@ -489,6 +490,8 @@ const sections = [
       },
       {
         title: "Simple UI",
+        showCustomVisual: true,
+        customVisualComponent: "simpleUI",
         content: {
           overview:
             "Hobson's user interface is designed for simplicity and ease of use, requiring zero training and delivering instant value from day one.",
@@ -1973,7 +1976,8 @@ const InvestmentOpportunity = () => {
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "matrix" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "europeanGlobal" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "heuPricing" && (
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "heuPricing" &&
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "simpleUI" && (
                         <CompetitiveLandscapeVisual />
                       )}
 
@@ -1990,6 +1994,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for HEU & Pricing */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "heuPricing" && (
                       <HEUPricingVisual />
+                    )}
+
+                    {/* Custom Visual Component for Simple UI */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "simpleUI" && (
+                      <SimpleUIVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
