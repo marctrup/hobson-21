@@ -19,6 +19,8 @@ export const ValueSlide = () => {
               src={heuUsage} 
               alt="HEU Usage Display" 
               className="w-36 h-auto sm:w-48 md:w-56 rounded-lg shadow-md"
+              loading="lazy"
+              decoding="async"
             />
             <span className="text-[10px] sm:text-xs text-primary font-medium">Real-time Usage</span>
           </div>
