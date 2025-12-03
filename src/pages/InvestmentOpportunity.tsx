@@ -521,7 +521,7 @@ const sections = [
   {
     id: "roadmap",
     title: "Roadmap & Product",
-    subtitle: "Timeline, Milestones, Pilot clients & Development Philosophy",
+    subtitle: "Timeline & Innovation",
     icon: Map,
     color: "from-green-500/10 to-green-600/10",
     iconColor: "text-green-600",
