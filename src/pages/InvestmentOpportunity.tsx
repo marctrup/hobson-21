@@ -430,6 +430,20 @@ const sections = [
           ],
         },
       },
+      {
+        title: "Hobson's Opportunity",
+        content: {
+          overview: "",
+          sections: [
+            {
+              title: "Opportunity Overview",
+              items: [
+                "Content to be added.",
+              ],
+            },
+          ],
+        },
+      },
     ],
   },
   {
