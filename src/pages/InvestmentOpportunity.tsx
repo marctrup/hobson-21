@@ -725,7 +725,7 @@ const sections = [
   {
     id: "financials",
     title: "Financials",
-    subtitle: "Forecast & Assumptions, OPEX, COP & Staffing",
+    subtitle: "Forecasts & Assumptions",
     icon: PieChart,
     color: "from-red-500/10 to-red-600/10",
     iconColor: "text-red-600",
