@@ -199,11 +199,7 @@ const sections = [
             {
               title: "⭐ Summary for Investors",
               items: [
-                "We selected 12% because it is:",
-                "• Grounded in verified adoption ranges (8–20%)",
-                "• Below the midpoint of early AI/PropTech adoption",
-                "• Aligned with SMB-heavy market behaviour",
-                "• Supported by Hobson's advantages: zero onboarding, low pricing, immediate ROI",
+                "We selected 12% because it is: grounded in verified adoption ranges (8–20%), below the midpoint of early AI/PropTech adoption, aligned with SMB-heavy market behaviour, and supported by Hobson's advantages: zero onboarding, low pricing, immediate ROI.",
                 "→ 12% is a conservative, evidence-aligned, credible assumption.",
               ],
             },
