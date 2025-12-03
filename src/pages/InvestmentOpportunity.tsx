@@ -429,11 +429,11 @@ const sections = [
           sections: [
             {
               title: "Large Operator",
-              items: ["EPAM Asset Management", "Commercial management - operate team across multiple systems"],
+              items: ["EPAM Asset Management - Commercial management that operate team across multiple systems"],
             },
             {
               title: "Medium Operator",
-              items: ["Live-in Guardians", "Guardian company - operate teams using single system"],
+              items: ["Live-in Guardians - Guardian company that operate teams using single system"],
             },
             {
               title: "Small Operators",
