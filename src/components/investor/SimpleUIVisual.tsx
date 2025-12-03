@@ -18,9 +18,9 @@ export const SimpleUIVisual = () => {
       </div>
 
       {/* Device Mockups */}
-      <div className="flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-8">
+      <div className="flex flex-col lg:flex-row items-center justify-center gap-4 lg:gap-6">
         {/* Desktop Mockup */}
-        <div className="relative w-full max-w-md lg:max-w-lg">
+        <div className="relative w-full max-w-xs lg:max-w-sm">
           <div className="relative">
             {/* Desktop Frame */}
             <img 
@@ -49,7 +49,7 @@ export const SimpleUIVisual = () => {
         </div>
 
         {/* Mobile Mockup */}
-        <div className="relative w-40 sm:w-48 lg:w-56 flex-shrink-0">
+        <div className="relative w-32 sm:w-36 lg:w-44 flex-shrink-0">
           <div className="relative">
             {/* Phone Frame */}
             <img 
