@@ -191,7 +191,7 @@ const sections = [
         },
       },
       {
-        title: "Customer Segmentation and Efficiency Gains",
+        title: "Customer Segmentation",
         content: {
           overview:
             "A 20% efficiency improvement = £6,000 saved per year per role, based on a UK junior admin salary of £30,000. This reflects time saved on searching, retrieving, and extracting information from leases and other documents.",
