@@ -936,6 +936,7 @@ const InvestmentOpportunity = () => {
     const removeEmojis = (text: string) => {
       // Comprehensive emoji removal regex and special character replacements
       return text
+        .replace(/⭐/g, '') // Remove star emoji
         .replace(/→/g, '->') // Replace arrow
         .replace(/←/g, '<-') // Replace left arrow
         .replace(/✓/g, '-') // Replace checkmark with dash
@@ -954,6 +955,7 @@ const InvestmentOpportunity = () => {
         .replace(/"/g, '"') // Replace smart quote
         .replace(/…/g, '...') // Replace ellipsis
         .replace(/£/g, 'GBP ') // Replace pound sign for PDF compatibility
+        .replace(/[\u{2B50}]/gu, '') // Star emoji
         .replace(/[\u{1F000}-\u{1F9FF}]/gu, '') // Emoticons, symbols, pictographs
         .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
         .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
@@ -1355,6 +1357,29 @@ const InvestmentOpportunity = () => {
           });
         }
         
+        // Handle conclusion
+        if (section.conclusion) {
+          if (yPosition > pageHeight - 40) {
+            doc.addPage();
+            yPosition = margin;
+          }
+          
+          // Draw conclusion box
+          doc.setFillColor(245, 245, 245);
+          doc.setDrawColor(200, 200, 200);
+          const cleanedConclusion = removeEmojis(section.conclusion);
+          const conclusionLines = doc.splitTextToSize(cleanedConclusion, maxWidth - 16);
+          const boxHeight = conclusionLines.length * 5 + 8;
+          doc.roundedRect(margin, yPosition - 2, maxWidth, boxHeight, 2, 2, 'FD');
+          
+          // Conclusion text
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'normal');
+          doc.text(conclusionLines, margin + 8, yPosition + 4);
+          yPosition += boxHeight + 5;
+        }
+        
         yPosition += 8;
       });
       }
@@ -1391,6 +1416,7 @@ const InvestmentOpportunity = () => {
     const removeEmojis = (text: string) => {
       // Comprehensive emoji removal regex and special character replacements
       return text
+        .replace(/⭐/g, '') // Remove star emoji
         .replace(/→/g, '->') // Replace arrow
         .replace(/←/g, '<-') // Replace left arrow
         .replace(/✓/g, '-') // Replace checkmark with dash
@@ -1409,6 +1435,7 @@ const InvestmentOpportunity = () => {
         .replace(/"/g, '"') // Replace smart quote
         .replace(/…/g, '...') // Replace ellipsis
         .replace(/£/g, 'GBP ') // Replace pound sign for PDF compatibility
+        .replace(/[\u{2B50}]/gu, '') // Star emoji
         .replace(/[\u{1F000}-\u{1F9FF}]/gu, '') // Emoticons, symbols, pictographs
         .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
         .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
@@ -1694,7 +1721,8 @@ const InvestmentOpportunity = () => {
             doc.setTextColor(31, 41, 55);
             doc.setFontSize(14);
             doc.setFont('helvetica', 'bold');
-            const sectionTitleLines = doc.splitTextToSize(section.title, maxWidth);
+            const cleanedSectionTitle = removeEmojis(section.title);
+            const sectionTitleLines = doc.splitTextToSize(cleanedSectionTitle, maxWidth);
             doc.text(sectionTitleLines, margin, yPosition);
             yPosition += sectionTitleLines.length * 7 + 3;
             
@@ -1807,6 +1835,29 @@ const InvestmentOpportunity = () => {
                 doc.text(itemLines, margin + 8, yPosition);
                 yPosition += itemLines.length * 5 + 3;
               });
+            }
+            
+            // Handle conclusion
+            if (section.conclusion) {
+              if (yPosition > pageHeight - 40) {
+                doc.addPage();
+                yPosition = margin;
+              }
+              
+              // Draw conclusion box
+              doc.setFillColor(245, 245, 245);
+              doc.setDrawColor(200, 200, 200);
+              const cleanedConclusion = removeEmojis(section.conclusion);
+              const conclusionLines = doc.splitTextToSize(cleanedConclusion, maxWidth - 16);
+              const boxHeight = conclusionLines.length * 5 + 8;
+              doc.roundedRect(margin, yPosition - 2, maxWidth, boxHeight, 2, 2, 'FD');
+              
+              // Conclusion text
+              doc.setTextColor(75, 85, 99);
+              doc.setFontSize(9);
+              doc.setFont('helvetica', 'normal');
+              doc.text(conclusionLines, margin + 8, yPosition + 4);
+              yPosition += boxHeight + 5;
             }
             
             yPosition += 8;
