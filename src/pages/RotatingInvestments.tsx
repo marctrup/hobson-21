@@ -211,24 +211,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         {/* Footer info */}
         <div className="mt-4 sm:mt-6 text-center">
-          <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-4">
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => window.open('https://hobsonschoice.ai', '_blank')} 
-              className="text-xs sm:text-sm py-2 touch-manipulation"
-            >
-              Visit Hobson
-            </Button>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={() => window.location.reload()} 
-              className="text-xs sm:text-sm py-2 touch-manipulation"
-            >
-              Restart Carousel
-            </Button>
-          </div>
+          <Button 
+            variant="cta" 
+            size="lg" 
+            onClick={() => window.open('https://hobsonschoice.ai', '_blank')} 
+            className="text-sm sm:text-base px-8 py-3 touch-manipulation"
+          >
+            Visit Hobson
+          </Button>
         </div>
       </div>
       </div>
