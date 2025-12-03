@@ -57,9 +57,9 @@ const sections = [
             {
               title: "Market Opportunity",
               items: [
-                "£6B efficiency-saving potential in the UK alone",
-                "£66B across Europe and £708B globally",
-                "PropTech is shifting from static software to intelligent automation — Hobson is positioned to lead this transition",
+                "Real estate faces massive inefficiencies, with £6B in potential savings in the UK, £66B across Europe, and £708B globally.",
+                "The industry is shifting from static tools to intelligent automation, creating a clear opening for a specialised AI assistant.",
+                "Hobson is built to lead this transition.",
               ],
             },
             {
@@ -67,15 +67,17 @@ const sections = [
               items: [
                 "MVP launching Q1 2026, validated with four real-world partners",
                 "Current model performance at 98% accuracy",
-                "Handles key document types: legal, compliance, reports, and more",
+                "Supports key document types: legal, compliance, operational reports, and more",
+                "Built and tested using real industry data for reliability and domain depth",
               ],
             },
             {
               title: "Revenue Model",
               items: [
-                "Usage-based pricing through Hobson Energy Units (HEUs)",
-                "No per-user or per-asset fees",
-                "Built to integrate seamlessly with existing systems",
+                "Usage-based pricing via Hobson Energy Units (HEUs)",
+                "No per-user or per-asset fees → enables broad, frictionless rollout",
+                "Designed to integrate with existing systems with zero onboarding",
+                "Clear, measurable ROI based on time and cost savings",
               ],
             },
           ],
