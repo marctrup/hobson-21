@@ -870,7 +870,7 @@ const sections = [
   {
     id: "financial-downloads",
     title: "Financial Downloads",
-    subtitle: "Detailed Financial Spreadsheets & Models",
+    subtitle: "Detailed Financial Spreadsheets",
     icon: FileSpreadsheet,
     color: "from-emerald-500/10 to-emerald-600/10",
     iconColor: "text-emerald-600",
