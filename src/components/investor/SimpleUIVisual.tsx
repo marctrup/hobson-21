@@ -30,19 +30,18 @@ export const SimpleUIVisual = () => {
               loading="lazy"
             />
             {/* Web Interface inside frame */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <img 
-                src={webInterface} 
-                alt="Hobson web interface showing satellite map view with property navigation" 
-                className="w-[83%] h-[76%] object-cover rounded-sm"
-                style={{ 
-                  position: 'absolute',
-                  top: '5%',
-                  left: '8.5%',
-                }}
-                loading="lazy"
-              />
-            </div>
+            <img 
+              src={webInterface} 
+              alt="Hobson web interface showing satellite map view with property navigation" 
+              className="absolute object-cover"
+              style={{ 
+                top: '4.5%',
+                left: '4.5%',
+                width: '91%',
+                height: '72%',
+              }}
+              loading="lazy"
+            />
           </div>
           <p className="text-xs text-center text-muted-foreground mt-2">
             Web Interface - Property Map View
