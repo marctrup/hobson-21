@@ -128,7 +128,7 @@ const sections = [
   {
     id: "market",
     title: "Customers, Market & Opportunities",
-    subtitle: "Customer Segmentation, Market Size, Competitive Landscape & Efficiency Savings",
+    subtitle: "Market Opportunity",
     icon: Users,
     color: "from-purple-500/10 to-purple-600/10",
     iconColor: "text-purple-600",
@@ -671,9 +671,7 @@ const sections = [
           sections: [
             {
               title: "AI & Intelligence",
-              items: [
-                "🤖 OpenAI: Powers natural language understanding and AI-driven responses",
-              ],
+              items: ["🤖 OpenAI: Powers natural language understanding and AI-driven responses"],
             },
             {
               title: "Cloud Infrastructure",
@@ -924,95 +922,95 @@ const InvestmentOpportunity = () => {
   const { toast } = useToast();
 
   // Function to generate PDF from section data
-  const generatePDF = (section: typeof sections[0]) => {
+  const generatePDF = (section: (typeof sections)[0]) => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 20;
-    const maxWidth = pageWidth - (margin * 2);
+    const maxWidth = pageWidth - margin * 2;
     let yPosition = 20;
-    
+
     // Helper function to remove emojis and fix special characters for PDF
     const removeEmojis = (text: string) => {
       // Comprehensive emoji removal regex and special character replacements
       return text
-        .replace(/⭐/g, '') // Remove star emoji
-        .replace(/→/g, '->') // Replace arrow
-        .replace(/←/g, '<-') // Replace left arrow
-        .replace(/✓/g, '-') // Replace checkmark with dash
-        .replace(/✔/g, '-') // Replace checkmark
-        .replace(/✗/g, 'x') // Replace x mark
-        .replace(/✘/g, 'x') // Replace x mark
-        .replace(/•/g, '-') // Replace bullet
-        .replace(/⦁/g, '-') // Replace bullet
-        .replace(/≈/g, '~') // Replace approximately equal with tilde
-        .replace(/×/g, 'x') // Replace multiplication sign
-        .replace(/—/g, '-') // Replace em dash
-        .replace(/–/g, '-') // Replace en dash
+        .replace(/⭐/g, "") // Remove star emoji
+        .replace(/→/g, "->") // Replace arrow
+        .replace(/←/g, "<-") // Replace left arrow
+        .replace(/✓/g, "-") // Replace checkmark with dash
+        .replace(/✔/g, "-") // Replace checkmark
+        .replace(/✗/g, "x") // Replace x mark
+        .replace(/✘/g, "x") // Replace x mark
+        .replace(/•/g, "-") // Replace bullet
+        .replace(/⦁/g, "-") // Replace bullet
+        .replace(/≈/g, "~") // Replace approximately equal with tilde
+        .replace(/×/g, "x") // Replace multiplication sign
+        .replace(/—/g, "-") // Replace em dash
+        .replace(/–/g, "-") // Replace en dash
         .replace(/'/g, "'") // Replace smart quote
         .replace(/'/g, "'") // Replace smart quote
         .replace(/"/g, '"') // Replace smart quote
         .replace(/"/g, '"') // Replace smart quote
-        .replace(/…/g, '...') // Replace ellipsis
-        .replace(/£/g, 'GBP ') // Replace pound sign for PDF compatibility
-        .replace(/[\u{2B50}]/gu, '') // Star emoji
-        .replace(/[\u{1F000}-\u{1F9FF}]/gu, '') // Emoticons, symbols, pictographs
-        .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
-        .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
-        .replace(/[\u{FE00}-\u{FE0F}]/gu, '') // Variation Selectors
-        .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, '') // Regional Indicator Symbols (flags)
-        .replace(/[\u{1F300}-\u{1F5FF}]/gu, '') // Miscellaneous Symbols and Pictographs
-        .replace(/[\u{1F600}-\u{1F64F}]/gu, '') // Emoticons
-        .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // Transport and Map Symbols
-        .replace(/[\u{1F700}-\u{1F77F}]/gu, '') // Alchemical Symbols
-        .replace(/[\u{1F780}-\u{1F7FF}]/gu, '') // Geometric Shapes Extended
-        .replace(/[\u{1F800}-\u{1F8FF}]/gu, '') // Supplemental Arrows-C
-        .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Supplemental Symbols and Pictographs
-        .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '') // Chess Symbols
-        .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '') // Symbols and Pictographs Extended-A
-        .replace(/[\u{200D}]/gu, '') // Zero Width Joiner
+        .replace(/…/g, "...") // Replace ellipsis
+        .replace(/£/g, "GBP ") // Replace pound sign for PDF compatibility
+        .replace(/[\u{2B50}]/gu, "") // Star emoji
+        .replace(/[\u{1F000}-\u{1F9FF}]/gu, "") // Emoticons, symbols, pictographs
+        .replace(/[\u{2600}-\u{26FF}]/gu, "") // Miscellaneous Symbols
+        .replace(/[\u{2700}-\u{27BF}]/gu, "") // Dingbats
+        .replace(/[\u{FE00}-\u{FE0F}]/gu, "") // Variation Selectors
+        .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, "") // Regional Indicator Symbols (flags)
+        .replace(/[\u{1F300}-\u{1F5FF}]/gu, "") // Miscellaneous Symbols and Pictographs
+        .replace(/[\u{1F600}-\u{1F64F}]/gu, "") // Emoticons
+        .replace(/[\u{1F680}-\u{1F6FF}]/gu, "") // Transport and Map Symbols
+        .replace(/[\u{1F700}-\u{1F77F}]/gu, "") // Alchemical Symbols
+        .replace(/[\u{1F780}-\u{1F7FF}]/gu, "") // Geometric Shapes Extended
+        .replace(/[\u{1F800}-\u{1F8FF}]/gu, "") // Supplemental Arrows-C
+        .replace(/[\u{1F900}-\u{1F9FF}]/gu, "") // Supplemental Symbols and Pictographs
+        .replace(/[\u{1FA00}-\u{1FA6F}]/gu, "") // Chess Symbols
+        .replace(/[\u{1FA70}-\u{1FAFF}]/gu, "") // Symbols and Pictographs Extended-A
+        .replace(/[\u{200D}]/gu, "") // Zero Width Joiner
         .trim()
-        .replace(/\s+/g, ' '); // Normalize whitespace
+        .replace(/\s+/g, " "); // Normalize whitespace
     };
 
     // Cover Page - Purple gradient effect with white text
     doc.setFillColor(124, 58, 237); // Purple background
-    doc.rect(0, 0, pageWidth, pageHeight, 'F');
-    
+    doc.rect(0, 0, pageWidth, pageHeight, "F");
+
     // HOBSON AI logo
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
-    doc.setFont('helvetica', 'bold');
-    doc.text('HOBSON AI', pageWidth / 2, 80, { align: 'center' });
-    
+    doc.setFont("helvetica", "bold");
+    doc.text("HOBSON AI", pageWidth / 2, 80, { align: "center" });
+
     // Section title
     doc.setFontSize(32);
     const titleLines = doc.splitTextToSize(section.title, maxWidth - 20);
-    doc.text(titleLines, pageWidth / 2, 110, { align: 'center' });
-    
+    doc.text(titleLines, pageWidth / 2, 110, { align: "center" });
+
     // Subtitle
     doc.setFontSize(14);
-    doc.setFont('helvetica', 'normal');
+    doc.setFont("helvetica", "normal");
     const subtitleLines = doc.splitTextToSize(section.subtitle, maxWidth - 20);
-    doc.text(subtitleLines, pageWidth / 2, 140, { align: 'center' });
-    
+    doc.text(subtitleLines, pageWidth / 2, 140, { align: "center" });
+
     // Investment Opportunity Document label
     doc.setFontSize(10);
-    doc.text('Investment Opportunity Document', pageWidth / 2, 170, { align: 'center' });
-    
+    doc.text("Investment Opportunity Document", pageWidth / 2, 170, { align: "center" });
+
     // Date
-    const currentDate = new Date().toLocaleDateString('en-GB', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+    const currentDate = new Date().toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
-    doc.text(currentDate, pageWidth / 2, pageHeight - 20, { align: 'center' });
+    doc.text(currentDate, pageWidth / 2, pageHeight - 20, { align: "center" });
 
     // Content pages - white background with colored text
     section.pages.forEach((page: any, pageIndex: number) => {
       doc.addPage();
       yPosition = margin;
-      
+
       // Handle pages with images specially
       const pageImage = page.image || page.pdfImage;
       const isSimpleUI = page.customVisualComponent === "simpleUI";
@@ -1020,19 +1018,19 @@ const InvestmentOpportunity = () => {
         // Page title - Purple
         doc.setTextColor(124, 58, 237);
         doc.setFontSize(18);
-        doc.setFont('helvetica', 'bold');
+        doc.setFont("helvetica", "bold");
         const cleanedPageTitle = removeEmojis(page.title);
         const pageTitleLines = doc.splitTextToSize(cleanedPageTitle, maxWidth);
         doc.text(pageTitleLines, margin, yPosition);
         yPosition += pageTitleLines.length * 8 + 10;
-        
+
         // Determine aspect ratio and size based on image type
         const aspectRatio = isSimpleUI ? 0.75 : 1.7;
         // For simpleUI, use smaller image to fit content on same page
         const imgWidth = isSimpleUI ? maxWidth * 0.7 : maxWidth;
         const targetHeight = imgWidth * aspectRatio;
         const availableHeight = isSimpleUI ? 80 : pageHeight - yPosition - 30;
-        
+
         // Scale image to fit on current page if needed
         let finalWidth = imgWidth;
         let finalHeight = targetHeight;
@@ -1040,16 +1038,16 @@ const InvestmentOpportunity = () => {
           finalHeight = availableHeight;
           finalWidth = finalHeight / aspectRatio;
         }
-        
+
         try {
           // Center the image for simpleUI
           const imgX = isSimpleUI ? margin + (maxWidth - finalWidth) / 2 : margin;
-          doc.addImage(pageImage, 'PNG', imgX, yPosition, finalWidth, finalHeight);
+          doc.addImage(pageImage, "PNG", imgX, yPosition, finalWidth, finalHeight);
           yPosition += finalHeight + 10;
         } catch (error) {
-          console.error('Error adding image to PDF:', error);
+          console.error("Error adding image to PDF:", error);
         }
-        
+
         // For non-simpleUI pages, start content on next page
         if (!isSimpleUI) {
           doc.addPage();
@@ -1059,45 +1057,45 @@ const InvestmentOpportunity = () => {
         // Page title - Purple (for non-image pages)
         doc.setTextColor(124, 58, 237);
         doc.setFontSize(18);
-        doc.setFont('helvetica', 'bold');
+        doc.setFont("helvetica", "bold");
         const cleanedPageTitle = removeEmojis(page.title);
         const pageTitleLines = doc.splitTextToSize(cleanedPageTitle, maxWidth);
         doc.text(pageTitleLines, margin, yPosition);
         yPosition += pageTitleLines.length * 8 + 5;
-        
+
         // Purple line under title
         doc.setDrawColor(124, 58, 237);
         doc.setLineWidth(0.5);
         doc.line(margin, yPosition, pageWidth - margin, yPosition);
         yPosition += 10;
       }
-      
+
       // Overview - Dark gray on light background (for all pages)
       if (page.content?.overview) {
         doc.setFillColor(249, 250, 251);
-        
+
         doc.setTextColor(55, 65, 81);
         doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
+        doc.setFont("helvetica", "normal");
         const cleanedOverview = removeEmojis(page.content.overview);
         const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 10);
-        
+
         const lineSpacing = 8;
         const boxHeight = overviewLines.length * lineSpacing + 8;
-        doc.rect(margin, yPosition, maxWidth, boxHeight, 'F');
-        
+        doc.rect(margin, yPosition, maxWidth, boxHeight, "F");
+
         // Render text with proper line spacing
         doc.text(overviewLines, margin + 5, yPosition + 6, { lineHeightFactor: 1.4 });
-        
+
         yPosition += boxHeight + 8;
       }
-      
+
       // Handle visual-only pages with fallback content
       if ((page as any).isVisual && page.title === "AI Processing Time & Cost Examples") {
         doc.setTextColor(75, 85, 99);
         doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
-        
+        doc.setFont("helvetica", "normal");
+
         const visualContent = [
           "AI Processing Time & Cost Examples:",
           "",
@@ -1126,37 +1124,37 @@ const InvestmentOpportunity = () => {
           "• AI processing is fast, predictable, and inexpensive",
           "• Even heavy portfolios cost single-digit dollars to index",
           "• Processing time measured in seconds, not hours",
-          "• Transparent, usage-based pricing with no hidden costs"
+          "• Transparent, usage-based pricing with no hidden costs",
         ];
-        
+
         visualContent.forEach((line) => {
           if (yPosition > pageHeight - 40) {
             doc.addPage();
             yPosition = margin;
           }
-          
+
           if (line === "") {
             yPosition += 5;
           } else if (line.endsWith(":")) {
-            doc.setFont('helvetica', 'bold');
+            doc.setFont("helvetica", "bold");
             doc.text(line, margin, yPosition);
             yPosition += 7;
-            doc.setFont('helvetica', 'normal');
+            doc.setFont("helvetica", "normal");
           } else {
             doc.text(line, margin, yPosition);
             yPosition += 5.5;
           }
         });
-        
+
         yPosition += 10;
       }
-      
+
       // Handle HEU Pricing visual page
       if ((page as any).showCustomVisual && (page as any).customVisualComponent === "heuPricing") {
         doc.setTextColor(75, 85, 99);
         doc.setFontSize(10);
-        doc.setFont('helvetica', 'normal');
-        
+        doc.setFont("helvetica", "normal");
+
         const pricingContent = [
           "Hobson Energy Units (HEUs) & Transparent Pricing:",
           "",
@@ -1201,187 +1199,187 @@ const InvestmentOpportunity = () => {
           "• No per-user charges",
           "• No per-asset pricing",
           "• Pay only for actual usage",
-          "• Flexible billing that scales with your needs"
+          "• Flexible billing that scales with your needs",
         ];
-        
+
         pricingContent.forEach((line) => {
           if (yPosition > pageHeight - 40) {
             doc.addPage();
             yPosition = margin;
           }
-          
+
           if (line === "") {
             yPosition += 5;
-          } else if (line.endsWith(":") || line.startsWith("Free Plan") || line.startsWith("Essential") || line.startsWith("Enterprise") || line.startsWith("Top-Up")) {
-            doc.setFont('helvetica', 'bold');
+          } else if (
+            line.endsWith(":") ||
+            line.startsWith("Free Plan") ||
+            line.startsWith("Essential") ||
+            line.startsWith("Enterprise") ||
+            line.startsWith("Top-Up")
+          ) {
+            doc.setFont("helvetica", "bold");
             doc.text(line, margin, yPosition);
             yPosition += 7;
-            doc.setFont('helvetica', 'normal');
+            doc.setFont("helvetica", "normal");
           } else {
             doc.text(line, margin, yPosition);
             yPosition += 5.5;
           }
         });
-        
+
         yPosition += 10;
       }
-      
+
       // Sections
       if (page.content?.sections) {
         page.content.sections.forEach((section: any) => {
-        // Check if we need a new page
-        if (yPosition > pageHeight - 60) {
-          doc.addPage();
-          yPosition = margin;
-        }
-        
-        // Section title - Dark gray, bold
-        doc.setTextColor(31, 41, 55);
-        doc.setFontSize(14);
-        doc.setFont('helvetica', 'bold');
-        const cleanedSectionTitle = removeEmojis(section.title);
-        const sectionTitleLines = doc.splitTextToSize(cleanedSectionTitle, maxWidth);
-        doc.text(sectionTitleLines, margin, yPosition);
-        yPosition += sectionTitleLines.length * 7 + 3;
-        
-        // Subtitle - Purple
-        if (section.subtitle) {
-          doc.setTextColor(124, 58, 237);
-          doc.setFontSize(12);
-          doc.setFont('helvetica', 'bold');
-          const cleanedSubtitle = removeEmojis(section.subtitle);
-          const subtitleLines = doc.splitTextToSize(cleanedSubtitle, maxWidth);
-          doc.text(subtitleLines, margin, yPosition);
-          yPosition += subtitleLines.length * 6 + 5;
-        }
-        
-        // Handle Team Members
-        if (section.teamMembers && Array.isArray(section.teamMembers)) {
-          const membersPerRow = 3;
-          const cardWidth = (maxWidth - 10) / membersPerRow;
-          const cardHeight = 35;
-          const cardSpacing = 5;
-          
-          section.teamMembers.forEach((member: any, idx: number) => {
-            const col = idx % membersPerRow;
-            const row = Math.floor(idx / membersPerRow);
-            const xPos = margin + col * cardWidth;
-            const cardYPos = yPosition + row * (cardHeight + cardSpacing);
-            
-            // Check if we need a new page for this row
-            if (cardYPos > pageHeight - 60 && col === 0) {
-              doc.addPage();
-              yPosition = margin;
-              const newCardYPos = yPosition + (row - Math.floor(idx / membersPerRow)) * (cardHeight + cardSpacing);
-            }
-            
-            const finalYPos = col === 0 && row > 0 && yPosition < margin + 20 ? margin : cardYPos;
-            
-            // Draw card border
-            doc.setDrawColor(124, 58, 237);
-            doc.setLineWidth(0.5);
-            doc.rect(xPos + 2, finalYPos, cardWidth - 6, cardHeight);
-            
-            // Role (top section with background)
-            doc.setFillColor(124, 58, 237);
-            doc.rect(xPos + 2, finalYPos, cardWidth - 6, 8, 'F');
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(7);
-            doc.setFont('helvetica', 'bold');
-            doc.text(member.role, xPos + cardWidth / 2, finalYPos + 5, { align: 'center' });
-            
-            // Name
-            doc.setTextColor(31, 41, 55);
-            doc.setFontSize(10);
-            doc.setFont('helvetica', 'bold');
-            const nameLines = doc.splitTextToSize(member.name, cardWidth - 12);
-            doc.text(nameLines, xPos + cardWidth / 2, finalYPos + 16, { align: 'center' });
-            
-            // LinkedIn link
-            if (member.linkedin) {
+          // Check if we need a new page
+          if (yPosition > pageHeight - 60) {
+            doc.addPage();
+            yPosition = margin;
+          }
+
+          // Section title - Dark gray, bold
+          doc.setTextColor(31, 41, 55);
+          doc.setFontSize(14);
+          doc.setFont("helvetica", "bold");
+          const cleanedSectionTitle = removeEmojis(section.title);
+          const sectionTitleLines = doc.splitTextToSize(cleanedSectionTitle, maxWidth);
+          doc.text(sectionTitleLines, margin, yPosition);
+          yPosition += sectionTitleLines.length * 7 + 3;
+
+          // Subtitle - Purple
+          if (section.subtitle) {
+            doc.setTextColor(124, 58, 237);
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            const cleanedSubtitle = removeEmojis(section.subtitle);
+            const subtitleLines = doc.splitTextToSize(cleanedSubtitle, maxWidth);
+            doc.text(subtitleLines, margin, yPosition);
+            yPosition += subtitleLines.length * 6 + 5;
+          }
+
+          // Handle Team Members
+          if (section.teamMembers && Array.isArray(section.teamMembers)) {
+            const membersPerRow = 3;
+            const cardWidth = (maxWidth - 10) / membersPerRow;
+            const cardHeight = 35;
+            const cardSpacing = 5;
+
+            section.teamMembers.forEach((member: any, idx: number) => {
+              const col = idx % membersPerRow;
+              const row = Math.floor(idx / membersPerRow);
+              const xPos = margin + col * cardWidth;
+              const cardYPos = yPosition + row * (cardHeight + cardSpacing);
+
+              // Check if we need a new page for this row
+              if (cardYPos > pageHeight - 60 && col === 0) {
+                doc.addPage();
+                yPosition = margin;
+                const newCardYPos = yPosition + (row - Math.floor(idx / membersPerRow)) * (cardHeight + cardSpacing);
+              }
+
+              const finalYPos = col === 0 && row > 0 && yPosition < margin + 20 ? margin : cardYPos;
+
+              // Draw card border
+              doc.setDrawColor(124, 58, 237);
+              doc.setLineWidth(0.5);
+              doc.rect(xPos + 2, finalYPos, cardWidth - 6, cardHeight);
+
+              // Role (top section with background)
+              doc.setFillColor(124, 58, 237);
+              doc.rect(xPos + 2, finalYPos, cardWidth - 6, 8, "F");
+              doc.setTextColor(255, 255, 255);
+              doc.setFontSize(7);
+              doc.setFont("helvetica", "bold");
+              doc.text(member.role, xPos + cardWidth / 2, finalYPos + 5, { align: "center" });
+
+              // Name
+              doc.setTextColor(31, 41, 55);
+              doc.setFontSize(10);
+              doc.setFont("helvetica", "bold");
+              const nameLines = doc.splitTextToSize(member.name, cardWidth - 12);
+              doc.text(nameLines, xPos + cardWidth / 2, finalYPos + 16, { align: "center" });
+
+              // LinkedIn link
+              if (member.linkedin) {
+                doc.setTextColor(124, 58, 237);
+                doc.setFontSize(7);
+                doc.setFont("helvetica", "normal");
+                const linkText = "LinkedIn Profile";
+                const linkY = finalYPos + 26;
+
+                // Render text first
+                doc.text(linkText, xPos + cardWidth / 2, linkY, { align: "center" });
+
+                // Add clickable link annotation over the text
+                const textWidth = doc.getTextWidth(linkText);
+                doc.link(xPos + (cardWidth - textWidth) / 2, linkY - 3, textWidth, 4, { url: member.linkedin });
+              } else {
+                doc.setTextColor(156, 163, 175);
+                doc.setFontSize(7);
+                doc.setFont("helvetica", "italic");
+                doc.text("Coming Soon", xPos + cardWidth / 2, finalYPos + 26, { align: "center" });
+              }
+            });
+
+            // Move position down after all team members
+            const totalRows = Math.ceil(section.teamMembers.length / membersPerRow);
+            yPosition += totalRows * (cardHeight + cardSpacing) + 5;
+          }
+
+          // Handle regular items
+          if (section.items && Array.isArray(section.items)) {
+            doc.setTextColor(75, 85, 99);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+
+            section.items.forEach((item: string) => {
+              if (yPosition > pageHeight - 40) {
+                doc.addPage();
+                yPosition = margin;
+              }
+
+              // Bullet point - Purple
               doc.setTextColor(124, 58, 237);
-              doc.setFontSize(7);
-              doc.setFont('helvetica', 'normal');
-              const linkText = 'LinkedIn Profile';
-              const linkY = finalYPos + 26;
-              
-              // Render text first
-              doc.text(linkText, xPos + cardWidth / 2, linkY, { align: 'center' });
-              
-              // Add clickable link annotation over the text
-              const textWidth = doc.getTextWidth(linkText);
-              doc.link(
-                xPos + (cardWidth - textWidth) / 2, 
-                linkY - 3, 
-                textWidth, 
-                4, 
-                { url: member.linkedin }
-              );
-            } else {
-              doc.setTextColor(156, 163, 175);
-              doc.setFontSize(7);
-              doc.setFont('helvetica', 'italic');
-              doc.text('Coming Soon', xPos + cardWidth / 2, finalYPos + 26, { align: 'center' });
-            }
-          });
-          
-          // Move position down after all team members
-          const totalRows = Math.ceil(section.teamMembers.length / membersPerRow);
-          yPosition += totalRows * (cardHeight + cardSpacing) + 5;
-        }
-        
-        // Handle regular items
-        if (section.items && Array.isArray(section.items)) {
-          doc.setTextColor(75, 85, 99);
-          doc.setFontSize(9);
-          doc.setFont('helvetica', 'normal');
-          
-          section.items.forEach((item: string) => {
+              doc.setFont("helvetica", "bold");
+              doc.text("•", margin + 2, yPosition);
+
+              // Item text - Dark gray
+              doc.setTextColor(75, 85, 99);
+              doc.setFont("helvetica", "normal");
+              const cleanedItem = removeEmojis(item);
+              const itemLines = doc.splitTextToSize(cleanedItem, maxWidth - 10);
+              doc.text(itemLines, margin + 8, yPosition);
+              yPosition += itemLines.length * 5 + 3;
+            });
+          }
+
+          // Handle conclusion
+          if (section.conclusion) {
             if (yPosition > pageHeight - 40) {
               doc.addPage();
               yPosition = margin;
             }
-            
-            // Bullet point - Purple
-            doc.setTextColor(124, 58, 237);
-            doc.setFont('helvetica', 'bold');
-            doc.text('•', margin + 2, yPosition);
-            
-            // Item text - Dark gray
+
+            // Draw conclusion box
+            doc.setFillColor(245, 245, 245);
+            doc.setDrawColor(200, 200, 200);
+            const cleanedConclusion = removeEmojis(section.conclusion);
+            const conclusionLines = doc.splitTextToSize(cleanedConclusion, maxWidth - 16);
+            const boxHeight = conclusionLines.length * 5 + 8;
+            doc.roundedRect(margin, yPosition - 2, maxWidth, boxHeight, 2, 2, "FD");
+
+            // Conclusion text
             doc.setTextColor(75, 85, 99);
-            doc.setFont('helvetica', 'normal');
-            const cleanedItem = removeEmojis(item);
-            const itemLines = doc.splitTextToSize(cleanedItem, maxWidth - 10);
-            doc.text(itemLines, margin + 8, yPosition);
-            yPosition += itemLines.length * 5 + 3;
-          });
-        }
-        
-        // Handle conclusion
-        if (section.conclusion) {
-          if (yPosition > pageHeight - 40) {
-            doc.addPage();
-            yPosition = margin;
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text(conclusionLines, margin + 8, yPosition + 4);
+            yPosition += boxHeight + 5;
           }
-          
-          // Draw conclusion box
-          doc.setFillColor(245, 245, 245);
-          doc.setDrawColor(200, 200, 200);
-          const cleanedConclusion = removeEmojis(section.conclusion);
-          const conclusionLines = doc.splitTextToSize(cleanedConclusion, maxWidth - 16);
-          const boxHeight = conclusionLines.length * 5 + 8;
-          doc.roundedRect(margin, yPosition - 2, maxWidth, boxHeight, 2, 2, 'FD');
-          
-          // Conclusion text
-          doc.setTextColor(75, 85, 99);
-          doc.setFontSize(9);
-          doc.setFont('helvetica', 'normal');
-          doc.text(conclusionLines, margin + 8, yPosition + 4);
-          yPosition += boxHeight + 5;
-        }
-        
-        yPosition += 8;
-      });
+
+          yPosition += 8;
+        });
       }
     });
 
@@ -1391,17 +1389,13 @@ const InvestmentOpportunity = () => {
       doc.setPage(i);
       doc.setTextColor(107, 114, 128);
       doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      doc.text(
-        `© ${new Date().getFullYear()} Hobson AI - Confidential Investment Materials`,
-        margin,
-        pageHeight - 10
-      );
-      doc.text(`Page ${i - 1} of ${totalPages - 1}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+      doc.setFont("helvetica", "normal");
+      doc.text(`© ${new Date().getFullYear()} Hobson AI - Confidential Investment Materials`, margin, pageHeight - 10);
+      doc.text(`Page ${i - 1} of ${totalPages - 1}`, pageWidth - margin, pageHeight - 10, { align: "right" });
     }
 
     // Save the PDF
-    doc.save(`Hobson-${section.title.replace(/[^a-z0-9]/gi, '-')}.pdf`);
+    doc.save(`Hobson-${section.title.replace(/[^a-z0-9]/gi, "-")}.pdf`);
   };
 
   // Function to generate combined PDF with all sections
@@ -1410,120 +1404,120 @@ const InvestmentOpportunity = () => {
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     const margin = 20;
-    const maxWidth = pageWidth - (margin * 2);
-    
+    const maxWidth = pageWidth - margin * 2;
+
     // Helper function to remove emojis and fix special characters for PDF
     const removeEmojis = (text: string) => {
       // Comprehensive emoji removal regex and special character replacements
       return text
-        .replace(/⭐/g, '') // Remove star emoji
-        .replace(/→/g, '->') // Replace arrow
-        .replace(/←/g, '<-') // Replace left arrow
-        .replace(/✓/g, '-') // Replace checkmark with dash
-        .replace(/✔/g, '-') // Replace checkmark
-        .replace(/✗/g, 'x') // Replace x mark
-        .replace(/✘/g, 'x') // Replace x mark
-        .replace(/•/g, '-') // Replace bullet
-        .replace(/⦁/g, '-') // Replace bullet
-        .replace(/≈/g, '~') // Replace approximately equal with tilde
-        .replace(/×/g, 'x') // Replace multiplication sign
-        .replace(/—/g, '-') // Replace em dash
-        .replace(/–/g, '-') // Replace en dash
+        .replace(/⭐/g, "") // Remove star emoji
+        .replace(/→/g, "->") // Replace arrow
+        .replace(/←/g, "<-") // Replace left arrow
+        .replace(/✓/g, "-") // Replace checkmark with dash
+        .replace(/✔/g, "-") // Replace checkmark
+        .replace(/✗/g, "x") // Replace x mark
+        .replace(/✘/g, "x") // Replace x mark
+        .replace(/•/g, "-") // Replace bullet
+        .replace(/⦁/g, "-") // Replace bullet
+        .replace(/≈/g, "~") // Replace approximately equal with tilde
+        .replace(/×/g, "x") // Replace multiplication sign
+        .replace(/—/g, "-") // Replace em dash
+        .replace(/–/g, "-") // Replace en dash
         .replace(/'/g, "'") // Replace smart quote
         .replace(/'/g, "'") // Replace smart quote
         .replace(/"/g, '"') // Replace smart quote
         .replace(/"/g, '"') // Replace smart quote
-        .replace(/…/g, '...') // Replace ellipsis
-        .replace(/£/g, 'GBP ') // Replace pound sign for PDF compatibility
-        .replace(/[\u{2B50}]/gu, '') // Star emoji
-        .replace(/[\u{1F000}-\u{1F9FF}]/gu, '') // Emoticons, symbols, pictographs
-        .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
-        .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
-        .replace(/[\u{FE00}-\u{FE0F}]/gu, '') // Variation Selectors
-        .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, '') // Regional Indicator Symbols (flags)
-        .replace(/[\u{1F300}-\u{1F5FF}]/gu, '') // Miscellaneous Symbols and Pictographs
-        .replace(/[\u{1F600}-\u{1F64F}]/gu, '') // Emoticons
-        .replace(/[\u{1F680}-\u{1F6FF}]/gu, '') // Transport and Map Symbols
-        .replace(/[\u{1F700}-\u{1F77F}]/gu, '') // Alchemical Symbols
-        .replace(/[\u{1F780}-\u{1F7FF}]/gu, '') // Geometric Shapes Extended
-        .replace(/[\u{1F800}-\u{1F8FF}]/gu, '') // Supplemental Arrows-C
-        .replace(/[\u{1F900}-\u{1F9FF}]/gu, '') // Supplemental Symbols and Pictographs
-        .replace(/[\u{1FA00}-\u{1FA6F}]/gu, '') // Chess Symbols
-        .replace(/[\u{1FA70}-\u{1FAFF}]/gu, '') // Symbols and Pictographs Extended-A
-        .replace(/[\u{200D}]/gu, '') // Zero Width Joiner
+        .replace(/…/g, "...") // Replace ellipsis
+        .replace(/£/g, "GBP ") // Replace pound sign for PDF compatibility
+        .replace(/[\u{2B50}]/gu, "") // Star emoji
+        .replace(/[\u{1F000}-\u{1F9FF}]/gu, "") // Emoticons, symbols, pictographs
+        .replace(/[\u{2600}-\u{26FF}]/gu, "") // Miscellaneous Symbols
+        .replace(/[\u{2700}-\u{27BF}]/gu, "") // Dingbats
+        .replace(/[\u{FE00}-\u{FE0F}]/gu, "") // Variation Selectors
+        .replace(/[\u{1F1E6}-\u{1F1FF}]/gu, "") // Regional Indicator Symbols (flags)
+        .replace(/[\u{1F300}-\u{1F5FF}]/gu, "") // Miscellaneous Symbols and Pictographs
+        .replace(/[\u{1F600}-\u{1F64F}]/gu, "") // Emoticons
+        .replace(/[\u{1F680}-\u{1F6FF}]/gu, "") // Transport and Map Symbols
+        .replace(/[\u{1F700}-\u{1F77F}]/gu, "") // Alchemical Symbols
+        .replace(/[\u{1F780}-\u{1F7FF}]/gu, "") // Geometric Shapes Extended
+        .replace(/[\u{1F800}-\u{1F8FF}]/gu, "") // Supplemental Arrows-C
+        .replace(/[\u{1F900}-\u{1F9FF}]/gu, "") // Supplemental Symbols and Pictographs
+        .replace(/[\u{1FA00}-\u{1FA6F}]/gu, "") // Chess Symbols
+        .replace(/[\u{1FA70}-\u{1FAFF}]/gu, "") // Symbols and Pictographs Extended-A
+        .replace(/[\u{200D}]/gu, "") // Zero Width Joiner
         .trim()
-        .replace(/\s+/g, ' '); // Normalize whitespace
+        .replace(/\s+/g, " "); // Normalize whitespace
     };
-    
+
     // Track page numbers for each section
     const sectionPageNumbers: { [key: string]: number } = {};
-    
+
     // Cover Page - Purple gradient
     doc.setFillColor(124, 58, 237);
-    doc.rect(0, 0, pageWidth, pageHeight, 'F');
-    
+    doc.rect(0, 0, pageWidth, pageHeight, "F");
+
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(24);
-    doc.setFont('helvetica', 'bold');
-    doc.text('HOBSON AI', pageWidth / 2, 60, { align: 'center' });
-    
+    doc.setFont("helvetica", "bold");
+    doc.text("HOBSON AI", pageWidth / 2, 60, { align: "center" });
+
     doc.setFontSize(36);
-    doc.text('Full Business Plan', pageWidth / 2, 100, { align: 'center' });
-    
+    doc.text("Full Business Plan", pageWidth / 2, 100, { align: "center" });
+
     doc.setFontSize(16);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Investment Opportunity Document', pageWidth / 2, 130, { align: 'center' });
-    
+    doc.setFont("helvetica", "normal");
+    doc.text("Investment Opportunity Document", pageWidth / 2, 130, { align: "center" });
+
     // Add funding requirement with enhanced design
     const fundingY = 165;
-    
+
     // Add decorative lines above
     doc.setDrawColor(255, 255, 255);
     doc.setLineWidth(0.5);
     doc.line(pageWidth / 2 - 80, fundingY - 15, pageWidth / 2 + 80, fundingY - 15);
-    
+
     // Add funding label with opacity effect
     doc.setFontSize(11);
-    doc.setFont('helvetica', 'bold');
+    doc.setFont("helvetica", "bold");
     doc.setTextColor(255, 255, 255);
-    doc.text('FUNDING REQUIREMENT', pageWidth / 2, fundingY, { align: 'center' });
-    
+    doc.text("FUNDING REQUIREMENT", pageWidth / 2, fundingY, { align: "center" });
+
     // Add funding amount - extra large and bold
     doc.setFontSize(42);
-    doc.setFont('helvetica', 'bold');
+    doc.setFont("helvetica", "bold");
     doc.setTextColor(255, 255, 255);
-    doc.text('£750,000', pageWidth / 2, fundingY + 20, { align: 'center' });
-    
+    doc.text("£750,000", pageWidth / 2, fundingY + 20, { align: "center" });
+
     // Add decorative lines below
     doc.setLineWidth(0.5);
     doc.line(pageWidth / 2 - 80, fundingY + 30, pageWidth / 2 + 80, fundingY + 30);
-    
-    const currentDate = new Date().toLocaleDateString('en-GB', { 
-      year: 'numeric', 
-      month: 'long', 
-      day: 'numeric' 
+
+    const currentDate = new Date().toLocaleDateString("en-GB", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
     doc.setFontSize(10);
-    doc.text(currentDate, pageWidth / 2, pageHeight - 20, { align: 'center' });
+    doc.text(currentDate, pageWidth / 2, pageHeight - 20, { align: "center" });
 
     // Add index page
     doc.addPage();
     let indexY = margin;
-    
+
     doc.setTextColor(31, 41, 55);
     doc.setFontSize(24);
-    doc.setFont('helvetica', 'bold');
-    doc.text('Contents', pageWidth / 2, indexY, { align: 'center' });
+    doc.setFont("helvetica", "bold");
+    doc.text("Contents", pageWidth / 2, indexY, { align: "center" });
     indexY += 15;
-    
+
     doc.setDrawColor(124, 58, 237);
     doc.setLineWidth(1);
     doc.line(margin + 40, indexY, pageWidth - margin - 40, indexY);
     indexY += 15;
-    
+
     // Store index page number
     const indexPageNum = doc.getNumberOfPages();
-    
+
     // First pass: Calculate page numbers
     let currentPageNum = indexPageNum + 1;
     sections.forEach((section) => {
@@ -1536,7 +1530,7 @@ const InvestmentOpportunity = () => {
         currentPageNum++;
       });
     });
-    
+
     // Draw index cards (2 columns)
     const cardWidth = (pageWidth - margin * 2 - 10) / 2;
     const cardHeight = 45;
@@ -1544,7 +1538,7 @@ const InvestmentOpportunity = () => {
     let cardX = margin;
     let cardY = indexY;
     let cardCount = 0;
-    
+
     sections.forEach((section, idx) => {
       if (cardY + cardHeight > pageHeight - 30) {
         doc.addPage();
@@ -1552,48 +1546,50 @@ const InvestmentOpportunity = () => {
         cardX = margin;
         cardCount = 0;
       }
-      
+
       // Card background with subtle gradient effect
       doc.setFillColor(249, 250, 251);
-      doc.roundedRect(cardX, cardY, cardWidth, cardHeight, 3, 3, 'F');
-      
+      doc.roundedRect(cardX, cardY, cardWidth, cardHeight, 3, 3, "F");
+
       // Colored top border
       const colors = [
         [59, 130, 246], // blue
         [168, 85, 247], // purple
-        [34, 197, 94],  // green
-        [234, 179, 8],  // yellow
-        [239, 68, 68],  // red
+        [34, 197, 94], // green
+        [234, 179, 8], // yellow
+        [239, 68, 68], // red
         [236, 72, 153], // pink
         [14, 165, 233], // cyan
       ];
       const color = colors[idx % colors.length];
       doc.setFillColor(color[0], color[1], color[2]);
-      doc.roundedRect(cardX, cardY, cardWidth, 3, 1, 1, 'F');
-      
+      doc.roundedRect(cardX, cardY, cardWidth, 3, 1, 1, "F");
+
       // Section title
       doc.setTextColor(31, 41, 55);
       doc.setFontSize(11);
-      doc.setFont('helvetica', 'bold');
+      doc.setFont("helvetica", "bold");
       const titleLines = doc.splitTextToSize(section.title, cardWidth - 10);
       doc.text(titleLines, cardX + 5, cardY + 12);
-      
+
       // Section subtitle
       doc.setTextColor(107, 114, 128);
       doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
+      doc.setFont("helvetica", "normal");
       const subtitleLines = doc.splitTextToSize(section.subtitle, cardWidth - 10);
-      doc.text(subtitleLines, cardX + 5, cardY + 12 + (titleLines.length * 5) + 3);
-      
+      doc.text(subtitleLines, cardX + 5, cardY + 12 + titleLines.length * 5 + 3);
+
       // Page number
       doc.setTextColor(124, 58, 237);
       doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.text(`Page ${sectionPageNumbers[section.id] - 1}`, cardX + cardWidth - 5, cardY + cardHeight - 5, { align: 'right' });
-      
+      doc.setFont("helvetica", "bold");
+      doc.text(`Page ${sectionPageNumbers[section.id] - 1}`, cardX + cardWidth - 5, cardY + cardHeight - 5, {
+        align: "right",
+      });
+
       // Add clickable link
       doc.link(cardX, cardY, cardWidth, cardHeight, { pageNumber: sectionPageNumbers[section.id] });
-      
+
       // Position for next card
       cardCount++;
       if (cardCount % 2 === 0) {
@@ -1609,46 +1605,46 @@ const InvestmentOpportunity = () => {
       // Add purple section separator page
       doc.addPage();
       doc.setFillColor(124, 58, 237);
-      doc.rect(0, 0, pageWidth, pageHeight, 'F');
-      
+      doc.rect(0, 0, pageWidth, pageHeight, "F");
+
       doc.setTextColor(255, 255, 255);
       doc.setFontSize(32);
-      doc.setFont('helvetica', 'bold');
-      
+      doc.setFont("helvetica", "bold");
+
       const titleLines = doc.splitTextToSize(section.title, pageWidth - 80);
       const titleHeight = titleLines.length * 12;
       const titleY = (pageHeight - titleHeight) / 2;
-      
-      doc.text(titleLines, pageWidth / 2, titleY, { align: 'center' });
-      
+
+      doc.text(titleLines, pageWidth / 2, titleY, { align: "center" });
+
       if (section.subtitle) {
         doc.setFontSize(16);
-        doc.setFont('helvetica', 'normal');
+        doc.setFont("helvetica", "normal");
         const subtitleLines = doc.splitTextToSize(section.subtitle, pageWidth - 80);
-        doc.text(subtitleLines, pageWidth / 2, titleY + titleHeight + 15, { align: 'center' });
+        doc.text(subtitleLines, pageWidth / 2, titleY + titleHeight + 15, { align: "center" });
       }
-      
+
       section.pages.forEach((page: any) => {
         // Skip pages without content, but allow simpleUI pages that have content
         const isSimpleUI = page.customVisualComponent === "simpleUI";
         if (!page.content || (page.showCustomVisual && !isSimpleUI)) {
           return;
         }
-        
+
         doc.addPage();
         let yPosition = margin;
-        
+
         // Handle pages with images specially
         const pageImage = page.image || page.pdfImage;
         if (pageImage) {
           // Page title - Purple
           doc.setTextColor(124, 58, 237);
           doc.setFontSize(18);
-          doc.setFont('helvetica', 'bold');
+          doc.setFont("helvetica", "bold");
           const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
           doc.text(pageTitleLines, margin, yPosition);
           yPosition += pageTitleLines.length * 8 + 10;
-          
+
           // Determine aspect ratio and size based on image type
           const isSimpleUI = page.customVisualComponent === "simpleUI";
           const aspectRatio = isSimpleUI ? 0.75 : 1.7;
@@ -1656,7 +1652,7 @@ const InvestmentOpportunity = () => {
           const imgWidth = isSimpleUI ? maxWidth * 0.7 : maxWidth;
           const targetHeight = imgWidth * aspectRatio;
           const availableHeight = isSimpleUI ? 80 : pageHeight - yPosition - 30;
-          
+
           // Scale image to fit on current page if needed
           let finalWidth = imgWidth;
           let finalHeight = targetHeight;
@@ -1664,16 +1660,16 @@ const InvestmentOpportunity = () => {
             finalHeight = availableHeight;
             finalWidth = finalHeight / aspectRatio;
           }
-          
+
           try {
             // Center the image for simpleUI
             const imgX = isSimpleUI ? margin + (maxWidth - finalWidth) / 2 : margin;
-            doc.addImage(pageImage, 'PNG', imgX, yPosition, finalWidth, finalHeight);
+            doc.addImage(pageImage, "PNG", imgX, yPosition, finalWidth, finalHeight);
             yPosition += finalHeight + 10;
           } catch (error) {
-            console.error('Error adding image to PDF:', error);
+            console.error("Error adding image to PDF:", error);
           }
-          
+
           // For non-simpleUI pages, start content on next page
           if (!isSimpleUI) {
             doc.addPage();
@@ -1683,11 +1679,11 @@ const InvestmentOpportunity = () => {
           // Page title - Purple (for non-image pages)
           doc.setTextColor(124, 58, 237);
           doc.setFontSize(18);
-          doc.setFont('helvetica', 'bold');
+          doc.setFont("helvetica", "bold");
           const pageTitleLines = doc.splitTextToSize(page.title, maxWidth);
           doc.text(pageTitleLines, margin, yPosition);
           yPosition += pageTitleLines.length * 8 + 5;
-          
+
           // Purple line under title
           doc.setDrawColor(124, 58, 237);
           doc.setLineWidth(0.5);
@@ -1700,15 +1696,15 @@ const InvestmentOpportunity = () => {
           doc.setFillColor(249, 250, 251);
           doc.setTextColor(55, 65, 81);
           doc.setFontSize(10);
-          doc.setFont('helvetica', 'normal');
+          doc.setFont("helvetica", "normal");
           const overviewLines = doc.splitTextToSize(page.content.overview, maxWidth - 10);
-          
+
           const boxHeight = overviewLines.length * 5 + 10;
-          doc.rect(margin, yPosition, maxWidth, boxHeight, 'F');
+          doc.rect(margin, yPosition, maxWidth, boxHeight, "F");
           doc.text(overviewLines, margin + 5, yPosition + 7);
           yPosition += boxHeight + 8;
         }
-        
+
         // Sections
         if (page.content.sections && Array.isArray(page.content.sections)) {
           page.content.sections.forEach((section: any) => {
@@ -1716,150 +1712,144 @@ const InvestmentOpportunity = () => {
               doc.addPage();
               yPosition = margin;
             }
-            
+
             // Section title
             doc.setTextColor(31, 41, 55);
             doc.setFontSize(14);
-            doc.setFont('helvetica', 'bold');
+            doc.setFont("helvetica", "bold");
             const cleanedSectionTitle = removeEmojis(section.title);
             const sectionTitleLines = doc.splitTextToSize(cleanedSectionTitle, maxWidth);
             doc.text(sectionTitleLines, margin, yPosition);
             yPosition += sectionTitleLines.length * 7 + 3;
-            
+
             // Subtitle
             if (section.subtitle) {
               doc.setTextColor(124, 58, 237);
               doc.setFontSize(12);
-              doc.setFont('helvetica', 'bold');
+              doc.setFont("helvetica", "bold");
               const subtitleLines = doc.splitTextToSize(section.subtitle, maxWidth);
               doc.text(subtitleLines, margin, yPosition);
               yPosition += subtitleLines.length * 6 + 5;
             }
-            
+
             // Handle Team Members
             if (section.teamMembers && Array.isArray(section.teamMembers)) {
               const membersPerRow = 3;
               const cardWidth = (maxWidth - 10) / membersPerRow;
               const cardHeight = 35;
               const cardSpacing = 5;
-              
+
               section.teamMembers.forEach((member: any, idx: number) => {
                 const col = idx % membersPerRow;
                 const row = Math.floor(idx / membersPerRow);
                 const xPos = margin + col * cardWidth;
                 const cardYPos = yPosition + row * (cardHeight + cardSpacing);
-                
+
                 // Check if we need a new page for this row
                 if (cardYPos > pageHeight - 60 && col === 0) {
                   doc.addPage();
                   yPosition = margin;
                 }
-                
+
                 const finalYPos = col === 0 && row > 0 && yPosition < margin + 20 ? margin : cardYPos;
-                
+
                 // Draw card border
                 doc.setDrawColor(124, 58, 237);
                 doc.setLineWidth(0.5);
                 doc.rect(xPos + 2, finalYPos, cardWidth - 6, cardHeight);
-                
+
                 // Role (top section with background)
                 doc.setFillColor(124, 58, 237);
-                doc.rect(xPos + 2, finalYPos, cardWidth - 6, 8, 'F');
+                doc.rect(xPos + 2, finalYPos, cardWidth - 6, 8, "F");
                 doc.setTextColor(255, 255, 255);
                 doc.setFontSize(7);
-                doc.setFont('helvetica', 'bold');
-                doc.text(member.role, xPos + cardWidth / 2, finalYPos + 5, { align: 'center' });
-                
+                doc.setFont("helvetica", "bold");
+                doc.text(member.role, xPos + cardWidth / 2, finalYPos + 5, { align: "center" });
+
                 // Name
                 doc.setTextColor(31, 41, 55);
                 doc.setFontSize(10);
-                doc.setFont('helvetica', 'bold');
+                doc.setFont("helvetica", "bold");
                 const nameLines = doc.splitTextToSize(member.name, cardWidth - 12);
-                doc.text(nameLines, xPos + cardWidth / 2, finalYPos + 16, { align: 'center' });
-                
+                doc.text(nameLines, xPos + cardWidth / 2, finalYPos + 16, { align: "center" });
+
                 // LinkedIn link
                 if (member.linkedin) {
                   doc.setTextColor(124, 58, 237);
                   doc.setFontSize(7);
-                  doc.setFont('helvetica', 'normal');
-                  const linkText = 'LinkedIn Profile';
+                  doc.setFont("helvetica", "normal");
+                  const linkText = "LinkedIn Profile";
                   const linkY = finalYPos + 26;
-                  
+
                   // Render text first
-                  doc.text(linkText, xPos + cardWidth / 2, linkY, { align: 'center' });
-                  
+                  doc.text(linkText, xPos + cardWidth / 2, linkY, { align: "center" });
+
                   // Add clickable link annotation over the text
                   const textWidth = doc.getTextWidth(linkText);
-                  doc.link(
-                    xPos + (cardWidth - textWidth) / 2, 
-                    linkY - 3, 
-                    textWidth, 
-                    4, 
-                    { url: member.linkedin }
-                  );
+                  doc.link(xPos + (cardWidth - textWidth) / 2, linkY - 3, textWidth, 4, { url: member.linkedin });
                 } else {
                   doc.setTextColor(156, 163, 175);
                   doc.setFontSize(7);
-                  doc.setFont('helvetica', 'italic');
-                  doc.text('Coming Soon', xPos + cardWidth / 2, finalYPos + 26, { align: 'center' });
+                  doc.setFont("helvetica", "italic");
+                  doc.text("Coming Soon", xPos + cardWidth / 2, finalYPos + 26, { align: "center" });
                 }
               });
-              
+
               // Move position down after all team members
               const totalRows = Math.ceil(section.teamMembers.length / membersPerRow);
               yPosition += totalRows * (cardHeight + cardSpacing) + 5;
             }
-            
+
             // Items
             if (section.items && Array.isArray(section.items)) {
               doc.setTextColor(75, 85, 99);
               doc.setFontSize(9);
-              doc.setFont('helvetica', 'normal');
-              
+              doc.setFont("helvetica", "normal");
+
               section.items.forEach((item: string) => {
                 if (yPosition > pageHeight - 40) {
                   doc.addPage();
                   yPosition = margin;
                 }
-                
+
                 // Bullet point
                 doc.setTextColor(124, 58, 237);
-                doc.setFont('helvetica', 'bold');
-                doc.text('•', margin + 2, yPosition);
-                
+                doc.setFont("helvetica", "bold");
+                doc.text("•", margin + 2, yPosition);
+
                 // Item text
                 doc.setTextColor(75, 85, 99);
-                doc.setFont('helvetica', 'normal');
+                doc.setFont("helvetica", "normal");
                 const cleanedItem = removeEmojis(item);
                 const itemLines = doc.splitTextToSize(cleanedItem, maxWidth - 10);
                 doc.text(itemLines, margin + 8, yPosition);
                 yPosition += itemLines.length * 5 + 3;
               });
             }
-            
+
             // Handle conclusion
             if (section.conclusion) {
               if (yPosition > pageHeight - 40) {
                 doc.addPage();
                 yPosition = margin;
               }
-              
+
               // Draw conclusion box
               doc.setFillColor(245, 245, 245);
               doc.setDrawColor(200, 200, 200);
               const cleanedConclusion = removeEmojis(section.conclusion);
               const conclusionLines = doc.splitTextToSize(cleanedConclusion, maxWidth - 16);
               const boxHeight = conclusionLines.length * 5 + 8;
-              doc.roundedRect(margin, yPosition - 2, maxWidth, boxHeight, 2, 2, 'FD');
-              
+              doc.roundedRect(margin, yPosition - 2, maxWidth, boxHeight, 2, 2, "FD");
+
               // Conclusion text
               doc.setTextColor(75, 85, 99);
               doc.setFontSize(9);
-              doc.setFont('helvetica', 'normal');
+              doc.setFont("helvetica", "normal");
               doc.text(conclusionLines, margin + 8, yPosition + 4);
               yPosition += boxHeight + 5;
             }
-            
+
             yPosition += 8;
           });
         }
@@ -1872,20 +1862,16 @@ const InvestmentOpportunity = () => {
       doc.setPage(i);
       doc.setTextColor(107, 114, 128);
       doc.setFontSize(8);
-      doc.setFont('helvetica', 'normal');
-      doc.text(
-        `© ${new Date().getFullYear()} Hobson AI - Confidential Investment Materials`,
-        margin,
-        pageHeight - 10
-      );
+      doc.setFont("helvetica", "normal");
+      doc.text(`© ${new Date().getFullYear()} Hobson AI - Confidential Investment Materials`, margin, pageHeight - 10);
       // Skip page number on index page
       if (i !== indexPageNum) {
-        doc.text(`Page ${i - 2} of ${totalPages - 2}`, pageWidth - margin, pageHeight - 10, { align: 'right' });
+        doc.text(`Page ${i - 2} of ${totalPages - 2}`, pageWidth - margin, pageHeight - 10, { align: "right" });
       }
     }
 
     // Save the combined PDF
-    doc.save('Hobson-Full-Business-Plan.pdf');
+    doc.save("Hobson-Full-Business-Plan.pdf");
   };
 
   // Check if user has already authenticated in this session
@@ -2015,7 +2001,9 @@ const InvestmentOpportunity = () => {
                   Mission Statement
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  <span className="text-primary font-semibold">Innovation without disruption.</span> To bring clarity and connected insight to real estate professionals by delivering instant, accurate, AI-enhanced answers that build on the systems and documents they already use.
+                  <span className="text-primary font-semibold">Innovation without disruption.</span> To bring clarity
+                  and connected insight to real estate professionals by delivering instant, accurate, AI-enhanced
+                  answers that build on the systems and documents they already use.
                 </p>
               </div>
 
@@ -2025,7 +2013,12 @@ const InvestmentOpportunity = () => {
                   Positioning Statement
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  <span className="text-primary font-semibold">Disruption without displacement.</span> Hobson brings AI clarity to real estate operations by transforming unstructured documents and fragmented data into immediate, trustworthy answers. It enhances — rather than replaces — existing CRMs and workflows, offering a lightweight, low-cost layer that delivers enterprise-grade accuracy. Hobson creates meaningful productivity gains, lowers operating costs, and provides a stepping stone for widespread AI adoption across the sector.
+                  <span className="text-primary font-semibold">Disruption without displacement.</span> Hobson brings AI
+                  clarity to real estate operations by transforming unstructured documents and fragmented data into
+                  immediate, trustworthy answers. It enhances — rather than replaces — existing CRMs and workflows,
+                  offering a lightweight, low-cost layer that delivers enterprise-grade accuracy. Hobson creates
+                  meaningful productivity gains, lowers operating costs, and provides a stepping stone for widespread AI
+                  adoption across the sector.
                 </p>
               </div>
 
@@ -2035,7 +2028,9 @@ const InvestmentOpportunity = () => {
                   <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
                     <TrendingUp className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
                   </div>
-                  <p className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">Funding Requirement</p>
+                  <p className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">
+                    Funding Requirement
+                  </p>
                   <p className="text-3xl sm:text-4xl font-bold text-primary">£750,000</p>
                 </div>
               </div>
@@ -2052,9 +2047,7 @@ const InvestmentOpportunity = () => {
           <div className="container mx-auto px-3 sm:px-4">
             <div className="max-w-6xl mx-auto">
               <div className="text-center mb-8 sm:mb-10">
-                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-3">
-                  Business Plan Sections
-                </h2>
+                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-3">Business Plan Sections</h2>
                 <p className="text-sm sm:text-base text-muted-foreground mb-6 max-w-2xl mx-auto px-2">
                   Explore individual sections below to view detailed information or download as separate documents, or
                 </p>
@@ -2073,7 +2066,7 @@ const InvestmentOpportunity = () => {
                         description: "Full Business Plan has been saved to your downloads folder",
                       });
                     } catch (error) {
-                      console.error('Error generating full business plan:', error);
+                      console.error("Error generating full business plan:", error);
                       toast({
                         title: "Error",
                         description: "Failed to generate PDF. Please try again.",
@@ -2123,7 +2116,7 @@ const InvestmentOpportunity = () => {
                         <Button
                           onClick={(e) => {
                             e.stopPropagation();
-                            
+
                             try {
                               toast({
                                 title: "Generating PDF",
@@ -2137,7 +2130,7 @@ const InvestmentOpportunity = () => {
                                 description: `${section.title} PDF has been saved to your downloads folder`,
                               });
                             } catch (error) {
-                              console.error('Error generating PDF:', error);
+                              console.error("Error generating PDF:", error);
                               toast({
                                 title: "Error",
                                 description: "Failed to generate PDF. Please try again.",
@@ -2300,113 +2293,124 @@ const InvestmentOpportunity = () => {
                       !(selectedSection.pages[currentPageIndex] as any).isVisual &&
                       selectedSection.pages[currentPageIndex].content.sections.map((contentSection: any, idx) => {
                         // Determine if section should have white background
-                        const hasWhiteBg = contentSection.teamMembers || 
-                          /\d{4}:/.test(contentSection.title) || 
+                        const hasWhiteBg =
+                          contentSection.teamMembers ||
+                          /\d{4}:/.test(contentSection.title) ||
                           /^\d+\./.test(contentSection.title) ||
-                          contentSection.title.includes('Operator') || 
-                          contentSection.title.startsWith('Step') || 
-                          contentSection.title.includes('Technical Components') ||
-                          contentSection.title.includes('Focus') ||
-                          contentSection.title.includes('Opportunity') ||
-                          contentSection.title.includes('Model') ||
-                          contentSection.title.includes('Traction') ||
-                          contentSection.title.includes('Milestones') ||
-                          contentSection.title.includes('TAM') ||
-                          contentSection.title.includes('SAM') ||
-                          contentSection.title.includes('SOM') ||
-                          contentSection.title.includes('Overview') ||
-                          contentSection.title.includes('Summary') ||
-                          contentSection.title.includes('Traditional') ||
-                          contentSection.title.includes('Next-Generation') ||
-                          contentSection.title.includes('Competitive') ||
-                          contentSection.title.includes('Europe') ||
-                          contentSection.title.includes('Global') ||
-                          contentSection.title.includes('Cloud') ||
-                          contentSection.title.includes('Data') ||
-                          contentSection.title.includes('Communication') ||
-                          contentSection.title.includes('AI &') ||
-                          contentSection.title.includes('Baseline') ||
-                          contentSection.title.includes('Assumptions') ||
-                          contentSection.title.includes('Why 12%') ||
-                          contentSection.title.includes('Why a 12%') ||
-                          contentSection.title.includes('Cost & Savings') ||
-                          contentSection.title.includes('Verified Evidence') ||
-                          contentSection.title.includes('Why This Matters') ||
-                          contentSection.title.includes('Explosive') ||
-                          contentSection.title.includes('Specialised') ||
-                          contentSection.title.includes('Delivers') ||
-                          contentSection.title.includes('Solving') ||
-                          contentSection.title.includes('Learns') ||
-                          contentSection.title.includes('Perfect Timing') ||
-                          contentSection.title.includes('The Result');
-                        
+                          contentSection.title.includes("Operator") ||
+                          contentSection.title.startsWith("Step") ||
+                          contentSection.title.includes("Technical Components") ||
+                          contentSection.title.includes("Focus") ||
+                          contentSection.title.includes("Opportunity") ||
+                          contentSection.title.includes("Model") ||
+                          contentSection.title.includes("Traction") ||
+                          contentSection.title.includes("Milestones") ||
+                          contentSection.title.includes("TAM") ||
+                          contentSection.title.includes("SAM") ||
+                          contentSection.title.includes("SOM") ||
+                          contentSection.title.includes("Overview") ||
+                          contentSection.title.includes("Summary") ||
+                          contentSection.title.includes("Traditional") ||
+                          contentSection.title.includes("Next-Generation") ||
+                          contentSection.title.includes("Competitive") ||
+                          contentSection.title.includes("Europe") ||
+                          contentSection.title.includes("Global") ||
+                          contentSection.title.includes("Cloud") ||
+                          contentSection.title.includes("Data") ||
+                          contentSection.title.includes("Communication") ||
+                          contentSection.title.includes("AI &") ||
+                          contentSection.title.includes("Baseline") ||
+                          contentSection.title.includes("Assumptions") ||
+                          contentSection.title.includes("Why 12%") ||
+                          contentSection.title.includes("Why a 12%") ||
+                          contentSection.title.includes("Cost & Savings") ||
+                          contentSection.title.includes("Verified Evidence") ||
+                          contentSection.title.includes("Why This Matters") ||
+                          contentSection.title.includes("Explosive") ||
+                          contentSection.title.includes("Specialised") ||
+                          contentSection.title.includes("Delivers") ||
+                          contentSection.title.includes("Solving") ||
+                          contentSection.title.includes("Learns") ||
+                          contentSection.title.includes("Perfect Timing") ||
+                          contentSection.title.includes("The Result");
+
                         return (
-                        <div key={idx} className="space-y-3 sm:space-y-4">
-                          <div className={`${hasWhiteBg ? 'bg-white border-b-2 border-primary/20' : 'bg-primary'} rounded-lg px-4 py-3 mb-4`}>
-                            <h3 className={`text-base sm:text-lg md:text-xl font-bold ${hasWhiteBg ? 'text-foreground' : 'text-white'}`}>
-                              {contentSection.title}
-                            </h3>
-                            {contentSection.subtitle && (
-                              <p className={`text-xs sm:text-sm mt-1 ${hasWhiteBg ? 'text-muted-foreground' : 'text-white/90'}`}>{contentSection.subtitle}</p>
-                            )}
-                          </div>
-                          
-                          {/* Team Members Grid */}
-                          {contentSection.teamMembers ? (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                              {contentSection.teamMembers.map((member: any, memberIdx: number) => (
-                                <div
-                                  key={memberIdx}
-                                  className="border-2 border-primary/30 rounded-lg bg-white hover:border-primary transition-colors overflow-hidden"
+                          <div key={idx} className="space-y-3 sm:space-y-4">
+                            <div
+                              className={`${hasWhiteBg ? "bg-white border-b-2 border-primary/20" : "bg-primary"} rounded-lg px-4 py-3 mb-4`}
+                            >
+                              <h3
+                                className={`text-base sm:text-lg md:text-xl font-bold ${hasWhiteBg ? "text-foreground" : "text-white"}`}
+                              >
+                                {contentSection.title}
+                              </h3>
+                              {contentSection.subtitle && (
+                                <p
+                                  className={`text-xs sm:text-sm mt-1 ${hasWhiteBg ? "text-muted-foreground" : "text-white/90"}`}
                                 >
-                                  <div className="text-center">
-                                    <div className="bg-primary/20 px-4 py-3">
-                                      <span className="text-xs sm:text-sm font-semibold text-primary uppercase tracking-wide">
-                                        {member.role}
-                                      </span>
-                                    </div>
-                                    <div className="pt-2 px-4 pb-4 sm:pt-3 sm:px-6 sm:pb-6 space-y-3">
-                                      <h4 className="text-lg sm:text-xl font-bold text-foreground min-h-[3rem] flex items-center justify-center">
-                                        {member.name}
-                                      </h4>
-                                      {member.linkedin ? (
-                                        <a
-                                          href={member.linkedin}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="text-xs sm:text-sm text-purple-800 hover:text-purple-900 underline inline-flex items-center gap-1 transition-colors"
-                                        >
-                                          <span>LinkedIn Profile</span>
-                                          <span className="text-[10px]">↗</span>
-                                        </a>
-                                      ) : (
-                                        <span className="text-xs sm:text-sm text-muted-foreground italic">Coming Soon</span>
-                                      )}
+                                  {contentSection.subtitle}
+                                </p>
+                              )}
+                            </div>
+
+                            {/* Team Members Grid */}
+                            {contentSection.teamMembers ? (
+                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                                {contentSection.teamMembers.map((member: any, memberIdx: number) => (
+                                  <div
+                                    key={memberIdx}
+                                    className="border-2 border-primary/30 rounded-lg bg-white hover:border-primary transition-colors overflow-hidden"
+                                  >
+                                    <div className="text-center">
+                                      <div className="bg-primary/20 px-4 py-3">
+                                        <span className="text-xs sm:text-sm font-semibold text-primary uppercase tracking-wide">
+                                          {member.role}
+                                        </span>
+                                      </div>
+                                      <div className="pt-2 px-4 pb-4 sm:pt-3 sm:px-6 sm:pb-6 space-y-3">
+                                        <h4 className="text-lg sm:text-xl font-bold text-foreground min-h-[3rem] flex items-center justify-center">
+                                          {member.name}
+                                        </h4>
+                                        {member.linkedin ? (
+                                          <a
+                                            href={member.linkedin}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-xs sm:text-sm text-purple-800 hover:text-purple-900 underline inline-flex items-center gap-1 transition-colors"
+                                          >
+                                            <span>LinkedIn Profile</span>
+                                            <span className="text-[10px]">↗</span>
+                                          </a>
+                                        ) : (
+                                          <span className="text-xs sm:text-sm text-muted-foreground italic">
+                                            Coming Soon
+                                          </span>
+                                        )}
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              ))}
-                            </div>
-                          ) : (
-                            /* Regular Items List */
-                            <ul className="space-y-2 sm:space-y-3 pl-3 sm:pl-4">
-                              {contentSection.items?.map((item: string, itemIdx: number) => (
-                                <li key={itemIdx} className="flex items-start gap-2 sm:gap-3 text-foreground">
-                                  <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary/60 mt-1.5 sm:mt-2 flex-shrink-0"></span>
-                                  <span className="text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
-                          {/* Conclusion without bullet */}
-                          {contentSection.conclusion && (
-                            <div className="bg-muted/30 border border-border rounded-lg p-3 lg:p-4 mt-4">
-                              <p className="text-sm lg:text-base text-muted-foreground">
-                                {contentSection.conclusion}
-                              </p>
-                            </div>
-                          )}
-                        </div>
+                                ))}
+                              </div>
+                            ) : (
+                              /* Regular Items List */
+                              <ul className="space-y-2 sm:space-y-3 pl-3 sm:pl-4">
+                                {contentSection.items?.map((item: string, itemIdx: number) => (
+                                  <li key={itemIdx} className="flex items-start gap-2 sm:gap-3 text-foreground">
+                                    <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-primary/60 mt-1.5 sm:mt-2 flex-shrink-0"></span>
+                                    <span className="text-xs sm:text-sm md:text-base leading-relaxed">{item}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            )}
+                            {/* Conclusion without bullet */}
+                            {contentSection.conclusion && (
+                              <div className="bg-muted/30 border border-border rounded-lg p-3 lg:p-4 mt-4">
+                                <p className="text-sm lg:text-base text-muted-foreground">
+                                  {contentSection.conclusion}
+                                </p>
+                              </div>
+                            )}
+                          </div>
                         );
                       })}
 
@@ -2414,9 +2418,7 @@ const InvestmentOpportunity = () => {
                     {(selectedSection.pages[currentPageIndex] as any).downloads && (
                       <div className="space-y-3 sm:space-y-4 mt-6 sm:mt-8">
                         <div className="bg-primary rounded-lg px-4 py-3 mb-4">
-                          <h3 className="text-base sm:text-lg md:text-xl font-bold text-white">
-                            Download Files
-                          </h3>
+                          <h3 className="text-base sm:text-lg md:text-xl font-bold text-white">Download Files</h3>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
                           {(selectedSection.pages[currentPageIndex] as any).downloads.map(
