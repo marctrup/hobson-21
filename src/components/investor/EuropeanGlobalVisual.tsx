@@ -118,7 +118,7 @@ export const EuropeanGlobalVisual = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>With 65% of operators realistically motivated to adopt AI, the SAM is £10.1B.</span>
+                <span>With 65% of european motivation to adopt AI, the SAM is £10.1B.</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
