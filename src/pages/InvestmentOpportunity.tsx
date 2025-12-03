@@ -1294,7 +1294,8 @@ const InvestmentOpportunity = () => {
     sections.forEach((section) => {
       sectionPageNumbers[section.id] = currentPageNum;
       section.pages.forEach((page: any) => {
-        if (!page.content || page.showCustomVisual) {
+        const isSimpleUI = page.customVisualComponent === "simpleUI";
+        if (!page.content || (page.showCustomVisual && !isSimpleUI)) {
           return;
         }
         currentPageNum++;
@@ -1393,8 +1394,9 @@ const InvestmentOpportunity = () => {
       }
       
       section.pages.forEach((page: any) => {
-        // Skip pages without content or with custom visuals
-        if (!page.content || page.showCustomVisual) {
+        // Skip pages without content, but allow simpleUI pages that have content
+        const isSimpleUI = page.customVisualComponent === "simpleUI";
+        if (!page.content || (page.showCustomVisual && !isSimpleUI)) {
           return;
         }
         
