@@ -1800,7 +1800,7 @@ const InvestmentOpportunity = () => {
                 </p>
                 <Button
                   size="lg"
-                  className="gap-2"
+                  className="gap-2 bg-gradient-to-r from-primary/80 to-primary hover:from-primary hover:to-primary/90 transition-all duration-300"
                   onClick={() => {
                     try {
                       toast({
