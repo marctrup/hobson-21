@@ -487,6 +487,42 @@ const sections = [
           ],
         },
       },
+      {
+        title: "Simple UI",
+        content: {
+          overview:
+            "Hobson's user interface is designed for simplicity and ease of use, requiring zero training and delivering instant value from day one.",
+          sections: [
+            {
+              title: "Design Philosophy",
+              items: [
+                "🎯 Zero Learning Curve: Intuitive chat interface that anyone can use immediately",
+                "💬 Conversational First: Natural language interactions, no complex menus or workflows",
+                "📱 Mobile-Ready: Responsive design works seamlessly across desktop, tablet, and mobile",
+                "🎨 Clean & Minimal: Distraction-free interface focused on getting answers fast",
+              ],
+            },
+            {
+              title: "Key Interface Features",
+              items: [
+                "🔍 Smart Search: Ask questions in plain English and get instant, referenced answers",
+                "📄 Document Preview: View source documents directly within responses",
+                "📊 Usage Dashboard: Real-time HEU tracking with transparent cost visibility",
+                "🏢 Property Navigation: Easy switching between properties, portfolios, and units",
+              ],
+            },
+            {
+              title: "User Experience Benefits",
+              items: [
+                "⚡ Instant Onboarding: Upload documents and start asking questions in minutes",
+                "🎓 No Training Required: Designed for non-technical property professionals",
+                "✅ Trust Through Transparency: Every answer includes source citations",
+                "🔄 Continuous Improvement: Interface evolves based on user feedback and usage patterns",
+              ],
+            },
+          ],
+        },
+      },
     ],
   },
   {
