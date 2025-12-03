@@ -2210,7 +2210,13 @@ const InvestmentOpportunity = () => {
                           contentSection.title.includes('Assumptions') ||
                           contentSection.title.includes('Why 12%') ||
                           contentSection.title.includes('Why This Matters') ||
-                          contentSection.title.includes('Explosive');
+                          contentSection.title.includes('Explosive') ||
+                          contentSection.title.includes('Specialised') ||
+                          contentSection.title.includes('Delivers') ||
+                          contentSection.title.includes('Solving') ||
+                          contentSection.title.includes('Learns') ||
+                          contentSection.title.includes('Perfect Timing') ||
+                          contentSection.title.includes('The Result');
                         
                         return (
                         <div key={idx} className="space-y-3 sm:space-y-4">
