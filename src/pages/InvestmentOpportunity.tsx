@@ -217,6 +217,20 @@ const sections = [
         },
       },
       {
+        title: "Global Validation",
+        content: {
+          overview: "",
+          sections: [
+            {
+              title: "Validation Overview",
+              items: [
+                "Global market validation content to be added.",
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: "European & Global Opportunities",
         showCustomVisual: true,
         customVisualComponent: "europeanGlobal",
