@@ -214,7 +214,7 @@ const sections = [
           overview: "Market expansion opportunities across European and Global markets",
           sections: [
             {
-              title: "Europe Overview",
+              title: "Europe",
               subtitle: "11× UK Population Multiple",
               items: [
                 "Europe's population is 11× larger than the UK",
@@ -225,7 +225,7 @@ const sections = [
               ],
             },
             {
-              title: "Europe TAM",
+              title: "Total Addressable Market (TAM)",
               subtitle: "£15.5B",
               items: [
                 "Scaling the UK's £1.41B efficiency value by Europe's 11× population multiple",
@@ -234,7 +234,7 @@ const sections = [
               ],
             },
             {
-              title: "Europe SAM",
+              title: "Serviceable Available Market (SAM)",
               subtitle: "£10.1B",
               items: [
                 "The proportion of European real estate operators realistically motivated and ready to adopt AI tools",
@@ -243,7 +243,7 @@ const sections = [
               ],
             },
             {
-              title: "Europe SOM",
+              title: "Serviceable Obtainable Market (SOM)",
               subtitle: "£1.2B",
               items: [
                 "A credible near-term reach for Hobson within Europe",
@@ -252,7 +252,7 @@ const sections = [
               ],
             },
             {
-              title: "Europe Summary",
+              title: "Summary",
               items: [
                 "Europe's population is 11× larger than the UK, creating a major expansion opportunity.",
                 "Using the UK's £6,000 efficiency saving per business and £1.41B TAM as the baseline, Europe represents a £15.5B TAM.",
@@ -263,7 +263,7 @@ const sections = [
               ],
             },
             {
-              title: "Global Overview",
+              title: "Global",
               subtitle: "118× UK Population Multiple",
               items: [
                 "The global population is 118× larger than the UK",
@@ -274,7 +274,7 @@ const sections = [
               ],
             },
             {
-              title: "Global TAM",
+              title: "Total Addressable Market (TAM)",
               subtitle: "£155.6B",
               items: [
                 "Scaling the UK's £1.41B efficiency value by the global population multiple",
@@ -283,7 +283,7 @@ const sections = [
               ],
             },
             {
-              title: "Global SAM",
+              title: "Serviceable Available Market (SAM)",
               subtitle: "£101B",
               items: [
                 "The share of the global market realistically motivated and able to adopt AI tools",
@@ -292,7 +292,7 @@ const sections = [
               ],
             },
             {
-              title: "Global SOM",
+              title: "Serviceable Obtainable Market (SOM)",
               subtitle: "£12.1B",
               items: [
                 "Credible near-term reach for Hobson in global markets",
@@ -301,7 +301,7 @@ const sections = [
               ],
             },
             {
-              title: "Global Summary",
+              title: "Summary",
               items: [
                 "The global population is 118× larger than the UK, giving Hobson exceptional international scalability.",
                 "Applying the UK's £6,000 efficiency saving and £1.41B TAM, the global TAM reaches £155.6B.",
