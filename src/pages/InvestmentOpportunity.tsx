@@ -906,6 +906,14 @@ const InvestmentOpportunity = () => {
     const removeEmojis = (text: string) => {
       // Comprehensive emoji removal regex and special character replacements
       return text
+        .replace(/→/g, '->') // Replace arrow
+        .replace(/←/g, '<-') // Replace left arrow
+        .replace(/✓/g, '-') // Replace checkmark with dash
+        .replace(/✔/g, '-') // Replace checkmark
+        .replace(/✗/g, 'x') // Replace x mark
+        .replace(/✘/g, 'x') // Replace x mark
+        .replace(/•/g, '-') // Replace bullet
+        .replace(/⦁/g, '-') // Replace bullet
         .replace(/≈/g, '~') // Replace approximately equal with tilde
         .replace(/×/g, 'x') // Replace multiplication sign
         .replace(/—/g, '-') // Replace em dash
@@ -915,6 +923,7 @@ const InvestmentOpportunity = () => {
         .replace(/"/g, '"') // Replace smart quote
         .replace(/"/g, '"') // Replace smart quote
         .replace(/…/g, '...') // Replace ellipsis
+        .replace(/£/g, 'GBP ') // Replace pound sign for PDF compatibility
         .replace(/[\u{1F000}-\u{1F9FF}]/gu, '') // Emoticons, symbols, pictographs
         .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
         .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
@@ -1348,10 +1357,28 @@ const InvestmentOpportunity = () => {
     const margin = 20;
     const maxWidth = pageWidth - (margin * 2);
     
-    // Helper function to remove emojis from text
+    // Helper function to remove emojis and fix special characters for PDF
     const removeEmojis = (text: string) => {
-      // Comprehensive emoji removal regex
+      // Comprehensive emoji removal regex and special character replacements
       return text
+        .replace(/→/g, '->') // Replace arrow
+        .replace(/←/g, '<-') // Replace left arrow
+        .replace(/✓/g, '-') // Replace checkmark with dash
+        .replace(/✔/g, '-') // Replace checkmark
+        .replace(/✗/g, 'x') // Replace x mark
+        .replace(/✘/g, 'x') // Replace x mark
+        .replace(/•/g, '-') // Replace bullet
+        .replace(/⦁/g, '-') // Replace bullet
+        .replace(/≈/g, '~') // Replace approximately equal with tilde
+        .replace(/×/g, 'x') // Replace multiplication sign
+        .replace(/—/g, '-') // Replace em dash
+        .replace(/–/g, '-') // Replace en dash
+        .replace(/'/g, "'") // Replace smart quote
+        .replace(/'/g, "'") // Replace smart quote
+        .replace(/"/g, '"') // Replace smart quote
+        .replace(/"/g, '"') // Replace smart quote
+        .replace(/…/g, '...') // Replace ellipsis
+        .replace(/£/g, 'GBP ') // Replace pound sign for PDF compatibility
         .replace(/[\u{1F000}-\u{1F9FF}]/gu, '') // Emoticons, symbols, pictographs
         .replace(/[\u{2600}-\u{26FF}]/gu, '') // Miscellaneous Symbols
         .replace(/[\u{2700}-\u{27BF}]/gu, '') // Dingbats
