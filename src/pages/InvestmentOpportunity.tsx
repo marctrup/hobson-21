@@ -127,7 +127,7 @@ const sections = [
   },
   {
     id: "market",
-    title: "Customers & the Market",
+    title: "Customers & Market",
     subtitle: "UK & Global opportunities",
     icon: Users,
     color: "from-purple-500/10 to-purple-600/10",
