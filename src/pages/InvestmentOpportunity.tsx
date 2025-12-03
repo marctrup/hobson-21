@@ -1769,48 +1769,14 @@ const InvestmentOpportunity = () => {
                 </p>
               </div>
 
-              {/* Funding & Download Section */}
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6 bg-primary/5 border border-primary/20 rounded-lg p-4 sm:p-6">
-                <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-primary" />
+              {/* Funding Requirement Section */}
+              <div className="flex justify-center">
+                <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent border border-primary/20 rounded-2xl p-6 sm:p-8 text-center max-w-sm">
+                  <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <TrendingUp className="w-7 h-7 sm:w-8 sm:h-8 text-primary" />
                   </div>
-                  <div>
-                    <p className="text-xs sm:text-sm text-muted-foreground mb-0.5 sm:mb-1">Funding Requirement</p>
-                    <p className="text-xl sm:text-2xl font-bold text-foreground">£750,000</p>
-                  </div>
-                </div>
-
-                <div className="flex justify-center w-full md:w-auto">
-                  <Button
-                    size="lg"
-                    className="gap-2 w-full md:w-auto"
-                    onClick={() => {
-                      try {
-                        toast({
-                          title: "Generating Full Business Plan",
-                          description: "Combining all sections into one PDF...",
-                        });
-
-                        generateFullBusinessPlan();
-
-                        toast({
-                          title: "PDF Downloaded",
-                          description: "Full Business Plan has been saved to your downloads folder",
-                        });
-                      } catch (error) {
-                        console.error('Error generating full business plan:', error);
-                        toast({
-                          title: "Error",
-                          description: "Failed to generate PDF. Please try again.",
-                          variant: "destructive",
-                        });
-                      }
-                    }}
-                  >
-                    <Download className="w-4 h-4" />
-                    Download Full Business Plan
-                  </Button>
+                  <p className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">Funding Requirement</p>
+                  <p className="text-3xl sm:text-4xl font-bold text-primary">£750,000</p>
                 </div>
               </div>
 
