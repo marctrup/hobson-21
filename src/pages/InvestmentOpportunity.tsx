@@ -833,11 +833,12 @@ const InvestmentOpportunity = () => {
         doc.text(pageTitleLines, margin, yPosition);
         yPosition += pageTitleLines.length * 8 + 10;
         
-        // Determine aspect ratio based on image type
-        const aspectRatio = isSimpleUI ? 0.75 : 1.7; // Landscape for simpleUI, tall for architecture
-        const imgWidth = maxWidth;
+        // Determine aspect ratio and size based on image type
+        const aspectRatio = isSimpleUI ? 0.75 : 1.7;
+        // For simpleUI, use smaller image to fit content on same page
+        const imgWidth = isSimpleUI ? maxWidth * 0.7 : maxWidth;
         const targetHeight = imgWidth * aspectRatio;
-        const availableHeight = pageHeight - yPosition - 30;
+        const availableHeight = isSimpleUI ? 80 : pageHeight - yPosition - 30;
         
         // Scale image to fit on current page if needed
         let finalWidth = imgWidth;
@@ -848,15 +849,19 @@ const InvestmentOpportunity = () => {
         }
         
         try {
-          doc.addImage(pageImage, 'PNG', margin, yPosition, finalWidth, finalHeight);
-          yPosition += finalHeight + 15;
+          // Center the image for simpleUI
+          const imgX = isSimpleUI ? margin + (maxWidth - finalWidth) / 2 : margin;
+          doc.addImage(pageImage, 'PNG', imgX, yPosition, finalWidth, finalHeight);
+          yPosition += finalHeight + 10;
         } catch (error) {
           console.error('Error adding image to PDF:', error);
         }
         
-        // Start content on next page
-        doc.addPage();
-        yPosition = margin;
+        // For non-simpleUI pages, start content on next page
+        if (!isSimpleUI) {
+          doc.addPage();
+          yPosition = margin;
+        }
       } else {
         // Page title - Purple (for non-image pages)
         doc.setTextColor(124, 58, 237);
@@ -1408,13 +1413,13 @@ const InvestmentOpportunity = () => {
           doc.text(pageTitleLines, margin, yPosition);
           yPosition += pageTitleLines.length * 8 + 10;
           
-          // Determine aspect ratio based on image type
+          // Determine aspect ratio and size based on image type
           const isSimpleUI = page.customVisualComponent === "simpleUI";
-          const aspectRatio = isSimpleUI ? 0.75 : 1.7; // Landscape for simpleUI, tall for architecture
-          
-          const imgWidth = maxWidth;
+          const aspectRatio = isSimpleUI ? 0.75 : 1.7;
+          // For simpleUI, use smaller image to fit content on same page
+          const imgWidth = isSimpleUI ? maxWidth * 0.7 : maxWidth;
           const targetHeight = imgWidth * aspectRatio;
-          const availableHeight = pageHeight - yPosition - 30;
+          const availableHeight = isSimpleUI ? 80 : pageHeight - yPosition - 30;
           
           // Scale image to fit on current page if needed
           let finalWidth = imgWidth;
@@ -1425,15 +1430,19 @@ const InvestmentOpportunity = () => {
           }
           
           try {
-            doc.addImage(pageImage, 'PNG', margin, yPosition, finalWidth, finalHeight);
-            yPosition += finalHeight + 15;
+            // Center the image for simpleUI
+            const imgX = isSimpleUI ? margin + (maxWidth - finalWidth) / 2 : margin;
+            doc.addImage(pageImage, 'PNG', imgX, yPosition, finalWidth, finalHeight);
+            yPosition += finalHeight + 10;
           } catch (error) {
             console.error('Error adding image to PDF:', error);
           }
           
-          // Start content on next page
-          doc.addPage();
-          yPosition = margin;
+          // For non-simpleUI pages, start content on next page
+          if (!isSimpleUI) {
+            doc.addPage();
+            yPosition = margin;
+          }
         } else {
           // Page title - Purple (for non-image pages)
           doc.setTextColor(124, 58, 237);
