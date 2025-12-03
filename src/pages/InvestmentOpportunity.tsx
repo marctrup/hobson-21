@@ -157,6 +157,20 @@ const sections = [
         },
       },
       {
+        title: "Assumptions",
+        content: {
+          overview: "",
+          sections: [
+            {
+              title: "Content coming soon",
+              items: [
+                "This section will contain the assumptions underlying our market analysis and projections.",
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: "UK Market Opportunity",
         content: {
           overview: "",
