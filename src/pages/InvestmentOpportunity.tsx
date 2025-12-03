@@ -1796,38 +1796,35 @@ const InvestmentOpportunity = () => {
                   Business Plan Sections
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground mb-6 max-w-2xl mx-auto px-2">
-                  Explore individual sections below to view detailed information or download as separate documents
+                  Explore individual sections below to view detailed information or download as separate documents, or
                 </p>
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-                  <span className="text-sm text-muted-foreground">or</span>
-                  <Button
-                    size="lg"
-                    className="gap-2"
-                    onClick={() => {
-                      try {
-                        toast({
-                          title: "Generating Full Business Plan",
-                          description: "Combining all sections into one PDF...",
-                        });
-                        generateFullBusinessPlan();
-                        toast({
-                          title: "PDF Downloaded",
-                          description: "Full Business Plan has been saved to your downloads folder",
-                        });
-                      } catch (error) {
-                        console.error('Error generating full business plan:', error);
-                        toast({
-                          title: "Error",
-                          description: "Failed to generate PDF. Please try again.",
-                          variant: "destructive",
-                        });
-                      }
-                    }}
-                  >
-                    <Download className="w-4 h-4" />
-                    Download Complete Business Plan
-                  </Button>
-                </div>
+                <Button
+                  size="lg"
+                  className="gap-2"
+                  onClick={() => {
+                    try {
+                      toast({
+                        title: "Generating Full Business Plan",
+                        description: "Combining all sections into one PDF...",
+                      });
+                      generateFullBusinessPlan();
+                      toast({
+                        title: "PDF Downloaded",
+                        description: "Full Business Plan has been saved to your downloads folder",
+                      });
+                    } catch (error) {
+                      console.error('Error generating full business plan:', error);
+                      toast({
+                        title: "Error",
+                        description: "Failed to generate PDF. Please try again.",
+                        variant: "destructive",
+                      });
+                    }
+                  }}
+                >
+                  <Download className="w-4 h-4" />
+                  Download Complete Business Plan
+                </Button>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
