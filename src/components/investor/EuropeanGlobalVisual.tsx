@@ -9,7 +9,7 @@ export const EuropeanGlobalVisual = () => {
           {/* Europe Header */}
           <div className="pb-3 border-b-2 border-primary/20">
             <h3 className="text-xl lg:text-2xl font-bold text-primary mb-1">Europe</h3>
-            <p className="text-xs lg:text-sm text-muted-foreground">11× UK Population Multiple</p>
+            <p className="text-xs lg:text-sm text-muted-foreground">11× UK Population</p>
           </div>
 
           {/* Europe TAM */}
@@ -85,7 +85,7 @@ export const EuropeanGlobalVisual = () => {
           {/* Global Header */}
           <div className="pb-3 border-b-2 border-primary/20">
             <h3 className="text-xl lg:text-2xl font-bold text-primary mb-1">Global</h3>
-            <p className="text-xs lg:text-sm text-muted-foreground">118× UK Population Multiple</p>
+            <p className="text-xs lg:text-sm text-muted-foreground">118× UK Population</p>
           </div>
 
           {/* Global TAM */}
