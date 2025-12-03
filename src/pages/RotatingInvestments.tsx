@@ -214,7 +214,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <Button 
             size="lg" 
             onClick={() => window.open('https://hobsonschoice.ai', '_blank')} 
-            className="text-sm sm:text-base px-8 py-3 touch-manipulation bg-gradient-to-r from-[#14b8a6] to-[#0d9488] hover:from-[#0d9488] hover:to-[#0f766e] text-white font-semibold border-0"
+            className="text-sm sm:text-base px-8 py-3 touch-manipulation bg-gradient-to-r from-[#a855f7] to-[#7c3aed] hover:from-[#9333ea] hover:to-[#6d28d9] text-white font-semibold border-0"
           >
             Visit Hobson
           </Button>
