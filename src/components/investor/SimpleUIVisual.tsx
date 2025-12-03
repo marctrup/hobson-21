@@ -43,7 +43,7 @@ export const SimpleUIVisual = () => {
               loading="lazy"
             />
           </div>
-          <p className="text-xs text-center text-muted-foreground mt-2">
+          <p className="text-xs text-center text-foreground/70 mt-2">
             Web Interface - Property Map View
           </p>
         </div>
@@ -73,7 +73,7 @@ export const SimpleUIVisual = () => {
               />
             </div>
           </div>
-          <p className="text-xs text-center text-muted-foreground mt-2">
+          <p className="text-xs text-center text-foreground/70 mt-2">
             Mobile Chat Interface
           </p>
         </div>
