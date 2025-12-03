@@ -97,11 +97,11 @@ export const EuropeanGlobalVisual = () => {
             <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Scaling the UK's £1.41B efficiency value by the global population multiple</span>
+                <span>Scaling the UK's £1.41B efficiency value by the global 18 × population multiple</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>£1.41B × 118 = £166.4B, rounded to £155.6B for conservatism</span>
+                <span>£1.41B × 118 = £166.4B, rounded to £155.6B </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
