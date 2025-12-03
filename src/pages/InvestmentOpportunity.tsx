@@ -839,7 +839,7 @@ const sections = [
   {
     id: "marketing",
     title: "Marketing Strategy",
-    subtitle: "Go-to-Market Plan & Customer Acquisition",
+    subtitle: "Go-to-Market Plan",
     icon: BookOpen,
     color: "from-teal-500/10 to-teal-600/10",
     iconColor: "text-teal-600",
