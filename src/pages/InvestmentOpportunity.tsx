@@ -517,6 +517,36 @@ const sections = [
           ],
         },
       },
+      {
+        title: "Tech Stack",
+        content: {
+          overview:
+            "Hobson runs on trusted, industry-standard platforms designed for security, performance, and scalability.",
+          sections: [
+            {
+              title: "Cloud Infrastructure",
+              items: [
+                "☁️ OVH Cloud: Stores your uploaded files and documents (secure UK/EU-based cloud storage)",
+                "⚡ Vercel: Runs the Hobson web app (fast, stable interface)",
+              ],
+            },
+            {
+              title: "Data & Storage",
+              items: [
+                "🗄️ MongoDB: Handles structured data such as units, portfolios, users, and document metadata",
+                "🔗 Neo4j: Used for knowledge-graph structures to understand relationships",
+                "🔍 Pinecone: Stores vector embeddings for quick document search",
+              ],
+            },
+            {
+              title: "Communication & Admin",
+              items: [
+                "📧 Google Workspace (G Suite): Supports email delivery, team communication, and secure internal admin",
+              ],
+            },
+          ],
+        },
+      },
     ],
   },
   {
