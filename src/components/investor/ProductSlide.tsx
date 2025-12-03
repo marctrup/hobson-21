@@ -17,7 +17,7 @@ export const ProductSlide = () => {
           <img 
             src={hobsonCarouselDevices} 
             alt="Hobson interface on desktop and mobile" 
-            className="w-full max-w-[280px] sm:max-w-xs md:max-w-sm h-auto"
+            className="w-full max-w-[220px] sm:max-w-[260px] md:max-w-xs h-auto"
           />
         </div>
       </div>
