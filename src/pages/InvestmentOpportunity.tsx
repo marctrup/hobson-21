@@ -2292,9 +2292,11 @@ const InvestmentOpportunity = () => {
                           )}
                           {/* Conclusion without bullet */}
                           {contentSection.conclusion && (
-                            <p className="text-xs sm:text-sm md:text-base leading-relaxed text-foreground font-medium mt-4 pl-3 sm:pl-4">
-                              {contentSection.conclusion}
-                            </p>
+                            <div className="bg-muted/30 border border-border rounded-lg p-3 lg:p-4 mt-4">
+                              <p className="text-sm lg:text-base text-muted-foreground">
+                                {contentSection.conclusion}
+                              </p>
+                            </div>
                           )}
                         </div>
                         );
