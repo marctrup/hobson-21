@@ -2083,7 +2083,10 @@ const InvestmentOpportunity = () => {
                           contentSection.title.includes('Next-Generation') ||
                           contentSection.title.includes('Competitive') ||
                           contentSection.title.includes('Europe') ||
-                          contentSection.title.includes('Global');
+                          contentSection.title.includes('Global') ||
+                          contentSection.title.includes('Cloud') ||
+                          contentSection.title.includes('Data') ||
+                          contentSection.title.includes('Communication');
                         
                         return (
                         <div key={idx} className="space-y-3 sm:space-y-4">
