@@ -51,7 +51,7 @@ const sections = [
         title: "Executive Summary",
         content: {
           overview:
-            "Hobson is an AI-native assistant tailored for the real estate industry. It automates insight extraction, decision support, and document understanding—built for trust, accuracy, and zero onboarding. Hobson becomes smarter over time, evolving from reactive to proactive operations.",
+            "Hobson is a specialised AI assistant for the real estate industry, turning complex documents and decisions into clear, reliable insight. It works with zero onboarding, delivers trusted accuracy from day one, and learns continuously. As it grows, Hobson shifts from basic automation to proactive support—unlocking major efficiency gains across the entire property lifecycle.",
           sections: [
             {
               title: "Market Opportunity",
