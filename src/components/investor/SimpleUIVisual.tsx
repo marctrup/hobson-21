@@ -14,18 +14,8 @@ export const SimpleUIVisual = () => {
         </p>
       </div>
 
-      {/* Combined Device Image */}
-      <div className="flex justify-center">
-        <img 
-          src={devicesCombined} 
-          alt="Hobson interface on desktop and mobile showing property management and chat features" 
-          className="w-full max-w-2xl h-auto"
-          loading="lazy"
-        />
-      </div>
-
       {/* Key Features */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         <div className="text-center p-3 bg-primary/5 rounded-lg">
           <span className="text-lg">⚡</span>
           <p className="text-xs font-medium text-foreground mt-1">Instant Start</p>
@@ -42,6 +32,16 @@ export const SimpleUIVisual = () => {
           <span className="text-lg">📱</span>
           <p className="text-xs font-medium text-foreground mt-1">Any Device</p>
         </div>
+      </div>
+
+      {/* Combined Device Image */}
+      <div className="flex justify-center">
+        <img 
+          src={devicesCombined} 
+          alt="Hobson interface on desktop and mobile showing property management and chat features" 
+          className="w-full max-w-2xl h-auto"
+          loading="lazy"
+        />
       </div>
     </div>
   );
