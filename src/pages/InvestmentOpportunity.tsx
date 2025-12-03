@@ -152,6 +152,15 @@ const sections = [
               ],
             },
             {
+              title: "Why 12% Penetration Rate?",
+              items: [
+                "Chosen as a conservative early-stage target within the motivated segment",
+                "Reflects benchmarks from SaaS and AI tools in fragmented markets",
+                "Justified by Hobson's characteristics: Low friction, Low pricing, Zero onboarding, Immediate ROI through efficiency savings",
+                "Ensures credibility: not an aggressive market-grab assumption",
+              ],
+            },
+            {
               title: "Total Addressable Market (TAM)",
               subtitle: "£1.41B",
               items: [
@@ -167,15 +176,6 @@ const sections = [
                 "Assumes 65% adoption readiness (realistic for a traditional sector)",
                 "235,200 × 65% = 152,880 businesses",
                 "152,880 × £6,000 = £917M",
-              ],
-            },
-            {
-              title: "Why 12% Penetration Rate?",
-              items: [
-                "Chosen as a conservative early-stage target within the motivated segment",
-                "Reflects benchmarks from SaaS and AI tools in fragmented markets",
-                "Justified by Hobson's characteristics: Low friction, Low pricing, Zero onboarding, Immediate ROI through efficiency savings",
-                "Ensures credibility: not an aggressive market-grab assumption",
               ],
             },
             {
@@ -2104,7 +2104,10 @@ const InvestmentOpportunity = () => {
                           contentSection.title.includes('Cloud') ||
                           contentSection.title.includes('Data') ||
                           contentSection.title.includes('Communication') ||
-                          contentSection.title.includes('AI &');
+                          contentSection.title.includes('AI &') ||
+                          contentSection.title.includes('Baseline') ||
+                          contentSection.title.includes('Assumptions') ||
+                          contentSection.title.includes('Why 12%');
                         
                         return (
                         <div key={idx} className="space-y-3 sm:space-y-4">
