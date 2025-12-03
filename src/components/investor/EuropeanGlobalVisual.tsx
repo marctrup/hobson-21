@@ -1,8 +1,6 @@
 import React from 'react';
-
 export const EuropeanGlobalVisual = () => {
-  return (
-    <div className="w-full space-y-6 lg:space-y-8">
+  return <div className="w-full space-y-6 lg:space-y-8">
       {/* Desktop: Side by side, Mobile: Europe first, then Global */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8">
         
@@ -31,7 +29,7 @@ export const EuropeanGlobalVisual = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>Applying the 11× multiple gives a simple, directional estimate</span>
+                <span>Applying the 11× multiple gives a simple estimate</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
@@ -163,7 +161,7 @@ export const EuropeanGlobalVisual = () => {
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
-                <span>Applying the 118× multiple provides a simple, directional global estimate</span>
+                <span>Applying the 118× multiple provides a simple estimate</span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary/60 mt-1.5 flex-shrink-0"></span>
@@ -270,6 +268,5 @@ export const EuropeanGlobalVisual = () => {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
