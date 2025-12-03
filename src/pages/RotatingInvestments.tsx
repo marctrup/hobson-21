@@ -192,7 +192,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               size="icon"
               onClick={prevSlide}
               aria-label="Previous slide"
-              className="rounded-full bg-gradient-to-r from-[#0d9488] to-[#06b6d4] hover:from-[#0f766e] hover:to-[#0891b2] w-9 h-9 sm:w-10 sm:h-10 pointer-events-auto touch-manipulation border-0 shadow-lg"
+              className="rounded-full bg-gradient-to-r from-[#34d399] to-[#6ee7b7] hover:from-[#10b981] hover:to-[#34d399] w-9 h-9 sm:w-10 sm:h-10 pointer-events-auto touch-manipulation border-0 shadow-lg"
             >
               <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </Button>
@@ -202,7 +202,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               size="icon"
               onClick={nextSlide}
               aria-label="Next slide"
-              className="rounded-full bg-gradient-to-r from-[#0d9488] to-[#06b6d4] hover:from-[#0f766e] hover:to-[#0891b2] w-9 h-9 sm:w-10 sm:h-10 pointer-events-auto touch-manipulation border-0 shadow-lg"
+              className="rounded-full bg-gradient-to-r from-[#34d399] to-[#6ee7b7] hover:from-[#10b981] hover:to-[#34d399] w-9 h-9 sm:w-10 sm:h-10 pointer-events-auto touch-manipulation border-0 shadow-lg"
             >
               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </Button>
@@ -214,7 +214,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           <Button 
             size="lg" 
             onClick={() => window.open('https://hobsonschoice.ai', '_blank')} 
-            className="text-sm sm:text-base px-8 py-3 touch-manipulation bg-gradient-to-r from-[#0d9488] to-[#06b6d4] hover:from-[#0f766e] hover:to-[#0891b2] text-white border-0"
+            className="text-sm sm:text-base px-8 py-3 touch-manipulation bg-gradient-to-r from-[#34d399] to-[#6ee7b7] hover:from-[#10b981] hover:to-[#34d399] text-white border-0"
           >
             Visit Hobson
           </Button>
