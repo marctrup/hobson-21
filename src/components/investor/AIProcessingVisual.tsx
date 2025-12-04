@@ -1,8 +1,6 @@
 import { Clock, FileText, DollarSign, TrendingDown } from "lucide-react";
-
 export const AIProcessingVisual = () => {
-  return (
-    <div className="space-y-6 sm:space-y-8">
+  return <div className="space-y-6 sm:space-y-8">
       {/* Processing Time Section */}
       <div>
         <div className="flex items-center gap-2 mb-3 sm:mb-4">
@@ -28,7 +26,7 @@ export const AIProcessingVisual = () => {
           <div className="bg-background border border-border rounded-lg p-4 sm:p-5">
             <div className="text-xs sm:text-sm font-medium text-muted-foreground mb-1 sm:mb-2">Low Complexity</div>
             <div className="text-xs text-muted-foreground mb-2 sm:mb-3">(e.g., Notices, Letters)</div>
-            <div className="text-xl sm:text-2xl font-bold text-primary">30s–1 min</div>
+            <div className="text-xl sm:text-2xl font-bold text-primary">30 sec–1 min</div>
           </div>
         </div>
       </div>
@@ -145,6 +143,5 @@ export const AIProcessingVisual = () => {
           </li>
         </ul>
       </div>
-    </div>
-  );
+    </div>;
 };
