@@ -2,7 +2,7 @@ import React from "react";
 
 const competitorData = [
   {
-    competitor: "Hobson",
+    competitor: "Hobson AI",
     whoTheyAre: "AI document-intelligence assistant",
     whatTheyDo: "Reads + answers from leases, deeds, notices",
     strengths: "Transparent, low-friction, clarity-driven",
