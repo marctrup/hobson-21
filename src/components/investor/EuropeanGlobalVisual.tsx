@@ -56,27 +56,6 @@ export const EuropeanGlobalVisual = () => {
             </ul>
           </div>
 
-          {/* Europe SOM */}
-          <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 lg:p-4 space-y-2">
-            <div className="flex items-baseline justify-between">
-              <h4 className="text-sm lg:text-base font-semibold text-foreground">Serviceable Obtainable Market (SOM)</h4>
-              <span className="text-xl lg:text-2xl font-bold text-primary">£1.2B</span>
-            </div>
-            <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>A credible near-term reach for Hobson within Europe</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Assumes 12% penetration of motivated organisations</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>£10.1B × 12% = £1.21B, rounded to £1.2B</span>
-              </li>
-            </ul>
-          </div>
 
         </div>
 
@@ -132,27 +111,6 @@ export const EuropeanGlobalVisual = () => {
             </ul>
           </div>
 
-          {/* Global SOM */}
-          <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 lg:p-4 space-y-2">
-            <div className="flex items-baseline justify-between">
-              <h4 className="text-sm lg:text-base font-semibold text-foreground">Serviceable Obtainable Market (SOM)</h4>
-              <span className="text-xl lg:text-2xl font-bold text-primary">£12.1B</span>
-            </div>
-            <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Credible near-term reach for Hobson in global markets</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Assumes 12% penetration of motivated buyers</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>£101B × 12% = £12.1B</span>
-              </li>
-            </ul>
-          </div>
 
         </div>
       </div>
