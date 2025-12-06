@@ -580,6 +580,30 @@ const sections = [
         },
       },
       {
+        title: "Pilot Clients (2025)",
+        content: {
+          overview:
+            "Our approach to building strategic partnerships and pilot validation across different operator sizes and system environments.",
+          sections: [
+            {
+              title: "Large Operator",
+              items: ["EPAM Asset Management - Commercial management that operate team across multiple systems"],
+            },
+            {
+              title: "Medium Operator",
+              items: ["Live-in Guardians - Guardian company that operate teams using single system"],
+            },
+            {
+              title: "Small Operators",
+              items: [
+                "Landhold - Development, sales, and investment company using Microsoft suites",
+                "Saxon Investments - Development, sales, and investment company using Microsoft suite",
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: "Roadmap (2026–2028)",
         showCustomVisual: true,
         customVisualComponent: "ganttChart",
@@ -619,30 +643,6 @@ const sections = [
                 "Grow paid customer base across UK + international regions",
                 "Expand brand presence through partnerships, content, and local industry events",
                 "Strengthen platform reliability and insight features to support multi-market operations",
-              ],
-            },
-          ],
-        },
-      },
-      {
-        title: "Pilot clients",
-        content: {
-          overview:
-            "Our approach to building strategic partnerships and pilot validation across different operator sizes and system environments.",
-          sections: [
-            {
-              title: "Large Operator",
-              items: ["EPAM Asset Management - Commercial management that operate team across multiple systems"],
-            },
-            {
-              title: "Medium Operator",
-              items: ["Live-in Guardians - Guardian company that operate teams using single system"],
-            },
-            {
-              title: "Small Operators",
-              items: [
-                "Landhold - Development, sales, and investment company using Microsoft suites",
-                "Saxon Investments - Development, sales, and investment company using Microsoft suite",
               ],
             },
           ],
