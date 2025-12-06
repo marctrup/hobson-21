@@ -2502,24 +2502,20 @@ const InvestmentOpportunity = () => {
                         <div className="mb-4">
                           <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground">Download Files</h3>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+                        <div className="space-y-2">
                           {(selectedSection.pages[currentPageIndex] as any).downloads.map(
                             (download: any, idx: number) => (
                               <div
                                 key={idx}
-                                className="bg-background border border-border rounded-lg p-4 sm:p-5 hover:border-primary/50 transition-colors flex flex-col"
+                                className="flex items-center justify-between py-3 px-4 rounded-lg border border-border/50 hover:border-primary/30 hover:bg-muted/30 transition-all group"
                               >
-                                <div className="flex items-start gap-3 mb-4">
-                                  <div className="w-10 h-10 rounded-lg bg-emerald-50 flex items-center justify-center flex-shrink-0">
-                                    <FileSpreadsheet className="w-5 h-5 text-emerald-600" />
-                                  </div>
-                                  <div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-foreground leading-relaxed">
-                                      {download.name}
-                                    </p>
-                                  </div>
+                                <div className="flex items-center gap-3">
+                                  <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
+                                  <span className="text-sm text-foreground">
+                                    {download.name}
+                                  </span>
                                 </div>
-                                <Button
+                                <button
                                   onClick={() => {
                                     const link = document.createElement("a");
                                     link.href = download.path;
@@ -2533,12 +2529,11 @@ const InvestmentOpportunity = () => {
                                       description: `Downloading ${download.name}`,
                                     });
                                   }}
-                                  size="sm"
-                                  className="gap-2 text-xs w-full"
+                                  className="flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 font-medium transition-colors"
                                 >
-                                  <Download className="w-4 h-4" />
-                                  Download File
-                                </Button>
+                                  <Download className="w-3.5 h-3.5" />
+                                  Download
+                                </button>
                               </div>
                             ),
                           )}
