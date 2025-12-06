@@ -1721,6 +1721,69 @@ const InvestmentOpportunity = () => {
           return; // Skip the rest of the page rendering for HEU Pricing
         }
 
+        // Handle Competitor Analysis visual page
+        const isCompetitorAnalysis = page.customVisualComponent === "competitorAnalysis";
+        if (isCompetitorAnalysis) {
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+
+          const competitorContent = [
+            "Competitive Landscape & Strategic Positioning Matrix:",
+            "",
+            "HOBSON (Category Leader):",
+            "• Personas: Large portfolio operators, Medium property companies, SMB owner-managers",
+            "• SEO: Competes in emerging, low-competition spaces: AI for real estate documents, lease analysis AI",
+            "• Strategic Position: White-space category — Hobson can dominate AI document insight for real estate",
+            "",
+            "EliseAI:",
+            "• Personas: Residential property managers, Leasing agents, Customer service teams",
+            "• SEO: High difficulty on AI leasing assistant terms; saturated market",
+            "• Implication: Avoid leasing automation positioning; focus on operational clarity and document accuracy",
+            "",
+            "StanAI:",
+            "• Personas: Commercial brokers, Investment teams, Underwriting analysts",
+            "• SEO: Competes in AI underwriting, CRE data automation",
+            "• Implication: Clear separation — StanAI = deal analytics; Hobson = document intelligence",
+            "",
+            "Kendal AI:",
+            "• Personas: Property managers, Tenant communication teams",
+            "• SEO: Competitive terms in AI property management, tenant automation",
+            "• Implication: Their domain is front-of-house; Hobson stays back-of-house clarity and compliance",
+            "",
+            "Trudi:",
+            "• Personas: SME property managers, Residential leasing teams (AU/US)",
+            "• SEO: Regional keywords; moderate difficulty",
+            "• Implication: Hobson wins with more professional, operationally-focused identity",
+            "",
+            "Legacy PropTech (Yardi, MRI, AppFolio, RealPage, Buildium):",
+            "• Personas: Enterprises + SMBs across commercial & residential",
+            "• SEO: Extremely high domain authority; dominate broad software terms",
+            "• Implication: Do not compete on broad terms; position Hobson as AI layer that complements existing systems",
+          ];
+
+          competitorContent.forEach((line) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+
+            if (line === "") {
+              yPosition += 5;
+            } else if (line.endsWith(":")) {
+              doc.setFont("helvetica", "bold");
+              doc.text(line, margin, yPosition);
+              yPosition += 7;
+              doc.setFont("helvetica", "normal");
+            } else {
+              doc.text(line, margin, yPosition);
+              yPosition += 5.5;
+            }
+          });
+
+          return; // Skip the rest of the page rendering for Competitor Analysis
+        }
+
         // Overview
         if (page.content?.overview) {
           doc.setFillColor(249, 250, 251);
