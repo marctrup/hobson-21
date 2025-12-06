@@ -2,108 +2,49 @@ import React from "react";
 
 const competitorData = [
   {
-    competitor: "Hobson",
-    personas: [
-      "Large portfolio operators",
-      "Medium property companies",
-      "SMB owner-managers handling heavy document workflows",
-    ],
-    seo: [
-      "Competes in emerging, low-competition spaces: AI for real estate documents, lease analysis AI, document intelligence.",
-      "Search volume rising; avoids saturated \"property management software\" terms.",
-    ],
-    social: [
-      "Early-stage presence.",
-      "Opportunity to own the \"document intelligence\" voice.",
-      "Best suited to clarity-driven, expert content.",
-    ],
-    implications: "White-space category: Hobson can dominate AI document insight for real estate — a niche not occupied by legacy PropTech or AI leasing tools.",
-    isHobson: true,
-  },
-  {
     competitor: "EliseAI",
-    personas: [
-      "Residential property managers",
-      "Leasing agents",
-      "Customer service teams",
-    ],
-    seo: [
-      "High difficulty: AI leasing assistant, property management automation.",
-      "Large search volume but saturated.",
-    ],
-    social: [
-      "Strong LinkedIn presence; regular posting.",
-      "Case-study heavy; automation-first narrative.",
-    ],
-    implications: "Avoid leasing automation positioning. Focus instead on operational clarity, document accuracy, and retrieval.",
-    isHobson: false,
+    whoTheyAre: "AI leasing + tenant comms",
+    whatTheyDo: "Automation for residential teams",
+    strengths: "Strong brand, proven ROI, enterprise traction",
+    weaknesses: "Not document-focused, costly",
+    reviews: ["Powerful automation", "Great ROI", "Not for commercial", "Pricey", "Support slow at times"],
+    marketValue: "~$500M+",
   },
   {
     competitor: "StanAI",
-    personas: [
-      "Commercial brokers",
-      "Investment teams",
-      "Underwriting analysts",
-    ],
-    seo: [
-      "Competes in AI underwriting, CRE data automation.",
-      "Moderate difficulty; specialist search volume.",
-    ],
-    social: [
-      "Professional tone, consistent posting.",
-      "CRE analytics-focused insights.",
-    ],
-    implications: "Clear separation: StanAI = deal analytics; Hobson = document intelligence. Keep messaging distinct to avoid confusion.",
-    isHobson: false,
+    whoTheyAre: "CRE underwriting AI",
+    whatTheyDo: "Automates deal docs + financial models",
+    strengths: "Strong for analysts, fast extraction",
+    weaknesses: "Narrow use-case, US-centric",
+    reviews: ["Great for underwriting", "High accuracy", "Niche", "Complex setup", "Premium pricing"],
+    marketValue: "Undisclosed",
   },
   {
     competitor: "Kendal AI",
-    personas: [
-      "Property managers",
-      "Tenant communication teams",
-    ],
-    seo: [
-      "Competitive and costly terms: AI property management, tenant enquiry automation.",
-    ],
-    social: [
-      "Small but active LinkedIn presence.",
-      "Conversational tone focused on tenant messaging use-cases.",
-    ],
-    implications: "Their domain is front-of-house. Hobson should stay positioned as back-of-house clarity, accuracy, and compliance intelligence.",
-    isHobson: false,
+    whoTheyAre: "Tenant enquiry automation",
+    whatTheyDo: "AI messaging for PMs",
+    strengths: "Easy setup, low cost",
+    weaknesses: "No document intelligence, limited for CRE",
+    reviews: ["Time saver", "Simple", "Limited analytics", "Not for commercial", "Affordable"],
+    marketValue: "Undisclosed",
   },
   {
     competitor: "Trudi",
-    personas: [
-      "SME property managers",
-      "Residential leasing teams (AU/US)",
-    ],
-    seo: [
-      "Regional keywords; moderate difficulty.",
-      "Terms like AI assistant for property management growing.",
-    ],
-    social: [
-      "Warm, approachable brand style.",
-      "Video and testimonial-led content.",
-    ],
-    implications: "Tone mismatch advantage: Hobson wins by maintaining a more professional, operationally-focused identity.",
-    isHobson: false,
+    whoTheyAre: "SME property manager assistant",
+    whatTheyDo: "Leasing FAQs + basic automation",
+    strengths: "Simple UX, testimonials, quick adoption",
+    weaknesses: "Light features, residential only",
+    reviews: ["Helpful", "Easy", "Not commercial", "Friendly UI", "Good support"],
+    marketValue: "Undisclosed",
   },
   {
     competitor: "Legacy PropTech",
-    subtext: "(Yardi, MRI, AppFolio, RealPage, Buildium)",
-    personas: [
-      "Enterprises + SMBs across commercial & residential",
-    ],
-    seo: [
-      "Extremely high domain authority.",
-      "Completely dominate broad terms: property management software, lease management system.",
-    ],
-    social: [
-      "Large-scale presence; polished enterprise brand; huge budget.",
-    ],
-    implications: "Do not compete on broad software terms. Position Hobson as the AI layer that complements existing systems.",
-    isHobson: false,
+    whoTheyAre: "Yardi/MRI/AppFolio/etc.",
+    whatTheyDo: "Full-stack PM software",
+    strengths: "Deep functionality, trusted",
+    weaknesses: "Expensive, slow, weak in AI",
+    reviews: ["Complex", "Manual for documents", "Long onboarding", "Reliable accounting", "Slow support"],
+    marketValue: "$4–10B+",
   },
 ];
 
@@ -112,11 +53,8 @@ const CompetitorAnalysisMatrix: React.FC = () => {
     <div className="space-y-6">
       <div className="text-center mb-8">
         <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
-          Competitive Landscape & Strategic Positioning Matrix
+          Competitor Analysis
         </h3>
-        <p className="text-muted-foreground text-sm">
-          Hobson
-        </p>
       </div>
 
       {/* Desktop Table */}
@@ -125,58 +63,46 @@ const CompetitorAnalysisMatrix: React.FC = () => {
           <thead>
             <tr className="bg-primary/10">
               <th className="border border-border p-3 text-left font-semibold text-foreground">Competitor</th>
-              <th className="border border-border p-3 text-left font-semibold text-foreground">Customer Personas Served</th>
-              <th className="border border-border p-3 text-left font-semibold text-foreground">SEO Landscape<br/><span className="font-normal text-xs text-muted-foreground">(Competition, Keywords, Search Volume)</span></th>
-              <th className="border border-border p-3 text-left font-semibold text-foreground">Social Media Presence<br/><span className="font-normal text-xs text-muted-foreground">(Reach, Engagement, Style)</span></th>
-              <th className="border border-border p-3 text-left font-semibold text-foreground">Strategic Implications for Hobson</th>
+              <th className="border border-border p-3 text-left font-semibold text-foreground">Who They Are</th>
+              <th className="border border-border p-3 text-left font-semibold text-foreground">What They Do</th>
+              <th className="border border-border p-3 text-left font-semibold text-foreground">Strengths</th>
+              <th className="border border-border p-3 text-left font-semibold text-foreground">Weaknesses</th>
+              <th className="border border-border p-3 text-left font-semibold text-foreground">5 x Representative Reviews</th>
+              <th className="border border-border p-3 text-left font-semibold text-foreground">Market Value</th>
             </tr>
           </thead>
           <tbody>
             {competitorData.map((row, index) => (
               <tr 
                 key={row.competitor} 
-                className={`${row.isHobson ? "bg-primary/5" : index % 2 === 0 ? "bg-background" : "bg-muted/30"}`}
+                className={index % 2 === 0 ? "bg-background" : "bg-muted/30"}
               >
-                <td className="border border-border p-3 align-top min-w-[100px]">
-                  <div className={`${row.isHobson ? "text-primary font-bold" : "font-semibold text-foreground"}`}>
-                    {row.competitor}
+                <td className="border border-border p-3 align-top font-semibold text-foreground">
+                  {row.competitor}
+                </td>
+                <td className="border border-border p-3 align-top text-muted-foreground">
+                  {row.whoTheyAre}
+                </td>
+                <td className="border border-border p-3 align-top text-muted-foreground">
+                  {row.whatTheyDo}
+                </td>
+                <td className="border border-border p-3 align-top text-muted-foreground">
+                  {row.strengths}
+                </td>
+                <td className="border border-border p-3 align-top text-muted-foreground">
+                  {row.weaknesses}
+                </td>
+                <td className="border border-border p-3 align-top text-muted-foreground">
+                  <div className="flex flex-wrap gap-1">
+                    {row.reviews.map((review, i) => (
+                      <span key={i} className="text-xs bg-muted px-2 py-1 rounded">
+                        "{review}"
+                      </span>
+                    ))}
                   </div>
-                  {row.subtext && (
-                    <div className="text-xs text-muted-foreground mt-1">{row.subtext}</div>
-                  )}
                 </td>
-                <td className="border border-border p-3 align-top text-muted-foreground min-w-[150px]">
-                  <ul className="space-y-1">
-                    {row.personas.map((item, i) => (
-                      <li key={i} className="flex items-start gap-1">
-                        <span className="text-primary">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-                <td className="border border-border p-3 align-top text-muted-foreground min-w-[200px]">
-                  <ul className="space-y-1">
-                    {row.seo.map((item, i) => (
-                      <li key={i} className="flex items-start gap-1">
-                        <span className="text-primary">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-                <td className="border border-border p-3 align-top text-muted-foreground min-w-[180px]">
-                  <ul className="space-y-1">
-                    {row.social.map((item, i) => (
-                      <li key={i} className="flex items-start gap-1">
-                        <span className="text-primary">•</span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-                <td className={`border border-border p-3 align-top min-w-[200px] ${row.isHobson ? "text-primary font-medium" : "text-muted-foreground"}`}>
-                  {row.implications}
+                <td className="border border-border p-3 align-top text-foreground font-medium">
+                  {row.marketValue}
                 </td>
               </tr>
             ))}
@@ -189,57 +115,49 @@ const CompetitorAnalysisMatrix: React.FC = () => {
         {competitorData.map((row) => (
           <div 
             key={row.competitor} 
-            className={`rounded-lg border p-4 ${row.isHobson ? "border-primary bg-primary/5" : "border-border bg-card"}`}
+            className="rounded-lg border border-border bg-card p-4"
           >
-            <div className={`text-lg font-bold mb-3 ${row.isHobson ? "text-primary" : "text-foreground"}`}>
+            <div className="text-lg font-bold mb-3 text-foreground">
               {row.competitor}
-              {row.subtext && (
-                <div className="text-xs font-normal text-muted-foreground mt-1">{row.subtext}</div>
-              )}
             </div>
             
-            <div className="space-y-4 text-sm">
-              <div>
-                <div className="font-semibold text-foreground mb-2">Customer Personas Served</div>
-                <ul className="space-y-1 text-muted-foreground">
-                  {row.personas.map((item, i) => (
-                    <li key={i} className="flex items-start gap-1">
-                      <span className="text-primary">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div>
-                <div className="font-semibold text-foreground mb-2">SEO Landscape</div>
-                <ul className="space-y-1 text-muted-foreground">
-                  {row.seo.map((item, i) => (
-                    <li key={i} className="flex items-start gap-1">
-                      <span className="text-primary">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div>
-                <div className="font-semibold text-foreground mb-2">Social Media Presence</div>
-                <ul className="space-y-1 text-muted-foreground">
-                  {row.social.map((item, i) => (
-                    <li key={i} className="flex items-start gap-1">
-                      <span className="text-primary">•</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div>
-                <div className="font-semibold text-foreground mb-2">Strategic Implications</div>
-                <div className={row.isHobson ? "text-primary font-medium" : "text-muted-foreground"}>
-                  {row.implications}
+            <div className="space-y-3 text-sm">
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <div className="font-semibold text-foreground text-xs mb-1">Who They Are</div>
+                  <div className="text-muted-foreground">{row.whoTheyAre}</div>
                 </div>
+                <div>
+                  <div className="font-semibold text-foreground text-xs mb-1">What They Do</div>
+                  <div className="text-muted-foreground">{row.whatTheyDo}</div>
+                </div>
+              </div>
+              
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <div className="font-semibold text-foreground text-xs mb-1">Strengths</div>
+                  <div className="text-muted-foreground">{row.strengths}</div>
+                </div>
+                <div>
+                  <div className="font-semibold text-foreground text-xs mb-1">Weaknesses</div>
+                  <div className="text-muted-foreground">{row.weaknesses}</div>
+                </div>
+              </div>
+              
+              <div>
+                <div className="font-semibold text-foreground text-xs mb-1">Representative Reviews</div>
+                <div className="flex flex-wrap gap-1">
+                  {row.reviews.map((review, i) => (
+                    <span key={i} className="text-xs bg-muted px-2 py-1 rounded text-muted-foreground">
+                      "{review}"
+                    </span>
+                  ))}
+                </div>
+              </div>
+              
+              <div>
+                <div className="font-semibold text-foreground text-xs mb-1">Market Value</div>
+                <div className="text-foreground font-medium">{row.marketValue}</div>
               </div>
             </div>
           </div>
