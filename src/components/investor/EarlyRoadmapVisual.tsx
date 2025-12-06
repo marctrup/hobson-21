@@ -35,7 +35,6 @@ const timelineData: PhaseSection[] = [
       "Build online presence and branding",
       "Testing MVP with key clients in real-world scenarios",
       "Finalise **pricing strategy** based on usage data",
-      "Build **pricing plan**",
       "Build a **marketing plan**",
       "Build a **business plan** and financial model",
     ],
