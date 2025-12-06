@@ -2149,6 +2149,8 @@ const InvestmentOpportunity = () => {
                             <a
                               href={(section as any).directDownload.path}
                               download={(section as any).directDownload.name}
+                              target="_blank"
+                              rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
                             >
                               <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
