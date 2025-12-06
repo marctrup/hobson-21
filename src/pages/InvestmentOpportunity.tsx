@@ -781,52 +781,6 @@ const sections = [
     ],
   },
   {
-    id: "financials",
-    title: "Financials",
-    subtitle: "Forecasts & Assumptions",
-    icon: PieChart,
-    color: "from-red-500/10 to-red-600/10",
-    iconColor: "text-red-600",
-    pages: [
-      {
-        title: "Onboarding Costs",
-        customVisualComponent: "onboardingCosts",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Financial Forecast",
-        content: {
-          overview: "Revenue projections and growth assumptions.",
-          sections: [],
-        },
-      },
-      {
-        title: "Operating Expenses",
-        content: {
-          overview: "Detailed breakdown of operational costs.",
-          sections: [],
-        },
-      },
-      {
-        title: "Cost of Product",
-        content: {
-          overview: "Infrastructure and AI cost analysis.",
-          sections: [],
-        },
-      },
-      {
-        title: "Staffing",
-        content: {
-          overview: "Team growth plan and hiring roadmap.",
-          sections: [],
-        },
-      },
-    ],
-  },
-  {
     id: "team",
     title: "Team",
     subtitle: "Leadership & Key Personnel",
@@ -903,17 +857,50 @@ const sections = [
     ],
   },
   {
-    id: "marketing",
-    title: "Marketing Strategy",
-    subtitle: "Go-to-Market Plan",
-    icon: BookOpen,
-    color: "from-teal-500/10 to-teal-600/10",
-    iconColor: "text-teal-600",
-    directDownload: {
-      name: "HOBSON — SOSTAC® GO-TO-MARKET STRATEGY PLAN.docx",
-      path: "/Hobson_SOSTAC_Go_To_Market_Strategy.docx",
-    },
-    pages: [],
+    id: "financials",
+    title: "Financials",
+    subtitle: "Forecasts & Assumptions",
+    icon: PieChart,
+    color: "from-red-500/10 to-red-600/10",
+    iconColor: "text-red-600",
+    pages: [
+      {
+        title: "Onboarding Costs",
+        customVisualComponent: "onboardingCosts",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Financial Forecast",
+        content: {
+          overview: "Revenue projections and growth assumptions.",
+          sections: [],
+        },
+      },
+      {
+        title: "Operating Expenses",
+        content: {
+          overview: "Detailed breakdown of operational costs.",
+          sections: [],
+        },
+      },
+      {
+        title: "Cost of Product",
+        content: {
+          overview: "Infrastructure and AI cost analysis.",
+          sections: [],
+        },
+      },
+      {
+        title: "Staffing",
+        content: {
+          overview: "Team growth plan and hiring roadmap.",
+          sections: [],
+        },
+      },
+    ],
   },
   {
     id: "financial-downloads",
@@ -937,6 +924,19 @@ const sections = [
         ],
       },
     ],
+  },
+  {
+    id: "marketing",
+    title: "Marketing Strategy",
+    subtitle: "Go-to-Market Plan",
+    icon: BookOpen,
+    color: "from-teal-500/10 to-teal-600/10",
+    iconColor: "text-teal-600",
+    directDownload: {
+      name: "HOBSON — SOSTAC® GO-TO-MARKET STRATEGY PLAN.docx",
+      path: "/Hobson_SOSTAC_Go_To_Market_Strategy.docx",
+    },
+    pages: [],
   },
 ];
 
