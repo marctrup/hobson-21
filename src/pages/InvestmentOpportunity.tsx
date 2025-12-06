@@ -1490,15 +1490,8 @@ const InvestmentOpportunity = () => {
     let currentPageNum = indexPageNum + 1;
     includedSections.forEach((section) => {
       sectionPageNumbers[section.id] = currentPageNum;
-      section.pages.forEach((page: any) => {
-        const isSimpleUI = page.customVisualComponent === "simpleUI";
-        const isHeuPricing = page.customVisualComponent === "heuPricing";
-        if (!page.content && !isHeuPricing) {
-          return;
-        }
-        if (page.showCustomVisual && !isSimpleUI && !isHeuPricing) {
-          return;
-        }
+      // Count ALL pages - include every tab
+      section.pages.forEach(() => {
         currentPageNum++;
       });
     });
@@ -1597,15 +1590,8 @@ const InvestmentOpportunity = () => {
       }
 
       section.pages.forEach((page: any) => {
-        // Skip pages without content, but allow simpleUI and heuPricing pages
-        const isSimpleUI = page.customVisualComponent === "simpleUI";
+        // Include ALL pages - don't skip any tabs
         const isHeuPricing = page.customVisualComponent === "heuPricing";
-        if (!page.content && !isHeuPricing) {
-          return;
-        }
-        if (page.showCustomVisual && !isSimpleUI && !isHeuPricing) {
-          return;
-        }
 
         doc.addPage();
         let yPosition = margin;
@@ -1750,7 +1736,7 @@ const InvestmentOpportunity = () => {
         }
 
         // Sections
-        if (page.content.sections && Array.isArray(page.content.sections)) {
+        if (page.content?.sections && Array.isArray(page.content.sections)) {
           page.content.sections.forEach((section: any) => {
             if (yPosition > pageHeight - 60) {
               doc.addPage();
