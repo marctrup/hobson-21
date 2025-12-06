@@ -788,6 +788,47 @@ const sections = [
     iconColor: "text-red-600",
     pages: [
       {
+        title: "Processing Costs",
+        content: {
+          overview: "AI processing costs and unit economics for document analysis.",
+          sections: [
+            {
+              title: "Document Processing Costs",
+              description: "Real-world AI processing costs demonstrate the unit economics underlying Hobson's HEU model.",
+            },
+            {
+              title: "EPAM Example",
+              items: [
+                "29 documents (leases + deeds)",
+                "17.6M tokens processed",
+                "$10.51 total cost",
+                "~$0.36 per document average",
+                "Individual leases ~$0.38 each",
+              ],
+            },
+            {
+              title: "Drapers Example",
+              items: [
+                "19 head leases",
+                "19.1M tokens processed",
+                "$7.77 total cost",
+                "~$0.41 per lease",
+              ],
+            },
+            {
+              title: "Key Insights",
+              items: [
+                "Lease processing costs more than deeds due to increased complexity",
+                "Extended internal reasoning steps add to lease processing time",
+                "Even heavy portfolios cost single-digit dollars to index",
+                "Fast, predictable, and inexpensive processing",
+                "Strong margin potential at current HEU pricing",
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: "Financial Forecast",
         content: {
           overview: "Revenue projections and growth assumptions.",
