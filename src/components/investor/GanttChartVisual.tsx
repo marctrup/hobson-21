@@ -49,9 +49,9 @@ const ganttData: YearSection[] = [
 
 const getBarColor = (level: "full" | "partial" | "light" | "none", yearIndex: number) => {
   const colorSchemes = [
-    { full: "bg-purple-600", partial: "bg-purple-400", light: "bg-purple-200" },
-    { full: "bg-blue-600", partial: "bg-blue-400", light: "bg-blue-200" },
-    { full: "bg-green-600", partial: "bg-green-400", light: "bg-green-200" },
+    { full: "bg-purple-600", partial: "bg-purple-500", light: "bg-purple-400" },
+    { full: "bg-blue-600", partial: "bg-blue-500", light: "bg-blue-400" },
+    { full: "bg-green-600", partial: "bg-green-500", light: "bg-green-400" },
   ];
   
   const scheme = colorSchemes[yearIndex % colorSchemes.length];
@@ -59,34 +59,9 @@ const getBarColor = (level: "full" | "partial" | "light" | "none", yearIndex: nu
   return scheme[level];
 };
 
-const getBarWidth = (level: "full" | "partial" | "light" | "none") => {
-  switch (level) {
-    case "full": return "w-full";
-    case "partial": return "w-2/3";
-    case "light": return "w-1/3";
-    case "none": return "w-0";
-  }
-};
-
 export const GanttChartVisual: React.FC = () => {
   return (
     <div className="w-full space-y-8">
-      {/* Legend */}
-      <div className="flex flex-wrap items-center gap-4 text-sm mb-6">
-        <span className="font-medium text-foreground">Legend:</span>
-        <div className="flex items-center gap-2">
-          <div className="w-6 h-4 bg-purple-600 rounded-sm"></div>
-          <span className="text-muted-foreground">Active (Full)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-purple-400 rounded-sm"></div>
-          <span className="text-muted-foreground">Active (Partial)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-4 bg-purple-200 rounded-sm"></div>
-          <span className="text-muted-foreground">Planned/Light</span>
-        </div>
-      </div>
 
       {ganttData.map((yearSection, yearIndex) => (
         <div key={yearSection.year} className="bg-background border border-border rounded-lg overflow-hidden">
@@ -137,11 +112,9 @@ export const GanttChartVisual: React.FC = () => {
                     {row.quarters.map((level, qIndex) => (
                       <td key={qIndex} className="px-2 py-3">
                         <div className="flex justify-center">
-                          <div className="w-full max-w-[80px] h-6 bg-muted/20 rounded-sm overflow-hidden flex items-center">
-                            <div 
-                              className={`h-full ${getBarWidth(level)} ${getBarColor(level, yearIndex)} rounded-sm transition-all duration-300`}
-                            ></div>
-                          </div>
+                          <div 
+                            className={`w-full max-w-[80px] h-6 ${level === "none" ? "bg-transparent" : getBarColor(level, yearIndex)} rounded-sm transition-all duration-300`}
+                          ></div>
                         </div>
                       </td>
                     ))}
