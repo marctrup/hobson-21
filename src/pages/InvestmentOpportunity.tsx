@@ -39,6 +39,7 @@ import { EarlyRoadmapVisual } from "@/components/investor/EarlyRoadmapVisual";
 import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
 import OnboardingCostsVisual from "@/components/investor/OnboardingCostsVisual";
 import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMatrix";
+import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { jsPDF } from "jspdf";
 
@@ -1699,57 +1700,8 @@ const InvestmentOpportunity = () => {
           doc.setFontSize(10);
           doc.setFont("helvetica", "normal");
 
-          const competitorContent = [
-            "Competitor Analysis:",
-            "",
-            "HOBSON AI:",
-            "• Who They Are: AI document-intelligence assistant",
-            "• What They Do: Reads + answers from leases, deeds, notices",
-            "• Strengths: Transparent, low-friction, clarity-driven",
-            "• Weaknesses: Early-stage awareness, still scaling support",
-            "• Reviews: \"Fast,\" \"Clear,\" \"Helpful,\" \"Accurate,\" \"Excited for roadmap\"",
-            "• Market Value: Early-stage (high-growth market)",
-            "",
-            "EliseAI:",
-            "• Who They Are: AI leasing automation",
-            "• What They Do: Tenant comms + leasing workflows",
-            "• Strengths: Strong ROI, big adoption",
-            "• Weaknesses: No doc-intel, expensive",
-            "• Reviews: \"Great automation,\" \"Pricey,\" \"Not for CRE,\" \"Case-study heavy,\" \"Useful\"",
-            "• Market Value: ~$500M+",
-            "",
-            "StanAI:",
-            "• Who They Are: CRE underwriting AI",
-            "• What They Do: Deal docs + financial extraction",
-            "• Strengths: Great for analysts",
-            "• Weaknesses: Narrow use-case",
-            "• Reviews: \"Accurate,\" \"Niche,\" \"Premium,\" \"Fast,\" \"Complex\"",
-            "• Market Value: Undisclosed",
-            "",
-            "Kendal AI:",
-            "• Who They Are: Tenant messaging automation",
-            "• What They Do: Handles tenant queries",
-            "• Strengths: Simple, cheap",
-            "• Weaknesses: No doc capability",
-            "• Reviews: \"Time saver,\" \"Simple,\" \"Not CRE,\" \"Affordable,\" \"Useful\"",
-            "• Market Value: Undisclosed",
-            "",
-            "Trudi:",
-            "• Who They Are: SME leasing AI",
-            "• What They Do: FAQs + simple automation",
-            "• Strengths: Easy UI, onboarding",
-            "• Weaknesses: Light document skills",
-            "• Reviews: \"Helpful,\" \"Easy,\" \"Not deep,\" \"Good support,\" \"SMB fit\"",
-            "• Market Value: Undisclosed",
-            "",
-            "Legacy PropTech (Yardi/MRI/AppFolio):",
-            "• Who They Are: Full PM systems",
-            "• What They Do: Full PM systems",
-            "• Strengths: Robust, trusted",
-            "• Weaknesses: Weak AI, slow, expensive",
-            "• Reviews: \"Complex,\" \"Manual docs,\" \"Long onboarding,\" \"Stable,\" \"Slow support\"",
-            "• Market Value: $4–10B+",
-          ];
+          // Use shared data source for competitor content
+          const competitorContent = getCompetitorPdfContent();
 
           competitorContent.forEach((line) => {
             if (yPosition > pageHeight - 40) {
