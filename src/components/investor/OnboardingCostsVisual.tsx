@@ -125,26 +125,26 @@ const OnboardingCostsVisual = () => {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border">
-                <th className="text-left py-3 px-4 font-semibold text-foreground">Portfolio Size</th>
-                <th className="text-left py-3 px-4 font-semibold text-foreground">Total Units</th>
-                <th className="text-left py-3 px-4 font-semibold text-foreground">Est. Onboarding Cost</th>
+                <th className="text-left py-3 px-4 font-semibold text-foreground">Client Type</th>
+                <th className="text-left py-3 px-4 font-semibold text-foreground">Units</th>
+                <th className="text-left py-3 px-4 font-semibold text-foreground">Total AI Cost</th>
               </tr>
             </thead>
             <tbody>
               <tr className="border-b border-border/50">
-                <td className="py-3 px-4 text-foreground">Small</td>
-                <td className="py-3 px-4 text-muted-foreground">100 units</td>
-                <td className="py-3 px-4 font-semibold text-primary">~$74</td>
+                <td className="py-3 px-4 font-medium text-foreground">Small</td>
+                <td className="py-3 px-4 text-muted-foreground">5 units</td>
+                <td className="py-3 px-4 font-semibold text-primary">$3.70 – $3.80</td>
               </tr>
               <tr className="border-b border-border/50">
-                <td className="py-3 px-4 text-foreground">Medium</td>
-                <td className="py-3 px-4 text-muted-foreground">1,000 units</td>
-                <td className="py-3 px-4 font-semibold text-primary">~$740</td>
+                <td className="py-3 px-4 font-medium text-foreground">Medium</td>
+                <td className="py-3 px-4 text-muted-foreground">100 units</td>
+                <td className="py-3 px-4 font-semibold text-primary">$74 – $76</td>
               </tr>
               <tr>
-                <td className="py-3 px-4 text-foreground">Large</td>
-                <td className="py-3 px-4 text-muted-foreground">10,000 units</td>
-                <td className="py-3 px-4 font-semibold text-primary">~$7,400</td>
+                <td className="py-3 px-4 font-medium text-foreground">Large</td>
+                <td className="py-3 px-4 text-muted-foreground">1,000 units</td>
+                <td className="py-3 px-4 font-semibold text-primary">$740 – $760</td>
               </tr>
             </tbody>
           </table>
