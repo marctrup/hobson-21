@@ -2502,41 +2502,8 @@ const InvestmentOpportunity = () => {
                         <div className="mb-4">
                           <h3 className="text-base sm:text-lg md:text-xl font-bold text-foreground">Download Files</h3>
                         </div>
-                        <div className="space-y-2">
-                          {(selectedSection.pages[currentPageIndex] as any).downloads.map(
-                            (download: any, idx: number) => (
-                              <div
-                                key={idx}
-                                className="flex items-center justify-between py-3 px-4 rounded-lg border border-border/50 hover:border-primary/30 hover:bg-muted/30 transition-all group"
-                              >
-                                <div className="flex items-center gap-3">
-                                  <FileSpreadsheet className="w-4 h-4 text-emerald-600" />
-                                  <span className="text-sm text-foreground">
-                                    {download.name}
-                                  </span>
-                                </div>
-                                <button
-                                  onClick={() => {
-                                    const link = document.createElement("a");
-                                    link.href = download.path;
-                                    link.download = download.name;
-                                    document.body.appendChild(link);
-                                    link.click();
-                                    document.body.removeChild(link);
-
-                                    toast({
-                                      title: "Download Started",
-                                      description: `Downloading ${download.name}`,
-                                    });
-                                  }}
-                                  className="flex items-center gap-1.5 text-xs text-primary hover:text-primary/80 font-medium transition-colors"
-                                >
-                                  <Download className="w-3.5 h-3.5" />
-                                  Download
-                                </button>
-                              </div>
-                            ),
-                          )}
+                        <div className="flex items-center justify-center py-8 px-4 rounded-lg border border-dashed border-border/50 bg-muted/20">
+                          <p className="text-sm text-muted-foreground">Not Yet Available</p>
                         </div>
                       </div>
                     )}
