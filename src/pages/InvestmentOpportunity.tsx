@@ -2152,8 +2152,8 @@ const InvestmentOpportunity = () => {
                               onClick={(e) => e.stopPropagation()}
                             >
                               <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                              <span className="hidden xs:inline">Download PDF</span>
-                              <span className="xs:hidden">PDF</span>
+                              <span className="hidden xs:inline">Download Word</span>
+                              <span className="xs:hidden">Word</span>
                             </a>
                           </Button>
                         ) : (
