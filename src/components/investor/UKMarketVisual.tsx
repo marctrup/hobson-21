@@ -59,35 +59,6 @@ export const UKMarketVisual = () => {
         </ul>
       </div>
 
-      {/* SOM Box */}
-      <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 lg:p-4 space-y-2">
-        <div className="flex items-baseline justify-between">
-          <h4 className="text-sm lg:text-base font-semibold text-foreground">Serviceable Obtainable Market (SOM)</h4>
-          <span className="text-xl lg:text-2xl font-bold text-primary">£110M</span>
-        </div>
-        <p className="text-xs lg:text-sm text-muted-foreground mb-2">Built using the evidence-backed 12% early penetration assumption.</p>
-        <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
-          <li className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-            <span>12% penetration sits within the independently verified 8–20% early-stage adoption range (McKinsey, PwC, Deloitte, BVP, Gartner, Forbes)</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-            <span>152,880 motivated businesses × 12% = 18,345 early adopters</span>
-          </li>
-          <li className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-            <span>18,345 × £6,000 = £110M</span>
-          </li>
-        </ul>
-      </div>
-
-      {/* Summary */}
-      <div className="bg-muted/30 border border-border rounded-lg p-3 lg:p-4">
-        <p className="text-sm lg:text-base text-muted-foreground">
-          → SOM is intentionally conservative and supported by industry-verified adoption behaviour.
-        </p>
-      </div>
     </div>
   );
 };
