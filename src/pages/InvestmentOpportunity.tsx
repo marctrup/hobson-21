@@ -2141,22 +2141,30 @@ const InvestmentOpportunity = () => {
                       <div className="flex gap-2">
                         {(section as any).directDownload ? (
                           <Button
-                            asChild
+                            onClick={async (e) => {
+                              e.stopPropagation();
+                              try {
+                                const response = await fetch((section as any).directDownload.path);
+                                const blob = await response.blob();
+                                const url = window.URL.createObjectURL(blob);
+                                const link = document.createElement('a');
+                                link.href = url;
+                                link.download = (section as any).directDownload.name;
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                                window.URL.revokeObjectURL(url);
+                              } catch (error) {
+                                console.error('Download failed:', error);
+                              }
+                            }}
                             variant="outline"
                             size="sm"
                             className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
                           >
-                            <a
-                              href={(section as any).directDownload.path}
-                              download={(section as any).directDownload.name}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                              <span className="hidden xs:inline">Download Word</span>
-                              <span className="xs:hidden">Word</span>
-                            </a>
+                            <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                            <span className="hidden xs:inline">Download Word</span>
+                            <span className="xs:hidden">Word</span>
                           </Button>
                         ) : (
                           <>
