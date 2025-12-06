@@ -946,6 +946,7 @@ const InvestmentOpportunity = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedSection, setSelectedSection] = useState<(typeof sections)[0] | null>(null);
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
+  const [showDownloadConfirm, setShowDownloadConfirm] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -1546,9 +1547,10 @@ const InvestmentOpportunity = () => {
     // Store index page number
     const indexPageNum = doc.getNumberOfPages();
 
-    // First pass: Calculate page numbers
+    // First pass: Calculate page numbers (only first 6 sections)
+    const includedSections = sections.slice(0, 6);
     let currentPageNum = indexPageNum + 1;
-    sections.forEach((section) => {
+    includedSections.forEach((section) => {
       sectionPageNumbers[section.id] = currentPageNum;
       section.pages.forEach((page: any) => {
         const isSimpleUI = page.customVisualComponent === "simpleUI";
@@ -1567,7 +1569,7 @@ const InvestmentOpportunity = () => {
     let cardY = indexY;
     let cardCount = 0;
 
-    sections.forEach((section, idx) => {
+    includedSections.forEach((section, idx) => {
       if (cardY + cardHeight > pageHeight - 30) {
         doc.addPage();
         cardY = margin;
@@ -1628,8 +1630,8 @@ const InvestmentOpportunity = () => {
       }
     });
 
-    // Loop through all sections in order
-    sections.forEach((section) => {
+    // Loop through included sections only
+    includedSections.forEach((section) => {
       // Add purple section separator page
       doc.addPage();
       doc.setFillColor(124, 58, 237);
@@ -2082,31 +2084,81 @@ const InvestmentOpportunity = () => {
                 <Button
                   size="lg"
                   className="gap-2 bg-gradient-to-r from-primary/80 to-primary hover:from-primary hover:to-primary/90 transition-all duration-300"
-                  onClick={() => {
-                    try {
-                      toast({
-                        title: "Generating Full Business Plan",
-                        description: "Combining all sections into one PDF...",
-                      });
-                      generateFullBusinessPlan();
-                      toast({
-                        title: "PDF Downloaded",
-                        description: "Full Business Plan has been saved to your downloads folder",
-                      });
-                    } catch (error) {
-                      console.error("Error generating full business plan:", error);
-                      toast({
-                        title: "Error",
-                        description: "Failed to generate PDF. Please try again.",
-                        variant: "destructive",
-                      });
-                    }
-                  }}
+                  onClick={() => setShowDownloadConfirm(true)}
                 >
                   <Download className="w-4 h-4" />
                   Download Complete Business Plan
                 </Button>
               </div>
+
+              {/* Download Confirmation Dialog */}
+              <Dialog open={showDownloadConfirm} onOpenChange={setShowDownloadConfirm}>
+                <DialogContent className="max-w-md">
+                  <DialogHeader>
+                    <DialogTitle>Download Business Plan PDF</DialogTitle>
+                    <DialogDescription className="pt-2">
+                      The following sections will be included in your PDF:
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 py-4">
+                    <div>
+                      <p className="text-sm font-medium text-foreground mb-2">Included:</p>
+                      <ul className="space-y-1">
+                        {sections.slice(0, 6).map((section) => (
+                          <li key={section.id} className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                            {section.title}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-foreground mb-2">Not Included:</p>
+                      <ul className="space-y-1">
+                        {sections.slice(6).map((section) => (
+                          <li key={section.id} className="flex items-center gap-2 text-sm text-muted-foreground">
+                            <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50" />
+                            {section.title}
+                            <span className="text-xs text-muted-foreground/70">(download separately)</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 justify-end">
+                    <Button variant="outline" onClick={() => setShowDownloadConfirm(false)}>
+                      Cancel
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setShowDownloadConfirm(false);
+                        try {
+                          toast({
+                            title: "Generating Business Plan",
+                            description: "Combining sections into one PDF...",
+                          });
+                          generateFullBusinessPlan();
+                          toast({
+                            title: "PDF Downloaded",
+                            description: "Business Plan has been saved to your downloads folder",
+                          });
+                        } catch (error) {
+                          console.error("Error generating business plan:", error);
+                          toast({
+                            title: "Error",
+                            description: "Failed to generate PDF. Please try again.",
+                            variant: "destructive",
+                          });
+                        }
+                      }}
+                      className="gap-2"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download PDF
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 {sections.map((section) => (
