@@ -774,10 +774,6 @@ const sections = [
           sections: [],
         },
       },
-      {
-        title: "AI Processing Time & Cost Examples",
-        isVisual: true,
-      },
     ],
   },
   {
@@ -1119,64 +1115,6 @@ const InvestmentOpportunity = () => {
         yPosition += boxHeight + 8;
       }
 
-      // Handle visual-only pages with fallback content
-      if ((page as any).isVisual && page.title === "AI Processing Time & Cost Examples") {
-        doc.setTextColor(75, 85, 99);
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-
-        const visualContent = [
-          "AI Processing Time & Cost Examples:",
-          "",
-          "Document Complexity Estimates:",
-          "• Complex documents (leases with schedules): 15-30 seconds",
-          "• Medium complexity (standard leases): 8-15 seconds",
-          "• Low complexity (deeds, certificates): 3-8 seconds",
-          "",
-          "Real Customer Examples:",
-          "",
-          "EPAM Example:",
-          "• 29 documents (leases + deeds)",
-          "• Total tokens: 17.6M",
-          "• Total cost: $10.51",
-          "• Average: ~$0.36 per document",
-          "• Individual leases: ~$0.38 each",
-          "",
-          "Drapers Example:",
-          "• 19 head leases",
-          "• Total tokens: 19.1M",
-          "• Total cost: $7.77",
-          "• Average: ~$0.41 per lease",
-          "",
-          "Key Takeaways:",
-          "• Lease processing costs more than deeds due to complexity",
-          "• AI processing is fast, predictable, and inexpensive",
-          "• Even heavy portfolios cost single-digit dollars to index",
-          "• Processing time measured in seconds, not hours",
-          "• Transparent, usage-based pricing with no hidden costs",
-        ];
-
-        visualContent.forEach((line) => {
-          if (yPosition > pageHeight - 40) {
-            doc.addPage();
-            yPosition = margin;
-          }
-
-          if (line === "") {
-            yPosition += 5;
-          } else if (line.endsWith(":")) {
-            doc.setFont("helvetica", "bold");
-            doc.text(line, margin, yPosition);
-            yPosition += 7;
-            doc.setFont("helvetica", "normal");
-          } else {
-            doc.text(line, margin, yPosition);
-            yPosition += 5.5;
-          }
-        });
-
-        yPosition += 10;
-      }
 
       // Handle HEU Pricing visual page
       if ((page as any).showCustomVisual && (page as any).customVisualComponent === "heuPricing") {
