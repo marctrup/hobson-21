@@ -900,29 +900,11 @@ const sections = [
     icon: BookOpen,
     color: "from-teal-500/10 to-teal-600/10",
     iconColor: "text-teal-600",
-    pages: [
-      {
-        title: "Go-to-Market Strategy",
-        content: {
-          overview: "Our comprehensive approach to market entry and customer acquisition.",
-          sections: [],
-        },
-      },
-      {
-        title: "Customer Acquisition",
-        content: {
-          overview: "Strategies and channels for acquiring and retaining customers.",
-          sections: [],
-        },
-      },
-      {
-        title: "Market Positioning",
-        content: {
-          overview: "How we differentiate and position Hobson in the competitive landscape.",
-          sections: [],
-        },
-      },
-    ],
+    directDownload: {
+      name: "HOBSON — SOSTAC® GO-TO-MARKET STRATEGY PLAN",
+      path: "/Hobson_SOSTAC_Go_To_Market_Strategy.pdf",
+    },
+    pages: [],
   },
   {
     id: "financial-downloads",
@@ -2157,52 +2139,73 @@ const InvestmentOpportunity = () => {
                         </div>
                       </div>
                       <div className="flex gap-2">
-                        <Button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedSection(section);
-                          }}
-                          variant="secondary"
-                          size="sm"
-                          className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
-                        >
-                          <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                          <span className="hidden xs:inline">View</span>
-                          <span className="xs:hidden">View</span>
-                        </Button>
-                        <Button
-                          onClick={(e) => {
-                            e.stopPropagation();
+                        {(section as any).directDownload ? (
+                          <Button
+                            asChild
+                            variant="outline"
+                            size="sm"
+                            className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
+                          >
+                            <a
+                              href={(section as any).directDownload.path}
+                              download={(section as any).directDownload.name}
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                              <span className="hidden xs:inline">Download PDF</span>
+                              <span className="xs:hidden">PDF</span>
+                            </a>
+                          </Button>
+                        ) : (
+                          <>
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedSection(section);
+                              }}
+                              variant="secondary"
+                              size="sm"
+                              className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
+                            >
+                              <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                              <span className="hidden xs:inline">View</span>
+                              <span className="xs:hidden">View</span>
+                            </Button>
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
 
-                            try {
-                              toast({
-                                title: "Generating PDF",
-                                description: "Creating your document...",
-                              });
+                                try {
+                                  toast({
+                                    title: "Generating PDF",
+                                    description: "Creating your document...",
+                                  });
 
-                              generatePDF(section);
+                                  generatePDF(section);
 
-                              toast({
-                                title: "PDF Downloaded",
-                                description: `${section.title} PDF has been saved to your downloads folder`,
-                              });
-                            } catch (error) {
-                              console.error("Error generating PDF:", error);
-                              toast({
-                                title: "Error",
-                                description: "Failed to generate PDF. Please try again.",
-                                variant: "destructive",
-                              });
-                            }
-                          }}
-                          variant="outline"
-                          size="sm"
-                          className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
-                        >
-                          <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                          <span className="hidden xs:inline">Download PDF</span>
-                          <span className="xs:hidden">PDF</span>
-                        </Button>
+                                  toast({
+                                    title: "PDF Downloaded",
+                                    description: `${section.title} PDF has been saved to your downloads folder`,
+                                  });
+                                } catch (error) {
+                                  console.error("Error generating PDF:", error);
+                                  toast({
+                                    title: "Error",
+                                    description: "Failed to generate PDF. Please try again.",
+                                    variant: "destructive",
+                                  });
+                                }
+                              }}
+                              variant="outline"
+                              size="sm"
+                              className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
+                            >
+                              <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                              <span className="hidden xs:inline">Download PDF</span>
+                              <span className="xs:hidden">PDF</span>
+                            </Button>
+                          </>
+                        )}
                       </div>
                     </div>
                   </Card>
