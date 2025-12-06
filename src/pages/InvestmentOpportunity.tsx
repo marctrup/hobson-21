@@ -901,8 +901,8 @@ const sections = [
     color: "from-teal-500/10 to-teal-600/10",
     iconColor: "text-teal-600",
     directDownload: {
-      name: "HOBSON — SOSTAC® GO-TO-MARKET STRATEGY PLAN",
-      path: "/Hobson_SOSTAC_Go_To_Market_Strategy.pdf",
+      name: "HOBSON — SOSTAC® GO-TO-MARKET STRATEGY PLAN.docx",
+      path: "/Hobson_SOSTAC_Go_To_Market_Strategy.docx",
     },
     pages: [],
   },
