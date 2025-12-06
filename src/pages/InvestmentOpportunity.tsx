@@ -2200,8 +2200,8 @@ const InvestmentOpportunity = () => {
                               className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
                             >
                               <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                              <span className="hidden xs:inline">Download PDF</span>
-                              <span className="xs:hidden">PDF</span>
+                              <span className="hidden xs:inline">Download {section.id === "financial-downloads" ? "Excel" : "PDF"}</span>
+                              <span className="xs:hidden">{section.id === "financial-downloads" ? "Excel" : "PDF"}</span>
                             </Button>
                           </>
                         )}
