@@ -1424,7 +1424,7 @@ const InvestmentOpportunity = () => {
     doc.setFontSize(42);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(255, 255, 255);
-    doc.text("£750,000", pageWidth / 2, fundingY + 20, { align: "center" });
+    doc.text("£1,000,000", pageWidth / 2, fundingY + 20, { align: "center" });
 
     // Add decorative lines below
     doc.setLineWidth(0.5);
@@ -2357,7 +2357,7 @@ const InvestmentOpportunity = () => {
                   <p className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">
                     Funding Requirement
                   </p>
-                  <p className="text-3xl sm:text-4xl font-bold text-primary">£750,000</p>
+                  <p className="text-3xl sm:text-4xl font-bold text-primary">£1,000,000</p>
                 </div>
               </div>
 
