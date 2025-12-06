@@ -35,6 +35,7 @@ import { HEUPricingVisual } from "@/components/investor/HEUPricingVisual";
 import { AIProcessingVisual } from "@/components/investor/AIProcessingVisual";
 import { SimpleUIVisual } from "@/components/investor/SimpleUIVisual";
 import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
+import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMatrix";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { jsPDF } from "jspdf";
 
@@ -463,76 +464,11 @@ const sections = [
       },
       {
         title: "Competitor Analysis",
+        showCustomVisual: true,
+        customVisualComponent: "competitorAnalysis",
         content: {
-          overview: "Deep-dive comparison of Hobson against key competitors in the AI-native real estate space.",
-          sections: [
-            {
-              title: "Hobson",
-              subtitle: "AI-Native Document Assistant",
-              items: [
-                "Focus: Document understanding, insight extraction, and decision support for real estate professionals",
-                "Strengths: Zero onboarding, usage-based pricing, 98% accuracy, citation-backed answers, works with existing systems",
-                "Differentiator: Purpose-built for real estate terminology, workflows, and document types",
-                "Pricing: Transparent HEU-based model with free tier available",
-                "Target: SMB to enterprise real estate operators across UK, Europe, and globally",
-              ],
-            },
-            {
-              title: "EliseAI",
-              subtitle: "Conversational AI for Property Management",
-              items: [
-                "Focus: Leasing automation, resident communications, and property management workflows",
-                "Strengths: Strong in multifamily residential, handles high-volume tenant interactions",
-                "Limitations: Focused on leasing/resident comms, not document intelligence",
-                "Pricing: Enterprise contracts, higher barrier to entry",
-                "Target: Large multifamily property managers in the US market",
-              ],
-            },
-            {
-              title: "Trudi",
-              subtitle: "AI Compliance Assistant",
-              items: [
-                "Focus: Compliance checking and regulatory document review",
-                "Strengths: Specialist in legal/compliance workflows",
-                "Limitations: Narrow use case, less applicable to day-to-day operations",
-                "Pricing: Subscription-based",
-                "Target: Legal teams and compliance officers in property sector",
-              ],
-            },
-            {
-              title: "StanAI",
-              subtitle: "Real Estate Document Analysis",
-              items: [
-                "Focus: Document analysis and data extraction from real estate documents",
-                "Strengths: Good at structured data extraction",
-                "Limitations: Less conversational, more batch-processing oriented",
-                "Pricing: Per-document or subscription models",
-                "Target: Commercial real estate firms with high document volumes",
-              ],
-            },
-            {
-              title: "Kendal AI",
-              subtitle: "Real Estate Operations Automation",
-              items: [
-                "Focus: Workflow automation and operational efficiency",
-                "Strengths: Broad operational scope",
-                "Limitations: Less specialised in document understanding",
-                "Pricing: Enterprise-focused",
-                "Target: Mid-to-large property management companies",
-              ],
-            },
-            {
-              title: "Hobson's Competitive Edge",
-              items: [
-                "Only solution combining zero onboarding + usage-based pricing + document intelligence",
-                "Built specifically for UK/European real estate terminology and document types",
-                "Citation-backed answers build trust and reduce liability concerns",
-                "Works alongside existing CRMs and systems — no displacement required",
-                "Continuous learning from user feedback improves accuracy over time",
-                "Transparent pricing with no hidden costs or long-term commitments",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
       {
@@ -2336,6 +2272,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Simple UI */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "simpleUI" && (
                       <SimpleUIVisual />
+                    )}
+
+                    {/* Custom Visual Component for Competitor Analysis */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "competitorAnalysis" && (
+                      <CompetitorAnalysisMatrix />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
