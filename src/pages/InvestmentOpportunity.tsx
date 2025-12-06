@@ -1169,6 +1169,37 @@ const InvestmentOpportunity = () => {
         yPosition += 10;
       }
 
+      // Handle Competitor Analysis visual page in individual section downloads
+      if ((page as any).showCustomVisual && (page as any).customVisualComponent === "competitorAnalysis") {
+        doc.setTextColor(75, 85, 99);
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
+
+        // Use shared data source for competitor content
+        const competitorContent = getCompetitorPdfContent();
+
+        competitorContent.forEach((line) => {
+          if (yPosition > pageHeight - 40) {
+            doc.addPage();
+            yPosition = margin;
+          }
+
+          if (line === "") {
+            yPosition += 5;
+          } else if (line.endsWith(":")) {
+            doc.setFont("helvetica", "bold");
+            doc.text(line, margin, yPosition);
+            yPosition += 7;
+            doc.setFont("helvetica", "normal");
+          } else {
+            doc.text(line, margin, yPosition);
+            yPosition += 5.5;
+          }
+        });
+
+        yPosition += 10;
+      }
+
       // Sections
       if (page.content?.sections) {
         page.content.sections.forEach((section: any) => {
