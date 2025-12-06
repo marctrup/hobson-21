@@ -2292,7 +2292,8 @@ const InvestmentOpportunity = () => {
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "heuPricing" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "simpleUI" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ukMarket" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "competitorAnalysis" && (
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "competitorAnalysis" &&
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ganttChart" && (
                         <CompetitiveLandscapeVisual />
                       )}
 
