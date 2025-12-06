@@ -37,6 +37,7 @@ import { SimpleUIVisual } from "@/components/investor/SimpleUIVisual";
 import { GanttChartVisual } from "@/components/investor/GanttChartVisual";
 import { EarlyRoadmapVisual } from "@/components/investor/EarlyRoadmapVisual";
 import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
+import OnboardingCostsVisual from "@/components/investor/OnboardingCostsVisual";
 import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMatrix";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { jsPDF } from "jspdf";
@@ -789,43 +790,9 @@ const sections = [
     pages: [
       {
         title: "Onboarding Costs",
+        customVisualComponent: "onboardingCosts",
         content: {
-          overview: "AI processing costs and unit economics for document analysis.",
-          sections: [
-            {
-              title: "Document Processing Costs",
-              description: "Real-world AI processing costs demonstrate the unit economics underlying Hobson's HEU model.",
-            },
-            {
-              title: "EPAM Example",
-              items: [
-                "29 documents (leases + deeds)",
-                "17.6M tokens processed",
-                "$10.51 total cost",
-                "~$0.36 per document average",
-                "Individual leases ~$0.38 each",
-              ],
-            },
-            {
-              title: "Drapers Example",
-              items: [
-                "19 head leases",
-                "19.1M tokens processed",
-                "$7.77 total cost",
-                "~$0.41 per lease",
-              ],
-            },
-            {
-              title: "Key Insights",
-              items: [
-                "Lease processing costs more than deeds due to increased complexity",
-                "Extended internal reasoning steps add to lease processing time",
-                "Even heavy portfolios cost single-digit dollars to index",
-                "Fast, predictable, and inexpensive processing",
-                "Strong margin potential at current HEU pricing",
-              ],
-            },
-          ],
+          overview: "",
         },
       },
       {
@@ -2381,6 +2348,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Competitor Analysis */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "competitorAnalysis" && (
                       <CompetitorAnalysisMatrix />
+                    )}
+
+                    {/* Custom Visual Component for Onboarding Costs */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "onboardingCosts" && (
+                      <OnboardingCostsVisual />
                     )}
 
                     {/* Custom Visual Component for Gantt Chart */}
