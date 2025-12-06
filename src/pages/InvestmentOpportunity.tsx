@@ -935,16 +935,6 @@ const sections = [
                 "Operating Expense Breakdown",
                 "Cash Flow Analysis",
                 "Break-even Analysis",
-                "Unit Economics Model",
-              ],
-            },
-            {
-              title: "Supporting Documents",
-              items: [
-                "Cost of Product Analysis",
-                "Staffing Plan & Costs",
-                "Customer Acquisition Cost (CAC) Model",
-                "Lifetime Value (LTV) Calculations",
               ],
             },
           ],
