@@ -793,6 +793,7 @@ const sections = [
         customVisualComponent: "onboardingCosts",
         content: {
           overview: "",
+          sections: [],
         },
       },
       {
