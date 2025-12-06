@@ -1492,7 +1492,11 @@ const InvestmentOpportunity = () => {
       sectionPageNumbers[section.id] = currentPageNum;
       section.pages.forEach((page: any) => {
         const isSimpleUI = page.customVisualComponent === "simpleUI";
-        if (!page.content || (page.showCustomVisual && !isSimpleUI)) {
+        const isHeuPricing = page.customVisualComponent === "heuPricing";
+        if (!page.content && !isHeuPricing) {
+          return;
+        }
+        if (page.showCustomVisual && !isSimpleUI && !isHeuPricing) {
           return;
         }
         currentPageNum++;
@@ -1593,9 +1597,13 @@ const InvestmentOpportunity = () => {
       }
 
       section.pages.forEach((page: any) => {
-        // Skip pages without content, but allow simpleUI pages that have content
+        // Skip pages without content, but allow simpleUI and heuPricing pages
         const isSimpleUI = page.customVisualComponent === "simpleUI";
-        if (!page.content || (page.showCustomVisual && !isSimpleUI)) {
+        const isHeuPricing = page.customVisualComponent === "heuPricing";
+        if (!page.content && !isHeuPricing) {
+          return;
+        }
+        if (page.showCustomVisual && !isSimpleUI && !isHeuPricing) {
           return;
         }
 
@@ -1659,8 +1667,76 @@ const InvestmentOpportunity = () => {
           yPosition += 10;
         }
 
+        // Handle HEU Pricing visual page in full business plan
+        if (isHeuPricing) {
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+
+          const pricingContent = [
+            "Hobson Energy Units (HEUs) & Transparent Pricing:",
+            "",
+            "What are HEUs?",
+            "Hobson Energy Units measure AI effort. Every task (query, document read, report build) consumes HEUs based on complexity and computational resources required.",
+            "",
+            "Pricing Tiers:",
+            "",
+            "Free Plan: £0/month",
+            "• 18 HEUs per month",
+            "• Perfect for testing and light usage",
+            "",
+            "Essential: £19.50/month + VAT",
+            "• 275 HEUs per month",
+            "• Ideal for small operators",
+            "",
+            "Essential Plus: £49.75/month + VAT",
+            "• 700 HEUs per month",
+            "• Great for growing teams",
+            "",
+            "Enterprise: £148.50/month + VAT",
+            "• 2000 HEUs per month",
+            "• Designed for large operations",
+            "",
+            "Top-Up Pack: £15 (one-time)",
+            "• 150 additional HEUs",
+            "• Non-rollover (expires at billing period end)",
+            "",
+            "Real-Time Transparency:",
+            "• Live HEU balance display in your dashboard",
+            "• Per-message cost breakdown available via ⋯ button",
+            "• Know exactly what you're spending as you work",
+            "",
+            "Key Benefits:",
+            "• No per-user fees — add unlimited team members",
+            "• No per-asset fees — manage unlimited properties",
+            "• Pay only for what you use",
+            "• Scales with your actual usage",
+          ];
+
+          pricingContent.forEach((line) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+
+            if (line === "") {
+              yPosition += 5;
+            } else if (line.endsWith(":")) {
+              doc.setFont("helvetica", "bold");
+              doc.text(line, margin, yPosition);
+              yPosition += 7;
+              doc.setFont("helvetica", "normal");
+            } else {
+              doc.text(line, margin, yPosition);
+              yPosition += 5.5;
+            }
+          });
+
+          return; // Skip the rest of the page rendering for HEU Pricing
+        }
+
         // Overview
-        if (page.content.overview) {
+        if (page.content?.overview) {
           doc.setFillColor(249, 250, 251);
           doc.setTextColor(55, 65, 81);
           doc.setFontSize(10);
