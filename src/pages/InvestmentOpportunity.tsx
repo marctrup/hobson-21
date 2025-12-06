@@ -782,38 +782,40 @@ const sections = [
   {
     id: "financials",
     title: "Financials",
-    subtitle: "Financial Models & Forecasts",
-    icon: FileSpreadsheet,
-    color: "from-emerald-500/10 to-emerald-600/10",
-    iconColor: "text-emerald-600",
-    isDownloadCard: true,
-    downloads: [
+    subtitle: "Forecasts & Assumptions",
+    icon: PieChart,
+    color: "from-red-500/10 to-red-600/10",
+    iconColor: "text-red-600",
+    pages: [
       {
         title: "Financial Forecast",
-        description: "Revenue projections and growth assumptions",
-        filename: "Hobson_Financial_Forecast.xlsx",
-        path: "/financials/Hobson_Financial_Forecast.xlsx",
+        content: {
+          overview: "Revenue projections and growth assumptions.",
+          sections: [],
+        },
       },
       {
         title: "Operating Expenses",
-        description: "Detailed breakdown of operational costs",
-        filename: "Hobson_Operating_Expenses.xlsx",
-        path: "/financials/Hobson_Operating_Expenses.xlsx",
+        content: {
+          overview: "Detailed breakdown of operational costs.",
+          sections: [],
+        },
       },
       {
         title: "Cost of Product",
-        description: "Infrastructure and AI cost analysis",
-        filename: "Hobson_Cost_of_Product.xlsx",
-        path: "/financials/Hobson_Cost_of_Product.xlsx",
+        content: {
+          overview: "Infrastructure and AI cost analysis.",
+          sections: [],
+        },
       },
       {
         title: "Staffing",
-        description: "Team growth plan and hiring roadmap",
-        filename: "Hobson_Staffing.xlsx",
-        path: "/financials/Hobson_Staffing.xlsx",
+        content: {
+          overview: "Team growth plan and hiring roadmap.",
+          sections: [],
+        },
       },
     ],
-    pages: [],
   },
   {
     id: "team",
@@ -2136,35 +2138,8 @@ const InvestmentOpportunity = () => {
                           <p className="text-xs sm:text-sm text-muted-foreground line-clamp-2">{section.subtitle}</p>
                         </div>
                       </div>
-                      
-                      {/* Special rendering for download cards */}
-                      {(section as any).isDownloadCard ? (
-                        <div className="space-y-2">
-                          {(section as any).downloads?.map((download: any, idx: number) => (
-                            <Button
-                              key={idx}
-                              onClick={async (e) => {
-                                e.stopPropagation();
-                                toast({
-                                  title: "Coming Soon",
-                                  description: `${download.title} will be available for download shortly.`,
-                                });
-                              }}
-                              variant="outline"
-                              size="sm"
-                              className="w-full justify-start gap-2 h-auto py-2 px-3 text-left"
-                            >
-                              <FileSpreadsheet className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-                              <div className="flex-1 min-w-0">
-                                <div className="text-xs sm:text-sm font-medium text-foreground">{download.title}</div>
-                                <div className="text-[10px] sm:text-xs text-muted-foreground truncate">{download.description}</div>
-                              </div>
-                              <Download className="w-3.5 h-3.5 text-muted-foreground flex-shrink-0" />
-                            </Button>
-                          ))}
-                        </div>
-                      ) : (section as any).directDownload ? (
-                        <div className="flex gap-2">
+                      <div className="flex gap-2">
+                        {(section as any).directDownload ? (
                           <Button
                             onClick={async (e) => {
                               e.stopPropagation();
@@ -2191,57 +2166,57 @@ const InvestmentOpportunity = () => {
                             <span className="hidden xs:inline">Download Word</span>
                             <span className="xs:hidden">Word</span>
                           </Button>
-                        </div>
-                      ) : (
-                        <div className="flex gap-2">
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedSection(section);
-                            }}
-                            variant="secondary"
-                            size="sm"
-                            className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
-                          >
-                            <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                            <span className="hidden xs:inline">View</span>
-                            <span className="xs:hidden">View</span>
-                          </Button>
-                          <Button
-                            onClick={(e) => {
-                              e.stopPropagation();
+                        ) : (
+                          <>
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedSection(section);
+                              }}
+                              variant="secondary"
+                              size="sm"
+                              className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
+                            >
+                              <FileText className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                              <span className="hidden xs:inline">View</span>
+                              <span className="xs:hidden">View</span>
+                            </Button>
+                            <Button
+                              onClick={(e) => {
+                                e.stopPropagation();
 
-                              try {
-                                toast({
-                                  title: "Generating PDF",
-                                  description: "Creating your document...",
-                                });
+                                try {
+                                  toast({
+                                    title: "Generating PDF",
+                                    description: "Creating your document...",
+                                  });
 
-                                generatePDF(section);
+                                  generatePDF(section);
 
-                                toast({
-                                  title: "PDF Downloaded",
-                                  description: `${section.title} PDF has been saved to your downloads folder`,
-                                });
-                              } catch (error) {
-                                console.error("Error generating PDF:", error);
-                                toast({
-                                  title: "Error",
-                                  description: "Failed to generate PDF. Please try again.",
-                                  variant: "destructive",
-                                });
-                              }
-                            }}
-                            variant="outline"
-                            size="sm"
-                            className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
-                          >
-                            <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                            <span className="hidden xs:inline">Download PDF</span>
-                            <span className="xs:hidden">PDF</span>
-                          </Button>
-                        </div>
-                      )}
+                                  toast({
+                                    title: "PDF Downloaded",
+                                    description: `${section.title} PDF has been saved to your downloads folder`,
+                                  });
+                                } catch (error) {
+                                  console.error("Error generating PDF:", error);
+                                  toast({
+                                    title: "Error",
+                                    description: "Failed to generate PDF. Please try again.",
+                                    variant: "destructive",
+                                  });
+                                }
+                              }}
+                              variant="outline"
+                              size="sm"
+                              className="flex-1 gap-1.5 sm:gap-2 h-9 text-xs sm:text-sm"
+                            >
+                              <Download className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                              <span className="hidden xs:inline">Download PDF</span>
+                              <span className="xs:hidden">PDF</span>
+                            </Button>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </Card>
                 ))}
