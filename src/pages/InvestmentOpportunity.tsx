@@ -35,6 +35,7 @@ import { HEUPricingVisual } from "@/components/investor/HEUPricingVisual";
 import { AIProcessingVisual } from "@/components/investor/AIProcessingVisual";
 import { SimpleUIVisual } from "@/components/investor/SimpleUIVisual";
 import { GanttChartVisual } from "@/components/investor/GanttChartVisual";
+import { EarlyRoadmapVisual } from "@/components/investor/EarlyRoadmapVisual";
 import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
 import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMatrix";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -538,13 +539,15 @@ const sections = [
     iconColor: "text-green-600",
     pages: [
       {
-        title: "Timeline & Milestones",
+        title: "Roadmap (2024–2025)",
+        showCustomVisual: true,
+        customVisualComponent: "earlyRoadmap",
         content: {
           overview:
-            "Strategic product development timeline from MVP to Phase 2 and beyond, structured across four key phases.",
+            "Strategic product development timeline covering discovery, validation, and development phases.",
           sections: [
             {
-              title: "May - Aug 2024: Discover",
+              title: "May – Aug 2024: Discover",
               items: [
                 "Client discovery calls with real estate professionals",
                 "Establish the core problem being solved",
@@ -553,27 +556,25 @@ const sections = [
               ],
             },
             {
-              title: "Sept-Dec 2024: Validate",
+              title: "Sept – Dec 2024: Validate",
               items: [
-                "Establish 4 working partnerships with real estate firms",
+                "Establish four working partnerships with real estate firms",
                 "No-code concepts validation",
-                "Scope the MVP (Phase 1) based on partner feedback",
+                "Scope the MVP based on partner feedback",
                 "Refine value proposition and feature set",
               ],
             },
             {
-              title: "Jan - Dec 2025: Develop",
+              title: "Jan – Dec 2025: Develop",
               items: [
                 "Build MVP: Phase 1 with core AI capabilities",
-                "Testing Phase 1 with key clients in real-world scenarios",
+                "Build online presence and branding",
+                "Testing MVP with key clients in real-world scenarios",
                 "Finalise pricing strategy based on usage data",
-                "Build Phase 2 with enhanced features",
-                "Develop go-to-market strategy for broader launch",
+                "Build pricing plan",
+                "Build a marketing plan",
+                "Build a business plan and financial model",
               ],
-            },
-            {
-              title: "2026: Prepare for Launch",
-              items: ["Launch MVP to our pilot clients Q1"],
             },
           ],
         },
@@ -2293,7 +2294,8 @@ const InvestmentOpportunity = () => {
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "simpleUI" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ukMarket" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "competitorAnalysis" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ganttChart" && (
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ganttChart" &&
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "earlyRoadmap" && (
                         <CompetitiveLandscapeVisual />
                       )}
 
@@ -2330,6 +2332,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Gantt Chart */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "ganttChart" && (
                       <GanttChartVisual />
+                    )}
+
+                    {/* Custom Visual Component for Early Roadmap */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "earlyRoadmap" && (
+                      <EarlyRoadmapVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
