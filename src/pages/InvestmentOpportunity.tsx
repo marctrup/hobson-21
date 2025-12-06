@@ -926,18 +926,8 @@ const sections = [
       {
         title: "Available Downloads",
         content: {
-          overview: "Download detailed financial models and spreadsheets for comprehensive analysis.",
-          sections: [
-            {
-              title: "Financial Models",
-              items: [
-                "Revenue Projections (5-Year)",
-                "Operating Expense Breakdown",
-                "Cash Flow Analysis",
-                "Break-even Analysis",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
         downloads: [
           { name: "Financial Projections 2025-2030.xlsx", path: "/financials/projections.xlsx" },
