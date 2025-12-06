@@ -1784,6 +1784,268 @@ const InvestmentOpportunity = () => {
           return; // Skip the rest of the page rendering for Competitor Analysis
         }
 
+        // Handle UK Market visual page
+        const isUkMarket = page.customVisualComponent === "ukMarket";
+        if (isUkMarket) {
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+
+          const ukMarketContent = [
+            "UK Market Opportunity — Built Directly From Verified Assumptions:",
+            "",
+            "Total Addressable Market (TAM) — £1.41B:",
+            "• Based on verified ONS business counts and salary benchmarks",
+            "• 235,200 UK real estate businesses (5.6M total UK businesses × 4.2% real estate share)",
+            "• £6,000 annual saving per business (20% efficiency gain on £30,000 junior salary)",
+            "• TAM = 235,200 × £6,000 = £1.41B",
+            "",
+            "Serviceable Available Market (SAM) — £917M:",
+            "• Reflects businesses motivated and able to adopt AI",
+            "• 65% adoption readiness (consistent with PropTech and operational AI adoption rates)",
+            "• 235,200 × 65% = 152,880 motivated businesses",
+            "• 152,880 × £6,000 = £917M",
+            "",
+            "Serviceable Obtainable Market (SOM) — £110M:",
+            "• Built using the evidence-backed 12% early penetration assumption",
+            "• 12% sits within verified 8-20% early-stage adoption range (McKinsey, PwC, Deloitte)",
+            "• 152,880 × 12% = 18,345 early adopters",
+            "• 18,345 × £6,000 = £110M",
+            "",
+            "SOM is intentionally conservative and supported by industry-verified adoption behaviour.",
+          ];
+
+          ukMarketContent.forEach((line) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+            if (line === "") {
+              yPosition += 5;
+            } else if (line.endsWith(":")) {
+              doc.setFont("helvetica", "bold");
+              doc.text(line, margin, yPosition);
+              yPosition += 7;
+              doc.setFont("helvetica", "normal");
+            } else {
+              doc.text(line, margin, yPosition);
+              yPosition += 5.5;
+            }
+          });
+          return;
+        }
+
+        // Handle European & Global Opportunities visual page
+        const isEuropeanGlobal = page.customVisualComponent === "europeanGlobal";
+        if (isEuropeanGlobal) {
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+
+          const europeanGlobalContent = [
+            "European & Global Market Opportunities:",
+            "",
+            "EUROPE (11× UK Population Multiple):",
+            "",
+            "Total Addressable Market (TAM) — £15.5B:",
+            "• Scaling UK's £1.41B by Europe's 11× population multiple",
+            "• Represents annual efficiency value across Europe for AI-driven document workflows",
+            "",
+            "Serviceable Available Market (SAM) — £10.1B:",
+            "• 65% of European operators motivated and ready to adopt AI tools",
+            "• £15.5B × 65% = £10.1B",
+            "",
+            "Serviceable Obtainable Market (SOM) — £1.2B:",
+            "• 12% penetration of motivated organisations",
+            "• £10.1B × 12% = £1.2B",
+            "",
+            "GLOBAL (118× UK Population Multiple):",
+            "",
+            "Total Addressable Market (TAM) — £155.6B:",
+            "• Scaling UK's £1.41B by global 118× population multiple",
+            "• Worldwide opportunity for AI-driven efficiency gains in real estate",
+            "",
+            "Serviceable Available Market (SAM) — £101B:",
+            "• 65% of global market motivated to adopt AI tools",
+            "• £155.6B × 65% = £101B",
+            "",
+            "Serviceable Obtainable Market (SOM) — £12.1B:",
+            "• 12% penetration of motivated buyers",
+            "• £101B × 12% = £12.1B",
+          ];
+
+          europeanGlobalContent.forEach((line) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+            if (line === "") {
+              yPosition += 5;
+            } else if (line.endsWith(":")) {
+              doc.setFont("helvetica", "bold");
+              doc.text(line, margin, yPosition);
+              yPosition += 7;
+              doc.setFont("helvetica", "normal");
+            } else {
+              doc.text(line, margin, yPosition);
+              yPosition += 5.5;
+            }
+          });
+          return;
+        }
+
+        // Handle Early Roadmap (2024-2025) visual page
+        const isEarlyRoadmap = page.customVisualComponent === "earlyRoadmap";
+        if (isEarlyRoadmap) {
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+
+          const earlyRoadmapContent = [
+            "Roadmap 2024–2025:",
+            "",
+            "Phase 1: Discover (May – Aug 2024):",
+            "• Client discovery calls with real estate professionals",
+            "• Establish the core problem being solved",
+            "• Identify pain points in existing systems",
+            "• Define target market segments",
+            "",
+            "Phase 2: Validate (Sept – Dec 2024):",
+            "• Establish four working partnerships with real estate firms",
+            "• No-code concepts validation",
+            "• Scope the MVP based on partner feedback",
+            "• Refine value proposition and feature set",
+            "",
+            "Phase 3: Develop (Jan – Dec 2025):",
+            "• Build MVP: Phase 1 with core AI capabilities",
+            "• Build online presence and branding",
+            "• Testing MVP with key clients in real-world scenarios",
+            "• Finalise pricing strategy based on usage data",
+            "• Build pricing plan, marketing plan, business plan and financial model",
+          ];
+
+          earlyRoadmapContent.forEach((line) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+            if (line === "") {
+              yPosition += 5;
+            } else if (line.endsWith(":")) {
+              doc.setFont("helvetica", "bold");
+              doc.text(line, margin, yPosition);
+              yPosition += 7;
+              doc.setFont("helvetica", "normal");
+            } else {
+              doc.text(line, margin, yPosition);
+              yPosition += 5.5;
+            }
+          });
+          return;
+        }
+
+        // Handle Gantt Chart (2026-2028 Roadmap) visual page
+        const isGanttChart = page.customVisualComponent === "ganttChart";
+        if (isGanttChart) {
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+
+          const ganttChartContent = [
+            "Roadmap 2026–2028:",
+            "",
+            "2026 — Strengthen the Product and Validate the Market:",
+            "• Grow to 10 active pilot organisations across different portfolio sizes",
+            "• Scale and improve core features based on real pilot feedback",
+            "• Convert 3–5 pilots into paying customers to prove commercial demand",
+            "• Build payment engine and billing workflows ready for public launch",
+            "• Finalise marketing plan with KPIs, channels, content structure, and acquisition strategy",
+            "• Prepare full go-to-market plan for 2027 launch",
+            "",
+            "2027 — Enter the Market and Expand Commercially:",
+            "• Launch public Hobson website (Q1 2027) with full pricing and onboarding flows",
+            "• Implement marketing plan: SEO, LinkedIn content, website funnels, retention communications",
+            "• Scale technology and platform features to support growing demand",
+            "• Strengthen onboarding, support processes, and customer success workflows",
+            "• Prepare for global expansion by validating demand in two target countries",
+            "",
+            "2028 — Global Launch and Market Expansion:",
+            "• Launch Hobson in two international markets with regionalised marketing",
+            "• Release localised document packs and accuracy enhancements for new jurisdictions",
+            "• Grow paid customer base across UK + international regions",
+            "• Expand brand presence through partnerships, content, and local industry events",
+            "• Strengthen platform reliability and insight features for multi-market operations",
+          ];
+
+          ganttChartContent.forEach((line) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+            if (line === "") {
+              yPosition += 5;
+            } else if (line.endsWith(":")) {
+              doc.setFont("helvetica", "bold");
+              doc.text(line, margin, yPosition);
+              yPosition += 7;
+              doc.setFont("helvetica", "normal");
+            } else {
+              doc.text(line, margin, yPosition);
+              yPosition += 5.5;
+            }
+          });
+          return;
+        }
+
+        // Handle Onboarding Costs visual page
+        const isOnboardingCosts = page.customVisualComponent === "onboardingCosts";
+        if (isOnboardingCosts) {
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+
+          const onboardingCostsContent = [
+            "Customer Onboarding Costs & Payback Analysis:",
+            "",
+            "Cost to Acquire a Customer (CAC):",
+            "• Marketing, sales, and onboarding costs per new customer",
+            "• Designed to be minimal due to zero-onboarding product approach",
+            "",
+            "Customer Lifetime Value (LTV):",
+            "• Average revenue per customer over their subscription lifetime",
+            "• Usage-based model aligns revenue with customer value received",
+            "",
+            "Payback Period:",
+            "• Time to recover customer acquisition costs",
+            "• Target: <12 months for sustainable unit economics",
+            "",
+            "Key Advantages:",
+            "• Zero onboarding = lower support costs",
+            "• Self-serve model = reduced sales overhead",
+            "• Usage-based pricing = natural expansion revenue",
+            "• Low entry price = high conversion rates",
+          ];
+
+          onboardingCostsContent.forEach((line) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+            if (line === "") {
+              yPosition += 5;
+            } else if (line.endsWith(":")) {
+              doc.setFont("helvetica", "bold");
+              doc.text(line, margin, yPosition);
+              yPosition += 7;
+              doc.setFont("helvetica", "normal");
+            } else {
+              doc.text(line, margin, yPosition);
+              yPosition += 5.5;
+            }
+          });
+          return;
+        }
+
         // Overview
         if (page.content?.overview) {
           doc.setFillColor(249, 250, 251);
