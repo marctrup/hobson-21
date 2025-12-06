@@ -34,6 +34,7 @@ import { EuropeanGlobalVisual } from "@/components/investor/EuropeanGlobalVisual
 import { HEUPricingVisual } from "@/components/investor/HEUPricingVisual";
 import { AIProcessingVisual } from "@/components/investor/AIProcessingVisual";
 import { SimpleUIVisual } from "@/components/investor/SimpleUIVisual";
+import { GanttChartVisual } from "@/components/investor/GanttChartVisual";
 import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
 import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMatrix";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -573,6 +574,51 @@ const sections = [
             {
               title: "2026: Prepare for Launch",
               items: ["Launch MVP to our pilot clients Q1"],
+            },
+          ],
+        },
+      },
+      {
+        title: "Roadmap (2026–2028)",
+        showCustomVisual: true,
+        customVisualComponent: "ganttChart",
+        content: {
+          overview:
+            "Growth timeline from pilot expansion through international launch, with quarterly milestones across key workstreams.",
+          sections: [
+            {
+              title: "2026 — Strengthen the Product and Validate the Market",
+              items: [
+                "Goal: Expand pilot testing, refine the product, and prepare for commercial launch.",
+                "Grow to 10 active pilot organisations across different portfolio sizes",
+                "Scale and improve core features based on real pilot feedback",
+                "Convert 3–5 pilots into paying customers to prove commercial demand",
+                "Build a payment engine and billing workflows ready for public launch",
+                "Finalise the marketing plan, including KPIs, channels, content structure, and acquisition strategy",
+                "Prepare the full go-to-market plan for 2027 launch",
+              ],
+            },
+            {
+              title: "2027 — Enter the Market and Expand Commercially",
+              items: [
+                "Goal: Launch publicly, grow paid users, and prepare for international expansion.",
+                "Launch the public Hobson website (Q1 2027) with full pricing and onboarding flows",
+                "Implement the marketing plan, including SEO, LinkedIn content, website funnels, and retention communications",
+                "Scale the technology and platform features to support growing demand",
+                "Strengthen onboarding, support processes, and customer success workflows",
+                "Prepare for global expansion by validating demand and compliance requirements in two target countries",
+              ],
+            },
+            {
+              title: "2028 — Global Launch and Market Expansion",
+              items: [
+                "Goal: Move beyond the UK and establish Hobson as an international solution.",
+                "Launch Hobson in two international markets, supported by regionalised marketing and documentation",
+                "Release localised document packs and accuracy enhancements for new jurisdictions",
+                "Grow paid customer base across UK + international regions",
+                "Expand brand presence through partnerships, content, and local industry events",
+                "Strengthen platform reliability and insight features to support multi-market operations",
+              ],
             },
           ],
         },
@@ -2278,6 +2324,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Competitor Analysis */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "competitorAnalysis" && (
                       <CompetitorAnalysisMatrix />
+                    )}
+
+                    {/* Custom Visual Component for Gantt Chart */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "ganttChart" && (
+                      <GanttChartVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
