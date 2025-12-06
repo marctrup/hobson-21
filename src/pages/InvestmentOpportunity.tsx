@@ -788,7 +788,7 @@ const sections = [
     iconColor: "text-red-600",
     pages: [
       {
-        title: "Processing Costs",
+        title: "Onboarding Costs",
         content: {
           overview: "AI processing costs and unit economics for document analysis.",
           sections: [
