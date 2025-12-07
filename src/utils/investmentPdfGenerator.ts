@@ -196,8 +196,7 @@ const getCustomVisualContent = (componentType: string): string[] => {
         "- Calculation: GBP 155.6B x 65% = GBP 101B",
         "",
         "65% Adoption Rate Source:",
-        "Department for Business, Energy & Industrial Strategy (BEIS) / ONS",
-        "- consistent with PropTech and operational AI adoption rates in traditional sectors (Deloitte, PwC, McKinsey).",
+        "Consistent with PropTech and operational AI adoption rates in traditional sectors (Deloitte, PwC, McKinsey).",
       ];
 
     case "ukMarket":
