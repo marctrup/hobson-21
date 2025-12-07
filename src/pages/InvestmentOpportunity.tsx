@@ -833,6 +833,40 @@ const sections = [
     iconColor: "text-red-600",
     pages: [
       {
+        title: "Target Market",
+        content: {
+          overview: "Market analysis and target customer segments for financial planning.",
+          sections: [
+            {
+              title: "Primary Target Segments",
+              items: [
+                "Large Operators (50–250 employees): High-volume document processing needs with budget for enterprise solutions",
+                "Medium Operators (10–49 employees): Growing businesses seeking efficiency gains at accessible price points",
+                "Small Operators (1–9 employees): Cost-conscious users benefiting from pay-as-you-go model",
+              ],
+            },
+            {
+              title: "Market Size Assumptions",
+              items: [
+                "UK Market: 235,200 real estate businesses (ONS verified)",
+                "Target penetration Year 1: 0.5% of SOM (92 customers)",
+                "Target penetration Year 3: 5% of SOM (917 customers)",
+                "Target penetration Year 5: 12% of SOM (2,200 customers)",
+              ],
+            },
+            {
+              title: "Revenue Per Customer Assumptions",
+              items: [
+                "Small Operators: Average £240/year (Essential tier)",
+                "Medium Operators: Average £600/year (Essential Plus tier)",
+                "Large Operators: Average £1,800/year (Enterprise tier)",
+                "Blended average across segments: £720/year per customer",
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: "Onboarding Costs",
         customVisualComponent: "onboardingCosts",
         content: {
