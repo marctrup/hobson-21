@@ -581,38 +581,52 @@ const renderTabContent = (
     try {
       // AI Architecture gets its own full page for proper display
       if (tab.title === "AI Architecture") {
-        // Use maximum available space for the architecture diagram
-        const availableWidth = maxWidth;
-        const availableHeight = pageHeight - yPosition - 30;
+        // Start fresh on this page - title already rendered above
+        // Use most of the remaining page for the image
+        const availableHeight = pageHeight - yPosition - 20;
         
-        // Architecture diagram natural aspect ratio (approx 1.7:1 width:height)
-        const naturalAspectRatio = 0.588; // height/width
+        // Architecture diagram - use 4:3 aspect ratio (height/width = 0.75)
+        // This matches typical technical diagrams better
+        const naturalAspectRatio = 0.75;
         
-        // Calculate dimensions to maximize size while maintaining aspect ratio
-        let imgWidth = availableWidth;
+        // Calculate to fit available space while maintaining ratio
+        let imgWidth = maxWidth;
         let imgHeight = imgWidth * naturalAspectRatio;
         
-        // If too tall, scale down
+        // Scale to fit if needed
         if (imgHeight > availableHeight) {
           imgHeight = availableHeight;
           imgWidth = imgHeight / naturalAspectRatio;
         }
         
-        // Center horizontally if scaled down
+        // Center horizontally
         const xOffset = margin + (maxWidth - imgWidth) / 2;
         
         doc.addImage(imageToUse, "PNG", xOffset, yPosition, imgWidth, imgHeight);
-        yPosition += imgHeight + 10;
         
-        // Start text content on new page
+        // Text content on new page
         doc.addPage();
         yPosition = margin;
-      } else {
-        // Simple UI and other images - standard sizing
-        const aspectRatio = tab.title === "Simple UI" ? 0.75 : 0.5625;
+      } else if (tab.title === "Simple UI") {
+        // Simple UI - portrait device mockup
+        const aspectRatio = 0.8;
+        const imgWidth = maxWidth * 0.7; // Slightly smaller
+        const imgHeight = imgWidth * aspectRatio;
         
+        if (yPosition + imgHeight > pageHeight - 40) {
+          doc.addPage();
+          yPosition = margin;
+        }
+        
+        // Center horizontally
+        const xOffset = margin + (maxWidth - imgWidth) / 2;
+        doc.addImage(imageToUse, "PNG", xOffset, yPosition, imgWidth, imgHeight);
+        yPosition += imgHeight + 10;
+      } else {
+        // Other images - default handling
+        const aspectRatio = 0.6;
         const imgWidth = maxWidth;
-        let imgHeight = imgWidth * aspectRatio;
+        const imgHeight = imgWidth * aspectRatio;
         
         if (yPosition + imgHeight > pageHeight - 40) {
           doc.addPage();
