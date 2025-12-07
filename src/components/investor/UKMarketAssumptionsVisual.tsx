@@ -89,11 +89,32 @@ export const UKMarketAssumptionsVisual = () => {
         </a>
       </div>
 
-      {/* Section 3: Labour Cost */}
+      {/* Section 3: AI Investment Readiness */}
+      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 lg:p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Zap className="w-5 h-5 text-primary" />
+          <h4 className="text-sm lg:text-base font-semibold text-foreground">3. AI Investment Readiness</h4>
+        </div>
+        <div className="bg-background/50 rounded-lg p-4 border border-border/50">
+          <p className="text-3xl lg:text-4xl font-bold text-primary">65%</p>
+          <p className="text-sm text-muted-foreground mt-1">of UK businesses are primed to invest in AI</p>
+        </div>
+        <a 
+          href="https://www2.deloitte.com/us/en/insights/focus/cognitive-technologies/state-of-ai-and-intelligent-automation-in-business-survey.html" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-xs text-primary/70 hover:text-primary mt-3 transition-colors"
+        >
+          Source: Deloitte – State of AI in the Enterprise (5th Edition)
+          <ExternalLink className="w-3 h-3" />
+        </a>
+      </div>
+
+      {/* Section 4: Labour Cost */}
       <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 lg:p-5">
         <div className="flex items-center gap-2 mb-3">
           <Banknote className="w-5 h-5 text-primary" />
-          <h4 className="text-sm lg:text-base font-semibold text-foreground">3. Labour Cost Baseline</h4>
+          <h4 className="text-sm lg:text-base font-semibold text-foreground">4. Labour Cost Baseline</h4>
         </div>
         <div className="bg-background/50 rounded-lg p-4 border border-border/50">
           <p className="text-3xl lg:text-4xl font-bold text-primary">£30,000</p>
@@ -110,11 +131,11 @@ export const UKMarketAssumptionsVisual = () => {
         </a>
       </div>
 
-      {/* Section 4: AI Efficiency Gain */}
+      {/* Section 5: AI Efficiency Gain */}
       <div className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/30 rounded-lg p-4 lg:p-5">
         <div className="flex items-center gap-2 mb-3">
           <Zap className="w-5 h-5 text-primary" />
-          <h4 className="text-sm lg:text-base font-semibold text-foreground">4. AI Efficiency Gain Assumption — 20%</h4>
+          <h4 className="text-sm lg:text-base font-semibold text-foreground">5. AI Efficiency Gain Assumption — 20%</h4>
         </div>
 
         {/* Evidence Base */}
@@ -152,11 +173,11 @@ export const UKMarketAssumptionsVisual = () => {
         </div>
       </div>
 
-      {/* Section 5: Financial Impact */}
+      {/* Section 6: Financial Impact */}
       <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-4 lg:p-5">
         <div className="flex items-center gap-2 mb-3">
           <PoundSterling className="w-5 h-5 text-green-600" />
-          <h4 className="text-sm lg:text-base font-semibold text-foreground">5. Financial Impact of Efficiency Gains</h4>
+          <h4 className="text-sm lg:text-base font-semibold text-foreground">6. Financial Impact of Efficiency Gains</h4>
         </div>
         
         <p className="text-xs lg:text-sm text-muted-foreground mb-3">
@@ -200,10 +221,14 @@ export const UKMarketAssumptionsVisual = () => {
           </li>
           <li className="flex items-start gap-2">
             <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center flex-shrink-0">2</span>
-            <span>Labour cost baselines</span>
+            <span>65% of UK businesses primed to invest in AI</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center flex-shrink-0">3</span>
+            <span>Labour cost baselines</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center flex-shrink-0">4</span>
             <span>A conservative but evidence-backed efficiency gain (20%) equal to <span className="font-semibold text-primary">£6k per role per year</span></span>
           </li>
         </ul>
