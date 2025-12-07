@@ -78,9 +78,15 @@ export const UKMarketAssumptionsVisual = () => {
             </tbody>
           </table>
         </div>
-        <p className="text-xs text-primary/70 mt-3">
+        <a 
+          href="https://www.gov.uk/government/collections/business-population-estimates" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-xs text-primary/70 hover:text-primary mt-3 transition-colors"
+        >
           Source: Department for Business, Energy & Industrial Strategy (BEIS) / Office for National Statistics (ONS)
-        </p>
+          <ExternalLink className="w-3 h-3" />
+        </a>
       </div>
 
       {/* Section 3: Labour Cost */}
