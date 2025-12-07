@@ -844,7 +844,7 @@ const sections = [
         },
       },
       {
-        title: "Target Market",
+        title: "TAM",
         showCustomVisual: true,
         customVisualComponent: "targetMarket",
         content: {
