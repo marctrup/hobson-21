@@ -47,6 +47,7 @@ export interface Tab {
   customVisualComponent?: string;
   image?: string;
   pdfImage?: string;
+  imageAlt?: string;
 }
 
 export interface CardSection {
@@ -573,6 +574,28 @@ const renderTabContent = (
   doc.setLineWidth(0.5);
   doc.line(margin, yPosition, pageWidth - margin, yPosition);
   yPosition += 10;
+
+  // Handle image if present (either image or pdfImage)
+  const imageToUse = tab.image || tab.pdfImage;
+  if (imageToUse) {
+    try {
+      // Calculate image dimensions to fit within page width
+      const imgWidth = maxWidth;
+      const aspectRatio = tab.customVisualComponent === "simpleUI" ? 0.75 : 0.5;
+      let imgHeight = imgWidth * aspectRatio;
+      
+      // Check if image fits on current page, otherwise add new page
+      if (yPosition + imgHeight > pageHeight - 40) {
+        doc.addPage();
+        yPosition = margin;
+      }
+
+      doc.addImage(imageToUse, "PNG", margin, yPosition, imgWidth, imgHeight);
+      yPosition += imgHeight + 10;
+    } catch (error) {
+      console.error("Error adding image to PDF:", error);
+    }
+  }
 
   // Overview
   if (tab.content?.overview) {
