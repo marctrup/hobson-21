@@ -2689,7 +2689,8 @@ const InvestmentOpportunity = () => {
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ukMarket" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "competitorAnalysis" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ganttChart" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "earlyRoadmap" && (
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "earlyRoadmap" &&
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "targetMarket" && (
                         <CompetitiveLandscapeVisual />
                       )}
 
