@@ -169,26 +169,11 @@ const sections = [
       },
       {
         title: "Assumptions",
+        showCustomVisual: true,
+        customVisualComponent: "ukMarketAssumptions",
         content: {
-          overview: "Verified & Evidence-Backed",
-          sections: [
-            {
-              title: "1. Market Baseline (ONS-Verified)",
-              items: [
-                "Total UK businesses (2023): 5.6 million — Source: ONS — UK Business: Activity, Size & Location",
-                "Real estate activities = 4.2% of all UK businesses — Source: ONS — Real Estate Activities by Employment Size",
-                "5.6M × 4.2% = 235,200 real estate businesses (Excludes architects, surveyors, finance — strictly 'real estate activities')",
-              ],
-            },
-            {
-              title: "2. Cost & Savings Assumptions (Verified)",
-              items: [
-                "Average junior real estate salary: £30,000 — Source: Macdonald & Company — UK Salary Report 2023/24",
-                "20% efficiency gain = £6,000 annual saving per admin/document-handling role",
-                "Conservative assumption: every real estate business has at least one admin/document-heavy role",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
       {
