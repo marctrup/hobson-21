@@ -942,6 +942,7 @@ const sections = [
   },
 ];
 
+// Investment Opportunity Page Component
 const InvestmentOpportunity = () => {
   const [password, setPassword] = useState("");
   const [isAuthenticated, setIsAuthenticated] = useState(false);
