@@ -39,6 +39,7 @@ import { EarlyRoadmapVisual } from "@/components/investor/EarlyRoadmapVisual";
 import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
 import OnboardingCostsVisual from "@/components/investor/OnboardingCostsVisual";
 import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMatrix";
+import { TargetMarketVisual } from "@/components/investor/TargetMarketVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { jsPDF } from "jspdf";
@@ -834,29 +835,11 @@ const sections = [
     pages: [
       {
         title: "Target Market",
+        showCustomVisual: true,
+        customVisualComponent: "targetMarket",
         content: {
-          overview: "UK and Global Total Addressable Market based on verified data sources.",
-          sections: [
-            {
-              title: "UK Total Addressable Market (TAM)",
-              subtitle: "£1.41B",
-              items: [
-                "Based on verified ONS business counts and salary benchmarks",
-                "235,200 UK real estate businesses (from 5.6M total UK businesses × 4.2% real estate share)",
-                "£6,000 annual saving per business (20% efficiency gain on £30,000 junior salary)",
-                "TAM = 235,200 × £6,000 = £1.41B",
-              ],
-            },
-            {
-              title: "Global Total Addressable Market (TAM)",
-              subtitle: "£155.6B",
-              items: [
-                "Scaling the UK's £1.41B efficiency value by the global 118× population multiple",
-                "£1.41B × 118 = £166.4B, rounded to £155.6B for conservatism",
-                "Represents the worldwide opportunity for AI-driven efficiency gains in real estate document workflows",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
       {
@@ -2706,6 +2689,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Competitor Analysis */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "competitorAnalysis" && (
                       <CompetitorAnalysisMatrix />
+                    )}
+
+                    {/* Custom Visual Component for Target Market */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "targetMarket" && (
+                      <TargetMarketVisual />
                     )}
 
                     {/* Custom Visual Component for Onboarding Costs */}
