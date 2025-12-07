@@ -43,7 +43,7 @@ import { TargetMarketVisual } from "@/components/investor/TargetMarketVisual";
 import { SAMVisual } from "@/components/investor/SAMVisual";
 import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumptionsVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
-import { generateCardPdf, generateFullBusinessPlanPdf, CardSection } from "@/utils/investmentPdfGenerator";
+import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { jsPDF } from "jspdf";
 
@@ -951,7 +951,16 @@ const InvestmentOpportunity = () => {
 
   // Function to generate combined PDF with all sections - uses new architecture
   const generateFullBusinessPlan = () => {
-    generateFullBusinessPlanPdf(sections as CardSection[]);
+    // Explicit mapping of cards by their purpose
+    const cards: BusinessPlanCards = {
+      strategyPositioning: sections[0] as CardSection,  // Strategy & Positioning
+      customersMarket: sections[1] as CardSection,       // Customers & Market
+      roadmapProduct: sections[2] as CardSection,        // Roadmap & Product
+      commercials: sections[3] as CardSection,           // Commercials
+      team: sections[4] as CardSection,                  // Team
+      financials: sections[5] as CardSection,            // Financials
+    };
+    generateFullBusinessPlanPdf(cards);
   };
 
   // Check if user has already authenticated in this session
