@@ -845,17 +845,38 @@ export const generateCardPdf = (section: CardSection): void => {
 };
 
 /**
- * Generate complete business plan PDF with all sections
+ * Business Plan Cards - explicit interface for the 6 included cards
+ */
+export interface BusinessPlanCards {
+  strategyPositioning: CardSection;
+  customersMarket: CardSection;
+  roadmapProduct: CardSection;
+  commercials: CardSection;
+  team: CardSection;
+  financials: CardSection;
+}
+
+/**
+ * Generate complete business plan PDF with all 6 cards
  * 
- * @param sections - Array of all card sections (first 6 will be included)
+ * @param cards - Object containing all 6 card sections explicitly
  * @returns void - Downloads the PDF directly
  */
-export const generateFullBusinessPlanPdf = (sections: CardSection[]): void => {
+export const generateFullBusinessPlanPdf = (cards: BusinessPlanCards): void => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = PDF_CONFIG.margin;
-  const maxWidth = pageWidth - margin * 2;
+
+  // Explicit ordered list of cards to include
+  const includedSections: CardSection[] = [
+    cards.strategyPositioning,
+    cards.customersMarket,
+    cards.roadmapProduct,
+    cards.commercials,
+    cards.team,
+    cards.financials,
+  ];
 
   // Cover page
   doc.setFillColor(...PDF_CONFIG.primaryColor);
@@ -912,7 +933,6 @@ export const generateFullBusinessPlanPdf = (sections: CardSection[]): void => {
   indexY += 15;
 
   const indexPageNum = doc.getNumberOfPages();
-  const includedSections = sections.slice(0, 6);
 
   // Calculate page numbers
   const sectionPageNumbers: { [key: string]: number } = {};
@@ -932,12 +952,12 @@ export const generateFullBusinessPlanPdf = (sections: CardSection[]): void => {
   let cardCount = 0;
 
   const colors = [
-    [59, 130, 246],
-    [168, 85, 247],
-    [34, 197, 94],
-    [234, 179, 8],
-    [239, 68, 68],
-    [236, 72, 153],
+    [59, 130, 246],   // Strategy - blue
+    [168, 85, 247],   // Customers - purple
+    [34, 197, 94],    // Roadmap - green
+    [234, 179, 8],    // Commercials - yellow
+    [239, 68, 68],    // Team - red
+    [236, 72, 153],   // Financials - pink
   ];
 
   includedSections.forEach((section, idx) => {
