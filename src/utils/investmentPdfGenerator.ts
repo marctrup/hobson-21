@@ -1049,8 +1049,50 @@ export const generateFullBusinessPlanPdf = (cards: BusinessPlanCards): void => {
     }
   });
 
-  // Render all section content
-  includedSections.forEach((section) => {
+  // Render all section content with section divider pages
+  includedSections.forEach((section, idx) => {
+    // Add section divider page
+    doc.addPage();
+    const [r, g, b] = colors[idx % colors.length];
+    
+    // Section divider - colored header bar
+    doc.setFillColor(r, g, b);
+    doc.rect(0, 0, pageWidth, 60, "F");
+    
+    // Section number
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(48);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${idx + 1}`, pageWidth / 2, 42, { align: "center" });
+    
+    // Section title
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(32);
+    doc.setFont("helvetica", "bold");
+    doc.text(section.title, pageWidth / 2, 100, { align: "center" });
+    
+    // Section subtitle
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "normal");
+    doc.text(section.subtitle, pageWidth / 2, 120, { align: "center" });
+    
+    // Decorative line
+    doc.setDrawColor(r, g, b);
+    doc.setLineWidth(2);
+    doc.line(pageWidth / 2 - 40, 135, pageWidth / 2 + 40, 135);
+    
+    // List of tabs in this section
+    doc.setTextColor(...PDF_CONFIG.textLight);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "normal");
+    let tabListY = 160;
+    section.pages.forEach((tab, tabIdx) => {
+      doc.text(`${tabIdx + 1}. ${tab.title}`, pageWidth / 2, tabListY, { align: "center" });
+      tabListY += 12;
+    });
+    
+    // Render each tab
     section.pages.forEach((tab) => {
       doc.addPage();
       renderTabContent(doc, tab, margin);
