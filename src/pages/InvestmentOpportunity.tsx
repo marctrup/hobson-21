@@ -40,6 +40,7 @@ import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
 import OnboardingCostsVisual from "@/components/investor/OnboardingCostsVisual";
 import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMatrix";
 import { TargetMarketVisual } from "@/components/investor/TargetMarketVisual";
+import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumptionsVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { jsPDF } from "jspdf";
@@ -835,47 +836,11 @@ const sections = [
     pages: [
       {
         title: "Assumptions",
+        showCustomVisual: true,
+        customVisualComponent: "ukMarketAssumptions",
         content: {
-          overview: "Key assumptions underlying market sizing and financial projections.",
-          sections: [
-            {
-              title: "Business Population",
-              items: [
-                "235,200 real estate businesses in the UK",
-                "Based on 5.6M UK businesses × 4.2% real estate proportion (ONS data)",
-              ],
-            },
-            {
-              title: "Efficiency Savings Calculation",
-              items: [
-                "£30,000 average junior admin/document-heavy role salary",
-                "20% time efficiency gain from AI-assisted document processing",
-                "£6,000 annual savings per business (£30,000 × 20%)",
-              ],
-            },
-            {
-              title: "Market Motivation (SAM)",
-              items: [
-                "65% of businesses motivated to adopt efficiency-improving technology",
-                "Conservative estimate based on digital transformation trends in property sector",
-              ],
-            },
-            {
-              title: "Market Penetration (SOM)",
-              items: [
-                "12% addressable market penetration target",
-                "Reflects early-stage SaaS benchmarks for low-friction, immediate-ROI products",
-              ],
-            },
-            {
-              title: "Geographic Scaling",
-              items: [
-                "European market: UK baseline × 11 (population multiple)",
-                "Global market: UK baseline × 118 (population multiple)",
-                "Same 65% SAM motivation and 12% SOM penetration applied consistently",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
       {
@@ -1844,6 +1809,74 @@ const InvestmentOpportunity = () => {
           return; // Skip the rest of the page rendering for Competitor Analysis
         }
 
+        // Handle UK Market Assumptions visual page
+        const isUkMarketAssumptions = page.customVisualComponent === "ukMarketAssumptions";
+        if (isUkMarketAssumptions) {
+          doc.setTextColor(75, 85, 99);
+          doc.setFontSize(10);
+          doc.setFont("helvetica", "normal");
+
+          const ukMarketAssumptionsContent = [
+            "UK Market Assumptions — Evidence-based framework for market sizing:",
+            "",
+            "1. Size of the UK Real Estate Business Market:",
+            "• Total UK businesses: 5.6 million",
+            "• Real estate activities account for 4.2% → 235,200 real estate businesses",
+            "• Source: ONS – Real estate activities by employment size",
+            "",
+            "2. Distribution by Business Size (Real Estate Segment):",
+            "• Small (1–9 employees): 96% = 225,792 businesses",
+            "• Medium (10–49): 2.7% = 6,350 businesses",
+            "• Large (50–249): 0.6% = 1,411 businesses",
+            "• Enterprise (250+): 0.1% = 235 businesses",
+            "",
+            "3. Labour Cost Baseline:",
+            "• Average junior salary in UK real estate: £30,000",
+            "• Source: Macdonald & Company Salary Report 2023/24",
+            "",
+            "4. AI Efficiency Gain Assumption — 20%:",
+            "• AI expected to deliver 10–20% efficiency gains in real estate operations (Forbes Tech Council, 2024)",
+            "• Up to 37% of tasks are automatable inside real estate companies (Morgan Stanley, 2025)",
+            "• AI is already improving: document processing, compliance workflows, asset lifecycle management",
+            "",
+            "This 20% gain reflects:",
+            "• Faster document retrieval",
+            "• Reduced administrative time",
+            "• Fewer errors & compliance risks",
+            "• Increased decision-making speed",
+            "• Ability to scale without hiring proportionately",
+            "",
+            "5. Why These Assumptions Are Conservative but Credible:",
+            "• Industry research shows higher upper-bounds (20%–37%), so 20% is prudent",
+            "• Real estate is document-heavy and highly impacted by retrieval automation",
+            "• Efficiency gains apply to all segments (small → enterprise), making TAM scalable",
+            "",
+            "Summary:",
+            "1. A clear, evidence-based definition of the accessible market",
+            "2. A salary and labour baseline relevant to modelling time savings",
+            "3. A defensible 20% efficiency gain assumption that supports revenue modelling",
+          ];
+
+          ukMarketAssumptionsContent.forEach((line) => {
+            if (yPosition > pageHeight - 40) {
+              doc.addPage();
+              yPosition = margin;
+            }
+            if (line === "") {
+              yPosition += 5;
+            } else if (line.endsWith(":")) {
+              doc.setFont("helvetica", "bold");
+              doc.text(line, margin, yPosition);
+              yPosition += 7;
+              doc.setFont("helvetica", "normal");
+            } else {
+              doc.text(line, margin, yPosition);
+              yPosition += 5.5;
+            }
+          });
+          return;
+        }
+
         // Handle UK Market visual page
         const isUkMarket = page.customVisualComponent === "ukMarket";
         if (isUkMarket) {
@@ -2735,7 +2768,8 @@ const InvestmentOpportunity = () => {
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "competitorAnalysis" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ganttChart" &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "earlyRoadmap" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "targetMarket" && (
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "targetMarket" &&
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ukMarketAssumptions" && (
                         <CompetitiveLandscapeVisual />
                       )}
 
@@ -2767,6 +2801,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Competitor Analysis */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "competitorAnalysis" && (
                       <CompetitorAnalysisMatrix />
+                    )}
+
+                    {/* Custom Visual Component for UK Market Assumptions */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "ukMarketAssumptions" && (
+                      <UKMarketAssumptionsVisual />
                     )}
 
                     {/* Custom Visual Component for Target Market */}
