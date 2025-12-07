@@ -40,6 +40,7 @@ import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
 import OnboardingCostsVisual from "@/components/investor/OnboardingCostsVisual";
 import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMatrix";
 import { TargetMarketVisual } from "@/components/investor/TargetMarketVisual";
+import { SAMVisual } from "@/components/investor/SAMVisual";
 import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumptionsVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -854,6 +855,8 @@ const sections = [
       },
       {
         title: "SAM",
+        showCustomVisual: true,
+        customVisualComponent: "sam",
         content: {
           overview: "",
           sections: [],
@@ -2797,6 +2800,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Target Market */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "targetMarket" && (
                       <TargetMarketVisual />
+                    )}
+
+                    {/* Custom Visual Component for SAM */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "sam" && (
+                      <SAMVisual />
                     )}
 
                     {/* Custom Visual Component for Onboarding Costs */}
