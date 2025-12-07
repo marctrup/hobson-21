@@ -855,17 +855,8 @@ const sections = [
       {
         title: "Segmented Uptake",
         content: {
-          overview: "Market segment distribution based on UK business size data.",
-          sections: [
-            {
-              title: "Operator Segments",
-              items: [
-                "Large Operators (50-249 employees): 1.30%",
-                "Medium Operators (10-49 employees): 2.70%",
-                "Small Operators (1-9 employees): 96%",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
       {
