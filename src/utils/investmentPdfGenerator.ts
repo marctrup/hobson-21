@@ -579,28 +579,49 @@ const renderTabContent = (
   const imageToUse = tab.image || tab.pdfImage;
   if (imageToUse) {
     try {
-      // Determine aspect ratio based on tab title for accuracy
-      // AI Architecture: wide landscape diagram (approx 1920x1080 = 16:9, height/width = 0.5625)
-      // Simple UI devices: portrait combined mockup (approx 800x600, height/width = 0.75)
-      let aspectRatio = 0.5625; // default for landscape images
-      
-      if (tab.title === "Simple UI") {
-        aspectRatio = 0.75; // Portrait devices mockup
-      } else if (tab.title === "AI Architecture") {
-        aspectRatio = 0.5625; // Wide landscape diagram (16:9)
-      }
-      
-      const imgWidth = maxWidth;
-      let imgHeight = imgWidth * aspectRatio;
-      
-      // Check if image fits on current page, otherwise add new page
-      if (yPosition + imgHeight > pageHeight - 40) {
+      // AI Architecture gets its own full page for proper display
+      if (tab.title === "AI Architecture") {
+        // Use maximum available space for the architecture diagram
+        const availableWidth = maxWidth;
+        const availableHeight = pageHeight - yPosition - 30;
+        
+        // Architecture diagram natural aspect ratio (approx 1.7:1 width:height)
+        const naturalAspectRatio = 0.588; // height/width
+        
+        // Calculate dimensions to maximize size while maintaining aspect ratio
+        let imgWidth = availableWidth;
+        let imgHeight = imgWidth * naturalAspectRatio;
+        
+        // If too tall, scale down
+        if (imgHeight > availableHeight) {
+          imgHeight = availableHeight;
+          imgWidth = imgHeight / naturalAspectRatio;
+        }
+        
+        // Center horizontally if scaled down
+        const xOffset = margin + (maxWidth - imgWidth) / 2;
+        
+        doc.addImage(imageToUse, "PNG", xOffset, yPosition, imgWidth, imgHeight);
+        yPosition += imgHeight + 10;
+        
+        // Start text content on new page
         doc.addPage();
         yPosition = margin;
-      }
+      } else {
+        // Simple UI and other images - standard sizing
+        const aspectRatio = tab.title === "Simple UI" ? 0.75 : 0.5625;
+        
+        const imgWidth = maxWidth;
+        let imgHeight = imgWidth * aspectRatio;
+        
+        if (yPosition + imgHeight > pageHeight - 40) {
+          doc.addPage();
+          yPosition = margin;
+        }
 
-      doc.addImage(imageToUse, "PNG", margin, yPosition, imgWidth, imgHeight);
-      yPosition += imgHeight + 10;
+        doc.addImage(imageToUse, "PNG", margin, yPosition, imgWidth, imgHeight);
+        yPosition += imgHeight + 10;
+      }
     } catch (error) {
       console.error("Error adding image to PDF:", error);
     }
