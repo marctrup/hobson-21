@@ -579,11 +579,16 @@ const renderTabContent = (
   const imageToUse = tab.image || tab.pdfImage;
   if (imageToUse) {
     try {
-      // Calculate image dimensions - use natural aspect ratio
-      // AI Architecture image is wider than tall (landscape ~1.7:1)
-      // Simple UI combined devices is more portrait-like (~0.75:1)
-      const isSimpleUI = tab.customVisualComponent === "simpleUI";
-      const aspectRatio = isSimpleUI ? 1.33 : 0.59; // height/width ratio
+      // Determine aspect ratio based on tab title for accuracy
+      // AI Architecture: wide landscape diagram (approx 1920x1080 = 16:9, height/width = 0.5625)
+      // Simple UI devices: portrait combined mockup (approx 800x600, height/width = 0.75)
+      let aspectRatio = 0.5625; // default for landscape images
+      
+      if (tab.title === "Simple UI") {
+        aspectRatio = 0.75; // Portrait devices mockup
+      } else if (tab.title === "AI Architecture") {
+        aspectRatio = 0.5625; // Wide landscape diagram (16:9)
+      }
       
       const imgWidth = maxWidth;
       let imgHeight = imgWidth * aspectRatio;
