@@ -843,6 +843,38 @@ const sections = [
         },
       },
       {
+        title: "Segmented Uptake",
+        content: {
+          overview: "Customer acquisition projections by operator segment over the forecast period.",
+          sections: [
+            {
+              title: "Large Operators (50–250 employees)",
+              items: [
+                "Year 1: 5 customers | Year 2: 15 customers | Year 3: 35 customers",
+                "Higher contract values with enterprise pricing tier",
+                "Longer sales cycles but stronger retention",
+              ],
+            },
+            {
+              title: "Medium Operators (10–49 employees)",
+              items: [
+                "Year 1: 25 customers | Year 2: 80 customers | Year 3: 200 customers",
+                "Core growth segment with Essential Plus tier",
+                "Balanced acquisition cost and lifetime value",
+              ],
+            },
+            {
+              title: "Small Operators (1–9 employees)",
+              items: [
+                "Year 1: 60 customers | Year 2: 200 customers | Year 3: 500 customers",
+                "High volume, self-serve acquisition model",
+                "Lower touch with strong word-of-mouth growth",
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: "Onboarding Costs",
         customVisualComponent: "onboardingCosts",
         content: {
