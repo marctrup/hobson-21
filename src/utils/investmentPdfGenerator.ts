@@ -585,9 +585,8 @@ const renderTabContent = (
         // Use most of the remaining page for the image
         const availableHeight = pageHeight - yPosition - 20;
         
-        // Architecture diagram - use taller aspect ratio (height/width = 0.95)
-        // More portrait orientation as per actual image
-        const naturalAspectRatio = 0.95;
+        // Architecture diagram - tall portrait aspect ratio (height/width = 1.3)
+        const naturalAspectRatio = 1.3;
         
         // Calculate to fit available space while maintaining ratio
         let imgWidth = maxWidth;
