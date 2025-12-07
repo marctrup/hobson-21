@@ -376,6 +376,7 @@ const sections = [
       {
         title: "Market Landscape",
         showCustomVisual: true,
+        customVisualComponent: "landscape",
         content: {
           overview:
             "The next winners in real estate tech will be AI-native. Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.",
@@ -2298,19 +2299,9 @@ const InvestmentOpportunity = () => {
               <div className="flex-1 overflow-y-auto mt-4 sm:mt-6 space-y-6 sm:space-y-8 -mx-4 sm:-mx-6 px-4 sm:px-6">
                 {selectedSection.pages[currentPageIndex] && (
                   <>
-                    {/* Custom Visual Component for Market Landscape */}
+                    {/* Custom Visual Component for Market Landscape - only show for explicit landscape component */}
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "matrix" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "europeanGlobal" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "heuPricing" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "simpleUI" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ukMarket" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "competitorAnalysis" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ganttChart" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "earlyRoadmap" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "targetMarket" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "ukMarketAssumptions" &&
-                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent !== "sam" && (
+                      (selectedSection.pages[currentPageIndex] as any).customVisualComponent === "landscape" && (
                         <CompetitiveLandscapeVisual />
                       )}
 

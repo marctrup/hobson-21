@@ -293,6 +293,33 @@ export const renderPdfContentLines = (
   return yPosition;
 };
 
+export const getLandscapePdfContent = (): string[] => [
+  "Market Landscape — The Next Winners in Real Estate Tech Will Be AI-Native:",
+  "",
+  "Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.",
+  "",
+  "Traditional Cloud Solutions — The Overcrowded 'Before':",
+  "• Overcrowded market with 100+ competitors",
+  "• High cost, slow innovation cycles",
+  "• Still reliant on manual information retrieval",
+  "• Complex interfaces requiring extensive training",
+  "• Heavy infrastructure with long implementation times",
+  "",
+  "Next-Generation AI Solutions — The Emerging 'After':",
+  "• Hobson (Category Leader) - AI-native assistant for real estate documents",
+  "• EliseAI - Conversational AI for real estate management",
+  "• Trudi - AI compliance assistant",
+  "• StanAI - Property management automation",
+  "• Kendal AI - Lease abstraction and analysis",
+  "",
+  "Key Differentiators of AI-Native Solutions:",
+  "• Instant, referenced answers from source documents",
+  "• Simple, lightweight, and low cost",
+  "• Designed for accuracy and automation",
+  "• Zero training required",
+  "• Works alongside existing systems",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   ukMarketAssumptions: getUKMarketAssumptionsPdfContent,
@@ -304,6 +331,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   ganttChart: getGanttChartPdfContent,
   onboardingCosts: getOnboardingCostsPdfContent,
   heuPricing: getHEUPricingPdfContent,
+  landscape: getLandscapePdfContent,
 };
 
 // Get PDF content for any visual component type
