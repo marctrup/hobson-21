@@ -834,6 +834,51 @@ const sections = [
     iconColor: "text-red-600",
     pages: [
       {
+        title: "Assumptions",
+        content: {
+          overview: "Key assumptions underlying market sizing and financial projections.",
+          sections: [
+            {
+              title: "Business Population",
+              items: [
+                "235,200 real estate businesses in the UK",
+                "Based on 5.6M UK businesses × 4.2% real estate proportion (ONS data)",
+              ],
+            },
+            {
+              title: "Efficiency Savings Calculation",
+              items: [
+                "£30,000 average junior admin/document-heavy role salary",
+                "20% time efficiency gain from AI-assisted document processing",
+                "£6,000 annual savings per business (£30,000 × 20%)",
+              ],
+            },
+            {
+              title: "Market Motivation (SAM)",
+              items: [
+                "65% of businesses motivated to adopt efficiency-improving technology",
+                "Conservative estimate based on digital transformation trends in property sector",
+              ],
+            },
+            {
+              title: "Market Penetration (SOM)",
+              items: [
+                "12% addressable market penetration target",
+                "Reflects early-stage SaaS benchmarks for low-friction, immediate-ROI products",
+              ],
+            },
+            {
+              title: "Geographic Scaling",
+              items: [
+                "European market: UK baseline × 11 (population multiple)",
+                "Global market: UK baseline × 118 (population multiple)",
+                "Same 65% SAM motivation and 12% SOM penetration applied consistently",
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: "Target Market",
         showCustomVisual: true,
         customVisualComponent: "targetMarket",
