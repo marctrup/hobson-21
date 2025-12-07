@@ -1829,6 +1829,7 @@ const InvestmentOpportunity = () => {
             "• Medium (10–49): 2.7% = 6,350 businesses",
             "• Large (50–249): 0.6% = 1,411 businesses",
             "• Enterprise (250+): 0.1% = 235 businesses",
+            "• Source: BEIS / ONS",
             "",
             "3. Labour Cost Baseline:",
             "• Average junior real estate salary: £30,000",

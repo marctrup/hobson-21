@@ -78,6 +78,9 @@ export const UKMarketAssumptionsVisual = () => {
             </tbody>
           </table>
         </div>
+        <p className="text-xs text-primary/70 mt-3">
+          Source: Department for Business, Energy & Industrial Strategy (BEIS) / Office for National Statistics (ONS)
+        </p>
       </div>
 
       {/* Section 3: Labour Cost */}
