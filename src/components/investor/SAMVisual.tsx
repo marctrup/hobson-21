@@ -66,15 +66,7 @@ export const SAMVisual = () => {
       <div className="mt-8 p-4 rounded-xl bg-muted/50 border">
         <p className="text-center text-sm text-muted-foreground">
           <span className="font-semibold text-foreground">65% Adoption Rate Source:</span>{" "}
-          <a 
-            href="https://www.gov.uk/government/collections/business-population-estimates" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="text-primary hover:underline"
-          >
-            Department for Business, Energy & Industrial Strategy (BEIS) / ONS
-          </a>
-          {" "}— consistent with PropTech and operational AI adoption rates in traditional sectors (Deloitte, PwC, McKinsey).
+          Consistent with PropTech and operational AI adoption rates in traditional sectors (Deloitte, PwC, McKinsey).
         </p>
       </div>
     </div>
