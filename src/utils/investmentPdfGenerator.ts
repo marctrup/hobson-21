@@ -579,9 +579,13 @@ const renderTabContent = (
   const imageToUse = tab.image || tab.pdfImage;
   if (imageToUse) {
     try {
-      // Calculate image dimensions to fit within page width
+      // Calculate image dimensions - use natural aspect ratio
+      // AI Architecture image is wider than tall (landscape ~1.7:1)
+      // Simple UI combined devices is more portrait-like (~0.75:1)
+      const isSimpleUI = tab.customVisualComponent === "simpleUI";
+      const aspectRatio = isSimpleUI ? 1.33 : 0.59; // height/width ratio
+      
       const imgWidth = maxWidth;
-      const aspectRatio = tab.customVisualComponent === "simpleUI" ? 0.75 : 0.5;
       let imgHeight = imgWidth * aspectRatio;
       
       // Check if image fits on current page, otherwise add new page
