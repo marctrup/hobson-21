@@ -853,6 +853,13 @@ const sections = [
         },
       },
       {
+        title: "SAM",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Segmented Uptake",
         content: {
           overview: "",
