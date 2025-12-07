@@ -857,6 +857,7 @@ const sections = [
       },
       {
         title: "Onboarding Costs",
+        showCustomVisual: true,
         customVisualComponent: "onboardingCosts",
         content: {
           overview: "",
