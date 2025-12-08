@@ -21,7 +21,7 @@ const CACAssumptionsVisual = () => {
             <h3 className="text-xl font-bold text-foreground mb-3">Core Inputs</h3>
             
             <h4 className="font-semibold text-foreground mt-4 mb-3">Revenue (ARR)</h4>
-            <div className="grid grid-cols-5 gap-2 mb-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-6">
               {[
                 { year: "2027", value: "£1.17M" },
                 { year: "2028", value: "£6.71M" },
@@ -29,9 +29,9 @@ const CACAssumptionsVisual = () => {
                 { year: "2030", value: "£12.53M" },
                 { year: "2031", value: "£14.92M" },
               ].map((item) => (
-                <div key={item.year} className="text-center p-3 bg-purple-100/50 rounded-lg">
-                  <div className="text-sm text-muted-foreground">{item.year}</div>
-                  <div className="font-bold text-primary">{item.value}</div>
+                <div key={item.year} className="text-center p-2 sm:p-3 bg-purple-100/50 rounded-lg">
+                  <div className="text-xs sm:text-sm text-muted-foreground">{item.year}</div>
+                  <div className="text-sm sm:text-base font-bold text-primary">{item.value}</div>
                 </div>
               ))}
             </div>
@@ -107,7 +107,7 @@ const CACAssumptionsVisual = () => {
 
             {/* Total New Customers per Year */}
             <h5 className="text-sm font-semibold text-muted-foreground mb-2 mt-4">Total number of new customers gained in that year</h5>
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
               {[
                 { year: "2027", value: "2,352" },
                 { year: "2028", value: "11,172" },
@@ -115,9 +115,9 @@ const CACAssumptionsVisual = () => {
                 { year: "2030", value: "6,938" },
                 { year: "2031", value: "4,822" },
               ].map((item) => (
-                <div key={item.year} className="text-center p-3 bg-purple-100/50 rounded-lg">
-                  <div className="text-sm text-muted-foreground">{item.year}</div>
-                  <div className="font-bold text-foreground">{item.value}</div>
+                <div key={item.year} className="text-center p-2 sm:p-3 bg-purple-100/50 rounded-lg">
+                  <div className="text-xs sm:text-sm text-muted-foreground">{item.year}</div>
+                  <div className="text-sm sm:text-base font-bold text-foreground">{item.value}</div>
                 </div>
               ))}
             </div>
@@ -159,46 +159,50 @@ const CACAssumptionsVisual = () => {
       </Card>
 
       {/* Section 3: CAC Calculation */}
-      <Card className="p-6 bg-gradient-to-br from-green-50 to-white border-green-200">
-        <div className="flex items-start gap-4">
-          <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-            <span className="text-2xl">🧮</span>
+      <Card className="p-4 sm:p-6 bg-gradient-to-br from-green-50 to-white border-green-200">
+        <div className="flex flex-col sm:flex-row items-start gap-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+            <span className="text-xl sm:text-2xl">🧮</span>
           </div>
-          <div className="flex-1">
-            <h3 className="text-xl font-bold text-foreground mb-3">CAC Table (2027–2031)</h3>
+          <div className="flex-1 w-full">
+            <h3 className="text-lg sm:text-xl font-bold text-foreground mb-3">CAC Table (2027–2031)</h3>
             <div className="p-3 bg-green-100/50 rounded-lg mb-4">
-              <p className="text-sm font-medium text-green-800">
+              <p className="text-xs sm:text-sm font-medium text-green-800">
                 <strong>Formula:</strong> CAC = (Revenue × 12%) ÷ New Customers
               </p>
             </div>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Year</TableHead>
-                  <TableHead className="text-right">Revenue</TableHead>
-                  <TableHead className="text-right">Acquisition Spend (12%)</TableHead>
-                  <TableHead className="text-right">New Customers</TableHead>
-                  <TableHead className="text-right">CAC / Customer</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {[
-                  { year: "2027", revenue: "£1.17M", spend: "£140,400", customers: "2,352", cac: "£60" },
-                  { year: "2028", revenue: "£6.71M", spend: "£805,200", customers: "11,172", cac: "£72" },
-                  { year: "2029", revenue: "£9.10M", spend: "£1.092M", customers: "4,822", cac: "£226" },
-                  { year: "2030", revenue: "£12.53M", spend: "£1.503M", customers: "6,938", cac: "£217" },
-                  { year: "2031", revenue: "£14.92M", spend: "£1.790M", customers: "4,822", cac: "£371" },
-                ].map((row) => (
-                  <TableRow key={row.year}>
-                    <TableCell className="font-medium">{row.year}</TableCell>
-                    <TableCell className="text-right">{row.revenue}</TableCell>
-                    <TableCell className="text-right">{row.spend}</TableCell>
-                    <TableCell className="text-right">{row.customers}</TableCell>
-                    <TableCell className="text-right font-bold text-green-600">{row.cac}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+            <div className="overflow-x-auto -mx-4 sm:mx-0">
+              <div className="min-w-[500px] px-4 sm:px-0">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead className="text-xs sm:text-sm">Year</TableHead>
+                      <TableHead className="text-right text-xs sm:text-sm">Revenue</TableHead>
+                      <TableHead className="text-right text-xs sm:text-sm">Acq. Spend</TableHead>
+                      <TableHead className="text-right text-xs sm:text-sm">New Cust.</TableHead>
+                      <TableHead className="text-right text-xs sm:text-sm">CAC</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {[
+                      { year: "2027", revenue: "£1.17M", spend: "£140k", customers: "2,352", cac: "£60" },
+                      { year: "2028", revenue: "£6.71M", spend: "£805k", customers: "11,172", cac: "£72" },
+                      { year: "2029", revenue: "£9.10M", spend: "£1.09M", customers: "4,822", cac: "£226" },
+                      { year: "2030", revenue: "£12.53M", spend: "£1.50M", customers: "6,938", cac: "£217" },
+                      { year: "2031", revenue: "£14.92M", spend: "£1.79M", customers: "4,822", cac: "£371" },
+                    ].map((row) => (
+                      <TableRow key={row.year}>
+                        <TableCell className="font-medium text-xs sm:text-sm">{row.year}</TableCell>
+                        <TableCell className="text-right text-xs sm:text-sm">{row.revenue}</TableCell>
+                        <TableCell className="text-right text-xs sm:text-sm">{row.spend}</TableCell>
+                        <TableCell className="text-right text-xs sm:text-sm">{row.customers}</TableCell>
+                        <TableCell className="text-right font-bold text-green-600 text-xs sm:text-sm">{row.cac}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            </div>
           </div>
         </div>
       </Card>

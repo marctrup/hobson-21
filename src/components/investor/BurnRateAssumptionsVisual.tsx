@@ -27,22 +27,22 @@ const BurnRateAssumptionsVisual = () => {
           <p className="text-sm text-muted-foreground mt-1">Covers 18–24 months and early commercialisation</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-4">
-          <div className="bg-background/60 rounded-lg p-3 text-center">
-            <p className="text-lg font-bold text-foreground">£500k–£700k</p>
-            <p className="text-xs text-muted-foreground">Pre-2027 engineering build</p>
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 mt-4">
+          <div className="bg-background/60 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-sm sm:text-lg font-bold text-foreground">£500k–£700k</p>
+            <p className="text-[10px] sm:text-xs text-muted-foreground">Pre-2027 engineering</p>
           </div>
-          <div className="bg-background/60 rounded-lg p-3 text-center">
-            <p className="text-lg font-bold text-foreground">£750k</p>
-            <p className="text-xs text-muted-foreground">Team hiring & runway</p>
+          <div className="bg-background/60 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-sm sm:text-lg font-bold text-foreground">£750k</p>
+            <p className="text-[10px] sm:text-xs text-muted-foreground">Team hiring & runway</p>
           </div>
-          <div className="bg-background/60 rounded-lg p-3 text-center">
-            <p className="text-lg font-bold text-foreground">£150k</p>
-            <p className="text-xs text-muted-foreground">Initial marketing ramp</p>
+          <div className="bg-background/60 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-sm sm:text-lg font-bold text-foreground">£150k</p>
+            <p className="text-[10px] sm:text-xs text-muted-foreground">Initial marketing</p>
           </div>
-          <div className="bg-background/60 rounded-lg p-3 text-center">
-            <p className="text-lg font-bold text-foreground">£300k</p>
-            <p className="text-xs text-muted-foreground">Buffer</p>
+          <div className="bg-background/60 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-sm sm:text-lg font-bold text-foreground">£300k</p>
+            <p className="text-[10px] sm:text-xs text-muted-foreground">Buffer</p>
           </div>
         </div>
 
@@ -136,22 +136,22 @@ const BurnRateAssumptionsVisual = () => {
           2. COGS (Infrastructure) Assumptions
         </h4>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-3 text-center">
-            <p className="text-lg font-bold text-orange-700 dark:text-orange-300">6%</p>
-            <p className="text-xs text-orange-600 dark:text-orange-400">AI inference</p>
+        <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-3">
+          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-base sm:text-lg font-bold text-orange-700 dark:text-orange-300">6%</p>
+            <p className="text-[10px] sm:text-xs text-orange-600 dark:text-orange-400">AI inference</p>
           </div>
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-3 text-center">
-            <p className="text-lg font-bold text-orange-700 dark:text-orange-300">1.5%</p>
-            <p className="text-xs text-orange-600 dark:text-orange-400">Vector DB</p>
+          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-base sm:text-lg font-bold text-orange-700 dark:text-orange-300">1.5%</p>
+            <p className="text-[10px] sm:text-xs text-orange-600 dark:text-orange-400">Vector DB</p>
           </div>
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-3 text-center">
-            <p className="text-lg font-bold text-orange-700 dark:text-orange-300">2%</p>
-            <p className="text-xs text-orange-600 dark:text-orange-400">Cloud compute</p>
+          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-base sm:text-lg font-bold text-orange-700 dark:text-orange-300">2%</p>
+            <p className="text-[10px] sm:text-xs text-orange-600 dark:text-orange-400">Cloud compute</p>
           </div>
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-3 text-center">
-            <p className="text-lg font-bold text-orange-700 dark:text-orange-300">0.5%</p>
-            <p className="text-xs text-orange-600 dark:text-orange-400">Storage & bandwidth</p>
+          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-base sm:text-lg font-bold text-orange-700 dark:text-orange-300">0.5%</p>
+            <p className="text-[10px] sm:text-xs text-orange-600 dark:text-orange-400">Storage</p>
           </div>
         </div>
         <div className="bg-orange-100 dark:bg-orange-950/50 rounded-lg p-3">
@@ -241,69 +241,69 @@ const BurnRateAssumptionsVisual = () => {
 
         <div className="space-y-4">
           {/* 2027 */}
-          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <div className="flex justify-between items-start mb-2">
+          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
               <h5 className="font-bold text-green-800 dark:text-green-200">2027</h5>
-              <span className="bg-green-600 text-white text-xs px-2 py-1 rounded-full">Profitable in Year 1</span>
+              <span className="bg-green-600 text-white text-[10px] sm:text-xs px-2 py-1 rounded-full self-start">Profitable Year 1</span>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground">£1.17M → £97,500/mo</span></div>
-              <div><span className="text-muted-foreground">Variable (22%):</span> <span className="font-medium text-foreground">£21,450</span></div>
-              <div><span className="text-muted-foreground">Total costs:</span> <span className="font-medium text-foreground">£92,250</span></div>
-              <div><span className="text-muted-foreground">Monthly surplus:</span> <span className="font-bold text-green-600 dark:text-green-400">£5,250</span></div>
+            <div className="grid grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm">
+              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground block sm:inline">£1.17M</span></div>
+              <div><span className="text-muted-foreground">Variable:</span> <span className="font-medium text-foreground block sm:inline">£21,450</span></div>
+              <div><span className="text-muted-foreground">Costs:</span> <span className="font-medium text-foreground block sm:inline">£92,250</span></div>
+              <div><span className="text-muted-foreground">Surplus:</span> <span className="font-bold text-green-600 dark:text-green-400 block sm:inline">£5,250</span></div>
             </div>
           </div>
 
           {/* 2028 */}
-          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4">
-            <div className="flex justify-between items-start mb-2">
+          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2 mb-2">
               <h5 className="font-bold text-green-800 dark:text-green-200">2028</h5>
-              <span className="bg-green-600 text-white text-xs px-2 py-1 rounded-full">Large profitability due to scale</span>
+              <span className="bg-green-600 text-white text-[10px] sm:text-xs px-2 py-1 rounded-full self-start">High profitability</span>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground">£6.71M → £559,000/mo</span></div>
-              <div><span className="text-muted-foreground">Variable (22%):</span> <span className="font-medium text-foreground">£123,000</span></div>
-              <div><span className="text-muted-foreground">Total costs:</span> <span className="font-medium text-foreground">£193,800</span></div>
-              <div><span className="text-muted-foreground">Monthly surplus:</span> <span className="font-bold text-green-600 dark:text-green-400">£365,200</span></div>
+            <div className="grid grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm">
+              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground block sm:inline">£6.71M</span></div>
+              <div><span className="text-muted-foreground">Variable:</span> <span className="font-medium text-foreground block sm:inline">£123,000</span></div>
+              <div><span className="text-muted-foreground">Costs:</span> <span className="font-medium text-foreground block sm:inline">£193,800</span></div>
+              <div><span className="text-muted-foreground">Surplus:</span> <span className="font-bold text-green-600 dark:text-green-400 block sm:inline">£365,200</span></div>
             </div>
           </div>
 
           {/* 2029 */}
-          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4">
+          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
             <div className="flex justify-between items-start mb-2">
               <h5 className="font-bold text-green-800 dark:text-green-200">2029</h5>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground">£9.10M → £758,333/mo</span></div>
-              <div><span className="text-muted-foreground">Variable (22%):</span> <span className="font-medium text-foreground">£166,833</span></div>
-              <div><span className="text-muted-foreground">Total costs:</span> <span className="font-medium text-foreground">£237,633</span></div>
-              <div><span className="text-muted-foreground">Monthly surplus:</span> <span className="font-bold text-green-600 dark:text-green-400">£520,700</span></div>
+            <div className="grid grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm">
+              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground block sm:inline">£9.10M</span></div>
+              <div><span className="text-muted-foreground">Variable:</span> <span className="font-medium text-foreground block sm:inline">£166,833</span></div>
+              <div><span className="text-muted-foreground">Costs:</span> <span className="font-medium text-foreground block sm:inline">£237,633</span></div>
+              <div><span className="text-muted-foreground">Surplus:</span> <span className="font-bold text-green-600 dark:text-green-400 block sm:inline">£520,700</span></div>
             </div>
           </div>
 
           {/* 2030 */}
-          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4">
+          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
             <div className="flex justify-between items-start mb-2">
               <h5 className="font-bold text-green-800 dark:text-green-200">2030</h5>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground">£12.53M → £1.044M/mo</span></div>
-              <div><span className="text-muted-foreground">Variable (22%):</span> <span className="font-medium text-foreground">£229,680</span></div>
-              <div><span className="text-muted-foreground">Total costs:</span> <span className="font-medium text-foreground">£300,480</span></div>
-              <div><span className="text-muted-foreground">Monthly surplus:</span> <span className="font-bold text-green-600 dark:text-green-400">£743,520</span></div>
+            <div className="grid grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm">
+              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground block sm:inline">£12.53M</span></div>
+              <div><span className="text-muted-foreground">Variable:</span> <span className="font-medium text-foreground block sm:inline">£229,680</span></div>
+              <div><span className="text-muted-foreground">Costs:</span> <span className="font-medium text-foreground block sm:inline">£300,480</span></div>
+              <div><span className="text-muted-foreground">Surplus:</span> <span className="font-bold text-green-600 dark:text-green-400 block sm:inline">£743,520</span></div>
             </div>
           </div>
 
           {/* 2031 */}
-          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-4">
+          <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
             <div className="flex justify-between items-start mb-2">
               <h5 className="font-bold text-green-800 dark:text-green-200">2031</h5>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
-              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground">£14.92M → £1.243M/mo</span></div>
-              <div><span className="text-muted-foreground">Variable (22%):</span> <span className="font-medium text-foreground">£273,460</span></div>
-              <div><span className="text-muted-foreground">Total costs:</span> <span className="font-medium text-foreground">£344,260</span></div>
-              <div><span className="text-muted-foreground">Monthly surplus:</span> <span className="font-bold text-green-600 dark:text-green-400">£898,740</span></div>
+            <div className="grid grid-cols-2 gap-1 sm:gap-2 text-xs sm:text-sm">
+              <div><span className="text-muted-foreground">Revenue:</span> <span className="font-medium text-foreground block sm:inline">£14.92M</span></div>
+              <div><span className="text-muted-foreground">Variable:</span> <span className="font-medium text-foreground block sm:inline">£273,460</span></div>
+              <div><span className="text-muted-foreground">Costs:</span> <span className="font-medium text-foreground block sm:inline">£344,260</span></div>
+              <div><span className="text-muted-foreground">Surplus:</span> <span className="font-bold text-green-600 dark:text-green-400 block sm:inline">£898,740</span></div>
             </div>
           </div>
         </div>
