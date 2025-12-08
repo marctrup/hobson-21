@@ -53,6 +53,7 @@ import PLAssumptionsVisual from "@/components/investor/PLAssumptionsVisual";
 import PLGrowthVisual from "@/components/investor/PLGrowthVisual";
 import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
 import BurnRateAssumptionsVisual from "@/components/investor/BurnRateAssumptionsVisual";
+import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -794,6 +795,15 @@ const sections = [
     iconColor: "text-red-600",
     pages: [
       {
+        title: "Capital Raise Strategy",
+        showCustomVisual: true,
+        customVisualComponent: "capitalRaiseStrategy",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Revenue Growth",
         showCustomVisual: true,
         customVisualComponent: "revenueGrowth",
@@ -1508,6 +1518,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Revenue Growth */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "revenueGrowth" && (
                       <RevenueGrowthVisual />
+                    )}
+
+                    {/* Custom Visual Component for Capital Raise Strategy */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "capitalRaiseStrategy" && (
+                      <CapitalRaiseStrategyVisual />
                     )}
 
                     {/* Custom Visual Component for Gantt Chart */}

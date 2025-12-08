@@ -670,6 +670,36 @@ const getCustomVisualContent = (componentType: string): string[] => {
         "-> Supports a path to very high margins, attractive capital efficiency, and global scalability.",
       ];
 
+    case "capitalRaiseStrategy":
+      return [
+        "Capital Raise Strategy:",
+        "",
+        "Seed Round Target: GBP 1.5M - GBP 2M",
+        "18-24 months runway covering pre-launch build and early commercialisation",
+        "",
+        "Use of Funds:",
+        "- Pre-2027 Engineering Build: GBP 500k - GBP 700k",
+        "- Team Hiring & Runway: GBP 750k",
+        "- Initial Marketing Ramp: GBP 150k",
+        "- Operational Buffer: GBP 300k",
+        "",
+        "Investment Timeline:",
+        "- Pre-Revenue Phase: 2025-2026 (Development, pilot testing, market preparation)",
+        "- Commercial Launch: Q1 2027 (Public launch with full pricing and onboarding flows)",
+        "",
+        "Path to Profitability:",
+        "- Profitability from Year 1 (2027) - GBP 5,250/month surplus in first commercial year",
+        "- Capital required only for pre-revenue development phase, not ongoing operations",
+        "- Scaling to GBP 898,740/month surplus by 2031",
+        "- Ultra-lean model with outsourced execution strategy",
+        "",
+        "Summary:",
+        "Hobson requires GBP 1.5M-GBP 2M seed funding to complete pre-launch development",
+        "and reach commercial launch in Q1 2027. The capital-efficient model reflects",
+        "lightweight team structure and outsourced execution, with profitability achieved",
+        "immediately upon market entry - requiring no additional funding rounds for ongoing operations.",
+      ];
+
     case "revenueGrowth":
       return [
         "Revenue Growth (2027-2031):",
