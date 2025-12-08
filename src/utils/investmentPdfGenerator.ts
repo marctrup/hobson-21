@@ -595,8 +595,6 @@ const getCustomVisualContent = (componentType: string): string[] => {
         "Market Size Basis:",
         "- UK real estate businesses: 235,200",
         "- Global comparable markets: 4.23M (18x UK, OECD-adjusted)",
-        "- ROI driver: 20% efficiency gain = GBP 6,000 saving per role",
-        "- This underpins TAM (GBP 1.41B) and SAM (GBP 917M)",
         "",
         "2. Cost of Goods Sold (COGS) Assumptions:",
         "",

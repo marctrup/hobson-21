@@ -54,12 +54,6 @@ const PLAssumptionsVisual = () => {
               <li className="flex items-center gap-2">
                 <span className="text-primary">•</span> Global comparable markets: <strong>4.23M</strong> (18× UK, OECD-adjusted)
               </li>
-              <li className="flex items-center gap-2">
-                <span className="text-primary">•</span> ROI driver: 20% efficiency gain = <strong>£6,000 saving per role</strong>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="text-primary">•</span> This underpins TAM (£1.41B) and SAM (£917M)
-              </li>
             </ul>
           </div>
         </div>
