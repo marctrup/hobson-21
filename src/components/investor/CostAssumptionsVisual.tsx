@@ -299,7 +299,7 @@ const CostAssumptionsVisual = () => {
           </div>
           <div>
             <h3 className="text-xl font-bold text-foreground mb-4">Why This Cost Model Is Defensible</h3>
-            <p className="text-muted-foreground mb-4">Your architecture makes variable cost extremely low:</p>
+            <p className="text-muted-foreground mb-4">Our architecture makes variable cost extremely low:</p>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <span className="text-green-600 font-bold">✔</span>
