@@ -137,25 +137,25 @@ const BurnRateAssumptionsVisual = () => {
         </h4>
         
         <div className="grid grid-cols-2 gap-2 sm:gap-3 mb-3">
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-2 sm:p-3 text-center">
-            <p className="text-base sm:text-lg font-bold text-orange-700 dark:text-orange-300">6%</p>
-            <p className="text-[10px] sm:text-xs text-orange-600 dark:text-orange-400">AI inference</p>
+          <div className="bg-amber-50 dark:bg-amber-900/40 border border-amber-300 dark:border-amber-700 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-base sm:text-lg font-bold text-amber-800 dark:text-amber-200">6%</p>
+            <p className="text-[10px] sm:text-xs text-amber-700 dark:text-amber-300">AI inference</p>
           </div>
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-2 sm:p-3 text-center">
-            <p className="text-base sm:text-lg font-bold text-orange-700 dark:text-orange-300">1.5%</p>
-            <p className="text-[10px] sm:text-xs text-orange-600 dark:text-orange-400">Vector DB</p>
+          <div className="bg-amber-50 dark:bg-amber-900/40 border border-amber-300 dark:border-amber-700 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-base sm:text-lg font-bold text-amber-800 dark:text-amber-200">1.5%</p>
+            <p className="text-[10px] sm:text-xs text-amber-700 dark:text-amber-300">Vector DB</p>
           </div>
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-2 sm:p-3 text-center">
-            <p className="text-base sm:text-lg font-bold text-orange-700 dark:text-orange-300">2%</p>
-            <p className="text-[10px] sm:text-xs text-orange-600 dark:text-orange-400">Cloud compute</p>
+          <div className="bg-amber-50 dark:bg-amber-900/40 border border-amber-300 dark:border-amber-700 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-base sm:text-lg font-bold text-amber-800 dark:text-amber-200">2%</p>
+            <p className="text-[10px] sm:text-xs text-amber-700 dark:text-amber-300">Cloud compute</p>
           </div>
-          <div className="bg-orange-50 dark:bg-orange-950/30 border border-orange-200 dark:border-orange-800 rounded-lg p-2 sm:p-3 text-center">
-            <p className="text-base sm:text-lg font-bold text-orange-700 dark:text-orange-300">0.5%</p>
-            <p className="text-[10px] sm:text-xs text-orange-600 dark:text-orange-400">Storage</p>
+          <div className="bg-amber-50 dark:bg-amber-900/40 border border-amber-300 dark:border-amber-700 rounded-lg p-2 sm:p-3 text-center">
+            <p className="text-base sm:text-lg font-bold text-amber-800 dark:text-amber-200">0.5%</p>
+            <p className="text-[10px] sm:text-xs text-amber-700 dark:text-amber-300">Storage</p>
           </div>
         </div>
-        <div className="bg-orange-100 dark:bg-orange-950/50 rounded-lg p-3">
-          <p className="text-sm font-semibold text-orange-800 dark:text-orange-200 text-center">Total COGS = 10% of revenue</p>
+        <div className="bg-amber-100 dark:bg-amber-900/50 rounded-lg p-3">
+          <p className="text-sm font-semibold text-amber-800 dark:text-amber-200 text-center">Total COGS = 10% of revenue</p>
         </div>
       </div>
 
@@ -188,17 +188,17 @@ const BurnRateAssumptionsVisual = () => {
           4. Total Variable Cost Load
         </h4>
         
-        <div className="flex items-center justify-center gap-4 flex-wrap">
-          <div className="bg-orange-100 dark:bg-orange-950/30 rounded-lg px-4 py-2">
-            <span className="font-semibold text-orange-700 dark:text-orange-300">COGS 10%</span>
+        <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
+          <div className="bg-amber-100 dark:bg-amber-900/40 rounded-lg px-3 sm:px-4 py-2">
+            <span className="font-semibold text-amber-800 dark:text-amber-200 text-sm sm:text-base">COGS 10%</span>
           </div>
-          <span className="text-2xl font-bold text-muted-foreground">+</span>
-          <div className="bg-blue-100 dark:bg-blue-950/30 rounded-lg px-4 py-2">
-            <span className="font-semibold text-blue-700 dark:text-blue-300">CAC 12%</span>
+          <span className="text-xl sm:text-2xl font-bold text-muted-foreground">+</span>
+          <div className="bg-blue-100 dark:bg-blue-900/40 rounded-lg px-3 sm:px-4 py-2">
+            <span className="font-semibold text-blue-800 dark:text-blue-200 text-sm sm:text-base">CAC 12%</span>
           </div>
-          <span className="text-2xl font-bold text-muted-foreground">=</span>
-          <div className="bg-primary/20 rounded-lg px-6 py-2">
-            <span className="text-xl font-bold text-primary">22% of revenue</span>
+          <span className="text-xl sm:text-2xl font-bold text-muted-foreground">=</span>
+          <div className="bg-primary/20 rounded-lg px-4 sm:px-6 py-2">
+            <span className="text-lg sm:text-xl font-bold text-primary">22% of revenue</span>
           </div>
         </div>
       </div>
@@ -211,7 +211,7 @@ const BurnRateAssumptionsVisual = () => {
         </h4>
         
         <div className="bg-background rounded-lg p-4 text-center mb-4">
-          <p className="text-lg font-mono font-semibold text-foreground">
+          <p className="text-sm sm:text-base md:text-lg font-semibold text-foreground">
             Monthly Burn = Fixed Costs + Variable Costs – Monthly Revenue
           </p>
         </div>
