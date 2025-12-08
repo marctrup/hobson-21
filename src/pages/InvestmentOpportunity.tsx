@@ -836,7 +836,7 @@ const sections = [
         },
       },
       {
-        title: "Assumptions",
+        title: "UK Assumptions",
         showCustomVisual: true,
         customVisualComponent: "ukMarketAssumptions",
         content: {
