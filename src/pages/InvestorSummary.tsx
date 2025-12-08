@@ -223,14 +223,14 @@ const InvestorSummary = () => {
                 Why This Market <span className="text-primary">Bends in Our Favour</span>
               </h2>
               <p className="text-base sm:text-lg text-muted-foreground">
-                Real estate is massive, document-heavy, and deeply underserved.
+                Real estate is drowning in document work — and it's costing a fortune.
               </p>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 mb-4 sm:mb-6">
               {[
-                { value: "235,200", label: "UK businesses", icon: Target },
-                { value: "4.2M", label: "Global OECD markets", icon: Globe },
+                { value: "£1.4B", label: "Annual efficiency loss in the UK", icon: Target },
+                { value: "£155.6B", label: "Annual efficiency loss across global OECD markets", icon: Globe },
               ].map((stat, i) => (
                 <div key={i} className="bg-primary/5 rounded-xl p-5 sm:p-8 border border-primary/20 text-center">
                   <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 text-primary mx-auto mb-2 sm:mb-3" />
@@ -240,13 +240,24 @@ const InvestorSummary = () => {
               ))}
             </div>
             
+            <div className="text-center mb-6 sm:mb-8">
+              <p className="text-sm sm:text-base text-muted-foreground mb-1">That's the <span className="text-primary font-semibold">TAM</span>:</p>
+              <p className="text-sm sm:text-base text-foreground">
+                The value trapped in admin, manual work, and document-chasing.
+              </p>
+            </div>
+            
+            <p className="text-base sm:text-lg text-center text-primary font-semibold mb-4 sm:mb-6">
+              And here's the twist:
+            </p>
+            
             <div className="bg-card rounded-xl p-4 sm:p-6 border border-border mb-6 sm:mb-8">
               <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wider mb-3 text-center">There is:</p>
               <div className="grid grid-cols-2 gap-2 sm:gap-3">
                 {[
                   "No incumbent",
                   "No category leader",
-                  "No integrated AI doc intel solution",
+                  "No integrated AI document intelligence",
                   "No low-friction tool like Hobson",
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-2 bg-secondary/50 rounded-lg p-2 sm:p-3">
@@ -262,8 +273,11 @@ const InvestorSummary = () => {
                 We are <span className="text-primary font-semibold">early</span>. We are <span className="text-primary font-semibold">differentiated</span>. We are <span className="text-primary font-semibold">exactly on time</span>.
               </p>
               <p className="text-sm sm:text-base text-muted-foreground">
-                And the sector is begging for efficiency —<br />
+                The sector is desperate for efficiency —<br />
                 <span className="text-foreground">20% gains from AI are now baseline, not hype.</span>
+              </p>
+              <p className="text-base sm:text-lg text-primary font-semibold mt-3">
+                Hobson is the clarity layer that unlocks those gains.
               </p>
             </div>
           </div>
