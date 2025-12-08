@@ -871,6 +871,15 @@ const sections = [
           sections: [],
         },
       },
+      {
+        title: "CAC Assumptions",
+        showCustomVisual: true,
+        customVisualComponent: "cacAssumptions",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
     ],
   },
   {
