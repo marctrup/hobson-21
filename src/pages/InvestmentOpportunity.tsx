@@ -827,6 +827,15 @@ const sections = [
     iconColor: "text-red-600",
     pages: [
       {
+        title: "Revenue Growth",
+        showCustomVisual: true,
+        customVisualComponent: "revenueGrowth",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Assumptions",
         showCustomVisual: true,
         customVisualComponent: "ukMarketAssumptions",
@@ -848,24 +857,6 @@ const sections = [
         title: "SAM",
         showCustomVisual: true,
         customVisualComponent: "sam",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Revenue Growth",
-        showCustomVisual: true,
-        customVisualComponent: "revenueGrowth",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Assumptions",
-        showCustomVisual: true,
-        customVisualComponent: "ukMarketAssumptions",
         content: {
           overview: "",
           sections: [],
