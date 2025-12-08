@@ -190,12 +190,10 @@ const InvestorSummary = () => {
               We innovate without disruption.
             </p>
             
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+            <div className="grid grid-cols-2 gap-2 sm:gap-3">
               {[
                 "No onboarding",
-                "No integrations",
                 "No behaviour change",
-                "No expensive consultants",
               ].map((item, i) => (
                 <div key={i} className="bg-secondary/50 rounded-lg p-3 sm:p-4 border border-border">
                   <span className="text-foreground text-xs sm:text-sm">{item}</span>
