@@ -42,7 +42,7 @@ const InvestorSummary = () => {
           </div>
           
           <div className="relative z-10 text-center max-w-4xl mx-auto px-2">
-            <p className="text-primary font-semibold text-base sm:text-lg md:text-xl tracking-wide mb-3 sm:mb-4">HOBSON AI</p>
+            <p className="text-primary font-semibold text-base sm:text-lg md:text-xl tracking-wide mb-3 sm:mb-4">HOBSON AI - Specialist AI</p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-foreground">
               The Document Chaos<br />
               <span className="text-primary">No One Talks About</span>
