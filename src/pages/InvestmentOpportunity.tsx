@@ -833,6 +833,13 @@ const sections = [
         },
       },
       {
+        title: "Cost Assumptions",
+        content: {
+          overview: "Breakdown of cost structure and assumptions underlying financial projections.",
+          sections: [],
+        },
+      },
+      {
         title: "Onboarding Costs",
         showCustomVisual: true,
         customVisualComponent: "onboardingCosts",
