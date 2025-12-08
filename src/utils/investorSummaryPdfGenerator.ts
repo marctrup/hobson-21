@@ -288,14 +288,15 @@ const renderMagicSection = (doc: jsPDF, section: MagicSection, margin: number, o
   const pageWidth = doc.internal.pageSize.getWidth();
   const contentWidth = pageWidth - margin * 2;
   const centerX = pageWidth / 2;
-  let y = 30;
+  let y = 25;
   
-  // Owl mascot at top (aspect ratio ~1:1 for the mascot)
+  // Owl mascot at top (natural aspect ratio ~1:1.3 width:height)
   if (owlImage) {
     try {
-      const owlSize = 35;
-      doc.addImage(owlImage, "PNG", centerX - owlSize / 2, y, owlSize, owlSize);
-      y += owlSize + 10;
+      const owlWidth = 32;
+      const owlHeight = 42; // Taller than wide for natural owl mascot proportions
+      doc.addImage(owlImage, "PNG", centerX - owlWidth / 2, y, owlWidth, owlHeight);
+      y += owlHeight + 8;
     } catch (e) {
       console.warn("Could not add owl image to PDF:", e);
     }
