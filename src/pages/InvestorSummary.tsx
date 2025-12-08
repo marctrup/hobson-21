@@ -169,6 +169,57 @@ const InvestorSummary = () => {
         {/* Divider */}
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
+        {/* How Big Is This Market Section */}
+        <section className="px-4 sm:px-6 py-10 sm:py-16">
+          <div className="max-w-3xl mx-auto">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-foreground">
+                How Big Is This Market?
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground">
+                Bigger than you think.<br />
+                Bigger than we thought.<br />
+                <span className="italic">Honestly… bigger than anyone needs it to be.</span>
+              </p>
+            </div>
+            
+            {/* UK TAM */}
+            <div className="bg-primary/5 rounded-xl p-5 sm:p-8 border border-primary/20 mb-4 sm:mb-6 text-center">
+              <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wider mb-2">UK TAM</p>
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3 sm:mb-4">£1.41B</p>
+              <p className="text-sm sm:text-base text-foreground">
+                That's a lot of documents.<br />
+                <span className="text-muted-foreground">Enough to wallpaper every estate agent's office. Twice.</span>
+              </p>
+            </div>
+            
+            {/* Global TAM */}
+            <div className="bg-primary/10 rounded-xl p-5 sm:p-8 border border-primary/30 mb-6 sm:mb-10 text-center">
+              <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wider mb-2">Global TAM</p>
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3 sm:mb-4">£155.6B</p>
+              <p className="text-sm sm:text-base text-foreground">
+                Yes, you read that right.<br />
+                <span className="text-muted-foreground">Apparently the whole world is drowning in PDFs. Who knew?</span>
+              </p>
+            </div>
+            
+            {/* Translation */}
+            <div className="bg-card rounded-xl p-5 sm:p-6 border-l-4 border-primary text-center sm:text-left">
+              <p className="text-xs sm:text-sm text-primary font-semibold uppercase tracking-wider mb-2">Translation</p>
+              <p className="text-base sm:text-lg text-foreground mb-3">
+                There's a huge amount of value locked in documents.<br />
+                All someone needs is a key.
+              </p>
+              <p className="text-lg sm:text-xl font-bold text-primary">
+                Hobson is that key.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Divider */}
+        <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
+
         {/* Market Opportunity Section */}
         <section className="px-4 sm:px-6 py-10 sm:py-16">
           <div className="max-w-4xl mx-auto">
