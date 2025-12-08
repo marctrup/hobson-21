@@ -45,8 +45,7 @@ const BurnRateAssumptionsVisual = () => {
         </div>
 
         <div className="bg-green-100 dark:bg-green-950/40 border border-green-300 dark:border-green-800 rounded-lg p-3 mt-4">
-          <p className="text-sm text-green-800 dark:text-green-200 text-center">
-            <strong>Key:</strong> You avoid unnecessary dilution because the operating model is profitable from Year 1.
+          <p className="text-sm text-green-800 dark:text-green-200 text-center">Key: We  avoid unnecessary dilution because the operating model is profitable from Year 1.<strong>Key:</strong> You avoid unnecessary dilution because the operating model is profitable from Year 1.
           </p>
         </div>
       </div>
@@ -55,8 +54,7 @@ const BurnRateAssumptionsVisual = () => {
       <div className="bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
         <div className="flex items-start gap-3">
           <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5 shrink-0" />
-          <p className="text-sm text-blue-800 dark:text-blue-200">
-            Your <strong>operating</strong> model does not require capital. Your <strong>build</strong> and <strong>go-to-market acceleration</strong> do. 
+          <p className="text-sm text-blue-800 dark:text-blue-200">Our operating model does not require capital. Our build and go-to-market acceleration do. The model below shows how the business becomes cashflow-positive almost immediately once revenue begins in 2027.<strong>operating</strong> model does not require capital. Your <strong>build</strong> and <strong>go-to-market acceleration</strong> do. 
             The model below shows how the business becomes cashflow-positive almost immediately once revenue begins in 2027.
           </p>
         </div>
