@@ -97,7 +97,7 @@ const sections = [
               items: [
                 "Usage-based pricing via Hobson Energy Units (HEUs)",
                 "No per-user or per-asset fees → enables broad, frictionless rollout",
-                "Designed to integrate with existing systems with zero onboarding",
+                "Designed to work alongside existing systems with zero onboarding",
                 "Clear, measurable ROI based on time and cost savings",
               ],
             },
