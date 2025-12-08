@@ -790,6 +790,15 @@ const sections = [
     iconColor: "text-red-600",
     pages: [
       {
+        title: "P/L Growth",
+        showCustomVisual: true,
+        customVisualComponent: "plGrowth",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Revenue Growth",
         showCustomVisual: true,
         customVisualComponent: "revenueGrowth",
