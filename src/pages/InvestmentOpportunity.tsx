@@ -845,24 +845,6 @@ const sections = [
         },
       },
       {
-        title: "TAM",
-        showCustomVisual: true,
-        customVisualComponent: "targetMarket",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "SAM",
-        showCustomVisual: true,
-        customVisualComponent: "sam",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
         title: "Penetration Justification",
         showCustomVisual: true,
         customVisualComponent: "marketShareJustification",
