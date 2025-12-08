@@ -189,7 +189,7 @@ const InvestorSummary = () => {
               <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3 sm:mb-4">£1.41B</p>
               <p className="text-sm sm:text-base text-foreground">
                 That's a lot of documents.<br />
-                <span className="text-muted-foreground">Enough to wallpaper every estate agent's office. Twice.</span>
+                <span className="text-muted-foreground">Enough to wallpaper every office. Twice.</span>
               </p>
             </div>
             
