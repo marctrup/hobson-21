@@ -580,7 +580,7 @@ const renderRaiseSection = (doc: jsPDF, section: RaiseSection, margin: number): 
       doc.setTextColor(...PDF_CONFIG.primaryColor);
       doc.setFontSize(6);
       doc.setFont("helvetica", "bold");
-      doc.text("RECOMMENDED", optionX + optionWidth / 2, y + 10, { align: "center" });
+      doc.text("PREFERRED", optionX + optionWidth / 2, y + 10, { align: "center" });
       
       doc.setTextColor(255, 255, 255);
     } else {

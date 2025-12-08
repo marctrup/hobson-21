@@ -529,7 +529,7 @@ const InvestorSummary = () => {
                   {option.recommended && (
                     <div className="flex justify-center mb-1 sm:mb-2">
                       <span className="inline-block bg-primary-foreground text-primary text-[8px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 rounded-full">
-                        RECOMMENDED
+                        PREFERRED
                       </span>
                     </div>
                   )}
