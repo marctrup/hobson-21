@@ -1,17 +1,20 @@
+import { Info } from "lucide-react";
 import plForecastChart from "@/assets/pl-forecast-chart.png";
 
 const PLGrowthVisual = () => {
   return (
     <div className="space-y-6">
-      {/* Explainer text */}
-      <div className="bg-gradient-to-r from-primary/5 to-primary/10 border border-primary/20 rounded-lg p-6">
-        <p className="text-foreground/80 leading-relaxed">
-          The following tabs explain how this growth is achievable.
-        </p>
-        <p className="text-foreground/80 leading-relaxed mt-2">
-          Review the <span className="font-semibold text-primary">Revenue Assumptions</span> and{" "}
-          <span className="font-semibold text-primary">Cost Assumptions</span> tabs for detailed methodology and supporting data.
-        </p>
+      {/* Explainer Box */}
+      <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 flex items-start gap-3">
+        <Info className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+        <div>
+          <p className="text-sm text-foreground font-medium mb-1">
+            The following tabs explain how this growth is achievable
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Review the Revenue Assumptions and Cost Assumptions tabs for detailed methodology and supporting data.
+          </p>
+        </div>
       </div>
 
       {/* P/L Forecast Chart */}
