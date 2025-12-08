@@ -203,25 +203,25 @@ const InvestorSummary = () => {
             }
           `}</style>
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <FileText className="absolute top-8 left-[5%] w-6 h-6 sm:w-10 sm:h-10 text-primary/40" style={{ animation: 'floatExtreme1 9s ease-in-out infinite', animationDelay: '0ms' }} />
-            <FileText className="absolute top-12 right-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/50" style={{ animation: 'floatExtreme2 10s ease-in-out infinite', animationDelay: '800ms' }} />
-            <FileText className="absolute top-[30%] left-[3%] w-7 h-7 sm:w-11 sm:h-11 text-primary/35" style={{ animation: 'floatExtreme3 11s ease-in-out infinite', animationDelay: '1600ms' }} />
-            <FileText className="absolute top-[35%] right-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45" style={{ animation: 'floatExtreme4 9.5s ease-in-out infinite', animationDelay: '2400ms' }} />
-            <FileText className="absolute bottom-[30%] left-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/50" style={{ animation: 'floatExtreme1 10.5s ease-in-out infinite', animationDelay: '1200ms' }} />
-            <FileText className="absolute bottom-[25%] right-[3%] w-7 h-7 sm:w-10 sm:h-10 text-primary/40" style={{ animation: 'floatExtreme2 9.8s ease-in-out infinite', animationDelay: '2000ms' }} />
-            <FileText className="absolute bottom-16 left-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45" style={{ animation: 'floatExtreme3 10.2s ease-in-out infinite', animationDelay: '2800ms' }} />
-            <FileText className="absolute bottom-12 right-[10%] w-5 h-5 sm:w-7 sm:h-7 text-primary/55" style={{ animation: 'floatExtreme4 8.5s ease-in-out infinite', animationDelay: '400ms' }} />
+            <FileText className="absolute top-8 left-[5%] w-6 h-6 sm:w-10 sm:h-10 text-primary/40" style={{ animation: 'floatExtreme1 16s ease-in-out infinite', animationDelay: '0ms' }} />
+            <FileText className="absolute top-12 right-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/50" style={{ animation: 'floatExtreme2 18s ease-in-out infinite', animationDelay: '1500ms' }} />
+            <FileText className="absolute top-[30%] left-[3%] w-7 h-7 sm:w-11 sm:h-11 text-primary/35" style={{ animation: 'floatExtreme3 20s ease-in-out infinite', animationDelay: '3000ms' }} />
+            <FileText className="absolute top-[35%] right-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45" style={{ animation: 'floatExtreme4 17s ease-in-out infinite', animationDelay: '4500ms' }} />
+            <FileText className="absolute bottom-[30%] left-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/50" style={{ animation: 'floatExtreme1 19s ease-in-out infinite', animationDelay: '2200ms' }} />
+            <FileText className="absolute bottom-[25%] right-[3%] w-7 h-7 sm:w-10 sm:h-10 text-primary/40" style={{ animation: 'floatExtreme2 17.5s ease-in-out infinite', animationDelay: '3800ms' }} />
+            <FileText className="absolute bottom-16 left-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45" style={{ animation: 'floatExtreme3 18.5s ease-in-out infinite', animationDelay: '5200ms' }} />
+            <FileText className="absolute bottom-12 right-[10%] w-5 h-5 sm:w-7 sm:h-7 text-primary/55" style={{ animation: 'floatExtreme4 15s ease-in-out infinite', animationDelay: '800ms' }} />
             
-            <FileText className="hidden sm:block absolute top-6 left-[28%] w-12 h-12 text-primary/35" style={{ animation: 'floatExtreme3 11.5s ease-in-out infinite', animationDelay: '1600ms' }} />
-            <FileText className="hidden sm:block absolute top-14 right-[28%] w-9 h-9 text-primary/45" style={{ animation: 'floatExtreme1 9.8s ease-in-out infinite', animationDelay: '2400ms' }} />
-            <FileText className="hidden sm:block absolute top-[22%] left-[22%] w-7 h-7 text-primary/50" style={{ animation: 'floatExtreme2 10.5s ease-in-out infinite', animationDelay: '2000ms' }} />
-            <FileText className="hidden sm:block absolute top-[28%] right-[22%] w-10 h-10 text-primary/40" style={{ animation: 'floatExtreme4 9.6s ease-in-out infinite', animationDelay: '2800ms' }} />
-            <FileText className="hidden sm:block absolute top-[45%] left-[15%] w-6 h-6 text-primary/60" style={{ animation: 'floatExtreme1 8.8s ease-in-out infinite', animationDelay: '1400ms' }} />
-            <FileText className="hidden sm:block absolute top-[42%] right-[18%] w-8 h-8 text-primary/50" style={{ animation: 'floatExtreme3 10.2s ease-in-out infinite', animationDelay: '2200ms' }} />
-            <FileText className="hidden sm:block absolute top-[65%] left-[20%] w-8 h-8 text-primary/50" style={{ animation: 'floatExtreme2 10s ease-in-out infinite', animationDelay: '1000ms' }} />
-            <FileText className="hidden sm:block absolute top-[68%] right-[25%] w-10 h-10 text-primary/40" style={{ animation: 'floatExtreme4 9.2s ease-in-out infinite', animationDelay: '1800ms' }} />
-            <FileText className="hidden sm:block absolute bottom-20 left-[35%] w-8 h-8 text-primary/50" style={{ animation: 'floatExtreme1 8.9s ease-in-out infinite', animationDelay: '1800ms' }} />
-            <FileText className="hidden sm:block absolute bottom-16 right-[35%] w-9 h-9 text-primary/45" style={{ animation: 'floatExtreme3 9.8s ease-in-out infinite', animationDelay: '2600ms' }} />
+            <FileText className="hidden sm:block absolute top-6 left-[28%] w-12 h-12 text-primary/35" style={{ animation: 'floatExtreme3 21s ease-in-out infinite', animationDelay: '3000ms' }} />
+            <FileText className="hidden sm:block absolute top-14 right-[28%] w-9 h-9 text-primary/45" style={{ animation: 'floatExtreme1 17.5s ease-in-out infinite', animationDelay: '4500ms' }} />
+            <FileText className="hidden sm:block absolute top-[22%] left-[22%] w-7 h-7 text-primary/50" style={{ animation: 'floatExtreme2 19s ease-in-out infinite', animationDelay: '3800ms' }} />
+            <FileText className="hidden sm:block absolute top-[28%] right-[22%] w-10 h-10 text-primary/40" style={{ animation: 'floatExtreme4 17s ease-in-out infinite', animationDelay: '5200ms' }} />
+            <FileText className="hidden sm:block absolute top-[45%] left-[15%] w-6 h-6 text-primary/60" style={{ animation: 'floatExtreme1 15.5s ease-in-out infinite', animationDelay: '2600ms' }} />
+            <FileText className="hidden sm:block absolute top-[42%] right-[18%] w-8 h-8 text-primary/50" style={{ animation: 'floatExtreme3 18.5s ease-in-out infinite', animationDelay: '4200ms' }} />
+            <FileText className="hidden sm:block absolute top-[65%] left-[20%] w-8 h-8 text-primary/50" style={{ animation: 'floatExtreme2 18s ease-in-out infinite', animationDelay: '1800ms' }} />
+            <FileText className="hidden sm:block absolute top-[68%] right-[25%] w-10 h-10 text-primary/40" style={{ animation: 'floatExtreme4 16.5s ease-in-out infinite', animationDelay: '3400ms' }} />
+            <FileText className="hidden sm:block absolute bottom-20 left-[35%] w-8 h-8 text-primary/50" style={{ animation: 'floatExtreme1 16s ease-in-out infinite', animationDelay: '3400ms' }} />
+            <FileText className="hidden sm:block absolute bottom-16 right-[35%] w-9 h-9 text-primary/45" style={{ animation: 'floatExtreme3 17.5s ease-in-out infinite', animationDelay: '4800ms' }} />
           </div>
           
           <div className="relative z-10 text-center max-w-4xl mx-auto px-2">
