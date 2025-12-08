@@ -3,7 +3,7 @@ import { TrendingUp, Target, Zap, Globe, DollarSign, BarChart3, Building2, Layer
 
 const MarketShareJustificationVisual = () => {
   const ukProjection = [
-    { year: "2026", share: "0.05%", rationale: "Pilot validation only" },
+    { year: "2026", share: "-", rationale: "Pilot validation only" },
     { year: "2027", share: "0.2%", rationale: "UK commercial launch + first conversions" },
     { year: "2028", share: "0.7%", rationale: "Strong UK adoption + compounding referrals" },
     { year: "2029", share: "1.5%", rationale: "Brand leadership in UK emerges" },

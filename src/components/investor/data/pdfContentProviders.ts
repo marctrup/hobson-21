@@ -346,7 +346,7 @@ export const getMarketShareJustificationPdfContent = (): string[] => [
   "6. UK Market Share Projection:",
   "",
   "Year    | UK Market Share | Rationale",
-  "2026    | 0.05%          | Pilot validation only",
+  "2026    | -              | Pilot validation only",
   "2027    | 0.2%           | UK commercial launch + first conversions",
   "2028    | 0.7%           | Strong UK adoption + compounding referrals",
   "2029    | 1.5%           | Brand leadership in UK emerges",
