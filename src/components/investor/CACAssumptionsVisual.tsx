@@ -89,7 +89,6 @@ const CACAssumptionsVisual = () => {
                   </TableHeader>
                   <TableBody>
                     {[
-                      { year: "2027", customers: "—", new: "—" },
                       { year: "2028", customers: "10,584", new: "10,584" },
                       { year: "2029", customers: "14,818", new: "4,234" },
                       { year: "2030", customers: "21,168", new: "6,350" },
