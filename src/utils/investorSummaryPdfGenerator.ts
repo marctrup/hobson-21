@@ -481,19 +481,11 @@ const renderBusinessModelSection = (doc: jsPDF, section: BusinessModelSection, m
     doc.setFillColor(249, 250, 251);
     doc.roundedRect(featureX, featureY, featureWidth, 35, 3, 3, "F");
     
-    // Draw a checkmark circle instead of unicode character
-    doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(featureX + featureWidth / 2, featureY + 10, 4, "F");
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "bold");
-    doc.text("OK", featureX + featureWidth / 2, featureY + 11.5, { align: "center" });
-    
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(9);
     doc.setFont("helvetica", "normal");
     const featureLines = doc.splitTextToSize(sanitizeText(feature), featureWidth - 10);
-    doc.text(featureLines, featureX + featureWidth / 2, featureY + 22, { align: "center" });
+    doc.text(featureLines, featureX + featureWidth / 2, featureY + 18, { align: "center" });
     
     if ((idx + 1) % 3 === 0) {
       featureX = margin;
