@@ -40,14 +40,37 @@ const InvestorSummary = () => {
           </div>
           
           <div className="relative z-10 text-center max-w-4xl mx-auto px-2">
-            <p className="text-primary font-semibold text-base sm:text-lg md:text-xl tracking-wide mb-3 sm:mb-4">HOBSON AI</p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-foreground">
-              The Problem<br />
-              <span className="text-primary">No One Talks About</span>
-            </h1>
-            <div className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-light space-y-2">
-              <p>Real estate runs on documents.</p>
-              <p className="text-primary font-medium">Documents run on chaos.</p>
+            {/* Documents surrounding the header */}
+            <div className="relative inline-block">
+              {/* Top documents */}
+              <FileText className="absolute -top-8 sm:-top-10 left-1/4 w-5 h-5 sm:w-7 sm:h-7 text-primary/50 animate-bounce" style={{ animationDelay: '100ms', animationDuration: '2.8s' }} />
+              <FileText className="absolute -top-6 sm:-top-8 left-1/2 -translate-x-1/2 w-6 h-6 sm:w-8 sm:h-8 text-primary/60 animate-bounce" style={{ animationDelay: '300ms', animationDuration: '3s' }} />
+              <FileText className="absolute -top-8 sm:-top-10 right-1/4 w-5 h-5 sm:w-7 sm:h-7 text-primary/45 animate-bounce" style={{ animationDelay: '500ms', animationDuration: '2.6s' }} />
+              
+              {/* Left side documents */}
+              <FileText className="absolute top-1/4 -left-6 sm:-left-10 w-5 h-5 sm:w-7 sm:h-7 text-primary/55 animate-bounce" style={{ animationDelay: '200ms', animationDuration: '2.9s' }} />
+              <FileText className="absolute top-1/2 -translate-y-1/2 -left-8 sm:-left-12 w-6 h-6 sm:w-8 sm:h-8 text-primary/50 animate-bounce" style={{ animationDelay: '400ms', animationDuration: '3.1s' }} />
+              <FileText className="absolute bottom-1/4 -left-6 sm:-left-10 w-5 h-5 sm:w-7 sm:h-7 text-primary/45 animate-bounce" style={{ animationDelay: '600ms', animationDuration: '2.7s' }} />
+              
+              {/* Right side documents */}
+              <FileText className="absolute top-1/4 -right-6 sm:-right-10 w-5 h-5 sm:w-7 sm:h-7 text-primary/50 animate-bounce" style={{ animationDelay: '350ms', animationDuration: '3s' }} />
+              <FileText className="absolute top-1/2 -translate-y-1/2 -right-8 sm:-right-12 w-6 h-6 sm:w-8 sm:h-8 text-primary/55 animate-bounce" style={{ animationDelay: '550ms', animationDuration: '2.8s' }} />
+              <FileText className="absolute bottom-1/4 -right-6 sm:-right-10 w-5 h-5 sm:w-7 sm:h-7 text-primary/40 animate-bounce" style={{ animationDelay: '150ms', animationDuration: '3.2s' }} />
+              
+              {/* Bottom documents */}
+              <FileText className="absolute -bottom-6 sm:-bottom-8 left-1/4 w-5 h-5 sm:w-7 sm:h-7 text-primary/45 animate-bounce" style={{ animationDelay: '250ms', animationDuration: '2.9s' }} />
+              <FileText className="absolute -bottom-8 sm:-bottom-10 left-1/2 -translate-x-1/2 w-6 h-6 sm:w-8 sm:h-8 text-primary/55 animate-bounce" style={{ animationDelay: '450ms', animationDuration: '2.7s' }} />
+              <FileText className="absolute -bottom-6 sm:-bottom-8 right-1/4 w-5 h-5 sm:w-7 sm:h-7 text-primary/50 animate-bounce" style={{ animationDelay: '650ms', animationDuration: '3.1s' }} />
+              
+              <p className="text-primary font-semibold text-base sm:text-lg md:text-xl tracking-wide mb-3 sm:mb-4">HOBSON AI</p>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-foreground">
+                The Problem<br />
+                <span className="text-primary">No One Talks About</span>
+              </h1>
+              <div className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-light space-y-2">
+                <p>Real estate runs on documents.</p>
+                <p className="text-primary font-medium">Documents run on chaos.</p>
+              </div>
             </div>
           </div>
         </section>
