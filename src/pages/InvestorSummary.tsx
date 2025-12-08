@@ -53,8 +53,8 @@ const solutionSection: SolutionSection = {
 
 const magicSection: MagicSection = {
   type: "magic",
-  title: "The Magic Trick",
-  subtitle: "(That Isn't Magic)",
+  title: "Wisdom at Work",
+  subtitle: "",
   underTheHood: ["Document Intelligence", "AI Reasoning", "Instant Clarity"],
   userMessage: "\"Here's the answer. And here's exactly where I found it.\"",
   benefits: [
@@ -322,8 +322,7 @@ const InvestorSummary = () => {
               <div className="w-full">
                 <div className="text-center mb-6 sm:mb-8">
                   <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
-                    The Magic Trick<br />
-                    <span className="text-primary">(That Isn't Magic)</span>
+                    Wisdom at Work
                   </h2>
                 </div>
                 
