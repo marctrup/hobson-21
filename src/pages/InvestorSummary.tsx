@@ -156,7 +156,7 @@ const InvestorSummary = () => {
     setIsGenerating(true);
     
     try {
-      downloadInvestorSummaryPdf(allSections);
+      downloadInvestorSummaryPdf(allSections, hobsonMascot);
     } catch (error) {
       console.error('Error generating PDF:', error);
     } finally {

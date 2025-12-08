@@ -132,33 +132,44 @@ const sanitizeText = (text: string): string => {
 /**
  * Render hero section
  */
-const renderHeroSection = (doc: jsPDF, section: HeroSection, margin: number): void => {
+const renderHeroSection = (doc: jsPDF, section: HeroSection, margin: number, owlImage?: string): void => {
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const centerX = pageWidth / 2;
+  
+  // Owl mascot at top
+  if (owlImage) {
+    try {
+      const owlWidth = 40;
+      const owlHeight = 40;
+      doc.addImage(owlImage, "PNG", centerX - owlWidth / 2, 25, owlWidth, owlHeight);
+    } catch (e) {
+      console.warn("Could not add owl image to PDF:", e);
+    }
+  }
   
   // Brand name
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(16);
   doc.setFont("helvetica", "bold");
-  doc.text(section.brandName, centerX, 80, { align: "center" });
+  doc.text(section.brandName, centerX, owlImage ? 80 : 60, { align: "center" });
   
   // Main headline
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(36);
   doc.setFont("helvetica", "bold");
-  doc.text(section.headline, centerX, 110, { align: "center" });
+  doc.text(section.headline, centerX, owlImage ? 110 : 90, { align: "center" });
   
   // Highlighted headline
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(36);
-  doc.text(section.highlightedHeadline, centerX, 125, { align: "center" });
+  doc.text(section.highlightedHeadline, centerX, owlImage ? 125 : 105, { align: "center" });
   
   // Taglines
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(14);
   doc.setFont("helvetica", "normal");
-  let taglineY = 160;
+  let taglineY = owlImage ? 160 : 140;
   section.taglines.forEach((tagline) => {
     doc.text(sanitizeText(tagline), centerX, taglineY, { align: "center" });
     taglineY += 18;
@@ -683,7 +694,7 @@ const renderClosingSection = (doc: jsPDF, section: ClosingSection, margin: numbe
 /**
  * Generate investor summary PDF with all sections
  */
-export const generateInvestorSummaryPdf = (sections: InvestorSummarySection[]): jsPDF => {
+export const generateInvestorSummaryPdf = (sections: InvestorSummarySection[], owlImage?: string): jsPDF => {
   const doc = new jsPDF("p", "mm", "a4");
   const margin = PDF_CONFIG.margin;
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -695,7 +706,7 @@ export const generateInvestorSummaryPdf = (sections: InvestorSummarySection[]): 
     
     switch (section.type) {
       case "hero":
-        renderHeroSection(doc, section, margin);
+        renderHeroSection(doc, section, margin, owlImage);
         break;
       case "pain":
         renderPainSection(doc, section, margin);
@@ -743,7 +754,7 @@ export const generateInvestorSummaryPdf = (sections: InvestorSummarySection[]): 
 /**
  * Download investor summary PDF
  */
-export const downloadInvestorSummaryPdf = (sections: InvestorSummarySection[], filename: string = "Hobson-AI-Investor-Summary.pdf"): void => {
-  const doc = generateInvestorSummaryPdf(sections);
+export const downloadInvestorSummaryPdf = (sections: InvestorSummarySection[], owlImage?: string, filename: string = "Hobson-AI-Investor-Summary.pdf"): void => {
+  const doc = generateInvestorSummaryPdf(sections, owlImage);
   doc.save(filename);
 };
