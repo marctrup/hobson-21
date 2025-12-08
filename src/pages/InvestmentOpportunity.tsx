@@ -48,6 +48,7 @@ import RevenueModelVisual from "@/components/investor/RevenueModelVisual";
 import GlobalJustificationVisual from "@/components/investor/GlobalJustificationVisual";
 import RevenueGrowthVisual from "@/components/investor/RevenueGrowthVisual";
 import CostAssumptionsVisual from "@/components/investor/CostAssumptionsVisual";
+import PLAssumptionsVisual from "@/components/investor/PLAssumptionsVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -853,8 +854,10 @@ const sections = [
       },
       {
         title: "P/L Assumptions",
+        showCustomVisual: true,
+        customVisualComponent: "plAssumptions",
         content: {
-          overview: "Profit and loss assumptions underlying financial projections.",
+          overview: "",
           sections: [],
         },
       },
@@ -1466,6 +1469,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Cost Assumptions */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "costAssumptions" && (
                       <CostAssumptionsVisual />
+                    )}
+
+                    {/* Custom Visual Component for P/L Assumptions */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "plAssumptions" && (
+                      <PLAssumptionsVisual />
                     )}
 
                     {/* Custom Visual Component for Global Justification */}
