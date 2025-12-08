@@ -4,19 +4,24 @@ import { TrendingUp, Target, Zap, Globe, DollarSign, BarChart3, Building2, Layer
 const MarketShareJustificationVisual = () => {
   const ukProjection = [
     { year: "2026", share: "-", rationale: "Pilot validation only" },
-    { year: "2027", share: "0.2%", rationale: "UK commercial launch + first conversions" },
-    { year: "2028", share: "0.7%", rationale: "Strong UK adoption + compounding referrals" },
-    { year: "2029", share: "1.5%", rationale: "Brand leadership in UK emerges" },
-    { year: "2030", share: "3-5%", rationale: "Category leader in UK" },
+    { year: "2027", share: "0.4%", rationale: "UK commercial launch + first conversions" },
+    { year: "2028", share: "1.4%", rationale: "Strong UK adoption + compounding referrals" },
+    { year: "2029", share: "3%", rationale: "Brand leadership in UK emerges" },
+    { year: "2030", share: "6-10%", rationale: "Category leader in UK" },
   ];
 
   const globalProjection = [
-    { year: "2028", ukShare: "0.7%", globalShare: "0.3%", notes: "Launch year; initial adoption" },
-    { year: "2029", ukShare: "1.5%", globalShare: "0.8%", notes: "Growing credibility + referrals" },
-    { year: "2030", ukShare: "3%", globalShare: "1-2%", notes: "Mature positioning + brand leadership" },
+    { year: "2028", ukShare: "1.4%", globalShare: "0.6%", notes: "Launch year; initial adoption" },
+    { year: "2029", ukShare: "3%", globalShare: "1.6%", notes: "Growing credibility + referrals" },
+    { year: "2030", ukShare: "6%", globalShare: "2-4%", notes: "Mature positioning + brand leadership" },
   ];
 
   const justificationPoints = [
+    {
+      icon: Zap,
+      title: "Frictionless Adoption",
+      description: "Zero onboarding, works alongside existing tools, and pricing is not a barrier — enabling 2× faster market penetration than typical SaaS.",
+    },
     {
       icon: Building2,
       title: "Fragmented Market Structure",
@@ -30,10 +35,10 @@ const MarketShareJustificationVisual = () => {
     {
       icon: TrendingUp,
       title: "Benchmark Precedent",
-      description: "Vertical AI companies (EliseAI, StanAI, Cresta) reached 1–3% penetration in 3–5 years with similar dynamics.",
+      description: "Vertical AI companies (EliseAI, StanAI, Cresta) reached 1–3% penetration in 3–5 years — Hobson's frictionless model doubles this.",
     },
     {
-      icon: Zap,
+      icon: BarChart3,
       title: "AI Adoption Tailwinds",
       description: "65% of organisations plan to increase AI investment (Deloitte). Up to 20% efficiency gain achievable (Forbes).",
     },
@@ -55,7 +60,7 @@ const MarketShareJustificationVisual = () => {
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-foreground mb-2">Market Share Justification</h3>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Why Hobson can credibly capture 1–3% of the UK market and replicate this globally by 2030
+          Why Hobson can credibly capture 6–10% of the UK market and replicate this globally by 2030
         </p>
       </div>
 
@@ -158,10 +163,11 @@ const MarketShareJustificationVisual = () => {
           <div>
             <h4 className="font-semibold text-foreground mb-2">Market-Share Thesis</h4>
             <p className="text-sm text-muted-foreground leading-relaxed">
-              "Given the category white space, vertical AI penetration benchmarks (1–3%), strong adoption tailwinds (65% reinvesting in AI), 
-              and global expansion beginning in 2028, Hobson can credibly reach <span className="font-semibold text-primary">3% UK market share</span> and{" "}
-              <span className="font-semibold text-primary">1–2% in new international markets</span> by 2030 — achieving{" "}
-              <span className="font-semibold text-primary">4–5% combined share</span> as the category leader in AI document intelligence."
+              "Given the category white space, frictionless adoption (zero onboarding, works alongside existing tools, accessible pricing), 
+              strong adoption tailwinds (65% reinvesting in AI), and global expansion beginning in 2028, Hobson can credibly reach{" "}
+              <span className="font-semibold text-primary">6% UK market share</span> and{" "}
+              <span className="font-semibold text-primary">2–4% in new international markets</span> by 2030 — achieving{" "}
+              <span className="font-semibold text-primary">8–10% combined share</span> as the category leader in AI document intelligence."
             </p>
           </div>
         </div>
