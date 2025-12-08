@@ -854,7 +854,7 @@ const sections = [
         },
       },
       {
-        title: "Penetration Justification",
+        title: "Market Penetration",
         showCustomVisual: true,
         customVisualComponent: "marketShareJustification",
         content: {
