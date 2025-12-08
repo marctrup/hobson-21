@@ -43,6 +43,7 @@ import { TargetMarketVisual } from "@/components/investor/TargetMarketVisual";
 import { SAMVisual } from "@/components/investor/SAMVisual";
 import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumptionsVisual";
 import MarketShareJustificationVisual from "@/components/investor/MarketShareJustificationVisual";
+import RevenueModelVisual from "@/components/investor/RevenueModelVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -860,6 +861,15 @@ const sections = [
         },
       },
       {
+        title: "Revenue Model",
+        showCustomVisual: true,
+        customVisualComponent: "revenueModel",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Onboarding Costs",
         showCustomVisual: true,
         customVisualComponent: "onboardingCosts",
@@ -1461,6 +1471,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Market Share Justification */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "marketShareJustification" && (
                       <MarketShareJustificationVisual />
+                    )}
+
+                    {/* Custom Visual Component for Revenue Model */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "revenueModel" && (
+                      <RevenueModelVisual />
                     )}
 
                     {/* Custom Visual Component for Gantt Chart */}
