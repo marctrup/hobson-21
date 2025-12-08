@@ -50,6 +50,7 @@ import RevenueGrowthVisual from "@/components/investor/RevenueGrowthVisual";
 import CostAssumptionsVisual from "@/components/investor/CostAssumptionsVisual";
 import PLAssumptionsVisual from "@/components/investor/PLAssumptionsVisual";
 import PLGrowthVisual from "@/components/investor/PLGrowthVisual";
+import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -1465,6 +1466,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for P/L Assumptions */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "plAssumptions" && (
                       <PLAssumptionsVisual />
+                    )}
+
+                    {/* Custom Visual Component for CAC Assumptions */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "cacAssumptions" && (
+                      <CACAssumptionsVisual />
                     )}
 
                     {/* Custom Visual Component for Global Justification */}
