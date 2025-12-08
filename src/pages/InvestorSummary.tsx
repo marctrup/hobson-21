@@ -447,9 +447,11 @@ const InvestorSummary = () => {
                   }`}
                 >
                   {option.recommended && (
-                    <span className="inline-block bg-primary-foreground text-primary text-[8px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 rounded-full mb-1 sm:mb-2">
-                      RECOMMENDED
-                    </span>
+                    <div className="flex justify-center mb-1 sm:mb-2">
+                      <span className="inline-block bg-primary-foreground text-primary text-[8px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 rounded-full">
+                        RECOMMENDED
+                      </span>
+                    </div>
                   )}
                   <p className={`text-lg sm:text-xl md:text-2xl font-bold mb-0.5 sm:mb-1 ${option.recommended ? 'text-primary-foreground' : 'text-foreground'}`}>
                     {option.amount}
