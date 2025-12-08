@@ -45,7 +45,8 @@ const BurnRateAssumptionsVisual = () => {
         </div>
 
         <div className="bg-amber-50 dark:bg-amber-100 border border-amber-200 rounded-lg p-3 mt-4">
-          <p className="text-sm text-black text-center">1.Key: You avoid unnecessary dilution because the operating model is profitable from Year 1.<strong>Key:</strong> You avoid unnecessary dilution because the operating model is profitable from Year 1.
+          <p className="text-sm text-black text-center">
+            <strong>Key:</strong> You avoid unnecessary dilution because the operating model is profitable from Year 1.
           </p>
         </div>
       </div>
