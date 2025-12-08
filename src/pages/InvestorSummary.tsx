@@ -1,6 +1,6 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
-import { FileText, Search, Zap, Shield, Globe, Mail, Users, Target, Sparkles, CheckCircle, XCircle } from 'lucide-react';
+import { FileText, Search, Zap, Shield, Globe, Mail, Users, Target, Sparkles, CheckCircle, XCircle, Brain, Eye } from 'lucide-react';
 import hobsonMascot from '@/assets/hobson-mascot.png';
 
 const InvestorSummary = () => {
@@ -15,10 +15,9 @@ const InvestorSummary = () => {
       
       <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
         {/* Hero Section */}
-        <section className="relative min-h-[45vh] sm:min-h-[55vh] flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-20 overflow-hidden">
-          {/* Floating document icons - fewer on mobile, more on desktop */}
+        <section className="relative min-h-[50vh] sm:min-h-[60vh] flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-20 overflow-hidden">
+          {/* Floating document icons */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {/* Mobile: fewer icons */}
             <FileText className="absolute top-8 left-[5%] w-6 h-6 sm:w-10 sm:h-10 text-[#2AB6B6]/40 animate-bounce" style={{ animationDelay: '0ms', animationDuration: '3s' }} />
             <FileText className="absolute top-12 right-[8%] w-5 h-5 sm:w-8 sm:h-8 text-[#2AB6B6]/50 animate-bounce" style={{ animationDelay: '200ms', animationDuration: '2.5s' }} />
             <FileText className="absolute top-[30%] left-[3%] w-7 h-7 sm:w-11 sm:h-11 text-[#2AB6B6]/35 animate-bounce" style={{ animationDelay: '400ms', animationDuration: '3.2s' }} />
@@ -28,7 +27,6 @@ const InvestorSummary = () => {
             <FileText className="absolute bottom-16 left-[5%] w-6 h-6 sm:w-9 sm:h-9 text-[#2AB6B6]/45 animate-bounce" style={{ animationDelay: '700ms', animationDuration: '3s' }} />
             <FileText className="absolute bottom-12 right-[10%] w-5 h-5 sm:w-7 sm:h-7 text-[#2AB6B6]/55 animate-bounce" style={{ animationDelay: '100ms', animationDuration: '2.6s' }} />
             
-            {/* Desktop only: additional icons */}
             <FileText className="hidden sm:block absolute top-6 left-[28%] w-12 h-12 text-[#2AB6B6]/35 animate-bounce" style={{ animationDelay: '400ms', animationDuration: '3.2s' }} />
             <FileText className="hidden sm:block absolute top-14 right-[28%] w-9 h-9 text-[#2AB6B6]/45 animate-bounce" style={{ animationDelay: '600ms', animationDuration: '2.8s' }} />
             <FileText className="hidden sm:block absolute top-[22%] left-[22%] w-7 h-7 text-[#2AB6B6]/50 animate-bounce" style={{ animationDelay: '500ms', animationDuration: '3.3s' }} />
@@ -42,15 +40,15 @@ const InvestorSummary = () => {
           </div>
           
           <div className="relative z-10 text-center max-w-4xl mx-auto px-2">
-            <p className="text-primary font-semibold text-base sm:text-lg md:text-xl tracking-wide mb-3 sm:mb-4">HOBSON  A Specialist AI</p>
+            <p className="text-primary font-semibold text-base sm:text-lg md:text-xl tracking-wide mb-3 sm:mb-4">HOBSON AI</p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-foreground">
-              The Document Chaos<br />
+              The Problem<br />
               <span className="text-primary">No One Talks About</span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-light">
-              Real estate runs on documents.<br />
-              <span className="text-muted-foreground/70">Documents run on chaos.</span>
-            </p>
+            <div className="text-lg sm:text-xl md:text-2xl text-muted-foreground font-light space-y-2">
+              <p>Real estate runs on documents.</p>
+              <p className="text-primary font-medium">Documents run on chaos.</p>
+            </div>
           </div>
         </section>
 
@@ -62,19 +60,22 @@ const InvestorSummary = () => {
           <div className="max-w-3xl mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-10">
               <div className="flex-1 order-2 md:order-1">
-                <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-5 text-foreground text-center md:text-left">
-                  Finding answers shouldn't feel like <span className="text-primary">detective work.</span>
-                </h2>
                 <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5 leading-relaxed text-center md:text-left">
-                  Every day, operators lose time digging through leases, titles, reports, and emails…
-                  or asking <span className="italic text-muted-foreground/70">"Does anyone know where that clause is?"</span>
+                  Every lease, title, report, and contract hides the answer someone needs <span className="text-primary font-semibold">right now</span> —
+                  and 99% of the time, that answer is trapped in a PDF, a shared drive, or someone's head.
                 </p>
-                <div className="bg-primary/5 rounded-lg p-4 sm:p-5 border-l-4 border-primary">
-                  <p className="text-base sm:text-lg text-foreground text-center md:text-left">
-                    Real estate runs on knowledge.<br />
-                    <span className="text-primary font-semibold">But that knowledge is buried.</span>
+                <div className="bg-primary/5 rounded-lg p-4 sm:p-5 border-l-4 border-primary mb-4 sm:mb-5">
+                  <p className="text-base sm:text-lg text-foreground text-center md:text-left italic">
+                    "Why does finding one answer still take 20 minutes, 3 systems, and a colleague named Dave who knows where everything is?"
                   </p>
                 </div>
+                <p className="text-sm sm:text-base text-muted-foreground text-center md:text-left">
+                  There had to be a better way.<br />
+                  <span className="text-foreground font-medium">There wasn't.</span>
+                </p>
+                <p className="text-base sm:text-lg text-primary font-semibold mt-3 text-center md:text-left">
+                  So we built one.
+                </p>
               </div>
               <div className="flex-shrink-0 order-1 md:order-2">
                 <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center">
@@ -88,15 +89,20 @@ const InvestorSummary = () => {
         {/* Divider */}
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
-        {/* The Twist Section */}
+        {/* AI That Doesn't Cause a Riot Section */}
         <section className="px-4 sm:px-6 py-10 sm:py-16">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-foreground">
-              Most AI tools show up shouting:<br />
-              <span className="text-destructive">"Replace everything!"</span>
+              AI That Doesn't Cause a Riot
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground mb-4 sm:mb-6">
-              Real estate says: <span className="font-semibold text-foreground">"Absolutely not."</span>
+            <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-5">
+              Most AI startups show up and say:
+            </p>
+            <p className="text-base sm:text-lg md:text-xl text-destructive font-semibold mb-4 sm:mb-5 italic">
+              "Replace everything! Burn the old systems! Embrace the disruption!"
+            </p>
+            <p className="text-sm sm:text-base text-foreground mb-6 sm:mb-8">
+              Real estate people hear that and think: <span className="font-bold">"No."</span>
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 my-6 sm:my-10">
@@ -111,8 +117,27 @@ const InvestorSummary = () => {
               </div>
             </div>
             
-            <p className="text-base sm:text-lg text-foreground">
-              Hobson takes a different path — <span className="text-primary font-semibold">innovation without disruption.</span>
+            <p className="text-lg sm:text-xl text-primary font-semibold mb-6 sm:mb-8">
+              We innovate without disruption.
+            </p>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+              {[
+                "No onboarding",
+                "No integrations",
+                "No behaviour change",
+                "No expensive consultants",
+              ].map((item, i) => (
+                <div key={i} className="bg-secondary/50 rounded-lg p-3 sm:p-4 border border-border">
+                  <span className="text-foreground text-xs sm:text-sm">{item}</span>
+                </div>
+              ))}
+            </div>
+            
+            <p className="text-sm sm:text-base text-muted-foreground mt-6 sm:mt-8">
+              You just upload your documents and ask a question.<br />
+              <span className="text-primary font-medium">Hobson answers — instantly, accurately, with receipts.</span><br />
+              <span className="italic text-muted-foreground/70">(Unlike your last intern.)</span>
             </p>
           </div>
         </section>
@@ -120,7 +145,7 @@ const InvestorSummary = () => {
         {/* Divider */}
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
-        {/* What Hobson Does Section - with Mascot */}
+        {/* The Magic Trick Section - with Mascot */}
         <section className="px-4 sm:px-6 py-10 sm:py-16">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col items-center gap-6 sm:gap-10">
@@ -137,28 +162,49 @@ const InvestorSummary = () => {
               <div className="w-full">
                 <div className="text-center mb-6 sm:mb-8">
                   <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
-                    Your documents. Your workflows.<br />
-                    <span className="text-primary">Instant clarity.</span>
+                    The Magic Trick<br />
+                    <span className="text-primary">(That Isn't Magic)</span>
                   </h2>
                 </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-4 sm:mb-6">
-                  {[
-                    { icon: FileText, text: "Upload documents → Hobson understands them" },
-                    { icon: Zap, text: "Ask a question → Hobson answers instantly" },
-                    { icon: Shield, text: "Always shows citations" },
-                    { icon: Sparkles, text: "No onboarding, no integration, no drama" },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-center gap-2 sm:gap-3 bg-secondary/50 rounded-lg p-3 sm:p-4 border border-border">
-                      <item.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
-                      <span className="text-foreground text-xs sm:text-sm">{item.text}</span>
+                <div className="bg-card rounded-xl p-4 sm:p-6 border border-border mb-4 sm:mb-6">
+                  <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wider mb-2 sm:mb-3 text-center">Under the hood</p>
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4">
+                    <div className="flex items-center gap-2 text-foreground">
+                      <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                      <span className="text-sm sm:text-base">Document Intelligence</span>
                     </div>
-                  ))}
+                    <span className="text-primary font-bold hidden sm:inline">→</span>
+                    <div className="flex items-center gap-2 text-foreground">
+                      <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                      <span className="text-sm sm:text-base">K-Graph Reasoning</span>
+                    </div>
+                    <span className="text-primary font-bold hidden sm:inline">→</span>
+                    <div className="flex items-center gap-2 text-foreground">
+                      <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
+                      <span className="text-sm sm:text-base">Instant Clarity</span>
+                    </div>
+                  </div>
                 </div>
                 
-                <div className="text-center">
-                  <p className="text-lg sm:text-xl font-semibold text-primary">
-                    Finally: AI you can trust.
+                <div className="bg-primary/5 rounded-xl p-4 sm:p-6 border-l-4 border-primary mb-4 sm:mb-6">
+                  <p className="text-xs sm:text-sm text-primary font-semibold uppercase tracking-wider mb-2 text-center">To the user</p>
+                  <p className="text-base sm:text-lg text-foreground text-center italic">
+                    "Here's the answer. And here's exactly where I found it."
+                  </p>
+                </div>
+                
+                <div className="text-center space-y-3">
+                  <p className="text-base sm:text-lg text-foreground">
+                    Hobson turns <span className="text-primary font-semibold">chaos into clarity</span><br />
+                    and fragmented data into one clean, trusted source of truth.
+                  </p>
+                  <p className="text-sm sm:text-base text-muted-foreground">
+                    Real estate has never seen this before —<br />
+                    but every operator who touches it says the same thing:
+                  </p>
+                  <p className="text-lg sm:text-xl font-bold text-primary">
+                    "I'm not going back."
                   </p>
                 </div>
               </div>
@@ -169,83 +215,55 @@ const InvestorSummary = () => {
         {/* Divider */}
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
-        {/* How Big Is This Market Section */}
-        <section className="px-4 sm:px-6 py-10 sm:py-16">
-          <div className="max-w-3xl mx-auto">
-            <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-foreground">
-                How Big Is This Market?
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground">
-                Bigger than you think.<br />
-                Bigger than we thought.<br />
-                <span className="italic">Honestly… bigger than anyone needs it to be.</span>
-              </p>
-            </div>
-            
-            {/* UK TAM */}
-            <div className="bg-primary/5 rounded-xl p-5 sm:p-8 border border-primary/20 mb-4 sm:mb-6 text-center">
-              <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wider mb-2">UK TAM</p>
-              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3 sm:mb-4">£1.41B</p>
-              <p className="text-sm sm:text-base text-foreground">
-                That's a lot of documents.<br />
-                <span className="text-muted-foreground">Enough to wallpaper every office. Twice.</span>
-              </p>
-            </div>
-            
-            {/* Global TAM */}
-            <div className="bg-primary/10 rounded-xl p-5 sm:p-8 border border-primary/30 mb-6 sm:mb-10 text-center">
-              <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wider mb-2">Global TAM</p>
-              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3 sm:mb-4">£155.6B</p>
-              <p className="text-sm sm:text-base text-foreground">
-                Yes, you read that right.<br />
-                <span className="text-muted-foreground">Apparently the whole world is drowning in PDFs. Who knew?</span>
-              </p>
-            </div>
-            
-            {/* Translation */}
-            <div className="bg-card rounded-xl p-5 sm:p-6 border-l-4 border-primary text-center sm:text-left">
-              <p className="text-xs sm:text-sm text-primary font-semibold uppercase tracking-wider mb-2">Translation</p>
-              <p className="text-base sm:text-lg text-foreground mb-3">
-                There's a huge amount of value locked in documents.<br />
-                All someone needs is a key.
-              </p>
-              <p className="text-lg sm:text-xl font-bold text-primary">
-                Hobson is that key.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Divider */}
-        <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
-
-        {/* Market Opportunity Section */}
+        {/* Why This Market Section */}
         <section className="px-4 sm:px-6 py-10 sm:py-16">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-6 sm:mb-10">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
-                A massive, ignored, <span className="text-primary">document-heavy category.</span>
+                Why This Market <span className="text-primary">Bends in Our Favour</span>
               </h2>
+              <p className="text-base sm:text-lg text-muted-foreground">
+                Real estate is massive, document-heavy, and deeply underserved.
+              </p>
             </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-5 mb-6 sm:mb-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-5 mb-6 sm:mb-10">
               {[
-                { value: "235,200", label: "UK real estate companies", icon: Target },
-                { value: "4.2M", label: "Global OECD target market", icon: Globe },
-                { value: "0", label: "Category leaders in AI doc intelligence", icon: Users },
+                { value: "235,200", label: "UK businesses", icon: Target },
+                { value: "4.2M", label: "Global OECD markets", icon: Globe },
               ].map((stat, i) => (
-                <div key={i} className="bg-card rounded-xl p-4 sm:p-6 border border-border text-center">
-                  <stat.icon className="w-5 h-5 sm:w-7 sm:h-7 text-primary mx-auto mb-2 sm:mb-3" />
-                  <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-1">{stat.value}</p>
-                  <p className="text-[10px] sm:text-xs text-muted-foreground">{stat.label}</p>
+                <div key={i} className="bg-primary/5 rounded-xl p-5 sm:p-8 border border-primary/20 text-center">
+                  <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 text-primary mx-auto mb-2 sm:mb-3" />
+                  <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-1">{stat.value}</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">{stat.label}</p>
                 </div>
               ))}
             </div>
             
-            <div className="text-center">
+            <div className="bg-card rounded-xl p-4 sm:p-6 border border-border mb-6 sm:mb-8">
+              <p className="text-xs sm:text-sm text-muted-foreground uppercase tracking-wider mb-3 text-center">There is:</p>
+              <div className="grid grid-cols-2 gap-2 sm:gap-3">
+                {[
+                  "No incumbent",
+                  "No category leader",
+                  "No integrated AI doc intel solution",
+                  "No low-friction tool like Hobson",
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-2 bg-secondary/50 rounded-lg p-2 sm:p-3">
+                    <XCircle className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                    <span className="text-foreground text-xs sm:text-sm">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            <div className="text-center space-y-2">
               <p className="text-base sm:text-lg text-foreground">
-                The space is wide open. <span className="text-primary font-semibold">We're early — by design.</span>
+                We are <span className="text-primary font-semibold">early</span>. We are <span className="text-primary font-semibold">differentiated</span>. We are <span className="text-primary font-semibold">exactly on time</span>.
+              </p>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                And the sector is begging for efficiency —<br />
+                <span className="text-foreground">20% gains from AI are now baseline, not hype.</span>
               </p>
             </div>
           </div>
@@ -259,28 +277,47 @@ const InvestorSummary = () => {
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-6 sm:mb-10">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
-                SaaS the way SaaS <span className="text-primary">was meant to be.</span>
+                The Business Model That <span className="text-primary">Makes Investors Smile</span>
               </h2>
             </div>
             
-            <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3 mb-6 sm:mb-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-6">
               {[
-                { value: "88–95%", label: "Margins" },
-                { value: "£0", label: "Onboarding" },
-                { value: "Instant", label: "Adoption" },
-                { value: "1.5–9 mo", label: "CAC Payback" },
-                { value: "10×–40×", label: "LTV:CAC" },
-              ].map((metric, i) => (
-                <div key={i} className={`bg-primary/5 rounded-lg p-2 sm:p-3 text-center border border-primary/10 ${i >= 3 ? 'col-span-1 sm:col-span-1' : ''}`}>
-                  <p className="text-sm sm:text-lg md:text-xl font-bold text-primary mb-0.5">{metric.value}</p>
-                  <p className="text-[8px] sm:text-[10px] text-muted-foreground leading-tight">{metric.label}</p>
+                "Lightweight SaaS",
+                "High gross margins (≈88–95%)",
+                "Zero onboarding cost",
+                "Tiny infrastructure spend",
+                "Near-infinite scalability",
+                "Pricing from £19.50/month",
+              ].map((item, i) => (
+                <div key={i} className="bg-secondary/50 rounded-lg p-3 sm:p-4 border border-border text-center">
+                  <CheckCircle className="w-4 h-4 text-primary mx-auto mb-1" />
+                  <span className="text-foreground text-xs sm:text-sm">{item}</span>
                 </div>
               ))}
             </div>
             
-            <div className="text-center">
+            <div className="bg-primary/5 rounded-xl p-4 sm:p-6 border border-primary/20 mb-4 sm:mb-6">
+              <p className="text-xs sm:text-sm text-primary font-semibold uppercase tracking-wider mb-3 text-center">The kicker</p>
+              <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                <div className="text-center">
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">&lt;2 mo</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">CAC Payback</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-1">&gt;10×</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">LTV:CAC</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="text-center space-y-3">
               <p className="text-base sm:text-lg text-foreground">
-                High margin. Low friction. <span className="text-primary font-semibold">Category-defining.</span>
+                This is <span className="text-primary font-semibold">SaaS the way SaaS is supposed to work.</span>
+              </p>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                Even better — the workflow spreads via referrals.<br />
+                <span className="text-foreground">Once one team adopts Hobson, everyone else wants it.</span>
               </p>
             </div>
           </div>
@@ -294,16 +331,20 @@ const InvestorSummary = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-6 sm:mb-10">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
-                We pilot in 2026. <span className="text-primary">To scale, we raise for 2027.</span>
+                What We're Raising <span className="text-primary">(And Why It Matters)</span>
               </h2>
+              <p className="text-sm sm:text-base text-muted-foreground">
+                We can run pilots throughout 2026.<br />
+                <span className="text-foreground font-medium">We cannot unlock commercial scale without capital.</span>
+              </p>
             </div>
             
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 mb-6 sm:mb-8">
               {[
-                { amount: "£1.2M", label: "Activation", desc: "Pilot → minimal launch" },
-                { amount: "£1.5M", label: "Minimum", desc: "Stable UK launch" },
-                { amount: "£1.8M", label: "Optimal", desc: "Best runway + GTM", recommended: true },
-                { amount: "£2.2M", label: "Accelerated", desc: "UK + international" },
+                { amount: "£1.2M", label: "We launch", desc: "but nervously" },
+                { amount: "£1.5M", label: "We launch", desc: "sustainably" },
+                { amount: "£1.8M", label: "We launch", desc: "grow, and breathe", recommended: true },
+                { amount: "£2.2M", label: "We launch", desc: "grow, expand, dominate" },
               ].map((option, i) => (
                 <div 
                   key={i} 
@@ -331,9 +372,14 @@ const InvestorSummary = () => {
               ))}
             </div>
             
-            <div className="text-center">
+            <div className="bg-primary/5 rounded-xl p-4 sm:p-6 border-l-4 border-primary text-center">
+              <p className="text-xs sm:text-sm text-primary font-semibold uppercase tracking-wider mb-2">Our recommendation</p>
               <p className="text-base sm:text-lg text-foreground">
-                We're raising to bring <span className="text-primary font-semibold">clarity to global real estate.</span>
+                <span className="text-primary font-bold text-xl sm:text-2xl">£1.8M</span> to build the category leader in AI document intelligence.
+              </p>
+              <p className="text-sm sm:text-base text-muted-foreground mt-3">
+                Hobson isn't a feature.<br />
+                <span className="text-foreground font-medium">Hobson is the clarity layer real estate has been missing for decades.</span>
               </p>
             </div>
           </div>
@@ -345,16 +391,28 @@ const InvestorSummary = () => {
         {/* Closing Section */}
         <section className="px-4 sm:px-6 py-10 sm:py-16">
           <div className="max-w-2xl mx-auto text-center">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
-              Clarity shouldn't be a luxury.<br />
-              <span className="text-primary">Hobson makes it instant.</span>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-foreground">
+              Come Build This With Us
             </h2>
-            <p className="text-base sm:text-lg text-muted-foreground mb-6 sm:mb-10">
-              Real estate has never been more ready.
+            <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6">
+              If AI is going to reshape operational work,<br />
+              it should do it with <span className="text-foreground font-medium">empathy, trust, and transparency</span>.
+            </p>
+            <p className="text-base sm:text-lg text-foreground mb-6 sm:mb-8">
+              Real estate doesn't need another shiny tool.<br />
+              It needs an expert —<br />
+              one that shows up instantly, answers truthfully, and never gets tired.
+            </p>
+            <p className="text-xl sm:text-2xl font-bold text-primary mb-6 sm:mb-8">
+              That's Hobson.
             </p>
             
-            <div className="bg-primary/5 rounded-xl p-5 sm:p-8 border-l-4 border-primary">
-              <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-5">Want the complete picture?</p>
+            <p className="text-lg sm:text-xl text-foreground mb-2">
+              Let's build the future of clarity together.
+            </p>
+            
+            <div className="bg-primary/5 rounded-xl p-5 sm:p-8 border-l-4 border-primary mt-6 sm:mt-10">
+              <p className="text-sm sm:text-base text-foreground mb-4 sm:mb-5">Want the full picture?</p>
               <a 
                 href="mailto:rochelle.t@hobsonschoice.ai"
                 className="inline-flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all text-sm sm:text-base"
