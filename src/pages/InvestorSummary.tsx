@@ -262,7 +262,7 @@ const InvestorSummary = () => {
               "Replace everything! Change systems! Embrace the disruption!"
             </p>
             <p className="text-sm sm:text-base text-foreground mb-6 sm:mb-8">
-              Real estate people hear that and think: <span className="font-bold">"No."</span>
+              Real estate people hear that and think: <span className="font-bold">"NO!"</span>
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 my-6 sm:my-10">
