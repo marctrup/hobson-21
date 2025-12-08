@@ -47,6 +47,7 @@ import MarketShareJustificationVisual from "@/components/investor/MarketShareJus
 import RevenueModelVisual from "@/components/investor/RevenueModelVisual";
 import GlobalJustificationVisual from "@/components/investor/GlobalJustificationVisual";
 import RevenueGrowthVisual from "@/components/investor/RevenueGrowthVisual";
+import CostAssumptionsVisual from "@/components/investor/CostAssumptionsVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -834,8 +835,10 @@ const sections = [
       },
       {
         title: "Cost Assumptions",
+        showCustomVisual: true,
+        customVisualComponent: "costAssumptions",
         content: {
-          overview: "Breakdown of cost structure and assumptions underlying financial projections.",
+          overview: "",
           sections: [],
         },
       },
@@ -1451,6 +1454,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Revenue Model */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "revenueModel" && (
                       <RevenueModelVisual />
+                    )}
+
+                    {/* Custom Visual Component for Cost Assumptions */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "costAssumptions" && (
+                      <CostAssumptionsVisual />
                     )}
 
                     {/* Custom Visual Component for Global Justification */}
