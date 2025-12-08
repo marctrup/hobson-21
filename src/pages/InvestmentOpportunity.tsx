@@ -852,6 +852,13 @@ const sections = [
         },
       },
       {
+        title: "P/L Assumptions",
+        content: {
+          overview: "Profit and loss assumptions underlying financial projections.",
+          sections: [],
+        },
+      },
+      {
         title: "Financial Forecast",
         content: {
           overview: "Revenue projections and growth assumptions.",
