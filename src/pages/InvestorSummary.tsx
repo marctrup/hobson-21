@@ -254,7 +254,7 @@ const InvestorSummary = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-10">
               <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-foreground">
-                We pilot in 2026. <span className="text-primary">To scale, we raise in 2027.</span>
+                We pilot in 2026. <span className="text-primary">To scale, we raise for 2027.</span>
               </h2>
             </div>
             
