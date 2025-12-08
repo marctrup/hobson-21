@@ -871,34 +871,6 @@ const sections = [
           sections: [],
         },
       },
-      {
-        title: "Financial Forecast",
-        content: {
-          overview: "Revenue projections and growth assumptions.",
-          sections: [],
-        },
-      },
-      {
-        title: "Operating Expenses",
-        content: {
-          overview: "Detailed breakdown of operational costs.",
-          sections: [],
-        },
-      },
-      {
-        title: "Cost of Product",
-        content: {
-          overview: "Infrastructure and AI cost analysis.",
-          sections: [],
-        },
-      },
-      {
-        title: "Staffing",
-        content: {
-          overview: "Team growth plan and hiring roadmap.",
-          sections: [],
-        },
-      },
     ],
   },
   {
