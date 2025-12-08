@@ -41,9 +41,13 @@ const CACAssumptionsVisual = () => {
             <div className="grid md:grid-cols-2 gap-4 mb-4">
               {/* UK Table */}
               <div>
-                <h5 className="text-sm font-semibold text-muted-foreground mb-2">UK</h5>
                 <Table>
                   <TableHeader>
+                    <TableRow className="bg-purple-100/70 hover:bg-purple-100/70">
+                      <TableHead colSpan={3} className="text-center">
+                        <span className="text-lg font-bold text-purple-700">UK</span>
+                      </TableHead>
+                    </TableRow>
                     <TableRow>
                       <TableHead>Year</TableHead>
                       <TableHead className="text-right">Customers</TableHead>
@@ -70,9 +74,13 @@ const CACAssumptionsVisual = () => {
 
               {/* Global Table */}
               <div>
-                <h5 className="text-sm font-semibold text-muted-foreground mb-2">Global</h5>
                 <Table>
                   <TableHeader>
+                    <TableRow className="bg-indigo-100/70 hover:bg-indigo-100/70">
+                      <TableHead colSpan={3} className="text-center">
+                        <span className="text-lg font-bold text-indigo-700">Global</span>
+                      </TableHead>
+                    </TableRow>
                     <TableRow>
                       <TableHead>Year</TableHead>
                       <TableHead className="text-right">Customers</TableHead>
