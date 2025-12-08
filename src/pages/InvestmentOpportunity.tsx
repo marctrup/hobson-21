@@ -49,6 +49,7 @@ import GlobalJustificationVisual from "@/components/investor/GlobalJustification
 import RevenueGrowthVisual from "@/components/investor/RevenueGrowthVisual";
 import CostAssumptionsVisual from "@/components/investor/CostAssumptionsVisual";
 import PLAssumptionsVisual from "@/components/investor/PLAssumptionsVisual";
+import PLGrowthVisual from "@/components/investor/PLGrowthVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -1488,6 +1489,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Global Justification */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "globalJustification" && (
                       <GlobalJustificationVisual />
+                    )}
+
+                    {/* Custom Visual Component for P/L Growth */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "plGrowth" && (
+                      <PLGrowthVisual />
                     )}
 
                     {/* Custom Visual Component for Revenue Growth */}
