@@ -132,44 +132,32 @@ const sanitizeText = (text: string): string => {
 /**
  * Render hero section
  */
-const renderHeroSection = (doc: jsPDF, section: HeroSection, margin: number, owlImage?: string): void => {
+const renderHeroSection = (doc: jsPDF, section: HeroSection, margin: number): void => {
   const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
   const centerX = pageWidth / 2;
-  
-  // Owl mascot at top
-  if (owlImage) {
-    try {
-      const owlWidth = 40;
-      const owlHeight = 40;
-      doc.addImage(owlImage, "PNG", centerX - owlWidth / 2, 25, owlWidth, owlHeight);
-    } catch (e) {
-      console.warn("Could not add owl image to PDF:", e);
-    }
-  }
   
   // Brand name
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(16);
   doc.setFont("helvetica", "bold");
-  doc.text(section.brandName, centerX, owlImage ? 80 : 60, { align: "center" });
+  doc.text(section.brandName, centerX, 80, { align: "center" });
   
   // Main headline
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(36);
   doc.setFont("helvetica", "bold");
-  doc.text(section.headline, centerX, owlImage ? 110 : 90, { align: "center" });
+  doc.text(section.headline, centerX, 110, { align: "center" });
   
   // Highlighted headline
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(36);
-  doc.text(section.highlightedHeadline, centerX, owlImage ? 125 : 105, { align: "center" });
+  doc.text(section.highlightedHeadline, centerX, 125, { align: "center" });
   
   // Taglines
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(14);
   doc.setFont("helvetica", "normal");
-  let taglineY = owlImage ? 160 : 140;
+  let taglineY = 160;
   section.taglines.forEach((tagline) => {
     doc.text(sanitizeText(tagline), centerX, taglineY, { align: "center" });
     taglineY += 18;
@@ -296,74 +284,85 @@ const renderSolutionSection = (doc: jsPDF, section: SolutionSection, margin: num
 /**
  * Render magic section
  */
-const renderMagicSection = (doc: jsPDF, section: MagicSection, margin: number): void => {
+const renderMagicSection = (doc: jsPDF, section: MagicSection, margin: number, owlImage?: string): void => {
   const pageWidth = doc.internal.pageSize.getWidth();
   const contentWidth = pageWidth - margin * 2;
   const centerX = pageWidth / 2;
-  let y = 50;
+  let y = 30;
+  
+  // Owl mascot at top (aspect ratio ~1:1 for the mascot)
+  if (owlImage) {
+    try {
+      const owlSize = 35;
+      doc.addImage(owlImage, "PNG", centerX - owlSize / 2, y, owlSize, owlSize);
+      y += owlSize + 10;
+    } catch (e) {
+      console.warn("Could not add owl image to PDF:", e);
+    }
+  }
   
   // Title
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(24);
+  doc.setFontSize(22);
   doc.setFont("helvetica", "bold");
   doc.text(section.title, centerX, y, { align: "center" });
-  y += 12;
+  y += 10;
   
   // Subtitle
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(20);
+  doc.setFontSize(18);
   doc.text(section.subtitle, centerX, y, { align: "center" });
-  y += 30;
+  y += 25;
   
   // Under the hood box
   doc.setFillColor(249, 250, 251);
-  doc.roundedRect(margin, y, contentWidth, 40, 3, 3, "F");
+  doc.roundedRect(margin, y, contentWidth, 35, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(9);
+  doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
-  doc.text("Under the hood", centerX, y + 10, { align: "center" });
+  doc.text("Under the hood", centerX, y + 8, { align: "center" });
   
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(11);
+  doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   const hoodText = section.underTheHood.join(" -> ");
-  doc.text(sanitizeText(hoodText), centerX, y + 25, { align: "center" });
-  y += 55;
+  doc.text(sanitizeText(hoodText), centerX, y + 22, { align: "center" });
+  y += 45;
   
   // User message box
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.setDrawColor(...PDF_CONFIG.primaryColor);
-  doc.rect(margin, y, 3, 35, "F");
+  doc.rect(margin, y, 3, 30, "F");
   doc.setFillColor(249, 250, 251);
-  doc.rect(margin + 3, y, contentWidth - 3, 35, "F");
+  doc.rect(margin + 3, y, contentWidth - 3, 30, "F");
   
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(9);
+  doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
-  doc.text("To the user", centerX, y + 12, { align: "center" });
+  doc.text("To the user", centerX, y + 10, { align: "center" });
   
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(12);
+  doc.setFontSize(11);
   doc.setFont("helvetica", "italic");
-  doc.text(sanitizeText(section.userMessage), centerX, y + 25, { align: "center" });
-  y += 50;
+  doc.text(sanitizeText(section.userMessage), centerX, y + 22, { align: "center" });
+  y += 40;
   
   // Benefits
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(12);
+  doc.setFontSize(11);
   doc.setFont("helvetica", "normal");
   section.benefits.forEach((benefit) => {
     const lines = doc.splitTextToSize(sanitizeText(benefit), contentWidth);
     doc.text(lines, centerX, y, { align: "center" });
-    y += lines.length * 7 + 8;
+    y += lines.length * 6 + 6;
   });
   
   y += 5;
   
   // Testimonial
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(16);
+  doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
   doc.text(sanitizeText(section.testimonial), centerX, y, { align: "center" });
 };
@@ -706,7 +705,7 @@ export const generateInvestorSummaryPdf = (sections: InvestorSummarySection[], o
     
     switch (section.type) {
       case "hero":
-        renderHeroSection(doc, section, margin, owlImage);
+        renderHeroSection(doc, section, margin);
         break;
       case "pain":
         renderPainSection(doc, section, margin);
@@ -715,7 +714,7 @@ export const generateInvestorSummaryPdf = (sections: InvestorSummarySection[], o
         renderSolutionSection(doc, section, margin);
         break;
       case "magic":
-        renderMagicSection(doc, section, margin);
+        renderMagicSection(doc, section, margin, owlImage);
         break;
       case "market":
         renderMarketSection(doc, section, margin);
