@@ -1,53 +1,45 @@
 import React from 'react';
 import { Rocket, Users, Globe, AlertTriangle, CheckCircle, ArrowRight, Zap } from 'lucide-react';
-
 const CapitalRaiseStrategyVisual = () => {
-  const scenarios = [
-    {
-      amount: "£1.2M",
-      label: "Activation Round",
-      runway: "9–12 months",
-      risk: "high",
-      description: "Transition from pilots to limited 2027 launch. Minimal runway, heightened execution risk.",
-      color: "from-amber-500/20 to-amber-600/10",
-      borderColor: "border-amber-500/30",
-      textColor: "text-amber-600",
-    },
-    {
-      amount: "£1.5M",
-      label: "Minimum Credible",
-      runway: "12–18 months",
-      risk: "medium",
-      description: "Covers early operating costs and supports a stable launch phase. Minimum viable raise.",
-      color: "from-blue-500/20 to-blue-600/10",
-      borderColor: "border-blue-500/30",
-      textColor: "text-blue-600",
-    },
-    {
-      amount: "£1.8M",
-      label: "Balanced Seed",
-      runway: "18–22 months",
-      risk: "optimal",
-      description: "Supports product velocity, marketing execution, and early enterprise engagement. Strategically optimal.",
-      color: "from-primary/20 to-primary/10",
-      borderColor: "border-primary/50",
-      textColor: "text-primary",
-      recommended: true,
-    },
-    {
-      amount: "£2.2M",
-      label: "Accelerated Growth",
-      runway: "22–28 months",
-      risk: "low",
-      description: "Positions for accelerated UK scale and early international expansion from 2028.",
-      color: "from-emerald-500/20 to-emerald-600/10",
-      borderColor: "border-emerald-500/30",
-      textColor: "text-emerald-600",
-    },
-  ];
-
-  return (
-    <div className="space-y-8">
+  const scenarios = [{
+    amount: "£1.2M",
+    label: "Activation Round",
+    runway: "9–12 months",
+    risk: "high",
+    description: "Transition from pilots to limited 2027 launch. Minimal runway, heightened execution risk.",
+    color: "from-amber-500/20 to-amber-600/10",
+    borderColor: "border-amber-500/30",
+    textColor: "text-amber-600"
+  }, {
+    amount: "£1.5M",
+    label: "Minimum Credible",
+    runway: "12–18 months",
+    risk: "medium",
+    description: "Covers early operating costs and supports a stable launch phase. Minimum viable raise.",
+    color: "from-blue-500/20 to-blue-600/10",
+    borderColor: "border-blue-500/30",
+    textColor: "text-blue-600"
+  }, {
+    amount: "£1.8M",
+    label: "Balanced Seed",
+    runway: "18–22 months",
+    risk: "optimal",
+    description: "Supports product velocity, marketing execution, and early enterprise engagement. Strategically optimal.",
+    color: "from-primary/20 to-primary/10",
+    borderColor: "border-primary/50",
+    textColor: "text-primary",
+    recommended: true
+  }, {
+    amount: "£2.2M",
+    label: "Accelerated Growth",
+    runway: "22–28 months",
+    risk: "low",
+    description: "Positions for accelerated UK scale and early international expansion from 2028.",
+    color: "from-emerald-500/20 to-emerald-600/10",
+    borderColor: "border-emerald-500/30",
+    textColor: "text-emerald-600"
+  }];
+  return <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
         <h2 className="text-2xl font-bold text-foreground mb-2">Capital Raise Strategy</h2>
@@ -92,7 +84,7 @@ const CapitalRaiseStrategyVisual = () => {
               <Rocket className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <p className="font-medium text-foreground">Go-to-Market</p>
+              <p className="font-medium text-foreground">Go-to-Market-Strategy</p>
               <p className="text-sm text-muted-foreground">Convert pilot insights into scalable revenue</p>
             </div>
           </div>
@@ -103,18 +95,10 @@ const CapitalRaiseStrategyVisual = () => {
       <div>
         <h3 className="text-lg font-semibold text-foreground mb-4">Raise Scenarios</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {scenarios.map((scenario, index) => (
-            <div
-              key={index}
-              className={`relative bg-gradient-to-br ${scenario.color} rounded-xl p-5 border ${scenario.borderColor} ${
-                scenario.recommended ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''
-              }`}
-            >
-              {scenario.recommended && (
-                <div className="absolute -top-3 left-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
+          {scenarios.map((scenario, index) => <div key={index} className={`relative bg-gradient-to-br ${scenario.color} rounded-xl p-5 border ${scenario.borderColor} ${scenario.recommended ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''}`}>
+              {scenario.recommended && <div className="absolute -top-3 left-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
                   Recommended
-                </div>
-              )}
+                </div>}
               <div className="flex items-start justify-between mb-3">
                 <div>
                   <p className={`text-2xl font-bold ${scenario.textColor}`}>{scenario.amount}</p>
@@ -127,24 +111,17 @@ const CapitalRaiseStrategyVisual = () => {
               </div>
               <p className="text-sm text-muted-foreground">{scenario.description}</p>
               <div className="mt-3 flex items-center gap-2">
-                {scenario.risk === "high" && (
-                  <span className="inline-flex items-center gap-1 text-xs text-amber-600 bg-amber-500/20 px-2 py-1 rounded-full">
+                {scenario.risk === "high" && <span className="inline-flex items-center gap-1 text-xs text-amber-600 bg-amber-500/20 px-2 py-1 rounded-full">
                     <AlertTriangle className="w-3 h-3" /> Higher Risk
-                  </span>
-                )}
-                {scenario.risk === "optimal" && (
-                  <span className="inline-flex items-center gap-1 text-xs text-primary bg-primary/20 px-2 py-1 rounded-full">
+                  </span>}
+                {scenario.risk === "optimal" && <span className="inline-flex items-center gap-1 text-xs text-primary bg-primary/20 px-2 py-1 rounded-full">
                     <CheckCircle className="w-3 h-3" /> Optimal Execution
-                  </span>
-                )}
-                {scenario.risk === "low" && (
-                  <span className="inline-flex items-center gap-1 text-xs text-emerald-600 bg-emerald-500/20 px-2 py-1 rounded-full">
+                  </span>}
+                {scenario.risk === "low" && <span className="inline-flex items-center gap-1 text-xs text-emerald-600 bg-emerald-500/20 px-2 py-1 rounded-full">
                     <Globe className="w-3 h-3" /> Global Ready
-                  </span>
-                )}
+                  </span>}
               </div>
-            </div>
-          ))}
+            </div>)}
         </div>
       </div>
 
@@ -183,8 +160,6 @@ const CapitalRaiseStrategyVisual = () => {
           a minimal but functional launch in 2027, and accelerated UK penetration and global expansion from 2028 onwards.
         </p>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default CapitalRaiseStrategyVisual;
