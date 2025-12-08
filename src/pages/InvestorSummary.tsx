@@ -17,34 +17,56 @@ const InvestorSummary = () => {
     try {
       const content = contentRef.current;
       
-      // Create canvas from the content
+      // Store original styles
+      const originalWidth = content.style.width;
+      const originalMaxWidth = content.style.maxWidth;
+      
+      // Set a fixed width for consistent PDF rendering (A4 proportion)
+      content.style.width = '800px';
+      content.style.maxWidth = '800px';
+      
+      // Wait for styles to apply
+      await new Promise(resolve => setTimeout(resolve, 100));
+      
+      // Create canvas from the content with higher quality
       const canvas = await html2canvas(content, {
         scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
+        windowWidth: 800,
       });
       
+      // Restore original styles
+      content.style.width = originalWidth;
+      content.style.maxWidth = originalMaxWidth;
+      
       const imgData = canvas.toDataURL('image/png');
-      const imgWidth = 210; // A4 width in mm
-      const pageHeight = 297; // A4 height in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      // A4 dimensions in mm
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+      
+      // Calculate dimensions maintaining aspect ratio
+      const canvasAspectRatio = canvas.width / canvas.height;
+      const imgWidth = pdfWidth;
+      const imgHeight = pdfWidth / canvasAspectRatio;
       
       const pdf = new jsPDF('p', 'mm', 'a4');
-      let heightLeft = imgHeight;
-      let position = 0;
       
-      // Add first page
-      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
+      // Calculate how many pages we need
+      const totalPages = Math.ceil(imgHeight / pdfHeight);
       
-      // Add subsequent pages if content is longer than one page
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+      for (let page = 0; page < totalPages; page++) {
+        if (page > 0) {
+          pdf.addPage();
+        }
+        
+        // Calculate the y position for this page slice
+        const yOffset = -(page * pdfHeight);
+        
+        pdf.addImage(imgData, 'PNG', 0, yOffset, imgWidth, imgHeight);
       }
       
       pdf.save('Hobson-AI-Investor-Summary.pdf');
