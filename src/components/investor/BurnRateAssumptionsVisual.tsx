@@ -339,7 +339,7 @@ const BurnRateAssumptionsVisual = () => {
       {/* Summary */}
       <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
         <p className="text-sm text-foreground">
-          <strong className="text-primary">Summary:</strong> The £1.5M–£2M seed raise covers 18–24 months of pre-revenue build and early commercialisation. 
+          <strong className="text-primary">Summary:</strong> The £1.5M–£2.2M seed raise covers 18–24 months of pre-revenue build and early commercialisation. 
           Once revenue begins in 2027, the lean operating model becomes cashflow-positive almost immediately, 
           avoiding unnecessary dilution and demonstrating exceptional capital efficiency.
         </p>
