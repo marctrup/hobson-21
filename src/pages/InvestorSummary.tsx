@@ -238,8 +238,8 @@ const InvestorSummary = () => {
                 </p>
               </div>
               <div className="flex-shrink-0 order-1 md:order-2">
-                <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center">
-                  <Search className="w-10 h-10 sm:w-14 sm:h-14 text-primary/70" />
+                <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-primary/15 to-primary/5 flex items-center justify-center">
+                  <Search className="w-8 h-8 sm:w-10 sm:h-10 text-primary/70" />
                 </div>
               </div>
             </div>
