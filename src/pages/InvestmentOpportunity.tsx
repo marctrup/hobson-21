@@ -1129,7 +1129,7 @@ const InvestmentOpportunity = () => {
                   <p className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">
                     Funding Requirement
                   </p>
-                  <p className="text-2xl sm:text-3xl font-bold text-primary mb-2">£1.5M–£2M</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-primary mb-2">£1.5M–£2.2M</p>
                   <p className="text-xs sm:text-sm text-muted-foreground">Covers 18–24 months and early commercialisation</p>
                 </div>
               </div>
