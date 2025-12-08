@@ -1,9 +1,59 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { FileText, Search, Zap, Shield, Globe, Mail, Users, Target, Sparkles, CheckCircle, XCircle, Brain, Eye } from 'lucide-react';
+import { FileText, Search, Zap, Shield, Globe, Mail, Users, Target, Sparkles, CheckCircle, XCircle, Brain, Eye, Download, Loader2 } from 'lucide-react';
 import hobsonMascot from '@/assets/hobson-mascot.png';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 const InvestorSummary = () => {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [isGenerating, setIsGenerating] = useState(false);
+
+  const handleDownloadPDF = async () => {
+    if (!contentRef.current || isGenerating) return;
+    
+    setIsGenerating(true);
+    
+    try {
+      const content = contentRef.current;
+      
+      // Create canvas from the content
+      const canvas = await html2canvas(content, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+      });
+      
+      const imgData = canvas.toDataURL('image/png');
+      const imgWidth = 210; // A4 width in mm
+      const pageHeight = 297; // A4 height in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      
+      const pdf = new jsPDF('p', 'mm', 'a4');
+      let heightLeft = imgHeight;
+      let position = 0;
+      
+      // Add first page
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+      
+      // Add subsequent pages if content is longer than one page
+      while (heightLeft > 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
+      
+      pdf.save('Hobson-AI-Investor-Summary.pdf');
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
   return (
     <>
       <Helmet>
@@ -13,7 +63,26 @@ const InvestorSummary = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </Helmet>
       
-      <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      {/* Floating Download Button */}
+      <button
+        onClick={handleDownloadPDF}
+        disabled={isGenerating}
+        className="fixed top-4 right-4 z-50 flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-4 py-2.5 rounded-lg shadow-lg transition-all disabled:opacity-70 text-sm"
+      >
+        {isGenerating ? (
+          <>
+            <Loader2 className="w-4 h-4 animate-spin" />
+            <span className="hidden sm:inline">Generating...</span>
+          </>
+        ) : (
+          <>
+            <Download className="w-4 h-4" />
+            <span className="hidden sm:inline">Download PDF</span>
+          </>
+        )}
+      </button>
+
+      <div ref={contentRef} className="min-h-screen bg-background text-foreground overflow-x-hidden">
         {/* Hero Section */}
         <section className="relative min-h-[50vh] sm:min-h-[60vh] flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-20 overflow-hidden">
           {/* Floating document icons */}
