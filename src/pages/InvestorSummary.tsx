@@ -250,7 +250,7 @@ const InvestorSummary = () => {
                     <span className="text-primary font-bold hidden sm:inline">→</span>
                     <div className="flex items-center gap-2 text-foreground">
                       <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
-                      <span className="text-sm sm:text-base">K-Graph Reasoning</span>
+                      <span className="text-sm sm:text-base">AI Reasoning</span>
                     </div>
                     <span className="text-primary font-bold hidden sm:inline">→</span>
                     <div className="flex items-center gap-2 text-foreground">
