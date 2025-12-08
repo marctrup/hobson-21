@@ -221,7 +221,7 @@ const sections = [
         },
       },
       {
-        title: "Global Validation",
+        title: "Global Market Assumptions",
         content: {
           overview: "Explosive Global Growth (Verified by Independent Reports)",
           sections: [
