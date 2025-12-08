@@ -1,82 +1,162 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { FileText, Search, Zap, Shield, Globe, Mail, Users, Target, Sparkles, CheckCircle, XCircle, Brain, Eye, Download, Loader2 } from 'lucide-react';
+import { FileText, Search, Zap, Globe, Mail, Target, CheckCircle, XCircle, Brain, Download, Loader2 } from 'lucide-react';
 import hobsonMascot from '@/assets/hobson-mascot.png';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import { 
+  downloadInvestorSummaryPdf, 
+  InvestorSummarySection,
+  HeroSection,
+  PainSection,
+  SolutionSection,
+  MagicSection,
+  MarketSection,
+  BusinessModelSection,
+  RaiseSection,
+  ClosingSection
+} from '@/utils/investorSummaryPdfGenerator';
+
+// Define all section content for PDF generation
+const heroSection: HeroSection = {
+  type: "hero",
+  brandName: "HOBSON AI",
+  headline: "The Problem",
+  highlightedHeadline: "No One Talks About",
+  taglines: [
+    "Real estate runs on documents.",
+    "Documents run on chaos."
+  ]
+};
+
+const painSection: PainSection = {
+  type: "pain",
+  description: "Every lease, title, report, and contract hides the answer someone needs right now — and 99% of the time, that answer is trapped in a PDF, a shared drive, or someone's head.",
+  quote: "\"Why does finding one answer still take 20 minutes, 3 systems, and a colleague named Dave who knows where everything is?\"",
+  conclusion: [
+    "There had to be a better way.",
+    "There wasn't."
+  ],
+  callToAction: "So we built one."
+};
+
+const solutionSection: SolutionSection = {
+  type: "solution",
+  title: "AI That Doesn't Cause a Riot",
+  problemStatement: "Most AI startups show up and say:",
+  response: "\"Replace everything! Burn the old systems! Embrace the disruption!\"",
+  keyMessage: "We innovate without disruption.",
+  features: [
+    "No onboarding",
+    "No behaviour change"
+  ],
+  description: "You just upload your documents and ask a question. Hobson answers — instantly, accurately, with receipts. (Unlike your last intern.)"
+};
+
+const magicSection: MagicSection = {
+  type: "magic",
+  title: "The Magic Trick",
+  subtitle: "(That Isn't Magic)",
+  underTheHood: ["Document Intelligence", "AI Reasoning", "Instant Clarity"],
+  userMessage: "\"Here's the answer. And here's exactly where I found it.\"",
+  benefits: [
+    "Hobson turns chaos into clarity and fragmented data into one clean, trusted source of truth.",
+    "Real estate has never seen this before — but every operator who touches it says the same thing:"
+  ],
+  testimonial: "\"I'm not going back.\""
+};
+
+const marketSection: MarketSection = {
+  type: "market",
+  title: "Why This Market Bends in Our Favour",
+  subtitle: "Real estate is drowning in document work — and it's costing a fortune.",
+  stats: [
+    { value: "£1.4B", label: "Annual efficiency loss in the UK" },
+    { value: "£155.6B", label: "Annual efficiency loss across global OECD markets" }
+  ],
+  tamExplanation: "That's the TAM: The value trapped in admin, manual work, and document-chasing.",
+  noItems: [
+    "No incumbent",
+    "No category leader",
+    "No integrated AI document intelligence",
+    "No low-friction tool like Hobson"
+  ],
+  positioning: [
+    "We are early. We are differentiated. We are exactly on time.",
+    "The sector is desperate for efficiency — 20% gains from AI are now baseline, not hype."
+  ],
+  conclusion: "Hobson is the clarity layer that unlocks those gains."
+};
+
+const businessModelSection: BusinessModelSection = {
+  type: "businessModel",
+  title: "The Business Model That Makes Investors Smile",
+  features: [
+    "Lightweight SaaS",
+    "High gross margins (≈88–95%)",
+    "Zero onboarding cost",
+    "Tiny infrastructure spend",
+    "Near-infinite scalability",
+    "Pricing from £19.50/month"
+  ],
+  metrics: [
+    { value: "<2 mo", label: "CAC Payback" },
+    { value: ">10×", label: "LTV:CAC" }
+  ],
+  tagline: "This is SaaS the way SaaS is supposed to work.",
+  referralNote: "Even better — the workflow spreads via referrals. Once one team adopts Hobson, everyone else wants it."
+};
+
+const raiseSection: RaiseSection = {
+  type: "raise",
+  title: "What We're Raising (And Why It Matters)",
+  subtitle: [
+    "We can run pilots throughout 2026.",
+    "We cannot unlock commercial scale without capital."
+  ],
+  options: [
+    { amount: "£1.2M", label: "We launch", desc: "but nervously" },
+    { amount: "£1.5M", label: "We launch", desc: "sustainably" },
+    { amount: "£1.8M", label: "We launch", desc: "grow, and breathe", recommended: true },
+    { amount: "£2.2M", label: "We launch", desc: "grow, expand, dominate" }
+  ],
+  recommendation: {
+    amount: "£1.8M",
+    description: "to build the category leader in AI document intelligence."
+  },
+  closingStatement: "Hobson isn't a feature. Hobson is the clarity layer real estate has been missing for decades."
+};
+
+const closingSection: ClosingSection = {
+  type: "closing",
+  title: "Come Build This With Us",
+  philosophy: "If AI is going to reshape operational work, it should do it with empathy, trust, and transparency.",
+  pitch: "Real estate doesn't need another shiny tool. It needs an expert — one that shows up instantly, answers truthfully, and never gets tired.",
+  brandName: "That's Hobson.",
+  callToAction: "Let's build the future of clarity together.",
+  contactPrompt: "Want the full picture?",
+  contactEmail: "rochelle.t@hobsonschoice.ai"
+};
+
+const allSections: InvestorSummarySection[] = [
+  heroSection,
+  painSection,
+  solutionSection,
+  magicSection,
+  marketSection,
+  businessModelSection,
+  raiseSection,
+  closingSection
+];
 
 const InvestorSummary = () => {
-  const contentRef = useRef<HTMLDivElement>(null);
   const [isGenerating, setIsGenerating] = useState(false);
 
-  const handleDownloadPDF = async () => {
-    if (!contentRef.current || isGenerating) return;
+  const handleDownloadPDF = () => {
+    if (isGenerating) return;
     
     setIsGenerating(true);
     
     try {
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      const pdfWidth = 210;
-      const pdfHeight = 297;
-      const margin = 10;
-      const contentWidth = pdfWidth - (margin * 2);
-      
-      // Hide elements that shouldn't appear in PDF
-      const hiddenElements = contentRef.current.querySelectorAll('[data-pdf-hide]');
-      hiddenElements.forEach((el) => {
-        (el as HTMLElement).style.display = 'none';
-      });
-      
-      // Get all sections
-      const sections = contentRef.current.querySelectorAll('[data-pdf-section]');
-      
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i] as HTMLElement;
-        
-        // Add new page for all sections after the first
-        if (i > 0) {
-          pdf.addPage();
-        }
-        
-        // Capture section
-        const canvas = await html2canvas(section, {
-          scale: 2,
-          useCORS: true,
-          allowTaint: true,
-          backgroundColor: '#ffffff',
-          logging: false,
-          width: 800,
-          windowWidth: 800,
-        });
-        
-        const imgData = canvas.toDataURL('image/png');
-        
-        // Calculate dimensions to fit within page with margins
-        const imgAspectRatio = canvas.width / canvas.height;
-        let imgWidth = contentWidth;
-        let imgHeight = contentWidth / imgAspectRatio;
-        
-        // If image is taller than page, scale down
-        const maxHeight = pdfHeight - (margin * 2);
-        if (imgHeight > maxHeight) {
-          imgHeight = maxHeight;
-          imgWidth = maxHeight * imgAspectRatio;
-        }
-        
-        // Center horizontally
-        const xOffset = (pdfWidth - imgWidth) / 2;
-        // Center vertically
-        const yOffset = (pdfHeight - imgHeight) / 2;
-        
-        pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight);
-      }
-      
-      // Restore hidden elements
-      hiddenElements.forEach((el) => {
-        (el as HTMLElement).style.display = '';
-      });
-      
-      pdf.save('Hobson-AI-Investor-Summary.pdf');
+      downloadInvestorSummaryPdf(allSections);
     } catch (error) {
       console.error('Error generating PDF:', error);
     } finally {
@@ -93,7 +173,7 @@ const InvestorSummary = () => {
       </Helmet>
       
 
-      <div ref={contentRef} className="min-h-screen bg-background text-foreground overflow-x-hidden">
+      <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
         {/* Hero Section */}
         <section data-pdf-section className="relative min-h-[50vh] sm:min-h-[60vh] flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-20 overflow-hidden bg-background">
           {/* Floating document icons */}
