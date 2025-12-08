@@ -117,10 +117,10 @@ const BurnRateAssumptionsVisual = () => {
         </div>
 
         {/* Total Fixed */}
-        <div className="bg-muted border border-border rounded-lg p-4 mt-4">
+        <div className="bg-muted border border-border rounded-lg p-3 sm:p-4 mt-4">
           <p className="text-center">
-            <span className="text-sm text-muted-foreground">Total Fixed Operating Cost</span><br />
-            <span className="text-2xl font-medium text-foreground">£850,000/year → £70,800/month</span>
+            <span className="text-xs sm:text-sm text-muted-foreground">Total Fixed Operating Cost</span><br />
+            <span className="text-base sm:text-lg font-medium text-foreground">£850,000/year → £70,800/month</span>
           </p>
         </div>
       </div>
