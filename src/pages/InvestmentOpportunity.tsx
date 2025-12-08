@@ -42,6 +42,7 @@ import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMa
 import { TargetMarketVisual } from "@/components/investor/TargetMarketVisual";
 import { SAMVisual } from "@/components/investor/SAMVisual";
 import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumptionsVisual";
+import { UKAssumptionsFinancialsVisual } from "@/components/investor/UKAssumptionsFinancialsVisual";
 import { GlobalMarketAssumptionsVisual } from "@/components/investor/GlobalMarketAssumptionsVisual";
 import MarketShareJustificationVisual from "@/components/investor/MarketShareJustificationVisual";
 import RevenueModelVisual from "@/components/investor/RevenueModelVisual";
@@ -813,7 +814,7 @@ const sections = [
       {
         title: "UK Assumptions",
         showCustomVisual: true,
-        customVisualComponent: "ukMarketAssumptions",
+        customVisualComponent: "ukAssumptionsFinancials",
         content: {
           overview: "",
           sections: [],
@@ -1434,9 +1435,14 @@ const InvestmentOpportunity = () => {
                       <CompetitorAnalysisMatrix />
                     )}
 
-                    {/* Custom Visual Component for UK Market Assumptions */}
+                    {/* Custom Visual Component for UK Market Assumptions (Customers & Market section) */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "ukMarketAssumptions" && (
                       <UKMarketAssumptionsVisual />
+                    )}
+
+                    {/* Custom Visual Component for UK Assumptions (Financials section) */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "ukAssumptionsFinancials" && (
+                      <UKAssumptionsFinancialsVisual />
                     )}
 
                     {/* Custom Visual Component for Global Market Assumptions */}
