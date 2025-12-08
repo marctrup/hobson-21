@@ -105,8 +105,8 @@ const CACAssumptionsVisual = () => {
               </div>
             </div>
 
-            {/* Combined New Customers */}
-            <h5 className="text-sm font-semibold text-muted-foreground mb-2 mt-4">Combined New Customers</h5>
+            {/* Total New Customers per Year */}
+            <h5 className="text-sm font-semibold text-muted-foreground mb-2 mt-4">Total number of new customers gained in that year</h5>
             <div className="grid grid-cols-5 gap-2">
               {[
                 { year: "2027", value: "2,352" },
