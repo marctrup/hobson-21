@@ -845,18 +845,18 @@ const sections = [
         },
       },
       {
-        title: "Penetration Justification",
+        title: "Global Assumptions",
         showCustomVisual: true,
-        customVisualComponent: "marketShareJustification",
+        customVisualComponent: "globalJustification",
         content: {
           overview: "",
           sections: [],
         },
       },
       {
-        title: "Global Justification",
+        title: "Penetration Justification",
         showCustomVisual: true,
-        customVisualComponent: "globalJustification",
+        customVisualComponent: "marketShareJustification",
         content: {
           overview: "",
           sections: [],
