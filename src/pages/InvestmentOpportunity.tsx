@@ -843,7 +843,7 @@ const sections = [
         },
       },
       {
-        title: "Onboarding Costs",
+        title: "Onboarding Cost Detail",
         showCustomVisual: true,
         customVisualComponent: "onboardingCosts",
         content: {
