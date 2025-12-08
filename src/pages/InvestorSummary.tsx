@@ -42,7 +42,7 @@ const solutionSection: SolutionSection = {
   type: "solution",
   title: "AI That Doesn't Cause a Riot",
   problemStatement: "Most AI startups show up and say:",
-  response: "\"Replace everything! Burn the old systems! Embrace the disruption!\"",
+  response: "\"Replace everything! Change systems! Embrace the disruption!\"",
   keyMessage: "We innovate without disruption.",
   features: [
     "No onboarding",
@@ -259,7 +259,7 @@ const InvestorSummary = () => {
               Most AI startups show up and say:
             </p>
             <p className="text-base sm:text-lg md:text-xl text-destructive font-semibold mb-4 sm:mb-5 italic">
-              "Replace everything! Burn the old systems! Embrace the disruption!"
+              "Replace everything! Change systems! Embrace the disruption!"
             </p>
             <p className="text-sm sm:text-base text-foreground mb-6 sm:mb-8">
               Real estate people hear that and think: <span className="font-bold">"No."</span>
