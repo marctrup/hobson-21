@@ -21,6 +21,12 @@ const InvestorSummary = () => {
       const margin = 10;
       const contentWidth = pdfWidth - (margin * 2);
       
+      // Hide elements that shouldn't appear in PDF
+      const hiddenElements = contentRef.current.querySelectorAll('[data-pdf-hide]');
+      hiddenElements.forEach((el) => {
+        (el as HTMLElement).style.display = 'none';
+      });
+      
       // Get all sections
       const sections = contentRef.current.querySelectorAll('[data-pdf-section]');
       
@@ -64,6 +70,11 @@ const InvestorSummary = () => {
         
         pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight);
       }
+      
+      // Restore hidden elements
+      hiddenElements.forEach((el) => {
+        (el as HTMLElement).style.display = '';
+      });
       
       pdf.save('Hobson-AI-Investor-Summary.pdf');
     } catch (error) {
@@ -506,6 +517,7 @@ const InvestorSummary = () => {
             <button
               onClick={handleDownloadPDF}
               disabled={isGenerating}
+              data-pdf-hide
               className="mt-6 inline-flex items-center gap-2 bg-background hover:bg-secondary text-foreground border border-border font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all disabled:opacity-70 text-sm sm:text-base"
             >
               {isGenerating ? (
