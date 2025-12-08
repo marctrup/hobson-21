@@ -44,6 +44,7 @@ import { SAMVisual } from "@/components/investor/SAMVisual";
 import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumptionsVisual";
 import MarketShareJustificationVisual from "@/components/investor/MarketShareJustificationVisual";
 import RevenueModelVisual from "@/components/investor/RevenueModelVisual";
+import GlobalJustificationVisual from "@/components/investor/GlobalJustificationVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -861,6 +862,15 @@ const sections = [
         },
       },
       {
+        title: "Global Justification",
+        showCustomVisual: true,
+        customVisualComponent: "globalJustification",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Revenue Model",
         showCustomVisual: true,
         customVisualComponent: "revenueModel",
@@ -1476,6 +1486,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Revenue Model */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "revenueModel" && (
                       <RevenueModelVisual />
+                    )}
+
+                    {/* Custom Visual Component for Global Justification */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "globalJustification" && (
+                      <GlobalJustificationVisual />
                     )}
 
                     {/* Custom Visual Component for Gantt Chart */}
