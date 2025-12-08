@@ -15,58 +15,54 @@ const InvestorSummary = () => {
     setIsGenerating(true);
     
     try {
-      const content = contentRef.current;
-      
-      // Store original styles
-      const originalWidth = content.style.width;
-      const originalMaxWidth = content.style.maxWidth;
-      
-      // Set a fixed width for consistent PDF rendering (A4 proportion)
-      content.style.width = '800px';
-      content.style.maxWidth = '800px';
-      
-      // Wait for styles to apply
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      // Create canvas from the content with higher quality
-      const canvas = await html2canvas(content, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-        windowWidth: 800,
-      });
-      
-      // Restore original styles
-      content.style.width = originalWidth;
-      content.style.maxWidth = originalMaxWidth;
-      
-      const imgData = canvas.toDataURL('image/png');
-      
-      // A4 dimensions in mm
+      const pdf = new jsPDF('p', 'mm', 'a4');
       const pdfWidth = 210;
       const pdfHeight = 297;
+      const margin = 10;
+      const contentWidth = pdfWidth - (margin * 2);
       
-      // Calculate dimensions maintaining aspect ratio
-      const canvasAspectRatio = canvas.width / canvas.height;
-      const imgWidth = pdfWidth;
-      const imgHeight = pdfWidth / canvasAspectRatio;
+      // Get all sections
+      const sections = contentRef.current.querySelectorAll('[data-pdf-section]');
       
-      const pdf = new jsPDF('p', 'mm', 'a4');
-      
-      // Calculate how many pages we need
-      const totalPages = Math.ceil(imgHeight / pdfHeight);
-      
-      for (let page = 0; page < totalPages; page++) {
-        if (page > 0) {
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i] as HTMLElement;
+        
+        // Add new page for all sections after the first
+        if (i > 0) {
           pdf.addPage();
         }
         
-        // Calculate the y position for this page slice
-        const yOffset = -(page * pdfHeight);
+        // Capture section
+        const canvas = await html2canvas(section, {
+          scale: 2,
+          useCORS: true,
+          allowTaint: true,
+          backgroundColor: '#ffffff',
+          logging: false,
+          width: 800,
+          windowWidth: 800,
+        });
         
-        pdf.addImage(imgData, 'PNG', 0, yOffset, imgWidth, imgHeight);
+        const imgData = canvas.toDataURL('image/png');
+        
+        // Calculate dimensions to fit within page with margins
+        const imgAspectRatio = canvas.width / canvas.height;
+        let imgWidth = contentWidth;
+        let imgHeight = contentWidth / imgAspectRatio;
+        
+        // If image is taller than page, scale down
+        const maxHeight = pdfHeight - (margin * 2);
+        if (imgHeight > maxHeight) {
+          imgHeight = maxHeight;
+          imgWidth = maxHeight * imgAspectRatio;
+        }
+        
+        // Center horizontally
+        const xOffset = (pdfWidth - imgWidth) / 2;
+        // Center vertically
+        const yOffset = (pdfHeight - imgHeight) / 2;
+        
+        pdf.addImage(imgData, 'PNG', xOffset, yOffset, imgWidth, imgHeight);
       }
       
       pdf.save('Hobson-AI-Investor-Summary.pdf');
@@ -88,7 +84,7 @@ const InvestorSummary = () => {
 
       <div ref={contentRef} className="min-h-screen bg-background text-foreground overflow-x-hidden">
         {/* Hero Section */}
-        <section className="relative min-h-[50vh] sm:min-h-[60vh] flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-20 overflow-hidden">
+        <section data-pdf-section className="relative min-h-[50vh] sm:min-h-[60vh] flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-20 overflow-hidden bg-background">
           {/* Floating document icons */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <FileText className="absolute top-8 left-[5%] w-6 h-6 sm:w-10 sm:h-10 text-primary/40 animate-bounce" style={{ animationDelay: '0ms', animationDuration: '3s' }} />
@@ -129,7 +125,7 @@ const InvestorSummary = () => {
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
         {/* The Pain Section */}
-        <section className="px-4 sm:px-6 py-10 sm:py-16">
+        <section data-pdf-section className="px-4 sm:px-6 py-10 sm:py-16 bg-background">
           <div className="max-w-3xl mx-auto">
             <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-10">
               <div className="flex-1 order-2 md:order-1">
@@ -163,7 +159,7 @@ const InvestorSummary = () => {
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
         {/* AI That Doesn't Cause a Riot Section */}
-        <section className="px-4 sm:px-6 py-10 sm:py-16">
+        <section data-pdf-section className="px-4 sm:px-6 py-10 sm:py-16 bg-background">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-foreground">
               AI That Doesn't Cause a Riot
@@ -219,7 +215,7 @@ const InvestorSummary = () => {
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
         {/* The Magic Trick Section - with Mascot */}
-        <section className="px-4 sm:px-6 py-10 sm:py-16">
+        <section data-pdf-section className="px-4 sm:px-6 py-10 sm:py-16 bg-background">
           <div className="max-w-4xl mx-auto">
             <div className="flex flex-col items-center gap-6 sm:gap-10">
               {/* Mascot */}
@@ -289,7 +285,7 @@ const InvestorSummary = () => {
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
         {/* Why This Market Section */}
-        <section className="px-4 sm:px-6 py-10 sm:py-16">
+        <section data-pdf-section className="px-4 sm:px-6 py-10 sm:py-16 bg-background">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-6 sm:mb-10">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
@@ -360,7 +356,7 @@ const InvestorSummary = () => {
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
         {/* Business Model Section */}
-        <section className="px-4 sm:px-6 py-10 sm:py-16">
+        <section data-pdf-section className="px-4 sm:px-6 py-10 sm:py-16 bg-background">
           <div className="max-w-3xl mx-auto">
             <div className="text-center mb-6 sm:mb-10">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
@@ -414,7 +410,7 @@ const InvestorSummary = () => {
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
         {/* The Raise Section */}
-        <section className="px-4 sm:px-6 py-10 sm:py-16">
+        <section data-pdf-section className="px-4 sm:px-6 py-10 sm:py-16 bg-background">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-6 sm:mb-10">
               <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
@@ -476,7 +472,7 @@ const InvestorSummary = () => {
         <div className="mx-4 sm:max-w-3xl sm:mx-auto border-t border-border" />
 
         {/* Closing Section */}
-        <section className="px-4 sm:px-6 py-10 sm:py-16">
+        <section data-pdf-section className="px-4 sm:px-6 py-10 sm:py-16 bg-background">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-foreground">
               Come Build This With Us
