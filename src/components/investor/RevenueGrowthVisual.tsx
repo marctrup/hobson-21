@@ -38,7 +38,7 @@ const RevenueGrowthVisual = () => {
             The following tabs explain how this growth is achievable
           </p>
           <p className="text-xs text-muted-foreground">
-            Review the Assumptions, Penetration Justification, Global Justification, and Revenue Model tabs for detailed methodology and supporting data.
+            Review the UK Assumptions, Global Assumptions, Market Penetration, and Revenue Model tabs for detailed methodology and supporting data.
           </p>
         </div>
       </div>
