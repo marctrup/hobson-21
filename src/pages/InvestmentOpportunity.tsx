@@ -791,18 +791,18 @@ const sections = [
     iconColor: "text-red-600",
     pages: [
       {
-        title: "P/L Growth",
+        title: "Revenue Growth",
         showCustomVisual: true,
-        customVisualComponent: "plGrowth",
+        customVisualComponent: "revenueGrowth",
         content: {
           overview: "",
           sections: [],
         },
       },
       {
-        title: "Revenue Growth",
+        title: "P/L Growth",
         showCustomVisual: true,
-        customVisualComponent: "revenueGrowth",
+        customVisualComponent: "plGrowth",
         content: {
           overview: "",
           sections: [],
