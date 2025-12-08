@@ -1,9 +1,7 @@
 import React from 'react';
 import { Info, TrendingUp, Users, Server, Target, Calculator, BarChart3, Lightbulb, PoundSterling } from 'lucide-react';
-
 const BurnRateAssumptionsVisual = () => {
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       {/* Header */}
       <div className="text-center mb-6">
         <h3 className="text-xl font-bold text-foreground mb-2">Burn Rate Assumptions (2027–2031)</h3>
@@ -18,7 +16,7 @@ const BurnRateAssumptionsVisual = () => {
           </div>
           <div>
             <h4 className="text-lg font-bold text-foreground">Recommended Seed Raise</h4>
-            <p className="text-sm text-muted-foreground">What you actually need</p>
+            <p className="text-sm text-muted-foreground">What is actually need</p>
           </div>
         </div>
         
@@ -344,8 +342,6 @@ const BurnRateAssumptionsVisual = () => {
           avoiding unnecessary dilution and demonstrating exceptional capital efficiency.
         </p>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default BurnRateAssumptionsVisual;
