@@ -45,6 +45,7 @@ import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumpt
 import MarketShareJustificationVisual from "@/components/investor/MarketShareJustificationVisual";
 import RevenueModelVisual from "@/components/investor/RevenueModelVisual";
 import GlobalJustificationVisual from "@/components/investor/GlobalJustificationVisual";
+import RevenueGrowthVisual from "@/components/investor/RevenueGrowthVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -853,6 +854,24 @@ const sections = [
         },
       },
       {
+        title: "Revenue Growth",
+        showCustomVisual: true,
+        customVisualComponent: "revenueGrowth",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Assumptions",
+        showCustomVisual: true,
+        customVisualComponent: "ukMarketAssumptions",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Penetration Justification",
         showCustomVisual: true,
         customVisualComponent: "marketShareJustification",
@@ -1491,6 +1510,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Global Justification */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "globalJustification" && (
                       <GlobalJustificationVisual />
+                    )}
+
+                    {/* Custom Visual Component for Revenue Growth */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "revenueGrowth" && (
+                      <RevenueGrowthVisual />
                     )}
 
                     {/* Custom Visual Component for Gantt Chart */}
