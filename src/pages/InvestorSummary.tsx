@@ -176,52 +176,27 @@ const InvestorSummary = () => {
       <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
         {/* Hero Section */}
         <section data-pdf-section className="relative min-h-[50vh] sm:min-h-[60vh] flex flex-col items-center justify-center px-4 sm:px-6 py-12 sm:py-20 overflow-hidden bg-background">
-          {/* Floating document icons with extreme motion */}
-          <style>{`
-            @keyframes floatExtreme1 {
-              0%, 100% { transform: translate(0, 0) rotate(0deg); }
-              25% { transform: translate(35px, -50px) rotate(18deg); }
-              50% { transform: translate(-25px, -80px) rotate(-12deg); }
-              75% { transform: translate(45px, -30px) rotate(22deg); }
-            }
-            @keyframes floatExtreme2 {
-              0%, 100% { transform: translate(0, 0) rotate(0deg); }
-              25% { transform: translate(-45px, -60px) rotate(-22deg); }
-              50% { transform: translate(35px, -90px) rotate(15deg); }
-              75% { transform: translate(-55px, -40px) rotate(-18deg); }
-            }
-            @keyframes floatExtreme3 {
-              0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-              25% { transform: translate(50px, -70px) rotate(25deg) scale(1.15); }
-              50% { transform: translate(-35px, -100px) rotate(-18deg) scale(0.85); }
-              75% { transform: translate(60px, -50px) rotate(28deg) scale(1.1); }
-            }
-            @keyframes floatExtreme4 {
-              0%, 100% { transform: translate(0, 0) rotate(0deg); }
-              33% { transform: translate(-60px, -85px) rotate(-28deg); }
-              66% { transform: translate(50px, -65px) rotate(22deg); }
-            }
-          `}</style>
+          {/* Floating document icons */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <FileText className="absolute top-8 left-[5%] w-6 h-6 sm:w-10 sm:h-10 text-primary/40" style={{ animation: 'floatExtreme1 16s ease-in-out infinite', animationDelay: '0ms' }} />
-            <FileText className="absolute top-12 right-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/50" style={{ animation: 'floatExtreme2 18s ease-in-out infinite', animationDelay: '1500ms' }} />
-            <FileText className="absolute top-[30%] left-[3%] w-7 h-7 sm:w-11 sm:h-11 text-primary/35" style={{ animation: 'floatExtreme3 20s ease-in-out infinite', animationDelay: '3000ms' }} />
-            <FileText className="absolute top-[35%] right-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45" style={{ animation: 'floatExtreme4 17s ease-in-out infinite', animationDelay: '4500ms' }} />
-            <FileText className="absolute bottom-[30%] left-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/50" style={{ animation: 'floatExtreme1 19s ease-in-out infinite', animationDelay: '2200ms' }} />
-            <FileText className="absolute bottom-[25%] right-[3%] w-7 h-7 sm:w-10 sm:h-10 text-primary/40" style={{ animation: 'floatExtreme2 17.5s ease-in-out infinite', animationDelay: '3800ms' }} />
-            <FileText className="absolute bottom-16 left-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45" style={{ animation: 'floatExtreme3 18.5s ease-in-out infinite', animationDelay: '5200ms' }} />
-            <FileText className="absolute bottom-12 right-[10%] w-5 h-5 sm:w-7 sm:h-7 text-primary/55" style={{ animation: 'floatExtreme4 15s ease-in-out infinite', animationDelay: '800ms' }} />
+            <FileText className="absolute top-8 left-[5%] w-6 h-6 sm:w-10 sm:h-10 text-primary/40 animate-bounce" style={{ animationDelay: '0ms', animationDuration: '3s' }} />
+            <FileText className="absolute top-12 right-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/50 animate-bounce" style={{ animationDelay: '200ms', animationDuration: '2.5s' }} />
+            <FileText className="absolute top-[30%] left-[3%] w-7 h-7 sm:w-11 sm:h-11 text-primary/35 animate-bounce" style={{ animationDelay: '400ms', animationDuration: '3.2s' }} />
+            <FileText className="absolute top-[35%] right-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45 animate-bounce" style={{ animationDelay: '600ms', animationDuration: '2.8s' }} />
+            <FileText className="absolute bottom-[30%] left-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/50 animate-bounce" style={{ animationDelay: '300ms', animationDuration: '3.1s' }} />
+            <FileText className="absolute bottom-[25%] right-[3%] w-7 h-7 sm:w-10 sm:h-10 text-primary/40 animate-bounce" style={{ animationDelay: '500ms', animationDuration: '2.9s' }} />
+            <FileText className="absolute bottom-16 left-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45 animate-bounce" style={{ animationDelay: '700ms', animationDuration: '3s' }} />
+            <FileText className="absolute bottom-12 right-[10%] w-5 h-5 sm:w-7 sm:h-7 text-primary/55 animate-bounce" style={{ animationDelay: '100ms', animationDuration: '2.6s' }} />
             
-            <FileText className="hidden sm:block absolute top-6 left-[28%] w-12 h-12 text-primary/35" style={{ animation: 'floatExtreme3 21s ease-in-out infinite', animationDelay: '3000ms' }} />
-            <FileText className="hidden sm:block absolute top-14 right-[28%] w-9 h-9 text-primary/45" style={{ animation: 'floatExtreme1 17.5s ease-in-out infinite', animationDelay: '4500ms' }} />
-            <FileText className="hidden sm:block absolute top-[22%] left-[22%] w-7 h-7 text-primary/50" style={{ animation: 'floatExtreme2 19s ease-in-out infinite', animationDelay: '3800ms' }} />
-            <FileText className="hidden sm:block absolute top-[28%] right-[22%] w-10 h-10 text-primary/40" style={{ animation: 'floatExtreme4 17s ease-in-out infinite', animationDelay: '5200ms' }} />
-            <FileText className="hidden sm:block absolute top-[45%] left-[15%] w-6 h-6 text-primary/60" style={{ animation: 'floatExtreme1 15.5s ease-in-out infinite', animationDelay: '2600ms' }} />
-            <FileText className="hidden sm:block absolute top-[42%] right-[18%] w-8 h-8 text-primary/50" style={{ animation: 'floatExtreme3 18.5s ease-in-out infinite', animationDelay: '4200ms' }} />
-            <FileText className="hidden sm:block absolute top-[65%] left-[20%] w-8 h-8 text-primary/50" style={{ animation: 'floatExtreme2 18s ease-in-out infinite', animationDelay: '1800ms' }} />
-            <FileText className="hidden sm:block absolute top-[68%] right-[25%] w-10 h-10 text-primary/40" style={{ animation: 'floatExtreme4 16.5s ease-in-out infinite', animationDelay: '3400ms' }} />
-            <FileText className="hidden sm:block absolute bottom-20 left-[35%] w-8 h-8 text-primary/50" style={{ animation: 'floatExtreme1 16s ease-in-out infinite', animationDelay: '3400ms' }} />
-            <FileText className="hidden sm:block absolute bottom-16 right-[35%] w-9 h-9 text-primary/45" style={{ animation: 'floatExtreme3 17.5s ease-in-out infinite', animationDelay: '4800ms' }} />
+            <FileText className="hidden sm:block absolute top-6 left-[28%] w-12 h-12 text-primary/35 animate-bounce" style={{ animationDelay: '400ms', animationDuration: '3.2s' }} />
+            <FileText className="hidden sm:block absolute top-14 right-[28%] w-9 h-9 text-primary/45 animate-bounce" style={{ animationDelay: '600ms', animationDuration: '2.8s' }} />
+            <FileText className="hidden sm:block absolute top-[22%] left-[22%] w-7 h-7 text-primary/50 animate-bounce" style={{ animationDelay: '500ms', animationDuration: '3.3s' }} />
+            <FileText className="hidden sm:block absolute top-[28%] right-[22%] w-10 h-10 text-primary/40 animate-bounce" style={{ animationDelay: '700ms', animationDuration: '2.7s' }} />
+            <FileText className="hidden sm:block absolute top-[45%] left-[15%] w-6 h-6 text-primary/60 animate-bounce" style={{ animationDelay: '350ms', animationDuration: '2.4s' }} />
+            <FileText className="hidden sm:block absolute top-[42%] right-[18%] w-8 h-8 text-primary/50 animate-bounce" style={{ animationDelay: '550ms', animationDuration: '3.2s' }} />
+            <FileText className="hidden sm:block absolute top-[65%] left-[20%] w-8 h-8 text-primary/50 animate-bounce" style={{ animationDelay: '250ms', animationDuration: '3.1s' }} />
+            <FileText className="hidden sm:block absolute top-[68%] right-[25%] w-10 h-10 text-primary/40 animate-bounce" style={{ animationDelay: '450ms', animationDuration: '2.6s' }} />
+            <FileText className="hidden sm:block absolute bottom-20 left-[35%] w-8 h-8 text-primary/50 animate-bounce" style={{ animationDelay: '450ms', animationDuration: '2.5s' }} />
+            <FileText className="hidden sm:block absolute bottom-16 right-[35%] w-9 h-9 text-primary/45 animate-bounce" style={{ animationDelay: '650ms', animationDuration: '3s' }} />
           </div>
           
           <div className="relative z-10 text-center max-w-4xl mx-auto px-2">
