@@ -268,7 +268,7 @@ const InvestorSummary = () => {
                 { value: "88–95%", label: "Margins" },
                 { value: "£0", label: "Onboarding" },
                 { value: "Instant", label: "Adoption" },
-                { value: "<2mo", label: "CAC payback" },
+                { value: "1.5–9 mo", label: "CAC Payback" },
                 { value: "10×–40×", label: "LTV:CAC" },
               ].map((metric, i) => (
                 <div key={i} className={`bg-primary/5 rounded-lg p-2 sm:p-3 text-center border border-primary/10 ${i >= 3 ? 'col-span-1 sm:col-span-1' : ''}`}>
