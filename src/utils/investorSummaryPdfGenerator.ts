@@ -364,21 +364,21 @@ const renderMarketSection = (doc: jsPDF, section: MarketSection, margin: number)
   const pageWidth = doc.internal.pageSize.getWidth();
   const contentWidth = pageWidth - margin * 2;
   const centerX = pageWidth / 2;
-  let y = 45;
+  let y = 35;
   
   // Title
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(20);
+  doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   doc.text(sanitizeText(section.title), centerX, y, { align: "center" });
-  y += 12;
+  y += 10;
   
   // Subtitle
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(11);
+  doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   doc.text(sanitizeText(section.subtitle), centerX, y, { align: "center" });
-  y += 25;
+  y += 18;
   
   // Stats
   const statWidth = (contentWidth - 20) / section.stats.length;
@@ -386,61 +386,61 @@ const renderMarketSection = (doc: jsPDF, section: MarketSection, margin: number)
     const statX = margin + idx * (statWidth + 10);
     
     doc.setFillColor(249, 250, 251);
-    doc.roundedRect(statX, y, statWidth, 50, 3, 3, "F");
+    doc.roundedRect(statX, y, statWidth, 40, 3, 3, "F");
     
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(24);
+    doc.setFontSize(20);
     doc.setFont("helvetica", "bold");
-    doc.text(sanitizeText(stat.value), statX + statWidth / 2, y + 22, { align: "center" });
+    doc.text(sanitizeText(stat.value), statX + statWidth / 2, y + 18, { align: "center" });
     
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(8);
+    doc.setFontSize(7);
     doc.setFont("helvetica", "normal");
     const labelLines = doc.splitTextToSize(sanitizeText(stat.label), statWidth - 10);
-    doc.text(labelLines, statX + statWidth / 2, y + 35, { align: "center" });
+    doc.text(labelLines, statX + statWidth / 2, y + 30, { align: "center" });
   });
-  y += 60;
+  y += 48;
   
   // TAM explanation
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
   const tamLines = doc.splitTextToSize(sanitizeText(section.tamExplanation), contentWidth);
   doc.text(tamLines, centerX, y, { align: "center" });
-  y += tamLines.length * 6 + 15;
+  y += tamLines.length * 5 + 12;
   
   // "There is:" items
   doc.setFillColor(249, 250, 251);
-  doc.roundedRect(margin, y, contentWidth, 50, 3, 3, "F");
+  doc.roundedRect(margin, y, contentWidth, 42, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(9);
-  doc.text("There is:", centerX, y + 10, { align: "center" });
+  doc.setFontSize(8);
+  doc.text("There is:", centerX, y + 8, { align: "center" });
   
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(10);
-  let itemY = y + 22;
+  doc.setFontSize(9);
+  let itemY = y + 18;
   const itemWidth = contentWidth / 2 - 10;
   section.noItems.forEach((item, idx) => {
     const itemX = margin + 10 + (idx % 2) * (itemWidth + 10);
-    if (idx > 0 && idx % 2 === 0) itemY += 12;
+    if (idx > 0 && idx % 2 === 0) itemY += 10;
     doc.text("x " + sanitizeText(item), itemX, itemY);
   });
-  y += 65;
+  y += 50;
   
   // Positioning
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(11);
+  doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   section.positioning.forEach((line) => {
     doc.text(sanitizeText(line), centerX, y, { align: "center" });
-    y += 10;
+    y += 9;
   });
-  y += 5;
+  y += 4;
   
   // Conclusion
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(12);
+  doc.setFontSize(11);
   doc.setFont("helvetica", "bold");
   doc.text(sanitizeText(section.conclusion), centerX, y, { align: "center" });
 };
@@ -535,24 +535,24 @@ const renderRaiseSection = (doc: jsPDF, section: RaiseSection, margin: number): 
   const pageWidth = doc.internal.pageSize.getWidth();
   const contentWidth = pageWidth - margin * 2;
   const centerX = pageWidth / 2;
-  let y = 45;
+  let y = 35;
   
   // Title
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(20);
+  doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   doc.text(sanitizeText(section.title), centerX, y, { align: "center" });
-  y += 15;
+  y += 12;
   
   // Subtitle
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
   section.subtitle.forEach((line) => {
     doc.text(sanitizeText(line), centerX, y, { align: "center" });
-    y += 10;
+    y += 8;
   });
-  y += 10;
+  y += 8;
   
   // Options grid
   const optionWidth = (contentWidth - 30) / 4;
@@ -561,60 +561,60 @@ const renderRaiseSection = (doc: jsPDF, section: RaiseSection, margin: number): 
     
     if (option.recommended) {
       doc.setFillColor(...PDF_CONFIG.primaryColor);
-      doc.roundedRect(optionX, y, optionWidth, 70, 3, 3, "F");
+      doc.roundedRect(optionX, y, optionWidth, 60, 3, 3, "F");
       
       // Recommended badge
       doc.setFillColor(255, 255, 255);
-      doc.roundedRect(optionX + 5, y + 5, optionWidth - 10, 12, 2, 2, "F");
+      doc.roundedRect(optionX + 3, y + 4, optionWidth - 6, 10, 2, 2, "F");
       doc.setTextColor(...PDF_CONFIG.primaryColor);
-      doc.setFontSize(7);
+      doc.setFontSize(6);
       doc.setFont("helvetica", "bold");
-      doc.text("RECOMMENDED", optionX + optionWidth / 2, y + 12, { align: "center" });
+      doc.text("RECOMMENDED", optionX + optionWidth / 2, y + 10, { align: "center" });
       
       doc.setTextColor(255, 255, 255);
     } else {
       doc.setFillColor(249, 250, 251);
-      doc.roundedRect(optionX, y, optionWidth, 70, 3, 3, "F");
+      doc.roundedRect(optionX, y, optionWidth, 60, 3, 3, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
     }
     
-    doc.setFontSize(14);
+    doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
-    doc.text(sanitizeText(option.amount), optionX + optionWidth / 2, y + 32, { align: "center" });
-    
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(option.label), optionX + optionWidth / 2, y + 45, { align: "center" });
+    doc.text(sanitizeText(option.amount), optionX + optionWidth / 2, y + 28, { align: "center" });
     
     doc.setFontSize(7);
-    const descLines = doc.splitTextToSize(sanitizeText(option.desc), optionWidth - 10);
-    doc.text(descLines, optionX + optionWidth / 2, y + 55, { align: "center" });
+    doc.setFont("helvetica", "normal");
+    doc.text(sanitizeText(option.label), optionX + optionWidth / 2, y + 40, { align: "center" });
+    
+    doc.setFontSize(6);
+    const descLines = doc.splitTextToSize(sanitizeText(option.desc), optionWidth - 8);
+    doc.text(descLines, optionX + optionWidth / 2, y + 50, { align: "center" });
   });
-  y += 85;
+  y += 72;
   
   // Recommendation box
   doc.setFillColor(249, 250, 251);
   doc.setDrawColor(...PDF_CONFIG.primaryColor);
-  doc.rect(margin, y, 3, 50, "F");
-  doc.rect(margin + 3, y, contentWidth - 3, 50, "F");
+  doc.rect(margin, y, 3, 40, "F");
+  doc.rect(margin + 3, y, contentWidth - 3, 40, "F");
   
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(9);
+  doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
-  doc.text("Our recommendation", centerX, y + 12, { align: "center" });
+  doc.text("Our recommendation", centerX, y + 10, { align: "center" });
   
-  doc.setFontSize(18);
-  doc.text(sanitizeText(section.recommendation.amount), centerX, y + 28, { align: "center" });
+  doc.setFontSize(16);
+  doc.text(sanitizeText(section.recommendation.amount), centerX, y + 24, { align: "center" });
   
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(section.recommendation.description), centerX, y + 40, { align: "center" });
-  y += 60;
+  doc.text(sanitizeText(section.recommendation.description), centerX, y + 34, { align: "center" });
+  y += 50;
   
   // Closing statement
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(10);
+  doc.setFontSize(9);
   const closingLines = doc.splitTextToSize(sanitizeText(section.closingStatement), contentWidth);
   doc.text(closingLines, centerX, y, { align: "center" });
 };
