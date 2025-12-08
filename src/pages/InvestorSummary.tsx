@@ -485,25 +485,25 @@ const InvestorSummary = () => {
                 <Mail className="w-4 h-4" />
                 Contact Rochelle
               </a>
-              
-              <button
-                onClick={handleDownloadPDF}
-                disabled={isGenerating}
-                className="mt-4 inline-flex items-center gap-2 bg-background hover:bg-secondary text-foreground border border-border font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all disabled:opacity-70 text-sm sm:text-base"
-              >
-                {isGenerating ? (
-                  <>
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Generating...
-                  </>
-                ) : (
-                  <>
-                    <Download className="w-4 h-4" />
-                    Download PDF
-                  </>
-                )}
-              </button>
             </div>
+            
+            <button
+              onClick={handleDownloadPDF}
+              disabled={isGenerating}
+              className="mt-6 inline-flex items-center gap-2 bg-background hover:bg-secondary text-foreground border border-border font-semibold px-5 sm:px-6 py-2.5 sm:py-3 rounded-lg transition-all disabled:opacity-70 text-sm sm:text-base"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Generating...
+                </>
+              ) : (
+                <>
+                  <Download className="w-4 h-4" />
+                  Download PDF
+                </>
+              )}
+            </button>
           </div>
         </section>
 
