@@ -53,6 +53,7 @@ import PLAssumptionsVisual from "@/components/investor/PLAssumptionsVisual";
 import PLGrowthVisual from "@/components/investor/PLGrowthVisual";
 import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
 import { ExecutiveSummaryVisual } from "@/components/investor/ExecutiveSummaryVisual";
+import { ApproachVisual } from "@/components/investor/ApproachVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -81,42 +82,11 @@ const sections = [
       },
       {
         title: "Approach",
+        showCustomVisual: true,
+        customVisualComponent: "approach",
         content: {
-          overview:
-            "Our strategic approach combines AI innovation with deep real estate industry expertise to deliver unprecedented value through three key focus areas.",
-          sections: [
-            {
-              title: "Brand Focus",
-              items: [
-                "Personalisation – Deliver relevant, context-aware experiences",
-                "Integrity – Be transparent and set clear expectations",
-                "Expectations – Meet essentials first, then exceed over time",
-                "Resolution – Act on feedback and data to improve fast",
-                "Time & Effort – Make every interaction simple and efficient",
-                "Empathy – Design for real-world client challenges",
-              ],
-            },
-            {
-              title: "Product Focus",
-              items: [
-                "Helps users retrieve and unify information they already have, even if scattered across documents or systems",
-                "Simple interface with no learning curve",
-                "Works alongside existing tools, with a gentle adoption curve",
-                "Designed to be a trust-building assistant, becoming more proactive and helpful over time",
-                "Future vision: anticipates user needs, takes initiative, supports workflows",
-              ],
-            },
-            {
-              title: "Business Focus",
-              items: [
-                "No license, per-user, or per-asset pricing",
-                "Users pay based on usage, measured in Hobson's Energy Units",
-                "Transparent way to account for effort put into tasks (answering questions, reading documents, building reports)",
-                "Flexible billing that matches real usage",
-                "Low base cost to grab market share",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
     ],
@@ -1380,7 +1350,11 @@ const InvestmentOpportunity = () => {
                       <ExecutiveSummaryVisual />
                     )}
 
-                    {/* Custom Visual Component for Market Landscape - only show for explicit landscape component */}
+                    {/* Custom Visual Component for Approach */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "approach" && (
+                      <ApproachVisual />
+                    )}
+
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent === "landscape" && (
                         <CompetitiveLandscapeVisual />

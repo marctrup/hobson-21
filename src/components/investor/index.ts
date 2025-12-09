@@ -18,3 +18,4 @@ export { UKMarketVisual } from './UKMarketVisual';
 export { GanttChartVisual } from './GanttChartVisual';
 export { default as CACAssumptionsVisual } from './CACAssumptionsVisual';
 export { ExecutiveSummaryVisual } from './ExecutiveSummaryVisual';
+export { ApproachVisual } from './ApproachVisual';
