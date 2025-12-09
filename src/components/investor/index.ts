@@ -21,3 +21,4 @@ export { ExecutiveSummaryVisual } from './ExecutiveSummaryVisual';
 export { ApproachVisual } from './ApproachVisual';
 export { CustomerSegmentationVisual } from './CustomerSegmentationVisual';
 export { HobsonOpportunityVisual } from './HobsonOpportunityVisual';
+export { PilotClientsVisual } from './PilotClientsVisual';

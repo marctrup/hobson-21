@@ -56,6 +56,7 @@ import { ExecutiveSummaryVisual } from "@/components/investor/ExecutiveSummaryVi
 import { ApproachVisual } from "@/components/investor/ApproachVisual";
 import { CustomerSegmentationVisual } from "@/components/investor/CustomerSegmentationVisual";
 import { HobsonOpportunityVisual } from "@/components/investor/HobsonOpportunityVisual";
+import { PilotClientsVisual } from "@/components/investor/PilotClientsVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -400,26 +401,11 @@ const sections = [
       },
       {
         title: "Pilot Clients (2025)",
+        showCustomVisual: true,
+        customVisualComponent: "pilotClients",
         content: {
-          overview:
-            "Our approach to building strategic partnerships and pilot validation across different operator sizes and system environments.",
-          sections: [
-            {
-              title: "Large Operator",
-              items: ["EPAM Asset Management - Commercial management that operate team across multiple systems"],
-            },
-            {
-              title: "Medium Operator",
-              items: ["Live-in Guardians - Guardian company that operate teams using single system"],
-            },
-            {
-              title: "Small Operators",
-              items: [
-                "Landhold - Development, sales, and investment company using Microsoft suites",
-                "Saxon Investments - Development, sales, and investment company using Microsoft suite",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
       {
@@ -1304,6 +1290,12 @@ const InvestmentOpportunity = () => {
                       <HobsonOpportunityVisual />
                     )}
 
+                    {/* Custom Visual Component for Pilot Clients */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "pilotClients" && (
+                      <PilotClientsVisual />
+                    )}
+
+                    {/* Custom Visual Component for Market Landscape */}
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent === "landscape" && (
                         <CompetitiveLandscapeVisual />
