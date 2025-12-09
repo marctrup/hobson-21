@@ -19,28 +19,28 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
         remarkPlugins={[remarkBreaks]}
         components={{
           h1: ({ children }) => (
-            <h1 className="text-2xl font-semibold mb-4 mt-6 text-foreground">{children}</h1>
+            <h1 className="text-3xl font-semibold mb-4 mt-6 text-foreground">{children}</h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-xl font-semibold mb-3 mt-5 text-foreground">{children}</h2>
+            <h2 className="text-2xl font-semibold mb-3 mt-5 text-foreground">{children}</h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-lg font-semibold mb-2 mt-4 text-foreground">{children}</h3>
+            <h3 className="text-xl font-semibold mb-2 mt-4 text-foreground">{children}</h3>
           ),
           h4: ({ children }) => (
-            <h4 className="text-base font-semibold mb-2 mt-3 text-foreground">{children}</h4>
+            <h4 className="text-lg font-semibold mb-2 mt-3 text-foreground">{children}</h4>
           ),
           p: ({ children }) => (
-            <p className="text-base leading-relaxed mb-4 last:mb-0 text-foreground">{children}</p>
+            <p className="text-lg leading-relaxed mb-4 last:mb-0 text-foreground">{children}</p>
           ),
           ul: ({ children }) => (
-            <ul className="list-disc mb-4 ml-6 text-base">{children}</ul>
+            <ul className="list-disc mb-4 ml-6 text-lg">{children}</ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal mb-4 ml-6 text-base">{children}</ol>
+            <ol className="list-decimal mb-4 ml-6 text-lg">{children}</ol>
           ),
           li: ({ children }) => (
-            <li className="mb-1.5 text-foreground">{children}</li>
+            <li className="mb-1.5 text-foreground text-lg">{children}</li>
           ),
           a: ({ href, children }) => (
             <a
