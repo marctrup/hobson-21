@@ -49,7 +49,7 @@ const WhyNowVisual: React.FC = () => {
       intro: "Real estate compliance is exploding:",
       bullets: [
         "New transparency and audit trails",
-        "ESG reporting now requires document-linked evidence",
+        "Environmental, Social, and Governance (ESG) reporting now requires document-linked evidence",
         "Risk, safety, and building regulations tightening yearly",
         "Data residency rules favour UK/EU-based AI solutions",
       ],
