@@ -120,37 +120,52 @@ export const ApproachVisual = () => {
           </div>
         </div>
         
-        <div className="pl-11 space-y-3">
-          {/* No fees badges */}
-          <div className="flex flex-wrap gap-2">
-            {businessItems.map((item, idx) => (
-              <span 
-                key={idx}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-full bg-amber-100/80 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400 border border-amber-200/50 dark:border-amber-700/30"
-              >
-                <item.icon className="w-3.5 h-3.5" />
-                {item.label}
-              </span>
-            ))}
+        <div className="pl-11 space-y-4">
+          {/* No fees - prominent cards */}
+          <div className="grid grid-cols-3 gap-3">
+            <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30 text-center">
+              <CheckCircle2 className="w-6 h-6 text-emerald-600 mx-auto mb-2" />
+              <div className="font-semibold text-emerald-700 dark:text-emerald-400 text-sm">No licence fees</div>
+            </div>
+            <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30 text-center">
+              <CheckCircle2 className="w-6 h-6 text-emerald-600 mx-auto mb-2" />
+              <div className="font-semibold text-emerald-700 dark:text-emerald-400 text-sm">No per-user fees</div>
+            </div>
+            <div className="p-4 rounded-xl bg-gradient-to-br from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30 text-center">
+              <CheckCircle2 className="w-6 h-6 text-emerald-600 mx-auto mb-2" />
+              <div className="font-semibold text-emerald-700 dark:text-emerald-400 text-sm">No per-asset fees</div>
+            </div>
           </div>
           
-          {/* Business details */}
-          <div className="grid sm:grid-cols-2 gap-2">
-            <div className="flex items-start gap-2 text-sm">
-              <Coins className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-              <span className="text-foreground"><strong>Usage-based pricing</strong> via Hobson Energy Units (HEUs)</span>
+          {/* Business model details - card layout */}
+          <div className="grid sm:grid-cols-2 gap-3">
+            <div className="p-4 rounded-xl bg-amber-50/80 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-800/30">
+              <div className="flex items-center gap-2 mb-2">
+                <Coins className="w-5 h-5 text-amber-600" />
+                <span className="font-semibold text-foreground">Usage-Based Pricing</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Pay via Hobson Energy Units (HEUs) — only for what you use</p>
             </div>
-            <div className="flex items-start gap-2 text-sm">
-              <Shield className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-              <span className="text-foreground"><strong>Full transparency</strong> — customers see exactly what Hobson did and why</span>
+            <div className="p-4 rounded-xl bg-amber-50/80 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-800/30">
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="w-5 h-5 text-amber-600" />
+                <span className="font-semibold text-foreground">Full Transparency</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Customers see exactly what Hobson did and why</p>
             </div>
-            <div className="flex items-start gap-2 text-sm">
-              <TrendingUp className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-              <span className="text-foreground"><strong>Low base cost</strong> → frictionless entry</span>
+            <div className="p-4 rounded-xl bg-amber-50/80 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-800/30">
+              <div className="flex items-center gap-2 mb-2">
+                <TrendingUp className="w-5 h-5 text-amber-600" />
+                <span className="font-semibold text-foreground">Low Base Cost</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Frictionless entry for businesses of any size</p>
             </div>
-            <div className="flex items-start gap-2 text-sm">
-              <BarChart3 className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
-              <span className="text-foreground"><strong>Flexible billing</strong> → high-volume market capture</span>
+            <div className="p-4 rounded-xl bg-amber-50/80 dark:bg-amber-950/20 border border-amber-200/50 dark:border-amber-800/30">
+              <div className="flex items-center gap-2 mb-2">
+                <BarChart3 className="w-5 h-5 text-amber-600" />
+                <span className="font-semibold text-foreground">Flexible Billing</span>
+              </div>
+              <p className="text-sm text-muted-foreground">Enables high-volume market capture at scale</p>
             </div>
           </div>
         </div>
