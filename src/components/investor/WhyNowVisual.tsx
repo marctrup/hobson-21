@@ -9,7 +9,7 @@ const WhyNowVisual: React.FC = () => {
       title: "Technology Has Finally Caught Up to the Problem",
       intro: "For years, real estate workflows were too messy and too document-heavy for past-generation technology. Today:",
       bullets: [
-        "LLMs now deliver production-grade accuracy with good layered architectures on top",
+        "LLMs now deliver production-grade accuracy with a good layered architecture on top",
         "Document intelligence routinely hits 95%+ extraction quality",
         "Infrastructure costs have fallen 10× in three years",
         "Real-time AI inference is cheap enough to deploy at scale",
