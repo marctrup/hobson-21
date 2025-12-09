@@ -61,7 +61,7 @@ import { TechStackVisual } from "@/components/investor/TechStackVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
-import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
+import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards, FundingRequirement } from "@/utils/investmentPdfGenerator";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { jsPDF } from "jspdf";
 
@@ -773,7 +773,14 @@ const InvestmentOpportunity = () => {
       team: sections[4] as CardSection,                  // Team
       financials: sections[5] as CardSection,            // Financials
     };
-    generateFullBusinessPlanPdf(cards);
+    
+    // Funding requirement data for cover page
+    const fundingRequirement: FundingRequirement = {
+      amount: "£1.5M–£2.2M",
+      description: "Covers 18–24 months and early commercialisation",
+    };
+    
+    generateFullBusinessPlanPdf(cards, fundingRequirement);
   };
 
   // Check if user has already authenticated in this session
