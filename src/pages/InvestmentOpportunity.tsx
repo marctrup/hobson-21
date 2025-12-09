@@ -462,40 +462,7 @@ const sections = [
         content: {
           overview:
             "Hobson's technical architecture leverages cutting-edge AI components to transform unstructured property documents into queryable, structured knowledge.",
-          sections: [
-            {
-              title: "Step 1: Document Parsing Pipeline",
-              items: [
-                "📄 Document Upload: Users upload leases, rent rolls, and real estate documents",
-                "✂️ Intelligent Chunking: Documents split into meaningful segments using embedding models",
-                "🧠 Knowledge Graph Generation: LightRAG creates entity-relationship graphs from content",
-                "🔍 Entity & Relation Extraction: Identifies properties, tenants, clauses, dates, financial terms",
-                "💾 Multi-Layer Storage: Vector DB for semantic search, Knowledge Graph for relationships, MongoDB for structured data",
-                "🎯 Fine-Tuned Extraction: Document-specific prompts pull key values (rent, dates, addresses, clauses)",
-              ],
-            },
-            {
-              title: "Step 2: AI-Driven Query Resolver",
-              items: [
-                "💬 Natural Language Interface: Users ask questions in plain English via chat",
-                "🔎 Query Parser: Identifies intent, extracts keywords, determines context (user, property ID)",
-                "⚙️ Query Engine: Fetches relevant data and documents based on parsed query",
-                "✅ Quality Check: Validates response accuracy and completeness before delivery",
-                "📝 Answer Generation: LLM synthesizes natural, contextual responses with source references",
-                "🔄 RAG Fallback: If quality check fails, system uses retrieval-augmented generation for best possible answer",
-              ],
-            },
-            {
-              title: "Technical Components & Scalability",
-              items: [
-                "🤖 AI Models: Proprietary logic layer + LLM for reasoning and natural language generation",
-                "🗄️ Storage Architecture: MongoDB (structured data), Vector DB (embeddings), Knowledge Graph (relationships)",
-                "📋 Notes System: Fine-tuned prompts ensure domain-specific accuracy and extract critical data points",
-                "☁️ Cloud Infrastructure: Scalable architecture handles multiple properties and concurrent users",
-                "🔒 Security: Document data encrypted at rest and in transit, user-scoped access controls",
-              ],
-            },
-          ],
+          sections: [],
         },
       },
       {
