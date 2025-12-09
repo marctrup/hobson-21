@@ -1376,20 +1376,20 @@ const InvestmentOpportunity = () => {
                           return (
                             <div className={`relative overflow-hidden rounded-xl border p-6 sm:p-8 ${
                               isAdvisoryPage 
-                                ? "bg-gradient-to-r from-amber-50 via-amber-100/50 to-amber-50 border-amber-300/40" 
+                                ? "bg-gradient-to-r from-sky-50 via-sky-100/50 to-sky-50 border-sky-300/40" 
                                 : "bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-primary/20"
                             }`}>
                               <div className={`absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-1/2 translate-x-1/2 ${
-                                isAdvisoryPage ? "bg-amber-200/30" : "bg-primary/5"
+                                isAdvisoryPage ? "bg-sky-200/30" : "bg-primary/5"
                               }`} />
                               <div className={`absolute bottom-0 left-0 w-24 h-24 rounded-full translate-y-1/2 -translate-x-1/2 ${
-                                isAdvisoryPage ? "bg-amber-200/30" : "bg-primary/5"
+                                isAdvisoryPage ? "bg-sky-200/30" : "bg-primary/5"
                               }`} />
                               <div className="relative flex items-center gap-4">
                                 <div className={`hidden sm:flex w-12 h-12 rounded-xl items-center justify-center flex-shrink-0 ${
-                                  isAdvisoryPage ? "bg-amber-200/50" : "bg-primary/10"
+                                  isAdvisoryPage ? "bg-sky-200/50" : "bg-primary/10"
                                 }`}>
-                                  <Users className={`w-6 h-6 ${isAdvisoryPage ? "text-amber-700" : "text-primary"}`} />
+                                  <Users className={`w-6 h-6 ${isAdvisoryPage ? "text-sky-700" : "text-primary"}`} />
                                 </div>
                                 <p className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed font-medium">
                                   {selectedSection.pages[currentPageIndex].content.overview}
@@ -1487,18 +1487,18 @@ const InvestmentOpportunity = () => {
                                         key={memberIdx}
                                         className={`border-2 rounded-lg bg-white transition-colors overflow-hidden ${
                                           isAdvisory 
-                                            ? "border-amber-400/50 hover:border-amber-500" 
+                                            ? "border-sky-300/50 hover:border-sky-400" 
                                             : "border-primary/30 hover:border-primary"
                                         }`}
                                       >
                                         <div className="text-center">
                                           <div className={`px-4 py-3 ${
                                             isAdvisory 
-                                              ? "bg-gradient-to-r from-amber-100 to-amber-50" 
+                                              ? "bg-gradient-to-r from-sky-100 to-sky-50" 
                                               : "bg-primary/20"
                                           }`}>
                                             <span className={`text-xs sm:text-sm font-semibold uppercase tracking-wide ${
-                                              isAdvisory ? "text-amber-700" : "text-primary"
+                                              isAdvisory ? "text-slate-800" : "text-primary"
                                             }`}>
                                               {member.role}
                                             </span>
@@ -1514,7 +1514,7 @@ const InvestmentOpportunity = () => {
                                                 rel="noopener noreferrer"
                                                 className={`text-xs sm:text-sm underline inline-flex items-center gap-1 transition-colors ${
                                                   isAdvisory 
-                                                    ? "text-amber-700 hover:text-amber-800" 
+                                                    ? "text-sky-700 hover:text-sky-800" 
                                                     : "text-purple-800 hover:text-purple-900"
                                                 }`}
                                               >
