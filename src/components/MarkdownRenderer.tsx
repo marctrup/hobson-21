@@ -13,11 +13,16 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   content,
   className = ''
 }) => {
+  // First, convert <br> tags to newlines for proper detection
+  const normalizedContent = content
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/&nbsp;/gi, ' ');
+  
   // Check if content is primarily HTML (has structural HTML tags, not just inline formatting)
   const hasStructuralHtml = /<(div|section|article|header|footer|table|form)[^>]*>/i.test(content);
   
-  // Check if content has markdown syntax
-  const hasMarkdownSyntax = /^#{1,6}\s|^\*\*|^\*\s|^-\s|^\d+\.\s|^>\s|\[.*\]\(.*\)/m.test(content);
+  // Check if content has markdown syntax (now checking normalized content with actual newlines)
+  const hasMarkdownSyntax = /^#{1,6}\s|^\*\*|^\*\s|^-\s|^\d+\.\s|^>\s|\[.*\]\(.*\)/m.test(normalizedContent);
   
   // If it has structural HTML and no markdown syntax, use HTML renderer
   if (hasStructuralHtml && !hasMarkdownSyntax) {
@@ -29,11 +34,6 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
       />
     );
   }
-  
-  // Convert <br> tags to newlines for markdown processing
-  const processedContent = content
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/&nbsp;/gi, ' ');
   
   // Render with react-markdown (supports inline HTML via rehype-raw)
   return (
@@ -122,7 +122,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           ),
         }}
       >
-        {processedContent}
+        {normalizedContent}
       </ReactMarkdown>
     </div>
   );
