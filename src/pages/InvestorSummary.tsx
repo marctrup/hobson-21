@@ -53,7 +53,7 @@ const solutionSection: SolutionSection = {
 
 const magicSection: MagicSection = {
   type: "magic",
-  title: "Wisdom at Work",
+  title: "Wisdom delivered. No feathers ruffled.",
   subtitle: "",
   underTheHood: ["Document Intelligence", "AI Reasoning", "Instant Clarity"],
   userMessage: "\"Here's the answer. And here's exactly where I found it.\"",
@@ -322,7 +322,7 @@ const InvestorSummary = () => {
               <div className="w-full">
                 <div className="text-center mb-6 sm:mb-8">
                   <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
-                    Wisdom at Work
+                    Wisdom delivered. No feathers ruffled.
                   </h2>
                 </div>
                 
