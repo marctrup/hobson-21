@@ -137,9 +137,9 @@ const WhyNowVisual: React.FC = () => {
       </div>
 
       {/* The Convergence */}
-      <div className="mt-12 bg-gradient-to-br from-purple-600 to-purple-800 rounded-xl p-8 text-white">
+      <div className="mt-12 bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl p-8 text-gray-900">
         <div className="flex items-center justify-center gap-3 mb-6">
-          <Zap className="w-6 h-6" />
+          <Zap className="w-6 h-6 text-purple-600" />
           <h4 className="text-xl font-bold">The Convergence</h4>
         </div>
 
@@ -147,7 +147,7 @@ const WhyNowVisual: React.FC = () => {
           {convergencePoints.map((point, index) => (
             <span
               key={index}
-              className="px-4 py-2 bg-white/15 rounded-full text-sm font-medium backdrop-blur-sm"
+              className="px-4 py-2 bg-purple-600/15 rounded-full text-sm font-medium text-purple-800"
             >
               {point}
             </span>
@@ -155,13 +155,13 @@ const WhyNowVisual: React.FC = () => {
         </div>
 
         <div className="text-center space-y-3">
-          <p className="text-lg font-medium text-purple-100">
+          <p className="text-lg font-medium text-purple-700">
             This is the exact moment the industry shifts from
           </p>
-          <p className="text-xl font-bold">
+          <p className="text-xl font-bold text-gray-900">
             'documents everywhere' → 'answers instantly.'
           </p>
-          <p className="text-lg font-semibold text-purple-200 mt-4">
+          <p className="text-lg font-semibold text-purple-600 mt-4">
             And Hobson is positioned to lead that shift.
           </p>
         </div>
