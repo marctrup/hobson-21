@@ -65,8 +65,8 @@ import { jsPDF } from "jspdf";
 const sections = [
   {
     id: "strategy",
-    title: "Strategy & Positioning",
-    subtitle: "Executive Summary & Approach",
+    title: "Strategy & Approach",
+    subtitle: "Summary & Strategic Approach",
     icon: Target,
     color: "from-blue-500/10 to-blue-600/10",
     iconColor: "text-blue-600",
