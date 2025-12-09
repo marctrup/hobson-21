@@ -34,16 +34,16 @@ export const ExecutiveSummaryVisual = () => {
         
         <div className="grid grid-cols-3 gap-3">
           <div className="text-center p-4 rounded-xl bg-gradient-to-b from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200/50 dark:border-emerald-800/30">
-            <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£6B</div>
+            <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£1.41B</div>
             <div className="text-xs text-muted-foreground mt-1">UK Savings</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-gradient-to-b from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200/50 dark:border-emerald-800/30">
-            <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£66B</div>
-            <div className="text-xs text-muted-foreground mt-1">Europe</div>
+            <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£15.5B</div>
+            <div className="text-xs text-muted-foreground mt-1">European Savings</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-gradient-to-b from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200/50 dark:border-emerald-800/30">
-            <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£708B</div>
-            <div className="text-xs text-muted-foreground mt-1">Global</div>
+            <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£155.6B</div>
+            <div className="text-xs text-muted-foreground mt-1">Global Savings</div>
           </div>
         </div>
         
