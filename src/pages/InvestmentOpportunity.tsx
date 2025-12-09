@@ -1371,18 +1371,33 @@ const InvestmentOpportunity = () => {
                     {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
                       !(selectedSection.pages[currentPageIndex] as any).isVisual && 
                       selectedSection.pages[currentPageIndex].content.overview && (
-                        <div className="relative overflow-hidden bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-xl border border-primary/20 p-6 sm:p-8">
-                          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
-                          <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full translate-y-1/2 -translate-x-1/2" />
-                          <div className="relative flex items-center gap-4">
-                            <div className="hidden sm:flex w-12 h-12 rounded-xl bg-primary/10 items-center justify-center flex-shrink-0">
-                              <Users className="w-6 h-6 text-primary" />
+                        (() => {
+                          const isAdvisoryPage = selectedSection.pages[currentPageIndex].title === "Advisory Board";
+                          return (
+                            <div className={`relative overflow-hidden rounded-xl border p-6 sm:p-8 ${
+                              isAdvisoryPage 
+                                ? "bg-gradient-to-r from-amber-50 via-amber-100/50 to-amber-50 border-amber-300/40" 
+                                : "bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-primary/20"
+                            }`}>
+                              <div className={`absolute top-0 right-0 w-32 h-32 rounded-full -translate-y-1/2 translate-x-1/2 ${
+                                isAdvisoryPage ? "bg-amber-200/30" : "bg-primary/5"
+                              }`} />
+                              <div className={`absolute bottom-0 left-0 w-24 h-24 rounded-full translate-y-1/2 -translate-x-1/2 ${
+                                isAdvisoryPage ? "bg-amber-200/30" : "bg-primary/5"
+                              }`} />
+                              <div className="relative flex items-center gap-4">
+                                <div className={`hidden sm:flex w-12 h-12 rounded-xl items-center justify-center flex-shrink-0 ${
+                                  isAdvisoryPage ? "bg-amber-200/50" : "bg-primary/10"
+                                }`}>
+                                  <Users className={`w-6 h-6 ${isAdvisoryPage ? "text-amber-700" : "text-primary"}`} />
+                                </div>
+                                <p className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed font-medium">
+                                  {selectedSection.pages[currentPageIndex].content.overview}
+                                </p>
+                              </div>
                             </div>
-                            <p className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed font-medium">
-                              {selectedSection.pages[currentPageIndex].content.overview}
-                            </p>
-                          </div>
-                        </div>
+                          );
+                        })()
                       )}
 
                     {/* Image (if present) */}
@@ -1463,42 +1478,61 @@ const InvestmentOpportunity = () => {
 
                             {/* Team Members Grid */}
                             {contentSection.teamMembers ? (
-                              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                                {contentSection.teamMembers.map((member: any, memberIdx: number) => (
-                                  <div
-                                    key={memberIdx}
-                                    className="border-2 border-primary/30 rounded-lg bg-white hover:border-primary transition-colors overflow-hidden"
-                                  >
-                                    <div className="text-center">
-                                      <div className="bg-primary/20 px-4 py-3">
-                                        <span className="text-xs sm:text-sm font-semibold text-primary uppercase tracking-wide">
-                                          {member.role}
-                                        </span>
+                              (() => {
+                                const isAdvisory = contentSection.title.includes("Advisory");
+                                return (
+                                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                                    {contentSection.teamMembers.map((member: any, memberIdx: number) => (
+                                      <div
+                                        key={memberIdx}
+                                        className={`border-2 rounded-lg bg-white transition-colors overflow-hidden ${
+                                          isAdvisory 
+                                            ? "border-amber-400/50 hover:border-amber-500" 
+                                            : "border-primary/30 hover:border-primary"
+                                        }`}
+                                      >
+                                        <div className="text-center">
+                                          <div className={`px-4 py-3 ${
+                                            isAdvisory 
+                                              ? "bg-gradient-to-r from-amber-100 to-amber-50" 
+                                              : "bg-primary/20"
+                                          }`}>
+                                            <span className={`text-xs sm:text-sm font-semibold uppercase tracking-wide ${
+                                              isAdvisory ? "text-amber-700" : "text-primary"
+                                            }`}>
+                                              {member.role}
+                                            </span>
+                                          </div>
+                                          <div className="pt-2 px-4 pb-4 sm:pt-3 sm:px-6 sm:pb-6 space-y-3">
+                                            <h4 className="text-lg sm:text-xl font-bold text-foreground min-h-[3rem] flex items-center justify-center">
+                                              {member.name}
+                                            </h4>
+                                            {member.linkedin ? (
+                                              <a
+                                                href={member.linkedin}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`text-xs sm:text-sm underline inline-flex items-center gap-1 transition-colors ${
+                                                  isAdvisory 
+                                                    ? "text-amber-700 hover:text-amber-800" 
+                                                    : "text-purple-800 hover:text-purple-900"
+                                                }`}
+                                              >
+                                                <span>LinkedIn Profile</span>
+                                                <span className="text-[10px]">↗</span>
+                                              </a>
+                                            ) : (
+                                              <span className="text-xs sm:text-sm text-muted-foreground italic">
+                                                Coming Soon
+                                              </span>
+                                            )}
+                                          </div>
+                                        </div>
                                       </div>
-                                      <div className="pt-2 px-4 pb-4 sm:pt-3 sm:px-6 sm:pb-6 space-y-3">
-                                        <h4 className="text-lg sm:text-xl font-bold text-foreground min-h-[3rem] flex items-center justify-center">
-                                          {member.name}
-                                        </h4>
-                                        {member.linkedin ? (
-                                          <a
-                                            href={member.linkedin}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="text-xs sm:text-sm text-purple-800 hover:text-purple-900 underline inline-flex items-center gap-1 transition-colors"
-                                          >
-                                            <span>LinkedIn Profile</span>
-                                            <span className="text-[10px]">↗</span>
-                                          </a>
-                                        ) : (
-                                          <span className="text-xs sm:text-sm text-muted-foreground italic">
-                                            Coming Soon
-                                          </span>
-                                        )}
-                                      </div>
-                                    </div>
+                                    ))}
                                   </div>
-                                ))}
-                              </div>
+                                );
+                              })()
                             ) : (
                               /* Regular Items List */
                               <ul className="space-y-2 sm:space-y-3 pl-3 sm:pl-4">
