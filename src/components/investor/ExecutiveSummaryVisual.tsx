@@ -25,11 +25,14 @@ export const ExecutiveSummaryVisual = () => {
         </div>
       </div>
 
-      {/* Market Opportunity */}
+      {/* Addressable Market */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <Globe className="w-5 h-5 text-emerald-600" />
-          <h4 className="font-semibold text-foreground">Market Opportunity</h4>
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <Globe className="w-5 h-5 text-emerald-600" />
+            <h4 className="font-semibold text-foreground">Addressable Market</h4>
+          </div>
+          <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium ml-7">Annual Efficiency Savings</p>
         </div>
         
         <div className="grid grid-cols-3 gap-3">
@@ -48,7 +51,7 @@ export const ExecutiveSummaryVisual = () => {
         </div>
         
         <p className="text-sm text-muted-foreground">
-          The industry is shifting from static tools to intelligent automation. Hobson is built to lead this transition.
+          Real estate professionals lose 20% of admin time to document chaos. These figures represent the annual savings Hobson can unlock—and the opportunity we're built to capture.
         </p>
       </div>
 
