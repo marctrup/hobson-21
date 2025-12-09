@@ -11,6 +11,8 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   content,
   className = ''
 }) => {
+  console.log('MarkdownRenderer received content:', content?.substring(0, 100));
+  
   return (
     <div className={className}>
       <ReactMarkdown
