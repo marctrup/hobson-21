@@ -1,5 +1,5 @@
 import React from 'react';
-import { Brain, TrendingUp, Target, Zap, CheckCircle2, Globe, Rocket, Coins } from 'lucide-react';
+import { Brain, Target, Zap, CheckCircle2, Globe, Rocket } from 'lucide-react';
 
 export const ExecutiveSummaryVisual = () => {
   return (
@@ -94,39 +94,6 @@ export const ExecutiveSummaryVisual = () => {
         </div>
       </div>
 
-      {/* Revenue Model */}
-      <div className="space-y-4">
-        <div className="flex items-center gap-2">
-          <Coins className="w-5 h-5 text-amber-600" />
-          <h4 className="font-semibold text-foreground">Revenue Model</h4>
-        </div>
-        
-        <div className="p-4 rounded-xl bg-gradient-to-r from-amber-50/80 to-orange-50/80 dark:from-amber-950/20 dark:to-orange-950/20 border border-amber-200/50 dark:border-amber-800/30">
-          <div className="flex flex-wrap gap-4 justify-between items-center">
-            <div className="space-y-1">
-              <div className="font-semibold text-foreground">Usage-Based Pricing</div>
-              <div className="text-sm text-muted-foreground">Pay via Hobson Energy Units (HEUs)</div>
-            </div>
-            <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 text-sm font-bold rounded-lg bg-sky-400 text-gray-900 shadow-md">
-                No per-user fees
-              </span>
-              <span className="px-4 py-2 text-sm font-bold rounded-lg bg-sky-400 text-gray-900 shadow-md">
-                No per-asset fees
-              </span>
-              <span className="px-4 py-2 text-sm font-bold rounded-lg bg-sky-400 text-gray-900 shadow-md">
-                Zero onboarding
-              </span>
-            </div>
-          </div>
-          <div className="mt-3 pt-3 border-t border-amber-200/50 dark:border-amber-700/30">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-amber-600" />
-              <span className="text-sm text-foreground font-medium">Clear, measurable ROI based on time and cost savings</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 };
