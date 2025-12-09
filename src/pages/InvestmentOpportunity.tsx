@@ -52,6 +52,7 @@ import CostAssumptionsVisual from "@/components/investor/CostAssumptionsVisual";
 import PLAssumptionsVisual from "@/components/investor/PLAssumptionsVisual";
 import PLGrowthVisual from "@/components/investor/PLGrowthVisual";
 import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
+import { ExecutiveSummaryVisual } from "@/components/investor/ExecutiveSummaryVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -71,37 +72,11 @@ const sections = [
     pages: [
       {
         title: "Executive Summary",
+        showCustomVisual: true,
+        customVisualComponent: "executiveSummary",
         content: {
-          overview:
-            "Hobson is a specialised AI assistant for the real estate industry, turning complex documents and decisions into clear, reliable insight. It works with zero onboarding, delivers trusted accuracy from day one, and learns continuously. As it grows, Hobson shifts from basic automation to proactive support—unlocking major efficiency gains across the entire property lifecycle.",
-          sections: [
-            {
-              title: "Market Opportunity",
-              items: [
-                "Real estate faces massive inefficiencies, with £6B in potential savings in the UK, £66B across Europe, and £708B globally.",
-                "The industry is shifting from static tools to intelligent automation, creating a clear opening for a specialised AI assistant.",
-                "Hobson is built to lead this transition.",
-              ],
-            },
-            {
-              title: "Traction & Milestones",
-              items: [
-                "MVP launching Q1 2026, validated with four real-world partners",
-                "Current model performance at 98% accuracy",
-                "Supports key document types: legal, compliance, operational reports, and more",
-                "Built and tested using real industry data for reliability and domain depth",
-              ],
-            },
-            {
-              title: "Revenue Model",
-              items: [
-                "Usage-based pricing via Hobson Energy Units (HEUs)",
-                "No per-user or per-asset fees → enables broad, frictionless rollout",
-                "Designed to work alongside existing systems with zero onboarding",
-                "Clear, measurable ROI based on time and cost savings",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
       {
@@ -1400,6 +1375,11 @@ const InvestmentOpportunity = () => {
               <div className="flex-1 overflow-y-auto mt-4 sm:mt-6 space-y-6 sm:space-y-8 -mx-4 sm:-mx-6 px-4 sm:px-6">
                 {selectedSection.pages[currentPageIndex] && (
                   <>
+                    {/* Custom Visual Component for Executive Summary */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "executiveSummary" && (
+                      <ExecutiveSummaryVisual />
+                    )}
+
                     {/* Custom Visual Component for Market Landscape - only show for explicit landscape component */}
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent === "landscape" && (
