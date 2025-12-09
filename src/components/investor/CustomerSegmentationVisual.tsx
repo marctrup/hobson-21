@@ -73,9 +73,9 @@ export const CustomerSegmentationVisual = () => {
                 <div className={`w-10 h-10 rounded-xl ${segment.iconBg} flex items-center justify-center`}>
                   <segment.icon className={`w-5 h-5 ${segment.iconColor}`} />
                 </div>
-                <div>
+                <div className="flex items-baseline gap-2">
                   <h4 className="font-semibold text-foreground">{segment.title}</h4>
-                  <span className="text-xs text-muted-foreground">{segment.employees}</span>
+                  <span className="text-xs text-muted-foreground">({segment.employees})</span>
                 </div>
               </div>
 
