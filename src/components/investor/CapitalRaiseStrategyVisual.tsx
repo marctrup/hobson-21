@@ -1,6 +1,5 @@
 import React from 'react';
 import { Rocket, Users, Globe, AlertTriangle, CheckCircle, ArrowRight, Zap, DollarSign, Lightbulb, Shield } from 'lucide-react';
-
 const CapitalRaiseStrategyVisual = () => {
   const scenarios = [{
     amount: "£1.2M",
@@ -44,15 +43,22 @@ const CapitalRaiseStrategyVisual = () => {
     borderColor: "border-emerald-500/30",
     textColor: "text-emerald-600"
   }];
-
-  const useOfFunds = [
-    { label: "Team hiring & 2026 payroll (Jun–Dec)", amount: "£207k" },
-    { label: "Outsourced engineering (pre-launch build)", amount: "£150k–£250k" },
-    { label: "Legal, compliance, finance", amount: "£40k" },
-    { label: "Early marketing + GTM prep", amount: "£100k–£150k" },
-    { label: "Buffer (investor standard)", amount: "£250k–£300k" }
-  ];
-
+  const useOfFunds = [{
+    label: "Team hiring & 2026 payroll (Jun–Dec)",
+    amount: "£207k"
+  }, {
+    label: "Outsourced engineering (pre-launch build)",
+    amount: "£150k–£250k"
+  }, {
+    label: "Legal, compliance, finance",
+    amount: "£40k"
+  }, {
+    label: "Early marketing + GTM prep",
+    amount: "£100k–£150k"
+  }, {
+    label: "Buffer (investor standard)",
+    amount: "£250k–£300k"
+  }];
   return <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
@@ -116,12 +122,10 @@ const CapitalRaiseStrategyVisual = () => {
         </div>
         
         <div className="space-y-3 mb-6">
-          {useOfFunds.map((item, index) => (
-            <div key={index} className="flex justify-between items-center p-3 bg-muted/30 rounded-lg border border-border">
+          {useOfFunds.map((item, index) => <div key={index} className="flex justify-between items-center p-3 bg-muted/30 rounded-lg border border-border">
               <p className="text-sm text-foreground">{item.label}</p>
               <p className="text-sm font-bold text-foreground">{item.amount}</p>
-            </div>
-          ))}
+            </div>)}
         </div>
 
         <div className="border-t border-border pt-4 space-y-3">
@@ -176,7 +180,7 @@ const CapitalRaiseStrategyVisual = () => {
       <div className="bg-muted/30 rounded-xl p-6 border border-border">
         <div className="flex items-center gap-2 mb-4">
           <Lightbulb className="w-5 h-5 text-primary" />
-          <h3 className="text-lg font-semibold text-foreground">Burn Insight (Corrected for Model)</h3>
+          <h3 className="text-lg font-semibold text-foreground">Burn Insight)</h3>
         </div>
         <p className="text-muted-foreground leading-relaxed mb-3">
           Your burn is <span className="text-foreground font-bold">entirely pre-revenue</span>.
@@ -223,5 +227,4 @@ const CapitalRaiseStrategyVisual = () => {
       </div>
     </div>;
 };
-
 export default CapitalRaiseStrategyVisual;
