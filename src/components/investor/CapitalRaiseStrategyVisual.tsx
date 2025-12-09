@@ -42,7 +42,7 @@ const CapitalRaiseStrategyVisual = () => {
   }];
 
   const useOfFunds = [
-    { label: "Pre-2027 engineering", amount: "£500k–£700k" },
+    { label: "Pre-launch engineering (outsourced)", amount: "£150k–£250k" },
     { label: "Team hiring & runway", amount: "£750k" },
     { label: "Initial marketing", amount: "£150k" },
     { label: "Buffer", amount: "£300k" }
