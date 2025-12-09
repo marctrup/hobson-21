@@ -49,7 +49,7 @@ export const HobsonOpportunityVisual = () => {
       title: 'Perfect Timing',
       color: 'rose',
       items: [
-        'UK TAM/SAM/SOM shows a £110M attainable early market',
+        'UK TAM shows a £1.41B attainable early market',
         'Global AI real estate space is growing 35–36% annually',
         'AI adoption is accelerating and ROI is clear',
       ],
