@@ -5,7 +5,7 @@ export const GlobalMarketAssumptionsVisual = () => {
   const whyMattersPoints = [
     "AI efficiency gains are a global norm, reinforcing UK opportunity",
     "20% efficiency uplift is validated by global real estate data",
-    "Your UK £1.41B → £917M → £110M path sits inside a multi-trillion-dollar, fast-growing global market",
+    "Your £1.41B sits inside a multi-billion-dollar, fast-growing global market",
     "Hobson enters a sector where adoption is rising and ROI is demonstrable",
   ];
 
