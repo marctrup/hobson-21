@@ -2,7 +2,6 @@ import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
 import rehypeRaw from 'rehype-raw';
-import { sanitizeBlogContent } from '@/utils/security';
 
 interface MarkdownRendererProps {
   content: string;
@@ -13,29 +12,12 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   content,
   className = ''
 }) => {
-  // First, convert <br> tags to newlines for proper detection
+  // Convert <br> tags to newlines for markdown processing
   const normalizedContent = content
     .replace(/<br\s*\/?>/gi, '\n')
     .replace(/&nbsp;/gi, ' ');
   
-  // Check if content is primarily HTML (has structural HTML tags, not just inline formatting)
-  const hasStructuralHtml = /<(div|section|article|header|footer|table|form)[^>]*>/i.test(content);
-  
-  // Check if content has markdown syntax (now checking normalized content with actual newlines)
-  const hasMarkdownSyntax = /^#{1,6}\s|^\*\*|^\*\s|^-\s|^\d+\.\s|^>\s|\[.*\]\(.*\)/m.test(normalizedContent);
-  
-  // If it has structural HTML and no markdown syntax, use HTML renderer
-  if (hasStructuralHtml && !hasMarkdownSyntax) {
-    const sanitizedContent = sanitizeBlogContent(content);
-    return (
-      <div
-        className={className}
-        dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-      />
-    );
-  }
-  
-  // Render with react-markdown (supports inline HTML via rehype-raw)
+  // Always render with react-markdown (supports inline HTML via rehype-raw)
   return (
     <div className={className}>
       <ReactMarkdown
