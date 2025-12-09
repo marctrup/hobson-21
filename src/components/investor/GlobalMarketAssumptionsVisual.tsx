@@ -147,7 +147,7 @@ export const GlobalMarketAssumptionsVisual = () => {
         <ul className="space-y-2 text-xs lg:text-sm text-foreground">
           <li className="flex items-start gap-2">
             <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center flex-shrink-0">1</span>
-            <span>AI in real estate is a fast-growing multi-trillion dollar market</span>
+            <span>AI in real estate is a fast-growing multi-billion dollar market</span>
           </li>
           <li className="flex items-start gap-2">
             <span className="w-5 h-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center flex-shrink-0">2</span>
