@@ -1171,6 +1171,44 @@ export const getUKAssumptionsFinancialsPdfContent = (): string[] => [
   "2. Clear segmentation by business size, with 96% being small operators",
 ];
 
+export const getWhyNowPdfContent = (): string[] => [
+  "Why Now? - The Perfect Storm for AI in Real Estate:",
+  "",
+  "1. Technology Inflection Point:",
+  "- Large Language Models have reached production-grade reliability",
+  "- Document understanding AI now achieves 95%+ accuracy",
+  "- Infrastructure costs have dropped 10x in 3 years",
+  "- Real-time AI inference is now cost-effective at scale",
+  "",
+  "2. Market Readiness:",
+  "- 65% of businesses are primed to invest in AI (Deloitte)",
+  "- COVID accelerated digital transformation in real estate",
+  "- Remote work normalized digital-first document workflows",
+  "- Talent shortages forcing automation adoption",
+  "",
+  "3. Competitive Window:",
+  "- No dominant AI-native player in real estate document intelligence",
+  "- Legacy PropTech vendors slow to adopt AI",
+  "- 12-18 month window to establish category leadership",
+  "- First-mover advantage in trust and data accumulation",
+  "",
+  "4. Regulatory Tailwinds:",
+  "- Increasing compliance requirements favour automated tracking",
+  "- ESG reporting demands creating document complexity",
+  "- Data residency requirements favour UK/EU-based solutions",
+  "",
+  "5. Economic Pressure:",
+  "- Rising operational costs driving efficiency focus",
+  "- Margin compression in property management",
+  "- Labour cost inflation making automation ROI compelling",
+  "- GBP 6,000 annual saving per role is immediately attractive",
+  "",
+  "Summary:",
+  "The convergence of technology maturity, market readiness, competitive",
+  "white space, regulatory tailwinds, and economic pressure creates an",
+  "unprecedented window for Hobson to establish category leadership.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1204,6 +1242,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   cacAssumptions: getCACAssumptionsPdfContent,
   burnRateAssumptions: getBurnRateAssumptionsPdfContent,
   ukAssumptionsFinancials: getUKAssumptionsFinancialsPdfContent,
+  whyNow: getWhyNowPdfContent,
 };
 
 // Get PDF content for any visual component type
