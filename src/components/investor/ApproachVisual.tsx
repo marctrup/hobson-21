@@ -1,7 +1,7 @@
 import React from 'react';
 import { Heart, Shield, Target, Zap, Clock, Users, Puzzle, Sparkles, TrendingUp, Coins, BarChart3, Lightbulb, CheckCircle2, Rocket, Calendar } from 'lucide-react';
 export const ApproachVisual = () => {
-  const productItems = ['Unifies scattered information across documents, emails, and systems', 'A simple interface with zero learning curve', 'Works alongside existing workflows — no disruption, no integration burden', 'Designed to earn trust: citations, transparency, no hallucinations', 'Becomes more helpful over time → proactive support, guided workflows', 'Current business activity (pilots, document processing, manual insights) directly informs the production platform'];
+  const productItems = ['Unifies scattered information across documents, emails, and systems', 'A simple interface with zero learning curve', 'Works alongside existing workflows — no disruption', 'Designed to earn trust: citations, transparency, no hallucinations', 'Becomes more helpful over time → proactive support, guided workflows', 'Current business activity (pilots, document processing, manual insights) directly informs the production platform'];
   const brandItems = [{
     label: 'Personalisation',
     desc: 'Responses adapt to context and user role'

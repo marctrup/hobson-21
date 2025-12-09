@@ -612,7 +612,7 @@ export const getApproachPdfContent = (): string[] => [
   "Built for the way real estate actually works:",
   "- Unifies scattered information across documents, emails, and systems",
   "- A simple interface with zero learning curve",
-  "- Works alongside existing workflows - no disruption, no integration burden",
+  "- Works alongside existing workflows - no disruption",
   "- Designed to earn trust: citations, transparency, no hallucinations",
   "- Becomes more helpful over time - proactive support, guided workflows",
   "- Current business activity directly informs the production platform",
