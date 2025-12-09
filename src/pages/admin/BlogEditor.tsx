@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
-import { ArrowLeft, Save, Eye, Upload, Bold, Italic, Underline, Link, List, ListOrdered, Mail } from "lucide-react";
+import { ArrowLeft, Save, Eye, Upload } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,6 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { ImageUpload } from "@/components/blog/ImageUpload";
+import { RichTextEditor } from "@/components/admin/RichTextEditor";
 
 interface BlogPost {
   id?: string;
@@ -136,7 +137,7 @@ const BlogEditor = () => {
         title: data.title,
         slug: data.slug,
         excerpt: data.excerpt,
-        content: processContentForEditing(data.content),
+        content: data.content,
         featured_image_url: data.featured_image_url || '',
         featured_image_alt: data.featured_image_alt || '',
         status: data.status as 'draft' | 'published',
@@ -194,202 +195,13 @@ const BlogEditor = () => {
     }));
   };
 
-  const contentTextareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const processContentForSave = (content: string) => {
-    // For markdown content, preserve newlines as-is
-    // Only process if content has HTML structural elements that need <br> conversion
-    const hasStructuralHtml = /<(div|section|article|p|ul|ol|li|table)[^>]*>/i.test(content);
-    
-    if (!hasStructuralHtml) {
-      // Pure markdown or plain text - return as-is
-      return content;
-    }
-    
-    // For HTML content, convert newlines to <br> in text portions
-    const htmlTagRegex = /<[^>]*>/g;
-    let result = '';
-    let lastIndex = 0;
-    let match;
-    
-    while ((match = htmlTagRegex.exec(content)) !== null) {
-      const textBefore = content.substring(lastIndex, match.index);
-      if (textBefore) {
-        result += textBefore.replace(/\n/g, '<br>');
-      }
-      result += match[0];
-      lastIndex = htmlTagRegex.lastIndex;
-    }
-    
-    const remainingText = content.substring(lastIndex);
-    if (remainingText) {
-      result += remainingText.replace(/\n/g, '<br>');
-    }
-    
-    result = result.replace(/<br>\s*(<\/?(ul|ol|li|div|p|h[1-6])[^>]*>)/gi, '$1');
-    result = result.replace(/(<\/?(ul|ol|li|div|p|h[1-6])[^>]*>)\s*<br>/gi, '$1');
-    
-    return result;
-  };
-
-  const processContentForEditing = (content: string) => {
-    // Preserve HTML formatting for editing - only convert basic <br> tags
-    return content
-      .replace(/<br\s*\/?>/gi, '\n') // Convert <br> tags to line breaks
-      .trim();
-  };
-
   const handleImageInsert = (imageUrl: string, altText: string) => {
-    const imageMarkup = `<img src="${imageUrl}" alt="${altText}" style="max-width: 100%; height: auto; margin: 20px 0;" />`;
+    // Use markdown image syntax
+    const imageMarkup = `![${altText}](${imageUrl})`;
     setPost(prev => ({
       ...prev,
       content: prev.content + '\n\n' + imageMarkup
     }));
-  };
-
-  const insertFormatting = (startTag: string, endTag: string) => {
-    const textarea = contentTextareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = post.content.substring(start, end);
-    
-    const formattedText = startTag + selectedText + endTag;
-    const newContent = post.content.substring(0, start) + formattedText + post.content.substring(end);
-    
-    handleContentChange(newContent);
-    
-    // Restore selection after state update
-    setTimeout(() => {
-      textarea.focus();
-      textarea.setSelectionRange(start + startTag.length, start + startTag.length + selectedText.length);
-    }, 0);
-  };
-
-  const handleBold = () => insertFormatting('<strong>', '</strong>');
-  const handleItalic = () => insertFormatting('<em>', '</em>');
-  const handleUnderline = () => insertFormatting('<u>', '</u>');
-  
-  const handleBulletList = () => {
-    const textarea = contentTextareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = post.content.substring(start, end);
-    
-    let listMarkup;
-    if (selectedText) {
-      // If text is selected, convert lines to list items
-      const lines = selectedText.split('\n').filter(line => line.trim());
-      const listItems = lines.map(line => `  <li>${line.trim()}</li>`).join('\n');
-      listMarkup = `<ul>${listItems}</ul>`;
-    } else {
-      // If no selection, insert empty list
-      listMarkup = '<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li></ul>';
-    }
-    
-    const newContent = post.content.substring(0, start) + listMarkup + post.content.substring(end);
-    handleContentChange(newContent);
-    
-    // Focus and position cursor
-    setTimeout(() => {
-      textarea.focus();
-      const newPosition = start + listMarkup.length;
-      textarea.setSelectionRange(newPosition, newPosition);
-    }, 0);
-  };
-
-  const handleNumberedList = () => {
-    const textarea = contentTextareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = post.content.substring(start, end);
-    
-    let listMarkup;
-    if (selectedText) {
-      // If text is selected, convert lines to list items
-      const lines = selectedText.split('\n').filter(line => line.trim());
-      const listItems = lines.map(line => `  <li>${line.trim()}</li>`).join('\n');
-      listMarkup = `<ol>${listItems}</ol>`;
-    } else {
-      // If no selection, insert empty list
-      listMarkup = '<ol><li>Item 1</li><li>Item 2</li><li>Item 3</li></ol>';
-    }
-    
-    const newContent = post.content.substring(0, start) + listMarkup + post.content.substring(end);
-    handleContentChange(newContent);
-    
-    // Focus and position cursor
-    setTimeout(() => {
-      textarea.focus();
-      const newPosition = start + listMarkup.length;
-      textarea.setSelectionRange(newPosition, newPosition);
-    }, 0);
-  };
-  
-  const handleLink = () => {
-    const textarea = contentTextareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = post.content.substring(start, end);
-    
-    const url = prompt("Enter the URL:");
-    if (!url) return;
-    
-    const linkText = selectedText || "link text";
-    const linkMarkup = `<a href="${url}" target="_blank" rel="noopener noreferrer">${linkText}</a>`;
-    const newContent = post.content.substring(0, start) + linkMarkup + post.content.substring(end);
-    
-    handleContentChange(newContent);
-    
-    // Focus and position cursor after the link
-    setTimeout(() => {
-      textarea.focus();
-      const newPosition = start + linkMarkup.length;
-      textarea.setSelectionRange(newPosition, newPosition);
-    }, 0);
-  };
-
-  const handleEmailLink = () => {
-    const textarea = contentTextareaRef.current;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = post.content.substring(start, end);
-    
-    const email = prompt("Enter the email address:");
-    if (!email) return;
-    
-    const subject = prompt("Enter the email subject (optional):") || "";
-    const body = prompt("Enter the email body (optional):") || "";
-    
-    let mailtoUrl = `mailto:${email}`;
-    const params = [];
-    if (subject) params.push(`subject=${encodeURIComponent(subject)}`);
-    if (body) params.push(`body=${encodeURIComponent(body)}`);
-    if (params.length > 0) {
-      mailtoUrl += `?${params.join('&')}`;
-    }
-    
-    const linkText = selectedText || email;
-    const emailLinkMarkup = `<a href="${mailtoUrl}">${linkText}</a>`;
-    const newContent = post.content.substring(0, start) + emailLinkMarkup + post.content.substring(end);
-    
-    handleContentChange(newContent);
-    
-    // Focus and position cursor after the email link
-    setTimeout(() => {
-      textarea.focus();
-      const newPosition = start + emailLinkMarkup.length;
-      textarea.setSelectionRange(newPosition, newPosition);
-    }, 0);
   };
 
   const handleSave = async (newStatus?: 'draft' | 'published') => {
@@ -444,7 +256,7 @@ const BlogEditor = () => {
       title: post.title,
       slug: finalSlug,
       excerpt: post.excerpt,
-      content: processContentForSave(post.content),
+      content: post.content,
       featured_image_url: post.featured_image_url || null,
       featured_image_alt: post.featured_image_alt || null,
       status: statusToSave,
@@ -612,92 +424,11 @@ const BlogEditor = () => {
 
               <div>
                 <Label htmlFor="content">Content</Label>
-                
-                {/* Formatting Toolbar */}
-                <div className="border border-input rounded-t-md bg-muted/20 px-3 py-2 flex items-center gap-1">
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleBold}
-                    className="h-8 w-8 p-0"
-                    title="Bold"
-                  >
-                    <Bold className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleItalic}
-                    className="h-8 w-8 p-0"
-                    title="Italic"
-                  >
-                    <Italic className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleUnderline}
-                    className="h-8 w-8 p-0"
-                    title="Underline"
-                  >
-                    <Underline className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleLink}
-                    className="h-8 w-8 p-0"
-                    title="Add Link"
-                  >
-                    <Link className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleEmailLink}
-                    className="h-8 w-8 p-0"
-                    title="Add Email Link"
-                  >
-                    <Mail className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleBulletList}
-                    className="h-8 w-8 p-0"
-                    title="Bullet List"
-                  >
-                    <List className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleNumberedList}
-                    className="h-8 w-8 p-0"
-                    title="Numbered List"
-                  >
-                    <ListOrdered className="h-4 w-4" />
-                  </Button>
-                  <div className="text-xs text-muted-foreground ml-2">
-                    Select text and click formatting buttons
-                  </div>
-                </div>
-                
-                <Textarea
-                  ref={contentTextareaRef}
+                <RichTextEditor
                   id="content"
                   value={post.content}
-                  onChange={(e) => handleContentChange(e.target.value)}
-                  placeholder="Write your blog post content here..."
+                  onChange={(content) => handleContentChange(content)}
                   rows={20}
-                  className="font-mono rounded-t-none border-t-0"
                 />
                 <p className="text-sm text-muted-foreground mt-1">
                   Estimated reading time: {post.reading_time} minutes
