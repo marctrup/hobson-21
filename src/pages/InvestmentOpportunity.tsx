@@ -81,7 +81,7 @@ const sections = [
         },
       },
       {
-        title: "Approach",
+        title: "Strategic Approach",
         showCustomVisual: true,
         customVisualComponent: "approach",
         content: {
