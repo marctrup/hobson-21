@@ -340,57 +340,11 @@ const sections = [
       },
       {
         title: "Hobson's Opportunity",
+        showCustomVisual: true,
+        customVisualComponent: "hobsonOpportunity",
         content: {
-          overview: "Why Hobson Wins This Market",
-          sections: [
-            {
-              title: "A Specialised AI Assistant Built for Real Estate",
-              items: [
-                "Designed specifically for real estate workflows, documents, and terminology",
-                "Handles complex, high-volume admin with trusted accuracy",
-                "No generic tooling — purpose-built for the sector's pain points",
-              ],
-            },
-            {
-              title: "Delivers Immediate, Measurable Value",
-              items: [
-                "Automates document understanding, insight extraction, and decision support",
-                "Zero onboarding → value from day one",
-                "Low friction + low pricing → easy adoption at scale",
-                "Proven 98% model accuracy (validated with real-world partners)",
-              ],
-            },
-            {
-              title: "Solving the Industry's Biggest Bottleneck",
-              items: [
-                "Real estate is admin-heavy, fragmented, and cost-sensitive",
-                "20% efficiency gain = £6,000 annual saving per role",
-                "Aligns directly with the global trend of AI-driven operational efficiency",
-              ],
-            },
-            {
-              title: "Learns and Improves Over Time",
-              items: [
-                "Starts as automation",
-                "Evolves into a proactive assistant",
-                "Becomes more accurate, personalised, and valuable with each interaction",
-              ],
-            },
-            {
-              title: "Perfect Timing",
-              items: [
-                "UK TAM/SAM/SOM shows a £110M attainable early market",
-                "Global AI real estate space is growing 35–36% annually",
-                "AI adoption is accelerating and ROI is clear",
-              ],
-            },
-            {
-              title: "The Result",
-              items: [
-                "Hobson becomes the go-to specialised AI assistant in a sector that urgently needs automation, cost savings, and operational clarity.",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
     ],
