@@ -1,18 +1,19 @@
 import React from 'react';
-import { Rocket, Users, Globe, AlertTriangle, CheckCircle, ArrowRight, Zap } from 'lucide-react';
+import { Rocket, Users, Globe, AlertTriangle, CheckCircle, ArrowRight, Zap, DollarSign } from 'lucide-react';
+
 const CapitalRaiseStrategyVisual = () => {
   const scenarios = [{
     amount: "£1.2M",
     label: "Activation Round",
     runway: "9–12 months",
     risk: "high",
-    description: "Transition from pilots to limited 2027 launch. Minimal runway, heightened execution risk.",
+    description: "Transition from pilots to limited 2027 launch. Elevated risk.",
     color: "from-amber-500/20 to-amber-600/10",
     borderColor: "border-amber-500/30",
     textColor: "text-amber-600"
   }, {
     amount: "£1.5M",
-    label: "Minimum Credible",
+    label: "Minimum Credible Raise",
     runway: "12–18 months",
     risk: "medium",
     description: "Covers early operating costs and supports a stable launch phase. Minimum viable raise.",
@@ -21,7 +22,7 @@ const CapitalRaiseStrategyVisual = () => {
     textColor: "text-blue-600"
   }, {
     amount: "£1.8M",
-    label: "Balanced Seed",
+    label: "Balanced Seed Round",
     runway: "18–22 months",
     risk: "optimal",
     description: "Supports product velocity, marketing execution, and early enterprise engagement. Strategically optimal.",
@@ -34,11 +35,19 @@ const CapitalRaiseStrategyVisual = () => {
     label: "Accelerated Growth",
     runway: "22–28 months",
     risk: "low",
-    description: "Positions for accelerated UK scale and early international expansion from 2028.",
+    description: "Positions for rapid UK scale and early international expansion. Global ready.",
     color: "from-emerald-500/20 to-emerald-600/10",
     borderColor: "border-emerald-500/30",
     textColor: "text-emerald-600"
   }];
+
+  const useOfFunds = [
+    { label: "Pre-2027 engineering", amount: "£500k–£700k" },
+    { label: "Team hiring & runway", amount: "£750k" },
+    { label: "Initial marketing", amount: "£150k" },
+    { label: "Buffer", amount: "£300k" }
+  ];
+
   return <div className="space-y-8">
       {/* Header */}
       <div className="text-center">
@@ -46,21 +55,34 @@ const CapitalRaiseStrategyVisual = () => {
         <p className="text-muted-foreground">Activating the Business for Commercial Launch</p>
       </div>
 
-      {/* The Story */}
+      {/* The Context */}
       <div className="bg-card rounded-xl p-6 border border-border">
         <h3 className="text-lg font-semibold text-foreground mb-4">The Context</h3>
         <p className="text-muted-foreground leading-relaxed">
-          Hobson can operate pilot programmes throughout 2026 using founder-led execution and outsourced engineering, 
-          but <span className="text-foreground font-medium">the company cannot hire its core team or begin meaningful 
-          commercial activity without external capital</span>. A seed round is required to activate the business, 
-          complete the production-ready platform, and support a minimal commercial launch in early 2027.
+          Hobson can run pilot programmes throughout 2026 with founder-led execution and outsourced engineering, 
+          but <span className="text-foreground font-medium">cannot hire its core team or begin meaningful 
+          commercial activity without external capital</span>. The seed round activates the business: completing the production platform, hiring the team, and preparing for a commercial launch in early 2027.
+        </p>
+      </div>
+
+      {/* Why This Raise Is Needed */}
+      <div className="bg-muted/30 rounded-xl p-6 border border-border">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Why This Raise Is Needed</h3>
+        <p className="text-muted-foreground leading-relaxed mb-4">
+          Our operating model does <span className="text-foreground font-bold">not</span> require ongoing capital.
+        </p>
+        <p className="text-muted-foreground leading-relaxed">
+          Our <span className="text-foreground font-bold">build and go-to-market acceleration do.</span>
+        </p>
+        <p className="text-muted-foreground leading-relaxed mt-4">
+          The seed round funds the entire 2026 build year so that the business can launch ready, staffed, and immediately profitable in 2027.
         </p>
       </div>
 
       {/* What the Capital Unlocks */}
       <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-6 border border-primary/20">
         <h3 className="text-lg font-semibold text-foreground mb-4">What This Capital Unlocks</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="flex items-start gap-3 p-4 bg-background/50 rounded-lg">
             <div className="p-2 bg-primary/20 rounded-lg flex-shrink-0">
               <Users className="w-5 h-5 text-primary" />
@@ -84,10 +106,27 @@ const CapitalRaiseStrategyVisual = () => {
               <Rocket className="w-5 h-5 text-primary" />
             </div>
             <div>
-              <p className="font-medium text-foreground">Go-to-Market-Strategy</p>
+              <p className="font-medium text-foreground">Go-to-Market Strategy</p>
               <p className="text-sm text-muted-foreground">Convert pilot insights into scalable revenue</p>
             </div>
           </div>
+        </div>
+
+        {/* Use of Funds */}
+        <div className="bg-background/50 rounded-lg p-4">
+          <div className="flex items-center gap-2 mb-3">
+            <DollarSign className="w-5 h-5 text-primary" />
+            <p className="font-medium text-foreground">Use of Funds</p>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {useOfFunds.map((item, index) => (
+              <div key={index} className="text-center p-3 bg-muted/30 rounded-lg">
+                <p className="text-sm font-semibold text-foreground">{item.amount}</p>
+                <p className="text-xs text-muted-foreground">{item.label}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-center mt-4 text-sm font-semibold text-primary">Total: £1.5M–£2.2M</p>
         </div>
       </div>
 
@@ -112,10 +151,10 @@ const CapitalRaiseStrategyVisual = () => {
               <p className="text-sm text-muted-foreground">{scenario.description}</p>
               <div className="mt-3 flex items-center gap-2">
                 {scenario.risk === "high" && <span className="inline-flex items-center gap-1 text-xs text-amber-600 bg-amber-500/20 px-2 py-1 rounded-full">
-                    <AlertTriangle className="w-3 h-3" /> Higher Risk
+                    <AlertTriangle className="w-3 h-3" /> Elevated Risk
                   </span>}
                 {scenario.risk === "optimal" && <span className="inline-flex items-center gap-1 text-xs text-primary bg-primary/20 px-2 py-1 rounded-full">
-                    <CheckCircle className="w-3 h-3" /> Optimal Execution
+                    <CheckCircle className="w-3 h-3" /> Strategically Optimal
                   </span>}
                 {scenario.risk === "low" && <span className="inline-flex items-center gap-1 text-xs text-emerald-600 bg-emerald-500/20 px-2 py-1 rounded-full">
                     <Globe className="w-3 h-3" /> Global Ready
@@ -125,6 +164,20 @@ const CapitalRaiseStrategyVisual = () => {
         </div>
       </div>
 
+      {/* Burn Rate Insight */}
+      <div className="bg-muted/30 rounded-xl p-6 border border-border">
+        <h3 className="text-lg font-semibold text-foreground mb-4">Burn Rate Insight</h3>
+        <p className="text-muted-foreground leading-relaxed">
+          Your lowest point is <span className="text-foreground font-bold">not</span> an operational loss.
+        </p>
+        <p className="text-muted-foreground leading-relaxed mt-2">
+          It is the <span className="text-foreground font-bold">capital required to hire + build in 2026</span>.
+        </p>
+        <p className="text-muted-foreground leading-relaxed mt-2">
+          From January 2027 onward, the business becomes cashflow-positive.
+        </p>
+      </div>
+
       {/* Timeline Trajectory */}
       <div className="bg-card rounded-xl p-6 border border-border">
         <h3 className="text-lg font-semibold text-foreground mb-6">Commercial Trajectory</h3>
@@ -132,7 +185,6 @@ const CapitalRaiseStrategyVisual = () => {
           <div className="flex-1 p-4 bg-muted/50 rounded-lg text-center">
             <p className="text-2xl font-bold text-foreground mb-1">2026</p>
             <p className="text-sm font-medium text-primary mb-2">Pilots & Validation</p>
-            <p className="text-xs text-muted-foreground">Technical validation with real-world partners</p>
           </div>
           <div className="hidden md:flex items-center">
             <ArrowRight className="w-6 h-6 text-muted-foreground" />
@@ -140,7 +192,6 @@ const CapitalRaiseStrategyVisual = () => {
           <div className="flex-1 p-4 bg-muted/50 rounded-lg text-center">
             <p className="text-2xl font-bold text-foreground mb-1">2027</p>
             <p className="text-sm font-medium text-primary mb-2">Commercial Launch</p>
-            <p className="text-xs text-muted-foreground">Minimal but functional market entry</p>
           </div>
           <div className="hidden md:flex items-center">
             <ArrowRight className="w-6 h-6 text-muted-foreground" />
@@ -148,18 +199,18 @@ const CapitalRaiseStrategyVisual = () => {
           <div className="flex-1 p-4 bg-muted/50 rounded-lg text-center">
             <p className="text-2xl font-bold text-foreground mb-1">2028+</p>
             <p className="text-sm font-medium text-primary mb-2">Scale & Expand</p>
-            <p className="text-xs text-muted-foreground">Accelerated UK penetration and global expansion</p>
           </div>
         </div>
       </div>
 
       {/* Summary */}
       <div className="bg-gradient-to-r from-primary/10 to-primary/5 rounded-xl p-6 border border-primary/20">
+        <h3 className="text-lg font-semibold text-foreground mb-3">Summary</h3>
         <p className="text-foreground leading-relaxed">
-          This raise unlocks the full commercial potential of the business: pilots and technical validation in 2026, 
-          a minimal but functional launch in 2027, and accelerated UK penetration and global expansion from 2028 onwards.
+          The £1.5M–£2.2M raise funds the full pre-revenue build and early commercialisation. Once revenue begins in 2027, the lean operating model becomes cashflow-positive almost immediately, avoiding unnecessary dilution and demonstrating exceptional capital efficiency.
         </p>
       </div>
     </div>;
 };
+
 export default CapitalRaiseStrategyVisual;
