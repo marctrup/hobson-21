@@ -19,35 +19,35 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
         remarkPlugins={[remarkBreaks]}
         components={{
           h1: ({ children }) => (
-            <h1 className="text-3xl font-bold mb-4 mt-6">{children}</h1>
+            <h1 className="text-xl font-semibold mb-3 mt-5 text-foreground">{children}</h1>
           ),
           h2: ({ children }) => (
-            <h2 className="text-2xl font-bold mb-3 mt-5">{children}</h2>
+            <h2 className="text-lg font-semibold mb-2 mt-4 text-foreground">{children}</h2>
           ),
           h3: ({ children }) => (
-            <h3 className="text-xl font-semibold mb-2 mt-4">{children}</h3>
+            <h3 className="text-base font-semibold mb-2 mt-3 text-foreground">{children}</h3>
           ),
           h4: ({ children }) => (
-            <h4 className="text-lg font-semibold mb-2 mt-3">{children}</h4>
+            <h4 className="text-sm font-semibold mb-1 mt-2 text-foreground">{children}</h4>
           ),
           p: ({ children }) => (
-            <p className="mb-4 last:mb-0">{children}</p>
+            <p className="text-sm leading-relaxed mb-3 last:mb-0 text-foreground">{children}</p>
           ),
           ul: ({ children }) => (
-            <ul className="list-disc mb-4 ml-6">{children}</ul>
+            <ul className="list-disc mb-3 ml-5 text-sm">{children}</ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal mb-4 ml-6">{children}</ol>
+            <ol className="list-decimal mb-3 ml-5 text-sm">{children}</ol>
           ),
           li: ({ children }) => (
-            <li className="mb-1">{children}</li>
+            <li className="mb-1 text-foreground">{children}</li>
           ),
           a: ({ href, children }) => (
             <a
               href={href}
               target={href?.startsWith('mailto:') || href?.startsWith('tel:') ? undefined : '_blank'}
               rel={href?.startsWith('mailto:') || href?.startsWith('tel:') ? undefined : 'noopener noreferrer'}
-              className="text-blue-600 underline hover:text-blue-800 hover:no-underline"
+              className="text-primary underline hover:text-primary/80 hover:no-underline"
             >
               {children}
             </a>
@@ -59,16 +59,16 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
             <em className="italic">{children}</em>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-primary pl-4 my-4 italic text-muted-foreground">
+            <blockquote className="border-l-4 border-primary pl-3 my-3 italic text-muted-foreground text-sm">
               {children}
             </blockquote>
           ),
-          hr: () => <hr className="my-8 border-border" />,
+          hr: () => <hr className="my-6 border-border" />,
           img: ({ src, alt }) => (
             <img
               src={src}
               alt={alt || ''}
-              className="max-w-full h-auto rounded-lg my-4"
+              className="max-w-full h-auto rounded-lg my-3"
               loading="lazy"
             />
           ),
