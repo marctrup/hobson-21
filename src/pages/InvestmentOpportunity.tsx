@@ -1369,11 +1369,19 @@ const InvestmentOpportunity = () => {
 
                     {/* Overview */}
                     {!(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
-                      !(selectedSection.pages[currentPageIndex] as any).isVisual && (
-                        <div className="prose prose-sm max-w-none">
-                          <p className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed">
-                            {selectedSection.pages[currentPageIndex].content.overview}
-                          </p>
+                      !(selectedSection.pages[currentPageIndex] as any).isVisual && 
+                      selectedSection.pages[currentPageIndex].content.overview && (
+                        <div className="relative overflow-hidden bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 rounded-xl border border-primary/20 p-6 sm:p-8">
+                          <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2" />
+                          <div className="absolute bottom-0 left-0 w-24 h-24 bg-primary/5 rounded-full translate-y-1/2 -translate-x-1/2" />
+                          <div className="relative flex items-center gap-4">
+                            <div className="hidden sm:flex w-12 h-12 rounded-xl bg-primary/10 items-center justify-center flex-shrink-0">
+                              <Users className="w-6 h-6 text-primary" />
+                            </div>
+                            <p className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed font-medium">
+                              {selectedSection.pages[currentPageIndex].content.overview}
+                            </p>
+                          </div>
                         </div>
                       )}
 
