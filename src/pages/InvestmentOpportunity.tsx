@@ -52,7 +52,7 @@ import CostAssumptionsVisual from "@/components/investor/CostAssumptionsVisual";
 import PLAssumptionsVisual from "@/components/investor/PLAssumptionsVisual";
 import PLGrowthVisual from "@/components/investor/PLGrowthVisual";
 import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
-import BurnRateAssumptionsVisual from "@/components/investor/BurnRateAssumptionsVisual";
+
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
 import { generateCardPdf, generateFullBusinessPlanPdf, CardSection, BusinessPlanCards } from "@/utils/investmentPdfGenerator";
@@ -893,15 +893,6 @@ const sections = [
           sections: [],
         },
       },
-      {
-        title: "Burn Rate Assumptions",
-        showCustomVisual: true,
-        customVisualComponent: "burnRateAssumptions",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
     ],
   },
   {
@@ -1500,10 +1491,6 @@ const InvestmentOpportunity = () => {
                       <CACAssumptionsVisual />
                     )}
 
-                    {/* Custom Visual Component for Burn Rate Assumptions */}
-                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "burnRateAssumptions" && (
-                      <BurnRateAssumptionsVisual />
-                    )}
 
                     {/* Custom Visual Component for Global Justification */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "globalJustification" && (
