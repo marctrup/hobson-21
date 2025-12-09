@@ -55,6 +55,7 @@ import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
 import { ExecutiveSummaryVisual } from "@/components/investor/ExecutiveSummaryVisual";
 import { ApproachVisual } from "@/components/investor/ApproachVisual";
 import { CustomerSegmentationVisual } from "@/components/investor/CustomerSegmentationVisual";
+import { HobsonOpportunityVisual } from "@/components/investor/HobsonOpportunityVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -272,6 +273,15 @@ const sections = [
               ],
             },
           ],
+        },
+      },
+      {
+        title: "Hobson's Opportunity",
+        showCustomVisual: true,
+        customVisualComponent: "hobsonOpportunity",
+        content: {
+          overview: "",
+          sections: [],
         },
       },
       {
@@ -1344,7 +1354,11 @@ const InvestmentOpportunity = () => {
                       <CustomerSegmentationVisual />
                     )}
 
-                    {/* Custom Visual Component for Market Landscape */}
+                    {/* Custom Visual Component for Hobson's Opportunity */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "hobsonOpportunity" && (
+                      <HobsonOpportunityVisual />
+                    )}
+
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent === "landscape" && (
                         <CompetitiveLandscapeVisual />
