@@ -322,7 +322,7 @@ const InvestorSummary = () => {
               <div className="w-full">
                 <div className="text-center mb-6 sm:mb-8">
                   <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 sm:mb-3 text-foreground">
-                    Wisdom delivered. No feathers ruffled.
+                    Wisdom delivered. <span className="text-primary">No feathers ruffled.</span>
                   </h2>
                 </div>
                 
