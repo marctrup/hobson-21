@@ -86,18 +86,18 @@ const sections = [
         },
       },
       {
-        title: "Strategic Approach",
+        title: "Why Now?",
         showCustomVisual: true,
-        customVisualComponent: "approach",
+        customVisualComponent: "whyNow",
         content: {
           overview: "",
           sections: [],
         },
       },
       {
-        title: "Why Now?",
+        title: "Strategic Approach",
         showCustomVisual: true,
-        customVisualComponent: "whyNow",
+        customVisualComponent: "approach",
         content: {
           overview: "",
           sections: [],
