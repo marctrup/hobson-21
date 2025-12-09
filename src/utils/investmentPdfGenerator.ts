@@ -1690,12 +1690,24 @@ export interface BusinessPlanCards {
 }
 
 /**
+ * Funding requirement info for cover page
+ */
+export interface FundingRequirement {
+  amount: string;
+  description: string;
+}
+
+/**
  * Generate complete business plan PDF with all 6 cards
  * 
  * @param cards - Object containing all 6 card sections explicitly
+ * @param fundingRequirement - Optional funding requirement data for cover page
  * @returns void - Downloads the PDF directly
  */
-export const generateFullBusinessPlanPdf = (cards: BusinessPlanCards): void => {
+export const generateFullBusinessPlanPdf = (
+  cards: BusinessPlanCards,
+  fundingRequirement?: FundingRequirement
+): void => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
@@ -1727,7 +1739,10 @@ export const generateFullBusinessPlanPdf = (cards: BusinessPlanCards): void => {
   doc.setFont("helvetica", "normal");
   doc.text("Investment Opportunity Document", pageWidth / 2, 130, { align: "center" });
 
-  // Funding requirement
+  // Funding requirement - use provided data or defaults
+  const fundingAmount = fundingRequirement?.amount || "GBP 1.5M - 2.2M";
+  const fundingDesc = fundingRequirement?.description || "Covers 18-24 months and early commercialisation";
+  
   const fundingY = 165;
   doc.setDrawColor(255, 255, 255);
   doc.setLineWidth(0.5);
@@ -1737,10 +1752,16 @@ export const generateFullBusinessPlanPdf = (cards: BusinessPlanCards): void => {
   doc.setFont("helvetica", "bold");
   doc.text("FUNDING REQUIREMENT", pageWidth / 2, fundingY, { align: "center" });
 
-  doc.setFontSize(42);
-  doc.text("GBP 1,000,000", pageWidth / 2, fundingY + 20, { align: "center" });
+  doc.setFontSize(36);
+  const sanitizedAmount = sanitizeText(fundingAmount);
+  doc.text(sanitizedAmount, pageWidth / 2, fundingY + 18, { align: "center" });
 
-  doc.line(pageWidth / 2 - 80, fundingY + 30, pageWidth / 2 + 80, fundingY + 30);
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "normal");
+  const sanitizedDesc = sanitizeText(fundingDesc);
+  doc.text(sanitizedDesc, pageWidth / 2, fundingY + 32, { align: "center" });
+
+  doc.line(pageWidth / 2 - 80, fundingY + 42, pageWidth / 2 + 80, fundingY + 42);
 
   const currentDate = new Date().toLocaleDateString("en-GB", {
     year: "numeric",
