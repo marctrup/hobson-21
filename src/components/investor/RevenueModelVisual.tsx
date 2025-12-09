@@ -1,5 +1,5 @@
 import React from "react";
-import { TrendingUp, Users, Building2, Target, CheckCircle, Globe, PoundSterling, Zap, Ban, UserX, Package } from "lucide-react";
+import { TrendingUp, Users, Building2, Target, CheckCircle, Globe, PoundSterling } from "lucide-react";
 import {
   Table,
   TableBody,
@@ -70,46 +70,6 @@ const RevenueModelVisual = () => {
         <p className="text-muted-foreground max-w-2xl mx-auto">
           Post-pilot commercial launch → UK scale → Global expansion → Stabilised growth
         </p>
-      </div>
-
-      {/* Usage-Based Pricing - Key Differentiators */}
-      <div className="p-6 rounded-xl bg-gradient-to-r from-green-500/10 via-emerald-500/10 to-green-500/10 border-2 border-green-500/40">
-        <div className="text-center mb-6">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <Zap className="w-6 h-6 text-green-600" />
-            <h4 className="text-xl font-bold text-foreground">Usage-Based Pricing</h4>
-          </div>
-          <p className="text-muted-foreground">Pay via Hobson Energy Units (HEUs)</p>
-        </div>
-        
-        <div className="grid md:grid-cols-3 gap-4 mb-6">
-          <div className="p-4 bg-green-500/20 rounded-xl border-2 border-green-500/50 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <UserX className="w-6 h-6 text-green-700" />
-            </div>
-            <p className="font-bold text-green-800 dark:text-green-300 text-lg">No per-user fees</p>
-            <p className="text-xs text-green-700/80 dark:text-green-400/80 mt-1">Unlike traditional SaaS</p>
-          </div>
-          <div className="p-4 bg-green-500/20 rounded-xl border-2 border-green-500/50 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Package className="w-6 h-6 text-green-700" />
-            </div>
-            <p className="font-bold text-green-800 dark:text-green-300 text-lg">No per-asset fees</p>
-            <p className="text-xs text-green-700/80 dark:text-green-400/80 mt-1">Scale without limits</p>
-          </div>
-          <div className="p-4 bg-green-500/20 rounded-xl border-2 border-green-500/50 text-center">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Ban className="w-6 h-6 text-green-700" />
-            </div>
-            <p className="font-bold text-green-800 dark:text-green-300 text-lg">Zero onboarding</p>
-            <p className="text-xs text-green-700/80 dark:text-green-400/80 mt-1">Start instantly</p>
-          </div>
-        </div>
-
-        <div className="text-center p-4 bg-background/60 rounded-lg border border-green-500/30">
-          <p className="text-sm text-muted-foreground mb-1">Result</p>
-          <p className="font-semibold text-foreground">Clear, measurable ROI based on time and cost savings</p>
-        </div>
       </div>
 
       {/* Market Size Basis */}
