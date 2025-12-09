@@ -141,7 +141,7 @@ const CapitalRaiseStrategyVisual = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {scenarios.map((scenario, index) => <div key={index} className={`relative bg-gradient-to-br ${scenario.color} rounded-xl p-5 border ${scenario.borderColor} ${scenario.recommended ? 'ring-2 ring-primary ring-offset-2 ring-offset-background' : ''}`}>
               {scenario.recommended && <div className="absolute -top-3 left-4 px-3 py-1 bg-primary text-primary-foreground text-xs font-semibold rounded-full">
-                  Recommended
+                  Preferred
                 </div>}
               <div className="flex items-start justify-between mb-3">
                 <div>
