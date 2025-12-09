@@ -276,15 +276,6 @@ const sections = [
         },
       },
       {
-        title: "Hobson's Opportunity",
-        showCustomVisual: true,
-        customVisualComponent: "hobsonOpportunity",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
         title: "Market Landscape",
         showCustomVisual: true,
         customVisualComponent: "landscape",
