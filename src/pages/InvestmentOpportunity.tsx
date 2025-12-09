@@ -54,6 +54,7 @@ import PLGrowthVisual from "@/components/investor/PLGrowthVisual";
 import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
 import { ExecutiveSummaryVisual } from "@/components/investor/ExecutiveSummaryVisual";
 import { ApproachVisual } from "@/components/investor/ApproachVisual";
+import { CustomerSegmentationVisual } from "@/components/investor/CustomerSegmentationVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -101,28 +102,11 @@ const sections = [
     pages: [
       {
         title: "Customer Segmentation",
+        showCustomVisual: true,
+        customVisualComponent: "customerSegmentation",
         content: {
           overview: "",
-          sections: [
-            {
-              title: "Large Operators (50–250 employees)",
-              items: [
-                "High-admin organisations struggling with scattered data and slow information retrieval, needing automation and accuracy at scale.",
-              ],
-            },
-            {
-              title: "Medium Operators (10–49 employees)",
-              items: [
-                "Agile teams overwhelmed by inboxes and shared drives, looking for efficient, low-overhead tools that eliminate manual searching.",
-              ],
-            },
-            {
-              title: "Small Operators (1–9 employees)",
-              items: [
-                "Time-poor owner-operators needing a simple, low-cost assistant that works instantly without onboarding or a tech stack.",
-              ],
-            },
-          ],
+          sections: [],
         },
       },
       {
@@ -1355,6 +1339,12 @@ const InvestmentOpportunity = () => {
                       <ApproachVisual />
                     )}
 
+                    {/* Custom Visual Component for Customer Segmentation */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "customerSegmentation" && (
+                      <CustomerSegmentationVisual />
+                    )}
+
+                    {/* Custom Visual Component for Market Landscape */}
                     {(selectedSection.pages[currentPageIndex] as any).showCustomVisual &&
                       (selectedSection.pages[currentPageIndex] as any).customVisualComponent === "landscape" && (
                         <CompetitiveLandscapeVisual />
