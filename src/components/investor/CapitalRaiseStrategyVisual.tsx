@@ -163,21 +163,6 @@ const CapitalRaiseStrategyVisual = () => {
             </div>)}
         </div>
       </div>
-
-      {/* Burn Rate Insight */}
-      <div className="bg-muted/30 rounded-xl p-6 border border-border">
-        <h3 className="text-lg font-semibold text-foreground mb-4">Burn Rate Insight</h3>
-        <p className="text-muted-foreground leading-relaxed">
-          Your lowest point is <span className="text-foreground font-bold">not</span> an operational loss.
-        </p>
-        <p className="text-muted-foreground leading-relaxed mt-2">
-          It is the <span className="text-foreground font-bold">capital required to hire + build in 2026</span>.
-        </p>
-        <p className="text-muted-foreground leading-relaxed mt-2">
-          From January 2027 onward, the business becomes cashflow-positive.
-        </p>
-      </div>
-
       {/* Timeline Trajectory */}
       <div className="bg-card rounded-xl p-6 border border-border">
         <h3 className="text-lg font-semibold text-foreground mb-6">Commercial Trajectory</h3>
