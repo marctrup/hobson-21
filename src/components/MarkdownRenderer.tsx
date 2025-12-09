@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkBreaks from 'remark-breaks';
-import rehypeRaw from 'rehype-raw';
 
 interface MarkdownRendererProps {
   content: string;
@@ -12,19 +11,11 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
   content,
   className = ''
 }) => {
-  // Convert <br> tags to newlines for markdown processing
-  const normalizedContent = content
-    .replace(/<br\s*\/?>/gi, '\n')
-    .replace(/&nbsp;/gi, ' ');
-  
-  // Always render with react-markdown (supports inline HTML via rehype-raw)
   return (
     <div className={className}>
       <ReactMarkdown
         remarkPlugins={[remarkBreaks]}
-        rehypePlugins={[rehypeRaw]}
         components={{
-          // Custom heading styles
           h1: ({ children }) => (
             <h1 className="text-3xl font-bold mb-4 mt-6">{children}</h1>
           ),
@@ -37,21 +28,18 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           h4: ({ children }) => (
             <h4 className="text-lg font-semibold mb-2 mt-3">{children}</h4>
           ),
-          // Paragraph styling
           p: ({ children }) => (
-            <p className="mb-4 leading-relaxed">{children}</p>
+            <p className="mb-4 last:mb-0">{children}</p>
           ),
-          // List styling
           ul: ({ children }) => (
-            <ul className="list-disc pl-6 mb-4 space-y-2">{children}</ul>
+            <ul className="list-disc mb-4 ml-6">{children}</ul>
           ),
           ol: ({ children }) => (
-            <ol className="list-decimal pl-6 mb-4 space-y-2">{children}</ol>
+            <ol className="list-decimal mb-4 ml-6">{children}</ol>
           ),
           li: ({ children }) => (
-            <li className="leading-relaxed">{children}</li>
+            <li className="mb-1">{children}</li>
           ),
-          // Link styling
           a: ({ href, children }) => (
             <a
               href={href}
@@ -62,38 +50,18 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
               {children}
             </a>
           ),
-          // Bold and italic
           strong: ({ children }) => (
-            <strong className="font-bold">{children}</strong>
+            <strong className="font-semibold text-foreground">{children}</strong>
           ),
           em: ({ children }) => (
             <em className="italic">{children}</em>
           ),
-          // Blockquote
           blockquote: ({ children }) => (
             <blockquote className="border-l-4 border-primary pl-4 my-4 italic text-muted-foreground">
               {children}
             </blockquote>
           ),
-          // Code blocks
-          code: ({ className, children }) => {
-            const isInline = !className;
-            if (isInline) {
-              return (
-                <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono">
-                  {children}
-                </code>
-              );
-            }
-            return (
-              <pre className="bg-muted p-4 rounded-lg overflow-x-auto mb-4">
-                <code className="text-sm font-mono">{children}</code>
-              </pre>
-            );
-          },
-          // Horizontal rule
           hr: () => <hr className="my-8 border-border" />,
-          // Images
           img: ({ src, alt }) => (
             <img
               src={src}
@@ -104,7 +72,7 @@ export const MarkdownRenderer: React.FC<MarkdownRendererProps> = ({
           ),
         }}
       >
-        {normalizedContent}
+        {content}
       </ReactMarkdown>
     </div>
   );
