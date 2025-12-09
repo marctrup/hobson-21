@@ -58,6 +58,7 @@ import { CustomerSegmentationVisual } from "@/components/investor/CustomerSegmen
 import { HobsonOpportunityVisual } from "@/components/investor/HobsonOpportunityVisual";
 import { PilotClientsVisual } from "@/components/investor/PilotClientsVisual";
 import { TechStackVisual } from "@/components/investor/TechStackVisual";
+import WhyNowVisual from "@/components/investor/WhyNowVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -88,6 +89,15 @@ const sections = [
         title: "Strategic Approach",
         showCustomVisual: true,
         customVisualComponent: "approach",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Why Now?",
+        showCustomVisual: true,
+        customVisualComponent: "whyNow",
         content: {
           overview: "",
           sections: [],
@@ -1228,6 +1238,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Approach */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "approach" && (
                       <ApproachVisual />
+                    )}
+
+                    {/* Custom Visual Component for Why Now */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "whyNow" && (
+                      <WhyNowVisual />
                     )}
 
                     {/* Custom Visual Component for Customer Segmentation */}
