@@ -108,13 +108,13 @@ export const ExecutiveSummaryVisual = () => {
               <div className="text-sm text-muted-foreground">Pay via Hobson Energy Units (HEUs)</div>
             </div>
             <div className="flex flex-wrap gap-3">
-              <span className="px-4 py-2 text-sm font-bold rounded-lg bg-teal-400 text-gray-900 shadow-md">
+              <span className="px-4 py-2 text-sm font-bold rounded-lg bg-sky-400 text-gray-900 shadow-md">
                 No per-user fees
               </span>
-              <span className="px-4 py-2 text-sm font-bold rounded-lg bg-teal-400 text-gray-900 shadow-md">
+              <span className="px-4 py-2 text-sm font-bold rounded-lg bg-sky-400 text-gray-900 shadow-md">
                 No per-asset fees
               </span>
-              <span className="px-4 py-2 text-sm font-bold rounded-lg bg-teal-400 text-gray-900 shadow-md">
+              <span className="px-4 py-2 text-sm font-bold rounded-lg bg-sky-400 text-gray-900 shadow-md">
                 Zero onboarding
               </span>
             </div>
