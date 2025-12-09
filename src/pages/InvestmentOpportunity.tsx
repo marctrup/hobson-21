@@ -57,6 +57,7 @@ import { ApproachVisual } from "@/components/investor/ApproachVisual";
 import { CustomerSegmentationVisual } from "@/components/investor/CustomerSegmentationVisual";
 import { HobsonOpportunityVisual } from "@/components/investor/HobsonOpportunityVisual";
 import { PilotClientsVisual } from "@/components/investor/PilotClientsVisual";
+import { TechStackVisual } from "@/components/investor/TechStackVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -527,36 +528,11 @@ const sections = [
       },
       {
         title: "Tech Stack",
+        showCustomVisual: true,
+        customVisualComponent: "techStack",
         content: {
-          overview:
-            "Hobson runs on trusted, industry-standard platforms designed for security, performance, and scalability.",
-          sections: [
-            {
-              title: "AI & Intelligence",
-              items: ["🤖 OpenAI: Powers natural language understanding and AI-driven responses"],
-            },
-            {
-              title: "Cloud Infrastructure",
-              items: [
-                "☁️ OVH Cloud: Stores your uploaded files and documents (secure UK/EU-based cloud storage)",
-                "⚡ Vercel: Runs the Hobson web app (fast, stable interface)",
-              ],
-            },
-            {
-              title: "Data & Storage",
-              items: [
-                "🗄️ MongoDB: Handles structured data such as units, portfolios, users, and document metadata",
-                "🔗 Neo4j: Used for knowledge-graph structures to understand relationships",
-                "🔍 Pinecone: Stores vector embeddings for quick document search",
-              ],
-            },
-            {
-              title: "Communication & Admin",
-              items: [
-                "📧 Google Workspace (G Suite): Supports email delivery, team communication, and secure internal admin",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
         },
       },
     ],
@@ -1326,7 +1302,11 @@ const InvestmentOpportunity = () => {
                       <SimpleUIVisual />
                     )}
 
-                    {/* Custom Visual Component for Competitor Analysis */}
+                    {/* Custom Visual Component for Tech Stack */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "techStack" && (
+                      <TechStackVisual />
+                    )}
+
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "competitorAnalysis" && (
                       <CompetitorAnalysisMatrix />
                     )}
