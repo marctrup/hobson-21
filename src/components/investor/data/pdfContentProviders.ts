@@ -715,7 +715,7 @@ export const getGlobalMarketAssumptionsPdfContent = (): string[] => [
   "- Hobson enters a sector where adoption is rising and ROI is demonstrable",
   "",
   "Summary:",
-  "1. AI in real estate is a fast-growing multi-trillion dollar market",
+  "1. AI in real estate is a fast-growing multi-billion dollar market",
   "2. 35%+ CAGR through 2030",
   "3. Proven 10-20% efficiency gains across the industry",
   "4. Nearly half of real estate businesses already seeing cost reductions from AI",
