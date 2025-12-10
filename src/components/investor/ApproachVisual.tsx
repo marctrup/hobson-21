@@ -31,7 +31,7 @@ export const ApproachVisual = () => {
     label: 'No per-asset fees',
     icon: CheckCircle2
   }];
-  const raiseItems = ['Full production platform', 'Knowledge graph scaling', 'Stability, QA, security', 'Core hiring', 'GTM development', 'Pilot conversion frameworks'];
+  const raiseItems = ['Full production platform', 'AI scaling', 'Stability, QA, security', 'Core hiring', 'GTM development', 'Pilot conversion frameworks'];
   return <div className="space-y-8">
       {/* Intro */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 p-6 border border-primary/20">
