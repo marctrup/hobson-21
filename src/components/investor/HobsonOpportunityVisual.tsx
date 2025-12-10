@@ -9,7 +9,7 @@ export const HobsonOpportunityVisual = () => {
       color: 'blue',
       items: [
         'Designed specifically for real estate documents',
-        'Handles complex, high-volume admin with trusted accuracy',
+        'Handles complex, high-volume of documents with trusted accuracy',
         'No generic tooling — purpose-built for the sector\'s pain points',
       ],
     },
