@@ -25,10 +25,10 @@ All colors MUST be HSL.
     66% { transform: translateY(-6px) translateX(10px) rotate(var(--rotate, 0deg)); }
   }
   
-  /* Mobile bounce with 10% more range (27.5% vs 25%) */
+  /* Mobile bounce with 20% more range (30% vs 25%) */
   @keyframes bounce-mobile {
     0%, 100% {
-      transform: translateY(-27.5%);
+      transform: translateY(-30%);
       animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
     }
     50% {
