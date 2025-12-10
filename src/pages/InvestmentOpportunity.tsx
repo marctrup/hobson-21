@@ -114,6 +114,15 @@ const sections = [
     iconColor: "text-purple-600",
     pages: [
       {
+        title: "Hobson's Opportunity",
+        showCustomVisual: true,
+        customVisualComponent: "hobsonOpportunity",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Customer Segmentation",
         showCustomVisual: true,
         customVisualComponent: "customerSegmentation",
@@ -345,15 +354,6 @@ const sections = [
         title: "Competitor Analysis",
         showCustomVisual: true,
         customVisualComponent: "competitorAnalysis",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Hobson's Opportunity",
-        showCustomVisual: true,
-        customVisualComponent: "hobsonOpportunity",
         content: {
           overview: "",
           sections: [],
