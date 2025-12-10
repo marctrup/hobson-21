@@ -55,7 +55,7 @@ import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
 import { ExecutiveSummaryVisual } from "@/components/investor/ExecutiveSummaryVisual";
 import { ApproachVisual } from "@/components/investor/ApproachVisual";
 import { CustomerSegmentationVisual } from "@/components/investor/CustomerSegmentationVisual";
-import { HobsonOpportunityVisual } from "@/components/investor/HobsonOpportunityVisual";
+
 import { PilotClientsVisual } from "@/components/investor/PilotClientsVisual";
 import { TechStackVisual } from "@/components/investor/TechStackVisual";
 import WhyNowVisual from "@/components/investor/WhyNowVisual";
@@ -113,15 +113,6 @@ const sections = [
     color: "from-purple-500/10 to-purple-600/10",
     iconColor: "text-purple-600",
     pages: [
-      {
-        title: "Hobson's Opportunity",
-        showCustomVisual: true,
-        customVisualComponent: "hobsonOpportunity",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
       {
         title: "Customer Segmentation",
         showCustomVisual: true,
@@ -1250,10 +1241,6 @@ const InvestmentOpportunity = () => {
                       <CustomerSegmentationVisual />
                     )}
 
-                    {/* Custom Visual Component for Hobson's Opportunity */}
-                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "hobsonOpportunity" && (
-                      <HobsonOpportunityVisual />
-                    )}
 
                     {/* Custom Visual Component for Pilot Clients */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "pilotClients" && (
