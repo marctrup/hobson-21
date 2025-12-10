@@ -99,7 +99,7 @@ const CapitalRaiseStrategyVisual = () => {
             </div>
             <div>
               <p className="font-medium text-foreground">Production-Ready Platform</p>
-              <p className="text-sm text-muted-foreground">Completing the ingestion engine, knowledge graph scaling, UI/UX, quality systems, and release engineering.</p>
+              <p className="text-sm text-muted-foreground">Completing the ingestion engine, AI scaling, UI/UX, quality systems, and release engineering.</p>
             </div>
           </div>
           <div className="flex items-start gap-3 p-4 bg-background/50 rounded-lg">

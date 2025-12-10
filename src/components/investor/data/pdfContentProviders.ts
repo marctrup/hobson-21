@@ -649,7 +649,7 @@ export const getApproachPdfContent = (): string[] => [
   "Why We Raise in 2026:",
   "To deliver a 2027 commercial launch, we need to complete:",
   "- Full production platform",
-  "- Knowledge graph scaling",
+  "- AI scaling",
   "- Stability, QA, security",
   "- Core hiring",
   "- GTM development",
