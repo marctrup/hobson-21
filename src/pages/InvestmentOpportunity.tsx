@@ -391,7 +391,7 @@ const sections = [
               items: [
                 "Build MVP: Phase 1 with core AI capabilities",
                 "Build online presence and branding",
-                "Testing MVP with key clients in real-world scenarios",
+                "Testing MVP with key clients data",
                 "Finalise pricing strategy based on usage data",
                 "Build pricing plan",
                 "Build a marketing plan",

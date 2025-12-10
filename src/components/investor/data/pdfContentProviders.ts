@@ -166,7 +166,7 @@ export const getEarlyRoadmapPdfContent = (): string[] => [
   "Phase 3: Develop (Jan - Dec 2025):",
   "- Build MVP: Phase 1 with core AI capabilities",
   "- Build online presence and branding",
-  "- Testing MVP with key clients in real-world scenarios",
+  "- Testing MVP with key clients data",
   "- Finalise pricing strategy based on usage data",
   "- Build pricing plan, marketing plan, business plan and financial model",
 ];
