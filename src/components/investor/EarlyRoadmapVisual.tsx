@@ -33,7 +33,7 @@ const timelineData: PhaseSection[] = [
     objectives: [
       "Build **MVP: Phase 1** with core AI capabilities",
       "Build online presence and branding",
-      "Testing MVP with key clients in real-world scenarios",
+      "Testing MVP with key clients data",
       "Finalise **pricing strategy** based on usage data",
       "Build a **marketing plan**",
       "Build a **business plan** and financial model",
