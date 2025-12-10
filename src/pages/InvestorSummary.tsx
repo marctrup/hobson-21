@@ -179,14 +179,14 @@ const InvestorSummary = () => {
           {/* Floating document icons */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {/* Mobile visible icons - purple and black 50/50 */}
-            <FileText className="absolute top-8 left-[5%] w-6 h-6 sm:w-10 sm:h-10 text-primary/40 animate-bounce" style={{ animationDelay: '0ms', animationDuration: window.innerWidth < 640 ? '2.2s' : '2.71s' }} />
-            <FileText className="absolute top-12 right-[8%] w-5 h-5 sm:w-8 sm:h-8 text-foreground/30 animate-bounce" style={{ animationDelay: '200ms', animationDuration: window.innerWidth < 640 ? '1.83s' : '2.26s' }} />
-            <FileText className="absolute top-[30%] left-[3%] w-7 h-7 sm:w-11 sm:h-11 text-foreground/25 animate-bounce" style={{ animationDelay: '400ms', animationDuration: window.innerWidth < 640 ? '2.34s' : '2.89s' }} />
-            <FileText className="absolute top-[35%] right-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45 animate-bounce" style={{ animationDelay: '600ms', animationDuration: window.innerWidth < 640 ? '2.05s' : '2.53s' }} />
-            <FileText className="absolute bottom-[30%] left-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/40 animate-bounce" style={{ animationDelay: '300ms', animationDuration: window.innerWidth < 640 ? '2.27s' : '2.8s' }} />
-            <FileText className="absolute bottom-[25%] right-[3%] w-7 h-7 sm:w-10 sm:h-10 text-foreground/30 animate-bounce" style={{ animationDelay: '500ms', animationDuration: window.innerWidth < 640 ? '2.12s' : '2.62s' }} />
-            <FileText className="absolute bottom-16 left-[5%] w-6 h-6 sm:w-9 sm:h-9 text-foreground/25 animate-bounce" style={{ animationDelay: '700ms', animationDuration: window.innerWidth < 640 ? '2.2s' : '2.71s' }} />
-            <FileText className="absolute bottom-12 right-[10%] w-5 h-5 sm:w-7 sm:h-7 text-primary/50 animate-bounce" style={{ animationDelay: '100ms', animationDuration: window.innerWidth < 640 ? '1.91s' : '2.35s' }} />
+            <FileText className="absolute top-8 left-[5%] w-6 h-6 sm:w-10 sm:h-10 text-primary/40 animate-bounce" style={{ animationDelay: '0ms', animationDuration: window.innerWidth < 640 ? '1.98s' : '2.71s' }} />
+            <FileText className="absolute top-12 right-[8%] w-5 h-5 sm:w-8 sm:h-8 text-foreground/30 animate-bounce" style={{ animationDelay: '200ms', animationDuration: window.innerWidth < 640 ? '1.65s' : '2.26s' }} />
+            <FileText className="absolute top-[30%] left-[3%] w-7 h-7 sm:w-11 sm:h-11 text-foreground/25 animate-bounce" style={{ animationDelay: '400ms', animationDuration: window.innerWidth < 640 ? '2.11s' : '2.89s' }} />
+            <FileText className="absolute top-[35%] right-[5%] w-6 h-6 sm:w-9 sm:h-9 text-primary/45 animate-bounce" style={{ animationDelay: '600ms', animationDuration: window.innerWidth < 640 ? '1.85s' : '2.53s' }} />
+            <FileText className="absolute bottom-[30%] left-[8%] w-5 h-5 sm:w-8 sm:h-8 text-primary/40 animate-bounce" style={{ animationDelay: '300ms', animationDuration: window.innerWidth < 640 ? '2.04s' : '2.8s' }} />
+            <FileText className="absolute bottom-[25%] right-[3%] w-7 h-7 sm:w-10 sm:h-10 text-foreground/30 animate-bounce" style={{ animationDelay: '500ms', animationDuration: window.innerWidth < 640 ? '1.91s' : '2.62s' }} />
+            <FileText className="absolute bottom-16 left-[5%] w-6 h-6 sm:w-9 sm:h-9 text-foreground/25 animate-bounce" style={{ animationDelay: '700ms', animationDuration: window.innerWidth < 640 ? '1.98s' : '2.71s' }} />
+            <FileText className="absolute bottom-12 right-[10%] w-5 h-5 sm:w-7 sm:h-7 text-primary/50 animate-bounce" style={{ animationDelay: '100ms', animationDuration: window.innerWidth < 640 ? '1.72s' : '2.35s' }} />
             
             {/* Desktop only icons - purple and black 50/50 */}
             <FileText className="hidden sm:block absolute top-6 left-[28%] w-12 h-12 text-foreground/25 animate-bounce" style={{ animationDelay: '400ms', animationDuration: '2.89s' }} />
