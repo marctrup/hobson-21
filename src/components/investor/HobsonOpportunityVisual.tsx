@@ -8,7 +8,7 @@ export const HobsonOpportunityVisual = () => {
       title: 'A Specialised AI Assistant Built for Real Estate',
       color: 'blue',
       items: [
-        'Designed specifically for real estate workflows, documents, and terminology',
+        'Designed specifically for real estate documents',
         'Handles complex, high-volume admin with trusted accuracy',
         'No generic tooling — purpose-built for the sector\'s pain points',
       ],
