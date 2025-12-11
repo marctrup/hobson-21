@@ -1410,11 +1410,12 @@ const InvestmentOpportunity = () => {
 
                     {/* Image (if present) */}
                     {(selectedSection.pages[currentPageIndex] as any).image && (
-                      <div className="w-full bg-muted/30 rounded-lg p-6 border border-border">
+                      <div className="w-full bg-background rounded-lg p-4 sm:p-6 border border-border mt-4">
                         <img
                           src={(selectedSection.pages[currentPageIndex] as any).image}
                           alt={(selectedSection.pages[currentPageIndex] as any).imageAlt || "Architecture diagram"}
-                          className="w-full h-auto rounded-lg shadow-md"
+                          className="w-full h-auto rounded-lg"
+                          loading="eager"
                         />
                       </div>
                     )}
