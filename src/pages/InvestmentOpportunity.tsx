@@ -459,7 +459,7 @@ const sections = [
         title: "AI Architecture",
         content: {
           overview:
-            "Hobson's technical architecture leverages cutting-edge AI components to transform unstructured property documents into queryable, structured knowledge.",
+            "When RAG fell short, we adapted fast—pivoting to a structured retrieval model built around the realities of property data. AI now acts surgically across the journey, giving us predictable, enterprise-grade performance.",
           sections: [],
         },
       },
