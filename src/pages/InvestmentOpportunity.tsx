@@ -28,6 +28,7 @@ import { OptimizedImage } from "@/components/OptimizedImage";
 import hobsonLogo from "/hobson-logo.png";
 import mvpArchitecture from "@/assets/mvp-ai-architecture.png";
 import hobsonDevicesCombined from "@/assets/hobson-devices-combined.png";
+import aiArchitectureDiagram from "@/assets/ai-architecture-diagram.jpg";
 import { CompetitiveLandscapeVisual } from "@/components/investor/CompetitiveLandscapeVisual";
 import { CompetitiveMatrixVisual } from "@/components/investor/CompetitiveMatrixVisual";
 import { EuropeanGlobalVisual } from "@/components/investor/EuropeanGlobalVisual";
@@ -457,6 +458,7 @@ const sections = [
       },
       {
         title: "AI Architecture",
+        image: aiArchitectureDiagram,
         content: {
           overview:
             "When RAG fell short, we adapted fast—pivoting to a structured retrieval model built around the realities of property data. AI now acts surgically across the journey, giving us predictable, enterprise-grade performance.",
