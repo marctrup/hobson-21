@@ -1,41 +1,33 @@
 import React from 'react';
 import { ArrowRight, Sparkles } from 'lucide-react';
-
 export const CompetitiveLandscapeVisual = () => {
   // Traditional PropTech companies (representing overcrowded market)
-  const traditionalCompanies = [
-    'AppFolio', 'Yardi', 'RealPage', 'Entrata', 'MRI Software',
-    'Propertyware', 'Buildium', 'Rent Manager', 'TenantCloud', 'Cozy',
-    'Avail', 'Rentec Direct', 'SimplifyEm', 'DoorLoop', 'Innago',
-    'TurboTenant', 'Landlord Studio', 'Hemlane', 'Rentler', 'Zumper',
-    'Apartments.com', 'Zillow Rental', 'HotPads', 'PadMapper', 'Trulia Rentals',
-    'ManageCasa', 'Property Matrix', 'ResMan', 'OneSite', 'Knock CRM',
-    'LionDesk', 'Follow Up Boss', 'Contactually', 'Wise Agent', 'kvCORE',
-    'BoomTown', 'Chime', 'Zurple', 'Structurely', 'Rex Software',
-    'Apto', 'VTS', 'Juniper Square', 'Ascendix', 'CommercialEdge',
-    'LoopNet', 'CoStar', 'Reonomy', 'PropertyShark', 'CompStak',
-    'CREXi', 'Raise Commercial', 'Dealpath', 'Altus Group', 'Argus'
-  ];
+  const traditionalCompanies = ['AppFolio', 'Yardi', 'RealPage', 'Entrata', 'MRI Software', 'Propertyware', 'Buildium', 'Rent Manager', 'TenantCloud', 'Cozy', 'Avail', 'Rentec Direct', 'SimplifyEm', 'DoorLoop', 'Innago', 'TurboTenant', 'Landlord Studio', 'Hemlane', 'Rentler', 'Zumper', 'Apartments.com', 'Zillow Rental', 'HotPads', 'PadMapper', 'Trulia Rentals', 'ManageCasa', 'Property Matrix', 'ResMan', 'OneSite', 'Knock CRM', 'LionDesk', 'Follow Up Boss', 'Contactually', 'Wise Agent', 'kvCORE', 'BoomTown', 'Chime', 'Zurple', 'Structurely', 'Rex Software', 'Apto', 'VTS', 'Juniper Square', 'Ascendix', 'CommercialEdge', 'LoopNet', 'CoStar', 'Reonomy', 'PropertyShark', 'CompStak', 'CREXi', 'Raise Commercial', 'Dealpath', 'Altus Group', 'Argus'];
 
   // AI-native solutions
-  const aiNativeCompanies = [
-    { name: 'Hobson', leader: true },
-    { name: 'EliseAI', leader: false },
-    { name: 'Trudi', leader: false },
-    { name: 'StanAI', leader: false },
-    { name: 'Kendal AI', leader: false }
-  ];
-
-  return (
-    <div className="w-full bg-white rounded-2xl p-8 md:p-12 shadow-xl border border-slate-200">
+  const aiNativeCompanies = [{
+    name: 'Hobson',
+    leader: true
+  }, {
+    name: 'EliseAI',
+    leader: false
+  }, {
+    name: 'Trudi',
+    leader: false
+  }, {
+    name: 'StanAI',
+    leader: false
+  }, {
+    name: 'Kendal AI',
+    leader: false
+  }];
+  return <div className="w-full bg-white rounded-2xl p-8 md:p-12 shadow-xl border border-slate-200">
       {/* Header - Discreet boxed style */}
       <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-10">
         <h2 className="text-lg md:text-xl font-semibold text-slate-800 mb-2">
           The Next Winners in Real Estate Tech Will Be AI-Native
         </h2>
-        <p className="text-sm text-slate-600">
-          Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.
-        </p>
+        <p className="text-sm text-slate-600">Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers.</p>
       </div>
 
       {/* Main Comparison - Desktop */}
@@ -52,18 +44,14 @@ export const CompetitiveLandscapeVisual = () => {
             <div className="relative bg-slate-50 rounded-xl p-6 border border-slate-200 min-h-[400px] overflow-hidden">
               <div className="grid grid-cols-4 gap-2">
                 {traditionalCompanies.slice(0, 48).map((company, idx) => {
-                  const row = Math.floor(idx / 4);
-                  const opacity = Math.max(0.15, 1 - (row * 0.08));
-                  return (
-                    <div 
-                      key={idx}
-                      className="bg-slate-200 rounded px-2 py-1.5 text-[10px] text-slate-600 text-center truncate border border-slate-300"
-                      style={{ opacity }}
-                    >
+                const row = Math.floor(idx / 4);
+                const opacity = Math.max(0.15, 1 - row * 0.08);
+                return <div key={idx} className="bg-slate-200 rounded px-2 py-1.5 text-[10px] text-slate-600 text-center truncate border border-slate-300" style={{
+                  opacity
+                }}>
                       {company}
-                    </div>
-                  );
-                })}
+                    </div>;
+              })}
               </div>
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-100/60 pointer-events-none"></div>
             </div>
@@ -105,24 +93,16 @@ export const CompetitiveLandscapeVisual = () => {
 
             {/* Clean, spacious AI-native logos */}
             <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-8 border-2 border-emerald-300 min-h-[400px] flex flex-col justify-center gap-6 shadow-lg">
-              {aiNativeCompanies.map((company, idx) => (
-                <div 
-                  key={idx}
-                  className={`
-                    ${company.leader 
-                      ? 'bg-gradient-to-r from-emerald-100 to-emerald-200 border-2 border-emerald-600 shadow-md' 
-                      : 'bg-white border border-slate-300'
-                    }
+              {aiNativeCompanies.map((company, idx) => <div key={idx} className={`
+                    ${company.leader ? 'bg-gradient-to-r from-emerald-100 to-emerald-200 border-2 border-emerald-600 shadow-md' : 'bg-white border border-slate-300'}
                     rounded-lg px-6 py-4 flex items-center justify-between transition-all hover:scale-[1.02]
-                  `}
-                >
+                  `}>
                   <span className={`
                     ${company.leader ? 'text-emerald-900 text-xl font-bold' : 'text-slate-700 text-lg font-medium'}
                   `}>
                     {company.name}
                   </span>
-                </div>
-              ))}
+                </div>)}
             </div>
 
             {/* Key Benefits */}
@@ -157,18 +137,14 @@ export const CompetitiveLandscapeVisual = () => {
           <div className="relative bg-slate-50 rounded-xl p-4 border border-slate-200 min-h-[300px] overflow-hidden">
             <div className="grid grid-cols-3 gap-1.5">
               {traditionalCompanies.slice(0, 36).map((company, idx) => {
-                const row = Math.floor(idx / 3);
-                const opacity = Math.max(0.15, 1 - (row * 0.08));
-                return (
-                  <div 
-                    key={idx}
-                    className="bg-slate-200 rounded px-1.5 py-1 text-[9px] text-slate-600 text-center truncate border border-slate-300"
-                    style={{ opacity }}
-                  >
+              const row = Math.floor(idx / 3);
+              const opacity = Math.max(0.15, 1 - row * 0.08);
+              return <div key={idx} className="bg-slate-200 rounded px-1.5 py-1 text-[9px] text-slate-600 text-center truncate border border-slate-300" style={{
+                opacity
+              }}>
                     {company}
-                  </div>
-                );
-              })}
+                  </div>;
+            })}
             </div>
             <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-100/60 pointer-events-none"></div>
           </div>
@@ -210,24 +186,16 @@ export const CompetitiveLandscapeVisual = () => {
 
           {/* Clean, spacious AI-native logos */}
           <div className="bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl p-5 border-2 border-emerald-300 min-h-[300px] flex flex-col justify-center gap-4 shadow-lg">
-            {aiNativeCompanies.map((company, idx) => (
-              <div 
-                key={idx}
-                className={`
-                  ${company.leader 
-                    ? 'bg-gradient-to-r from-emerald-100 to-emerald-200 border-2 border-emerald-600 shadow-md' 
-                    : 'bg-white border border-slate-300'
-                  }
+            {aiNativeCompanies.map((company, idx) => <div key={idx} className={`
+                  ${company.leader ? 'bg-gradient-to-r from-emerald-100 to-emerald-200 border-2 border-emerald-600 shadow-md' : 'bg-white border border-slate-300'}
                   rounded-lg px-4 py-3 flex items-center justify-between transition-all
-                `}
-              >
+                `}>
                 <span className={`
                   ${company.leader ? 'text-emerald-900 text-base font-bold' : 'text-slate-700 text-sm font-medium'}
                 `}>
                   {company.name}
                 </span>
-              </div>
-            ))}
+              </div>)}
           </div>
 
           {/* Key Benefits */}
@@ -247,6 +215,5 @@ export const CompetitiveLandscapeVisual = () => {
           </ul>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
