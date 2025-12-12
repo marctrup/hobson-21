@@ -612,17 +612,9 @@ const renderWhyNow = (
     doc.setLineWidth(0.3);
     doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "S");
 
-    // Number badge (filled circle with centered text)
-    const circleX = margin + 8;
-    const circleY = yPosition + 10;
-    const circleRadius = 5;
+    // Number badge (filled circle only - no text)
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(circleX, circleY, circleRadius, "F");
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "bold");
-    // Center text: x is circle center, y offset by ~1/3 of font size for baseline
-    doc.text(section.number, circleX, circleY + 3, { align: "center" });
+    doc.circle(margin + 8, yPosition + 10, 5, "F");
 
     // Title
     doc.setTextColor(...PDF_CONFIG.textDark);
@@ -751,15 +743,9 @@ const renderStrategicApproach = (
     yPosition = margin;
   }
 
-  // Number badge (centered text)
-  const badge1X = margin + 6;
-  const badge1Y = yPosition + 4;
+  // Number badge (filled circle only - no text)
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(badge1X, badge1Y, 5, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("1", badge1X, badge1Y + 3, { align: "center" });
+  doc.circle(margin + 6, yPosition + 4, 5, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(11);
@@ -804,15 +790,9 @@ const renderStrategicApproach = (
     yPosition = margin;
   }
 
-  // Number badge (centered text)
-  const badge2X = margin + 6;
-  const badge2Y = yPosition + 4;
+  // Number badge (filled circle only - no text)
   doc.setFillColor(...PDF_CONFIG.rose);
-  doc.circle(badge2X, badge2Y, 5, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("2", badge2X, badge2Y + 3, { align: "center" });
+  doc.circle(margin + 6, yPosition + 4, 5, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(11);
@@ -875,15 +855,9 @@ const renderStrategicApproach = (
     yPosition = margin;
   }
 
-  // Number badge (centered text)
-  const badge3X = margin + 6;
-  const badge3Y = yPosition + 4;
+  // Number badge (filled circle only - no text)
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(badge3X, badge3Y, 5, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("3", badge3X, badge3Y + 3, { align: "center" });
+  doc.circle(margin + 6, yPosition + 4, 5, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(11);
