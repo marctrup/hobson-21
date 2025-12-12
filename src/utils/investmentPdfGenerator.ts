@@ -463,28 +463,28 @@ const renderExecutiveSummary = (
     yPosition = margin;
   }
   
-  // Section header with globe icon (small filled circle)
-  const globeIconX = margin;
-  const globeIconY = yPosition - 3;
+  // Section header with globe icon (aligned with text baseline)
+  const globeIconX = margin + 4;
+  const globeIconY = yPosition - 1;
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(globeIconX + 3, globeIconY, 3, "F");
+  doc.circle(globeIconX, globeIconY, 4, "F");
   
   doc.setTextColor(...PDF_CONFIG.emerald);
-  doc.setFontSize(12);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle); // 12pt standardized
   doc.setFont("helvetica", "bold");
-  doc.text("Addressable Market", margin + 10, yPosition);
-  yPosition += 5;
+  doc.text("Addressable Market", margin + 14, yPosition);
+  yPosition += 6;
   
-  // Subtitle
+  // Subtitle - standardized font
   doc.setTextColor(...PDF_CONFIG.emerald);
-  doc.setFontSize(9);
+  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt standardized
   doc.setFont("helvetica", "normal");
-  doc.text("Annual Efficiency Savings", margin + 2, yPosition);
-  yPosition += 10;
+  doc.text("Annual Efficiency Savings", margin + 14, yPosition);
+  yPosition += 12;
   
   // Three market cards - matches: bg-gradient-to-b from-emerald-50 to-emerald-100/50 border border-emerald-200/50 rounded-xl
   const cardWidth = (maxWidth - 10) / 3;
-  const cardHeight = 40;
+  const cardHeight = 45; // Increased for better spacing
   const cardSpacing = 5;
   
   const marketData = [
@@ -507,48 +507,48 @@ const renderExecutiveSummary = (
     
     // Value - large emerald text centered
     doc.setTextColor(...PDF_CONFIG.emerald);
-    doc.setFontSize(16);
+    doc.setFontSize(PDF_CONFIG.fontSize.stat); // 16pt standardized
     doc.setFont("helvetica", "bold");
-    doc.text(data.value, cardX + cardWidth / 2, yPosition + 18, { align: "center" });
+    doc.text(data.value, cardX + cardWidth / 2, yPosition + 20, { align: "center" });
     
-    // Label - muted text centered
+    // Label - standardized body small font
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt standardized
     doc.setFont("helvetica", "normal");
-    doc.text(data.label, cardX + cardWidth / 2, yPosition + 30, { align: "center" });
+    doc.text(data.label, cardX + cardWidth / 2, yPosition + 34, { align: "center" });
   });
   
-  yPosition += cardHeight + 8;
+  yPosition += cardHeight + 10;
   
   // Market description text
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(9);
+  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt standardized
   doc.setFont("helvetica", "normal");
   const marketDesc = "Real estate professionals lose 20% of admin time to document chaos. These figures represent the annual savings Hobson can unlock - and the opportunity we're built to capture.";
-  yPosition = renderSpacedText(doc, marketDesc, margin, yPosition, maxWidth, 6);
-  yPosition += 10;
+  yPosition = renderSpacedText(doc, marketDesc, margin, yPosition, maxWidth, PDF_CONFIG.lineHeight.body);
+  yPosition += 12;
 
   // ===== TRACTION & MILESTONES SECTION =====
   // Check for page break
-  if (yPosition > pageHeight - 80) {
+  if (yPosition > pageHeight - 100) {
     doc.addPage();
     yPosition = margin;
   }
   
-  // Section header with rocket icon (small filled circle)
+  // Section header with rocket icon (aligned with text baseline)
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 3, yPosition - 3, 3, "F");
+  doc.circle(margin + 4, yPosition - 1, 4, "F");
   
   doc.setTextColor(...PDF_CONFIG.blue);
-  doc.setFontSize(12);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle); // 12pt standardized
   doc.setFont("helvetica", "bold");
-  doc.text("Traction & Milestones", margin + 10, yPosition);
-  yPosition += 10;
+  doc.text("Traction & Milestones", margin + 14, yPosition);
+  yPosition += 14;
   
   // Traction cards in 2x2 grid - matches: bg-blue-50/50 border border-blue-100 rounded-lg
-  const tractionCardWidth = (maxWidth - 8) / 2;
-  const tractionCardHeight = 28;
-  const tractionSpacing = 4;
+  const tractionCardWidth = (maxWidth - 10) / 2;
+  const tractionCardHeight = 38; // Increased for better spacing
+  const tractionSpacing = 8;
   
   const tractionData = [
     { title: "MVP Launch Q1 2026", subtitle: "Validated with 4 real-world partners" },
@@ -565,31 +565,31 @@ const renderExecutiveSummary = (
     
     // Card background - blue
     doc.setFillColor(...PDF_CONFIG.blueBg);
-    doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 2, 2, "F");
+    doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 3, 3, "F");
     
     // Card border
     doc.setDrawColor(...PDF_CONFIG.blueBorder);
     doc.setLineWidth(0.3);
-    doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 2, 2, "S");
+    doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 3, 3, "S");
     
-    // Icon - simple filled circle (no text inside)
+    // Icon - filled circle aligned with title
     doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(cardX + 8, cardY + 12, 3, "F");
+    doc.circle(cardX + 10, cardY + 14, 4, "F");
     
-    // Title (positioned after icon)
+    // Title (positioned after icon with proper alignment)
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(9);
+    doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt standardized
     doc.setFont("helvetica", "bold");
-    doc.text(data.title, cardX + 16, cardY + 10);
+    doc.text(data.title, cardX + 20, cardY + 16);
     
-    // Subtitle
+    // Subtitle with proper spacing
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt standardized
     doc.setFont("helvetica", "normal");
-    doc.text(data.subtitle, cardX + 16, cardY + 18);
+    doc.text(data.subtitle, cardX + 20, cardY + 28);
   });
   
-  yPosition += 2 * (tractionCardHeight + tractionSpacing) + 10;
+  yPosition += 2 * (tractionCardHeight + tractionSpacing) + 12;
 
   return yPosition;
 };
