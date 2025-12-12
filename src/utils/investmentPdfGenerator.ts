@@ -2689,6 +2689,7 @@ const renderRevenueModel = (
 
 /**
  * Render Capital Raise Strategy visual with standardized fonts
+ * IMPORTANT: This must match CapitalRaiseStrategyVisual.tsx exactly
  */
 const renderCapitalRaiseStrategy = (
   doc: jsPDF,
@@ -2699,6 +2700,7 @@ const renderCapitalRaiseStrategy = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
+  const valueCol = margin + maxWidth - 10;
 
   // Context
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -2710,42 +2712,94 @@ const renderCapitalRaiseStrategy = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  yPosition = renderSpacedText(
-    doc,
-    "Hobson can operate pilot programmes throughout 2026 using founder-led execution and outsourced engineering, but the company cannot hire its core team or begin meaningful commercial activity without external capital.",
-    margin,
-    yPosition,
-    maxWidth,
-    PDF_CONFIG.lineHeight.body
-  );
-  yPosition += 12;
+  const contextText = [
+    "Hobson can run pilot programmes throughout 2026 using founder-led execution and outsourced engineering.",
+    "But the business cannot hire its core team or execute a commercial launch without external capital.",
+    "A seed round funds the 2026 build year, prepares the organisation for launch, and enables the business to enter 2027 fully staffed, ready, and revenue-generating."
+  ];
+  contextText.forEach((line) => {
+    const wrapped = doc.splitTextToSize(line, maxWidth);
+    doc.text(wrapped, margin, yPosition);
+    yPosition += wrapped.length * 5 + 4;
+  });
+  yPosition += 8;
 
   // What capital unlocks
+  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("What This Capital Unlocks", margin, yPosition);
-  yPosition += 10;
+  yPosition += 12;
 
   const unlocks = [
-    "Foundational Team: Core hires to execute commercial strategy",
-    "Infrastructure: Production-ready platform build",
-    "Go-to-Market: Convert pilot insights into scalable revenue"
+    { title: "Foundational Team (from June 2026)", desc: "Hiring the core commercial and product team ahead of launch." },
+    { title: "Production-Ready Platform", desc: "Completing the ingestion engine, AI scaling, UI/UX, quality systems, and release engineering." },
+    { title: "Go-to-Market Activation", desc: "Brand, funnel, messaging, early campaigns and converting pilots into scalable recurring revenue." }
   ];
 
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
   unlocks.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
     doc.circle(margin + 4, yPosition - 1, 1.5, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.title, margin + 10, yPosition);
+    yPosition += 6;
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(item, margin + 10, yPosition);
-    yPosition += PDF_CONFIG.lineHeight.body + 2;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.text(item.desc, margin + 10, yPosition);
+    yPosition += 10;
   });
-  yPosition += 10;
+  yPosition += 8;
+
+  // Use of Funds
+  if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Use of Funds", margin, yPosition);
+  yPosition += 12;
+
+  const useOfFunds = [
+    { label: "Team hiring & 2026 payroll (Jun–Dec)", amount: "£207k" },
+    { label: "Outsourced engineering (pre-launch build)", amount: "£150k–£250k" },
+    { label: "Legal, compliance, finance", amount: "£40k" },
+    { label: "Early marketing + GTM prep", amount: "£100k–£150k" },
+    { label: "Buffer (investor standard)", amount: "£250k–£300k" },
+  ];
+
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  useOfFunds.forEach((item) => {
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(item.label, margin + 8, yPosition);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(item.amount, valueCol, yPosition, { align: "right" });
+    yPosition += 8;
+  });
+  yPosition += 6;
+
+  // Total
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 24, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Total Pre-Revenue Need:", margin + 8, yPosition + 10);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.text("£750k–£950k", valueCol, yPosition + 10, { align: "right" });
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("To fund 2026 build + 18-24 months runway → £1.5M–£2.2M seed round required.", margin + 8, yPosition + 20);
+  yPosition += 32;
 
   // Raise scenarios
-  if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 100) { doc.addPage(); yPosition = margin; }
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
@@ -2753,51 +2807,137 @@ const renderCapitalRaiseStrategy = (
   yPosition += 12;
 
   const scenarios = [
-    { amount: "GBP 1.2M", name: "Activation Round", runway: "9-12 months", desc: "Minimal runway, heightened risk", recommended: false },
-    { amount: "GBP 1.5M", name: "Minimum Credible", runway: "12-18 months", desc: "Stable launch phase", recommended: false },
-    { amount: "GBP 1.8M", name: "Balanced Seed", runway: "18-22 months", desc: "Product velocity + marketing execution", recommended: true },
-    { amount: "GBP 2.2M", name: "Accelerated Growth", runway: "22-28 months", desc: "Early international expansion", recommended: false },
+    { amount: "£1.2M", name: "Activation Round", runway: "9–12 months", desc: "Moves from pilots to limited launch but leaves little margin for error.", badge: "Higher risk", recommended: false, badgeColor: [217, 119, 6] as [number, number, number] },
+    { amount: "£1.5M", name: "Minimum Credible Raise", runway: "12–18 months", desc: "Funds core team, engineering, GTM setup and ensures a stable commercial launch in 2027.", badge: "Recommended minimum", recommended: false, badgeColor: [37, 99, 235] as [number, number, number] },
+    { amount: "£1.8M", name: "Balanced Seed Round", runway: "18–22 months", desc: "Supports stronger product velocity, full marketing activation, and early enterprise conversations.", badge: "Optimal execution", recommended: true, badgeColor: PDF_CONFIG.primaryColor },
+    { amount: "£2.2M", name: "Accelerated Growth", runway: "22–28 months", desc: "Funds UK scale and prepares for early international market entry from 2028.", badge: "Global ready", recommended: false, badgeColor: [5, 150, 105] as [number, number, number] },
   ];
 
-  const cardHeight = 32;
-  scenarios.forEach((scenario) => {
-    if (yPosition > pageHeight - 40) { doc.addPage(); yPosition = margin; }
+  const cardHeight = 48;
+  const colWidth = (maxWidth - 8) / 2;
+
+  scenarios.forEach((scenario, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + col * (colWidth + 8);
+    const yPos = yPosition + row * (cardHeight + 8);
+
+    if (yPos > pageHeight - 60) {
+      doc.addPage();
+      yPosition = margin;
+    }
 
     const bgColor = scenario.recommended ? PDF_CONFIG.primaryBgLight : PDF_CONFIG.bgLight;
     const borderColor = scenario.recommended ? PDF_CONFIG.primaryColor : PDF_CONFIG.border;
 
     doc.setFillColor(...bgColor);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    doc.roundedRect(xPos, yPos, colWidth, cardHeight, 3, 3, "F");
     doc.setDrawColor(...borderColor);
-    doc.setLineWidth(scenario.recommended ? 1 : 0.5);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "S");
+    doc.setLineWidth(scenario.recommended ? 1.5 : 0.5);
+    doc.roundedRect(xPos, yPos, colWidth, cardHeight, 3, 3, "S");
 
-    doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-    doc.setFont("helvetica", "bold");
-    doc.text(scenario.amount, margin + 8, yPosition + 12);
-
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.body);
-    doc.text(scenario.name, margin + 55, yPosition + 12);
-
+    // Preferred badge for recommended
     if (scenario.recommended) {
       doc.setFillColor(...PDF_CONFIG.primaryColor);
-      doc.roundedRect(margin + maxWidth - 70, yPosition + 4, 60, 10, 2, 2, "F");
+      doc.roundedRect(xPos + 8, yPos - 4, 30, 8, 2, 2, "F");
       doc.setTextColor(255, 255, 255);
-      doc.setFontSize(7);
-      doc.text("RECOMMENDED", margin + maxWidth - 40, yPosition + 11, { align: "center" });
+      doc.setFontSize(6);
+      doc.setFont("helvetica", "bold");
+      doc.text("Preferred", xPos + 23, yPos + 1, { align: "center" });
     }
 
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-    doc.setFont("helvetica", "normal");
-    doc.text(`${scenario.runway} runway - ${scenario.desc}`, margin + 8, yPosition + 24);
+    // Amount and label
+    doc.setTextColor(...(scenario.badgeColor as [number, number, number]));
+    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+    doc.setFont("helvetica", "bold");
+    doc.text(scenario.amount, xPos + 8, yPos + 12);
 
-    yPosition += cardHeight + 6;
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.text(scenario.name, xPos + 8, yPos + 20);
+
+    // Runway
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text("Runway: " + scenario.runway, xPos + colWidth - 8, yPos + 12, { align: "right" });
+
+    // Description (wrapped)
+    doc.setFontSize(7);
+    const descLines = doc.splitTextToSize(scenario.desc, colWidth - 16);
+    doc.text(descLines.slice(0, 2), xPos + 8, yPos + 28);
+
+    // Badge
+    doc.setFillColor(...(scenario.badgeColor as [number, number, number]));
+    doc.roundedRect(xPos + 8, yPos + cardHeight - 10, 35, 7, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "bold");
+    doc.text(scenario.badge, xPos + 8 + 17.5, yPos + cardHeight - 5.5, { align: "center" });
   });
 
-  return yPosition + 10;
+  yPosition += 2 * (cardHeight + 8) + 12;
+
+  // Burn Insight
+  if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 36, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Burn Insight", margin + 8, yPosition + 12);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text("Your burn is entirely pre-revenue. Once revenue begins in 2027, the business", margin + 8, yPosition + 22);
+  doc.text("becomes cashflow-positive almost immediately. The seed round funds readiness, not losses.", margin + 8, yPosition + 30);
+  yPosition += 44;
+
+  // Commercial Trajectory
+  if (yPosition > pageHeight - 40) { doc.addPage(); yPosition = margin; }
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Commercial Trajectory", margin, yPosition);
+  yPosition += 10;
+
+  const trajectory = [
+    { year: "2026", phase: "Pilots & Validation" },
+    { year: "2027", phase: "Commercial Launch" },
+    { year: "2028+", phase: "UK Scale & Global Expansion" },
+  ];
+  const trajWidth = (maxWidth - 16) / 3;
+  trajectory.forEach((item, idx) => {
+    const xPos = margin + idx * (trajWidth + 8);
+    doc.setFillColor(...PDF_CONFIG.bgLight);
+    doc.roundedRect(xPos, yPosition, trajWidth, 24, 3, 3, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.year, xPos + trajWidth / 2, yPosition + 10, { align: "center" });
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text(item.phase, xPos + trajWidth / 2, yPosition + 18, { align: "center" });
+  });
+  yPosition += 32;
+
+  // Summary
+  if (yPosition > pageHeight - 35) { doc.addPage(); yPosition = margin; }
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 28, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Summary", margin + 8, yPosition + 10);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const summaryText = doc.splitTextToSize("The £1.5M–£2.2M raise funds the full 2026 build period: platform completion, core team hiring, GTM development, and operating runway. From 2027 onward, Hobson becomes cashflow-positive.", maxWidth - 16);
+  doc.text(summaryText, margin + 8, yPosition + 18);
+  yPosition += 36;
+
+  return yPosition;
 };
 
 /**
