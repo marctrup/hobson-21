@@ -162,6 +162,49 @@ const sanitizeText = (text: string): string => {
 };
 
 /**
+ * STANDARDIZED BOX SIZING SYSTEM
+ * All box heights should be calculated dynamically based on content
+ * to ensure consistent spacing across all PDF sections.
+ * 
+ * Standard padding values:
+ * - paddingTop: 8pt (space from box top to first content)
+ * - paddingBottom: 6pt (space from last content to box bottom)
+ * - paddingX: 8pt (horizontal padding)
+ */
+const BOX_SIZING = {
+  paddingTop: 8,
+  paddingBottom: 6,
+  paddingX: 8,
+  iconSize: 12,
+  iconGap: 6,        // Gap after icon
+  titleHeight: 6,    // Height occupied by title text
+  subtitleGap: 5,    // Gap between title and subtitle
+  contentGap: 6,     // Gap between header area and content
+};
+
+/**
+ * Calculate hero box height dynamically based on content
+ * @param doc - jsPDF instance for measuring text
+ * @param descText - Description text to measure
+ * @param maxWidth - Maximum width for text wrapping
+ * @param hasSubtitle - Whether box includes a subtitle
+ */
+const calculateHeroBoxHeight = (
+  doc: jsPDF,
+  descText: string,
+  maxWidth: number,
+  hasSubtitle: boolean = true
+): number => {
+  const descLines = doc.splitTextToSize(sanitizeText(descText), maxWidth - BOX_SIZING.paddingX * 2);
+  const descHeight = descLines.length * PDF_CONFIG.lineHeight.body;
+  
+  const headerHeight = BOX_SIZING.iconSize + BOX_SIZING.contentGap;
+  const subtitleHeight = hasSubtitle ? BOX_SIZING.subtitleGap : 0;
+  
+  return BOX_SIZING.paddingTop + headerHeight + subtitleHeight + descHeight + BOX_SIZING.paddingBottom;
+};
+
+/**
  * Calculate box height based on number of items and line spacing
  * This prevents text from overflowing fixed-height boxes
  */
@@ -727,8 +770,14 @@ const renderExecutiveSummary = (
   const maxWidth = pageWidth - margin * 2;
 
   // ===== HERO STATEMENT SECTION =====
-  // Matches: bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 border border-primary/20 rounded-2xl
-  const heroHeight = 70;
+  // Description text for height calculation
+  const fullDesc = "Turning complex documents and decisions into clear, reliable insight. Zero onboarding. Trusted accuracy from day one. Continuous learning that shifts from basic automation to proactive support - unlocking major efficiency gains across the entire property lifecycle.";
+  
+  // Set font before measuring
+  setBodyFont(doc);
+  
+  // Calculate dynamic height based on actual content
+  const heroHeight = calculateHeroBoxHeight(doc, fullDesc, maxWidth, true);
   
   // Draw gradient background (simulate with solid light purple)
   doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
@@ -740,14 +789,13 @@ const renderExecutiveSummary = (
   doc.roundedRect(margin, yPosition, maxWidth, heroHeight, 4, 4, "S");
   
   // Brain icon - simple filled rounded square with purple color
-  const iconSize = 12;
-  const iconX = margin + 8;
-  const iconY = yPosition + 8;
+  const iconX = margin + BOX_SIZING.paddingX;
+  const iconY = yPosition + BOX_SIZING.paddingTop;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.roundedRect(iconX, iconY, iconSize, iconSize, 2, 2, "F");
+  doc.roundedRect(iconX, iconY, BOX_SIZING.iconSize, BOX_SIZING.iconSize, 2, 2, "F");
   
   // Title: Hobson AI (positioned after icon)
-  const textStartX = iconX + iconSize + 6;
+  const textStartX = iconX + BOX_SIZING.iconSize + BOX_SIZING.iconGap;
   doc.setTextColor(...PDF_CONFIG.textDark);
   setSectionTitleFont(doc);
   doc.text("Hobson AI", textStartX, iconY + 5);
@@ -755,19 +803,18 @@ const renderExecutiveSummary = (
   // Subtitle: Specialised AI for Real Estate
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
-  doc.text("Specialised AI for Real Estate", textStartX, iconY + 12);
+  doc.text("Specialised AI for Real Estate", textStartX, iconY + 5 + BOX_SIZING.subtitleGap + 2);
   
   // Main description text
-  const descY = iconY + iconSize + 8;
+  const descY = iconY + BOX_SIZING.iconSize + BOX_SIZING.contentGap;
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
   
-  // Render as single wrapped paragraph with better line spacing
-  const fullDesc = "Turning complex documents and decisions into clear, reliable insight. Zero onboarding. Trusted accuracy from day one. Continuous learning that shifts from basic automation to proactive support - unlocking major efficiency gains across the entire property lifecycle.";
-  const descLines = doc.splitTextToSize(fullDesc, maxWidth - 20);
+  // Render as single wrapped paragraph
+  const descLines = doc.splitTextToSize(fullDesc, maxWidth - BOX_SIZING.paddingX * 2);
   let descLineY = descY;
   descLines.forEach((line: string) => {
-    doc.text(line, margin + 8, descLineY);
+    doc.text(line, margin + BOX_SIZING.paddingX, descLineY);
     descLineY += PDF_CONFIG.lineHeight.body;
   });
   
