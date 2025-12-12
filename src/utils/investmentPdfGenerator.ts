@@ -244,6 +244,19 @@ const renderTabContent = (
         const xOffset = margin + (maxWidth - imgWidth) / 2;
         doc.addImage(imageToUse, "PNG", xOffset, yPosition, imgWidth, imgHeight);
         yPosition += imgHeight + 10;
+      } else if (tab.title === "P/L Growth" || tab.title === "Revenue Growth") {
+        // Chart images - landscape aspect ratio for bar charts
+        const aspectRatio = 0.625; // Approx 16:10 ratio for charts
+        const imgWidth = maxWidth;
+        const imgHeight = imgWidth * aspectRatio;
+        
+        if (yPosition + imgHeight > pageHeight - 40) {
+          doc.addPage();
+          yPosition = margin;
+        }
+
+        doc.addImage(imageToUse, "PNG", margin, yPosition, imgWidth, imgHeight);
+        yPosition += imgHeight + 15;
       } else {
         // Other images - default handling
         const aspectRatio = 0.6;
