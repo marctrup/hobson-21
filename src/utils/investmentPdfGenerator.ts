@@ -135,199 +135,8 @@ const sanitizeText = (text: string): string => {
     .replace(/[\u{1FA00}-\u{1FA6F}]/gu, "")
     .replace(/[\u{1FA70}-\u{1FAFF}]/gu, "")
     .replace(/[\u{200D}]/gu, "")
-.trim()
+    .trim()
     .replace(/\s+/g, " ");
-};
-
-// ============= ICON DRAWING HELPERS =============
-// Draw simplified icon representations using jsPDF primitives
-
-/**
- * Draw a Brain icon (simplified: rounded square with inner pattern)
- */
-const drawBrainIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setFillColor(...color);
-  doc.roundedRect(x, y, size, size, size * 0.2, size * 0.2, "F");
-  // Inner white curves
-  doc.setDrawColor(255, 255, 255);
-  doc.setLineWidth(size * 0.08);
-  doc.line(x + size * 0.5, y + size * 0.2, x + size * 0.5, y + size * 0.8);
-  doc.line(x + size * 0.3, y + size * 0.4, x + size * 0.5, y + size * 0.5);
-  doc.line(x + size * 0.7, y + size * 0.4, x + size * 0.5, y + size * 0.5);
-};
-
-/**
- * Draw a Globe icon (circle with cross lines)
- */
-const drawGlobeIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  const cx = x + size / 2;
-  const cy = y + size / 2;
-  const r = size / 2;
-  doc.setDrawColor(...color);
-  doc.setLineWidth(size * 0.08);
-  doc.circle(cx, cy, r, "S");
-  // Horizontal line
-  doc.line(x, cy, x + size, cy);
-  // Vertical ellipse suggestion
-  doc.line(cx, y, cx, y + size);
-};
-
-/**
- * Draw a Rocket icon (triangle with base)
- */
-const drawRocketIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setFillColor(...color);
-  // Rocket body (triangle pointing up)
-  doc.triangle(x + size / 2, y, x + size * 0.2, y + size * 0.8, x + size * 0.8, y + size * 0.8, "F");
-  // Flame at bottom
-  doc.setFillColor(255, 200, 100);
-  doc.triangle(x + size / 2, y + size, x + size * 0.35, y + size * 0.75, x + size * 0.65, y + size * 0.75, "F");
-};
-
-/**
- * Draw a Target icon (concentric circles)
- */
-const drawTargetIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  const cx = x + size / 2;
-  const cy = y + size / 2;
-  doc.setDrawColor(...color);
-  doc.setLineWidth(size * 0.06);
-  doc.circle(cx, cy, size * 0.45, "S");
-  doc.circle(cx, cy, size * 0.28, "S");
-  doc.setFillColor(...color);
-  doc.circle(cx, cy, size * 0.12, "F");
-};
-
-/**
- * Draw a CheckCircle icon (circle with checkmark)
- */
-const drawCheckCircleIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  const cx = x + size / 2;
-  const cy = y + size / 2;
-  doc.setFillColor(...color);
-  doc.circle(cx, cy, size / 2, "F");
-  // White checkmark
-  doc.setDrawColor(255, 255, 255);
-  doc.setLineWidth(size * 0.1);
-  doc.line(x + size * 0.25, cy, x + size * 0.45, y + size * 0.65);
-  doc.line(x + size * 0.45, y + size * 0.65, x + size * 0.75, y + size * 0.3);
-};
-
-/**
- * Draw a Zap/Lightning icon
- */
-const drawZapIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setFillColor(...color);
-  // Lightning bolt shape using lines
-  doc.setDrawColor(...color);
-  doc.setLineWidth(size * 0.12);
-  doc.line(x + size * 0.6, y, x + size * 0.3, y + size * 0.5);
-  doc.line(x + size * 0.3, y + size * 0.5, x + size * 0.55, y + size * 0.5);
-  doc.line(x + size * 0.55, y + size * 0.5, x + size * 0.35, y + size);
-};
-
-/**
- * Draw a CPU/Chip icon (square with lines)
- */
-const drawCpuIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setDrawColor(...color);
-  doc.setLineWidth(size * 0.06);
-  const inset = size * 0.2;
-  doc.rect(x + inset, y + inset, size - inset * 2, size - inset * 2);
-  // Connection lines on sides
-  doc.line(x, y + size * 0.35, x + inset, y + size * 0.35);
-  doc.line(x, y + size * 0.65, x + inset, y + size * 0.65);
-  doc.line(x + size - inset, y + size * 0.35, x + size, y + size * 0.35);
-  doc.line(x + size - inset, y + size * 0.65, x + size, y + size * 0.65);
-};
-
-/**
- * Draw a Users icon (two person silhouettes)
- */
-const drawUsersIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setFillColor(...color);
-  // First person head
-  doc.circle(x + size * 0.35, y + size * 0.25, size * 0.15, "F");
-  // First person body
-  doc.ellipse(x + size * 0.35, y + size * 0.65, size * 0.2, size * 0.25, "F");
-  // Second person head (slightly behind)
-  doc.circle(x + size * 0.65, y + size * 0.3, size * 0.12, "F");
-  // Second person body
-  doc.ellipse(x + size * 0.65, y + size * 0.68, size * 0.15, size * 0.2, "F");
-};
-
-/**
- * Draw a Shield icon
- */
-const drawShieldIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setFillColor(...color);
-  // Shield shape - top rounded, bottom pointed
-  const cx = x + size / 2;
-  doc.roundedRect(x + size * 0.15, y, size * 0.7, size * 0.55, size * 0.1, size * 0.1, "F");
-  doc.triangle(x + size * 0.15, y + size * 0.5, cx, y + size, x + size * 0.85, y + size * 0.5, "F");
-};
-
-/**
- * Draw a Pound/Money icon
- */
-const drawPoundIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setFillColor(...color);
-  doc.circle(x + size / 2, y + size / 2, size / 2, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(size * 0.6);
-  doc.setFont("helvetica", "bold");
-  doc.text("£", x + size / 2, y + size * 0.65, { align: "center" });
-};
-
-/**
- * Draw a Sparkles icon (star shape)
- */
-const drawSparklesIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setFillColor(...color);
-  const cx = x + size / 2;
-  const cy = y + size / 2;
-  // Simple 4-point star
-  doc.triangle(cx, y, cx - size * 0.15, cy, cx + size * 0.15, cy, "F");
-  doc.triangle(cx, y + size, cx - size * 0.15, cy, cx + size * 0.15, cy, "F");
-  doc.triangle(x, cy, cx, cy - size * 0.15, cx, cy + size * 0.15, "F");
-  doc.triangle(x + size, cy, cx, cy - size * 0.15, cx, cy + size * 0.15, "F");
-};
-
-/**
- * Draw a Coins icon
- */
-const drawCoinsIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setDrawColor(...color);
-  doc.setLineWidth(size * 0.08);
-  // Two overlapping circles
-  doc.circle(x + size * 0.35, y + size * 0.4, size * 0.28, "S");
-  doc.circle(x + size * 0.55, y + size * 0.55, size * 0.28, "S");
-};
-
-/**
- * Draw a TrendingUp icon (arrow going up-right)
- */
-const drawTrendingUpIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setDrawColor(...color);
-  doc.setLineWidth(size * 0.1);
-  // Upward trending line
-  doc.line(x, y + size * 0.8, x + size * 0.4, y + size * 0.5);
-  doc.line(x + size * 0.4, y + size * 0.5, x + size * 0.6, y + size * 0.65);
-  doc.line(x + size * 0.6, y + size * 0.65, x + size, y + size * 0.2);
-  // Arrow head
-  doc.line(x + size * 0.75, y + size * 0.2, x + size, y + size * 0.2);
-  doc.line(x + size, y + size * 0.2, x + size, y + size * 0.45);
-};
-
-/**
- * Draw a BarChart icon
- */
-const drawBarChartIcon = (doc: jsPDF, x: number, y: number, size: number, color: [number, number, number]) => {
-  doc.setFillColor(...color);
-  // Three bars of increasing height
-  doc.rect(x + size * 0.1, y + size * 0.6, size * 0.2, size * 0.4, "F");
-  doc.rect(x + size * 0.4, y + size * 0.35, size * 0.2, size * 0.65, "F");
-  doc.rect(x + size * 0.7, y + size * 0.15, size * 0.2, size * 0.85, "F");
 };
 
 /**
@@ -531,25 +340,25 @@ const renderExecutiveSummary = (
   doc.setLineWidth(0.5);
   doc.roundedRect(margin, yPosition, maxWidth, heroHeight, 4, 4, "S");
   
-  // Brain icon using helper
-  const iconSize = 10;
+  // Brain icon - simple filled rounded square with purple color
+  const iconSize = 12;
   const iconX = margin + 8;
   const iconY = yPosition + 8;
-  drawBrainIcon(doc, iconX, iconY, iconSize, PDF_CONFIG.primaryColor);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(iconX, iconY, iconSize, iconSize, 2, 2, "F");
   
-  // Title: Hobson AI (positioned after icon with proper vertical alignment)
+  // Title: Hobson AI (positioned after icon)
   const textStartX = iconX + iconSize + 6;
-  const textCenterY = iconY + iconSize / 2;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson AI", textStartX, textCenterY - 1);
+  doc.text("Hobson AI", textStartX, iconY + 5);
   
   // Subtitle: Specialised AI for Real Estate
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text("Specialised AI for Real Estate", textStartX, textCenterY + 6);
+  doc.text("Specialised AI for Real Estate", textStartX, iconY + 12);
   
   // Main description text
   const descY = iconY + iconSize + 10;
@@ -571,14 +380,16 @@ const renderExecutiveSummary = (
     yPosition = margin;
   }
   
-  // Section header with globe icon
-  const globeIconSize = 8;
-  drawGlobeIcon(doc, margin, yPosition - 5, globeIconSize, PDF_CONFIG.emerald);
+  // Section header with globe icon (small filled circle)
+  const globeIconX = margin;
+  const globeIconY = yPosition - 3;
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(globeIconX + 3, globeIconY, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
-  doc.text("Addressable Market", margin + globeIconSize + 4, yPosition);
+  doc.text("Addressable Market", margin + 10, yPosition);
   yPosition += 5;
   
   // Subtitle
@@ -642,14 +453,14 @@ const renderExecutiveSummary = (
     yPosition = margin;
   }
   
-  // Section header with rocket icon
-  const rocketIconSize = 8;
-  drawRocketIcon(doc, margin, yPosition - 6, rocketIconSize, PDF_CONFIG.blue);
+  // Section header with rocket icon (small filled circle)
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 3, yPosition - 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
-  doc.text("Traction & Milestones", margin + rocketIconSize + 4, yPosition);
+  doc.text("Traction & Milestones", margin + 10, yPosition);
   yPosition += 10;
   
   // Traction cards in 2x2 grid - matches: bg-blue-50/50 border border-blue-100 rounded-lg
@@ -658,10 +469,10 @@ const renderExecutiveSummary = (
   const tractionSpacing = 4;
   
   const tractionData = [
-    { title: "MVP Launch Q1 2026", subtitle: "Validated with 4 real-world partners", iconFn: drawTargetIcon },
-    { title: "98% Model Accuracy", subtitle: "Tested on real industry data", iconFn: drawCheckCircleIcon },
-    { title: "Multi-Document Support", subtitle: "Legal, compliance, operational reports", iconFn: drawZapIcon },
-    { title: "Domain-Trained AI", subtitle: "Built for reliability and depth", iconFn: drawBrainIcon },
+    { title: "MVP Launch Q1 2026", subtitle: "Validated with 4 real-world partners" },
+    { title: "98% Model Accuracy", subtitle: "Tested on real industry data" },
+    { title: "Multi-Document Support", subtitle: "Legal, compliance, operational reports" },
+    { title: "Domain-Trained AI", subtitle: "Built for reliability and depth" },
   ];
   
   tractionData.forEach((data, idx) => {
@@ -679,22 +490,21 @@ const renderExecutiveSummary = (
     doc.setLineWidth(0.3);
     doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 2, 2, "S");
     
-    // Icon using helper function
-    const tractionIconSize = 7;
-    data.iconFn(doc, cardX + 5, cardY + 8, tractionIconSize, PDF_CONFIG.blue);
+    // Icon - simple filled circle (no text inside)
+    doc.setFillColor(...PDF_CONFIG.blue);
+    doc.circle(cardX + 8, cardY + 12, 3, "F");
     
-    // Title (positioned after icon with proper alignment)
-    const tractionTextX = cardX + 5 + tractionIconSize + 4;
+    // Title (positioned after icon)
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
-    doc.text(data.title, tractionTextX, cardY + 12);
+    doc.text(data.title, cardX + 16, cardY + 10);
     
     // Subtitle
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(7);
     doc.setFont("helvetica", "normal");
-    doc.text(data.subtitle, tractionTextX, cardY + 20);
+    doc.text(data.subtitle, cardX + 16, cardY + 18);
   });
   
   yPosition += 2 * (tractionCardHeight + tractionSpacing) + 10;
@@ -732,7 +542,6 @@ const renderWhyNow = (
   const sections = [
     {
       number: "1",
-      iconFn: drawCpuIcon,
       title: "Technology Has Finally Caught Up",
       intro: "For years, real estate workflows were too messy for past-generation technology. Today:",
       bullets: [
@@ -744,7 +553,6 @@ const renderWhyNow = (
     },
     {
       number: "2",
-      iconFn: drawUsersIcon,
       title: "The Industry Is Ready for Efficiency",
       intro: "Real estate operators have never been under this much pressure:",
       bullets: [
@@ -756,7 +564,6 @@ const renderWhyNow = (
     },
     {
       number: "3",
-      iconFn: drawTargetIcon,
       title: "Massive Competitive White Space",
       intro: "Despite the size of the opportunity:",
       bullets: [
@@ -768,7 +575,6 @@ const renderWhyNow = (
     },
     {
       number: "4",
-      iconFn: drawShieldIcon,
       title: "Regulation Making Documents More Complex",
       intro: "Real estate compliance is exploding:",
       bullets: [
@@ -780,7 +586,6 @@ const renderWhyNow = (
     },
     {
       number: "5",
-      iconFn: drawPoundIcon,
       title: "Economics Forcing Waste Removal",
       intro: "Margins are compressing across the industry:",
       bullets: [
@@ -807,7 +612,7 @@ const renderWhyNow = (
     doc.setLineWidth(0.3);
     doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "S");
 
-    // Number badge (filled circle with number)
+    // Number badge (filled circle)
     doc.setFillColor(...PDF_CONFIG.primaryColor);
     doc.circle(margin + 8, yPosition + 10, 5, "F");
     doc.setTextColor(255, 255, 255);
@@ -815,15 +620,11 @@ const renderWhyNow = (
     doc.setFont("helvetica", "bold");
     doc.text(section.number, margin + 8, yPosition + 12, { align: "center" });
 
-    // Section icon next to title
-    const sectionIconSize = 8;
-    section.iconFn(doc, margin + 18, yPosition + 4, sectionIconSize, PDF_CONFIG.primaryColor);
-
-    // Title (positioned after icon)
+    // Title
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
-    doc.text(section.title, margin + 18 + sectionIconSize + 4, yPosition + 10);
+    doc.text(section.title, margin + 18, yPosition + 10);
 
     // Intro
     doc.setTextColor(...PDF_CONFIG.textGray);
@@ -865,9 +666,9 @@ const renderWhyNow = (
   doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
   doc.roundedRect(margin, yPosition, maxWidth, convergenceHeight, 4, 4, "F");
 
-  // Header with Zap icon
-  const zapIconSize = 8;
-  drawZapIcon(doc, pageWidth / 2 - 40, yPosition + 5, zapIconSize, PDF_CONFIG.primaryColor);
+  // Header
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(pageWidth / 2 - 30, yPosition + 10, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
@@ -972,22 +773,23 @@ const renderStrategicApproach = (
   ];
 
   productItems.forEach((item) => {
-    // CheckCircle icon for each item
-    drawCheckCircleIcon(doc, margin + 8, yPosition - 2, 5, PDF_CONFIG.blue);
+    doc.setFillColor(...PDF_CONFIG.blue);
+    doc.circle(margin + 10, yPosition, 1.5, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(8);
     doc.text(item, margin + 16, yPosition + 1);
     yPosition += 6;
   });
 
-  // Goal box with Target icon
+  // Goal box
   doc.setFillColor(...PDF_CONFIG.blueBg);
   doc.roundedRect(margin + 8, yPosition, maxWidth - 16, 10, 2, 2, "F");
-  drawTargetIcon(doc, margin + 12, yPosition + 2, 6, PDF_CONFIG.blue);
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 14, yPosition + 5, 2, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
-  doc.text("Goal: A clarity engine that feels like part of the team on day one.", margin + 22, yPosition + 6);
+  doc.text("Goal: A clarity engine that feels like part of the team on day one.", margin + 20, yPosition + 6);
   yPosition += 16;
 
   // ===== PILLAR 2: BRAND =====
@@ -1048,14 +850,15 @@ const renderStrategicApproach = (
   });
   yPosition += 2 * (brandCardHeight + 4) + 6;
 
-  // Goal box with Sparkles icon
+  // Goal box
   doc.setFillColor(...PDF_CONFIG.roseBg);
   doc.roundedRect(margin + 8, yPosition, maxWidth - 16, 10, 2, 2, "F");
-  drawSparklesIcon(doc, margin + 12, yPosition + 2, 6, PDF_CONFIG.rose);
+  doc.setFillColor(...PDF_CONFIG.rose);
+  doc.circle(margin + 14, yPosition + 5, 2, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
-  doc.text("Goal: A brand that embodies Innovation without disruption.", margin + 22, yPosition + 6);
+  doc.text("Goal: A brand that embodies Innovation without disruption.", margin + 20, yPosition + 6);
   yPosition += 16;
 
   // ===== PILLAR 3: BUSINESS =====
@@ -1092,8 +895,8 @@ const renderStrategicApproach = (
     doc.setLineWidth(0.2);
     doc.roundedRect(cardX, yPosition, noFeeCardWidth, 16, 2, 2, "S");
 
-    // CheckCircle icon centered
-    drawCheckCircleIcon(doc, cardX + noFeeCardWidth / 2 - 3, yPosition + 2, 6, PDF_CONFIG.emerald);
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(cardX + noFeeCardWidth / 2, yPosition + 5, 2, "F");
     doc.setTextColor(...PDF_CONFIG.emerald);
     doc.setFontSize(7);
     doc.setFont("helvetica", "bold");
@@ -1103,10 +906,10 @@ const renderStrategicApproach = (
 
   // Business model cards (2x2 amber cards)
   const bizItems = [
-    { label: "Usage-Based Pricing", desc: "Pay via HEUs - only for what you use", iconFn: drawCoinsIcon },
-    { label: "Full Transparency", desc: "See exactly what Hobson did and why", iconFn: drawShieldIcon },
-    { label: "Low Base Cost", desc: "Frictionless entry for any business size", iconFn: drawTrendingUpIcon },
-    { label: "Flexible Billing", desc: "Enables high-volume market capture", iconFn: drawBarChartIcon },
+    { label: "Usage-Based Pricing", desc: "Pay via HEUs - only for what you use" },
+    { label: "Full Transparency", desc: "See exactly what Hobson did and why" },
+    { label: "Low Base Cost", desc: "Frictionless entry for any business size" },
+    { label: "Flexible Billing", desc: "Enables high-volume market capture" },
   ];
   const bizCardWidth = (maxWidth - 16) / 2;
   const bizCardHeight = 18;
@@ -1122,27 +925,28 @@ const renderStrategicApproach = (
     doc.setLineWidth(0.2);
     doc.roundedRect(cardX, cardY, bizCardWidth, bizCardHeight, 2, 2, "S");
 
-    // Draw icon using helper
-    item.iconFn(doc, cardX + 4, cardY + 4, 6, PDF_CONFIG.amber);
+    doc.setFillColor(...PDF_CONFIG.amber);
+    doc.circle(cardX + 6, cardY + 5, 2, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(8);
     doc.setFont("helvetica", "bold");
-    doc.text(item.label, cardX + 14, cardY + 6);
+    doc.text(item.label, cardX + 12, cardY + 6);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(6);
     doc.setFont("helvetica", "normal");
-    doc.text(item.desc, cardX + 14, cardY + 12);
+    doc.text(item.desc, cardX + 12, cardY + 12);
   });
   yPosition += 2 * (bizCardHeight + 4) + 6;
 
-  // Goal box with Target icon
+  // Goal box
   doc.setFillColor(...PDF_CONFIG.amberBg);
   doc.roundedRect(margin + 8, yPosition, maxWidth - 16, 10, 2, 2, "F");
-  drawTargetIcon(doc, margin + 12, yPosition + 2, 6, PDF_CONFIG.amber);
+  doc.setFillColor(...PDF_CONFIG.amber);
+  doc.circle(margin + 14, yPosition + 5, 2, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
-  doc.text("Goal: Category-defining AI document intelligence layer.", margin + 22, yPosition + 6);
+  doc.text("Goal: Category-defining AI document intelligence layer.", margin + 20, yPosition + 6);
   yPosition += 16;
 
   // ===== WHY WE RAISE IN 2026 =====
@@ -1151,8 +955,9 @@ const renderStrategicApproach = (
     yPosition = margin;
   }
 
-  // Rocket icon
-  drawRocketIcon(doc, margin + 2, yPosition - 1, 10, PDF_CONFIG.primaryColor);
+  // Rocket badge
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 6, yPosition + 4, 5, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(11);
