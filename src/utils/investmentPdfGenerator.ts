@@ -169,6 +169,52 @@ const calculateBoxHeight = (
 };
 
 /**
+ * Calculate dynamic card height for numbered section cards
+ * Accounts for header, content rows, and padding
+ */
+const calculateSectionCardHeight = (
+  contentRows: number,
+  hasStatRow: boolean = false,
+  hasTableRows: number = 0
+): number => {
+  const headerHeight = 16; // Title row
+  const statRowHeight = hasStatRow ? 18 : 0; // Large stat + label
+  const tableHeight = hasTableRows * PDF_CONFIG.lineHeight.body;
+  const padding = 12; // Top and bottom padding
+  return headerHeight + statRowHeight + tableHeight + (contentRows * PDF_CONFIG.lineHeight.body) + padding;
+};
+
+/**
+ * Render a numbered section card with icon, title, and flexible content area
+ * Returns the ending Y position
+ */
+const renderNumberedSectionCard = (
+  doc: jsPDF,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  bgColor: [number, number, number],
+  iconColor: [number, number, number],
+  title: string
+): { cardY: number; contentY: number } => {
+  // Card background
+  doc.setFillColor(...bgColor);
+  doc.roundedRect(x, y, width, height, 3, 3, "F");
+  
+  // Number circle
+  doc.setFillColor(...iconColor);
+  doc.circle(x + 8, y + 10, 4, "F");
+  
+  // Title
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text(title, x + 16, y + 12);
+  
+  return { cardY: y + height, contentY: y + 24 };
+};
+
+/**
  * Standard card padding constants
  */
 const CARD_PADDING = {
@@ -873,12 +919,7 @@ const renderWhyNow = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Header
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setPageTitleFont(doc);
-  doc.text("Why Now?", pageWidth / 2, yPosition, { align: "center" });
-  yPosition += 8;
-  
+  // Subtitle only - main title "Why Now?" already rendered by renderTabContent
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodyFont(doc);
   doc.text("The Perfect Moment for AI Clarity in Real Estate", pageWidth / 2, yPosition, { align: "center" });
@@ -1308,19 +1349,15 @@ const renderCustomerSegmentation = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
+  const pageWidthCalc = pageWidth;
 
-  // Header
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setPageTitleFont(doc);
-  doc.text("Who We Serve", pageWidth / 2, yPosition, { align: "center" });
-  yPosition += 6;
-
+  // Description only - main title "Customer Segmentation" already rendered by renderTabContent
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
   yPosition = renderSpacedTextCentered(
     doc,
     "Hobson is designed to meet the needs of real estate professionals across all operator sizes—each with distinct challenges, but a shared need for clarity.",
-    pageWidth / 2,
+    pageWidthCalc / 2,
     yPosition,
     maxWidth - 20,
     PDF_CONFIG.lineHeight.body
@@ -1421,11 +1458,8 @@ const renderUKMarketAssumptions = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Header
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  setPageTitleFont(doc);
-  doc.text("UK Market Assumptions", margin, yPosition);
-  yPosition += 6;
+  // Note: Tab title "UK Market Assumptions" is already rendered by renderTabContent
+  // Only render subtitle here
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
   doc.text("Evidence-based framework for market sizing", margin, yPosition);
@@ -1456,21 +1490,22 @@ const renderUKMarketAssumptions = (
   doc.text("Real estate businesses (4.2%)", margin + maxWidth / 2 + 38, yPosition + 28);
   yPosition += 44;
 
-  // Section 2: Business Size Breakdown
-  yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
-  renderContentCard(doc, margin, yPosition, maxWidth, 48, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, 4, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("2. Business Size Breakdown (Real Estate Only)", margin + 16, yPosition + 12);
-  
+  // Section 2: Business Size Breakdown - calculate dynamic height
   const sizeData = [
     { size: "Small (1-9)", pct: "96%", count: "225,792" },
     { size: "Medium (10-49)", pct: "2.7%", count: "6,350" },
     { size: "Large (50-249)", pct: "0.6%", count: "1,411" },
     { size: "Enterprise (250+)", pct: "0.1%", count: "235" },
   ];
+  const section2Height = calculateSectionCardHeight(0, false, sizeData.length);
+  yPosition = checkPageBreak(doc, yPosition, section2Height + 8, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, section2Height, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 10, 4, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("2. Business Size Breakdown (Real Estate Only)", margin + 16, yPosition + 12);
+  
   let tableY = yPosition + 24;
   setBodyFont(doc);
   sizeData.forEach((row) => {
@@ -1484,7 +1519,7 @@ const renderUKMarketAssumptions = (
     doc.text(row.count, margin + 100, tableY);
     tableY += PDF_CONFIG.lineHeight.body;
   });
-  yPosition += 56;
+  yPosition += section2Height + 8;
 
   // Section 3: AI Investment Readiness
   yPosition = checkPageBreak(doc, yPosition, 40, pageHeight, margin);
@@ -1651,15 +1686,9 @@ const renderGlobalMarketAssumptions = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Header
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Global Market Assumptions", margin, yPosition);
-  yPosition += 6;
+  // Subtitle only - main title already rendered by renderTabContent
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
+  setBodyFont(doc);
   doc.text("Explosive Global Growth (Verified by Independent Reports)", margin, yPosition);
   yPosition += 14;
 
