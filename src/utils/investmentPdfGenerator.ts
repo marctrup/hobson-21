@@ -236,10 +236,10 @@ const calculateSectionCardHeight = (
   hasStatRow: boolean = false,
   hasTableRows: number = 0
 ): number => {
-  const headerHeight = 10; // Title row (reduced)
+  const headerHeight = 20; // Title row + gap to content (was 10, now 20 to account for title at +12 and content at +24)
   const statRowHeight = hasStatRow ? 14 : 0; // Large stat + label (reduced)
   const tableHeight = hasTableRows * PDF_CONFIG.lineHeight.body;
-  const padding = 6; // Top and bottom padding (reduced)
+  const padding = 8; // Bottom padding (increased from 6)
   return headerHeight + statRowHeight + tableHeight + (contentRows * PDF_CONFIG.lineHeight.body) + padding;
 };
 
