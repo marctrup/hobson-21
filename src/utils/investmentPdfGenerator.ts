@@ -831,7 +831,7 @@ const renderExecutiveSummary = (
     descLineY += PDF_CONFIG.lineHeight.body;
   });
   
-  yPosition += heroHeight + PDF_CONFIG.spacing.sectionGap;
+  yPosition += heroHeight + PDF_CONFIG.spacing.sectionGap + 4; // Extra spacing before Addressable Market
 
   // ===== ADDRESSABLE MARKET SECTION =====
   // Check for page break
