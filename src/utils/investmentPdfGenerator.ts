@@ -3860,7 +3860,7 @@ const renderGlobalJustification = (
 
   // OECD methodology box
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 65, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
@@ -3883,14 +3883,14 @@ const renderGlobalJustification = (
     doc.circle(margin + 12, itemY - 1, 1.5, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(item, margin + 18, itemY);
-    itemY += 8;
+    itemY += 9;
   });
-  yPosition += 63;
+  yPosition += 73;
 
   // Why defensible box
-  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 70) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.emeraldBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 58, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
@@ -3912,9 +3912,9 @@ const renderGlobalJustification = (
     doc.circle(margin + 12, itemY - 1, 1.5, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(item, margin + 18, itemY);
-    itemY += 8;
+    itemY += 9;
   });
-  yPosition += 58;
+  yPosition += 66;
 
   // TAM summary
   if (yPosition > pageHeight - 40) { doc.addPage(); yPosition = margin; }
