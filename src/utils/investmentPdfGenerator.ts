@@ -3797,18 +3797,19 @@ const renderRevenueGrowth = (
   doc.text("Review UK Assumptions, Global Assumptions, Market Penetration, and Revenue Model tabs.", margin + 8, yPosition + 22);
   yPosition += 40;
 
-  // Note about chart
+  // Note about chart - tighter box
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 40, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 24, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "italic");
-  doc.text("See the interactive Revenue Growth Chart in the web version for visual breakdown.", margin + 8, yPosition + 16);
-  doc.text("The stacked bar chart shows UK Revenue (amber) and Global Revenue (blue) by year.", margin + 8, yPosition + 28);
-  yPosition += 50;
+  doc.text("See the interactive Revenue Growth Chart in the web version. Stacked bars show UK (amber) and Global (blue) revenue.", margin + 6, yPosition + 10);
+  doc.text("", margin + 6, yPosition + 18);
+  yPosition += 30;
 
-  // Summary Stats - 4 columns matching the visual
-  const colWidth = (maxWidth - 24) / 4;
+  // Summary Stats - 4 columns matching the visual - tighter boxes
+  yPosition = checkPageBreak(doc, yPosition, 36, pageHeight, margin);
+  const colWidth = (maxWidth - 18) / 4;
   const stats = [
     { label: "2027 (UK Launch)", value: "GBP 1.17M", color: PDF_CONFIG.amber, bgColor: PDF_CONFIG.amberBg },
     { label: "2028 (Global Start)", value: "GBP 6.71M", color: PDF_CONFIG.blue, bgColor: PDF_CONFIG.blueBg },
@@ -3817,33 +3818,33 @@ const renderRevenueGrowth = (
   ];
 
   stats.forEach((stat, idx) => {
-    const xPos = margin + idx * (colWidth + 8);
+    const xPos = margin + idx * (colWidth + 6);
     doc.setFillColor(...stat.bgColor);
-    doc.roundedRect(xPos, yPosition, colWidth, 40, 3, 3, "F");
+    doc.roundedRect(xPos, yPosition, colWidth, 28, 3, 3, "F");
     doc.setDrawColor(...stat.color);
-    doc.roundedRect(xPos, yPosition, colWidth, 40, 3, 3, "S");
+    doc.roundedRect(xPos, yPosition, colWidth, 28, 3, 3, "S");
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(7);
     doc.setFont("helvetica", "normal");
-    doc.text(stat.label, xPos + colWidth / 2, yPosition + 10, { align: "center" });
+    doc.text(stat.label, xPos + colWidth / 2, yPosition + 8, { align: "center" });
 
     doc.setTextColor(...stat.color);
-    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(stat.value, xPos + colWidth / 2, yPosition + 28, { align: "center" });
+    doc.text(stat.value, xPos + colWidth / 2, yPosition + 20, { align: "center" });
   });
-  yPosition += 50;
+  yPosition += 34;
 
-  // Key Milestones
-  if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
+  // Key Milestones - tighter box
+  yPosition = checkPageBreak(doc, yPosition, 38, pageHeight, margin);
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 48, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 34, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Key Revenue Milestones", margin + 8, yPosition + 12);
+  doc.text("Key Revenue Milestones", margin + 6, yPosition + 10);
   
   const milestones = [
     { year: "2027", desc: "UK commercial launch, first paying customers", color: PDF_CONFIG.amber },
@@ -3851,20 +3852,20 @@ const renderRevenueGrowth = (
     { year: "2031", desc: "~30,000 customers, category leadership", color: PDF_CONFIG.primaryColor },
   ];
   
-  let mY = yPosition + 22;
+  let mY = yPosition + 18;
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   milestones.forEach((m) => {
     doc.setFillColor(...m.color);
-    doc.circle(margin + 12, mY - 1, 2, "F");
+    doc.circle(margin + 10, mY - 1, PDF_CONFIG.circleSize.bullet, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFont("helvetica", "bold");
-    doc.text(m.year + ":", margin + 18, mY);
+    doc.text(m.year + ":", margin + 14, mY);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(m.desc, margin + 35, mY);
-    mY += 8;
+    doc.text(m.desc, margin + 28, mY);
+    mY += 5;
   });
-  yPosition += 56;
+  yPosition += 40;
 
   return yPosition;
 };
