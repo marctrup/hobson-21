@@ -3713,15 +3713,15 @@ const renderPLGrowth = (
   doc.text("Review the Revenue Assumptions and Cost Assumptions tabs for detailed methodology.", margin + 8, yPosition + 22);
   yPosition += 40;
 
-  // Note about chart
+  // Note about chart - tighter box
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 28, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "italic");
-  doc.text("See the interactive P/L Forecast Chart in the web version for visual growth trajectory.", margin + 8, yPosition + 20);
-  doc.text("The chart shows Infrastructure/COGS, Operating Costs, and Net Profit from 2027-2031.", margin + 8, yPosition + 32);
-  yPosition += 60;
+  doc.text("See the interactive P/L Forecast Chart in the web version. Shows Infrastructure/COGS, Operating Costs, and Net Profit 2027-2031.", margin + 6, yPosition + 11);
+  doc.text("", margin + 6, yPosition + 20);
+  yPosition += 34;
 
   // Key metrics grid - 3 columns (matching the visual exactly)
   const colWidth = (maxWidth - 16) / 3;
