@@ -4512,13 +4512,20 @@ const renderTabContent = (
     doc.setFont("helvetica", "normal");
     const cleanedOverview = sanitizeText(tab.content.overview);
     const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 16);
-    const boxHeight = overviewLines.length * 7 + 12; // More padding
+    
+    // Calculate box height with proper vertical padding
+    const lineHeight = 6;
+    const contentHeight = overviewLines.length * lineHeight;
+    const verticalPadding = 10; // Equal top and bottom padding
+    const boxHeight = contentHeight + verticalPadding * 2;
+    
     doc.rect(margin, yPosition, maxWidth, boxHeight, "F");
-    // Use explicit line spacing for overview
-    let overviewY = yPosition + 8;
+    
+    // Center text vertically in box
+    let overviewY = yPosition + verticalPadding + 4; // 4pt offset for text baseline
     overviewLines.forEach((line: string) => {
       doc.text(line, margin + 8, overviewY);
-      overviewY += 6; // Explicit 6pt line spacing
+      overviewY += lineHeight;
     });
     yPosition += boxHeight + 10;
   }
