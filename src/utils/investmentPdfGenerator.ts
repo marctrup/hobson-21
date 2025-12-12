@@ -17,14 +17,25 @@ import { jsPDF } from "jspdf";
 import { getPdfContentForComponent } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
-// PDF Configuration
+// PDF Configuration - Colors matched to design system (index.css)
+// Primary: HSL 269 91% 52% = RGB 124, 58, 237 (#7c3aed)
+// Primary Light: HSL 269 75% 65% = RGB 168, 113, 246 (#a871f6)
+// Background: HSL 0 0% 100% = RGB 255, 255, 255
+// Foreground: HSL 222.2 84% 4.9% = RGB 9, 9, 25 (~dark)
+// Muted: HSL 210 40% 96.1% = RGB 241, 245, 249 (#f1f5f9)
+// Border: HSL 214.3 31.8% 91.4% = RGB 226, 232, 240 (#e2e8f0)
 const PDF_CONFIG = {
   margin: 20,
-  primaryColor: [124, 58, 237] as [number, number, number],
-  textDark: [31, 41, 55] as [number, number, number],
-  textGray: [75, 85, 99] as [number, number, number],
-  textLight: [107, 114, 128] as [number, number, number],
-  bgLight: [249, 250, 251] as [number, number, number],
+  primaryColor: [124, 58, 237] as [number, number, number],       // hsl(269 91% 52%) - brand purple
+  primaryLight: [168, 113, 246] as [number, number, number],      // hsl(269 75% 65%) - lighter purple
+  primaryBg: [240, 235, 255] as [number, number, number],         // Very light purple for Hobson row
+  textDark: [9, 9, 25] as [number, number, number],               // hsl(222.2 84% 4.9%) - foreground
+  textGray: [100, 116, 139] as [number, number, number],          // hsl(215.4 16.3% 46.9%) - muted-foreground
+  textLight: [148, 163, 184] as [number, number, number],         // lighter muted
+  bgLight: [241, 245, 249] as [number, number, number],           // hsl(210 40% 96.1%) - muted bg
+  bgWhite: [255, 255, 255] as [number, number, number],           // white
+  border: [226, 232, 240] as [number, number, number],            // hsl(214.3 31.8% 91.4%) - border color
+  headerBg: [245, 243, 255] as [number, number, number],          // primary/10 - light purple header
 };
 
 // Types for tab/page content
@@ -137,77 +148,113 @@ const renderCompetitorTable = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
   
-  // Table title
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(14);
+  // Table title - matches on-screen text-xl font-bold text-foreground
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(16);
   doc.setFont("helvetica", "bold");
-  doc.text("Competitor Analysis Matrix", margin, yPosition);
-  yPosition += 10;
+  doc.text("Competitor Analysis", margin, yPosition);
+  yPosition += 12;
   
-  // Column configuration
-  const colWidths = [25, 30, 35, 28, 28, 28]; // Adjusted widths
-  const headers = ["Competitor", "Who They Are", "What They Do", "Strengths", "Weaknesses", "Market Value"];
+  // Column configuration - includes Reviews column to match on-screen
+  const colWidths = [22, 26, 30, 24, 24, 30, 20]; // 7 columns
+  const headers = ["Competitor", "Who They Are", "What They Do", "Strengths", "Weaknesses", "Representative Reviews", "Market Value"];
   
-  // Header row
-  doc.setFillColor(124, 58, 237); // Primary purple
-  doc.rect(margin, yPosition, maxWidth, 8, "F");
+  // Header row - matches bg-primary/10 (light purple background)
+  doc.setFillColor(...PDF_CONFIG.headerBg);
+  doc.rect(margin, yPosition, maxWidth, 10, "F");
   
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(7);
+  // Header border - matches border-border
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.rect(margin, yPosition, maxWidth, 10, "S");
+  
+  // Header text - matches font-semibold text-foreground
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(6);
   doc.setFont("helvetica", "bold");
   
   let xPos = margin + 2;
   headers.forEach((header, i) => {
-    doc.text(header, xPos, yPosition + 5.5);
+    const headerLines = doc.splitTextToSize(header, colWidths[i] - 3);
+    doc.text(headerLines, xPos, yPosition + 4);
     xPos += colWidths[i];
   });
-  yPosition += 8;
+  yPosition += 10;
   
   // Data rows
   doc.setFont("helvetica", "normal");
   
   competitorData.forEach((competitor, rowIndex) => {
     // Check if we need a new page
-    if (yPosition > pageHeight - 40) {
+    if (yPosition > pageHeight - 50) {
       doc.addPage();
       yPosition = margin;
+      
+      // Re-render header on new page
+      doc.setFillColor(...PDF_CONFIG.headerBg);
+      doc.rect(margin, yPosition, maxWidth, 10, "F");
+      doc.setDrawColor(...PDF_CONFIG.border);
+      doc.rect(margin, yPosition, maxWidth, 10, "S");
+      
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.setFontSize(6);
+      doc.setFont("helvetica", "bold");
+      
+      xPos = margin + 2;
+      headers.forEach((header, i) => {
+        const headerLines = doc.splitTextToSize(header, colWidths[i] - 3);
+        doc.text(headerLines, xPos, yPosition + 4);
+        xPos += colWidths[i];
+      });
+      yPosition += 10;
+      doc.setFont("helvetica", "normal");
     }
     
-    const rowHeight = 14;
+    const rowHeight = 18;
     const isHobson = competitor.competitor === "Hobson AI";
     
-    // Alternating row background
+    // Alternating row background - matches on-screen bg-background / bg-muted/30
     if (isHobson) {
-      doc.setFillColor(124, 58, 237, 0.1); // Light purple for Hobson
-      doc.setFillColor(240, 235, 255);
+      // Special highlight for Hobson row
+      doc.setFillColor(...PDF_CONFIG.primaryBg);
     } else if (rowIndex % 2 === 0) {
-      doc.setFillColor(249, 250, 251);
+      doc.setFillColor(...PDF_CONFIG.bgWhite);
     } else {
-      doc.setFillColor(255, 255, 255);
+      doc.setFillColor(...PDF_CONFIG.bgLight);
     }
     doc.rect(margin, yPosition, maxWidth, rowHeight, "F");
     
-    // Draw cell borders
-    doc.setDrawColor(229, 231, 235);
+    // Draw cell borders - matches border-border
+    doc.setDrawColor(...PDF_CONFIG.border);
     doc.rect(margin, yPosition, maxWidth, rowHeight, "S");
     
-    // Cell content
-    doc.setTextColor(31, 41, 55);
-    doc.setFontSize(6);
+    // Draw vertical cell dividers
+    xPos = margin;
+    colWidths.forEach((width) => {
+      xPos += width;
+      if (xPos < margin + maxWidth) {
+        doc.line(xPos, yPosition, xPos, yPosition + rowHeight);
+      }
+    });
     
+    // Cell content
+    doc.setFontSize(5.5);
     xPos = margin + 2;
     const cellY = yPosition + 4;
     
-    // Competitor name (bold for Hobson)
+    // Competitor name - matches font-semibold text-foreground
+    doc.setFont("helvetica", "bold");
     if (isHobson) {
-      doc.setFont("helvetica", "bold");
-      doc.setTextColor(124, 58, 237);
+      doc.setTextColor(...PDF_CONFIG.primaryColor);
+    } else {
+      doc.setTextColor(...PDF_CONFIG.textDark);
     }
     const nameLines = doc.splitTextToSize(sanitizeText(competitor.competitor), colWidths[0] - 4);
     doc.text(nameLines, xPos, cellY);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(31, 41, 55);
     xPos += colWidths[0];
+    
+    // Reset to normal text - matches text-muted-foreground
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textGray);
     
     // Who They Are
     const whoLines = doc.splitTextToSize(sanitizeText(competitor.whoTheyAre), colWidths[1] - 4);
@@ -229,8 +276,15 @@ const renderCompetitorTable = (
     doc.text(weaknessLines, xPos, cellY);
     xPos += colWidths[4];
     
-    // Market Value
-    const valueLines = doc.splitTextToSize(sanitizeText(competitor.marketValue), colWidths[5] - 4);
+    // Reviews - format as comma-separated quoted strings
+    const reviewsText = competitor.reviews.map(r => `"${r}"`).join(", ");
+    const reviewLines = doc.splitTextToSize(sanitizeText(reviewsText), colWidths[5] - 4);
+    doc.text(reviewLines, xPos, cellY);
+    xPos += colWidths[5];
+    
+    // Market Value - matches text-foreground font-medium
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    const valueLines = doc.splitTextToSize(sanitizeText(competitor.marketValue), colWidths[6] - 4);
     doc.text(valueLines, xPos, cellY);
     
     yPosition += rowHeight;
