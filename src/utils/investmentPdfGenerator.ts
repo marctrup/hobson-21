@@ -1510,140 +1510,108 @@ const renderMarketLandscape = (
   const maxWidth = pageWidth - margin * 2;
 
   // Header
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(14);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
-  doc.text("The Next Winners in Real Estate Tech Will Be AI-Native", pageWidth / 2, yPosition, { align: "center" });
+  doc.text("Market Landscape", margin, yPosition);
+  yPosition += 8;
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(10);
+  doc.text("The Next Winners in Real Estate Tech Will Be AI-Native", margin, yPosition);
   yPosition += 6;
+  
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(9);
+  doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
-  const subLines = doc.splitTextToSize(
-    "Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.",
-    maxWidth - 20
-  );
-  doc.text(subLines, pageWidth / 2, yPosition, { align: "center" });
-  yPosition += subLines.length * 5 + 10;
+  doc.text("Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers.", margin, yPosition);
+  yPosition += 12;
 
-  const colWidth = (maxWidth - 12) / 2;
-
-  // LEFT: Traditional Cloud Solutions
-  const leftHeight = 85;
+  // SECTION 1: Traditional Cloud Solutions
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, colWidth, leftHeight, 3, 3, "F");
-  doc.setDrawColor(200, 200, 200);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, colWidth, leftHeight, 3, 3, "S");
-
+  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
+  
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
-  doc.text("Traditional Cloud Solutions", margin + 6, yPosition + 10);
-  doc.setFontSize(7);
+  doc.text("Traditional Cloud Solutions", margin + 8, yPosition + 10);
+  doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
-  doc.text('The Overcrowded "Before"', margin + 6, yPosition + 17);
-
-  // Fading company names grid
-  const traditionalCompanies = [
-    "AppFolio", "Yardi", "RealPage", "Entrata", "MRI",
-    "Buildium", "Rent Manager", "TenantCloud", "Cozy", "Avail",
-    "DoorLoop", "Innago", "Hemlane", "Rentler", "Zumper",
-    "ManageCasa", "ResMan", "OneSite", "VTS", "CoStar"
-  ];
-  let compY = yPosition + 24;
-  let compX = margin + 6;
-  doc.setFontSize(6);
-  traditionalCompanies.forEach((company, idx) => {
-    const row = Math.floor(idx / 5);
-    const col = idx % 5;
-    const opacity = Math.max(0.3, 1 - row * 0.2);
-    doc.setTextColor(120, 120, 120);
-    doc.text(company, compX + col * 22, compY + row * 7);
-  });
-
-  // Issues list
-  const issuesY = yPosition + 58;
-  const issues = ["Overcrowded market", "High cost, slow innovation", "Manual information retrieval"];
+  doc.text("The Overcrowded Before - 100+ competitors including:", margin + 8, yPosition + 18);
+  
   doc.setFontSize(7);
-  issues.forEach((issue, idx) => {
+  doc.text("AppFolio, Yardi, RealPage, Entrata, MRI, Buildium, Rent Manager, VTS, CoStar...", margin + 8, yPosition + 26);
+  
+  const issues = ["Overcrowded market", "High cost, slow innovation", "Manual information retrieval"];
+  let issueX = margin + 8;
+  doc.setFontSize(7);
+  issues.forEach((issue) => {
     doc.setFillColor(239, 68, 68);
-    doc.circle(margin + 8, issuesY + idx * 6 - 1, 1, "F");
+    doc.circle(issueX, yPosition + 37, 1.5, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(issue, margin + 12, issuesY + idx * 6);
+    doc.text(issue, issueX + 4, yPosition + 38);
+    issueX += 55;
   });
+  yPosition += 52;
 
-  // RIGHT: AI-Native Solutions
+  // SECTION 2: AI-Native Solutions
   const greenBg: [number, number, number] = [236, 253, 245];
-  const greenBorder: [number, number, number] = [16, 185, 129];
   doc.setFillColor(...greenBg);
-  doc.roundedRect(margin + colWidth + 12, yPosition, colWidth, leftHeight, 3, 3, "F");
-  doc.setDrawColor(...greenBorder);
+  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.emerald);
   doc.setLineWidth(0.5);
-  doc.roundedRect(margin + colWidth + 12, yPosition, colWidth, leftHeight, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "S");
 
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
-  doc.text("Next-Generation AI Solutions", margin + colWidth + 18, yPosition + 10);
-  doc.setFontSize(7);
+  doc.text("Next-Generation AI Solutions", margin + 8, yPosition + 10);
+  doc.setFontSize(8);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text('The Emerging "After"', margin + colWidth + 18, yPosition + 17);
+  doc.text("The Emerging After - AI-native tools delivering real value:", margin + 8, yPosition + 18);
 
-  // AI companies
-  const aiCompanies = [
-    { name: "Hobson", leader: true },
-    { name: "EliseAI", leader: false },
-    { name: "Trudi", leader: false },
-    { name: "StanAI", leader: false },
-    { name: "Kendal AI", leader: false },
-  ];
-  let aiY = yPosition + 24;
-  aiCompanies.forEach((company) => {
-    if (company.leader) {
+  // AI companies in a row
+  const aiCompanies = ["Hobson (Leader)", "EliseAI", "Trudi", "StanAI", "Kendal AI"];
+  let aiX = margin + 8;
+  aiCompanies.forEach((company, idx) => {
+    if (idx === 0) {
       doc.setFillColor(209, 250, 229);
-      doc.roundedRect(margin + colWidth + 16, aiY - 3, colWidth - 8, 10, 2, 2, "F");
-      doc.setDrawColor(...PDF_CONFIG.emerald);
-      doc.setLineWidth(0.4);
-      doc.roundedRect(margin + colWidth + 16, aiY - 3, colWidth - 8, 10, 2, 2, "S");
+      doc.roundedRect(aiX, yPosition + 22, 35, 10, 2, 2, "F");
       doc.setTextColor(...PDF_CONFIG.emerald);
-      doc.setFontSize(9);
+      doc.setFontSize(8);
       doc.setFont("helvetica", "bold");
-      doc.text(company.name, margin + colWidth + 20, aiY + 4);
+      doc.text(company, aiX + 3, yPosition + 29);
+      aiX += 40;
     } else {
-      doc.setFillColor(255, 255, 255);
-      doc.roundedRect(margin + colWidth + 16, aiY - 3, colWidth - 8, 8, 2, 2, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       doc.setFontSize(7);
       doc.setFont("helvetica", "normal");
-      doc.text(company.name, margin + colWidth + 20, aiY + 3);
+      doc.text(company, aiX, yPosition + 29);
+      aiX += 25;
     }
-    aiY += company.leader ? 12 : 9;
   });
 
-  // Benefits list
-  const benefitsY = yPosition + 58;
   const benefits = ["Instant, referenced answers", "Simple, lightweight, low cost", "Designed for accuracy"];
+  let benefitX = margin + 8;
   doc.setFontSize(7);
-  benefits.forEach((benefit, idx) => {
+  benefits.forEach((benefit) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + colWidth + 18, benefitsY + idx * 6 - 1, 1, "F");
+    doc.circle(benefitX, yPosition + 46, 1.5, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(benefit, margin + colWidth + 22, benefitsY + idx * 6);
+    doc.text(benefit, benefitX + 4, yPosition + 47);
+    benefitX += 55;
   });
+  yPosition += 62;
 
-  yPosition += leftHeight + 10;
-
-  // Transition arrow/message
+  // Transition message
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 16, 3, 3, "F");
-  doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(pageWidth / 2 - 50, yPosition + 8, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.roundedRect(margin, yPosition, maxWidth, 14, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
-  doc.text("Industry Transition: From passive cloud storage to active AI assistance", pageWidth / 2, yPosition + 10, { align: "center" });
-  yPosition += 22;
+  doc.text("Industry Transition: From passive cloud storage to active AI assistance", margin + 8, yPosition + 9);
+  yPosition += 20;
 
   return yPosition;
 };
