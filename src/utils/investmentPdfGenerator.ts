@@ -2638,13 +2638,13 @@ const renderHEUPricing = (
   ];
 
   const cardWidth = (maxWidth - 12) / 2;
-  const cardHeight = 40;
+  const cardHeight = 32; // Reduced from 40
 
   tiers.forEach((tier, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const xPos = margin + col * (cardWidth + 12);
-    const yPos = yPosition + row * (cardHeight + 8);
+    const yPos = yPosition + row * (cardHeight + 6);
 
     if (yPos > pageHeight - 50) {
       doc.addPage();
@@ -2660,38 +2660,38 @@ const renderHEUPricing = (
     doc.setTextColor(...tier.color);
     doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
-    doc.text(tier.name, xPos + 8, yPos + 12);
+    doc.text(tier.name, xPos + 6, yPos + 10);
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.body);
-    doc.text(tier.price, xPos + cardWidth - 8, yPos + 12, { align: "right" });
+    doc.text(tier.price, xPos + cardWidth - 6, yPos + 10, { align: "right" });
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(tier.heu, xPos + 8, yPos + 24);
+    doc.text(tier.heu, xPos + 6, yPos + 19);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    doc.text(tier.desc, xPos + 8, yPos + 34);
+    doc.text(tier.desc, xPos + 6, yPos + 27);
   });
 
-  yPosition += 2 * (cardHeight + 8) + 12;
+  yPosition += 2 * (cardHeight + 6) + 8;
 
-  // Top-up pack
+  // Top-up pack - tighter box
   if (yPosition > pageHeight - 40) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.amberBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 28, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 22, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.amber);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Top-Up Pack: GBP 15 (one-time)", margin + 8, yPosition + 12);
+  doc.text("Top-Up Pack: GBP 15 (one-time)", margin + 6, yPosition + 10);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text("150 additional HEUs - Non-rollover (expires at billing period end)", margin + 8, yPosition + 22);
-  yPosition += 36;
+  doc.text("150 additional HEUs - Non-rollover (expires at billing period end)", margin + 6, yPosition + 18);
+  yPosition += 28;
 
   // Key benefits
   doc.setTextColor(...PDF_CONFIG.textDark);
