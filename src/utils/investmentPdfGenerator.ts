@@ -3770,8 +3770,8 @@ const renderMarketPenetration = (
 
   yPosition += 3 * (cardHeight + 10) + 12;
 
-  // UK Market Share table
-  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
+  // UK Market Share table - need space for header + 5 rows + summary = ~100 units
+  if (yPosition > pageHeight - 110) { doc.addPage(); yPosition = margin; }
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
@@ -3803,6 +3803,9 @@ const renderMarketPenetration = (
   doc.setFont("helvetica", "normal");
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   ukData.forEach((row, rowIdx) => {
+    // Check for page break before each row
+    if (yPosition > pageHeight - 25) { doc.addPage(); yPosition = margin; }
+    
     if (rowIdx % 2 === 0) {
       doc.setFillColor(...PDF_CONFIG.bgLight);
       doc.rect(margin, yPosition, maxWidth, 10, "F");
@@ -3817,10 +3820,10 @@ const renderMarketPenetration = (
     });
     yPosition += 10;
   });
-  yPosition += 12;
+  yPosition += 8;
 
   // Summary box - ensure it fits on page
-  if (yPosition > pageHeight - 40) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 35) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 24, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
