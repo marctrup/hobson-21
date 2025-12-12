@@ -1001,53 +1001,58 @@ const renderWhyNow = (
       title: "Technology Has Finally Caught Up",
       intro: "For years, real estate workflows were too messy for past-generation technology. Today:",
       bullets: [
-        "LLMs with the right layer deliver production-grade accuracy",
-        "Document intelligence hits 95%+ extraction quality",
+        "Add the right layer on top of an LLM, and you get specialised AI with production-grade accuracy",
+        "Document intelligence routinely hits 95%+ extraction quality",
         "Infrastructure costs have fallen 10x in three years",
+        "Real-time AI inference is cheap enough to deploy at scale",
       ],
-      conclusion: "The technology to solve document problems properly didn't exist until now.",
+      conclusion: "The technology to solve document problems properly didn't exist until now. Now it does - and it's affordable.",
     },
     {
       number: "2",
-      title: "The Industry Is Ready for Efficiency",
+      title: "The Industry Is Ready - and Desperate - for Efficiency",
       intro: "Real estate operators have never been under this much pressure:",
       bullets: [
         "65% of businesses plan to increase AI spend (Deloitte)",
         "COVID forced digital maturity a decade early",
+        "Remote workflows normalised digital document dependency",
         "Talent shortages make manual processes unsustainable",
       ],
       conclusion: "The market isn't experimenting with AI anymore - it's actively shopping for it.",
     },
     {
       number: "3",
-      title: "Massive Competitive White Space",
+      title: "Massive Competitive White Space - Nobody Owns This Category Yet",
       intro: "Despite the size of the opportunity:",
       bullets: [
         "No AI-native leader exists in document intelligence for real estate",
         "Legacy PropTech is too slow and too integrated",
-        "A 12-18 month window exists to become the category standard",
+        "Horizontal AI tools can't meet regulatory or accuracy expectations",
+        "A 12-18 month window exists to become the default category standard",
       ],
       conclusion: "This is one of the last major AI verticals without a clear winner.",
     },
     {
       number: "4",
-      title: "Regulation Making Documents More Complex",
+      title: "Regulation Is Making Documents More Complex - Not Less",
       intro: "Real estate compliance is exploding:",
       bullets: [
         "New transparency and audit trail requirements",
-        "ESG reporting requires document-linked evidence",
+        "ESG reporting now requires document-linked evidence",
+        "Risk, safety, and building regulations tightening yearly",
         "Data residency rules favour UK/EU-based AI solutions",
       ],
-      conclusion: "More rules -> more documents -> more need for automation.",
+      conclusion: "More rules -> more documents -> more cost -> more need for automation.",
     },
     {
       number: "5",
-      title: "Economics Forcing Waste Removal",
+      title: "Economics Are Forcing Operators to Remove Waste",
       intro: "Margins are compressing across the industry:",
       bullets: [
-        "Operational costs rising, headcount limits",
+        "Operational costs rising",
+        "Headcount limits across property and asset management",
         "Labour inflation making manual work unaffordable",
-        "AI delivers ~GBP 6,000 per role per year in savings",
+        "AI delivers ~GBP 6,000 per role per year in time savings",
       ],
       conclusion: "When budgets tighten, tools that eliminate waste get adopted fastest.",
     },
@@ -1217,10 +1222,11 @@ const renderStrategicApproach = (
 
   const productItems = [
     "Unifies scattered information across documents, emails, and systems",
-    "Simple interface with zero learning curve",
+    "A simple interface with zero learning curve",
     "Works alongside existing workflows - no disruption",
     "Designed to earn trust: citations, transparency, no hallucinations",
-    "Becomes more helpful over time - proactive support",
+    "Becomes more helpful over time -> proactive support, guided workflows",
+    "Current business activity (pilots, document processing, insights) directly informs the production platform",
   ];
 
   yPosition = renderBulletList(doc, productItems, margin + 4, yPosition, maxWidth - 8, PDF_CONFIG.blue, PDF_CONFIG.textDark);
@@ -4014,7 +4020,7 @@ const renderMarketPenetration = (
   doc.text("Why Hobson can credibly capture 6-10% of the UK market by 2030", margin, yPosition);
   yPosition += 14;
 
-  // Justification points - 2 column layout with full text
+  // Justification points - 2 column layout with full text (7 points to match visual)
   const justifications = [
     { title: "Frictionless Adoption", desc: "Zero onboarding, works alongside existing tools, and pricing is not a barrier - enabling 2x faster market penetration than typical SaaS." },
     { title: "Fragmented Market Structure", desc: "225,792 small firms, 6,350 medium, 1,411 large, 235 enterprise - lightweight AI spreads rapidly through referrals." },
@@ -4022,11 +4028,12 @@ const renderMarketPenetration = (
     { title: "Benchmark Precedent", desc: "Vertical AI companies (EliseAI, StanAI, Cresta) reached 1-3% penetration in 3-5 years - Hobson's frictionless model doubles this." },
     { title: "AI Adoption Tailwinds", desc: "65% of organisations plan to increase AI investment (Deloitte). Up to 20% efficiency gain achievable (Forbes)." },
     { title: "Favourable Unit Economics", desc: "~GBP 1.60-2.00 per unit onboarding cost. High gross margin enables aggressive SMB and enterprise scaling." },
+    { title: "Global Replicability", desc: "Similar market structure, AI adoption rates, and universal document needs support international expansion." },
   ];
 
   const colWidth = (maxWidth - 8) / 2;
-  const cardHeight = 58; // Increased for full text
-  const cardSpacing = 8;
+  const cardHeight = 54; // Height for full text
+  const cardSpacing = 6;
 
   justifications.forEach((item, idx) => {
     const col = idx % 2;
@@ -4034,33 +4041,37 @@ const renderMarketPenetration = (
     const xPos = margin + col * (colWidth + 8);
     const yPos = yPosition + row * (cardHeight + cardSpacing);
 
-    if (yPos > pageHeight - 70) {
+    // Check page break for each row
+    if (yPos > pageHeight - 65) {
       doc.addPage();
       yPosition = margin;
     }
 
+    const actualY = yPosition + row * (cardHeight + cardSpacing);
+
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-    doc.roundedRect(xPos, yPos, colWidth, cardHeight, 3, 3, "F");
+    doc.roundedRect(xPos, actualY, colWidth, cardHeight, 3, 3, "F");
     doc.setDrawColor(...PDF_CONFIG.primaryLight);
-    doc.roundedRect(xPos, yPos, colWidth, cardHeight, 3, 3, "S");
+    doc.roundedRect(xPos, actualY, colWidth, cardHeight, 3, 3, "S");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(item.title, xPos + 6, yPos + 12);
+    doc.text(item.title, xPos + 6, actualY + 11);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(7);
     doc.setFont("helvetica", "normal");
     const descLines = doc.splitTextToSize(item.desc, colWidth - 12);
-    let descY = yPos + 22;
+    let descY = actualY + 20;
     descLines.forEach((line: string) => {
       doc.text(line, xPos + 6, descY);
       descY += 6;
     });
   });
 
-  yPosition += 3 * (cardHeight + cardSpacing) + 12;
+  // 7 items = 4 rows (0,1 in row0; 2,3 in row1; 4,5 in row2; 6 in row3)
+  yPosition += 4 * (cardHeight + cardSpacing) + 8;
 
   // UK Market Share table - need space for header + 5 rows + summary = ~100 units
   if (yPosition > pageHeight - 110) { doc.addPage(); yPosition = margin; }
