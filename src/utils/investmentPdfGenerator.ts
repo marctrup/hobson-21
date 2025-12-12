@@ -361,17 +361,21 @@ const renderExecutiveSummary = (
   doc.text("Specialised AI for Real Estate", textStartX, iconY + 12);
   
   // Main description text
-  const descY = iconY + iconSize + 10;
+  const descY = iconY + iconSize + 12;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   
-  // Render as single wrapped paragraph (simplified - no inline highlights for PDF)
+  // Render as single wrapped paragraph with better line spacing
   const fullDesc = "Turning complex documents and decisions into clear, reliable insight. Zero onboarding. Trusted accuracy from day one. Continuous learning that shifts from basic automation to proactive support - unlocking major efficiency gains across the entire property lifecycle.";
-  const descLines = doc.splitTextToSize(fullDesc, maxWidth - 16);
-  doc.text(descLines, margin + 8, descY);
+  const descLines = doc.splitTextToSize(fullDesc, maxWidth - 20);
+  let descLineY = descY;
+  descLines.forEach((line: string) => {
+    doc.text(line, margin + 8, descLineY);
+    descLineY += 6; // Explicit line spacing (increased from default ~4)
+  });
   
-  yPosition += heroHeight + 12;
+  yPosition += heroHeight + 14;
 
   // ===== ADDRESSABLE MARKET SECTION =====
   // Check for page break
