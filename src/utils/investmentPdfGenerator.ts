@@ -363,26 +363,8 @@ const renderExecutiveSummary = (
   doc.setFontSize(10);
   doc.setFont("helvetica", "normal");
   
-  const descPart1 = "Turning complex documents and decisions into ";
-  const descHighlight1 = "clear, reliable insight";
-  const descPart2 = ". Zero onboarding. Trusted accuracy from day one. Continuous learning that shifts from basic automation to ";
-  const descHighlight2 = "proactive support";
-  const descPart3 = " - unlocking major efficiency gains across the entire property lifecycle.";
-  
-  // Render with highlights in purple
-  let textX = margin + 8;
-  doc.text(descPart1, textX, descY);
-  textX += doc.getTextWidth(descPart1);
-  
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFont("helvetica", "bold");
-  doc.text(descHighlight1, textX, descY);
-  textX = margin + 8;
-  
-  // Second line
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFont("helvetica", "normal");
-  const fullDesc = sanitizeText(descPart1 + descHighlight1 + descPart2 + descHighlight2 + descPart3);
+  // Render as single wrapped paragraph (simplified - no inline highlights for PDF)
+  const fullDesc = "Turning complex documents and decisions into clear, reliable insight. Zero onboarding. Trusted accuracy from day one. Continuous learning that shifts from basic automation to proactive support - unlocking major efficiency gains across the entire property lifecycle.";
   const descLines = doc.splitTextToSize(fullDesc, maxWidth - 16);
   doc.text(descLines, margin + 8, descY);
   
