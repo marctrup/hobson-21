@@ -2165,9 +2165,9 @@ const renderEarlyRoadmap = (
   ];
 
   phases.forEach((phase, idx) => {
-    yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
-
-    const cardHeight = 50 + phase.objectives.length * PDF_CONFIG.lineHeight.body;
+    // Calculate tighter card height: header (16) + gap to bullets (6) + bullets + bottom padding (6)
+    const cardHeight = 16 + 6 + phase.objectives.length * PDF_CONFIG.lineHeight.body + 8;
+    yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
     
     // Card background
     doc.setFillColor(...phase.bgColor);
@@ -2186,8 +2186,8 @@ const renderEarlyRoadmap = (
     setBodySmallFont(doc);
     doc.text(phase.timeframe, margin + maxWidth - 60, yPosition + 12);
 
-    // Objectives
-    let objY = yPosition + 24;
+    // Objectives - tighter spacing after title
+    let objY = yPosition + 12 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
     setBodySmallFont(doc);
     phase.objectives.forEach((obj) => {
       doc.setFillColor(...phase.color);
@@ -2197,7 +2197,7 @@ const renderEarlyRoadmap = (
       objY += PDF_CONFIG.lineHeight.body;
     });
 
-    yPosition += cardHeight + 8;
+    yPosition += cardHeight + 6;
   });
 
   return yPosition;
