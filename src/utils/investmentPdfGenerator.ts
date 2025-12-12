@@ -2411,7 +2411,6 @@ const renderHEUPricing = (
     "No per-user fees - add unlimited team members",
     "No per-asset fees - manage unlimited properties",
     "Pay only for what you use",
-    "Real-time HEU balance and per-message cost breakdown"
   ];
 
   doc.setFontSize(PDF_CONFIG.fontSize.body);
@@ -2423,6 +2422,125 @@ const renderHEUPricing = (
     doc.text(benefit, margin + 10, yPosition);
     yPosition += PDF_CONFIG.lineHeight.body + 2;
   });
+  yPosition += 12;
+
+  // COMPLETE USAGE TRANSPARENCY SECTION
+  if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Complete Usage Transparency", margin, yPosition);
+  yPosition += 12;
+
+  // Two-column layout for transparency visuals
+  const colWidth = (maxWidth - 10) / 2;
+
+  // LEFT COLUMN: Real-Time HEU Bar
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, colWidth, 70, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.roundedRect(margin, yPosition, colWidth, 70, 3, 3, "S");
+
+  // Header
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 12, yPosition + 12, 4, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(7);
+  doc.text("|||", margin + 10, yPosition + 14);
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Real-Time HEU Bar", margin + 22, yPosition + 14);
+
+  // HEU Bar visualization
+  const barY = yPosition + 24;
+  const barWidth = colWidth - 16;
+  const barHeight = 14;
+  
+  // Used portion (gray)
+  doc.setFillColor(156, 163, 175); // gray-400
+  doc.rect(margin + 8, barY, barWidth * 0.6, barHeight, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("420 used", margin + 8 + (barWidth * 0.3), barY + 10, { align: "center" });
+  
+  // Remaining portion (purple)
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.rect(margin + 8 + (barWidth * 0.6), barY, barWidth * 0.4, barHeight, "F");
+  doc.text("280 left", margin + 8 + (barWidth * 0.8), barY + 10, { align: "center" });
+
+  // Total label
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("700 total HEUs", margin + 8 + (barWidth / 2), barY + 22, { align: "center" });
+
+  // Description
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const barDesc = doc.splitTextToSize("Real-time tracking shows exactly how much you've used and what remains.", colWidth - 20);
+  doc.text(barDesc, margin + 8, barY + 34);
+
+  // RIGHT COLUMN: Per-Message Cost
+  const rightX = margin + colWidth + 10;
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(rightX, yPosition, colWidth, 70, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.roundedRect(rightX, yPosition, colWidth, 70, 3, 3, "S");
+
+  // Header
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(rightX + 12, yPosition + 12, 4, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(7);
+  doc.text("O", rightX + 10, yPosition + 14);
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Per-Message Cost", rightX + 22, yPosition + 14);
+
+  // Cost breakdown box
+  const costBoxY = yPosition + 22;
+  doc.setFillColor(249, 250, 251); // gray-50
+  doc.roundedRect(rightX + 8, costBoxY, colWidth - 16, 38, 2, 2, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.roundedRect(rightX + 8, costBoxY, colWidth - 16, 38, 2, 2, "S");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("Message Usage Details", rightX + 12, costBoxY + 8);
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(7);
+  const costDetails = [
+    ["HEU Cost:", "0.05"],
+    ["Query Type:", "Simple extraction"],
+    ["Processing:", "1.2s"],
+  ];
+  
+  let detailY = costBoxY + 16;
+  costDetails.forEach(([label, value]) => {
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(label, rightX + 12, detailY);
+    doc.setTextColor(...(label === "HEU Cost:" ? PDF_CONFIG.primaryColor : PDF_CONFIG.textDark));
+    doc.text(value, rightX + colWidth - 20, detailY, { align: "right" });
+    detailY += 7;
+  });
+
+  // Description
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const costDesc = doc.splitTextToSize("Click ... on any message for detailed breakdown. Every action is itemised.", colWidth - 20);
+  doc.text(costDesc, rightX + 8, yPosition + 64);
+
+  yPosition += 78;
 
   return yPosition + 10;
 };
