@@ -50,7 +50,7 @@ const PDF_CONFIG = {
   },
   // Standardized circle/icon sizes
   circleSize: {
-    header: 8,           // Section headers (like Addressable Market)
+    header: 4,           // Section headers (like Addressable Market)
     cardBadge: 2,        // Inside cards/boxes
     bullet: 1,           // Bullet points (minimal)
     pillarBadge: 3,      // Numbered pillar badges
