@@ -2691,7 +2691,7 @@ const renderHEUPricing = (
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   doc.text("150 additional HEUs - Non-rollover (expires at billing period end)", margin + 6, yPosition + 18);
-  yPosition += 28;
+  yPosition += 34; // Increased gap before Key Benefits
 
   // Key benefits
   doc.setTextColor(...PDF_CONFIG.textDark);
