@@ -2818,7 +2818,7 @@ const renderCostAssumptions = (
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Fixed Internal Team Costs (GBP 415,000/year)", margin, yPosition);
-  yPosition += 10;
+  yPosition += 12;
 
   const teamCosts = [
     { role: "CEO", cost: "GBP 120,000" },
@@ -2828,24 +2828,26 @@ const renderCostAssumptions = (
     { role: "Head of Sales", cost: "GBP 85,000" },
   ];
 
+  const valueCol = margin + maxWidth - 10;
   doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
   teamCosts.forEach((item) => {
+    doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(item.role, margin + 8, yPosition);
+    doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(item.cost, margin + maxWidth - 60, yPosition, { align: "right" });
-    yPosition += PDF_CONFIG.lineHeight.body + 2;
+    doc.text(item.cost, valueCol, yPosition, { align: "right" });
+    yPosition += 8;
   });
-  yPosition += 10;
+  yPosition += 14;
 
   // Variable Costs
-  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 70) { doc.addPage(); yPosition = margin; }
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Variable Outsourced Costs (32% of Revenue)", margin, yPosition);
-  yPosition += 10;
+  yPosition += 12;
 
   const variableCosts = [
     { category: "Engineering & Design", range: "10-14%" },
@@ -2856,23 +2858,24 @@ const renderCostAssumptions = (
   ];
 
   doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
   variableCosts.forEach((item) => {
+    doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(item.category, margin + 8, yPosition);
+    doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.text(item.range, margin + maxWidth - 40, yPosition, { align: "right" });
-    yPosition += PDF_CONFIG.lineHeight.body + 2;
+    doc.text(item.range, valueCol, yPosition, { align: "right" });
+    yPosition += 8;
   });
-  yPosition += 10;
+  yPosition += 14;
 
   // Infrastructure COGS
-  if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("AI & Infrastructure COGS (12% of Revenue)", margin, yPosition);
-  yPosition += 10;
+  yPosition += 12;
 
   const infraCosts = [
     { component: "LLM inference (OpenAI)", range: "3-5%" },
@@ -2882,17 +2885,19 @@ const renderCostAssumptions = (
   ];
 
   doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
   infraCosts.forEach((item) => {
+    doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(item.component, margin + 8, yPosition);
+    doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.emerald);
-    doc.text(item.range, margin + maxWidth - 40, yPosition, { align: "right" });
-    yPosition += PDF_CONFIG.lineHeight.body + 2;
+    doc.text(item.range, valueCol, yPosition, { align: "right" });
+    yPosition += 8;
   });
-  yPosition += 10;
+  yPosition += 14;
 
   // Summary box
+  if (yPosition > pageHeight - 35) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.emeraldBg);
   doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.emerald);
