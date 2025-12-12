@@ -3593,13 +3593,13 @@ const renderMarketPenetration = (
   ];
 
   const colWidth = (maxWidth - 8) / 2;
-  const cardHeight = 32;
+  const cardHeight = 42;
 
   justifications.forEach((item, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const xPos = margin + col * (colWidth + 8);
-    const yPos = yPosition + row * (cardHeight + 6);
+    const yPos = yPosition + row * (cardHeight + 10);
 
     if (yPos > pageHeight - 50) {
       doc.addPage();
@@ -3614,16 +3614,16 @@ const renderMarketPenetration = (
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(item.title, xPos + 8, yPos + 12);
+    doc.text(item.title, xPos + 8, yPos + 14);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     const descLines = doc.splitTextToSize(item.desc, colWidth - 16);
-    doc.text(descLines, xPos + 8, yPos + 22);
+    doc.text(descLines, xPos + 8, yPos + 26);
   });
 
-  yPosition += 3 * (cardHeight + 6) + 10;
+  yPosition += 3 * (cardHeight + 10) + 12;
 
   // UK Market Share table
   if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
