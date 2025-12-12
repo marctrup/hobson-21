@@ -537,7 +537,7 @@ const renderCompetitorTable = (
   
   // Header text - matches font-semibold text-foreground
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(8); // Increased from 6pt
+  setBodySmallFont(doc);
   doc.setFont("helvetica", "bold");
   
   let xPos = margin + 2;
@@ -564,7 +564,7 @@ const renderCompetitorTable = (
       doc.rect(margin, yPosition, maxWidth, 14, "S");
       
       doc.setTextColor(...PDF_CONFIG.textDark);
-      doc.setFontSize(8);
+      setBodySmallFont(doc);
       doc.setFont("helvetica", "bold");
       
       xPos = margin + 2;
@@ -577,12 +577,11 @@ const renderCompetitorTable = (
       doc.setFont("helvetica", "normal");
     }
     
-    const rowHeight = 22; // Increased from 18 for larger text
+    const rowHeight = 22;
     const isHobson = competitor.competitor === "Hobson AI";
     
     // Alternating row background - matches on-screen bg-background / bg-muted/30
     if (isHobson) {
-      // Special highlight for Hobson row
       doc.setFillColor(...PDF_CONFIG.primaryBg);
     } else if (rowIndex % 2 === 0) {
       doc.setFillColor(...PDF_CONFIG.bgWhite);
@@ -591,7 +590,7 @@ const renderCompetitorTable = (
     }
     doc.rect(margin, yPosition, maxWidth, rowHeight, "F");
     
-    // Draw cell borders - matches border-border
+    // Draw cell borders
     doc.setDrawColor(...PDF_CONFIG.border);
     doc.rect(margin, yPosition, maxWidth, rowHeight, "S");
     
@@ -604,12 +603,12 @@ const renderCompetitorTable = (
       }
     });
     
-    // Cell content - increased from 5.5pt to 7pt
-    doc.setFontSize(7);
+    // Cell content - use caption font for table cells
+    setCaptionFont(doc);
     xPos = margin + 2;
     const cellY = yPosition + 5;
     
-    // Competitor name - matches font-semibold text-foreground
+    // Competitor name
     doc.setFont("helvetica", "bold");
     if (isHobson) {
       doc.setTextColor(...PDF_CONFIG.primaryColor);
@@ -620,7 +619,7 @@ const renderCompetitorTable = (
     doc.text(nameLines, xPos, cellY);
     xPos += colWidths[0];
     
-    // Reset to normal text - matches text-muted-foreground
+    // Reset to normal text
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textGray);
     
@@ -644,13 +643,13 @@ const renderCompetitorTable = (
     doc.text(weaknessLines, xPos, cellY);
     xPos += colWidths[4];
     
-    // Reviews - format as comma-separated quoted strings
+    // Reviews
     const reviewsText = competitor.reviews.map(r => `"${r}"`).join(", ");
     const reviewLines = doc.splitTextToSize(sanitizeText(reviewsText), colWidths[5] - 4);
     doc.text(reviewLines, xPos, cellY);
     xPos += colWidths[5];
     
-    // Market Value - matches text-foreground font-medium
+    // Market Value
     doc.setTextColor(...PDF_CONFIG.textDark);
     const valueLines = doc.splitTextToSize(sanitizeText(competitor.marketValue), colWidths[6] - 4);
     doc.text(valueLines, xPos, cellY);
@@ -698,21 +697,18 @@ const renderExecutiveSummary = (
   // Title: Hobson AI (positioned after icon)
   const textStartX = iconX + iconSize + 6;
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
+  setSectionTitleFont(doc);
   doc.text("Hobson AI", textStartX, iconY + 5);
   
   // Subtitle: Specialised AI for Real Estate
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "normal");
+  setBodyFont(doc);
   doc.text("Specialised AI for Real Estate", textStartX, iconY + 12);
   
   // Main description text
   const descY = iconY + iconSize + 12;
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "normal");
+  setBodyFont(doc);
   
   // Render as single wrapped paragraph with better line spacing
   const fullDesc = "Turning complex documents and decisions into clear, reliable insight. Zero onboarding. Trusted accuracy from day one. Continuous learning that shifts from basic automation to proactive support - unlocking major efficiency gains across the entire property lifecycle.";
@@ -720,7 +716,7 @@ const renderExecutiveSummary = (
   let descLineY = descY;
   descLines.forEach((line: string) => {
     doc.text(line, margin + 8, descLineY);
-    descLineY += 6; // Explicit line spacing (increased from default ~4)
+    descLineY += PDF_CONFIG.lineHeight.body;
   });
   
   yPosition += heroHeight + 14;
@@ -1315,21 +1311,19 @@ const renderCustomerSegmentation = (
 
   // Header
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(16);
-  doc.setFont("helvetica", "bold");
+  setPageTitleFont(doc);
   doc.text("Who We Serve", pageWidth / 2, yPosition, { align: "center" });
   yPosition += 6;
 
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "normal");
+  setBodyFont(doc);
   yPosition = renderSpacedTextCentered(
     doc,
     "Hobson is designed to meet the needs of real estate professionals across all operator sizes—each with distinct challenges, but a shared need for clarity.",
     pageWidth / 2,
     yPosition,
     maxWidth - 20,
-    6
+    PDF_CONFIG.lineHeight.body
   );
   yPosition += 8;
 
@@ -1361,63 +1355,55 @@ const renderCustomerSegmentation = (
   ];
 
   segments.forEach((segment) => {
-    if (yPosition > pageHeight - 70) {
-      doc.addPage();
-      yPosition = margin;
-    }
+    yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
 
-    const cardHeight = 55; // Increased from 42 for better spacing
-    doc.setFillColor(...segment.bgColor);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    const cardHeight = 60;
+    renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, segment.bgColor, segment.color);
 
-    // Icon circle (no text inside)
+    // Icon circle
     doc.setFillColor(...segment.color);
     doc.circle(margin + 10, yPosition + 14, 5, "F");
 
-    // Title & employees - increased vertical spacing
+    // Title & employees
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
+    setCardTitleFont(doc);
     doc.text(segment.title, margin + 20, yPosition + 12);
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
-    doc.text(`(${segment.employees})`, margin + 20, yPosition + 20);
+    setBodyFont(doc);
+    doc.text(`(${segment.employees})`, margin + 20, yPosition + 22);
 
-    // Challenge - moved down with more spacing
-    doc.setFontSize(8);
+    // Challenge
+    setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("CHALLENGE", margin + 10, yPosition + 32);
+    doc.text("CHALLENGE", margin + 10, yPosition + 34);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(8);
-    renderSpacedText(doc, segment.challenge, margin + 10, yPosition + 40, maxWidth / 2 - 25, 5);
+    setBodySmallFont(doc);
+    renderSpacedText(doc, segment.challenge, margin + 10, yPosition + 44, maxWidth / 2 - 25, PDF_CONFIG.lineHeight.tight);
 
-    // Need - moved to right side with better spacing
-    doc.setFontSize(8);
+    // Need
+    setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("WHAT THEY NEED", margin + maxWidth / 2 + 5, yPosition + 32);
+    doc.text("WHAT THEY NEED", margin + maxWidth / 2 + 5, yPosition + 34);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(8);
-    renderSpacedText(doc, segment.need, margin + maxWidth / 2 + 5, yPosition + 40, maxWidth / 2 - 25, 5);
+    setBodySmallFont(doc);
+    renderSpacedText(doc, segment.need, margin + maxWidth / 2 + 5, yPosition + 44, maxWidth / 2 - 25, PDF_CONFIG.lineHeight.tight);
 
-    yPosition += cardHeight + 8; // Increased spacing between cards
+    yPosition += cardHeight + 8;
   });
 
   // Footer insight
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 16, 3, 3, "F");
+  renderContentCard(doc, margin, yPosition, maxWidth, 18, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "normal");
-  doc.text("One platform, three experiences", margin + 8, yPosition + 10);
+  setBodySmallFont(doc);
+  doc.text("One platform, three experiences", margin + 8, yPosition + 11);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.text(" — Hobson adapts to the complexity and scale of each operator type.", margin + 8 + doc.getTextWidth("One platform, three experiences"), yPosition + 10);
-  yPosition += 20;
+  doc.text(" — Hobson adapts to the complexity and scale of each operator type.", margin + 8 + doc.getTextWidth("One platform, three experiences"), yPosition + 11);
+  yPosition += 24;
 
   return yPosition;
 };
@@ -2079,12 +2065,9 @@ const renderEarlyRoadmap = (
   ];
 
   phases.forEach((phase, idx) => {
-    if (yPosition > pageHeight - 60) {
-      doc.addPage();
-      yPosition = margin;
-    }
+    yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
 
-    const cardHeight = 50 + phase.objectives.length * 7;
+    const cardHeight = 50 + phase.objectives.length * PDF_CONFIG.lineHeight.body;
     
     // Card background
     doc.setFillColor(...phase.bgColor);
@@ -2096,24 +2079,22 @@ const renderEarlyRoadmap = (
 
     // Phase title and timeframe
     doc.setTextColor(...phase.color);
-    doc.setFontSize(12);
-    doc.setFont("helvetica", "bold");
+    setCardTitleFont(doc);
     doc.text(`Phase ${phase.phase}: ${phase.title}`, margin + 12, yPosition + 12);
     
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "normal");
+    setBodySmallFont(doc);
     doc.text(phase.timeframe, margin + maxWidth - 60, yPosition + 12);
 
     // Objectives
     let objY = yPosition + 24;
-    doc.setFontSize(9);
+    setBodySmallFont(doc);
     phase.objectives.forEach((obj) => {
       doc.setFillColor(...phase.color);
       doc.circle(margin + 16, objY - 1, 1.5, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       doc.text(obj, margin + 22, objY);
-      objY += 7;
+      objY += PDF_CONFIG.lineHeight.body;
     });
 
     yPosition += cardHeight + 8;
@@ -2182,12 +2163,9 @@ const renderGanttChart = (
   ];
 
   years.forEach((yearData) => {
-    if (yPosition > pageHeight - 80) {
-      doc.addPage();
-      yPosition = margin;
-    }
+    yPosition = checkPageBreak(doc, yPosition, 90, pageHeight, margin);
 
-    const cardHeight = 55 + yearData.objectives.length * 7;
+    const cardHeight = 55 + yearData.objectives.length * PDF_CONFIG.lineHeight.body;
     
     // Card background
     doc.setFillColor(...yearData.bgColor);
@@ -2201,29 +2179,28 @@ const renderGanttChart = (
     doc.setFillColor(...yearData.color);
     doc.roundedRect(margin + 12, yPosition + 6, 28, 14, 2, 2, "F");
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(10);
+    setBodyFont(doc);
     doc.setFont("helvetica", "bold");
     doc.text(yearData.year, margin + 26, yPosition + 15, { align: "center" });
 
     // Title and goal
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(11);
+    setCardTitleFont(doc);
     doc.text(yearData.title, margin + 48, yPosition + 14);
     
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(8);
-    doc.setFont("helvetica", "normal");
+    setBodySmallFont(doc);
     doc.text(`Goal: ${yearData.goal}`, margin + 12, yPosition + 28);
 
     // Objectives
     let objY = yPosition + 40;
-    doc.setFontSize(8);
+    setBodySmallFont(doc);
     yearData.objectives.forEach((obj) => {
       doc.setFillColor(...yearData.color);
       doc.circle(margin + 16, objY - 1, 1, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       doc.text(obj, margin + 22, objY);
-      objY += 7;
+      objY += PDF_CONFIG.lineHeight.body;
     });
 
     yPosition += cardHeight + 8;
@@ -2247,15 +2224,14 @@ const renderPilotClients = (
 
   // Intro text
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "normal");
+  setBodyFont(doc);
   yPosition = renderSpacedText(
     doc,
     "Strategic partnerships and pilot validation across different operator sizes and system environments.",
     margin,
     yPosition,
     maxWidth,
-    6
+    PDF_CONFIG.lineHeight.body
   );
   yPosition += 10;
 
@@ -2288,37 +2264,33 @@ const renderPilotClients = (
   ];
 
   pilots.forEach((pilotGroup) => {
-    if (yPosition > pageHeight - 50) {
-      doc.addPage();
-      yPosition = margin;
-    }
+    yPosition = checkPageBreak(doc, yPosition, 60, pageHeight, margin);
 
     // Type header
     doc.setFillColor(...pilotGroup.color);
-    doc.roundedRect(margin, yPosition, 80, 12, 2, 2, "F");
+    doc.roundedRect(margin, yPosition, 80, 14, 2, 2, "F");
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(8);
+    setBodySmallFont(doc);
     doc.setFont("helvetica", "bold");
-    doc.text(pilotGroup.type, margin + 40, yPosition + 8, { align: "center" });
+    doc.text(pilotGroup.type, margin + 40, yPosition + 9, { align: "center" });
     yPosition += 18;
 
     pilotGroup.clients.forEach((client) => {
-      const cardHeight = 28;
-      doc.setFillColor(...pilotGroup.bgColor);
-      doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 2, 2, "F");
+      const cardHeight = 32;
+      renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, pilotGroup.bgColor, pilotGroup.color);
       
       doc.setTextColor(...PDF_CONFIG.textDark);
-      doc.setFontSize(10);
+      setBodyFont(doc);
       doc.setFont("helvetica", "bold");
-      doc.text(client.name, margin + 8, yPosition + 10);
+      doc.text(client.name, margin + 8, yPosition + 12);
       
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(8);
+      setBodySmallFont(doc);
       doc.setFont("helvetica", "normal");
-      doc.text(client.desc, margin + 8, yPosition + 18);
+      doc.text(client.desc, margin + 8, yPosition + 22);
       
       doc.setTextColor(...pilotGroup.color);
-      doc.text(`System: ${client.system}`, margin + maxWidth - 60, yPosition + 10);
+      doc.text(`System: ${client.system}`, margin + maxWidth - 60, yPosition + 12);
       
       yPosition += cardHeight + 4;
     });
@@ -2327,18 +2299,13 @@ const renderPilotClients = (
   });
 
   // Summary box
-  if (yPosition > pageHeight - 30) {
-    doc.addPage();
-    yPosition = margin;
-  }
-
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
+  yPosition = checkPageBreak(doc, yPosition, 30, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 22, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(9);
+  setBodyFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("4 Active Pilots  |  3 Operator Sizes  |  2+ System Types", pageWidth / 2, yPosition + 12, { align: "center" });
-  yPosition += 26;
+  doc.text("4 Active Pilots  |  3 Operator Sizes  |  2+ System Types", pageWidth / 2, yPosition + 13, { align: "center" });
+  yPosition += 28;
 
   return yPosition;
 };
@@ -2358,15 +2325,14 @@ const renderTechStack = (
 
   // Intro
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "normal");
+  setBodyFont(doc);
   yPosition = renderSpacedText(
     doc,
     "Hobson runs on trusted, industry-standard platforms designed for security, performance, and scalability.",
     margin,
     yPosition,
     maxWidth,
-    6
+    PDF_CONFIG.lineHeight.body
   );
   yPosition += 10;
 
@@ -2405,16 +2371,12 @@ const renderTechStack = (
   ];
 
   categories.forEach((category) => {
-    if (yPosition > pageHeight - 40) {
-      doc.addPage();
-      yPosition = margin;
-    }
+    yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
 
-    const cardHeight = 18 + category.items.length * 10;
+    const cardHeight = 20 + category.items.length * PDF_CONFIG.lineHeight.body;
     
     // Card background
-    doc.setFillColor(...category.bgColor);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, category.bgColor, category.color);
     
     // Left accent
     doc.setFillColor(...category.color);
@@ -2422,38 +2384,33 @@ const renderTechStack = (
 
     // Title
     doc.setTextColor(...category.color);
-    doc.setFontSize(10);
+    setBodyFont(doc);
     doc.setFont("helvetica", "bold");
-    doc.text(category.title, margin + 12, yPosition + 10);
+    doc.text(category.title, margin + 12, yPosition + 12);
 
     // Items
-    let itemY = yPosition + 20;
-    doc.setFontSize(8);
+    let itemY = yPosition + 22;
+    setBodySmallFont(doc);
     doc.setFont("helvetica", "normal");
     category.items.forEach((item) => {
       doc.setFillColor(...category.color);
       doc.circle(margin + 14, itemY - 1, 1, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       doc.text(item, margin + 20, itemY);
-      itemY += 10;
+      itemY += PDF_CONFIG.lineHeight.body;
     });
 
     yPosition += cardHeight + 6;
   });
 
   // Key features box
-  if (yPosition > pageHeight - 30) {
-    doc.addPage();
-    yPosition = margin;
-  }
-
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 18, 3, 3, "F");
+  yPosition = checkPageBreak(doc, yPosition, 30, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 20, PDF_CONFIG.bgLight, PDF_CONFIG.border);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(8);
+  setBodySmallFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("Key Features: UK/EU Data Residency  |  High Availability  |  Vector Search", pageWidth / 2, yPosition + 11, { align: "center" });
-  yPosition += 24;
+  doc.text("Key Features: UK/EU Data Residency  |  High Availability  |  Vector Search", pageWidth / 2, yPosition + 12, { align: "center" });
+  yPosition += 26;
 
   return yPosition;
 };
@@ -2480,7 +2437,7 @@ const renderSimpleUI = (
 
   // 2x2 grid of feature cards
   const cardWidth = (maxWidth - 8) / 2;
-  const cardHeight = 35;
+  const cardHeight = 38;
 
   features.forEach((feature, idx) => {
     const col = idx % 2;
@@ -2489,8 +2446,7 @@ const renderSimpleUI = (
     const yPos = yPosition + row * (cardHeight + 6);
 
     // Card background
-    doc.setFillColor(...PDF_CONFIG.bgLight);
-    doc.roundedRect(xPos, yPos, cardWidth, cardHeight, 3, 3, "F");
+    renderContentCard(doc, xPos, yPos, cardWidth, cardHeight, PDF_CONFIG.bgLight, feature.color);
     
     // Left accent
     doc.setFillColor(...feature.color);
@@ -2498,35 +2454,30 @@ const renderSimpleUI = (
 
     // Title
     doc.setTextColor(...feature.color);
-    doc.setFontSize(10);
+    setBodyFont(doc);
     doc.setFont("helvetica", "bold");
-    doc.text(feature.title, xPos + 10, yPos + 12);
+    doc.text(feature.title, xPos + 10, yPos + 14);
 
     // Description
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(8);
+    setBodySmallFont(doc);
     doc.setFont("helvetica", "normal");
     const descLines = doc.splitTextToSize(feature.desc, cardWidth - 16);
     descLines.forEach((line: string, lineIdx: number) => {
-      doc.text(line, xPos + 10, yPos + 22 + lineIdx * 6);
+      doc.text(line, xPos + 10, yPos + 24 + lineIdx * PDF_CONFIG.lineHeight.tight);
     });
   });
 
   yPosition += 2 * (cardHeight + 6) + 10;
 
   // Summary box
-  if (yPosition > pageHeight - 25) {
-    doc.addPage();
-    yPosition = margin;
-  }
-
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
+  yPosition = checkPageBreak(doc, yPosition, 30, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 22, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(9);
+  setBodyFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("Zero Onboarding Interface - Ready to use from day one", pageWidth / 2, yPosition + 12, { align: "center" });
-  yPosition += 26;
+  doc.text("Zero Onboarding Interface - Ready to use from day one", pageWidth / 2, yPosition + 13, { align: "center" });
+  yPosition += 28;
 
   return yPosition;
 };
