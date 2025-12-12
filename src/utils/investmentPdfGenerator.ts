@@ -156,6 +156,19 @@ const sanitizeText = (text: string): string => {
 };
 
 /**
+ * Calculate box height based on number of items and line spacing
+ * This prevents text from overflowing fixed-height boxes
+ */
+const calculateBoxHeight = (
+  itemCount: number,
+  headerHeight: number = 16,
+  lineHeight: number = PDF_CONFIG.lineHeight.body,
+  paddingBottom: number = 8
+): number => {
+  return headerHeight + (itemCount * lineHeight) + paddingBottom;
+};
+
+/**
  * Render text with explicit line spacing (prevents cramped text)
  * This is the default method for multi-line text rendering.
  * 
@@ -164,7 +177,7 @@ const sanitizeText = (text: string): string => {
  * @param x - X position
  * @param y - Starting Y position
  * @param maxWidth - Maximum width for text wrapping
- * @param lineHeight - Height between lines (default: 5)
+ * @param lineHeight - Height between lines (default: PDF_CONFIG.lineHeight.body)
  * @returns The Y position after the last line
  */
 const renderSpacedText = (
@@ -173,7 +186,7 @@ const renderSpacedText = (
   x: number,
   y: number,
   maxWidth: number,
-  lineHeight: number = 5
+  lineHeight: number = PDF_CONFIG.lineHeight.body
 ): number => {
   const lines = doc.splitTextToSize(sanitizeText(text), maxWidth);
   let currentY = y;
@@ -193,7 +206,7 @@ const renderSpacedTextCentered = (
   centerX: number,
   y: number,
   maxWidth: number,
-  lineHeight: number = 5
+  lineHeight: number = PDF_CONFIG.lineHeight.body
 ): number => {
   const lines = doc.splitTextToSize(sanitizeText(text), maxWidth);
   let currentY = y;
@@ -1534,10 +1547,17 @@ const renderGlobalMarketAssumptions = (
   });
 
   // Why This Matters
-  if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
   const greenBg: [number, number, number] = [236, 253, 245];
+  const whyItems = [
+    "AI efficiency gains are a global norm",
+    "20% efficiency uplift validated by global data",
+    "UK GBP 1.41B sits inside multi-billion-dollar global market",
+    "Adoption rising and ROI demonstrable",
+  ];
+  const whyBoxHeight = 20 + (whyItems.length * PDF_CONFIG.lineHeight.body) + 8; // Dynamic height
   doc.setFillColor(...greenBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 44, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, whyBoxHeight, 3, 3, "F");
   doc.setFillColor(...PDF_CONFIG.emerald);
   doc.circle(margin + 8, yPosition + 10, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -1545,13 +1565,7 @@ const renderGlobalMarketAssumptions = (
   doc.setFont("helvetica", "bold");
   doc.text("Why This Matters for Hobson", margin + 16, yPosition + 12);
   
-  const whyItems = [
-    "AI efficiency gains are a global norm",
-    "20% efficiency uplift validated by global data",
-    "UK GBP 1.41B sits inside multi-billion-dollar global market",
-    "Adoption rising and ROI demonstrable",
-  ];
-  let whyY = yPosition + 22;
+  let whyY = yPosition + 24;
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   whyItems.forEach((item) => {
@@ -1561,7 +1575,7 @@ const renderGlobalMarketAssumptions = (
     doc.text(item, margin + 20, whyY);
     whyY += PDF_CONFIG.lineHeight.body;
   });
-  yPosition += 50;
+  yPosition += whyBoxHeight + 6;
 
   return yPosition;
 };
@@ -3701,8 +3715,8 @@ const renderMarketPenetration = (
 
   // Justification points - 2 column layout
   const justifications = [
-    { title: "Frictionless Adoption", desc: "Zero onboarding, works alongside existing tools — 2x faster penetration" },
-    { title: "Fragmented Market", desc: "225,792 small firms, 6,350 medium — lightweight AI spreads via referrals" },
+    { title: "Frictionless Adoption", desc: "Zero onboarding, works alongside existing tools - 2x faster penetration" },
+    { title: "Fragmented Market", desc: "225,792 small firms, 6,350 medium - lightweight AI spreads via referrals" },
     { title: "White-Space Positioning", desc: "First AI for Document Intelligence -> Clarity -> Referenced Answers" },
     { title: "Benchmark Precedent", desc: "Vertical AI companies reached 1-3% in 3-5 years; Hobson doubles this" },
     { title: "AI Adoption Tailwinds", desc: "65% of organisations plan to increase AI investment (Deloitte)" },
@@ -3710,15 +3724,16 @@ const renderMarketPenetration = (
   ];
 
   const colWidth = (maxWidth - 8) / 2;
-  const cardHeight = 42;
+  const cardHeight = 50; // Increased for better text fit
+  const cardSpacing = 12; // Increased spacing between rows
 
   justifications.forEach((item, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const xPos = margin + col * (colWidth + 8);
-    const yPos = yPosition + row * (cardHeight + 10);
+    const yPos = yPosition + row * (cardHeight + cardSpacing);
 
-    if (yPos > pageHeight - 50) {
+    if (yPos > pageHeight - 60) {
       doc.addPage();
       yPosition = margin;
     }
@@ -3737,10 +3752,14 @@ const renderMarketPenetration = (
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     const descLines = doc.splitTextToSize(item.desc, colWidth - 16);
-    doc.text(descLines, xPos + 8, yPos + 26);
+    let descY = yPos + 26;
+    descLines.forEach((line: string) => {
+      doc.text(line, xPos + 8, descY);
+      descY += PDF_CONFIG.lineHeight.body;
+    });
   });
 
-  yPosition += 3 * (cardHeight + 10) + 12;
+  yPosition += 3 * (cardHeight + cardSpacing) + 12;
 
   // UK Market Share table - need space for header + 5 rows + summary = ~100 units
   if (yPosition > pageHeight - 110) { doc.addPage(); yPosition = margin; }
