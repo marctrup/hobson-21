@@ -4014,19 +4014,19 @@ const renderMarketPenetration = (
   doc.text("Why Hobson can credibly capture 6-10% of the UK market by 2030", margin, yPosition);
   yPosition += 14;
 
-  // Justification points - 2 column layout
+  // Justification points - 2 column layout with full text
   const justifications = [
-    { title: "Frictionless Adoption", desc: "Zero onboarding, works alongside existing tools - 2x faster penetration" },
-    { title: "Fragmented Market", desc: "225,792 small firms, 6,350 medium - lightweight AI spreads via referrals" },
-    { title: "White-Space Positioning", desc: "First AI for Document Intelligence -> Clarity -> Referenced Answers" },
-    { title: "Benchmark Precedent", desc: "Vertical AI companies reached 1-3% in 3-5 years; Hobson doubles this" },
-    { title: "AI Adoption Tailwinds", desc: "65% of organisations plan to increase AI investment (Deloitte)" },
-    { title: "Favourable Unit Economics", desc: "~GBP 0.60 per unit onboarding cost enables aggressive scaling" },
+    { title: "Frictionless Adoption", desc: "Zero onboarding, works alongside existing tools, and pricing is not a barrier - enabling 2x faster market penetration than typical SaaS." },
+    { title: "Fragmented Market Structure", desc: "225,792 small firms, 6,350 medium, 1,411 large, 235 enterprise - lightweight AI spreads rapidly through referrals." },
+    { title: "White-Space Positioning", desc: "First AI built solely for Document Intelligence -> Retrieval -> Clarity -> Referenced Answers. No direct competitor." },
+    { title: "Benchmark Precedent", desc: "Vertical AI companies (EliseAI, StanAI, Cresta) reached 1-3% penetration in 3-5 years - Hobson's frictionless model doubles this." },
+    { title: "AI Adoption Tailwinds", desc: "65% of organisations plan to increase AI investment (Deloitte). Up to 20% efficiency gain achievable (Forbes)." },
+    { title: "Favourable Unit Economics", desc: "~GBP 1.60-2.00 per unit onboarding cost. High gross margin enables aggressive SMB and enterprise scaling." },
   ];
 
   const colWidth = (maxWidth - 8) / 2;
-  const cardHeight = 50; // Increased for better text fit
-  const cardSpacing = 12; // Increased spacing between rows
+  const cardHeight = 58; // Increased for full text
+  const cardSpacing = 8;
 
   justifications.forEach((item, idx) => {
     const col = idx % 2;
@@ -4034,7 +4034,7 @@ const renderMarketPenetration = (
     const xPos = margin + col * (colWidth + 8);
     const yPos = yPosition + row * (cardHeight + cardSpacing);
 
-    if (yPos > pageHeight - 60) {
+    if (yPos > pageHeight - 70) {
       doc.addPage();
       yPosition = margin;
     }
@@ -4045,18 +4045,18 @@ const renderMarketPenetration = (
     doc.roundedRect(xPos, yPos, colWidth, cardHeight, 3, 3, "S");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(item.title, xPos + 8, yPos + 14);
+    doc.text(item.title, xPos + 6, yPos + 12);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(7);
     doc.setFont("helvetica", "normal");
-    const descLines = doc.splitTextToSize(item.desc, colWidth - 16);
-    let descY = yPos + 26;
+    const descLines = doc.splitTextToSize(item.desc, colWidth - 12);
+    let descY = yPos + 22;
     descLines.forEach((line: string) => {
-      doc.text(line, xPos + 8, descY);
-      descY += PDF_CONFIG.lineHeight.body;
+      doc.text(line, xPos + 6, descY);
+      descY += 6;
     });
   });
 
