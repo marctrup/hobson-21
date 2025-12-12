@@ -3674,7 +3674,8 @@ const renderMarketPenetration = (
   });
   yPosition += 12;
 
-  // Summary box
+  // Summary box - ensure it fits on page
+  if (yPosition > pageHeight - 40) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 24, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
