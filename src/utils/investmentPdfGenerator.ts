@@ -15,6 +15,7 @@
 
 import { jsPDF } from "jspdf";
 import { getPdfContentForComponent } from "@/components/investor/data/pdfContentProviders";
+import { competitorData } from "@/components/investor/data/competitorData";
 
 // PDF Configuration
 const PDF_CONFIG = {
@@ -121,6 +122,121 @@ const sanitizeText = (text: string): string => {
 const getCustomVisualContent = (componentType: string): string[] => {
   const content = getPdfContentForComponent(componentType);
   return content || [];
+};
+
+/**
+ * Render competitor analysis as a proper table
+ */
+const renderCompetitorTable = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  
+  // Table title
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "bold");
+  doc.text("Competitor Analysis Matrix", margin, yPosition);
+  yPosition += 10;
+  
+  // Column configuration
+  const colWidths = [25, 30, 35, 28, 28, 28]; // Adjusted widths
+  const headers = ["Competitor", "Who They Are", "What They Do", "Strengths", "Weaknesses", "Market Value"];
+  
+  // Header row
+  doc.setFillColor(124, 58, 237); // Primary purple
+  doc.rect(margin, yPosition, maxWidth, 8, "F");
+  
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "bold");
+  
+  let xPos = margin + 2;
+  headers.forEach((header, i) => {
+    doc.text(header, xPos, yPosition + 5.5);
+    xPos += colWidths[i];
+  });
+  yPosition += 8;
+  
+  // Data rows
+  doc.setFont("helvetica", "normal");
+  
+  competitorData.forEach((competitor, rowIndex) => {
+    // Check if we need a new page
+    if (yPosition > pageHeight - 40) {
+      doc.addPage();
+      yPosition = margin;
+    }
+    
+    const rowHeight = 14;
+    const isHobson = competitor.competitor === "Hobson AI";
+    
+    // Alternating row background
+    if (isHobson) {
+      doc.setFillColor(124, 58, 237, 0.1); // Light purple for Hobson
+      doc.setFillColor(240, 235, 255);
+    } else if (rowIndex % 2 === 0) {
+      doc.setFillColor(249, 250, 251);
+    } else {
+      doc.setFillColor(255, 255, 255);
+    }
+    doc.rect(margin, yPosition, maxWidth, rowHeight, "F");
+    
+    // Draw cell borders
+    doc.setDrawColor(229, 231, 235);
+    doc.rect(margin, yPosition, maxWidth, rowHeight, "S");
+    
+    // Cell content
+    doc.setTextColor(31, 41, 55);
+    doc.setFontSize(6);
+    
+    xPos = margin + 2;
+    const cellY = yPosition + 4;
+    
+    // Competitor name (bold for Hobson)
+    if (isHobson) {
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor(124, 58, 237);
+    }
+    const nameLines = doc.splitTextToSize(sanitizeText(competitor.competitor), colWidths[0] - 4);
+    doc.text(nameLines, xPos, cellY);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(31, 41, 55);
+    xPos += colWidths[0];
+    
+    // Who They Are
+    const whoLines = doc.splitTextToSize(sanitizeText(competitor.whoTheyAre), colWidths[1] - 4);
+    doc.text(whoLines, xPos, cellY);
+    xPos += colWidths[1];
+    
+    // What They Do
+    const whatLines = doc.splitTextToSize(sanitizeText(competitor.whatTheyDo), colWidths[2] - 4);
+    doc.text(whatLines, xPos, cellY);
+    xPos += colWidths[2];
+    
+    // Strengths
+    const strengthLines = doc.splitTextToSize(sanitizeText(competitor.strengths), colWidths[3] - 4);
+    doc.text(strengthLines, xPos, cellY);
+    xPos += colWidths[3];
+    
+    // Weaknesses
+    const weaknessLines = doc.splitTextToSize(sanitizeText(competitor.weaknesses), colWidths[4] - 4);
+    doc.text(weaknessLines, xPos, cellY);
+    xPos += colWidths[4];
+    
+    // Market Value
+    const valueLines = doc.splitTextToSize(sanitizeText(competitor.marketValue), colWidths[5] - 4);
+    doc.text(valueLines, xPos, cellY);
+    
+    yPosition += rowHeight;
+  });
+  
+  return yPosition + 10;
 };
 
 /**
@@ -285,32 +401,37 @@ const renderTabContent = (
   const hasCustomVisual = tab.showCustomVisual && componentType;
   
   if (hasCustomVisual) {
-    const customContent = getCustomVisualContent(componentType);
-    if (customContent.length > 0) {
-      doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(10);
-      doc.setFont("helvetica", "normal");
+    // Special handling for competitor analysis - render as table
+    if (componentType === "competitorAnalysis") {
+      yPosition = renderCompetitorTable(doc, yPosition, margin, pageWidth, pageHeight);
+    } else {
+      const customContent = getCustomVisualContent(componentType);
+      if (customContent.length > 0) {
+        doc.setTextColor(...PDF_CONFIG.textGray);
+        doc.setFontSize(10);
+        doc.setFont("helvetica", "normal");
 
-      customContent.forEach((line) => {
-        if (yPosition > pageHeight - 40) {
-          doc.addPage();
-          yPosition = margin;
-        }
+        customContent.forEach((line) => {
+          if (yPosition > pageHeight - 40) {
+            doc.addPage();
+            yPosition = margin;
+          }
 
-        const cleanLine = sanitizeText(line);
-        if (cleanLine === "") {
-          yPosition += 5;
-        } else if (cleanLine.endsWith(":")) {
-          doc.setFont("helvetica", "bold");
-          doc.text(cleanLine, margin, yPosition);
-          yPosition += 7;
-          doc.setFont("helvetica", "normal");
-        } else {
-          doc.text(cleanLine, margin, yPosition);
-          yPosition += 5.5;
-        }
-      });
-      yPosition += 10;
+          const cleanLine = sanitizeText(line);
+          if (cleanLine === "") {
+            yPosition += 5;
+          } else if (cleanLine.endsWith(":")) {
+            doc.setFont("helvetica", "bold");
+            doc.text(cleanLine, margin, yPosition);
+            yPosition += 7;
+            doc.setFont("helvetica", "normal");
+          } else {
+            doc.text(cleanLine, margin, yPosition);
+            yPosition += 5.5;
+          }
+        });
+        yPosition += 10;
+      }
     }
   }
 
