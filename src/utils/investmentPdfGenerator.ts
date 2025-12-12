@@ -208,10 +208,12 @@ const calculateHeroBoxHeight = (
   const descLines = doc.splitTextToSize(sanitizeText(descText), maxWidth - BOX_SIZING.paddingX * 2);
   const descHeight = descLines.length * PDF_CONFIG.lineHeight.body;
   
-  const headerHeight = BOX_SIZING.iconSize + BOX_SIZING.contentGap;
-  const subtitleHeight = hasSubtitle ? BOX_SIZING.subtitleGap : 0;
+  // Header: title + subtitle + gap to description
+  const titleHeight = 5; // Title line
+  const subtitleHeight = hasSubtitle ? BOX_SIZING.subtitleGap + 5 : 0; // Subtitle line
+  const subtitleToDescGap = PDF_CONFIG.subtitleToBullets + 4; // Gap between subtitle and description
   
-  return BOX_SIZING.paddingTop + headerHeight + subtitleHeight + descHeight + BOX_SIZING.paddingBottom;
+  return BOX_SIZING.paddingTop + titleHeight + subtitleHeight + subtitleToDescGap + descHeight + BOX_SIZING.paddingBottom;
 };
 
 /**
@@ -814,12 +816,13 @@ const renderExecutiveSummary = (
   doc.text("Hobson AI", textStartX, iconY + 5);
   
   // Subtitle: Specialised AI for Real Estate
+  const subtitleY = iconY + 5 + BOX_SIZING.subtitleGap + 2;
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
-  doc.text("Specialised AI for Real Estate", textStartX, iconY + 5 + BOX_SIZING.subtitleGap + 2);
+  doc.text("Specialised AI for Real Estate", textStartX, subtitleY);
   
-  // Main description text
-  const descY = iconY + BOX_SIZING.iconSize + BOX_SIZING.contentGap;
+  // Main description text - add gap after subtitle
+  const descY = subtitleY + PDF_CONFIG.subtitleToBullets + 4; // Extra spacing after subtitle
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
   
