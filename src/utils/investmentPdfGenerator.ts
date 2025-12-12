@@ -37,9 +37,9 @@ const PDF_CONFIG = {
     stat: 16,           // Large statistics/numbers
   },
   lineHeight: {
-    body: 7,            // Standard line spacing (increased from 6)
-    tight: 6,           // Compact lists
-    loose: 9,           // Headers, titles
+    body: 8,            // Standard line spacing (increased for readability)
+    tight: 7,           // Compact lists
+    loose: 10,          // Headers, titles
   },
   // Colors
   primaryColor: [124, 58, 237] as [number, number, number],       // hsl(269 91% 52%) - brand purple
