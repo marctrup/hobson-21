@@ -1090,7 +1090,7 @@ const renderCustomerSegmentation = (
   const segments = [
     {
       title: "Large Operators",
-      employees: "50–250 employees",
+      employees: "50-250 employees",
       color: PDF_CONFIG.blue,
       bgColor: [239, 246, 255] as [number, number, number],
       challenge: "High-admin organisations struggling with scattered data and slow information retrieval",
@@ -1098,7 +1098,7 @@ const renderCustomerSegmentation = (
     },
     {
       title: "Medium Operators",
-      employees: "10–49 employees",
+      employees: "10-49 employees",
       color: PDF_CONFIG.primaryColor,
       bgColor: PDF_CONFIG.primaryBgLight,
       challenge: "Agile teams overwhelmed by inboxes and shared drives",
@@ -1106,7 +1106,7 @@ const renderCustomerSegmentation = (
     },
     {
       title: "Small Operators",
-      employees: "1–9 employees",
+      employees: "1-9 employees",
       color: PDF_CONFIG.emerald,
       bgColor: [236, 253, 245] as [number, number, number],
       challenge: "Time-poor owner-operators with no time for complex tools",
@@ -1241,9 +1241,9 @@ const renderUKMarketAssumptions = (
   doc.text("2. Business Size Breakdown (Real Estate Only)", margin + 12, yPosition + 9);
   
   const sizeData = [
-    { size: "Small (1–9)", pct: "96%", count: "225,792" },
-    { size: "Medium (10–49)", pct: "2.7%", count: "6,350" },
-    { size: "Large (50–249)", pct: "0.6%", count: "1,411" },
+    { size: "Small (1-9)", pct: "96%", count: "225,792" },
+    { size: "Medium (10-49)", pct: "2.7%", count: "6,350" },
+    { size: "Large (50-249)", pct: "0.6%", count: "1,411" },
     { size: "Enterprise (250+)", pct: "0.1%", count: "235" },
   ];
   let tableY = yPosition + 18;
@@ -2763,11 +2763,11 @@ const renderCapitalRaiseStrategy = (
   yPosition += 12;
 
   const useOfFunds = [
-    { label: "Team hiring & 2026 payroll (Jun–Dec)", amount: "£207k" },
-    { label: "Outsourced engineering (pre-launch build)", amount: "£150k–£250k" },
-    { label: "Legal, compliance, finance", amount: "£40k" },
-    { label: "Early marketing + GTM prep", amount: "£100k–£150k" },
-    { label: "Buffer (investor standard)", amount: "£250k–£300k" },
+    { label: "Team hiring & 2026 payroll (Jun-Dec)", amount: "GBP 207k" },
+    { label: "Outsourced engineering (pre-launch build)", amount: "GBP 150k-250k" },
+    { label: "Legal, compliance, finance", amount: "GBP 40k" },
+    { label: "Early marketing + GTM prep", amount: "GBP 100k-150k" },
+    { label: "Buffer (investor standard)", amount: "GBP 250k-300k" },
   ];
 
   doc.setFontSize(PDF_CONFIG.fontSize.body);
@@ -2791,11 +2791,11 @@ const renderCapitalRaiseStrategy = (
   doc.text("Total Pre-Revenue Need:", margin + 8, yPosition + 10);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.text("£750k–£950k", valueCol, yPosition + 10, { align: "right" });
+  doc.text("GBP 750k-950k", valueCol, yPosition + 10, { align: "right" });
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text("To fund 2026 build + 18-24 months runway → £1.5M–£2.2M seed round required.", margin + 8, yPosition + 20);
+  doc.text("To fund 2026 build + 18-24 months runway: GBP 1.5M-GBP 2.2M seed round required.", margin + 8, yPosition + 20);
   yPosition += 32;
 
   // Raise scenarios
@@ -2807,10 +2807,10 @@ const renderCapitalRaiseStrategy = (
   yPosition += 12;
 
   const scenarios = [
-    { amount: "£1.2M", name: "Activation Round", runway: "9–12 months", desc: "Moves from pilots to limited launch but leaves little margin for error.", badge: "Higher risk", recommended: false, badgeColor: [217, 119, 6] as [number, number, number] },
-    { amount: "£1.5M", name: "Minimum Credible Raise", runway: "12–18 months", desc: "Funds core team, engineering, GTM setup and ensures a stable commercial launch in 2027.", badge: "Recommended minimum", recommended: false, badgeColor: [37, 99, 235] as [number, number, number] },
-    { amount: "£1.8M", name: "Balanced Seed Round", runway: "18–22 months", desc: "Supports stronger product velocity, full marketing activation, and early enterprise conversations.", badge: "Optimal execution", recommended: true, badgeColor: PDF_CONFIG.primaryColor },
-    { amount: "£2.2M", name: "Accelerated Growth", runway: "22–28 months", desc: "Funds UK scale and prepares for early international market entry from 2028.", badge: "Global ready", recommended: false, badgeColor: [5, 150, 105] as [number, number, number] },
+    { amount: "GBP 1.2M", name: "Activation Round", runway: "9-12 months", desc: "Moves from pilots to limited launch but leaves little margin for error.", badge: "Higher risk", recommended: false, badgeColor: [217, 119, 6] as [number, number, number] },
+    { amount: "GBP 1.5M", name: "Minimum Credible Raise", runway: "12-18 months", desc: "Funds core team, engineering, GTM setup and ensures a stable commercial launch in 2027.", badge: "Recommended minimum", recommended: false, badgeColor: [37, 99, 235] as [number, number, number] },
+    { amount: "GBP 1.8M", name: "Balanced Seed Round", runway: "18-22 months", desc: "Supports stronger product velocity, full marketing activation, and early enterprise conversations.", badge: "Optimal execution", recommended: true, badgeColor: PDF_CONFIG.primaryColor },
+    { amount: "GBP 2.2M", name: "Accelerated Growth", runway: "22-28 months", desc: "Funds UK scale and prepares for early international market entry from 2028.", badge: "Global ready", recommended: false, badgeColor: [5, 150, 105] as [number, number, number] },
   ];
 
   const cardHeight = 48;
@@ -2933,7 +2933,7 @@ const renderCapitalRaiseStrategy = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  const summaryText = doc.splitTextToSize("The £1.5M–£2.2M raise funds the full 2026 build period: platform completion, core team hiring, GTM development, and operating runway. From 2027 onward, Hobson becomes cashflow-positive.", maxWidth - 16);
+  const summaryText = doc.splitTextToSize("The GBP 1.5M-2.2M raise funds the full 2026 build period: platform completion, core team hiring, GTM development, and operating runway. From 2027 onward, Hobson becomes cashflow-positive.", maxWidth - 16);
   doc.text(summaryText, margin + 8, yPosition + 22, { lineHeightFactor: 1.4 });
   yPosition += 46;
 
