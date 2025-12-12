@@ -3388,6 +3388,8 @@ const renderOnboardingCosts = (
 
 /**
  * Render P/L Growth visual with standardized fonts
+ * Matches PLGrowthVisual.tsx - shows explainer box + 3 key metrics cards
+ * Note: The UI shows an image chart; PDF shows the key metrics summary only
  */
 const renderPLGrowth = (
   doc: jsPDF,
@@ -3415,7 +3417,17 @@ const renderPLGrowth = (
   doc.text("Review the Revenue Assumptions and Cost Assumptions tabs for detailed methodology.", margin + 8, yPosition + 22);
   yPosition += 40;
 
-  // Key metrics grid - 3 columns
+  // Note about chart
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 50, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "italic");
+  doc.text("See the interactive P/L Forecast Chart in the web version for visual growth trajectory.", margin + 8, yPosition + 20);
+  doc.text("The chart shows Infrastructure/COGS, Operating Costs, and Net Profit from 2027-2031.", margin + 8, yPosition + 32);
+  yPosition += 60;
+
+  // Key metrics grid - 3 columns (matching the visual exactly)
   const colWidth = (maxWidth - 16) / 3;
   const metrics = [
     { label: "Infrastructure / COGS", value: "5-10%", sublabel: "of revenue", color: PDF_CONFIG.amber, bgColor: PDF_CONFIG.amberBg },
@@ -3426,78 +3438,30 @@ const renderPLGrowth = (
   metrics.forEach((metric, idx) => {
     const xPos = margin + idx * (colWidth + 8);
     doc.setFillColor(...metric.bgColor);
-    doc.roundedRect(xPos, yPosition, colWidth, 40, 3, 3, "F");
+    doc.roundedRect(xPos, yPosition, colWidth, 44, 3, 3, "F");
     doc.setDrawColor(...metric.color);
-    doc.roundedRect(xPos, yPosition, colWidth, 40, 3, 3, "S");
+    doc.roundedRect(xPos, yPosition, colWidth, 44, 3, 3, "S");
 
     doc.setTextColor(...metric.color);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(metric.label, xPos + colWidth / 2, yPosition + 10, { align: "center" });
+    doc.text(metric.label, xPos + colWidth / 2, yPosition + 12, { align: "center" });
 
     doc.setFontSize(PDF_CONFIG.fontSize.stat);
-    doc.text(metric.value, xPos + colWidth / 2, yPosition + 26, { align: "center" });
+    doc.text(metric.value, xPos + colWidth / 2, yPosition + 28, { align: "center" });
 
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(metric.sublabel, xPos + colWidth / 2, yPosition + 34, { align: "center" });
+    doc.text(metric.sublabel, xPos + colWidth / 2, yPosition + 38, { align: "center" });
   });
-  yPosition += 50;
-
-  // Growth trajectory table
-  if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("P/L Growth Trajectory (2027-2031)", margin, yPosition);
-  yPosition += 10;
-
-  const colWidths = [30, 35, 40, 35, 30];
-  doc.setFillColor(...PDF_CONFIG.headerBg);
-  doc.rect(margin, yPosition, maxWidth, 12, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "bold");
-
-  let xPos = margin + 4;
-  ["Year", "Revenue", "Operating", "COGS", "Net Profit"].forEach((header, i) => {
-    doc.text(header, xPos, yPosition + 8);
-    xPos += colWidths[i];
-  });
-  yPosition += 12;
-
-  const plData = [
-    ["2027", "GBP 1.17M", "GBP 409k", "GBP 117k", "GBP 644k"],
-    ["2028", "GBP 6.71M", "GBP 2.35M", "GBP 671k", "GBP 3.69M"],
-    ["2029", "GBP 9.10M", "GBP 3.19M", "GBP 910k", "GBP 5.01M"],
-    ["2030", "GBP 12.53M", "GBP 4.39M", "GBP 1.25M", "GBP 6.89M"],
-    ["2031", "GBP 14.92M", "GBP 5.22M", "GBP 1.49M", "GBP 8.21M"],
-  ];
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  plData.forEach((row, rowIdx) => {
-    if (rowIdx % 2 === 0) {
-      doc.setFillColor(...PDF_CONFIG.bgLight);
-      doc.rect(margin, yPosition, maxWidth, 10, "F");
-    }
-    xPos = margin + 4;
-    row.forEach((cell, i) => {
-      doc.setTextColor(...(i === 4 ? PDF_CONFIG.emerald : PDF_CONFIG.textGray));
-      if (i === 4) doc.setFont("helvetica", "bold");
-      else doc.setFont("helvetica", "normal");
-      doc.text(cell, xPos, yPosition + 7);
-      xPos += colWidths[i];
-    });
-    yPosition += 10;
-  });
-  yPosition += 10;
+  yPosition += 54;
 
   return yPosition;
 };
 
 /**
  * Render Revenue Growth visual with standardized fonts
+ * Matches RevenueGrowthVisual.tsx - shows header, explainer, chart note, and summary stats
  */
 const renderRevenueGrowth = (
   doc: jsPDF,
@@ -3509,6 +3473,18 @@ const renderRevenueGrowth = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // Header
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Revenue Growth (2027-2031)", margin, yPosition);
+  yPosition += 6;
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text("5-year revenue projection from UK launch through global expansion", margin, yPosition);
+  yPosition += 14;
+
   // Explainer box
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 30, 3, 3, "F");
@@ -3518,85 +3494,81 @@ const renderRevenueGrowth = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Revenue projections based on verified market assumptions", margin + 8, yPosition + 12);
+  doc.text("The following tabs explain how this growth is achievable", margin + 8, yPosition + 12);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.text("Review UK Assumptions, Global Assumptions, and Revenue Model tabs for details.", margin + 8, yPosition + 22);
+  doc.text("Review UK Assumptions, Global Assumptions, Market Penetration, and Revenue Model tabs.", margin + 8, yPosition + 22);
   yPosition += 40;
 
-  // Revenue breakdown table
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Revenue Growth (2027-2031)", margin, yPosition);
-  yPosition += 10;
-
-  const colWidths = [30, 40, 45, 45];
-  doc.setFillColor(...PDF_CONFIG.headerBg);
-  doc.rect(margin, yPosition, maxWidth, 12, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "bold");
-
-  let xPos = margin + 4;
-  ["Year", "UK Revenue", "Global Revenue", "Total"].forEach((header, i) => {
-    doc.text(header, xPos, yPosition + 8);
-    xPos += colWidths[i];
-  });
-  yPosition += 12;
-
-  const revenueData = [
-    ["2027", "GBP 1.17M", "--", "GBP 1.17M"],
-    ["2028", "GBP 1.46M", "GBP 5.25M", "GBP 6.71M"],
-    ["2029", "GBP 1.75M", "GBP 7.35M", "GBP 9.10M"],
-    ["2030", "GBP 2.04M", "GBP 10.49M", "GBP 12.53M"],
-    ["2031", "GBP 2.33M", "GBP 12.59M", "GBP 14.92M"],
-  ];
-
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  revenueData.forEach((row, rowIdx) => {
-    if (rowIdx % 2 === 0) {
-      doc.setFillColor(...PDF_CONFIG.bgLight);
-      doc.rect(margin, yPosition, maxWidth, 10, "F");
-    }
-    xPos = margin + 4;
-    row.forEach((cell, i) => {
-      doc.setTextColor(...(i === 3 ? PDF_CONFIG.primaryColor : PDF_CONFIG.textGray));
-      if (i === 3) doc.setFont("helvetica", "bold");
-      else doc.setFont("helvetica", "normal");
-      doc.text(cell, xPos, yPosition + 7);
-      xPos += colWidths[i];
-    });
-    yPosition += 10;
-  });
-  yPosition += 12;
-
-  // Key drivers
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Key Revenue Drivers:", margin, yPosition);
-  yPosition += 10;
-
-  const drivers = [
-    "UK commercial launch 2027 with 1.0% penetration growing to 2.0% by 2031",
-    "Global expansion from 2028: 0.25% penetration growing to 0.6% by 2031",
-    "Blended ARPU of GBP 495.72/year across Essential, Essential Plus, Enterprise tiers",
-    "Total addressable: 235,200 UK businesses + 4.23M global OECD businesses",
-  ];
-
+  // Note about chart
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
-  drivers.forEach((driver) => {
-    doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 4, yPosition - 1, 1.5, "F");
+  doc.setFont("helvetica", "italic");
+  doc.text("See the interactive Revenue Growth Chart in the web version for visual breakdown.", margin + 8, yPosition + 16);
+  doc.text("The stacked bar chart shows UK Revenue (amber) and Global Revenue (blue) by year.", margin + 8, yPosition + 28);
+  yPosition += 50;
+
+  // Summary Stats - 4 columns matching the visual
+  const colWidth = (maxWidth - 24) / 4;
+  const stats = [
+    { label: "2027 (UK Launch)", value: "GBP 1.17M", color: PDF_CONFIG.amber, bgColor: PDF_CONFIG.amberBg },
+    { label: "2028 (Global Start)", value: "GBP 6.71M", color: PDF_CONFIG.blue, bgColor: PDF_CONFIG.blueBg },
+    { label: "2031 (Year 5)", value: "GBP 14.92M", color: PDF_CONFIG.primaryColor, bgColor: PDF_CONFIG.primaryBgLight },
+    { label: "5-Year CAGR", value: "~90%", color: PDF_CONFIG.emerald, bgColor: PDF_CONFIG.emeraldBg },
+  ];
+
+  stats.forEach((stat, idx) => {
+    const xPos = margin + idx * (colWidth + 8);
+    doc.setFillColor(...stat.bgColor);
+    doc.roundedRect(xPos, yPosition, colWidth, 40, 3, 3, "F");
+    doc.setDrawColor(...stat.color);
+    doc.roundedRect(xPos, yPosition, colWidth, 40, 3, 3, "S");
+
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(driver, margin + 10, yPosition);
-    yPosition += PDF_CONFIG.lineHeight.body + 2;
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text(stat.label, xPos + colWidth / 2, yPosition + 10, { align: "center" });
+
+    doc.setTextColor(...stat.color);
+    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+    doc.setFont("helvetica", "bold");
+    doc.text(stat.value, xPos + colWidth / 2, yPosition + 28, { align: "center" });
   });
-  yPosition += 10;
+  yPosition += 50;
+
+  // Key Milestones
+  if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 48, 3, 3, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Key Revenue Milestones", margin + 8, yPosition + 12);
+  
+  const milestones = [
+    { year: "2027", desc: "UK commercial launch, first paying customers", color: PDF_CONFIG.amber },
+    { year: "2028", desc: "Global expansion begins, revenue accelerates", color: PDF_CONFIG.blue },
+    { year: "2031", desc: "~30,000 customers, category leadership", color: PDF_CONFIG.primaryColor },
+  ];
+  
+  let mY = yPosition + 22;
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  milestones.forEach((m) => {
+    doc.setFillColor(...m.color);
+    doc.circle(margin + 12, mY - 1, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFont("helvetica", "bold");
+    doc.text(m.year + ":", margin + 18, mY);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(m.desc, margin + 35, mY);
+    mY += 8;
+  });
+  yPosition += 56;
 
   return yPosition;
 };
