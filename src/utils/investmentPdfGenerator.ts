@@ -202,33 +202,23 @@ const renderTabContent = (
   const imageToUse = tab.image || tab.pdfImage;
   if (imageToUse) {
     try {
-      // AI Architecture gets its own full page for proper display
+      // AI Architecture gets its own handling for proper display
       if (tab.title === "AI Architecture") {
-        // Start fresh on this page - title already rendered above
-        // Use most of the remaining page for the image
-        const availableHeight = pageHeight - yPosition - 20;
+        // Architecture diagram - landscape aspect ratio (width > height)
+        // The uploaded image is approximately 16:9 landscape format
+        const naturalAspectRatio = 0.6; // height/width ratio (landscape)
         
-        // Architecture diagram - tall portrait aspect ratio (height/width = 1.3)
-        const naturalAspectRatio = 1.3;
+        const imgWidth = maxWidth;
+        const imgHeight = imgWidth * naturalAspectRatio;
         
-        // Calculate to fit available space while maintaining ratio
-        let imgWidth = maxWidth;
-        let imgHeight = imgWidth * naturalAspectRatio;
-        
-        // Scale to fit if needed
-        if (imgHeight > availableHeight) {
-          imgHeight = availableHeight;
-          imgWidth = imgHeight / naturalAspectRatio;
+        // Check if we need a new page
+        if (yPosition + imgHeight > pageHeight - 40) {
+          doc.addPage();
+          yPosition = margin;
         }
         
-        // Center horizontally
-        const xOffset = margin + (maxWidth - imgWidth) / 2;
-        
-        doc.addImage(imageToUse, "PNG", xOffset, yPosition, imgWidth, imgHeight);
-        
-        // Text content on new page
-        doc.addPage();
-        yPosition = margin;
+        doc.addImage(imageToUse, "JPEG", margin, yPosition, imgWidth, imgHeight);
+        yPosition += imgHeight + 15;
       } else if (tab.title === "Simple UI") {
         // Simple UI - portrait device mockup
         const aspectRatio = 0.8;
