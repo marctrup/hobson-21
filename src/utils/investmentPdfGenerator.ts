@@ -4032,7 +4032,7 @@ const renderMarketPenetration = (
   ];
 
   const colWidth = (maxWidth - 8) / 2;
-  const cardHeight = 40; // Compact height for content
+  const cardHeight = 52; // Height for larger font
   const cardSpacing = 6;
 
   justifications.forEach((item, idx) => {
@@ -4055,18 +4055,18 @@ const renderMarketPenetration = (
     doc.roundedRect(xPos, actualY, colWidth, cardHeight, 3, 3, "S");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(item.title, xPos + 6, actualY + 11);
+    doc.text(item.title, xPos + 6, actualY + 12);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     const descLines = doc.splitTextToSize(item.desc, colWidth - 12);
-    let descY = actualY + 20;
+    let descY = actualY + 22;
     descLines.forEach((line: string) => {
       doc.text(line, xPos + 6, descY);
-      descY += 6;
+      descY += 7;
     });
   });
 
