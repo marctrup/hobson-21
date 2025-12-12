@@ -2471,9 +2471,17 @@ const renderTechStack = (
   ];
 
   categories.forEach((category) => {
-    yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
-
-    const cardHeight = 20 + category.items.length * PDF_CONFIG.lineHeight.body;
+    // Calculate content height: title + gap + items
+    const titleHeight = 10;
+    const titleToItemsGap = PDF_CONFIG.subtitleToBullets;
+    const itemsHeight = category.items.length * PDF_CONFIG.lineHeight.body;
+    const contentHeight = titleHeight + titleToItemsGap + itemsHeight;
+    
+    // Add vertical padding for centering
+    const verticalPadding = 8;
+    const cardHeight = contentHeight + verticalPadding * 2;
+    
+    yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
     
     // Card background
     renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, category.bgColor, category.color);
@@ -2482,14 +2490,17 @@ const renderTechStack = (
     doc.setFillColor(...category.color);
     doc.rect(margin, yPosition, 4, cardHeight, "F");
 
-    // Title
+    // Calculate vertical center offset
+    const contentStartY = yPosition + verticalPadding;
+    
+    // Title - centered in top portion
     doc.setTextColor(...category.color);
     setBodyFont(doc);
     doc.setFont("helvetica", "bold");
-    doc.text(category.title, margin + 12, yPosition + 12);
+    doc.text(category.title, margin + 12, contentStartY + 8);
 
-    // Items
-    let itemY = yPosition + 22;
+    // Items - start after title with proper gap
+    let itemY = contentStartY + titleHeight + titleToItemsGap;
     setBodySmallFont(doc);
     doc.setFont("helvetica", "normal");
     category.items.forEach((item) => {
