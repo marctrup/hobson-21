@@ -1561,23 +1561,15 @@ const renderMarketLandscape = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Header
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(12);
-  doc.setFont("helvetica", "bold");
-  doc.text("Market Landscape", margin, yPosition);
-  yPosition += 8;
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(10);
-  doc.text("The Next Winners in Real Estate Tech Will Be AI-Native", margin, yPosition);
-  yPosition += 6;
+  // Note: Tab title "Market Landscape" is already rendered by the tab renderer
+  // So we skip the header here to avoid duplication
   
+  // Subtitle only (no duplicate header)
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(8);
+  doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text("Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers.", margin, yPosition);
-  yPosition += 12;
+  doc.text("AI-native tools can deliver what traditional cloud systems cannot - reasoning, accuracy, and instant answers.", margin, yPosition);
+  yPosition += 10;
 
   // SECTION 1: Traditional Cloud Solutions
   doc.setFillColor(...PDF_CONFIG.bgLight);
