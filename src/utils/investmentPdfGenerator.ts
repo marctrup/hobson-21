@@ -280,9 +280,11 @@ const renderTabContent = (
     yPosition += boxHeight + 8;
   }
 
-  // Custom visual content
+  // Custom visual content - when present, this REPLACES content.sections to avoid duplication
   const componentType = tab.customVisualComponent;
-  if (tab.showCustomVisual && componentType) {
+  const hasCustomVisual = tab.showCustomVisual && componentType;
+  
+  if (hasCustomVisual) {
     const customContent = getCustomVisualContent(componentType);
     if (customContent.length > 0) {
       doc.setTextColor(...PDF_CONFIG.textGray);
@@ -312,8 +314,8 @@ const renderTabContent = (
     }
   }
 
-  // Content sections
-  if (tab.content?.sections) {
+  // Content sections - only render if no custom visual (to avoid duplication)
+  if (!hasCustomVisual && tab.content?.sections) {
     tab.content.sections.forEach((section) => {
       if (yPosition > pageHeight - 60) {
         doc.addPage();
