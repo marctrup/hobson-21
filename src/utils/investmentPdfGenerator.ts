@@ -240,9 +240,10 @@ const renderCompetitorTable = (
   doc.text("Competitor Analysis", margin, yPosition);
   yPosition += 14;
   
-  // Column configuration - includes Reviews column to match on-screen
-  const colWidths = [24, 28, 32, 26, 26, 32, 22]; // 7 columns - slightly wider for larger text
-  const headers = ["Competitor", "Who They Are", "What They Do", "Strengths", "Weaknesses", "Representative Reviews", "Market Value"];
+  // Column configuration - balanced widths to fit page (A4 = 210mm, margins = 40mm, content = 170mm)
+  // Total column width should match maxWidth (~170)
+  const colWidths = [22, 24, 28, 22, 24, 28, 22]; // 7 columns = 170
+  const headers = ["Competitor", "Who They Are", "What They Do", "Strengths", "Weaknesses", "Reviews", "Market Value"];
   
   // Header row - matches bg-primary/10 (light purple background)
   doc.setFillColor(...PDF_CONFIG.headerBg);
