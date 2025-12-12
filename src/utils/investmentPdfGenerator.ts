@@ -2445,9 +2445,6 @@ const renderHEUPricing = (
   // Header
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 12, yPosition + 12, 4, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(7);
-  doc.text("|||", margin + 10, yPosition + 14);
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
@@ -2495,9 +2492,6 @@ const renderHEUPricing = (
   // Header
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(rightX + 12, yPosition + 12, 4, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(7);
-  doc.text("O", rightX + 10, yPosition + 14);
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
