@@ -3713,18 +3713,25 @@ const renderPLGrowth = (
   doc.text("Review the Revenue Assumptions and Cost Assumptions tabs for detailed methodology.", margin + 8, yPosition + 22);
   yPosition += 40;
 
-  // Note about chart - tighter box
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 28, 3, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.textGray);
+  // Note about chart - with proper text wrapping
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "italic");
-  doc.text("See the interactive P/L Forecast Chart in the web version. Shows Infrastructure/COGS, Operating Costs, and Net Profit 2027-2031.", margin + 6, yPosition + 11);
-  doc.text("", margin + 6, yPosition + 20);
-  yPosition += 34;
+  const plNoteText = "See the interactive P/L Forecast Chart in the web version. Shows Infrastructure/COGS, Operating Costs, and Net Profit 2027-2031.";
+  const wrappedPlNote = doc.splitTextToSize(plNoteText, maxWidth - 12);
+  const plNoteLineHeight = 7;
+  const plNoteBoxHeight = wrappedPlNote.length * plNoteLineHeight + 12;
+  
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, plNoteBoxHeight, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  wrappedPlNote.forEach((line: string, idx: number) => {
+    doc.text(line, margin + 6, yPosition + 10 + idx * plNoteLineHeight);
+  });
+  yPosition += plNoteBoxHeight + 6;
 
-  // Key metrics grid - 3 columns (matching the visual exactly)
-  const colWidth = (maxWidth - 16) / 3;
+  // Key metrics grid - 3 columns matching Revenue Growth box sizing
+  yPosition = checkPageBreak(doc, yPosition, 36, pageHeight, margin);
+  const colWidth = (maxWidth - 18) / 3;
   const metrics = [
     { label: "Infrastructure / COGS", value: "5-10%", sublabel: "of revenue", color: PDF_CONFIG.amber, bgColor: PDF_CONFIG.amberBg },
     { label: "Operating Costs", value: "30-35%", sublabel: "of revenue (early years)", color: PDF_CONFIG.blue, bgColor: PDF_CONFIG.blueBg },
@@ -3732,25 +3739,25 @@ const renderPLGrowth = (
   ];
 
   metrics.forEach((metric, idx) => {
-    const xPos = margin + idx * (colWidth + 8);
+    const xPos = margin + idx * (colWidth + 6);
     doc.setFillColor(...metric.bgColor);
-    doc.roundedRect(xPos, yPosition, colWidth, 44, 3, 3, "F");
+    doc.roundedRect(xPos, yPosition, colWidth, 28, 3, 3, "F");
     doc.setDrawColor(...metric.color);
-    doc.roundedRect(xPos, yPosition, colWidth, 44, 3, 3, "S");
+    doc.roundedRect(xPos, yPosition, colWidth, 28, 3, 3, "S");
 
     doc.setTextColor(...metric.color);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(7);
     doc.setFont("helvetica", "bold");
-    doc.text(metric.label, xPos + colWidth / 2, yPosition + 12, { align: "center" });
+    doc.text(metric.label, xPos + colWidth / 2, yPosition + 8, { align: "center" });
 
-    doc.setFontSize(PDF_CONFIG.fontSize.stat);
-    doc.text(metric.value, xPos + colWidth / 2, yPosition + 28, { align: "center" });
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.text(metric.value, xPos + colWidth / 2, yPosition + 17, { align: "center" });
 
-    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFontSize(6);
     doc.setFont("helvetica", "normal");
-    doc.text(metric.sublabel, xPos + colWidth / 2, yPosition + 38, { align: "center" });
+    doc.text(metric.sublabel, xPos + colWidth / 2, yPosition + 24, { align: "center" });
   });
-  yPosition += 54;
+  yPosition += 34;
 
   return yPosition;
 };
