@@ -50,12 +50,13 @@ const PDF_CONFIG = {
   },
   // Standardized circle/icon sizes
   circleSize: {
-    header: 3,           // Section headers (like Addressable Market)
-    cardBadge: 2.7,      // Inside cards/boxes (10% smaller than header)
-    bullet: 1.5,         // Bullet points in lists
-    pillarBadge: 4,      // Numbered pillar badges (Product/Brand/Business)
+    header: 8,           // Section headers (like Addressable Market)
+    cardBadge: 2,        // Inside cards/boxes
+    bullet: 1,           // Bullet points (minimal)
+    pillarBadge: 3,      // Numbered pillar badges
     goalIcon: 2,         // Goal box icons
   },
+  subtitleToBullets: 4,  // Gap between subtitle and bullet list
   // Colors
   primaryColor: [124, 58, 237] as [number, number, number],       // hsl(269 91% 52%) - brand purple
   primaryLight: [168, 113, 246] as [number, number, number],      // hsl(269 75% 65%) - lighter purple
@@ -384,6 +385,7 @@ const renderContentCard = (
 /**
  * Render a section header with icon
  * Returns the Y position after the header
+ * @param hasBulletsFollowing - if true, adds extra spacing for bullet list
  */
 const renderSectionHeader = (
   doc: jsPDF,
@@ -392,7 +394,8 @@ const renderSectionHeader = (
   x: number,
   y: number,
   iconColor: [number, number, number],
-  textColor: [number, number, number]
+  textColor: [number, number, number],
+  hasBulletsFollowing: boolean = false
 ): number => {
   // Icon circle aligned with text - uses header size
   doc.setFillColor(...iconColor);
@@ -410,7 +413,7 @@ const renderSectionHeader = (
     doc.setTextColor(...textColor);
     setBodyFont(doc);
     doc.text(subtitle, x + 14, newY);
-    newY += PDF_CONFIG.spacing.paragraphGap;
+    newY += hasBulletsFollowing ? PDF_CONFIG.subtitleToBullets : PDF_CONFIG.spacing.paragraphGap;
   }
   
   return newY;
@@ -1074,8 +1077,8 @@ const renderWhyNow = (
     setBodySmallFont(doc);
     doc.text(section.intro, margin + 20, yPosition + 20);
 
-    // Bullets with proper spacing using body font
-    let bulletY = yPosition + 28;
+    // Bullets with proper spacing using body font - add subtitleToBullets gap
+    let bulletY = yPosition + 20 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
     setBodySmallFont(doc);
     section.bullets.forEach((bullet) => {
       doc.setFillColor(...PDF_CONFIG.primaryLight);
