@@ -37,9 +37,9 @@ const PDF_CONFIG = {
     stat: 16,           // Large statistics/numbers
   },
   lineHeight: {
-    body: 6,            // Standard line spacing
-    tight: 5,           // Compact lists
-    loose: 8,           // Headers, titles
+    body: 7,            // Standard line spacing (increased from 6)
+    tight: 6,           // Compact lists
+    loose: 9,           // Headers, titles
   },
   // Colors
   primaryColor: [124, 58, 237] as [number, number, number],       // hsl(269 91% 52%) - brand purple
@@ -2923,19 +2923,19 @@ const renderCapitalRaiseStrategy = (
   yPosition += 32;
 
   // Summary
-  if (yPosition > pageHeight - 35) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 45) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 28, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 38, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Summary", margin + 8, yPosition + 10);
+  doc.text("Summary", margin + 8, yPosition + 12);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   const summaryText = doc.splitTextToSize("The £1.5M–£2.2M raise funds the full 2026 build period: platform completion, core team hiring, GTM development, and operating runway. From 2027 onward, Hobson becomes cashflow-positive.", maxWidth - 16);
-  doc.text(summaryText, margin + 8, yPosition + 18);
-  yPosition += 36;
+  doc.text(summaryText, margin + 8, yPosition + 22, { lineHeightFactor: 1.4 });
+  yPosition += 46;
 
   return yPosition;
 };
