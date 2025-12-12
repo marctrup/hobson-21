@@ -28,12 +28,12 @@ export const CompetitiveLandscapeVisual = () => {
 
   return (
     <div className="w-full bg-white rounded-2xl p-8 md:p-12 shadow-xl border border-slate-200">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+      {/* Header - Discreet boxed style */}
+      <div className="bg-slate-50 border border-slate-200 rounded-xl p-6 mb-10">
+        <h2 className="text-lg md:text-xl font-semibold text-slate-800 mb-2">
           The Next Winners in Real Estate Tech Will Be AI-Native
         </h2>
-        <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+        <p className="text-sm text-slate-600">
           Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.
         </p>
       </div>
