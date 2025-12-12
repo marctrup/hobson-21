@@ -3797,15 +3797,18 @@ const renderRevenueGrowth = (
   doc.text("Review UK Assumptions, Global Assumptions, Market Penetration, and Revenue Model tabs.", margin + 8, yPosition + 22);
   yPosition += 40;
 
-  // Note about chart - tighter box
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 24, 3, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.textGray);
+  // Note about chart - tighter box with wrapped text
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "italic");
-  doc.text("See the interactive Revenue Growth Chart in the web version. Stacked bars show UK (amber) and Global (blue) revenue.", margin + 6, yPosition + 10);
-  doc.text("", margin + 6, yPosition + 18);
-  yPosition += 30;
+  const noteText = "See the interactive Revenue Growth Chart in the web version. Stacked bars show UK (amber) and Global (blue) revenue by year.";
+  const wrappedNote = doc.splitTextToSize(noteText, maxWidth - 12);
+  const noteBoxHeight = wrappedNote.length * 5 + 10;
+  
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, noteBoxHeight, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.text(wrappedNote, margin + 6, yPosition + 8);
+  yPosition += noteBoxHeight + 6;
 
   // Summary Stats - 4 columns matching the visual - tighter boxes
   yPosition = checkPageBreak(doc, yPosition, 36, pageHeight, margin);
