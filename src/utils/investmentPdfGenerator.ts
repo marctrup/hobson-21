@@ -1774,6 +1774,518 @@ const renderEuropeanGlobal = (
 };
 
 /**
+ * Render Early Roadmap (2024-2025) visual
+ */
+const renderEarlyRoadmap = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  const phases = [
+    {
+      phase: "1",
+      title: "Discover",
+      timeframe: "May - Aug 2024",
+      color: PDF_CONFIG.blue,
+      bgColor: PDF_CONFIG.blueBg,
+      borderColor: PDF_CONFIG.blueBorder,
+      objectives: [
+        "Client discovery calls with real estate professionals",
+        "Establish the core problem being solved",
+        "Identify pain points in existing systems",
+        "Define target market segments",
+      ],
+    },
+    {
+      phase: "2",
+      title: "Validate",
+      timeframe: "Sept - Dec 2024",
+      color: PDF_CONFIG.primaryColor,
+      bgColor: PDF_CONFIG.primaryBgLight,
+      borderColor: PDF_CONFIG.primaryLight,
+      objectives: [
+        "Establish four working partnerships with real estate firms",
+        "No-code concepts validation",
+        "Scope the MVP based on partner feedback",
+        "Refine value proposition and feature set",
+      ],
+    },
+    {
+      phase: "3",
+      title: "Develop",
+      timeframe: "Jan - Dec 2025",
+      color: PDF_CONFIG.emerald,
+      bgColor: PDF_CONFIG.emeraldBg,
+      borderColor: PDF_CONFIG.emeraldBorder,
+      objectives: [
+        "Build MVP: Phase 1 with core AI capabilities",
+        "Build online presence and branding",
+        "Testing MVP with key clients data",
+        "Finalise pricing strategy based on usage data",
+        "Build pricing plan, marketing plan, business plan and financial model",
+      ],
+    },
+  ];
+
+  phases.forEach((phase, idx) => {
+    if (yPosition > pageHeight - 60) {
+      doc.addPage();
+      yPosition = margin;
+    }
+
+    const cardHeight = 50 + phase.objectives.length * 7;
+    
+    // Card background
+    doc.setFillColor(...phase.bgColor);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    
+    // Left accent border
+    doc.setFillColor(...phase.color);
+    doc.rect(margin, yPosition, 4, cardHeight, "F");
+
+    // Phase title and timeframe
+    doc.setTextColor(...phase.color);
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Phase ${phase.phase}: ${phase.title}`, margin + 12, yPosition + 12);
+    
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.text(phase.timeframe, margin + maxWidth - 60, yPosition + 12);
+
+    // Objectives
+    let objY = yPosition + 24;
+    doc.setFontSize(9);
+    phase.objectives.forEach((obj) => {
+      doc.setFillColor(...phase.color);
+      doc.circle(margin + 16, objY - 1, 1.5, "F");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.text(obj, margin + 22, objY);
+      objY += 7;
+    });
+
+    yPosition += cardHeight + 8;
+  });
+
+  return yPosition;
+};
+
+/**
+ * Render Gantt Chart (2026-2028) visual
+ */
+const renderGanttChart = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  const years = [
+    {
+      year: "2026",
+      title: "Strengthen & Validate",
+      goal: "Validate commercial model and prepare for market entry",
+      color: PDF_CONFIG.blue,
+      bgColor: PDF_CONFIG.blueBg,
+      objectives: [
+        "Grow to 10 active pilot organisations across different portfolio sizes",
+        "Scale and improve core features based on real pilot feedback",
+        "Convert 3-5 pilots into paying customers to prove commercial demand",
+        "Build payment engine and billing workflows ready for public launch",
+        "Finalise marketing plan with KPIs, channels, content structure",
+        "Prepare full go-to-market plan for 2027 launch",
+      ],
+    },
+    {
+      year: "2027",
+      title: "Market Entry",
+      goal: "Launch commercially and expand UK presence",
+      color: PDF_CONFIG.primaryColor,
+      bgColor: PDF_CONFIG.primaryBgLight,
+      objectives: [
+        "Launch public Hobson website (Q1 2027) with full pricing and onboarding flows",
+        "Implement marketing plan: SEO, LinkedIn content, website funnels",
+        "Scale technology and platform features to support growing demand",
+        "Strengthen onboarding, support processes, and customer success workflows",
+        "Prepare for global expansion by validating demand in two target countries",
+      ],
+    },
+    {
+      year: "2028",
+      title: "Global Expansion",
+      goal: "Enter international markets and scale platform",
+      color: PDF_CONFIG.emerald,
+      bgColor: PDF_CONFIG.emeraldBg,
+      objectives: [
+        "Launch Hobson in two international markets with regionalised marketing",
+        "Release localised document packs and accuracy enhancements",
+        "Grow paid customer base across UK + international regions",
+        "Expand brand presence through partnerships and local events",
+        "Strengthen platform reliability for multi-market operations",
+      ],
+    },
+  ];
+
+  years.forEach((yearData) => {
+    if (yPosition > pageHeight - 80) {
+      doc.addPage();
+      yPosition = margin;
+    }
+
+    const cardHeight = 55 + yearData.objectives.length * 7;
+    
+    // Card background
+    doc.setFillColor(...yearData.bgColor);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    
+    // Left accent border
+    doc.setFillColor(...yearData.color);
+    doc.rect(margin, yPosition, 4, cardHeight, "F");
+
+    // Year badge
+    doc.setFillColor(...yearData.color);
+    doc.roundedRect(margin + 12, yPosition + 6, 28, 14, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text(yearData.year, margin + 26, yPosition + 15, { align: "center" });
+
+    // Title and goal
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(11);
+    doc.text(yearData.title, margin + 48, yPosition + 14);
+    
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text(`Goal: ${yearData.goal}`, margin + 12, yPosition + 28);
+
+    // Objectives
+    let objY = yPosition + 40;
+    doc.setFontSize(8);
+    yearData.objectives.forEach((obj) => {
+      doc.setFillColor(...yearData.color);
+      doc.circle(margin + 16, objY - 1, 1, "F");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.text(obj, margin + 22, objY);
+      objY += 7;
+    });
+
+    yPosition += cardHeight + 8;
+  });
+
+  return yPosition;
+};
+
+/**
+ * Render Pilot Clients visual
+ */
+const renderPilotClients = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Intro text
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  yPosition = renderSpacedText(
+    doc,
+    "Strategic partnerships and pilot validation across different operator sizes and system environments.",
+    margin,
+    yPosition,
+    maxWidth,
+    6
+  );
+  yPosition += 10;
+
+  const pilots = [
+    {
+      type: "LARGE OPERATOR",
+      color: PDF_CONFIG.blue,
+      bgColor: PDF_CONFIG.blueBg,
+      clients: [
+        { name: "EPAM Asset Management", desc: "Commercial management operating teams across multiple systems", system: "Multiple systems" },
+      ],
+    },
+    {
+      type: "MEDIUM OPERATOR",
+      color: PDF_CONFIG.primaryColor,
+      bgColor: PDF_CONFIG.primaryBgLight,
+      clients: [
+        { name: "Live-in Guardians", desc: "Guardian company operating teams using single system", system: "Single system" },
+      ],
+    },
+    {
+      type: "SMALL OPERATORS",
+      color: PDF_CONFIG.emerald,
+      bgColor: PDF_CONFIG.emeraldBg,
+      clients: [
+        { name: "Landhold", desc: "Development, sales, and investment company", system: "Microsoft suites" },
+        { name: "Saxon Investments", desc: "Development, sales, and investment company", system: "Microsoft suite" },
+      ],
+    },
+  ];
+
+  pilots.forEach((pilotGroup) => {
+    if (yPosition > pageHeight - 50) {
+      doc.addPage();
+      yPosition = margin;
+    }
+
+    // Type header
+    doc.setFillColor(...pilotGroup.color);
+    doc.roundedRect(margin, yPosition, 80, 12, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "bold");
+    doc.text(pilotGroup.type, margin + 40, yPosition + 8, { align: "center" });
+    yPosition += 18;
+
+    pilotGroup.clients.forEach((client) => {
+      const cardHeight = 28;
+      doc.setFillColor(...pilotGroup.bgColor);
+      doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 2, 2, "F");
+      
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "bold");
+      doc.text(client.name, margin + 8, yPosition + 10);
+      
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.setFontSize(8);
+      doc.setFont("helvetica", "normal");
+      doc.text(client.desc, margin + 8, yPosition + 18);
+      
+      doc.setTextColor(...pilotGroup.color);
+      doc.text(`System: ${client.system}`, margin + maxWidth - 60, yPosition + 10);
+      
+      yPosition += cardHeight + 4;
+    });
+
+    yPosition += 6;
+  });
+
+  // Summary box
+  if (yPosition > pageHeight - 30) {
+    doc.addPage();
+    yPosition = margin;
+  }
+
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.text("4 Active Pilots  |  3 Operator Sizes  |  2+ System Types", pageWidth / 2, yPosition + 12, { align: "center" });
+  yPosition += 26;
+
+  return yPosition;
+};
+
+/**
+ * Render Tech Stack visual
+ */
+const renderTechStack = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Intro
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  yPosition = renderSpacedText(
+    doc,
+    "Hobson runs on trusted, industry-standard platforms designed for security, performance, and scalability.",
+    margin,
+    yPosition,
+    maxWidth,
+    6
+  );
+  yPosition += 10;
+
+  const categories = [
+    {
+      title: "AI & Intelligence",
+      color: PDF_CONFIG.primaryColor,
+      bgColor: PDF_CONFIG.primaryBgLight,
+      items: ["OpenAI - Powers natural language understanding and AI-driven responses"],
+    },
+    {
+      title: "Cloud Infrastructure",
+      color: PDF_CONFIG.blue,
+      bgColor: PDF_CONFIG.blueBg,
+      items: [
+        "OVH Cloud - Stores uploaded files and documents (secure UK/EU-based storage)",
+        "Vercel - Runs the Hobson web app (fast, stable interface)",
+      ],
+    },
+    {
+      title: "Data & Storage",
+      color: PDF_CONFIG.emerald,
+      bgColor: PDF_CONFIG.emeraldBg,
+      items: [
+        "MongoDB - Handles structured data (units, portfolios, users, metadata)",
+        "Neo4j - Used for knowledge-graph structures to understand relationships",
+        "Pinecone - Stores vector embeddings for quick document search",
+      ],
+    },
+    {
+      title: "Communication & Admin",
+      color: PDF_CONFIG.amber,
+      bgColor: PDF_CONFIG.amberBg,
+      items: ["Google Workspace - Email delivery, team communication, secure internal admin"],
+    },
+  ];
+
+  categories.forEach((category) => {
+    if (yPosition > pageHeight - 40) {
+      doc.addPage();
+      yPosition = margin;
+    }
+
+    const cardHeight = 18 + category.items.length * 10;
+    
+    // Card background
+    doc.setFillColor(...category.bgColor);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    
+    // Left accent
+    doc.setFillColor(...category.color);
+    doc.rect(margin, yPosition, 4, cardHeight, "F");
+
+    // Title
+    doc.setTextColor(...category.color);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text(category.title, margin + 12, yPosition + 10);
+
+    // Items
+    let itemY = yPosition + 20;
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    category.items.forEach((item) => {
+      doc.setFillColor(...category.color);
+      doc.circle(margin + 14, itemY - 1, 1, "F");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.text(item, margin + 20, itemY);
+      itemY += 10;
+    });
+
+    yPosition += cardHeight + 6;
+  });
+
+  // Key features box
+  if (yPosition > pageHeight - 30) {
+    doc.addPage();
+    yPosition = margin;
+  }
+
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 18, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("Key Features: UK/EU Data Residency  |  High Availability  |  Vector Search", pageWidth / 2, yPosition + 11, { align: "center" });
+  yPosition += 24;
+
+  return yPosition;
+};
+
+/**
+ * Render Simple UI visual
+ */
+const renderSimpleUI = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  const features = [
+    { title: "Instant Start", desc: "No training required - start immediately after sign-up", color: PDF_CONFIG.blue },
+    { title: "Zero Training", desc: "Intuitive interface for all skill levels - no complex menus", color: PDF_CONFIG.primaryColor },
+    { title: "Natural Language", desc: "Ask questions in plain English - no query syntax to learn", color: PDF_CONFIG.emerald },
+    { title: "Any Device", desc: "Works on desktop and mobile with responsive design", color: PDF_CONFIG.amber },
+  ];
+
+  // 2x2 grid of feature cards
+  const cardWidth = (maxWidth - 8) / 2;
+  const cardHeight = 35;
+
+  features.forEach((feature, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + col * (cardWidth + 8);
+    const yPos = yPosition + row * (cardHeight + 6);
+
+    // Card background
+    doc.setFillColor(...PDF_CONFIG.bgLight);
+    doc.roundedRect(xPos, yPos, cardWidth, cardHeight, 3, 3, "F");
+    
+    // Left accent
+    doc.setFillColor(...feature.color);
+    doc.rect(xPos, yPos, 4, cardHeight, "F");
+
+    // Title
+    doc.setTextColor(...feature.color);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text(feature.title, xPos + 10, yPos + 12);
+
+    // Description
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(feature.desc, cardWidth - 16);
+    descLines.forEach((line: string, lineIdx: number) => {
+      doc.text(line, xPos + 10, yPos + 22 + lineIdx * 6);
+    });
+  });
+
+  yPosition += 2 * (cardHeight + 6) + 10;
+
+  // Summary box
+  if (yPosition > pageHeight - 25) {
+    doc.addPage();
+    yPosition = margin;
+  }
+
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.text("Zero Onboarding Interface - Ready to use from day one", pageWidth / 2, yPosition + 12, { align: "center" });
+  yPosition += 26;
+
+  return yPosition;
+};
+
+/**
  * Create cover page for a section PDF
  */
 const createCoverPage = (
@@ -1962,6 +2474,18 @@ const renderTabContent = (
       yPosition = renderEuropeanGlobal(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "landscape") {
       yPosition = renderMarketLandscape(doc, yPosition, margin, pageWidth, pageHeight);
+    }
+    // Roadmap & Product renderers
+    else if (componentType === "earlyRoadmap") {
+      yPosition = renderEarlyRoadmap(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "ganttChart") {
+      yPosition = renderGanttChart(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "pilotClients") {
+      yPosition = renderPilotClients(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "techStack") {
+      yPosition = renderTechStack(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "simpleUI") {
+      yPosition = renderSimpleUI(doc, yPosition, margin, pageWidth, pageHeight);
     } else {
       const customContent = getCustomVisualContent(componentType);
       if (customContent.length > 0) {
