@@ -1296,60 +1296,61 @@ const renderUKMarketOpportunity = (
 
   // TAM Box
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
   doc.text("Total Addressable Market (TAM)", margin + 8, yPosition + 10);
-  doc.setFontSize(16);
+  doc.setFontSize(14);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("£1.41B", margin + maxWidth - 35, yPosition + 10);
+  doc.text("GBP 1.41B", margin + maxWidth - 45, yPosition + 10);
   
   const tamItems = [
-    "235,200 UK real estate businesses (5.6M total × 4.2%)",
-    "£6,000 annual saving per business (20% efficiency on £30k salary)",
-    "TAM = 235,200 × £6,000 = £1.41B",
+    "235,200 UK real estate businesses (5.6M total x 4.2%)",
+    "GBP 6,000 annual saving per business (20% efficiency on GBP 30k salary)",
+    "TAM = 235,200 x GBP 6,000 = GBP 1.41B",
   ];
-  let itemY = yPosition + 20;
-  doc.setFontSize(7);
+  let itemY = yPosition + 22;
+  doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
   tamItems.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryLight);
     doc.circle(margin + 12, itemY - 1, 1, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(item, margin + 16, itemY);
-    itemY += 6;
+    itemY += 8;
   });
-  yPosition += 56;
+  yPosition += 62;
 
   // SAM Box
-  if (yPosition > pageHeight - 55) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(10);
   doc.setFont("helvetica", "bold");
   doc.text("Serviceable Available Market (SAM)", margin + 8, yPosition + 10);
-  doc.setFontSize(16);
+  doc.setFontSize(14);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("£917M", margin + maxWidth - 35, yPosition + 10);
+  doc.text("GBP 917M", margin + maxWidth - 45, yPosition + 10);
   
   const samItems = [
     "65% adoption readiness (Deloitte, PwC, McKinsey)",
-    "235,200 × 65% = 152,880 motivated businesses",
-    "152,880 × £6,000 = £917M",
+    "235,200 x 65% = 152,880 motivated businesses",
+    "152,880 x GBP 6,000 = GBP 917M",
   ];
-  itemY = yPosition + 20;
+  itemY = yPosition + 22;
+  doc.setFontSize(8);
   samItems.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryLight);
     doc.circle(margin + 12, itemY - 1, 1, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(item, margin + 16, itemY);
-    itemY += 6;
+    itemY += 8;
   });
-  yPosition += 56;
+  yPosition += 62;
 
   return yPosition;
 };
@@ -1419,12 +1420,12 @@ const renderGlobalMarketAssumptions = (
   ];
 
   sections.forEach((section) => {
-    if (yPosition > pageHeight - 40) {
+    if (yPosition > pageHeight - 50) {
       doc.addPage();
       yPosition = margin;
     }
 
-    const cardHeight = section.stat2 ? 32 : 28;
+    const cardHeight = 40;
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
     doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
 
@@ -1438,24 +1439,25 @@ const renderGlobalMarketAssumptions = (
     doc.setFont("helvetica", "bold");
     doc.text(`${section.title} (${section.source})`, margin + 12, yPosition + 9);
 
-    // Stats
-    doc.setFontSize(12);
+    // Stats on separate rows for clarity
+    doc.setFontSize(11);
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.text(section.stat1, margin + 8, yPosition + 22);
-    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text(section.stat1, margin + 10, yPosition + 22);
+    doc.setFontSize(8);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.text(section.stat1Label, margin + 8 + doc.getTextWidth(section.stat1) + 4, yPosition + 22);
+    doc.text(section.stat1Label, margin + 10, yPosition + 29);
 
     if (section.stat2) {
-      doc.setFontSize(12);
+      doc.setFontSize(11);
       doc.setTextColor(...PDF_CONFIG.primaryColor);
       doc.setFont("helvetica", "bold");
-      doc.text(section.stat2, margin + maxWidth / 2, yPosition + 22);
-      doc.setFontSize(7);
+      doc.text(section.stat2, margin + maxWidth / 2 + 10, yPosition + 22);
+      doc.setFontSize(8);
       doc.setTextColor(...PDF_CONFIG.textGray);
       doc.setFont("helvetica", "normal");
-      doc.text(section.stat2Label, margin + maxWidth / 2 + doc.getTextWidth(section.stat2) + 4, yPosition + 22);
+      doc.text(section.stat2Label, margin + maxWidth / 2 + 10, yPosition + 29);
     }
 
     yPosition += cardHeight + 6;
