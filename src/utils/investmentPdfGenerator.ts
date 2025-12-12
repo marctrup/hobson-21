@@ -3016,9 +3016,9 @@ const renderCapitalRaiseStrategy = (
   contextText.forEach((line) => {
     const wrapped = doc.splitTextToSize(line, maxWidth);
     doc.text(wrapped, margin, yPosition);
-    yPosition += wrapped.length * 5 + 4;
+    yPosition += wrapped.length * PDF_CONFIG.lineHeight.body + 1; // Tighter paragraph spacing
   });
-  yPosition += 8;
+  yPosition += 6;
 
   // What capital unlocks
   if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
