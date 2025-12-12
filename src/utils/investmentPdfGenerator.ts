@@ -4032,7 +4032,7 @@ const renderMarketPenetration = (
   ];
 
   const colWidth = (maxWidth - 8) / 2;
-  const cardHeight = 52; // Height for larger font
+  const cardHeight = 46; // Compact height with tighter line spacing
   const cardSpacing = 6;
 
   justifications.forEach((item, idx) => {
@@ -4066,7 +4066,7 @@ const renderMarketPenetration = (
     let descY = actualY + 22;
     descLines.forEach((line: string) => {
       doc.text(line, xPos + 6, descY);
-      descY += 7;
+      descY += 5.5;
     });
   });
 
