@@ -332,30 +332,25 @@ const renderExecutiveSummary = (
   doc.setLineWidth(0.5);
   doc.roundedRect(margin, yPosition, maxWidth, heroHeight, 4, 4, "S");
   
-  // Brain icon placeholder (rounded square with purple bg)
+  // Brain icon - simple filled rounded square with purple color
   const iconSize = 12;
   const iconX = margin + 8;
   const iconY = yPosition + 8;
-  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.roundedRect(iconX, iconY, iconSize, iconSize, 2, 2, "F");
   
-  // Icon letter "H" for Hobson
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "bold");
-  doc.text("H", iconX + iconSize / 2, iconY + 8, { align: "center" });
-  
-  // Title: Hobson AI
+  // Title: Hobson AI (positioned after icon)
+  const textStartX = iconX + iconSize + 6;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson AI", iconX + iconSize + 6, iconY + 6);
+  doc.text("Hobson AI", textStartX, iconY + 5);
   
   // Subtitle: Specialised AI for Real Estate
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  doc.text("Specialised AI for Real Estate", iconX + iconSize + 6, iconY + 12);
+  doc.text("Specialised AI for Real Estate", textStartX, iconY + 12);
   
   // Main description text
   const descY = iconY + iconSize + 10;
@@ -377,11 +372,16 @@ const renderExecutiveSummary = (
     yPosition = margin;
   }
   
-  // Section header with globe icon
+  // Section header with globe icon (small filled circle)
+  const globeIconX = margin;
+  const globeIconY = yPosition - 3;
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(globeIconX + 3, globeIconY, 3, "F");
+  
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
-  doc.text("Addressable Market", margin, yPosition);
+  doc.text("Addressable Market", margin + 10, yPosition);
   yPosition += 5;
   
   // Subtitle
@@ -445,11 +445,14 @@ const renderExecutiveSummary = (
     yPosition = margin;
   }
   
-  // Section header
+  // Section header with rocket icon (small filled circle)
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 3, yPosition - 3, 3, "F");
+  
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFontSize(12);
   doc.setFont("helvetica", "bold");
-  doc.text("Traction & Milestones", margin, yPosition);
+  doc.text("Traction & Milestones", margin + 10, yPosition);
   yPosition += 10;
   
   // Traction cards in 2x2 grid - matches: bg-blue-50/50 border border-blue-100 rounded-lg
@@ -479,15 +482,11 @@ const renderExecutiveSummary = (
     doc.setLineWidth(0.3);
     doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 2, 2, "S");
     
-    // Icon placeholder (circle with bullet)
+    // Icon - simple filled circle (no text inside)
     doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(cardX + 8, cardY + 10, 3, "F");
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(6);
-    doc.setFont("helvetica", "bold");
-    doc.text("-", cardX + 8, cardY + 11.5, { align: "center" });
+    doc.circle(cardX + 8, cardY + 12, 3, "F");
     
-    // Title
+    // Title (positioned after icon)
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
