@@ -2263,9 +2263,12 @@ const renderGanttChart = (
   ];
 
   years.forEach((yearData) => {
-    yPosition = checkPageBreak(doc, yPosition, 90, pageHeight, margin);
-
-    const cardHeight = 55 + yearData.objectives.length * PDF_CONFIG.lineHeight.body;
+    // Calculate tighter card height: header area (32) + gap (4) + objectives + bottom padding (6)
+    const headerHeight = 30; // Year badge + title + goal
+    const objectivesHeight = yearData.objectives.length * PDF_CONFIG.lineHeight.body;
+    const cardHeight = headerHeight + PDF_CONFIG.subtitleToBullets + objectivesHeight + 8;
+    
+    yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
     
     // Card background
     doc.setFillColor(...yearData.bgColor);
@@ -2277,23 +2280,23 @@ const renderGanttChart = (
 
     // Year badge
     doc.setFillColor(...yearData.color);
-    doc.roundedRect(margin + 12, yPosition + 6, 28, 14, 2, 2, "F");
+    doc.roundedRect(margin + 12, yPosition + 6, 28, 12, 2, 2, "F");
     doc.setTextColor(255, 255, 255);
     setBodyFont(doc);
     doc.setFont("helvetica", "bold");
-    doc.text(yearData.year, margin + 26, yPosition + 15, { align: "center" });
+    doc.text(yearData.year, margin + 26, yPosition + 14, { align: "center" });
 
     // Title and goal
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
-    doc.text(yearData.title, margin + 48, yPosition + 14);
+    doc.text(yearData.title, margin + 48, yPosition + 13);
     
     doc.setTextColor(...PDF_CONFIG.textGray);
     setBodySmallFont(doc);
-    doc.text(`Goal: ${yearData.goal}`, margin + 12, yPosition + 28);
+    doc.text(`Goal: ${yearData.goal}`, margin + 12, yPosition + 24);
 
-    // Objectives
-    let objY = yPosition + 40;
+    // Objectives - start after header with proper gap
+    let objY = yPosition + headerHeight + PDF_CONFIG.subtitleToBullets;
     setBodySmallFont(doc);
     yearData.objectives.forEach((obj) => {
       doc.setFillColor(...yearData.color);
@@ -2303,7 +2306,7 @@ const renderGanttChart = (
       objY += PDF_CONFIG.lineHeight.body;
     });
 
-    yPosition += cardHeight + 8;
+    yPosition += cardHeight + 6;
   });
 
   return yPosition;
