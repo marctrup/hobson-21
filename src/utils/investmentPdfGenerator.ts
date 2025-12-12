@@ -42,10 +42,11 @@ const PDF_CONFIG = {
     loose: 6,           // Headers, titles
   },
   spacing: {
-    sectionGap: 8,      // Gap between sections
-    cardGap: 6,         // Gap between cards
-    headingGap: 3,      // Gap after headings (reduced from implicit larger values)
-    paragraphGap: 4,    // Gap between paragraphs
+    sectionGap: 8,       // Gap between major sections
+    cardGap: 6,          // Gap between cards
+    headingGap: 5,       // Gap between title and subtitle (was 3, now 5)
+    paragraphGap: 4,     // Gap between paragraphs
+    titleToContent: 6,   // Gap between header area and main content
   },
   // Colors
   primaryColor: [124, 58, 237] as [number, number, number],       // hsl(269 91% 52%) - brand purple
@@ -831,24 +832,24 @@ const renderExecutiveSummary = (
   const globeIconX = margin + 4;
   const globeIconY = yPosition - 1;
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(globeIconX, globeIconY, 4, "F");
+  doc.circle(globeIconX, globeIconY, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle); // 12pt standardized
   doc.setFont("helvetica", "bold");
-  doc.text("Addressable Market", margin + 14, yPosition);
-  yPosition += PDF_CONFIG.spacing.headingGap;
+  doc.text("Addressable Market", margin + 12, yPosition);
+  yPosition += PDF_CONFIG.spacing.headingGap; // 5pt gap between title and subtitle
   
   // Subtitle - standardized font
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt standardized
   doc.setFont("helvetica", "normal");
-  doc.text("Annual Efficiency Savings", margin + 14, yPosition);
-  yPosition += PDF_CONFIG.spacing.sectionGap;
+  doc.text("Annual Efficiency Savings", margin + 12, yPosition);
+  yPosition += PDF_CONFIG.spacing.titleToContent; // 6pt gap before cards
   
-  // Three market cards - matches: bg-gradient-to-b from-emerald-50 to-emerald-100/50 border border-emerald-200/50 rounded-xl
+  // Three market cards - dynamically sized
   const cardWidth = (maxWidth - 10) / 3;
-  const cardHeight = 45; // Increased for better spacing
+  const cardHeight = 32; // Reduced from 45 - fits stat + label
   const cardSpacing = 5;
   
   const marketData = [
@@ -873,13 +874,13 @@ const renderExecutiveSummary = (
     doc.setTextColor(...PDF_CONFIG.emerald);
     doc.setFontSize(PDF_CONFIG.fontSize.stat); // 16pt standardized
     doc.setFont("helvetica", "bold");
-    doc.text(data.value, cardX + cardWidth / 2, yPosition + 20, { align: "center" });
+    doc.text(data.value, cardX + cardWidth / 2, yPosition + 14, { align: "center" });
     
     // Label - standardized body small font
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt standardized
     doc.setFont("helvetica", "normal");
-    doc.text(data.label, cardX + cardWidth / 2, yPosition + 34, { align: "center" });
+    doc.text(data.label, cardX + cardWidth / 2, yPosition + 24, { align: "center" });
   });
   
   yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
