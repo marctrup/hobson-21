@@ -440,13 +440,13 @@ const renderBulletList = (
   items.forEach((item) => {
     // Bullet point - uses bullet size
     doc.setFillColor(...bulletColor);
-    doc.circle(x + 4, currentY - 2, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(x + 3, currentY - 2, PDF_CONFIG.circleSize.bullet, "F");
     
-    // Text
+    // Text - closer to bullet
     doc.setTextColor(...textColor);
-    const lines = doc.splitTextToSize(sanitizeText(item), maxWidth - 12);
+    const lines = doc.splitTextToSize(sanitizeText(item), maxWidth - 10);
     lines.forEach((line: string) => {
-      doc.text(line, x + 10, currentY);
+      doc.text(line, x + 7, currentY);
       currentY += PDF_CONFIG.lineHeight.body;
     });
   });
