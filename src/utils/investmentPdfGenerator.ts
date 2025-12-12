@@ -29,6 +29,8 @@ const PDF_CONFIG = {
   primaryColor: [124, 58, 237] as [number, number, number],       // hsl(269 91% 52%) - brand purple
   primaryLight: [168, 113, 246] as [number, number, number],      // hsl(269 75% 65%) - lighter purple
   primaryBg: [240, 235, 255] as [number, number, number],         // Very light purple for Hobson row
+  primaryBgLight: [250, 245, 255] as [number, number, number],    // from-primary/5 - very subtle purple
+  primaryBgMedium: [245, 238, 255] as [number, number, number],   // via-primary/10 - subtle purple
   textDark: [9, 9, 25] as [number, number, number],               // hsl(222.2 84% 4.9%) - foreground
   textGray: [100, 116, 139] as [number, number, number],          // hsl(215.4 16.3% 46.9%) - muted-foreground
   textLight: [148, 163, 184] as [number, number, number],         // lighter muted
@@ -36,6 +38,16 @@ const PDF_CONFIG = {
   bgWhite: [255, 255, 255] as [number, number, number],           // white
   border: [226, 232, 240] as [number, number, number],            // hsl(214.3 31.8% 91.4%) - border color
   headerBg: [245, 243, 255] as [number, number, number],          // primary/10 - light purple header
+  // Emerald colors for market section
+  emerald: [5, 150, 105] as [number, number, number],             // emerald-600
+  emeraldLight: [16, 185, 129] as [number, number, number],       // emerald-500
+  emeraldBg: [236, 253, 245] as [number, number, number],         // emerald-50
+  emeraldBgLight: [240, 253, 248] as [number, number, number],    // from-emerald-50
+  emeraldBorder: [167, 243, 208] as [number, number, number],     // emerald-200/50
+  // Blue colors for traction section
+  blue: [37, 99, 235] as [number, number, number],                // blue-600
+  blueBg: [239, 246, 255] as [number, number, number],            // blue-50/50
+  blueBorder: [219, 234, 254] as [number, number, number],        // blue-100
 };
 
 // Types for tab/page content
@@ -294,6 +306,224 @@ const renderCompetitorTable = (
 };
 
 /**
+ * Render Executive Summary with visual styling matching on-screen component
+ * Replicates: Hero card (purple gradient), Addressable Market (emerald cards), Traction (blue cards)
+ */
+const renderExecutiveSummary = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // ===== HERO STATEMENT SECTION =====
+  // Matches: bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 border border-primary/20 rounded-2xl
+  const heroHeight = 70;
+  
+  // Draw gradient background (simulate with solid light purple)
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.roundedRect(margin, yPosition, maxWidth, heroHeight, 4, 4, "F");
+  
+  // Draw border
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(margin, yPosition, maxWidth, heroHeight, 4, 4, "S");
+  
+  // Brain icon placeholder (rounded square with purple bg)
+  const iconSize = 12;
+  const iconX = margin + 8;
+  const iconY = yPosition + 8;
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.roundedRect(iconX, iconY, iconSize, iconSize, 2, 2, "F");
+  
+  // Icon letter "H" for Hobson
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  doc.text("H", iconX + iconSize / 2, iconY + 8, { align: "center" });
+  
+  // Title: Hobson AI
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(14);
+  doc.setFont("helvetica", "bold");
+  doc.text("Hobson AI", iconX + iconSize + 6, iconY + 6);
+  
+  // Subtitle: Specialised AI for Real Estate
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.text("Specialised AI for Real Estate", iconX + iconSize + 6, iconY + 12);
+  
+  // Main description text
+  const descY = iconY + iconSize + 10;
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  
+  const descPart1 = "Turning complex documents and decisions into ";
+  const descHighlight1 = "clear, reliable insight";
+  const descPart2 = ". Zero onboarding. Trusted accuracy from day one. Continuous learning that shifts from basic automation to ";
+  const descHighlight2 = "proactive support";
+  const descPart3 = " - unlocking major efficiency gains across the entire property lifecycle.";
+  
+  // Render with highlights in purple
+  let textX = margin + 8;
+  doc.text(descPart1, textX, descY);
+  textX += doc.getTextWidth(descPart1);
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text(descHighlight1, textX, descY);
+  textX = margin + 8;
+  
+  // Second line
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "normal");
+  const fullDesc = sanitizeText(descPart1 + descHighlight1 + descPart2 + descHighlight2 + descPart3);
+  const descLines = doc.splitTextToSize(fullDesc, maxWidth - 16);
+  doc.text(descLines, margin + 8, descY);
+  
+  yPosition += heroHeight + 12;
+
+  // ===== ADDRESSABLE MARKET SECTION =====
+  // Check for page break
+  if (yPosition > pageHeight - 100) {
+    doc.addPage();
+    yPosition = margin;
+  }
+  
+  // Section header with globe icon
+  doc.setTextColor(...PDF_CONFIG.emerald);
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.text("Addressable Market", margin, yPosition);
+  yPosition += 5;
+  
+  // Subtitle
+  doc.setTextColor(...PDF_CONFIG.emerald);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  doc.text("Annual Efficiency Savings", margin + 2, yPosition);
+  yPosition += 10;
+  
+  // Three market cards - matches: bg-gradient-to-b from-emerald-50 to-emerald-100/50 border border-emerald-200/50 rounded-xl
+  const cardWidth = (maxWidth - 10) / 3;
+  const cardHeight = 40;
+  const cardSpacing = 5;
+  
+  const marketData = [
+    { value: "GBP 1.41B", label: "UK Savings" },
+    { value: "GBP 15.5B", label: "European Savings" },
+    { value: "GBP 155.6B", label: "Global Savings" },
+  ];
+  
+  marketData.forEach((data, idx) => {
+    const cardX = margin + idx * (cardWidth + cardSpacing);
+    
+    // Card background - emerald gradient
+    doc.setFillColor(...PDF_CONFIG.emeraldBg);
+    doc.roundedRect(cardX, yPosition, cardWidth, cardHeight, 3, 3, "F");
+    
+    // Card border
+    doc.setDrawColor(...PDF_CONFIG.emeraldBorder);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(cardX, yPosition, cardWidth, cardHeight, 3, 3, "S");
+    
+    // Value - large emerald text centered
+    doc.setTextColor(...PDF_CONFIG.emerald);
+    doc.setFontSize(16);
+    doc.setFont("helvetica", "bold");
+    doc.text(data.value, cardX + cardWidth / 2, yPosition + 18, { align: "center" });
+    
+    // Label - muted text centered
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text(data.label, cardX + cardWidth / 2, yPosition + 30, { align: "center" });
+  });
+  
+  yPosition += cardHeight + 8;
+  
+  // Market description text
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  const marketDesc = "Real estate professionals lose 20% of admin time to document chaos. These figures represent the annual savings Hobson can unlock - and the opportunity we're built to capture.";
+  const marketDescLines = doc.splitTextToSize(sanitizeText(marketDesc), maxWidth);
+  doc.text(marketDescLines, margin, yPosition);
+  yPosition += marketDescLines.length * 5 + 12;
+
+  // ===== TRACTION & MILESTONES SECTION =====
+  // Check for page break
+  if (yPosition > pageHeight - 80) {
+    doc.addPage();
+    yPosition = margin;
+  }
+  
+  // Section header
+  doc.setTextColor(...PDF_CONFIG.blue);
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.text("Traction & Milestones", margin, yPosition);
+  yPosition += 10;
+  
+  // Traction cards in 2x2 grid - matches: bg-blue-50/50 border border-blue-100 rounded-lg
+  const tractionCardWidth = (maxWidth - 8) / 2;
+  const tractionCardHeight = 28;
+  const tractionSpacing = 4;
+  
+  const tractionData = [
+    { title: "MVP Launch Q1 2026", subtitle: "Validated with 4 real-world partners" },
+    { title: "98% Model Accuracy", subtitle: "Tested on real industry data" },
+    { title: "Multi-Document Support", subtitle: "Legal, compliance, operational reports" },
+    { title: "Domain-Trained AI", subtitle: "Built for reliability and depth" },
+  ];
+  
+  tractionData.forEach((data, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const cardX = margin + col * (tractionCardWidth + tractionSpacing);
+    const cardY = yPosition + row * (tractionCardHeight + tractionSpacing);
+    
+    // Card background - blue
+    doc.setFillColor(...PDF_CONFIG.blueBg);
+    doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 2, 2, "F");
+    
+    // Card border
+    doc.setDrawColor(...PDF_CONFIG.blueBorder);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 2, 2, "S");
+    
+    // Icon placeholder (circle with bullet)
+    doc.setFillColor(...PDF_CONFIG.blue);
+    doc.circle(cardX + 8, cardY + 10, 3, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "bold");
+    doc.text("-", cardX + 8, cardY + 11.5, { align: "center" });
+    
+    // Title
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    doc.text(data.title, cardX + 16, cardY + 10);
+    
+    // Subtitle
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text(data.subtitle, cardX + 16, cardY + 18);
+  });
+  
+  yPosition += 2 * (tractionCardHeight + tractionSpacing) + 10;
+
+  return yPosition;
+};
+
+/**
  * Create cover page for a section PDF
  */
 const createCoverPage = (
@@ -458,6 +688,8 @@ const renderTabContent = (
     // Special handling for competitor analysis - render as table
     if (componentType === "competitorAnalysis") {
       yPosition = renderCompetitorTable(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "executiveSummary") {
+      yPosition = renderExecutiveSummary(doc, yPosition, margin, pageWidth, pageHeight);
     } else {
       const customContent = getCustomVisualContent(componentType);
       if (customContent.length > 0) {
