@@ -4032,7 +4032,7 @@ const renderMarketPenetration = (
   ];
 
   const colWidth = (maxWidth - 8) / 2;
-  const cardHeight = 54; // Height for full text
+  const cardHeight = 40; // Compact height for content
   const cardSpacing = 6;
 
   justifications.forEach((item, idx) => {
