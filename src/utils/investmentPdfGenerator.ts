@@ -449,6 +449,7 @@ const renderBulletList = (
       doc.text(line, x + 7, currentY);
       currentY += PDF_CONFIG.lineHeight.body;
     });
+    currentY += 2; // Extra spacing between items
   });
   
   return currentY;
