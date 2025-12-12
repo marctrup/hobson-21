@@ -947,11 +947,18 @@ const renderWhyNow = (
   ];
 
   sections.forEach((section) => {
-    // Check for page break
-    yPosition = checkPageBreak(doc, yPosition, 65, pageHeight, margin);
+    // Calculate dynamic card height based on content
+    const titleHeight = 14;
+    const introHeight = 10;
+    const bulletsHeight = section.bullets.length * PDF_CONFIG.lineHeight.body;
+    const conclusionHeight = 14;
+    const padding = 16; // Top and bottom padding
+    const cardHeight = titleHeight + introHeight + bulletsHeight + conclusionHeight + padding;
+    
+    // Check for page break with calculated height
+    yPosition = checkPageBreak(doc, yPosition, cardHeight + 12, pageHeight, margin);
 
-    // Section card - dynamic height based on content
-    const cardHeight = 58; // Increased for better spacing
+    // Section card with dynamic height
     renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
     // Number badge (filled circle)
@@ -965,36 +972,37 @@ const renderWhyNow = (
 
     // Intro
     doc.setTextColor(...PDF_CONFIG.textGray);
-    setBodySmallFont(doc);
-    doc.text(section.intro, margin + 20, yPosition + 24);
+    setBodyFont(doc);
+    doc.text(section.intro, margin + 20, yPosition + 26);
 
-    // Bullets with proper spacing
-    let bulletY = yPosition + 34;
-    setBodySmallFont(doc);
+    // Bullets with proper spacing using body font
+    let bulletY = yPosition + 38;
+    setBodyFont(doc);
     section.bullets.forEach((bullet) => {
       doc.setFillColor(...PDF_CONFIG.primaryLight);
       doc.circle(margin + 22, bulletY - 1.5, 1.5, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       doc.text(bullet, margin + 28, bulletY);
-      bulletY += PDF_CONFIG.lineHeight.tight;
+      bulletY += PDF_CONFIG.lineHeight.body;
     });
 
-    // Conclusion (left border accent)
+    // Conclusion (left border accent) - position relative to bullets end
+    const conclusionY = bulletY + 4;
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.rect(margin + 6, yPosition + cardHeight - 12, 2, 8, "F");
+    doc.rect(margin + 6, conclusionY - 4, 2, 8, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    setCaptionFont(doc);
+    setBodyFont(doc);
     doc.setFont("helvetica", "italic");
-    doc.text(section.conclusion, margin + 12, yPosition + cardHeight - 6);
+    doc.text(section.conclusion, margin + 12, conclusionY);
 
     yPosition += cardHeight + 10;
   });
 
   // Convergence section
-  yPosition = checkPageBreak(doc, yPosition, 55, pageHeight, margin);
+  yPosition = checkPageBreak(doc, yPosition, 65, pageHeight, margin);
 
   // Convergence background
-  const convergenceHeight = 50;
+  const convergenceHeight = 60;
   renderContentCard(doc, margin, yPosition, maxWidth, convergenceHeight, PDF_CONFIG.primaryBgMedium);
 
   // Header
@@ -1004,15 +1012,39 @@ const renderWhyNow = (
   setCardTitleFont(doc);
   doc.text("The Convergence", pageWidth / 2, yPosition + 14, { align: "center" });
 
-  // Points as pills
+  // Points as two rows of pills for better fit
   const points = ["Technology ready", "Market ready", "Competition absent", "Regulation rising", "Economics demand efficiency"];
-  const pillY = yPosition + 26;
-  let pillX = margin + 6;
-  setBodySmallFont(doc);
-  points.forEach((point) => {
+  setBodyFont(doc);
+  
+  // Row 1: first 3 points
+  let pillY = yPosition + 28;
+  let totalWidth1 = 0;
+  points.slice(0, 3).forEach((point) => {
+    totalWidth1 += doc.getTextWidth(point) + 14;
+  });
+  let pillX = (pageWidth - totalWidth1) / 2;
+  
+  points.slice(0, 3).forEach((point) => {
     const textWidth = doc.getTextWidth(point) + 10;
     doc.setFillColor(...PDF_CONFIG.primaryBg);
-    doc.roundedRect(pillX, pillY - 5, textWidth, 10, 2, 2, "F");
+    doc.roundedRect(pillX, pillY - 5, textWidth, 12, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.text(point, pillX + 5, pillY + 2);
+    pillX += textWidth + 4;
+  });
+  
+  // Row 2: last 2 points
+  pillY += 16;
+  let totalWidth2 = 0;
+  points.slice(3).forEach((point) => {
+    totalWidth2 += doc.getTextWidth(point) + 14;
+  });
+  pillX = (pageWidth - totalWidth2) / 2;
+  
+  points.slice(3).forEach((point) => {
+    const textWidth = doc.getTextWidth(point) + 10;
+    doc.setFillColor(...PDF_CONFIG.primaryBg);
+    doc.roundedRect(pillX, pillY - 5, textWidth, 12, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.text(point, pillX + 5, pillY + 2);
     pillX += textWidth + 4;
@@ -1021,7 +1053,7 @@ const renderWhyNow = (
   // Closing statement
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodyBoldFont(doc);
-  doc.text("'documents everywhere' -> 'answers instantly.' Hobson leads this shift.", pageWidth / 2, yPosition + 42, { align: "center" });
+  doc.text("'documents everywhere' -> 'answers instantly.' Hobson leads this shift.", pageWidth / 2, yPosition + 54, { align: "center" });
 
   yPosition += convergenceHeight + 12;
   return yPosition;
