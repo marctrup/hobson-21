@@ -26,6 +26,22 @@ import { competitorData } from "@/components/investor/data/competitorData";
 // Border: HSL 214.3 31.8% 91.4% = RGB 226, 232, 240 (#e2e8f0)
 const PDF_CONFIG = {
   margin: 20,
+  // STANDARDIZED FONT SIZES (for print readability)
+  fontSize: {
+    pageTitle: 18,      // Tab/page titles
+    sectionTitle: 13,   // Section headers within content
+    cardTitle: 12,      // Card/box titles
+    body: 10,           // Standard body text (was 8-9, now 10)
+    bodySmall: 9,       // Secondary info, labels
+    caption: 8,         // Footnotes, sources
+    stat: 16,           // Large statistics/numbers
+  },
+  lineHeight: {
+    body: 6,            // Standard line spacing
+    tight: 5,           // Compact lists
+    loose: 8,           // Headers, titles
+  },
+  // Colors
   primaryColor: [124, 58, 237] as [number, number, number],       // hsl(269 91% 52%) - brand purple
   primaryLight: [168, 113, 246] as [number, number, number],      // hsl(269 75% 65%) - lighter purple
   primaryBg: [240, 235, 255] as [number, number, number],         // Very light purple for Hobson row
@@ -1336,73 +1352,74 @@ const renderUKMarketOpportunity = (
 
   // Header
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(14);
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Market Opportunity", margin, yPosition);
-  yPosition += 5;
+  yPosition += 6;
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   doc.text("Built Directly From Verified Assumptions", margin, yPosition);
-  yPosition += 12;
+  yPosition += 14;
 
   // TAM Box
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 60, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(10);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Total Addressable Market (TAM)", margin + 8, yPosition + 10);
-  doc.setFontSize(14);
+  doc.text("Total Addressable Market (TAM)", margin + 8, yPosition + 12);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("GBP 1.41B", margin + maxWidth - 45, yPosition + 10);
+  doc.text("GBP 1.41B", margin + maxWidth - 50, yPosition + 12);
   
   const tamItems = [
     "235,200 UK real estate businesses (5.6M total x 4.2%)",
     "GBP 6,000 annual saving per business (20% efficiency on GBP 30k salary)",
     "TAM = 235,200 x GBP 6,000 = GBP 1.41B",
   ];
-  let itemY = yPosition + 22;
-  doc.setFontSize(8);
+  let itemY = yPosition + 26;
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   tamItems.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryLight);
-    doc.circle(margin + 12, itemY - 1, 1, "F");
+    doc.circle(margin + 12, itemY - 1, 1.5, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(item, margin + 16, itemY);
-    itemY += 8;
+    doc.text(item, margin + 18, itemY);
+    itemY += PDF_CONFIG.lineHeight.body + 2;
   });
-  yPosition += 62;
+  yPosition += 68;
 
   // SAM Box
-  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 70) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 60, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(10);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Serviceable Available Market (SAM)", margin + 8, yPosition + 10);
-  doc.setFontSize(14);
+  doc.text("Serviceable Available Market (SAM)", margin + 8, yPosition + 12);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("GBP 917M", margin + maxWidth - 45, yPosition + 10);
+  doc.text("GBP 917M", margin + maxWidth - 50, yPosition + 12);
   
   const samItems = [
     "65% adoption readiness (Deloitte, PwC, McKinsey)",
     "235,200 x 65% = 152,880 motivated businesses",
     "152,880 x GBP 6,000 = GBP 917M",
   ];
-  itemY = yPosition + 22;
-  doc.setFontSize(8);
+  itemY = yPosition + 26;
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
   samItems.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryLight);
-    doc.circle(margin + 12, itemY - 1, 1, "F");
+    doc.circle(margin + 12, itemY - 1, 1.5, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(item, margin + 16, itemY);
-    itemY += 8;
+    doc.text(item, margin + 18, itemY);
+    itemY += PDF_CONFIG.lineHeight.body + 2;
   });
-  yPosition += 62;
+  yPosition += 68;
 
   return yPosition;
 };
@@ -1422,15 +1439,15 @@ const renderGlobalMarketAssumptions = (
 
   // Header
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(14);
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Global Market Assumptions", margin, yPosition);
-  yPosition += 5;
+  yPosition += 6;
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   doc.text("Explosive Global Growth (Verified by Independent Reports)", margin, yPosition);
-  yPosition += 12;
+  yPosition += 14;
 
   const sections = [
     {
@@ -1472,78 +1489,78 @@ const renderGlobalMarketAssumptions = (
   ];
 
   sections.forEach((section) => {
-    if (yPosition > pageHeight - 50) {
+    if (yPosition > pageHeight - 55) {
       doc.addPage();
       yPosition = margin;
     }
 
-    const cardHeight = 40;
+    const cardHeight = 46;
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
     doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
 
-    // Circle indicator (no number)
+    // Circle indicator
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 6, yPosition + 8, 3, "F");
+    doc.circle(margin + 8, yPosition + 10, 4, "F");
 
     // Title
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(9);
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(`${section.title} (${section.source})`, margin + 12, yPosition + 9);
+    doc.text(`${section.title} (${section.source})`, margin + 16, yPosition + 12);
 
-    // Stats on separate rows for clarity
-    doc.setFontSize(11);
+    // Stats - larger and clearer
+    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFont("helvetica", "bold");
-    doc.text(section.stat1, margin + 10, yPosition + 22);
-    doc.setFontSize(8);
+    doc.text(section.stat1, margin + 12, yPosition + 26);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.text(section.stat1Label, margin + 10, yPosition + 29);
+    doc.text(section.stat1Label, margin + 12, yPosition + 36);
 
     if (section.stat2) {
-      doc.setFontSize(11);
+      doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
       doc.setTextColor(...PDF_CONFIG.primaryColor);
       doc.setFont("helvetica", "bold");
-      doc.text(section.stat2, margin + maxWidth / 2 + 10, yPosition + 22);
-      doc.setFontSize(8);
+      doc.text(section.stat2, margin + maxWidth / 2 + 10, yPosition + 26);
+      doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
       doc.setTextColor(...PDF_CONFIG.textGray);
       doc.setFont("helvetica", "normal");
-      doc.text(section.stat2Label, margin + maxWidth / 2 + 10, yPosition + 29);
+      doc.text(section.stat2Label, margin + maxWidth / 2 + 10, yPosition + 36);
     }
 
-    yPosition += cardHeight + 6;
+    yPosition += cardHeight + 8;
   });
 
   // Why This Matters
-  if (yPosition > pageHeight - 45) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
   const greenBg: [number, number, number] = [236, 253, 245];
   doc.setFillColor(...greenBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 38, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 44, 3, 3, "F");
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 6, yPosition + 8, 3, "F");
+  doc.circle(margin + 8, yPosition + 10, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Why This Matters for Hobson", margin + 12, yPosition + 9);
+  doc.text("Why This Matters for Hobson", margin + 16, yPosition + 12);
   
   const whyItems = [
     "AI efficiency gains are a global norm",
     "20% efficiency uplift validated by global data",
-    "UK £1.41B sits inside multi-billion-dollar global market",
+    "UK GBP 1.41B sits inside multi-billion-dollar global market",
     "Adoption rising and ROI demonstrable",
   ];
-  let whyY = yPosition + 18;
-  doc.setFontSize(7);
+  let whyY = yPosition + 22;
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   whyItems.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 10, whyY - 1, 1, "F");
+    doc.circle(margin + 14, whyY - 1, 1.5, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(item, margin + 14, whyY);
-    whyY += 5;
+    doc.text(item, margin + 20, whyY);
+    whyY += PDF_CONFIG.lineHeight.body;
   });
-  yPosition += 44;
+  yPosition += 50;
 
   return yPosition;
 };
@@ -1676,99 +1693,99 @@ const renderEuropeanGlobal = (
 
   // EUROPE Section
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(12);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Europe", margin, yPosition);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text("11× UK Population Multiple", margin + 35, yPosition);
-  yPosition += 10;
+  doc.text("11x UK Population Multiple", margin + 40, yPosition);
+  yPosition += 12;
 
   // Europe TAM
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, colWidth, 36, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, colWidth, 42, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("TAM", margin + 6, yPosition + 10);
-  doc.setFontSize(14);
+  doc.text("TAM", margin + 8, yPosition + 12);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("£15.5B", margin + 6, yPosition + 22);
-  doc.setFontSize(7);
+  doc.text("GBP 15.5B", margin + 8, yPosition + 26);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text("£1.41B × 11", margin + 6, yPosition + 30);
+  doc.text("GBP 1.41B x 11", margin + 8, yPosition + 36);
 
   // Europe SAM
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin + colWidth + 10, yPosition, colWidth, 36, 3, 3, "F");
+  doc.roundedRect(margin + colWidth + 10, yPosition, colWidth, 42, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("SAM", margin + colWidth + 16, yPosition + 10);
-  doc.setFontSize(14);
+  doc.text("SAM", margin + colWidth + 18, yPosition + 12);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("£10.1B", margin + colWidth + 16, yPosition + 22);
-  doc.setFontSize(7);
+  doc.text("GBP 10.1B", margin + colWidth + 18, yPosition + 26);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text("£15.5B × 65%", margin + colWidth + 16, yPosition + 30);
-  yPosition += 44;
+  doc.text("GBP 15.5B x 65%", margin + colWidth + 18, yPosition + 36);
+  yPosition += 50;
 
   // GLOBAL Section
-  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 70) { doc.addPage(); yPosition = margin; }
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(12);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Global", margin, yPosition);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text("18× UK Population Multiple (OECD markets)", margin + 32, yPosition);
-  yPosition += 10;
+  doc.text("18x UK Population Multiple (OECD markets)", margin + 35, yPosition);
+  yPosition += 12;
 
   // Global TAM
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, colWidth, 36, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, colWidth, 42, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("TAM", margin + 6, yPosition + 10);
-  doc.setFontSize(14);
+  doc.text("TAM", margin + 8, yPosition + 12);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("£155.6B", margin + 6, yPosition + 22);
-  doc.setFontSize(7);
+  doc.text("GBP 155.6B", margin + 8, yPosition + 26);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text("£1.41B × 118 (adjusted)", margin + 6, yPosition + 30);
+  doc.text("GBP 1.41B x 118 (adjusted)", margin + 8, yPosition + 36);
 
   // Global SAM
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin + colWidth + 10, yPosition, colWidth, 36, 3, 3, "F");
+  doc.roundedRect(margin + colWidth + 10, yPosition, colWidth, 42, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("SAM", margin + colWidth + 16, yPosition + 10);
-  doc.setFontSize(14);
+  doc.text("SAM", margin + colWidth + 18, yPosition + 12);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("£101B", margin + colWidth + 16, yPosition + 22);
-  doc.setFontSize(7);
+  doc.text("GBP 101B", margin + colWidth + 18, yPosition + 26);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text("£155.6B × 65%", margin + colWidth + 16, yPosition + 30);
-  yPosition += 44;
+  doc.text("GBP 155.6B x 65%", margin + colWidth + 18, yPosition + 36);
+  yPosition += 50;
 
   // Summary
-  if (yPosition > pageHeight - 25) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 28) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 18, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 22, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   const summaryText = "Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.";
-  doc.text(summaryText, margin + 6, yPosition + 11);
-  yPosition += 24;
+  doc.text(summaryText, margin + 8, yPosition + 14);
+  yPosition += 28;
 
   return yPosition;
 };
@@ -2489,8 +2506,8 @@ const renderTabContent = (
     } else {
       const customContent = getCustomVisualContent(componentType);
       if (customContent.length > 0) {
-        doc.setTextColor(...PDF_CONFIG.textGray);
-        doc.setFontSize(10);
+        doc.setTextColor(...PDF_CONFIG.textDark);
+        doc.setFontSize(PDF_CONFIG.fontSize.body);
         doc.setFont("helvetica", "normal");
 
         customContent.forEach((line) => {
@@ -2501,15 +2518,26 @@ const renderTabContent = (
 
           const cleanLine = sanitizeText(line);
           if (cleanLine === "") {
-            yPosition += 6; // Increased blank line spacing
+            yPosition += PDF_CONFIG.lineHeight.body;
           } else if (cleanLine.endsWith(":")) {
+            // Section headers - bold but same size
             doc.setFont("helvetica", "bold");
+            doc.setTextColor(...PDF_CONFIG.textDark);
             doc.text(cleanLine, margin, yPosition);
-            yPosition += 8; // Increased header spacing
+            yPosition += PDF_CONFIG.lineHeight.loose;
             doc.setFont("helvetica", "normal");
-          } else {
+          } else if (cleanLine.startsWith("-") || cleanLine.startsWith(">>")) {
+            // List items - normal weight, not bold
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(...PDF_CONFIG.textDark);
             doc.text(cleanLine, margin, yPosition);
-            yPosition += 6; // Increased line spacing from 5.5
+            yPosition += PDF_CONFIG.lineHeight.body + 1;
+          } else {
+            // Regular text - normal weight
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(...PDF_CONFIG.textDark);
+            doc.text(cleanLine, margin, yPosition);
+            yPosition += PDF_CONFIG.lineHeight.body + 1;
           }
         });
         yPosition += 10;
@@ -2527,19 +2555,19 @@ const renderTabContent = (
 
       // Section title
       doc.setTextColor(...PDF_CONFIG.textDark);
-      doc.setFontSize(14);
+      doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
       doc.setFont("helvetica", "bold");
       const cleanedSectionTitle = sanitizeText(section.title);
-      yPosition = renderSpacedText(doc, cleanedSectionTitle, margin, yPosition, maxWidth, 7);
-      yPosition += 2;
+      yPosition = renderSpacedText(doc, cleanedSectionTitle, margin, yPosition, maxWidth, PDF_CONFIG.lineHeight.loose);
+      yPosition += 4;
 
       // Subtitle
       if (section.subtitle) {
         doc.setTextColor(...PDF_CONFIG.primaryColor);
-        doc.setFontSize(12);
+        doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
         doc.setFont("helvetica", "bold");
         const cleanedSubtitle = sanitizeText(section.subtitle);
-        yPosition = renderSpacedText(doc, cleanedSubtitle, margin, yPosition, maxWidth, 6);
+        yPosition = renderSpacedText(doc, cleanedSubtitle, margin, yPosition, maxWidth, PDF_CONFIG.lineHeight.body);
         yPosition += 4;
       }
 
