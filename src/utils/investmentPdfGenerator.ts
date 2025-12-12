@@ -182,14 +182,14 @@ const sanitizeText = (text: string): string => {
  * - paddingX: 8pt (horizontal padding)
  */
 const BOX_SIZING = {
-  paddingTop: 8,
-  paddingBottom: 6,
-  paddingX: 8,
-  iconSize: 12,
-  iconGap: 6,        // Gap after icon
-  titleHeight: 6,    // Height occupied by title text
-  subtitleGap: 5,    // Gap between title and subtitle
-  contentGap: 6,     // Gap between header area and content
+  paddingTop: 6,
+  paddingBottom: 4,
+  paddingX: 6,
+  iconSize: 8,         // Reduced from 12
+  iconGap: 4,          // Gap after icon (reduced)
+  titleHeight: 5,      // Height occupied by title text
+  subtitleGap: 4,      // Gap between title and subtitle (reduced)
+  contentGap: 4,       // Gap between header area and content (reduced)
 };
 
 /**
