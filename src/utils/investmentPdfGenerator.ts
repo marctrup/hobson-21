@@ -4370,8 +4370,8 @@ const renderTabContent = (
       if (section.teamMembers && Array.isArray(section.teamMembers)) {
         const membersPerRow = 3;
         const cardWidth = (maxWidth - 10) / membersPerRow;
-        const cardHeight = 35;
-        const cardSpacing = 5;
+        const cardHeight = 42; // Increased height for better spacing
+        const cardSpacing = 8; // Increased spacing between rows
 
         section.teamMembers.forEach((member, idx) => {
           const col = idx % membersPerRow;
@@ -4391,41 +4391,41 @@ const renderTabContent = (
           doc.setLineWidth(0.5);
           doc.rect(xPos + 2, finalYPos, cardWidth - 6, cardHeight);
 
-          // Role header
+          // Role header - taller for better readability
           doc.setFillColor(...PDF_CONFIG.primaryColor);
-          doc.rect(xPos + 2, finalYPos, cardWidth - 6, 8, "F");
+          doc.rect(xPos + 2, finalYPos, cardWidth - 6, 10, "F");
           doc.setTextColor(255, 255, 255);
-          doc.setFontSize(7);
+          doc.setFontSize(8);
           doc.setFont("helvetica", "bold");
-          doc.text(member.role, xPos + cardWidth / 2, finalYPos + 5, { align: "center" });
+          doc.text(member.role, xPos + cardWidth / 2, finalYPos + 7, { align: "center" });
 
-          // Name
+          // Name - with more vertical space
           doc.setTextColor(...PDF_CONFIG.textDark);
-          doc.setFontSize(10);
+          doc.setFontSize(11);
           doc.setFont("helvetica", "bold");
           const nameLines = doc.splitTextToSize(member.name, cardWidth - 12);
-          doc.text(nameLines, xPos + cardWidth / 2, finalYPos + 16, { align: "center" });
+          doc.text(nameLines, xPos + cardWidth / 2, finalYPos + 20, { align: "center" });
 
-          // LinkedIn
+          // LinkedIn - positioned lower
           if (member.linkedin) {
             doc.setTextColor(...PDF_CONFIG.primaryColor);
-            doc.setFontSize(7);
+            doc.setFontSize(8);
             doc.setFont("helvetica", "normal");
             const linkText = "LinkedIn Profile";
-            const linkY = finalYPos + 26;
+            const linkY = finalYPos + 32;
             doc.text(linkText, xPos + cardWidth / 2, linkY, { align: "center" });
             const textWidth = doc.getTextWidth(linkText);
             doc.link(xPos + (cardWidth - textWidth) / 2, linkY - 3, textWidth, 4, { url: member.linkedin });
           } else {
             doc.setTextColor(...PDF_CONFIG.textLight);
-            doc.setFontSize(7);
+            doc.setFontSize(8);
             doc.setFont("helvetica", "italic");
-            doc.text("Coming Soon", xPos + cardWidth / 2, finalYPos + 26, { align: "center" });
+            doc.text("Coming Soon", xPos + cardWidth / 2, finalYPos + 32, { align: "center" });
           }
         });
 
         const totalRows = Math.ceil(section.teamMembers.length / membersPerRow);
-        yPosition += totalRows * (cardHeight + cardSpacing) + 5;
+        yPosition += totalRows * (cardHeight + cardSpacing) + 8;
       }
 
       // Items
