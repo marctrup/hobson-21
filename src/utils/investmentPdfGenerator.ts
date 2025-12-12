@@ -1681,9 +1681,10 @@ const renderUKMarketOpportunity = (
   doc.text("Built Directly From Verified Assumptions", margin, yPosition);
   yPosition += 14;
 
-  // TAM Box
+  // TAM Box - dynamic height based on content
+  const tamBoxHeight = 38; // Header (10) + 3 items × 5 + padding (13)
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 48, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, tamBoxHeight, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
@@ -1698,7 +1699,7 @@ const renderUKMarketOpportunity = (
     "GBP 6,000 annual saving per business (20% efficiency on GBP 30k salary)",
     "TAM = 235,200 x GBP 6,000 = GBP 1.41B",
   ];
-  let itemY = yPosition + 20;
+  let itemY = yPosition + 18;
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   tamItems.forEach((item) => {
@@ -1708,12 +1709,12 @@ const renderUKMarketOpportunity = (
     doc.text(item, margin + 18, itemY);
     itemY += PDF_CONFIG.lineHeight.body;
   });
-  yPosition += 54;
+  yPosition += tamBoxHeight + 6;
 
-  // SAM Box
-  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
+  // SAM Box - dynamic height based on content
+  const samBoxHeight = 38; // Header (10) + 3 items × 5 + padding (13)
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 48, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, samBoxHeight, 3, 3, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
@@ -1728,7 +1729,7 @@ const renderUKMarketOpportunity = (
     "235,200 x 65% = 152,880 motivated businesses",
     "152,880 x GBP 6,000 = GBP 917M",
   ];
-  itemY = yPosition + 20;
+  itemY = yPosition + 18;
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   samItems.forEach((item) => {
@@ -1738,7 +1739,7 @@ const renderUKMarketOpportunity = (
     doc.text(item, margin + 18, itemY);
     itemY += PDF_CONFIG.lineHeight.body;
   });
-  yPosition += 54;
+  yPosition += samBoxHeight + 6;
 
   return yPosition;
 };
