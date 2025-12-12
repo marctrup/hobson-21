@@ -1437,54 +1437,47 @@ const renderUKMarketAssumptions = (
 
   // Header
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
+  setPageTitleFont(doc);
   doc.text("UK Market Assumptions", margin, yPosition);
-  yPosition += 5;
+  yPosition += 6;
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(8);
-  doc.setFont("helvetica", "normal");
+  setBodyFont(doc);
   doc.text("Evidence-based framework for market sizing", margin, yPosition);
-  yPosition += 10;
+  yPosition += 12;
 
   // Section 1: Market Size
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 30, 3, 3, "F");
+  yPosition = checkPageBreak(doc, yPosition, 40, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 36, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 6, yPosition + 8, 3, "F");
+  doc.circle(margin + 8, yPosition + 10, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("1. Size of the UK Real Estate Business Market", margin + 12, yPosition + 9);
+  setCardTitleFont(doc);
+  doc.text("1. Size of the UK Real Estate Business Market", margin + 16, yPosition + 12);
   
-  doc.setFontSize(14);
+  // Stats row
+  setStatFont(doc);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("5.6M", margin + 8, yPosition + 22);
-  doc.setFontSize(7);
+  doc.text("5.6M", margin + 12, yPosition + 28);
+  setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("Total UK businesses", margin + 28, yPosition + 22);
+  doc.text("Total UK businesses", margin + 36, yPosition + 28);
   
-  doc.setFontSize(14);
+  setStatFont(doc);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFont("helvetica", "bold");
-  doc.text("235,200", margin + maxWidth / 2, yPosition + 22);
-  doc.setFontSize(7);
+  doc.text("235,200", margin + maxWidth / 2, yPosition + 28);
+  setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("Real estate businesses (4.2%)", margin + maxWidth / 2 + 32, yPosition + 22);
-  yPosition += 36;
+  doc.text("Real estate businesses (4.2%)", margin + maxWidth / 2 + 38, yPosition + 28);
+  yPosition += 44;
 
   // Section 2: Business Size Breakdown
-  if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 38, 3, 3, "F");
+  yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 48, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 6, yPosition + 8, 3, "F");
+  doc.circle(margin + 8, yPosition + 10, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("2. Business Size Breakdown (Real Estate Only)", margin + 12, yPosition + 9);
+  setCardTitleFont(doc);
+  doc.text("2. Business Size Breakdown (Real Estate Only)", margin + 16, yPosition + 12);
   
   const sizeData = [
     { size: "Small (1-9)", pct: "96%", count: "225,792" },
@@ -1492,94 +1485,82 @@ const renderUKMarketAssumptions = (
     { size: "Large (50-249)", pct: "0.6%", count: "1,411" },
     { size: "Enterprise (250+)", pct: "0.1%", count: "235" },
   ];
-  let tableY = yPosition + 18;
-  doc.setFontSize(7);
+  let tableY = yPosition + 24;
+  setBodyFont(doc);
   sizeData.forEach((row) => {
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(row.size, margin + 8, tableY);
+    doc.text(row.size, margin + 12, tableY);
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(row.pct, margin + 60, tableY);
+    doc.text(row.pct, margin + 70, tableY);
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFont("helvetica", "bold");
-    doc.text(row.count, margin + 85, tableY);
-    tableY += 5;
+    doc.text(row.count, margin + 100, tableY);
+    tableY += PDF_CONFIG.lineHeight.body;
   });
-  yPosition += 44;
+  yPosition += 56;
 
   // Section 3: AI Investment Readiness
-  if (yPosition > pageHeight - 35) { doc.addPage(); yPosition = margin; }
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 28, 3, 3, "F");
+  yPosition = checkPageBreak(doc, yPosition, 40, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 36, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 6, yPosition + 8, 3, "F");
+  doc.circle(margin + 8, yPosition + 10, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("3. AI Investment Readiness", margin + 12, yPosition + 9);
-  doc.setFontSize(18);
+  setCardTitleFont(doc);
+  doc.text("3. AI Investment Readiness", margin + 16, yPosition + 12);
+  setStatFont(doc);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("65%", margin + 8, yPosition + 22);
-  doc.setFontSize(8);
+  doc.text("65%", margin + 12, yPosition + 28);
+  setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("of UK businesses are primed to invest in AI (Source: Deloitte)", margin + 28, yPosition + 22);
-  yPosition += 34;
+  doc.text("of UK businesses are primed to invest in AI (Source: Deloitte)", margin + 36, yPosition + 28);
+  yPosition += 44;
 
   // Section 4: Labour Cost
-  if (yPosition > pageHeight - 35) { doc.addPage(); yPosition = margin; }
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 28, 3, 3, "F");
+  yPosition = checkPageBreak(doc, yPosition, 40, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 36, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 6, yPosition + 8, 3, "F");
+  doc.circle(margin + 8, yPosition + 10, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("4. Labour Cost Baseline", margin + 12, yPosition + 9);
-  doc.setFontSize(18);
+  setCardTitleFont(doc);
+  doc.text("4. Labour Cost Baseline", margin + 16, yPosition + 12);
+  setStatFont(doc);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("£30,000", margin + 8, yPosition + 22);
-  doc.setFontSize(8);
+  doc.text("£30,000", margin + 12, yPosition + 28);
+  setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("Average junior real estate salary", margin + 42, yPosition + 22);
-  yPosition += 34;
+  doc.text("Average junior real estate salary", margin + 52, yPosition + 28);
+  yPosition += 44;
 
   // Section 5: Efficiency Gain
-  if (yPosition > pageHeight - 35) { doc.addPage(); yPosition = margin; }
-  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-  doc.roundedRect(margin, yPosition, maxWidth, 28, 3, 3, "F");
+  yPosition = checkPageBreak(doc, yPosition, 40, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 36, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 6, yPosition + 8, 3, "F");
+  doc.circle(margin + 8, yPosition + 10, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("5. AI Efficiency Gain Assumption — 20%", margin + 12, yPosition + 9);
-  doc.setFontSize(8);
+  setCardTitleFont(doc);
+  doc.text("5. AI Efficiency Gain Assumption — 20%", margin + 16, yPosition + 12);
+  setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("Based on Forbes, Morgan Stanley, and Drooms research on AI in real estate", margin + 8, yPosition + 20);
-  yPosition += 34;
+  doc.text("Based on Forbes, Morgan Stanley, and Drooms research on AI in real estate", margin + 12, yPosition + 26);
+  yPosition += 44;
 
   // Section 6: Financial Impact
-  if (yPosition > pageHeight - 30) { doc.addPage(); yPosition = margin; }
+  yPosition = checkPageBreak(doc, yPosition, 40, pageHeight, margin);
   const greenBg: [number, number, number] = [236, 253, 245];
-  doc.setFillColor(...greenBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 24, 3, 3, "F");
+  renderContentCard(doc, margin, yPosition, maxWidth, 36, greenBg, PDF_CONFIG.emerald);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 6, yPosition + 8, 3, "F");
+  doc.circle(margin + 8, yPosition + 10, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(9);
-  doc.setFont("helvetica", "bold");
-  doc.text("6. Financial Impact: 20% efficiency gain =", margin + 12, yPosition + 9);
-  doc.setFontSize(14);
+  setCardTitleFont(doc);
+  doc.text("6. Financial Impact: 20% efficiency gain =", margin + 16, yPosition + 12);
+  setStatFont(doc);
   doc.setTextColor(...PDF_CONFIG.emerald);
-  doc.text("£6,000", margin + 100, yPosition + 9);
-  doc.setFontSize(8);
+  doc.text("£6,000", margin + 120, yPosition + 12);
+  setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("annual saving per admin/document-handling role", margin + 8, yPosition + 18);
-  yPosition += 30;
+  doc.text("annual saving per admin/document-handling role", margin + 12, yPosition + 26);
+  yPosition += 44;
 
   return yPosition;
 };
