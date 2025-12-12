@@ -2101,15 +2101,15 @@ const renderEuropeanGlobal = (
   yPosition += 50;
 
   // Summary
-  if (yPosition > pageHeight - 28) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 32) { doc.addPage(); yPosition = margin; }
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 22, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 26, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   const summaryText = "Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.";
-  doc.text(summaryText, margin + 8, yPosition + 14);
-  yPosition += 28;
+  doc.text(summaryText, margin + 8, yPosition + 16);
+  yPosition += 32;
 
   return yPosition;
 };
