@@ -476,14 +476,15 @@ const renderFeatureCard = (
   doc.setLineWidth(0.3);
   doc.roundedRect(x, y, width, height, 3, 3, "S");
   
-  // Icon - filled circle inside card (uses cardBadge size - 10% smaller)
+  // Icon - filled circle inside card - align with title baseline
+  const titleY = y + height / 2 - 2;
   doc.setFillColor(...iconColor);
-  doc.circle(x + 12, y + height / 2 - 4, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.circle(x + 12, titleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
   
   // Title
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyBoldFont(doc);
-  doc.text(title, x + 22, y + height / 2 - 2);
+  doc.text(title, x + 22, titleY);
   
   // Subtitle
   doc.setTextColor(...PDF_CONFIG.textGray);
@@ -948,15 +949,16 @@ const renderExecutiveSummary = (
     doc.setLineWidth(0.3);
     doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 3, 3, "S");
     
-    // Icon - filled circle inside card (cardBadge size)
+    // Icon - filled circle inside card (cardBadge size) - align with title baseline
+    const titleY = cardY + 16;
     doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(cardX + 10, cardY + 14, PDF_CONFIG.circleSize.cardBadge, "F");
+    doc.circle(cardX + 10, titleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
     
     // Title (positioned after icon with proper alignment)
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt standardized
     doc.setFont("helvetica", "bold");
-    doc.text(data.title, cardX + 20, cardY + 16);
+    doc.text(data.title, cardX + 20, titleY);
     
     // Subtitle with proper spacing
     doc.setTextColor(...PDF_CONFIG.textGray);
@@ -1464,14 +1466,15 @@ const renderCustomerSegmentation = (
     const cardHeight = 52; // Reduced height
     renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, segment.bgColor, segment.color);
 
-    // Icon circle - cardBadge size (inside card)
+    // Icon circle - cardBadge size (inside card) - align with title baseline
+    const segmentTitleY = yPosition + 10;
     doc.setFillColor(...segment.color);
-    doc.circle(margin + 10, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+    doc.circle(margin + 10, segmentTitleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
 
     // Title & employees
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
-    doc.text(segment.title, margin + 20, yPosition + 10);
+    doc.text(segment.title, margin + 20, segmentTitleY);
     doc.setTextColor(...PDF_CONFIG.textGray);
     setBodySmallFont(doc);
     doc.text(`(${segment.employees})`, margin + 20, yPosition + 18);
