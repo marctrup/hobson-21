@@ -140,6 +140,55 @@ const sanitizeText = (text: string): string => {
 };
 
 /**
+ * Render text with explicit line spacing (prevents cramped text)
+ * This is the default method for multi-line text rendering.
+ * 
+ * @param doc - jsPDF instance
+ * @param text - Text to render (will be split to fit width)
+ * @param x - X position
+ * @param y - Starting Y position
+ * @param maxWidth - Maximum width for text wrapping
+ * @param lineHeight - Height between lines (default: 5)
+ * @returns The Y position after the last line
+ */
+const renderSpacedText = (
+  doc: jsPDF,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  lineHeight: number = 5
+): number => {
+  const lines = doc.splitTextToSize(sanitizeText(text), maxWidth);
+  let currentY = y;
+  lines.forEach((line: string) => {
+    doc.text(line, x, currentY);
+    currentY += lineHeight;
+  });
+  return currentY;
+};
+
+/**
+ * Render centered text with explicit line spacing
+ */
+const renderSpacedTextCentered = (
+  doc: jsPDF,
+  text: string,
+  centerX: number,
+  y: number,
+  maxWidth: number,
+  lineHeight: number = 5
+): number => {
+  const lines = doc.splitTextToSize(sanitizeText(text), maxWidth);
+  let currentY = y;
+  lines.forEach((line: string) => {
+    doc.text(line, centerX, currentY, { align: "center" });
+    currentY += lineHeight;
+  });
+  return currentY;
+};
+
+/**
  * Get custom visual content for PDF rendering
  * 
  * ARCHITECTURE: This function delegates to pdfContentProviders.ts
@@ -446,9 +495,8 @@ const renderExecutiveSummary = (
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
   const marketDesc = "Real estate professionals lose 20% of admin time to document chaos. These figures represent the annual savings Hobson can unlock - and the opportunity we're built to capture.";
-  const marketDescLines = doc.splitTextToSize(sanitizeText(marketDesc), maxWidth);
-  doc.text(marketDescLines, margin, yPosition);
-  yPosition += marketDescLines.length * 5 + 12;
+  yPosition = renderSpacedText(doc, marketDesc, margin, yPosition, maxWidth, 6);
+  yPosition += 10;
 
   // ===== TRACTION & MILESTONES SECTION =====
   // Check for page break
@@ -649,10 +697,9 @@ const renderWhyNow = (
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(7);
     doc.setFont("helvetica", "italic");
-    const conclusionLines = doc.splitTextToSize(section.conclusion, maxWidth - 20);
-    doc.text(conclusionLines, margin + 10, yPosition + 47);
+    renderSpacedText(doc, section.conclusion, margin + 10, yPosition + 47, maxWidth - 20, 5);
 
-    yPosition += cardHeight + 6;
+    yPosition += cardHeight + 8;
   });
 
   // Convergence section
@@ -730,16 +777,14 @@ const renderStrategicApproach = (
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
   const introText = "Hobson combines AI innovation with deep real estate experience to create a platform that feels familiar, works instantly, and delivers clarity without disruption.";
-  const introLines = doc.splitTextToSize(introText, maxWidth - 16);
-  doc.text(introLines, margin + 8, yPosition + 18);
+  const introEndY = renderSpacedText(doc, introText, margin + 8, yPosition + 18, maxWidth - 16, 6);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(8);
   const pillarsText = "Built around three pillars: Product, Brand, and Business Model - aligned toward a 2027 commercial launch, funded by a 2026 seed round.";
-  const pillarsLines = doc.splitTextToSize(pillarsText, maxWidth - 16);
-  doc.text(pillarsLines, margin + 8, yPosition + 35);
+  renderSpacedText(doc, pillarsText, margin + 8, introEndY + 4, maxWidth - 16, 6);
 
-  yPosition += introHeight + 10;
+  yPosition += introHeight + 12;
 
   // ===== PILLAR 1: PRODUCT =====
   if (yPosition > pageHeight - 70) {
@@ -1015,12 +1060,15 @@ const renderCustomerSegmentation = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(9);
   doc.setFont("helvetica", "normal");
-  const introLines = doc.splitTextToSize(
+  yPosition = renderSpacedTextCentered(
+    doc,
     "Hobson is designed to meet the needs of real estate professionals across all operator sizes—each with distinct challenges, but a shared need for clarity.",
-    maxWidth - 20
+    pageWidth / 2,
+    yPosition,
+    maxWidth - 20,
+    6
   );
-  doc.text(introLines, pageWidth / 2, yPosition, { align: "center" });
-  yPosition += introLines.length * 5 + 10;
+  yPosition += 8;
 
   const segments = [
     {
@@ -1081,8 +1129,7 @@ const renderCustomerSegmentation = (
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(8);
-    const challengeLines = doc.splitTextToSize(segment.challenge, maxWidth / 2 - 20);
-    doc.text(challengeLines, margin + 10, yPosition + 40);
+    renderSpacedText(doc, segment.challenge, margin + 10, yPosition + 40, maxWidth / 2 - 25, 5);
 
     // Need - moved to right side with better spacing
     doc.setFontSize(8);
@@ -1092,8 +1139,7 @@ const renderCustomerSegmentation = (
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(8);
-    const needLines = doc.splitTextToSize(segment.need, maxWidth / 2 - 20);
-    doc.text(needLines, margin + maxWidth / 2 + 5, yPosition + 40);
+    renderSpacedText(doc, segment.need, margin + maxWidth / 2 + 5, yPosition + 40, maxWidth / 2 - 25, 5);
 
     yPosition += cardHeight + 8; // Increased spacing between cards
   });
@@ -1800,9 +1846,8 @@ const renderTabContent = (
   doc.setFontSize(18);
   doc.setFont("helvetica", "bold");
   const cleanedTitle = sanitizeText(tab.title);
-  const titleLines = doc.splitTextToSize(cleanedTitle, maxWidth);
-  doc.text(titleLines, margin, yPosition);
-  yPosition += titleLines.length * 8 + 5;
+  yPosition = renderSpacedText(doc, cleanedTitle, margin, yPosition, maxWidth, 8);
+  yPosition += 2;
 
   // Purple line under title
   doc.setDrawColor(...PDF_CONFIG.primaryColor);
@@ -1885,11 +1930,16 @@ const renderTabContent = (
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
     const cleanedOverview = sanitizeText(tab.content.overview);
-    const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 10);
-    const boxHeight = overviewLines.length * 8 + 8;
+    const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 16);
+    const boxHeight = overviewLines.length * 7 + 12; // More padding
     doc.rect(margin, yPosition, maxWidth, boxHeight, "F");
-    doc.text(overviewLines, margin + 5, yPosition + 6, { lineHeightFactor: 1.4 });
-    yPosition += boxHeight + 8;
+    // Use explicit line spacing for overview
+    let overviewY = yPosition + 8;
+    overviewLines.forEach((line: string) => {
+      doc.text(line, margin + 8, overviewY);
+      overviewY += 6; // Explicit 6pt line spacing
+    });
+    yPosition += boxHeight + 10;
   }
 
   // Custom visual content - when present, this REPLACES content.sections to avoid duplication
@@ -1935,15 +1985,15 @@ const renderTabContent = (
 
           const cleanLine = sanitizeText(line);
           if (cleanLine === "") {
-            yPosition += 5;
+            yPosition += 6; // Increased blank line spacing
           } else if (cleanLine.endsWith(":")) {
             doc.setFont("helvetica", "bold");
             doc.text(cleanLine, margin, yPosition);
-            yPosition += 7;
+            yPosition += 8; // Increased header spacing
             doc.setFont("helvetica", "normal");
           } else {
             doc.text(cleanLine, margin, yPosition);
-            yPosition += 5.5;
+            yPosition += 6; // Increased line spacing from 5.5
           }
         });
         yPosition += 10;
@@ -1964,9 +2014,8 @@ const renderTabContent = (
       doc.setFontSize(14);
       doc.setFont("helvetica", "bold");
       const cleanedSectionTitle = sanitizeText(section.title);
-      const sectionTitleLines = doc.splitTextToSize(cleanedSectionTitle, maxWidth);
-      doc.text(sectionTitleLines, margin, yPosition);
-      yPosition += sectionTitleLines.length * 7 + 3;
+      yPosition = renderSpacedText(doc, cleanedSectionTitle, margin, yPosition, maxWidth, 7);
+      yPosition += 2;
 
       // Subtitle
       if (section.subtitle) {
@@ -1974,9 +2023,8 @@ const renderTabContent = (
         doc.setFontSize(12);
         doc.setFont("helvetica", "bold");
         const cleanedSubtitle = sanitizeText(section.subtitle);
-        const subtitleLines = doc.splitTextToSize(cleanedSubtitle, maxWidth);
-        doc.text(subtitleLines, margin, yPosition);
-        yPosition += subtitleLines.length * 6 + 5;
+        yPosition = renderSpacedText(doc, cleanedSubtitle, margin, yPosition, maxWidth, 6);
+        yPosition += 4;
       }
 
       // Team members
@@ -2058,13 +2106,12 @@ const renderTabContent = (
           doc.setFont("helvetica", "bold");
           doc.text("-", margin + 2, yPosition);
 
-          // Text
+          // Text with proper line spacing
           doc.setTextColor(...PDF_CONFIG.textGray);
           doc.setFont("helvetica", "normal");
           const cleanedItem = sanitizeText(item);
-          const itemLines = doc.splitTextToSize(cleanedItem, maxWidth - 10);
-          doc.text(itemLines, margin + 8, yPosition);
-          yPosition += itemLines.length * 5 + 3;
+          const itemEndY = renderSpacedText(doc, cleanedItem, margin + 8, yPosition, maxWidth - 12, 5);
+          yPosition = itemEndY + 2;
         });
       }
 
@@ -2078,15 +2125,20 @@ const renderTabContent = (
         doc.setFillColor(245, 245, 245);
         doc.setDrawColor(200, 200, 200);
         const cleanedConclusion = sanitizeText(section.conclusion);
-        const conclusionLines = doc.splitTextToSize(cleanedConclusion, maxWidth - 16);
-        const boxHeight = conclusionLines.length * 5 + 8;
+        const conclusionLines = doc.splitTextToSize(cleanedConclusion, maxWidth - 20);
+        const boxHeight = conclusionLines.length * 6 + 12; // More padding
         doc.roundedRect(margin, yPosition - 2, maxWidth, boxHeight, 2, 2, "FD");
 
         doc.setTextColor(...PDF_CONFIG.textGray);
         doc.setFontSize(9);
         doc.setFont("helvetica", "normal");
-        doc.text(conclusionLines, margin + 8, yPosition + 4);
-        yPosition += boxHeight + 5;
+        // Explicit line spacing for conclusion
+        let conclusionY = yPosition + 6;
+        conclusionLines.forEach((line: string) => {
+          doc.text(line, margin + 10, conclusionY);
+          conclusionY += 6;
+        });
+        yPosition += boxHeight + 6;
       }
 
       yPosition += 8;
