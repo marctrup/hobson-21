@@ -3650,21 +3650,26 @@ const renderOnboardingCosts = (
     { size: "Large (1,000 units)", cost: "$740 - $760", desc: "Enterprise scale" },
   ];
 
+  // Use columns for better spacing
+  const sizeColX = margin + 8;
+  const costColX = margin + 80;
+  const descColX = margin + 130;
+
   portfolioCosts.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.bgLight);
     doc.roundedRect(margin, yPosition, maxWidth, 18, 2, 2, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(item.size, margin + 8, yPosition + 11);
+    doc.text(item.size, sizeColX, yPosition + 11);
     
     doc.setTextColor(...PDF_CONFIG.emerald);
-    doc.text(item.cost, margin + 100, yPosition + 11);
+    doc.text(item.cost, costColX, yPosition + 11);
     
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.text(item.desc, margin + maxWidth - 60, yPosition + 11, { align: "right" });
+    doc.text(item.desc, descColX, yPosition + 11);
     
     yPosition += 22;
   });
