@@ -768,9 +768,9 @@ const renderStrategicApproach = (
     doc.setFillColor(...PDF_CONFIG.blue);
     doc.circle(margin + 10, yPosition, 1.5, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(8);
+    doc.setFontSize(9);
     doc.text(item, margin + 16, yPosition + 1);
-    yPosition += 6;
+    yPosition += 8; // Increased from 6 for better line spacing
   });
 
   // Goal box
@@ -812,14 +812,14 @@ const renderStrategicApproach = (
     { label: "Empathy", desc: "Built for real-world pressure" },
   ];
 
-  // 3x2 grid of brand cards
-  const brandCardWidth = (maxWidth - 20) / 3;
-  const brandCardHeight = 18;
+  // 3x2 grid of brand cards - with better spacing
+  const brandCardWidth = (maxWidth - 24) / 3;
+  const brandCardHeight = 22; // Increased from 18
   brandItems.forEach((item, idx) => {
     const col = idx % 3;
     const row = Math.floor(idx / 3);
-    const cardX = margin + 8 + col * (brandCardWidth + 4);
-    const cardY = yPosition + row * (brandCardHeight + 4);
+    const cardX = margin + 8 + col * (brandCardWidth + 6);
+    const cardY = yPosition + row * (brandCardHeight + 6);
 
     doc.setFillColor(...PDF_CONFIG.roseBg);
     doc.roundedRect(cardX, cardY, brandCardWidth, brandCardHeight, 2, 2, "F");
@@ -828,15 +828,15 @@ const renderStrategicApproach = (
     doc.roundedRect(cardX, cardY, brandCardWidth, brandCardHeight, 2, 2, "S");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(8);
+    doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
-    doc.text(item.label, cardX + 3, cardY + 6);
+    doc.text(item.label, cardX + 4, cardY + 8);
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(6);
+    doc.setFontSize(7);
     doc.setFont("helvetica", "normal");
-    doc.text(item.desc, cardX + 3, cardY + 12);
+    doc.text(item.desc, cardX + 4, cardY + 16);
   });
-  yPosition += 2 * (brandCardHeight + 4) + 6;
+  yPosition += 2 * (brandCardHeight + 6) + 8;
 
   // Goal box
   doc.setFillColor(...PDF_CONFIG.roseBg);
@@ -1046,50 +1046,52 @@ const renderCustomerSegmentation = (
   ];
 
   segments.forEach((segment) => {
-    if (yPosition > pageHeight - 60) {
+    if (yPosition > pageHeight - 70) {
       doc.addPage();
       yPosition = margin;
     }
 
-    const cardHeight = 42;
+    const cardHeight = 55; // Increased from 42 for better spacing
     doc.setFillColor(...segment.bgColor);
     doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
 
     // Icon circle (no text inside)
     doc.setFillColor(...segment.color);
-    doc.circle(margin + 10, yPosition + 12, 5, "F");
+    doc.circle(margin + 10, yPosition + 14, 5, "F");
 
-    // Title & employees
+    // Title & employees - increased vertical spacing
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(11);
+    doc.setFontSize(12);
     doc.setFont("helvetica", "bold");
-    doc.text(segment.title, margin + 20, yPosition + 10);
+    doc.text(segment.title, margin + 20, yPosition + 12);
     doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    doc.text(`(${segment.employees})`, margin + 20, yPosition + 20);
+
+    // Challenge - moved down with more spacing
     doc.setFontSize(8);
-    doc.setFont("helvetica", "normal");
-    doc.text(`(${segment.employees})`, margin + 20 + doc.getTextWidth(segment.title) + 4, yPosition + 10);
-
-    // Challenge
-    doc.setFontSize(7);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("CHALLENGE", margin + 8, yPosition + 22);
+    doc.text("CHALLENGE", margin + 10, yPosition + 32);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    const challengeLines = doc.splitTextToSize(segment.challenge, maxWidth / 2 - 15);
-    doc.text(challengeLines, margin + 8, yPosition + 28);
+    doc.setFontSize(8);
+    const challengeLines = doc.splitTextToSize(segment.challenge, maxWidth / 2 - 20);
+    doc.text(challengeLines, margin + 10, yPosition + 40);
 
-    // Need
-    doc.setFontSize(7);
+    // Need - moved to right side with better spacing
+    doc.setFontSize(8);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("WHAT THEY NEED", margin + maxWidth / 2, yPosition + 22);
+    doc.text("WHAT THEY NEED", margin + maxWidth / 2 + 5, yPosition + 32);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    const needLines = doc.splitTextToSize(segment.need, maxWidth / 2 - 15);
-    doc.text(needLines, margin + maxWidth / 2, yPosition + 28);
+    doc.setFontSize(8);
+    const needLines = doc.splitTextToSize(segment.need, maxWidth / 2 - 20);
+    doc.text(needLines, margin + maxWidth / 2 + 5, yPosition + 40);
 
-    yPosition += cardHeight + 6;
+    yPosition += cardHeight + 8; // Increased spacing between cards
   });
 
   // Footer insight
