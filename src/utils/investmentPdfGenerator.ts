@@ -1210,7 +1210,7 @@ const renderStrategicApproach = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
   doc.text("Built for the way real estate actually works", margin + 18, yPosition + 14);
-  yPosition += 18;
+  yPosition += 14 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
 
   const productItems = [
     "Unifies scattered information across documents, emails, and systems",
@@ -1247,7 +1247,7 @@ const renderStrategicApproach = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
   doc.text("Human, helpful, and honest", margin + 18, yPosition + 14);
-  yPosition += 18;
+  yPosition += 14 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
 
   const brandItems = [
     { label: "Personalisation", desc: "Adapts to context and role" },
@@ -1302,7 +1302,7 @@ const renderStrategicApproach = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
   doc.text("Built for mass adoption and rapid scaling", margin + 18, yPosition + 14);
-  yPosition += 18;
+  yPosition += 14 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
 
   // No fees cards (3 emerald cards)
   const noFeeItems = ["No licence fees", "No per-user fees", "No per-asset fees"];
