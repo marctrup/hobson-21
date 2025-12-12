@@ -48,6 +48,14 @@ const PDF_CONFIG = {
   blue: [37, 99, 235] as [number, number, number],                // blue-600
   blueBg: [239, 246, 255] as [number, number, number],            // blue-50/50
   blueBorder: [219, 234, 254] as [number, number, number],        // blue-100
+  // Rose colors for brand section
+  rose: [225, 29, 72] as [number, number, number],                // rose-600
+  roseBg: [255, 241, 242] as [number, number, number],            // rose-50
+  roseBorder: [254, 205, 211] as [number, number, number],        // rose-200
+  // Amber colors for business section
+  amber: [217, 119, 6] as [number, number, number],               // amber-600
+  amberBg: [255, 251, 235] as [number, number, number],           // amber-50
+  amberBorder: [253, 230, 138] as [number, number, number],       // amber-200
 };
 
 // Types for tab/page content
@@ -505,6 +513,498 @@ const renderExecutiveSummary = (
 };
 
 /**
+ * Render Why Now visual with styling matching on-screen component
+ * Replicates: 5 numbered sections with purple cards, convergence footer
+ */
+const renderWhyNow = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Header
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(16);
+  doc.setFont("helvetica", "bold");
+  doc.text("Why Now?", pageWidth / 2, yPosition, { align: "center" });
+  yPosition += 6;
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "normal");
+  doc.text("The Perfect Moment for AI Clarity in Real Estate", pageWidth / 2, yPosition, { align: "center" });
+  yPosition += 12;
+
+  const sections = [
+    {
+      number: "1",
+      title: "Technology Has Finally Caught Up",
+      intro: "For years, real estate workflows were too messy for past-generation technology. Today:",
+      bullets: [
+        "LLMs with the right layer deliver production-grade accuracy",
+        "Document intelligence hits 95%+ extraction quality",
+        "Infrastructure costs have fallen 10x in three years",
+      ],
+      conclusion: "The technology to solve document problems properly didn't exist until now.",
+    },
+    {
+      number: "2",
+      title: "The Industry Is Ready for Efficiency",
+      intro: "Real estate operators have never been under this much pressure:",
+      bullets: [
+        "65% of businesses plan to increase AI spend (Deloitte)",
+        "COVID forced digital maturity a decade early",
+        "Talent shortages make manual processes unsustainable",
+      ],
+      conclusion: "The market isn't experimenting with AI anymore - it's actively shopping for it.",
+    },
+    {
+      number: "3",
+      title: "Massive Competitive White Space",
+      intro: "Despite the size of the opportunity:",
+      bullets: [
+        "No AI-native leader exists in document intelligence for real estate",
+        "Legacy PropTech is too slow and too integrated",
+        "A 12-18 month window exists to become the category standard",
+      ],
+      conclusion: "This is one of the last major AI verticals without a clear winner.",
+    },
+    {
+      number: "4",
+      title: "Regulation Making Documents More Complex",
+      intro: "Real estate compliance is exploding:",
+      bullets: [
+        "New transparency and audit trail requirements",
+        "ESG reporting requires document-linked evidence",
+        "Data residency rules favour UK/EU-based AI solutions",
+      ],
+      conclusion: "More rules -> more documents -> more need for automation.",
+    },
+    {
+      number: "5",
+      title: "Economics Forcing Waste Removal",
+      intro: "Margins are compressing across the industry:",
+      bullets: [
+        "Operational costs rising, headcount limits",
+        "Labour inflation making manual work unaffordable",
+        "AI delivers ~GBP 6,000 per role per year in savings",
+      ],
+      conclusion: "When budgets tighten, tools that eliminate waste get adopted fastest.",
+    },
+  ];
+
+  sections.forEach((section) => {
+    // Check for page break
+    if (yPosition > pageHeight - 70) {
+      doc.addPage();
+      yPosition = margin;
+    }
+
+    // Section card background
+    const cardHeight = 52;
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    doc.setDrawColor(...PDF_CONFIG.primaryLight);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "S");
+
+    // Number badge (filled circle)
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(margin + 8, yPosition + 10, 5, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    doc.text(section.number, margin + 8, yPosition + 12, { align: "center" });
+
+    // Title
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text(section.title, margin + 18, yPosition + 10);
+
+    // Intro
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "normal");
+    doc.text(section.intro, margin + 18, yPosition + 18);
+
+    // Bullets
+    let bulletY = yPosition + 25;
+    section.bullets.forEach((bullet) => {
+      doc.setFillColor(...PDF_CONFIG.primaryLight);
+      doc.circle(margin + 20, bulletY - 1, 1, "F");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.setFontSize(7);
+      doc.text(bullet, margin + 24, bulletY);
+      bulletY += 5;
+    });
+
+    // Conclusion (left border accent)
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.rect(margin + 4, yPosition + 42, 2, 8, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "italic");
+    const conclusionLines = doc.splitTextToSize(section.conclusion, maxWidth - 20);
+    doc.text(conclusionLines, margin + 10, yPosition + 47);
+
+    yPosition += cardHeight + 6;
+  });
+
+  // Convergence section
+  if (yPosition > pageHeight - 60) {
+    doc.addPage();
+    yPosition = margin;
+  }
+
+  // Convergence background
+  const convergenceHeight = 45;
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.roundedRect(margin, yPosition, maxWidth, convergenceHeight, 4, 4, "F");
+
+  // Header
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(pageWidth / 2 - 30, yPosition + 10, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.text("The Convergence", pageWidth / 2, yPosition + 12, { align: "center" });
+
+  // Points as pills
+  const points = ["Technology ready", "Market ready", "Competition absent", "Regulation rising", "Economics demand efficiency"];
+  const pillY = yPosition + 22;
+  let pillX = margin + 8;
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "normal");
+  points.forEach((point) => {
+    const textWidth = doc.getTextWidth(point) + 8;
+    doc.setFillColor(...PDF_CONFIG.primaryBg);
+    doc.roundedRect(pillX, pillY - 4, textWidth, 8, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.text(point, pillX + 4, pillY + 1);
+    pillX += textWidth + 4;
+  });
+
+  // Closing statement
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.text("'documents everywhere' -> 'answers instantly.' Hobson leads this shift.", pageWidth / 2, yPosition + 38, { align: "center" });
+
+  yPosition += convergenceHeight + 10;
+  return yPosition;
+};
+
+/**
+ * Render Strategic Approach visual with styling matching on-screen component
+ * Replicates: Intro card, 3 numbered pillars (Product/Brand/Business), Why We Raise section
+ */
+const renderStrategicApproach = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // ===== INTRO SECTION =====
+  const introHeight = 45;
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 4, 4, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 4, 4, "S");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(12);
+  doc.setFont("helvetica", "bold");
+  doc.text("Our Strategic Approach", margin + 8, yPosition + 10);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "normal");
+  const introText = "Hobson combines AI innovation with deep real estate experience to create a platform that feels familiar, works instantly, and delivers clarity without disruption.";
+  const introLines = doc.splitTextToSize(introText, maxWidth - 16);
+  doc.text(introLines, margin + 8, yPosition + 18);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(8);
+  const pillarsText = "Built around three pillars: Product, Brand, and Business Model - aligned toward a 2027 commercial launch, funded by a 2026 seed round.";
+  const pillarsLines = doc.splitTextToSize(pillarsText, maxWidth - 16);
+  doc.text(pillarsLines, margin + 8, yPosition + 35);
+
+  yPosition += introHeight + 10;
+
+  // ===== PILLAR 1: PRODUCT =====
+  if (yPosition > pageHeight - 70) {
+    doc.addPage();
+    yPosition = margin;
+  }
+
+  // Number badge
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 6, yPosition + 4, 5, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.text("1", margin + 6, yPosition + 6, { align: "center" });
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(11);
+  doc.text("Product Approach", margin + 16, yPosition + 5);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.text("Built for the way real estate actually works", margin + 16, yPosition + 11);
+  yPosition += 16;
+
+  const productItems = [
+    "Unifies scattered information across documents, emails, and systems",
+    "Simple interface with zero learning curve",
+    "Works alongside existing workflows - no disruption",
+    "Designed to earn trust: citations, transparency, no hallucinations",
+    "Becomes more helpful over time - proactive support",
+  ];
+
+  productItems.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.blue);
+    doc.circle(margin + 10, yPosition, 1.5, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(8);
+    doc.text(item, margin + 16, yPosition + 1);
+    yPosition += 6;
+  });
+
+  // Goal box
+  doc.setFillColor(...PDF_CONFIG.blueBg);
+  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, 10, 2, 2, "F");
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 14, yPosition + 5, 2, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("Goal: A clarity engine that feels like part of the team on day one.", margin + 20, yPosition + 6);
+  yPosition += 16;
+
+  // ===== PILLAR 2: BRAND =====
+  if (yPosition > pageHeight - 60) {
+    doc.addPage();
+    yPosition = margin;
+  }
+
+  // Number badge
+  doc.setFillColor(...PDF_CONFIG.rose);
+  doc.circle(margin + 6, yPosition + 4, 5, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.text("2", margin + 6, yPosition + 6, { align: "center" });
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(11);
+  doc.text("Brand Approach", margin + 16, yPosition + 5);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.text("Human, helpful, and honest", margin + 16, yPosition + 11);
+  yPosition += 16;
+
+  const brandItems = [
+    { label: "Personalisation", desc: "Adapts to context and role" },
+    { label: "Integrity", desc: "Transparent, visible sources" },
+    { label: "Expectations", desc: "Essentials first, then expand" },
+    { label: "Resolution", desc: "Act on feedback quickly" },
+    { label: "Time & Effort", desc: "Every interaction effortless" },
+    { label: "Empathy", desc: "Built for real-world pressure" },
+  ];
+
+  // 3x2 grid of brand cards
+  const brandCardWidth = (maxWidth - 20) / 3;
+  const brandCardHeight = 18;
+  brandItems.forEach((item, idx) => {
+    const col = idx % 3;
+    const row = Math.floor(idx / 3);
+    const cardX = margin + 8 + col * (brandCardWidth + 4);
+    const cardY = yPosition + row * (brandCardHeight + 4);
+
+    doc.setFillColor(...PDF_CONFIG.roseBg);
+    doc.roundedRect(cardX, cardY, brandCardWidth, brandCardHeight, 2, 2, "F");
+    doc.setDrawColor(...PDF_CONFIG.roseBorder);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(cardX, cardY, brandCardWidth, brandCardHeight, 2, 2, "S");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.label, cardX + 3, cardY + 6);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "normal");
+    doc.text(item.desc, cardX + 3, cardY + 12);
+  });
+  yPosition += 2 * (brandCardHeight + 4) + 6;
+
+  // Goal box
+  doc.setFillColor(...PDF_CONFIG.roseBg);
+  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, 10, 2, 2, "F");
+  doc.setFillColor(...PDF_CONFIG.rose);
+  doc.circle(margin + 14, yPosition + 5, 2, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("Goal: A brand that embodies Innovation without disruption.", margin + 20, yPosition + 6);
+  yPosition += 16;
+
+  // ===== PILLAR 3: BUSINESS =====
+  if (yPosition > pageHeight - 80) {
+    doc.addPage();
+    yPosition = margin;
+  }
+
+  // Number badge
+  doc.setFillColor(...PDF_CONFIG.amber);
+  doc.circle(margin + 6, yPosition + 4, 5, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  doc.text("3", margin + 6, yPosition + 6, { align: "center" });
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(11);
+  doc.text("Business Approach", margin + 16, yPosition + 5);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.text("Built for mass adoption and rapid scaling", margin + 16, yPosition + 11);
+  yPosition += 16;
+
+  // No fees cards (3 emerald cards)
+  const noFeeItems = ["No licence fees", "No per-user fees", "No per-asset fees"];
+  const noFeeCardWidth = (maxWidth - 20) / 3;
+  noFeeItems.forEach((item, idx) => {
+    const cardX = margin + 8 + idx * (noFeeCardWidth + 4);
+    doc.setFillColor(...PDF_CONFIG.emeraldBg);
+    doc.roundedRect(cardX, yPosition, noFeeCardWidth, 16, 2, 2, "F");
+    doc.setDrawColor(...PDF_CONFIG.emeraldBorder);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(cardX, yPosition, noFeeCardWidth, 16, 2, 2, "S");
+
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(cardX + noFeeCardWidth / 2, yPosition + 5, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.emerald);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text(item, cardX + noFeeCardWidth / 2, yPosition + 12, { align: "center" });
+  });
+  yPosition += 22;
+
+  // Business model cards (2x2 amber cards)
+  const bizItems = [
+    { label: "Usage-Based Pricing", desc: "Pay via HEUs - only for what you use" },
+    { label: "Full Transparency", desc: "See exactly what Hobson did and why" },
+    { label: "Low Base Cost", desc: "Frictionless entry for any business size" },
+    { label: "Flexible Billing", desc: "Enables high-volume market capture" },
+  ];
+  const bizCardWidth = (maxWidth - 16) / 2;
+  const bizCardHeight = 18;
+  bizItems.forEach((item, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const cardX = margin + 8 + col * (bizCardWidth + 4);
+    const cardY = yPosition + row * (bizCardHeight + 4);
+
+    doc.setFillColor(...PDF_CONFIG.amberBg);
+    doc.roundedRect(cardX, cardY, bizCardWidth, bizCardHeight, 2, 2, "F");
+    doc.setDrawColor(...PDF_CONFIG.amberBorder);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(cardX, cardY, bizCardWidth, bizCardHeight, 2, 2, "S");
+
+    doc.setFillColor(...PDF_CONFIG.amber);
+    doc.circle(cardX + 6, cardY + 5, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.label, cardX + 12, cardY + 6);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "normal");
+    doc.text(item.desc, cardX + 12, cardY + 12);
+  });
+  yPosition += 2 * (bizCardHeight + 4) + 6;
+
+  // Goal box
+  doc.setFillColor(...PDF_CONFIG.amberBg);
+  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, 10, 2, 2, "F");
+  doc.setFillColor(...PDF_CONFIG.amber);
+  doc.circle(margin + 14, yPosition + 5, 2, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("Goal: Category-defining AI document intelligence layer.", margin + 20, yPosition + 6);
+  yPosition += 16;
+
+  // ===== WHY WE RAISE IN 2026 =====
+  if (yPosition > pageHeight - 50) {
+    doc.addPage();
+    yPosition = margin;
+  }
+
+  // Rocket badge
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 6, yPosition + 4, 5, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(11);
+  doc.setFont("helvetica", "bold");
+  doc.text("Why We Raise in 2026", margin + 16, yPosition + 6);
+  yPosition += 14;
+
+  // Raise box
+  const raiseHeight = 45;
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, raiseHeight, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, raiseHeight, 3, 3, "S");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "normal");
+  doc.text("To deliver a 2027 commercial launch, we need to complete:", margin + 12, yPosition + 8);
+
+  const raiseItems = ["Full production platform", "AI scaling", "Stability, QA, security", "Core hiring", "GTM development", "Pilot conversion"];
+  let raiseX = margin + 12;
+  let raiseY = yPosition + 16;
+  raiseItems.forEach((item, idx) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(raiseX + 2, raiseY, 1, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(7);
+    doc.text(item, raiseX + 6, raiseY + 1);
+    if (idx === 2) {
+      raiseX = margin + 12;
+      raiseY += 7;
+    } else {
+      raiseX += 52;
+    }
+  });
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("We raise in 2026 to ensure everything is in place before revenue begins in 2027.", margin + 12, yPosition + 38);
+
+  yPosition += raiseHeight + 10;
+  return yPosition;
+};
+
+/**
  * Create cover page for a section PDF
  */
 const createCoverPage = (
@@ -671,6 +1171,10 @@ const renderTabContent = (
       yPosition = renderCompetitorTable(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "executiveSummary") {
       yPosition = renderExecutiveSummary(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "whyNow") {
+      yPosition = renderWhyNow(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "approach") {
+      yPosition = renderStrategicApproach(doc, yPosition, margin, pageWidth, pageHeight);
     } else {
       const customContent = getCustomVisualContent(componentType);
       if (customContent.length > 0) {
