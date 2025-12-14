@@ -787,7 +787,7 @@ const renderExecutiveSummary = (
 
   // ===== HERO STATEMENT SECTION =====
   // Description text for height calculation
-  const fullDesc = "Turning complex documents and decisions into clear, reliable insight. Zero onboarding. Trusted accuracy from day one. Continuous learning that shifts from basic automation to proactive support - unlocking major efficiency gains across the entire property lifecycle.";
+  const fullDesc = "Hobson is the intelligence layer real estate operations run on. We replace manual document work with AI-driven reasoning—delivering instant, auditable answers that cut staffing costs, reduce risk, and accelerate decisions, without disrupting existing systems. There is no category leader yet, and real estate is entering its AI efficiency era.";
   
   // Set font before measuring
   setBodyFont(doc);
