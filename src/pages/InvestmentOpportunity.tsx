@@ -916,9 +916,7 @@ const InvestmentOpportunity = () => {
                   Mission Statement
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-foreground leading-relaxed text-center max-w-4xl mx-auto">
-                  <span className="text-primary font-semibold">Innovation without disruption.</span> To bring clarity
-                  and connected insight to real estate professionals by delivering instant, accurate, AI-enhanced
-                  answers that build on the systems and documents they already use.
+                  <span className="text-primary font-semibold">Innovation without disruption.</span> To become the intelligence layer real estate runs on—ensuring every operational decision is based on instant, auditable insight rather than manual search, institutional memory, or guesswork.
                 </p>
               </div>
 
