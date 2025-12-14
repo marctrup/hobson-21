@@ -782,8 +782,8 @@ const InvestmentOpportunity = () => {
     
     // Funding requirement data for cover page
     const fundingRequirement: FundingRequirement = {
-      amount: "£1.5M–£2.2M",
-      description: "Covers 18–24 months and early commercialisation",
+      amount: "£1.8M",
+      description: "",
     };
     
     generateFullBusinessPlanPdf(cards, fundingRequirement);
@@ -939,8 +939,7 @@ const InvestmentOpportunity = () => {
                   <p className="text-xs sm:text-sm font-medium text-muted-foreground uppercase tracking-wider mb-2">
                     Funding Requirement
                   </p>
-                  <p className="text-2xl sm:text-3xl font-bold text-primary mb-2">£1.5M–£2.2M</p>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Covers 18–24 months and early commercialisation</p>
+                  <p className="text-2xl sm:text-3xl font-bold text-primary">£1.8M</p>
                 </div>
               </div>
 
