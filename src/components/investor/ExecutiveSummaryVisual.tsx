@@ -18,9 +18,7 @@ export const ExecutiveSummaryVisual = () => {
             </div>
           </div>
           <p className="text-foreground leading-relaxed">
-            Turning complex documents and decisions into <span className="font-semibold text-primary">clear, reliable insight</span>. 
-            Zero onboarding. Trusted accuracy from day one. Continuous learning that shifts from basic automation to 
-            <span className="font-semibold text-primary"> proactive support</span>—unlocking major efficiency gains across the entire property lifecycle.
+            Hobson is the <span className="font-semibold text-primary">intelligence layer</span> real estate operations run on. We replace manual document work with AI-driven reasoning—delivering instant, auditable answers that cut staffing costs, reduce risk, and accelerate decisions, without disrupting existing systems. There is <span className="font-semibold text-primary">no category leader yet</span>, and real estate is entering its AI efficiency era.
           </p>
         </div>
       </div>
