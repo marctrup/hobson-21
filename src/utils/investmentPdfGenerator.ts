@@ -824,14 +824,52 @@ const renderExecutiveSummary = (
   
   // Main description text - add gap after subtitle
   const descY = subtitleY + PDF_CONFIG.subtitleToBullets + 4; // Extra spacing after subtitle
-  doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
   
-  // Render as single wrapped paragraph
-  const descLines = doc.splitTextToSize(fullDesc, maxWidth - BOX_SIZING.paddingX * 2);
+  // Render with colored highlights for key phrases
+  const textParts = [
+    { text: "Hobson is the ", color: PDF_CONFIG.textDark },
+    { text: "intelligence layer", color: PDF_CONFIG.primaryColor },
+    { text: " real estate operations run on. We replace manual document work with AI-driven reasoning—delivering instant, auditable answers that cut staffing costs, reduce risk, and accelerate decisions, without disrupting existing systems. There is ", color: PDF_CONFIG.textDark },
+    { text: "no category leader yet", color: PDF_CONFIG.primaryColor },
+    { text: ", and real estate is entering its AI efficiency era.", color: PDF_CONFIG.textDark }
+  ];
+  
+  // Build full text for wrapping calculation
+  const fullTextForWrap = textParts.map(p => p.text).join('');
+  const wrappedLines = doc.splitTextToSize(fullTextForWrap, maxWidth - BOX_SIZING.paddingX * 2);
+  
   let descLineY = descY;
-  descLines.forEach((line: string) => {
-    doc.text(line, margin + BOX_SIZING.paddingX, descLineY);
+  let charIndex = 0;
+  
+  wrappedLines.forEach((line: string) => {
+    let lineX = margin + BOX_SIZING.paddingX;
+    let lineCharIndex = 0;
+    
+    // Find which parts are in this line
+    let tempCharIndex = charIndex;
+    for (const part of textParts) {
+      if (tempCharIndex >= charIndex + line.length) break;
+      if (tempCharIndex + part.text.length <= charIndex) {
+        tempCharIndex += part.text.length;
+        continue;
+      }
+      
+      // Calculate overlap of this part with current line
+      const partStart = Math.max(0, charIndex - tempCharIndex);
+      const partEnd = Math.min(part.text.length, charIndex + line.length - tempCharIndex);
+      const visibleText = part.text.substring(partStart, partEnd);
+      
+      if (visibleText.length > 0) {
+        doc.setTextColor(...part.color);
+        doc.text(visibleText, lineX, descLineY);
+        lineX += doc.getTextWidth(visibleText);
+      }
+      
+      tempCharIndex += part.text.length;
+    }
+    
+    charIndex += line.length;
     descLineY += PDF_CONFIG.lineHeight.body;
   });
   
