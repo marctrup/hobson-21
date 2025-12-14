@@ -826,52 +826,64 @@ const renderExecutiveSummary = (
   const descY = subtitleY + PDF_CONFIG.subtitleToBullets + 4; // Extra spacing after subtitle
   setBodyFont(doc);
   
-  // Render with colored highlights for key phrases
-  const textParts = [
-    { text: "Hobson is the ", color: PDF_CONFIG.textDark },
-    { text: "intelligence layer", color: PDF_CONFIG.primaryColor },
-    { text: " real estate operations run on. We replace manual document work with AI-driven reasoning—delivering instant, auditable answers that cut staffing costs, reduce risk, and accelerate decisions, without disrupting existing systems. There is ", color: PDF_CONFIG.textDark },
-    { text: "no category leader yet", color: PDF_CONFIG.primaryColor },
-    { text: ", and real estate is entering its AI efficiency era.", color: PDF_CONFIG.textDark }
-  ];
-  
-  // Build full text for wrapping calculation
-  const fullTextForWrap = textParts.map(p => p.text).join('');
-  const wrappedLines = doc.splitTextToSize(fullTextForWrap, maxWidth - BOX_SIZING.paddingX * 2);
+  // Render with colored highlights for key phrases using word-by-word approach
+  const highlightPhrases = ["intelligence layer", "no category leader yet"];
+  const words = fullDesc.split(' ');
   
   let descLineY = descY;
-  let charIndex = 0;
+  let currentLineX = margin + BOX_SIZING.paddingX;
+  const lineMaxWidth = maxWidth - BOX_SIZING.paddingX * 2;
+  let currentLineWidth = 0;
   
-  wrappedLines.forEach((line: string) => {
-    let lineX = margin + BOX_SIZING.paddingX;
-    let lineCharIndex = 0;
+  // Track highlight state
+  let inHighlight = false;
+  let highlightBuffer = "";
+  
+  words.forEach((word, idx) => {
+    const wordWithSpace = idx < words.length - 1 ? word + " " : word;
+    const wordWidth = doc.getTextWidth(wordWithSpace);
     
-    // Find which parts are in this line
-    let tempCharIndex = charIndex;
-    for (const part of textParts) {
-      if (tempCharIndex >= charIndex + line.length) break;
-      if (tempCharIndex + part.text.length <= charIndex) {
-        tempCharIndex += part.text.length;
-        continue;
-      }
-      
-      // Calculate overlap of this part with current line
-      const partStart = Math.max(0, charIndex - tempCharIndex);
-      const partEnd = Math.min(part.text.length, charIndex + line.length - tempCharIndex);
-      const visibleText = part.text.substring(partStart, partEnd);
-      
-      if (visibleText.length > 0) {
-        doc.setTextColor(...part.color);
-        doc.text(visibleText, lineX, descLineY);
-        lineX += doc.getTextWidth(visibleText);
-      }
-      
-      tempCharIndex += part.text.length;
+    // Check if we need to wrap to next line
+    if (currentLineWidth + wordWidth > lineMaxWidth && currentLineWidth > 0) {
+      descLineY += PDF_CONFIG.lineHeight.body;
+      currentLineX = margin + BOX_SIZING.paddingX;
+      currentLineWidth = 0;
     }
     
-    charIndex += line.length;
-    descLineY += PDF_CONFIG.lineHeight.body;
+    // Check if this word starts or is part of a highlight phrase
+    let isHighlighted = false;
+    for (const phrase of highlightPhrases) {
+      if (phrase.includes(word) || word.includes(phrase.split(' ')[0])) {
+        // Check if we're building up a highlight phrase
+        const testPhrase = highlightBuffer ? highlightBuffer + " " + word : word;
+        if (phrase.startsWith(testPhrase.trim()) || phrase === testPhrase.trim()) {
+          isHighlighted = true;
+          highlightBuffer = testPhrase.trim();
+          if (phrase === highlightBuffer) {
+            highlightBuffer = ""; // Reset after complete match
+          }
+          break;
+        }
+      }
+    }
+    
+    // Simpler approach: just check if word is in any highlight phrase
+    isHighlighted = highlightPhrases.some(phrase => phrase.split(' ').includes(word));
+    
+    // Set color based on highlight state
+    if (isHighlighted) {
+      doc.setTextColor(...PDF_CONFIG.primaryColor);
+    } else {
+      doc.setTextColor(...PDF_CONFIG.textDark);
+    }
+    
+    doc.text(wordWithSpace, currentLineX, descLineY);
+    currentLineX += wordWidth;
+    currentLineWidth += wordWidth;
   });
+  
+  // Calculate final Y position based on rendered lines
+  descLineY += PDF_CONFIG.lineHeight.body;
   
   yPosition += heroHeight + PDF_CONFIG.spacing.sectionGap + 4; // Extra spacing before Addressable Market
 
