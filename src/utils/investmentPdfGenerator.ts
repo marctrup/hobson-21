@@ -997,6 +997,9 @@ const renderExecutiveSummary = (
   yPosition += whyFailsHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== THE HOBSON APPROACH SECTION =====
+  // Force new page for Hobson Approach to prevent overflow
+  doc.addPage();
+  yPosition = margin;
   const approachParagraphs = [
     "Hobson is built for how this market actually adopts technology.",
     "We embed into existing workflows, start at the document layer—the source of truth—and deliver auditable, traceable reasoning. Our architecture and pricing are designed to prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.",
