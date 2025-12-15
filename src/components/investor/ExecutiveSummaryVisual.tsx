@@ -6,7 +6,7 @@ export const ExecutiveSummaryVisual = () => {
       <div className="rounded-xl border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-5 sm:p-6">
         <div className="flex items-center gap-2 mb-4">
           <Target className="w-5 h-5 text-primary" />
-          <h3 className="text-lg font-bold text-foreground">The Investment Thesis</h3>
+          <h3 className="text-lg font-bold text-foreground">Investment Rationale</h3>
         </div>
         <div className="space-y-2 text-foreground leading-relaxed">
           <p>This is not a feature play.</p>

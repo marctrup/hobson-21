@@ -814,7 +814,7 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("The Investment Thesis", margin + 20, thesisHeaderY);
+  doc.text("Investment Rationale", margin + 20, thesisHeaderY);
   
   // Thesis content
   let thesisContentY = thesisHeaderY + 14;
