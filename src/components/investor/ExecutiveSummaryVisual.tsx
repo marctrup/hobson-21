@@ -88,11 +88,12 @@ export const ExecutiveSummaryVisual = () => {
           <Lock className="w-5 h-5 text-primary" />
           <h3 className="text-lg font-bold text-foreground">Hobson Defensible Moat</h3>
         </div>
-        <p className="text-foreground leading-relaxed">
-          In real estate AI, the hardest problem is not intelligence—it is earning permission to use it. 
-          Clients are sceptical by default. Hobson's proprietary advantage is knowing how to earn that permission, 
-          repeatedly, at scale.
-        </p>
+        <div className="space-y-3 text-foreground leading-relaxed">
+          <p className="font-semibold">Our moat is execution-driven.</p>
+          <p>
+            Hobson's AI architecture has been shaped through trial and error on real client data and real operator resistance. We understand where real estate teams hesitate, why they distrust AI, and how to earn trust without forcing system change. That applied knowledge compounds with every customer—and is extremely difficult to replicate.
+          </p>
+        </div>
       </div>
 
       {/* Market Opportunity */}
