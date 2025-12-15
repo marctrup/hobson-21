@@ -1051,7 +1051,7 @@ const renderExecutiveSummary = (
     
     // Title (positioned after icon with proper alignment)
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // Smaller for fit
+    doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt for readability
     doc.setFont("helvetica", "bold");
     
     // Wrap title if needed
@@ -1060,13 +1060,13 @@ const renderExecutiveSummary = (
     
     // Subtitle with proper spacing and wrapping
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(8); // Smaller font for subtitles
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt for subtitles
     doc.setFont("helvetica", "normal");
     const subtitleLines = doc.splitTextToSize(data.subtitle, cardTextMaxWidth);
-    let subtitleY = cardY + 24;
+    let subtitleY = cardY + 26;
     subtitleLines.forEach((line: string) => {
       doc.text(line, cardX + 20, subtitleY);
-      subtitleY += 4;
+      subtitleY += 5;
     });
   });
   
@@ -1086,12 +1086,12 @@ const renderExecutiveSummary = (
   doc.circle(margin + 10, domainTitleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt for readability
   doc.setFont("helvetica", "bold");
   doc.text("Domain-Trained AI", margin + 20, domainTitleY);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt for subtitles
   doc.setFont("helvetica", "normal");
   doc.text("Purpose-built for real estate complexity, reliability, and auditability", margin + 20, fullWidthCardY + 26);
   
