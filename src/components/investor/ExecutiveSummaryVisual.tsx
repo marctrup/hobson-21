@@ -22,7 +22,7 @@ export const ExecutiveSummaryVisual = () => {
               Hobson is the <span className="font-semibold text-primary">trusted intelligence layer</span> real estate operations must adopt to remain competitive. As portfolios grow and regulation tightens, manual document work has become a <span className="font-semibold text-primary">structural bottleneck</span>—driving cost, hidden risk, and slow decisions.
             </p>
             <p>
-              Most AI platforms fail in this market because they demand system replacement. Real estate operators respond with "nooooo." The risk is too high, the systems too embedded, and the consequences of error too severe.
+              AI platforms sell the dream but fail in this market because they sell on system replacement. The risk is too high, the systems too embedded, and the cost of error too severe. At the same time, operators do not trust AI that cannot prove where its answers come from. Speed without truth is a liability.
             </p>
             <p>
               Hobson takes the only viable path. We embed into existing workflows, start at the document layer—the source of truth—and prove accuracy through auditable, traceable reasoning. Trust is earned first, adoption follows, and replacement only happens when it is safe and inevitable.
