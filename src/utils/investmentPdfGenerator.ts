@@ -1225,62 +1225,64 @@ const renderWhyNow = (
     yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
   });
 
-  // Convergence section
-  yPosition = checkPageBreak(doc, yPosition, 55, pageHeight, margin);
+  // Convergence section - bright purple background with white text
+  yPosition = checkPageBreak(doc, yPosition, 65, pageHeight, margin);
 
-  // Convergence background
-  const convergenceHeight = 50;
-  renderContentCard(doc, margin, yPosition, maxWidth, convergenceHeight, PDF_CONFIG.primaryBgMedium);
-
-  // Header
+  // Convergence background - solid purple (primary color)
+  const convergenceHeight = 60;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(pageWidth / 2 - 35, yPosition + 10, PDF_CONFIG.circleSize.header, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("The Convergence", pageWidth / 2, yPosition + 12, { align: "center" });
+  doc.roundedRect(margin, yPosition, maxWidth, convergenceHeight, 4, 4, "F");
 
-  // Points as two rows of pills for better fit
+  // Header with icon
+  doc.setFillColor(255, 255, 255); // white circle
+  doc.circle(pageWidth / 2 - 40, yPosition + 12, PDF_CONFIG.circleSize.header, "F");
+  doc.setTextColor(255, 255, 255); // white text
+  setCardTitleFont(doc);
+  doc.text("The Convergence", pageWidth / 2, yPosition + 14, { align: "center" });
+
+  // Points as pills with lighter purple background
   const points = ["Technology ready", "Market ready", "Competition absent", "Regulation rising", "Economics demand efficiency"];
   setBodySmallFont(doc);
   
   // Row 1: first 3 points
-  let pillY = yPosition + 22;
+  let pillY = yPosition + 26;
   let totalWidth1 = 0;
   points.slice(0, 3).forEach((point) => {
-    totalWidth1 += doc.getTextWidth(point) + 12;
+    totalWidth1 += doc.getTextWidth(point) + 14;
   });
   let pillX = (pageWidth - totalWidth1) / 2;
   
   points.slice(0, 3).forEach((point) => {
-    const textWidth = doc.getTextWidth(point) + 8;
-    doc.setFillColor(...PDF_CONFIG.primaryBg);
-    doc.roundedRect(pillX, pillY - 4, textWidth, 10, 2, 2, "F");
-    doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.text(point, pillX + 4, pillY + 2);
-    pillX += textWidth + 3;
+    const textWidth = doc.getTextWidth(point) + 10;
+    // Lighter purple pill (blend of purple and white)
+    doc.setFillColor(180, 140, 220); // lighter purple
+    doc.roundedRect(pillX, pillY - 4, textWidth, 10, 5, 5, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.text(point, pillX + 5, pillY + 2);
+    pillX += textWidth + 4;
   });
   
   // Row 2: last 2 points
-  pillY += 12;
+  pillY += 13;
   let totalWidth2 = 0;
   points.slice(3).forEach((point) => {
-    totalWidth2 += doc.getTextWidth(point) + 12;
+    totalWidth2 += doc.getTextWidth(point) + 14;
   });
   pillX = (pageWidth - totalWidth2) / 2;
   
   points.slice(3).forEach((point) => {
-    const textWidth = doc.getTextWidth(point) + 8;
-    doc.setFillColor(...PDF_CONFIG.primaryBg);
-    doc.roundedRect(pillX, pillY - 4, textWidth, 10, 2, 2, "F");
-    doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.text(point, pillX + 4, pillY + 2);
-    pillX += textWidth + 3;
+    const textWidth = doc.getTextWidth(point) + 10;
+    doc.setFillColor(180, 140, 220); // lighter purple
+    doc.roundedRect(pillX, pillY - 4, textWidth, 10, 5, 5, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.text(point, pillX + 5, pillY + 2);
+    pillX += textWidth + 4;
   });
 
-  // Closing statement
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  // Closing statement - white text
+  doc.setTextColor(255, 255, 255);
   setBodyBoldFont(doc);
-  doc.text("'documents everywhere' -> 'answers instantly.' Hobson leads this shift.", pageWidth / 2, yPosition + 46, { align: "center" });
+  doc.text("'documents everywhere' -> 'answers instantly.' Hobson leads this shift.", pageWidth / 2, yPosition + 54, { align: "center" });
 
   yPosition += convergenceHeight + PDF_CONFIG.spacing.sectionGap;
   return yPosition;
