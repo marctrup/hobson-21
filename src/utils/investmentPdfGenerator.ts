@@ -786,14 +786,30 @@ const renderExecutiveSummary = (
   const maxWidth = pageWidth - margin * 2;
 
   // ===== HERO STATEMENT SECTION =====
-  // Description text for height calculation
-  const fullDesc = "Hobson is the intelligence layer real estate operations must adopt to remain competitive. Manual document work is now a structural bottleneck—driving rising costs, hidden risks, and slow decision-making in an industry under pressure. Hobson replaces this bottleneck with AI-driven reasoning, embedding instant, traceable insight directly into existing workflows.";
+  // Multi-paragraph description for better readability
+  const heroParagraphs = [
+    "Hobson is the trusted intelligence layer real estate operations must adopt to remain competitive. As portfolios grow and regulation tightens, manual document work has become a structural bottleneck—driving cost, hidden risk, and slow decisions.",
+    "Most AI platforms fail in this market because they demand system replacement. Real estate operators respond with \"nooooo.\" The risk is too high, the systems too embedded, and the consequences of error too severe.",
+    "Hobson takes the only viable path. We embed into existing workflows, start at the document layer—the source of truth—and prove accuracy through auditable, traceable reasoning. Trust is earned first, adoption follows, and replacement only happens when it is safe and inevitable.",
+    "This trust-first approach unlocks over £155B in global annual efficiency value and creates the foundation for a scalable intelligence platform. No shortcuts. Accuracy before autonomy. Trust before scale."
+  ];
   
   // Set font before measuring
   setBodyFont(doc);
   
-  // Calculate dynamic height based on actual content
-  const heroHeight = calculateHeroBoxHeight(doc, fullDesc, maxWidth, true);
+  // Calculate dynamic height based on all paragraphs
+  const lineMaxWidth = maxWidth - BOX_SIZING.paddingX * 2;
+  let totalTextLines = 0;
+  heroParagraphs.forEach(para => {
+    const wrappedLines = doc.splitTextToSize(para, lineMaxWidth);
+    totalTextLines += wrappedLines.length;
+  });
+  // Add spacing for gaps between paragraphs (3 gaps between 4 paragraphs)
+  const paragraphGapCount = heroParagraphs.length - 1;
+  const heroHeight = BOX_SIZING.paddingTop + BOX_SIZING.iconSize + BOX_SIZING.subtitleGap + 8 + 
+    (totalTextLines * PDF_CONFIG.lineHeight.body) + 
+    (paragraphGapCount * 4) + // Gap between paragraphs
+    BOX_SIZING.paddingBottom + 6;
   
   // Draw gradient background (simulate with solid light purple)
   doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
@@ -822,68 +838,50 @@ const renderExecutiveSummary = (
   setBodyFont(doc);
   doc.text("Specialised AI for Real Estate", textStartX, subtitleY);
   
-  // Main description text - add gap after subtitle
-  const descY = subtitleY + PDF_CONFIG.subtitleToBullets + 4; // Extra spacing after subtitle
-  setBodyFont(doc);
+  // Main description text - render each paragraph with spacing
+  let descY = subtitleY + PDF_CONFIG.subtitleToBullets + 6;
+  const highlightPhrases = ["trusted intelligence layer", "structural bottleneck", "trust-first approach", "£155B"];
   
-  // Render with colored highlights for key phrases using word-by-word approach
-  const highlightPhrases = ["intelligence layer", "structural bottleneck"];
-  const words = fullDesc.split(' ');
-  
-  let descLineY = descY;
-  let currentLineX = margin + BOX_SIZING.paddingX;
-  const lineMaxWidth = maxWidth - BOX_SIZING.paddingX * 2;
-  let currentLineWidth = 0;
-  
-  // Track highlight state
-  let inHighlight = false;
-  let highlightBuffer = "";
-  
-  words.forEach((word, idx) => {
-    const wordWithSpace = idx < words.length - 1 ? word + " " : word;
-    const wordWidth = doc.getTextWidth(wordWithSpace);
+  heroParagraphs.forEach((paragraph, paraIdx) => {
+    const words = paragraph.split(' ');
+    let currentLineX = margin + BOX_SIZING.paddingX;
+    let currentLineWidth = 0;
     
-    // Check if we need to wrap to next line
-    if (currentLineWidth + wordWidth > lineMaxWidth && currentLineWidth > 0) {
-      descLineY += PDF_CONFIG.lineHeight.body;
-      currentLineX = margin + BOX_SIZING.paddingX;
-      currentLineWidth = 0;
-    }
-    
-    // Check if this word starts or is part of a highlight phrase
-    let isHighlighted = false;
-    for (const phrase of highlightPhrases) {
-      if (phrase.includes(word) || word.includes(phrase.split(' ')[0])) {
-        // Check if we're building up a highlight phrase
-        const testPhrase = highlightBuffer ? highlightBuffer + " " + word : word;
-        if (phrase.startsWith(testPhrase.trim()) || phrase === testPhrase.trim()) {
-          isHighlighted = true;
-          highlightBuffer = testPhrase.trim();
-          if (phrase === highlightBuffer) {
-            highlightBuffer = ""; // Reset after complete match
-          }
-          break;
-        }
+    words.forEach((word, idx) => {
+      const wordWithSpace = idx < words.length - 1 ? word + " " : word;
+      const wordWidth = doc.getTextWidth(wordWithSpace);
+      
+      // Check if we need to wrap to next line
+      if (currentLineWidth + wordWidth > lineMaxWidth && currentLineWidth > 0) {
+        descY += PDF_CONFIG.lineHeight.body;
+        currentLineX = margin + BOX_SIZING.paddingX;
+        currentLineWidth = 0;
       }
-    }
+      
+      // Check if word is part of a highlight phrase
+      const isHighlighted = highlightPhrases.some(phrase => 
+        phrase.split(' ').includes(word) || phrase === word
+      );
+      
+      // Set color based on highlight state
+      if (isHighlighted) {
+        doc.setTextColor(...PDF_CONFIG.primaryColor);
+      } else {
+        doc.setTextColor(...PDF_CONFIG.textDark);
+      }
+      
+      doc.text(wordWithSpace, currentLineX, descY);
+      currentLineX += wordWidth;
+      currentLineWidth += wordWidth;
+    });
     
-    // Simpler approach: just check if word is in any highlight phrase
-    isHighlighted = highlightPhrases.some(phrase => phrase.split(' ').includes(word));
-    
-    // Set color based on highlight state
-    if (isHighlighted) {
-      doc.setTextColor(...PDF_CONFIG.primaryColor);
+    // Add gap after paragraph (except for last one)
+    if (paraIdx < heroParagraphs.length - 1) {
+      descY += PDF_CONFIG.lineHeight.body + 4; // Line height + paragraph gap
     } else {
-      doc.setTextColor(...PDF_CONFIG.textDark);
+      descY += PDF_CONFIG.lineHeight.body;
     }
-    
-    doc.text(wordWithSpace, currentLineX, descLineY);
-    currentLineX += wordWidth;
-    currentLineWidth += wordWidth;
   });
-  
-  // Calculate final Y position based on rendered lines
-  descLineY += PDF_CONFIG.lineHeight.body;
   
   yPosition += heroHeight + PDF_CONFIG.spacing.sectionGap + 4; // Extra spacing before Addressable Market
 
