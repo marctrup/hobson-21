@@ -785,6 +785,55 @@ const renderExecutiveSummary = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // ===== THE INVESTMENT THESIS SECTION =====
+  const thesisLines = [
+    "This is not a feature play.",
+    "It is infrastructure.",
+  ];
+  const thesisPurpleLine = "And in this market, trust is the constraint that defines the winner.";
+  
+  // Calculate thesis box height
+  const thesisHeaderHeight = 12;
+  const thesisContentHeight = thesisLines.length * PDF_CONFIG.lineHeight.body + PDF_CONFIG.lineHeight.body + 2; // +2 for extra line
+  const thesisBoxHeight = thesisHeaderHeight + 10 + thesisContentHeight + 10;
+  
+  // Draw gradient-style background (purple tint)
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, thesisBoxHeight, 4, 4, "F");
+  
+  // Draw purple border
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(margin, yPosition, maxWidth, thesisBoxHeight, 4, 4, "S");
+  
+  // Header with icon
+  const thesisHeaderY = yPosition + 12;
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 12, thesisHeaderY - 2, 3, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("The Investment Thesis", margin + 20, thesisHeaderY);
+  
+  // Thesis content
+  let thesisContentY = thesisHeaderY + 14;
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  
+  thesisLines.forEach((line) => {
+    doc.text(line, margin + 12, thesisContentY);
+    thesisContentY += PDF_CONFIG.lineHeight.body;
+  });
+  
+  // Purple closing line
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text(thesisPurpleLine, margin + 12, thesisContentY);
+  
+  yPosition += thesisBoxHeight + PDF_CONFIG.spacing.sectionGap;
+
   // ===== WHY AI FAILS IN REAL ESTATE SECTION =====
   // Define content for dynamic height calculation
   const col1Items = ["Systems too embedded", "Risk too high", "Cost of failure unacceptable"];
