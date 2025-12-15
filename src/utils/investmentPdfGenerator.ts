@@ -787,7 +787,7 @@ const renderExecutiveSummary = (
 
   // ===== HERO STATEMENT SECTION =====
   // Description text for height calculation
-  const fullDesc = "Hobson is the intelligence layer real estate operations run on. We replace manual document work with AI-driven reasoning—delivering instant, auditable answers that cut staffing costs, reduce risk, and accelerate decisions, without disrupting existing systems. There is no category leader yet, and real estate is entering its AI efficiency era.";
+  const fullDesc = "Hobson is the intelligence layer real estate operations must adopt to remain competitive. Manual document work is now a structural bottleneck—driving rising costs, hidden risks, and slow decision-making in an industry under pressure. Hobson replaces this bottleneck with AI-driven reasoning, embedding instant, traceable insight directly into existing workflows.";
   
   // Set font before measuring
   setBodyFont(doc);
@@ -827,7 +827,7 @@ const renderExecutiveSummary = (
   setBodyFont(doc);
   
   // Render with colored highlights for key phrases using word-by-word approach
-  const highlightPhrases = ["intelligence layer", "no category leader yet"];
+  const highlightPhrases = ["intelligence layer", "structural bottleneck"];
   const words = fullDesc.split(' ');
   
   let descLineY = descY;
