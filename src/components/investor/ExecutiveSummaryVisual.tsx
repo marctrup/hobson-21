@@ -5,60 +5,60 @@ export const ExecutiveSummaryVisual = () => {
   return (
     <div className="space-y-6">
       {/* Band 1: Market Reality - Why AI Fails */}
-      <div className="rounded-xl border-2 border-amber-500/40 bg-gradient-to-r from-amber-50/80 via-orange-50/50 to-red-50/30 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-red-950/20 p-5 sm:p-6">
+      <div className="rounded-xl border border-border bg-muted/30 p-5 sm:p-6">
         <div className="flex items-center gap-2 mb-4">
-          <AlertTriangle className="w-5 h-5 text-amber-600" />
-          <h3 className="text-lg font-bold text-amber-700 dark:text-amber-400">Why AI Fails in Real Estate</h3>
+          <AlertTriangle className="w-5 h-5 text-muted-foreground" />
+          <h3 className="text-lg font-bold text-foreground">Why AI Fails in Real Estate</h3>
         </div>
         
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid sm:grid-cols-2 gap-4">
           {/* System Replacement Block */}
-          <div className="p-4 rounded-lg bg-white/60 dark:bg-background/40 border border-red-200/50 dark:border-red-800/30">
+          <div className="p-4 rounded-lg bg-background border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <XCircle className="w-5 h-5 text-red-500" />
-              <span className="font-bold text-foreground">System Replacement → "NOOOOO"</span>
+              <XCircle className="w-5 h-5 text-destructive" />
+              <span className="font-bold text-foreground text-sm">System Replacement → "NOOOOO"</span>
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                 Systems too embedded
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                 Risk too high
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                 Cost of failure unacceptable
               </li>
             </ul>
           </div>
           
           {/* Speed Without Truth Block */}
-          <div className="p-4 rounded-lg bg-white/60 dark:bg-background/40 border border-amber-200/50 dark:border-amber-800/30">
+          <div className="p-4 rounded-lg bg-background border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <XCircle className="w-5 h-5 text-amber-500" />
-              <span className="font-bold text-foreground">Speed Without Truth → Rejected</span>
+              <XCircle className="w-5 h-5 text-destructive" />
+              <span className="font-bold text-foreground text-sm">Speed Without Truth → Rejected</span>
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                 No source transparency
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                 No audit trail
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                 Accuracy {">"} speed in regulated decisions
               </li>
             </ul>
           </div>
         </div>
         
-        <p className="mt-4 text-sm font-semibold text-amber-700 dark:text-amber-400 text-center">
-          This market says <span className="underline">no</span> by default.
+        <p className="mt-4 text-sm font-semibold text-foreground text-center">
+          This market says <span className="underline text-destructive">no</span> by default.
         </p>
       </div>
 
