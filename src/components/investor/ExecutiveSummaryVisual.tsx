@@ -87,9 +87,7 @@ export const ExecutiveSummaryVisual = () => {
           <p>
             We embed into existing workflows, start at the document layer—the source of truth—and deliver auditable, traceable reasoning. Our architecture and pricing are designed to prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.
           </p>
-          <p className="font-semibold text-primary">
-            Trust is not a feature. It is the gate to £155B of savings.
-          </p>
+          <p className="font-semibold text-primary">Trust is not a feature. It is the gateway to £155B of savings.</p>
         </div>
       </div>
 
