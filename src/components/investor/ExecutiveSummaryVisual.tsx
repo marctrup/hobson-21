@@ -17,9 +17,20 @@ export const ExecutiveSummaryVisual = () => {
               <p className="text-sm text-muted-foreground">Specialised AI for Real Estate</p>
             </div>
           </div>
-          <p className="text-foreground leading-relaxed">
-            Hobson is the <span className="font-semibold text-primary">intelligence layer</span> real estate operations must adopt to remain competitive. Manual document work is now a <span className="font-semibold text-primary">structural bottleneck</span>—driving rising costs, hidden risks, and slow decision-making in an industry under pressure. Hobson replaces this bottleneck with AI-driven reasoning, embedding instant, traceable insight directly into existing workflows.
-          </p>
+          <div className="space-y-4 text-foreground leading-relaxed">
+            <p>
+              Hobson is the <span className="font-semibold text-primary">trusted intelligence layer</span> real estate operations must adopt to remain competitive. As portfolios grow and regulation tightens, manual document work has become a <span className="font-semibold text-primary">structural bottleneck</span>—driving cost, hidden risk, and slow decisions.
+            </p>
+            <p>
+              Most AI platforms fail in this market because they demand system replacement. Real estate operators respond with "nooooo." The risk is too high, the systems too embedded, and the consequences of error too severe.
+            </p>
+            <p>
+              Hobson takes the only viable path. We embed into existing workflows, start at the document layer—the source of truth—and prove accuracy through auditable, traceable reasoning. Trust is earned first, adoption follows, and replacement only happens when it is safe and inevitable.
+            </p>
+            <p>
+              This <span className="font-semibold text-primary">trust-first approach</span> unlocks over <span className="font-semibold text-primary">£155B</span> in global annual efficiency value and creates the foundation for a scalable intelligence platform. No shortcuts. Accuracy before autonomy. Trust before scale.
+            </p>
+          </div>
         </div>
       </div>
 
