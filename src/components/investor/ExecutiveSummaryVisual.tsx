@@ -28,7 +28,7 @@ export const ExecutiveSummaryVisual = () => {
               Hobson is built around these realities. Our architecture embeds into existing workflows, starts at the document layer—the source of truth—and delivers auditable, traceable reasoning. Our pricing and deployment reflect how customers actually adopt technology: prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.
             </p>
             <p>
-              This <span className="font-semibold text-primary">trust-first strategy</span> unlocks over <span className="font-semibold text-primary">£155B</span> in global annual efficiency value and establishes the foundation for a scalable intelligence platform.
+              <span className="font-semibold text-primary">Trust is the gate to the £155B opportunity.</span> Hobson starts at the document layer to earn it—then expands into higher-order intelligence as customers allow deeper adoption, unlocking increasing layers of value.
             </p>
           </div>
         </div>
