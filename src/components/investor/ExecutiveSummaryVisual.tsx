@@ -102,7 +102,7 @@ export const ExecutiveSummaryVisual = () => {
         <div className="space-y-3 text-foreground leading-relaxed">
           <p className="font-semibold">Our moat is built under real-world constraints</p>
           <p className="text-sm text-muted-foreground">
-            Hobson's trust-first architecture is the result of real client deployment, repeated architectural iteration, and deep domain knowledge of how real estate operators actually adopt technology. This execution knowledge compounds with every deployment and cannot be replicated without years of delivery inside a sceptical, regulated market.
+            Hobson has been shaped by live client data, repeated architectural pivots, and firsthand exposure to operator scepticism, regulatory pressure, and real-world failure modes. This know-how—how to build, deploy, and earn trust in real estate—compounds faster than competitors can copy.
           </p>
           <p className="font-semibold text-primary">Hard to copy. Impossible to shortcut.</p>
         </div>

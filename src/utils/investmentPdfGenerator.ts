@@ -1067,7 +1067,7 @@ const renderExecutiveSummary = (
   // ===== HOBSON DEFENSIBLE MOAT SECTION =====
   const moatHeadline = "Our moat is built under real-world constraints";
   const moatBody = sanitizeText(
-    "Hobson's trust-first architecture is the result of real client deployment, repeated architectural iteration, and deep domain knowledge of how real estate operators actually adopt technology. This execution knowledge compounds with every deployment and cannot be replicated without years of delivery inside a sceptical, regulated market."
+    "Hobson has been shaped by live client data, repeated architectural pivots, and firsthand exposure to operator scepticism, regulatory pressure, and real-world failure modes. This know-how - how to build, deploy, and earn trust in real estate - compounds faster than competitors can copy."
   );
   const moatClosing = "Hard to copy. Impossible to shortcut.";
   const moatHeadlineLines = doc.splitTextToSize(moatHeadline, lineMaxWidth);
