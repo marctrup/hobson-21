@@ -1000,27 +1000,35 @@ const renderExecutiveSummary = (
   yPosition += calloutHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== TRACTION & MILESTONES SECTION =====
-  // Check for page break
-  if (yPosition > pageHeight - 100) {
+  // Card sizing (used for both page-break calculation and rendering)
+  const tractionCardWidth = (maxWidth - 10) / 2;
+  const tractionCardHeight = 44; // Fits 10/9pt wrapped text
+  const tractionSpacing = 8;
+  const cardTextMaxWidth = tractionCardWidth - 28; // Account for icon and padding
+  const fullWidthCardHeight = 36;
+
+  // Conservative page-break: keep clear of footer text at the bottom of the page
+  const footerReserve = 18;
+  const tractionHeaderHeight = 14; // header + gap before cards
+  const tractionBlockHeight =
+    tractionHeaderHeight + 2 * (tractionCardHeight + tractionSpacing) + fullWidthCardHeight + 12;
+
+  if (yPosition + tractionBlockHeight > pageHeight - footerReserve) {
     doc.addPage();
     yPosition = margin;
   }
-  
+
   // Section header with rocket icon (aligned with text baseline)
   doc.setFillColor(...PDF_CONFIG.blue);
   doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.header, "F");
-  
+
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle); // 12pt standardized
   doc.setFont("helvetica", "bold");
   doc.text("Traction & Execution Momentum", margin + 14, yPosition);
   yPosition += 14;
-  
+
   // Traction cards in 2x2 grid + 1 full-width - matches updated UI
-  const tractionCardWidth = (maxWidth - 10) / 2;
-  const tractionCardHeight = 44; // Increased height for wrapped text
-  const tractionSpacing = 8;
-  const cardTextMaxWidth = tractionCardWidth - 28; // Account for icon and padding
   
   const tractionData = [
     { title: "MVP Launch — Q1 2026", subtitle: "On track, with scope defined by live partner workflows" },
@@ -1073,7 +1081,6 @@ const renderExecutiveSummary = (
   yPosition += 2 * (tractionCardHeight + tractionSpacing);
   
   // Domain-Trained AI - full-width card
-  const fullWidthCardHeight = 36;
   const fullWidthCardY = yPosition;
   doc.setFillColor(...PDF_CONFIG.blueBg);
   doc.roundedRect(margin, fullWidthCardY, maxWidth, fullWidthCardHeight, 3, 3, "F");
