@@ -794,7 +794,8 @@ const renderExecutiveSummary = (
   const colWidth = (maxWidth - 20) / 2;
   const colTextWidth = colWidth - 24; // Account for icon + padding (18px text start + 6px right padding)
   const colHeaderHeight = 14; // Title row inside column
-  const colItemLineHeight = 8;
+  const colItemLineHeight = 8; // Gap between separate bullet items
+  const colWrapLineHeight = 4; // Tighter spacing for wrapped continuation lines
   const colPaddingTop = 10;
   const colPaddingBottom = 6;
 
@@ -802,21 +803,24 @@ const renderExecutiveSummary = (
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
 
-  // Calculate total lines needed for each column (with text wrapping)
-  let col1TotalLines = 0;
-  col1Items.forEach((item) => {
-    const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
-    col1TotalLines += wrappedLines.length;
-  });
+  // Calculate total height needed for each column (with text wrapping, using tighter wrap spacing)
+  const calculateColHeight = (items: string[]) => {
+    let height = 0;
+    items.forEach((item) => {
+      const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
+      // First line uses item spacing, continuation lines use wrap spacing
+      height += colItemLineHeight; // First line
+      if (wrappedLines.length > 1) {
+        height += (wrappedLines.length - 1) * colWrapLineHeight; // Continuation lines
+      }
+    });
+    return height;
+  };
 
-  let col2TotalLines = 0;
-  col2Items.forEach((item) => {
-    const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
-    col2TotalLines += wrappedLines.length;
-  });
-
-  const maxColLines = Math.max(col1TotalLines, col2TotalLines);
-  const innerColBoxHeight = colHeaderHeight + colPaddingTop + (maxColLines * colItemLineHeight) + colPaddingBottom;
+  const col1Height = calculateColHeight(col1Items);
+  const col2Height = calculateColHeight(col2Items);
+  const maxColContentHeight = Math.max(col1Height, col2Height);
+  const innerColBoxHeight = colHeaderHeight + colPaddingTop + maxColContentHeight + colPaddingBottom;
 
   // Calculate outer box height dynamically
   const outerHeaderHeight = 12; // Header row
@@ -875,9 +879,12 @@ const renderExecutiveSummary = (
       if (idx === 0) {
         doc.setFillColor(239, 68, 68);
         doc.circle(col1X + 12, itemY - 1, 1, "F");
+        doc.text(line, col1X + 18, itemY);
+        itemY += colItemLineHeight;
+      } else {
+        doc.text(line, col1X + 18, itemY - (colItemLineHeight - colWrapLineHeight));
+        itemY += colWrapLineHeight;
       }
-      doc.text(line, col1X + 18, itemY);
-      itemY += colItemLineHeight;
     });
   });
 
@@ -905,9 +912,12 @@ const renderExecutiveSummary = (
       if (idx === 0) {
         doc.setFillColor(239, 68, 68);
         doc.circle(col2X + 12, itemY - 1, 1, "F");
+        doc.text(line, col2X + 18, itemY);
+        itemY += colItemLineHeight;
+      } else {
+        doc.text(line, col2X + 18, itemY - (colItemLineHeight - colWrapLineHeight));
+        itemY += colWrapLineHeight;
       }
-      doc.text(line, col2X + 18, itemY);
-      itemY += colItemLineHeight;
     });
   });
 
