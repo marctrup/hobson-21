@@ -786,7 +786,25 @@ const renderExecutiveSummary = (
   const maxWidth = pageWidth - margin * 2;
 
   // ===== WHY AI FAILS IN REAL ESTATE SECTION =====
-  const whyFailsHeight = 92;
+  // Define content for dynamic height calculation
+  const col1Items = ["Systems too embedded", "Risk too high", "Cost of failure unacceptable"];
+  const col2Items = ["No source transparency", "No audit trail", "Accuracy > speed in regulated decisions"];
+
+  // Calculate inner column box height dynamically
+  const colHeaderHeight = 14; // Title row inside column
+  const colItemLineHeight = 8;
+  const colPaddingTop = 10;
+  const colPaddingBottom = 6;
+  const maxColItems = Math.max(col1Items.length, col2Items.length);
+  const innerColBoxHeight = colHeaderHeight + colPaddingTop + (maxColItems * colItemLineHeight) + colPaddingBottom;
+
+  // Calculate outer box height dynamically
+  const outerHeaderHeight = 12; // Header row
+  const headerToColGap = 14; // Gap between header and column boxes
+  const colToFooterGap = 8; // Gap between column boxes and footer
+  const footerHeight = 10; // Footer text line
+  const outerPaddingBottom = 6;
+  const whyFailsHeight = outerHeaderHeight + headerToColGap + innerColBoxHeight + colToFooterGap + footerHeight + outerPaddingBottom;
 
   // Draw muted background
   doc.setFillColor(...PDF_CONFIG.bgLight);
@@ -811,13 +829,13 @@ const renderExecutiveSummary = (
   const colWidth = (maxWidth - 20) / 2;
   const col1X = margin + 10;
   const col2X = margin + colWidth + 15;
-  const colY = headerY + 14;
+  const colY = headerY + headerToColGap;
 
   // Column 1: System Replacement
   doc.setFillColor(...PDF_CONFIG.bgWhite);
-  doc.roundedRect(col1X, colY, colWidth, 50, 3, 3, "F");
+  doc.roundedRect(col1X, colY, colWidth, innerColBoxHeight, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
-  doc.roundedRect(col1X, colY, colWidth, 50, 3, 3, "S");
+  doc.roundedRect(col1X, colY, colWidth, innerColBoxHeight, 3, 3, "S");
 
   // X icon (red circle)
   doc.setFillColor(239, 68, 68); // red-500
@@ -831,20 +849,19 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  const col1Items = ["Systems too embedded", "Risk too high", "Cost of failure unacceptable"];
   let itemY = colY + 24;
   col1Items.forEach((item) => {
     doc.setFillColor(239, 68, 68);
     doc.circle(col1X + 12, itemY - 1, 1, "F");
     doc.text(sanitizeText(item), col1X + 18, itemY);
-    itemY += 8;
+    itemY += colItemLineHeight;
   });
 
   // Column 2: Speed Without Truth
   doc.setFillColor(...PDF_CONFIG.bgWhite);
-  doc.roundedRect(col2X, colY, colWidth, 50, 3, 3, "F");
+  doc.roundedRect(col2X, colY, colWidth, innerColBoxHeight, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
-  doc.roundedRect(col2X, colY, colWidth, 50, 3, 3, "S");
+  doc.roundedRect(col2X, colY, colWidth, innerColBoxHeight, 3, 3, "S");
 
   // X icon (red circle)
   doc.setFillColor(239, 68, 68);
@@ -857,17 +874,16 @@ const renderExecutiveSummary = (
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  const col2Items = ["No source transparency", "No audit trail", "Accuracy > speed in regulated decisions"];
   itemY = colY + 24;
   col2Items.forEach((item) => {
     doc.setFillColor(239, 68, 68);
     doc.circle(col2X + 12, itemY - 1, 1, "F");
     doc.text(sanitizeText(item), col2X + 18, itemY);
-    itemY += 8;
+    itemY += colItemLineHeight;
   });
 
   // Footer text (centered, measured)
-  const footerY = colY + 58;
+  const footerY = colY + innerColBoxHeight + colToFooterGap;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
