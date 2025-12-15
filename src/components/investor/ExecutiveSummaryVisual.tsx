@@ -49,7 +49,7 @@ export const ExecutiveSummaryVisual = () => {
           </div>
           <div className="text-base sm:text-lg font-medium text-foreground leading-relaxed space-y-2">
             <p className="text-primary font-bold">Our moat is earned, not claimed.</p>
-            <p>Through repeated architectural pivots and live operator use, Hobson has learned how to earn trust inside real estate workflows. That execution knowledge <span className="text-primary font-bold">compounds faster than competitors can copy</span>—and is what unlocks adoption at scale.</p>
+            <p>Through repeated architectural pivots and live operator use, Hobson has learned how to earn trust inside real estate workflows. That execution knowledge compounds faster than competitors can copy—and is what unlocks adoption at scale.</p>
           </div>
         </div>
       </div>
