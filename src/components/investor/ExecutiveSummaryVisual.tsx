@@ -30,63 +30,70 @@ export const ExecutiveSummaryVisual = () => {
             <Globe className="w-5 h-5 text-emerald-600" />
             <h4 className="font-semibold text-foreground">Addressable Market</h4>
           </div>
-          <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium ml-7">Annual Efficiency Savings</p>
+          <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium ml-7">Annual Efficiency Value Unlocked</p>
         </div>
         
         <div className="grid grid-cols-3 gap-3">
           <div className="text-center p-4 rounded-xl bg-gradient-to-b from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200/50 dark:border-emerald-800/30">
             <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£1.41B</div>
-            <div className="text-xs text-muted-foreground mt-1">UK Savings</div>
+            <div className="text-xs text-muted-foreground mt-1">UK</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-gradient-to-b from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200/50 dark:border-emerald-800/30">
             <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£15.5B</div>
-            <div className="text-xs text-muted-foreground mt-1">European Savings</div>
+            <div className="text-xs text-muted-foreground mt-1">Europe</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-gradient-to-b from-emerald-50 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200/50 dark:border-emerald-800/30">
             <div className="text-2xl sm:text-3xl font-bold text-emerald-700 dark:text-emerald-400">£155.6B</div>
-            <div className="text-xs text-muted-foreground mt-1">Global Savings</div>
+            <div className="text-xs text-muted-foreground mt-1">Global</div>
           </div>
         </div>
         
         <p className="text-sm text-muted-foreground">
-          Real estate professionals lose 20% of admin time to document chaos. These figures represent the annual savings Hobson can unlock—and the opportunity we're built to capture.
+          Real estate operations are structurally inefficient. Over 20% of professional time is lost to document handling, verification, and search. Hobson converts this wasted cost into permanent operating leverage. These figures represent recurring, defensible value that AI-native operators will capture—and legacy workflows will forfeit.
         </p>
       </div>
 
-      {/* Traction & Milestones */}
+      {/* Traction & Execution Momentum */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">
           <Rocket className="w-5 h-5 text-blue-600" />
-          <h4 className="font-semibold text-foreground">Traction & Milestones</h4>
+          <h4 className="font-semibold text-foreground">Traction & Execution Momentum</h4>
         </div>
         
         <div className="grid sm:grid-cols-2 gap-3">
           <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
             <Target className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div>
-              <div className="font-medium text-foreground text-sm">MVP Launch Q1 2026</div>
-              <div className="text-xs text-muted-foreground">Validated with 4 real-world partners</div>
+              <div className="font-medium text-foreground text-sm">MVP Launch — Q1 2026</div>
+              <div className="text-xs text-muted-foreground">On track, with scope defined by live partner workflows</div>
+            </div>
+          </div>
+          <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
+            <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+            <div>
+              <div className="font-medium text-foreground text-sm">Validated with 4 Operating Partners</div>
+              <div className="text-xs text-muted-foreground">Use cases proven inside real real estate organisations</div>
             </div>
           </div>
           <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
             <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div>
               <div className="font-medium text-foreground text-sm">98% Model Accuracy</div>
-              <div className="text-xs text-muted-foreground">Tested on real industry data</div>
+              <div className="text-xs text-muted-foreground">Measured on proprietary, industry-specific datasets</div>
             </div>
           </div>
           <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
             <Zap className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div>
-              <div className="font-medium text-foreground text-sm">Multi-Document Support</div>
-              <div className="text-xs text-muted-foreground">Legal, compliance, operational reports</div>
+              <div className="font-medium text-foreground text-sm">Multi-Document Reasoning</div>
+              <div className="text-xs text-muted-foreground">Legal, compliance, and operational documents, analysed together</div>
             </div>
           </div>
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
+          <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30 sm:col-span-2">
             <Brain className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
             <div>
               <div className="font-medium text-foreground text-sm">Domain-Trained AI</div>
-              <div className="text-xs text-muted-foreground">Built for reliability and depth</div>
+              <div className="text-xs text-muted-foreground">Purpose-built for real estate complexity, reliability, and auditability</div>
             </div>
           </div>
         </div>
