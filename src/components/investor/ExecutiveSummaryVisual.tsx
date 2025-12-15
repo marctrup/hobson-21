@@ -1,55 +1,135 @@
 import React from 'react';
-import { Brain, Target, Zap, CheckCircle2, Globe, Rocket, Shield } from 'lucide-react';
+import { Brain, Target, Zap, CheckCircle2, Globe, Rocket, Shield, XCircle, AlertTriangle, ArrowDown, FileText, Search, Lock, TrendingUp, Repeat } from 'lucide-react';
 
 export const ExecutiveSummaryVisual = () => {
   return (
     <div className="space-y-6">
-      {/* Hero Statement */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 p-6 sm:p-8 border border-primary/20">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="relative">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-              <Brain className="w-6 h-6 text-primary" />
+      {/* Band 1: Market Reality - Why AI Fails */}
+      <div className="rounded-xl border-2 border-amber-500/40 bg-gradient-to-r from-amber-50/80 via-orange-50/50 to-red-50/30 dark:from-amber-950/30 dark:via-orange-950/20 dark:to-red-950/20 p-5 sm:p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <AlertTriangle className="w-5 h-5 text-amber-600" />
+          <h3 className="text-lg font-bold text-amber-700 dark:text-amber-400">Why AI Fails in Real Estate</h3>
+        </div>
+        
+        <div className="grid md:grid-cols-2 gap-4">
+          {/* System Replacement Block */}
+          <div className="p-4 rounded-lg bg-white/60 dark:bg-background/40 border border-red-200/50 dark:border-red-800/30">
+            <div className="flex items-center gap-2 mb-3">
+              <XCircle className="w-5 h-5 text-red-500" />
+              <span className="font-bold text-foreground">System Replacement → "NOOOOO"</span>
             </div>
-            <div>
-              <h3 className="text-lg font-bold text-foreground">Hobson AI</h3>
-              <p className="text-sm text-muted-foreground">Specialised AI for Real Estate</p>
-            </div>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                Systems too embedded
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                Risk too high
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                Cost of failure unacceptable
+              </li>
+            </ul>
           </div>
-          <div className="space-y-4 text-foreground leading-relaxed">
-            <p>
-              Manual document work is now a <span className="font-semibold text-primary">structural bottleneck</span> in real estate—driving cost, hidden risk, and slow decisions as portfolios scale and regulation tightens.
-            </p>
-            <p>
-              Most AI platforms fail here for two reasons. They demand system replacement—and operators say "nooooo". The risk is too high and systems are too embedded. They also prioritise speed over truth. AI that cannot prove where answers come from is not trusted. In this market, <span className="font-semibold text-primary">speed without accuracy is a liability</span>.
-            </p>
-            <p>
-              Hobson is built for these realities. We embed into existing workflows, start at the document layer—the source of truth—and deliver auditable, traceable reasoning. Our architecture and pricing are designed to earn trust first, then expand. Replacement only happens when it is safe and inevitable.
-            </p>
-            <p>
-              <span className="font-semibold text-primary">Trust is the gate to the £155B opportunity.</span> Hobson earns it—then unlocks it.
-            </p>
+          
+          {/* Speed Without Truth Block */}
+          <div className="p-4 rounded-lg bg-white/60 dark:bg-background/40 border border-amber-200/50 dark:border-amber-800/30">
+            <div className="flex items-center gap-2 mb-3">
+              <XCircle className="w-5 h-5 text-amber-500" />
+              <span className="font-bold text-foreground">Speed Without Truth → Rejected</span>
+            </div>
+            <ul className="space-y-2 text-sm text-muted-foreground">
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                No source transparency
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                No audit trail
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+                Accuracy {">"} speed in regulated decisions
+              </li>
+            </ul>
           </div>
         </div>
+        
+        <p className="mt-4 text-sm font-semibold text-amber-700 dark:text-amber-400 text-center">
+          This market says <span className="underline">no</span> by default.
+        </p>
       </div>
 
-      {/* Proprietary Advantage */}
-      <div className="relative overflow-hidden rounded-xl border-2 border-primary/30 bg-gradient-to-r from-primary/5 via-background to-primary/5">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
-        <div className="relative p-5 sm:p-6">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center">
-              <Shield className="w-5 h-5 text-primary" />
+      {/* Band 2: Hobson's Strategy - The Only Viable Path */}
+      <div className="relative overflow-hidden rounded-xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 via-primary/5 to-background p-6 sm:p-8">
+        <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        
+        <div className="relative text-center">
+          <div className="flex items-center justify-center gap-2 mb-6">
+            <Shield className="w-6 h-6 text-primary" />
+            <h3 className="text-xl font-bold text-primary">The Only Viable Path</h3>
+          </div>
+          
+          {/* Vertical Flow */}
+          <div className="flex flex-col items-center gap-2">
+            <div className="px-6 py-3 rounded-lg bg-primary/15 border border-primary/30">
+              <div className="flex items-center gap-2">
+                <FileText className="w-5 h-5 text-primary" />
+                <span className="font-semibold text-foreground">Document Layer</span>
+              </div>
+              <p className="text-xs text-primary mt-1">Source of Truth</p>
             </div>
-            <div>
-              <h4 className="font-bold text-foreground">Proprietary Advantage</h4>
-              <p className="text-xs text-primary font-semibold">The Real Moat</p>
+            
+            <ArrowDown className="w-5 h-5 text-primary/60" />
+            
+            <div className="px-6 py-3 rounded-lg bg-primary/12 border border-primary/25">
+              <div className="flex items-center gap-2">
+                <Search className="w-5 h-5 text-primary" />
+                <span className="font-semibold text-foreground">Auditable, Traceable Reasoning</span>
+              </div>
+            </div>
+            
+            <ArrowDown className="w-5 h-5 text-primary/60" />
+            
+            <div className="px-6 py-3 rounded-lg bg-primary/10 border border-primary/20">
+              <div className="flex items-center gap-2">
+                <Lock className="w-5 h-5 text-primary" />
+                <span className="font-semibold text-foreground">Trust Earned</span>
+              </div>
+            </div>
+            
+            <ArrowDown className="w-5 h-5 text-primary/60" />
+            
+            <div className="px-6 py-3 rounded-lg bg-primary/8 border border-primary/15">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-primary" />
+                <span className="font-semibold text-foreground">Adoption Expands</span>
+              </div>
+            </div>
+            
+            <ArrowDown className="w-5 h-5 text-primary/60" />
+            
+            <div className="px-6 py-3 rounded-lg bg-emerald-100/80 dark:bg-emerald-950/30 border border-emerald-300/50 dark:border-emerald-700/30">
+              <div className="flex items-center gap-2">
+                <Repeat className="w-5 h-5 text-emerald-600" />
+                <span className="font-semibold text-emerald-700 dark:text-emerald-400">Replacement Becomes Inevitable</span>
+              </div>
             </div>
           </div>
-          <div className="space-y-4 text-foreground leading-relaxed">
-            <p className="text-primary font-bold">Our moat is earned, not claimed.</p>
-            <p>Through repeated architectural pivots and live operator use, Hobson has learned how to earn trust inside real estate workflows. That execution knowledge compounds faster than competitors can copy—and is what unlocks adoption at scale.</p>
+          
+          {/* Caption */}
+          <p className="mt-6 text-sm font-medium text-muted-foreground">
+            <span className="text-primary font-semibold">Embed first.</span> Prove accuracy. Earn trust. <span className="text-primary font-semibold">Expand safely.</span>
+          </p>
+          
+          {/* Moat Statement */}
+          <div className="mt-6 pt-5 border-t border-primary/20">
+            <p className="text-sm text-foreground">
+              <span className="font-bold text-primary">Our moat is earned, not claimed.</span> Through repeated architectural pivots and live operator use, Hobson has learned how to earn trust inside real estate workflows. That execution knowledge compounds faster than competitors can copy.
+            </p>
           </div>
         </div>
       </div>
