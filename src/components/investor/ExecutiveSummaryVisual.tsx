@@ -91,7 +91,7 @@ export const ExecutiveSummaryVisual = () => {
         <div className="space-y-2 text-foreground leading-relaxed">
           <p className="font-semibold">Our moat is earned execution.</p>
           <p>Trust-first architecture, shaped by real client use, domain expertise, and delivery in a sceptical market.</p>
-          <p className="font-semibold">Hard to copy. Impossible to shortcut.</p>
+          <p className="font-semibold text-primary">Hard to copy. Impossible to shortcut.</p>
         </div>
       </div>
 
