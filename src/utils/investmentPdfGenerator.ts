@@ -1018,14 +1018,15 @@ const renderExecutiveSummary = (
   
   // Traction cards in 2x2 grid + 1 full-width - matches updated UI
   const tractionCardWidth = (maxWidth - 10) / 2;
-  const tractionCardHeight = 38; // Increased for better spacing
+  const tractionCardHeight = 44; // Increased height for wrapped text
   const tractionSpacing = 8;
+  const cardTextMaxWidth = tractionCardWidth - 28; // Account for icon and padding
   
   const tractionData = [
     { title: "MVP Launch — Q1 2026", subtitle: "On track, with scope defined by live partner workflows" },
-    { title: "Validated with 4 Operating Partners", subtitle: "Use cases proven inside real real estate organisations" },
-    { title: "98% Model Accuracy", subtitle: "Measured on proprietary, industry-specific datasets" },
-    { title: "Multi-Document Reasoning", subtitle: "Legal, compliance, and operational documents, analysed together" },
+    { title: "Validated with 4 Partners", subtitle: "Use cases proven inside real organisations" },
+    { title: "98% Model Accuracy", subtitle: "Measured on proprietary datasets" },
+    { title: "Multi-Document Reasoning", subtitle: "Legal, compliance, operational docs analysed" },
   ];
   
   tractionData.forEach((data, idx) => {
@@ -1044,48 +1045,57 @@ const renderExecutiveSummary = (
     doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 3, 3, "S");
     
     // Icon - filled circle inside card (cardBadge size) - align with title baseline
-    const titleY = cardY + 16;
+    const titleY = cardY + 14;
     doc.setFillColor(...PDF_CONFIG.blue);
     doc.circle(cardX + 10, titleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
     
     // Title (positioned after icon with proper alignment)
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt standardized
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // Smaller for fit
     doc.setFont("helvetica", "bold");
-    doc.text(data.title, cardX + 20, titleY);
     
-    // Subtitle with proper spacing
+    // Wrap title if needed
+    const titleLines = doc.splitTextToSize(data.title, cardTextMaxWidth);
+    doc.text(titleLines[0], cardX + 20, titleY);
+    
+    // Subtitle with proper spacing and wrapping
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt standardized
+    doc.setFontSize(8); // Smaller font for subtitles
     doc.setFont("helvetica", "normal");
-    doc.text(data.subtitle, cardX + 20, cardY + 28);
+    const subtitleLines = doc.splitTextToSize(data.subtitle, cardTextMaxWidth);
+    let subtitleY = cardY + 24;
+    subtitleLines.forEach((line: string) => {
+      doc.text(line, cardX + 20, subtitleY);
+      subtitleY += 4;
+    });
   });
   
   yPosition += 2 * (tractionCardHeight + tractionSpacing);
   
   // Domain-Trained AI - full-width card
+  const fullWidthCardHeight = 36;
   const fullWidthCardY = yPosition;
   doc.setFillColor(...PDF_CONFIG.blueBg);
-  doc.roundedRect(margin, fullWidthCardY, maxWidth, tractionCardHeight, 3, 3, "F");
+  doc.roundedRect(margin, fullWidthCardY, maxWidth, fullWidthCardHeight, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.blueBorder);
   doc.setLineWidth(0.3);
-  doc.roundedRect(margin, fullWidthCardY, maxWidth, tractionCardHeight, 3, 3, "S");
+  doc.roundedRect(margin, fullWidthCardY, maxWidth, fullWidthCardHeight, 3, 3, "S");
   
-  const domainTitleY = fullWidthCardY + 16;
+  const domainTitleY = fullWidthCardY + 14;
   doc.setFillColor(...PDF_CONFIG.blue);
   doc.circle(margin + 10, domainTitleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
   doc.text("Domain-Trained AI", margin + 20, domainTitleY);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFontSize(8);
   doc.setFont("helvetica", "normal");
-  doc.text("Purpose-built for real estate complexity, reliability, and auditability", margin + 20, fullWidthCardY + 28);
+  doc.text("Purpose-built for real estate complexity, reliability, and auditability", margin + 20, fullWidthCardY + 26);
   
-  yPosition += tractionCardHeight + 12;
+  yPosition += fullWidthCardHeight + 12;
 
   return yPosition;
 };
