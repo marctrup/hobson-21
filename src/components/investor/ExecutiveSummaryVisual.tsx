@@ -62,86 +62,31 @@ export const ExecutiveSummaryVisual = () => {
         </p>
       </div>
 
-      {/* Band 2: Hobson's Strategy - The Only Viable Path */}
-      <div className="relative overflow-hidden rounded-xl border-2 border-primary/40 bg-gradient-to-br from-primary/10 via-primary/5 to-background p-6 sm:p-8">
-        <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+      {/* Band 2: The Hobson Approach */}
+      <div className="relative overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-br from-primary/5 via-background to-primary/5 p-5 sm:p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Shield className="w-5 h-5 text-primary" />
+          <h3 className="text-lg font-bold text-foreground">The Hobson Approach</h3>
+        </div>
         
-        <div className="relative text-center">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <Shield className="w-6 h-6 text-primary" />
-            <h3 className="text-xl font-bold text-primary">The Only Viable Path</h3>
-          </div>
-          
-          {/* Vertical Flow */}
-          <div className="flex flex-col items-center gap-2">
-            <div className="px-6 py-3 rounded-lg bg-primary/15 border border-primary/30">
-              <div className="flex items-center gap-2">
-                <FileText className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-foreground">Document Layer</span>
-              </div>
-              <p className="text-xs text-primary mt-1">Source of Truth</p>
-            </div>
-            
-            <ArrowDown className="w-5 h-5 text-primary/60" />
-            
-            <div className="px-6 py-3 rounded-lg bg-primary/12 border border-primary/25">
-              <div className="flex items-center gap-2">
-                <Search className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-foreground">Auditable, Traceable Reasoning</span>
-              </div>
-            </div>
-            
-            <ArrowDown className="w-5 h-5 text-primary/60" />
-            
-            <div className="px-6 py-3 rounded-lg bg-primary/10 border border-primary/20">
-              <div className="flex items-center gap-2">
-                <Lock className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-foreground">Trust Earned</span>
-              </div>
-            </div>
-            
-            <ArrowDown className="w-5 h-5 text-primary/60" />
-            
-            <div className="px-6 py-3 rounded-lg bg-primary/8 border border-primary/15">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-foreground">Adoption Expands</span>
-              </div>
-            </div>
-            
-            <ArrowDown className="w-5 h-5 text-primary/60" />
-            
-            <div className="px-6 py-3 rounded-lg bg-emerald-100/80 dark:bg-emerald-950/30 border border-emerald-300/50 dark:border-emerald-700/30">
-              <div className="flex items-center gap-2">
-                <Repeat className="w-5 h-5 text-emerald-600" />
-                <span className="font-semibold text-emerald-700 dark:text-emerald-400">Replacement Becomes Inevitable</span>
-              </div>
-            </div>
-          </div>
-          
-          {/* Caption */}
-          <p className="mt-6 text-sm font-medium text-muted-foreground">
-            <span className="text-primary font-semibold">Embed first.</span> Prove accuracy. Earn trust. <span className="text-primary font-semibold">Expand safely.</span>
+        <div className="space-y-4 text-foreground leading-relaxed">
+          <p className="font-medium">
+            Hobson is built for how this market actually adopts technology.
           </p>
-          
-          {/* Moat Statement */}
-          <div className="mt-6 pt-5 border-t border-primary/20">
-            <p className="text-sm text-foreground">
-              <span className="font-bold text-primary">Our moat is earned, not claimed.</span> Through repeated architectural pivots and live operator use, Hobson has learned how to earn trust inside real estate workflows. That execution knowledge compounds faster than competitors can copy.
-            </p>
-          </div>
+          <p>
+            We embed into existing workflows, start at the document layer—the source of truth—and deliver auditable, traceable reasoning. Our architecture and pricing are designed to prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.
+          </p>
+          <p className="font-semibold text-primary">
+            Trust is not a feature. It is the gate to £155B of savings.
+          </p>
         </div>
       </div>
 
-      {/* Addressable Market */}
+      {/* Market Opportunity */}
       <div className="space-y-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2">
-            <Globe className="w-5 h-5 text-emerald-600" />
-            <h4 className="font-semibold text-foreground">Addressable Market</h4>
-          </div>
-          <p className="text-xs text-emerald-600 dark:text-emerald-400 font-medium ml-7">Annual Efficiency Value Unlocked</p>
+        <div className="flex items-center gap-2">
+          <Globe className="w-5 h-5 text-primary" />
+          <h4 className="font-semibold text-foreground">Market Opportunity</h4>
         </div>
         
         <div className="grid grid-cols-3 gap-3">
