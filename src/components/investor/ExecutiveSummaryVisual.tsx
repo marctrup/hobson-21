@@ -2,6 +2,19 @@ import React from 'react';
 import { Brain, Target, Zap, CheckCircle2, Globe, Rocket, Shield, XCircle, AlertTriangle, ArrowDown, FileText, Search, Lock, TrendingUp, Repeat } from 'lucide-react';
 export const ExecutiveSummaryVisual = () => {
   return <div className="space-y-6">
+      {/* The Investment Thesis */}
+      <div className="rounded-xl border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-5 sm:p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Target className="w-5 h-5 text-primary" />
+          <h3 className="text-lg font-bold text-foreground">The Investment Thesis</h3>
+        </div>
+        <div className="space-y-2 text-foreground leading-relaxed">
+          <p>This is not a feature play.</p>
+          <p>It is infrastructure.</p>
+          <p className="font-semibold text-primary">And in this market, trust is the constraint that defines the winner.</p>
+        </div>
+      </div>
+
       {/* Band 1: Market Reality - Why AI Fails */}
       <div className="rounded-xl border border-border bg-muted/30 p-5 sm:p-6">
         <div className="flex items-center gap-2 mb-4">
