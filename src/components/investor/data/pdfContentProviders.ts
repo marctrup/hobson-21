@@ -565,6 +565,11 @@ export const renderPdfContentLines = (
 export const getExecutiveSummaryPdfContent = (): string[] => [
   "Executive Summary - Hobson AI:",
   "",
+  "THE INVESTMENT THESIS:",
+  "This is not a feature play.",
+  "It is infrastructure.",
+  "And in this market, trust is the constraint that defines the winner.",
+  "",
   "WHY AI FAILS IN REAL ESTATE:",
   "",
   "System Replacement - 'NOOOOO':",
