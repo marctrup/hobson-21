@@ -792,10 +792,11 @@ const renderExecutiveSummary = (
   ];
   const thesisPurpleLine = "And in this market, trust is the constraint that defines the winner.";
   
-  // Calculate thesis box height
-  const thesisHeaderHeight = 12;
-  const thesisContentHeight = thesisLines.length * PDF_CONFIG.lineHeight.body + PDF_CONFIG.lineHeight.body + 2; // +2 for extra line
-  const thesisBoxHeight = thesisHeaderHeight + 10 + thesisContentHeight + 10;
+  // Calculate thesis box height - increased spacing
+  const thesisHeaderHeight = 14;
+  const thesisLineSpacing = 8; // Increased from 5
+  const thesisContentHeight = thesisLines.length * thesisLineSpacing + thesisLineSpacing + 4;
+  const thesisBoxHeight = thesisHeaderHeight + 14 + thesisContentHeight + 12;
   
   // Draw gradient-style background (purple tint)
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -807,7 +808,7 @@ const renderExecutiveSummary = (
   doc.roundedRect(margin, yPosition, maxWidth, thesisBoxHeight, 4, 4, "S");
   
   // Header with icon
-  const thesisHeaderY = yPosition + 12;
+  const thesisHeaderY = yPosition + 14;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 12, thesisHeaderY - 2, 3, "F");
   
@@ -816,18 +817,19 @@ const renderExecutiveSummary = (
   doc.setFont("helvetica", "bold");
   doc.text("Investment Rationale", margin + 20, thesisHeaderY);
   
-  // Thesis content
-  let thesisContentY = thesisHeaderY + 14;
+  // Thesis content - more spacing between lines
+  let thesisContentY = thesisHeaderY + 16;
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textDark);
   
   thesisLines.forEach((line) => {
     doc.text(line, margin + 12, thesisContentY);
-    thesisContentY += PDF_CONFIG.lineHeight.body;
+    thesisContentY += thesisLineSpacing;
   });
   
-  // Purple closing line
+  // Purple closing line - extra gap before it
+  thesisContentY += 2;
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
   doc.text(thesisPurpleLine, margin + 12, thesisContentY);
