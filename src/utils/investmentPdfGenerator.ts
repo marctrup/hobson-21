@@ -790,13 +790,33 @@ const renderExecutiveSummary = (
   const col1Items = ["Systems too embedded", "Risk too high", "Cost of failure unacceptable"];
   const col2Items = ["No source transparency", "No audit trail", "Accuracy > speed in regulated decisions"];
 
-  // Calculate inner column box height dynamically
+  // Column layout constants
+  const colWidth = (maxWidth - 20) / 2;
+  const colTextWidth = colWidth - 24; // Account for icon + padding (18px text start + 6px right padding)
   const colHeaderHeight = 14; // Title row inside column
   const colItemLineHeight = 8;
   const colPaddingTop = 10;
   const colPaddingBottom = 6;
-  const maxColItems = Math.max(col1Items.length, col2Items.length);
-  const innerColBoxHeight = colHeaderHeight + colPaddingTop + (maxColItems * colItemLineHeight) + colPaddingBottom;
+
+  // Set font for measurement
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+
+  // Calculate total lines needed for each column (with text wrapping)
+  let col1TotalLines = 0;
+  col1Items.forEach((item) => {
+    const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
+    col1TotalLines += wrappedLines.length;
+  });
+
+  let col2TotalLines = 0;
+  col2Items.forEach((item) => {
+    const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
+    col2TotalLines += wrappedLines.length;
+  });
+
+  const maxColLines = Math.max(col1TotalLines, col2TotalLines);
+  const innerColBoxHeight = colHeaderHeight + colPaddingTop + (maxColLines * colItemLineHeight) + colPaddingBottom;
 
   // Calculate outer box height dynamically
   const outerHeaderHeight = 12; // Header row
@@ -826,7 +846,6 @@ const renderExecutiveSummary = (
   doc.text(sanitizeText("Why AI Fails in Real Estate"), margin + 20, headerY);
 
   // Two columns
-  const colWidth = (maxWidth - 20) / 2;
   const col1X = margin + 10;
   const col2X = margin + colWidth + 15;
   const colY = headerY + headerToColGap;
@@ -851,10 +870,15 @@ const renderExecutiveSummary = (
   doc.setFont("helvetica", "normal");
   let itemY = colY + 24;
   col1Items.forEach((item) => {
-    doc.setFillColor(239, 68, 68);
-    doc.circle(col1X + 12, itemY - 1, 1, "F");
-    doc.text(sanitizeText(item), col1X + 18, itemY);
-    itemY += colItemLineHeight;
+    const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
+    wrappedLines.forEach((line: string, idx: number) => {
+      if (idx === 0) {
+        doc.setFillColor(239, 68, 68);
+        doc.circle(col1X + 12, itemY - 1, 1, "F");
+      }
+      doc.text(line, col1X + 18, itemY);
+      itemY += colItemLineHeight;
+    });
   });
 
   // Column 2: Speed Without Truth
@@ -876,10 +900,15 @@ const renderExecutiveSummary = (
   doc.setFont("helvetica", "normal");
   itemY = colY + 24;
   col2Items.forEach((item) => {
-    doc.setFillColor(239, 68, 68);
-    doc.circle(col2X + 12, itemY - 1, 1, "F");
-    doc.text(sanitizeText(item), col2X + 18, itemY);
-    itemY += colItemLineHeight;
+    const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
+    wrappedLines.forEach((line: string, idx: number) => {
+      if (idx === 0) {
+        doc.setFillColor(239, 68, 68);
+        doc.circle(col2X + 12, itemY - 1, 1, "F");
+      }
+      doc.text(line, col2X + 18, itemY);
+      itemY += colItemLineHeight;
+    });
   });
 
   // Footer text (centered, measured)
