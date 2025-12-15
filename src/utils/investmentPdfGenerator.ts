@@ -786,97 +786,108 @@ const renderExecutiveSummary = (
   const maxWidth = pageWidth - margin * 2;
 
   // ===== WHY AI FAILS IN REAL ESTATE SECTION =====
-  const whyFailsHeight = 85;
-  
+  const whyFailsHeight = 92;
+
   // Draw muted background
   doc.setFillColor(...PDF_CONFIG.bgLight);
   doc.roundedRect(margin, yPosition, maxWidth, whyFailsHeight, 4, 4, "F");
-  
+
   // Draw border
   doc.setDrawColor(...PDF_CONFIG.border);
   doc.setLineWidth(0.5);
   doc.roundedRect(margin, yPosition, maxWidth, whyFailsHeight, 4, 4, "S");
-  
+
   // Header with warning icon
   const headerY = yPosition + 12;
   doc.setFillColor(...PDF_CONFIG.textGray);
   doc.circle(margin + 12, headerY - 2, 3, "F");
-  
+
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Why AI Fails in Real Estate", margin + 20, headerY);
-  
+  doc.text(sanitizeText("Why AI Fails in Real Estate"), margin + 20, headerY);
+
   // Two columns
   const colWidth = (maxWidth - 20) / 2;
   const col1X = margin + 10;
   const col2X = margin + colWidth + 15;
-  let colY = headerY + 14;
-  
+  const colY = headerY + 14;
+
   // Column 1: System Replacement
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.roundedRect(col1X, colY, colWidth, 50, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
   doc.roundedRect(col1X, colY, colWidth, 50, 3, 3, "S");
-  
+
   // X icon (red circle)
   doc.setFillColor(239, 68, 68); // red-500
   doc.circle(col1X + 10, colY + 12, 3, "F");
-  
+
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text("System Replacement → \"NOOOOO\"", col1X + 18, colY + 14);
-  
+  doc.text(sanitizeText("System Replacement -> NOOOOO"), col1X + 18, colY + 14);
+
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   const col1Items = ["Systems too embedded", "Risk too high", "Cost of failure unacceptable"];
   let itemY = colY + 24;
-  col1Items.forEach(item => {
+  col1Items.forEach((item) => {
     doc.setFillColor(239, 68, 68);
     doc.circle(col1X + 12, itemY - 1, 1, "F");
-    doc.text(item, col1X + 18, itemY);
+    doc.text(sanitizeText(item), col1X + 18, itemY);
     itemY += 8;
   });
-  
+
   // Column 2: Speed Without Truth
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.roundedRect(col2X, colY, colWidth, 50, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
   doc.roundedRect(col2X, colY, colWidth, 50, 3, 3, "S");
-  
+
   // X icon (red circle)
   doc.setFillColor(239, 68, 68);
   doc.circle(col2X + 10, colY + 12, 3, "F");
-  
+
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text("Speed Without Truth → Rejected", col2X + 18, colY + 14);
-  
+  doc.text(sanitizeText("Speed Without Truth -> Rejected"), col2X + 18, colY + 14);
+
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
   const col2Items = ["No source transparency", "No audit trail", "Accuracy > speed in regulated decisions"];
   itemY = colY + 24;
-  col2Items.forEach(item => {
+  col2Items.forEach((item) => {
     doc.setFillColor(239, 68, 68);
     doc.circle(col2X + 12, itemY - 1, 1, "F");
-    doc.text(item, col2X + 18, itemY);
+    doc.text(sanitizeText(item), col2X + 18, itemY);
     itemY += 8;
   });
-  
-  // Footer text
+
+  // Footer text (centered, measured)
   const footerY = colY + 58;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text("This market says ", margin + maxWidth / 2 - 30, footerY);
+
+  const footerLeft = sanitizeText("This market says ");
+  const footerNo = sanitizeText("no");
+  const footerRight = sanitizeText(" by default.");
+  const footerWidth = doc.getTextWidth(footerLeft) + doc.getTextWidth(footerNo) + doc.getTextWidth(footerRight);
+  let footerX = margin + (maxWidth - footerWidth) / 2;
+
+  doc.text(footerLeft, footerX, footerY);
+  footerX += doc.getTextWidth(footerLeft);
+
   doc.setTextColor(239, 68, 68);
-  doc.text("no", margin + maxWidth / 2 + 8, footerY);
+  doc.text(footerNo, footerX, footerY);
+  footerX += doc.getTextWidth(footerNo);
+
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(" by default.", margin + maxWidth / 2 + 16, footerY);
-  
+  doc.text(footerRight, footerX, footerY);
+
   yPosition += whyFailsHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== THE HOBSON APPROACH SECTION =====
@@ -884,99 +895,103 @@ const renderExecutiveSummary = (
     "Hobson is built for how this market actually adopts technology.",
     "We embed into existing workflows, start at the document layer—the source of truth—and deliver auditable, traceable reasoning. Our architecture and pricing are designed to prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.",
   ];
-  
+
   setBodyFont(doc);
   const lineMaxWidth = maxWidth - BOX_SIZING.paddingX * 2;
-  
+
   // Calculate height
   let totalLines = 0;
-  approachParagraphs.forEach(para => {
-    const lines = doc.splitTextToSize(para, lineMaxWidth);
+  approachParagraphs.forEach((para) => {
+    const lines = doc.splitTextToSize(sanitizeText(para), lineMaxWidth);
     totalLines += lines.length;
   });
-  const approachHeight = 20 + (totalLines * PDF_CONFIG.lineHeight.body) + 8 + 20; // header + text + gap + closing
-  
+  const approachHeight = 20 + totalLines * PDF_CONFIG.lineHeight.body + 8 + 20; // header + text + gap + closing
+
   // Draw gradient background
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, approachHeight, 4, 4, "F");
-  
+
   // Draw border
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(0.5);
   doc.roundedRect(margin, yPosition, maxWidth, approachHeight, 4, 4, "S");
-  
+
   // Header with shield icon
   const approachHeaderY = yPosition + 14;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 12, approachHeaderY - 2, 3, "F");
-  
+
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("The Hobson Approach", margin + 20, approachHeaderY);
-  
+  doc.text(sanitizeText("The Hobson Approach"), margin + 20, approachHeaderY);
+
   // Paragraphs
   let textY = approachHeaderY + 12;
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
-  
+
   // First paragraph (bold)
   doc.setFont("helvetica", "bold");
-  const para1Lines = doc.splitTextToSize(approachParagraphs[0], lineMaxWidth);
+  const para1Lines = doc.splitTextToSize(sanitizeText(approachParagraphs[0]), lineMaxWidth);
   para1Lines.forEach((line: string) => {
     doc.text(line, margin + BOX_SIZING.paddingX, textY);
     textY += PDF_CONFIG.lineHeight.body;
   });
-  
+
   textY += 3; // gap between paragraphs
-  
+
   // Second paragraph (normal)
   doc.setFont("helvetica", "normal");
-  const para2Lines = doc.splitTextToSize(approachParagraphs[1], lineMaxWidth);
+  const para2Lines = doc.splitTextToSize(sanitizeText(approachParagraphs[1]), lineMaxWidth);
   para2Lines.forEach((line: string) => {
     doc.text(line, margin + BOX_SIZING.paddingX, textY);
     textY += PDF_CONFIG.lineHeight.body;
   });
-  
+
   textY += 4;
-  
+
   // Closing statement (bold purple)
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.text("Trust is not a feature. It is the gate to GBP 155B of savings.", margin + BOX_SIZING.paddingX, textY);
-  
+  doc.text(sanitizeText("Trust is not a feature. It is the gate to GBP 155B of savings."), margin + BOX_SIZING.paddingX, textY);
+
   yPosition += approachHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== HOBSON DEFENSIBLE MOAT SECTION =====
-  const moatContent = "In real estate AI, the hardest problem is not intelligence - it is earning permission to use it. Clients are sceptical by default. Hobson's proprietary advantage is knowing how to earn that permission, repeatedly, at scale.";
+  const moatContent = sanitizeText(
+    "In real estate AI, the hardest problem is not intelligence - it is earning permission to use it. Clients are sceptical by default. Hobson's proprietary advantage is knowing how to earn that permission, repeatedly, at scale."
+  );
   const moatLines = doc.splitTextToSize(moatContent, lineMaxWidth);
-  const moatHeight = 14 + (moatLines.length * PDF_CONFIG.lineHeight.body) + BOX_SIZING.paddingTop + BOX_SIZING.paddingBottom;
-  
+
+  // Height must cover header + content + bottom padding
+  const moatHeight = 30 + moatLines.length * PDF_CONFIG.lineHeight.body;
+
   // Check for page break
   if (yPosition + moatHeight > pageHeight - margin) {
     doc.addPage();
     yPosition = margin;
   }
-  
+
   // Moat box background
   doc.setFillColor(...PDF_CONFIG.bgLight);
   doc.roundedRect(margin, yPosition, maxWidth, moatHeight, 4, 4, "F");
-  
+
   // Border
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(0.5);
   doc.roundedRect(margin, yPosition, maxWidth, moatHeight, 4, 4, "S");
-  
+
   // Header with lock icon
   const moatHeaderY = yPosition + 14;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 12, moatHeaderY - 2, 3, "F");
-  
+
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson Defensible Moat", margin + 20, moatHeaderY);
-  
+  doc.text(sanitizeText("Hobson Defensible Moat"), margin + 20, moatHeaderY);
+
   // Content
   let moatTextY = moatHeaderY + 12;
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -986,7 +1001,7 @@ const renderExecutiveSummary = (
     doc.text(line, margin + BOX_SIZING.paddingX, moatTextY);
     moatTextY += PDF_CONFIG.lineHeight.body;
   });
-  
+
   yPosition += moatHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== MARKET OPPORTUNITY SECTION =====
