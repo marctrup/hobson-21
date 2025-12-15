@@ -47,9 +47,10 @@ export const ExecutiveSummaryVisual = () => {
               <p className="text-xs text-primary font-semibold">The Real Moat</p>
             </div>
           </div>
-          <p className="text-base sm:text-lg font-medium text-foreground leading-relaxed">
-            <span className="text-primary font-bold">Hobson's moat is execution-led.</span> In real estate AI, intelligence is easy to build—<span className="text-primary font-bold">permission to deploy is not</span>. Our proprietary advantage is knowing how to earn trust, fit into real workflows, and compound domain learning faster than competitors can copy.
-          </p>
+          <div className="text-base sm:text-lg font-medium text-foreground leading-relaxed space-y-2">
+            <p className="text-primary font-bold">Our moat is earned, not claimed.</p>
+            <p>Through repeated architectural pivots and live operator use, Hobson has learned how to earn trust inside real estate workflows. That execution knowledge <span className="text-primary font-bold">compounds faster than competitors can copy</span>—and is what unlocks adoption at scale.</p>
+          </div>
         </div>
       </div>
 
