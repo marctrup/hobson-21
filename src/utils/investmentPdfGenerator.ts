@@ -910,7 +910,7 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt standardized
   doc.setFont("helvetica", "normal");
-  doc.text("Annual Efficiency Savings", margin + 12, yPosition);
+  doc.text("Annual Efficiency Value Unlocked", margin + 12, yPosition);
   yPosition += PDF_CONFIG.spacing.titleToContent; // 6pt gap before cards
   
   // Three market cards - dynamically sized
@@ -919,9 +919,9 @@ const renderExecutiveSummary = (
   const cardSpacing = 5;
   
   const marketData = [
-    { value: "GBP 1.41B", label: "UK Savings" },
-    { value: "GBP 15.5B", label: "European Savings" },
-    { value: "GBP 155.6B", label: "Global Savings" },
+    { value: "GBP 1.41B", label: "UK" },
+    { value: "GBP 15.5B", label: "Europe" },
+    { value: "GBP 155.6B", label: "Global" },
   ];
   
   marketData.forEach((data, idx) => {
@@ -951,13 +951,53 @@ const renderExecutiveSummary = (
   
   yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
   
-  // Market description text
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt standardized
+  // Market description callout box with left border
+  const calloutHeight = 28;
+  const calloutX = margin;
+  const calloutWidth = maxWidth;
+  
+  // Draw callout background
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(calloutX, yPosition, calloutWidth, calloutHeight, 3, 3, "F");
+  
+  // Draw left border (4px purple)
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(calloutX, yPosition, 3, calloutHeight, 1.5, 1.5, "F");
+  
+  // Callout text with highlights
+  const calloutTextX = calloutX + 10;
+  let calloutTextY = yPosition + 8;
+  
+  // Line 1: Bold opening + highlighted text
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Real estate operations are structurally inefficient.", calloutTextX, calloutTextY);
+  
+  // Line 2
+  calloutTextY += 5;
   doc.setFont("helvetica", "normal");
-  const marketDesc = "Real estate professionals lose 20% of admin time to document chaos. These figures represent the annual savings Hobson can unlock - and the opportunity we're built to capture.";
-  yPosition = renderSpacedText(doc, marketDesc, margin, yPosition, maxWidth, PDF_CONFIG.lineHeight.body);
-  yPosition += PDF_CONFIG.spacing.sectionGap;
+  doc.text("Over ", calloutTextX, calloutTextY);
+  const overWidth = doc.getTextWidth("Over ");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text("20% of professional time", calloutTextX + overWidth, calloutTextY);
+  const timeWidth = doc.getTextWidth("20% of professional time");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "normal");
+  doc.text(" is lost to document handling. Hobson converts this into ", calloutTextX + overWidth + timeWidth, calloutTextY);
+  
+  // Line 3
+  calloutTextY += 5;
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text("permanent operating leverage", calloutTextX, calloutTextY);
+  const levWidth = doc.getTextWidth("permanent operating leverage");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "normal");
+  doc.text("—value AI-native operators will capture.", calloutTextX + levWidth, calloutTextY);
+  
+  yPosition += calloutHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== TRACTION & MILESTONES SECTION =====
   // Check for page break
@@ -973,19 +1013,19 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle); // 12pt standardized
   doc.setFont("helvetica", "bold");
-  doc.text("Traction & Milestones", margin + 14, yPosition);
+  doc.text("Traction & Execution Momentum", margin + 14, yPosition);
   yPosition += 14;
   
-  // Traction cards in 2x2 grid - matches: bg-blue-50/50 border border-blue-100 rounded-lg
+  // Traction cards in 2x2 grid + 1 full-width - matches updated UI
   const tractionCardWidth = (maxWidth - 10) / 2;
   const tractionCardHeight = 38; // Increased for better spacing
   const tractionSpacing = 8;
   
   const tractionData = [
-    { title: "MVP Launch Q1 2026", subtitle: "Validated with 4 real-world partners" },
-    { title: "98% Model Accuracy", subtitle: "Tested on real industry data" },
-    { title: "Multi-Document Support", subtitle: "Legal, compliance, operational reports" },
-    { title: "Domain-Trained AI", subtitle: "Built for reliability and depth" },
+    { title: "MVP Launch — Q1 2026", subtitle: "On track, with scope defined by live partner workflows" },
+    { title: "Validated with 4 Operating Partners", subtitle: "Use cases proven inside real real estate organisations" },
+    { title: "98% Model Accuracy", subtitle: "Measured on proprietary, industry-specific datasets" },
+    { title: "Multi-Document Reasoning", subtitle: "Legal, compliance, and operational documents, analysed together" },
   ];
   
   tractionData.forEach((data, idx) => {
@@ -1021,7 +1061,31 @@ const renderExecutiveSummary = (
     doc.text(data.subtitle, cardX + 20, cardY + 28);
   });
   
-  yPosition += 2 * (tractionCardHeight + tractionSpacing) + 12;
+  yPosition += 2 * (tractionCardHeight + tractionSpacing);
+  
+  // Domain-Trained AI - full-width card
+  const fullWidthCardY = yPosition;
+  doc.setFillColor(...PDF_CONFIG.blueBg);
+  doc.roundedRect(margin, fullWidthCardY, maxWidth, tractionCardHeight, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.blueBorder);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, fullWidthCardY, maxWidth, tractionCardHeight, 3, 3, "S");
+  
+  const domainTitleY = fullWidthCardY + 16;
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 10, domainTitleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Domain-Trained AI", margin + 20, domainTitleY);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Purpose-built for real estate complexity, reliability, and auditability", margin + 20, fullWidthCardY + 28);
+  
+  yPosition += tractionCardHeight + 12;
 
   return yPosition;
 };
