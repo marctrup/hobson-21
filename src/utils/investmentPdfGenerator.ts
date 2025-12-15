@@ -1830,30 +1830,56 @@ const renderUKMarketAssumptions = (
   doc.text("Evidence-based framework for market sizing", margin, yPosition);
   yPosition += 12;
 
-  // Section 1: Market Size
-  yPosition = checkPageBreak(doc, yPosition, 40, pageHeight, margin);
-  renderContentCard(doc, margin, yPosition, maxWidth, 36, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+  // Section 1: Market Size (dynamic height + wrap-safe)
+  const statsLeftX = margin + 12;
+  const statsRightX = margin + maxWidth / 2 + 8;
+  const statsColWidth = maxWidth / 2 - 20;
+
+  const leftStat = "5.6M";
+  const leftLabel = "Total UK businesses";
+  const rightStat = "235,200";
+  const rightLabel = "Real estate businesses (4.2%)";
+
+  setBodyFont(doc);
+  const leftLabelLines = doc.splitTextToSize(sanitizeText(leftLabel), statsColWidth);
+  const rightLabelLines = doc.splitTextToSize(sanitizeText(rightLabel), statsColWidth);
+  const labelLineHeight = PDF_CONFIG.lineHeight.body;
+  const maxLabelLines = Math.max(leftLabelLines.length, rightLabelLines.length);
+
+  const section1Height = Math.max(36, 36 + (maxLabelLines * labelLineHeight) + 6);
+
+  yPosition = checkPageBreak(doc, yPosition, section1Height + 8, pageHeight, margin);
+  const statsY = yPosition + 28;
+  const labelY = statsY + 8;
+
+  renderContentCard(doc, margin, yPosition, maxWidth, section1Height, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("1. Size of the UK Real Estate Business Market", margin + 16, yPosition + 12);
-  
-  // Stats row
+
+  // Left stat block
   setStatFont(doc);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("5.6M", margin + 12, yPosition + 28);
+  doc.text(leftStat, statsLeftX, statsY);
   setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("Total UK businesses", margin + 36, yPosition + 28);
-  
+  leftLabelLines.forEach((line: string, idx: number) => {
+    doc.text(line, statsLeftX, labelY + idx * labelLineHeight);
+  });
+
+  // Right stat block
   setStatFont(doc);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("235,200", margin + maxWidth / 2, yPosition + 28);
+  doc.text(rightStat, statsRightX, statsY);
   setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("Real estate businesses (4.2%)", margin + maxWidth / 2 + 38, yPosition + 28);
-  yPosition += 44;
+  rightLabelLines.forEach((line: string, idx: number) => {
+    doc.text(line, statsRightX, labelY + idx * labelLineHeight);
+  });
+
+  yPosition += section1Height + 8;
 
   // Section 2: Business Size Breakdown - calculate dynamic height
   const sizeData = [
