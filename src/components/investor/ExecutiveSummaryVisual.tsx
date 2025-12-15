@@ -100,7 +100,7 @@ export const ExecutiveSummaryVisual = () => {
           <h3 className="text-lg font-bold text-foreground">Hobson Defensible Moat</h3>
         </div>
         <div className="space-y-2 text-foreground leading-relaxed">
-          <p className="font-semibold">Our moat is earned execution.</p>
+          <p className="font-semibold">Our moat is built under real-world constraints</p>
           <p>
         </p>
           <p className="font-semibold text-primary">Hard to copy. Impossible to shortcut.</p>
