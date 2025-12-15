@@ -1014,9 +1014,9 @@ const renderExecutiveSummary = (
   yPosition += approachHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== HOBSON DEFENSIBLE MOAT SECTION =====
-  const moatHeadline = "Our moat is execution-driven.";
+  const moatHeadline = "Our moat is earned execution.";
   const moatBody = sanitizeText(
-    "Hobson's AI architecture has been shaped through trial and error on real client data and real operator resistance. We understand where real estate teams hesitate, why they distrust AI, and how to earn trust without forcing system change. That applied knowledge compounds with every customer - and is extremely difficult to replicate."
+    "Trust-first architecture, shaped by real client use, domain expertise, and delivery in a sceptical market. Hard to copy. Impossible to shortcut."
   );
   const moatHeadlineLines = doc.splitTextToSize(moatHeadline, lineMaxWidth);
   const moatBodyLines = doc.splitTextToSize(moatBody, lineMaxWidth);
