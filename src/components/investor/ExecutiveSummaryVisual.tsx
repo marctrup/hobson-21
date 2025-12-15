@@ -19,16 +19,16 @@ export const ExecutiveSummaryVisual = () => {
           </div>
           <div className="space-y-4 text-foreground leading-relaxed">
             <p>
-              Hobson is the <span className="font-semibold text-primary">trusted intelligence layer</span> real estate operations must adopt to remain competitive. As portfolios grow and regulation tightens, manual document work has become a <span className="font-semibold text-primary">structural bottleneck</span>—driving cost, hidden risk, and slow decisions.
+              Hobson is the <span className="font-semibold text-primary">trusted intelligence layer</span> real estate operations must adopt to remain competitive. As portfolios grow and regulation tightens, manual document work has become a <span className="font-semibold text-primary">structural bottleneck</span>—driving cost, hidden risk, and slow decision-making.
             </p>
             <p>
-              AI platforms sell the dream but fail in this market because they sell on system replacement. The risk is too high, the systems too embedded, and the cost of error too severe. At the same time, operators do not trust AI that cannot prove where its answers come from. Speed without truth is a liability.
+              Most AI platforms fail in this market for two reasons. First, they demand system replacement—and real estate operators respond with "nooooo." The risk is too high, systems are too embedded, and the cost of failure is unacceptable. Second, they prioritise speed over truth. AI that cannot prove where its answers come from is not trusted. In this market, <span className="font-semibold text-primary">speed without accuracy is a liability</span>.
             </p>
             <p>
-              Hobson takes the only viable path. We embed into existing workflows, start at the document layer—the source of truth—and prove accuracy through auditable, traceable reasoning. Trust is earned first, adoption follows, and replacement only happens when it is safe and inevitable.
+              Hobson is built around these realities. Our architecture embeds into existing workflows, starts at the document layer—the source of truth—and delivers auditable, traceable reasoning. Our pricing and deployment reflect how customers actually adopt technology: prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.
             </p>
             <p>
-              This <span className="font-semibold text-primary">trust-first approach</span> unlocks over <span className="font-semibold text-primary">£155B</span> in global annual efficiency value and creates the foundation for a scalable intelligence platform. No shortcuts. Accuracy before autonomy. Trust before scale.
+              This <span className="font-semibold text-primary">trust-first strategy</span> unlocks over <span className="font-semibold text-primary">£155B</span> in global annual efficiency value and establishes the foundation for a scalable intelligence platform.
             </p>
           </div>
         </div>
