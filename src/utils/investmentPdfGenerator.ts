@@ -1065,15 +1065,17 @@ const renderExecutiveSummary = (
   yPosition += approachHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== HOBSON DEFENSIBLE MOAT SECTION =====
-  const moatHeadline = "Our moat is earned execution.";
+  const moatHeadline = "Our moat is built under real-world constraints";
   const moatBody = sanitizeText(
-    "Trust-first architecture, shaped by real client use, domain expertise, and delivery in a sceptical market. Hard to copy. Impossible to shortcut."
+    "Hobson's trust-first architecture is the result of real client deployment, repeated architectural iteration, and deep domain knowledge of how real estate operators actually adopt technology. This execution knowledge compounds with every deployment and cannot be replicated without years of delivery inside a sceptical, regulated market."
   );
+  const moatClosing = "Hard to copy. Impossible to shortcut.";
   const moatHeadlineLines = doc.splitTextToSize(moatHeadline, lineMaxWidth);
   const moatBodyLines = doc.splitTextToSize(moatBody, lineMaxWidth);
+  const moatClosingLines = doc.splitTextToSize(moatClosing, lineMaxWidth);
 
-  // Height must cover header + headline + body + bottom padding
-  const moatHeight = 30 + (moatHeadlineLines.length + moatBodyLines.length) * PDF_CONFIG.lineHeight.body + 4;
+  // Height must cover header + headline + body + closing + bottom padding
+  const moatHeight = 30 + (moatHeadlineLines.length + moatBodyLines.length + moatClosingLines.length) * PDF_CONFIG.lineHeight.body + 8;
 
   // Check for page break
   if (yPosition + moatHeight > pageHeight - margin) {
@@ -1114,7 +1116,18 @@ const renderExecutiveSummary = (
 
   // Body (normal)
   doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.textGray);
   moatBodyLines.forEach((line: string) => {
+    doc.text(line, margin + BOX_SIZING.paddingX, moatTextY);
+    moatTextY += PDF_CONFIG.lineHeight.body;
+  });
+
+  moatTextY += 4; // Gap before closing
+
+  // Closing (purple bold)
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  moatClosingLines.forEach((line: string) => {
     doc.text(line, margin + BOX_SIZING.paddingX, moatTextY);
     moatTextY += PDF_CONFIG.lineHeight.body;
   });
