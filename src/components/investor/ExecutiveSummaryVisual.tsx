@@ -48,9 +48,11 @@ export const ExecutiveSummaryVisual = () => {
           </div>
         </div>
         
-        <p className="text-sm text-muted-foreground">
-          Real estate operations are structurally inefficient. Over 20% of professional time is lost to document handling, verification, and search. Hobson converts this wasted cost into permanent operating leverage. These figures represent recurring, defensible value that AI-native operators will capture—and legacy workflows will forfeit.
-        </p>
+        <div className="relative p-4 rounded-lg bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-l-4 border-primary">
+          <p className="text-sm text-foreground leading-relaxed">
+            <span className="font-semibold">Real estate operations are structurally inefficient.</span> Over <span className="font-semibold text-primary">20% of professional time</span> is lost to document handling, verification, and search. Hobson converts this wasted cost into <span className="font-semibold text-primary">permanent operating leverage</span>. These figures represent recurring, defensible value that AI-native operators will capture—and legacy workflows will forfeit.
+          </p>
+        </div>
       </div>
 
       {/* Traction & Execution Momentum */}
