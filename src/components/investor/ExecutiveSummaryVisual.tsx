@@ -1,9 +1,9 @@
 import React from 'react';
-import { Brain, Target, Zap, CheckCircle2, Globe, Rocket } from 'lucide-react';
+import { Brain, Target, Zap, CheckCircle2, Globe, Rocket, Shield } from 'lucide-react';
 
 export const ExecutiveSummaryVisual = () => {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Hero Statement */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 p-6 sm:p-8 border border-primary/20">
         <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
@@ -31,6 +31,25 @@ export const ExecutiveSummaryVisual = () => {
               <span className="font-semibold text-primary">Trust is the gate to the £155B opportunity.</span> Hobson starts at the document layer to earn it—then expands into higher-order intelligence as customers allow deeper adoption, unlocking increasing layers of value.
             </p>
           </div>
+        </div>
+      </div>
+
+      {/* Proprietary Advantage */}
+      <div className="relative overflow-hidden rounded-xl border-2 border-primary/30 bg-gradient-to-r from-primary/5 via-background to-primary/5">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
+        <div className="relative p-5 sm:p-6">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center">
+              <Shield className="w-5 h-5 text-primary" />
+            </div>
+            <div>
+              <h4 className="font-bold text-foreground">Proprietary Advantage</h4>
+              <p className="text-xs text-primary font-semibold">The Real Moat</p>
+            </div>
+          </div>
+          <p className="text-base sm:text-lg font-medium text-foreground leading-relaxed">
+            Our moat is <span className="text-primary font-bold">execution-driven</span>: trust, workflow fit, and domain learning that <span className="text-primary font-bold">compounds faster than competitors can copy</span>.
+          </p>
         </div>
       </div>
 
