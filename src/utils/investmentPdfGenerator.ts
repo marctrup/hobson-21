@@ -1014,13 +1014,15 @@ const renderExecutiveSummary = (
   yPosition += approachHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== HOBSON DEFENSIBLE MOAT SECTION =====
-  const moatContent = sanitizeText(
-    "In real estate AI, the hardest problem is not intelligence - it is earning permission to use it. Clients are sceptical by default. Hobson's proprietary advantage is knowing how to earn that permission, repeatedly, at scale."
+  const moatHeadline = "Our moat is execution-driven.";
+  const moatBody = sanitizeText(
+    "Hobson's AI architecture has been shaped through trial and error on real client data and real operator resistance. We understand where real estate teams hesitate, why they distrust AI, and how to earn trust without forcing system change. That applied knowledge compounds with every customer - and is extremely difficult to replicate."
   );
-  const moatLines = doc.splitTextToSize(moatContent, lineMaxWidth);
+  const moatHeadlineLines = doc.splitTextToSize(moatHeadline, lineMaxWidth);
+  const moatBodyLines = doc.splitTextToSize(moatBody, lineMaxWidth);
 
-  // Height must cover header + content + bottom padding
-  const moatHeight = 30 + moatLines.length * PDF_CONFIG.lineHeight.body;
+  // Height must cover header + headline + body + bottom padding
+  const moatHeight = 30 + (moatHeadlineLines.length + moatBodyLines.length) * PDF_CONFIG.lineHeight.body + 4;
 
   // Check for page break
   if (yPosition + moatHeight > pageHeight - margin) {
@@ -1047,12 +1049,21 @@ const renderExecutiveSummary = (
   doc.setFont("helvetica", "bold");
   doc.text(sanitizeText("Hobson Defensible Moat"), margin + 20, moatHeaderY);
 
-  // Content
+  // Headline (bold)
   let moatTextY = moatHeaderY + 12;
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
+  doc.setFont("helvetica", "bold");
+  moatHeadlineLines.forEach((line: string) => {
+    doc.text(line, margin + BOX_SIZING.paddingX, moatTextY);
+    moatTextY += PDF_CONFIG.lineHeight.body;
+  });
+
+  moatTextY += 2; // Small gap
+
+  // Body (normal)
   doc.setFont("helvetica", "normal");
-  moatLines.forEach((line: string) => {
+  moatBodyLines.forEach((line: string) => {
     doc.text(line, margin + BOX_SIZING.paddingX, moatTextY);
     moatTextY += PDF_CONFIG.lineHeight.body;
   });
