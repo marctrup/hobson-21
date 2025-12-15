@@ -99,10 +99,11 @@ export const ExecutiveSummaryVisual = () => {
           <Lock className="w-5 h-5 text-primary" />
           <h3 className="text-lg font-bold text-foreground">Hobson Defensible Moat</h3>
         </div>
-        <div className="space-y-2 text-foreground leading-relaxed">
+        <div className="space-y-3 text-foreground leading-relaxed">
           <p className="font-semibold">Our moat is built under real-world constraints</p>
-          <p>
-        </p>
+          <p className="text-sm text-muted-foreground">
+            Hobson's trust-first architecture is the result of real client deployment, repeated architectural iteration, and deep domain knowledge of how real estate operators actually adopt technology. This execution knowledge compounds with every deployment and cannot be replicated without years of delivery inside a sceptical, regulated market.
+          </p>
           <p className="font-semibold text-primary">Hard to copy. Impossible to shortcut.</p>
         </div>
       </div>
