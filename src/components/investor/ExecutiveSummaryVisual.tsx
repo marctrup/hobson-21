@@ -82,6 +82,19 @@ export const ExecutiveSummaryVisual = () => {
         </div>
       </div>
 
+      {/* Hobson Defensible Moat */}
+      <div className="rounded-xl border border-primary/20 bg-muted/30 p-5 sm:p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Lock className="w-5 h-5 text-primary" />
+          <h3 className="text-lg font-bold text-foreground">Hobson Defensible Moat</h3>
+        </div>
+        <p className="text-foreground leading-relaxed text-center">
+          In real estate AI, the hardest problem is not intelligence—it is earning permission to use it. 
+          Clients are sceptical by default. Hobson's proprietary advantage is knowing how to earn that permission, 
+          repeatedly, at scale.
+        </p>
+      </div>
+
       {/* Market Opportunity */}
       <div className="space-y-4">
         <div className="flex items-center gap-2">

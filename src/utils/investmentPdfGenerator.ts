@@ -947,6 +947,50 @@ const renderExecutiveSummary = (
   
   yPosition += approachHeight + PDF_CONFIG.spacing.sectionGap;
 
+  // ===== HOBSON DEFENSIBLE MOAT SECTION =====
+  const moatContent = "In real estate AI, the hardest problem is not intelligence - it is earning permission to use it. Clients are sceptical by default. Hobson's proprietary advantage is knowing how to earn that permission, repeatedly, at scale.";
+  const moatLines = doc.splitTextToSize(moatContent, lineMaxWidth);
+  const moatHeight = 14 + (moatLines.length * PDF_CONFIG.lineHeight.body) + BOX_SIZING.paddingTop + BOX_SIZING.paddingBottom;
+  
+  // Check for page break
+  if (yPosition + moatHeight > pageHeight - margin) {
+    doc.addPage();
+    yPosition = margin;
+  }
+  
+  // Moat box background
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, moatHeight, 4, 4, "F");
+  
+  // Border
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(margin, yPosition, maxWidth, moatHeight, 4, 4, "S");
+  
+  // Header with lock icon
+  const moatHeaderY = yPosition + 14;
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 12, moatHeaderY - 2, 3, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Hobson Defensible Moat", margin + 20, moatHeaderY);
+  
+  // Content
+  let moatTextY = moatHeaderY + 12;
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodyFont(doc);
+  doc.setFont("helvetica", "normal");
+  moatLines.forEach((line: string) => {
+    doc.text(line, margin + BOX_SIZING.paddingX, moatTextY);
+    moatTextY += PDF_CONFIG.lineHeight.body;
+  });
+  
+  yPosition += moatHeight + PDF_CONFIG.spacing.sectionGap;
+
+  // ===== MARKET OPPORTUNITY SECTION =====
+
   // ===== MARKET OPPORTUNITY SECTION =====
   // Check for page break
   if (yPosition > pageHeight - 100) {
