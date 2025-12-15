@@ -773,7 +773,7 @@ const renderCompetitorTable = (
 
 /**
  * Render Executive Summary with visual styling matching on-screen component
- * Replicates: Hero card (purple gradient), Addressable Market (emerald cards), Traction (blue cards)
+ * Replicates: Why AI Fails section, The Hobson Approach, Market Opportunity, Traction cards
  */
 const renderExecutiveSummary = (
   doc: jsPDF,
@@ -785,135 +785,188 @@ const renderExecutiveSummary = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // ===== HERO STATEMENT SECTION =====
-  // Multi-paragraph description for better readability
-  const heroParagraphs = [
-    "Hobson is the trusted intelligence layer real estate operations must adopt to remain competitive. As portfolios grow and regulation tightens, manual document work has become a structural bottleneck—driving cost, hidden risk, and slow decision-making.",
-    "Most AI platforms fail in this market for two reasons. First, they demand system replacement—and real estate operators respond with \"nooooo.\" The risk is too high, systems are too embedded, and the cost of failure is unacceptable. Second, they prioritise speed over truth. AI that cannot prove where its answers come from is not trusted. In this market, speed without accuracy is a liability.",
-    "Hobson is built around these realities. Our architecture embeds into existing workflows, starts at the document layer—the source of truth—and delivers auditable, traceable reasoning. Our pricing and deployment reflect how customers actually adopt technology: prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.",
-    "Trust is the gate to the £155B opportunity. Hobson starts at the document layer to earn it—then expands into higher-order intelligence as customers allow deeper adoption, unlocking increasing layers of value."
+  // ===== WHY AI FAILS IN REAL ESTATE SECTION =====
+  const whyFailsHeight = 85;
+  
+  // Draw muted background
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, whyFailsHeight, 4, 4, "F");
+  
+  // Draw border
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(margin, yPosition, maxWidth, whyFailsHeight, 4, 4, "S");
+  
+  // Header with warning icon
+  const headerY = yPosition + 12;
+  doc.setFillColor(...PDF_CONFIG.textGray);
+  doc.circle(margin + 12, headerY - 2, 3, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Why AI Fails in Real Estate", margin + 20, headerY);
+  
+  // Two columns
+  const colWidth = (maxWidth - 20) / 2;
+  const col1X = margin + 10;
+  const col2X = margin + colWidth + 15;
+  let colY = headerY + 14;
+  
+  // Column 1: System Replacement
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.roundedRect(col1X, colY, colWidth, 50, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.roundedRect(col1X, colY, colWidth, 50, 3, 3, "S");
+  
+  // X icon (red circle)
+  doc.setFillColor(239, 68, 68); // red-500
+  doc.circle(col1X + 10, colY + 12, 3, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("System Replacement → \"NOOOOO\"", col1X + 18, colY + 14);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const col1Items = ["Systems too embedded", "Risk too high", "Cost of failure unacceptable"];
+  let itemY = colY + 24;
+  col1Items.forEach(item => {
+    doc.setFillColor(239, 68, 68);
+    doc.circle(col1X + 12, itemY - 1, 1, "F");
+    doc.text(item, col1X + 18, itemY);
+    itemY += 8;
+  });
+  
+  // Column 2: Speed Without Truth
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.roundedRect(col2X, colY, colWidth, 50, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.roundedRect(col2X, colY, colWidth, 50, 3, 3, "S");
+  
+  // X icon (red circle)
+  doc.setFillColor(239, 68, 68);
+  doc.circle(col2X + 10, colY + 12, 3, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Speed Without Truth → Rejected", col2X + 18, colY + 14);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  const col2Items = ["No source transparency", "No audit trail", "Accuracy > speed in regulated decisions"];
+  itemY = colY + 24;
+  col2Items.forEach(item => {
+    doc.setFillColor(239, 68, 68);
+    doc.circle(col2X + 12, itemY - 1, 1, "F");
+    doc.text(item, col2X + 18, itemY);
+    itemY += 8;
+  });
+  
+  // Footer text
+  const footerY = colY + 58;
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("This market says ", margin + maxWidth / 2 - 30, footerY);
+  doc.setTextColor(239, 68, 68);
+  doc.text("no", margin + maxWidth / 2 + 8, footerY);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text(" by default.", margin + maxWidth / 2 + 16, footerY);
+  
+  yPosition += whyFailsHeight + PDF_CONFIG.spacing.sectionGap;
+
+  // ===== THE HOBSON APPROACH SECTION =====
+  const approachParagraphs = [
+    "Hobson is built for how this market actually adopts technology.",
+    "We embed into existing workflows, start at the document layer—the source of truth—and deliver auditable, traceable reasoning. Our architecture and pricing are designed to prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.",
   ];
   
-  // Set font before measuring
   setBodyFont(doc);
-  
-  // Calculate dynamic height based on all paragraphs
   const lineMaxWidth = maxWidth - BOX_SIZING.paddingX * 2;
-  let totalTextLines = 0;
-  heroParagraphs.forEach(para => {
-    const wrappedLines = doc.splitTextToSize(para, lineMaxWidth);
-    totalTextLines += wrappedLines.length;
-  });
-  // Add spacing for gaps between paragraphs (3 gaps between 4 paragraphs)
-  const paragraphGapCount = heroParagraphs.length - 1;
-  const heroHeight = BOX_SIZING.paddingTop + BOX_SIZING.iconSize + BOX_SIZING.subtitleGap + 8 + 
-    (totalTextLines * PDF_CONFIG.lineHeight.body) + 
-    (paragraphGapCount * 4) + // Gap between paragraphs
-    BOX_SIZING.paddingBottom + 6;
   
-  // Draw gradient background (simulate with solid light purple)
-  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-  doc.roundedRect(margin, yPosition, maxWidth, heroHeight, 4, 4, "F");
+  // Calculate height
+  let totalLines = 0;
+  approachParagraphs.forEach(para => {
+    const lines = doc.splitTextToSize(para, lineMaxWidth);
+    totalLines += lines.length;
+  });
+  const approachHeight = 20 + (totalLines * PDF_CONFIG.lineHeight.body) + 8 + 20; // header + text + gap + closing
+  
+  // Draw gradient background
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, approachHeight, 4, 4, "F");
   
   // Draw border
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(0.5);
-  doc.roundedRect(margin, yPosition, maxWidth, heroHeight, 4, 4, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, approachHeight, 4, 4, "S");
   
-  // Brain icon - simple filled rounded square with purple color
-  const iconX = margin + BOX_SIZING.paddingX;
-  const iconY = yPosition + BOX_SIZING.paddingTop;
+  // Header with shield icon
+  const approachHeaderY = yPosition + 14;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.roundedRect(iconX, iconY, BOX_SIZING.iconSize, BOX_SIZING.iconSize, 2, 2, "F");
+  doc.circle(margin + 12, approachHeaderY - 2, 3, "F");
   
-  // Title: Hobson AI (positioned after icon)
-  const textStartX = iconX + BOX_SIZING.iconSize + BOX_SIZING.iconGap;
   doc.setTextColor(...PDF_CONFIG.textDark);
-  setSectionTitleFont(doc);
-  doc.text("Hobson AI", textStartX, iconY + 5);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("The Hobson Approach", margin + 20, approachHeaderY);
   
-  // Subtitle: Specialised AI for Real Estate
-  const subtitleY = iconY + 5 + BOX_SIZING.subtitleGap + 2;
-  doc.setTextColor(...PDF_CONFIG.textGray);
+  // Paragraphs
+  let textY = approachHeaderY + 12;
+  doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
-  doc.text("Specialised AI for Real Estate", textStartX, subtitleY);
   
-  // Main description text - render each paragraph with spacing
-  let descY = subtitleY + PDF_CONFIG.subtitleToBullets + 6;
-  const highlightPhrases = ["trusted intelligence layer", "structural bottleneck", "trust-first approach", "£155B"];
-  
-  heroParagraphs.forEach((paragraph, paraIdx) => {
-    const words = paragraph.split(' ');
-    let currentLineX = margin + BOX_SIZING.paddingX;
-    let currentLineWidth = 0;
-    
-    words.forEach((word, idx) => {
-      const wordWithSpace = idx < words.length - 1 ? word + " " : word;
-      const wordWidth = doc.getTextWidth(wordWithSpace);
-      
-      // Check if we need to wrap to next line
-      if (currentLineWidth + wordWidth > lineMaxWidth && currentLineWidth > 0) {
-        descY += PDF_CONFIG.lineHeight.body;
-        currentLineX = margin + BOX_SIZING.paddingX;
-        currentLineWidth = 0;
-      }
-      
-      // Check if word is part of a highlight phrase
-      const isHighlighted = highlightPhrases.some(phrase => 
-        phrase.split(' ').includes(word) || phrase === word
-      );
-      
-      // Set color based on highlight state
-      if (isHighlighted) {
-        doc.setTextColor(...PDF_CONFIG.primaryColor);
-      } else {
-        doc.setTextColor(...PDF_CONFIG.textDark);
-      }
-      
-      doc.text(wordWithSpace, currentLineX, descY);
-      currentLineX += wordWidth;
-      currentLineWidth += wordWidth;
-    });
-    
-    // Add gap after paragraph (except for last one)
-    if (paraIdx < heroParagraphs.length - 1) {
-      descY += PDF_CONFIG.lineHeight.body + 4; // Line height + paragraph gap
-    } else {
-      descY += PDF_CONFIG.lineHeight.body;
-    }
+  // First paragraph (bold)
+  doc.setFont("helvetica", "bold");
+  const para1Lines = doc.splitTextToSize(approachParagraphs[0], lineMaxWidth);
+  para1Lines.forEach((line: string) => {
+    doc.text(line, margin + BOX_SIZING.paddingX, textY);
+    textY += PDF_CONFIG.lineHeight.body;
   });
   
-  yPosition += heroHeight + PDF_CONFIG.spacing.sectionGap + 4; // Extra spacing before Addressable Market
+  textY += 3; // gap between paragraphs
+  
+  // Second paragraph (normal)
+  doc.setFont("helvetica", "normal");
+  const para2Lines = doc.splitTextToSize(approachParagraphs[1], lineMaxWidth);
+  para2Lines.forEach((line: string) => {
+    doc.text(line, margin + BOX_SIZING.paddingX, textY);
+    textY += PDF_CONFIG.lineHeight.body;
+  });
+  
+  textY += 4;
+  
+  // Closing statement (bold purple)
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text("Trust is not a feature. It is the gate to GBP 155B of savings.", margin + BOX_SIZING.paddingX, textY);
+  
+  yPosition += approachHeight + PDF_CONFIG.spacing.sectionGap;
 
-  // ===== ADDRESSABLE MARKET SECTION =====
+  // ===== MARKET OPPORTUNITY SECTION =====
   // Check for page break
   if (yPosition > pageHeight - 100) {
     doc.addPage();
     yPosition = margin;
   }
   
-  // Section header with globe icon (aligned with text baseline)
-  const globeIconX = margin + 4;
-  const globeIconY = yPosition - 1;
-  doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(globeIconX, globeIconY, PDF_CONFIG.circleSize.header, "F");
+  // Section header with globe icon
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.header, "F");
   
-  doc.setTextColor(...PDF_CONFIG.emerald);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle); // 12pt standardized
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Addressable Market", margin + 12, yPosition);
-  yPosition += PDF_CONFIG.spacing.headingGap; // 5pt gap between title and subtitle
+  doc.text("Market Opportunity", margin + 12, yPosition);
+  yPosition += PDF_CONFIG.spacing.titleToContent;
   
-  // Subtitle - standardized font
-  doc.setTextColor(...PDF_CONFIG.emerald);
-  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt standardized
-  doc.setFont("helvetica", "normal");
-  doc.text("Annual Efficiency Value Unlocked", margin + 12, yPosition);
-  yPosition += PDF_CONFIG.spacing.titleToContent; // 6pt gap before cards
-  
-  // Three market cards - dynamically sized
+  // Three market cards
   const cardWidth = (maxWidth - 10) / 3;
-  const cardHeight = 32; // Reduced from 45 - fits stat + label
+  const cardHeight = 32;
   const cardSpacing = 5;
   
   const marketData = [
@@ -936,13 +989,13 @@ const renderExecutiveSummary = (
     
     // Value - large emerald text centered
     doc.setTextColor(...PDF_CONFIG.emerald);
-    doc.setFontSize(PDF_CONFIG.fontSize.stat); // 16pt standardized
+    doc.setFontSize(PDF_CONFIG.fontSize.stat);
     doc.setFont("helvetica", "bold");
     doc.text(data.value, cardX + cardWidth / 2, yPosition + 14, { align: "center" });
     
-    // Label - standardized body small font
+    // Label
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt standardized
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     doc.text(data.label, cardX + cardWidth / 2, yPosition + 24, { align: "center" });
   });
@@ -962,17 +1015,15 @@ const renderExecutiveSummary = (
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.roundedRect(calloutX, yPosition, 3, calloutHeight, 1.5, 1.5, "F");
   
-  // Callout text with highlights
+  // Callout text
   const calloutTextX = calloutX + 10;
   let calloutTextY = yPosition + 8;
   
-  // Line 1: Bold opening + highlighted text
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
   doc.text("Real estate operations are structurally inefficient.", calloutTextX, calloutTextY);
   
-  // Line 2
   calloutTextY += 5;
   doc.setFont("helvetica", "normal");
   doc.text("Over ", calloutTextX, calloutTextY);
@@ -985,7 +1036,6 @@ const renderExecutiveSummary = (
   doc.setFont("helvetica", "normal");
   doc.text(" is lost to document handling. Hobson converts this into ", calloutTextX + overWidth + timeWidth, calloutTextY);
   
-  // Line 3
   calloutTextY += 5;
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
@@ -998,16 +1048,14 @@ const renderExecutiveSummary = (
   yPosition += calloutHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== TRACTION & MILESTONES SECTION =====
-  // Card sizing (used for both page-break calculation and rendering)
   const tractionCardWidth = (maxWidth - 10) / 2;
-  const tractionCardHeight = 44; // Fits 10/9pt wrapped text
+  const tractionCardHeight = 44;
   const tractionSpacing = 8;
-  const cardTextMaxWidth = tractionCardWidth - 28; // Account for icon and padding
+  const cardTextMaxWidth = tractionCardWidth - 28;
   const fullWidthCardHeight = 36;
 
-  // Conservative page-break: keep clear of footer text at the bottom of the page
   const footerReserve = 18;
-  const tractionHeaderHeight = 14; // header + gap before cards
+  const tractionHeaderHeight = 14;
   const tractionBlockHeight =
     tractionHeaderHeight + 2 * (tractionCardHeight + tractionSpacing) + fullWidthCardHeight + 12;
 
@@ -1016,18 +1064,16 @@ const renderExecutiveSummary = (
     yPosition = margin;
   }
 
-  // Section header with rocket icon (aligned with text baseline)
+  // Section header with rocket icon
   doc.setFillColor(...PDF_CONFIG.blue);
   doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.header, "F");
 
   doc.setTextColor(...PDF_CONFIG.blue);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle); // 12pt standardized
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Traction & Execution Momentum", margin + 14, yPosition);
   yPosition += 14;
 
-  // Traction cards in 2x2 grid + 1 full-width - matches updated UI
-  
   const tractionData = [
     { title: "MVP Launch — Q1 2026", subtitle: "On track, with scope defined by live partner workflows" },
     { title: "Validated with 4 Partners", subtitle: "Use cases proven inside real organisations" },
@@ -1041,32 +1087,26 @@ const renderExecutiveSummary = (
     const cardX = margin + col * (tractionCardWidth + tractionSpacing);
     const cardY = yPosition + row * (tractionCardHeight + tractionSpacing);
     
-    // Card background - blue
     doc.setFillColor(...PDF_CONFIG.blueBg);
     doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 3, 3, "F");
     
-    // Card border
     doc.setDrawColor(...PDF_CONFIG.blueBorder);
     doc.setLineWidth(0.3);
     doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 3, 3, "S");
     
-    // Icon - filled circle inside card (cardBadge size) - align with title baseline
     const titleY = cardY + 14;
     doc.setFillColor(...PDF_CONFIG.blue);
     doc.circle(cardX + 10, titleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
     
-    // Title (positioned after icon with proper alignment)
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt for readability
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.setFont("helvetica", "bold");
     
-    // Wrap title if needed
     const titleLines = doc.splitTextToSize(data.title, cardTextMaxWidth);
     doc.text(titleLines[0], cardX + 20, titleY);
     
-    // Subtitle with proper spacing and wrapping
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt for subtitles
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     const subtitleLines = doc.splitTextToSize(data.subtitle, cardTextMaxWidth);
     let subtitleY = cardY + 26;
@@ -1091,12 +1131,12 @@ const renderExecutiveSummary = (
   doc.circle(margin + 10, domainTitleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt for readability
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
   doc.text("Domain-Trained AI", margin + 20, domainTitleY);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt for subtitles
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   doc.text("Purpose-built for real estate complexity, reliability, and auditability", margin + 20, fullWidthCardY + 26);
   
