@@ -844,11 +844,13 @@ const renderExecutiveSummary = (
     "Familiar systems feel safer",
     "Change carries risk they can't control",
     "The unknown feels worse than the status quo",
+    "Onboarding effort",
   ];
   const col2Items = [
     "No source transparency",
     "No audit trail",
     "Accuracy > speed in regulated decisions",
+    "Security concerns",
   ];
 
   // Column layout constants
