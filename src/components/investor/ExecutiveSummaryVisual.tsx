@@ -48,11 +48,11 @@ export const ExecutiveSummaryVisual = () => {
             </ul>
           </div>
           
-          {/* Speed Without Truth Block */}
+          {/* Trust Block */}
           <div className="p-4 rounded-lg bg-background border border-border">
             <div className="flex items-center gap-2 mb-3">
               <XCircle className="w-5 h-5 text-destructive" />
-              <span className="font-bold text-foreground text-sm">Speed Without Truth</span>
+              <span className="font-bold text-foreground text-sm">Trust</span>
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
