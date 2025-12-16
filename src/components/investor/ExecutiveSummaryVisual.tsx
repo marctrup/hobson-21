@@ -30,8 +30,9 @@ export const ExecutiveSummaryVisual = () => {
               <span className="font-bold text-foreground text-sm">Disruption</span>
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-center gap-2">Current systems too embedded<span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                Systems too embedded
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
+                Current systems too embedded
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
