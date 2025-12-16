@@ -30,8 +30,7 @@ export const ExecutiveSummaryVisual = () => {
               <span className="font-bold text-foreground text-sm">Disruption</span>
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
+              <li className="flex items-center gap-2">Current systems too embedded<span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                 Systems too embedded
               </li>
               <li className="flex items-center gap-2">
@@ -53,7 +52,7 @@ export const ExecutiveSummaryVisual = () => {
           <div className="p-4 rounded-lg bg-background border border-border">
             <div className="flex items-center gap-2 mb-3">
               <XCircle className="w-5 h-5 text-destructive" />
-              <span className="font-bold text-foreground text-sm">Speed Without Truth → Rejected</span>
+              <span className="font-bold text-foreground text-sm">Speed Without Truth</span>
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
