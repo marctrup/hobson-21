@@ -42,6 +42,10 @@ export const ExecutiveSummaryVisual = () => {
                 <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                 Cost of failure unacceptable
               </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
+                Onboarding effort
+              </li>
             </ul>
           </div>
           
@@ -63,6 +67,10 @@ export const ExecutiveSummaryVisual = () => {
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
                 Accuracy {">"} speed in regulated decisions
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
+                Security concerns
               </li>
             </ul>
           </div>
