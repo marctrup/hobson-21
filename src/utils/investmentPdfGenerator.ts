@@ -844,11 +844,11 @@ const renderExecutiveSummary = (
   // Column layout constants
   const colWidth = (maxWidth - 20) / 2;
   const colTextWidth = colWidth - 24; // Account for icon + padding (18px text start + 6px right padding)
-  const colHeaderHeight = 14; // Title row inside column
+  const colHeaderHeight = 18; // Title row inside column (increased for longer titles)
   const colItemLineHeight = 8; // Gap between separate bullet items
-  const colWrapLineHeight = 4; // Tighter spacing for wrapped continuation lines
-  const colPaddingTop = 10;
-  const colPaddingBottom = 6;
+  const colWrapLineHeight = 5; // Spacing for wrapped continuation lines
+  const colPaddingTop = 12;
+  const colPaddingBottom = 8;
 
   // Set font for measurement
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
@@ -874,11 +874,11 @@ const renderExecutiveSummary = (
   const innerColBoxHeight = colHeaderHeight + colPaddingTop + maxColContentHeight + colPaddingBottom;
 
   // Calculate outer box height dynamically
-  const outerHeaderHeight = 12; // Header row
+  const outerHeaderHeight = 14; // Header row
   const headerToColGap = 14; // Gap between header and column boxes
-  const colToFooterGap = 8; // Gap between column boxes and footer
-  const footerHeight = 10; // Footer text line
-  const outerPaddingBottom = 6;
+  const colToFooterGap = 10; // Gap between column boxes and footer
+  const footerHeight = 12; // Footer text line
+  const outerPaddingBottom = 8;
   const whyFailsHeight = outerHeaderHeight + headerToColGap + innerColBoxHeight + colToFooterGap + footerHeight + outerPaddingBottom;
 
   // Draw muted background
