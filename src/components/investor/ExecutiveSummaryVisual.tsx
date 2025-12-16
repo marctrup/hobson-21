@@ -15,53 +15,53 @@ export const ExecutiveSummaryVisual = () => {
         </div>
       </div>
 
-      {/* Band 1: Market Reality - Why AI Fails */}
+      {/* Band 1: What Clients Fear */}
       <div className="rounded-xl border border-border bg-muted/30 p-5 sm:p-6">
         <div className="flex items-center gap-2 mb-4">
           <AlertTriangle className="w-5 h-5 text-muted-foreground" />
-          <h3 className="text-lg font-bold text-foreground">Why AI Fails in Real Estate</h3>
+          <h3 className="text-lg font-bold text-foreground">What Clients Fear About AI</h3>
         </div>
         
         <div className="grid sm:grid-cols-2 gap-4">
-          {/* System Replacement Block */}
+          {/* Fear 1: Replacement */}
           <div className="p-4 rounded-lg bg-background border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <XCircle className="w-5 h-5 text-destructive" />
-              <span className="font-bold text-foreground text-sm">System Replacement → Clients say "NOOOOO"</span>
+              <XCircle className="w-5 h-5 text-amber-500" />
+              <span className="font-bold text-foreground text-sm">"They'll make us replace everything"</span>
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                Systems too embedded
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
+                Systems too embedded to rip out
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                Risk too high
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
+                Risk of disruption too high
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
                 Cost of failure unacceptable
               </li>
             </ul>
           </div>
           
-          {/* Speed Without Truth Block */}
+          {/* Fear 2: Accuracy */}
           <div className="p-4 rounded-lg bg-background border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <XCircle className="w-5 h-5 text-destructive" />
-              <span className="font-bold text-foreground text-sm">Speed Without Truth → Rejected</span>
+              <XCircle className="w-5 h-5 text-amber-500" />
+              <span className="font-bold text-foreground text-sm">"It won't be accurate enough"</span>
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
                 No source transparency
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
                 No audit trail
               </li>
               <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
                 Accuracy {">"} speed in regulated decisions
               </li>
             </ul>
@@ -69,7 +69,7 @@ export const ExecutiveSummaryVisual = () => {
         </div>
         
         <p className="mt-4 text-sm font-semibold text-foreground text-center">
-          This market says <span className="underline text-destructive">no</span> by default.
+          These fears are <span className="underline text-primary">valid</span>. We built for them.
         </p>
       </div>
 

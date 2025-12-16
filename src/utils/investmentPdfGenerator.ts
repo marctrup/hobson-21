@@ -836,9 +836,9 @@ const renderExecutiveSummary = (
   
   yPosition += thesisBoxHeight + PDF_CONFIG.spacing.sectionGap;
 
-  // ===== WHY AI FAILS IN REAL ESTATE SECTION =====
+  // ===== WHAT CLIENTS FEAR ABOUT AI SECTION =====
   // Define content for dynamic height calculation
-  const col1Items = ["Systems too embedded", "Risk too high", "Cost of failure unacceptable"];
+  const col1Items = ["Systems too embedded to rip out", "Risk of disruption too high", "Cost of failure unacceptable"];
   const col2Items = ["No source transparency", "No audit trail", "Accuracy > speed in regulated decisions"];
 
   // Column layout constants
@@ -898,7 +898,7 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("Why AI Fails in Real Estate"), margin + 20, headerY);
+  doc.text(sanitizeText("What Clients Fear About AI"), margin + 20, headerY);
 
   // Two columns
   const col1X = margin + 10;
@@ -911,14 +911,14 @@ const renderExecutiveSummary = (
   doc.setDrawColor(...PDF_CONFIG.border);
   doc.roundedRect(col1X, colY, colWidth, innerColBoxHeight, 3, 3, "S");
 
-  // X icon (red circle)
-  doc.setFillColor(239, 68, 68); // red-500
+  // Warning icon (amber circle)
+  doc.setFillColor(245, 158, 11); // amber-500
   doc.circle(col1X + 10, colY + 12, 3, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("System Replacement -> NOOOOO"), col1X + 18, colY + 14);
+  doc.text(sanitizeText("'They'll make us replace everything'"), col1X + 18, colY + 14);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
@@ -928,7 +928,7 @@ const renderExecutiveSummary = (
     const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
     wrappedLines.forEach((line: string, idx: number) => {
       if (idx === 0) {
-        doc.setFillColor(239, 68, 68);
+        doc.setFillColor(245, 158, 11);
         doc.circle(col1X + 12, itemY - 1, 1, "F");
         doc.text(line, col1X + 18, itemY);
         itemY += colItemLineHeight;
@@ -939,20 +939,20 @@ const renderExecutiveSummary = (
     });
   });
 
-  // Column 2: Speed Without Truth
+  // Column 2: Accuracy Fear
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.roundedRect(col2X, colY, colWidth, innerColBoxHeight, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
   doc.roundedRect(col2X, colY, colWidth, innerColBoxHeight, 3, 3, "S");
 
-  // X icon (red circle)
-  doc.setFillColor(239, 68, 68);
+  // Warning icon (amber circle)
+  doc.setFillColor(245, 158, 11);
   doc.circle(col2X + 10, colY + 12, 3, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("Speed Without Truth -> Rejected"), col2X + 18, colY + 14);
+  doc.text(sanitizeText("'It won't be accurate enough'"), col2X + 18, colY + 14);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
@@ -961,7 +961,7 @@ const renderExecutiveSummary = (
     const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
     wrappedLines.forEach((line: string, idx: number) => {
       if (idx === 0) {
-        doc.setFillColor(239, 68, 68);
+        doc.setFillColor(245, 158, 11);
         doc.circle(col2X + 12, itemY - 1, 1, "F");
         doc.text(line, col2X + 18, itemY);
         itemY += colItemLineHeight;
@@ -978,18 +978,18 @@ const renderExecutiveSummary = (
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
 
-  const footerLeft = sanitizeText("This market says ");
-  const footerNo = sanitizeText("no");
-  const footerRight = sanitizeText(" by default.");
-  const footerWidth = doc.getTextWidth(footerLeft) + doc.getTextWidth(footerNo) + doc.getTextWidth(footerRight);
+  const footerLeft = sanitizeText("These fears are ");
+  const footerValid = sanitizeText("valid");
+  const footerRight = sanitizeText(". We built for them.");
+  const footerWidth = doc.getTextWidth(footerLeft) + doc.getTextWidth(footerValid) + doc.getTextWidth(footerRight);
   let footerX = margin + (maxWidth - footerWidth) / 2;
 
   doc.text(footerLeft, footerX, footerY);
   footerX += doc.getTextWidth(footerLeft);
 
-  doc.setTextColor(239, 68, 68);
-  doc.text(footerNo, footerX, footerY);
-  footerX += doc.getTextWidth(footerNo);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.text(footerValid, footerX, footerY);
+  footerX += doc.getTextWidth(footerValid);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.text(footerRight, footerX, footerY);
