@@ -838,13 +838,22 @@ const renderExecutiveSummary = (
 
   // ===== WHAT CLIENTS FEAR ABOUT AI SECTION =====
   // Define content for dynamic height calculation
-  const col1Items = ["Familiar systems feel safer", "Change carries risk they can't control", "The unknown feels worse than the status quo"];
-  const col2Items = ["No source transparency", "No audit trail", "Accuracy > speed in regulated decisions"];
+  const col1Title = "'What if we have to change everything?'";
+  const col2Title = "'It won't be accurate enough'";
+  const col1Items = [
+    "Familiar systems feel safer",
+    "Change carries risk they can't control",
+    "The unknown feels worse than the status quo",
+  ];
+  const col2Items = [
+    "No source transparency",
+    "No audit trail",
+    "Accuracy > speed in regulated decisions",
+  ];
 
   // Column layout constants
   const colWidth = (maxWidth - 20) / 2;
   const colTextWidth = colWidth - 24; // Account for icon + padding (18px text start + 6px right padding)
-  const colHeaderHeight = 18; // Title row inside column (increased for longer titles)
   const colItemLineHeight = 8; // Gap between separate bullet items
   const colWrapLineHeight = 5; // Spacing for wrapped continuation lines
   const colPaddingTop = 12;
@@ -852,14 +861,25 @@ const renderExecutiveSummary = (
 
   // Set font for measurement
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+
+  // Wrap column titles so they never run outside the column box
+  const colTitleLineHeight = 6;
+  const col1TitleLines = doc.splitTextToSize(sanitizeText(col1Title), colTextWidth);
+  const col2TitleLines = doc.splitTextToSize(sanitizeText(col2Title), colTextWidth);
+  const maxTitleLines = Math.max(col1TitleLines.length, col2TitleLines.length);
+
+  // Dynamic title row height (padding + wrapped title lines)
+  const colHeaderHeight = 8 + maxTitleLines * colTitleLineHeight;
+
+  // Reset font for item measurement
   doc.setFont("helvetica", "normal");
 
-  // Calculate total height needed for each column (with text wrapping, using tighter wrap spacing)
+  // Calculate total height needed for each column (with text wrapping)
   const calculateColHeight = (items: string[]) => {
     let height = 0;
     items.forEach((item) => {
       const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
-      // First line uses item spacing, continuation lines use wrap spacing
       height += colItemLineHeight; // First line
       if (wrappedLines.length > 1) {
         height += (wrappedLines.length - 1) * colWrapLineHeight; // Continuation lines
@@ -918,12 +938,16 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("'What if we have to change everything?'"), col1X + 18, colY + 14);
+
+  const colTitleStartY = colY + 14;
+  col1TitleLines.forEach((line: string, idx: number) => {
+    doc.text(line, col1X + 18, colTitleStartY + idx * colTitleLineHeight);
+  });
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  let itemY = colY + 24;
+  let itemY = colTitleStartY + col1TitleLines.length * colTitleLineHeight + 6;
   col1Items.forEach((item) => {
     const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
     wrappedLines.forEach((line: string, idx: number) => {
@@ -952,11 +976,15 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("'It won't be accurate enough'"), col2X + 18, colY + 14);
+
+  const col2TitleStartY = colY + 14;
+  col2TitleLines.forEach((line: string, idx: number) => {
+    doc.text(line, col2X + 18, col2TitleStartY + idx * colTitleLineHeight);
+  });
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  itemY = colY + 24;
+  itemY = col2TitleStartY + col2TitleLines.length * colTitleLineHeight + 6;
   col2Items.forEach((item) => {
     const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
     wrappedLines.forEach((line: string, idx: number) => {
