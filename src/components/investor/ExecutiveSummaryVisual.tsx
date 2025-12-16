@@ -27,20 +27,20 @@ export const ExecutiveSummaryVisual = () => {
           <div className="p-4 rounded-lg bg-background border border-border">
             <div className="flex items-center gap-2 mb-3">
               <XCircle className="w-5 h-5 text-amber-500" />
-              <span className="font-bold text-foreground text-sm">"They'll make us replace everything"</span>
+              <span className="font-bold text-foreground text-sm">"What if we have to change everything?"</span>
             </div>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
-                Systems too embedded to rip out
+                Familiar systems feel safer
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
-                Risk of disruption too high
+                Change carries risk they can't control
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-amber-500/60" />
-                Cost of failure unacceptable
+                The unknown feels worse than the status quo
               </li>
             </ul>
           </div>

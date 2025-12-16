@@ -838,7 +838,7 @@ const renderExecutiveSummary = (
 
   // ===== WHAT CLIENTS FEAR ABOUT AI SECTION =====
   // Define content for dynamic height calculation
-  const col1Items = ["Systems too embedded to rip out", "Risk of disruption too high", "Cost of failure unacceptable"];
+  const col1Items = ["Familiar systems feel safer", "Change carries risk they can't control", "The unknown feels worse than the status quo"];
   const col2Items = ["No source transparency", "No audit trail", "Accuracy > speed in regulated decisions"];
 
   // Column layout constants
@@ -918,7 +918,7 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("'They'll make us replace everything'"), col1X + 18, colY + 14);
+  doc.text(sanitizeText("'What if we have to change everything?'"), col1X + 18, colY + 14);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
