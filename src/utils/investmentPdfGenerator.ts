@@ -1108,6 +1108,9 @@ const renderExecutiveSummary = (
     yPosition = margin;
   }
 
+  // Extra spacing before Traction section
+  yPosition += 8;
+
   // Section header with rocket icon
   doc.setFillColor(...PDF_CONFIG.blue);
   doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.header, "F");
