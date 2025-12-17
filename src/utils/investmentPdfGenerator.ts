@@ -835,8 +835,12 @@ const renderExecutiveSummary = (
   const gapMd = 8;
   const bulletGap = 2;
 
+  // Headline uses a larger font size; give it its own line-height so it doesn't look cramped.
+  // (PDF_CONFIG.lineHeight.loose is optimised for smaller headings.)
+  const headlineLineHeight = 9;
+
   const headlineHeight =
-    (headlineLinesA.length + headlineLinesB.length + headlineLinesC.length) * PDF_CONFIG.lineHeight.loose;
+    (headlineLinesA.length + headlineLinesB.length + headlineLinesC.length) * headlineLineHeight;
 
   const para1Height = para1Lines.length * PDF_CONFIG.lineHeight.body;
   const para2Height = para2Lines.length * PDF_CONFIG.lineHeight.body;
@@ -896,17 +900,17 @@ const renderExecutiveSummary = (
   doc.setFontSize(PDF_CONFIG.fontSize.pageTitle);
   headlineLinesA.forEach((l: string) => {
     doc.text(l, textX, contentY);
-    contentY += PDF_CONFIG.lineHeight.loose;
+    contentY += headlineLineHeight;
   });
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   headlineLinesB.forEach((l: string) => {
     doc.text(l, textX, contentY);
-    contentY += PDF_CONFIG.lineHeight.loose;
+    contentY += headlineLineHeight;
   });
   doc.setTextColor(...PDF_CONFIG.textDark);
   headlineLinesC.forEach((l: string) => {
     doc.text(l, textX, contentY);
-    contentY += PDF_CONFIG.lineHeight.loose;
+    contentY += headlineLineHeight;
   });
 
   contentY += gapMd;
