@@ -10,7 +10,7 @@ export const ExecutiveSummaryVisual = () => {
         </div>
         
         <div className="space-y-6 text-foreground">
-          <p className="text-base leading-relaxed">
+          <p className="text-lg leading-loose">
             Hobson is building the <span className="text-primary font-semibold">cornerstone of accurate document intelligence</span> for commercial real estate.
           </p>
           
