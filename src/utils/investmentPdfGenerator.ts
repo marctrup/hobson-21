@@ -795,7 +795,7 @@ const renderExecutiveSummary = (
 
   const headlineA = "Hobson is building the";
   const headlineB = "cornerstone of accurate document intelligence";
-  const headlineC = "for commercial real estate.";
+  const headlineC = "for the real estate industry.";
 
   const para1 =
     "We deliver AI-driven reasoning directly from source documents, with full traceability and auditability, inside the workflows operators already use.";

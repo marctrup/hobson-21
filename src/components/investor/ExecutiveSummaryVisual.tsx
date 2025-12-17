@@ -11,7 +11,7 @@ export const ExecutiveSummaryVisual = () => {
         
         <div className="space-y-6 text-foreground">
           <p className="text-lg leading-loose">
-            Hobson is building the <span className="text-primary font-semibold">cornerstone of accurate document intelligence</span> for commercial real estate.
+            Hobson is building the <span className="text-primary font-semibold">cornerstone of accurate document intelligence</span> for the real estate industry.
           </p>
           
           <p className="text-sm leading-relaxed">
