@@ -2,115 +2,39 @@ import React from 'react';
 import { Brain, Target, Zap, CheckCircle2, Globe, Rocket, Shield, XCircle, AlertTriangle, ArrowDown, FileText, Search, Lock, TrendingUp, Repeat } from 'lucide-react';
 export const ExecutiveSummaryVisual = () => {
   return <div className="space-y-6">
-      {/* The Investment Thesis */}
+      {/* Investment Rationale */}
       <div className="rounded-xl border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-5 sm:p-6">
         <div className="flex items-center gap-2 mb-4">
           <Target className="w-5 h-5 text-primary" />
           <h3 className="text-lg font-bold text-foreground">Investment Rationale</h3>
         </div>
-        <div className="space-y-2 text-foreground leading-relaxed">
-          <p>This is not a feature play.</p>
-          <p>It is infrastructure.</p>
-          <p className="font-semibold text-primary">And in this market, trust is the constraint that defines the winner.</p>
-        </div>
-      </div>
-
-      {/* Band 1: Market Reality - Why AI Fails */}
-      <div className="rounded-xl border border-border bg-muted/30 p-5 sm:p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <AlertTriangle className="w-5 h-5 text-muted-foreground" />
-          <h3 className="text-lg font-bold text-foreground">What Clients worry about </h3>
-        </div>
-        
-        <div className="grid sm:grid-cols-2 gap-4">
-          {/* System Replacement Block */}
-          <div className="p-4 rounded-lg bg-background border border-border">
-            <div className="flex items-center gap-2 mb-3">
-              <XCircle className="w-5 h-5 text-destructive" />
-              <span className="font-bold text-foreground text-sm">Disruption</span>
-            </div>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                Current systems too embedded
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                Risk too high
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                Cost of failure unacceptable
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                Onboarding effort
-              </li>
-            </ul>
-          </div>
-          
-          {/* Trust Block */}
-          <div className="p-4 rounded-lg bg-background border border-border">
-            <div className="flex items-center gap-2 mb-3">
-              <XCircle className="w-5 h-5 text-destructive" />
-              <span className="font-bold text-foreground text-sm">Trust</span>
-            </div>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                No source transparency
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                No audit trail
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                Accuracy {">"} speed in regulated decisions
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-destructive/60" />
-                Security concerns
-              </li>
-            </ul>
-          </div>
-        </div>
-        
-        <p className="mt-4 text-sm font-semibold text-foreground text-center">
-          This market says <span className="underline text-destructive">no</span> by default.
-        </p>
-      </div>
-
-      {/* Band 2: The Hobson Approach */}
-      <div className="relative overflow-hidden rounded-xl border border-primary/30 bg-gradient-to-br from-primary/5 via-background to-primary/5 p-5 sm:p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Shield className="w-5 h-5 text-primary" />
-          <h3 className="text-lg font-bold text-foreground">The Hobson Approach</h3>
-        </div>
         
         <div className="space-y-4 text-foreground leading-relaxed">
-          <p className="font-medium">
-            Hobson is built for how this market actually adopts technology.
+          <p className="font-semibold text-lg">
+            Hobson is building the <span className="text-primary">cornerstone of accurate document intelligence</span> for commercial real estate.
           </p>
+          
           <p>
-            We embed into existing workflows, start at the document layer—the source of truth—and deliver auditable, traceable reasoning. Our architecture and pricing are designed to prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.
+            We deliver <span className="font-semibold">AI-driven reasoning directly from source documents</span>, with full traceability and auditability, inside the workflows operators already use. This unlocks <span className="font-semibold text-primary">faster decisions</span>, <span className="font-semibold text-primary">lower staffing costs</span>, and <span className="font-semibold text-primary">materially fewer errors</span> in high-value operations.
           </p>
-          <p className="font-semibold text-primary">Trust is not a feature. It is the gateway to £155B of savings.</p>
-        </div>
-      </div>
-
-      {/* Hobson Defensible Moat */}
-      <div className="rounded-xl border border-primary/20 bg-muted/30 p-5 sm:p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Lock className="w-5 h-5 text-primary" />
-          <h3 className="text-lg font-bold text-foreground">Hobson Defensible Moat</h3>
-        </div>
-        <div className="space-y-3 text-foreground leading-relaxed">
-          <p className="font-semibold">Our moat is built under real-world constraints</p>
-          <p className="text-sm text-muted-foreground">
-            Hobson has been shaped by live client data, repeated architectural pivots, and firsthand exposure to operator scepticism, regulatory pressure, and real-world failure modes. This know-how—how to build, deploy, and earn trust in real estate—compounds faster than competitors can copy.
+          
+          <div className="my-4 p-4 rounded-lg bg-primary/10 border-l-4 border-primary">
+            <p className="font-semibold text-primary">This capability compounds.</p>
+          </div>
+          
+          <p>
+            Once document intelligence is trusted, it becomes the <span className="font-semibold">foundation for automation, optimisation, and entirely new AI-led products</span> across the real estate stack. Hobson is the entry point to that expansion.
           </p>
-          <p className="font-semibold text-primary">Hard to copy. Impossible to shortcut.</p>
+          
+          <p className="font-semibold text-lg mt-4">
+            What starts as document reasoning becomes <span className="text-primary">decision infrastructure</span>.
+          </p>
+          
+          <div className="mt-6 p-4 rounded-lg bg-muted/50 border border-border">
+            <p className="text-sm text-muted-foreground italic">
+              This is a rare chance to back a platform that begins with <span className="font-semibold text-foreground">accuracy and trust</span>—and grows into a <span className="font-semibold text-foreground">system of record for AI in real assets</span>.
+            </p>
+          </div>
         </div>
       </div>
 
