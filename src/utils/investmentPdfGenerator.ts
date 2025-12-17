@@ -785,387 +785,205 @@ const renderExecutiveSummary = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // ===== THE INVESTMENT THESIS SECTION =====
-  const thesisLines = [
-    "This is not a feature play.",
-    "It is infrastructure.",
+  // ===== INVESTMENT RATIONALE (MATCHES ON-SCREEN EXECUTIVE SUMMARY) =====
+  // NOTE: This section must remain in sync with src/components/investor/ExecutiveSummaryVisual.tsx
+  const boxX = margin;
+  const boxW = maxWidth;
+  const boxPaddingX = 12;
+  const boxPaddingTop = 14;
+  const boxPaddingBottom = 12;
+
+  const headlineA = "Hobson is building the";
+  const headlineB = "cornerstone of accurate document intelligence";
+  const headlineC = "for commercial real estate.";
+
+  const para1 =
+    "We deliver AI-driven reasoning directly from source documents, with full traceability and auditability, inside the workflows operators already use.";
+
+  const unlocksTitle = "This unlocks:";
+  const unlocksBullets = [
+    "Faster decisions",
+    "Lower staffing costs",
+    "Materially fewer errors in high-value operations",
   ];
-  const thesisPurpleLine = "And in this market, trust is the constraint that defines the winner.";
-  
-  // Calculate thesis box height - increased spacing
-  const thesisHeaderHeight = 14;
-  const thesisLineSpacing = 8; // Increased from 5
-  const thesisContentHeight = thesisLines.length * thesisLineSpacing + thesisLineSpacing + 4;
-  const thesisBoxHeight = thesisHeaderHeight + 14 + thesisContentHeight + 12;
-  
-  // Draw gradient-style background (purple tint)
+
+  const calloutText = "This capability compounds.";
+
+  const para2 =
+    "Once document intelligence is trusted, it becomes the foundation for automation, optimisation, and entirely new AI-led products across the real estate stack. Hobson is the entry point to that expansion.";
+
+  const statement = "What starts as document reasoning becomes decision infrastructure.";
+
+  const closing =
+    "This is a rare chance to back a platform that begins with accuracy and trust - and grows into a system of record for AI in real assets.";
+
+  // --- Measure heights ---
+  setBodyFont(doc);
+  const contentMaxWidth = boxW - boxPaddingX * 2;
+
+  const headlineLinesA = doc.splitTextToSize(sanitizeText(headlineA), contentMaxWidth);
+  const headlineLinesB = doc.splitTextToSize(sanitizeText(headlineB), contentMaxWidth);
+  const headlineLinesC = doc.splitTextToSize(sanitizeText(headlineC), contentMaxWidth);
+
+  const para1Lines = doc.splitTextToSize(sanitizeText(para1), contentMaxWidth);
+  const para2Lines = doc.splitTextToSize(sanitizeText(para2), contentMaxWidth);
+  const statementLines = doc.splitTextToSize(sanitizeText(statement), contentMaxWidth);
+  const closingLines = doc.splitTextToSize(sanitizeText(closing), contentMaxWidth);
+
+  // Spacing tuned to mirror UI rhythm
+  const gapSm = 4;
+  const gapMd = 8;
+  const bulletGap = 2;
+
+  const headlineHeight =
+    (headlineLinesA.length + headlineLinesB.length + headlineLinesC.length) * PDF_CONFIG.lineHeight.loose;
+
+  const para1Height = para1Lines.length * PDF_CONFIG.lineHeight.body;
+  const para2Height = para2Lines.length * PDF_CONFIG.lineHeight.body;
+  const statementHeight = statementLines.length * PDF_CONFIG.lineHeight.loose;
+  const closingHeight = closingLines.length * PDF_CONFIG.lineHeight.body;
+
+  const unlocksTitleHeight = PDF_CONFIG.lineHeight.body;
+  const unlocksBulletsHeight = unlocksBullets.length * (PDF_CONFIG.lineHeight.body + bulletGap);
+
+  const rationaleCalloutHeight = 12; // fixed small callout
+
+  const boxH =
+    boxPaddingTop +
+    14 + // header row
+    gapMd +
+    headlineHeight +
+    gapMd +
+    para1Height +
+    gapSm +
+    unlocksTitleHeight +
+    gapSm +
+    unlocksBulletsHeight +
+    gapMd +
+    rationaleCalloutHeight +
+    gapMd +
+    para2Height +
+    gapMd +
+    statementHeight +
+    gapMd +
+    closingHeight +
+    boxPaddingBottom;
+
+  // --- Draw card ---
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, thesisBoxHeight, 4, 4, "F");
-  
-  // Draw purple border
+  doc.roundedRect(boxX, yPosition, boxW, boxH, 4, 4, "F");
+
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(0.5);
-  doc.roundedRect(margin, yPosition, maxWidth, thesisBoxHeight, 4, 4, "S");
-  
-  // Header with icon
-  const thesisHeaderY = yPosition + 14;
+  doc.roundedRect(boxX, yPosition, boxW, boxH, 4, 4, "S");
+
+  // Header
+  const headerY = yPosition + 14;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, thesisHeaderY - 2, 3, "F");
-  
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Investment Rationale", margin + 20, thesisHeaderY);
-  
-  // Thesis content - more spacing between lines
-  let thesisContentY = thesisHeaderY + 16;
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  
-  thesisLines.forEach((line) => {
-    doc.text(line, margin + 12, thesisContentY);
-    thesisContentY += thesisLineSpacing;
-  });
-  
-  // Purple closing line - extra gap before it
-  thesisContentY += 2;
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFont("helvetica", "bold");
-  doc.text(thesisPurpleLine, margin + 12, thesisContentY);
-  
-  yPosition += thesisBoxHeight + PDF_CONFIG.spacing.sectionGap;
-
-  // ===== WHAT CLIENTS FEAR ABOUT AI SECTION =====
-  // Define content for dynamic height calculation
-  const col1Title = "'What if we have to change everything?'";
-  const col2Title = "'It won't be accurate enough'";
-  const col1Items = [
-    "Familiar systems feel safer",
-    "Change carries risk they can't control",
-    "The unknown feels worse than the status quo",
-    "Onboarding effort",
-  ];
-  const col2Items = [
-    "No source transparency",
-    "No audit trail",
-    "Accuracy > speed in regulated decisions",
-    "Security concerns",
-  ];
-
-  // Column layout constants
-  const colWidth = (maxWidth - 20) / 2;
-  const colTextWidth = colWidth - 24; // Account for icon + padding (18px text start + 6px right padding)
-  const colItemLineHeight = 8; // Gap between separate bullet items
-  const colWrapLineHeight = 5; // Spacing for wrapped continuation lines
-  const colPaddingTop = 12;
-  const colPaddingBottom = 8;
-
-  // Set font for measurement
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "bold");
-
-  // Wrap column titles so they never run outside the column box
-  const colTitleLineHeight = 6;
-  const col1TitleLines = doc.splitTextToSize(sanitizeText(col1Title), colTextWidth);
-  const col2TitleLines = doc.splitTextToSize(sanitizeText(col2Title), colTextWidth);
-  const maxTitleLines = Math.max(col1TitleLines.length, col2TitleLines.length);
-
-  // Dynamic title row height (padding + wrapped title lines)
-  const colHeaderHeight = 8 + maxTitleLines * colTitleLineHeight;
-
-  // Reset font for item measurement
-  doc.setFont("helvetica", "normal");
-
-  // Calculate total height needed for each column (with text wrapping)
-  const calculateColHeight = (items: string[]) => {
-    let height = 0;
-    items.forEach((item) => {
-      const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
-      height += colItemLineHeight; // First line
-      if (wrappedLines.length > 1) {
-        height += (wrappedLines.length - 1) * colWrapLineHeight; // Continuation lines
-      }
-    });
-    return height;
-  };
-
-  const col1Height = calculateColHeight(col1Items);
-  const col2Height = calculateColHeight(col2Items);
-  const maxColContentHeight = Math.max(col1Height, col2Height);
-  const innerColBoxHeight = colHeaderHeight + colPaddingTop + maxColContentHeight + colPaddingBottom;
-
-  // Calculate outer box height dynamically
-  const outerHeaderHeight = 14; // Header row
-  const headerToColGap = 14; // Gap between header and column boxes
-  const colToFooterGap = 10; // Gap between column boxes and footer
-  const footerHeight = 12; // Footer text line
-  const outerPaddingBottom = 8;
-  const whyFailsHeight = outerHeaderHeight + headerToColGap + innerColBoxHeight + colToFooterGap + footerHeight + outerPaddingBottom;
-
-  // Draw muted background
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, whyFailsHeight, 4, 4, "F");
-
-  // Draw border
-  doc.setDrawColor(...PDF_CONFIG.border);
-  doc.setLineWidth(0.5);
-  doc.roundedRect(margin, yPosition, maxWidth, whyFailsHeight, 4, 4, "S");
-
-  // Header with warning icon
-  const headerY = yPosition + 12;
-  doc.setFillColor(...PDF_CONFIG.textGray);
   doc.circle(margin + 12, headerY - 2, 3, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("What Clients Fear About AI"), margin + 20, headerY);
+  setCardTitleFont(doc);
+  doc.text("Investment Rationale", margin + 20, headerY);
 
-  // Two columns
-  const col1X = margin + 10;
-  const col2X = margin + colWidth + 15;
-  const colY = headerY + headerToColGap;
+  // Content
+  let contentY = headerY + 12;
+  const textX = boxX + boxPaddingX;
 
-  // Column 1: System Replacement
-  doc.setFillColor(...PDF_CONFIG.bgWhite);
-  doc.roundedRect(col1X, colY, colWidth, innerColBoxHeight, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.border);
-  doc.roundedRect(col1X, colY, colWidth, innerColBoxHeight, 3, 3, "S");
-
-  // Warning icon (amber circle)
-  doc.setFillColor(245, 158, 11); // amber-500
-  doc.circle(col1X + 10, colY + 12, 3, "F");
-
+  // Headline (3 lines with middle in purple)
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-
-  const colTitleStartY = colY + 14;
-  col1TitleLines.forEach((line: string, idx: number) => {
-    doc.text(line, col1X + 18, colTitleStartY + idx * colTitleLineHeight);
+  doc.setFontSize(PDF_CONFIG.fontSize.pageTitle);
+  headlineLinesA.forEach((l: string) => {
+    doc.text(l, textX, contentY);
+    contentY += PDF_CONFIG.lineHeight.loose;
+  });
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  headlineLinesB.forEach((l: string) => {
+    doc.text(l, textX, contentY);
+    contentY += PDF_CONFIG.lineHeight.loose;
+  });
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  headlineLinesC.forEach((l: string) => {
+    doc.text(l, textX, contentY);
+    contentY += PDF_CONFIG.lineHeight.loose;
   });
 
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  contentY += gapMd;
+
+  // Paragraph 1
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  let itemY = colTitleStartY + col1TitleLines.length * colTitleLineHeight + 6;
-  col1Items.forEach((item) => {
-    const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
-    wrappedLines.forEach((line: string, idx: number) => {
-      if (idx === 0) {
-        doc.setFillColor(245, 158, 11);
-        doc.circle(col1X + 12, itemY - 1, 1, "F");
-        doc.text(line, col1X + 18, itemY);
-        itemY += colItemLineHeight;
-      } else {
-        doc.text(line, col1X + 18, itemY - (colItemLineHeight - colWrapLineHeight));
-        itemY += colWrapLineHeight;
-      }
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  para1Lines.forEach((l: string) => {
+    doc.text(l, textX, contentY);
+    contentY += PDF_CONFIG.lineHeight.body;
+  });
+
+  contentY += gapSm;
+
+  // This unlocks + bullets
+  doc.setFont("helvetica", "bold");
+  doc.text(unlocksTitle, textX, contentY);
+  contentY += PDF_CONFIG.lineHeight.body + gapSm;
+
+  doc.setFont("helvetica", "normal");
+  unlocksBullets.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(textX + 3, contentY - 2, PDF_CONFIG.circleSize.bullet, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    const lines = doc.splitTextToSize(sanitizeText(item), contentMaxWidth - 10);
+    lines.forEach((line: string) => {
+      doc.text(line, textX + 7, contentY);
+      contentY += PDF_CONFIG.lineHeight.body;
     });
+    contentY += bulletGap;
   });
 
-  // Column 2: Accuracy Fear
-  doc.setFillColor(...PDF_CONFIG.bgWhite);
-  doc.roundedRect(col2X, colY, colWidth, innerColBoxHeight, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.border);
-  doc.roundedRect(col2X, colY, colWidth, innerColBoxHeight, 3, 3, "S");
+  contentY += gapMd;
 
-  // Warning icon (amber circle)
-  doc.setFillColor(245, 158, 11);
-  doc.circle(col2X + 10, colY + 12, 3, "F");
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "bold");
-
-  const col2TitleStartY = colY + 14;
-  col2TitleLines.forEach((line: string, idx: number) => {
-    doc.text(line, col2X + 18, col2TitleStartY + idx * colTitleLineHeight);
-  });
-
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  itemY = col2TitleStartY + col2TitleLines.length * colTitleLineHeight + 6;
-  col2Items.forEach((item) => {
-    const wrappedLines = doc.splitTextToSize(sanitizeText(item), colTextWidth);
-    wrappedLines.forEach((line: string, idx: number) => {
-      if (idx === 0) {
-        doc.setFillColor(245, 158, 11);
-        doc.circle(col2X + 12, itemY - 1, 1, "F");
-        doc.text(line, col2X + 18, itemY);
-        itemY += colItemLineHeight;
-      } else {
-        doc.text(line, col2X + 18, itemY - (colItemLineHeight - colWrapLineHeight));
-        itemY += colWrapLineHeight;
-      }
-    });
-  });
-
-  // Footer text (centered, measured)
-  const footerY = colY + innerColBoxHeight + colToFooterGap;
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "bold");
-
-  const footerLeft = sanitizeText("These fears are ");
-  const footerValid = sanitizeText("valid");
-  const footerRight = sanitizeText(". We built for them.");
-  const footerWidth = doc.getTextWidth(footerLeft) + doc.getTextWidth(footerValid) + doc.getTextWidth(footerRight);
-  let footerX = margin + (maxWidth - footerWidth) / 2;
-
-  doc.text(footerLeft, footerX, footerY);
-  footerX += doc.getTextWidth(footerLeft);
-
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text(footerValid, footerX, footerY);
-  footerX += doc.getTextWidth(footerValid);
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(footerRight, footerX, footerY);
-
-  yPosition += whyFailsHeight + PDF_CONFIG.spacing.sectionGap;
-
-  // ===== THE HOBSON APPROACH SECTION =====
-  // Force new page for Hobson Approach to prevent overflow
-  doc.addPage();
-  yPosition = margin;
-  const approachParagraphs = [
-    "Hobson is built for how this market actually adopts technology.",
-    "We embed into existing workflows, start at the document layer—the source of truth—and deliver auditable, traceable reasoning. Our architecture and pricing are designed to prove value first, earn trust, then expand. Replacement only happens when it is safe and inevitable.",
-  ];
-
-  setBodyFont(doc);
-  const lineMaxWidth = maxWidth - BOX_SIZING.paddingX * 2;
-
-  // Calculate height
-  let totalLines = 0;
-  approachParagraphs.forEach((para) => {
-    const lines = doc.splitTextToSize(sanitizeText(para), lineMaxWidth);
-    totalLines += lines.length;
-  });
-  const approachHeight = 20 + totalLines * PDF_CONFIG.lineHeight.body + 8 + 20; // header + text + gap + closing
-
-  // Draw gradient background
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, approachHeight, 4, 4, "F");
-
-  // Draw border
-  doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.setLineWidth(0.5);
-  doc.roundedRect(margin, yPosition, maxWidth, approachHeight, 4, 4, "S");
-
-  // Header with shield icon
-  const approachHeaderY = yPosition + 14;
+  // Callout: This capability compounds.
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.roundedRect(textX, contentY - 8, contentMaxWidth, 12, 2, 2, "F");
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, approachHeaderY - 2, 3, "F");
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("The Hobson Approach"), margin + 20, approachHeaderY);
-
-  // Paragraphs
-  let textY = approachHeaderY + 12;
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setBodyFont(doc);
-
-  // First paragraph (bold)
-  doc.setFont("helvetica", "bold");
-  const para1Lines = doc.splitTextToSize(sanitizeText(approachParagraphs[0]), lineMaxWidth);
-  para1Lines.forEach((line: string) => {
-    doc.text(line, margin + BOX_SIZING.paddingX, textY);
-    textY += PDF_CONFIG.lineHeight.body;
-  });
-
-  textY += 3; // gap between paragraphs
-
-  // Second paragraph (normal)
-  doc.setFont("helvetica", "normal");
-  const para2Lines = doc.splitTextToSize(sanitizeText(approachParagraphs[1]), lineMaxWidth);
-  para2Lines.forEach((line: string) => {
-    doc.text(line, margin + BOX_SIZING.paddingX, textY);
-    textY += PDF_CONFIG.lineHeight.body;
-  });
-
-  textY += 4;
-
-  // Closing statement (bold purple)
+  doc.rect(textX, contentY - 8, 3, 12, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("Trust is not a feature. It is the gate to GBP 155B of savings."), margin + BOX_SIZING.paddingX, textY);
+  doc.text(sanitizeText(calloutText), textX + 8, contentY);
+  contentY += 16;
 
-  yPosition += approachHeight + PDF_CONFIG.spacing.sectionGap;
-
-  // ===== HOBSON DEFENSIBLE MOAT SECTION =====
-  const moatHeadline = "Our moat is built under real-world constraints";
-  const moatBody = sanitizeText(
-    "Hobson has been shaped by live client data, repeated architectural pivots, and firsthand exposure to operator scepticism, regulatory pressure, and real-world failure modes. This know-how - how to build, deploy, and earn trust in real estate - compounds faster than competitors can copy."
-  );
-  const moatClosing = "Hard to copy. Impossible to shortcut.";
-  const moatHeadlineLines = doc.splitTextToSize(moatHeadline, lineMaxWidth);
-  const moatBodyLines = doc.splitTextToSize(moatBody, lineMaxWidth);
-  const moatClosingLines = doc.splitTextToSize(moatClosing, lineMaxWidth);
-
-  // Height must cover header + headline + body + closing + bottom padding
-  const moatHeight = 30 + (moatHeadlineLines.length + moatBodyLines.length + moatClosingLines.length) * PDF_CONFIG.lineHeight.body + 8;
-
-  // Check for page break
-  if (yPosition + moatHeight > pageHeight - margin) {
-    doc.addPage();
-    yPosition = margin;
-  }
-
-  // Moat box background
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, moatHeight, 4, 4, "F");
-
-  // Border
-  doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.setLineWidth(0.5);
-  doc.roundedRect(margin, yPosition, maxWidth, moatHeight, 4, 4, "S");
-
-  // Header with lock icon
-  const moatHeaderY = yPosition + 14;
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, moatHeaderY - 2, 3, "F");
-
+  // Paragraph 2
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText("Hobson Defensible Moat"), margin + 20, moatHeaderY);
-
-  // Headline (bold)
-  let moatTextY = moatHeaderY + 12;
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setBodyFont(doc);
-  doc.setFont("helvetica", "bold");
-  moatHeadlineLines.forEach((line: string) => {
-    doc.text(line, margin + BOX_SIZING.paddingX, moatTextY);
-    moatTextY += PDF_CONFIG.lineHeight.body;
+  doc.setFont("helvetica", "normal");
+  para2Lines.forEach((l: string) => {
+    doc.text(l, textX, contentY);
+    contentY += PDF_CONFIG.lineHeight.body;
   });
 
-  moatTextY += 2; // Small gap
+  contentY += gapMd;
 
-  // Body (normal)
+  // Statement (bold)
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  statementLines.forEach((l: string) => {
+    doc.text(l, textX, contentY);
+    contentY += PDF_CONFIG.lineHeight.loose;
+  });
+
+  contentY += gapMd;
+
+  // Closing (italic-ish via smaller + gray)
   doc.setFont("helvetica", "normal");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  moatBodyLines.forEach((line: string) => {
-    doc.text(line, margin + BOX_SIZING.paddingX, moatTextY);
-    moatTextY += PDF_CONFIG.lineHeight.body;
+  closingLines.forEach((l: string) => {
+    doc.text(l, textX, contentY);
+    contentY += PDF_CONFIG.lineHeight.body;
   });
 
-  moatTextY += 4; // Gap before closing
+  yPosition += boxH + PDF_CONFIG.spacing.sectionGap;
 
-  // Closing (purple bold)
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFont("helvetica", "bold");
-  moatClosingLines.forEach((line: string) => {
-    doc.text(line, margin + BOX_SIZING.paddingX, moatTextY);
-    moatTextY += PDF_CONFIG.lineHeight.body;
-  });
-
-  yPosition += moatHeight + PDF_CONFIG.spacing.sectionGap;
 
   // ===== MARKET OPPORTUNITY SECTION =====
 
