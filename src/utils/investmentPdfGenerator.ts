@@ -1123,9 +1123,9 @@ const renderExecutiveSummary = (
 
   const tractionData = [
     { title: "MVP Launch — Q1 2026", subtitle: "On track, with scope defined by live partner workflows" },
-    { title: "Validated with 4 Partners", subtitle: "Use cases proven inside real organisations" },
-    { title: "98% Model Accuracy", subtitle: "Measured on proprietary datasets" },
-    { title: "Multi-Document Reasoning", subtitle: "Legal, compliance, operational docs analysed" },
+    { title: "Validated with 4 Operating Partners", subtitle: "Use cases proven inside real estate organisations" },
+    { title: "98% Model Accuracy", subtitle: "Measured on proprietary, industry-specific datasets" },
+    { title: "Multi-Document Reasoning", subtitle: "Legal, compliance, and operational documents, analysed together" },
   ];
   
   tractionData.forEach((data, idx) => {
