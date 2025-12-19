@@ -67,13 +67,17 @@ export default function FaqManagement() {
     is_active: true,
   });
 
-  const hasFormChanged = initialFormData ? 
-    formData.question !== initialFormData.question ||
-    formData.answer !== initialFormData.answer ||
-    formData.category !== initialFormData.category ||
-    formData.sort_order !== initialFormData.sort_order ||
-    formData.is_active !== initialFormData.is_active
-    : (formData.question.trim() !== "" || formData.answer.trim() !== "");
+  const hasFormChanged = initialFormData
+    ? formData.question.trim() !== initialFormData.question.trim() ||
+      formData.answer.trim() !== initialFormData.answer.trim() ||
+      formData.category !== initialFormData.category ||
+      formData.sort_order !== initialFormData.sort_order ||
+      formData.is_active !== initialFormData.is_active
+    : formData.question.trim() !== "" || formData.answer.trim() !== "";
+
+  // When editing an existing FAQ, always allow submitting (some editors normalize HTML and can
+  // make strict comparisons unreliable).
+  const canSubmit = editingFaq ? true : hasFormChanged;
 
   useEffect(() => {
     fetchFaqs();
@@ -430,7 +434,7 @@ export default function FaqManagement() {
                   >
                     Cancel
                   </Button>
-                  <Button type="submit" disabled={!hasFormChanged}>
+                  <Button type="submit" disabled={!canSubmit}>
                     {editingFaq ? "Update" : "Create"}
                   </Button>
                 </div>
