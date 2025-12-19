@@ -56,6 +56,7 @@ export default function FaqManagement() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
   const [initialFormData, setInitialFormData] = useState<typeof formData | null>(null);
+  const [hasUnpublishedChanges, setHasUnpublishedChanges] = useState(false);
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -154,6 +155,7 @@ export default function FaqManagement() {
         toast({ title: "FAQ created successfully" });
       }
 
+      setHasUnpublishedChanges(true);
       setIsDialogOpen(false);
       resetForm();
       fetchFaqs();
@@ -179,6 +181,7 @@ export default function FaqManagement() {
 
       if (error) throw error;
       toast({ title: "FAQ deleted successfully" });
+      setHasUnpublishedChanges(true);
       fetchFaqs();
     } catch (error: any) {
       toast({
@@ -236,6 +239,7 @@ export default function FaqManagement() {
         description,
         duration: 8000,
       });
+      setHasUnpublishedChanges(false);
     } catch (error: any) {
       console.error("Error updating knowledge base:", error);
       toast({
@@ -319,11 +323,12 @@ export default function FaqManagement() {
             Fix Duplicate Orders
           </Button>
           <Button 
-            variant="outline" 
+            variant={hasUnpublishedChanges ? "default" : "outline"}
             onClick={updateKnowledgeBase} 
             disabled={updatingKnowledge}
+            className={hasUnpublishedChanges ? "animate-pulse" : ""}
           >
-            {updatingKnowledge ? "Updating..." : "Update Knowledge Base"}
+            {updatingKnowledge ? "Updating..." : hasUnpublishedChanges ? "Publish Changes" : "Update Knowledge Base"}
           </Button>
           <Dialog open={isDialogOpen} onOpenChange={(open) => {
             setIsDialogOpen(open);
