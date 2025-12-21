@@ -796,10 +796,12 @@ const renderExecutiveSummary = (
   const openingStatement = "Hobson is building the intelligence infrastructure that Real Estate operations now require to function safely, efficiently, and at scale.";
 
   // --- Draw opening statement box ---
-  setBodyFont(doc);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
   const contentMaxWidth = boxW - boxPaddingX * 2;
   const openingLines = doc.splitTextToSize(sanitizeText(openingStatement), contentMaxWidth);
-  const openingBoxH = boxPaddingTop + openingLines.length * PDF_CONFIG.lineHeight.body + boxPaddingBottom;
+  const openingLineHeight = PDF_CONFIG.lineHeight.loose + 2; // Larger line height for section title font
+  const openingBoxH = boxPaddingTop + openingLines.length * openingLineHeight + boxPaddingBottom;
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(boxX, yPosition, boxW, openingBoxH, 4, 4, "F");
@@ -827,7 +829,7 @@ const renderExecutiveSummary = (
     } else {
       doc.text(l, boxX + boxPaddingX, openingY);
     }
-    openingY += PDF_CONFIG.lineHeight.body;
+    openingY += openingLineHeight;
   });
 
   yPosition += openingBoxH + PDF_CONFIG.spacing.sectionGap;
