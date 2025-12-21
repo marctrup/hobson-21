@@ -785,7 +785,7 @@ const renderExecutiveSummary = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // ===== INVESTMENT RATIONALE (MATCHES ON-SCREEN EXECUTIVE SUMMARY) =====
+  // ===== OPENING STATEMENT =====
   // NOTE: This section must remain in sync with src/components/investor/ExecutiveSummaryVisual.tsx
   const boxX = margin;
   const boxW = maxWidth;
@@ -793,82 +793,99 @@ const renderExecutiveSummary = (
   const boxPaddingTop = 14;
   const boxPaddingBottom = 12;
 
-  const headlineA = "Hobson is building the";
-  const headlineB = "cornerstone of accurate document intelligence";
-  const headlineC = "for the real estate industry.";
+  const openingStatement = "Hobson is building the intelligence infrastructure that Real Estate operations now require to function safely, efficiently, and at scale.";
 
-  const para1 =
-    "We deliver AI-driven reasoning directly from source documents, with full traceability and auditability, inside the workflows operators already use.";
-
-  const unlocksTitle = "This unlocks:";
-  const unlocksBullets = [
-    "Faster decisions",
-    "Lower staffing costs",
-    "Materially fewer errors in high-value operations",
-  ];
-
-  const calloutText = "This capability compounds.";
-
-  const para2 =
-    "Once document intelligence is trusted, it becomes the foundation for automation, optimisation, and entirely new AI-led products across the real estate stack. Hobson is the entry point to that expansion.";
-
-  const statement = "What starts as document reasoning becomes decision infrastructure.";
-
-  const closing =
-    "This is a rare chance to back a platform that begins with accuracy and trust - and grows into a system of record for AI in real assets.";
-
-  // --- Measure heights ---
+  // --- Draw opening statement box ---
   setBodyFont(doc);
   const contentMaxWidth = boxW - boxPaddingX * 2;
+  const openingLines = doc.splitTextToSize(sanitizeText(openingStatement), contentMaxWidth);
+  const openingBoxH = boxPaddingTop + openingLines.length * PDF_CONFIG.lineHeight.body + boxPaddingBottom;
 
-  const headlineLinesA = doc.splitTextToSize(sanitizeText(headlineA), contentMaxWidth);
-  const headlineLinesB = doc.splitTextToSize(sanitizeText(headlineB), contentMaxWidth);
-  const headlineLinesC = doc.splitTextToSize(sanitizeText(headlineC), contentMaxWidth);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(boxX, yPosition, boxW, openingBoxH, 4, 4, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(0.5);
+  doc.roundedRect(boxX, yPosition, boxW, openingBoxH, 4, 4, "S");
 
+  let openingY = yPosition + boxPaddingTop;
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
+  openingLines.forEach((l: string) => {
+    // Highlight "intelligence infrastructure" in primary color
+    if (l.includes("intelligence infrastructure")) {
+      const parts = l.split("intelligence infrastructure");
+      const x = boxX + boxPaddingX;
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.text(parts[0], x, openingY);
+      const part1Width = doc.getTextWidth(parts[0]);
+      doc.setTextColor(...PDF_CONFIG.primaryColor);
+      doc.text("intelligence infrastructure", x + part1Width, openingY);
+      const highlightWidth = doc.getTextWidth("intelligence infrastructure");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.text(parts[1] || "", x + part1Width + highlightWidth, openingY);
+    } else {
+      doc.text(l, boxX + boxPaddingX, openingY);
+    }
+    openingY += PDF_CONFIG.lineHeight.body;
+  });
+
+  yPosition += openingBoxH + PDF_CONFIG.spacing.sectionGap;
+
+  // ===== INVESTMENT RATIONALE BOX =====
+  const para1 =
+    "Hobson delivers AI-driven reasoning directly from source documents, with full traceability and auditability, inside existing workflows. Every obligation, exposure, valuation input, and compliance requirement is buried inside leases, titles, reports, and contracts. By replacing manual document handling, the hidden backbone of all operations, planning applications, funding due diligence, investment committee papers, and asset management, Hobson removes a growing source of structural cost, decision delay, and operational risk across Real Estate.";
+
+  const founderNote =
+    "Founded by the team behind Arthur Online, built and scaled to institutional adoption and acquired by Advent International and Aareon in 2021. Hobson is an AI platform born from firsthand experience of Real Estate operations at scale.";
+
+  const calloutText = "This is not a productivity enhancement. It is the removal of a core operational bottleneck.";
+
+  const enablesItems = [
+    "Permanent reduction in document-driven staffing costs",
+    "Faster, defensible decisions across operations, acquisitions and asset management",
+    "Material reduction in errors and compliance exposure through traceable, source-linked outputs",
+  ];
+
+  const para2 =
+    "Once document intelligence is trusted, it becomes infrastructure. What begins as reasoning becomes decision control, then automation, then a system-level advantage across the Real Estate stack.";
+
+  const closing =
+    "Hobson is the entry point for AI becoming a system of record for the Real Estate industry.";
+
+  // --- Measure heights ---
   const para1Lines = doc.splitTextToSize(sanitizeText(para1), contentMaxWidth);
+  const founderLines = doc.splitTextToSize(sanitizeText(founderNote), contentMaxWidth - 16);
   const para2Lines = doc.splitTextToSize(sanitizeText(para2), contentMaxWidth);
-  const statementLines = doc.splitTextToSize(sanitizeText(statement), contentMaxWidth);
   const closingLines = doc.splitTextToSize(sanitizeText(closing), contentMaxWidth);
 
-  // Spacing tuned to mirror UI rhythm
   const gapSm = 4;
   const gapMd = 8;
   const bulletGap = 2;
 
-  // Headline uses a larger font size; give it its own line-height so it doesn't look cramped.
-  // (PDF_CONFIG.lineHeight.loose is optimised for smaller headings.)
-  const headlineLineHeight = 9;
-
-  const headlineHeight =
-    (headlineLinesA.length + headlineLinesB.length + headlineLinesC.length) * headlineLineHeight;
-
   const para1Height = para1Lines.length * PDF_CONFIG.lineHeight.body;
+  const founderHeight = founderLines.length * PDF_CONFIG.lineHeight.body + 12; // box padding
   const para2Height = para2Lines.length * PDF_CONFIG.lineHeight.body;
-  const statementHeight = statementLines.length * PDF_CONFIG.lineHeight.loose;
-  const closingHeight = closingLines.length * PDF_CONFIG.lineHeight.body;
+  const closingHeight = closingLines.length * PDF_CONFIG.lineHeight.loose;
+  const enablesItemsHeight = enablesItems.length * (PDF_CONFIG.lineHeight.body * 2 + bulletGap);
 
-  const unlocksTitleHeight = PDF_CONFIG.lineHeight.body;
-  const unlocksBulletsHeight = unlocksBullets.length * (PDF_CONFIG.lineHeight.body + bulletGap);
-
-  const rationaleCalloutHeight = 12; // fixed small callout
+  const rationaleCalloutHeight = 12;
 
   const boxH =
     boxPaddingTop +
     14 + // header row
     gapMd +
-    headlineHeight +
-    gapMd +
     para1Height +
-    gapSm +
-    unlocksTitleHeight +
-    gapSm +
-    unlocksBulletsHeight +
+    gapMd +
+    founderHeight +
     gapMd +
     rationaleCalloutHeight +
     gapMd +
-    para2Height +
+    PDF_CONFIG.lineHeight.body + // "Hobson enables:"
+    gapSm +
+    enablesItemsHeight +
     gapMd +
-    statementHeight +
+    para2Height +
     gapMd +
     closingHeight +
     boxPaddingBottom;
@@ -894,28 +911,7 @@ const renderExecutiveSummary = (
   let contentY = headerY + 12;
   const textX = boxX + boxPaddingX;
 
-  // Headline (3 lines with middle in purple)
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(PDF_CONFIG.fontSize.pageTitle);
-  headlineLinesA.forEach((l: string) => {
-    doc.text(l, textX, contentY);
-    contentY += headlineLineHeight;
-  });
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  headlineLinesB.forEach((l: string) => {
-    doc.text(l, textX, contentY);
-    contentY += headlineLineHeight;
-  });
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  headlineLinesC.forEach((l: string) => {
-    doc.text(l, textX, contentY);
-    contentY += headlineLineHeight;
-  });
-
-  contentY += gapMd;
-
-  // Paragraph 1
+  // Paragraph 1 - main description
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -924,30 +920,43 @@ const renderExecutiveSummary = (
     contentY += PDF_CONFIG.lineHeight.body;
   });
 
-  contentY += gapSm;
-
-  // This unlocks + bullets
-  doc.setFont("helvetica", "bold");
-  doc.text(unlocksTitle, textX, contentY);
-  contentY += PDF_CONFIG.lineHeight.body + gapSm;
-
-  doc.setFont("helvetica", "normal");
-  unlocksBullets.forEach((item) => {
-    doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(textX + 3, contentY - 2, PDF_CONFIG.circleSize.bullet, "F");
-
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    const lines = doc.splitTextToSize(sanitizeText(item), contentMaxWidth - 10);
-    lines.forEach((line: string) => {
-      doc.text(line, textX + 7, contentY);
-      contentY += PDF_CONFIG.lineHeight.body;
-    });
-    contentY += bulletGap;
-  });
-
   contentY += gapMd;
 
-  // Callout: This capability compounds.
+  // Founder note box
+  const founderBoxY = contentY - 6;
+  const founderBoxH = founderLines.length * PDF_CONFIG.lineHeight.body + 12;
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(textX, founderBoxY, contentMaxWidth, founderBoxH, 2, 2, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(textX, founderBoxY, contentMaxWidth, founderBoxH, 2, 2, "S");
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  contentY = founderBoxY + 8;
+  founderLines.forEach((l: string) => {
+    // Highlight "Arthur Online" in bold
+    if (l.includes("Arthur Online")) {
+      const parts = l.split("Arthur Online");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.text(parts[0], textX + 8, contentY);
+      const part1Width = doc.getTextWidth(parts[0]);
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.setFont("helvetica", "bold");
+      doc.text("Arthur Online", textX + 8 + part1Width, contentY);
+      const highlightWidth = doc.getTextWidth("Arthur Online");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.setFont("helvetica", "normal");
+      doc.text(parts[1] || "", textX + 8 + part1Width + highlightWidth, contentY);
+    } else {
+      doc.text(l, textX + 8, contentY);
+    }
+    contentY += PDF_CONFIG.lineHeight.body;
+  });
+
+  contentY += gapMd + 4;
+
+  // Callout: This is not a productivity enhancement
   doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
   doc.roundedRect(textX, contentY - 8, contentMaxWidth, 12, 2, 2, "F");
   doc.setFillColor(...PDF_CONFIG.primaryColor);
@@ -956,6 +965,45 @@ const renderExecutiveSummary = (
   doc.setFont("helvetica", "bold");
   doc.text(sanitizeText(calloutText), textX + 8, contentY);
   contentY += 16;
+
+  // "Hobson enables:"
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.text("Hobson enables:", textX, contentY);
+  contentY += PDF_CONFIG.lineHeight.body + gapSm;
+
+  // Enables bullets with icons
+  doc.setFont("helvetica", "normal");
+  enablesItems.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(textX + 3, contentY - 2, PDF_CONFIG.circleSize.bullet, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    const lines = doc.splitTextToSize(sanitizeText(item), contentMaxWidth - 10);
+    lines.forEach((line: string, lineIdx: number) => {
+      // Bold the first phrase in each item
+      if (lineIdx === 0) {
+        const boldPhrases = ["Permanent reduction", "Faster, defensible decisions", "Material reduction"];
+        const matchedPhrase = boldPhrases.find(p => line.includes(p));
+        if (matchedPhrase) {
+          const parts = line.split(matchedPhrase);
+          doc.setFont("helvetica", "bold");
+          doc.text(matchedPhrase, textX + 7, contentY);
+          const boldWidth = doc.getTextWidth(matchedPhrase);
+          doc.setFont("helvetica", "normal");
+          doc.text(parts[1] || "", textX + 7 + boldWidth, contentY);
+        } else {
+          doc.text(line, textX + 7, contentY);
+        }
+      } else {
+        doc.text(line, textX + 7, contentY);
+      }
+      contentY += PDF_CONFIG.lineHeight.body;
+    });
+    contentY += bulletGap;
+  });
+
+  contentY += gapMd;
 
   // Paragraph 2
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -967,23 +1015,23 @@ const renderExecutiveSummary = (
 
   contentY += gapMd;
 
-  // Statement (bold)
+  // Closing statement (bold with "system of record" in primary color)
   doc.setFont("helvetica", "bold");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  statementLines.forEach((l: string) => {
-    doc.text(l, textX, contentY);
-    contentY += PDF_CONFIG.lineHeight.loose;
-  });
-
-  contentY += gapMd;
-
-  // Closing (italic-ish via smaller + gray)
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setTextColor(...PDF_CONFIG.textGray);
   closingLines.forEach((l: string) => {
-    doc.text(l, textX, contentY);
-    contentY += PDF_CONFIG.lineHeight.body;
+    if (l.includes("system of record")) {
+      const parts = l.split("system of record");
+      doc.text(parts[0], textX, contentY);
+      const part1Width = doc.getTextWidth(parts[0]);
+      doc.setTextColor(...PDF_CONFIG.primaryColor);
+      doc.text("system of record", textX + part1Width, contentY);
+      const highlightWidth = doc.getTextWidth("system of record");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.text(parts[1] || "", textX + part1Width + highlightWidth, contentY);
+    } else {
+      doc.text(l, textX, contentY);
+    }
+    contentY += PDF_CONFIG.lineHeight.loose;
   });
 
   yPosition += boxH + PDF_CONFIG.spacing.sectionGap;

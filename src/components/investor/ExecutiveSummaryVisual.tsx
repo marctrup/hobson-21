@@ -2,6 +2,13 @@ import React from 'react';
 import { Brain, Target, Zap, CheckCircle2, Globe, Rocket, Shield, XCircle, AlertTriangle, ArrowDown, FileText, Search, Lock, TrendingUp, Repeat } from 'lucide-react';
 export const ExecutiveSummaryVisual = () => {
   return <div className="space-y-8">
+      {/* Opening Statement */}
+      <div className="rounded-xl border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-6 sm:p-8 mb-6">
+        <p className="text-lg leading-loose text-foreground">
+          Hobson is building the <span className="text-primary font-semibold">intelligence infrastructure</span> that Real Estate operations now require to function safely, efficiently, and at scale.
+        </p>
+      </div>
+
       {/* Investment Rationale */}
       <div className="rounded-xl border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-6 sm:p-8">
         <div className="flex items-center gap-3 mb-6">
@@ -10,46 +17,50 @@ export const ExecutiveSummaryVisual = () => {
         </div>
         
         <div className="space-y-6 text-foreground">
-          <p className="text-lg leading-loose">
-            Hobson is building the <span className="text-primary font-semibold">cornerstone of accurate document intelligence</span> for the real estate industry.
-          </p>
-          
           <p className="text-sm leading-relaxed">
-            We deliver <span className="font-semibold">AI-driven reasoning directly from source documents</span>, with full traceability and auditability, inside the workflows operators already use. This unlocks:
+            Hobson delivers <span className="font-semibold">AI-driven reasoning directly from source documents</span>, with full traceability and auditability, inside existing workflows. Every obligation, exposure, valuation input, and compliance requirement is buried inside leases, titles, reports, and contracts. By replacing manual document handling, the hidden backbone of all operations, planning applications, funding due diligence, investment committee papers, and asset management, Hobson removes a growing source of structural cost, decision delay, and operational risk across Real Estate.
           </p>
           
-          <div className="flex flex-wrap gap-3 pl-4">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
-              <Zap className="w-3.5 h-3.5" />
-              Faster decisions
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
-              <TrendingUp className="w-3.5 h-3.5" />
-              Lower staffing costs
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
-              <Shield className="w-3.5 h-3.5" />
-              Fewer errors
-            </span>
+          <div className="p-4 rounded-lg bg-muted/50 border border-border">
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              Founded by the team behind <span className="font-semibold text-foreground">Arthur Online</span>, built and scaled to institutional adoption and acquired by Advent International and Aareon in 2021. Hobson is an AI platform born from firsthand experience of Real Estate operations at scale.
+            </p>
           </div>
           
           <div className="p-4 rounded-lg bg-primary/10 border-l-4 border-primary">
-            <p className="font-semibold text-primary text-sm">This capability compounds.</p>
+            <p className="font-semibold text-primary text-sm">This is not a productivity enhancement. It is the removal of a core operational bottleneck.</p>
           </div>
           
-          <p className="text-sm leading-relaxed">
-            Once document intelligence is trusted, it becomes the <span className="font-semibold">foundation for automation, optimisation, and entirely new AI-led products</span> across the real estate stack. Hobson is the entry point to that expansion.
+          <p className="font-semibold text-base">Hobson enables:</p>
+          
+          <div className="space-y-3 pl-4">
+            <div className="flex items-start gap-3">
+              <TrendingUp className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <p className="text-sm leading-relaxed">
+                <span className="font-semibold">Permanent reduction</span> in document-driven staffing costs
+              </p>
+            </div>
+            <div className="flex items-start gap-3">
+              <Zap className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <p className="text-sm leading-relaxed">
+                <span className="font-semibold">Faster, defensible decisions</span> across operations, acquisitions and asset management
+              </p>
+            </div>
+            <div className="flex items-start gap-3">
+              <Shield className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <p className="text-sm leading-relaxed">
+                <span className="font-semibold">Material reduction</span> in errors and compliance exposure through traceable, source-linked outputs
+              </p>
+            </div>
+          </div>
+          
+          <p className="text-sm leading-relaxed pt-2">
+            Once document intelligence is trusted, it becomes <span className="font-semibold">infrastructure</span>. What begins as reasoning becomes decision control, then automation, then a system-level advantage across the Real Estate stack.
           </p>
           
           <p className="font-semibold text-base pt-2">
-            What starts as document reasoning becomes <span className="text-primary">decision infrastructure</span>.
+            Hobson is the entry point for AI becoming a <span className="text-primary">system of record</span> for the Real Estate industry.
           </p>
-          
-          <div className="mt-4 p-4 rounded-lg bg-muted/50 border border-border">
-            <p className="text-sm text-muted-foreground italic leading-relaxed">
-              This is a rare chance to back a platform that begins with <span className="font-semibold text-foreground">accuracy and trust</span>—and grows into a <span className="font-semibold text-foreground">system of record for AI in real assets</span>.
-            </p>
-          </div>
         </div>
       </div>
 
