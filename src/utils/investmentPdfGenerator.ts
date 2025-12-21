@@ -832,11 +832,7 @@ const renderExecutiveSummary = (
     openingY += openingLineHeight;
   });
 
-  yPosition += openingBoxH + PDF_CONFIG.spacing.sectionGap;
-
-  // Start Investment Rationale on a new page
-  doc.addPage();
-  yPosition = margin;
+  yPosition += openingBoxH + 8;
 
   // ===== INVESTMENT RATIONALE BOX =====
   const para1 =
