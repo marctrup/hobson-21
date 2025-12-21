@@ -1576,6 +1576,177 @@ const renderStrategicApproach = (
 };
 
 /**
+ * Render Team Credibility visual matching on-screen component
+ */
+const renderTeamCredibility = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Header box
+  const headerHeight = 36;
+  renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Founded by the Team Behind Arthur Online", margin + 12, yPosition + 14);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodySmallFont(doc);
+  const headerText = "Hobson was founded by the team behind Arthur Online, a Real Estate operations platform built and scaled for institutional adoption, which was acquired by Advent and Aareon in 2021.";
+  const headerLines = doc.splitTextToSize(sanitizeText(headerText), maxWidth - 24);
+  let headerY = yPosition + 22;
+  headerLines.forEach((line: string) => {
+    doc.text(line, margin + 12, headerY);
+    headerY += PDF_CONFIG.lineHeight.body;
+  });
+
+  yPosition += headerHeight + 12;
+
+  // Section 1: Direct Market Experience
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Direct Market Experience", margin + 18, yPosition + 7);
+  yPosition += 14;
+
+  // Experience box
+  const expHeight = 24;
+  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, expHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodySmallFont(doc);
+  const expText = "That experience provides direct insight into how Real Estate platforms are bought, deployed, and relied upon at scale - and where they break under document complexity, compliance pressure, and operational load.";
+  const expLines = doc.splitTextToSize(sanitizeText(expText), maxWidth - 40);
+  let expY = yPosition + 8;
+  expLines.forEach((line: string) => {
+    doc.text(line, margin + 18, expY);
+    expY += PDF_CONFIG.lineHeight.body;
+  });
+
+  yPosition += expHeight + 12;
+
+  // Section 2: The Team Brings
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("The Team Brings", margin + 18, yPosition + 7);
+  yPosition += 14;
+
+  const teamBrings = [
+    "Proven experience building and scaling enterprise Real Estate software",
+    "Deep understanding of document-heavy, regulated environments",
+    "Credibility with institutional buyers and partners",
+    "Prior experience navigating governance, security, and M&A processes",
+  ];
+
+  // 2x2 grid of cards
+  const cardWidth = (maxWidth - 30) / 2;
+  const cardHeight = 24;
+  teamBrings.forEach((item, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const cardX = margin + 10 + col * (cardWidth + 6);
+    const cardY = yPosition + row * (cardHeight + 6);
+
+    renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
+
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(cardX + 8, cardY + 8, PDF_CONFIG.circleSize.goalIcon, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setBodySmallFont(doc);
+    const itemLines = doc.splitTextToSize(sanitizeText(item), cardWidth - 20);
+    let itemY = cardY + 8;
+    itemLines.forEach((line: string) => {
+      doc.text(line, cardX + 14, itemY);
+      itemY += PDF_CONFIG.lineHeight.body;
+    });
+  });
+
+  yPosition += 2 * (cardHeight + 6) + PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
+ * Render Raise visual matching on-screen component
+ */
+const renderRaise = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Funding header box
+  const headerHeight = 32;
+  renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+
+  // Funding icon circle
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 20, yPosition + 16, 8, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("FUNDING REQUIREMENT", margin + 36, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setStatFont(doc);
+  doc.text("GBP 1.8M", margin + 36, yPosition + 24);
+
+  yPosition += headerHeight + 12;
+
+  // Use of Funds section
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Use of Funds", margin + 18, yPosition + 7);
+  yPosition += 14;
+
+  const useOfFunds = [
+    "To secure category leadership with a production-grade platform, QA, and security",
+    "Core technical and go-to-market hiring",
+    "Conversion of pilots into contracted deployments",
+  ];
+
+  useOfFunds.forEach((item) => {
+    const cardHeight = 20;
+    renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
+
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(margin + 20, yPosition + 10, PDF_CONFIG.circleSize.goalIcon, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setBodySmallFont(doc);
+    const itemLines = doc.splitTextToSize(sanitizeText(item), maxWidth - 50);
+    let itemY = yPosition + 8;
+    itemLines.forEach((line: string) => {
+      doc.text(line, margin + 28, itemY);
+      itemY += PDF_CONFIG.lineHeight.body;
+    });
+
+    yPosition += cardHeight + 6;
+  });
+
+  yPosition += PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
  * Render Customer Segmentation visual
  */
 const renderCustomerSegmentation = (
@@ -4766,7 +4937,11 @@ const renderTabContent = (
       yPosition = renderWhyNow(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "approach") {
       yPosition = renderStrategicApproach(doc, yPosition, margin, pageWidth, pageHeight);
-    } 
+    } else if (componentType === "teamCredibility") {
+      yPosition = renderTeamCredibility(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "raise") {
+      yPosition = renderRaise(doc, yPosition, margin, pageWidth, pageHeight);
+    }
     // Customers & Market renderers
     else if (componentType === "customerSegmentation") {
       yPosition = renderCustomerSegmentation(doc, yPosition, margin, pageWidth, pageHeight);
