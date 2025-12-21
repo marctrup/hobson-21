@@ -1313,8 +1313,8 @@ const renderWhyNow = (
     const bulletsHeight =
       bulletLinesByItem.reduce((sum, lines) => sum + lines.length * PDF_CONFIG.lineHeight.body + 2, 0) || 0;
     const conclusionHeight = conclusionLines.length * PDF_CONFIG.lineHeight.body;
-    const padding = 14; // internal padding
-    const cardHeight = titleHeight + 6 + introHeight + 6 + bulletsHeight + 6 + conclusionHeight + padding;
+    const padding = 8; // reduced internal padding
+    const cardHeight = titleHeight + 4 + introHeight + 4 + bulletsHeight + 4 + conclusionHeight + padding;
 
     // Check for page break
     yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
@@ -1327,7 +1327,7 @@ const renderWhyNow = (
     doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
 
     // Title
-    let cursorY = yPosition + 12;
+    let cursorY = yPosition + 10; // reduced top padding
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
     if (section.title) {
@@ -1335,7 +1335,7 @@ const renderWhyNow = (
     }
 
     // Intro
-    cursorY = yPosition + 20;
+    cursorY = yPosition + 16; // reduced gap after title
     doc.setTextColor(...PDF_CONFIG.textGray);
     setBodySmallFont(doc);
     introLines.forEach((line: string) => {
@@ -1344,7 +1344,7 @@ const renderWhyNow = (
     });
 
     // Bullets
-    cursorY += 4;
+    cursorY += 2;
     setBodySmallFont(doc);
     bulletLinesByItem.forEach((lines) => {
       doc.setFillColor(...PDF_CONFIG.primaryLight);
@@ -1354,11 +1354,11 @@ const renderWhyNow = (
         doc.text(line, margin + 28, cursorY);
         cursorY += PDF_CONFIG.lineHeight.body;
       });
-      cursorY += 2;
+      cursorY += 1;
     });
 
     // Conclusion (left border accent)
-    cursorY += 4;
+    cursorY += 2;
     const accentH = Math.max(6, conclusionLines.length * PDF_CONFIG.lineHeight.body);
     doc.setFillColor(...PDF_CONFIG.primaryColor);
     doc.rect(margin + 6, cursorY - 4, 2, accentH, "F");
@@ -1371,7 +1371,7 @@ const renderWhyNow = (
       cursorY += PDF_CONFIG.lineHeight.body;
     });
 
-    yPosition += cardHeight + 8;
+    yPosition += cardHeight + 6; // reduced gap between cards
   });
 
   // Convergence section - bright purple background with white text
