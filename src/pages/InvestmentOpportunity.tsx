@@ -62,6 +62,7 @@ import { CustomerSegmentationVisual } from "@/components/investor/CustomerSegmen
 import { PilotClientsVisual } from "@/components/investor/PilotClientsVisual";
 import { TechStackVisual } from "@/components/investor/TechStackVisual";
 import WhyNowVisual from "@/components/investor/WhyNowVisual";
+import { TeamCredibilityVisual } from "@/components/investor/TeamCredibilityVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -101,6 +102,15 @@ const sections = [
         title: "Strategic Approach",
         showCustomVisual: true,
         customVisualComponent: "approach",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Team Credibility",
+        showCustomVisual: true,
+        customVisualComponent: "teamCredibility",
         content: {
           overview: "",
           sections: [],
@@ -1231,6 +1241,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Why Now */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "whyNow" && (
                       <WhyNowVisual />
+                    )}
+
+                    {/* Custom Visual Component for Team Credibility */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "teamCredibility" && (
+                      <TeamCredibilityVisual />
                     )}
 
                     {/* Custom Visual Component for Customer Segmentation */}
