@@ -868,12 +868,12 @@ const renderExecutiveSummary = (
   const para2Lines = doc.splitTextToSize(sanitizeText(para2), textContentWidth);
   const closingLines = doc.splitTextToSize(sanitizeText(closing), textContentWidth);
 
-  const gapSm = 4;
-  const gapMd = 8;
-  const bulletGap = 2;
+  const gapSm = 3;
+  const gapMd = 6;
+  const bulletGap = 1;
 
   const para1Height = para1Lines.length * PDF_CONFIG.lineHeight.body;
-  const founderHeight = founderLines.length * PDF_CONFIG.lineHeight.body + 12; // box padding
+  const founderHeight = founderLines.length * PDF_CONFIG.lineHeight.body + 8; // box padding
   const para2Height = para2Lines.length * PDF_CONFIG.lineHeight.body;
   const closingHeight = closingLines.length * PDF_CONFIG.lineHeight.loose;
   const enablesItemsHeight = enablesItems.length * (PDF_CONFIG.lineHeight.body * 2 + bulletGap);
@@ -887,7 +887,7 @@ const renderExecutiveSummary = (
     para1Height +
     gapMd +
     founderHeight +
-    gapMd + 12 + // Extra spacing before callout (matches contentY += gapMd + 12)
+    gapMd + 8 + // Extra spacing before callout
     rationaleCalloutHeight +
     gapMd +
     PDF_CONFIG.lineHeight.body + // "Hobson enables:"
@@ -932,8 +932,8 @@ const renderExecutiveSummary = (
   contentY += gapMd;
 
   // Founder note box
-  const founderBoxY = contentY - 6;
-  const founderBoxH = founderLines.length * PDF_CONFIG.lineHeight.body + 12;
+  const founderBoxY = contentY - 4;
+  const founderBoxH = founderLines.length * PDF_CONFIG.lineHeight.body + 8;
   doc.setFillColor(...PDF_CONFIG.bgLight);
   doc.roundedRect(textX, founderBoxY, textContentWidth, founderBoxH, 2, 2, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
@@ -942,7 +942,7 @@ const renderExecutiveSummary = (
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  contentY = founderBoxY + 8;
+  contentY = founderBoxY + 6;
   founderLines.forEach((l: string) => {
     // Highlight "Arthur Online" in bold
     if (l.includes("Arthur Online")) {
