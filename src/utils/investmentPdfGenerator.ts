@@ -790,8 +790,8 @@ const renderExecutiveSummary = (
   const boxX = margin;
   const boxW = maxWidth;
   const boxPaddingX = 10;
-  const boxPaddingTop = 5;
-  const boxPaddingBottom = 5;
+  const boxPaddingTop = 8;
+  const boxPaddingBottom = 6;
 
   const openingStatement = "Hobson is building the intelligence infrastructure that Real Estate operations now require to function safely, efficiently, and at scale.";
 
@@ -809,7 +809,7 @@ const renderExecutiveSummary = (
   doc.setLineWidth(0.5);
   doc.roundedRect(boxX, yPosition, boxW, openingBoxH, 4, 4, "S");
 
-  let openingY = yPosition + boxPaddingTop;
+  let openingY = yPosition + boxPaddingTop + 4; // +4 for font baseline offset
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
