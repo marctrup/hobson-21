@@ -1490,18 +1490,12 @@ const renderStrategicApproach = (
 
   // Conclusion box
   doc.setFillColor(...PDF_CONFIG.blueBg);
-  const productConclusionHeight = 16;
+  const productConclusionHeight = 12;
   doc.roundedRect(margin + 8, yPosition, maxWidth - 16, productConclusionHeight, 2, 2, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  const productConclusion = "Trust is earned first. Expansion into proactive guidance and automation will follow.";
-  const productConcLines = doc.splitTextToSize(sanitizeText(productConclusion), maxWidth - 32);
-  let pcY = yPosition + 6;
-  productConcLines.forEach((line: string) => {
-    doc.text(line, margin + 14, pcY);
-    pcY += PDF_CONFIG.lineHeight.body;
-  });
-  yPosition += productConclusionHeight + 10;
+  doc.text("Trust is earned first. Expansion into proactive guidance and automation will follow.", margin + 14, yPosition + 7);
+  yPosition += productConclusionHeight + 8;
 
   // ===== PILLAR 2: BRAND =====
   yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
@@ -1538,12 +1532,12 @@ const renderStrategicApproach = (
 
   // Conclusion box
   doc.setFillColor(...PDF_CONFIG.roseBg);
-  const brandConclusionHeight = 12;
+  const brandConclusionHeight = 10;
   doc.roundedRect(margin + 8, yPosition, maxWidth - 16, brandConclusionHeight, 2, 2, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  doc.text("The brand signals reliability under pressure.", margin + 14, yPosition + 7);
-  yPosition += brandConclusionHeight + 10;
+  doc.text("The brand signals reliability under pressure.", margin + 14, yPosition + 6);
+  yPosition += brandConclusionHeight + 8;
 
   // ===== PILLAR 3: BUSINESS MODEL =====
   yPosition = checkPageBreak(doc, yPosition, 60, pageHeight, margin);
