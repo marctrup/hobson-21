@@ -868,8 +868,8 @@ const renderExecutiveSummary = (
   const para2Lines = doc.splitTextToSize(sanitizeText(para2), textContentWidth);
   const closingLines = doc.splitTextToSize(sanitizeText(closing), textContentWidth);
 
-  const gapSm = 3;
-  const gapMd = 6;
+  const gapSm = 2;
+  const gapMd = 4;
   const bulletGap = 1;
 
   const para1Height = para1Lines.length * PDF_CONFIG.lineHeight.body;
@@ -881,13 +881,13 @@ const renderExecutiveSummary = (
   const rationaleCalloutHeight = 12;
 
   const boxH =
-    boxPaddingTop +
+    boxPaddingTop + 4 + // +4 for baseline offset
     14 + // header row
     gapMd +
     para1Height +
     gapMd +
     founderHeight +
-    gapMd + 8 + // Extra spacing before callout
+    gapMd + 6 + // Extra spacing before callout
     rationaleCalloutHeight +
     gapMd +
     PDF_CONFIG.lineHeight.body + // "Hobson enables:"
@@ -897,7 +897,7 @@ const renderExecutiveSummary = (
     para2Height +
     gapMd +
     closingHeight +
-    boxPaddingBottom;
+    2; // Reduced bottom padding
 
   // --- Draw card ---
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -908,7 +908,7 @@ const renderExecutiveSummary = (
   doc.roundedRect(boxX, yPosition, boxW, boxH, 4, 4, "S");
 
   // Header
-  const headerY = yPosition + 14;
+  const headerY = yPosition + boxPaddingTop + 8; // +8 for baseline offset
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 12, headerY - 2, 3, "F");
 
@@ -917,7 +917,7 @@ const renderExecutiveSummary = (
   doc.text("Investment Rationale", margin + 20, headerY);
 
   // Content
-  let contentY = headerY + 12;
+  let contentY = headerY + 10;
   const textX = boxX + boxPaddingX;
 
   // Paragraph 1 - main description
