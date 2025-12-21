@@ -790,8 +790,8 @@ const renderExecutiveSummary = (
   const boxX = margin;
   const boxW = maxWidth;
   const boxPaddingX = 12;
-  const boxPaddingTop = 14;
-  const boxPaddingBottom = 12;
+  const boxPaddingTop = 10;
+  const boxPaddingBottom = 8;
 
   const openingStatement = "Hobson is building the intelligence infrastructure that Real Estate operations now require to function safely, efficiently, and at scale.";
 
