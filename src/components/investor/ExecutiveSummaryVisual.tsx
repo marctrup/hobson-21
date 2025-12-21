@@ -86,9 +86,15 @@ export const ExecutiveSummaryVisual = () => {
           </div>
         </div>
         
-        <div className="relative p-4 rounded-lg bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-l-4 border-primary">
+        <div className="relative p-4 rounded-lg bg-gradient-to-r from-primary/5 via-primary/10 to-primary/5 border-l-4 border-primary space-y-3">
+          <p className="text-sm text-foreground leading-relaxed font-semibold">
+            Real Estate operations are structurally constrained by manual document work.
+          </p>
           <p className="text-sm text-foreground leading-relaxed">
-            <span className="font-semibold">Real estate operations are structurally inefficient.</span> Over <span className="font-semibold text-primary">20% of professional time</span> is lost to document handling, verification, and search. Hobson converts this wasted cost into <span className="font-semibold text-primary">permanent operating leverage</span>. These figures represent recurring, defensible value that AI-native operators will capture—and legacy workflows will forfeit.
+            Over <span className="font-semibold text-primary">20% of professional time</span> is spent locating, validating, and cross-checking information across fragmented documents and systems.
+          </p>
+          <p className="text-sm text-foreground leading-relaxed">
+            This is recurring operational spend already being paid for in payroll, consultants, delays, and error remediation. Hobson converts this existing cost into <span className="font-semibold text-primary">permanent operating leverage</span> that compounds as portfolios scale.
           </p>
         </div>
       </div>
