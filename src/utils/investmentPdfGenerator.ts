@@ -1300,55 +1300,82 @@ const renderWhyNow = (
   ];
 
   sections.forEach((section) => {
-    // Calculate dynamic card height based on content - tighter spacing
-    const titleHeight = 10;
-    const introHeight = 8;
-    const bulletsHeight = section.bullets.length * PDF_CONFIG.lineHeight.body;
-    const conclusionHeight = 10;
-    const padding = 10; // Reduced padding
-    const cardHeight = titleHeight + introHeight + bulletsHeight + conclusionHeight + padding;
-    
-    // Check for page break with calculated height
+    // Measure text with correct font for wrapping
+    setBodySmallFont(doc);
+    const contentWidth = maxWidth - 32; // padding + number badge gutter
+    const introLines = section.intro ? doc.splitTextToSize(sanitizeText(section.intro), contentWidth) : [];
+    const bulletLinesByItem = section.bullets.map((b) =>
+      doc.splitTextToSize(sanitizeText(b), contentWidth - 12)
+    );
+    const conclusionLines = section.conclusion
+      ? doc.splitTextToSize(sanitizeText(section.conclusion), contentWidth)
+      : [];
+
+    // Dynamic card height based on wrapped content
+    const titleHeight = section.title ? 10 : 4;
+    const introHeight = introLines.length * PDF_CONFIG.lineHeight.body;
+    const bulletsHeight =
+      bulletLinesByItem.reduce((sum, lines) => sum + lines.length * PDF_CONFIG.lineHeight.body + 2, 0) || 0;
+    const conclusionHeight = conclusionLines.length * PDF_CONFIG.lineHeight.body;
+    const padding = 14; // internal padding
+    const cardHeight = titleHeight + 6 + introHeight + 6 + bulletsHeight + 6 + conclusionHeight + padding;
+
+    // Check for page break
     yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
 
-    // Section card with dynamic height
+    // Section card
     renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
-    // Number badge (filled circle) - pillarBadge size
+    // Number badge
     doc.setFillColor(...PDF_CONFIG.primaryColor);
     doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
 
     // Title
+    let cursorY = yPosition + 12;
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
-    doc.text(section.title, margin + 20, yPosition + 12);
+    if (section.title) {
+      doc.text(section.title, margin + 20, cursorY);
+    }
 
-    // Intro - reduced gap after title
+    // Intro
+    cursorY = yPosition + 20;
     doc.setTextColor(...PDF_CONFIG.textGray);
     setBodySmallFont(doc);
-    doc.text(section.intro, margin + 20, yPosition + 20);
-
-    // Bullets with proper spacing using body font - add subtitleToBullets gap
-    let bulletY = yPosition + 20 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
-    setBodySmallFont(doc);
-    section.bullets.forEach((bullet) => {
-      doc.setFillColor(...PDF_CONFIG.primaryLight);
-      doc.circle(margin + 22, bulletY - 1.5, PDF_CONFIG.circleSize.bullet, "F");
-      doc.setTextColor(...PDF_CONFIG.textDark);
-      doc.text(bullet, margin + 28, bulletY);
-      bulletY += PDF_CONFIG.lineHeight.body;
+    introLines.forEach((line: string) => {
+      doc.text(line, margin + 20, cursorY);
+      cursorY += PDF_CONFIG.lineHeight.body;
     });
 
-    // Conclusion (left border accent) - position relative to bullets end
-    const conclusionY = bulletY + 2;
+    // Bullets
+    cursorY += 4;
+    setBodySmallFont(doc);
+    bulletLinesByItem.forEach((lines) => {
+      doc.setFillColor(...PDF_CONFIG.primaryLight);
+      doc.circle(margin + 22, cursorY - 1.5, PDF_CONFIG.circleSize.bullet, "F");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      lines.forEach((line: string) => {
+        doc.text(line, margin + 28, cursorY);
+        cursorY += PDF_CONFIG.lineHeight.body;
+      });
+      cursorY += 2;
+    });
+
+    // Conclusion (left border accent)
+    cursorY += 4;
+    const accentH = Math.max(6, conclusionLines.length * PDF_CONFIG.lineHeight.body);
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.rect(margin + 6, conclusionY - 4, 2, 6, "F");
+    doc.rect(margin + 6, cursorY - 4, 2, accentH, "F");
+
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
     doc.setFont("helvetica", "italic");
-    doc.text(section.conclusion, margin + 12, conclusionY);
+    conclusionLines.forEach((line: string) => {
+      doc.text(line, margin + 12, cursorY);
+      cursorY += PDF_CONFIG.lineHeight.body;
+    });
 
-    yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
+    yPosition += cardHeight + 8;
   });
 
   // Convergence section - bright purple background with white text
