@@ -1104,7 +1104,7 @@ const renderExecutiveSummary = (
   yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
   
   // Market description callout box with left border
-  const calloutHeight = 28;
+  const calloutHeight = 34;
   const calloutX = margin;
   const calloutWidth = maxWidth;
   
