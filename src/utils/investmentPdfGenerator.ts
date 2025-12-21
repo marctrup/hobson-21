@@ -1714,22 +1714,22 @@ const renderRaise = (
   ];
 
   useOfFunds.forEach((item) => {
-    const cardHeight = 20;
+    const cardHeight = 18;
     renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 20, yPosition + 10, PDF_CONFIG.circleSize.goalIcon, "F");
+    doc.circle(margin + 20, yPosition + 9, PDF_CONFIG.circleSize.goalIcon, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
     const itemLines = doc.splitTextToSize(sanitizeText(item), maxWidth - 50);
-    let itemY = yPosition + 8;
+    let itemY = yPosition + 7 + (cardHeight - itemLines.length * PDF_CONFIG.lineHeight.body) / 2; // vertically center text
     itemLines.forEach((line: string) => {
       doc.text(line, margin + 28, itemY);
       itemY += PDF_CONFIG.lineHeight.body;
     });
 
-    yPosition += cardHeight + 6;
+    yPosition += cardHeight + 4;
   });
 
   yPosition += PDF_CONFIG.spacing.sectionGap;
