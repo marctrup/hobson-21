@@ -1292,7 +1292,7 @@ const renderWhyNow = (
     },
     {
       number: "5",
-      title: "",
+      title: "The Economics Are Clear",
       intro: "",
       bullets: [],
       conclusion: "AI delivers approximately GBP 6,000 per role per year in reclaimed capacity. Tools that remove labour, not merely optimise it, are adopted first.",

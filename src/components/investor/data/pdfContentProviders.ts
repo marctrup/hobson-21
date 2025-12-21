@@ -1247,6 +1247,8 @@ export const getWhyNowPdfContent = (): string[] => [
   "",
   "At the same time, labour inflation makes manual document work structurally unaffordable.",
   "",
+  "5. THE ECONOMICS ARE CLEAR",
+  "",
   "AI delivers approximately GBP 6,000 per role per year in reclaimed capacity.",
   "Tools that remove labour, not merely optimise it, are adopted first.",
   "",
