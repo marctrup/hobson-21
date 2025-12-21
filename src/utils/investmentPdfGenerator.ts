@@ -1443,7 +1443,7 @@ const renderWhyNow = (
 
 /**
  * Render Strategic Approach visual with styling matching on-screen component
- * Replicates: Intro card, 3 numbered pillars (Product/Brand/Business), Why We Raise section
+ * Updated to match new simplified content structure
  */
 const renderStrategicApproach = (
   doc: jsPDF,
@@ -1455,233 +1455,123 @@ const renderStrategicApproach = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // ===== INTRO SECTION =====
-  const introHeight = 40;
-  renderContentCard(doc, margin, yPosition, maxWidth, introHeight, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("Our Strategic Approach", margin + 10, yPosition + 10);
-
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  setBodySmallFont(doc);
-  const introText = "Hobson combines AI innovation with deep real estate experience to create a platform that feels familiar, works instantly, and delivers clarity without disruption.";
-  const introEndY = renderSpacedText(doc, introText, margin + 10, yPosition + 18, maxWidth - 20, PDF_CONFIG.lineHeight.body);
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setCaptionFont(doc);
-  const pillarsText = "Built around three pillars: Product, Brand, and Business Model - aligned toward a 2027 commercial launch, funded by a 2026 seed round.";
-  renderSpacedText(doc, pillarsText, margin + 10, introEndY + 1, maxWidth - 20, PDF_CONFIG.lineHeight.tight);
-
-  yPosition += introHeight + PDF_CONFIG.spacing.sectionGap;
-
   // ===== PILLAR 1: PRODUCT =====
   yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
 
-  // Number badge - pillarBadge size
+  // Number badge
   doc.setFillColor(...PDF_CONFIG.blue);
   doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Product Approach", margin + 18, yPosition + 7);
+  doc.text("Product", margin + 18, yPosition + 7);
+
+  // Subtitle - wrap long text
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("Built for the way real estate actually works", margin + 18, yPosition + 14);
-  yPosition += 14 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
+  const productSubtitle = "Hobson has been built to replace document-driven human reasoning without disrupting existing workflows";
+  const productSubLines = doc.splitTextToSize(sanitizeText(productSubtitle), maxWidth - 30);
+  let subY = yPosition + 14;
+  productSubLines.forEach((line: string) => {
+    doc.text(line, margin + 18, subY);
+    subY += PDF_CONFIG.lineHeight.body;
+  });
+  yPosition = subY + 4;
 
   const productItems = [
-    "Unifies scattered information across documents, emails, and systems",
-    "A simple interface with zero learning curve",
-    "Works alongside existing workflows - no disruption",
-    "Designed to earn trust: citations, transparency, no hallucinations",
-    "Becomes more helpful over time -> proactive support, guided workflows",
-    "Current business activity (pilots, document processing, insights) directly informs the production platform",
+    "Operates inside current systems",
+    "Zero onboarding or behavioural change",
+    "Unifies reasoning across documents, emails, and platforms",
+    "Transparent citations and verifiable outputs",
   ];
 
   yPosition = renderBulletList(doc, productItems, margin + 4, yPosition, maxWidth - 8, PDF_CONFIG.blue, PDF_CONFIG.textDark);
   yPosition += 2;
 
-  // Goal box
+  // Conclusion box
   doc.setFillColor(...PDF_CONFIG.blueBg);
-  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, 12, 2, 2, "F");
-  doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 16, yPosition + 6, PDF_CONFIG.circleSize.goalIcon, "F");
+  const productConclusionHeight = 16;
+  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, productConclusionHeight, 2, 2, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  doc.setFont("helvetica", "bold");
-  doc.text("Goal: A clarity engine that feels like part of the team on day one.", margin + 24, yPosition + 8);
-  yPosition += 16;
+  const productConclusion = "Trust is earned first. Expansion into proactive guidance and automation will follow.";
+  const productConcLines = doc.splitTextToSize(sanitizeText(productConclusion), maxWidth - 32);
+  let pcY = yPosition + 6;
+  productConcLines.forEach((line: string) => {
+    doc.text(line, margin + 14, pcY);
+    pcY += PDF_CONFIG.lineHeight.body;
+  });
+  yPosition += productConclusionHeight + 10;
 
   // ===== PILLAR 2: BRAND =====
   yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
 
-  // Number badge - pillarBadge size
+  // Number badge
   doc.setFillColor(...PDF_CONFIG.rose);
   doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Brand Approach", margin + 18, yPosition + 7);
+  doc.text("Brand", margin + 18, yPosition + 7);
+
+  // Subtitle - wrap long text
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("Human, helpful, and honest", margin + 18, yPosition + 14);
-  yPosition += 14 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
+  const brandSubtitle = "Hobson has been designed for high-stakes operational environments where accuracy, traceability, and defensibility are non-negotiable";
+  const brandSubLines = doc.splitTextToSize(sanitizeText(brandSubtitle), maxWidth - 30);
+  subY = yPosition + 14;
+  brandSubLines.forEach((line: string) => {
+    doc.text(line, margin + 18, subY);
+    subY += PDF_CONFIG.lineHeight.body;
+  });
+  yPosition = subY + 4;
 
   const brandItems = [
-    { label: "Personalisation", desc: "Adapts to context and role" },
-    { label: "Integrity", desc: "Transparent, visible sources" },
-    { label: "Expectations", desc: "Essentials first, then expand" },
-    { label: "Resolution", desc: "Act on feedback quickly" },
-    { label: "Time & Effort", desc: "Every interaction effortless" },
-    { label: "Empathy", desc: "Built for real-world pressure" },
+    "Predictable behaviour",
+    "Transparent sources",
+    "Clear expectations",
+    "Fast feedback loops",
   ];
 
-  // 3x2 grid of brand cards
-  const brandCardWidth = (maxWidth - 24) / 3;
-  const brandCardHeight = 22;
-  brandItems.forEach((item, idx) => {
-    const col = idx % 3;
-    const row = Math.floor(idx / 3);
-    const cardX = margin + 8 + col * (brandCardWidth + 4);
-    const cardY = yPosition + row * (brandCardHeight + 4);
+  yPosition = renderBulletList(doc, brandItems, margin + 4, yPosition, maxWidth - 8, PDF_CONFIG.rose, PDF_CONFIG.textDark);
+  yPosition += 2;
 
-    renderContentCard(doc, cardX, cardY, brandCardWidth, brandCardHeight, PDF_CONFIG.roseBg, PDF_CONFIG.roseBorder);
-
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    setBodyBoldFont(doc);
-    doc.text(item.label, cardX + 5, cardY + 9);
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    setCaptionFont(doc);
-    doc.text(item.desc, cardX + 5, cardY + 17);
-  });
-  yPosition += 2 * (brandCardHeight + 4) + 4;
-
-  // Goal box
+  // Conclusion box
   doc.setFillColor(...PDF_CONFIG.roseBg);
-  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, 12, 2, 2, "F");
-  doc.setFillColor(...PDF_CONFIG.rose);
-  doc.circle(margin + 16, yPosition + 6, PDF_CONFIG.circleSize.goalIcon, "F");
+  const brandConclusionHeight = 12;
+  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, brandConclusionHeight, 2, 2, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  doc.setFont("helvetica", "bold");
-  doc.text("Goal: A brand that embodies Innovation without disruption.", margin + 24, yPosition + 8);
-  yPosition += 16;
+  doc.text("The brand signals reliability under pressure.", margin + 14, yPosition + 7);
+  yPosition += brandConclusionHeight + 10;
 
-  // ===== PILLAR 3: BUSINESS =====
-  yPosition = checkPageBreak(doc, yPosition, 80, pageHeight, margin);
+  // ===== PILLAR 3: BUSINESS MODEL =====
+  yPosition = checkPageBreak(doc, yPosition, 60, pageHeight, margin);
 
-  // Number badge - pillarBadge size
+  // Number badge
   doc.setFillColor(...PDF_CONFIG.amber);
   doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Business Approach", margin + 18, yPosition + 7);
+  doc.text("Business Model", margin + 18, yPosition + 7);
+
+  // Subtitle
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("Built for mass adoption and rapid scaling", margin + 18, yPosition + 14);
+  doc.text("Hobson has been designed to become the default intelligence layer", margin + 18, yPosition + 14);
   yPosition += 14 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
 
-  // No fees cards (3 emerald cards)
-  const noFeeItems = ["No licence fees", "No per-user fees", "No per-asset fees"];
-  const noFeeCardWidth = (maxWidth - 20) / 3;
-  noFeeItems.forEach((item, idx) => {
-    const cardX = margin + 8 + idx * (noFeeCardWidth + 4);
-    renderContentCard(doc, cardX, yPosition, noFeeCardWidth, 16, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
-
-    doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(cardX + noFeeCardWidth / 2, yPosition + 5, PDF_CONFIG.circleSize.goalIcon, "F");
-    doc.setTextColor(...PDF_CONFIG.emerald);
-    setCaptionFont(doc);
-    doc.setFont("helvetica", "bold");
-    doc.text(item, cardX + noFeeCardWidth / 2, yPosition + 12, { align: "center" });
-  });
-  yPosition += 20;
-
-  // Business model cards (2x2 amber cards)
-  const bizItems = [
-    { label: "Usage-Based Pricing", desc: "Pay via HEUs - only for what you use" },
-    { label: "Full Transparency", desc: "See exactly what Hobson did and why" },
-    { label: "Low Base Cost", desc: "Frictionless entry for any business size" },
-    { label: "Flexible Billing", desc: "Enables high-volume market capture" },
+  const businessItems = [
+    "Usage-based pricing aligned to value delivered (HEU)",
+    "No licence, per-user, or per-asset fees",
+    "Low base cost enabling broad adoption",
+    "Full transparency into AI actions",
   ];
-  const bizCardWidth = (maxWidth - 16) / 2;
-  const bizCardHeight = 20;
-  bizItems.forEach((item, idx) => {
-    const col = idx % 2;
-    const row = Math.floor(idx / 2);
-    const cardX = margin + 8 + col * (bizCardWidth + 4);
-    const cardY = yPosition + row * (bizCardHeight + 4);
 
-    renderContentCard(doc, cardX, cardY, bizCardWidth, bizCardHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
+  yPosition = renderBulletList(doc, businessItems, margin + 4, yPosition, maxWidth - 8, PDF_CONFIG.amber, PDF_CONFIG.textDark);
+  yPosition += PDF_CONFIG.spacing.sectionGap;
 
-    doc.setFillColor(...PDF_CONFIG.amber);
-    doc.circle(cardX + 7, cardY + 7, PDF_CONFIG.circleSize.goalIcon, "F");
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    setBodySmallFont(doc);
-    doc.setFont("helvetica", "bold");
-    doc.text(item.label, cardX + 13, cardY + 8);
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    setCaptionFont(doc);
-    doc.text(item.desc, cardX + 13, cardY + 16);
-  });
-  yPosition += 2 * (bizCardHeight + 4) + 4;
-
-  // Goal box
-  doc.setFillColor(...PDF_CONFIG.amberBg);
-  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, 12, 2, 2, "F");
-  doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + 16, yPosition + 6, PDF_CONFIG.circleSize.goalIcon, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setBodySmallFont(doc);
-  doc.setFont("helvetica", "bold");
-  doc.text("Goal: Category-defining AI document intelligence layer.", margin + 24, yPosition + 8);
-  yPosition += 16;
-
-  // ===== WHY WE RAISE IN 2026 =====
-  yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
-
-  // Rocket badge - pillarBadge size
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("Why We Raise in 2026", margin + 18, yPosition + 7);
-  yPosition += 12;
-
-  // Raise box
-  const raiseHeight = 42;
-  renderContentCard(doc, margin + 8, yPosition, maxWidth - 16, raiseHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setBodySmallFont(doc);
-  doc.text("To deliver a 2027 commercial launch, we need to complete:", margin + 14, yPosition + 10);
-
-  const raiseItems = ["Full production platform", "AI scaling", "Stability, QA, security", "Core hiring", "GTM development", "Pilot conversion"];
-  let raiseX = margin + 14;
-  let raiseY = yPosition + 18;
-  setCaptionFont(doc);
-  raiseItems.forEach((item, idx) => {
-    doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(raiseX + 3, raiseY, PDF_CONFIG.circleSize.bullet, "F");
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(item, raiseX + 8, raiseY + 1);
-    if (idx === 2) {
-      raiseX = margin + 14;
-      raiseY += PDF_CONFIG.lineHeight.body;
-    } else {
-      raiseX += 54;
-    }
-  });
-
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  setBodySmallFont(doc);
-  doc.setFont("helvetica", "bold");
-  doc.text("We raise in 2026 to ensure everything is in place before revenue begins in 2027.", margin + 14, yPosition + 36);
-
-  yPosition += raiseHeight + PDF_CONFIG.spacing.sectionGap;
   return yPosition;
 };
 
