@@ -56,7 +56,7 @@ const WhyNowVisual: React.FC = () => {
     {
       number: "5",
       icon: PoundSterling,
-      title: "",
+      title: "The Economics Are Clear",
       intro: "",
       bullets: [],
       conclusion: "AI delivers approximately £6,000 per role per year in reclaimed capacity. Tools that remove labour, not merely optimise it, are adopted first.",
