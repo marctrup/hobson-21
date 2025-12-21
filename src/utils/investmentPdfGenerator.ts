@@ -855,11 +855,14 @@ const renderExecutiveSummary = (
   const closing =
     "Hobson is the entry point for AI becoming a system of record for the Real Estate industry.";
 
-  // --- Measure heights ---
-  const para1Lines = doc.splitTextToSize(sanitizeText(para1), contentMaxWidth);
-  const founderLines = doc.splitTextToSize(sanitizeText(founderNote), contentMaxWidth - 16);
-  const para2Lines = doc.splitTextToSize(sanitizeText(para2), contentMaxWidth);
-  const closingLines = doc.splitTextToSize(sanitizeText(closing), contentMaxWidth);
+  // --- Measure heights (set font first for accurate measurement) ---
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  const textContentWidth = boxW - boxPaddingX * 2; // Full width minus padding
+  const para1Lines = doc.splitTextToSize(sanitizeText(para1), textContentWidth);
+  const founderLines = doc.splitTextToSize(sanitizeText(founderNote), textContentWidth - 16);
+  const para2Lines = doc.splitTextToSize(sanitizeText(para2), textContentWidth);
+  const closingLines = doc.splitTextToSize(sanitizeText(closing), textContentWidth);
 
   const gapSm = 4;
   const gapMd = 8;
@@ -928,10 +931,10 @@ const renderExecutiveSummary = (
   const founderBoxY = contentY - 6;
   const founderBoxH = founderLines.length * PDF_CONFIG.lineHeight.body + 12;
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(textX, founderBoxY, contentMaxWidth, founderBoxH, 2, 2, "F");
+  doc.roundedRect(textX, founderBoxY, textContentWidth, founderBoxH, 2, 2, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
   doc.setLineWidth(0.3);
-  doc.roundedRect(textX, founderBoxY, contentMaxWidth, founderBoxH, 2, 2, "S");
+  doc.roundedRect(textX, founderBoxY, textContentWidth, founderBoxH, 2, 2, "S");
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
