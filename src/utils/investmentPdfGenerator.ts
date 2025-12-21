@@ -883,7 +883,7 @@ const renderExecutiveSummary = (
     para1Height +
     gapMd +
     founderHeight +
-    gapMd +
+    gapMd + 12 + // Extra spacing before callout (matches contentY += gapMd + 12)
     rationaleCalloutHeight +
     gapMd +
     PDF_CONFIG.lineHeight.body + // "Hobson enables:"
@@ -959,7 +959,7 @@ const renderExecutiveSummary = (
     contentY += PDF_CONFIG.lineHeight.body;
   });
 
-  contentY += gapMd + 4;
+  contentY += gapMd + 12; // Extra spacing between founder note and callout
 
   // Callout: This is not a productivity enhancement
   doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
