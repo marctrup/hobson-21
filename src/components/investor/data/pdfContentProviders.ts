@@ -610,11 +610,13 @@ export const getExecutiveSummaryPdfContent = (): string[] => [
   "- Global: GBP 155.6B",
   "",
   "Traction & Execution Momentum:",
-  "- MVP Launch Q1 2026 - On track, scope defined by live partner workflows",
-  "- Validated with 4 Operating Partners - Use cases proven inside real organisations",
-  "- 98% Model Accuracy - Measured on proprietary, industry-specific datasets",
-  "- Multi-Document Reasoning - Legal, compliance, and operational documents analysed together",
-  "- Domain-Trained AI - Purpose-built for real estate complexity and auditability",
+  "Hobson demonstrates production-grade capability against Real Estate operational workflows.",
+  "",
+  "- Validated across four live Real Estate operating use cases",
+  "- 98% model accuracy measured on proprietary, industry-specific datasets",
+  "- Multi-document reasoning across legal, compliance, and operational sources",
+  "- Domain-trained AI purpose-built for auditability and regulatory scrutiny",
+  "- MVP launch Q1 2026, with scope defined by partner workflows rather than theoretical use cases",
 ];
 
 export const getApproachPdfContent = (): string[] => [

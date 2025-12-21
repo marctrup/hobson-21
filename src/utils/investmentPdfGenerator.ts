@@ -1170,75 +1170,46 @@ const renderExecutiveSummary = (
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Traction & Execution Momentum", margin + 14, yPosition);
-  yPosition += 14;
+  yPosition += 12;
 
-  const tractionData = [
-    { title: "MVP Launch — Q1 2026", subtitle: "On track, with scope defined by live partner workflows" },
-    { title: "Validated with 4 Operating Partners", subtitle: "Use cases proven inside real estate organisations" },
-    { title: "98% Model Accuracy", subtitle: "Measured on proprietary, industry-specific datasets" },
-    { title: "Multi-Document Reasoning", subtitle: "Legal, compliance, and operational documents, analysed together" },
-  ];
-  
-  tractionData.forEach((data, idx) => {
-    const col = idx % 2;
-    const row = Math.floor(idx / 2);
-    const cardX = margin + col * (tractionCardWidth + tractionSpacing);
-    const cardY = yPosition + row * (tractionCardHeight + tractionSpacing);
-    
-    doc.setFillColor(...PDF_CONFIG.blueBg);
-    doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 3, 3, "F");
-    
-    doc.setDrawColor(...PDF_CONFIG.blueBorder);
-    doc.setLineWidth(0.3);
-    doc.roundedRect(cardX, cardY, tractionCardWidth, tractionCardHeight, 3, 3, "S");
-    
-    const titleY = cardY + 14;
-    doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(cardX + 10, titleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
-    
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.body);
-    doc.setFont("helvetica", "bold");
-    
-    const titleLines = doc.splitTextToSize(data.title, cardTextMaxWidth);
-    doc.text(titleLines[0], cardX + 20, titleY);
-    
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-    doc.setFont("helvetica", "normal");
-    const subtitleLines = doc.splitTextToSize(data.subtitle, cardTextMaxWidth);
-    let subtitleY = cardY + 26;
-    subtitleLines.forEach((line: string) => {
-      doc.text(line, cardX + 20, subtitleY);
-      subtitleY += 5;
-    });
-  });
-  
-  yPosition += 2 * (tractionCardHeight + tractionSpacing);
-  
-  // Domain-Trained AI - full-width card
-  const fullWidthCardY = yPosition;
-  doc.setFillColor(...PDF_CONFIG.blueBg);
-  doc.roundedRect(margin, fullWidthCardY, maxWidth, fullWidthCardHeight, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.blueBorder);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, fullWidthCardY, maxWidth, fullWidthCardHeight, 3, 3, "S");
-  
-  const domainTitleY = fullWidthCardY + 14;
-  doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 10, domainTitleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
-  
+  // Intro paragraph
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "bold");
-  doc.text("Domain-Trained AI", margin + 20, domainTitleY);
-  
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text("Purpose-built for real estate complexity, reliability, and auditability", margin + 20, fullWidthCardY + 26);
-  
-  yPosition += fullWidthCardHeight + 12;
+  const introText = "Hobson demonstrates production-grade capability against Real Estate operational workflows.";
+  const introLines = doc.splitTextToSize(introText, maxWidth);
+  introLines.forEach((line: string) => {
+    doc.text(line, margin, yPosition);
+    yPosition += PDF_CONFIG.lineHeight.body;
+  });
+  yPosition += 4;
+
+  // Bullet points
+  const tractionBullets = [
+    "Validated across four live Real Estate operating use cases",
+    "98% model accuracy measured on proprietary, industry-specific datasets",
+    "Multi-document reasoning across legal, compliance, and operational sources",
+    "Domain-trained AI purpose-built for auditability and regulatory scrutiny",
+    "MVP launch Q1 2026, with scope defined by partner workflows rather than theoretical use cases",
+  ];
+
+  tractionBullets.forEach((bullet) => {
+    doc.setFillColor(...PDF_CONFIG.blue);
+    doc.circle(margin + 3, yPosition - 2, PDF_CONFIG.circleSize.bullet, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.setFont("helvetica", "normal");
+    
+    const bulletLines = doc.splitTextToSize(bullet, maxWidth - 10);
+    bulletLines.forEach((line: string) => {
+      doc.text(line, margin + 8, yPosition);
+      yPosition += PDF_CONFIG.lineHeight.body;
+    });
+    yPosition += 2;
+  });
+
+  yPosition += 8;
 
   return yPosition;
 };
