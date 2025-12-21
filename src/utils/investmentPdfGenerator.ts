@@ -1114,9 +1114,9 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text("Real estate operations are structurally inefficient.", calloutTextX, calloutTextY);
+  doc.text("Real Estate operations are structurally constrained by manual document work.", calloutTextX, calloutTextY);
   
-  calloutTextY += 5;
+  calloutTextY += 6;
   doc.setFont("helvetica", "normal");
   doc.text("Over ", calloutTextX, calloutTextY);
   const overWidth = doc.getTextWidth("Over ");
@@ -1126,7 +1126,10 @@ const renderExecutiveSummary = (
   const timeWidth = doc.getTextWidth("20% of professional time");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "normal");
-  doc.text(" is lost to document handling. Hobson converts this into ", calloutTextX + overWidth + timeWidth, calloutTextY);
+  doc.text(" is spent locating, validating, and cross-checking information.", calloutTextX + overWidth + timeWidth, calloutTextY);
+  
+  calloutTextY += 6;
+  doc.text("This is recurring operational spend already being paid. Hobson converts this into ", calloutTextX, calloutTextY);
   
   calloutTextY += 5;
   doc.setTextColor(...PDF_CONFIG.primaryColor);
@@ -1135,7 +1138,7 @@ const renderExecutiveSummary = (
   const levWidth = doc.getTextWidth("permanent operating leverage");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "normal");
-  doc.text("—value AI-native operators will capture.", calloutTextX + levWidth, calloutTextY);
+  doc.text(" that compounds as portfolios scale.", calloutTextX + levWidth, calloutTextY);
   
   yPosition += calloutHeight + PDF_CONFIG.spacing.sectionGap;
 
