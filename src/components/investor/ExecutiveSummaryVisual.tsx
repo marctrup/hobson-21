@@ -106,41 +106,30 @@ export const ExecutiveSummaryVisual = () => {
           <h4 className="font-semibold text-foreground">Traction & Execution Momentum</h4>
         </div>
         
-        <div className="grid sm:grid-cols-2 gap-3">
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
-            <Target className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-            <div>
-              <div className="font-medium text-foreground text-sm">MVP Launch — Q1 2026</div>
-              <div className="text-xs text-muted-foreground">On track, with scope defined by live partner workflows</div>
-            </div>
+        <p className="text-sm text-foreground leading-relaxed">
+          Hobson demonstrates <span className="font-semibold">production-grade capability</span> against Real Estate operational workflows.
+        </p>
+        
+        <div className="space-y-2 pl-4">
+          <div className="flex items-start gap-2">
+            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-foreground">Validated across <span className="font-semibold">four live Real Estate operating use cases</span></p>
           </div>
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
-            <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-            <div>
-              <div className="font-medium text-foreground text-sm">Validated with 4 Operating Partners</div>
-              <div className="text-xs text-muted-foreground">Use cases proven inside real real estate organisations</div>
-            </div>
+          <div className="flex items-start gap-2">
+            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-foreground"><span className="font-semibold">98% model accuracy</span> measured on proprietary, industry-specific datasets</p>
           </div>
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
-            <CheckCircle2 className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-            <div>
-              <div className="font-medium text-foreground text-sm">98% Model Accuracy</div>
-              <div className="text-xs text-muted-foreground">Measured on proprietary, industry-specific datasets</div>
-            </div>
+          <div className="flex items-start gap-2">
+            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-foreground"><span className="font-semibold">Multi-document reasoning</span> across legal, compliance, and operational sources</p>
           </div>
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
-            <Zap className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-            <div>
-              <div className="font-medium text-foreground text-sm">Multi-Document Reasoning</div>
-              <div className="text-xs text-muted-foreground">Legal, compliance, and operational documents, analysed together</div>
-            </div>
+          <div className="flex items-start gap-2">
+            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-foreground"><span className="font-semibold">Domain-trained AI</span> purpose-built for auditability and regulatory scrutiny</p>
           </div>
-          <div className="flex items-start gap-3 p-3 rounded-lg bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30 sm:col-span-2">
-            <Brain className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-            <div>
-              <div className="font-medium text-foreground text-sm">Domain-Trained AI</div>
-              <div className="text-xs text-muted-foreground">Purpose-built for real estate complexity, reliability, and auditability</div>
-            </div>
+          <div className="flex items-start gap-2">
+            <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+            <p className="text-sm text-foreground"><span className="font-semibold">MVP launch Q1 2026</span>, with scope defined by partner workflows rather than theoretical use cases</p>
           </div>
         </div>
       </div>
