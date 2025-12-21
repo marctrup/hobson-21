@@ -1335,7 +1335,7 @@ const renderWhyNow = (
     }
 
     // Intro
-    cursorY = yPosition + 16; // reduced gap after title
+    cursorY = yPosition + 19; // moved down 3px for more spacing after title
     doc.setTextColor(...PDF_CONFIG.textGray);
     setBodySmallFont(doc);
     introLines.forEach((line: string) => {
