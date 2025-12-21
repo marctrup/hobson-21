@@ -789,9 +789,9 @@ const renderExecutiveSummary = (
   // NOTE: This section must remain in sync with src/components/investor/ExecutiveSummaryVisual.tsx
   const boxX = margin;
   const boxW = maxWidth;
-  const boxPaddingX = 12;
-  const boxPaddingTop = 10;
-  const boxPaddingBottom = 8;
+  const boxPaddingX = 10;
+  const boxPaddingTop = 6;
+  const boxPaddingBottom = 4;
 
   const openingStatement = "Hobson is building the intelligence infrastructure that Real Estate operations now require to function safely, efficiently, and at scale.";
 
