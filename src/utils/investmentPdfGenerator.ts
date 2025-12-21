@@ -834,6 +834,10 @@ const renderExecutiveSummary = (
 
   yPosition += openingBoxH + PDF_CONFIG.spacing.sectionGap;
 
+  // Start Investment Rationale on a new page
+  doc.addPage();
+  yPosition = margin;
+
   // ===== INVESTMENT RATIONALE BOX =====
   const para1 =
     "Hobson delivers AI-driven reasoning directly from source documents, with full traceability and auditability, inside existing workflows. Every obligation, exposure, valuation input, and compliance requirement is buried inside leases, titles, reports, and contracts. By replacing manual document handling, the hidden backbone of all operations, planning applications, funding due diligence, investment committee papers, and asset management, Hobson removes a growing source of structural cost, decision delay, and operational risk across Real Estate.";
