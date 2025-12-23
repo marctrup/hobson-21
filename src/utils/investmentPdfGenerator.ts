@@ -2151,27 +2151,41 @@ const renderUKMarketAssumptions = (
   yPosition += section4Height + 8;
 
   // Summary section
-  yPosition = checkPageBreak(doc, yPosition, 42, pageHeight, margin);
-  renderContentCard(doc, margin, yPosition, maxWidth, 38, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
+  yPosition = checkPageBreak(doc, yPosition, 55, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 52, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
   doc.text("Summary", margin + 8, yPosition + 12);
 
   setBodyFont(doc);
+  // Item 1 - Core Market
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 24, 3, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(7);
+  doc.text("1", margin + 12.5, yPosition + 25.5);
   doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodyFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("1  Core Market:", margin + 12, yPosition + 24);
+  doc.text("Core Market", margin + 22, yPosition + 25);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("~90,000 real estate operators where document intelligence is mission-critical", margin + 45, yPosition + 24);
+  doc.text("~90,000 real estate operators where document intelligence is mission-critical", margin + 22, yPosition + 33);
 
+  // Item 2 - Expansion Market
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 42, 3, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(7);
+  doc.text("2", margin + 12.5, yPosition + 43.5);
   doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodyFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("2  Expansion Market:", margin + 12, yPosition + 32);
+  doc.text("Expansion Market", margin + 22, yPosition + 43);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("500,000+ adjacent businesses built on the same document foundations", margin + 55, yPosition + 32);
-  yPosition += 46;
+  doc.text("500,000+ adjacent businesses built on the same document foundations", margin + 22, yPosition + 51);
+  yPosition += 60;
 
   return yPosition;
 };
