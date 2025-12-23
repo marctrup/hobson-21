@@ -34,9 +34,9 @@ export const CompetitiveLandscapeVisual = () => {
           <AlertTriangle className="w-5 h-5 text-amber-600" />
           <h4 className="text-sm lg:text-base font-semibold text-foreground">Current Market Gaps</h4>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-2">
           {marketGaps.map((gap, index) => (
-            <div key={index} className="flex items-start gap-3 bg-background/50 rounded-lg p-3 border border-border/50">
+            <div key={index} className="flex items-start gap-2 bg-background/50 rounded-lg p-2 border border-border/50">
               <span className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
               <span className="text-sm lg:text-base text-foreground">{gap}</span>
             </div>
