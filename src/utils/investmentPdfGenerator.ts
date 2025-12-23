@@ -2151,8 +2151,8 @@ const renderUKMarketAssumptions = (
   yPosition += section4Height + 8;
 
   // Summary section
-  yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
-  renderContentCard(doc, margin, yPosition, maxWidth, 46, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
+  yPosition = checkPageBreak(doc, yPosition, 42, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 38, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
   doc.text("Summary", margin + 8, yPosition + 12);
@@ -2160,18 +2160,18 @@ const renderUKMarketAssumptions = (
   setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.text("1  Core Market:", margin + 12, yPosition + 26);
+  doc.text("1  Core Market:", margin + 12, yPosition + 24);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("~90,000 real estate operators where document intelligence is mission-critical", margin + 45, yPosition + 26);
+  doc.text("~90,000 real estate operators where document intelligence is mission-critical", margin + 45, yPosition + 24);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.text("2  Expansion Market:", margin + 12, yPosition + 36);
+  doc.text("2  Expansion Market:", margin + 12, yPosition + 32);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("500,000+ adjacent businesses built on the same document foundations", margin + 55, yPosition + 36);
-  yPosition += 54;
+  doc.text("500,000+ adjacent businesses built on the same document foundations", margin + 55, yPosition + 32);
+  yPosition += 46;
 
   return yPosition;
 };
