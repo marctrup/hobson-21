@@ -2514,21 +2514,17 @@ const renderMarketLandscape = (
   doc.text("This creates a rare situation:", margin, yPosition);
   yPosition += 10;
 
-  // Rare situation box with bullet points
+  // Rare situation box - centered text without bullets
   const rareSituation = ["Large, conservative market", "Clear structural pain", "No entrenched AI leader"];
   yPosition = checkPageBreak(doc, yPosition, 38, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 34, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
-  let situationX = margin + 12;
-  const colWidth = (maxWidth - 24) / 3;
+  
+  // Center all three items in the box
   setBodyFont(doc);
   doc.setFont("helvetica", "bold");
-  rareSituation.forEach((item) => {
-    doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(situationX + 2, yPosition + 17, PDF_CONFIG.circleSize.bullet, "F");
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(item, situationX + 8, yPosition + 18);
-    situationX += colWidth;
-  });
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  const situationText = rareSituation.join("     •     ");
+  doc.text(situationText, pageWidth / 2, yPosition + 20, { align: "center" });
   yPosition += 42;
 
   // Consolidation note
@@ -2551,13 +2547,14 @@ const renderMarketLandscape = (
   doc.text("The After: AI-Native Intelligence Layers", margin + 16, yPosition + 12);
 
   let featureX = margin + 12;
+  const featureColWidth = (maxWidth - 24) / 3;
   setBodyFont(doc);
   aiFeatures.forEach((feature) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
     doc.circle(featureX + 2, yPosition + 28, PDF_CONFIG.circleSize.bullet, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(feature, featureX + 8, yPosition + 30);
-    featureX += colWidth;
+    featureX += featureColWidth;
   });
   yPosition += 48;
 
