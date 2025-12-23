@@ -1209,7 +1209,7 @@ const InvestmentOpportunity = () => {
           setCurrentPageIndex(0);
         }}
       >
-        <DialogContent className="max-w-[95vw] sm:max-w-3xl md:max-w-4xl lg:max-w-5xl max-h-[90vh] sm:max-h-[85vh] overflow-hidden flex flex-col p-4 sm:p-6">
+        <DialogContent className="max-w-[95vw] sm:max-w-4xl md:max-w-5xl lg:max-w-6xl max-h-[95vh] sm:max-h-[92vh] overflow-hidden flex flex-col p-4 sm:p-6">
           {selectedSection && (
             <>
               <DialogHeader className="pb-3 sm:pb-4">
