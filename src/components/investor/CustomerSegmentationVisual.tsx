@@ -113,14 +113,14 @@ export const CustomerSegmentationVisual = () => {
                     <Target className={`w-3.5 h-3.5 ${segment.iconColor}`} />
                   </div>
                   <div>
-                    <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
+                    <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
                       What Forces Adoption
                     </div>
-                    <ul className="text-sm text-foreground space-y-0.5">
+                    <ul className="text-sm text-foreground space-y-1">
                       {segment.adoptionDrivers.map((driver, dIdx) => (
-                        <li key={dIdx} className="flex items-start gap-1.5">
-                          <span className={`${segment.iconColor} mt-1.5`}>•</span>
-                          <span>{driver}</span>
+                        <li key={dIdx} className="flex items-start gap-2">
+                          <span className={`${segment.iconColor} leading-5`}>•</span>
+                          <span className="leading-5">{driver}</span>
                         </li>
                       ))}
                     </ul>
