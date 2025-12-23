@@ -193,7 +193,7 @@ const sections = [
         },
       },
       {
-        title: "European & Global Opportunities",
+        title: "Global Opportunity",
         showCustomVisual: true,
         customVisualComponent: "europeanGlobal",
         content: {
