@@ -105,7 +105,7 @@ const OurVisionVisual: React.FC = () => {
               </div>
 
               {/* Connector dot */}
-              <div className={`hidden md:block w-4 h-4 ${stage.accentColor} rounded-full mt-4 shadow-md border-2 border-white`} />
+              <div className={`hidden md:block w-4 h-4 ${stage.accentColor} rounded-full mt-4 shadow-md border-2 border-white z-20 relative`} />
 
               {/* Arrow (mobile) */}
               {index < stages.length - 1 && (
@@ -117,8 +117,8 @@ const OurVisionVisual: React.FC = () => {
           ))}
         </div>
 
-        {/* Progress Line - positioned below cards */}
-        <div className="hidden md:block absolute bottom-[6px] left-[16.67%] right-[16.67%] h-1 bg-gradient-to-r from-slate-400 via-purple-400 to-primary z-0" />
+        {/* Progress Line - positioned to align with dot centers */}
+        <div className="hidden md:block absolute bottom-[8px] left-[calc(16.67%-8px)] right-[calc(16.67%-8px)] h-1 bg-gradient-to-r from-slate-400 via-purple-400 to-primary z-10" />
       </div>
 
       {/* Progression Indicators */}
