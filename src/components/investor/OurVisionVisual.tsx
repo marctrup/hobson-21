@@ -60,9 +60,6 @@ const OurVisionVisual: React.FC = () => {
 
       {/* Timeline */}
       <div className="relative">
-        {/* Progress Line */}
-        <div className="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-slate-300 via-purple-400 to-primary transform -translate-y-1/2 z-0 mx-8" />
-        
         {/* Stages */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
           {stages.map((stage, index) => (
@@ -107,6 +104,9 @@ const OurVisionVisual: React.FC = () => {
                 </div>
               </div>
 
+              {/* Connector dot */}
+              <div className={`hidden md:block w-4 h-4 ${stage.accentColor} rounded-full mt-4 shadow-md border-2 border-white`} />
+
               {/* Arrow (mobile) */}
               {index < stages.length - 1 && (
                 <div className="md:hidden my-3">
@@ -116,6 +116,9 @@ const OurVisionVisual: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Progress Line - positioned below cards */}
+        <div className="hidden md:block absolute bottom-[6px] left-[16.67%] right-[16.67%] h-1 bg-gradient-to-r from-slate-400 via-purple-400 to-primary z-0" />
       </div>
 
       {/* Progression Indicators */}
