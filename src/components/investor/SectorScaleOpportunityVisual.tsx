@@ -15,10 +15,9 @@ export const SectorScaleOpportunityVisual = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
+      {/* Strapline */}
       <div className="text-center pb-2">
-        <h3 className="text-lg font-bold text-foreground mb-2">Sector Scale & Opportunity</h3>
-        <p className="text-sm text-muted-foreground max-w-xl mx-auto">
+        <p className="text-lg font-semibold text-foreground max-w-2xl mx-auto">
           Real estate is one of the largest and most document-intensive industries in the UK and globally.
         </p>
       </div>
