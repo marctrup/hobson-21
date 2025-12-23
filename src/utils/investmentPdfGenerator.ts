@@ -789,6 +789,16 @@ const renderOurVision = (
   doc.text("The Evolution of Real Estate AI", pageWidth / 2, yPosition, { align: "center" });
   yPosition += 14;
 
+  // Define stage colors to match the visual exactly
+  const slateColor: [number, number, number] = [100, 116, 139];  // slate-500
+  const purpleColor: [number, number, number] = [147, 51, 234];  // purple-600
+  const primaryColor = PDF_CONFIG.primaryColor;                   // brand purple
+
+  // Light background colors for each stage
+  const slateBg: [number, number, number] = [241, 245, 249];     // slate-100
+  const purpleBg: [number, number, number] = [243, 232, 255];    // purple-100
+  const primaryBg: [number, number, number] = [245, 238, 255];   // primary/20
+
   const stages = [
     {
       label: "Reactive Agent",
@@ -796,7 +806,8 @@ const renderOurVision = (
       description: "AI helps when asked with accuracy",
       icons: ["Prompts", "Documents"],
       visualNote: "Human-led, AI responds",
-      color: [100, 116, 139] as [number, number, number], // slate
+      color: slateColor,
+      bgColor: slateBg,
     },
     {
       label: "Proactive Agent",
@@ -804,7 +815,8 @@ const renderOurVision = (
       description: "AI suggests & prepares, humans approve",
       icons: ["Drafts", "Approvals"],
       visualNote: "AI prepares, human confirms",
-      color: [147, 51, 234] as [number, number, number], // purple
+      color: purpleColor,
+      bgColor: purpleBg,
     },
     {
       label: "Autonomous Agent",
@@ -812,84 +824,81 @@ const renderOurVision = (
       description: "AI executes & reports outcomes",
       icons: ["Executes", "Reports", "Audits"],
       visualNote: "AI operates, human monitors",
-      color: PDF_CONFIG.primaryColor,
+      color: primaryColor,
+      bgColor: primaryBg,
     },
   ];
 
-  // Calculate card dimensions
+  // Calculate card dimensions - taller cards to fit all content
   const cardWidth = (maxWidth - 12) / 3; // 3 cards with gaps
-  const cardHeight = 65;
+  const cardHeight = 72; // Increased height
 
   // Render timeline cards
   stages.forEach((stage, index) => {
     const cardX = margin + index * (cardWidth + 6);
 
-    // Card background with gradient effect
-    const lightColor: [number, number, number] = [
-      Math.min(255, stage.color[0] + 140),
-      Math.min(255, stage.color[1] + 140),
-      Math.min(255, stage.color[2] + 140),
-    ];
-    doc.setFillColor(...lightColor);
+    // Card background with distinct color per stage
+    doc.setFillColor(...stage.bgColor);
     doc.roundedRect(cardX, yPosition, cardWidth, cardHeight, 3, 3, "F");
 
-    // Card border
+    // Card border with stage color
     doc.setDrawColor(...stage.color);
-    doc.setLineWidth(0.5);
+    doc.setLineWidth(1);
     doc.roundedRect(cardX, yPosition, cardWidth, cardHeight, 3, 3, "S");
 
-    // Timeframe badge
+    // Timeframe badge with stage color
     doc.setFillColor(...stage.color);
-    const badgeWidth = doc.getTextWidth(stage.timeframe) + 8;
-    const badgeX = cardX + (cardWidth - badgeWidth) / 2;
-    doc.roundedRect(badgeX, yPosition + 4, badgeWidth, 8, 4, 4, "F");
-    doc.setTextColor(255, 255, 255);
     setBodySmallFont(doc);
-    doc.text(stage.timeframe, cardX + cardWidth / 2, yPosition + 9.5, { align: "center" });
+    const badgeWidth = doc.getTextWidth(stage.timeframe) + 10;
+    const badgeX = cardX + (cardWidth - badgeWidth) / 2;
+    doc.roundedRect(badgeX, yPosition + 5, badgeWidth, 9, 4, 4, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.text(stage.timeframe, cardX + cardWidth / 2, yPosition + 11, { align: "center" });
 
-    // Stage label
+    // Stage label with stage color
     doc.setTextColor(...stage.color);
     setCardTitleFont(doc);
-    doc.text(stage.label, cardX + cardWidth / 2, yPosition + 22, { align: "center" });
+    doc.text(stage.label, cardX + cardWidth / 2, yPosition + 24, { align: "center" });
 
     // Icon labels as pills
     setBodySmallFont(doc);
-    const iconY = yPosition + 32;
+    const iconY = yPosition + 34;
     let iconTotalWidth = 0;
     stage.icons.forEach((icon) => {
-      iconTotalWidth += doc.getTextWidth(icon) + 10;
+      iconTotalWidth += doc.getTextWidth(icon) + 12;
     });
     let iconX = cardX + (cardWidth - iconTotalWidth) / 2;
     stage.icons.forEach((icon) => {
-      const pillWidth = doc.getTextWidth(icon) + 6;
+      const pillWidth = doc.getTextWidth(icon) + 8;
       doc.setFillColor(255, 255, 255);
-      doc.roundedRect(iconX, iconY - 4, pillWidth, 8, 2, 2, "F");
+      doc.roundedRect(iconX, iconY - 4, pillWidth, 9, 2, 2, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.text(icon, iconX + 3, iconY + 1);
+      doc.text(icon, iconX + 4, iconY + 2);
       iconX += pillWidth + 4;
     });
 
     // Description
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    const descLines = doc.splitTextToSize(stage.description, cardWidth - 8);
-    doc.text(descLines, cardX + cardWidth / 2, yPosition + 44, { align: "center" });
+    const descLines = doc.splitTextToSize(stage.description, cardWidth - 10);
+    doc.text(descLines, cardX + cardWidth / 2, yPosition + 48, { align: "center" });
 
-    // Visual note
+    // Visual note at bottom
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(7);
-    doc.text(stage.visualNote, cardX + cardWidth / 2, yPosition + 58, { align: "center" });
+    doc.text(stage.visualNote, cardX + cardWidth / 2, yPosition + 66, { align: "center" });
   });
 
-  yPosition += cardHeight + 12;
+  yPosition += cardHeight + 14;
 
   // Progression indicators section
   yPosition = checkPageBreak(doc, yPosition, 30, pageHeight, margin);
 
+  // Use the exact same colors for dots as the cards
   const indicators = [
-    { label: "Automation", direction: "Increasing", colors: [[100, 116, 139], [147, 51, 234], PDF_CONFIG.primaryColor] },
-    { label: "Human Effort", direction: "Decreasing", colors: [PDF_CONFIG.primaryColor, [147, 51, 234], [100, 116, 139]] },
-    { label: "Scale", direction: "Expanding", colors: [[100, 116, 139], [147, 51, 234], PDF_CONFIG.primaryColor] },
+    { label: "Automation", direction: "Increasing", colors: [slateColor, purpleColor, primaryColor] },
+    { label: "Human Effort", direction: "Decreasing", colors: [primaryColor, purpleColor, slateColor] },
+    { label: "Scale", direction: "Expanding", colors: [slateColor, purpleColor, primaryColor] },
   ];
 
   const indicatorWidth = maxWidth / 3;
@@ -898,26 +907,26 @@ const renderOurVision = (
 
     // Label
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(8);
     doc.text(indicator.label.toUpperCase(), indX, yPosition, { align: "center" });
 
-    // Dots
-    const dotY = yPosition + 6;
-    const dotRadius = 2;
-    const dotGap = 8;
+    // Dots with correct colors
+    const dotY = yPosition + 7;
+    const dotRadius = 2.5;
+    const dotGap = 10;
     indicator.colors.forEach((color, dotIndex) => {
       const dotX = indX - dotGap + dotIndex * dotGap;
-      doc.setFillColor(...(color as [number, number, number]));
+      doc.setFillColor(...color);
       doc.circle(dotX, dotY, dotRadius, "F");
     });
 
     // Direction
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(7);
-    doc.text(indicator.direction, indX, yPosition + 14, { align: "center" });
+    doc.text(indicator.direction, indX, yPosition + 16, { align: "center" });
   });
 
-  yPosition += 22;
+  yPosition += 24;
 
   // Summary footer
   yPosition = checkPageBreak(doc, yPosition, 20, pageHeight, margin);
@@ -926,21 +935,21 @@ const renderOurVision = (
   doc.setFillColor(248, 250, 252); // slate-50
   doc.roundedRect(margin, yPosition, maxWidth, 16, 3, 3, "F");
 
-  // Summary text
+  // Summary text with matching colors
   setBodyBoldFont(doc);
-  doc.setTextColor(100, 116, 139); // slate
+  doc.setTextColor(...slateColor);
   doc.text("Today: Responds", margin + maxWidth * 0.15, yPosition + 10, { align: "center" });
   
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setTextColor(...purpleColor);
   doc.text("->", margin + maxWidth * 0.32, yPosition + 10, { align: "center" });
   
-  doc.setTextColor(147, 51, 234); // purple
+  doc.setTextColor(...purpleColor);
   doc.text("1 Year: Anticipates", margin + maxWidth * 0.5, yPosition + 10, { align: "center" });
   
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setTextColor(...primaryColor);
   doc.text("->", margin + maxWidth * 0.68, yPosition + 10, { align: "center" });
   
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setTextColor(...primaryColor);
   doc.text("3-5 Years: Executes", margin + maxWidth * 0.85, yPosition + 10, { align: "center" });
 
   yPosition += 20 + PDF_CONFIG.spacing.sectionGap;
