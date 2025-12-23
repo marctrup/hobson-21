@@ -1931,55 +1931,73 @@ const renderCustomerSegmentation = (
   segments.forEach((segment) => {
     // Calculate dynamic card height based on content
     setBodySmallFont(doc);
-    const pressureLines = doc.splitTextToSize(sanitizeText(segment.pressure), maxWidth / 2 - 30);
+    const pressureLines = doc.splitTextToSize(sanitizeText(segment.pressure), maxWidth / 2 - 45);
     const driverLines = segment.adoptionDrivers.length;
     const contentLines = Math.max(pressureLines.length, driverLines + 1);
-    const cardHeight = Math.max(58, 38 + contentLines * 5);
+    const cardHeight = Math.max(75, 45 + contentLines * 5);
 
     yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
     renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, segment.bgColor, segment.color);
 
-    // Icon circle and title row
-    const titleY = yPosition + 10;
+    // Header icon (larger, matching visual)
+    const headerIconSize = 4;
     doc.setFillColor(...segment.color);
-    doc.circle(margin + 10, titleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
+    doc.circle(margin + 12, yPosition + 14, headerIconSize, "F");
 
+    // Title
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
-    doc.text(segment.title, margin + 20, titleY);
+    doc.text(segment.title, margin + 22, yPosition + 12);
 
     // Percentage and description on second line
     doc.setTextColor(...segment.color);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9);
-    doc.text(segment.percentage, margin + 20, yPosition + 18);
+    doc.text(segment.percentage, margin + 22, yPosition + 20);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.text(segment.description, margin + 20 + doc.getTextWidth(segment.percentage + " "), yPosition + 18);
+    doc.text(segment.description, margin + 22 + doc.getTextWidth(segment.percentage + " "), yPosition + 20);
 
-    // Pressure column - increased gap from header section
+    // Pressure section with aligned icon
     const colStartY = yPosition + 32;
-    setCaptionFont(doc);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("PRESSURE", margin + 10, colStartY);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    setBodySmallFont(doc);
-    renderSpacedText(doc, segment.pressure, margin + 10, colStartY + 10, maxWidth / 2 - 25, PDF_CONFIG.lineHeight.tight);
+    const iconSize = 3.5;
+    const colIconX = margin + 12;
+    const colTextX = margin + 22;
 
-    // What Forces Adoption column
+    // Pressure icon
+    doc.setFillColor(...segment.color);
+    doc.circle(colIconX, colStartY + 2, iconSize, "F");
+
+    // Pressure label and content
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("WHAT FORCES ADOPTION", margin + maxWidth / 2 + 5, colStartY);
+    doc.text("PRESSURE", colTextX, colStartY);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    let driverY = colStartY + 10; // Increased spacing from heading
+    renderSpacedText(doc, segment.pressure, colTextX, colStartY + 8, maxWidth / 2 - 40, PDF_CONFIG.lineHeight.tight);
+
+    // What Forces Adoption section with aligned icon
+    const rightColIconX = margin + maxWidth / 2 + 12;
+    const rightColTextX = margin + maxWidth / 2 + 22;
+
+    // Adoption icon
+    doc.setFillColor(...segment.color);
+    doc.circle(rightColIconX, colStartY + 2, iconSize, "F");
+
+    // Adoption label and content
+    setCaptionFont(doc);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text("WHAT FORCES ADOPTION", rightColTextX, colStartY);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setBodySmallFont(doc);
+    let driverY = colStartY + 8;
     segment.adoptionDrivers.forEach((driver) => {
-      doc.text(`•  ${driver}`, margin + maxWidth / 2 + 5, driverY); // Added extra space after bullet
-      driverY += PDF_CONFIG.lineHeight.tight + 1; // Slightly more spacing between items
+      doc.text(`•  ${driver}`, rightColTextX, driverY);
+      driverY += PDF_CONFIG.lineHeight.tight + 1;
     });
 
     yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
