@@ -2193,7 +2193,7 @@ const renderUKMarketAssumptions = (
 };
 
 /**
- * Render Market Landscape (Traditional vs AI-Native) visual
+ * Render Competitive Landscape visual
  */
 const renderMarketLandscape = (
   doc: jsPDF,
@@ -2205,101 +2205,116 @@ const renderMarketLandscape = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Note: Tab title "Market Landscape" is already rendered by the tab renderer
-  // So we skip the header here to avoid duplication
-  
-  // Subtitle only (no duplicate header)
+  // Subtitle
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt for readability
-  doc.setFont("helvetica", "normal");
-  doc.text("AI-native tools can deliver what traditional cloud systems cannot - reasoning, accuracy, and instant answers.", margin, yPosition);
+  setBodyFont(doc);
+  doc.text("Despite the size of the sector:", margin, yPosition);
   yPosition += 12;
 
-  // SECTION 1: Traditional Cloud Solutions
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
-  
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle); // 12pt
-  doc.setFont("helvetica", "bold");
-  doc.text("Traditional Cloud Solutions", margin + 8, yPosition + 12);
-  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt
-  doc.setFont("helvetica", "normal");
-  doc.text("The Overcrowded Before - 100+ competitors including:", margin + 8, yPosition + 24);
-  
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt
-  doc.text("AppFolio, Yardi, RealPage, Entrata, MRI, Buildium, Rent Manager, VTS, CoStar...", margin + 8, yPosition + 35);
-  
-  const issues = ["Overcrowded market", "High cost, slow innovation", "Manual information retrieval"];
-  let issueX = margin + 8;
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt
-  issues.forEach((issue) => {
-    doc.setFillColor(239, 68, 68);
-    doc.circle(issueX, yPosition + 47, PDF_CONFIG.circleSize.bullet, "F");
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(issue, issueX + 4, yPosition + 48);
-    issueX += 55;
-  });
-  yPosition += 62;
+  // Market Gaps box
+  const marketGaps = [
+    "Legacy Prop Tech platforms are system-of-record for transactions, not intelligence",
+    "Horizontal AI tools lack domain depth, accuracy, and auditability",
+    "No AI-native platform has yet become the default intelligence layer for real estate documents",
+  ];
+  const gapsBoxHeight = 24 + marketGaps.length * 14;
+  yPosition = checkPageBreak(doc, yPosition, gapsBoxHeight + 8, pageHeight, margin);
+  const amberBg: [number, number, number] = [255, 251, 235];
+  const amberColor: [number, number, number] = [217, 119, 6];
+  renderContentCard(doc, margin, yPosition, maxWidth, gapsBoxHeight, amberBg, amberColor);
+  doc.setFillColor(...amberColor);
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Current Market Gaps", margin + 16, yPosition + 12);
 
-  // SECTION 2: AI-Native Solutions
-  const greenBg: [number, number, number] = [236, 253, 245];
-  doc.setFillColor(...greenBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 65, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.emerald);
-  doc.setLineWidth(0.5);
-  doc.roundedRect(margin, yPosition, maxWidth, 65, 3, 3, "S");
-
-  doc.setTextColor(...PDF_CONFIG.emerald);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle); // 12pt
-  doc.setFont("helvetica", "bold");
-  doc.text("Next-Generation AI Solutions", margin + 8, yPosition + 12);
-  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("The Emerging After - AI-native tools delivering real value:", margin + 8, yPosition + 24);
-
-  // AI companies in a row
-  const aiCompanies = ["Hobson (Leader)", "EliseAI", "Trudi", "StanAI", "Kendal AI"];
-  let aiX = margin + 8;
-  aiCompanies.forEach((company, idx) => {
-    if (idx === 0) {
-      doc.setFillColor(209, 250, 229);
-      doc.roundedRect(aiX, yPosition + 28, 40, 12, 2, 2, "F");
-      doc.setTextColor(...PDF_CONFIG.emerald);
-      doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt
-      doc.setFont("helvetica", "bold");
-      doc.text(company, aiX + 3, yPosition + 36);
-      aiX += 45;
-    } else {
-      doc.setTextColor(...PDF_CONFIG.textDark);
-      doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt
-      doc.setFont("helvetica", "normal");
-      doc.text(company, aiX, yPosition + 36);
-      aiX += 28;
-    }
-  });
-
-  const benefits = ["Instant, referenced answers", "Simple, lightweight, low cost", "Designed for accuracy"];
-  let benefitX = margin + 8;
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall); // 9pt
-  benefits.forEach((benefit) => {
-    doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(benefitX, yPosition + 55, PDF_CONFIG.circleSize.bullet, "F");
+  let gapY = yPosition + 26;
+  setBodyFont(doc);
+  marketGaps.forEach((gap) => {
+    doc.setFillColor(...amberColor);
+    doc.circle(margin + 14, gapY - 1, PDF_CONFIG.circleSize.bullet, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(benefit, benefitX + 4, yPosition + 56);
-    benefitX += 55;
+    const gapLines = doc.splitTextToSize(sanitizeText(gap), maxWidth - 30);
+    gapLines.forEach((line: string, idx: number) => {
+      doc.text(line, margin + 20, gapY + idx * 5);
+    });
+    gapY += 14;
   });
-  yPosition += 72;
+  yPosition += gapsBoxHeight + 10;
 
-  // Transition message
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 16, 3, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(PDF_CONFIG.fontSize.body); // 10pt
+  // Rare situation intro
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodyFont(doc);
+  doc.text("This creates a rare situation:", margin, yPosition);
+  yPosition += 10;
+
+  // Rare situation box
+  const rareSituation = ["Large, conservative market", "Clear structural pain", "No entrenched AI leader"];
+  yPosition = checkPageBreak(doc, yPosition, 38, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 34, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+  let situationX = margin + 12;
+  const colWidth = (maxWidth - 24) / 3;
+  setBodyFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("Industry Transition: From passive cloud storage to active AI assistance", margin + 8, yPosition + 10);
-  yPosition += 20;
+  rareSituation.forEach((item) => {
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(item, situationX, yPosition + 18);
+    situationX += colWidth;
+  });
+  yPosition += 42;
+
+  // Consolidation note
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodyFont(doc);
+  doc.setFont("helvetica", "italic");
+  doc.text("Markets like this tend to consolidate quickly once a trusted standard emerges.", margin, yPosition);
+  doc.setFont("helvetica", "normal");
+  yPosition += 12;
+
+  // AI-Native Features box
+  const aiFeatures = ["Real-time reasoning", "Instant, referenced answers", "Embedded into workflows"];
+  yPosition = checkPageBreak(doc, yPosition, 45, pageHeight, margin);
+  const greenBg: [number, number, number] = [236, 253, 245];
+  renderContentCard(doc, margin, yPosition, maxWidth, 40, greenBg, PDF_CONFIG.emerald);
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("The After: AI-Native Intelligence Layers", margin + 16, yPosition + 12);
+
+  let featureX = margin + 12;
+  setBodyFont(doc);
+  aiFeatures.forEach((feature) => {
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(featureX + 2, yPosition + 28, PDF_CONFIG.circleSize.bullet, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(feature, featureX + 8, yPosition + 30);
+    featureX += colWidth;
+  });
+  yPosition += 48;
+
+  // What This Means for Hobson box
+  yPosition = checkPageBreak(doc, yPosition, 55, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 50, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setCardTitleFont(doc);
+  doc.text("What This Means for Hobson", margin + 16, yPosition + 12);
+
+  setBodyFont(doc);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  const hobsonText = "Hobson is positioned within a large and durable UK vertical, a global market undergoing structural change and an industry where early trust compounds into long-term defensibility.";
+  const hobsonLines = doc.splitTextToSize(sanitizeText(hobsonText), maxWidth - 24);
+  let hobsonY = yPosition + 24;
+  hobsonLines.forEach((line: string) => {
+    doc.text(line, margin + 12, hobsonY);
+    hobsonY += PDF_CONFIG.lineHeight.body;
+  });
+
+  doc.setFont("helvetica", "italic");
+  doc.text("This section establishes why this market is worth building infrastructure for.", margin + 12, yPosition + 44);
+  yPosition += 58;
 
   return yPosition;
 };
