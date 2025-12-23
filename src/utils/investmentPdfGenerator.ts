@@ -1732,6 +1732,137 @@ const renderRaise = (
 };
 
 /**
+ * Render Sector Scale & Opportunity visual
+ */
+const renderSectorScaleOpportunity = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Strapline box
+  const straplineHeight = 24;
+  renderContentCard(doc, margin, yPosition, maxWidth, straplineHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  yPosition = renderSpacedText(
+    doc,
+    "Real estate is one of the largest and most document-intensive industries in the UK and globally.",
+    margin + 10,
+    yPosition + 15,
+    maxWidth - 20,
+    PDF_CONFIG.lineHeight.body
+  );
+  yPosition = startY + straplineHeight + 10;
+
+  // Document-Governed Industry section
+  yPosition = checkPageBreak(doc, yPosition, 65, pageHeight, margin);
+  const docGovHeight = 60;
+  renderContentCard(doc, margin, yPosition, maxWidth, docGovHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
+
+  // Icon and title
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Document-Governed Industry", margin + 22, yPosition + 14);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("Every core activity is governed by complex, long-lived documents:", margin + 10, yPosition + 24);
+
+  // Activities grid - 2 columns
+  const activities = [
+    "Operations", "Planning Applications",
+    "Funding & Refinancing", "Acquisitions & Disposals",
+    "Leasing", "Compliance",
+    "ESG Reporting", "Asset Management"
+  ];
+
+  const colWidth = (maxWidth - 30) / 2;
+  let activityY = yPosition + 32;
+  activities.forEach((activity, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + 10 + (col * colWidth);
+    const yPos = activityY + (row * 7);
+    
+    doc.setFillColor(...PDF_CONFIG.blue);
+    doc.circle(xPos + 2, yPos - 1.5, 1, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setBodySmallFont(doc);
+    doc.text(activity, xPos + 7, yPos);
+  });
+
+  yPosition += docGovHeight + 8;
+
+  // Compounding Complexity section
+  yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
+  const compoundHeight = 45;
+  renderContentCard(doc, margin, yPosition, maxWidth, compoundHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.border);
+
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Compounding Complexity", margin + 22, yPosition + 14);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("Unlike many sectors, this document burden does not shrink with digitisation. It compounds over time:", margin + 10, yPosition + 24);
+
+  // Stats row
+  const stats = [
+    { title: "Portfolios", subtitle: "Grow in size and complexity" },
+    { title: "Regulation", subtitle: "Increases annually" },
+    { title: "Reporting", subtitle: "Standards tighten continuously" }
+  ];
+  const statWidth = (maxWidth - 30) / 3;
+  stats.forEach((stat, idx) => {
+    const xPos = margin + 10 + (idx * statWidth);
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(10);
+    doc.text(stat.title, xPos, yPosition + 34);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+    doc.text(stat.subtitle, xPos, yPosition + 40);
+  });
+
+  yPosition += compoundHeight + 8;
+
+  // Structural Demand section
+  yPosition = checkPageBreak(doc, yPosition, 28, pageHeight, margin);
+  const structuralHeight = 24;
+  renderContentCard(doc, margin, yPosition, maxWidth, structuralHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Structural Demand", margin + 22, yPosition + 10);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodySmallFont(doc);
+  doc.text("Real Estate represents ", margin + 10, yPosition + 19);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text("structurally persistent demand", margin + 10 + doc.getTextWidth("Real Estate represents "), yPosition + 19);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "normal");
+  doc.text(" for document intelligence — not a cyclical or discretionary software market.", margin + 10 + doc.getTextWidth("Real Estate represents structurally persistent demand"), yPosition + 19);
+
+  yPosition += structuralHeight + PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
  * Render Customer Segmentation visual
  */
 const renderCustomerSegmentation = (
@@ -4928,7 +5059,9 @@ const renderTabContent = (
       yPosition = renderRaise(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Customers & Market renderers
-    else if (componentType === "customerSegmentation") {
+    else if (componentType === "sectorScaleOpportunity") {
+      yPosition = renderSectorScaleOpportunity(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "customerSegmentation") {
       yPosition = renderCustomerSegmentation(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "ukMarketAssumptions") {
       yPosition = renderUKMarketAssumptions(doc, yPosition, margin, pageWidth, pageHeight);
