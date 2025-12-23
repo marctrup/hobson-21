@@ -1994,25 +1994,28 @@ const renderCustomerSegmentation = (
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
+    const rightColMaxWidth = maxWidth / 2 - 30;
     let driverY = colStartY + 8;
     segment.adoptionDrivers.forEach((driver) => {
-      doc.text(`•  ${driver}`, rightColTextX, driverY);
-      driverY += PDF_CONFIG.lineHeight.tight + 1;
+      const wrappedDriver = doc.splitTextToSize(sanitizeText(driver), rightColMaxWidth);
+      wrappedDriver.forEach((line: string, lineIndex: number) => {
+        const prefix = lineIndex === 0 ? "•  " : "   ";
+        doc.text(`${prefix}${line}`, rightColTextX, driverY);
+        driverY += PDF_CONFIG.lineHeight.tight + 1;
+      });
     });
 
     yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
   });
 
-  // Footer insight
-  yPosition = checkPageBreak(doc, yPosition, 18, pageHeight, margin);
+  // Footer insight - purple text with spacing
+  yPosition = checkPageBreak(doc, yPosition, 22, pageHeight, margin);
+  yPosition += 4; // Add gap from last card
   renderContentCard(doc, margin, yPosition, maxWidth, 14, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
-  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodySmallFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("One platform. One intelligence layer.", margin + 8, yPosition + 9);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFont("helvetica", "normal");
-  doc.text(" Forced adoption across segments.", margin + 8 + doc.getTextWidth("One platform. One intelligence layer."), yPosition + 9);
+  doc.text("One platform.  One intelligence layer.  Forced adoption across segments.", margin + 8, yPosition + 9);
   yPosition += 18;
 
   return yPosition;
