@@ -1951,7 +1951,7 @@ const renderRaise = (
 
   // Funding icon circle
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 20, yPosition + 16, 6.4, "F"); // Funding icon (larger, reduced by 20%)
+  doc.circle(margin + 20, yPosition + 16, PDF_CONFIG.circleSize.pillarBadge, "F");
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
