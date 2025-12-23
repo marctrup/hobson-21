@@ -803,7 +803,7 @@ const renderOurVision = (
     {
       label: "Reactive Agent",
       timeframe: "Today",
-      description: "AI helps when asked with accuracy",
+      description: "AI retrieves when asked with accuracy",
       icons: ["Prompts", "Retrieves"],
       visualNote: "Human-led, AI responds",
       color: slateColor,
