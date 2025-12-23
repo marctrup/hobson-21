@@ -13,7 +13,7 @@ const OurVisionVisual: React.FC = () => {
       textColor: "text-slate-700",
       icons: [
         { Icon: MessageSquare, label: "Prompts" },
-        { Icon: FileText, label: "Documents" },
+        { Icon: FileText, label: "Retrieves" },
       ],
       visualNote: "Human-led, AI responds",
     },
