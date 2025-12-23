@@ -1,80 +1,165 @@
 import React from "react";
-import { Eye, Target, Lightbulb, Rocket, Globe } from "lucide-react";
+import { MessageSquare, FileText, ClipboardCheck, CheckCircle, Zap, BarChart3, Shield, Activity, ArrowRight } from "lucide-react";
 
 const OurVisionVisual: React.FC = () => {
-  const visionPoints = [
+  const stages = [
     {
-      icon: Eye,
-      title: "Clarity from Complexity",
-      description: "Transform overwhelming property documentation into instant, actionable intelligence.",
+      label: "Reactive Assistant",
+      timeframe: "Today",
+      description: "AI helps when asked",
+      color: "from-slate-100 to-slate-200",
+      borderColor: "border-slate-300",
+      accentColor: "bg-slate-500",
+      textColor: "text-slate-700",
+      icons: [
+        { Icon: MessageSquare, label: "Prompts" },
+        { Icon: FileText, label: "Documents" },
+      ],
+      visualNote: "Human-led, AI responds",
     },
     {
-      icon: Target,
-      title: "Industry Standard",
-      description: "Become the default AI-powered document intelligence platform for Real Estate professionals.",
+      label: "Proactive Copilot",
+      timeframe: "~1 Year",
+      description: "AI suggests & prepares, humans approve",
+      color: "from-purple-100 to-purple-200",
+      borderColor: "border-purple-300",
+      accentColor: "bg-purple-500",
+      textColor: "text-purple-700",
+      icons: [
+        { Icon: ClipboardCheck, label: "Drafts" },
+        { Icon: CheckCircle, label: "Approvals" },
+      ],
+      visualNote: "AI prepares, human confirms",
     },
     {
-      icon: Lightbulb,
-      title: "Human-Centred AI",
-      description: "Augment professional expertise rather than replace it—delivering answers that empower decisions.",
-    },
-    {
-      icon: Rocket,
-      title: "Scalable Impact",
-      description: "Build technology that scales from individual landlords to enterprise portfolios without complexity.",
-    },
-    {
-      icon: Globe,
-      title: "Global Ambition",
-      description: "Start with UK leadership, expand to serve property professionals worldwide.",
+      label: "Autonomous Agent",
+      timeframe: "3–5 Years",
+      description: "AI executes & reports outcomes",
+      color: "from-primary/20 to-violet-200",
+      borderColor: "border-primary/40",
+      accentColor: "bg-primary",
+      textColor: "text-primary",
+      icons: [
+        { Icon: Zap, label: "Executes" },
+        { Icon: BarChart3, label: "Reports" },
+        { Icon: Shield, label: "Audits" },
+      ],
+      visualNote: "AI operates, human monitors",
     },
   ];
 
   return (
-    <div className="bg-white rounded-lg p-6 space-y-8">
+    <div className="bg-white rounded-lg p-6 space-y-6">
       {/* Header */}
-      <div className="text-center mb-10">
-        <h3 className="text-2xl font-bold text-gray-900 mb-3">Our Vision</h3>
+      <div className="text-center mb-8">
+        <h3 className="text-2xl font-bold text-gray-900 mb-2">Our Vision</h3>
         <p className="text-lg text-purple-600 font-medium">
-          Redefining How Real Estate Professionals Access Information
+          The Evolution of Real Estate AI
         </p>
       </div>
 
-      {/* Vision Statement */}
-      <div className="bg-gradient-to-br from-purple-50 to-white border border-purple-100 rounded-xl p-6 mb-8">
-        <p className="text-xl text-gray-800 text-center font-medium leading-relaxed">
-          We envision a world where every property professional has instant access to the answers locked within their documents—freeing them to focus on what matters: <span className="text-purple-600 font-semibold">decisions, relationships, and growth</span>.
-        </p>
+      {/* Timeline */}
+      <div className="relative">
+        {/* Progress Line */}
+        <div className="hidden md:block absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-slate-300 via-purple-400 to-primary transform -translate-y-1/2 z-0 mx-8" />
+        
+        {/* Stages */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+          {stages.map((stage, index) => (
+            <div key={index} className="flex flex-col items-center">
+              {/* Card */}
+              <div className={`w-full bg-gradient-to-br ${stage.color} ${stage.borderColor} border-2 rounded-xl p-5 shadow-sm hover:shadow-lg transition-all duration-300`}>
+                {/* Timeframe Badge */}
+                <div className="flex justify-center mb-3">
+                  <span className={`${stage.accentColor} text-white text-xs font-bold px-3 py-1 rounded-full`}>
+                    {stage.timeframe}
+                  </span>
+                </div>
+
+                {/* Stage Label */}
+                <h4 className={`text-lg font-bold ${stage.textColor} text-center mb-3`}>
+                  {stage.label}
+                </h4>
+
+                {/* Icons Row */}
+                <div className="flex justify-center gap-3 mb-4">
+                  {stage.icons.map((item, iconIndex) => (
+                    <div key={iconIndex} className="flex flex-col items-center gap-1">
+                      <div className={`p-2 bg-white/80 rounded-lg shadow-sm`}>
+                        <item.Icon className={`w-5 h-5 ${stage.textColor}`} />
+                      </div>
+                      <span className="text-xs text-gray-500">{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Description */}
+                <p className="text-sm text-gray-600 text-center font-medium">
+                  {stage.description}
+                </p>
+
+                {/* Visual Note */}
+                <div className="mt-3 pt-3 border-t border-gray-200/50">
+                  <p className="text-xs text-gray-500 text-center italic flex items-center justify-center gap-1">
+                    <Activity className="w-3 h-3" />
+                    {stage.visualNote}
+                  </p>
+                </div>
+              </div>
+
+              {/* Arrow (mobile) */}
+              {index < stages.length - 1 && (
+                <div className="md:hidden my-3">
+                  <ArrowRight className="w-6 h-6 text-purple-400 rotate-90" />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Vision Points */}
-      <div className="grid gap-4">
-        {visionPoints.map((point, index) => (
-          <div
-            key={index}
-            className="flex items-start gap-4 bg-gradient-to-r from-purple-50/50 to-transparent border border-purple-100/50 rounded-lg p-4 hover:shadow-md transition-shadow"
-          >
-            <div className="p-2 bg-purple-100 rounded-lg shrink-0">
-              <point.icon className="w-5 h-5 text-purple-600" />
+      {/* Progression Indicators */}
+      <div className="mt-8 pt-6 border-t border-gray-100">
+        <div className="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">Automation</div>
+            <div className="flex justify-center gap-1">
+              <div className="w-2 h-2 rounded-full bg-slate-300" />
+              <div className="w-2 h-2 rounded-full bg-purple-400" />
+              <div className="w-2 h-2 rounded-full bg-primary" />
             </div>
-            <div>
-              <h4 className="text-lg font-semibold text-gray-900 mb-1">
-                {point.title}
-              </h4>
-              <p className="text-gray-600">{point.description}</p>
-            </div>
+            <div className="text-xs text-gray-500 mt-1">Increasing</div>
           </div>
-        ))}
+          <div>
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">Human Effort</div>
+            <div className="flex justify-center gap-1">
+              <div className="w-2 h-2 rounded-full bg-primary" />
+              <div className="w-2 h-2 rounded-full bg-purple-400" />
+              <div className="w-2 h-2 rounded-full bg-slate-300" />
+            </div>
+            <div className="text-xs text-gray-500 mt-1">Decreasing</div>
+          </div>
+          <div>
+            <div className="text-xs text-gray-400 uppercase tracking-wide mb-1">Scale</div>
+            <div className="flex justify-center gap-1">
+              <div className="w-2 h-2 rounded-full bg-slate-300" />
+              <div className="w-2 h-2 rounded-full bg-purple-400" />
+              <div className="w-2 h-2 rounded-full bg-primary" />
+            </div>
+            <div className="text-xs text-gray-500 mt-1">Expanding</div>
+          </div>
+        </div>
       </div>
 
-      {/* Mission Statement */}
-      <div className="mt-8 bg-gradient-to-br from-primary via-primary/90 to-violet-600 rounded-xl p-6 sm:p-8 border border-primary/30">
-        <h4 className="text-lg sm:text-xl font-bold text-white text-center mb-4">
-          Our Mission
-        </h4>
-        <p className="text-white/90 text-center text-base sm:text-lg leading-relaxed">
-          To eliminate the friction between property professionals and the information they need—delivering AI-powered clarity that transforms how the industry operates.
-        </p>
+      {/* Summary Footer */}
+      <div className="mt-6 bg-gradient-to-r from-slate-50 via-purple-50 to-primary/10 rounded-xl p-4 border border-gray-100">
+        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 text-sm">
+          <span className="font-medium text-slate-600">Today: Responds</span>
+          <ArrowRight className="w-4 h-4 text-purple-400 hidden sm:block" />
+          <span className="font-medium text-purple-600">1 Year: Anticipates</span>
+          <ArrowRight className="w-4 h-4 text-primary hidden sm:block" />
+          <span className="font-semibold text-primary">3–5 Years: Executes</span>
+        </div>
       </div>
     </div>
   );
