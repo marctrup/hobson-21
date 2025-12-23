@@ -102,10 +102,10 @@ export const CustomerSegmentationVisual = () => {
                     <AlertTriangle className={`w-3.5 h-3.5 ${segment.iconColor}`} />
                   </div>
                   <div>
-                    <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-0.5">
+                    <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
                       Pressure
                     </div>
-                    <p className="text-sm text-foreground">{segment.pressure}</p>
+                    <p className="text-sm text-foreground leading-5">{segment.pressure}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
