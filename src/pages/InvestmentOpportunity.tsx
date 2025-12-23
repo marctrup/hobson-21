@@ -137,6 +137,43 @@ const sections = [
     iconColor: "text-purple-600",
     pages: [
       {
+        title: "Sector Scale & Opportunity",
+        showCustomVisual: true,
+        customVisualComponent: "sectorScaleOpportunity",
+        content: {
+          overview: "The real estate sector represents one of the largest opportunities for AI-driven efficiency transformation.",
+          sections: [
+            {
+              title: "Sector Scale",
+              items: [
+                "Real estate is a £1.4 trillion sector in the UK alone",
+                "Over 235,000 real estate businesses operate across the UK",
+                "Document-intensive workflows consume 20%+ of operational time",
+                "Manual information retrieval is the primary bottleneck",
+              ],
+            },
+            {
+              title: "Efficiency Opportunity",
+              items: [
+                "£6,000 annual saving per business through AI automation",
+                "20% productivity gain on document-related tasks",
+                "Instant answers replace hours of manual searching",
+                "Consistent accuracy eliminates costly errors",
+              ],
+            },
+            {
+              title: "Market Timing",
+              items: [
+                "AI technology has reached production-grade accuracy",
+                "Regulatory complexity is increasing annually",
+                "Labour costs make manual work unsustainable",
+                "12-18 month window to establish category leadership",
+              ],
+            },
+          ],
+        },
+      },
+      {
         title: "Customer Segmentation",
         showCustomVisual: true,
         customVisualComponent: "customerSegmentation",
