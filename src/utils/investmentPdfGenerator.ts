@@ -1966,7 +1966,7 @@ const renderCustomerSegmentation = (
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    renderSpacedText(doc, segment.pressure, margin + 10, colStartY + 6, maxWidth / 2 - 25, PDF_CONFIG.lineHeight.tight);
+    renderSpacedText(doc, segment.pressure, margin + 10, colStartY + 10, maxWidth / 2 - 25, PDF_CONFIG.lineHeight.tight);
 
     // What Forces Adoption column
     setCaptionFont(doc);
