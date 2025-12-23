@@ -61,11 +61,11 @@ const OurVisionVisual: React.FC = () => {
       {/* Timeline */}
       <div className="relative">
         {/* Stages */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 items-stretch">
           {stages.map((stage, index) => (
-            <div key={index} className="flex flex-col items-center">
+            <div key={index} className="flex flex-col items-center h-full">
               {/* Card */}
-              <div className={`w-full bg-gradient-to-br ${stage.color} ${stage.borderColor} border-2 rounded-xl p-5 shadow-sm hover:shadow-lg transition-all duration-300`}>
+              <div className={`w-full h-full bg-gradient-to-br ${stage.color} ${stage.borderColor} border-2 rounded-xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col`}>
                 {/* Timeframe Badge */}
                 <div className="flex justify-center mb-3">
                   <span className={`${stage.accentColor} text-white text-xs font-bold px-3 py-1 rounded-full`}>
