@@ -193,54 +193,6 @@ const sections = [
         },
       },
       {
-        title: "UK Market Opportunity",
-        showCustomVisual: true,
-        customVisualComponent: "ukMarket",
-        content: {
-          overview: "Market Opportunity Built Directly From Verified Assumptions",
-          sections: [
-            {
-              title: "Total Addressable Market (TAM) - GBP 1.41B",
-              items: [
-                "Based on verified ONS business counts and salary benchmarks.",
-                "235,200 UK real estate businesses (from 5.6M total UK businesses x 4.2% real estate share)",
-                "GBP 6,000 annual saving per business (20% efficiency gain on GBP 30,000 junior salary)",
-                "TAM = 235,200 x GBP 6,000 = GBP 1.41B",
-              ],
-            },
-            {
-              title: "Serviceable Available Market (SAM) - GBP 917M",
-              items: [
-                "Reflects businesses motivated and able to adopt AI (supported by external adoption studies).",
-                "65% adoption readiness (consistent with PropTech and operational AI adoption rates in traditional sectors)",
-                "235,200 x 65% = 152,880 motivated businesses",
-                "152,880 x GBP 6,000 = GBP 917M",
-                "SAM aligns with verified adoption behaviour from Deloitte, PwC, McKinsey",
-              ],
-            },
-            {
-              title: "Serviceable Obtainable Market (SOM) - GBP 110M",
-              items: [
-                "Built using the evidence-backed 12% early penetration assumption.",
-                "12% penetration sits within the independently verified 8-20% early-stage adoption range (McKinsey, PwC, Deloitte, BVP, Gartner, Forbes)",
-                "152,880 motivated businesses x 12% = 18,345 early adopters",
-                "18,345 x GBP 6,000 = GBP 110M",
-              ],
-              conclusion: "SOM is intentionally conservative and supported by industry-verified adoption behaviour.",
-            },
-          ],
-        },
-      },
-      {
-        title: "Global Market Assumptions",
-        showCustomVisual: true,
-        customVisualComponent: "globalMarketAssumptions",
-        content: {
-          overview: "Explosive Global Growth (Verified by Independent Reports)",
-          sections: [],
-        },
-      },
-      {
         title: "European & Global Opportunities",
         showCustomVisual: true,
         customVisualComponent: "europeanGlobal",
