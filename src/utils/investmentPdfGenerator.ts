@@ -2244,7 +2244,7 @@ const renderCustomerSegmentation = (
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    renderSpacedText(doc, segment.pressure, leftColTextX, colStartY + 8, maxWidth / 2 - 40, PDF_CONFIG.lineHeight.tight);
+    renderSpacedText(doc, segment.pressure, leftColTextX, colStartY + 8, maxWidth / 2 - 40, PDF_CONFIG.lineHeight.body);
 
     // WHAT FORCES ADOPTION section - right column
     const rightColIconX = margin + maxWidth / 2 + 12;
