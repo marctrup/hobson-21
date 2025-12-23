@@ -1744,21 +1744,25 @@ const renderSectorScaleOpportunity = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Strapline box
-  const straplineHeight = 24;
-  renderContentCard(doc, margin, yPosition, maxWidth, straplineHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  // Strapline box - centered text
+  const straplineText = "Real estate is one of the largest and most document-intensive industries in the UK and globally.";
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  yPosition = renderSpacedText(
-    doc,
-    "Real estate is one of the largest and most document-intensive industries in the UK and globally.",
-    margin + 10,
-    yPosition + 15,
-    maxWidth - 20,
-    PDF_CONFIG.lineHeight.body
-  );
-  yPosition = startY + straplineHeight + 10;
+  const straplineLines = doc.splitTextToSize(straplineText, maxWidth - 30);
+  const straplineHeight = Math.max(28, 14 + (straplineLines.length * 6));
+  
+  renderContentCard(doc, margin, yPosition, maxWidth, straplineHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  
+  // Center text vertically in box
+  const textStartY = yPosition + (straplineHeight / 2) - ((straplineLines.length - 1) * 3);
+  straplineLines.forEach((line: string, idx: number) => {
+    const lineWidth = doc.getTextWidth(line);
+    const xPos = margin + (maxWidth - lineWidth) / 2;
+    doc.text(line, xPos, textStartY + (idx * 6));
+  });
+  
+  yPosition += straplineHeight + 10;
 
   // Document-Governed Industry section
   yPosition = checkPageBreak(doc, yPosition, 65, pageHeight, margin);

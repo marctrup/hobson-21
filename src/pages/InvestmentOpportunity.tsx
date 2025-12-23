@@ -142,7 +142,7 @@ const sections = [
         showCustomVisual: true,
         customVisualComponent: "sectorScaleOpportunity",
         content: {
-          overview: "Real estate is one of the largest and most document-intensive industries in the UK and globally.",
+          overview: "",
           sections: [
             {
               title: "Document-Governed Industry",
