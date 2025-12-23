@@ -2204,54 +2204,55 @@ const renderCustomerSegmentation = (
     yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
     renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, segment.bgColor, segment.color);
 
-    // Header icon (larger, matching visual)
+    // Header row - icon and title inline
+    const headerY = yPosition + 14;
     const headerIconSize = 4;
     doc.setFillColor(...segment.color);
-    doc.circle(margin + 12, yPosition + 14, headerIconSize, "F");
+    doc.circle(margin + 12, headerY - 2, headerIconSize, "F");
 
-    // Title
+    // Title - aligned with icon center
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
-    doc.text(segment.title, margin + 22, yPosition + 12);
+    doc.text(segment.title, margin + 22, headerY);
 
     // Percentage and description on second line
     doc.setTextColor(...segment.color);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(9);
-    doc.text(segment.percentage, margin + 22, yPosition + 20);
+    doc.text(segment.percentage, margin + 22, yPosition + 22);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.text(segment.description, margin + 22 + doc.getTextWidth(segment.percentage + " "), yPosition + 20);
+    doc.text(segment.description, margin + 22 + doc.getTextWidth(segment.percentage + " "), yPosition + 22);
 
-    // Pressure section with aligned icon
-    const colStartY = yPosition + 32;
-    const iconSize = 3.5;
-    const colIconX = margin + 12;
-    const colTextX = margin + 22;
+    // Two-column layout for PRESSURE and WHAT FORCES ADOPTION
+    const colStartY = yPosition + 34;
+    const iconSize = 2.5;
 
-    // Pressure icon
+    // PRESSURE section - left column
+    const leftColIconX = margin + 12;
+    const leftColTextX = margin + 22;
+    
+    // Pressure header with inline icon
     doc.setFillColor(...segment.color);
-    doc.circle(colIconX, colStartY + 2, iconSize, "F");
-
-    // Pressure label and content
+    doc.circle(leftColIconX, colStartY - 1, iconSize, "F");
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("PRESSURE", colTextX, colStartY);
+    doc.text("PRESSURE", leftColTextX, colStartY);
+    
+    // Pressure content
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    renderSpacedText(doc, segment.pressure, colTextX, colStartY + 8, maxWidth / 2 - 40, PDF_CONFIG.lineHeight.tight);
+    renderSpacedText(doc, segment.pressure, leftColTextX, colStartY + 8, maxWidth / 2 - 40, PDF_CONFIG.lineHeight.tight);
 
-    // What Forces Adoption section with aligned icon
+    // WHAT FORCES ADOPTION section - right column
     const rightColIconX = margin + maxWidth / 2 + 12;
     const rightColTextX = margin + maxWidth / 2 + 22;
 
-    // Adoption icon
+    // Adoption header with inline icon
     doc.setFillColor(...segment.color);
-    doc.circle(rightColIconX, colStartY + 2, iconSize, "F");
-
-    // Adoption label and content
+    doc.circle(rightColIconX, colStartY - 1, iconSize, "F");
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
