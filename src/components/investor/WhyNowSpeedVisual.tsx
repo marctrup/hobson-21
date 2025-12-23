@@ -30,8 +30,8 @@ export const WhyNowSpeedVisual = () => {
   return (
     <div className="w-full space-y-6 lg:space-y-8">
       {/* Header */}
-      <div className="bg-blue-100 border border-blue-200 rounded-lg p-4 lg:p-5">
-        <h3 className="text-sm lg:text-base font-bold text-primary text-left">
+      <div className="p-4 lg:p-5 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100/80 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200/50 dark:border-slate-700/30">
+        <h3 className="text-sm lg:text-base font-semibold text-primary text-left">
           The Real Estate industry is now choosing its intelligence layer
         </h3>
       </div>
