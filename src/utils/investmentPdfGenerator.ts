@@ -822,7 +822,7 @@ const renderOurVision = (
       label: "Autonomous Agent",
       timeframe: "3-5 Years",
       description: "AI executes & reports outcomes",
-      icons: ["Executes", "Reports", "Audits"],
+      icons: ["Executes", "Audits"],
       visualNote: "AI operates, human monitors",
       color: primaryColor,
       bgColor: primaryBg,
