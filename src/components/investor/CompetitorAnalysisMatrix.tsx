@@ -10,7 +10,7 @@ const CompetitorAnalysisMatrix: React.FC = () => {
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="bg-primary/10">
-              <th className="border border-border p-3 text-left font-semibold text-foreground">Competitor</th>
+              <th className="border border-border p-3 text-left font-semibold text-foreground">Company</th>
               <th className="border border-border p-3 text-left font-semibold text-foreground">Who They Are</th>
               <th className="border border-border p-3 text-left font-semibold text-foreground">What They Do</th>
               <th className="border border-border p-3 text-left font-semibold text-foreground">Strengths</th>
