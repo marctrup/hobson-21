@@ -1876,98 +1876,130 @@ const renderCustomerSegmentation = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const pageWidthCalc = pageWidth;
 
-  // Description only - main title "Customer Segmentation" already rendered by renderTabContent
+  // Description - left aligned
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
-  yPosition = renderSpacedTextCentered(
-    doc,
-    "Hobson is designed to meet the needs of real estate professionals across all operator sizes—each with distinct challenges, but a shared need for clarity.",
-    pageWidthCalc / 2,
-    yPosition,
-    maxWidth - 20,
-    PDF_CONFIG.lineHeight.body
-  );
-  yPosition += 8;
+  const introText = "ONS size-band data shows the Real Estate sector skews heavily toward small- and mid-sized operators, but value is concentrated higher up. While smaller firms are numerous, document complexity, regulatory exposure, and spend focus grow rapidly as portfolios scale, creating a strong wedge for platforms that embed early and expand upward.";
+  yPosition = renderSpacedText(doc, introText, margin, yPosition, maxWidth, PDF_CONFIG.lineHeight.body);
+  yPosition += 10;
 
   const segments = [
     {
       title: "Large Operators",
-      employees: "50-250 employees",
+      employees: "50–250 employees",
+      percentage: "~5–10%",
+      description: "larger and institutional operators (50+ employees)",
       color: PDF_CONFIG.blue,
       bgColor: [239, 246, 255] as [number, number, number],
-      challenge: "High-admin organisations struggling with scattered data and slow information retrieval",
-      need: "Automation and accuracy at scale",
+      pressure: "Rising compliance and audit requirements, high document volumes driving staffing growth, and increasing exposure from missed obligations",
+      adoptionDrivers: [
+        "Need to control cost without adding headcount",
+        "Requirement for traceable, defensible answers",
+        "Pressure from LPs, lenders, and regulators",
+      ],
     },
     {
       title: "Medium Operators",
-      employees: "10-49 employees",
+      employees: "10–49 employees",
+      percentage: "~20–25%",
+      description: "small–mid firms (10–49 employees)",
       color: PDF_CONFIG.primaryColor,
       bgColor: PDF_CONFIG.primaryBgLight,
-      challenge: "Agile teams overwhelmed by inboxes and shared drives",
-      need: "Efficient, low-overhead tools that eliminate manual searching",
+      pressure: "Scaling portfolios without proportional hiring, fragmented information across inboxes and shared drives, and decision bottlenecks are slowing transactions",
+      adoptionDrivers: [
+        "Margin compression",
+        "Speed expectations from partners and capital providers",
+        "Inability to scale manual processes",
+      ],
     },
     {
       title: "Small Operators",
-      employees: "1-9 employees",
+      employees: "1–9 employees",
+      percentage: "~65–70%",
+      description: "micro firms (1–9 employees)",
       color: PDF_CONFIG.emerald,
       bgColor: [236, 253, 245] as [number, number, number],
-      challenge: "Time-poor owner-operators with no time for complex tools",
-      need: "Simple, low-cost assistant that works instantly without onboarding",
+      pressure: "Severe time scarcity, no tolerance for complex tools, increasing regulatory and reporting burden",
+      adoptionDrivers: [
+        "Survival and competitiveness",
+        "Need for instant answers without overhead",
+      ],
     },
   ];
 
   segments.forEach((segment) => {
-    yPosition = checkPageBreak(doc, yPosition, 56, pageHeight, margin);
+    // Calculate dynamic card height based on content
+    setBodySmallFont(doc);
+    const pressureLines = doc.splitTextToSize(sanitizeText(segment.pressure), maxWidth / 2 - 30);
+    const driverLines = segment.adoptionDrivers.length;
+    const contentLines = Math.max(pressureLines.length, driverLines + 1);
+    const cardHeight = Math.max(58, 38 + contentLines * 5);
 
-    const cardHeight = 52; // Reduced height
+    yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
     renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, segment.bgColor, segment.color);
 
-    // Icon circle - cardBadge size (inside card) - align with title baseline
-    const segmentTitleY = yPosition + 10;
+    // Icon circle and title row
+    const titleY = yPosition + 10;
     doc.setFillColor(...segment.color);
-    doc.circle(margin + 10, segmentTitleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
+    doc.circle(margin + 10, titleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
 
-    // Title & employees
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
-    doc.text(segment.title, margin + 20, segmentTitleY);
+    doc.text(segment.title, margin + 20, titleY);
+    
     doc.setTextColor(...PDF_CONFIG.textGray);
     setBodySmallFont(doc);
-    doc.text(`(${segment.employees})`, margin + 20, yPosition + 18);
+    const titleWidth = doc.getTextWidth(segment.title + "  ");
+    doc.text(`(${segment.employees})`, margin + 20 + titleWidth, titleY);
 
-    // Challenge - reduced gap between label and content
+    // Percentage and description on second line
+    doc.setTextColor(...segment.color);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text(segment.percentage, margin + 20, yPosition + 18);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.text(segment.description, margin + 20 + doc.getTextWidth(segment.percentage + " "), yPosition + 18);
+
+    // Pressure column
+    const colStartY = yPosition + 28;
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("CHALLENGE", margin + 10, yPosition + 28);
+    doc.text("PRESSURE", margin + 10, colStartY);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    renderSpacedText(doc, segment.challenge, margin + 10, yPosition + 34, maxWidth / 2 - 25, PDF_CONFIG.lineHeight.tight);
+    renderSpacedText(doc, segment.pressure, margin + 10, colStartY + 6, maxWidth / 2 - 25, PDF_CONFIG.lineHeight.tight);
 
-    // Need - reduced gap between label and content
+    // What Forces Adoption column
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("WHAT THEY NEED", margin + maxWidth / 2 + 5, yPosition + 28);
+    doc.text("WHAT FORCES ADOPTION", margin + maxWidth / 2 + 5, colStartY);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    renderSpacedText(doc, segment.need, margin + maxWidth / 2 + 5, yPosition + 34, maxWidth / 2 - 25, PDF_CONFIG.lineHeight.tight);
+    let driverY = colStartY + 6;
+    segment.adoptionDrivers.forEach((driver) => {
+      doc.text(`• ${driver}`, margin + maxWidth / 2 + 5, driverY);
+      driverY += PDF_CONFIG.lineHeight.tight;
+    });
 
     yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
   });
 
   // Footer insight
+  yPosition = checkPageBreak(doc, yPosition, 18, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 14, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  doc.text("One platform, three experiences", margin + 8, yPosition + 9);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.text(" — Hobson adapts to the complexity and scale of each operator type.", margin + 8 + doc.getTextWidth("One platform, three experiences"), yPosition + 9);
+  doc.text("One platform. One intelligence layer.", margin + 8, yPosition + 9);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "normal");
+  doc.text(" Forced adoption across segments.", margin + 8 + doc.getTextWidth("One platform. One intelligence layer."), yPosition + 9);
   yPosition += 18;
 
   return yPosition;
