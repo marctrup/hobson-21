@@ -2471,10 +2471,12 @@ const renderMarketLandscape = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Subtitle
-  doc.setTextColor(...PDF_CONFIG.textGray);
+  // Subtitle - bold
+  doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
-  doc.text("Despite the size of the sector:", margin, yPosition);
+  doc.setFont("helvetica", "bold");
+  doc.text("Despite the size of the sector, this creates a rare situation:", margin, yPosition);
+  doc.setFont("helvetica", "normal");
   yPosition += 12;
 
   // Market Gaps box
@@ -2508,11 +2510,7 @@ const renderMarketLandscape = (
   });
   yPosition += gapsBoxHeight + 10;
 
-  // Rare situation intro
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  setBodyFont(doc);
-  doc.text("This creates a rare situation:", margin, yPosition);
-  yPosition += 10;
+  // Remove duplicate "This creates a rare situation:" as it's now in the subtitle above
 
   // Rare situation box - centered text without bullets
   const rareSituation = ["Large, conservative market", "Clear structural pain", "No entrenched AI leader"];
@@ -2527,10 +2525,10 @@ const renderMarketLandscape = (
   doc.text(situationText, pageWidth / 2, yPosition + 20, { align: "center" });
   yPosition += 42;
 
-  // Consolidation note
-  doc.setTextColor(...PDF_CONFIG.textGray);
+  // Consolidation note - bold
+  doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
-  doc.setFont("helvetica", "italic");
+  doc.setFont("helvetica", "bold");
   doc.text("Markets like this tend to consolidate quickly once a trusted standard emerges.", margin, yPosition);
   doc.setFont("helvetica", "normal");
   yPosition += 12;
