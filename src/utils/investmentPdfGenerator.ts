@@ -2550,16 +2550,13 @@ const renderMarketLandscape = (
   setCardTitleFont(doc);
   doc.text("The After: AI-Native Intelligence Layers", margin + 16, yPosition + 12);
 
-  let featureX = margin + 12;
-  const featureColWidth = (maxWidth - 24) / 3;
+  // Features as centered text separated by full stops
   setBodyFont(doc);
-  aiFeatures.forEach((feature) => {
-    doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(featureX + 2, yPosition + 28, PDF_CONFIG.circleSize.bullet, "F");
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(feature, featureX + 8, yPosition + 30);
-    featureX += featureColWidth;
-  });
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  const featuresText = aiFeatures.join("  .  ");
+  doc.text(featuresText, pageWidth / 2, yPosition + 28, { align: "center" });
+  doc.setFont("helvetica", "normal");
   yPosition += 48;
 
   // What This Means for Hobson box
