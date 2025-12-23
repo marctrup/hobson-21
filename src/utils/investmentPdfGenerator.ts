@@ -2281,7 +2281,7 @@ const renderCustomerSegmentation = (
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodySmallFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("One platform.  One intelligence layer.  Forced adoption across segments.", margin + 8, yPosition + 9);
+  doc.text("One platform.  One intelligence layer.  Forced adoption across segments.", pageWidth / 2, yPosition + 9, { align: "center" });
   yPosition += 18;
 
   return yPosition;
