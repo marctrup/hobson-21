@@ -64,6 +64,7 @@ import { PilotClientsVisual } from "@/components/investor/PilotClientsVisual";
 import { TechStackVisual } from "@/components/investor/TechStackVisual";
 import WhyNowVisual from "@/components/investor/WhyNowVisual";
 import { WhyNowSpeedVisual } from "@/components/investor/WhyNowSpeedVisual";
+import { CustomersMarketSourcesVisual } from "@/components/investor/CustomersMarketSourcesVisual";
 import { TeamCredibilityVisual } from "@/components/investor/TeamCredibilityVisual";
 import { RaiseVisual } from "@/components/investor/RaiseVisual";
 
@@ -368,6 +369,15 @@ const sections = [
         title: "Why Now – Why Speed",
         showCustomVisual: true,
         customVisualComponent: "whyNowSpeed",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Customers & Market Sources",
+        showCustomVisual: true,
+        customVisualComponent: "customersMarketSources",
         content: {
           overview: "",
           sections: [],
@@ -1322,6 +1332,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Why Now Speed */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "whyNowSpeed" && (
                       <WhyNowSpeedVisual />
+                    )}
+
+                    {/* Custom Visual Component for Customers & Market Sources */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "customersMarketSources" && (
+                      <CustomersMarketSourcesVisual />
                     )}
 
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "ukMarketAssumptions" && (
