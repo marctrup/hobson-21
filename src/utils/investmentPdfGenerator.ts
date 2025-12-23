@@ -1744,7 +1744,7 @@ const renderSectorScaleOpportunity = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Strapline box - centered text
+  // Strapline box - left justified text
   const straplineText = "Real estate is one of the largest and most document-intensive industries in the UK and globally.";
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
@@ -1754,12 +1754,10 @@ const renderSectorScaleOpportunity = (
   renderContentCard(doc, margin, yPosition, maxWidth, straplineHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   
-  // Center text vertically in box
+  // Left justify text, vertically centered in box
   const textStartY = yPosition + (straplineHeight / 2) - ((straplineLines.length - 1) * 3);
   straplineLines.forEach((line: string, idx: number) => {
-    const lineWidth = doc.getTextWidth(line);
-    const xPos = margin + (maxWidth - lineWidth) / 2;
-    doc.text(line, xPos, textStartY + (idx * 6));
+    doc.text(line, margin + 15, textStartY + (idx * 6));
   });
   
   yPosition += straplineHeight + 10;
