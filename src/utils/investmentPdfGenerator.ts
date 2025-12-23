@@ -1099,18 +1099,16 @@ const renderExecutiveSummary = (
   doc.setFont("helvetica", "normal");
   contentY = founderBoxY + 6;
   founderLines.forEach((l: string) => {
-    // Highlight "Arthur Online" in bold
+    // Highlight "Arthur Online" in purple (not bold)
     if (l.includes("Arthur Online")) {
       const parts = l.split("Arthur Online");
       doc.setTextColor(...PDF_CONFIG.textGray);
       doc.text(parts[0], textX + 8, contentY);
       const part1Width = doc.getTextWidth(parts[0]);
-      doc.setTextColor(...PDF_CONFIG.textDark);
-      doc.setFont("helvetica", "bold");
+      doc.setTextColor(...PDF_CONFIG.primaryColor);
       doc.text("Arthur Online", textX + 8 + part1Width, contentY);
       const highlightWidth = doc.getTextWidth("Arthur Online");
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFont("helvetica", "normal");
       doc.text(parts[1] || "", textX + 8 + part1Width + highlightWidth, contentY);
     } else {
       doc.text(l, textX + 8, contentY);
