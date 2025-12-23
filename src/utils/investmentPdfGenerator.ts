@@ -1976,10 +1976,10 @@ const renderCustomerSegmentation = (
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    let driverY = colStartY + 6;
+    let driverY = colStartY + 10; // Increased spacing from heading
     segment.adoptionDrivers.forEach((driver) => {
-      doc.text(`• ${driver}`, margin + maxWidth / 2 + 5, driverY);
-      driverY += PDF_CONFIG.lineHeight.tight;
+      doc.text(`•  ${driver}`, margin + maxWidth / 2 + 5, driverY); // Added extra space after bullet
+      driverY += PDF_CONFIG.lineHeight.tight + 1; // Slightly more spacing between items
     });
 
     yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
