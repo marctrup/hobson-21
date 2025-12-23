@@ -58,6 +58,7 @@ import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
 import { ExecutiveSummaryVisual } from "@/components/investor/ExecutiveSummaryVisual";
 import { ApproachVisual } from "@/components/investor/ApproachVisual";
 import { CustomerSegmentationVisual } from "@/components/investor/CustomerSegmentationVisual";
+import { SectorScaleOpportunityVisual } from "@/components/investor/SectorScaleOpportunityVisual";
 
 import { PilotClientsVisual } from "@/components/investor/PilotClientsVisual";
 import { TechStackVisual } from "@/components/investor/TechStackVisual";
@@ -1298,6 +1299,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Raise */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "raise" && (
                       <RaiseVisual />
+                    )}
+
+                    {/* Custom Visual Component for Sector Scale & Opportunity */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "sectorScaleOpportunity" && (
+                      <SectorScaleOpportunityVisual />
                     )}
 
                     {/* Custom Visual Component for Customer Segmentation */}

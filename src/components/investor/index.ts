@@ -20,6 +20,7 @@ export { default as CACAssumptionsVisual } from './CACAssumptionsVisual';
 export { ExecutiveSummaryVisual } from './ExecutiveSummaryVisual';
 export { ApproachVisual } from './ApproachVisual';
 export { CustomerSegmentationVisual } from './CustomerSegmentationVisual';
+export { SectorScaleOpportunityVisual } from './SectorScaleOpportunityVisual';
 
 export { PilotClientsVisual } from './PilotClientsVisual';
 export { TechStackVisual } from './TechStackVisual';
