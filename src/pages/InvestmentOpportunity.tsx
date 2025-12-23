@@ -64,6 +64,7 @@ import { PilotClientsVisual } from "@/components/investor/PilotClientsVisual";
 import { TechStackVisual } from "@/components/investor/TechStackVisual";
 import WhyNowVisual from "@/components/investor/WhyNowVisual";
 import { WhyNowSpeedVisual } from "@/components/investor/WhyNowSpeedVisual";
+import OurVisionVisual from "@/components/investor/OurVisionVisual";
 import { CustomersMarketSourcesVisual } from "@/components/investor/CustomersMarketSourcesVisual";
 import { TeamCredibilityVisual } from "@/components/investor/TeamCredibilityVisual";
 import { RaiseVisual } from "@/components/investor/RaiseVisual";
@@ -88,6 +89,15 @@ const sections = [
         title: "Executive Summary",
         showCustomVisual: true,
         customVisualComponent: "executiveSummary",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Our Vision",
+        showCustomVisual: true,
+        customVisualComponent: "ourVision",
         content: {
           overview: "",
           sections: [],
@@ -1251,6 +1261,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Approach */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "approach" && (
                       <ApproachVisual />
+                    )}
+
+                    {/* Custom Visual Component for Our Vision */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "ourVision" && (
+                      <OurVisionVisual />
                     )}
 
                     {/* Custom Visual Component for Why Now */}
