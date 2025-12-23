@@ -4,11 +4,6 @@ import { competitorData } from "./data/competitorData";
 const CompetitorAnalysisMatrix: React.FC = () => {
   return (
     <div className="space-y-6">
-      <div className="text-center mb-8">
-        <h3 className="text-xl md:text-2xl font-bold text-foreground mb-2">
-          Competitor Analysis
-        </h3>
-      </div>
 
       {/* Desktop Table */}
       <div className="hidden lg:block overflow-x-auto">
