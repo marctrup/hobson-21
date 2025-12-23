@@ -307,50 +307,45 @@ const sections = [
         showCustomVisual: true,
         customVisualComponent: "landscape",
         content: {
-          overview:
-            "The next winners in real estate tech will be AI-native. Traditional cloud systems cannot deliver reasoning, accuracy, or instant answers — AI-native tools can.",
+          // NOTE: PDF uses the custom visual renderer for this page.
+          // Keep overview empty so we never render stale/duplicate copy above the visual.
+          overview: "",
           sections: [
             {
-              title: "Traditional Cloud Solutions",
-              subtitle: 'The Overcrowded "Before"',
+              title: "Context: A Category Still Forming",
+              subtitle: "Despite the size of the sector:",
+              items: [],
+            },
+            {
+              title: "Current Market Gaps",
               items: [
-                "Overcrowded market with 100+ competitors",
-                "High cost, slow innovation cycles",
-                "Still reliant on manual information retrieval",
-                "Complex interfaces requiring extensive training",
-                "Heavy infrastructure with long implementation times",
+                "Legacy Prop Tech platforms are system-of-record for transactions, not intelligence",
+                "Horizontal AI tools lack domain depth, accuracy, and auditability",
+                "No AI-native platform has yet become the default intelligence layer for real estate documents",
               ],
             },
             {
-              title: "Next-Generation AI Solutions",
-              subtitle: 'The Emerging "After"',
+              title: "This creates a rare situation:",
               items: [
-                "Hobson (Category Leader) - AI-native assistant for real estate documents",
-                "EliseAI - Conversational AI for real estate management",
-                "Trudi - AI compliance assistant",
-                "StanAI - Real estate document analysis",
-                "Kendal AI - real estate operations automation",
+                "Large, conservative market",
+                "Clear structural pain",
+                "No entrenched AI leader",
+                "Markets like this tend to consolidate quickly once a trusted standard emerges.",
               ],
             },
             {
-              title: "Hobson's Competitive Advantages",
+              title: "The After: AI-Native Intelligence Layers",
               items: [
-                "Instant, referenced answers from source documents",
-                "Simple, lightweight, and low cost entry point",
-                "Designed for accuracy with citation-backed responses",
-                "Zero onboarding required - works immediately",
-                "Usage-based pricing eliminates adoption barriers",
-                "Built for trust and continuous learning from user feedback",
+                "Real-time reasoning",
+                "Instant, referenced answers",
+                "Embedded into workflows",
               ],
             },
             {
-              title: "Market Transition",
+              title: "What This Means for Hobson",
               items: [
-                "The industry is shifting from passive cloud storage to active AI assistance",
-                "Traditional PropTech focuses on data capture; AI-native tools deliver insights",
-                "Winner-takes-most dynamics emerging in AI category",
-                "Early movers building defensible positions through data and user trust",
-                "Hobson positioned at the forefront of this category transition",
+                "Hobson is positioned within a large and durable UK vertical, a global market undergoing structural change and an industry where early trust compounds into long-term defensibility.",
+                "This section is not about pricing or near-term monetisation. It establishes why this market is worth building infrastructure for and why the upside is category-scale.",
               ],
             },
           ],
