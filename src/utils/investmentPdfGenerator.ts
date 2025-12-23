@@ -1602,6 +1602,107 @@ const renderWhyNowSpeed = (
 };
 
 /**
+ * Render Customers & Market Sources visual with clickable links
+ */
+const renderCustomersMarketSources = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  const sources = [
+    {
+      title: "Office for National Statistics (ONS), Business Population Estimates 2025",
+      stat: "5.7M UK private sector businesses",
+      linkText: "GOV.UK",
+      linkUrl: "https://www.gov.uk/government/statistics/business-population-estimates-2024"
+    },
+    {
+      title: "ONS UK Business Activity, Size and Location 2025",
+      stat: "2.7M VAT/PAYE registered businesses",
+      linkText: "Office for National Statistics",
+      linkUrl: "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation"
+    },
+    {
+      title: "ONS Business Detailed Tables",
+      stat: "Real Estate activities by SIC (Section L)",
+      linkText: "GOV.UK",
+      linkUrl: "https://www.gov.uk/government/statistics/business-population-estimates-2024"
+    },
+    {
+      title: "McKinsey Global Survey on AI (2025)",
+      stat: "~88% AI adoption in business functions",
+      linkText: "McKinsey & Company",
+      linkUrl: "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai"
+    },
+    {
+      title: "McKinsey, Gen AI Real Estate Value",
+      stat: "$110-$180B+ global value potential",
+      linkText: "McKinsey & Company",
+      linkUrl: "https://www.mckinsey.com/industries/real-estate/our-insights"
+    },
+    {
+      title: "Deloitte Centre for Financial Services",
+      stat: ">$7.2B AI/ML venture investment (relevant industry signalling)",
+      linkText: "Deloitte United Kingdom",
+      linkUrl: "https://www.deloitte.com/uk/en/industries/financial-services.html"
+    }
+  ];
+
+  // Section header
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 4, PDF_CONFIG.circleSize.header, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Data Sources", margin + 18, yPosition + 6);
+  yPosition += 16;
+
+  // Sources list
+  sources.forEach((source, index) => {
+    yPosition = checkPageBreak(doc, yPosition, 24, pageHeight, margin);
+    
+    // Title
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setBodyBoldFont(doc);
+    const titleLines = doc.splitTextToSize(sanitizeText(source.title), maxWidth - 10);
+    titleLines.forEach((line: string) => {
+      doc.text(line, margin + 4, yPosition);
+      yPosition += PDF_CONFIG.lineHeight.body;
+    });
+    
+    // Stat
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    setBodySmallFont(doc);
+    doc.text(sanitizeText(source.stat), margin + 4, yPosition);
+    yPosition += PDF_CONFIG.lineHeight.body;
+    
+    // Link
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    setBodySmallFont(doc);
+    const linkText = source.linkText;
+    doc.text(linkText, margin + 4, yPosition);
+    const linkWidth = doc.getTextWidth(linkText);
+    doc.link(margin + 4, yPosition - 3, linkWidth, 5, { url: source.linkUrl });
+    
+    yPosition += 8;
+    
+    // Divider (except for last item)
+    if (index < sources.length - 1) {
+      doc.setDrawColor(...PDF_CONFIG.primaryLight);
+      doc.setLineWidth(0.2);
+      doc.line(margin + 4, yPosition - 2, margin + maxWidth - 4, yPosition - 2);
+    }
+  });
+
+  yPosition += PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
  * Render Strategic Approach visual with styling matching on-screen component
  * Updated to match new simplified content structure
  */
@@ -5055,6 +5156,8 @@ const renderTabContent = (
       yPosition = renderWhyNow(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "whyNowSpeed") {
       yPosition = renderWhyNowSpeed(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "customersMarketSources") {
+      yPosition = renderCustomersMarketSources(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "approach") {
       yPosition = renderStrategicApproach(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "teamCredibility") {
