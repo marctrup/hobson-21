@@ -2578,7 +2578,8 @@ const renderMarketLandscape = (
     hobsonY += PDF_CONFIG.lineHeight.body;
   });
 
-  doc.setFont("helvetica", "italic");
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   const closingText = "This section is not about pricing or near-term monetisation. It establishes why this market is worth building infrastructure for and why the upside is category-scale.";
   const closingLines = doc.splitTextToSize(sanitizeText(closingText), maxWidth - 24);
   let closingY = hobsonY + 4;
