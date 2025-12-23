@@ -1949,13 +1949,13 @@ const renderRaise = (
   const headerHeight = 32;
   renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
-  // Funding icon circle
+  // Funding icon circle - aligned with FUNDING REQUIREMENT text
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 20, yPosition + 16, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 20, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("FUNDING REQUIREMENT", margin + 36, yPosition + 12);
+  doc.text("FUNDING REQUIREMENT", margin + 28, yPosition + 12);
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setStatFont(doc);
