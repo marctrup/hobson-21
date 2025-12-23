@@ -184,7 +184,7 @@ const sections = [
         },
       },
       {
-        title: "UK Market Assumptions",
+        title: "UK Market Size",
         showCustomVisual: true,
         customVisualComponent: "ukMarketAssumptions",
         content: {

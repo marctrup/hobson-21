@@ -19,9 +19,8 @@ export const UKMarketAssumptionsVisual = () => {
 
   return (
     <div className="w-full space-y-6 lg:space-y-8">
-      {/* Header */}
+      {/* Subtitle - title is shown in tab */}
       <div className="pb-3 border-b-2 border-primary/20">
-        <h3 className="text-xl lg:text-2xl font-bold text-primary mb-1">UK Market Size</h3>
         <p className="text-xs lg:text-sm text-muted-foreground">According to the UK government and ONS Business Population Estimates</p>
       </div>
 
