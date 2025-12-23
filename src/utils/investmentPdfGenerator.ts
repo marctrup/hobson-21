@@ -1438,6 +1438,170 @@ const renderWhyNow = (
 };
 
 /**
+ * Render Why Now – Why Speed visual with styling matching on-screen component
+ * Replicates: Header, three converging forces, market reset, Hobson's advantage, closing statement
+ */
+const renderWhyNowSpeed = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Header - pale blue box with purple text
+  const headerHeight = 16;
+  doc.setFillColor(219, 234, 254); // blue-100
+  doc.setDrawColor(191, 219, 254); // blue-200
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "FD");
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setBodyBoldFont(doc);
+  doc.text("The Real Estate industry is now choosing its intelligence layer", margin + 8, yPosition + 10);
+  yPosition += headerHeight + 8;
+
+  // Three Converging Forces section
+  yPosition = checkPageBreak(doc, yPosition, 80, pageHeight, margin);
+  
+  const forcesHeight = 75;
+  renderContentCard(doc, margin, yPosition, maxWidth, forcesHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+  
+  // Section header with icon
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.header, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Three forces are converging", margin + 20, yPosition + 12);
+  
+  const forces = [
+    { title: "Technology is finally viable", desc: "AI can now deliver production-grade accuracy, auditability, and multi-document reasoning at scale - capabilities that did not exist even three years ago." },
+    { title: "Economics leave no slack", desc: "Labour inflation, margin compression, and headcount constraints make manual document work structurally unaffordable." },
+    { title: "Regulation is locking complexity in", desc: "Audit trails, ESG reporting, and risk obligations permanently increase document volume and scrutiny." },
+  ];
+
+  let forceY = yPosition + 22;
+  forces.forEach((force) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(margin + 14, forceY, PDF_CONFIG.circleSize.cardBadge, "F");
+    
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setBodyBoldFont(doc);
+    doc.text(force.title, margin + 22, forceY + 1);
+    
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    setBodySmallFont(doc);
+    const descLines = doc.splitTextToSize(sanitizeText(force.desc), maxWidth - 30);
+    let descY = forceY + 6;
+    descLines.forEach((line: string) => {
+      doc.text(line, margin + 22, descY);
+      descY += PDF_CONFIG.lineHeight.tight;
+    });
+    forceY = descY + 4;
+  });
+  
+  yPosition += forcesHeight + 6;
+
+  // Market Reset section - amber background
+  yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
+  
+  const resetHeight = 46;
+  doc.setFillColor(255, 251, 235); // amber-50
+  doc.setDrawColor(253, 230, 138); // amber-200
+  doc.roundedRect(margin, yPosition, maxWidth, resetHeight, 3, 3, "FD");
+  
+  // Header with warning icon
+  doc.setFillColor(217, 119, 6); // amber-600
+  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.header, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("When forces converge, markets reset", margin + 20, yPosition + 12);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  const resetText1 = "The first trusted system becomes embedded. Standards form quickly. Switching costs rise. Late entrants struggle to displace incumbents.";
+  const resetLines1 = doc.splitTextToSize(sanitizeText(resetText1), maxWidth - 16);
+  let resetY = yPosition + 20;
+  resetLines1.forEach((line: string) => {
+    doc.text(line, margin + 8, resetY);
+    resetY += PDF_CONFIG.lineHeight.tight;
+  });
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodyBoldFont(doc);
+  doc.text("This creates a narrow 12-18-month window to define the default system of record for AI in Real Estate.", margin + 8, resetY + 2);
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setBodyBoldFont(doc);
+  doc.text("Hobson is positioned to win that window.", margin + 8, resetY + 10);
+  
+  yPosition += resetHeight + 6;
+
+  // Hobson's Advantage section
+  yPosition = checkPageBreak(doc, yPosition, 40, pageHeight, margin);
+  
+  const advantageHeight = 36;
+  renderContentCard(doc, margin, yPosition, maxWidth, advantageHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Hobson's Advantage", margin + 8, yPosition + 10);
+  
+  const advantages = [
+    "Purpose-built AI for real estate complexity",
+    "Auditable, source-linked reasoning",
+    "Zero workflow disruption",
+    "Designed for institutional trust",
+  ];
+  
+  const advColWidth = (maxWidth - 16) / 2;
+  let advY = yPosition + 18;
+  advantages.forEach((adv, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const advX = margin + 8 + col * advColWidth;
+    const advYPos = advY + row * 8;
+    
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(advX + 2, advYPos - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    setBodySmallFont(doc);
+    doc.text(adv, advX + 8, advYPos);
+  });
+  
+  // "Once adopted" statement - purple
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setBodyBoldFont(doc);
+  doc.text("Once adopted, Hobson becomes operational infrastructure, not a tool.", margin + 8, yPosition + 32);
+  
+  yPosition += advantageHeight + 6;
+
+  // Closing Statement - gradient-like purple box
+  yPosition = checkPageBreak(doc, yPosition, 35, pageHeight, margin);
+  
+  const closingHeight = 32;
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.roundedRect(margin, yPosition, maxWidth, closingHeight, 3, 3, "FD");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodyBoldFont(doc);
+  doc.text("This is a category-creation moment.", pageWidth / 2, yPosition + 10, { align: "center" });
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("The market is significant, and the pressure is real. The window is closing.", pageWidth / 2, yPosition + 18, { align: "center" });
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setBodyBoldFont(doc);
+  doc.text("Hobson is building the system of record for AI-driven real estate operations.", pageWidth / 2, yPosition + 26, { align: "center" });
+  
+  yPosition += closingHeight + PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
  * Render Strategic Approach visual with styling matching on-screen component
  * Updated to match new simplified content structure
  */
@@ -4889,6 +5053,8 @@ const renderTabContent = (
       yPosition = renderExecutiveSummary(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "whyNow") {
       yPosition = renderWhyNow(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "whyNowSpeed") {
+      yPosition = renderWhyNowSpeed(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "approach") {
       yPosition = renderStrategicApproach(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "teamCredibility") {
