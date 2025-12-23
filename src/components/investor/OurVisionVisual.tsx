@@ -54,7 +54,7 @@ const OurVisionVisual: React.FC = () => {
       <div className="text-center mb-8">
         <h3 className="text-2xl font-bold text-gray-900 mb-2">Our Vision</h3>
         <p className="text-lg text-purple-600 font-medium">
-          The Evolution of Real Estate AI
+          The Evolution of Hobson AI
         </p>
       </div>
 
