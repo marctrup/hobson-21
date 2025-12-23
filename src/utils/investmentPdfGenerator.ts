@@ -2110,12 +2110,13 @@ const renderUKMarketAssumptions = (
   setCardTitleFont(doc);
   doc.text("Core Market Entry", margin + 16, yPosition + 12);
 
+  const centerX = margin + maxWidth / 2;
   setStatFont(doc);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("~90,000", margin + maxWidth / 2 - 20, yPosition + 28, { align: "center" });
+  doc.text("~90,000", centerX, yPosition + 28, { align: "center" });
   setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("Real estate operators where document intelligence is mission-critical", margin + maxWidth / 2 - 20, yPosition + 38, { align: "center" });
+  doc.text("Real estate operators where document intelligence is mission-critical", centerX, yPosition + 38, { align: "center" });
   yPosition += 54;
 
   // Section 4: Adjacent Market
