@@ -48,13 +48,11 @@ const PDF_CONFIG = {
     paragraphGap: 4,     // Gap between paragraphs
     titleToContent: 6,   // Gap between header area and main content
   },
-  // Standardized circle/icon sizes (reduced by 20% for cleaner look)
+  // Standardized circle sizes - 3 sizes only
   circleSize: {
-    header: 3.2,         // Section headers (like Addressable Market)
-    cardBadge: 1.6,      // Inside cards/boxes
-    bullet: 0.8,         // Bullet points (minimal)
-    pillarBadge: 2.4,    // Numbered pillar badges
-    goalIcon: 1.6,       // Goal box icons
+    small: 0.8,          // Bullet points
+    medium: 2.0,         // Card badges, icons
+    large: 3.2,          // Section headers, numbered badges
   },
   subtitleToBullets: 4,  // Gap between subtitle and bullet list
   // Colors
@@ -265,7 +263,7 @@ const renderNumberedSectionCard = (
   
   // Number circle - uses pillarBadge size for numbered sections
   doc.setFillColor(...iconColor);
-  doc.circle(x + 8, y + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(x + 8, y + 10, PDF_CONFIG.circleSize.large, "F");
   
   // Title
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -401,7 +399,7 @@ const renderSectionHeader = (
 ): number => {
   // Icon circle aligned with text - uses header size
   doc.setFillColor(...iconColor);
-  doc.circle(x + 4, y - 1, PDF_CONFIG.circleSize.header, "F");
+  doc.circle(x + 4, y - 1, PDF_CONFIG.circleSize.large, "F");
   
   // Title
   doc.setTextColor(...textColor);
@@ -440,7 +438,7 @@ const renderBulletList = (
   items.forEach((item) => {
     // Bullet point - uses bullet size
     doc.setFillColor(...bulletColor);
-    doc.circle(x + 3, currentY - 2, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(x + 3, currentY - 2, PDF_CONFIG.circleSize.small, "F");
     
     // Text - closer to bullet
     doc.setTextColor(...textColor);
@@ -482,7 +480,7 @@ const renderFeatureCard = (
   // Icon - filled circle inside card - align with title baseline
   const titleY = y + height / 2 - 2;
   doc.setFillColor(...iconColor);
-  doc.circle(x + 12, titleY - 2, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.circle(x + 12, titleY - 2, PDF_CONFIG.circleSize.medium, "F");
   
   // Title
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -906,7 +904,7 @@ const renderExecutiveSummary = (
   // Header
   const headerY = yPosition + boxPaddingTop + 8; // +8 for baseline offset
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, headerY - 2, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 12, headerY - 2, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -981,7 +979,7 @@ const renderExecutiveSummary = (
   doc.setFont("helvetica", "normal");
   enablesItems.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(textX + 3, contentY - 2, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(textX + 3, contentY - 2, PDF_CONFIG.circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     const lines = doc.splitTextToSize(sanitizeText(item), contentMaxWidth - 10);
@@ -1053,7 +1051,7 @@ const renderExecutiveSummary = (
   
   // Section header with globe icon
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.header, "F");
+  doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.large, "F");
   
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
@@ -1169,7 +1167,7 @@ const renderExecutiveSummary = (
 
   // Section header with rocket icon
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.header, "F");
+  doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
@@ -1200,7 +1198,7 @@ const renderExecutiveSummary = (
 
   tractionBullets.forEach((bullet) => {
     doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(margin + 3, yPosition - 2, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(margin + 3, yPosition - 2, PDF_CONFIG.circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.body);
@@ -1324,7 +1322,7 @@ const renderWhyNow = (
 
     // Number badge
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+    doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
 
     // Title
     let cursorY = yPosition + 10; // reduced top padding
@@ -1348,7 +1346,7 @@ const renderWhyNow = (
     setBodySmallFont(doc);
     bulletLinesByItem.forEach((lines) => {
       doc.setFillColor(...PDF_CONFIG.primaryLight);
-      doc.circle(margin + 22, cursorY - 1.5, PDF_CONFIG.circleSize.bullet, "F");
+      doc.circle(margin + 22, cursorY - 1.5, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       lines.forEach((line: string) => {
         doc.text(line, margin + 28, cursorY);
@@ -1384,7 +1382,7 @@ const renderWhyNow = (
 
   // Header with icon
   doc.setFillColor(255, 255, 255); // white circle
-  doc.circle(pageWidth / 2 - 40, yPosition + 12, PDF_CONFIG.circleSize.header, "F");
+  doc.circle(pageWidth / 2 - 40, yPosition + 12, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(255, 255, 255); // white text
   setCardTitleFont(doc);
   doc.text("The Convergence", pageWidth / 2, yPosition + 14, { align: "center" });
@@ -1470,7 +1468,7 @@ const renderWhyNowSpeed = (
   
   // Section header with icon
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.header, "F");
+  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Three forces are converging", margin + 20, yPosition + 12);
@@ -1484,7 +1482,7 @@ const renderWhyNowSpeed = (
   let forceY = yPosition + 22;
   forces.forEach((force) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 14, forceY, PDF_CONFIG.circleSize.cardBadge, "F");
+    doc.circle(margin + 14, forceY, PDF_CONFIG.circleSize.medium, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodyBoldFont(doc);
@@ -1513,7 +1511,7 @@ const renderWhyNowSpeed = (
   
   // Header with warning icon
   doc.setFillColor(217, 119, 6); // amber-600
-  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.header, "F");
+  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("When forces converge, markets reset", margin + 20, yPosition + 12);
@@ -1564,7 +1562,7 @@ const renderWhyNowSpeed = (
     const advYPos = advY + row * 8;
     
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(advX + 2, advYPos - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(advX + 2, advYPos - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
     setBodySmallFont(doc);
     doc.text(adv, advX + 8, advYPos);
@@ -1655,7 +1653,7 @@ const renderCustomersMarketSources = (
 
   // Section header
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 4, PDF_CONFIG.circleSize.header, "F");
+  doc.circle(margin + 8, yPosition + 4, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Data Sources", margin + 18, yPosition + 6);
@@ -1721,7 +1719,7 @@ const renderStrategicApproach = (
 
   // Number badge
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -1763,7 +1761,7 @@ const renderStrategicApproach = (
 
   // Number badge
   doc.setFillColor(...PDF_CONFIG.rose);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -1805,7 +1803,7 @@ const renderStrategicApproach = (
 
   // Number badge
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -1865,7 +1863,7 @@ const renderTeamCredibility = (
 
   // Section 1: Direct Market Experience
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -1890,7 +1888,7 @@ const renderTeamCredibility = (
 
   // Section 2: The Team Brings
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -1916,7 +1914,7 @@ const renderTeamCredibility = (
     renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(cardX + 8, cardY + 8, PDF_CONFIG.circleSize.goalIcon, "F");
+    doc.circle(cardX + 8, cardY + 8, PDF_CONFIG.circleSize.medium, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
@@ -1951,7 +1949,7 @@ const renderRaise = (
 
   // Funding icon circle - aligned with FUNDING REQUIREMENT text
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 20, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 20, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
@@ -1965,7 +1963,7 @@ const renderRaise = (
 
   // Use of Funds section
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -1983,7 +1981,7 @@ const renderRaise = (
     renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 20, yPosition + 8, PDF_CONFIG.circleSize.goalIcon, "F");
+    doc.circle(margin + 20, yPosition + 8, PDF_CONFIG.circleSize.medium, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
@@ -2034,7 +2032,7 @@ const renderSectorScaleOpportunity = (
 
   // Icon and title
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Document-Governed Industry", margin + 22, yPosition + 14);
@@ -2060,7 +2058,7 @@ const renderSectorScaleOpportunity = (
     const yPos = activityY + (row * 7);
     
     doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(xPos + 2, yPos - 1.5, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(xPos + 2, yPos - 1.5, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
     doc.text(activity, xPos + 7, yPos);
@@ -2074,7 +2072,7 @@ const renderSectorScaleOpportunity = (
   renderContentCard(doc, margin, yPosition, maxWidth, compoundHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.border);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Compounding Complexity", margin + 22, yPosition + 14);
@@ -2115,7 +2113,7 @@ const renderSectorScaleOpportunity = (
   renderContentCard(doc, margin, yPosition, maxWidth, structuralHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Structural Demand", margin + 22, yPosition + 13);
@@ -2206,7 +2204,7 @@ const renderCustomerSegmentation = (
 
     // Header row - icon and title inline
     const headerY = yPosition + 14;
-    const headerIconSize = PDF_CONFIG.circleSize.header;
+    const headerIconSize = PDF_CONFIG.circleSize.large;
     doc.setFillColor(...segment.color);
     doc.circle(margin + 12, headerY - 2, headerIconSize, "F");
 
@@ -2226,7 +2224,7 @@ const renderCustomerSegmentation = (
 
     // Two-column layout for PRESSURE and WHAT FORCES ADOPTION
     const colStartY = yPosition + 34;
-    const iconSize = PDF_CONFIG.circleSize.cardBadge;
+    const iconSize = PDF_CONFIG.circleSize.medium;
 
     // PRESSURE section - left column
     const leftColIconX = margin + 12;
@@ -2310,7 +2308,7 @@ const renderUKMarketAssumptions = (
   yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 46, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("UK Business Population", margin + 16, yPosition + 12);
@@ -2332,7 +2330,7 @@ const renderUKMarketAssumptions = (
   yPosition = checkPageBreak(doc, yPosition, 75, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 70, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("UK Real Estate Sector", margin + 16, yPosition + 12);
@@ -2371,7 +2369,7 @@ const renderUKMarketAssumptions = (
   yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 46, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Core Market Entry", margin + 16, yPosition + 12);
@@ -2398,7 +2396,7 @@ const renderUKMarketAssumptions = (
   const greenBg: [number, number, number] = [236, 253, 245];
   renderContentCard(doc, margin, yPosition, maxWidth, section4Height, greenBg, PDF_CONFIG.emerald);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Adjacent Market (Expansion Opportunity)", margin + 16, yPosition + 12);
@@ -2426,7 +2424,7 @@ const renderUKMarketAssumptions = (
   setBodyFont(doc);
   // Item 1 - Core Market
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 16, yPosition + 24, PDF_CONFIG.circleSize.header, "F");
+  doc.circle(margin + 16, yPosition + 24, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
@@ -2441,7 +2439,7 @@ const renderUKMarketAssumptions = (
 
   // Item 2 - Expansion Market
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 16, yPosition + 42, PDF_CONFIG.circleSize.header, "F");
+  doc.circle(margin + 16, yPosition + 42, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
@@ -2495,7 +2493,7 @@ const renderMarketLandscape = (
   const amberColor: [number, number, number] = [217, 119, 6];
   renderContentCard(doc, margin, yPosition, maxWidth, gapsBoxHeight, amberBg, amberColor);
   doc.setFillColor(...amberColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Current Market Gaps", margin + 16, yPosition + 12);
@@ -2504,7 +2502,7 @@ const renderMarketLandscape = (
   setBodyFont(doc);
   marketGaps.forEach((gap) => {
     doc.setFillColor(...amberColor);
-    doc.circle(margin + 14, gapY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(margin + 14, gapY - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     const gapLines = doc.splitTextToSize(sanitizeText(gap), maxWidth - 30);
     gapLines.forEach((line: string, idx: number) => {
@@ -2545,7 +2543,7 @@ const renderMarketLandscape = (
   const greenBg: [number, number, number] = [236, 253, 245];
   renderContentCard(doc, margin, yPosition, maxWidth, 40, greenBg, PDF_CONFIG.emerald);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("The After: AI-Native Intelligence Layers", margin + 16, yPosition + 12);
@@ -2563,7 +2561,7 @@ const renderMarketLandscape = (
   yPosition = checkPageBreak(doc, yPosition, 60, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 55, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
   doc.text("What This Means for Hobson", margin + 16, yPosition + 12);
@@ -2621,7 +2619,7 @@ const renderEuropeanGlobal = (
   yPosition = checkPageBreak(doc, yPosition, researchBoxHeight + 8, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, researchBoxHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Global Market Research", margin + 16, yPosition + 12);
@@ -2630,7 +2628,7 @@ const renderEuropeanGlobal = (
   setBodyFont(doc);
   researchFindings.forEach((finding) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 14, findingY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(margin + 14, findingY - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(finding, margin + 20, findingY);
     findingY += 8;
@@ -2656,7 +2654,7 @@ const renderEuropeanGlobal = (
   const amberColor: [number, number, number] = [217, 119, 6];
   renderContentCard(doc, margin, yPosition, maxWidth, pressureBoxHeight, amberBg, amberColor);
   doc.setFillColor(...amberColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Structural Pressures Driving Adoption", margin + 16, yPosition + 12);
@@ -2667,7 +2665,7 @@ const renderEuropeanGlobal = (
     const xPos = index % 2 === 0 ? margin + 12 : margin + maxWidth / 2;
     if (index % 2 === 0 && index > 0) pressureY += 10;
     doc.setFillColor(...amberColor);
-    doc.circle(xPos + 2, pressureY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(xPos + 2, pressureY - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(pressure, xPos + 8, pressureY);
   });
@@ -2677,7 +2675,7 @@ const renderEuropeanGlobal = (
   yPosition = checkPageBreak(doc, yPosition, 45, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 40, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
   doc.text("UK Within Global Context", margin + 16, yPosition + 12);
@@ -2782,7 +2780,7 @@ const renderEarlyRoadmap = (
     setBodySmallFont(doc);
     phase.objectives.forEach((obj) => {
       doc.setFillColor(...phase.color);
-      doc.circle(margin + 16, objY - 1, PDF_CONFIG.circleSize.bullet, "F");
+      doc.circle(margin + 16, objY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       doc.text(obj, margin + 22, objY);
       objY += PDF_CONFIG.lineHeight.body;
@@ -2891,7 +2889,7 @@ const renderGanttChart = (
     setBodySmallFont(doc);
     yearData.objectives.forEach((obj) => {
       doc.setFillColor(...yearData.color);
-      doc.circle(margin + 16, objY - 1, PDF_CONFIG.circleSize.bullet, "F");
+      doc.circle(margin + 16, objY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       doc.text(obj, margin + 22, objY);
       objY += PDF_CONFIG.lineHeight.body;
@@ -3099,7 +3097,7 @@ const renderTechStack = (
     doc.setFont("helvetica", "normal");
     category.items.forEach((item) => {
       doc.setFillColor(...category.color);
-      doc.circle(margin + 14, itemY - 1, PDF_CONFIG.circleSize.bullet, "F");
+      doc.circle(margin + 14, itemY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       doc.text(item, margin + 20, itemY);
       itemY += PDF_CONFIG.lineHeight.body;
@@ -3301,7 +3299,7 @@ const renderHEUPricing = (
   doc.setFont("helvetica", "normal");
   benefits.forEach((benefit) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(benefit, margin + 10, yPosition);
     yPosition += PDF_CONFIG.lineHeight.body + 2;
@@ -3328,7 +3326,7 @@ const renderHEUPricing = (
 
   // Header
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.large, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
@@ -3375,7 +3373,7 @@ const renderHEUPricing = (
 
   // Header
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(rightX + 12, yPosition + 12, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(rightX + 12, yPosition + 12, PDF_CONFIG.circleSize.large, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
@@ -4462,7 +4460,7 @@ const renderRevenueGrowth = (
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   milestones.forEach((m) => {
     doc.setFillColor(...m.color);
-    doc.circle(margin + 10, mY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(margin + 10, mY - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFont("helvetica", "bold");
     doc.text(m.year + ":", margin + 14, mY);
