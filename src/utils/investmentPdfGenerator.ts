@@ -2034,7 +2034,7 @@ const renderSectorScaleOpportunity = (
 
   // Icon and title
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Document-Governed Industry", margin + 22, yPosition + 14);
@@ -2060,7 +2060,7 @@ const renderSectorScaleOpportunity = (
     const yPos = activityY + (row * 7);
     
     doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(xPos + 2, yPos - 1.5, 1, "F");
+    doc.circle(xPos + 2, yPos - 1.5, 0.8, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
     doc.text(activity, xPos + 7, yPos);
@@ -2074,7 +2074,7 @@ const renderSectorScaleOpportunity = (
   renderContentCard(doc, margin, yPosition, maxWidth, compoundHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.border);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Compounding Complexity", margin + 22, yPosition + 14);
@@ -2115,7 +2115,7 @@ const renderSectorScaleOpportunity = (
   renderContentCard(doc, margin, yPosition, maxWidth, structuralHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Structural Demand", margin + 22, yPosition + 13);
@@ -2206,7 +2206,7 @@ const renderCustomerSegmentation = (
 
     // Header row - icon and title inline
     const headerY = yPosition + 14;
-    const headerIconSize = 4;
+    const headerIconSize = 3.2;
     doc.setFillColor(...segment.color);
     doc.circle(margin + 12, headerY - 2, headerIconSize, "F");
 
@@ -2226,7 +2226,7 @@ const renderCustomerSegmentation = (
 
     // Two-column layout for PRESSURE and WHAT FORCES ADOPTION
     const colStartY = yPosition + 34;
-    const iconSize = 2.5;
+    const iconSize = 2;
 
     // PRESSURE section - left column
     const leftColIconX = margin + 12;
@@ -2310,7 +2310,7 @@ const renderUKMarketAssumptions = (
   yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 46, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("UK Business Population", margin + 16, yPosition + 12);
@@ -2332,7 +2332,7 @@ const renderUKMarketAssumptions = (
   yPosition = checkPageBreak(doc, yPosition, 75, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 70, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("UK Real Estate Sector", margin + 16, yPosition + 12);
@@ -2371,7 +2371,7 @@ const renderUKMarketAssumptions = (
   yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 46, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Core Market Entry", margin + 16, yPosition + 12);
@@ -2398,7 +2398,7 @@ const renderUKMarketAssumptions = (
   const greenBg: [number, number, number] = [236, 253, 245];
   renderContentCard(doc, margin, yPosition, maxWidth, section4Height, greenBg, PDF_CONFIG.emerald);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Adjacent Market (Expansion Opportunity)", margin + 16, yPosition + 12);
@@ -2426,7 +2426,7 @@ const renderUKMarketAssumptions = (
   setBodyFont(doc);
   // Item 1 - Core Market
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 16, yPosition + 24, 4, "F");
+  doc.circle(margin + 16, yPosition + 24, 3.2, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
@@ -2441,7 +2441,7 @@ const renderUKMarketAssumptions = (
 
   // Item 2 - Expansion Market
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 16, yPosition + 42, 4, "F");
+  doc.circle(margin + 16, yPosition + 42, 3.2, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
@@ -2495,7 +2495,7 @@ const renderMarketLandscape = (
   const amberColor: [number, number, number] = [217, 119, 6];
   renderContentCard(doc, margin, yPosition, maxWidth, gapsBoxHeight, amberBg, amberColor);
   doc.setFillColor(...amberColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Current Market Gaps", margin + 16, yPosition + 12);
@@ -2504,7 +2504,7 @@ const renderMarketLandscape = (
   setBodyFont(doc);
   marketGaps.forEach((gap) => {
     doc.setFillColor(...amberColor);
-    doc.circle(margin + 14, gapY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(margin + 14, gapY - 1, PDF_CONFIG.circleSize.bullet * 0.8, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     const gapLines = doc.splitTextToSize(sanitizeText(gap), maxWidth - 30);
     gapLines.forEach((line: string, idx: number) => {
@@ -2545,7 +2545,7 @@ const renderMarketLandscape = (
   const greenBg: [number, number, number] = [236, 253, 245];
   renderContentCard(doc, margin, yPosition, maxWidth, 40, greenBg, PDF_CONFIG.emerald);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("The After: AI-Native Intelligence Layers", margin + 16, yPosition + 12);
@@ -2563,7 +2563,7 @@ const renderMarketLandscape = (
   yPosition = checkPageBreak(doc, yPosition, 60, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 55, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
   doc.text("What This Means for Hobson", margin + 16, yPosition + 12);
@@ -2621,7 +2621,7 @@ const renderEuropeanGlobal = (
   yPosition = checkPageBreak(doc, yPosition, researchBoxHeight + 8, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, researchBoxHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Global Market Research", margin + 16, yPosition + 12);
@@ -2630,7 +2630,7 @@ const renderEuropeanGlobal = (
   setBodyFont(doc);
   researchFindings.forEach((finding) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 14, findingY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(margin + 14, findingY - 1, PDF_CONFIG.circleSize.bullet * 0.8, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(finding, margin + 20, findingY);
     findingY += 8;
@@ -2656,7 +2656,7 @@ const renderEuropeanGlobal = (
   const amberColor: [number, number, number] = [217, 119, 6];
   renderContentCard(doc, margin, yPosition, maxWidth, pressureBoxHeight, amberBg, amberColor);
   doc.setFillColor(...amberColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
   doc.text("Structural Pressures Driving Adoption", margin + 16, yPosition + 12);
@@ -2667,7 +2667,7 @@ const renderEuropeanGlobal = (
     const xPos = index % 2 === 0 ? margin + 12 : margin + maxWidth / 2;
     if (index % 2 === 0 && index > 0) pressureY += 10;
     doc.setFillColor(...amberColor);
-    doc.circle(xPos + 2, pressureY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.circle(xPos + 2, pressureY - 1, PDF_CONFIG.circleSize.bullet * 0.8, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(pressure, xPos + 8, pressureY);
   });
@@ -2677,7 +2677,7 @@ const renderEuropeanGlobal = (
   yPosition = checkPageBreak(doc, yPosition, 45, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 40, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge * 0.8, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
   doc.text("UK Within Global Context", margin + 16, yPosition + 12);
