@@ -1855,7 +1855,7 @@ const renderSectorScaleOpportunity = (
   doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.cardBadge, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Structural Demand", margin + 22, yPosition + 10);
+  doc.text("Structural Demand", margin + 22, yPosition + 13);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
