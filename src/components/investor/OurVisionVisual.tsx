@@ -21,7 +21,7 @@ const OurVisionVisual: React.FC = () => {
       label: "Proactive Agent",
       timeframe: "~1 Year",
       description: "AI suggests & prepares, humans approve",
-      color: "from-purple-100 to-purple-200",
+      color: "from-purple-50 to-purple-100",
       borderColor: "border-purple-300",
       accentColor: "bg-purple-500",
       textColor: "text-purple-700",
@@ -148,16 +148,6 @@ const OurVisionVisual: React.FC = () => {
         </div>
       </div>
 
-      {/* Summary Footer */}
-      <div className="mt-6 bg-gradient-to-r from-slate-50 via-purple-50 to-primary/10 rounded-xl p-4 border border-gray-100">
-        <div className="flex flex-wrap justify-center items-center gap-2 sm:gap-4 text-sm">
-          <span className="font-medium text-slate-600">Today: Responds</span>
-          <ArrowRight className="w-4 h-4 text-purple-400 hidden sm:block" />
-          <span className="font-medium text-purple-600">1 Year: Anticipates</span>
-          <ArrowRight className="w-4 h-4 text-primary hidden sm:block" />
-          <span className="font-semibold text-primary">3–5 Years: Executes</span>
-        </div>
-      </div>
     </div>
   );
 };

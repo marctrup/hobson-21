@@ -796,7 +796,7 @@ const renderOurVision = (
 
   // Light background colors for each stage
   const slateBg: [number, number, number] = [241, 245, 249];     // slate-100
-  const purpleBg: [number, number, number] = [243, 232, 255];    // purple-100
+  const purpleBg: [number, number, number] = [250, 245, 255];    // purple-50 (lighter)
   const primaryBg: [number, number, number] = [245, 238, 255];   // primary/20
 
   const stages = [
@@ -926,33 +926,7 @@ const renderOurVision = (
     doc.text(indicator.direction, indX, yPosition + 16, { align: "center" });
   });
 
-  yPosition += 24;
-
-  // Summary footer
-  yPosition = checkPageBreak(doc, yPosition, 20, pageHeight, margin);
-  
-  // Gradient background effect
-  doc.setFillColor(248, 250, 252); // slate-50
-  doc.roundedRect(margin, yPosition, maxWidth, 16, 3, 3, "F");
-
-  // Summary text with matching colors
-  setBodyBoldFont(doc);
-  doc.setTextColor(...slateColor);
-  doc.text("Today: Responds", margin + maxWidth * 0.15, yPosition + 10, { align: "center" });
-  
-  doc.setTextColor(...purpleColor);
-  doc.text("->", margin + maxWidth * 0.32, yPosition + 10, { align: "center" });
-  
-  doc.setTextColor(...purpleColor);
-  doc.text("1 Year: Anticipates", margin + maxWidth * 0.5, yPosition + 10, { align: "center" });
-  
-  doc.setTextColor(...primaryColor);
-  doc.text("->", margin + maxWidth * 0.68, yPosition + 10, { align: "center" });
-  
-  doc.setTextColor(...primaryColor);
-  doc.text("3-5 Years: Executes", margin + maxWidth * 0.85, yPosition + 10, { align: "center" });
-
-  yPosition += 20 + PDF_CONFIG.spacing.sectionGap;
+  yPosition += PDF_CONFIG.spacing.sectionGap;
   return yPosition;
 };
 
