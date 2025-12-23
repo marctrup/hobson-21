@@ -796,7 +796,7 @@ const renderOurVision = (
 
   // Light background colors for each stage
   const slateBg: [number, number, number] = [241, 245, 249];     // slate-100
-  const purpleBg: [number, number, number] = [250, 245, 255];    // purple-50 (lighter)
+  const purpleBg: [number, number, number] = [253, 251, 255];    // very light purple
   const primaryBg: [number, number, number] = [245, 238, 255];   // primary/20
 
   const stages = [
