@@ -1842,8 +1842,13 @@ const renderSectorScaleOpportunity = (
   yPosition += compoundHeight + 8;
 
   // Structural Demand section
-  yPosition = checkPageBreak(doc, yPosition, 28, pageHeight, margin);
-  const structuralHeight = 24;
+  // Structural Demand section (wrap-safe)
+  const structuralText =
+    "Real Estate represents structurally persistent demand for document intelligence — not a cyclical or discretionary software market.";
+  const structuralLines = doc.splitTextToSize(sanitizeText(structuralText), maxWidth - 20);
+  const structuralHeight = Math.max(30, 16 + structuralLines.length * PDF_CONFIG.lineHeight.body);
+
+  yPosition = checkPageBreak(doc, yPosition, structuralHeight + 4, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, structuralHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
@@ -1854,13 +1859,8 @@ const renderSectorScaleOpportunity = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  doc.text("Real Estate represents ", margin + 10, yPosition + 19);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFont("helvetica", "bold");
-  doc.text("structurally persistent demand", margin + 10 + doc.getTextWidth("Real Estate represents "), yPosition + 19);
-  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "normal");
-  doc.text(" for document intelligence — not a cyclical or discretionary software market.", margin + 10 + doc.getTextWidth("Real Estate represents structurally persistent demand"), yPosition + 19);
+  renderSpacedText(doc, structuralText, margin + 10, yPosition + 19, maxWidth - 20, PDF_CONFIG.lineHeight.body);
 
   yPosition += structuralHeight + PDF_CONFIG.spacing.sectionGap;
   return yPosition;
