@@ -2528,7 +2528,7 @@ const renderMarketLandscape = (
   setBodyFont(doc);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  const situationText = rareSituation.join("     •     ");
+  const situationText = rareSituation.join("  .  ");
   doc.text(situationText, pageWidth / 2, yPosition + 28, { align: "center" });
   
   // Consolidation note - italic
