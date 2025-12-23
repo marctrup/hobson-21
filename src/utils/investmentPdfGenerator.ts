@@ -2305,7 +2305,7 @@ const renderMarketLandscape = (
 };
 
 /**
- * Render European & Global Opportunities visual
+ * Render Global Opportunity visual
  */
 const renderEuropeanGlobal = (
   doc: jsPDF,
@@ -2316,103 +2316,94 @@ const renderEuropeanGlobal = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const colWidth = (maxWidth - 10) / 2;
 
-  // EUROPE Section
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Europe", margin, yPosition);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  // Intro text
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("11x UK Population Multiple", margin + 40, yPosition);
+  setBodyFont(doc);
+  doc.text("Independent global research firms consistently show:", margin, yPosition);
   yPosition += 12;
 
-  // Europe TAM
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, colWidth, 42, 3, 3, "F");
+  // Research findings box
+  const researchFindings = [
+    "AI adoption in Real Estate is growing at ~35-36% CAGR",
+    "A projected $1.8T global AI-in-real-estate market by 2030",
+    "Measurable NOI and operational performance improvements at scale",
+  ];
+  const researchBoxHeight = 20 + researchFindings.length * 8;
+  yPosition = checkPageBreak(doc, yPosition, researchBoxHeight + 8, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, researchBoxHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "bold");
-  doc.text("TAM", margin + 8, yPosition + 12);
-  doc.setFontSize(PDF_CONFIG.fontSize.stat);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("GBP 15.5B", margin + 8, yPosition + 26);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("GBP 1.41B x 11", margin + 8, yPosition + 36);
+  setCardTitleFont(doc);
+  doc.text("Global Market Research", margin + 16, yPosition + 12);
 
-  // Europe SAM
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin + colWidth + 10, yPosition, colWidth, 42, 3, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "bold");
-  doc.text("SAM", margin + colWidth + 18, yPosition + 12);
-  doc.setFontSize(PDF_CONFIG.fontSize.stat);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("GBP 10.1B", margin + colWidth + 18, yPosition + 26);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("GBP 15.5B x 65%", margin + colWidth + 18, yPosition + 36);
-  yPosition += 50;
+  let findingY = yPosition + 24;
+  setBodyFont(doc);
+  researchFindings.forEach((finding) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(margin + 14, findingY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(finding, margin + 20, findingY);
+    findingY += 8;
+  });
+  yPosition += researchBoxHeight + 10;
 
-  // GLOBAL Section
-  if (yPosition > pageHeight - 70) { doc.addPage(); yPosition = margin; }
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Global", margin, yPosition);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  // Structural pressure intro
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("18x UK Population Multiple (OECD markets)", margin + 35, yPosition);
+  setBodyFont(doc);
+  doc.text("This growth is not driven by experimentation, but by structural pressure:", margin, yPosition);
   yPosition += 12;
 
-  // Global TAM
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, colWidth, 42, 3, 3, "F");
+  // Structural pressures box
+  const structuralPressures = [
+    "Labour shortages",
+    "Rising compliance and ESG requirements",
+    "Margin compression",
+    "Increasing asset complexity",
+  ];
+  const pressureBoxHeight = 20 + Math.ceil(structuralPressures.length / 2) * 10;
+  yPosition = checkPageBreak(doc, yPosition, pressureBoxHeight + 8, pageHeight, margin);
+  const amberBg: [number, number, number] = [255, 251, 235];
+  const amberColor: [number, number, number] = [217, 119, 6];
+  renderContentCard(doc, margin, yPosition, maxWidth, pressureBoxHeight, amberBg, amberColor);
+  doc.setFillColor(...amberColor);
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "bold");
-  doc.text("TAM", margin + 8, yPosition + 12);
-  doc.setFontSize(PDF_CONFIG.fontSize.stat);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("GBP 155.6B", margin + 8, yPosition + 26);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("GBP 1.41B x 118 (adjusted)", margin + 8, yPosition + 36);
+  setCardTitleFont(doc);
+  doc.text("Structural Pressures Driving Adoption", margin + 16, yPosition + 12);
 
-  // Global SAM
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin + colWidth + 10, yPosition, colWidth, 42, 3, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "bold");
-  doc.text("SAM", margin + colWidth + 18, yPosition + 12);
-  doc.setFontSize(PDF_CONFIG.fontSize.stat);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("GBP 101B", margin + colWidth + 18, yPosition + 26);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("GBP 155.6B x 65%", margin + colWidth + 18, yPosition + 36);
-  yPosition += 50;
+  let pressureY = yPosition + 24;
+  setBodyFont(doc);
+  structuralPressures.forEach((pressure, index) => {
+    const xPos = index % 2 === 0 ? margin + 12 : margin + maxWidth / 2;
+    if (index % 2 === 0 && index > 0) pressureY += 10;
+    doc.setFillColor(...amberColor);
+    doc.circle(xPos + 2, pressureY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(pressure, xPos + 8, pressureY);
+  });
+  yPosition += pressureBoxHeight + 10;
 
-  // Summary
-  if (yPosition > pageHeight - 32) { doc.addPage(); yPosition = margin; }
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 26, 3, 3, "F");
+  // UK Within Global Context box
+  yPosition = checkPageBreak(doc, yPosition, 45, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 40, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setCardTitleFont(doc);
+  doc.text("UK Within Global Context", margin + 16, yPosition + 12);
+
+  setBodyFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "normal");
-  const summaryText = "Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.";
-  doc.text(summaryText, margin + 8, yPosition + 16);
-  yPosition += 32;
+  const conclusionText = "The UK opportunity, therefore, sits inside a much larger global transition, with similar regulatory and document dynamics across Europe, North America, and OECD markets.";
+  const conclusionLines = doc.splitTextToSize(sanitizeText(conclusionText), maxWidth - 24);
+  let conclusionY = yPosition + 24;
+  conclusionLines.forEach((line: string) => {
+    doc.text(line, margin + 12, conclusionY);
+    conclusionY += PDF_CONFIG.lineHeight.body;
+  });
+  yPosition += 48;
 
   return yPosition;
 };
