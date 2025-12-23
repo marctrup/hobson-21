@@ -21,7 +21,7 @@ const OurVisionVisual: React.FC = () => {
       label: "Proactive Agent",
       timeframe: "~1 Year",
       description: "AI suggests & prepares, humans approve",
-      color: "from-purple-50 to-purple-100",
+      color: "from-purple-50/70 to-purple-50",
       borderColor: "border-purple-300",
       accentColor: "bg-purple-500",
       textColor: "text-purple-700",
