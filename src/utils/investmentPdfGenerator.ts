@@ -2471,12 +2471,16 @@ const renderMarketLandscape = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Subtitle - bold
-  doc.setTextColor(...PDF_CONFIG.textDark);
+  // Header - matching visual
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setSectionTitleFont(doc);
+  doc.text("Context: A Category Still Forming", margin, yPosition);
+  yPosition += 8;
+  
+  // Subtitle
+  doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
-  doc.setFont("helvetica", "bold");
-  doc.text("Despite the size of the sector, this creates a rare situation:", margin, yPosition);
-  doc.setFont("helvetica", "normal");
+  doc.text("Despite the size of the sector:", margin, yPosition);
   yPosition += 12;
 
   // Market Gaps box
@@ -2510,28 +2514,30 @@ const renderMarketLandscape = (
   });
   yPosition += gapsBoxHeight + 10;
 
-  // Remove duplicate "This creates a rare situation:" as it's now in the subtitle above
-
-  // Rare situation box - centered text without bullets
-  const rareSituation = ["Large, conservative market", "Clear structural pain", "No entrenched AI leader"];
-  yPosition = checkPageBreak(doc, yPosition, 38, pageHeight, margin);
-  renderContentCard(doc, margin, yPosition, maxWidth, 34, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+  // Rare Situation section
+  yPosition = checkPageBreak(doc, yPosition, 60, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 55, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   
-  // Center all three items in the box - purple text
+  // "This creates a rare situation:" text
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodyFont(doc);
+  doc.text("This creates a rare situation:", margin + 8, yPosition + 12);
+  
+  // Three items centered - purple text
+  const rareSituation = ["Large, conservative market", "Clear structural pain", "No entrenched AI leader"];
   setBodyFont(doc);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   const situationText = rareSituation.join("     •     ");
-  doc.text(situationText, pageWidth / 2, yPosition + 20, { align: "center" });
-  yPosition += 42;
-
-  // Consolidation note - bold
-  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text(situationText, pageWidth / 2, yPosition + 28, { align: "center" });
+  
+  // Consolidation note - italic
+  doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
-  doc.setFont("helvetica", "bold");
-  doc.text("Markets like this tend to consolidate quickly once a trusted standard emerges.", margin, yPosition);
+  doc.setFont("helvetica", "italic");
+  doc.text("Markets like this tend to consolidate quickly once a trusted standard emerges.", margin + 8, yPosition + 44);
   doc.setFont("helvetica", "normal");
-  yPosition += 12;
+  yPosition += 62;
 
   // AI-Native Features box
   const aiFeatures = ["Real-time reasoning", "Instant, referenced answers", "Embedded into workflows"];
@@ -2557,8 +2563,8 @@ const renderMarketLandscape = (
   yPosition += 48;
 
   // What This Means for Hobson box
-  yPosition = checkPageBreak(doc, yPosition, 55, pageHeight, margin);
-  renderContentCard(doc, margin, yPosition, maxWidth, 50, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
+  yPosition = checkPageBreak(doc, yPosition, 60, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 55, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.pillarBadge, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
@@ -2576,8 +2582,14 @@ const renderMarketLandscape = (
   });
 
   doc.setFont("helvetica", "italic");
-  doc.text("This section establishes why this market is worth building infrastructure for.", margin + 12, yPosition + 44);
-  yPosition += 58;
+  const closingText = "This section is not about pricing or near-term monetisation. It establishes why this market is worth building infrastructure for and why the upside is category-scale.";
+  const closingLines = doc.splitTextToSize(sanitizeText(closingText), maxWidth - 24);
+  let closingY = hobsonY + 4;
+  closingLines.forEach((line: string) => {
+    doc.text(line, margin + 12, closingY);
+    closingY += PDF_CONFIG.lineHeight.body;
+  });
+  yPosition += 62;
 
   return yPosition;
 };
