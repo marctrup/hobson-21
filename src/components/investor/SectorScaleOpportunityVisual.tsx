@@ -16,8 +16,8 @@ export const SectorScaleOpportunityVisual = () => {
   return (
     <div className="space-y-6">
       {/* Strapline */}
-      <div className="text-center pb-2">
-        <p className="text-lg font-semibold text-foreground max-w-2xl mx-auto">
+      <div className="p-5 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100/80 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200/50 dark:border-slate-700/30">
+        <p className="text-xl font-semibold text-foreground leading-relaxed">
           Real estate is one of the largest and most document-intensive industries in the UK and globally.
         </p>
       </div>
