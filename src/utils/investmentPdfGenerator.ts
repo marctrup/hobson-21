@@ -2151,8 +2151,8 @@ const renderUKMarketAssumptions = (
   yPosition += section4Height + 8;
 
   // Summary section
-  yPosition = checkPageBreak(doc, yPosition, 65, pageHeight, margin);
-  renderContentCard(doc, margin, yPosition, maxWidth, 60, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
+  yPosition = checkPageBreak(doc, yPosition, 58, pageHeight, margin);
+  renderContentCard(doc, margin, yPosition, maxWidth, 54, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
   doc.text("Summary", margin + 8, yPosition + 12);
@@ -2160,34 +2160,34 @@ const renderUKMarketAssumptions = (
   setBodyFont(doc);
   // Item 1 - Core Market
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 16, yPosition + 26, 4, "F");
+  doc.circle(margin + 16, yPosition + 24, 4, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
-  doc.text("1", margin + 14.5, yPosition + 28);
+  doc.text("1", margin + 14.8, yPosition + 25.5);
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("Core Market", margin + 24, yPosition + 27);
+  doc.text("Core Market", margin + 24, yPosition + 25);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("~90,000 real estate operators where document intelligence is mission-critical", margin + 24, yPosition + 36);
+  doc.text("~90,000 real estate operators where document intelligence is mission-critical", margin + 24, yPosition + 32);
 
   // Item 2 - Expansion Market
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 16, yPosition + 46, 4, "F");
+  doc.circle(margin + 16, yPosition + 42, 4, "F");
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
-  doc.text("2", margin + 14.5, yPosition + 48);
+  doc.text("2", margin + 14.8, yPosition + 43.5);
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("Expansion Market", margin + 24, yPosition + 47);
+  doc.text("Expansion Market", margin + 24, yPosition + 43);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("500,000+ adjacent businesses built on the same document foundations", margin + 24, yPosition + 56);
-  yPosition += 68;
+  doc.text("500,000+ adjacent businesses built on the same document foundations", margin + 24, yPosition + 50);
+  yPosition += 62;
 
   return yPosition;
 };
