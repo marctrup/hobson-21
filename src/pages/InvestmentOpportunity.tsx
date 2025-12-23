@@ -301,7 +301,7 @@ const sections = [
         },
       },
       {
-        title: "Market Landscape",
+        title: "Competitive Landscape",
         showCustomVisual: true,
         customVisualComponent: "landscape",
         content: {
