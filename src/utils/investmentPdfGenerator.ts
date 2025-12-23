@@ -770,6 +770,184 @@ const renderCompetitorTable = (
 };
 
 /**
+ * Render Our Vision visual with timeline showing AI evolution
+ * Replicates: 3 stage timeline from Reactive to Proactive to Autonomous Agent
+ */
+const renderOurVision = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Subtitle
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setBodyFont(doc);
+  doc.text("The Evolution of Real Estate AI", pageWidth / 2, yPosition, { align: "center" });
+  yPosition += 14;
+
+  const stages = [
+    {
+      label: "Reactive Agent",
+      timeframe: "Today",
+      description: "AI helps when asked with accuracy",
+      icons: ["Prompts", "Documents"],
+      visualNote: "Human-led, AI responds",
+      color: [100, 116, 139] as [number, number, number], // slate
+    },
+    {
+      label: "Proactive Agent",
+      timeframe: "~1 Year",
+      description: "AI suggests & prepares, humans approve",
+      icons: ["Drafts", "Approvals"],
+      visualNote: "AI prepares, human confirms",
+      color: [147, 51, 234] as [number, number, number], // purple
+    },
+    {
+      label: "Autonomous Agent",
+      timeframe: "3-5 Years",
+      description: "AI executes & reports outcomes",
+      icons: ["Executes", "Reports", "Audits"],
+      visualNote: "AI operates, human monitors",
+      color: PDF_CONFIG.primaryColor,
+    },
+  ];
+
+  // Calculate card dimensions
+  const cardWidth = (maxWidth - 12) / 3; // 3 cards with gaps
+  const cardHeight = 65;
+
+  // Render timeline cards
+  stages.forEach((stage, index) => {
+    const cardX = margin + index * (cardWidth + 6);
+
+    // Card background with gradient effect
+    const lightColor: [number, number, number] = [
+      Math.min(255, stage.color[0] + 140),
+      Math.min(255, stage.color[1] + 140),
+      Math.min(255, stage.color[2] + 140),
+    ];
+    doc.setFillColor(...lightColor);
+    doc.roundedRect(cardX, yPosition, cardWidth, cardHeight, 3, 3, "F");
+
+    // Card border
+    doc.setDrawColor(...stage.color);
+    doc.setLineWidth(0.5);
+    doc.roundedRect(cardX, yPosition, cardWidth, cardHeight, 3, 3, "S");
+
+    // Timeframe badge
+    doc.setFillColor(...stage.color);
+    const badgeWidth = doc.getTextWidth(stage.timeframe) + 8;
+    const badgeX = cardX + (cardWidth - badgeWidth) / 2;
+    doc.roundedRect(badgeX, yPosition + 4, badgeWidth, 8, 4, 4, "F");
+    doc.setTextColor(255, 255, 255);
+    setBodySmallFont(doc);
+    doc.text(stage.timeframe, cardX + cardWidth / 2, yPosition + 9.5, { align: "center" });
+
+    // Stage label
+    doc.setTextColor(...stage.color);
+    setCardTitleFont(doc);
+    doc.text(stage.label, cardX + cardWidth / 2, yPosition + 22, { align: "center" });
+
+    // Icon labels as pills
+    setBodySmallFont(doc);
+    const iconY = yPosition + 32;
+    let iconTotalWidth = 0;
+    stage.icons.forEach((icon) => {
+      iconTotalWidth += doc.getTextWidth(icon) + 10;
+    });
+    let iconX = cardX + (cardWidth - iconTotalWidth) / 2;
+    stage.icons.forEach((icon) => {
+      const pillWidth = doc.getTextWidth(icon) + 6;
+      doc.setFillColor(255, 255, 255);
+      doc.roundedRect(iconX, iconY - 4, pillWidth, 8, 2, 2, "F");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.text(icon, iconX + 3, iconY + 1);
+      iconX += pillWidth + 4;
+    });
+
+    // Description
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setBodySmallFont(doc);
+    const descLines = doc.splitTextToSize(stage.description, cardWidth - 8);
+    doc.text(descLines, cardX + cardWidth / 2, yPosition + 44, { align: "center" });
+
+    // Visual note
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.text(stage.visualNote, cardX + cardWidth / 2, yPosition + 58, { align: "center" });
+  });
+
+  yPosition += cardHeight + 12;
+
+  // Progression indicators section
+  yPosition = checkPageBreak(doc, yPosition, 30, pageHeight, margin);
+
+  const indicators = [
+    { label: "Automation", direction: "Increasing", colors: [[100, 116, 139], [147, 51, 234], PDF_CONFIG.primaryColor] },
+    { label: "Human Effort", direction: "Decreasing", colors: [PDF_CONFIG.primaryColor, [147, 51, 234], [100, 116, 139]] },
+    { label: "Scale", direction: "Expanding", colors: [[100, 116, 139], [147, 51, 234], PDF_CONFIG.primaryColor] },
+  ];
+
+  const indicatorWidth = maxWidth / 3;
+  indicators.forEach((indicator, index) => {
+    const indX = margin + index * indicatorWidth + indicatorWidth / 2;
+
+    // Label
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.text(indicator.label.toUpperCase(), indX, yPosition, { align: "center" });
+
+    // Dots
+    const dotY = yPosition + 6;
+    const dotRadius = 2;
+    const dotGap = 8;
+    indicator.colors.forEach((color, dotIndex) => {
+      const dotX = indX - dotGap + dotIndex * dotGap;
+      doc.setFillColor(...(color as [number, number, number]));
+      doc.circle(dotX, dotY, dotRadius, "F");
+    });
+
+    // Direction
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.text(indicator.direction, indX, yPosition + 14, { align: "center" });
+  });
+
+  yPosition += 22;
+
+  // Summary footer
+  yPosition = checkPageBreak(doc, yPosition, 20, pageHeight, margin);
+  
+  // Gradient background effect
+  doc.setFillColor(248, 250, 252); // slate-50
+  doc.roundedRect(margin, yPosition, maxWidth, 16, 3, 3, "F");
+
+  // Summary text
+  setBodyBoldFont(doc);
+  doc.setTextColor(100, 116, 139); // slate
+  doc.text("Today: Responds", margin + maxWidth * 0.15, yPosition + 10, { align: "center" });
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.text("->", margin + maxWidth * 0.32, yPosition + 10, { align: "center" });
+  
+  doc.setTextColor(147, 51, 234); // purple
+  doc.text("1 Year: Anticipates", margin + maxWidth * 0.5, yPosition + 10, { align: "center" });
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.text("->", margin + maxWidth * 0.68, yPosition + 10, { align: "center" });
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.text("3-5 Years: Executes", margin + maxWidth * 0.85, yPosition + 10, { align: "center" });
+
+  yPosition += 20 + PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
  * Render Executive Summary with visual styling matching on-screen component
  * Replicates: Why AI Fails section, The Hobson Approach, Market Opportunity, Traction cards
  */
@@ -5154,6 +5332,8 @@ const renderTabContent = (
       yPosition = renderCompetitorTable(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "executiveSummary") {
       yPosition = renderExecutiveSummary(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "ourVision") {
+      yPosition = renderOurVision(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "whyNow") {
       yPosition = renderWhyNow(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "whyNowSpeed") {
