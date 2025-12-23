@@ -83,7 +83,7 @@ export const CustomerSegmentationVisual = () => {
             <div className="relative">
               {/* Header row */}
               <div className="flex items-center gap-3 mb-5">
-                <div className={`w-10 h-10 rounded-xl ${segment.iconBg} flex items-center justify-center`}>
+                <div className={`w-10 h-10 rounded-xl ${segment.iconBg} flex items-center justify-center flex-shrink-0`}>
                   <segment.icon className={`w-5 h-5 ${segment.iconColor}`} />
                 </div>
                 <div>
@@ -95,24 +95,24 @@ export const CustomerSegmentationVisual = () => {
                 </div>
               </div>
 
-              {/* Pressure & Adoption Drivers */}
-              <div className="grid sm:grid-cols-2 gap-3">
-                <div className="flex items-start gap-2">
-                  <div className={`w-6 h-6 rounded-md ${segment.iconBg} flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                    <AlertTriangle className={`w-3.5 h-3.5 ${segment.iconColor}`} />
+              {/* Pressure & Adoption Drivers - icons aligned with header */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex items-start gap-3">
+                  <div className={`w-10 h-10 rounded-xl ${segment.iconBg} flex items-center justify-center flex-shrink-0`}>
+                    <AlertTriangle className={`w-5 h-5 ${segment.iconColor}`} />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
                       Pressure
                     </div>
                     <p className="text-sm text-foreground leading-5">{segment.pressure}</p>
                   </div>
                 </div>
-                <div className="flex items-start gap-2">
-                  <div className={`w-6 h-6 rounded-md ${segment.iconBg} flex items-center justify-center flex-shrink-0 mt-0.5`}>
-                    <Target className={`w-3.5 h-3.5 ${segment.iconColor}`} />
+                <div className="flex items-start gap-3">
+                  <div className={`w-10 h-10 rounded-xl ${segment.iconBg} flex items-center justify-center flex-shrink-0`}>
+                    <Target className={`w-5 h-5 ${segment.iconColor}`} />
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">
                       What Forces Adoption
                     </div>
