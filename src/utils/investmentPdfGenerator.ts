@@ -1380,9 +1380,7 @@ const renderWhyNow = (
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.roundedRect(margin, yPosition, maxWidth, convergenceHeight, 4, 4, "F");
 
-  // Header with icon
-  doc.setFillColor(255, 255, 255); // white circle
-  doc.circle(pageWidth / 2 - 40, yPosition + 12, PDF_CONFIG.circleSize.large, "F");
+  // Header - no icon
   doc.setTextColor(255, 255, 255); // white text
   setCardTitleFont(doc);
   doc.text("The Convergence", pageWidth / 2, yPosition + 14, { align: "center" });
