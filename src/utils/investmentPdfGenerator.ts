@@ -2248,7 +2248,7 @@ const renderMarketLandscape = (
   doc.text("This creates a rare situation:", margin, yPosition);
   yPosition += 10;
 
-  // Rare situation box
+  // Rare situation box with bullet points
   const rareSituation = ["Large, conservative market", "Clear structural pain", "No entrenched AI leader"];
   yPosition = checkPageBreak(doc, yPosition, 38, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 34, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
@@ -2257,8 +2257,10 @@ const renderMarketLandscape = (
   setBodyFont(doc);
   doc.setFont("helvetica", "bold");
   rareSituation.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(situationX + 2, yPosition + 17, PDF_CONFIG.circleSize.bullet, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(item, situationX, yPosition + 18);
+    doc.text(item, situationX + 8, yPosition + 18);
     situationX += colWidth;
   });
   yPosition += 42;
