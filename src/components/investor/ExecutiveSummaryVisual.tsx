@@ -23,7 +23,7 @@ export const ExecutiveSummaryVisual = () => {
           
           <div className="p-4 rounded-lg bg-muted/50 border border-border">
             <p className="text-sm text-muted-foreground leading-relaxed">
-              Founded by the team behind <span className="font-semibold text-foreground">Arthur Online</span>, built and scaled to institutional adoption and acquired by Advent International and Aareon in 2021. Hobson is an AI platform born from firsthand experience of Real Estate operations at scale.
+              Founded by the team behind <span className="text-primary">Arthur Online</span>, built and scaled to institutional adoption and acquired by Advent International and Aareon in 2021. Hobson is an AI platform born from firsthand experience of Real Estate operations at scale.
             </p>
           </div>
           
