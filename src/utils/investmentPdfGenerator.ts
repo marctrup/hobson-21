@@ -1957,8 +1957,8 @@ const renderCustomerSegmentation = (
     doc.setFont("helvetica", "normal");
     doc.text(segment.description, margin + 20 + doc.getTextWidth(segment.percentage + " "), yPosition + 18);
 
-    // Pressure column
-    const colStartY = yPosition + 28;
+    // Pressure column - increased gap from header section
+    const colStartY = yPosition + 32;
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
