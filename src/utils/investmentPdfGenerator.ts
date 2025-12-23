@@ -2517,10 +2517,10 @@ const renderMarketLandscape = (
   yPosition = checkPageBreak(doc, yPosition, 38, pageHeight, margin);
   renderContentCard(doc, margin, yPosition, maxWidth, 34, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   
-  // Center all three items in the box
+  // Center all three items in the box - purple text
   setBodyFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   const situationText = rareSituation.join("     •     ");
   doc.text(situationText, pageWidth / 2, yPosition + 20, { align: "center" });
   yPosition += 42;
