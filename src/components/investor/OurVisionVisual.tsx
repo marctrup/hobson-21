@@ -18,7 +18,7 @@ const OurVisionVisual: React.FC = () => {
       visualNote: "Human-led, AI responds",
     },
     {
-      label: "Proactive Copilot",
+      label: "Proactive Assistant",
       timeframe: "~1 Year",
       description: "AI suggests & prepares, humans approve",
       color: "from-purple-100 to-purple-200",
