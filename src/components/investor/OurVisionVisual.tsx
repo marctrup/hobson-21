@@ -4,7 +4,7 @@ import { MessageSquare, FileText, ClipboardCheck, CheckCircle, Zap, BarChart3, S
 const OurVisionVisual: React.FC = () => {
   const stages = [
     {
-      label: "Reactive Assistant",
+      label: "Reactive Agent",
       timeframe: "Today",
       description: "AI helps when asked with accuracy",
       color: "from-slate-100 to-slate-200",
@@ -18,7 +18,7 @@ const OurVisionVisual: React.FC = () => {
       visualNote: "Human-led, AI responds",
     },
     {
-      label: "Proactive Assistant",
+      label: "Proactive Agent",
       timeframe: "~1 Year",
       description: "AI suggests & prepares, humans approve",
       color: "from-purple-100 to-purple-200",
