@@ -1,125 +1,74 @@
 import React from 'react';
+import { TrendingUp, Globe, CheckCircle, AlertTriangle } from 'lucide-react';
+
 export const EuropeanGlobalVisual = () => {
-  return <div className="w-full space-y-6 lg:space-y-8">
-      {/* Desktop: Side by side, Mobile: Europe first, then Global */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-8">
-        
-        {/* Europe Column */}
-        <div className="space-y-4 lg:space-y-6">
-          {/* Europe Header */}
-          <div className="pb-3 border-b-2 border-primary/20">
-            <h3 className="text-xl lg:text-2xl font-bold text-primary mb-1">Europe</h3>
-            <p className="text-xs lg:text-sm text-muted-foreground">Figures estimated from population size differences - 11× UK Population</p>
-          </div>
+  const researchFindings = [
+    "AI adoption in Real Estate is growing at ~35–36% CAGR",
+    "A projected $1.8T global AI-in-real-estate market by 2030",
+    "Measurable NOI and operational performance improvements at scale",
+  ];
 
-          {/* Europe TAM */}
-          <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 lg:p-4 space-y-2">
-            <div className="flex items-baseline justify-between">
-              <h4 className="text-sm lg:text-base font-semibold text-foreground">Total Addressable Market (TAM)</h4>
-              <span className="text-xl lg:text-2xl font-bold text-primary">£15.5B</span>
-            </div>
-            <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Scaling the UK's £1.41B efficiency value by Europe's 11× population multiple</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>£1.41B × 11 = £15.51B, rounded to £15.5B</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Represents the annual efficiency value across Europe for AI-driven document and information workflows in real estate</span>
-              </li>
-            </ul>
-          </div>
+  const structuralPressures = [
+    "Labour shortages",
+    "Rising compliance and ESG requirements",
+    "Margin compression",
+    "Increasing asset complexity",
+  ];
 
-          {/* Europe SAM */}
-          <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 lg:p-4 space-y-2">
-            <div className="flex items-baseline justify-between">
-              <h4 className="text-sm lg:text-base font-semibold text-foreground">Serviceable Available Market (SAM)</h4>
-              <span className="text-xl lg:text-2xl font-bold text-primary">£10.1B</span>
-            </div>
-            <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>The proportion of European real estate operators realistically motivated and ready to adopt AI tools</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Uses the same 65% factor as the UK</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>£15.5B × 65% = £10.1B</span>
-              </li>
-            </ul>
-          </div>
+  return (
+    <div className="w-full space-y-6 lg:space-y-8">
+      {/* Intro text */}
+      <div className="text-sm lg:text-base text-muted-foreground">
+        Independent global research firms consistently show:
+      </div>
 
-
+      {/* Research findings */}
+      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 lg:p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <TrendingUp className="w-5 h-5 text-primary" />
+          <h4 className="text-sm lg:text-base font-semibold text-foreground">Global Market Research</h4>
         </div>
-
-        {/* Global Column */}
-        <div className="space-y-4 lg:space-y-6">
-          {/* Global Header */}
-          <div className="pb-3 border-b-2 border-primary/20">
-            <h3 className="text-xl lg:text-2xl font-bold text-primary mb-1">Global</h3>
-            <p className="text-xs lg:text-sm text-muted-foreground">Figures estimated from population size differences - 118× UK Population</p>
-          </div>
-
-          {/* Global TAM */}
-          <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 lg:p-4 space-y-2">
-            <div className="flex items-baseline justify-between">
-              <h4 className="text-sm lg:text-base font-semibold text-foreground">Total Addressable Market (TAM)</h4>
-              <span className="text-xl lg:text-2xl font-bold text-primary">£155.6B</span>
+        <div className="space-y-3">
+          {researchFindings.map((finding, index) => (
+            <div key={index} className="flex items-start gap-3">
+              <CheckCircle className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+              <span className="text-sm lg:text-base text-foreground">{finding}</span>
             </div>
-            <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Scaling the UK's £1.41B efficiency value by the global 18 × population multiple</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>£1.41B × 118 = £166.4B, rounded to £155.6B </span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Represents the worldwide opportunity for AI-driven efficiency gains in real estate document workflows</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* Global SAM */}
-          <div className="bg-primary/5 border border-primary/20 rounded-lg p-3 lg:p-4 space-y-2">
-            <div className="flex items-baseline justify-between">
-              <h4 className="text-sm lg:text-base font-semibold text-foreground">Serviceable Available Market (SAM)</h4>
-              <span className="text-xl lg:text-2xl font-bold text-primary">£101B</span>
-            </div>
-            <ul className="space-y-1.5 text-xs lg:text-sm text-muted-foreground">
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>The proportion of European real estate operators realistically motivated and ready to adopt AI tools</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>Uses the same 65% factor as the UK</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary/40 mt-1.5 flex-shrink-0"></span>
-                <span>£155.6B × 65% = £101B</span>
-              </li>
-            </ul>
-          </div>
-
-
+          ))}
         </div>
       </div>
 
-      {/* Single Summary */}
-      <div className="bg-muted/30 border border-border rounded-lg p-3 lg:p-4">
+      {/* Structural pressure intro */}
+      <div className="text-sm lg:text-base text-muted-foreground">
+        This growth is not driven by experimentation, but by structural pressure:
+      </div>
+
+      {/* Structural pressures */}
+      <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-4 lg:p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <AlertTriangle className="w-5 h-5 text-amber-600" />
+          <h4 className="text-sm lg:text-base font-semibold text-foreground">Structural Pressures Driving Adoption</h4>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {structuralPressures.map((pressure, index) => (
+            <div key={index} className="flex items-center gap-3 bg-background/50 rounded-lg p-3 border border-border/50">
+              <span className="w-2 h-2 rounded-full bg-amber-500 flex-shrink-0"></span>
+              <span className="text-sm lg:text-base text-foreground">{pressure}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Conclusion */}
+      <div className="bg-primary/10 border-2 border-primary/30 rounded-lg p-4 lg:p-5">
+        <div className="flex items-center gap-2 mb-3">
+          <Globe className="w-5 h-5 text-primary" />
+          <h4 className="text-sm lg:text-base font-semibold text-primary">UK Within Global Context</h4>
+        </div>
         <p className="text-sm lg:text-base text-muted-foreground">
-          Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.
+          The UK opportunity, therefore, sits inside a much larger global transition, with similar regulatory and document dynamics across Europe, North America, and OECD markets.
         </p>
       </div>
-    </div>;
+    </div>
+  );
 };
