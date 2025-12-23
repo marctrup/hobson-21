@@ -1947,11 +1947,6 @@ const renderCustomerSegmentation = (
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
     doc.text(segment.title, margin + 20, titleY);
-    
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    setBodySmallFont(doc);
-    const titleWidth = doc.getTextWidth(segment.title + "  ");
-    doc.text(`(${segment.employees})`, margin + 20 + titleWidth, titleY);
 
     // Percentage and description on second line
     doc.setTextColor(...segment.color);
