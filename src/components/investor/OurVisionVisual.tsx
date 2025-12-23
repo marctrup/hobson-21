@@ -6,7 +6,7 @@ const OurVisionVisual: React.FC = () => {
     {
       label: "Reactive Agent",
       timeframe: "Today",
-      description: "AI helps when asked with accuracy",
+      description: "AI retrieves when asked with accuracy",
       color: "from-slate-100 to-slate-200",
       borderColor: "border-slate-300",
       accentColor: "bg-slate-500",
