@@ -786,7 +786,7 @@ const renderOurVision = (
   // Subtitle
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodyFont(doc);
-  doc.text("The Evolution of Real Estate AI", pageWidth / 2, yPosition, { align: "center" });
+  doc.text("The Evolution of Hobson AI", pageWidth / 2, yPosition, { align: "center" });
   yPosition += 14;
 
   // Define stage colors to match the visual exactly
