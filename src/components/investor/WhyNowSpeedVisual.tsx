@@ -81,7 +81,7 @@ export const WhyNowSpeedVisual = () => {
             </div>
           ))}
         </div>
-        <p className="mt-4 text-xs lg:text-sm text-primary font-semibold italic">
+        <p className="mt-4 text-xs lg:text-sm text-primary font-semibold">
           Once adopted, Hobson becomes operational infrastructure, not a tool.
         </p>
       </div>
