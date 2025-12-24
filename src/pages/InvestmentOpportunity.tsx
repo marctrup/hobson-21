@@ -95,6 +95,15 @@ const sections = [
         },
       },
       {
+        title: "Our Vision",
+        showCustomVisual: true,
+        customVisualComponent: "ourVision",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Why Now?",
         showCustomVisual: true,
         customVisualComponent: "whyNow",
