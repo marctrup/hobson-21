@@ -3082,7 +3082,33 @@ const renderEarlyRoadmap = (
   yPosition += phase2Height + 6;
 
   // Phase 3: Develop the MVP
-  const phase3Height = 48;
+  const phase3Items = [
+    "Build MVP with core AI capabilities",
+    "Online presence and branding",
+    "Testing with key clients",
+    "Pricing strategy",
+    "Business plan",
+  ];
+
+  const phase3LineHeight = 6;
+  const phase3HeaderHeight = 18; // title row space
+  const phase3TopPadding = 8;
+  const phase3BottomPadding = 8;
+  const phase3ItemsStartOffset = 24;
+  const phase3TextStartX = margin + 22;
+  const phase3BulletX = margin + 16;
+  const phase3TextMaxWidth = maxWidth - (phase3TextStartX - margin) - 10;
+
+  // Compute dynamic height based on wrapped lines
+  let phase3ItemsHeight = 0;
+  phase3Items.forEach((item) => {
+    const lines = doc.splitTextToSize(sanitizeText(item), phase3TextMaxWidth);
+    phase3ItemsHeight += lines.length * phase3LineHeight;
+  });
+
+  const phase3Height =
+    phase3ItemsStartOffset + phase3ItemsHeight + phase3BottomPadding;
+
   yPosition = checkPageBreak(doc, yPosition, phase3Height + 8, pageHeight, margin);
   doc.setFillColor(255, 251, 235); // amber-50
   doc.roundedRect(margin, yPosition, maxWidth, phase3Height, 3, 3, "F");
@@ -3096,15 +3122,27 @@ const renderEarlyRoadmap = (
   setBodySmallFont(doc);
   doc.text("Jan - Dec 2025  |  In Progress", margin + maxWidth - 80, yPosition + 12);
 
-  const phase3Items = ["Build MVP with core AI capabilities", "Online presence and branding", "Testing with key clients", "Pricing strategy", "Business plan"];
-  let p3Y = yPosition + 24;
+  // Bullets (default circles) with wrapping + proper spacing
+  let p3Y = yPosition + phase3ItemsStartOffset;
   doc.setTextColor(...PDF_CONFIG.textDark);
-  phase3Items.forEach((item, idx) => {
+  phase3Items.forEach((item) => {
+    const lines = doc.splitTextToSize(sanitizeText(item), phase3TextMaxWidth);
+
+    // bullet for first line
     doc.setFillColor(217, 119, 6);
-    doc.circle(margin + 16, p3Y - 1, PDF_CONFIG.circleSize.small, "F");
-    doc.text(item, margin + 22, p3Y);
-    p3Y += 6;
+    doc.circle(phase3BulletX, p3Y - 1, PDF_CONFIG.circleSize.small, "F");
+
+    // first line
+    doc.text(lines[0], phase3TextStartX, p3Y);
+    p3Y += phase3LineHeight;
+
+    // wrapped lines (indented, no extra bullet)
+    for (let i = 1; i < lines.length; i += 1) {
+      doc.text(lines[i], phase3TextStartX, p3Y);
+      p3Y += phase3LineHeight;
+    }
   });
+
   yPosition += phase3Height + 6;
 
   // Phase 4: Build the Industry Operating Layer
