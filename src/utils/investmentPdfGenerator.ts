@@ -2852,7 +2852,161 @@ const renderEuropeanGlobal = (
 };
 
 /**
- * Render Early Roadmap (2024-2025) visual
+ * Render Product Vision visual
+ */
+const renderProductVision = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Subtitle
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setBodyFont(doc);
+  doc.text("The AI Operating Layer for Real Estate", pageWidth / 2, yPosition, { align: "center" });
+  yPosition += 12;
+
+  // Industry Context box
+  const industryPains = [
+    "Escalating regulatory complexity",
+    "Fragmented systems",
+    "Chronic labour shortages",
+    "Rising operating costs",
+    "Increasingly sophisticated landlord and tenant expectations",
+  ];
+  
+  const industryBoxHeight = 70;
+  yPosition = checkPageBreak(doc, yPosition, industryBoxHeight + 8, pageHeight, margin);
+  doc.setFillColor(255, 251, 235); // amber-50
+  doc.setDrawColor(253, 230, 138); // amber-200
+  doc.roundedRect(margin, yPosition, maxWidth, industryBoxHeight, 3, 3, "FD");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("The global Real Estate industry is primed for change", margin + 8, yPosition + 12);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("Operators are drowning in:", margin + 8, yPosition + 22);
+  
+  let painY = yPosition + 30;
+  industryPains.forEach((pain) => {
+    doc.setFillColor(217, 119, 6); // amber-600
+    doc.circle(margin + 14, painY - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(pain, margin + 20, painY);
+    painY += 7;
+  });
+  
+  yPosition += industryBoxHeight + 8;
+
+  // Vision statement box
+  yPosition = checkPageBreak(doc, yPosition, 24, pageHeight, margin);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "FD");
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setCardTitleFont(doc);
+  doc.text("Hobson is building the AI operating layer for the Real Estate industry.", pageWidth / 2, yPosition + 12, { align: "center" });
+  yPosition += 28;
+
+  // Market Gap box
+  const marketGaps = [
+    "Understands leases at scale",
+    "Enforces compliance continuously",
+    "Orchestrates maintenance and finance",
+    "Predicts risk across entire portfolios",
+  ];
+  
+  const gapBoxHeight = 58;
+  yPosition = checkPageBreak(doc, yPosition, gapBoxHeight + 8, pageHeight, margin);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.roundedRect(margin, yPosition, maxWidth, gapBoxHeight, 3, 3, "FD");
+  
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("The Market Gap Hobson Fills", margin + 16, yPosition + 12);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("Today, no platform:", margin + 8, yPosition + 24);
+  
+  let gapY = yPosition + 32;
+  marketGaps.forEach((gap) => {
+    doc.setFillColor(239, 68, 68); // red-500
+    doc.circle(margin + 14, gapY - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(gap, margin + 20, gapY);
+    gapY += 6;
+  });
+  yPosition += gapBoxHeight + 8;
+
+  // Core Capabilities box
+  const coreCapabilities = [
+    "Property master data",
+    "Lease abstraction",
+    "Compliance calendars",
+    "Financial intelligence",
+    "Maintenance orchestration",
+    "Communications automation",
+  ];
+  
+  const capBoxHeight = 52;
+  yPosition = checkPageBreak(doc, yPosition, capBoxHeight + 8, pageHeight, margin);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.roundedRect(margin, yPosition, maxWidth, capBoxHeight, 3, 3, "FD");
+  
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Hobson becomes the intelligence layer above every PMS", margin + 16, yPosition + 12);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("One Core Engine that delivers:", margin + 8, yPosition + 22);
+  
+  // 2x3 grid of capabilities
+  let capY = yPosition + 30;
+  coreCapabilities.forEach((cap, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + 8 + (col * (maxWidth / 2 - 4));
+    const yPos = capY + (row * 7);
+    
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(xPos + 2, yPos - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(cap, xPos + 8, yPos);
+  });
+  yPosition += capBoxHeight + 8;
+
+  // Closing statement
+  yPosition = checkPageBreak(doc, yPosition, 22, pageHeight, margin);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(margin, yPosition, maxWidth, 18, 3, 3, "F");
+  
+  doc.setTextColor(255, 255, 255);
+  setBodyBoldFont(doc);
+  const closingText = "This makes Hobson the only platform capable of running a single operating model across residential and commercial portfolios.";
+  const closingLines = doc.splitTextToSize(sanitizeText(closingText), maxWidth - 16);
+  doc.text(closingLines, pageWidth / 2, yPosition + 11, { align: "center" });
+  yPosition += 26;
+
+  return yPosition;
+};
+
+/**
+ * Render Timeline and Innovation visual (updated from Early Roadmap)
  */
 const renderEarlyRoadmap = (
   doc: jsPDF,
@@ -2864,87 +3018,194 @@ const renderEarlyRoadmap = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  const phases = [
-    {
-      phase: "1",
-      title: "Discover",
-      timeframe: "May - Aug 2024",
-      color: PDF_CONFIG.blue,
-      bgColor: PDF_CONFIG.blueBg,
-      borderColor: PDF_CONFIG.blueBorder,
-      objectives: [
-        "Client discovery calls with real estate professionals",
-        "Establish the core problem being solved",
-        "Identify pain points in existing systems",
-        "Define target market segments",
-      ],
-    },
-    {
-      phase: "2",
-      title: "Validate",
-      timeframe: "Sept - Dec 2024",
-      color: PDF_CONFIG.primaryColor,
-      bgColor: PDF_CONFIG.primaryBgLight,
-      borderColor: PDF_CONFIG.primaryLight,
-      objectives: [
-        "Establish four working partnerships with real estate firms",
-        "No-code concepts validation",
-        "Scope the MVP based on partner feedback",
-        "Refine value proposition and feature set",
-      ],
-    },
-    {
-      phase: "3",
-      title: "Develop",
-      timeframe: "Jan - Dec 2025",
-      color: PDF_CONFIG.emerald,
-      bgColor: PDF_CONFIG.emeraldBg,
-      borderColor: PDF_CONFIG.emeraldBorder,
-      objectives: [
-        "Build MVP: Phase 1 with core AI capabilities",
-        "Build online presence and branding",
-        "Testing MVP with key clients data",
-        "Finalise pricing strategy based on usage data",
-        "Build pricing plan, marketing plan, business plan and financial model",
-      ],
-    },
+  // Subtitle
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodyFont(doc);
+  doc.text("Strategic product development timeline covering discovery, validation, and development phases", margin, yPosition);
+  yPosition += 12;
+
+  // Phase 1: Discover & De-Risk
+  const phase1Height = 55;
+  yPosition = checkPageBreak(doc, yPosition, phase1Height + 8, pageHeight, margin);
+  doc.setFillColor(236, 253, 245); // green-50
+  doc.roundedRect(margin, yPosition, maxWidth, phase1Height, 3, 3, "F");
+  doc.setFillColor(5, 150, 105); // green-600
+  doc.rect(margin, yPosition, 4, phase1Height, "F");
+
+  doc.setTextColor(5, 150, 105);
+  setCardTitleFont(doc);
+  doc.text("Phase 1: Discover & De-Risk", margin + 12, yPosition + 12);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("May - Aug 2024  |  Completed", margin + maxWidth - 80, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodySmallFont(doc);
+  doc.text("Validated systemic failure of existing property management systems:", margin + 12, yPosition + 24);
+  
+  const phase1Items = ["Compliance risk", "Lease complexity", "Arrears management", "Maintenance chaos", "Portfolio fragmentation"];
+  let p1Y = yPosition + 32;
+  phase1Items.forEach((item, idx) => {
+    const col = idx % 3;
+    const row = Math.floor(idx / 3);
+    const xPos = margin + 12 + (col * 55);
+    const yPos = p1Y + (row * 6);
+    doc.setFillColor(5, 150, 105);
+    doc.circle(xPos + 2, yPos - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.text(item, xPos + 6, yPos);
+  });
+  yPosition += phase1Height + 6;
+
+  // Phase 2: Validate Core Engine
+  const phase2Height = 48;
+  yPosition = checkPageBreak(doc, yPosition, phase2Height + 8, pageHeight, margin);
+  doc.setFillColor(236, 253, 245);
+  doc.roundedRect(margin, yPosition, maxWidth, phase2Height, 3, 3, "F");
+  doc.setFillColor(5, 150, 105);
+  doc.rect(margin, yPosition, 4, phase2Height, "F");
+
+  doc.setTextColor(5, 150, 105);
+  setCardTitleFont(doc);
+  doc.text("Phase 2: Validate Core Engine", margin + 12, yPosition + 12);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("Sep - Dec 2024  |  Completed", margin + maxWidth - 80, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text("Product-market fit emerging. Four active pilot partners across operator sizes.", margin + 12, yPosition + 24);
+  doc.text("Validated: abstract leases, normalise workflows, surface compliance and financial risk.", margin + 12, yPosition + 32);
+  yPosition += phase2Height + 6;
+
+  // Phase 3: Develop the MVP
+  const phase3Height = 48;
+  yPosition = checkPageBreak(doc, yPosition, phase3Height + 8, pageHeight, margin);
+  doc.setFillColor(255, 251, 235); // amber-50
+  doc.roundedRect(margin, yPosition, maxWidth, phase3Height, 3, 3, "F");
+  doc.setFillColor(217, 119, 6); // amber-600
+  doc.rect(margin, yPosition, 4, phase3Height, "F");
+
+  doc.setTextColor(217, 119, 6);
+  setCardTitleFont(doc);
+  doc.text("Phase 3: Develop the MVP", margin + 12, yPosition + 12);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("Jan - Dec 2025  |  In Progress", margin + maxWidth - 80, yPosition + 12);
+
+  const phase3Items = ["Build MVP with core AI capabilities", "Online presence and branding", "Testing with key clients", "Pricing strategy", "Business plan"];
+  let p3Y = yPosition + 24;
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  phase3Items.forEach((item, idx) => {
+    doc.setFillColor(217, 119, 6);
+    doc.circle(margin + 16, p3Y - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.text(item, margin + 22, p3Y);
+    p3Y += 6;
+  });
+  yPosition += phase3Height + 6;
+
+  // Phase 4: Build the Industry Operating Layer
+  const phase4Height = 36;
+  yPosition = checkPageBreak(doc, yPosition, phase4Height + 8, pageHeight, margin);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, phase4Height, 3, 3, "F");
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.rect(margin, yPosition, 4, phase4Height, "F");
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  setCardTitleFont(doc);
+  doc.text("Phase 4: Build the Industry Operating Layer", margin + 12, yPosition + 12);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("Jan - Sep 2026  |  Upcoming", margin + maxWidth - 80, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text("Hobson MVP expands from \"document AI\" into full workflow intelligence.", margin + 12, yPosition + 24);
+  yPosition += phase4Height + 10;
+
+  // 2026-2028 Business Timeline
+  yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.large, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("2026-2028: Scale, Monetise, Dominate", margin + 12, yPosition);
+  yPosition += 12;
+
+  const businessPhases = [
+    { year: "2026", title: "Prove Commercial Model", items: ["10+ pilot organisations", "3-5 paying customers", "Full UK market readiness"] },
+    { year: "2027", title: "UK Market Capture", items: ["Public launch Q1", "Aggressive go-to-market", "Platform hardened for scale"] },
+    { year: "2028", title: "Global Expansion", items: ["Multi-market release", "Local compliance models", "Global partnerships"] },
   ];
 
-  phases.forEach((phase, idx) => {
-    // Calculate tighter card height: header (16) + gap to bullets (6) + bullets + bottom padding (6)
-    const cardHeight = 16 + 6 + phase.objectives.length * PDF_CONFIG.lineHeight.body + 8;
-    yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
+  const cardWidth = (maxWidth - 12) / 3;
+  const cardHeight = 50;
+  businessPhases.forEach((phase, idx) => {
+    const cardX = margin + idx * (cardWidth + 6);
     
-    // Card background
-    doc.setFillColor(...phase.bgColor);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
+    doc.setDrawColor(...PDF_CONFIG.border);
+    doc.roundedRect(cardX, yPosition, cardWidth, cardHeight, 3, 3, "FD");
     
-    // Left accent border
-    doc.setFillColor(...phase.color);
-    doc.rect(margin, yPosition, 4, cardHeight, "F");
-
-    // Phase title and timeframe
-    doc.setTextColor(...phase.color);
-    setCardTitleFont(doc);
-    doc.text(`Phase ${phase.phase}: ${phase.title}`, margin + 12, yPosition + 12);
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.roundedRect(cardX + 4, yPosition + 4, 24, 8, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text(phase.year, cardX + 16, yPosition + 9, { align: "center" });
     
-    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    doc.text(phase.timeframe, margin + maxWidth - 60, yPosition + 12);
-
-    // Objectives - tighter spacing after title
-    let objY = yPosition + 12 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
-    setBodySmallFont(doc);
-    phase.objectives.forEach((obj) => {
-      doc.setFillColor(...phase.color);
-      doc.circle(margin + 16, objY - 1, PDF_CONFIG.circleSize.small, "F");
-      doc.setTextColor(...PDF_CONFIG.textDark);
-      doc.text(obj, margin + 22, objY);
-      objY += PDF_CONFIG.lineHeight.body;
+    doc.setFont("helvetica", "bold");
+    doc.text(phase.title, cardX + 4, yPosition + 20);
+    
+    doc.setFont("helvetica", "normal");
+    let itemY = yPosition + 28;
+    phase.items.forEach((item) => {
+      doc.setFillColor(...PDF_CONFIG.primaryColor);
+      doc.circle(cardX + 8, itemY - 1, PDF_CONFIG.circleSize.small, "F");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.text(item, cardX + 12, itemY);
+      itemY += 6;
     });
-
-    yPosition += cardHeight + 6;
   });
+  yPosition += cardHeight + 12;
+
+  // Commercial Impact
+  yPosition = checkPageBreak(doc, yPosition, 36, pageHeight, margin);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 32, 3, 3, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Commercial Impact for Operators", margin + 8, yPosition + 10);
+  
+  const impacts = [
+    { value: "35-45%", label: "Cost reduction per unit" },
+    { value: "Sub-linear", label: "Headcount growth" },
+    { value: "Near-zero", label: "Compliance failures" },
+    { value: "Material", label: "Cashflow predictability" },
+  ];
+  
+  const impactWidth = (maxWidth - 16) / 4;
+  impacts.forEach((impact, idx) => {
+    const xPos = margin + 8 + idx * impactWidth;
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    setBodyBoldFont(doc);
+    doc.text(impact.value, xPos, yPosition + 20);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.text(impact.label, xPos, yPosition + 26);
+  });
+  yPosition += 40;
+
+  // Closing statement
+  yPosition = checkPageBreak(doc, yPosition, 24, pageHeight, margin);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
+  
+  doc.setTextColor(255, 255, 255);
+  setBodyBoldFont(doc);
+  doc.text("Hobson is becoming the operating system for Real Estate management.", pageWidth / 2, yPosition + 12, { align: "center" });
+  yPosition += 28;
 
   return yPosition;
 };
@@ -5341,12 +5602,10 @@ const renderTabContent = (
       yPosition = renderMarketLandscape(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Roadmap & Product renderers
-    else if (componentType === "earlyRoadmap") {
+    else if (componentType === "productVision") {
+      yPosition = renderProductVision(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "earlyRoadmap") {
       yPosition = renderEarlyRoadmap(doc, yPosition, margin, pageWidth, pageHeight);
-    } else if (componentType === "ganttChart") {
-      yPosition = renderGanttChart(doc, yPosition, margin, pageWidth, pageHeight);
-    } else if (componentType === "pilotClients") {
-      yPosition = renderPilotClients(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "techStack") {
       yPosition = renderTechStack(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "simpleUI") {
