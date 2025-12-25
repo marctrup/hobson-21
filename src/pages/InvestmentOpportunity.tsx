@@ -65,6 +65,7 @@ import { TechStackVisual } from "@/components/investor/TechStackVisual";
 import WhyNowVisual from "@/components/investor/WhyNowVisual";
 import { WhyNowSpeedVisual } from "@/components/investor/WhyNowSpeedVisual";
 import OurVisionVisual from "@/components/investor/OurVisionVisual";
+import ProductVisionVisual from "@/components/investor/ProductVisionVisual";
 import { CustomersMarketSourcesVisual } from "@/components/investor/CustomersMarketSourcesVisual";
 import { TeamCredibilityVisual } from "@/components/investor/TeamCredibilityVisual";
 import { RaiseVisual } from "@/components/investor/RaiseVisual";
@@ -398,6 +399,15 @@ const sections = [
     color: "from-green-500/10 to-green-600/10",
     iconColor: "text-green-600",
     pages: [
+      {
+        title: "Product Vision",
+        showCustomVisual: true,
+        customVisualComponent: "productVision",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
       {
         title: "Roadmap (2024–2025)",
         showCustomVisual: true,
@@ -1271,6 +1281,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Why Now */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "whyNow" && (
                       <WhyNowVisual />
+                    )}
+
+                    {/* Custom Visual Component for Product Vision */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "productVision" && (
+                      <ProductVisionVisual />
                     )}
 
                     {/* Custom Visual Component for Team Credibility */}
