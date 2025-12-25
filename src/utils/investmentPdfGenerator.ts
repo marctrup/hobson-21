@@ -3048,8 +3048,11 @@ const renderEarlyRoadmap = (
   setBodySmallFont(doc);
   doc.text("Validated systemic failure of existing property management systems:", margin + 12, yPosition + 24);
   
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.text("Confirmed market need for:", margin + 12, yPosition + 32);
+  
   const phase1Items = ["Compliance risk", "Lease complexity", "Arrears management", "Maintenance chaos", "Portfolio fragmentation"];
-  let p1Y = yPosition + 32;
+  let p1Y = yPosition + 40;
   phase1Items.forEach((item, idx) => {
     const col = idx % 3;
     const row = Math.floor(idx / 3);
@@ -3062,7 +3065,7 @@ const renderEarlyRoadmap = (
   yPosition += phase1Height + 6;
 
   // Phase 2: Validate Core Engine
-  const phase2Height = 48;
+  const phase2Height = 56;
   yPosition = checkPageBreak(doc, yPosition, phase2Height + 8, pageHeight, margin);
   doc.setFillColor(236, 253, 245);
   doc.roundedRect(margin, yPosition, maxWidth, phase2Height, 3, 3, "F");
@@ -3078,7 +3081,11 @@ const renderEarlyRoadmap = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.text("Product-market fit emerging. Four active pilot partners across operator sizes.", margin + 12, yPosition + 24);
-  doc.text("Validated: abstract leases, normalise workflows, surface compliance and financial risk.", margin + 12, yPosition + 32);
+  
+  doc.setFont("helvetica", "bold");
+  doc.text("Validated Hobson's ability to:", margin + 12, yPosition + 32);
+  doc.setFont("helvetica", "normal");
+  doc.text("Abstract leases, normalise workflows, surface compliance and financial risk.", margin + 12, yPosition + 40);
   yPosition += phase2Height + 6;
 
   // Phase 3: Develop the MVP
