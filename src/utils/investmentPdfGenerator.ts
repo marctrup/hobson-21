@@ -3065,7 +3065,7 @@ const renderEarlyRoadmap = (
   yPosition += phase1Height + 6;
 
   // Phase 2: Validate Core Engine
-  const phase2Height = 82;
+  const phase2Height = 98;
   yPosition = checkPageBreak(doc, yPosition, phase2Height + 8, pageHeight, margin);
   doc.setFillColor(236, 253, 245);
   doc.roundedRect(margin, yPosition, maxWidth, phase2Height, 3, 3, "F");
