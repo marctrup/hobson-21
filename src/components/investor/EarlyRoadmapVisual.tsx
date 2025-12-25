@@ -161,7 +161,7 @@ export const EarlyRoadmapVisual: React.FC = () => {
                     <p className="text-xs text-muted-foreground mb-1">Confirmed market need for:</p>
                   )}
                   {groupIndex === 1 && section.phase === "Sep – Dec 2024" && (
-                    <p className="text-xs text-muted-foreground mb-1 mt-3">Validated Hobson's ability to:</p>
+                    <p className="text-xs text-muted-foreground mb-1 mt-3"><span className="font-bold">Validated Hobson's ability to:</span></p>
                   )}
                   <ul className="space-y-1">
                     {group.map((item, itemIndex) => (
