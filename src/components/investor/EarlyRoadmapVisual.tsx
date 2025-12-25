@@ -12,7 +12,7 @@ const timelineData: PhaseSection[] = [{
   title: "Phase 1: Discover & De-Risk",
   status: "completed",
   objectives: ["Validated the systemic failure of existing property management systems through direct operator discovery:"],
-  subItems: [["Compliance risk", "Lease complexity", "Arrears management", "Maintenance chaos", "Portfolio fragmentation"], ["AI lease abstraction", "AI compliance orchestration", "AI financial intelligence"]]
+  subItems: [["Compliance risk", "Lease complexity", "Arrears management", "Maintenance chaos", "Portfolio fragmentation"]]
 }, {
   phase: "Sep – Dec 2024",
   title: "Phase 2: Validate Core Engine",
