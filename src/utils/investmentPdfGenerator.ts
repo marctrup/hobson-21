@@ -3065,7 +3065,7 @@ const renderEarlyRoadmap = (
   yPosition += phase1Height + 6;
 
   // Phase 2: Validate Core Engine
-  const phase2Height = 56;
+  const phase2Height = 82;
   yPosition = checkPageBreak(doc, yPosition, phase2Height + 8, pageHeight, margin);
   doc.setFillColor(236, 253, 245);
   doc.roundedRect(margin, yPosition, maxWidth, phase2Height, 3, 3, "F");
@@ -3080,12 +3080,30 @@ const renderEarlyRoadmap = (
   doc.text("Sep - Dec 2024  |  Completed", margin + maxWidth - 80, yPosition + 12);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text("Product-market fit emerging. Four active pilot partners across operator sizes.", margin + 12, yPosition + 24);
+  doc.text("Product-market fit is emerging.", margin + 12, yPosition + 24);
+  doc.text("Four active pilot partners across operator sizes and system environments:", margin + 12, yPosition + 32);
+  
+  const phase2PilotItems = ["Large multi-system commercial operator", "Medium single-system operator", "Small owner-operator investment firms"];
+  let p2Y = yPosition + 40;
+  phase2PilotItems.forEach((item) => {
+    doc.setFillColor(5, 150, 105);
+    doc.circle(margin + 14, p2Y - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.text(item, margin + 18, p2Y);
+    p2Y += 6;
+  });
   
   doc.setFont("helvetica", "bold");
-  doc.text("Validated Hobson's ability to:", margin + 12, yPosition + 32);
+  doc.text("Validated Hobson's ability to:", margin + 12, p2Y + 2);
   doc.setFont("helvetica", "normal");
-  doc.text("Abstract leases, normalise workflows, surface compliance and financial risk.", margin + 12, yPosition + 40);
+  
+  const phase2AbilityItems = ["Abstract leases", "Normalise residential and commercial workflows", "Surface compliance and financial risk"];
+  p2Y += 10;
+  phase2AbilityItems.forEach((item) => {
+    doc.setFillColor(5, 150, 105);
+    doc.circle(margin + 14, p2Y - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.text(item, margin + 18, p2Y);
+    p2Y += 6;
+  });
   yPosition += phase2Height + 6;
 
   // Phase 3: Develop the MVP
