@@ -3146,7 +3146,7 @@ const renderEarlyRoadmap = (
   yPosition += phase3Height + 6;
 
   // Phase 4: Build the Industry Operating Layer
-  const phase4Height = 36;
+  const phase4Height = 42;
   yPosition = checkPageBreak(doc, yPosition, phase4Height + 8, pageHeight, margin);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, phase4Height, 3, 3, "F");
@@ -3158,10 +3158,10 @@ const renderEarlyRoadmap = (
   doc.text("Phase 4: Build the Industry Operating Layer", margin + 12, yPosition + 12);
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("Jan - Sep 2026  |  Upcoming", margin + maxWidth - 80, yPosition + 12);
+  doc.text("Jan - Sep 2026  |  Upcoming", margin + 12, yPosition + 20);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text("Hobson MVP expands from \"document AI\" into full workflow intelligence.", margin + 12, yPosition + 24);
+  doc.text("Hobson MVP expands from \"document AI\" into full workflow intelligence.", margin + 12, yPosition + 30);
   yPosition += phase4Height + 10;
 
   // 2026-2028 Business Timeline
