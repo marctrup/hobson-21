@@ -450,60 +450,6 @@ const sections = [
         },
       },
       {
-        title: "Pilot Clients (2025)",
-        showCustomVisual: true,
-        customVisualComponent: "pilotClients",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Roadmap (2026–2028)",
-        showCustomVisual: true,
-        customVisualComponent: "ganttChart",
-        content: {
-          overview:
-            "Growth timeline from pilot expansion through international launch, with quarterly milestones across key workstreams.",
-          sections: [
-            {
-              title: "2026 — Strengthen the Product and Validate the Market",
-              items: [
-                "Goal: Expand pilot testing, refine the product, and prepare for commercial launch.",
-                "Grow to 10 active pilot organisations across different portfolio sizes",
-                "Scale and improve core features based on real pilot feedback",
-                "Convert 3–5 pilots into paying customers to prove commercial demand",
-                "Build a payment engine and billing workflows ready for public launch",
-                "Finalise the marketing plan, including KPIs, channels, content structure, and acquisition strategy",
-                "Prepare the full go-to-market plan for 2027 launch",
-              ],
-            },
-            {
-              title: "2027 — Enter the Market and Expand Commercially",
-              items: [
-                "Goal: Launch publicly, grow paid users, and prepare for international expansion.",
-                "Launch the public Hobson website (Q1 2027) with full pricing and onboarding flows",
-                "Implement the marketing plan, including SEO, LinkedIn content, website funnels, and retention communications",
-                "Scale the technology and platform features to support growing demand",
-                "Strengthen onboarding, support processes, and customer success workflows",
-                "Prepare for global expansion by validating demand and compliance requirements in two target countries",
-              ],
-            },
-            {
-              title: "2028 — Global Launch and Market Expansion",
-              items: [
-                "Goal: Move beyond the UK and establish Hobson as an international solution.",
-                "Launch Hobson in two international markets, supported by regionalised marketing and documentation",
-                "Release localised document packs and accuracy enhancements for new jurisdictions",
-                "Grow paid customer base across UK + international regions",
-                "Expand brand presence through partnerships, content, and local industry events",
-                "Strengthen platform reliability and insight features to support multi-market operations",
-              ],
-            },
-          ],
-        },
-      },
-      {
         title: "AI Architecture",
         image: aiArchitectureDiagram,
         content: {
