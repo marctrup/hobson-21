@@ -2991,16 +2991,21 @@ const renderProductVision = (
   yPosition += capBoxHeight + 8;
 
   // Closing statement
-  yPosition = checkPageBreak(doc, yPosition, 22, pageHeight, margin);
+  yPosition = checkPageBreak(doc, yPosition, 28, pageHeight, margin);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.roundedRect(margin, yPosition, maxWidth, 18, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 24, 3, 3, "F");
   
   doc.setTextColor(255, 255, 255);
   setBodyBoldFont(doc);
   const closingText = "This makes Hobson the only platform capable of running a single operating model across residential and commercial portfolios.";
-  const closingLines = doc.splitTextToSize(sanitizeText(closingText), maxWidth - 16);
-  doc.text(closingLines, pageWidth / 2, yPosition + 11, { align: "center" });
-  yPosition += 26;
+  const closingLines = doc.splitTextToSize(sanitizeText(closingText), maxWidth - 20);
+  const closingLineHeight = 6;
+  const closingTotalHeight = closingLines.length * closingLineHeight;
+  const closingStartY = yPosition + (24 - closingTotalHeight) / 2 + 4;
+  closingLines.forEach((line: string, idx: number) => {
+    doc.text(line, pageWidth / 2, closingStartY + idx * closingLineHeight, { align: "center" });
+  });
+  yPosition += 32;
 
   return yPosition;
 };
