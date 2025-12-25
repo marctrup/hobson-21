@@ -409,7 +409,7 @@ const sections = [
         },
       },
       {
-        title: "Roadmap (2024–2025)",
+        title: "Timeline and Innovation",
         showCustomVisual: true,
         customVisualComponent: "earlyRoadmap",
         content: {
