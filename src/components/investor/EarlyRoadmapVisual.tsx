@@ -145,7 +145,7 @@ export const EarlyRoadmapVisual: React.FC = () => {
               </ul>
               {section.subItems && section.subItems.map((group, groupIndex) => <div key={groupIndex} className="ml-4 mt-2">
                   {groupIndex === 0 && section.phase === "May – Aug 2024" && <p className="text-xs text-muted-foreground mb-1">Confirmed market need for:</p>}
-                  {groupIndex === 1 && section.phase === "Sep – Dec 2024" && <p className="text-xs text-muted-foreground mb-1 mt-3">Validate Hobson`s ability to:</p>}
+                  {groupIndex === 1 && section.phase === "Sep – Dec 2024" && <p className="text-xs text-muted-foreground mb-1 mt-3 font-semibold">Validated Hobson's ability to:</p>}
                   <ul className="space-y-1">
                     {group.map((item, itemIndex) => <li key={itemIndex} className="text-xs text-muted-foreground flex items-center gap-2">
                         <span className="w-1 h-1 rounded-full bg-muted-foreground" />
