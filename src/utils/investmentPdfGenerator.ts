@@ -3742,10 +3742,6 @@ const renderCommercialisationStrategy = (
   checkPageBreak(70);
   doc.setFillColor(...PDF_CONFIG.rose);
   doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
-  doc.setFillColor(...PDF_CONFIG.bgWhite);
-  doc.setTextColor(...PDF_CONFIG.bgWhite);
-  doc.setFontSize(8);
-  doc.text("1", margin + 8, yPosition + 7, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -3795,10 +3791,6 @@ const renderCommercialisationStrategy = (
   checkPageBreak(60);
   doc.setFillColor(...PDF_CONFIG.emerald);
   doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
-  doc.setFillColor(...PDF_CONFIG.bgWhite);
-  doc.setTextColor(...PDF_CONFIG.bgWhite);
-  doc.setFontSize(8);
-  doc.text("2", margin + 8, yPosition + 7, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
