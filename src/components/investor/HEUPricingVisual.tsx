@@ -1,209 +1,123 @@
-import { CreditCard, Zap, BarChart3, Eye } from 'lucide-react';
+import React from 'react';
+import { Zap, TrendingUp, Scale, Target, CheckCircle2 } from 'lucide-react';
 
 export const HEUPricingVisual = () => {
+  const monetises = [
+    "operator dependency",
+    "portfolio scale",
+    "regulatory complexity",
+    "decision intensity",
+  ];
+
+  const plans = [
+    { plan: "Free", price: "£0", heus: "18", intent: "Frictionless market entry" },
+    { plan: "Essential", price: "£19.50", heus: "275", intent: "Hook small operators" },
+    { plan: "Essential Plus", price: "£49.75", heus: "700", intent: "Convert growing teams" },
+    { plan: "Enterprise", price: "£148.50", heus: "2,000", intent: "Lock in serious operators" },
+    { plan: "HEU Top-Up", price: "£15", heus: "150", intent: "Expand ARPU naturally" },
+  ];
+
   return (
-    <div className="space-y-6 sm:space-y-8">
-      {/* Header */}
-      <div className="text-center mb-4 sm:mb-6">
-        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900 mb-1 sm:mb-2">
-          HEU System, Pricing, and Transparent Usage
-        </h2>
-        <p className="text-xs sm:text-sm text-gray-600">
-          Fair, predictable pricing with complete transparency
-        </p>
-      </div>
-
-      {/* HEU Explanation - Compact Banner */}
-      <div className="bg-white border border-purple-200 rounded-lg p-4 sm:p-5">
-        <div className="flex items-start gap-3 sm:gap-4">
-          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
-            <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
+    <div className="space-y-8">
+      {/* Header - The HEU Model */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/5 via-primary/10 to-primary/5 p-6 border border-primary/20">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="relative">
+          <div className="flex items-center gap-3 mb-3">
+            <Zap className="w-6 h-6 text-primary" />
+            <h3 className="text-xl font-bold text-foreground">The HEU Model</h3>
           </div>
-          <div className="flex-1">
-            <h3 className="text-sm sm:text-base font-bold text-gray-900 mb-1 sm:mb-2">
-              What is an HEU (Hobson Energy Unit)?
-            </h3>
-            <div className="space-y-1 text-xs sm:text-sm text-gray-700">
-              <p>
-                <strong>An HEU, Hobson's currency</strong> measures how much AI processing is used for each action.
-              </p>
-              <p>
-                This ensures <strong>fair, predictable pricing</strong> tied directly to value delivered.
-              </p>
-            </div>
-          </div>
+          <p className="text-foreground leading-relaxed">
+            Hobson's pricing model is a <span className="font-semibold text-primary">usage-based infrastructure monetisation model</span>.
+          </p>
         </div>
       </div>
 
-      {/* Pricing Section with Purple Background */}
-      <div className="bg-purple-50 p-4 sm:p-6 md:p-8 rounded-xl space-y-6">
-        {/* Pricing Plans - Compact Grid */}
-        <div>
-          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-purple-100 flex items-center justify-center">
-              <CreditCard className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" />
-            </div>
-            <h3 className="text-base sm:text-lg font-bold text-gray-900">Pricing Plans</h3>
-          </div>
-          
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {/* Free Plan */}
-            <div className="border border-gray-300 rounded-lg p-3 sm:p-4 bg-white">
-              <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-2 sm:mb-3 pb-2 border-b border-gray-200">Free</h4>
-              <div className="space-y-0.5 sm:space-y-1 text-center">
-                <p className="text-sm sm:text-base font-bold text-gray-900">£0.00</p>
-                <p className="text-xs text-gray-500">/month</p>
-                <p className="text-lg sm:text-xl font-bold text-purple-600 mt-1 sm:mt-2">18</p>
-                <p className="text-xs text-gray-600">HEUs/month</p>
-              </div>
-            </div>
-
-            {/* Essential Plan */}
-            <div className="border border-gray-300 rounded-lg p-3 sm:p-4 bg-white">
-              <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-2 sm:mb-3 pb-2 border-b border-gray-200">Essential</h4>
-              <div className="space-y-0.5 sm:space-y-1 text-center">
-                <p className="text-sm sm:text-base font-bold text-gray-900">£19.50</p>
-                <p className="text-xs text-gray-500">/month</p>
-                <p className="text-lg sm:text-xl font-bold text-purple-600 mt-1 sm:mt-2">275</p>
-                <p className="text-xs text-gray-600">HEUs/month</p>
-              </div>
-            </div>
-
-            {/* Essential Plus Plan */}
-            <div className="border-2 border-purple-400 rounded-lg p-3 sm:p-4 bg-white">
-              <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-2 sm:mb-3 pb-2 border-b border-purple-400">Essential Plus</h4>
-              <div className="space-y-0.5 sm:space-y-1 text-center">
-                <p className="text-sm sm:text-base font-bold text-gray-900">£49.75</p>
-                <p className="text-xs text-gray-500">/month</p>
-                <p className="text-lg sm:text-xl font-bold text-purple-600 mt-1 sm:mt-2">700</p>
-                <p className="text-xs text-gray-600">HEUs/month</p>
-              </div>
-            </div>
-
-            {/* Enterprise Plan */}
-            <div className="border border-gray-300 rounded-lg p-3 sm:p-4 bg-white">
-              <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-2 sm:mb-3 pb-2 border-b border-gray-200">Enterprise</h4>
-              <div className="space-y-0.5 sm:space-y-1 text-center">
-                <p className="text-sm sm:text-base font-bold text-gray-900">£148.50</p>
-                <p className="text-xs text-gray-500">/month</p>
-                <p className="text-lg sm:text-xl font-bold text-purple-600 mt-1 sm:mt-2">2000</p>
-                <p className="text-xs text-gray-600">HEUs/month</p>
-              </div>
-            </div>
-          </div>
+      {/* Section 1: What HEUs Measure */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-950/50 text-blue-700 dark:text-blue-400 font-bold text-sm">1</div>
+          <h4 className="font-semibold text-foreground">Hobson Energy Units (HEUs) measure AI effort:</h4>
         </div>
-
-        {/* Top-Up - Compact */}
-        <div className="bg-white border border-purple-200 rounded-lg p-3 sm:p-4">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
-            <div className="flex items-center gap-2 sm:gap-3">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-purple-100 flex items-center justify-center flex-shrink-0">
-                <Zap className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" />
-              </div>
-              <div>
-                <h3 className="text-xs sm:text-sm font-bold text-gray-900">Top-Up</h3>
-                <p className="text-xs text-gray-600">One-time purchase</p>
-              </div>
-            </div>
-            <div className="flex gap-4 sm:gap-8 items-center whitespace-nowrap">
-              <p className="text-sm sm:text-base font-bold text-gray-900">£15</p>
-              <p className="text-sm sm:text-base font-bold text-purple-600">150 HEUs</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Transparency Section */}
-      <div className="pt-3 sm:pt-4 border-t border-border">
-        <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-3 sm:mb-4 text-center">Complete Usage Transparency</h3>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-          {/* HEU Bar Visual */}
-          <div className="bg-white border border-border rounded-lg p-4 sm:p-5">
-            <div className="flex items-center gap-2 mb-3 sm:mb-4">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-purple-100 flex items-center justify-center">
-                <BarChart3 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-600" />
-              </div>
-              <h4 className="text-xs sm:text-sm font-bold text-gray-900">Real-Time HEU Bar</h4>
-            </div>
-            
-            <div className="space-y-2 sm:space-y-3">
-              <div className="relative w-full h-8 sm:h-10 bg-gray-200 rounded-lg overflow-hidden border border-gray-300">
-                <div 
-                  className="absolute left-0 top-0 h-full bg-gray-400 flex items-center justify-center"
-                  style={{ width: '60%' }}
-                >
-                  <span className="text-xs font-semibold text-white">420 used</span>
-                </div>
-                <div 
-                  className="absolute right-0 top-0 h-full bg-purple-500 flex items-center justify-center"
-                  style={{ width: '40%' }}
-                >
-                  <span className="text-xs font-semibold text-white">280 left</span>
-                </div>
-              </div>
-              
-              <div className="text-center">
-                <p className="text-xs font-semibold text-gray-900">700 total HEUs</p>
-              </div>
+        <div className="ml-11 p-4 rounded-xl bg-blue-50/50 dark:bg-blue-950/20 border border-blue-100 dark:border-blue-900/30">
+          <p className="text-foreground leading-relaxed">
+            Every document read, lease abstracted, compliance workflow executed, risk model run, or report built consumes HEUs.
+          </p>
+        </div>
+      </div>
 
-              <div className="bg-muted rounded-lg p-2 sm:p-3 border border-border">
-                <p className="text-xs text-gray-700 leading-relaxed">
-                  <strong>Real-time tracking</strong> shows exactly how much you've used and what remains.
-                </p>
-              </div>
+      {/* Section 2: What Hobson Monetises */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 font-bold text-sm">2</div>
+          <h4 className="font-semibold text-foreground">This means Hobson monetises:</h4>
+        </div>
+        
+        <div className="ml-11 grid sm:grid-cols-2 gap-3">
+          {monetises.map((item, idx) => (
+            <div key={idx} className="flex items-center gap-3 p-3 rounded-lg bg-emerald-50/50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/30">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0" />
+              <span className="text-foreground font-medium">{item}</span>
             </div>
-          </div>
+          ))}
+        </div>
+        
+        <div className="ml-11 p-3 rounded-lg bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
+          <p className="text-muted-foreground text-sm">
+            <span className="font-semibold text-foreground">not</span> headcount or asset count
+          </p>
+        </div>
+      </div>
 
-          {/* Per-Message Transparency */}
-          <div className="bg-white border border-border rounded-lg p-5">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
-                <Eye className="w-4 h-4 text-purple-600" />
-              </div>
-              <h4 className="text-sm font-bold text-gray-900">Per-Message Cost</h4>
-            </div>
+      {/* Key Insight */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border border-amber-200 dark:border-amber-800/30 p-5">
+        <div className="flex items-start gap-3">
+          <TrendingUp className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
+          <p className="text-foreground leading-relaxed">
+            Traditional property software caps revenue. <span className="font-semibold text-primary">Hobson's model scales automatically with operational stress.</span> The more complex the operator's world becomes, the more valuable and profitable Hobson becomes.
+          </p>
+        </div>
+      </div>
 
-            <div className="space-y-3">
-              <div className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-                <h5 className="font-semibold text-gray-900 mb-2 text-xs">Message Usage Details</h5>
-                <div className="space-y-1 text-xs">
-                  <div className="flex justify-between items-center py-1 border-b border-gray-200">
-                    <span className="text-gray-600">HEU Cost:</span>
-                    <span className="font-bold text-purple-600">0.05</span>
-                  </div>
-                  <div className="flex justify-between py-0.5">
-                    <span className="text-gray-600">Query Type:</span>
-                    <span className="text-gray-900">Simple extraction</span>
-                  </div>
-                  <div className="flex justify-between py-0.5">
-                    <span className="text-gray-600">Processing Time:</span>
-                    <span className="text-gray-900">1.2s</span>
-                  </div>
-                  <div className="flex justify-between py-0.5">
-                    <span className="text-gray-600">Documents:</span>
-                    <span className="text-gray-900">3 files</span>
-                  </div>
-                  <div className="border-t border-gray-200 pt-1 mt-1 space-y-0.5">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Before:</span>
-                      <span className="text-gray-900 font-mono">420.45</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">After:</span>
-                      <span className="text-gray-900 font-mono">420.40</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+      {/* Section 3: Pricing Table */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <Scale className="w-5 h-5 text-primary" />
+          <h4 className="font-semibold text-foreground">Pricing That Forces Adoption</h4>
+        </div>
+        
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse">
+            <thead>
+              <tr className="bg-primary/10">
+                <th className="text-left p-3 text-sm font-semibold text-foreground border border-border/50 rounded-tl-lg">Plan</th>
+                <th className="text-left p-3 text-sm font-semibold text-foreground border border-border/50">Monthly Price</th>
+                <th className="text-left p-3 text-sm font-semibold text-foreground border border-border/50">HEUs</th>
+                <th className="text-left p-3 text-sm font-semibold text-foreground border border-border/50 rounded-tr-lg">Strategic Intent</th>
+              </tr>
+            </thead>
+            <tbody>
+              {plans.map((row, idx) => (
+                <tr key={idx} className={idx % 2 === 0 ? 'bg-card' : 'bg-muted/30'}>
+                  <td className="p-3 text-sm font-medium text-foreground border border-border/50">{row.plan}</td>
+                  <td className="p-3 text-sm text-foreground border border-border/50">{row.price}</td>
+                  <td className="p-3 text-sm font-semibold text-primary border border-border/50">{row.heus}</td>
+                  <td className="p-3 text-sm text-muted-foreground border border-border/50">{row.intent}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
-              <div className="bg-muted rounded-lg p-3 border border-border">
-                <p className="text-xs text-gray-700 leading-relaxed">
-                  Click <strong>⋯</strong> on any message for detailed breakdown. <strong>Every action is itemised</strong>.
-                </p>
-              </div>
-            </div>
-          </div>
+      {/* Footer - No Fees */}
+      <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-green-500/10 via-emerald-500/10 to-teal-500/10 p-5 border border-green-200 dark:border-green-800/30">
+        <div className="flex items-center justify-center gap-2">
+          <Target className="w-5 h-5 text-green-600" />
+          <p className="text-foreground font-bold text-lg">
+            No per-user fees. No per-asset fees. Unlimited scale.
+          </p>
         </div>
       </div>
     </div>
