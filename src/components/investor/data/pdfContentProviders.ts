@@ -1576,6 +1576,21 @@ export const getCompetitorBenchmarksPdfContent = (): string[] => [
   "- Strategy: 'Disruption Without Displacement'",
 ];
 
+export const getCustomerOnlineBehaviourPdfContent = (): string[] => [
+  "Customer Online Behaviour:",
+  "",
+  "Digital Behaviour & Channel Analysis",
+  "",
+  "Content for Customer Online Behaviour to be provided.",
+  "This section will cover:",
+  "- Search behaviour and keyword patterns",
+  "- Social media channel preferences",
+  "- Content consumption patterns",
+  "- Discovery channels and touchpoints",
+  "",
+  "Awaiting detailed digital behaviour analysis content.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1619,6 +1634,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   customerUserJourneys: getCustomerUserJourneysPdfContent,
   marketDescription: getMarketDescriptionPdfContent,
   competitorBenchmarks: getCompetitorBenchmarksPdfContent,
+  customerOnlineBehaviour: getCustomerOnlineBehaviourPdfContent,
 };
 
 // Get PDF content for any visual component type

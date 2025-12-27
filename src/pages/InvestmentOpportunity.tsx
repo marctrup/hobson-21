@@ -80,6 +80,7 @@ import { CustomerPersonasVisual } from "@/components/investor/CustomerPersonasVi
 import { CustomerUserJourneysVisual } from "@/components/investor/CustomerUserJourneysVisual";
 import { MarketDescriptionVisual } from "@/components/investor/MarketDescriptionVisual";
 import { CompetitorBenchmarksVisual } from "@/components/investor/CompetitorBenchmarksVisual";
+import { CustomerOnlineBehaviourVisual } from "@/components/investor/CustomerOnlineBehaviourVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -630,6 +631,15 @@ const sections = [
         title: "Competitor Benchmarks",
         showCustomVisual: true,
         customVisualComponent: "competitorBenchmarks",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Customer Online Behaviour",
+        showCustomVisual: true,
+        customVisualComponent: "customerOnlineBehaviour",
         content: {
           overview: "",
           sections: [],
@@ -1481,6 +1491,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Competitor Benchmarks */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "competitorBenchmarks" && (
                       <CompetitorBenchmarksVisual />
+                    )}
+
+                    {/* Custom Visual Component for Customer Online Behaviour */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "customerOnlineBehaviour" && (
+                      <CustomerOnlineBehaviourVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
