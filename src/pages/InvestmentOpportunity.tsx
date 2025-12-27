@@ -574,17 +574,7 @@ const sections = [
     icon: Target,
     color: "from-teal-500/10 to-teal-600/10",
     iconColor: "text-teal-600",
-    pages: [
-      {
-        title: "Marketing & Sales Strategy",
-        showCustomVisual: true,
-        customVisualComponent: "marketingSalesStrategy",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-    ],
+    pages: [],
   },
   {
     id: "financials",
