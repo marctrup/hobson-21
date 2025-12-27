@@ -2309,6 +2309,213 @@ const renderFoundingLeadership = (
 };
 
 /**
+ * Render Team visual matching on-screen component
+ */
+const renderTeam = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Helper for page break
+  const checkPageBreak = (requiredSpace: number) => {
+    if (yPosition + requiredSpace > pageHeight - 40) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Core Team data
+  const coreTeam = [
+    { name: "Max Worth", role: "CEO", description: "", isTBC: true },
+    { name: "Marc Trup", role: "Commercial Lead", description: "Driving enterprise sales, go-to-market execution, and customer growth" },
+    { name: "Rochelle Trup", role: "Commercial Lead", description: "Leading commercial strategy, partnerships, and market expansion" },
+    { name: "Julia Szaltoni", role: "Product Lead", description: "Driving product strategy, design, and customer outcomes with deep domain understanding of property operations and user behaviour" },
+    { name: "Denis Kosenkov", role: "Senior AI Developer", description: "Architecting Hobson's AI systems and execution pipelines" },
+    { name: "Kumar Ankit", role: "AI & Technical Lead", description: "Leading the core AI architecture and platform development" },
+    { name: "Harriet Taylor", role: "Marketing Lead", description: "", isTBC: true },
+    { name: "Max Grey", role: "Sales Lead", description: "", isTBC: true },
+    { name: "Saul Trup", role: "Client Success Lead", description: "", isTBC: true },
+  ];
+
+  // Section 1: Core Operational Team Header
+  checkPageBreak(30);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 6, PDF_CONFIG.circleSize.large, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Core Operational Team", margin + 18, yPosition + 8);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("The team driving Hobson's growth and innovation", margin + 18, yPosition + 16);
+  yPosition += 24;
+
+  // Team member cards - 2 columns
+  const cardWidth = (maxWidth - 8) / 2;
+  const cardHeight = 36;
+  
+  coreTeam.forEach((member, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    
+    if (col === 0) {
+      checkPageBreak(cardHeight + 6);
+    }
+    
+    const cardX = margin + col * (cardWidth + 8);
+    const cardY = col === 0 ? yPosition : yPosition;
+
+    // Card background
+    renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+
+    // TBC badge
+    if (member.isTBC) {
+      doc.setFillColor(...PDF_CONFIG.amberBg);
+      doc.roundedRect(cardX + cardWidth - 22, cardY + 4, 18, 8, 2, 2, "F");
+      doc.setTextColor(...PDF_CONFIG.amber);
+      doc.setFontSize(6);
+      doc.text("TBC", cardX + cardWidth - 13, cardY + 9.5, { align: "center" });
+    }
+
+    // Initials circle
+    const initials = member.name.split(' ').map(n => n[0]).join('');
+    doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+    doc.circle(cardX + 14, cardY + 14, 8, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "bold");
+    doc.text(initials, cardX + 14, cardY + 16.5, { align: "center" });
+
+    // Name and role
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text(member.name, cardX + 26, cardY + 12);
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(8);
+    doc.text(member.role, cardX + 26, cardY + 18);
+
+    // Description
+    if (member.description) {
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.setFontSize(7);
+      const descLines = doc.splitTextToSize(sanitizeText(member.description), cardWidth - 32);
+      let descY = cardY + 25;
+      descLines.slice(0, 2).forEach((line: string) => {
+        doc.text(line, cardX + 26, descY);
+        descY += 4;
+      });
+    }
+
+    if (col === 1 || idx === coreTeam.length - 1) {
+      yPosition += cardHeight + 4;
+    }
+  });
+
+  yPosition += 8;
+
+  // Divider
+  checkPageBreak(40);
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.setLineWidth(0.3);
+  doc.line(margin + 40, yPosition, margin + maxWidth - 40, yPosition);
+  
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  const dividerText = "STRATEGIC GUIDANCE";
+  const dividerTextWidth = doc.getTextWidth(dividerText) + 16;
+  doc.rect(margin + (maxWidth - dividerTextWidth) / 2, yPosition - 4, dividerTextWidth, 8, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(7);
+  doc.text(dividerText, margin + maxWidth / 2, yPosition + 2, { align: "center" });
+  yPosition += 16;
+
+  // Section 2: Advisory Board Header
+  doc.setFillColor(...PDF_CONFIG.textGray);
+  doc.circle(margin + 8, yPosition + 6, PDF_CONFIG.circleSize.large, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Advisory Board", margin + 18, yPosition + 8);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("Experienced advisors providing strategic guidance", margin + 18, yPosition + 16);
+  yPosition += 24;
+
+  // Advisor card
+  const advisorCardHeight = 28;
+  renderContentCard(doc, margin, yPosition, cardWidth, advisorCardHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+
+  // Initials
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.circle(margin + 14, yPosition + 14, 8, "FD");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("ND", margin + 14, yPosition + 16.5, { align: "center" });
+
+  // Name and role
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(9);
+  doc.text("Nick Doffman", margin + 26, yPosition + 11);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(8);
+  doc.text("Commercial Advisor", margin + 26, yPosition + 17);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(7);
+  doc.text("Bringing deep commercial and industry experience to guide strategic growth", margin + 26, yPosition + 24);
+
+  yPosition += advisorCardHeight + 10;
+
+  // Upcoming advisors box
+  checkPageBreak(40);
+  const upcomingHeight = 32;
+  renderContentCard(doc, margin, yPosition, maxWidth, upcomingHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 10, yPosition + 8, PDF_CONFIG.circleSize.small, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(8);
+  doc.text("Additional advisors currently in formation to support:", margin + 16, yPosition + 10);
+
+  const upcomingAreas = ["International expansion", "Enterprise partnerships", "Regulatory strategy"];
+  const areaWidth = (maxWidth - 24) / 3;
+  
+  upcomingAreas.forEach((area, idx) => {
+    const areaX = margin + 8 + idx * areaWidth;
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
+    doc.roundedRect(areaX, yPosition + 16, areaWidth - 4, 12, 2, 2, "F");
+    
+    doc.setFillColor(...PDF_CONFIG.textGray);
+    doc.circle(areaX + 6, yPosition + 22, PDF_CONFIG.circleSize.small, "F");
+    
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    doc.text(area, areaX + 12, yPosition + 24);
+  });
+
+  yPosition += upcomingHeight + PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
  * Render Raise visual matching on-screen component
  */
 const renderRaise = (
@@ -5877,6 +6084,8 @@ const renderTabContent = (
       yPosition = renderTeamCredibility(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "foundingLeadership") {
       yPosition = renderFoundingLeadership(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "team") {
+      yPosition = renderTeam(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "raise") {
       yPosition = renderRaise(doc, yPosition, margin, pageWidth, pageHeight);
     }
