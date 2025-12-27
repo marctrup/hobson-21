@@ -1488,6 +1488,21 @@ export const getCustomerUserJourneysPdfContent = (): string[] => [
   "deeper document coverage, and clearer alignment with enterprise workflows.",
 ];
 
+export const getMarketDescriptionPdfContent = (): string[] => [
+  "Market Description:",
+  "",
+  "Property Document Management Market Analysis",
+  "",
+  "Content for Market Description to be provided.",
+  "This section will cover:",
+  "- Market size and valuation",
+  "- Target segments and breakdown",
+  "- Growth drivers and trends",
+  "- Competitive positioning",
+  "",
+  "Awaiting detailed market analysis content.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1529,6 +1544,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   situationAnalysis: getSituationAnalysisPdfContent,
   customerPersonas: getCustomerPersonasPdfContent,
   customerUserJourneys: getCustomerUserJourneysPdfContent,
+  marketDescription: getMarketDescriptionPdfContent,
 };
 
 // Get PDF content for any visual component type
