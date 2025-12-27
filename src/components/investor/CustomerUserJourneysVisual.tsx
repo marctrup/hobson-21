@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import { User, Target, MessageSquare, TrendingUp, AlertCircle, Lightbulb } from "lucide-react";
 
 interface Stage {
@@ -146,53 +145,54 @@ export const CustomerUserJourneysVisual = () => {
   return (
     <div className="space-y-6">
       {/* Introduction */}
-      <Card className="p-6 bg-gradient-to-br from-slate-800/60 to-slate-900/60 border-purple-500/20">
-        <p className="text-slate-300 leading-relaxed mb-4">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-500/10 via-blue-500/5 to-blue-500/10 p-6 border border-blue-200/50 dark:border-blue-800/30">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <p className="text-foreground leading-relaxed mb-4 relative">
           The Customer journey maps focus on the MVP journey by one of our pilots. It demonstrates how an adopter moves from first contact to sustained engagement.
         </p>
-        <div className="bg-purple-500/10 rounded-lg p-4 border border-purple-500/20">
-          <h3 className="text-lg font-semibold text-white mb-3">Segment 1: Large Portfolio Operators</h3>
-          <p className="text-slate-300 text-sm mb-4">
+        <div className="bg-background/60 rounded-xl p-4 border border-border/50 relative">
+          <h3 className="text-lg font-semibold text-foreground mb-3">Segment 1: Large Portfolio Operators</h3>
+          <p className="text-muted-foreground text-sm mb-4">
             Represented by Persona 1 (Leigh). This segment provides the clearest insight into enterprise expectations, adoption barriers, and the behaviours that shape product refinement.
           </p>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <User className="w-8 h-8 mx-auto text-purple-400 mb-2" />
-              <p className="text-xs text-slate-400">Name</p>
-              <p className="text-sm font-medium text-white">Leigh X</p>
+              <User className="w-8 h-8 mx-auto text-blue-600 dark:text-blue-400 mb-2" />
+              <p className="text-xs text-muted-foreground">Name</p>
+              <p className="text-sm font-medium text-foreground">Leigh X</p>
             </div>
             <div className="text-center">
-              <Target className="w-8 h-8 mx-auto text-purple-400 mb-2" />
-              <p className="text-xs text-slate-400">Role</p>
-              <p className="text-sm font-medium text-white">COO</p>
+              <Target className="w-8 h-8 mx-auto text-blue-600 dark:text-blue-400 mb-2" />
+              <p className="text-xs text-muted-foreground">Role</p>
+              <p className="text-sm font-medium text-foreground">COO</p>
             </div>
             <div className="text-center">
-              <svg className="w-8 h-8 mx-auto text-purple-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-8 h-8 mx-auto text-blue-600 dark:text-blue-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
               </svg>
-              <p className="text-xs text-slate-400">Organisation</p>
-              <p className="text-sm font-medium text-white">Large Property Mgmt</p>
+              <p className="text-xs text-muted-foreground">Organisation</p>
+              <p className="text-sm font-medium text-foreground">Large Property Mgmt</p>
             </div>
             <div className="text-center">
-              <TrendingUp className="w-8 h-8 mx-auto text-purple-400 mb-2" />
-              <p className="text-xs text-slate-400">Primary Goal</p>
-              <p className="text-sm font-medium text-white">Quick info retrieval</p>
+              <TrendingUp className="w-8 h-8 mx-auto text-blue-600 dark:text-blue-400 mb-2" />
+              <p className="text-xs text-muted-foreground">Primary Goal</p>
+              <p className="text-sm font-medium text-foreground">Quick info retrieval</p>
             </div>
           </div>
         </div>
-      </Card>
+      </div>
 
       {/* Journey Stages */}
       <div className="space-y-4">
         {stages.map((stage, index) => (
-          <Card key={index} className="p-5 bg-slate-800/40 border-slate-700/50 hover:border-purple-500/30 transition-colors">
+          <div key={index} className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 p-5 border border-slate-200 dark:border-slate-700/50 hover:border-blue-300 dark:hover:border-blue-700/50 transition-colors">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center">
-                <span className="text-purple-400 font-bold text-sm">{index + 1}</span>
+              <div className="w-10 h-10 rounded-full bg-blue-500/10 flex items-center justify-center">
+                <span className="text-blue-600 dark:text-blue-400 font-bold text-sm">{index + 1}</span>
               </div>
               <div>
-                <p className="text-xs text-purple-400 uppercase tracking-wider">{stage.stage}</p>
-                <h3 className="text-lg font-semibold text-white">{stage.title}</h3>
+                <p className="text-xs text-blue-600 dark:text-blue-400 uppercase tracking-wider">{stage.stage}</p>
+                <h3 className="text-lg font-semibold text-foreground">{stage.title}</h3>
               </div>
             </div>
 
@@ -200,15 +200,15 @@ export const CustomerUserJourneysVisual = () => {
               {/* Left Column */}
               <div className="space-y-3">
                 {/* Touchpoints */}
-                <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="bg-background/60 rounded-xl p-3 border border-border/50">
                   <div className="flex items-center gap-2 mb-2">
-                    <MessageSquare className="w-4 h-4 text-blue-400" />
-                    <span className="text-xs font-medium text-blue-400 uppercase">Touchpoints</span>
+                    <MessageSquare className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                    <span className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase">Touchpoints</span>
                   </div>
                   <ul className="space-y-1">
                     {stage.touchpoints.map((tp, i) => (
-                      <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
-                        <span className="text-blue-400 mt-1">•</span>
+                      <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="text-blue-600 dark:text-blue-400 mt-1">•</span>
                         {tp}
                       </li>
                     ))}
@@ -216,22 +216,22 @@ export const CustomerUserJourneysVisual = () => {
                 </div>
 
                 {/* What Leigh Thinks */}
-                <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="bg-amber-50/50 dark:bg-amber-950/20 rounded-xl p-3 border border-amber-200/50 dark:border-amber-800/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-medium text-amber-400 uppercase">💭 What Leigh Thinks</span>
+                    <span className="text-xs font-medium text-amber-700 dark:text-amber-400 uppercase">💭 What Leigh Thinks</span>
                   </div>
-                  <p className="text-sm text-slate-300 italic">"{stage.thinks}"</p>
+                  <p className="text-sm text-foreground italic">"{stage.thinks}"</p>
                 </div>
 
                 {/* What Leigh Does */}
-                <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl p-3 border border-emerald-200/50 dark:border-emerald-800/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-medium text-green-400 uppercase">✓ What Leigh Does</span>
+                    <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400 uppercase">✓ What Leigh Does</span>
                   </div>
                   <ul className="space-y-1">
                     {stage.does.map((action, i) => (
-                      <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
-                        <span className="text-green-400 mt-1">•</span>
+                      <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="text-emerald-600 dark:text-emerald-400 mt-1">•</span>
                         {action}
                       </li>
                     ))}
@@ -242,63 +242,66 @@ export const CustomerUserJourneysVisual = () => {
               {/* Right Column */}
               <div className="space-y-3">
                 {/* What Leigh Feels */}
-                <div className="bg-slate-900/50 rounded-lg p-3">
+                <div className="bg-pink-50/50 dark:bg-pink-950/20 rounded-xl p-3 border border-pink-200/50 dark:border-pink-800/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-medium text-pink-400 uppercase">❤️ What Leigh Feels</span>
+                    <span className="text-xs font-medium text-pink-700 dark:text-pink-400 uppercase">❤️ What Leigh Feels</span>
                   </div>
-                  <p className="text-sm text-slate-300">{stage.feels}</p>
+                  <p className="text-sm text-foreground">{stage.feels}</p>
                 </div>
 
                 {/* Blocks */}
-                <div className="bg-red-500/10 rounded-lg p-3 border border-red-500/20">
+                <div className="bg-red-50/50 dark:bg-red-950/20 rounded-xl p-3 border border-red-200/50 dark:border-red-800/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertCircle className="w-4 h-4 text-red-400" />
-                    <span className="text-xs font-medium text-red-400 uppercase">Blocks</span>
+                    <AlertCircle className="w-4 h-4 text-red-600 dark:text-red-400" />
+                    <span className="text-xs font-medium text-red-700 dark:text-red-400 uppercase">Blocks</span>
                   </div>
-                  <p className="text-sm text-slate-300">{stage.blocks}</p>
+                  <p className="text-sm text-muted-foreground">{stage.blocks}</p>
                 </div>
 
                 {/* Improvement Opportunity */}
-                <div className="bg-green-500/10 rounded-lg p-3 border border-green-500/20">
+                <div className="bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl p-3 border border-emerald-200/50 dark:border-emerald-800/30">
                   <div className="flex items-center gap-2 mb-2">
-                    <Lightbulb className="w-4 h-4 text-green-400" />
-                    <span className="text-xs font-medium text-green-400 uppercase">Improvement Opportunity</span>
+                    <Lightbulb className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                    <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400 uppercase">Improvement Opportunity</span>
                   </div>
-                  <p className="text-sm text-slate-300">{stage.improvement}</p>
+                  <p className="text-sm text-muted-foreground">{stage.improvement}</p>
                 </div>
               </div>
             </div>
-          </Card>
+          </div>
         ))}
       </div>
 
       {/* Summary */}
-      <Card className="p-6 bg-gradient-to-br from-purple-900/30 to-slate-900/60 border-purple-500/30">
-        <h3 className="text-lg font-semibold text-white mb-4">Summary</h3>
-        <p className="text-slate-300 leading-relaxed mb-4">
-          Leigh's journey reflects the typical enterprise adoption path: early enthusiasm, validation of alignment, operational friction during data preparation, renewed confidence after initial testing, a temporary loss of momentum due to delays, and restored trust following transparent communication.
-        </p>
-        
-        <div className="bg-slate-800/50 rounded-lg p-4 mb-4">
-          <h4 className="text-sm font-semibold text-purple-400 uppercase tracking-wider mb-3">Two Strategic Lessons</h4>
-          <div className="space-y-2">
-            {strategicLessons.map((lesson, index) => (
-              <div key={index} className="flex items-start gap-3">
-                <span className="w-6 h-6 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                  <span className="text-purple-400 font-bold text-xs">{index + 1}</span>
-                </span>
-                <p className="text-slate-300 text-sm">{lesson}</p>
-              </div>
-            ))}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-primary/10 p-6 border border-primary/20">
+        <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="relative">
+          <h3 className="text-lg font-semibold text-foreground mb-4">Summary</h3>
+          <p className="text-foreground leading-relaxed mb-4">
+            Leigh's journey reflects the typical enterprise adoption path: early enthusiasm, validation of alignment, operational friction during data preparation, renewed confidence after initial testing, a temporary loss of momentum due to delays, and restored trust following transparent communication.
+          </p>
+          
+          <div className="bg-background/60 rounded-xl p-4 border border-border/50 mb-4">
+            <h4 className="text-sm font-semibold text-primary uppercase tracking-wider mb-3">Two Strategic Lessons</h4>
+            <div className="space-y-2">
+              {strategicLessons.map((lesson, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <span className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <span className="text-primary font-bold text-xs">{index + 1}</span>
+                  </span>
+                  <p className="text-muted-foreground text-sm">{lesson}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-emerald-50/50 dark:bg-emerald-950/20 rounded-xl p-4 border border-emerald-200/50 dark:border-emerald-800/30">
+            <p className="text-foreground font-medium">
+              Hobson now enters MVP deployment with stronger trust foundations, deeper document coverage, and clearer alignment with enterprise workflows.
+            </p>
           </div>
         </div>
-
-        <div className="bg-green-500/10 rounded-lg p-4 border border-green-500/20">
-          <p className="text-slate-200 font-medium">
-            Hobson now enters MVP deployment with stronger trust foundations, deeper document coverage, and clearer alignment with enterprise workflows.
-          </p>
-        </div>
-      </Card>
+      </div>
     </div>
   );
 };
