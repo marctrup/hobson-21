@@ -6181,6 +6181,338 @@ const renderGlobalJustification = (
 };
 
 /**
+ * Render Brand Integrity, Perception & Positioning visual
+ */
+const renderBrandIntegrity = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Brand Summary Card
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 70, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, 70, 3, 3, "S");
+
+  // Icon circle
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Summary", margin + 24, yPosition + 16);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Clear, Coherent, and Authentic Brand Foundation", margin + 24, yPosition + 24);
+
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  const summaryText = "Hobson has a clear, coherent, and authentic brand foundation. Its voice, visual identity, archetypes, and interactive elements all convey calm intelligence and dependable guidance.";
+  const summaryLines = doc.splitTextToSize(summaryText, maxWidth - 16);
+  let textY = yPosition + 36;
+  summaryLines.forEach((line: string) => {
+    doc.text(line, margin + 8, textY);
+    textY += 5;
+  });
+
+  // Next Phase items
+  const nextPhase = ["Scaling emotional storytelling", "Building structured support and resolution processes", "Demonstrating the move from retrieval to proactive insight"];
+  textY = yPosition + 54;
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  nextPhase.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    doc.text(item, margin + 18, textY);
+    textY += 5;
+  });
+  yPosition += 78;
+
+  // Brand Background Card
+  if (yPosition > pageHeight - 85) { doc.addPage(); yPosition = margin; }
+  const purpleBg: [number, number, number] = [250, 245, 255];
+  const purpleBorder: [number, number, number] = [221, 214, 254];
+  doc.setFillColor(...purpleBg);
+  doc.roundedRect(margin, yPosition, maxWidth, 75, 3, 3, "F");
+  doc.setDrawColor(...purpleBorder);
+  doc.roundedRect(margin, yPosition, maxWidth, 75, 3, 3, "S");
+
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Background", margin + 24, yPosition + 16);
+
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  const bgText = "Hobson is a calm, intelligent, and dependable AI assistant built for Real Estate professionals. The brand stands for clarity, trust, and simplicity.";
+  const bgLines = doc.splitTextToSize(bgText, maxWidth - 16);
+  textY = yPosition + 28;
+  bgLines.forEach((line: string) => {
+    doc.text(line, margin + 8, textY);
+    textY += 5;
+  });
+
+  // Archetypes row
+  const archetypes = [
+    { name: "Sage", trait: "Primary Archetype", desc: "Wisdom, guidance, truth" },
+    { name: "Ruler", trait: "Supporting Trait", desc: "Order, reliability" },
+    { name: "Creator", trait: "Supporting Trait", desc: "Innovation" },
+  ];
+  const archWidth = (maxWidth - 24) / 3;
+  archetypes.forEach((arch, idx) => {
+    const xPos = margin + 8 + idx * (archWidth + 4);
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(xPos, yPosition + 45, archWidth, 24, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text(arch.trait.toUpperCase(), xPos + 4, yPosition + 53);
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.text(arch.name, xPos + 4, yPosition + 60);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text(arch.desc, xPos + 4, yPosition + 66);
+  });
+  yPosition += 83;
+
+  // Strengths & Weaknesses - 2 columns
+  if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
+  const colWidth = (maxWidth - 8) / 2;
+  const cardHeight = 70;
+
+  // Strengths Card
+  const emeraldBg: [number, number, number] = [236, 253, 245];
+  const emeraldBorder: [number, number, number] = [167, 243, 208];
+  doc.setFillColor(...emeraldBg);
+  doc.roundedRect(margin, yPosition, colWidth, cardHeight, 3, 3, "F");
+  doc.setDrawColor(...emeraldBorder);
+  doc.roundedRect(margin, yPosition, colWidth, cardHeight, 3, 3, "S");
+
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Strengths", margin + 22, yPosition + 14);
+
+  const strengths = [
+    "Simplifies document retrieval and reduces cognitive load",
+    "Saves meaningful time on routine information search",
+    "Provides transparent, referenced answers that build trust",
+    "Calm, clear, jargon-free tone matching the Sage archetype",
+  ];
+  textY = yPosition + 26;
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  strengths.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(margin + 8, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    const lines = doc.splitTextToSize(item, colWidth - 20);
+    lines.forEach((line: string) => {
+      doc.text(line, margin + 14, textY);
+      textY += 5;
+    });
+    textY += 1;
+  });
+
+  // Weaknesses Card
+  const amberBg: [number, number, number] = [255, 251, 235];
+  const amberBorder: [number, number, number] = [253, 230, 138];
+  doc.setFillColor(...amberBg);
+  doc.roundedRect(margin + colWidth + 8, yPosition, colWidth, cardHeight, 3, 3, "F");
+  doc.setDrawColor(...amberBorder);
+  doc.roundedRect(margin + colWidth + 8, yPosition, colWidth, cardHeight, 3, 3, "S");
+
+  doc.setFillColor(...PDF_CONFIG.amber);
+  doc.circle(margin + colWidth + 20, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Weaknesses (Opportunities)", margin + colWidth + 30, yPosition + 14);
+
+  const weaknesses = [
+    "Emotionally, the brand is not yet fully expressed",
+    "Seen as reliable but not yet as strategic insight source",
+    "Still building resolution and support structures",
+  ];
+  textY = yPosition + 26;
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  weaknesses.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.amber);
+    doc.circle(margin + colWidth + 16, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    const lines = doc.splitTextToSize(item, colWidth - 20);
+    lines.forEach((line: string) => {
+      doc.text(line, margin + colWidth + 22, textY);
+      textY += 5;
+    });
+    textY += 1;
+  });
+  yPosition += cardHeight + 8;
+
+  // Emotional & Cognitive Appeal - 2 columns
+  if (yPosition > pageHeight - 70) { doc.addPage(); yPosition = margin; }
+  const appealHeight = 62;
+
+  // Emotional Appeal Card
+  const pinkBg: [number, number, number] = [253, 242, 248];
+  const pinkBorder: [number, number, number] = [251, 207, 232];
+  const pink: [number, number, number] = [219, 39, 119];
+  doc.setFillColor(...pinkBg);
+  doc.roundedRect(margin, yPosition, colWidth, appealHeight, 3, 3, "F");
+  doc.setDrawColor(...pinkBorder);
+  doc.roundedRect(margin, yPosition, colWidth, appealHeight, 3, 3, "S");
+
+  doc.setFillColor(...pink);
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Emotional (Heart) Appeal", margin + 22, yPosition + 14);
+
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  const emotionalText = "Hobson's emotional promise is reassurance. It reduces stress by making hard-to-find information easy to access, giving professionals a sense of control.";
+  const emotionalLines = doc.splitTextToSize(emotionalText, colWidth - 16);
+  textY = yPosition + 26;
+  emotionalLines.forEach((line: string) => {
+    doc.text(line, margin + 8, textY);
+    textY += 5;
+  });
+
+  // Cognitive Appeal Card
+  const blueBg: [number, number, number] = [239, 246, 255];
+  const blueBorder: [number, number, number] = [191, 219, 254];
+  const blue: [number, number, number] = [37, 99, 235];
+  doc.setFillColor(...blueBg);
+  doc.roundedRect(margin + colWidth + 8, yPosition, colWidth, appealHeight, 3, 3, "F");
+  doc.setDrawColor(...blueBorder);
+  doc.roundedRect(margin + colWidth + 8, yPosition, colWidth, appealHeight, 3, 3, "S");
+
+  doc.setFillColor(...blue);
+  doc.circle(margin + colWidth + 20, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Cognitive (Head) Appeal", margin + colWidth + 30, yPosition + 14);
+
+  const cognitiveItems = [
+    "Measurable outcomes: time saved, fewer errors, quicker decisions",
+    "Transparent referencing: every answer traced back to its source",
+  ];
+  textY = yPosition + 28;
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  cognitiveItems.forEach((item) => {
+    doc.setFillColor(...blue);
+    doc.circle(margin + colWidth + 16, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    const lines = doc.splitTextToSize(item, colWidth - 20);
+    lines.forEach((line: string) => {
+      doc.text(line, margin + colWidth + 22, textY);
+      textY += 5;
+    });
+    textY += 1;
+  });
+  yPosition += appealHeight + 8;
+
+  // Brand Metaphors Card
+  if (yPosition > pageHeight - 55) { doc.addPage(); yPosition = margin; }
+  doc.setFillColor(...amberBg);
+  doc.roundedRect(margin, yPosition, maxWidth, 48, 3, 3, "F");
+  doc.setDrawColor(...amberBorder);
+  doc.roundedRect(margin, yPosition, maxWidth, 48, 3, 3, "S");
+
+  doc.setFillColor(...PDF_CONFIG.amber);
+  doc.circle(margin + 14, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Metaphors", margin + 24, yPosition + 14);
+
+  const metaphors = [
+    { metaphor: "GPS for documents", desc: "Takes you straight to the answer" },
+    { metaphor: "Master key", desc: "Unlocks information hidden in dense files" },
+    { metaphor: "Compass in a document jungle", desc: "Navigates complexity safely" },
+    { metaphor: "Desk lamp", desc: "Quietly illuminates truth" },
+  ];
+  const metaWidth = (maxWidth - 24) / 4;
+  metaphors.forEach((meta, idx) => {
+    const xPos = margin + 8 + idx * (metaWidth + 4);
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(xPos, yPosition + 22, metaWidth, 20, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(meta.metaphor, xPos + 4, yPosition + 30);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(meta.desc, metaWidth - 8);
+    doc.text(descLines[0] || "", xPos + 4, yPosition + 38);
+  });
+  yPosition += 56;
+
+  // Current Marketing Position Card
+  if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "S");
+
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Current Marketing Position", margin + 24, yPosition + 14);
+
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  const positionText = "Today, Hobson's market presence is selective and relationship-led. The focus is on deep MVP partnerships rather than broad public awareness.";
+  const positionLines = doc.splitTextToSize(positionText, maxWidth - 16);
+  textY = yPosition + 26;
+  positionLines.forEach((line: string) => {
+    doc.text(line, margin + 8, textY);
+    textY += 5;
+  });
+
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin + 8, yPosition + 35, maxWidth - 16, 6, 1, 1, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "bold");
+  doc.text("Opportunity: Shift to confident, educational voice shaping expectations for AI-native assistants in real estate", margin + 12, yPosition + 40);
+
+  yPosition += 53;
+
+  return yPosition;
+};
+
+/**
  * Create cover page for a section PDF
  */
 const createCoverPage = (
@@ -6432,6 +6764,10 @@ const renderTabContent = (
       yPosition = renderPLAssumptions(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "globalJustification") {
       yPosition = renderGlobalJustification(doc, yPosition, margin, pageWidth, pageHeight);
+    }
+    // Marketing & Sales Strategy renderers
+    else if (componentType === "brandIntegrity") {
+      yPosition = renderBrandIntegrity(doc, yPosition, margin, pageWidth, pageHeight);
     } else {
       const customContent = getCustomVisualContent(componentType);
       if (customContent.length > 0) {
