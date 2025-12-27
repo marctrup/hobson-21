@@ -804,6 +804,14 @@ const InvestmentOpportunity = () => {
   const [currentPageIndex, setCurrentPageIndex] = useState(0);
   const [showDownloadConfirm, setShowDownloadConfirm] = useState(false);
   const navigate = useNavigate();
+  const contentScrollRef = React.useRef<HTMLDivElement>(null);
+
+  // Scroll to top when tab changes or modal opens
+  React.useEffect(() => {
+    if (contentScrollRef.current) {
+      contentScrollRef.current.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [currentPageIndex, selectedSection]);
   const { toast } = useToast();
 
   // Function to generate PDF from section data - uses new architecture
@@ -1259,7 +1267,7 @@ const InvestmentOpportunity = () => {
               )}
 
               {/* Page Content */}
-              <div className="flex-1 overflow-y-auto mt-4 sm:mt-6 space-y-6 sm:space-y-8 -mx-4 sm:-mx-6 px-4 sm:px-6">
+              <div ref={contentScrollRef} className="flex-1 overflow-y-auto mt-4 sm:mt-6 space-y-6 sm:space-y-8 -mx-4 sm:-mx-6 px-4 sm:px-6">
                 {selectedSection.pages[currentPageIndex] && (
                   <>
                     {/* Custom Visual Component for Executive Summary */}
