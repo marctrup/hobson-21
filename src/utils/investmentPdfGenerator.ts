@@ -3895,16 +3895,13 @@ const renderCommercials = (
   const revenueCardHeight = 90;
   renderContentCard(doc, margin, yPosition, maxWidth, revenueCardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
-  // Header with icon
+  // Header with circle icon
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.roundedRect(margin + 12, yPosition + 8, 28, 14, 2, 2, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(10);
-  doc.text("↗", margin + 26, yPosition + 17, { align: "center" });
+  doc.circle(margin + 20, yPosition + 14, 6, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Built-In Revenue Expansion Engine", margin + 48, yPosition + 18);
+  doc.text("Built-In Revenue Expansion Engine", margin + 32, yPosition + 18);
 
   yPosition += 28;
 
@@ -3958,16 +3955,13 @@ const renderCommercials = (
   const transparencyCardHeight = 70;
   renderContentCard(doc, margin, yPosition, maxWidth, transparencyCardHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
 
-  // Header with icon
+  // Header with circle icon
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.roundedRect(margin + 12, yPosition + 8, 28, 14, 2, 2, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(10);
-  doc.text("✓", margin + 26, yPosition + 17, { align: "center" });
+  doc.circle(margin + 20, yPosition + 14, 6, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Unmatched Transparency = Enterprise Trust", margin + 48, yPosition + 18);
+  doc.text("Unmatched Transparency = Enterprise Trust", margin + 32, yPosition + 18);
 
   yPosition += 28;
 
