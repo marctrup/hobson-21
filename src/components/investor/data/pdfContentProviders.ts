@@ -1379,6 +1379,35 @@ export const getSituationAnalysisPdfContent = (): string[] => [
   "by delivering fast, accurate, referenced answers using existing files.",
 ];
 
+export const getCustomerPersonasPdfContent = (): string[] => [
+  "Customer Personas:",
+  "",
+  "Representative profiles from each target segment, validated through discovery interviews.",
+  "",
+  "Persona 1: Sarah - Operations Director (Large Portfolio Operator)",
+  "- Oversees team of 15 managing 500+ residential and commercial units",
+  "- Pain points: Hours lost searching fragmented repositories, manual board reports",
+  "- Goals: Reduce time-to-answer, enable team self-sufficiency, improve compliance",
+  "- Hobson value: Instant access to portfolio-wide document intelligence",
+  "",
+  "Persona 2: James - Property Manager (Medium-Sized Company)",
+  "- Manages 80 units in a lean team with informal knowledge sharing",
+  "- Pain points: Information scattered across emails/folders, slow onboarding",
+  "- Goals: Centralise access without system overhaul, speed up asset reviews",
+  "- Hobson value: An instant-access layer over existing files",
+  "",
+  "Persona 3: David - Owner-Manager (Small Portfolio Owner)",
+  "- Runs 12-unit residential portfolio with no admin support",
+  "- Pain points: No time for document management, relies on paper and email",
+  "- Goals: Quick answers without learning software, simple deadline tracking",
+  "- Hobson value: A simple digital assistant that just works",
+  "",
+  "Summary:",
+  "Each persona shares the same fundamental need: fast, reliable access to",
+  "document-based answers without changing existing workflows or learning",
+  "complex new tools.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1418,6 +1447,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   marketingSalesStrategy: getMarketingSalesStrategyPdfContent,
   executiveContext: getExecutiveContextPdfContent,
   situationAnalysis: getSituationAnalysisPdfContent,
+  customerPersonas: getCustomerPersonasPdfContent,
 };
 
 // Get PDF content for any visual component type
