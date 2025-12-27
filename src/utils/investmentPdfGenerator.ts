@@ -2331,7 +2331,7 @@ const renderTeam = (
 
   // Core Team data
   const coreTeam = [
-    { name: "Max Worth", role: "CEO", description: "", isTBC: true },
+    { name: "—", role: "CEO", description: "", isTBC: true },
     { name: "Marc Trup", role: "Commercial Lead", description: "Driving enterprise sales, go-to-market execution, and customer growth" },
     { name: "Rochelle Trup", role: "Commercial Lead", description: "Leading commercial strategy, partnerships, and market expansion" },
     { name: "Julia Szaltoni", role: "Product Lead", description: "Driving product strategy, design, and customer outcomes with deep domain understanding of property operations and user behaviour" },

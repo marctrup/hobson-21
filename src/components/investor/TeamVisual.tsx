@@ -10,7 +10,7 @@ interface TeamMember {
 
 const coreTeam: TeamMember[] = [
   {
-    name: "Max Worth",
+    name: "—",
     role: "CEO",
     isTBC: true,
   },
