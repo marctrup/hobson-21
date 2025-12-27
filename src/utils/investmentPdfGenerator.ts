@@ -6710,8 +6710,8 @@ export const generateFullBusinessPlanPdf = (
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = PDF_CONFIG.margin;
 
-  // Explicit ordered list of cards to include
-  const includedSections: CardSection[] = [
+  // Explicit ordered list of cards to include - filter out sections with no pages
+  const allSections: CardSection[] = [
     cards.strategyPositioning,
     cards.customersMarket,
     cards.roadmapProduct,
@@ -6720,6 +6720,11 @@ export const generateFullBusinessPlanPdf = (
     cards.marketingSales,
     cards.financials,
   ];
+  
+  // Only include sections that have content (pages)
+  const includedSections: CardSection[] = allSections.filter(
+    section => section.pages && section.pages.length > 0
+  );
 
   // Cover page
   doc.setFillColor(...PDF_CONFIG.primaryColor);
