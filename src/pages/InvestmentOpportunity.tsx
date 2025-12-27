@@ -68,6 +68,7 @@ import OurVisionVisual from "@/components/investor/OurVisionVisual";
 import ProductVisionVisual from "@/components/investor/ProductVisionVisual";
 import { CustomersMarketSourcesVisual } from "@/components/investor/CustomersMarketSourcesVisual";
 import { TeamCredibilityVisual } from "@/components/investor/TeamCredibilityVisual";
+import { FoundingLeadershipVisual } from "@/components/investor/FoundingLeadershipVisual";
 import { RaiseVisual } from "@/components/investor/RaiseVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
@@ -527,7 +528,7 @@ const sections = [
       {
         title: "Founding & Leadership",
         showCustomVisual: true,
-        customVisualComponent: "teamCredibility",
+        customVisualComponent: "foundingLeadership",
         content: {
           overview: "",
           sections: [],
@@ -1246,6 +1247,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Team Credibility */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "teamCredibility" && (
                       <TeamCredibilityVisual />
+                    )}
+
+                    {/* Custom Visual Component for Founding & Leadership */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "foundingLeadership" && (
+                      <FoundingLeadershipVisual />
                     )}
 
                     {/* Custom Visual Component for Raise */}
