@@ -3860,6 +3860,168 @@ const renderCommercialisationStrategy = (
 };
 
 /**
+ * Render Commercials visual
+ */
+const renderCommercials = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Helper for page break
+  const checkPageBreak = (requiredSpace: number) => {
+    if (yPosition + requiredSpace > pageHeight - 40) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Header - Intro text
+  checkPageBreak(20);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "italic");
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  const introText = "This is designed to kill procurement friction and accelerate viral adoption inside organisations.";
+  const introLines = doc.splitTextToSize(introText, maxWidth);
+  doc.text(introLines, pageWidth / 2, yPosition, { align: "center" });
+  yPosition += introLines.length * 6 + 16;
+
+  // Section 1: Revenue Expansion Engine
+  checkPageBreak(100);
+  const revenueCardHeight = 90;
+  renderContentCard(doc, margin, yPosition, maxWidth, revenueCardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
+
+  // Header with icon
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.roundedRect(margin + 12, yPosition + 8, 28, 14, 2, 2, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(10);
+  doc.text("↗", margin + 26, yPosition + 17, { align: "center" });
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Built-In Revenue Expansion Engine", margin + 48, yPosition + 18);
+
+  yPosition += 28;
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  const revenueIntro = "Hobson has something most startups do not: automatic net revenue retention growth.";
+  doc.text(revenueIntro, margin + 16, yPosition);
+  yPosition += 10;
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.text("As operators:", margin + 16, yPosition);
+  yPosition += 8;
+
+  const expansionDrivers = [
+    "grow portfolios,",
+    "expand into new jurisdictions,",
+    "face more compliance,",
+    "manage more complex leases,",
+    "increase reporting demands,"
+  ];
+
+  doc.setFont("helvetica", "normal");
+  expansionDrivers.forEach((driver) => {
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(margin + 22, yPosition - 1, 1.5, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(driver, margin + 28, yPosition);
+    yPosition += 6;
+  });
+
+  yPosition += 6;
+
+  // Callout
+  const calloutY = yPosition;
+  doc.setFillColor(...PDF_CONFIG.emeraldBg);
+  doc.roundedRect(margin + 12, calloutY - 4, maxWidth - 24, 14, 2, 2, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "normal");
+  doc.text("Their HEU consumption rises ", margin + 20, calloutY + 5);
+  doc.setTextColor(...PDF_CONFIG.emerald);
+  doc.setFont("helvetica", "bold");
+  doc.text("without a single sales conversation", margin + 20 + doc.getTextWidth("Their HEU consumption rises "), calloutY + 5);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text(".", margin + 20 + doc.getTextWidth("Their HEU consumption rises without a single sales conversation"), calloutY + 5);
+
+  yPosition += 24;
+
+  // Section 2: Transparency
+  checkPageBreak(80);
+  const transparencyCardHeight = 70;
+  renderContentCard(doc, margin, yPosition, maxWidth, transparencyCardHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
+
+  // Header with icon
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.roundedRect(margin + 12, yPosition + 8, 28, 14, 2, 2, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(10);
+  doc.text("✓", margin + 26, yPosition + 17, { align: "center" });
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Unmatched Transparency = Enterprise Trust", margin + 48, yPosition + 18);
+
+  yPosition += 28;
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  setBodySmallFont(doc);
+  doc.text("Hobson provides:", margin + 16, yPosition);
+  yPosition += 8;
+
+  const transparencyFeatures = [
+    "real-time HEU usage bars,",
+    "per-message cost breakdowns,",
+    "full audit trails of AI effort"
+  ];
+
+  doc.setFont("helvetica", "normal");
+  transparencyFeatures.forEach((feature) => {
+    doc.setFillColor(...PDF_CONFIG.blue);
+    doc.circle(margin + 22, yPosition - 1, 1.5, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(feature, margin + 28, yPosition);
+    yPosition += 6;
+  });
+
+  yPosition += 10;
+
+  // Bottom callout box
+  checkPageBreak(30);
+  const bottomCalloutHeight = 24;
+  renderContentCard(doc, margin, yPosition, maxWidth, bottomCalloutHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.text("This gives finance teams ", margin + 16, yPosition + 10);
+  doc.setTextColor(...PDF_CONFIG.blue);
+  doc.setFont("helvetica", "bold");
+  doc.text("absolute certainty on cost control", margin + 16 + doc.getTextWidth("This gives finance teams "), yPosition + 10);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text(".", margin + 16 + doc.getTextWidth("This gives finance teams absolute certainty on cost control"), yPosition + 10);
+
+  doc.setFont("helvetica", "normal");
+  doc.text("It removes the biggest objection enterprises have to AI: ", margin + 16, yPosition + 18);
+  doc.setTextColor(...PDF_CONFIG.blue);
+  doc.setFont("helvetica", "bold");
+  doc.text("unpredictable cost", margin + 16 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: "), yPosition + 18);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text(".", margin + 16 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: unpredictable cost"), yPosition + 18);
+
+  yPosition += bottomCalloutHeight + PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
  * Render Gantt Chart (2026-2028) visual
  */
 const renderGanttChart = (
@@ -6264,6 +6426,8 @@ const renderTabContent = (
       yPosition = renderCommercialisationStrategy(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "heuPricing") {
       yPosition = renderHEUPricing(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "commercials") {
+      yPosition = renderCommercials(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "revenueModel") {
       yPosition = renderRevenueModel(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "capitalRaiseStrategy") {
