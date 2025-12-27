@@ -525,6 +525,15 @@ const sections = [
     iconColor: "text-indigo-600",
     pages: [
       {
+        title: "Founding & Leadership",
+        showCustomVisual: true,
+        customVisualComponent: "teamCredibility",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Core Team",
         content: {
           overview: "Meet the core team driving Hobson's innovation and growth.",
