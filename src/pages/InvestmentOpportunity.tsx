@@ -805,6 +805,14 @@ const InvestmentOpportunity = () => {
   const [showDownloadConfirm, setShowDownloadConfirm] = useState(false);
   const navigate = useNavigate();
   const contentScrollRef = React.useRef<HTMLDivElement>(null);
+  const passwordInputRef = React.useRef<HTMLInputElement>(null);
+
+  // Focus password input when page loads
+  React.useEffect(() => {
+    if (!isAuthenticated && passwordInputRef.current) {
+      passwordInputRef.current.focus();
+    }
+  }, [isAuthenticated]);
 
   // Scroll to top when tab changes or modal opens
   React.useEffect(() => {
@@ -921,6 +929,7 @@ const InvestmentOpportunity = () => {
                   Password
                 </label>
                 <Input
+                  ref={passwordInputRef}
                   id="password"
                   type="password"
                   value={password}
