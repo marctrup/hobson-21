@@ -1338,6 +1338,32 @@ export const getExecutiveContextPdfContent = (): string[] => [
   "to define the industry's future operating model.",
 ];
 
+export const getSituationAnalysisPdfContent = (): string[] => [
+  "Situation Analysis:",
+  "",
+  "Market Overview:",
+  "The UK real estate sector comprises over 235,000 businesses, managing millions",
+  "of properties with complex document requirements. The market is ripe for AI-driven",
+  "transformation as traditional methods struggle to keep pace with regulatory demands.",
+  "",
+  "Key Market Segments:",
+  "- Property Managers: Managing portfolios of 10+ units with high document volume",
+  "- Letting Agents: Processing tenancy agreements and compliance documents daily",
+  "- Landlords: Portfolio owners seeking efficiency and compliance assurance",
+  "- Asset Managers: Institutional portfolios requiring audit-ready documentation",
+  "",
+  "Current Market Challenges:",
+  "1. Document retrieval averages 15-30 minutes per query",
+  "2. Compliance failures cost the sector millions annually",
+  "3. Staff turnover creates knowledge gaps and operational risk",
+  "4. Legacy systems cannot scale with portfolio growth",
+  "",
+  "Opportunity:",
+  "This situation creates a significant market opportunity for an AI-native solution",
+  "that can deliver instant document intelligence, reduce operational costs, and",
+  "ensure compliance across the entire property lifecycle.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1376,6 +1402,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   raise: getRaisePdfContent,
   marketingSalesStrategy: getMarketingSalesStrategyPdfContent,
   executiveContext: getExecutiveContextPdfContent,
+  situationAnalysis: getSituationAnalysisPdfContent,
 };
 
 // Get PDF content for any visual component type
