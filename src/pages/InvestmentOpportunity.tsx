@@ -929,6 +929,7 @@ const InvestmentOpportunity = () => {
                   required
                   disabled={isLoading}
                   className="w-full"
+                  autoFocus
                 />
               </div>
 
