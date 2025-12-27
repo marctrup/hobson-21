@@ -79,6 +79,7 @@ import { SituationAnalysisVisual } from "@/components/investor/SituationAnalysis
 import { CustomerPersonasVisual } from "@/components/investor/CustomerPersonasVisual";
 import { CustomerUserJourneysVisual } from "@/components/investor/CustomerUserJourneysVisual";
 import { MarketDescriptionVisual } from "@/components/investor/MarketDescriptionVisual";
+import { CompetitorBenchmarksVisual } from "@/components/investor/CompetitorBenchmarksVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -620,6 +621,15 @@ const sections = [
         title: "Market Description",
         showCustomVisual: true,
         customVisualComponent: "marketDescription",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Competitor Benchmarks",
+        showCustomVisual: true,
+        customVisualComponent: "competitorBenchmarks",
         content: {
           overview: "",
           sections: [],
@@ -1466,6 +1476,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Market Description */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "marketDescription" && (
                       <MarketDescriptionVisual />
+                    )}
+
+                    {/* Custom Visual Component for Competitor Benchmarks */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "competitorBenchmarks" && (
+                      <CompetitorBenchmarksVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}

@@ -1537,6 +1537,21 @@ export const getMarketDescriptionPdfContent = (): string[] => [
   "Hobson's solution is timely, strategically aligned, and driven by immediate market need.",
 ];
 
+export const getCompetitorBenchmarksPdfContent = (): string[] => [
+  "Competitor Benchmarks:",
+  "",
+  "Competitive Landscape Analysis",
+  "",
+  "Content for Competitor Benchmarks to be provided.",
+  "This section will cover:",
+  "- Direct competitors and their offerings",
+  "- Indirect alternatives in the market",
+  "- Key differentiation factors",
+  "- Hobson's competitive advantages",
+  "",
+  "Awaiting detailed competitive analysis content.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1579,6 +1594,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   customerPersonas: getCustomerPersonasPdfContent,
   customerUserJourneys: getCustomerUserJourneysPdfContent,
   marketDescription: getMarketDescriptionPdfContent,
+  competitorBenchmarks: getCompetitorBenchmarksPdfContent,
 };
 
 // Get PDF content for any visual component type
