@@ -518,7 +518,7 @@ const sections = [
   },
   {
     id: "team",
-    title: "Team",
+    title: "Leadership & Team",
     subtitle: "Leadership & Key Personnel",
     icon: Briefcase,
     color: "from-indigo-500/10 to-indigo-600/10",
