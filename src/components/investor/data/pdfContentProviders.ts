@@ -1420,6 +1420,42 @@ export const getCustomerPersonasPdfContent = (): string[] => [
   "ultimately scalable self-serve for long-tail owner-managers.",
 ];
 
+export const getCustomerUserJourneysPdfContent = (): string[] => [
+  "Customer User Journeys:",
+  "",
+  "From trigger event to successful adoption for each persona.",
+  "",
+  "Journey 1: Leigh (COO, Large Portfolio Operator)",
+  "- Trigger: Board meeting in 48 hours requires compliance summary across 200+ leases",
+  "- Discovery: Learns about Hobson through industry peer or conference",
+  "- Evaluation: Requests demo with own documents to test real-world performance",
+  "- Trial: Team runs parallel queries - Hobson vs manual search",
+  "- Adoption: Rolls out to operations team with defined use cases",
+  "- Expansion: Extends to compliance, legal, and investor reporting",
+  "- Outcome: Board pack delivered in hours instead of days",
+  "",
+  "Journey 2: James (Head of Asset Management, Medium Company)",
+  "- Trigger: New hire needs access to historical lease information",
+  "- Awareness: Sees LinkedIn post or case study about time savings",
+  "- Interest: Signs up for free trial to test with existing files",
+  "- Testing: Uses Hobson for asset review and onboarding pack",
+  "- Decision: Presents ROI case to leadership based on trial results",
+  "- Integration: Embeds into daily workflow for asset management",
+  "- Outcome: New hire productive in days instead of months",
+  "",
+  "Journey 3: Priya (Owner-Manager, Small Portfolio)",
+  "- Trigger: Tenant dispute requires finding specific clause in 5-year-old lease",
+  "- Problem: Spends 2 hours searching email and paper files",
+  "- Discovery: Finds Hobson through Google search or referral",
+  "- Sign-up: Creates account and uploads key documents in minutes",
+  "- First Query: Asks natural language question, gets instant answer",
+  "- Regular Use: Uses Hobson for renewals, notices, and quick lookups",
+  "- Outcome: Clause found in 30 seconds, dispute resolved same day",
+  "",
+  "Insight: All journeys share a document-related trigger creating urgency,",
+  "followed by rapid evaluation where Hobson proves value through immediate results.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1460,6 +1496,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   executiveContext: getExecutiveContextPdfContent,
   situationAnalysis: getSituationAnalysisPdfContent,
   customerPersonas: getCustomerPersonasPdfContent,
+  customerUserJourneys: getCustomerUserJourneysPdfContent,
 };
 
 // Get PDF content for any visual component type
