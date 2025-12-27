@@ -81,6 +81,7 @@ import { CustomerUserJourneysVisual } from "@/components/investor/CustomerUserJo
 import { MarketDescriptionVisual } from "@/components/investor/MarketDescriptionVisual";
 import { CompetitorBenchmarksVisual } from "@/components/investor/CompetitorBenchmarksVisual";
 import { CustomerOnlineBehaviourVisual } from "@/components/investor/CustomerOnlineBehaviourVisual";
+import { BrandIntegrityVisual } from "@/components/investor/BrandIntegrityVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -640,6 +641,15 @@ const sections = [
         title: "Customer Online Behaviour",
         showCustomVisual: true,
         customVisualComponent: "customerOnlineBehaviour",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Brand Integrity, Perception & Positioning",
+        showCustomVisual: true,
+        customVisualComponent: "brandIntegrity",
         content: {
           overview: "",
           sections: [],
@@ -1496,6 +1506,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Customer Online Behaviour */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "customerOnlineBehaviour" && (
                       <CustomerOnlineBehaviourVisual />
+                    )}
+
+                    {/* Custom Visual Component for Brand Integrity */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "brandIntegrity" && (
+                      <BrandIntegrityVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
