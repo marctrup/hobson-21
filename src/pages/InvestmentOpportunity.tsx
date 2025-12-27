@@ -72,6 +72,7 @@ import { FoundingLeadershipVisual } from "@/components/investor/FoundingLeadersh
 import { TeamVisual } from "@/components/investor/TeamVisual";
 import { RaiseVisual } from "@/components/investor/RaiseVisual";
 import { CommercialisationStrategyVisual } from "@/components/investor/CommercialisationStrategyVisual";
+import CommercialsVisual from "@/components/investor/CommercialsVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -521,6 +522,15 @@ const sections = [
         title: "HEU & Pricing",
         showCustomVisual: true,
         customVisualComponent: "heuPricing",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Commercials",
+        showCustomVisual: true,
+        customVisualComponent: "commercials",
         content: {
           overview: "",
           sections: [],
@@ -1263,6 +1273,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for HEU & Pricing */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "heuPricing" && (
                       <HEUPricingVisual />
+                    )}
+
+                    {/* Custom Visual Component for Commercials */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "commercials" && (
+                      <CommercialsVisual />
                     )}
 
                     {/* Custom Visual Component for Simple UI */}
