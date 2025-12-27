@@ -6181,6 +6181,133 @@ const renderGlobalJustification = (
 };
 
 /**
+ * Render PDF provider content as visual cards (used for Marketing & Sales Strategy tabs)
+ * This avoids the plain "text dump" fallback while keeping content sourced from pdfContentProviders.
+ */
+const renderProviderCards = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number,
+  componentType: string
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  const themes: Record<
+    string,
+    { bg: [number, number, number]; border: [number, number, number]; accent: [number, number, number] }
+  > = {
+    executiveContext: { bg: PDF_CONFIG.primaryBgLight, border: PDF_CONFIG.primaryLight, accent: PDF_CONFIG.primaryColor },
+    situationAnalysis: { bg: PDF_CONFIG.blueBg, border: PDF_CONFIG.blueBorder, accent: PDF_CONFIG.blue },
+    customerPersonas: { bg: PDF_CONFIG.emeraldBg, border: PDF_CONFIG.emeraldBorder, accent: PDF_CONFIG.emerald },
+    customerUserJourneys: { bg: PDF_CONFIG.emeraldBg, border: PDF_CONFIG.emeraldBorder, accent: PDF_CONFIG.emeraldLight },
+    marketDescription: { bg: PDF_CONFIG.primaryBgLight, border: PDF_CONFIG.primaryLight, accent: PDF_CONFIG.primaryColor },
+    competitorBenchmarks: { bg: PDF_CONFIG.bgLight, border: PDF_CONFIG.border, accent: PDF_CONFIG.primaryLight },
+    customerOnlineBehaviour: { bg: PDF_CONFIG.primaryBgLight, border: PDF_CONFIG.primaryLight, accent: PDF_CONFIG.primaryColor },
+  };
+
+  const theme = themes[componentType] || {
+    bg: PDF_CONFIG.bgLight,
+    border: PDF_CONFIG.border,
+    accent: PDF_CONFIG.primaryColor,
+  };
+
+  const lines = getCustomVisualContent(componentType);
+  if (!lines.length) return yPosition;
+
+  // Split into blocks by blank line
+  const blocks: string[][] = [];
+  let current: string[] = [];
+  lines.forEach((raw) => {
+    const line = sanitizeText(raw);
+    if (!line) {
+      if (current.length) {
+        blocks.push(current);
+        current = [];
+      }
+      return;
+    }
+    current.push(line);
+  });
+  if (current.length) blocks.push(current);
+
+  blocks.forEach((block) => {
+    // Rough page-break check (cards vary; keep conservative)
+    yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
+
+    const title = block[0].endsWith(":") ? block[0].slice(0, -1) : block[0];
+    const body = block.slice(1);
+
+    // Measure body height
+    const bodyLineHeight = PDF_CONFIG.lineHeight.body;
+    let measuredLines = 0;
+    body.forEach((l) => {
+      const wrapped = doc.splitTextToSize(l.replace(/^[-\s]+/, ""), maxWidth - 26);
+      measuredLines += wrapped.length || 1;
+    });
+
+    const cardHeight = Math.min(120, 24 + measuredLines * bodyLineHeight);
+
+    // Card background + border
+    doc.setFillColor(...theme.bg);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    doc.setDrawColor(...theme.border);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "S");
+
+    // Accent bar
+    doc.setFillColor(...theme.accent);
+    doc.rect(margin, yPosition, 3, cardHeight, "F");
+
+    // Header circle (no number)
+    doc.setFillColor(...theme.accent);
+    doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+    // Title
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setCardTitleFont(doc);
+    doc.text(title, margin + 22, yPosition + 14);
+
+    // Body
+    let contentY = yPosition + 24;
+    setBodyFont(doc);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+
+    body.forEach((l) => {
+      if (contentY > yPosition + cardHeight - 6) return;
+
+      const isBullet = l.startsWith("-");
+      const clean = l.replace(/^[-\s]+/, "");
+      const wrapped = doc.splitTextToSize(clean, maxWidth - (isBullet ? 30 : 22));
+
+      if (isBullet) {
+        doc.setFillColor(...theme.accent);
+        doc.circle(margin + 12, contentY - 2, PDF_CONFIG.circleSize.small, "F");
+        wrapped.forEach((w: string) => {
+          if (contentY > yPosition + cardHeight - 6) return;
+          doc.text(w, margin + 18, contentY);
+          contentY += bodyLineHeight;
+        });
+        contentY += 1;
+      } else {
+        wrapped.forEach((w: string) => {
+          if (contentY > yPosition + cardHeight - 6) return;
+          doc.text(w, margin + 8, contentY);
+          contentY += bodyLineHeight;
+        });
+        contentY += 1;
+      }
+    });
+
+    yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
+  });
+
+  return yPosition;
+};
+
+/**
  * Render Brand Integrity, Perception & Positioning visual
  */
 const renderBrandIntegrity = (
@@ -6766,7 +6893,17 @@ const renderTabContent = (
       yPosition = renderGlobalJustification(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Marketing & Sales Strategy renderers
-    else if (componentType === "brandIntegrity") {
+    else if (
+      componentType === "executiveContext" ||
+      componentType === "situationAnalysis" ||
+      componentType === "customerPersonas" ||
+      componentType === "customerUserJourneys" ||
+      componentType === "marketDescription" ||
+      componentType === "competitorBenchmarks" ||
+      componentType === "customerOnlineBehaviour"
+    ) {
+      yPosition = renderProviderCards(doc, yPosition, margin, pageWidth, pageHeight, componentType);
+    } else if (componentType === "brandIntegrity") {
       yPosition = renderBrandIntegrity(doc, yPosition, margin, pageWidth, pageHeight);
     } else {
       const customContent = getCustomVisualContent(componentType);
