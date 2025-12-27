@@ -76,6 +76,7 @@ import CommercialsVisual from "@/components/investor/CommercialsVisual";
 import { MarketingSalesStrategyVisual } from "@/components/investor/MarketingSalesStrategyVisual";
 import { ExecutiveContextVisual } from "@/components/investor/ExecutiveContextVisual";
 import { SituationAnalysisVisual } from "@/components/investor/SituationAnalysisVisual";
+import { CustomerPersonasVisual } from "@/components/investor/CustomerPersonasVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -590,6 +591,15 @@ const sections = [
         title: "Situation Analysis",
         showCustomVisual: true,
         customVisualComponent: "situationAnalysis",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Customer Personas",
+        showCustomVisual: true,
+        customVisualComponent: "customerPersonas",
         content: {
           overview: "",
           sections: [],
@@ -1421,6 +1431,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Situation Analysis */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "situationAnalysis" && (
                       <SituationAnalysisVisual />
+                    )}
+
+                    {/* Custom Visual Component for Customer Personas */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "customerPersonas" && (
+                      <CustomerPersonasVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
