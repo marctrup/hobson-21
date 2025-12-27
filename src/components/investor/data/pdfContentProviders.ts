@@ -1618,6 +1618,21 @@ export const getCustomerOnlineBehaviourPdfContent = (): string[] => [
   "5. Trust is fragile with AI - referenced output is essential",
 ];
 
+export const getBrandIntegrityPdfContent = (): string[] => [
+  "Brand Integrity, Perception & Positioning:",
+  "",
+  "Building Trust Through Consistent Brand Experience",
+  "",
+  "Content for Brand Integrity, Perception & Positioning to be provided.",
+  "This section will cover:",
+  "- Brand integrity principles",
+  "- Market perception strategy",
+  "- Strategic positioning framework",
+  "- Differentiation approach",
+  "",
+  "Awaiting detailed brand strategy content.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1662,6 +1677,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   marketDescription: getMarketDescriptionPdfContent,
   competitorBenchmarks: getCompetitorBenchmarksPdfContent,
   customerOnlineBehaviour: getCustomerOnlineBehaviourPdfContent,
+  brandIntegrity: getBrandIntegrityPdfContent,
 };
 
 // Get PDF content for any visual component type
