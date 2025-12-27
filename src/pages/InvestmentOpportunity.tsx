@@ -71,6 +71,7 @@ import { TeamCredibilityVisual } from "@/components/investor/TeamCredibilityVisu
 import { FoundingLeadershipVisual } from "@/components/investor/FoundingLeadershipVisual";
 import { TeamVisual } from "@/components/investor/TeamVisual";
 import { RaiseVisual } from "@/components/investor/RaiseVisual";
+import { CommercialisationStrategyVisual } from "@/components/investor/CommercialisationStrategyVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -507,6 +508,15 @@ const sections = [
     color: "from-amber-500/10 to-amber-600/10",
     iconColor: "text-amber-600",
     pages: [
+      {
+        title: "Commercialisation Strategy",
+        showCustomVisual: true,
+        customVisualComponent: "commercialisationStrategy",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
       {
         title: "HEU & Pricing",
         showCustomVisual: true,
@@ -1243,6 +1253,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for UK Market */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "ukMarket" && (
                       <UKMarketVisual />
+                    )}
+
+                    {/* Custom Visual Component for Commercialisation Strategy */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "commercialisationStrategy" && (
+                      <CommercialisationStrategyVisual />
                     )}
 
                     {/* Custom Visual Component for HEU & Pricing */}

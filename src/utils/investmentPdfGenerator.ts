@@ -3707,6 +3707,192 @@ const renderEarlyRoadmap = (
 };
 
 /**
+ * Render Commercialisation Strategy visual
+ */
+const renderCommercialisationStrategy = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Helper for page break
+  const checkPageBreak = (requiredSpace: number) => {
+    if (yPosition + requiredSpace > pageHeight - 40) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Header box
+  checkPageBreak(40);
+  const headerHeight = 32;
+  renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Go-to-Market Strategy", margin + 12, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  setBodySmallFont(doc);
+  doc.text("A phased approach to market entry, combining founder-led sales with scalable growth channels.", margin + 12, yPosition + 22);
+
+  yPosition += headerHeight + 12;
+
+  // Section: Commercialisation Roadmap
+  checkPageBreak(120);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Commercialisation Roadmap", margin + 16, yPosition + 7);
+  yPosition += 16;
+
+  // Phase data
+  const phases = [
+    {
+      phase: "Phase 1",
+      title: "Foundation",
+      timeline: "Q1-Q2 2025",
+      color: PDF_CONFIG.blue,
+      bgColor: PDF_CONFIG.blueBg,
+      borderColor: PDF_CONFIG.blueBorder,
+      items: [
+        "Complete pilot programme with early adopters",
+        "Validate product-market fit across segments",
+        "Refine pricing and packaging based on feedback",
+        "Build case studies and testimonials"
+      ]
+    },
+    {
+      phase: "Phase 2",
+      title: "Launch",
+      timeline: "Q3-Q4 2025",
+      color: PDF_CONFIG.emerald,
+      bgColor: PDF_CONFIG.emeraldBg,
+      borderColor: PDF_CONFIG.emeraldBorder,
+      items: [
+        "Public launch with refined positioning",
+        "Activate inbound marketing engine",
+        "Scale sales team and processes",
+        "Establish partner channel foundations"
+      ]
+    },
+    {
+      phase: "Phase 3",
+      title: "Scale",
+      timeline: "2026+",
+      color: PDF_CONFIG.primaryColor,
+      bgColor: PDF_CONFIG.primaryBgLight,
+      borderColor: PDF_CONFIG.primaryLight,
+      items: [
+        "Expand into enterprise segment",
+        "Launch strategic partnerships",
+        "International market entry",
+        "Platform ecosystem development"
+      ]
+    }
+  ];
+
+  // Render phases in 3 columns
+  const phaseWidth = (maxWidth - 12) / 3;
+  const phaseHeight = 80;
+
+  phases.forEach((phase, idx) => {
+    const phaseX = margin + idx * (phaseWidth + 6);
+    
+    renderContentCard(doc, phaseX, yPosition, phaseWidth, phaseHeight, phase.bgColor, phase.borderColor);
+
+    // Phase badge
+    doc.setFillColor(...phase.color);
+    doc.circle(phaseX + 10, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+    // Phase and title
+    doc.setTextColor(...phase.color);
+    doc.setFontSize(7);
+    doc.text(phase.phase, phaseX + 18, yPosition + 10);
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text(phase.title, phaseX + 18, yPosition + 17);
+
+    // Timeline badge
+    doc.setFillColor(...phase.bgColor);
+    doc.roundedRect(phaseX + 8, yPosition + 22, 32, 8, 2, 2, "F");
+    doc.setTextColor(...phase.color);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "bold");
+    doc.text(phase.timeline, phaseX + 24, yPosition + 27, { align: "center" });
+
+    // Items
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    let itemY = yPosition + 38;
+    phase.items.forEach((item) => {
+      doc.setFillColor(...phase.color);
+      doc.circle(phaseX + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
+      const itemLines = doc.splitTextToSize(sanitizeText(item), phaseWidth - 20);
+      itemLines.slice(0, 1).forEach((line: string) => {
+        doc.text(line, phaseX + 16, itemY);
+        itemY += 8;
+      });
+    });
+  });
+
+  yPosition += phaseHeight + 16;
+
+  // Section: GTM Channels
+  checkPageBreak(60);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Go-to-Market Channels", margin + 16, yPosition + 7);
+  yPosition += 16;
+
+  const channels = [
+    { title: "Direct Sales", desc: "Founder-led sales transitioning to dedicated team" },
+    { title: "Partnerships", desc: "Property management software integrations" },
+    { title: "Product-Led", desc: "Self-serve onboarding with usage-based growth" }
+  ];
+
+  const channelWidth = (maxWidth - 12) / 3;
+  const channelHeight = 36;
+
+  channels.forEach((channel, idx) => {
+    const channelX = margin + idx * (channelWidth + 6);
+    
+    renderContentCard(doc, channelX, yPosition, channelWidth, channelHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+
+    doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+    doc.roundedRect(channelX + 8, yPosition + 8, 16, 16, 3, 3, "F");
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(channelX + 16, yPosition + 16, 3, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text(channel.title, channelX + 30, yPosition + 14);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    const descLines = doc.splitTextToSize(sanitizeText(channel.desc), channelWidth - 38);
+    doc.text(descLines[0], channelX + 30, yPosition + 22);
+  });
+
+  yPosition += channelHeight + PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
  * Render Gantt Chart (2026-2028) visual
  */
 const renderGanttChart = (
@@ -6112,7 +6298,9 @@ const renderTabContent = (
       yPosition = renderSimpleUI(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Commercials renderers
-    else if (componentType === "heuPricing") {
+    else if (componentType === "commercialisationStrategy") {
+      yPosition = renderCommercialisationStrategy(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "heuPricing") {
       yPosition = renderHEUPricing(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "revenueModel") {
       yPosition = renderRevenueModel(doc, yPosition, margin, pageWidth, pageHeight);
