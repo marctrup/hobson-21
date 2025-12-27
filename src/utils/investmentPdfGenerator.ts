@@ -3727,168 +3727,135 @@ const renderCommercialisationStrategy = (
     }
   };
 
-  // Header box
-  checkPageBreak(40);
-  const headerHeight = 32;
+  // Header box - Inflexion Point
+  checkPageBreak(28);
+  const headerHeight = 24;
   renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Go-to-Market Strategy", margin + 12, yPosition + 12);
-
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  setBodySmallFont(doc);
-  doc.text("A phased approach to market entry, combining founder-led sales with scalable growth channels.", margin + 12, yPosition + 22);
+  doc.text("The Real Estate industry is at an inflexion point.", margin + 12, yPosition + 15);
 
   yPosition += headerHeight + 12;
 
-  // Section: Commercialisation Roadmap
-  checkPageBreak(120);
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.medium, "F");
+  // Section 1: Operators Are Facing
+  checkPageBreak(70);
+  doc.setFillColor(...PDF_CONFIG.rose);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.setTextColor(...PDF_CONFIG.bgWhite);
+  doc.setFontSize(8);
+  doc.text("1", margin + 8, yPosition + 7, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Commercialisation Roadmap", margin + 16, yPosition + 7);
-  yPosition += 16;
+  doc.text("Operators are facing:", margin + 18, yPosition + 7);
+  yPosition += 14;
 
-  // Phase data
-  const phases = [
-    {
-      phase: "Phase 1",
-      title: "Foundation",
-      timeline: "Q1-Q2 2025",
-      color: PDF_CONFIG.blue,
-      bgColor: PDF_CONFIG.blueBg,
-      borderColor: PDF_CONFIG.blueBorder,
-      items: [
-        "Complete pilot programme with early adopters",
-        "Validate product-market fit across segments",
-        "Refine pricing and packaging based on feedback",
-        "Build case studies and testimonials"
-      ]
-    },
-    {
-      phase: "Phase 2",
-      title: "Launch",
-      timeline: "Q3-Q4 2025",
-      color: PDF_CONFIG.emerald,
-      bgColor: PDF_CONFIG.emeraldBg,
-      borderColor: PDF_CONFIG.emeraldBorder,
-      items: [
-        "Public launch with refined positioning",
-        "Activate inbound marketing engine",
-        "Scale sales team and processes",
-        "Establish partner channel foundations"
-      ]
-    },
-    {
-      phase: "Phase 3",
-      title: "Scale",
-      timeline: "2026+",
-      color: PDF_CONFIG.primaryColor,
-      bgColor: PDF_CONFIG.primaryBgLight,
-      borderColor: PDF_CONFIG.primaryLight,
-      items: [
-        "Expand into enterprise segment",
-        "Launch strategic partnerships",
-        "International market entry",
-        "Platform ecosystem development"
-      ]
-    }
+  const challenges = [
+    "exploding regulatory complexity,",
+    "shrinking operating margins,",
+    "acute labour shortages,",
+    "rising compliance penalties,",
+    "and mounting portfolio risk."
   ];
 
-  // Render phases in 3 columns
-  const phaseWidth = (maxWidth - 12) / 3;
-  const phaseHeight = 80;
-
-  phases.forEach((phase, idx) => {
-    const phaseX = margin + idx * (phaseWidth + 6);
+  challenges.forEach((challenge) => {
+    const cardHeight = 14;
+    renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, cardHeight, PDF_CONFIG.roseBg, PDF_CONFIG.roseBorder);
     
-    renderContentCard(doc, phaseX, yPosition, phaseWidth, phaseHeight, phase.bgColor, phase.borderColor);
-
-    // Phase badge
-    doc.setFillColor(...phase.color);
-    doc.circle(phaseX + 10, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
-
-    // Phase and title
-    doc.setTextColor(...phase.color);
-    doc.setFontSize(7);
-    doc.text(phase.phase, phaseX + 18, yPosition + 10);
-
+    doc.setFillColor(...PDF_CONFIG.rose);
+    doc.circle(margin + 18, yPosition + 7, PDF_CONFIG.circleSize.small, "F");
+    
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(9);
-    doc.text(phase.title, phaseX + 18, yPosition + 17);
-
-    // Timeline badge
-    doc.setFillColor(...phase.bgColor);
-    doc.roundedRect(phaseX + 8, yPosition + 22, 32, 8, 2, 2, "F");
-    doc.setTextColor(...phase.color);
-    doc.setFontSize(6);
-    doc.setFont("helvetica", "bold");
-    doc.text(phase.timeline, phaseX + 24, yPosition + 27, { align: "center" });
-
-    // Items
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(7);
-    let itemY = yPosition + 38;
-    phase.items.forEach((item) => {
-      doc.setFillColor(...phase.color);
-      doc.circle(phaseX + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
-      const itemLines = doc.splitTextToSize(sanitizeText(item), phaseWidth - 20);
-      itemLines.slice(0, 1).forEach((line: string) => {
-        doc.text(line, phaseX + 16, itemY);
-        itemY += 8;
-      });
-    });
+    setBodySmallFont(doc);
+    doc.text(sanitizeText(challenge), margin + 24, yPosition + 9);
+    yPosition += cardHeight + 3;
   });
 
-  yPosition += phaseHeight + 16;
+  yPosition += 4;
 
-  // Section: GTM Channels
+  // Callout box
+  const calloutHeight = 20;
+  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, calloutHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.text("They cannot wait for incremental tools. They need a ", margin + 16, yPosition + 12);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.text("structural operating upgrade", margin + 16 + doc.getTextWidth("They cannot wait for incremental tools. They need a "), yPosition + 12);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text(".", margin + 16 + doc.getTextWidth("They cannot wait for incremental tools. They need a structural operating upgrade"), yPosition + 12);
+  doc.setFont("helvetica", "normal");
+
+  yPosition += calloutHeight + 12;
+
+  // Section 2: Hobson's Product
   checkPageBreak(60);
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.medium, "F");
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.setTextColor(...PDF_CONFIG.bgWhite);
+  doc.setFontSize(8);
+  doc.text("2", margin + 8, yPosition + 7, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Go-to-Market Channels", margin + 16, yPosition + 7);
-  yPosition += 16;
+  doc.text("Hobson's product is already solving existential problems:", margin + 18, yPosition + 7);
+  yPosition += 14;
 
-  const channels = [
-    { title: "Direct Sales", desc: "Founder-led sales transitioning to dedicated team" },
-    { title: "Partnerships", desc: "Property management software integrations" },
-    { title: "Product-Led", desc: "Self-serve onboarding with usage-based growth" }
+  const problemsSolved = [
+    "compliance exposure,",
+    "lease complexity,",
+    "maintenance volatility,",
+    "and portfolio-level risk blindness."
   ];
 
-  const channelWidth = (maxWidth - 12) / 3;
-  const channelHeight = 36;
+  // 2x2 grid
+  const cardWidth = (maxWidth - 30) / 2;
+  const cardHeight = 20;
+  problemsSolved.forEach((problem, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const cardX = margin + 10 + col * (cardWidth + 6);
+    const cardY = yPosition + row * (cardHeight + 4);
 
-  channels.forEach((channel, idx) => {
-    const channelX = margin + idx * (channelWidth + 6);
-    
-    renderContentCard(doc, channelX, yPosition, channelWidth, channelHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+    renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
-    doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-    doc.roundedRect(channelX + 8, yPosition + 8, 16, 16, 3, 3, "F");
-    doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(channelX + 16, yPosition + 16, 3, "F");
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(cardX + 10, cardY + 10, PDF_CONFIG.circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(9);
-    doc.text(channel.title, channelX + 30, yPosition + 14);
-
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(7);
-    const descLines = doc.splitTextToSize(sanitizeText(channel.desc), channelWidth - 38);
-    doc.text(descLines[0], channelX + 30, yPosition + 22);
+    setBodySmallFont(doc);
+    doc.text(sanitizeText(problem), cardX + 16, cardY + 12);
   });
 
-  yPosition += channelHeight + PDF_CONFIG.spacing.sectionGap;
+  yPosition += 2 * (cardHeight + 4) + 12;
+
+  // Conclusion box
+  checkPageBreak(32);
+  const conclusionHeight = 28;
+  renderContentCard(doc, margin, yPosition, maxWidth, conclusionHeight, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
+
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.text("Commercialisation is not an experiment. It is an ", margin + 20, yPosition + 11);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.text("inevitability", margin + 20 + doc.getTextWidth("Commercialisation is not an experiment. It is an "), yPosition + 11);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text(".", margin + 20 + doc.getTextWidth("Commercialisation is not an experiment. It is an inevitability"), yPosition + 11);
+
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.text("The only question is who captures the category.", margin + 20, yPosition + 21);
+  doc.setFont("helvetica", "normal");
+
+  yPosition += conclusionHeight + PDF_CONFIG.spacing.sectionGap;
   return yPosition;
 };
 

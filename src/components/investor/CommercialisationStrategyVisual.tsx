@@ -1,140 +1,87 @@
 import React from 'react';
-import { Target, Users, Rocket, TrendingUp, Building2, Zap } from 'lucide-react';
+import { AlertTriangle, TrendingDown, Users, Scale, ShieldAlert, Target, CheckCircle2, Zap } from 'lucide-react';
 
 export const CommercialisationStrategyVisual = () => {
-  const phases = [
-    {
-      phase: "Phase 1",
-      title: "Foundation",
-      timeline: "Q1-Q2 2025",
-      icon: Target,
-      color: "blue",
-      items: [
-        "Complete pilot programme with early adopters",
-        "Validate product-market fit across segments",
-        "Refine pricing and packaging based on feedback",
-        "Build case studies and testimonials"
-      ]
-    },
-    {
-      phase: "Phase 2", 
-      title: "Launch",
-      timeline: "Q3-Q4 2025",
-      icon: Rocket,
-      color: "emerald",
-      items: [
-        "Public launch with refined positioning",
-        "Activate inbound marketing engine",
-        "Scale sales team and processes",
-        "Establish partner channel foundations"
-      ]
-    },
-    {
-      phase: "Phase 3",
-      title: "Scale",
-      timeline: "2026+",
-      icon: TrendingUp,
-      color: "purple",
-      items: [
-        "Expand into enterprise segment",
-        "Launch strategic partnerships",
-        "International market entry",
-        "Platform ecosystem development"
-      ]
-    }
+  const operatorChallenges = [
+    { icon: Scale, text: "exploding regulatory complexity," },
+    { icon: TrendingDown, text: "shrinking operating margins," },
+    { icon: Users, text: "acute labour shortages," },
+    { icon: ShieldAlert, text: "rising compliance penalties," },
+    { icon: AlertTriangle, text: "and mounting portfolio risk." },
   ];
 
-  const gtmChannels = [
-    { icon: Users, title: "Direct Sales", desc: "Founder-led sales transitioning to dedicated team" },
-    { icon: Building2, title: "Partnerships", desc: "Property management software integrations" },
-    { icon: Zap, title: "Product-Led", desc: "Self-serve onboarding with usage-based growth" }
+  const problemsSolved = [
+    "compliance exposure,",
+    "lease complexity,",
+    "maintenance volatility,",
+    "and portfolio-level risk blindness.",
   ];
-
-  const getColorClasses = (color: string) => {
-    const colors: Record<string, { bg: string; border: string; text: string; light: string }> = {
-      blue: { bg: "bg-blue-100 dark:bg-blue-950/50", border: "border-blue-200 dark:border-blue-800/50", text: "text-blue-600 dark:text-blue-400", light: "bg-blue-50 dark:bg-blue-950/30" },
-      emerald: { bg: "bg-emerald-100 dark:bg-emerald-950/50", border: "border-emerald-200 dark:border-emerald-800/50", text: "text-emerald-600 dark:text-emerald-400", light: "bg-emerald-50 dark:bg-emerald-950/30" },
-      purple: { bg: "bg-purple-100 dark:bg-purple-950/50", border: "border-purple-200 dark:border-purple-800/50", text: "text-purple-600 dark:text-purple-400", light: "bg-purple-50 dark:bg-purple-950/30" }
-    };
-    return colors[color] || colors.blue;
-  };
 
   return (
     <div className="space-y-8">
-      {/* Header */}
+      {/* Header - Inflexion Point */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500/10 via-orange-500/10 to-amber-500/5 p-6 border border-amber-200/50 dark:border-amber-800/30">
         <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative">
-          <h3 className="text-xl font-bold text-foreground mb-2">Go-to-Market Strategy</h3>
-          <p className="text-muted-foreground">
-            A phased approach to market entry, combining founder-led sales with scalable growth channels.
+          <h3 className="text-xl font-bold text-foreground">The Real Estate industry is at an inflexion point.</h3>
+        </div>
+      </div>
+
+      {/* Section 1: Operators Are Facing */}
+      <div className="space-y-4">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-red-100 dark:bg-red-950/50 text-red-700 dark:text-red-400 font-bold text-sm">1</div>
+          <h4 className="font-semibold text-foreground">Operators are facing:</h4>
+        </div>
+        
+        <div className="ml-11 space-y-3">
+          {operatorChallenges.map((challenge, idx) => (
+            <div key={idx} className="flex items-center gap-3 p-3 rounded-lg bg-red-50/50 dark:bg-red-950/20 border border-red-100 dark:border-red-900/30">
+              <challenge.icon className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0" />
+              <span className="text-foreground">{challenge.text}</span>
+            </div>
+          ))}
+        </div>
+        
+        <div className="ml-11 mt-4 p-4 rounded-xl bg-gradient-to-r from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 border border-slate-200 dark:border-slate-700/50">
+          <p className="text-foreground font-medium">
+            They cannot wait for incremental tools. They need a <span className="text-primary font-bold">structural operating upgrade</span>.
           </p>
         </div>
       </div>
 
-      {/* Phases Timeline */}
+      {/* Section 2: Hobson's Product */}
       <div className="space-y-4">
-        <h4 className="font-semibold text-foreground flex items-center gap-2">
-          <Target className="w-5 h-5 text-primary" />
-          Commercialisation Roadmap
-        </h4>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-8 h-8 rounded-full bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-400 font-bold text-sm">2</div>
+          <h4 className="font-semibold text-foreground">Hobson's product is already solving existential problems:</h4>
+        </div>
         
-        <div className="grid md:grid-cols-3 gap-4">
-          {phases.map((phase, idx) => {
-            const colors = getColorClasses(phase.color);
-            return (
-              <div 
-                key={idx} 
-                className={`rounded-xl border ${colors.border} ${colors.light} p-5 transition-all hover:shadow-md`}
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <div className={`w-10 h-10 rounded-xl ${colors.bg} flex items-center justify-center`}>
-                    <phase.icon className={`w-5 h-5 ${colors.text}`} />
-                  </div>
-                  <div>
-                    <span className={`text-xs font-medium ${colors.text}`}>{phase.phase}</span>
-                    <h5 className="font-semibold text-foreground">{phase.title}</h5>
-                  </div>
-                </div>
-                
-                <div className={`text-xs font-medium ${colors.text} mb-3 px-2 py-1 rounded-full ${colors.bg} inline-block`}>
-                  {phase.timeline}
-                </div>
-                
-                <ul className="space-y-2">
-                  {phase.items.map((item, itemIdx) => (
-                    <li key={itemIdx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <div className={`w-1.5 h-1.5 rounded-full ${colors.text.replace('text-', 'bg-')} mt-1.5 flex-shrink-0`} />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            );
-          })}
+        <div className="ml-11 grid sm:grid-cols-2 gap-3">
+          {problemsSolved.map((problem, idx) => (
+            <div key={idx} className="flex items-start gap-3 p-4 rounded-xl bg-gradient-to-br from-emerald-50/80 to-emerald-100/50 dark:from-emerald-950/30 dark:to-emerald-900/20 border border-emerald-200 dark:border-emerald-800/30">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600 mt-0.5 flex-shrink-0" />
+              <span className="text-foreground">{problem}</span>
+            </div>
+          ))}
         </div>
       </div>
 
-      {/* GTM Channels */}
-      <div className="space-y-4">
-        <h4 className="font-semibold text-foreground flex items-center gap-2">
-          <Rocket className="w-5 h-5 text-primary" />
-          Go-to-Market Channels
-        </h4>
-        
-        <div className="grid md:grid-cols-3 gap-4">
-          {gtmChannels.map((channel, idx) => (
-            <div 
-              key={idx}
-              className="rounded-xl bg-card border border-border/50 p-5 hover:border-primary/30 hover:shadow-md transition-all"
-            >
-              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3">
-                <channel.icon className="w-5 h-5 text-primary" />
-              </div>
-              <h5 className="font-semibold text-foreground mb-1">{channel.title}</h5>
-              <p className="text-sm text-muted-foreground">{channel.desc}</p>
+      {/* Conclusion */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/15 to-primary/10 p-6 border border-primary/30">
+        <div className="absolute top-0 right-0 w-40 h-40 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="relative space-y-4">
+          <div className="flex items-start gap-3">
+            <Zap className="w-6 h-6 text-primary flex-shrink-0 mt-0.5" />
+            <div className="space-y-3">
+              <p className="text-foreground font-medium leading-relaxed">
+                Commercialisation is not an experiment. It is an <span className="text-primary font-bold">inevitability</span>.
+              </p>
+              <p className="text-foreground font-bold text-lg">
+                The only question is who captures the category.
+              </p>
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>
