@@ -4265,227 +4265,222 @@ const renderHEUPricing = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // What are HEUs intro
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("What are Hobson Energy Units (HEUs)?", margin, yPosition);
-  yPosition += 10;
-
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
-  yPosition = renderSpacedText(
-    doc,
-    "HEUs measure AI effort. Every task (query, document read, report build) consumes HEUs based on complexity and computational resources required.",
-    margin,
-    yPosition,
-    maxWidth,
-    PDF_CONFIG.lineHeight.body
-  );
-  yPosition += 12;
-
-  // Pricing tiers
-  const tiers = [
-    { name: "Free", price: "GBP 0/month", heu: "18 HEUs", desc: "Perfect for testing", color: PDF_CONFIG.textGray },
-    { name: "Essential", price: "GBP 19.50/month", heu: "275 HEUs", desc: "Ideal for small operators", color: PDF_CONFIG.primaryColor },
-    { name: "Essential Plus", price: "GBP 49.75/month", heu: "700 HEUs", desc: "Great for growing teams", color: PDF_CONFIG.primaryColor },
-    { name: "Enterprise", price: "GBP 148.50/month", heu: "2000 HEUs", desc: "Designed for large operations", color: PDF_CONFIG.primaryColor },
-  ];
-
-  const cardWidth = (maxWidth - 12) / 2;
-  const cardHeight = 32; // Reduced from 40
-
-  tiers.forEach((tier, idx) => {
-    const col = idx % 2;
-    const row = Math.floor(idx / 2);
-    const xPos = margin + col * (cardWidth + 12);
-    const yPos = yPosition + row * (cardHeight + 6);
-
-    if (yPos > pageHeight - 50) {
+  // Helper for page break
+  const checkPageBreak = (requiredSpace: number) => {
+    if (yPosition + requiredSpace > pageHeight - 40) {
       doc.addPage();
       yPosition = margin;
     }
+  };
 
-    doc.setFillColor(...PDF_CONFIG.bgLight);
-    doc.roundedRect(xPos, yPos, cardWidth, cardHeight, 3, 3, "F");
-    doc.setDrawColor(...tier.color);
-    doc.setLineWidth(0.5);
-    doc.roundedRect(xPos, yPos, cardWidth, cardHeight, 3, 3, "S");
+  // Header - The HEU Model
+  checkPageBreak(32);
+  const headerHeight = 28;
+  renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
-    doc.setTextColor(...tier.color);
-    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-    doc.setFont("helvetica", "bold");
-    doc.text(tier.name, xPos + 6, yPos + 10);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("The HEU Model", margin + 22, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodySmallFont(doc);
+  doc.text("Hobson's pricing model is a ", margin + 22, yPosition + 21);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text("usage-based infrastructure monetisation model", margin + 22 + doc.getTextWidth("Hobson's pricing model is a "), yPosition + 21);
+  doc.setFont("helvetica", "normal");
+
+  yPosition += headerHeight + 12;
+
+  // Section 1: What HEUs Measure
+  checkPageBreak(40);
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.setTextColor(...PDF_CONFIG.bgWhite);
+  doc.setFontSize(8);
+  doc.text("1", margin + 8, yPosition + 7, { align: "center" });
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Hobson Energy Units (HEUs) measure AI effort:", margin + 18, yPosition + 7);
+  yPosition += 14;
+
+  const heuBoxHeight = 20;
+  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, heuBoxHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodySmallFont(doc);
+  const heuText = "Every document read, lease abstracted, compliance workflow executed, risk model run, or report built consumes HEUs.";
+  const heuLines = doc.splitTextToSize(sanitizeText(heuText), maxWidth - 40);
+  let heuY = yPosition + 8;
+  heuLines.forEach((line: string) => {
+    doc.text(line, margin + 18, heuY);
+    heuY += PDF_CONFIG.lineHeight.body;
+  });
+
+  yPosition += heuBoxHeight + 12;
+
+  // Section 2: What Hobson Monetises
+  checkPageBreak(65);
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.setTextColor(...PDF_CONFIG.bgWhite);
+  doc.setFontSize(8);
+  doc.text("2", margin + 8, yPosition + 7, { align: "center" });
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("This means Hobson monetises:", margin + 18, yPosition + 7);
+  yPosition += 14;
+
+  const monetises = [
+    "operator dependency",
+    "portfolio scale",
+    "regulatory complexity",
+    "decision intensity"
+  ];
+
+  // 2x2 grid
+  const cardWidth = (maxWidth - 30) / 2;
+  const cardHeight = 16;
+  monetises.forEach((item, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const cardX = margin + 10 + col * (cardWidth + 6);
+    const cardY = yPosition + row * (cardHeight + 4);
+
+    renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
+
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(cardX + 10, cardY + 8, PDF_CONFIG.circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.body);
-    doc.text(tier.price, xPos + cardWidth - 6, yPos + 10, { align: "right" });
-
-    doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(tier.heu, xPos + 6, yPos + 19);
-
-    doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-    doc.setFont("helvetica", "normal");
-    doc.text(tier.desc, xPos + 6, yPos + 27);
+    doc.text(sanitizeText(item), cardX + 16, cardY + 10);
   });
 
-  yPosition += 2 * (cardHeight + 6) + 8;
+  yPosition += 2 * (cardHeight + 4) + 6;
 
-  // Top-up pack - tighter box
-  if (yPosition > pageHeight - 40) { doc.addPage(); yPosition = margin; }
-  doc.setFillColor(...PDF_CONFIG.amberBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 22, 3, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.amber);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Top-Up Pack: GBP 15 (one-time)", margin + 6, yPosition + 10);
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "normal");
-  doc.text("150 additional HEUs - Non-rollover (expires at billing period end)", margin + 6, yPosition + 18);
-  yPosition += 34; // Increased gap before Key Benefits
-
-  // Key benefits
+  // "not headcount" note
+  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, 12, PDF_CONFIG.bgLight, PDF_CONFIG.border);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Key Benefits:", margin, yPosition);
+  doc.setFontSize(7);
+  doc.text("not", margin + 18, yPosition + 8);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  doc.text(" headcount or asset count", margin + 18 + doc.getTextWidth("not "), yPosition + 8);
+
+  yPosition += 20;
+
+  // Key insight box
+  checkPageBreak(28);
+  const insightHeight = 24;
+  renderContentCard(doc, margin, yPosition, maxWidth, insightHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
+
+  doc.setFillColor(...PDF_CONFIG.amber);
+  doc.circle(margin + 10, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodySmallFont(doc);
+  const insightText = "Traditional property software caps revenue. Hobson's model scales automatically with operational stress. The more complex the operator's world becomes, the more valuable and profitable Hobson becomes.";
+  const insightLines = doc.splitTextToSize(sanitizeText(insightText), maxWidth - 28);
+  let insightY = yPosition + 8;
+  insightLines.slice(0, 2).forEach((line: string) => {
+    doc.text(line, margin + 18, insightY);
+    insightY += PDF_CONFIG.lineHeight.body;
+  });
+
+  yPosition += insightHeight + 12;
+
+  // Section 3: Pricing Table
+  checkPageBreak(80);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Pricing That Forces Adoption", margin + 16, yPosition + 7);
+  yPosition += 14;
+
+  // Table headers
+  const colWidths = [35, 30, 22, 70];
+  const tableX = margin;
+  const rowHeight = 12;
+
+  // Header row
+  renderContentCard(doc, tableX, yPosition, maxWidth, rowHeight, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(8);
+  
+  let headerX = tableX + 4;
+  ["Plan", "Monthly Price", "HEUs", "Strategic Intent"].forEach((header, idx) => {
+    doc.text(header, headerX, yPosition + 8);
+    headerX += colWidths[idx] + 4;
+  });
+  yPosition += rowHeight;
+
+  // Data rows
+  const plans = [
+    { plan: "Free", price: "£0", heus: "18", intent: "Frictionless market entry" },
+    { plan: "Essential", price: "£19.50", heus: "275", intent: "Hook small operators" },
+    { plan: "Essential Plus", price: "£49.75", heus: "700", intent: "Convert growing teams" },
+    { plan: "Enterprise", price: "£148.50", heus: "2,000", intent: "Lock in serious operators" },
+    { plan: "HEU Top-Up", price: "£15", heus: "150", intent: "Expand ARPU naturally" },
+  ];
+
+  plans.forEach((row, idx) => {
+    const bgColor = idx % 2 === 0 ? PDF_CONFIG.bgWhite : PDF_CONFIG.bgLight;
+    renderContentCard(doc, tableX, yPosition, maxWidth, rowHeight, bgColor, PDF_CONFIG.border);
+    
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(8);
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    
+    let cellX = tableX + 4;
+    doc.text(row.plan, cellX, yPosition + 8);
+    cellX += colWidths[0] + 4;
+    
+    doc.setFont("helvetica", "normal");
+    doc.text(row.price, cellX, yPosition + 8);
+    cellX += colWidths[1] + 4;
+    
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFont("helvetica", "bold");
+    doc.text(row.heus, cellX, yPosition + 8);
+    cellX += colWidths[2] + 4;
+    
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.text(row.intent, cellX, yPosition + 8);
+    
+    yPosition += rowHeight;
+  });
+
   yPosition += 10;
 
-  const benefits = [
-    "No per-user fees - add unlimited team members",
-    "No per-asset fees - manage unlimited properties",
-    "Pay only for what you use",
-  ];
+  // Footer - No Fees
+  checkPageBreak(24);
+  const footerHeight = 20;
+  renderContentCard(doc, margin, yPosition, maxWidth, footerHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
-  benefits.forEach((benefit) => {
-    doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 4, yPosition - 1, PDF_CONFIG.circleSize.small, "F");
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(benefit, margin + 10, yPosition);
-    yPosition += PDF_CONFIG.lineHeight.body + 2;
-  });
-  yPosition += 12;
-
-  // COMPLETE USAGE TRANSPARENCY SECTION
-  if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
-  
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Complete Usage Transparency", margin, yPosition);
-  yPosition += 12;
-
-  // Two-column layout for transparency visuals
-  const colWidth = (maxWidth - 10) / 2;
-
-  // LEFT COLUMN: Real-Time HEU Bar
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, colWidth, 70, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.border);
-  doc.roundedRect(margin, yPosition, colWidth, 70, 3, 3, "S");
-
-  // Header
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.large, "F");
-  
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "bold");
-  doc.text("Real-Time HEU Bar", margin + 22, yPosition + 14);
-
-  // HEU Bar visualization
-  const barY = yPosition + 24;
-  const barWidth = colWidth - 16;
-  const barHeight = 14;
-  
-  // Used portion (gray)
-  doc.setFillColor(156, 163, 175); // gray-400
-  doc.rect(margin + 8, barY, barWidth * 0.6, barHeight, "F");
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(8);
-  doc.setFont("helvetica", "bold");
-  doc.text("420 used", margin + 8 + (barWidth * 0.3), barY + 10, { align: "center" });
-  
-  // Remaining portion (purple)
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.rect(margin + 8 + (barWidth * 0.6), barY, barWidth * 0.4, barHeight, "F");
-  doc.text("280 left", margin + 8 + (barWidth * 0.8), barY + 10, { align: "center" });
-
-  // Total label
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "bold");
-  doc.text("700 total HEUs", margin + 8 + (barWidth / 2), barY + 22, { align: "center" });
-
-  // Description
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "normal");
-  const barDesc = doc.splitTextToSize("Real-time tracking shows exactly how much you've used and what remains.", colWidth - 20);
-  doc.text(barDesc, margin + 8, barY + 34);
-
-  // RIGHT COLUMN: Per-Message Cost
-  const rightX = margin + colWidth + 10;
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(rightX, yPosition, colWidth, 70, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.border);
-  doc.roundedRect(rightX, yPosition, colWidth, 70, 3, 3, "S");
-
-  // Header
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(rightX + 12, yPosition + 12, PDF_CONFIG.circleSize.large, "F");
-  
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "bold");
-  doc.text("Per-Message Cost", rightX + 22, yPosition + 14);
-
-  // Cost breakdown box
-  const costBoxY = yPosition + 22;
-  doc.setFillColor(249, 250, 251); // gray-50
-  doc.roundedRect(rightX + 8, costBoxY, colWidth - 16, 38, 2, 2, "F");
-  doc.setDrawColor(...PDF_CONFIG.border);
-  doc.roundedRect(rightX + 8, costBoxY, colWidth - 16, 38, 2, 2, "S");
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + maxWidth / 2 - 80, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(8);
   doc.setFont("helvetica", "bold");
-  doc.text("Message Usage Details", rightX + 12, costBoxY + 8);
+  doc.setFontSize(10);
+  doc.text("No per-user fees. No per-asset fees. Unlimited scale.", margin + maxWidth / 2, yPosition + 12, { align: "center" });
 
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(7);
-  const costDetails = [
-    ["HEU Cost:", "0.05"],
-    ["Query Type:", "Simple extraction"],
-    ["Processing:", "1.2s"],
-  ];
-  
-  let detailY = costBoxY + 16;
-  costDetails.forEach(([label, value]) => {
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(label, rightX + 12, detailY);
-    doc.setTextColor(...(label === "HEU Cost:" ? PDF_CONFIG.primaryColor : PDF_CONFIG.textDark));
-    doc.text(value, rightX + colWidth - 20, detailY, { align: "right" });
-    detailY += 7;
-  });
-
-  // Description
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.setFont("helvetica", "normal");
-  const costDesc = doc.splitTextToSize("Click ... on any message for detailed breakdown. Every action is itemised.", colWidth - 20);
-  doc.text(costDesc, rightX + 8, yPosition + 64);
-
-  yPosition += 78;
-
-  return yPosition + 10;
+  yPosition += footerHeight + PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
 };
 
 /**
