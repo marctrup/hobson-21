@@ -74,6 +74,7 @@ import { RaiseVisual } from "@/components/investor/RaiseVisual";
 import { CommercialisationStrategyVisual } from "@/components/investor/CommercialisationStrategyVisual";
 import CommercialsVisual from "@/components/investor/CommercialsVisual";
 import { MarketingSalesStrategyVisual } from "@/components/investor/MarketingSalesStrategyVisual";
+import { ExecutiveContextVisual } from "@/components/investor/ExecutiveContextVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -574,7 +575,17 @@ const sections = [
     icon: Target,
     color: "from-teal-500/10 to-teal-600/10",
     iconColor: "text-teal-600",
-    pages: [],
+    pages: [
+      {
+        title: "Executive Context",
+        showCustomVisual: true,
+        customVisualComponent: "executiveContext",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+    ],
   },
   {
     id: "financials",
@@ -1390,6 +1401,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Marketing & Sales Strategy */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "marketingSalesStrategy" && (
                       <MarketingSalesStrategyVisual />
+                    )}
+
+                    {/* Custom Visual Component for Executive Context */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "executiveContext" && (
+                      <ExecutiveContextVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
