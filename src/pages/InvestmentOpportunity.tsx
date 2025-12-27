@@ -504,7 +504,7 @@ const sections = [
   {
     id: "commercials",
     title: "Commercials",
-    subtitle: "Pricing & Transparency",
+    subtitle: "Pricing transparency",
     icon: DollarSign,
     color: "from-amber-500/10 to-amber-600/10",
     iconColor: "text-amber-600",
