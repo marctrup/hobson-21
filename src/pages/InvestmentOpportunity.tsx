@@ -528,7 +528,7 @@ const sections = [
         },
       },
       {
-        title: "Commercials",
+        title: "Commercial Philosophy",
         showCustomVisual: true,
         customVisualComponent: "commercials",
         content: {
