@@ -2088,6 +2088,227 @@ const renderTeamCredibility = (
 };
 
 /**
+ * Render Founding & Leadership visual matching on-screen component
+ */
+const renderFoundingLeadership = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Helper for page break
+  const checkPageBreak = (requiredSpace: number) => {
+    if (yPosition + requiredSpace > pageHeight - 40) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Header box - Proven Operators
+  checkPageBreak(50);
+  const headerHeight = 48;
+  renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 10, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Proven Operators. Repeat Exits. Category Builders", margin + 18, yPosition + 14);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodySmallFont(doc);
+  const headerText = "Hobson is led by a team that has built, scaled, and exited technology companies across three decades through multiple economic cycles and technology shifts. This is not a first venture.";
+  const headerLines = doc.splitTextToSize(sanitizeText(headerText), maxWidth - 24);
+  let headerY = yPosition + 24;
+  headerLines.forEach((line: string) => {
+    doc.text(line, margin + 12, headerY);
+    headerY += PDF_CONFIG.lineHeight.body;
+  });
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text("Hobson is the next evolution of a proven execution engine.", margin + 12, headerY + 2);
+  doc.setFont("helvetica", "normal");
+
+  yPosition += headerHeight + 12;
+
+  // Section 1: The founding leadership has
+  checkPageBreak(45);
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.setTextColor(...PDF_CONFIG.bgWhite);
+  doc.setFontSize(8);
+  doc.text("1", margin + 6.5, yPosition + 7);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("The founding leadership has:", margin + 18, yPosition + 7);
+  yPosition += 14;
+
+  const foundingExperience = [
+    "built businesses throughout the 1990s, 2000s, and 2010s,",
+    "scaled enterprise software platforms in regulated industries,",
+    "and executed successful exits."
+  ];
+
+  foundingExperience.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.blue);
+    doc.circle(margin + 14, yPosition + 2, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setBodySmallFont(doc);
+    doc.text(sanitizeText(item), margin + 20, yPosition + 3);
+    yPosition += PDF_CONFIG.lineHeight.body + 1;
+  });
+
+  yPosition += 8;
+
+  // Section 2: Arthur & Aareon Experience
+  checkPageBreak(65);
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.setTextColor(...PDF_CONFIG.bgWhite);
+  doc.setFontSize(8);
+  doc.text("2", margin + 6.5, yPosition + 7);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Arthur & Aareon Experience", margin + 18, yPosition + 7);
+  yPosition += 14;
+
+  const arthurBoxHeight = 52;
+  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, arthurBoxHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setBodySmallFont(doc);
+  const arthurText1 = "Most notably, the team previously founded and scaled Arthur, a category-leading property management platform that Advent International and Aareon ultimately acquired in 2021.";
+  const arthurLines1 = doc.splitTextToSize(sanitizeText(arthurText1), maxWidth - 40);
+  let arthurY = yPosition + 8;
+  arthurLines1.forEach((line: string) => {
+    doc.text(line, margin + 18, arthurY);
+    arthurY += PDF_CONFIG.lineHeight.body;
+  });
+
+  arthurY += 2;
+  const arthurText2 = "Following that acquisition, the leadership remained deeply involved in enterprise growth and strategic expansion inside Aareon's global organisation, where they:";
+  const arthurLines2 = doc.splitTextToSize(sanitizeText(arthurText2), maxWidth - 40);
+  arthurLines2.forEach((line: string) => {
+    doc.text(line, margin + 18, arthurY);
+    arthurY += PDF_CONFIG.lineHeight.body;
+  });
+
+  arthurY += 2;
+  const aareonExperience = [
+    "led complex platform implementations,",
+    "managed large enterprise clients,",
+    "and executed additional acquisitions, including Fixflo and Tilt Property Software."
+  ];
+
+  aareonExperience.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(margin + 22, arthurY - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(sanitizeText(item), margin + 28, arthurY);
+    arthurY += PDF_CONFIG.lineHeight.body;
+  });
+
+  yPosition += arthurBoxHeight + 12;
+
+  // Section 3: Key Insight
+  checkPageBreak(30);
+  doc.setFillColor(...PDF_CONFIG.amber);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.setTextColor(...PDF_CONFIG.bgWhite);
+  doc.setFontSize(8);
+  doc.text("3", margin + 6.5, yPosition + 7);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("This experience gives Hobson something few startups ever possess:", margin + 18, yPosition + 7);
+  yPosition += 14;
+
+  const insightBoxHeight = 16;
+  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, insightBoxHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.text("Direct, operational knowledge of how to build, scale, integrate, and exit Real Estate technology businesses.", margin + 18, yPosition + 10);
+  doc.setFont("helvetica", "normal");
+
+  yPosition += insightBoxHeight + 12;
+
+  // Section 4: What Team Has Navigated
+  checkPageBreak(60);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.setTextColor(...PDF_CONFIG.bgWhite);
+  doc.setFontSize(8);
+  doc.text("4", margin + 6.5, yPosition + 7);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Hobson's team has already navigated:", margin + 18, yPosition + 7);
+  yPosition += 14;
+
+  const teamNavigated = [
+    "product-market fit,",
+    "hypergrowth,",
+    "enterprise implementation,",
+    "cross-border expansion,",
+    "post-acquisition integration,",
+    "and strategic M&A execution."
+  ];
+
+  // 2x3 grid
+  const cardWidth = (maxWidth - 30) / 2;
+  const cardHeight = 16;
+  teamNavigated.forEach((item, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const cardX = margin + 10 + col * (cardWidth + 6);
+    const cardY = yPosition + row * (cardHeight + 4);
+
+    renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(cardX + 8, cardY + 8, PDF_CONFIG.circleSize.small, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setBodySmallFont(doc);
+    doc.text(sanitizeText(item), cardX + 14, cardY + 10);
+  });
+
+  yPosition += 3 * (cardHeight + 4) + 12;
+
+  // Conclusion box
+  checkPageBreak(24);
+  const conclusionHeight = 20;
+  renderContentCard(doc, margin, yPosition, maxWidth, conclusionHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
+
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  const conclusionText = "Hobson enters the market with dramatically reduced execution risk and a clear blueprint for both scale and exit.";
+  doc.text(sanitizeText(conclusionText), margin + 18, yPosition + 12);
+  doc.setFont("helvetica", "normal");
+
+  yPosition += conclusionHeight + PDF_CONFIG.spacing.sectionGap;
+  return yPosition;
+};
+
+/**
  * Render Raise visual matching on-screen component
  */
 const renderRaise = (
@@ -5654,6 +5875,8 @@ const renderTabContent = (
       yPosition = renderStrategicApproach(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "teamCredibility") {
       yPosition = renderTeamCredibility(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "foundingLeadership") {
+      yPosition = renderFoundingLeadership(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "raise") {
       yPosition = renderRaise(doc, yPosition, margin, pageWidth, pageHeight);
     }
