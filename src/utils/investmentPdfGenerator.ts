@@ -636,12 +636,12 @@ const renderCompetitorTable = (
   const colWidths = [22, 24, 28, 22, 24, 28, 22]; // 7 columns = 170
   const headers = ["Competitor", "Who They Are", "What They Do", "Strengths", "Weaknesses", "Reviews", "Market Value"];
   
-  // Header row - matches bg-primary/10 (light purple background)
-  doc.setFillColor(...PDF_CONFIG.headerBg);
+  // Header row - matches bg-gradient-to-r from-primary/20 via-primary/15 to-primary/20 (stronger purple gradient)
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
   doc.rect(margin, yPosition, maxWidth, 14, "F");
   
-  // Header border - matches border-border
-  doc.setDrawColor(...PDF_CONFIG.border);
+  // Header border - matches border-primary/20
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.rect(margin, yPosition, maxWidth, 14, "S");
   
   // Header text - matches font-semibold text-foreground
@@ -666,10 +666,10 @@ const renderCompetitorTable = (
       doc.addPage();
       yPosition = margin;
       
-      // Re-render header on new page
-      doc.setFillColor(...PDF_CONFIG.headerBg);
+      // Re-render header on new page with purple gradient styling
+      doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
       doc.rect(margin, yPosition, maxWidth, 14, "F");
-      doc.setDrawColor(...PDF_CONFIG.border);
+      doc.setDrawColor(...PDF_CONFIG.primaryLight);
       doc.rect(margin, yPosition, maxWidth, 14, "S");
       
       doc.setTextColor(...PDF_CONFIG.textDark);
@@ -689,18 +689,20 @@ const renderCompetitorTable = (
     const rowHeight = 22;
     const isHobson = competitor.competitor === "Hobson AI";
     
-    // Alternating row background - matches on-screen bg-background / bg-muted/30
+    // Alternating row background - matches on-screen purple gradient styling
+    // Even rows: from-primary/10 via-primary/5 to-primary/10
+    // Odd rows: from-secondary via-muted/50 to-secondary
     if (isHobson) {
-      doc.setFillColor(...PDF_CONFIG.primaryBg);
+      doc.setFillColor(...PDF_CONFIG.primaryBg); // Stronger purple for Hobson
     } else if (rowIndex % 2 === 0) {
-      doc.setFillColor(...PDF_CONFIG.bgWhite);
+      doc.setFillColor(...PDF_CONFIG.primaryBgLight); // Light purple tint
     } else {
-      doc.setFillColor(...PDF_CONFIG.bgLight);
+      doc.setFillColor(...PDF_CONFIG.primaryBgMedium); // Slightly stronger purple
     }
     doc.rect(margin, yPosition, maxWidth, rowHeight, "F");
     
-    // Draw cell borders
-    doc.setDrawColor(...PDF_CONFIG.border);
+    // Draw cell borders - matches border-primary/20
+    doc.setDrawColor(...PDF_CONFIG.primaryLight);
     doc.rect(margin, yPosition, maxWidth, rowHeight, "S");
     
     // Draw vertical cell dividers
