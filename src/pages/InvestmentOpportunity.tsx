@@ -73,6 +73,7 @@ import { TeamVisual } from "@/components/investor/TeamVisual";
 import { RaiseVisual } from "@/components/investor/RaiseVisual";
 import { CommercialisationStrategyVisual } from "@/components/investor/CommercialisationStrategyVisual";
 import CommercialsVisual from "@/components/investor/CommercialsVisual";
+import { MarketingSalesStrategyVisual } from "@/components/investor/MarketingSalesStrategyVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -567,6 +568,25 @@ const sections = [
     ],
   },
   {
+    id: "marketing-sales",
+    title: "Marketing & Sales Strategy",
+    subtitle: "Go-to-Market Plan",
+    icon: Target,
+    color: "from-teal-500/10 to-teal-600/10",
+    iconColor: "text-teal-600",
+    pages: [
+      {
+        title: "Marketing & Sales Strategy",
+        showCustomVisual: true,
+        customVisualComponent: "marketingSalesStrategy",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+    ],
+  },
+  {
     id: "financials",
     title: "Financials",
     subtitle: "Forecasts & Assumptions",
@@ -742,7 +762,8 @@ const InvestmentOpportunity = () => {
       roadmapProduct: sections[2] as CardSection,        // Roadmap & Product
       commercials: sections[3] as CardSection,           // Commercials
       team: sections[4] as CardSection,                  // Team
-      financials: sections[5] as CardSection,            // Financials
+      marketingSales: sections[5] as CardSection,        // Marketing & Sales Strategy
+      financials: sections[6] as CardSection,            // Financials
     };
     
     // Funding requirement data for cover page
@@ -1387,6 +1408,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Early Roadmap */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "earlyRoadmap" && (
                       <EarlyRoadmapVisual />
+                    )}
+
+                    {/* Custom Visual Component for Marketing & Sales Strategy */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "marketingSalesStrategy" && (
+                      <MarketingSalesStrategyVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
