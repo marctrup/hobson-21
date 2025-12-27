@@ -1255,6 +1255,50 @@ export const getWhyNowPdfContent = (): string[] => [
   "And Hobson is positioned to lead that shift.",
 ];
 
+export const getMarketingSalesStrategyPdfContent = (): string[] => [
+  "Marketing and Sales Strategy - Go-to-Market Plan:",
+  "",
+  "Multi-channel approach targeting UK property professionals.",
+  "",
+  "Sales Channels:",
+  "",
+  "1. Direct Sales:",
+  "- Targeted outreach to property management companies and landlords",
+  "- Focus on enterprise accounts with large portfolios",
+  "- Personalised demonstrations using client documents",
+  "",
+  "2. Strategic Partnerships:",
+  "- Integrations with property management platforms",
+  "- Partnerships with estate agents and letting agencies",
+  "- White-label opportunities for software vendors",
+  "",
+  "3. Digital Marketing:",
+  "- SEO and content marketing for real estate professionals",
+  "- Targeted campaigns on LinkedIn and industry platforms",
+  "- Thought leadership and educational content",
+  "",
+  "4. Industry Events:",
+  "- PropTech conferences and trade shows",
+  "- Networking events and speaking opportunities",
+  "- Industry association partnerships",
+  "",
+  "Sales Process:",
+  "1. Discovery - Identify pain points and document challenges",
+  "2. Demo - Personalised demonstration with client documents",
+  "3. Trial - Free pilot period to prove value",
+  "4. Onboard - Seamless setup and training",
+  "",
+  "Target Metrics:",
+  "- Target CAC: GBP 500 (Customer acquisition cost)",
+  "- LTV:CAC Ratio: 10:1 (Target lifetime value ratio)",
+  "- Sales Cycle: 30 days (Average time to close)",
+  "",
+  "Dual Approach Strategy:",
+  "Our strategy combines low-touch self-service for smaller operators with",
+  "high-touch enterprise sales for larger portfolios. This dual approach",
+  "maximises market coverage while optimising customer acquisition costs.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1291,6 +1335,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   whyNow: getWhyNowPdfContent,
   teamCredibility: getTeamCredibilityPdfContent,
   raise: getRaisePdfContent,
+  marketingSalesStrategy: getMarketingSalesStrategyPdfContent,
 };
 
 // Get PDF content for any visual component type

@@ -6682,6 +6682,7 @@ export interface BusinessPlanCards {
   roadmapProduct: CardSection;
   commercials: CardSection;
   team: CardSection;
+  marketingSales: CardSection;
   financials: CardSection;
 }
 
@@ -6716,6 +6717,7 @@ export const generateFullBusinessPlanPdf = (
     cards.roadmapProduct,
     cards.commercials,
     cards.team,
+    cards.marketingSales,
     cards.financials,
   ];
 
