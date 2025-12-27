@@ -1299,6 +1299,44 @@ export const getMarketingSalesStrategyPdfContent = (): string[] => [
   "maximises market coverage while optimising customer acquisition costs.",
 ];
 
+export const getExecutiveContextPdfContent = (): string[] => [
+  "Executive Context - Strategic Positioning for Market Entry:",
+  "",
+  "Market Context:",
+  "The UK real estate sector faces unprecedented pressure from regulatory complexity,",
+  "operational inefficiencies, and document overload. Property professionals spend up to",
+  "40% of their time searching for and processing document-based information.",
+  "",
+  "Strategic Opportunity:",
+  "",
+  "1. First-Mover Advantage:",
+  "- No established AI-native document intelligence solution exists for UK property",
+  "- Opportunity to define and capture the category",
+  "",
+  "2. Regulatory Tailwinds:",
+  "- Increasing compliance requirements drive demand for automated solutions",
+  "- ESG reporting, safety regulations, and tenancy law changes",
+  "",
+  "3. Technology Readiness:",
+  "- AI capabilities have matured to deliver reliable document understanding",
+  "- Cost-effective deployment now possible at scale",
+  "",
+  "4. Market Appetite:",
+  "- 65% of UK businesses are primed to invest in AI solutions",
+  "- PropTech adoption accelerating across all segments",
+  "",
+  "Target Audience:",
+  "- Property Managers: Managing 10+ units",
+  "- Letting Agents: High document volume operations",
+  "- Landlords: Portfolio owners seeking efficiency",
+  "- Asset Managers: Institutional portfolios requiring compliance",
+  "",
+  "Conclusion:",
+  "Hobson is positioned to capture a category-defining opportunity in AI-powered",
+  "property document intelligence. The convergence of market need, technology readiness,",
+  "and regulatory pressure creates the perfect conditions for rapid adoption and growth.",
+];
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -1336,6 +1374,7 @@ export const pdfContentMap: Record<string, () => string[]> = {
   teamCredibility: getTeamCredibilityPdfContent,
   raise: getRaisePdfContent,
   marketingSalesStrategy: getMarketingSalesStrategyPdfContent,
+  executiveContext: getExecutiveContextPdfContent,
 };
 
 // Get PDF content for any visual component type
