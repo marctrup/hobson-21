@@ -41,7 +41,6 @@ const PDF_CONFIG = {
     body: 9,              // Standard body text (doc.setFontSize(PDF_CONFIG.fontSize.body))
     bodySmall: 8,         // Secondary info, labels (doc.setFontSize(PDF_CONFIG.fontSize.bodySmall))
     caption: 8,           // Footnotes, sources
-    tiny: 7,              // Smallest text (descriptions, fine print)
     stat: 16,             // Large statistics
   },
 
@@ -2515,7 +2514,7 @@ const renderTeam = (
       doc.setFillColor(...PDF_CONFIG.amberBg);
       doc.roundedRect(cardX + cardWidth - 22, cardY + PDF_CONFIG.spacing.boxGap, 18, PDF_CONFIG.spacing.bulletOffset, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
       doc.setTextColor(...PDF_CONFIG.amber);
-      doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+      doc.setFontSize(PDF_CONFIG.fontSize.caption);
       doc.text("TBC", cardX + cardWidth - 13, cardY + 9.5, { align: "center" });
     }
 
@@ -2542,7 +2541,7 @@ const renderTeam = (
     // Description
     if (member.description) {
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+      doc.setFontSize(PDF_CONFIG.fontSize.caption);
       const descLines = doc.splitTextToSize(sanitizeText(member.description), cardWidth - 32);
       let descY = cardY + 25;
       descLines.slice(0, 2).forEach((line: string) => {
@@ -2570,7 +2569,7 @@ const renderTeam = (
   doc.rect(margin + (maxWidth - dividerTextWidth) / 2, yPosition - PDF_CONFIG.spacing.boxGap, dividerTextWidth, PDF_CONFIG.spacing.bulletOffset, "F");
   
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   doc.text(dividerText, margin + maxWidth / 2, yPosition + 2, { align: "center" });
   yPosition += 16;
 
@@ -2612,7 +2611,7 @@ const renderTeam = (
   doc.text("Commercial Advisor", margin + 26, yPosition + 17);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   doc.text("Bringing deep commercial and industry experience to guide strategic growth", margin + 26, yPosition + 24);
 
   yPosition += advisorCardHeight + PDF_CONFIG.spacing.circleOffset;
@@ -2643,7 +2642,7 @@ const renderTeam = (
     
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.text(area, areaX + PDF_CONFIG.spacing.itemGap, yPosition + 24);
   });
 
