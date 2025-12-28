@@ -6762,28 +6762,28 @@ const renderExecutiveContext = (
   });
   yPosition += posHeight + 8;
 
-  // 5. Mission Statement
+  // 5. Mission Statement - compact layout
   const missionContentLines = doc.splitTextToSize(sanitizeText(data.missionStatement.content), maxWidth - 16);
-  const missionHeight = 30 + missionContentLines.length * bodyLine;
-  fitPage(missionHeight + 6);
+  const missionHeight = 22 + missionContentLines.length * bodyLine;
+  fitPage(missionHeight + 4);
 
   // Header row
   doc.setFillColor(...tealAccent);
-  doc.circle(margin + 10, yPosition + 8, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + 10, yPosition + 6, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.title, margin + 20, yPosition + 10);
+  doc.text(data.missionStatement.title, margin + 20, yPosition + 8);
 
   doc.setTextColor(...tealAccent);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.subtitle, margin + 20, yPosition + 18);
+  doc.text(data.missionStatement.subtitle, margin + 20, yPosition + 15);
 
   // Content box
-  const missionBoxY = yPosition + 24;
-  const missionBoxHeight = missionContentLines.length * bodyLine + 12;
+  const missionBoxY = yPosition + 18;
+  const missionBoxHeight = missionContentLines.length * bodyLine + 8;
   doc.setFillColor(...tealBg);
   doc.roundedRect(margin, missionBoxY, maxWidth, missionBoxHeight, 3, 3, "F");
   doc.setDrawColor(...tealBorder);
@@ -6793,35 +6793,35 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = missionBoxY + 8;
+  textY = missionBoxY + 6;
   missionContentLines.forEach((line: string) => {
     doc.text(line, margin + 8, textY);
     textY += bodyLine;
   });
-  yPosition = missionBoxY + missionBoxHeight + 8;
+  yPosition = missionBoxY + missionBoxHeight + 5;
 
-  // 6. Positioning Statement
+  // 6. Positioning Statement - compact layout
   const positionContentLines = doc.splitTextToSize(sanitizeText(data.positioningStatement.content), maxWidth - 16);
-  const positionHeight = 30 + positionContentLines.length * bodyLine;
-  fitPage(positionHeight + 6);
+  const positionHeight = 22 + positionContentLines.length * bodyLine;
+  fitPage(positionHeight + 4);
 
   // Header row
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 10, yPosition + 8, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + 10, yPosition + 6, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.positioningStatement.title, margin + 20, yPosition + 10);
+  doc.text(data.positioningStatement.title, margin + 20, yPosition + 8);
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(data.positioningStatement.subtitle, margin + 20, yPosition + 18);
+  doc.text(data.positioningStatement.subtitle, margin + 20, yPosition + 15);
 
   // Content box
-  const positionBoxY = yPosition + 24;
-  const positionBoxHeight = positionContentLines.length * bodyLine + 12;
+  const positionBoxY = yPosition + 18;
+  const positionBoxHeight = positionContentLines.length * bodyLine + 8;
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, positionBoxY, maxWidth, positionBoxHeight, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
@@ -6831,12 +6831,12 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = positionBoxY + 8;
+  textY = positionBoxY + 6;
   positionContentLines.forEach((line: string) => {
     doc.text(line, margin + 8, textY);
     textY += bodyLine;
   });
-  yPosition = positionBoxY + positionBoxHeight + 8;
+  yPosition = positionBoxY + positionBoxHeight + 6;
 
   // 7. Conclusion box (amber themed)
   const conclusionLines = doc.splitTextToSize(sanitizeText(data.conclusion), maxWidth - 16);
