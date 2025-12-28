@@ -6793,78 +6793,83 @@ const renderProviderCards = (
   });
   if (current.length) blocks.push(current);
 
+  const { box, spacing, circleSize, fontSize, lineHeight, card } = PDF_CONFIG;
+  
   blocks.forEach((block) => {
     const title = block[0].endsWith(":") ? block[0].slice(0, -1) : block[0];
     const body = block.slice(1);
 
-    const bodyLineHeight = PDF_CONFIG.lineHeight.body;
+    const bodyLineHeight = lineHeight.body;
+    const bulletTextWidth = maxWidth - spacing.bulletTextOffset - spacing.itemGap;
+    const normalTextWidth = maxWidth - card.textOffsetX - spacing.paragraphGap;
 
-    // Measure body height (including wrapping)
+    // Measure body height (including wrapping) - use splitTextWithFont for correct metrics
     let measuredLines = 0;
     body.forEach((l) => {
       const isBullet = l.startsWith("-");
       const clean = l.replace(/^[-\s]+/, "");
-      const wrapped = doc.splitTextToSize(clean, maxWidth - (isBullet ? 30 : 22));
+      const wrapped = splitTextWithFont(doc, clean, isBullet ? bulletTextWidth : normalTextWidth, "body", false);
       measuredLines += Math.max(1, wrapped.length);
       measuredLines += 0.2; // subtle spacing between items
     });
 
     // Dynamic height so text never overflows the box
-    const headerHeight = 24; // title row + spacing
-    const bottomPadding = 8;
-    const cardHeight = Math.max(34, headerHeight + measuredLines * bodyLineHeight + bottomPadding);
+    const headerHeight = card.headerHeight + spacing.cardGap; // title row + spacing
+    const bottomPadding = box.paddingTop;
+    const cardHeight = Math.max(box.minHeight + fontSize.stat, headerHeight + measuredLines * bodyLineHeight + bottomPadding);
 
     // Page break based on actual card height
-    yPosition = checkPageBreak(doc, yPosition, cardHeight + PDF_CONFIG.spacing.cardGap, pageHeight, margin);
+    yPosition = checkPageBreak(doc, yPosition, cardHeight + spacing.cardGap, pageHeight, margin);
 
     // Card background + border
     doc.setFillColor(...theme.bg);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, box.borderRadius, box.borderRadius, "F");
     doc.setDrawColor(...theme.border);
-    doc.setLineWidth(0.3);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "S");
+    doc.setLineWidth(box.borderWidth);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, box.borderRadius, box.borderRadius, "S");
 
     // Accent bar
     doc.setFillColor(...theme.accent);
-    doc.rect(margin, yPosition, 3, cardHeight, "F");
+    doc.rect(margin, yPosition, box.borderRadius, cardHeight, "F");
 
     // Header circle (no number)
     doc.setFillColor(...theme.accent);
-    doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+    const circleY = yPosition + spacing.itemGap;
+    doc.circle(margin + spacing.itemGap, circleY, circleSize.medium, "F");
 
     // Title
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
-    doc.text(title, margin + 22, yPosition + 14);
+    doc.text(title, margin + card.textOffsetX + spacing.paragraphGap, yPosition + spacing.contentPadding);
 
     // Body
-    let contentY = yPosition + 24;
+    let contentY = yPosition + headerHeight + spacing.cardGap;
     setBodyFont(doc);
     doc.setTextColor(...PDF_CONFIG.textGray);
 
     body.forEach((l) => {
       const isBullet = l.startsWith("-");
       const clean = l.replace(/^[-\s]+/, "");
-      const wrapped = doc.splitTextToSize(clean, maxWidth - (isBullet ? 30 : 22));
+      const wrapped = splitTextWithFont(doc, clean, isBullet ? bulletTextWidth : normalTextWidth, "body", false);
 
       if (isBullet) {
         doc.setFillColor(...theme.accent);
-        doc.circle(margin + 12, contentY - 2, PDF_CONFIG.circleSize.small, "F");
+        doc.circle(margin + spacing.itemGap, contentY - circleSize.small, circleSize.small, "F");
         wrapped.forEach((w: string) => {
-          doc.text(w, margin + 18, contentY);
+          doc.text(w, margin + spacing.textIndent, contentY);
           contentY += bodyLineHeight;
         });
         contentY += 1;
       } else {
         wrapped.forEach((w: string) => {
-          doc.text(w, margin + 8, contentY);
+          doc.text(w, margin + box.paddingX, contentY);
           contentY += bodyLineHeight;
         });
         contentY += 1;
       }
     });
 
-    yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
+    yPosition += cardHeight + spacing.cardGap;
   });
 
   return yPosition;
@@ -6882,7 +6887,8 @@ const renderExecutiveContext = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const bodyLine = PDF_CONFIG.lineHeight.body;
+  const { box, spacing, circleSize, fontSize, lineHeight, lineHeightFactor } = PDF_CONFIG;
+  const bodyLine = lineHeight.body;
 
   const data = getExecutiveContextStructuredData();
 
@@ -6909,210 +6915,210 @@ const renderExecutiveContext = (
   const amberBorder: [number, number, number] = [253, 230, 138]; // amber-200
 
   // 1. Inflexion Point header box - tighter sizing with justified text
-  const innerPadding = 8;
+  const innerPadding = box.paddingX;
   const innerTextWidth = maxWidth - innerPadding * 2;
-  const inflexionLines = doc.splitTextToSize(sanitizeText(data.inflexionPoint), innerTextWidth);
-  const inflexionHeight = 10 + inflexionLines.length * (bodyLine * 1.2);
-  fitPage(inflexionHeight + 6);
+  const inflexionLines = splitTextWithFont(doc, data.inflexionPoint, innerTextWidth, "cardTitle", true);
+  const inflexionHeight = spacing.boxTopPadding + inflexionLines.length * (bodyLine * lineHeightFactor.tight);
+  fitPage(inflexionHeight + spacing.cardGap);
 
   doc.setFillColor(...tealBg);
-  doc.roundedRect(margin, yPosition, maxWidth, inflexionHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, inflexionHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...tealBorder);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, inflexionHeight, 3, 3, "S");
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, inflexionHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText(data.inflexionPoint), margin + innerPadding, yPosition + 10, {
+  doc.text(sanitizeText(data.inflexionPoint), margin + innerPadding, yPosition + spacing.boxTopPadding, {
     maxWidth: innerTextWidth,
     align: "justify",
-    lineHeightFactor: 1.2,
+    lineHeightFactor: lineHeightFactor.tight,
   });
-  yPosition += inflexionHeight + 6;
+  yPosition += inflexionHeight + spacing.cardGap;
 
   let textY = 0;
 
   // 2. Pressures - 2x2 grid
   fitPage(50);
-  const pressureBoxWidth = (maxWidth - 6) / 2;
-  const pressureBoxHeight = 18;
+  const pressureBoxWidth = (maxWidth - spacing.cardGap) / 2;
+  const pressureBoxHeight = box.minHeight;
   
   data.pressures.forEach((pressure, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
-    const x = margin + col * (pressureBoxWidth + 6);
-    const y = yPosition + row * (pressureBoxHeight + 4);
+    const x = margin + col * (pressureBoxWidth + spacing.cardGap);
+    const y = yPosition + row * (pressureBoxHeight + spacing.boxGap);
 
     doc.setFillColor(...redBg);
-    doc.roundedRect(x, y, pressureBoxWidth, pressureBoxHeight, 2, 2, "F");
+    doc.roundedRect(x, y, pressureBoxWidth, pressureBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setDrawColor(...redBorder);
-    doc.setLineWidth(0.2);
-    doc.roundedRect(x, y, pressureBoxWidth, pressureBoxHeight, 2, 2, "S");
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(x, y, pressureBoxWidth, pressureBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "S");
 
     // Warning icon (triangle)
     doc.setFillColor(...redAccent);
-    doc.circle(x + 10, y + pressureBoxHeight / 2, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(x + spacing.circleOffset, y + pressureBoxHeight / 2, circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.setFontSize(fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(sanitizeText(pressure), x + 18, y + 11);
+    doc.text(sanitizeText(pressure), x + spacing.textIndent, y + 11);
   });
-  yPosition += (pressureBoxHeight + 4) * 2 + 6;
+  yPosition += (pressureBoxHeight + spacing.boxGap) * 2 + spacing.cardGap;
 
   // 3. Context paragraph box - tighter with justified text
-  const ctxPadding = 8;
+  const ctxPadding = box.paddingX;
   const ctxTextWidth = maxWidth - ctxPadding * 2;
-  const contextLines = doc.splitTextToSize(sanitizeText(data.contextParagraph), ctxTextWidth);
-  const contextHeight = 8 + contextLines.length * (bodyLine * 1.25);
-  fitPage(contextHeight + 6);
+  const contextLines = splitTextWithFont(doc, data.contextParagraph, ctxTextWidth, "body", false);
+  const contextHeight = box.paddingX + contextLines.length * (bodyLine * lineHeightFactor.body);
+  fitPage(contextHeight + spacing.cardGap);
 
   doc.setFillColor(...slateBg);
-  doc.roundedRect(margin, yPosition, maxWidth, contextHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, contextHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...slateBorder);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, contextHeight, 3, 3, "S");
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, contextHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.contextParagraph), margin + ctxPadding, yPosition + 8, {
+  doc.text(sanitizeText(data.contextParagraph), margin + ctxPadding, yPosition + box.paddingX, {
     maxWidth: ctxTextWidth,
     align: "justify",
-    lineHeightFactor: 1.25,
+    lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition += contextHeight + 6;
+  yPosition += contextHeight + spacing.cardGap;
 
   // 4. Hobson positioning box (purple themed) - tighter with justified text
-  const posPadding = 8;
-  const posTextWidth = maxWidth - posPadding * 2 - 14; // account for circle
-  const posLines = doc.splitTextToSize(sanitizeText(data.hobsonPositioning), posTextWidth);
-  const posHeight = 8 + posLines.length * (bodyLine * 1.25);
-  fitPage(posHeight + 6);
+  const posPadding = box.paddingX;
+  const posTextWidth = maxWidth - posPadding * 2 - spacing.contentPadding; // account for circle
+  const posLines = splitTextWithFont(doc, data.hobsonPositioning, posTextWidth, "body", true);
+  const posHeight = box.paddingX + posLines.length * (bodyLine * lineHeightFactor.body);
+  fitPage(posHeight + spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, posHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, posHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, posHeight, 3, 3, "S");
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, posHeight, box.borderRadius, box.borderRadius, "S");
 
   // Circle aligned with first line of text
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + spacing.circleOffset, yPosition + spacing.circleOffset, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText(data.hobsonPositioning), margin + 20, yPosition + 8, {
+  doc.text(sanitizeText(data.hobsonPositioning), margin + spacing.bulletTextOffset, yPosition + box.paddingX, {
     maxWidth: posTextWidth,
     align: "justify",
-    lineHeightFactor: 1.25,
+    lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition += posHeight + 6;
+  yPosition += posHeight + spacing.cardGap;
 
   // 5. Mission Statement - compact layout with justified text
-  const missionPadding = 8;
+  const missionPadding = box.paddingX;
   const missionTextWidth = maxWidth - missionPadding * 2;
-  const missionContentLines = doc.splitTextToSize(sanitizeText(data.missionStatement.content), missionTextWidth);
-  const missionBoxHeight = missionContentLines.length * (bodyLine * 1.25) + 6;
-  const missionHeight = 18 + missionBoxHeight;
-  fitPage(missionHeight + 4);
+  const missionContentLines = splitTextWithFont(doc, data.missionStatement.content, missionTextWidth, "body", false);
+  const missionBoxHeight = missionContentLines.length * (bodyLine * lineHeightFactor.body) + spacing.cardGap;
+  const missionHeight = spacing.contentBoxStart + missionBoxHeight;
+  fitPage(missionHeight + spacing.boxGap);
 
   // Header row
   doc.setFillColor(...tealAccent);
-  doc.circle(margin + 10, yPosition + 6, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + spacing.circleOffset, yPosition + spacing.cardGap, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.title, margin + 20, yPosition + 8);
+  doc.text(data.missionStatement.title, margin + spacing.bulletTextOffset, yPosition + box.paddingX);
 
   doc.setTextColor(...tealAccent);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.subtitle, margin + 20, yPosition + 15);
+  doc.text(data.missionStatement.subtitle, margin + spacing.bulletTextOffset, yPosition + spacing.subtitleY);
 
   // Content box
-  const missionBoxY = yPosition + 18;
+  const missionBoxY = yPosition + spacing.contentBoxStart;
   doc.setFillColor(...tealBg);
-  doc.roundedRect(margin, missionBoxY, maxWidth, missionBoxHeight, 3, 3, "F");
+  doc.roundedRect(margin, missionBoxY, maxWidth, missionBoxHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...tealBorder);
-  doc.setLineWidth(0.2);
-  doc.roundedRect(margin, missionBoxY, maxWidth, missionBoxHeight, 3, 3, "S");
+  doc.setLineWidth(box.borderWidthThin);
+  doc.roundedRect(margin, missionBoxY, maxWidth, missionBoxHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.missionStatement.content), margin + missionPadding, missionBoxY + 6, {
+  doc.text(sanitizeText(data.missionStatement.content), margin + missionPadding, missionBoxY + spacing.cardGap, {
     maxWidth: missionTextWidth,
     align: "justify",
-    lineHeightFactor: 1.25,
+    lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition = missionBoxY + missionBoxHeight + 5;
+  yPosition = missionBoxY + missionBoxHeight + spacing.boxToBox;
 
   // 6. Positioning Statement - compact layout with justified text
-  const posStmtPadding = 8;
+  const posStmtPadding = box.paddingX;
   const posStmtTextWidth = maxWidth - posStmtPadding * 2;
-  const positionContentLines = doc.splitTextToSize(sanitizeText(data.positioningStatement.content), posStmtTextWidth);
-  const positionBoxHeight = positionContentLines.length * (bodyLine * 1.25) + 6;
-  const positionHeight = 18 + positionBoxHeight;
-  fitPage(positionHeight + 4);
+  const positionContentLines = splitTextWithFont(doc, data.positioningStatement.content, posStmtTextWidth, "body", false);
+  const positionBoxHeight = positionContentLines.length * (bodyLine * lineHeightFactor.body) + spacing.cardGap;
+  const positionHeight = spacing.contentBoxStart + positionBoxHeight;
+  fitPage(positionHeight + spacing.boxGap);
 
   // Header row
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 10, yPosition + 6, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + spacing.circleOffset, yPosition + spacing.cardGap, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.positioningStatement.title, margin + 20, yPosition + 8);
+  doc.text(data.positioningStatement.title, margin + spacing.bulletTextOffset, yPosition + box.paddingX);
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(data.positioningStatement.subtitle, margin + 20, yPosition + 15);
+  doc.text(data.positioningStatement.subtitle, margin + spacing.bulletTextOffset, yPosition + spacing.subtitleY);
 
   // Content box
-  const positionBoxY = yPosition + 18;
+  const positionBoxY = yPosition + spacing.contentBoxStart;
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, positionBoxY, maxWidth, positionBoxHeight, 3, 3, "F");
+  doc.roundedRect(margin, positionBoxY, maxWidth, positionBoxHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.setLineWidth(0.2);
-  doc.roundedRect(margin, positionBoxY, maxWidth, positionBoxHeight, 3, 3, "S");
+  doc.setLineWidth(box.borderWidthThin);
+  doc.roundedRect(margin, positionBoxY, maxWidth, positionBoxHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.positioningStatement.content), margin + posStmtPadding, positionBoxY + 6, {
+  doc.text(sanitizeText(data.positioningStatement.content), margin + posStmtPadding, positionBoxY + spacing.cardGap, {
     maxWidth: posStmtTextWidth,
     align: "justify",
-    lineHeightFactor: 1.25,
+    lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition = positionBoxY + positionBoxHeight + 5;
+  yPosition = positionBoxY + positionBoxHeight + spacing.boxToBox;
 
   // 7. Conclusion box (amber themed) - tighter with justified text
-  const concPadding = 8;
+  const concPadding = box.paddingX;
   const concTextWidth = maxWidth - concPadding * 2;
-  const conclusionLines = doc.splitTextToSize(sanitizeText(data.conclusion), concTextWidth);
-  const conclusionHeight = 8 + conclusionLines.length * (bodyLine * 1.25);
-  fitPage(conclusionHeight + 6);
+  const conclusionLines = splitTextWithFont(doc, data.conclusion, concTextWidth, "body", false);
+  const conclusionHeight = box.paddingX + conclusionLines.length * (bodyLine * lineHeightFactor.body);
+  fitPage(conclusionHeight + spacing.cardGap);
 
   doc.setFillColor(...amberBg);
-  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...amberBorder);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, 3, 3, "S");
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.conclusion), margin + concPadding, yPosition + 8, {
+  doc.text(sanitizeText(data.conclusion), margin + concPadding, yPosition + box.paddingX, {
     maxWidth: concTextWidth,
     align: "justify",
-    lineHeightFactor: 1.25,
+    lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition += conclusionHeight + 6;
+  yPosition += conclusionHeight + spacing.cardGap;
 
   return yPosition;
 };
@@ -7129,7 +7135,8 @@ const renderSituationAnalysis = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const bodyLine = PDF_CONFIG.lineHeight.body;
+  const { box, spacing, circleSize, fontSize, lineHeight, lineHeightFactor } = PDF_CONFIG;
+  const bodyLine = lineHeight.body;
 
   const data = getSituationAnalysisStructuredData();
 
@@ -7155,179 +7162,179 @@ const renderSituationAnalysis = (
 
   // 1. Header box
   const headerHeight = 28;
-  fitPage(headerHeight + 6);
+  fitPage(headerHeight + spacing.cardGap);
 
   doc.setFillColor(...tealBg);
-  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...tealBorder);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "S");
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setFillColor(...tealAccent);
-  doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + spacing.itemGap, yPosition + spacing.contentPadding, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + 22, yPosition + 12);
+  doc.text(data.header.title, margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.itemGap);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 22);
+  doc.text(sanitizeText(data.header.subtitle), margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.bulletTextOffset + spacing.paragraphGap);
 
-  yPosition += headerHeight + 6;
+  yPosition += headerHeight + spacing.cardGap;
 
   // 2. Intro paragraph - tighter with justified text
-  const introPadding = 8;
+  const introPadding = box.paddingX;
   const introTextWidth = maxWidth - introPadding * 2;
-  const introLines = doc.splitTextToSize(sanitizeText(data.intro), introTextWidth);
-  const introHeight = 8 + introLines.length * (bodyLine * 1.25);
-  fitPage(introHeight + 6);
+  const introLines = splitTextWithFont(doc, data.intro, introTextWidth, "body", false);
+  const introHeight = box.paddingX + introLines.length * (bodyLine * lineHeightFactor.body);
+  fitPage(introHeight + spacing.cardGap);
 
   doc.setFillColor(...slateBg);
-  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...slateBorder);
-  doc.setLineWidth(0.2);
-  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "S");
+  doc.setLineWidth(box.borderWidthThin);
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.intro), margin + introPadding, yPosition + 8, {
+  doc.text(sanitizeText(data.intro), margin + introPadding, yPosition + box.paddingX, {
     maxWidth: introTextWidth,
     align: "justify",
-    lineHeightFactor: 1.25,
+    lineHeightFactor: lineHeightFactor.body,
   });
   let textY = 0;
-  yPosition += introHeight + 6;
+  yPosition += introHeight + spacing.cardGap;
 
   // 3. Segments
   data.segments.forEach((segment, idx) => {
     const theme = segmentThemes[idx];
 
-    // Calculate segment card height
-    const descLines = doc.splitTextToSize(sanitizeText(segment.description), maxWidth - 16);
-    const valueLines = doc.splitTextToSize(sanitizeText(segment.hobsonValue), maxWidth - 56);
+    // Calculate segment card height - use splitTextWithFont for correct metrics
+    const descLines = splitTextWithFont(doc, segment.description, maxWidth - spacing.bulletTextOffset, "bodySmall", false);
+    const valueLines = splitTextWithFont(doc, segment.hobsonValue, maxWidth - spacing.pageBreakMargin - spacing.bulletTextOffset, "bodySmall", true);
     const useCaseHeight = segment.useCases.length * (bodyLine + 1);
-    const feedbackLines = doc.splitTextToSize(`Client feedback: "${segment.feedback}"`, maxWidth - 20);
+    const feedbackLines = splitTextWithFont(doc, `Client feedback: "${segment.feedback}"`, maxWidth - spacing.bulletTextOffset, "bodySmall", false);
     
-    const segmentHeight = 32 + descLines.length * bodyLine + 8 + valueLines.length * bodyLine + 12 + useCaseHeight + 8 + feedbackLines.length * bodyLine + 12;
-    fitPage(segmentHeight + 8);
+    const segmentHeight = 32 + descLines.length * bodyLine + box.paddingX + valueLines.length * bodyLine + spacing.itemGap + useCaseHeight + box.paddingX + feedbackLines.length * bodyLine + spacing.itemGap;
+    fitPage(segmentHeight + box.paddingX);
 
     // Main segment card
     doc.setFillColor(...theme.bg);
-    doc.roundedRect(margin, yPosition, maxWidth, segmentHeight, 3, 3, "F");
+    doc.roundedRect(margin, yPosition, maxWidth, segmentHeight, box.borderRadius, box.borderRadius, "F");
     doc.setDrawColor(...theme.border);
-    doc.setLineWidth(0.3);
-    doc.roundedRect(margin, yPosition, maxWidth, segmentHeight, 3, 3, "S");
+    doc.setLineWidth(box.borderWidth);
+    doc.roundedRect(margin, yPosition, maxWidth, segmentHeight, box.borderRadius, box.borderRadius, "S");
 
     // Segment header - circle aligned with text
     doc.setFillColor(...theme.accent);
-    doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+    doc.circle(margin + spacing.itemGap, yPosition + spacing.itemGap, circleSize.medium, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+    doc.setFontSize(fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
-    doc.text(`Segment ${segment.id}:`, margin + 22, yPosition + 14);
+    doc.text(`Segment ${segment.id}:`, margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.contentPadding);
 
     // Target label (no box, just colored text) - add spacing between segment and target
     doc.setTextColor(...theme.accent);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    const targetX = margin + 22 + doc.getTextWidth(`Segment ${segment.id}:`) + 12; // 12pt gap
-    doc.text(`${segment.targetLevel} Target`, targetX, yPosition + 14);
+    const targetX = margin + spacing.bulletTextOffset + spacing.paragraphGap + doc.getTextWidth(`Segment ${segment.id}:`) + spacing.itemGap; // gap between segment and target
+    doc.text(`${segment.targetLevel} Target`, targetX, yPosition + spacing.contentPadding);
 
     // Title
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.setFontSize(fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(sanitizeText(segment.title), margin + 22, yPosition + 24);
+    doc.text(sanitizeText(segment.title), margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + 24);
 
     textY = yPosition + 32;
 
     // Description
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     descLines.forEach((line: string) => {
-      doc.text(line, margin + 8, textY);
+      doc.text(line, margin + box.paddingX, textY);
       textY += bodyLine;
     });
-    textY += 4;
+    textY += spacing.boxGap;
 
     // Hobson value box - narrower width
     const valueBoxY = textY;
-    const valueBoxWidth = maxWidth - 40; // narrower box
-    const valueBoxHeight = valueLines.length * bodyLine + 10;
+    const valueBoxWidth = maxWidth - spacing.pageBreakMargin; // narrower box
+    const valueBoxHeight = valueLines.length * bodyLine + spacing.boxTopPadding;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(margin + 6, valueBoxY, valueBoxWidth, valueBoxHeight, 2, 2, "F");
+    doc.roundedRect(margin + spacing.cardGap, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setDrawColor(...theme.border);
-    doc.setLineWidth(0.2);
-    doc.roundedRect(margin + 6, valueBoxY, valueBoxWidth, valueBoxHeight, 2, 2, "S");
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(margin + spacing.cardGap, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "S");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    textY = valueBoxY + 6;
+    textY = valueBoxY + spacing.cardGap;
     valueLines.forEach((line: string) => {
-      doc.text(line, margin + 12, textY);
+      doc.text(line, margin + spacing.itemGap, textY);
       textY += bodyLine;
     });
-    textY = valueBoxY + valueBoxHeight + 4;
+    textY = valueBoxY + valueBoxHeight + spacing.boxGap;
 
     // Use cases
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     segment.useCases.forEach((useCase) => {
       doc.setFillColor(...theme.accent);
-      doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-      doc.text(sanitizeText(useCase), margin + 18, textY);
+      doc.circle(margin + spacing.itemGap, textY - 1.5, circleSize.small, "F");
+      doc.text(sanitizeText(useCase), margin + spacing.textIndent, textY);
       textY += bodyLine + 1;
     });
-    textY += 4;
+    textY += spacing.boxGap;
 
     // Client feedback
     const feedbackBoxY = textY;
-    const feedbackBoxHeight = feedbackLines.length * bodyLine + 8;
+    const feedbackBoxHeight = feedbackLines.length * bodyLine + box.paddingX;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(margin + 6, feedbackBoxY, maxWidth - 12, feedbackBoxHeight, 2, 2, "F");
+    doc.roundedRect(margin + spacing.cardGap, feedbackBoxY, maxWidth - spacing.itemGap, feedbackBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.rect(margin + 6, feedbackBoxY, 3, feedbackBoxHeight, "F");
+    doc.rect(margin + spacing.cardGap, feedbackBoxY, box.borderRadius, feedbackBoxHeight, "F");
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "italic");
-    textY = feedbackBoxY + 6;
+    textY = feedbackBoxY + spacing.cardGap;
     feedbackLines.forEach((line: string) => {
-      doc.text(line, margin + 14, textY);
+      doc.text(line, margin + spacing.contentPadding, textY);
       textY += bodyLine;
     });
 
-    yPosition += segmentHeight + 6;
+    yPosition += segmentHeight + spacing.cardGap;
   });
 
   // 4. Targeting Strategy
   fitPage(60);
   
   doc.setFillColor(...tealAccent);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + box.paddingX, yPosition + spacing.boxToBox, circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Targeting Strategy", margin + 18, yPosition + 8);
-  yPosition += 14;
+  doc.text("Targeting Strategy", margin + spacing.textIndent, yPosition + box.paddingX);
+  yPosition += spacing.contentPadding;
 
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  const strategyLines = doc.splitTextToSize(sanitizeText(data.strategyIntro), maxWidth);
+  const strategyLines = splitTextWithFont(doc, data.strategyIntro, maxWidth, "bodySmall", false);
   strategyLines.forEach((line: string) => {
     doc.text(line, margin, yPosition);
     yPosition += bodyLine;
   });
-  yPosition += 4;
+  yPosition += spacing.boxGap;
 
   // Strategy items (inline with circles)
   data.segments.forEach((segment, idx) => {
@@ -7335,57 +7342,57 @@ const renderSituationAnalysis = (
     
     // Circle indicator
     doc.setFillColor(...theme.accent);
-    doc.circle(margin + 4, yPosition + 3, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(margin + spacing.boxGap, yPosition + box.borderRadius, circleSize.small, "F");
     
     // Target level label
     doc.setTextColor(...theme.accent);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`${segment.targetLevel} Target`, margin + 12, yPosition + 5);
+    doc.text(`${segment.targetLevel} Target`, margin + spacing.itemGap, yPosition + spacing.boxToBox);
     
     // Segment label
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`Segment ${segment.id}`, margin + 50, yPosition + 5);
+    doc.text(`Segment ${segment.id}`, margin + 50, yPosition + spacing.boxToBox);
     
     // Reason text
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(segment.targetReason), margin + 75, yPosition + 5);
+    doc.text(sanitizeText(segment.targetReason), margin + 75, yPosition + spacing.boxToBox);
     
-    yPosition += 10;
+    yPosition += spacing.circleOffset;
   });
-  yPosition += 6;
+  yPosition += spacing.cardGap;
 
   // 5. Summary - tighter with justified text
-  const summaryPadding = 10;
+  const summaryPadding = spacing.circleOffset;
   const summaryTextWidth = maxWidth - summaryPadding * 2;
-  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), summaryTextWidth);
-  const summaryHeight = 18 + summaryLines.length * (bodyLine * 1.25);
-  fitPage(summaryHeight + 6);
+  const summaryLines = splitTextWithFont(doc, data.summary, summaryTextWidth, "body", false);
+  const summaryHeight = spacing.contentBoxStart + summaryLines.length * (bodyLine * lineHeightFactor.body);
+  fitPage(summaryHeight + spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "S");
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Summary", margin + summaryPadding, yPosition + 12);
+  doc.text("Summary", margin + summaryPadding, yPosition + spacing.itemGap);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.summary), margin + summaryPadding, yPosition + 20, {
+  doc.text(sanitizeText(data.summary), margin + summaryPadding, yPosition + spacing.bulletTextOffset, {
     maxWidth: summaryTextWidth,
     align: "justify",
-    lineHeightFactor: 1.25,
+    lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition += summaryHeight + 6;
+  yPosition += summaryHeight + spacing.cardGap;
 
   return yPosition;
 };
