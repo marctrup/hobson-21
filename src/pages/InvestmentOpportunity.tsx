@@ -84,6 +84,8 @@ import { CompetitorBenchmarksVisual } from "@/components/investor/CompetitorBenc
 import { CustomerOnlineBehaviourVisual } from "@/components/investor/CustomerOnlineBehaviourVisual";
 import { BrandIntegrityVisual } from "@/components/investor/BrandIntegrityVisual";
 import { PESTLEAnalysisVisual } from "@/components/investor/PESTLEAnalysisVisual";
+import { InternalCapabilityAssessmentVisual } from "@/components/investor/InternalCapabilityAssessmentVisual";
+
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -670,6 +672,15 @@ const sections = [
         title: "PESTLE Analysis",
         showCustomVisual: true,
         customVisualComponent: "pestleAnalysis",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Internal Capability Assessment",
+        showCustomVisual: true,
+        customVisualComponent: "internalCapabilityAssessment",
         content: {
           overview: "",
           sections: [],
@@ -1561,6 +1572,10 @@ const InvestmentOpportunity = () => {
                       <PESTLEAnalysisVisual />
                     )}
 
+                    {/* Custom Visual Component for Internal Capability Assessment */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "internalCapabilityAssessment" && (
+                      <InternalCapabilityAssessmentVisual />
+                    )}
                     {/* Custom Visual Component for AI Processing */}
                     {(selectedSection.pages[currentPageIndex] as any).isVisual && <AIProcessingVisual />}
 
