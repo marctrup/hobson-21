@@ -7548,8 +7548,10 @@ const renderCustomerUserJourneys = (
   yPosition += lessonsHeight + 6;
 
   // Summary and conclusion
-  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), maxWidth - 16);
-  const conclusionLines = doc.splitTextToSize(sanitizeText(data.conclusion), maxWidth - 16);
+  const innerPadding = 8;
+  const innerTextWidth = maxWidth - innerPadding * 2;
+  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), innerTextWidth);
+  const conclusionLines = doc.splitTextToSize(sanitizeText(data.conclusion), innerTextWidth);
   const summaryBoxHeight = 16 + summaryLines.length * bodyLine + 8 + conclusionLines.length * bodyLine + 8;
   fitPage(summaryBoxHeight + 6);
 
@@ -7564,7 +7566,7 @@ const renderCustomerUserJourneys = (
   doc.setFont("helvetica", "normal");
   textY = yPosition + 10;
   summaryLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + innerPadding, textY);
     textY += bodyLine;
   });
   textY += 6;
@@ -7572,7 +7574,7 @@ const renderCustomerUserJourneys = (
   doc.setFont("helvetica", "bold");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   conclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + innerPadding, textY);
     textY += bodyLine;
   });
 
