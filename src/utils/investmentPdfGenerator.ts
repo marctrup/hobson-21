@@ -8118,9 +8118,13 @@ const renderCompetitorBenchmarks = (
   };
 
   // Header
-  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), maxWidth - 16);
-  const detailLines = doc.splitTextToSize(sanitizeText(data.header.detail), maxWidth - 16);
-  const headerHeight = 28 + introLines.length * bodyLine + 4 + detailLines.length * bodyLine;
+  const innerPadding = 10;
+  const innerTextWidth = maxWidth - innerPadding * 2;
+  const introLineSpacing = 5.5;
+  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), innerTextWidth);
+  const detailLines = doc.splitTextToSize(sanitizeText(data.header.detail), innerTextWidth);
+  // Compact header: title area (24) + intro lines + gap (3) + detail lines + bottom padding (4)
+  const headerHeight = 24 + introLines.length * introLineSpacing + 3 + detailLines.length * introLineSpacing + 4;
   fitPage(headerHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
@@ -8130,36 +8134,42 @@ const renderCompetitorBenchmarks = (
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "S");
 
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + 22, yPosition + 12);
+  doc.text(data.header.title, margin + 22, yPosition + 10);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 22);
+  doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 18);
 
-  let textY = yPosition + 32;
+  // Single justified paragraph for intro
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
-  introLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.setFont("helvetica", "normal");
+  const introStartY = yPosition + 26;
+  doc.text(sanitizeText(data.header.intro), margin + innerPadding, introStartY, {
+    maxWidth: innerTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.3,
   });
-  textY += 2;
 
+  // Single justified paragraph for detail
+  const detailStartY = introStartY + introLines.length * introLineSpacing + 3;
   doc.setTextColor(...PDF_CONFIG.textGray);
-  detailLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.header.detail), margin + innerPadding, detailStartY, {
+    maxWidth: innerTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.3,
   });
 
-  yPosition += headerHeight + 8;
+  yPosition += headerHeight + 6;
 
   // Competitor cards
+  let textY = yPosition;
   data.competitors.forEach((competitor) => {
     const personaLines = doc.splitTextToSize(`Personas: ${sanitizeText(competitor.personas)}`, maxWidth - 20);
     const seoLines = doc.splitTextToSize(`SEO: ${sanitizeText(competitor.seo)}`, maxWidth - 20);
