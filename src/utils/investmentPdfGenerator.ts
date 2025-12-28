@@ -8300,9 +8300,13 @@ const renderCustomerOnlineBehaviour = (
     { bg: [236, 253, 245] as [number, number, number], accent: [5, 150, 105] as [number, number, number] }, // emerald - Priya
   ];
 
-  // Header
-  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), maxWidth - 16);
-  const headerHeight = 28 + introLines.length * bodyLine;
+  // Header - single justified paragraph
+  const innerPadding = 6;
+  const innerTextWidth = maxWidth - innerPadding * 2;
+  const introText = sanitizeText(data.header.intro);
+  const introLines = doc.splitTextToSize(introText, innerTextWidth);
+  const introHeight = introLines.length * (bodyLine * 1.3) + 4;
+  const headerHeight = 28 + introHeight;
   fitPage(headerHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
@@ -8324,13 +8328,15 @@ const renderCustomerOnlineBehaviour = (
   doc.setFont("helvetica", "normal");
   doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 22);
 
-  let textY = yPosition + 32;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
-  introLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.text(introText, margin + innerPadding, yPosition + 32, {
+    maxWidth: innerTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.3,
   });
+
+  let textY = 0;
 
   yPosition += headerHeight + 8;
 
