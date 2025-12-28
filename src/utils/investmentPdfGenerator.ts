@@ -4033,8 +4033,10 @@ const renderBusinessObjectives = (
   // Intro box
   checkBreak(50);
   const introText = "The next 12 months are focused on completing the MVP for early 2026, validating Hobson in real operational settings, and building the foundations needed for commercial rollout and long-term scale.";
-  const introLines = doc.splitTextToSize(introText, maxWidth - 16);
-  const introHeight = introLines.length * 6 + 16;
+  const innerPadding = 8;
+  const innerTextWidth = maxWidth - innerPadding * 2;
+  const introLines = doc.splitTextToSize(introText, innerTextWidth);
+  const introHeight = introLines.length * 6 + 12;
   
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "F");
@@ -4044,8 +4046,10 @@ const renderBusinessObjectives = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  introLines.forEach((line: string, idx: number) => {
-    doc.text(line, margin + 8, yPosition + 12 + idx * 6);
+  // Single justified paragraph rendering
+  doc.text(introText, margin + innerPadding, yPosition + 10, {
+    maxWidth: innerTextWidth,
+    align: "justify",
   });
   yPosition += introHeight + 12;
 
