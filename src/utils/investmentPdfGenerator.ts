@@ -7615,13 +7615,11 @@ const renderMarketDescription = (
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   let textY = yPosition + 28;
-  // Render as a justified paragraph within the box width
-  introLines.forEach((line: string, idx: number) => {
-    doc.text(line, margin + innerPaddingX, textY, {
-      maxWidth: innerTextWidth,
-      align: idx === introLines.length - 1 ? "left" : "justify",
-    });
-    textY += bodyLine;
+
+  // Render as a single justified paragraph so jsPDF can distribute spacing properly
+  doc.text(sanitizeText(data.header.intro), margin + innerPaddingX, textY, {
+    maxWidth: innerTextWidth,
+    align: "justify",
   });
 
   yPosition += headerHeight + 8;
