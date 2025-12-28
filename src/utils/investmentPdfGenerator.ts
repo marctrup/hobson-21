@@ -4050,18 +4050,18 @@ const renderBusinessObjectives = (
   yPosition += introHeight + 12;
 
   // Top-Level Organisational Goals
-  checkBreak(80);
+  checkBreak(65);
   doc.setFillColor(...PDF_CONFIG.emeraldBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 85, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 62, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.emeraldBorder);
-  doc.roundedRect(margin, yPosition, maxWidth, 85, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, 62, 3, 3, "S");
 
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 16, yPosition + 14, 5, "F");
+  doc.circle(margin + 14, yPosition + 12, 4, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Top-Level Organisational Goals", margin + 28, yPosition + 18);
+  doc.text("Top-Level Organisational Goals", margin + 24, yPosition + 14);
   
   const orgGoals = [
     "Validate Hobson's usefulness and reliability across a broader range of Real Estate operators",
@@ -4070,20 +4070,20 @@ const renderBusinessObjectives = (
     "Create a commercial foundation capable of driving paid adoption during 2026-2027"
   ];
   
-  let goalY = yPosition + 30;
+  let goalY = yPosition + 24;
   doc.setFont("helvetica", "normal");
-  setBodySmallFont(doc);
+  doc.setFontSize(8);
   orgGoals.forEach((goal) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 14, goalY - 1, 1.2, "F");
+    doc.circle(margin + 12, goalY - 1, 1, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    const goalLines = doc.splitTextToSize(goal, maxWidth - 30);
+    const goalLines = doc.splitTextToSize(goal, maxWidth - 24);
     goalLines.forEach((line: string, idx: number) => {
-      doc.text(line, margin + 20, goalY + idx * 5);
+      doc.text(line, margin + 16, goalY + idx * 4);
     });
-    goalY += goalLines.length * 5 + 3;
+    goalY += goalLines.length * 4 + 2;
   });
-  yPosition += 95;
+  yPosition += 68;
 
   // Mid- to Long-Term Vision
   checkBreak(60);
