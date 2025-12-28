@@ -72,6 +72,7 @@ import { FoundingLeadershipVisual } from "@/components/investor/FoundingLeadersh
 import { TeamVisual } from "@/components/investor/TeamVisual";
 import { RaiseVisual } from "@/components/investor/RaiseVisual";
 import { CommercialisationStrategyVisual } from "@/components/investor/CommercialisationStrategyVisual";
+import BusinessObjectivesVisual from "@/components/investor/BusinessObjectivesVisual";
 import CommercialsVisual from "@/components/investor/CommercialsVisual";
 import { MarketingSalesStrategyVisual } from "@/components/investor/MarketingSalesStrategyVisual";
 import { ExecutiveContextVisual } from "@/components/investor/ExecutiveContextVisual";
@@ -522,6 +523,15 @@ const sections = [
         title: "Commercialisation Strategy",
         showCustomVisual: true,
         customVisualComponent: "commercialisationStrategy",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Business Objectives",
+        showCustomVisual: true,
+        customVisualComponent: "businessObjectives",
         content: {
           overview: "",
           sections: [],
@@ -1365,6 +1375,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Commercialisation Strategy */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "commercialisationStrategy" && (
                       <CommercialisationStrategyVisual />
+                    )}
+
+                    {/* Custom Visual Component for Business Objectives */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "businessObjectives" && (
+                      <BusinessObjectivesVisual />
                     )}
 
                     {/* Custom Visual Component for HEU & Pricing */}
