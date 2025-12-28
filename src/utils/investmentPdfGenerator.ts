@@ -4137,12 +4137,13 @@ const renderBusinessObjectives = (
     }
   };
 
-  // Intro box
+  // Intro box (match Strategy & Approach text wrapping/leading)
   checkBreak(pageBreakMargin);
   const introText = "The next 12 months are focused on completing the MVP for early 2026, validating Hobson in real operational settings, and building the foundations needed for commercial rollout and long-term scale.";
+  const introSafe = sanitizeText(introText);
   const innerTextWidth = maxWidth - box.paddingX - box.paddingX;
-  const introLines = doc.splitTextToSize(introText, innerTextWidth);
-  const introHeight = introLines.length * lineHeight.body + spacing.sectionGap + box.borderRadiusSmall;
+  const introLines = doc.splitTextToSize(introSafe, innerTextWidth);
+  const introHeight = spacing.contentStart + introLines.length * (lineHeight.body * lineHeightFactor.body);
   
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, introHeight, box.borderRadius, box.borderRadius, "F");
@@ -4152,12 +4153,12 @@ const renderBusinessObjectives = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(introText, margin + box.paddingX, yPosition + spacing.contentStart, {
+  doc.text(introSafe, margin + box.paddingX, yPosition + spacing.contentStart, {
     maxWidth: innerTextWidth,
     align: "justify",
     lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition += introHeight + spacing.sectionGap + box.borderRadiusSmall;
+  yPosition += introHeight + spacing.sectionGap;
 
   // Top-Level Organisational Goals
   const orgGoalsHeaderY = spacing.titleY + spacing.subtitleToBullets;
