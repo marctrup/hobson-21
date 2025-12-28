@@ -422,6 +422,51 @@ const setStatFont = (doc: jsPDF): void => {
   doc.setFont("helvetica", "bold");
 };
 
+// ============================================================================
+// TEXT WRAPPING HELPERS
+// ============================================================================
+// IMPORTANT: jsPDF's splitTextToSize() uses the CURRENT font settings to
+// calculate line breaks. If you call it before setting the correct font,
+// wrapping will be incorrect. These helpers ensure font is set first.
+// ============================================================================
+
+type FontStyle = "body" | "bodySmall" | "caption" | "cardTitle" | "sectionTitle" | "pageTitle" | "stat";
+
+/**
+ * Split text to size with correct font metrics.
+ * Sets the specified font BEFORE measuring, ensuring accurate line wrapping.
+ * 
+ * @param doc - jsPDF instance
+ * @param text - Text to wrap
+ * @param maxWidth - Maximum width for wrapping
+ * @param fontStyle - Which font style to use for measuring
+ * @param bold - Whether to use bold weight (default: false for body styles)
+ * @returns Array of wrapped lines
+ */
+const splitTextWithFont = (
+  doc: jsPDF,
+  text: string,
+  maxWidth: number,
+  fontStyle: FontStyle = "body",
+  bold: boolean = false
+): string[] => {
+  // Set font before measuring
+  const fontSizeMap: Record<FontStyle, number> = {
+    body: PDF_CONFIG.fontSize.body,
+    bodySmall: PDF_CONFIG.fontSize.bodySmall,
+    caption: PDF_CONFIG.fontSize.caption,
+    cardTitle: PDF_CONFIG.fontSize.cardTitle,
+    sectionTitle: PDF_CONFIG.fontSize.sectionTitle,
+    pageTitle: PDF_CONFIG.fontSize.pageTitle,
+    stat: PDF_CONFIG.fontSize.stat,
+  };
+  
+  doc.setFontSize(fontSizeMap[fontStyle]);
+  doc.setFont("helvetica", bold ? "bold" : "normal");
+  
+  return doc.splitTextToSize(sanitizeText(text), maxWidth);
+};
+
 /**
  * Render a standard content card with consistent styling
  * Returns the Y position after the card
@@ -4146,15 +4191,12 @@ const renderBusinessObjectives = (
     businessObjectivesContent[2] ||
     "The next 12 months are focused on completing the MVP for early 2026, validating Hobson in real operational settings, and building the foundations needed for commercial rollout and long-term scale.";
 
-  // If the text was accidentally stored with surrounding quotes somewhere upstream, strip them.
-  const introSafe = sanitizeText(introText).replace(/^"|"$/g, "");
+  // Strip any accidental surrounding quotes
+  const introSafe = introText.replace(/^"|"$/g, "");
 
-  // IMPORTANT: set font BEFORE splitTextToSize so wrapping uses the correct metrics
-  doc.setFontSize(fontSize.body);
-  doc.setFont("helvetica", "normal");
-
+  // Use helper to set font and split text with correct metrics
   const innerTextWidth = maxWidth - box.paddingX * 2;
-  const introLines = doc.splitTextToSize(introSafe, innerTextWidth);
+  const introLines = splitTextWithFont(doc, introSafe, innerTextWidth, "body", false);
   const introLineHeight = lineHeight.body; // explicit, consistent line spacing
   const introHeight = box.paddingTop + introLines.length * introLineHeight + box.paddingBottom;
 
