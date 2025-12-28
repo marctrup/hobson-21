@@ -6660,9 +6660,10 @@ const renderExecutiveContext = (
   const amberBg: [number, number, number] = [255, 251, 235]; // amber-50
   const amberBorder: [number, number, number] = [253, 230, 138]; // amber-200
 
-  // 1. Inflexion Point header box
+  // 1. Inflexion Point header box - use larger line spacing for emphasis
+  const inflexionLineHeight = PDF_CONFIG.lineHeight.loose + 1; // 7pt for better readability
   const inflexionLines = doc.splitTextToSize(sanitizeText(data.inflexionPoint), maxWidth - 16);
-  const inflexionHeight = 16 + inflexionLines.length * bodyLine;
+  const inflexionHeight = 18 + inflexionLines.length * inflexionLineHeight;
   fitPage(inflexionHeight + 6);
 
   doc.setFillColor(...tealBg);
@@ -6674,12 +6675,12 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  let textY = yPosition + 10;
+  let textY = yPosition + 12;
   inflexionLines.forEach((line: string) => {
     doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+    textY += inflexionLineHeight;
   });
-  yPosition += inflexionHeight + 6;
+  yPosition += inflexionHeight + 8;
 
   // 2. Pressures - 2x2 grid
   fitPage(50);
