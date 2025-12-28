@@ -8392,33 +8392,33 @@ const renderCompetitorBenchmarks = (
   };
 
   // Header - tighter spacing
-  const innerPadding = 6;
+  const innerPadding = PDF_CONFIG.spacing.sectionGap;
   const innerTextWidth = maxWidth - innerPadding * 2;
-  const introLineSpacing = 5.5;
-  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), innerTextWidth);
-  const detailLines = doc.splitTextToSize(sanitizeText(data.header.detail), innerTextWidth);
+  const introLineSpacing = bodyLine + 0.5;
+  const introLines = splitTextWithFont(doc, sanitizeText(data.header.intro), innerTextWidth, "body", false);
+  const detailLines = splitTextWithFont(doc, sanitizeText(data.header.detail), innerTextWidth, "body", false);
   // Compact header: title area (22) + intro lines + gap (2) + detail lines + bottom padding (3)
-  const headerHeight = 22 + introLines.length * introLineSpacing + 2 + detailLines.length * introLineSpacing + 3;
-  fitPage(headerHeight + 6);
+  const headerHeight = PDF_CONFIG.card.textOffsetX + 2 + introLines.length * introLineSpacing + PDF_CONFIG.spacing.itemGap + detailLines.length * introLineSpacing + PDF_CONFIG.box.borderRadius;
+  fitPage(headerHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
-  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.blueBorder);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "S");
+  doc.setLineWidth(PDF_CONFIG.box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 12, yPosition + 11, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + 11, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + 22, yPosition + 9);
+  doc.text(data.header.title, margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.fontSize.body);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 17);
+  doc.text(sanitizeText(data.header.subtitle), margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + 17);
 
   // Single justified paragraph for intro
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -8428,30 +8428,30 @@ const renderCompetitorBenchmarks = (
   doc.text(sanitizeText(data.header.intro), margin + innerPadding, introStartY, {
     maxWidth: innerTextWidth,
     align: "justify",
-    lineHeightFactor: 1.4,
+    lineHeightFactor: PDF_CONFIG.lineHeightFactor.loose,
   });
 
   // Single justified paragraph for detail - reduced gap
-  const detailStartY = introStartY + introLines.length * introLineSpacing + 2;
+  const detailStartY = introStartY + introLines.length * introLineSpacing + PDF_CONFIG.spacing.itemGap;
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.text(sanitizeText(data.header.detail), margin + innerPadding, detailStartY, {
     maxWidth: innerTextWidth,
     align: "justify",
-    lineHeightFactor: 1.4,
+    lineHeightFactor: PDF_CONFIG.lineHeightFactor.loose,
   });
 
-  yPosition += headerHeight + 6;
+  yPosition += headerHeight + PDF_CONFIG.spacing.cardGap;
 
   // Competitor cards
   let textY = yPosition;
   data.competitors.forEach((competitor) => {
-    const personaLines = doc.splitTextToSize(`Personas: ${sanitizeText(competitor.personas)}`, maxWidth - 20);
-    const seoLines = doc.splitTextToSize(`SEO: ${sanitizeText(competitor.seo)}`, maxWidth - 20);
-    const socialLines = doc.splitTextToSize(`Social: ${sanitizeText(competitor.social)}`, maxWidth - 20);
-    const implLines = doc.splitTextToSize(`Implications: ${sanitizeText(competitor.implications)}`, maxWidth - 20);
+    const personaLines = splitTextWithFont(doc, `Personas: ${sanitizeText(competitor.personas)}`, maxWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
+    const seoLines = splitTextWithFont(doc, `SEO: ${sanitizeText(competitor.seo)}`, maxWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
+    const socialLines = splitTextWithFont(doc, `Social: ${sanitizeText(competitor.social)}`, maxWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
+    const implLines = splitTextWithFont(doc, `Implications: ${sanitizeText(competitor.implications)}`, maxWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
 
-    const cardHeight = 24 + personaLines.length * bodyLine + 4 + seoLines.length * bodyLine + 4 + socialLines.length * bodyLine + 4 + implLines.length * bodyLine + 8;
-    fitPage(cardHeight + 6);
+    const cardHeight = 24 + personaLines.length * bodyLine + PDF_CONFIG.spacing.paragraphGap + seoLines.length * bodyLine + PDF_CONFIG.spacing.paragraphGap + socialLines.length * bodyLine + PDF_CONFIG.spacing.paragraphGap + implLines.length * bodyLine + PDF_CONFIG.spacing.cardGap + 2;
+    fitPage(cardHeight + PDF_CONFIG.spacing.cardGap);
 
     const isHobson = competitor.isHobson;
     const bgColor = isHobson ? PDF_CONFIG.primaryBgLight : [248, 250, 252] as [number, number, number];
@@ -8459,77 +8459,77 @@ const renderCompetitorBenchmarks = (
     const accentColor = isHobson ? PDF_CONFIG.primaryColor : PDF_CONFIG.blue;
 
     doc.setFillColor(...bgColor);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
     doc.setDrawColor(...borderColor);
-    doc.setLineWidth(isHobson ? 0.5 : 0.3);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "S");
+    doc.setLineWidth(isHobson ? 0.5 : PDF_CONFIG.box.borderWidth);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
     // Name
     doc.setFillColor(...accentColor);
-    doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+    doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2, PDF_CONFIG.circleSize.medium, "F");
 
     doc.setTextColor(...(isHobson ? PDF_CONFIG.primaryColor : PDF_CONFIG.textDark));
     doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
-    doc.text(competitor.name, margin + 22, yPosition + 14);
+    doc.text(competitor.name, margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.contentPadding);
 
-    textY = yPosition + 26;
+    textY = yPosition + PDF_CONFIG.card.headerHeight + PDF_CONFIG.spacing.cardGap + 2;
 
     // Personas
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     personaLines.forEach((line: string) => {
-      doc.text(line, margin + 8, textY);
+      doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
       textY += bodyLine;
     });
-    textY += 2;
+    textY += PDF_CONFIG.spacing.itemGap;
 
     // SEO
     seoLines.forEach((line: string) => {
-      doc.text(line, margin + 8, textY);
+      doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
       textY += bodyLine;
     });
-    textY += 2;
+    textY += PDF_CONFIG.spacing.itemGap;
 
     // Social
     socialLines.forEach((line: string) => {
-      doc.text(line, margin + 8, textY);
+      doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
       textY += bodyLine;
     });
-    textY += 2;
+    textY += PDF_CONFIG.spacing.itemGap;
 
     // Implications
     doc.setTextColor(...(isHobson ? PDF_CONFIG.primaryColor : PDF_CONFIG.textGray));
     doc.setFont("helvetica", "italic");
     implLines.forEach((line: string) => {
-      doc.text(line, margin + 8, textY);
+      doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
       textY += bodyLine;
     });
 
-    yPosition += cardHeight + 6;
+    yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
   });
 
   // Summary
-  const summaryPadding = 8;
+  const summaryPadding = PDF_CONFIG.box.paddingX;
   const summaryTextWidth = maxWidth - summaryPadding * 2;
-  const diffLines = doc.splitTextToSize(`Differentiation: ${sanitizeText(data.summary.differentiation)}`, summaryTextWidth);
-  const posLines = doc.splitTextToSize(`Positioning: ${sanitizeText(data.summary.positioning)}`, summaryTextWidth);
-  const summaryHeight = 18 + diffLines.length * bodyLine + 4 + posLines.length * bodyLine + 8;
-  fitPage(summaryHeight + 6);
+  const diffLines = splitTextWithFont(doc, `Differentiation: ${sanitizeText(data.summary.differentiation)}`, summaryTextWidth, "body", false);
+  const posLines = splitTextWithFont(doc, `Positioning: ${sanitizeText(data.summary.positioning)}`, summaryTextWidth, "body", true);
+  const summaryHeight = PDF_CONFIG.card.headerHeight + diffLines.length * bodyLine + PDF_CONFIG.spacing.paragraphGap + posLines.length * bodyLine + PDF_CONFIG.spacing.cardGap + 2;
+  fitPage(summaryHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "S");
+  doc.setLineWidth(PDF_CONFIG.box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Summary", margin + summaryPadding, yPosition + 12);
+  doc.text("Summary", margin + summaryPadding, yPosition + PDF_CONFIG.spacing.circleOffset + 2);
 
-  textY = yPosition + 22;
+  textY = yPosition + PDF_CONFIG.card.textOffsetX + 2;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
@@ -8537,7 +8537,7 @@ const renderCompetitorBenchmarks = (
     doc.text(line, margin + summaryPadding, textY);
     textY += bodyLine;
   });
-  textY += 2;
+  textY += PDF_CONFIG.spacing.itemGap;
 
   doc.setFont("helvetica", "bold");
   posLines.forEach((line: string) => {
@@ -8545,7 +8545,7 @@ const renderCompetitorBenchmarks = (
     textY += bodyLine;
   });
 
-  yPosition += summaryHeight + 6;
+  yPosition += summaryHeight + PDF_CONFIG.spacing.cardGap;
   return yPosition;
 };
 
@@ -8577,112 +8577,112 @@ const renderCustomerOnlineBehaviour = (
   ];
 
   // Header - single justified paragraph
-  const innerPadding = 6;
+  const innerPadding = PDF_CONFIG.spacing.sectionGap;
   const innerTextWidth = maxWidth - innerPadding * 2;
   const introText = sanitizeText(data.header.intro);
-  const introLines = doc.splitTextToSize(introText, innerTextWidth);
-  const introHeight = introLines.length * (bodyLine * 1.3) + 4;
+  const introLines = splitTextWithFont(doc, introText, innerTextWidth, "body", false);
+  const introHeight = introLines.length * (bodyLine * PDF_CONFIG.lineHeightFactor.tight) + PDF_CONFIG.spacing.paragraphGap;
   const headerHeight = 28 + introHeight;
-  fitPage(headerHeight + 6);
+  fitPage(headerHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
-  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.blueBorder);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "S");
+  doc.setLineWidth(PDF_CONFIG.box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + 22, yPosition + 12);
+  doc.text(data.header.title, margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 22);
+  doc.text(sanitizeText(data.header.subtitle), margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.card.textOffsetX + 2);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.text(introText, margin + innerPadding, yPosition + 32, {
     maxWidth: innerTextWidth,
     align: "justify",
-    lineHeightFactor: 1.3,
+    lineHeightFactor: PDF_CONFIG.lineHeightFactor.tight,
   });
 
   let textY = 0;
 
-  yPosition += headerHeight + 8;
+  yPosition += headerHeight + PDF_CONFIG.spacing.cardGap;
 
   // Where Customers Research Tools section
-  fitPage(20);
+  fitPage(PDF_CONFIG.card.textOffsetX);
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Where Customers Research Tools", margin, yPosition);
-  yPosition += 12;
+  yPosition += PDF_CONFIG.spacing.circleOffset + 2;
 
   // Research channels for each persona
   data.researchChannels.forEach((persona, idx) => {
     const colors = personaColors[idx];
-    const channelsHeight = persona.channels.length * (bodyLine + 2);
-    const cardHeight = 24 + channelsHeight + 8;
-    fitPage(cardHeight + 6);
+    const channelsHeight = persona.channels.length * (bodyLine + PDF_CONFIG.spacing.itemGap);
+    const cardHeight = 24 + channelsHeight + PDF_CONFIG.spacing.cardGap + 2;
+    fitPage(cardHeight + PDF_CONFIG.spacing.cardGap);
 
     doc.setFillColor(...colors.bg);
-    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
 
     // Persona initial circle
     doc.setFillColor(...colors.accent);
-    doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+    doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.circleSize.medium, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(persona.persona.charAt(0), margin + 10, yPosition + 16);
+    doc.text(persona.persona.charAt(0), margin + PDF_CONFIG.spacing.circleOffset, yPosition + 16);
 
     // Persona name and role
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
-    doc.text(persona.persona, margin + 22, yPosition + 12);
+    doc.text(persona.persona, margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(persona.role), margin + 22, yPosition + 20);
+    doc.text(sanitizeText(persona.role), margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.card.textOffsetX);
 
     textY = yPosition + 28;
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     persona.channels.forEach((channel) => {
       doc.setFillColor(...colors.accent);
-      doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-      const channelLines = doc.splitTextToSize(sanitizeText(channel), maxWidth - 24);
-      doc.text(channelLines[0] || "", margin + 18, textY);
-      textY += bodyLine + 2;
+      doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+      const channelLines = splitTextWithFont(doc, sanitizeText(channel), maxWidth - 24, "bodySmall", false);
+      doc.text(channelLines[0] || "", margin + PDF_CONFIG.spacing.textIndent, textY);
+      textY += bodyLine + PDF_CONFIG.spacing.itemGap;
     });
 
-    yPosition += cardHeight + 6;
+    yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
   });
 
   // What Content They Trust section
-  fitPage(20);
+  fitPage(PDF_CONFIG.card.textOffsetX);
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("What Content They Trust", margin, yPosition);
-  yPosition += 8;
+  yPosition += PDF_CONFIG.spacing.cardGap;
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   doc.text("Across all personas, the content that builds trust is:", margin, yPosition);
-  yPosition += 10;
+  yPosition += PDF_CONFIG.spacing.circleOffset;
 
   // Trust content cards (2 column grid)
-  const trustCardWidth = (maxWidth - 8) / 2;
+  const trustCardWidth = (maxWidth - PDF_CONFIG.spacing.cardGap) / 2;
   const trustCardHeight = 32;
 
   data.trustedContent.forEach((item, idx) => {
@@ -8690,161 +8690,161 @@ const renderCustomerOnlineBehaviour = (
     const col = idx % 2;
     
     if (col === 0) {
-      fitPage(trustCardHeight + 4);
+      fitPage(trustCardHeight + PDF_CONFIG.spacing.paragraphGap);
     }
 
-    const x = margin + col * (trustCardWidth + 8);
-    const y = yPosition + row * (trustCardHeight + 4);
+    const x = margin + col * (trustCardWidth + PDF_CONFIG.spacing.cardGap);
+    const y = yPosition + row * (trustCardHeight + PDF_CONFIG.spacing.paragraphGap);
 
     doc.setFillColor(...PDF_CONFIG.emeraldBg);
-    doc.roundedRect(x, y, trustCardWidth, trustCardHeight, 3, 3, "F");
+    doc.roundedRect(x, y, trustCardWidth, trustCardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
 
     doc.setTextColor(...PDF_CONFIG.emerald);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(sanitizeText(item.title), x + 6, y + 10);
+    doc.text(sanitizeText(item.title), x + PDF_CONFIG.spacing.sectionGap, y + PDF_CONFIG.spacing.circleOffset);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const descLines = doc.splitTextToSize(sanitizeText(item.description), trustCardWidth - 12);
-    doc.text(descLines.slice(0, 2), x + 6, y + 18);
+    const descLines = splitTextWithFont(doc, sanitizeText(item.description), trustCardWidth - PDF_CONFIG.spacing.circleOffset - 2, "caption", false);
+    doc.text(descLines.slice(0, 2), x + PDF_CONFIG.spacing.sectionGap, y + PDF_CONFIG.spacing.textIndent);
   });
 
-  yPosition += Math.ceil(data.trustedContent.length / 2) * (trustCardHeight + 4) + 8;
+  yPosition += Math.ceil(data.trustedContent.length / 2) * (trustCardHeight + PDF_CONFIG.spacing.paragraphGap) + PDF_CONFIG.spacing.cardGap;
 
   // How Customers Evaluate AI Solutions section
   // Calculate total height needed for entire section
   const evalCardHeight = 30;
   const totalEvalRows = Math.ceil(data.evaluationCriteria.length / 2);
-  const totalEvalSectionHeight = 12 + totalEvalRows * (evalCardHeight + 4);
+  const totalEvalSectionHeight = PDF_CONFIG.spacing.circleOffset + 2 + totalEvalRows * (evalCardHeight + PDF_CONFIG.spacing.paragraphGap);
   fitPage(totalEvalSectionHeight);
 
   doc.setTextColor(...PDF_CONFIG.amber);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("How Customers Evaluate AI Solutions", margin, yPosition);
-  yPosition += 10;
+  yPosition += PDF_CONFIG.spacing.circleOffset;
 
   // Evaluation criteria cards (2 column grid)
-  const evalCardWidth = (maxWidth - 8) / 2;
+  const evalCardWidth = (maxWidth - PDF_CONFIG.spacing.cardGap) / 2;
 
   data.evaluationCriteria.forEach((item, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
 
     if (col === 0) {
-      fitPage(evalCardHeight + 4);
+      fitPage(evalCardHeight + PDF_CONFIG.spacing.paragraphGap);
     }
 
-    const x = margin + col * (evalCardWidth + 8);
-    const y = yPosition + row * (evalCardHeight + 4);
+    const x = margin + col * (evalCardWidth + PDF_CONFIG.spacing.cardGap);
+    const y = yPosition + row * (evalCardHeight + PDF_CONFIG.spacing.paragraphGap);
 
     doc.setFillColor(...PDF_CONFIG.amberBg);
-    doc.roundedRect(x, y, evalCardWidth, evalCardHeight, 3, 3, "F");
+    doc.roundedRect(x, y, evalCardWidth, evalCardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
 
     doc.setTextColor(...PDF_CONFIG.amber);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(sanitizeText(item.title), x + 6, y + 10);
+    doc.text(sanitizeText(item.title), x + PDF_CONFIG.spacing.sectionGap, y + PDF_CONFIG.spacing.circleOffset);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const descLines = doc.splitTextToSize(sanitizeText(item.description), evalCardWidth - 12);
-    doc.text(descLines.slice(0, 2), x + 6, y + 18);
+    const descLines = splitTextWithFont(doc, sanitizeText(item.description), evalCardWidth - PDF_CONFIG.spacing.circleOffset - 2, "caption", false);
+    doc.text(descLines.slice(0, 2), x + PDF_CONFIG.spacing.sectionGap, y + PDF_CONFIG.spacing.textIndent);
   });
 
-  yPosition += Math.ceil(data.evaluationCriteria.length / 2) * (evalCardHeight + 4) + 8;
+  yPosition += Math.ceil(data.evaluationCriteria.length / 2) * (evalCardHeight + PDF_CONFIG.spacing.paragraphGap) + PDF_CONFIG.spacing.cardGap;
 
   // What Triggers Distrust section
-  const distrustHeight = 18 + data.distrustTriggers.length * (bodyLine + 2);
-  fitPage(distrustHeight + 6);
+  const distrustHeight = PDF_CONFIG.card.headerHeight + data.distrustTriggers.length * (bodyLine + PDF_CONFIG.spacing.itemGap);
+  fitPage(distrustHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.roseBg);
-  doc.roundedRect(margin, yPosition, maxWidth, distrustHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, distrustHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.roseBorder);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, distrustHeight, 3, 3, "S");
+  doc.setLineWidth(PDF_CONFIG.box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, distrustHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.rose);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("What Triggers Distrust or Hesitation", margin + 8, yPosition + 12);
+  doc.text("What Triggers Distrust or Hesitation", margin + PDF_CONFIG.box.paddingX, yPosition + PDF_CONFIG.spacing.circleOffset + 2);
 
-  textY = yPosition + 22;
+  textY = yPosition + PDF_CONFIG.card.textOffsetX + 2;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   data.distrustTriggers.forEach((trigger) => {
     doc.setFillColor(...PDF_CONFIG.rose);
-    doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const triggerLines = doc.splitTextToSize(sanitizeText(trigger), maxWidth - 24);
-    doc.text(triggerLines[0] || "", margin + 18, textY);
-    textY += bodyLine + 2;
+    doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    const triggerLines = splitTextWithFont(doc, sanitizeText(trigger), maxWidth - 24, "bodySmall", false);
+    doc.text(triggerLines[0] || "", margin + PDF_CONFIG.spacing.textIndent, textY);
+    textY += bodyLine + PDF_CONFIG.spacing.itemGap;
   });
 
-  yPosition += distrustHeight + 8;
+  yPosition += distrustHeight + PDF_CONFIG.spacing.cardGap;
 
   // Channel Strategy Summary section
-  fitPage(20);
+  fitPage(PDF_CONFIG.card.textOffsetX);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("How These Behaviours Shape Hobson's Channel Strategy", margin, yPosition);
-  yPosition += 10;
+  yPosition += PDF_CONFIG.spacing.circleOffset;
 
   data.channelStrategySummary.forEach((item, idx) => {
-    const insightLines = doc.splitTextToSize(`${item.channel}: ${sanitizeText(item.insight)}`, maxWidth - 24);
-    const itemHeight = 8 + insightLines.length * bodyLine;
-    fitPage(itemHeight + 4);
+    const insightLines = splitTextWithFont(doc, `${item.channel}: ${sanitizeText(item.insight)}`, maxWidth - 24, "body", false);
+    const itemHeight = PDF_CONFIG.spacing.cardGap + 2 + insightLines.length * bodyLine;
+    fitPage(itemHeight + PDF_CONFIG.spacing.paragraphGap);
 
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-    doc.roundedRect(margin, yPosition, maxWidth, itemHeight, 2, 2, "F");
+    doc.roundedRect(margin, yPosition, maxWidth, itemHeight, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
 
     // Number badge
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 10, yPosition + itemHeight / 2, PDF_CONFIG.circleSize.medium, "F");
+    doc.circle(margin + PDF_CONFIG.spacing.circleOffset, yPosition + itemHeight / 2, PDF_CONFIG.circleSize.medium, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`${idx + 1}`, margin + 8, yPosition + itemHeight / 2 + 2);
+    doc.text(`${idx + 1}`, margin + PDF_CONFIG.spacing.cardGap + 2, yPosition + itemHeight / 2 + PDF_CONFIG.spacing.itemGap);
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.setFont("helvetica", "normal");
-    let lineY = yPosition + 6;
+    let lineY = yPosition + PDF_CONFIG.spacing.sectionGap;
     insightLines.forEach((line: string) => {
-      doc.text(line, margin + 20, lineY);
+      doc.text(line, margin + PDF_CONFIG.card.textOffsetX, lineY);
       lineY += bodyLine;
     });
 
-    yPosition += itemHeight + 4;
+    yPosition += itemHeight + PDF_CONFIG.spacing.paragraphGap;
   });
 
-  yPosition += 4;
+  yPosition += PDF_CONFIG.spacing.paragraphGap;
 
   // Conclusion
-  const conclusionLines = doc.splitTextToSize(sanitizeText(data.conclusion), maxWidth - 16);
-  const conclusionHeight = 12 + conclusionLines.length * bodyLine;
-  fitPage(conclusionHeight + 6);
+  const conclusionLines = splitTextWithFont(doc, sanitizeText(data.conclusion), maxWidth - 16, "body", true);
+  const conclusionHeight = PDF_CONFIG.spacing.circleOffset + 2 + conclusionLines.length * bodyLine;
+  fitPage(conclusionHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, 3, 3, "S");
+  doc.setLineWidth(PDF_CONFIG.box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  textY = yPosition + 8;
+  textY = yPosition + PDF_CONFIG.spacing.cardGap + 2;
   conclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + PDF_CONFIG.spacing.cardGap + 2, textY);
     textY += bodyLine;
   });
 
-  yPosition += conclusionHeight + 6;
+  yPosition += conclusionHeight + PDF_CONFIG.spacing.cardGap;
   return yPosition;
 };
 
@@ -8861,15 +8861,15 @@ const renderBrandIntegrity = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  const bodyLine = 5;
-  const smallLine = 5;
+  const bodyLine = PDF_CONFIG.lineHeight.body;
+  const smallLine = PDF_CONFIG.lineHeight.body;
 
   const fitPage = (required: number) => {
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
   };
 
-  const measureWrappedLines = (text: string, width: number): string[] =>
-    doc.splitTextToSize(sanitizeText(text), width);
+  const measureWrappedLines = (text: string, width: number, fontStyle: FontStyle = "body", bold: boolean = false): string[] =>
+    splitTextWithFont(doc, sanitizeText(text), width, fontStyle, bold);
 
   // -------- Brand Summary --------
   const summaryText =
@@ -8883,16 +8883,16 @@ const renderBrandIntegrity = (
 
   const summaryHeight =
     28 + summaryLines.length * bodyLine + nextPhase.length * (smallLine + 1) + 16;
-  fitPage(summaryHeight + 6);
+  fitPage(summaryHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.setLineWidth(0.3);
-  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "S");
+  doc.setLineWidth(PDF_CONFIG.box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
@@ -8908,24 +8908,24 @@ const renderBrandIntegrity = (
   doc.setFont("helvetica", "normal");
   let textY = yPosition + 34;
   summaryLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
     textY += bodyLine;
   });
 
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   nextPhase.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    const wrapped = measureWrappedLines(item, maxWidth - 30);
+    const wrapped = measureWrappedLines(item, maxWidth - 30, "bodySmall", false);
     wrapped.forEach((w: string) => {
-      doc.text(w, margin + 18, textY);
+      doc.text(w, margin + PDF_CONFIG.spacing.textIndent, textY);
       textY += smallLine;
     });
     textY += 1;
   });
 
-  yPosition += summaryHeight + 8;
+  yPosition += summaryHeight + PDF_CONFIG.spacing.cardGap;
 
   // -------- Brand Background --------
   const purpleBg: [number, number, number] = [250, 245, 255];
@@ -8936,16 +8936,16 @@ const renderBrandIntegrity = (
   const bgLines = measureWrappedLines(bgText, maxWidth - 16);
 
   const archetypeRowHeight = 30;
-  const backgroundHeight = 22 + bgLines.length * bodyLine + archetypeRowHeight + 18;
-  fitPage(backgroundHeight + 6);
+  const backgroundHeight = PDF_CONFIG.card.textOffsetX + 2 + bgLines.length * bodyLine + archetypeRowHeight + PDF_CONFIG.card.headerHeight;
+  fitPage(backgroundHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...purpleBg);
-  doc.roundedRect(margin, yPosition, maxWidth, backgroundHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, backgroundHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...purpleBorder);
-  doc.roundedRect(margin, yPosition, maxWidth, backgroundHeight, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, backgroundHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
@@ -8957,7 +8957,7 @@ const renderBrandIntegrity = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   textY = yPosition + 28;
   bgLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
     textY += bodyLine;
   });
 
@@ -8967,33 +8967,33 @@ const renderBrandIntegrity = (
     { name: "Ruler", trait: "Supporting Trait", desc: "Order, reliability" },
     { name: "Creator", trait: "Supporting Trait", desc: "Innovation" },
   ];
-  const archTop = textY + 6;
+  const archTop = textY + PDF_CONFIG.spacing.sectionGap;
   const archWidth = (maxWidth - 24) / 3;
   archetypes.forEach((arch, idx) => {
-    const xPos = margin + 8 + idx * (archWidth + 4);
+    const xPos = margin + PDF_CONFIG.box.paddingX + idx * (archWidth + PDF_CONFIG.spacing.paragraphGap);
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(xPos, archTop, archWidth, 24, 2, 2, "F");
+    doc.roundedRect(xPos, archTop, archWidth, 24, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(arch.trait.toUpperCase(), xPos + 4, archTop + 8);
+    doc.text(arch.trait.toUpperCase(), xPos + PDF_CONFIG.spacing.paragraphGap, archTop + PDF_CONFIG.box.paddingX);
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-    doc.text(arch.name, xPos + 4, archTop + 15);
+    doc.text(arch.name, xPos + PDF_CONFIG.spacing.paragraphGap, archTop + 15);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(arch.desc, xPos + 4, archTop + 21);
+    doc.text(arch.desc, xPos + PDF_CONFIG.spacing.paragraphGap, archTop + 21);
   });
 
-  yPosition += backgroundHeight + 8;
+  yPosition += backgroundHeight + PDF_CONFIG.spacing.cardGap;
 
   // -------- Strengths & Weaknesses --------
   fitPage(90);
-  const colWidth = (maxWidth - 8) / 2;
+  const colWidth = (maxWidth - PDF_CONFIG.spacing.cardGap) / 2;
 
   const emeraldBg: [number, number, number] = [236, 253, 245];
   const emeraldBorder: [number, number, number] = [167, 243, 208];
@@ -9018,73 +9018,73 @@ const renderBrandIntegrity = (
   const calcListHeight = (items: string[], width: number) => {
     let lines = 0;
     items.forEach((it) => {
-      lines += Math.max(1, doc.splitTextToSize(sanitizeText(it), width).length);
+      lines += Math.max(1, splitTextWithFont(doc, sanitizeText(it), width, "bodySmall", false).length);
       lines += 0.2;
     });
-    return 22 + lines * smallLine + 10;
+    return PDF_CONFIG.card.textOffsetX + 2 + lines * smallLine + PDF_CONFIG.spacing.circleOffset;
   };
 
-  const strengthsHeight = calcListHeight(strengths, colWidth - 20);
-  const weaknessesHeight = calcListHeight(weaknesses, colWidth - 20);
+  const strengthsHeight = calcListHeight(strengths, colWidth - PDF_CONFIG.card.textOffsetX);
+  const weaknessesHeight = calcListHeight(weaknesses, colWidth - PDF_CONFIG.card.textOffsetX);
   const swHeight = Math.max(strengthsHeight, weaknessesHeight);
-  fitPage(swHeight + 6);
+  fitPage(swHeight + PDF_CONFIG.spacing.cardGap);
 
   // Strengths
   doc.setFillColor(...emeraldBg);
-  doc.roundedRect(margin, yPosition, colWidth, swHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, colWidth, swHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...emeraldBorder);
-  doc.roundedRect(margin, yPosition, colWidth, swHeight, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, colWidth, swHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Brand Strengths", margin + 22, yPosition + 14);
+  doc.text("Brand Strengths", margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.contentPadding);
 
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  textY = yPosition + 26;
+  textY = yPosition + PDF_CONFIG.card.headerHeight + PDF_CONFIG.spacing.cardGap;
   strengths.forEach((it) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 8, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const wrapped = doc.splitTextToSize(sanitizeText(it), colWidth - 20);
+    doc.circle(margin + PDF_CONFIG.box.paddingX, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    const wrapped = splitTextWithFont(doc, sanitizeText(it), colWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
     wrapped.forEach((w: string) => {
-      doc.text(w, margin + 14, textY);
+      doc.text(w, margin + PDF_CONFIG.spacing.contentPadding, textY);
       textY += smallLine;
     });
     textY += 1;
   });
 
   // Weaknesses
-  const wx = margin + colWidth + 8;
+  const wx = margin + colWidth + PDF_CONFIG.spacing.cardGap;
   doc.setFillColor(...amberBg);
-  doc.roundedRect(wx, yPosition, colWidth, swHeight, 3, 3, "F");
+  doc.roundedRect(wx, yPosition, colWidth, swHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...amberBorder);
-  doc.roundedRect(wx, yPosition, colWidth, swHeight, 3, 3, "S");
+  doc.roundedRect(wx, yPosition, colWidth, swHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(wx + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(wx + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Brand Weaknesses (Opportunities)", wx + 22, yPosition + 14);
+  doc.text("Brand Weaknesses (Opportunities)", wx + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.contentPadding);
 
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  textY = yPosition + 26;
+  textY = yPosition + PDF_CONFIG.card.headerHeight + PDF_CONFIG.spacing.cardGap;
   weaknesses.forEach((it) => {
     doc.setFillColor(...PDF_CONFIG.amber);
-    doc.circle(wx + 8, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const wrapped = doc.splitTextToSize(sanitizeText(it), colWidth - 20);
+    doc.circle(wx + PDF_CONFIG.box.paddingX, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    const wrapped = splitTextWithFont(doc, sanitizeText(it), colWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
     wrapped.forEach((w: string) => {
-      doc.text(w, wx + 14, textY);
+      doc.text(w, wx + PDF_CONFIG.spacing.contentPadding, textY);
       textY += smallLine;
     });
     textY += 1;
   });
 
-  yPosition += swHeight + 8;
+  yPosition += swHeight + PDF_CONFIG.spacing.cardGap;
 
   // -------- Emotional & Cognitive Appeal --------
   const pinkBg: [number, number, number] = [253, 242, 248];
@@ -9097,7 +9097,7 @@ const renderBrandIntegrity = (
 
   const emotionalText =
     "Hobson's emotional promise is reassurance. It reduces stress by making hard-to-find information easy to access, and gives professionals a sense of control in high-pressure, chaotic environments.";
-  const emotionalLines = measureWrappedLines(emotionalText, colWidth - 16);
+  const emotionalLines = measureWrappedLines(emotionalText, colWidth - 16, "bodySmall", false);
 
   const cognitiveItems = [
     "Measurable outcomes: time saved, fewer errors, quicker decisions",
@@ -9105,66 +9105,66 @@ const renderBrandIntegrity = (
   ];
 
   const cognitiveLinesCount = cognitiveItems.reduce((acc, it) => {
-    return acc + Math.max(1, doc.splitTextToSize(sanitizeText(it), colWidth - 20).length);
+    return acc + Math.max(1, splitTextWithFont(doc, sanitizeText(it), colWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false).length);
   }, 0);
 
   const appealHeight = Math.max(
-    22 + emotionalLines.length * smallLine + 10,
-    22 + cognitiveLinesCount * smallLine + 14
+    PDF_CONFIG.card.textOffsetX + 2 + emotionalLines.length * smallLine + PDF_CONFIG.spacing.circleOffset,
+    PDF_CONFIG.card.textOffsetX + 2 + cognitiveLinesCount * smallLine + PDF_CONFIG.spacing.contentPadding
   );
 
-  fitPage(appealHeight + 6);
+  fitPage(appealHeight + PDF_CONFIG.spacing.cardGap);
 
   // Emotional
   doc.setFillColor(...pinkBg);
-  doc.roundedRect(margin, yPosition, colWidth, appealHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, colWidth, appealHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...pinkBorder);
-  doc.roundedRect(margin, yPosition, colWidth, appealHeight, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, colWidth, appealHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
   doc.setFillColor(...pink);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Emotional (Heart) Appeal", margin + 22, yPosition + 14);
+  doc.text("Emotional (Heart) Appeal", margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.contentPadding);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  textY = yPosition + 26;
+  textY = yPosition + PDF_CONFIG.card.headerHeight + PDF_CONFIG.spacing.cardGap;
   emotionalLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
     textY += smallLine;
   });
 
   // Cognitive
-  const cx = margin + colWidth + 8;
+  const cx = margin + colWidth + PDF_CONFIG.spacing.cardGap;
   doc.setFillColor(...blueBg);
-  doc.roundedRect(cx, yPosition, colWidth, appealHeight, 3, 3, "F");
+  doc.roundedRect(cx, yPosition, colWidth, appealHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...blueBorder);
-  doc.roundedRect(cx, yPosition, colWidth, appealHeight, 3, 3, "S");
+  doc.roundedRect(cx, yPosition, colWidth, appealHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
   doc.setFillColor(...blue);
-  doc.circle(cx + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(cx + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Cognitive (Head) Appeal", cx + 22, yPosition + 14);
+  doc.text("Cognitive (Head) Appeal", cx + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.contentPadding);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  textY = yPosition + 26;
+  textY = yPosition + PDF_CONFIG.card.headerHeight + PDF_CONFIG.spacing.cardGap;
   cognitiveItems.forEach((it) => {
     doc.setFillColor(...blue);
-    doc.circle(cx + 8, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const wrapped = doc.splitTextToSize(sanitizeText(it), colWidth - 20);
+    doc.circle(cx + PDF_CONFIG.box.paddingX, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    const wrapped = splitTextWithFont(doc, sanitizeText(it), colWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
     wrapped.forEach((w: string) => {
-      doc.text(w, cx + 14, textY);
+      doc.text(w, cx + PDF_CONFIG.spacing.contentPadding, textY);
       textY += smallLine;
     });
     textY += 1;
   });
 
-  yPosition += appealHeight + 8;
+  yPosition += appealHeight + PDF_CONFIG.spacing.cardGap;
 
   // -------- Brand Metaphors --------
   const metaphors = [
@@ -9174,42 +9174,42 @@ const renderBrandIntegrity = (
     { metaphor: "Desk lamp", desc: "Quietly illuminates the truth whenever needed" },
   ];
 
-  const metaphorsHeight = 22 + 28 + 10; // header + tiles + padding
-  fitPage(metaphorsHeight + 6);
+  const metaphorsHeight = PDF_CONFIG.card.textOffsetX + 2 + 28 + PDF_CONFIG.spacing.circleOffset; // header + tiles + padding
+  fitPage(metaphorsHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...amberBg);
-  doc.roundedRect(margin, yPosition, maxWidth, metaphorsHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, metaphorsHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...amberBorder);
-  doc.roundedRect(margin, yPosition, maxWidth, metaphorsHeight, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, metaphorsHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + 14, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + PDF_CONFIG.spacing.circleOffset + 2, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Brand Metaphors", margin + 24, yPosition + 14);
+  doc.text("Brand Metaphors", margin + 24, yPosition + PDF_CONFIG.spacing.contentPadding);
 
   const metaWidth = (maxWidth - 24) / 4;
   metaphors.forEach((meta, idx) => {
-    const xPos = margin + 8 + idx * (metaWidth + 4);
+    const xPos = margin + PDF_CONFIG.box.paddingX + idx * (metaWidth + PDF_CONFIG.spacing.paragraphGap);
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(xPos, yPosition + 22, metaWidth, 24, 2, 2, "F");
+    doc.roundedRect(xPos, yPosition + PDF_CONFIG.card.textOffsetX + 2, metaWidth, 24, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    const title = doc.splitTextToSize(meta.metaphor, metaWidth - 8);
-    doc.text(title[0] || "", xPos + 4, yPosition + 31);
+    const title = splitTextWithFont(doc, meta.metaphor, metaWidth - PDF_CONFIG.box.paddingX, "bodySmall", true);
+    doc.text(title[0] || "", xPos + PDF_CONFIG.spacing.paragraphGap, yPosition + 31);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const descLines = doc.splitTextToSize(meta.desc, metaWidth - 8);
-    doc.text(descLines[0] || "", xPos + 4, yPosition + 41);
+    const descLines = splitTextWithFont(doc, meta.desc, metaWidth - PDF_CONFIG.box.paddingX, "caption", false);
+    doc.text(descLines[0] || "", xPos + PDF_CONFIG.spacing.paragraphGap, yPosition + 41);
   });
 
-  yPosition += metaphorsHeight + 8;
+  yPosition += metaphorsHeight + PDF_CONFIG.spacing.cardGap;
 
   // -------- Current Marketing Position --------
   const positionText =
@@ -9218,49 +9218,49 @@ const renderBrandIntegrity = (
 
   const opportunityText =
     "Opportunity: Shift from a quiet, validating presence into a confident, educational voice shaping expectations for AI-native assistants in real estate.";
-  const opportunityLines = measureWrappedLines(opportunityText, maxWidth - 28);
+  const opportunityLines = measureWrappedLines(opportunityText, maxWidth - 28, "caption", true);
 
-  const positionHeight = 22 + positionLines.length * bodyLine + opportunityLines.length * 4 + 18;
-  fitPage(positionHeight + 6);
+  const positionHeight = PDF_CONFIG.card.textOffsetX + 2 + positionLines.length * bodyLine + opportunityLines.length * PDF_CONFIG.spacing.paragraphGap + PDF_CONFIG.card.headerHeight;
+  fitPage(positionHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, positionHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, positionHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
-  doc.roundedRect(margin, yPosition, maxWidth, positionHeight, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, positionHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 14, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + PDF_CONFIG.spacing.circleOffset + 2, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Current Marketing Position", margin + 24, yPosition + 14);
+  doc.text("Current Marketing Position", margin + 24, yPosition + PDF_CONFIG.spacing.contentPadding);
 
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  textY = yPosition + 26;
+  textY = yPosition + PDF_CONFIG.card.headerHeight + PDF_CONFIG.spacing.cardGap;
   positionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
     textY += bodyLine;
   });
 
   // Opportunity callout (wrapped)
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  const calloutY = textY + 4;
-  const calloutHeight = opportunityLines.length * 4 + 6;
-  doc.roundedRect(margin + 8, calloutY, maxWidth - 16, calloutHeight, 2, 2, "F");
+  const calloutY = textY + PDF_CONFIG.spacing.paragraphGap;
+  const calloutHeight = opportunityLines.length * PDF_CONFIG.spacing.paragraphGap + PDF_CONFIG.spacing.sectionGap;
+  doc.roundedRect(margin + PDF_CONFIG.box.paddingX, calloutY, maxWidth - 16, calloutHeight, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(7);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   doc.setFont("helvetica", "bold");
 
-  let oy = calloutY + 4;
+  let oy = calloutY + PDF_CONFIG.spacing.paragraphGap;
   opportunityLines.forEach((line: string) => {
-    doc.text(line, margin + 12, oy);
-    oy += 4;
+    doc.text(line, margin + PDF_CONFIG.spacing.circleOffset + 2, oy);
+    oy += PDF_CONFIG.spacing.paragraphGap;
   });
 
-  yPosition += positionHeight + 2;
+  yPosition += positionHeight + PDF_CONFIG.spacing.itemGap;
 
   return yPosition;
 };
