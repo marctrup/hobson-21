@@ -7240,11 +7240,11 @@ const renderSituationAnalysis = (
     doc.setFont("helvetica", "bold");
     doc.text(`Segment ${segment.id}:`, margin + spacing.bulletTextOffset, segmentHeaderY + 1);
 
-    // Target label (no box, just colored text) - add spacing between segment and target
+    // Target label (no box, just colored text) - separated from segment label
     doc.setTextColor(...theme.accent);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    const targetX = margin + spacing.bulletTextOffset + doc.getTextWidth(`Segment ${segment.id}:`) + spacing.paragraphGap;
+    const targetX = margin + spacing.bulletTextOffset + doc.getTextWidth(`Segment ${segment.id}:`) + spacing.cardGap;
     doc.text(`${segment.targetLevel} Target`, targetX, segmentHeaderY + 1);
 
     // Title - positioned below header with proper spacing
