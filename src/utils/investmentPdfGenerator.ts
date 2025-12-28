@@ -7068,41 +7068,35 @@ const renderSituationAnalysis = (
   });
   yPosition += 4;
 
-  // Strategy boxes (3 columns)
-  const stratBoxWidth = (maxWidth - 12) / 3;
-  const stratBoxHeight = 40;
-  
+  // Strategy items (inline with circles)
   data.segments.forEach((segment, idx) => {
     const theme = segmentThemes[idx];
-    const x = margin + idx * (stratBoxWidth + 6);
-
-    doc.setFillColor(...theme.bg);
-    doc.roundedRect(x, yPosition, stratBoxWidth, stratBoxHeight, 2, 2, "F");
-    doc.setDrawColor(...theme.border);
-    doc.setLineWidth(0.2);
-    doc.roundedRect(x, yPosition, stratBoxWidth, stratBoxHeight, 2, 2, "S");
-
+    
+    // Circle indicator
+    doc.setFillColor(...theme.accent);
+    doc.circle(margin + 4, yPosition + 3, PDF_CONFIG.circleSize.small, "F");
+    
+    // Target level label
     doc.setTextColor(...theme.accent);
-    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`${segment.targetLevel} Target`, x + 4, yPosition + 8);
-
+    doc.text(`${segment.targetLevel} Target`, margin + 12, yPosition + 5);
+    
+    // Segment label
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`Segment ${segment.id}`, x + 4, yPosition + 16);
-
+    doc.text(`Segment ${segment.id}`, margin + 50, yPosition + 5);
+    
+    // Reason text
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    const reasonLines = doc.splitTextToSize(sanitizeText(segment.targetReason), stratBoxWidth - 8);
-    let reasonY = yPosition + 24;
-    reasonLines.forEach((line: string) => {
-      doc.text(line, x + 4, reasonY);
-      reasonY += 4;
-    });
+    doc.text(sanitizeText(segment.targetReason), margin + 75, yPosition + 5);
+    
+    yPosition += 10;
   });
-  yPosition += stratBoxHeight + 8;
+  yPosition += 6;
 
   // 5. Summary
   const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), maxWidth - 24);
