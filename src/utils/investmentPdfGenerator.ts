@@ -4137,27 +4137,39 @@ const renderBusinessObjectives = (
     }
   };
 
-  // Intro box (match Strategy & Approach text wrapping/leading)
+  // Intro box (match Strategy & Approach padded line-by-line rendering)
   checkBreak(pageBreakMargin);
-  const introText = "The next 12 months are focused on completing the MVP for early 2026, validating Hobson in real operational settings, and building the foundations needed for commercial rollout and long-term scale.";
-  const introSafe = sanitizeText(introText);
-  const innerTextWidth = maxWidth - box.paddingX - box.paddingX;
+
+  // Source the intro sentence from the single source of truth (pdfContentProviders)
+  const businessObjectivesContent = getCustomVisualContent("businessObjectives");
+  const introText =
+    businessObjectivesContent[2] ||
+    "The next 12 months are focused on completing the MVP for early 2026, validating Hobson in real operational settings, and building the foundations needed for commercial rollout and long-term scale.";
+
+  // If the text was accidentally stored with surrounding quotes somewhere upstream, strip them.
+  const introSafe = sanitizeText(introText).replace(/^"|"$/g, "");
+
+  const innerTextWidth = maxWidth - box.paddingX * 2;
   const introLines = doc.splitTextToSize(introSafe, innerTextWidth);
-  const introHeight = spacing.contentStart + introLines.length * (lineHeight.body * lineHeightFactor.body);
-  
+  const introLineHeight = lineHeight.body; // explicit, consistent line spacing
+  const introHeight = box.paddingTop + introLines.length * introLineHeight + box.paddingBottom;
+
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, introHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
   doc.roundedRect(margin, yPosition, maxWidth, introHeight, box.borderRadius, box.borderRadius, "S");
-  
+
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(introSafe, margin + box.paddingX, yPosition + spacing.contentStart, {
-    maxWidth: innerTextWidth,
-    align: "justify",
-    lineHeightFactor: lineHeightFactor.body,
+
+  let introY = yPosition + box.paddingTop + box.borderRadiusSmall; // baseline offset
+  introLines.forEach((line: string) => {
+    doc.text(line, margin + box.paddingX, introY);
+    introY += introLineHeight;
   });
+
   yPosition += introHeight + spacing.sectionGap;
 
   // Top-Level Organisational Goals
