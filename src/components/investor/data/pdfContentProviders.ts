@@ -1818,7 +1818,7 @@ export const getCustomerOnlineBehaviourStructuredData = () => ({
 });
 
 // String array version for backward compatibility
-export const getCustomerOnlineBehaviourPdfContent = (): string[] => [];
+export const getCustomerOnlineBehaviourPdfContent = (): string[] => [
   "Scaling emotional storytelling",
   "Building structured support and resolution processes",
   "Demonstrating the move from retrieval to proactive insight and strategic clarity",
@@ -1887,6 +1887,31 @@ export const getCustomerOnlineBehaviourPdfContent = (): string[] => [];
   "Today, Hobson's market presence is selective and relationship-led. The focus is on deep MVP partnerships rather than broad public awareness.",
   "The brand is visually strong, the story is coherent, and the touchpoints (site, quiz, mascot, interface) are consistent.",
   "The main opportunity is to shift from being a quiet, validating presence into a confident, educational voice that helps shape expectations for AI-native assistants in real estate.",
+];
+
+export const getBrandIntegrityPdfContent = (): string[] => [
+  "BRAND INTEGRITY",
+  "",
+  "Hobson's brand is built on clarity, trust, and simplicity. Every touchpoint reinforces these core values.",
+  "",
+  "Brand Foundation:",
+  "- Sage archetype: wisdom, guidance, truth",
+  "- Supporting traits: Ruler (order, reliability) and Creator (innovation)",
+  "- Purple palette signals insight and clear thinking",
+  "- Owl mascot embodies quiet, observant guidance",
+  "",
+  "Brand Strengths:",
+  "- Simplifies document retrieval and reduces cognitive load",
+  "- Saves meaningful time on routine information search",
+  "- Provides transparent, referenced answers that build trust",
+  "- Calm, clear, jargon-free tone of voice",
+  "",
+  "Brand Consistency:",
+  "- Visual assets and interface design are consistent and modern",
+  "- Interactive tools reinforce Hobson as knowledgeable yet friendly",
+  "- The brand avoids hype and is open about limitations",
+  "",
+  "This authenticity is one of Hobson's core strengths, positioning the brand as trustworthy in a market often skeptical of AI claims.",
 ];
 
 export const getBusinessObjectivesPdfContent = (): string[] => [
