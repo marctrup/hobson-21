@@ -6919,9 +6919,10 @@ const renderSituationAnalysis = (
 
   yPosition += headerHeight + 6;
 
-  // 2. Intro paragraph
-  const introLines = doc.splitTextToSize(sanitizeText(data.intro), maxWidth - 16);
-  const introHeight = 12 + introLines.length * bodyLine;
+  // 2. Intro paragraph - increased box size with proper text wrapping
+  const introTextWidth = maxWidth - 24; // more padding for text
+  const introLines = doc.splitTextToSize(sanitizeText(data.intro), introTextWidth);
+  const introHeight = 16 + introLines.length * bodyLine; // increased vertical padding
   fitPage(introHeight + 6);
 
   doc.setFillColor(...slateBg);
