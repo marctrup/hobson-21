@@ -6946,7 +6946,7 @@ const renderSituationAnalysis = (
 
     // Calculate segment card height
     const descLines = doc.splitTextToSize(sanitizeText(segment.description), maxWidth - 16);
-    const valueLines = doc.splitTextToSize(sanitizeText(segment.hobsonValue), maxWidth - 52);
+    const valueLines = doc.splitTextToSize(sanitizeText(segment.hobsonValue), maxWidth - 56);
     const useCaseHeight = segment.useCases.length * (bodyLine + 1);
     const feedbackLines = doc.splitTextToSize(`Client feedback: "${segment.feedback}"`, maxWidth - 20);
     
