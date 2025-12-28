@@ -3784,7 +3784,7 @@ const renderEarlyRoadmap = (
 };
 
 /**
- * Render Commercialisation Strategy visual
+ * Render Commercialisation Strategy visual (Commercial Philosophy)
  * Uses PDF_CONFIG defaults for all sizing and spacing
  */
 const renderCommercialisationStrategy = (
@@ -3796,7 +3796,7 @@ const renderCommercialisationStrategy = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const { box, spacing, circleSize, lineHeightFactor } = PDF_CONFIG;
+  const { box, spacing, circleSize, fontSize, card, lineHeight } = PDF_CONFIG;
 
   // Helper for page break
   const checkBreak = (requiredSpace: number) => {
@@ -3806,26 +3806,45 @@ const renderCommercialisationStrategy = (
     }
   };
 
+  // Derived values from PDF_CONFIG
+  const headerBoxHeight = spacing.headerToContent + spacing.cardGap; // 24
+  const headerTextY = spacing.subtitleY; // 15
+  const challengeCardHeight = spacing.titleY + spacing.cardGap; // 14
+  const challengeTextY = fontSize.bodySmall; // 9
+  const challengeCircleY = challengeTextY - 2; // 7
+  const calloutHeight = spacing.headerToContent + 2; // 20
+  const calloutTextY = fontSize.cardTitle; // 12
+  const sectionCircleY = lineHeight.body; // 5
+  const sectionTitleY = sectionCircleY + 2; // 7
+  const gridCardHeight = spacing.headerToContent + 2; // 20
+  const gridCircleY = spacing.boxTopPadding; // 10
+  const gridTextY = fontSize.cardTitle; // 12
+  const conclusionHeight = spacing.headerToContent + spacing.boxTopPadding; // 28
+  const conclusionCircleY = spacing.titleY + spacing.cardGap; // 14
+  const conclusionLine1Y = fontSize.cardTitle - 1; // 11
+  const conclusionLine2Y = spacing.headerToContent + spacing.cardGap - 1; // 21
+
   // Header box - Inflexion Point
-  checkBreak(28);
-  const headerHeight = 24;
-  renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
+  checkBreak(headerBoxHeight + spacing.cardGap);
+  renderContentCard(doc, margin, yPosition, maxWidth, headerBoxHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("The Real Estate industry is at an inflexion point.", margin + box.paddingX + 4, yPosition + 15);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("The Real Estate industry is at an inflexion point.", margin + box.paddingX + spacing.subtitleToBullets, yPosition + headerTextY);
 
-  yPosition += headerHeight + spacing.sectionGap + 4;
+  yPosition += headerBoxHeight + spacing.sectionGap + spacing.subtitleToBullets;
 
   // Section 1: Operators Are Facing
-  checkBreak(70);
+  checkBreak(spacing.boxTopPadding * 7);
   doc.setFillColor(...PDF_CONFIG.rose);
-  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.large, "F");
+  doc.circle(margin + box.paddingX, yPosition + sectionCircleY, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("Operators are facing:", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7);
-  yPosition += spacing.headerToContent - 4;
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Operators are facing:", margin + card.textOffsetX - 2, yPosition + sectionTitleY);
+  yPosition += spacing.headerToContent - spacing.subtitleToBullets;
 
   const challenges = [
     "exploding regulatory complexity,",
@@ -3836,45 +3855,45 @@ const renderCommercialisationStrategy = (
   ];
 
   challenges.forEach((challenge) => {
-    const cardHeight = 14;
-    renderContentCard(doc, margin + PDF_CONFIG.card.iconOffsetX, yPosition, maxWidth - PDF_CONFIG.card.textOffsetX, cardHeight, PDF_CONFIG.roseBg, PDF_CONFIG.roseBorder);
+    renderContentCard(doc, margin + card.iconOffsetX, yPosition, maxWidth - card.textOffsetX, challengeCardHeight, PDF_CONFIG.roseBg, PDF_CONFIG.roseBorder);
     
     doc.setFillColor(...PDF_CONFIG.rose);
-    doc.circle(margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7, circleSize.small, "F");
+    doc.circle(margin + card.textOffsetX - 2, yPosition + challengeCircleY, circleSize.small, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
-    setBodySmallFont(doc);
-    doc.text(sanitizeText(challenge), margin + PDF_CONFIG.card.textOffsetX + 4, yPosition + 9);
-    yPosition += cardHeight + 3;
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "normal");
+    doc.text(sanitizeText(challenge), margin + card.textOffsetX + spacing.subtitleToBullets, yPosition + challengeTextY);
+    yPosition += challengeCardHeight + box.borderRadius;
   });
 
   yPosition += spacing.paragraphGap;
 
   // Callout box
-  const calloutHeight = 20;
-  renderContentCard(doc, margin + PDF_CONFIG.card.iconOffsetX, yPosition, maxWidth - PDF_CONFIG.card.textOffsetX, calloutHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+  renderContentCard(doc, margin + card.iconOffsetX, yPosition, maxWidth - card.textOffsetX, calloutHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.text("They cannot wait for incremental tools. They need a ", margin + box.paddingX * 2, yPosition + 12);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.text("They cannot wait for incremental tools. They need a ", margin + box.paddingX * 2, yPosition + calloutTextY);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("structural operating upgrade", margin + box.paddingX * 2 + doc.getTextWidth("They cannot wait for incremental tools. They need a "), yPosition + 12);
+  doc.text("structural operating upgrade", margin + box.paddingX * 2 + doc.getTextWidth("They cannot wait for incremental tools. They need a "), yPosition + calloutTextY);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("They cannot wait for incremental tools. They need a structural operating upgrade"), yPosition + 12);
+  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("They cannot wait for incremental tools. They need a structural operating upgrade"), yPosition + calloutTextY);
   doc.setFont("helvetica", "normal");
 
-  yPosition += calloutHeight + spacing.sectionGap + 4;
+  yPosition += calloutHeight + spacing.sectionGap + spacing.subtitleToBullets;
 
   // Section 2: Hobson's Product
-  checkBreak(60);
+  checkBreak(spacing.boxTopPadding * 6);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.large, "F");
+  doc.circle(margin + box.paddingX, yPosition + sectionCircleY, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("Hobson's product is already solving existential problems:", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7);
-  yPosition += spacing.headerToContent - 4;
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Hobson's product is already solving existential problems:", margin + card.textOffsetX - 2, yPosition + sectionTitleY);
+  yPosition += spacing.headerToContent - spacing.subtitleToBullets;
 
   const problemsSolved = [
     "compliance exposure,",
@@ -3884,46 +3903,45 @@ const renderCommercialisationStrategy = (
   ];
 
   // 2x2 grid
-  const cardWidth = (maxWidth - 30) / 2;
-  const cardHeight = 20;
+  const cardWidth = (maxWidth - spacing.headerToContent - spacing.boxTopPadding) / 2;
   problemsSolved.forEach((problem, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
-    const cardX = margin + PDF_CONFIG.card.iconOffsetX + col * (cardWidth + spacing.cardGap);
-    const cardY = yPosition + row * (cardHeight + spacing.paragraphGap);
+    const cardX = margin + card.iconOffsetX + col * (cardWidth + spacing.cardGap);
+    const cardY = yPosition + row * (gridCardHeight + spacing.paragraphGap);
 
-    renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
+    renderContentCard(doc, cardX, cardY, cardWidth, gridCardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(cardX + PDF_CONFIG.card.iconOffsetX, cardY + 10, circleSize.small, "F");
+    doc.circle(cardX + card.iconOffsetX, cardY + gridCircleY, circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
-    setBodySmallFont(doc);
-    doc.text(sanitizeText(problem), cardX + box.paddingX * 2, cardY + 12);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "normal");
+    doc.text(sanitizeText(problem), cardX + box.paddingX * 2, cardY + gridTextY);
   });
 
-  yPosition += 2 * (cardHeight + spacing.paragraphGap) + spacing.sectionGap + 4;
+  yPosition += 2 * (gridCardHeight + spacing.paragraphGap) + spacing.sectionGap + spacing.subtitleToBullets;
 
   // Conclusion box
-  checkBreak(32);
-  const conclusionHeight = 28;
+  checkBreak(conclusionHeight + spacing.sectionGap);
   renderContentCard(doc, margin, yPosition, maxWidth, conclusionHeight, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + box.paddingX + 4, yPosition + 14, circleSize.medium, "F");
+  doc.circle(margin + box.paddingX + spacing.subtitleToBullets, yPosition + conclusionCircleY, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.text("Commercialisation is not an experiment. It is an ", margin + PDF_CONFIG.card.textOffsetX, yPosition + 11);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.text("Commercialisation is not an experiment. It is an ", margin + card.textOffsetX, yPosition + conclusionLine1Y);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("inevitability", margin + PDF_CONFIG.card.textOffsetX + doc.getTextWidth("Commercialisation is not an experiment. It is an "), yPosition + 11);
+  doc.text("inevitability", margin + card.textOffsetX + doc.getTextWidth("Commercialisation is not an experiment. It is an "), yPosition + conclusionLine1Y);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + PDF_CONFIG.card.textOffsetX + doc.getTextWidth("Commercialisation is not an experiment. It is an inevitability"), yPosition + 11);
+  doc.text(".", margin + card.textOffsetX + doc.getTextWidth("Commercialisation is not an experiment. It is an inevitability"), yPosition + conclusionLine1Y);
 
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.text("The only question is who captures the category.", margin + PDF_CONFIG.card.textOffsetX, yPosition + 21);
+  doc.setFontSize(fontSize.body);
+  doc.text("The only question is who captures the category.", margin + card.textOffsetX, yPosition + conclusionLine2Y);
   doc.setFont("helvetica", "normal");
 
   yPosition += conclusionHeight + spacing.sectionGap;
