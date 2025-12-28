@@ -8122,11 +8122,11 @@ const renderCompetitorBenchmarks = (
   // Header - tighter spacing
   const innerPadding = 6;
   const innerTextWidth = maxWidth - innerPadding * 2;
-  const introLineSpacing = 4.5;
+  const introLineSpacing = 5.5;
   const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), innerTextWidth);
   const detailLines = doc.splitTextToSize(sanitizeText(data.header.detail), innerTextWidth);
-  // Compact header: title area (22) + intro lines + gap (1) + detail lines + bottom padding (2)
-  const headerHeight = 22 + introLines.length * introLineSpacing + 1 + detailLines.length * introLineSpacing + 2;
+  // Compact header: title area (22) + intro lines + gap (2) + detail lines + bottom padding (3)
+  const headerHeight = 22 + introLines.length * introLineSpacing + 2 + detailLines.length * introLineSpacing + 3;
   fitPage(headerHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
@@ -8156,16 +8156,16 @@ const renderCompetitorBenchmarks = (
   doc.text(sanitizeText(data.header.intro), margin + innerPadding, introStartY, {
     maxWidth: innerTextWidth,
     align: "justify",
-    lineHeightFactor: 1.15,
+    lineHeightFactor: 1.4,
   });
 
   // Single justified paragraph for detail - reduced gap
-  const detailStartY = introStartY + introLines.length * introLineSpacing + 1;
+  const detailStartY = introStartY + introLines.length * introLineSpacing + 2;
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.text(sanitizeText(data.header.detail), margin + innerPadding, detailStartY, {
     maxWidth: innerTextWidth,
     align: "justify",
-    lineHeightFactor: 1.15,
+    lineHeightFactor: 1.4,
   });
 
   yPosition += headerHeight + 6;
