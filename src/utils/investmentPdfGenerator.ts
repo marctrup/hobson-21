@@ -7655,10 +7655,10 @@ const renderMarketDescription = (
   yPosition += statHeight * 2 + 12;
 
   // Key Trends section
-  const trendsIntroLines = doc.splitTextToSize(sanitizeText(data.keyTrends.intro), maxWidth - 16);
+  const trendsIntroLines = doc.splitTextToSize(sanitizeText(data.keyTrends.intro), maxWidth - 28);
   const trendsItemsHeight = data.keyTrends.items.length * (bodyLine + 2);
-  const trendsConclusionLines = doc.splitTextToSize(sanitizeText(data.keyTrends.conclusion), maxWidth - 16);
-  const trendsHeight = 20 + trendsIntroLines.length * bodyLine + 6 + trendsItemsHeight + 6 + trendsConclusionLines.length * bodyLine + 8;
+  const trendsConclusionLines = doc.splitTextToSize(sanitizeText(data.keyTrends.conclusion), maxWidth - 28);
+  const trendsHeight = 24 + trendsIntroLines.length * bodyLine + 6 + trendsItemsHeight + 6 + trendsConclusionLines.length * bodyLine + 10;
   fitPage(trendsHeight + 6);
 
   doc.setFillColor(248, 250, 252);
@@ -7667,23 +7667,23 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText(data.keyTrends.title), margin + 8, yPosition + 12);
+  doc.text(sanitizeText(data.keyTrends.title), margin + 10, yPosition + 14);
 
-  textY = yPosition + 20;
+  textY = yPosition + 24;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   trendsIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
   textY += 4;
 
   data.keyTrends.items.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const itemLines = doc.splitTextToSize(sanitizeText(item), maxWidth - 24);
-    doc.text(itemLines[0] || "", margin + 18, textY);
+    doc.circle(margin + 14, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    const itemLines = doc.splitTextToSize(sanitizeText(item), maxWidth - 32);
+    doc.text(itemLines[0] || "", margin + 20, textY);
     textY += bodyLine + 2;
   });
   textY += 4;
@@ -7691,7 +7691,7 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "italic");
   trendsConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
 
