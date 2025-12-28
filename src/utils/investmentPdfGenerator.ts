@@ -7193,10 +7193,7 @@ const renderCustomerPersonas = (
   doc.setFont("helvetica", "normal");
   let textY = yPosition + 12;
   introLines.forEach((line: string) => {
-    // Center text horizontally
-    const textWidth = doc.getTextWidth(line);
-    const centerX = margin + (maxWidth - textWidth) / 2;
-    doc.text(line, centerX, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
   yPosition += introHeight + 14;
