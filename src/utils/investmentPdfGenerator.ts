@@ -6731,9 +6731,11 @@ const renderExecutiveContext = (
   });
   yPosition += contextHeight + 6;
 
-  // 4. Hobson positioning box (purple themed)
-  const posLines = doc.splitTextToSize(sanitizeText(data.hobsonPositioning), maxWidth - 24);
-  const posHeight = 16 + posLines.length * bodyLine;
+  // 4. Hobson positioning box (purple themed) - centered with circle aligned
+  const posLines = doc.splitTextToSize(sanitizeText(data.hobsonPositioning), maxWidth - 40);
+  const posLineHeight = PDF_CONFIG.lineHeight.loose;
+  const posContentHeight = posLines.length * posLineHeight;
+  const posHeight = 16 + posContentHeight;
   fitPage(posHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -6742,16 +6744,21 @@ const renderExecutiveContext = (
   doc.setLineWidth(0.3);
   doc.roundedRect(margin, yPosition, maxWidth, posHeight, 3, 3, "S");
 
+  // Calculate vertical center for both circle and text
+  const posBoxCenterY = yPosition + posHeight / 2;
+  const textStartY = posBoxCenterY - (posContentHeight / 2) + posLineHeight / 2;
+
+  // Circle aligned with text center
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 10, yPosition + posHeight / 2, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + 12, posBoxCenterY, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  textY = yPosition + 10;
+  textY = textStartY;
   posLines.forEach((line: string) => {
-    doc.text(line, margin + 20, textY);
-    textY += bodyLine;
+    doc.text(line, margin + 22, textY);
+    textY += posLineHeight;
   });
   yPosition += posHeight + 8;
 
