@@ -6744,18 +6744,14 @@ const renderExecutiveContext = (
   doc.setLineWidth(0.3);
   doc.roundedRect(margin, yPosition, maxWidth, posHeight, 3, 3, "S");
 
-  // Calculate vertical center for both circle and text
-  const posBoxCenterY = yPosition + posHeight / 2;
-  const textStartY = posBoxCenterY - (posContentHeight / 2) + posLineHeight / 2;
-
-  // Circle aligned with text center
+  // Circle aligned with first line of text
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, posBoxCenterY, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + 12, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  textY = textStartY;
+  textY = yPosition + 12;
   posLines.forEach((line: string) => {
     doc.text(line, margin + 22, textY);
     textY += posLineHeight;
