@@ -7466,7 +7466,7 @@ const renderCustomerPersonas = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  const subtitleLines = splitTextWithFont(doc, data.header.subtitle, maxWidth - spacing.bulletTextOffset - spacing.gridGap, "bodySmall", false);
+  const subtitleLines = splitTextWithFont(doc, data.header.subtitle, maxWidth - spacing.bulletTextOffset - spacing.circleOffset, "bodySmall", false);
   doc.text(subtitleLines[0] || "", margin + spacing.bulletTextOffset, headerCircleY + lineHeight.body + spacing.boxGap);
 
   yPosition += headerHeight + spacing.cardGap;
