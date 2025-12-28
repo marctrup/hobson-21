@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // PDF Configuration - Colors matched to design system (index.css)
@@ -8030,6 +8030,295 @@ const renderCompetitorBenchmarks = (
 };
 
 /**
+ * Render Customer Online Behaviour - matches UI layout
+ */
+const renderCustomerOnlineBehaviour = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const bodyLine = PDF_CONFIG.lineHeight.body;
+
+  const data = getCustomerOnlineBehaviourStructuredData();
+
+  const fitPage = (required: number) => {
+    yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Persona colors
+  const personaColors = [
+    { bg: [239, 246, 255] as [number, number, number], accent: [37, 99, 235] as [number, number, number] }, // blue - Leigh
+    { bg: [250, 245, 255] as [number, number, number], accent: [124, 58, 237] as [number, number, number] }, // purple - James
+    { bg: [236, 253, 245] as [number, number, number], accent: [5, 150, 105] as [number, number, number] }, // emerald - Priya
+  ];
+
+  // Header
+  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), maxWidth - 16);
+  const headerHeight = 28 + introLines.length * bodyLine;
+  fitPage(headerHeight + 6);
+
+  doc.setFillColor(...PDF_CONFIG.blueBg);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.blueBorder);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "S");
+
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.header.title, margin + 22, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 22);
+
+  let textY = yPosition + 32;
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  introLines.forEach((line: string) => {
+    doc.text(line, margin + 8, textY);
+    textY += bodyLine;
+  });
+
+  yPosition += headerHeight + 8;
+
+  // Where Customers Research Tools section
+  fitPage(20);
+  doc.setTextColor(...PDF_CONFIG.blue);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Where Customers Research Tools", margin, yPosition);
+  yPosition += 12;
+
+  // Research channels for each persona
+  data.researchChannels.forEach((persona, idx) => {
+    const colors = personaColors[idx];
+    const channelsHeight = persona.channels.length * (bodyLine + 2);
+    const cardHeight = 24 + channelsHeight + 8;
+    fitPage(cardHeight + 6);
+
+    doc.setFillColor(...colors.bg);
+    doc.roundedRect(margin, yPosition, maxWidth, cardHeight, 3, 3, "F");
+
+    // Persona initial circle
+    doc.setFillColor(...colors.accent);
+    doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(persona.persona.charAt(0), margin + 10, yPosition + 16);
+
+    // Persona name and role
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+    doc.setFont("helvetica", "bold");
+    doc.text(persona.persona, margin + 22, yPosition + 12);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "normal");
+    doc.text(sanitizeText(persona.role), margin + 22, yPosition + 20);
+
+    textY = yPosition + 28;
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    persona.channels.forEach((channel) => {
+      doc.setFillColor(...colors.accent);
+      doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+      const channelLines = doc.splitTextToSize(sanitizeText(channel), maxWidth - 24);
+      doc.text(channelLines[0] || "", margin + 18, textY);
+      textY += bodyLine + 2;
+    });
+
+    yPosition += cardHeight + 6;
+  });
+
+  // What Content They Trust section
+  fitPage(20);
+  doc.setTextColor(...PDF_CONFIG.emerald);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("What Content They Trust", margin, yPosition);
+  yPosition += 8;
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Across all personas, the content that builds trust is:", margin, yPosition);
+  yPosition += 10;
+
+  // Trust content cards (2 column grid)
+  const trustCardWidth = (maxWidth - 8) / 2;
+  const trustCardHeight = 32;
+
+  data.trustedContent.forEach((item, idx) => {
+    const row = Math.floor(idx / 2);
+    const col = idx % 2;
+    
+    if (col === 0) {
+      fitPage(trustCardHeight + 4);
+    }
+
+    const x = margin + col * (trustCardWidth + 8);
+    const y = yPosition + row * (trustCardHeight + 4);
+
+    doc.setFillColor(...PDF_CONFIG.emeraldBg);
+    doc.roundedRect(x, y, trustCardWidth, trustCardHeight, 3, 3, "F");
+
+    doc.setTextColor(...PDF_CONFIG.emerald);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(sanitizeText(item.title), x + 6, y + 10);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(sanitizeText(item.description), trustCardWidth - 12);
+    doc.text(descLines.slice(0, 2), x + 6, y + 18);
+  });
+
+  yPosition += Math.ceil(data.trustedContent.length / 2) * (trustCardHeight + 4) + 8;
+
+  // How Customers Evaluate AI Solutions section
+  fitPage(20);
+  doc.setTextColor(...PDF_CONFIG.amber);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("How Customers Evaluate AI Solutions", margin, yPosition);
+  yPosition += 10;
+
+  // Evaluation criteria cards (2 column grid)
+  const evalCardWidth = (maxWidth - 8) / 2;
+  const evalCardHeight = 30;
+
+  data.evaluationCriteria.forEach((item, idx) => {
+    const row = Math.floor(idx / 2);
+    const col = idx % 2;
+
+    if (col === 0) {
+      fitPage(evalCardHeight + 4);
+    }
+
+    const x = margin + col * (evalCardWidth + 8);
+    const y = yPosition + row * (evalCardHeight + 4);
+
+    doc.setFillColor(...PDF_CONFIG.amberBg);
+    doc.roundedRect(x, y, evalCardWidth, evalCardHeight, 3, 3, "F");
+
+    doc.setTextColor(...PDF_CONFIG.amber);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(sanitizeText(item.title), x + 6, y + 10);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(sanitizeText(item.description), evalCardWidth - 12);
+    doc.text(descLines.slice(0, 2), x + 6, y + 18);
+  });
+
+  yPosition += Math.ceil(data.evaluationCriteria.length / 2) * (evalCardHeight + 4) + 8;
+
+  // What Triggers Distrust section
+  const distrustHeight = 18 + data.distrustTriggers.length * (bodyLine + 2);
+  fitPage(distrustHeight + 6);
+
+  doc.setFillColor(...PDF_CONFIG.roseBg);
+  doc.roundedRect(margin, yPosition, maxWidth, distrustHeight, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.roseBorder);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, distrustHeight, 3, 3, "S");
+
+  doc.setTextColor(...PDF_CONFIG.rose);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("What Triggers Distrust or Hesitation", margin + 8, yPosition + 12);
+
+  textY = yPosition + 22;
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  data.distrustTriggers.forEach((trigger) => {
+    doc.setFillColor(...PDF_CONFIG.rose);
+    doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    const triggerLines = doc.splitTextToSize(sanitizeText(trigger), maxWidth - 24);
+    doc.text(triggerLines[0] || "", margin + 18, textY);
+    textY += bodyLine + 2;
+  });
+
+  yPosition += distrustHeight + 8;
+
+  // Channel Strategy Summary section
+  fitPage(20);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("How These Behaviours Shape Hobson's Channel Strategy", margin, yPosition);
+  yPosition += 10;
+
+  data.channelStrategySummary.forEach((item, idx) => {
+    const insightLines = doc.splitTextToSize(`${item.channel}: ${sanitizeText(item.insight)}`, maxWidth - 24);
+    const itemHeight = 8 + insightLines.length * bodyLine;
+    fitPage(itemHeight + 4);
+
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(margin, yPosition, maxWidth, itemHeight, 2, 2, "F");
+
+    // Number badge
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(margin + 10, yPosition + itemHeight / 2, PDF_CONFIG.circleSize.medium, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${idx + 1}`, margin + 8, yPosition + itemHeight / 2 + 2);
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.setFont("helvetica", "normal");
+    let lineY = yPosition + 6;
+    insightLines.forEach((line: string) => {
+      doc.text(line, margin + 20, lineY);
+      lineY += bodyLine;
+    });
+
+    yPosition += itemHeight + 4;
+  });
+
+  yPosition += 4;
+
+  // Conclusion
+  const conclusionLines = doc.splitTextToSize(sanitizeText(data.conclusion), maxWidth - 16);
+  const conclusionHeight = 12 + conclusionLines.length * bodyLine;
+  fitPage(conclusionHeight + 6);
+
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, conclusionHeight, 3, 3, "S");
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  textY = yPosition + 8;
+  conclusionLines.forEach((line: string) => {
+    doc.text(line, margin + 8, textY);
+    textY += bodyLine;
+  });
+
+  yPosition += conclusionHeight + 6;
+  return yPosition;
+};
+
+/**
  * Render Brand Integrity, Perception & Positioning visual
  */
 const renderBrandIntegrity = (
@@ -9181,7 +9470,7 @@ const renderTabContent = (
     } else if (componentType === "competitorBenchmarks") {
       yPosition = renderCompetitorBenchmarks(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "customerOnlineBehaviour") {
-      yPosition = renderProviderCards(doc, yPosition, margin, pageWidth, pageHeight, componentType);
+      yPosition = renderCustomerOnlineBehaviour(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "brandIntegrity") {
       yPosition = renderBrandIntegrity(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "pestleAnalysis") {
