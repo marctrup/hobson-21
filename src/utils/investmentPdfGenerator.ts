@@ -7247,13 +7247,14 @@ const renderSituationAnalysis = (
     const targetX = margin + spacing.bulletTextOffset + doc.getTextWidth(`Segment ${segment.id}:`) + spacing.paragraphGap;
     doc.text(`${segment.targetLevel} Target`, targetX, segmentHeaderY + 1);
 
-    // Title
+    // Title - positioned below header with proper spacing
+    const titleY = segmentHeaderY + lineHeight.body + spacing.boxGap;
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(sanitizeText(segment.title), margin + spacing.bulletTextOffset, yPosition + spacing.contentBoxStart);
+    doc.text(sanitizeText(segment.title), margin + spacing.bulletTextOffset, titleY);
 
-    textY = yPosition + spacing.contentBoxStart + spacing.cardGap;
+    textY = titleY + lineHeight.body + spacing.boxGap;
 
     // Description
     doc.setTextColor(...PDF_CONFIG.textGray);
