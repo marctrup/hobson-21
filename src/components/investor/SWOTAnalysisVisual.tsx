@@ -244,19 +244,19 @@ export const SWOTAnalysisVisual = () => {
       <div className="space-y-3">
         <h5 className="font-medium text-foreground text-sm">Pillars Evaluation Matrix</h5>
         <div className="rounded-xl bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900/50 dark:to-slate-800/30 p-4 border border-slate-200 dark:border-slate-700/50 overflow-x-auto">
-          <table className="w-full text-xs">
+          <table className="w-full text-xs table-fixed">
             <thead>
               <tr className="border-b border-slate-200 dark:border-slate-700">
-                <th className="text-left py-2 font-medium text-foreground">Pillar</th>
-                <th className="text-left py-2 font-medium text-foreground">Rating</th>
+                <th className="text-left py-2 font-medium text-foreground w-[100px]">Pillar</th>
+                <th className="text-left py-2 font-medium text-foreground w-[80px]">Rating</th>
                 <th className="text-left py-2 font-medium text-foreground">Explanation</th>
               </tr>
             </thead>
             <tbody>
               {pillarsData.map((row, idx) => (
-                <tr key={idx} className="border-b border-slate-100 dark:border-slate-800 last:border-0">
-                  <td className="py-2 font-medium text-foreground">{row.pillar}</td>
-                  <td className="py-2">
+                <tr key={idx} className="border-b border-slate-100 dark:border-slate-800 last:border-0 align-top">
+                  <td className="py-2 font-medium text-foreground whitespace-nowrap">{row.pillar}</td>
+                  <td className="py-2 whitespace-nowrap">
                     <div className="flex items-center gap-2">
                       {renderRating(row.rating)}
                       <span className="text-muted-foreground">{row.rating}/5</span>
