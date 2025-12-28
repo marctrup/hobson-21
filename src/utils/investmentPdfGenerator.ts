@@ -4190,37 +4190,32 @@ const renderBusinessObjectives = (
     }
   ];
 
-  const colWidth = (maxWidth - 6) / 2;
-  objectives.forEach((obj, idx) => {
-    const col = idx % 2;
-    const row = Math.floor(idx / 2);
+  const colWidth = (maxWidth - 8) / 2;
+  const cardHeight = 55;
+  const cardGap = 6;
+  
+  // Row 1 - first two objectives
+  checkBreak(cardHeight * 2 + cardGap + 20);
+  
+  // Draw first row (2 cards side by side)
+  for (let i = 0; i < 2; i++) {
+    const obj = objectives[i];
+    const xPos = margin + i * (colWidth + 8);
     
-    if (col === 0) {
-      checkBreak(55);
-    }
-    
-    const xPos = margin + col * (colWidth + 6);
-    const cardY = row === 0 ? yPosition : yPosition + 60;
-    
-    if (col === 0 && row > 0) {
-      yPosition += 60;
-    }
-    
-    const cardHeight = 52;
     doc.setFillColor(...obj.bgColor);
-    doc.roundedRect(xPos, cardY, colWidth, cardHeight, 3, 3, "F");
+    doc.roundedRect(xPos, yPosition, colWidth, cardHeight, 3, 3, "F");
     
     doc.setFillColor(...obj.color);
-    doc.circle(xPos + 10, cardY + 10, 3, "F");
+    doc.circle(xPos + 10, yPosition + 10, 3, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
-    doc.text(obj.title, xPos + 18, cardY + 12);
+    doc.text(obj.title, xPos + 18, yPosition + 12);
     
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
-    let itemY = cardY + 22;
+    let itemY = yPosition + 22;
     obj.items.forEach((item) => {
       doc.setFillColor(...obj.color);
       doc.circle(xPos + 10, itemY - 1, 1, "F");
@@ -4231,8 +4226,40 @@ const renderBusinessObjectives = (
       });
       itemY += itemLines.length * 4 + 2;
     });
-  });
-  yPosition += 120;
+  }
+  yPosition += cardHeight + cardGap;
+
+  // Row 2 - second two objectives
+  for (let i = 2; i < 4; i++) {
+    const obj = objectives[i];
+    const xPos = margin + (i - 2) * (colWidth + 8);
+    
+    doc.setFillColor(...obj.bgColor);
+    doc.roundedRect(xPos, yPosition, colWidth, cardHeight, 3, 3, "F");
+    
+    doc.setFillColor(...obj.color);
+    doc.circle(xPos + 10, yPosition + 10, 3, "F");
+    
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    doc.text(obj.title, xPos + 18, yPosition + 12);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    let itemY = yPosition + 22;
+    obj.items.forEach((item) => {
+      doc.setFillColor(...obj.color);
+      doc.circle(xPos + 10, itemY - 1, 1, "F");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      const itemLines = doc.splitTextToSize(item, colWidth - 20);
+      itemLines.forEach((line: string, lineIdx: number) => {
+        doc.text(line, xPos + 14, itemY + lineIdx * 4);
+      });
+      itemY += itemLines.length * 4 + 2;
+    });
+  }
+  yPosition += cardHeight + 12;
 
   // Timeline Progression
   checkBreak(50);
