@@ -4149,6 +4149,10 @@ const renderBusinessObjectives = (
   // If the text was accidentally stored with surrounding quotes somewhere upstream, strip them.
   const introSafe = sanitizeText(introText).replace(/^"|"$/g, "");
 
+  // IMPORTANT: set font BEFORE splitTextToSize so wrapping uses the correct metrics
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+
   const innerTextWidth = maxWidth - box.paddingX * 2;
   const introLines = doc.splitTextToSize(introSafe, innerTextWidth);
   const introLineHeight = lineHeight.body; // explicit, consistent line spacing
@@ -4161,8 +4165,7 @@ const renderBusinessObjectives = (
   doc.roundedRect(margin, yPosition, maxWidth, introHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(fontSize.body);
-  doc.setFont("helvetica", "normal");
+
 
   let introY = yPosition + box.paddingTop + box.borderRadiusSmall; // baseline offset
   introLines.forEach((line: string) => {
