@@ -100,7 +100,7 @@ const PDF_CONFIG = {
   // ============================================================================
   numberedCircle: {
     yOffset: 5,           // Y offset from yPosition for circle center
-    textYOffset: 2,       // Additional Y offset for text centering inside circle
+    textYOffset: 1,       // Additional Y offset for text centering inside circle
   },
 
   // ============================================================================
