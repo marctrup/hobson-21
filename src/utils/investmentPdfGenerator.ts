@@ -7231,28 +7231,29 @@ const renderSituationAnalysis = (
     doc.roundedRect(margin, yPosition, maxWidth, segmentHeight, box.borderRadius, box.borderRadius, "S");
 
     // Segment header - circle aligned with text
+    const segmentHeaderY = yPosition + spacing.contentPadding;
     doc.setFillColor(...theme.accent);
-    doc.circle(margin + spacing.itemGap, yPosition + spacing.itemGap, circleSize.medium, "F");
+    doc.circle(margin + spacing.circleOffset, segmentHeaderY, circleSize.medium, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
-    doc.text(`Segment ${segment.id}:`, margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.contentPadding);
+    doc.text(`Segment ${segment.id}:`, margin + spacing.bulletTextOffset, segmentHeaderY + 1);
 
     // Target label (no box, just colored text) - add spacing between segment and target
     doc.setTextColor(...theme.accent);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    const targetX = margin + spacing.bulletTextOffset + spacing.paragraphGap + doc.getTextWidth(`Segment ${segment.id}:`) + spacing.itemGap; // gap between segment and target
-    doc.text(`${segment.targetLevel} Target`, targetX, yPosition + spacing.contentPadding);
+    const targetX = margin + spacing.bulletTextOffset + doc.getTextWidth(`Segment ${segment.id}:`) + spacing.paragraphGap;
+    doc.text(`${segment.targetLevel} Target`, targetX, segmentHeaderY + 1);
 
     // Title
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(sanitizeText(segment.title), margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + 24);
+    doc.text(sanitizeText(segment.title), margin + spacing.bulletTextOffset, yPosition + spacing.contentBoxStart);
 
-    textY = yPosition + 32;
+    textY = yPosition + spacing.contentBoxStart + spacing.cardGap;
 
     // Description
     doc.setTextColor(...PDF_CONFIG.textGray);
