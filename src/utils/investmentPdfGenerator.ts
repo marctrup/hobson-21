@@ -7105,9 +7105,9 @@ const renderSituationAnalysis = (
   yPosition += stratBoxHeight + 8;
 
   // 5. Summary
-  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), maxWidth - 16);
-  const summaryHeight = 18 + summaryLines.length * bodyLine;
-  fitPage(summaryHeight + 6);
+  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), maxWidth - 24);
+  const summaryHeight = 24 + summaryLines.length * bodyLine;
+  fitPage(summaryHeight + 10);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "F");
@@ -7123,12 +7123,12 @@ const renderSituationAnalysis = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = yPosition + 18;
+  textY = yPosition + 20;
   summaryLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 12, textY);
     textY += bodyLine;
   });
-  yPosition += summaryHeight + 6;
+  yPosition += summaryHeight + 10;
 
   return yPosition;
 };
