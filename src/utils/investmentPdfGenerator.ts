@@ -7285,6 +7285,7 @@ const renderSituationAnalysis = (
     textY = valueBoxY + valueBoxHeight + spacing.boxGap;
 
     // Use cases
+    textY += spacing.paragraphGap;
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
