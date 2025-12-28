@@ -83,6 +83,7 @@ import { MarketDescriptionVisual } from "@/components/investor/MarketDescription
 import { CompetitorBenchmarksVisual } from "@/components/investor/CompetitorBenchmarksVisual";
 import { CustomerOnlineBehaviourVisual } from "@/components/investor/CustomerOnlineBehaviourVisual";
 import { BrandIntegrityVisual } from "@/components/investor/BrandIntegrityVisual";
+import { PESTLEAnalysisVisual } from "@/components/investor/PESTLEAnalysisVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -660,6 +661,15 @@ const sections = [
         title: "Brand Integrity, Perception & Positioning",
         showCustomVisual: true,
         customVisualComponent: "brandIntegrity",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "PESTLE Analysis",
+        showCustomVisual: true,
+        customVisualComponent: "pestleAnalysis",
         content: {
           overview: "",
           sections: [],
@@ -1544,6 +1554,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Brand Integrity */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "brandIntegrity" && (
                       <BrandIntegrityVisual />
+                    )}
+
+                    {/* Custom Visual Component for PESTLE Analysis */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "pestleAnalysis" && (
+                      <PESTLEAnalysisVisual />
                     )}
 
                     {/* Custom Visual Component for AI Processing */}
