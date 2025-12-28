@@ -8117,14 +8117,14 @@ const renderCompetitorBenchmarks = (
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
   };
 
-  // Header
-  const innerPadding = 10;
+  // Header - tighter spacing
+  const innerPadding = 6;
   const innerTextWidth = maxWidth - innerPadding * 2;
-  const introLineSpacing = 5.5;
+  const introLineSpacing = 4.5;
   const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), innerTextWidth);
   const detailLines = doc.splitTextToSize(sanitizeText(data.header.detail), innerTextWidth);
-  // Compact header: title area (24) + intro lines + gap (3) + detail lines + bottom padding (4)
-  const headerHeight = 24 + introLines.length * introLineSpacing + 3 + detailLines.length * introLineSpacing + 4;
+  // Compact header: title area (22) + intro lines + gap (1) + detail lines + bottom padding (2)
+  const headerHeight = 22 + introLines.length * introLineSpacing + 1 + detailLines.length * introLineSpacing + 2;
   fitPage(headerHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
@@ -8134,36 +8134,36 @@ const renderCompetitorBenchmarks = (
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "S");
 
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + 12, yPosition + 11, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + 22, yPosition + 10);
+  doc.text(data.header.title, margin + 22, yPosition + 9);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 18);
+  doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 17);
 
   // Single justified paragraph for intro
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  const introStartY = yPosition + 26;
+  const introStartY = yPosition + 24;
   doc.text(sanitizeText(data.header.intro), margin + innerPadding, introStartY, {
     maxWidth: innerTextWidth,
     align: "justify",
-    lineHeightFactor: 1.3,
+    lineHeightFactor: 1.15,
   });
 
-  // Single justified paragraph for detail
-  const detailStartY = introStartY + introLines.length * introLineSpacing + 3;
+  // Single justified paragraph for detail - reduced gap
+  const detailStartY = introStartY + introLines.length * introLineSpacing + 1;
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.text(sanitizeText(data.header.detail), margin + innerPadding, detailStartY, {
     maxWidth: innerTextWidth,
     align: "justify",
-    lineHeightFactor: 1.3,
+    lineHeightFactor: 1.15,
   });
 
   yPosition += headerHeight + 6;
