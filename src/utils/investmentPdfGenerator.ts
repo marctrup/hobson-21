@@ -8442,7 +8442,12 @@ const renderCustomerOnlineBehaviour = (
   yPosition += Math.ceil(data.trustedContent.length / 2) * (trustCardHeight + 4) + 8;
 
   // How Customers Evaluate AI Solutions section
-  fitPage(20);
+  // Calculate total height needed for entire section
+  const evalCardHeight = 30;
+  const totalEvalRows = Math.ceil(data.evaluationCriteria.length / 2);
+  const totalEvalSectionHeight = 12 + totalEvalRows * (evalCardHeight + 4);
+  fitPage(totalEvalSectionHeight);
+
   doc.setTextColor(...PDF_CONFIG.amber);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
@@ -8451,7 +8456,6 @@ const renderCustomerOnlineBehaviour = (
 
   // Evaluation criteria cards (2 column grid)
   const evalCardWidth = (maxWidth - 8) / 2;
-  const evalCardHeight = 30;
 
   data.evaluationCriteria.forEach((item, idx) => {
     const row = Math.floor(idx / 2);
