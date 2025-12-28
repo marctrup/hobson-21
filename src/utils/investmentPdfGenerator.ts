@@ -7597,7 +7597,8 @@ const renderMarketDescription = (
   const innerPaddingX = 10;
   const innerTextWidth = maxWidth - innerPaddingX * 2;
   const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), innerTextWidth);
-  const headerHeight = 28 + introLines.length * bodyLine;
+  // Tighter box: 16 for title area + text lines + 6 bottom padding
+  const headerHeight = 16 + introLines.length * bodyLine + 6;
   fitPage(headerHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
@@ -7614,7 +7615,7 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  let textY = yPosition + 28;
+  let textY = yPosition + 22;
 
   // Render as a single justified paragraph so jsPDF can distribute spacing properly
   doc.text(sanitizeText(data.header.intro), margin + innerPaddingX, textY, {
