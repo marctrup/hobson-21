@@ -7181,8 +7181,8 @@ const renderCustomerPersonas = (
   yPosition += headerHeight + 6;
 
   // Intro
-  const introLines = doc.splitTextToSize(sanitizeText(data.intro), maxWidth - 16);
-  const introHeight = 12 + introLines.length * bodyLine;
+  const introLines = doc.splitTextToSize(sanitizeText(data.intro), maxWidth - 24);
+  const introHeight = 16 + introLines.length * bodyLine;
   fitPage(introHeight + 6);
 
   doc.setFillColor(248, 250, 252);
@@ -7191,9 +7191,9 @@ const renderCustomerPersonas = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  let textY = yPosition + 8;
+  let textY = yPosition + 10;
   introLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 12, textY);
     textY += bodyLine;
   });
   yPosition += introHeight + 8;
