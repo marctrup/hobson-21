@@ -7523,16 +7523,21 @@ const renderCustomerPersonas = (
     doc.setFont("helvetica", "bold");
     doc.text(persona.name, margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.itemGap);
 
-    // Segment badge
-    const badgeX = margin + spacing.bulletTextOffset + spacing.paragraphGap + doc.getTextWidth(persona.name) + box.paddingX;
-    const badgeText = persona.segment;
-    const badgeWidth = doc.getTextWidth(badgeText) + box.paddingX;
-    doc.setFillColor(...theme.accent);
-    doc.roundedRect(badgeX, yPosition + spacing.boxToBox, badgeWidth, spacing.circleOffset, box.borderRadiusSmall, box.borderRadiusSmall, "F");
-    doc.setTextColor(255, 255, 255);
+    // Segment badge - centered text
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(badgeText, badgeX + spacing.boxGap, yPosition + 11.5);
+    const badgeText = persona.segment;
+    const badgeTextWidth = doc.getTextWidth(badgeText);
+    const badgePadding = spacing.boxGap;
+    const badgeWidth = badgeTextWidth + badgePadding * 2;
+    const badgeHeight = spacing.circleOffset;
+    const badgeX = margin + spacing.bulletTextOffset + spacing.paragraphGap + doc.getTextWidth(persona.name) + box.paddingX;
+    const badgeY = yPosition + spacing.boxToBox;
+    
+    doc.setFillColor(...theme.accent);
+    doc.roundedRect(badgeX, badgeY, badgeWidth, badgeHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.text(badgeText, badgeX + badgePadding, badgeY + badgeHeight / 2 + 1);
 
     // Role
     doc.setTextColor(...PDF_CONFIG.textGray);
