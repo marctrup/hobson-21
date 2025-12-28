@@ -21,8 +21,8 @@ import { competitorData } from "@/components/investor/data/competitorData";
 // PDF CONFIGURATION - MASTER DEFAULTS
 // ============================================================================
 // All sizing, spacing, and typography values are defined here.
-// These values supersede any hardcoded values in render functions.
-// Values extracted from Strategy & Approach cards as the baseline.
+// Values extracted EXACTLY from Strategy & Approach (renderExecutiveContext).
+// These are the source of truth for all PDF rendering.
 // ============================================================================
 
 const PDF_CONFIG = {
@@ -32,106 +32,113 @@ const PDF_CONFIG = {
   margin: 20,
 
   // ============================================================================
-  // FONT SIZES (in points) - from Strategy & Approach cards
+  // FONT SIZES (in points) - from Strategy & Approach
   // ============================================================================
   fontSize: {
-    pageTitle: 18,        // Tab/page titles (H1 equivalent)
-    sectionTitle: 13,     // Section headers within content (H2)
-    cardTitle: 12,        // Card/box titles (H3)
-    body: 10,             // Standard body text
-    bodySmall: 9,         // Secondary info, labels
+    pageTitle: 18,        // Tab/page titles
+    sectionTitle: 13,     // Section headers
+    cardTitle: 12,        // Card/box titles (doc.setFontSize(PDF_CONFIG.fontSize.cardTitle))
+    body: 10,             // Standard body text (doc.setFontSize(PDF_CONFIG.fontSize.body))
+    bodySmall: 9,         // Secondary info, labels (doc.setFontSize(PDF_CONFIG.fontSize.bodySmall))
     caption: 8,           // Footnotes, sources
-    stat: 16,             // Large statistics/numbers
+    stat: 16,             // Large statistics
   },
 
   // ============================================================================
   // LINE HEIGHT (in points) - vertical spacing between lines
+  // From: bodyLine = PDF_CONFIG.lineHeight.body (value = 5)
   // ============================================================================
   lineHeight: {
-    body: 5,              // Standard line spacing for body text
-    tight: 4,             // Compact lists, dense content
-    loose: 6,             // Headers, titles with more breathing room
+    body: 5,              // Standard line spacing
+    tight: 4,             // Compact lists
+    loose: 6,             // Headers, titles
   },
 
   // ============================================================================
   // LINE HEIGHT FACTOR - multiplier for doc.text() lineHeightFactor option
-  // From Strategy & Approach: 1.2 for headers, 1.25 for body paragraphs
+  // From: lineHeightFactor: 1.2 (headers), lineHeightFactor: 1.25 (body)
   // ============================================================================
   lineHeightFactor: {
-    tight: 1.2,           // Compact headers, inflexion point text
-    body: 1.25,           // Standard paragraphs, justified text
-    loose: 1.35,          // Headers with more breathing room
+    tight: 1.2,           // Headers, inflexion point (lineHeightFactor: 1.2)
+    body: 1.25,           // Standard paragraphs (lineHeightFactor: 1.25)
+    loose: 1.35,          // Extra breathing room
   },
 
   // ============================================================================
   // SPACING (in points) - gaps between elements
-  // From Strategy & Approach cards
+  // Extracted from Strategy & Approach exact values
   // ============================================================================
   spacing: {
-    sectionGap: 8,        // Gap between major sections
-    cardGap: 6,           // Gap between cards/boxes (yPosition += height + 6)
-    headingGap: 5,        // Gap between title and subtitle
+    sectionGap: 8,        // Major section gap
+    cardGap: 6,           // Gap between cards (pressureBoxWidth + 6, yPosition += height + 6)
+    boxGap: 4,            // Gap between rows in grid (pressureBoxHeight + 4)
+    boxToBox: 5,          // Gap between adjacent content boxes (missionBoxY + height + 5)
     paragraphGap: 4,      // Gap between paragraphs
-    titleToContent: 6,    // Gap between header area and main content
+    headingGap: 5,        // Gap between title and subtitle
+    titleToContent: 6,    // Gap between header and content
     subtitleToBullets: 4, // Gap between subtitle and bullet list
-    bulletIndent: 6,      // Indent for bullet point text from bullet
-    listItemGap: 1,       // Extra gap after each list item
-    boxToBox: 5,          // Gap between adjacent boxes (missionBoxY + missionBoxHeight + 5)
-    contentStart: 8,      // Y offset for first content line inside box (yPosition + 8)
-    headerToContent: 18,  // Header row height before content box
+    contentStart: 8,      // Y offset for first text line (yPosition + 8)
+    headerIconY: 6,       // Y offset for header icons (yPosition + 6)
+    titleY: 8,            // Y offset for title text (yPosition + 8)
+    subtitleY: 15,        // Y offset for subtitle text (yPosition + 15)
+    contentBoxStart: 18,  // Y offset where content box starts (yPosition + 18)
+    headerToContent: 18,  // Alias for contentBoxStart
+    boxTopPadding: 10,    // Top padding for box height calc (10 + lines * factor)
+    boxContentPadding: 6, // Content box internal padding (+6 in height calc)
   },
 
   // ============================================================================
   // CIRCLE SIZES (radius in points) - from Strategy & Approach
+  // From: PDF_CONFIG.circleSize.small, PDF_CONFIG.circleSize.medium
   // ============================================================================
   circleSize: {
-    bullet: 0.8,          // Small bullet points in lists
-    small: 1.2,           // Pressure box warning icons (PDF_CONFIG.circleSize.small)
-    medium: 2.0,          // Card header icons, badges
-    large: 3.2,           // Section headers, numbered badges
+    bullet: 0.8,          // Tiny bullet points
+    small: 1.2,           // Pressure box icons (PDF_CONFIG.circleSize.small)
+    medium: 2.0,          // Section header icons (PDF_CONFIG.circleSize.medium)
+    large: 3.2,           // Numbered badges
     xlarge: 4.0,          // Hero section icons
   },
 
   // ============================================================================
   // BOX/CARD SIZING (in points) - from Strategy & Approach
+  // From: innerPadding = 8, roundedRect(..., 3, 3), setLineWidth(0.3)
   // ============================================================================
   box: {
-    paddingX: 8,          // Horizontal padding (innerPadding, ctxPadding, posPadding, etc.)
-    paddingTop: 8,        // Top padding inside boxes
-    paddingBottom: 6,     // Bottom padding inside boxes
-    paddingCompact: 6,    // Compact padding for dense cards
-    borderRadius: 3,      // Corner radius for roundedRect (3, 3)
-    borderRadiusSmall: 2, // Smaller radius for pressure boxes
-    borderWidth: 0.3,     // Default border stroke width
-    borderWidthThin: 0.2, // Thin border for subtle cards/content boxes
-    minBoxHeight: 18,     // Minimum box height (pressureBoxHeight)
-    contentBoxPadding: 6, // Padding inside content boxes (missionBoxHeight calculation +6)
+    paddingX: 8,          // Horizontal padding (innerPadding = 8, ctxPadding = 8, etc.)
+    paddingTop: 8,        // Top padding
+    paddingBottom: 6,     // Bottom padding
+    borderRadius: 3,      // Main box corners (roundedRect(..., 3, 3))
+    borderRadiusSmall: 2, // Pressure/small box corners (roundedRect(..., 2, 2))
+    borderWidth: 0.3,     // Main border stroke (setLineWidth(0.3))
+    borderWidthThin: 0.2, // Content box border (setLineWidth(0.2))
+    minHeight: 18,        // Minimum box height (pressureBoxHeight = 18)
   },
 
   // ============================================================================
   // CARD LAYOUT - from Strategy & Approach
+  // From: circle at x + 10, text at margin + 20, text at x + 18
   // ============================================================================
   card: {
-    iconSize: 8,          // Icon dimensions in cards
-    iconGap: 4,           // Gap after icon before text
-    iconOffsetX: 10,      // X position of icon from card edge (margin + 10)
+    iconOffsetX: 10,      // X position of icon from edge (margin + 10, x + 10)
     textOffsetX: 20,      // X position of text after icon (margin + 20)
-    titleHeight: 5,       // Height occupied by title text line
-    subtitleGap: 7,       // Gap from title baseline to subtitle (yPosition + 8 vs + 15)
-    contentGap: 6,        // Gap between header area and content
-    headerHeight: 18,     // Total header area before content box starts
+    textOffsetXSmall: 18, // Smaller text offset for pressure boxes (x + 18)
+    iconSize: 8,          // Icon dimensions
+    iconGap: 4,           // Gap after icon
+    titleHeight: 5,       // Title line height
+    subtitleGap: 7,       // Gap from title to subtitle (15 - 8 = 7)
+    contentGap: 6,        // Gap between header and content
+    headerHeight: 18,     // Header area before content box
   },
 
   // ============================================================================
   // TEXT RENDERING DEFAULTS
   // ============================================================================
   text: {
-    align: "justify" as const, // Default text alignment for paragraphs
-    maxLines: 50,         // Safety limit for text wrapping
+    align: "justify" as const, // Default alignment (align: "justify")
   },
 
   // ============================================================================
-  // COLORS - RGB values matched to design system
+  // COLORS - RGB values
   // ============================================================================
   primaryColor: [124, 58, 237] as [number, number, number],
   primaryLight: [168, 113, 246] as [number, number, number],
