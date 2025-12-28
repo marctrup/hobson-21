@@ -7201,6 +7201,7 @@ const renderCustomerPersonas = (
   });
   yPosition += introHeight + 14;
 
+  yPosition += 3; // Extra spacing before persona cards
   // Render each persona
   data.personas.forEach((persona, idx) => {
     const theme = personaThemes[idx];
