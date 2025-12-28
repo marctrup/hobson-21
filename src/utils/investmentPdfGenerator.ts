@@ -6667,10 +6667,11 @@ const renderExecutiveContext = (
   const amberBg: [number, number, number] = [255, 251, 235]; // amber-50
   const amberBorder: [number, number, number] = [253, 230, 138]; // amber-200
 
-  // 1. Inflexion Point header box - use larger line spacing for emphasis
-  const inflexionLineHeight = PDF_CONFIG.lineHeight.loose + 1; // 7pt for better readability
-  const inflexionLines = doc.splitTextToSize(sanitizeText(data.inflexionPoint), maxWidth - 16);
-  const inflexionHeight = 18 + inflexionLines.length * inflexionLineHeight;
+  // 1. Inflexion Point header box - tighter sizing with justified text
+  const innerPadding = 8;
+  const innerTextWidth = maxWidth - innerPadding * 2;
+  const inflexionLines = doc.splitTextToSize(sanitizeText(data.inflexionPoint), innerTextWidth);
+  const inflexionHeight = 10 + inflexionLines.length * (bodyLine * 1.2);
   fitPage(inflexionHeight + 6);
 
   doc.setFillColor(...tealBg);
@@ -6682,12 +6683,14 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  let textY = yPosition + 12;
-  inflexionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += inflexionLineHeight;
+  doc.text(sanitizeText(data.inflexionPoint), margin + innerPadding, yPosition + 10, {
+    maxWidth: innerTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.2,
   });
-  yPosition += inflexionHeight + 8;
+  yPosition += inflexionHeight + 6;
+
+  let textY = 0;
 
   // 2. Pressures - 2x2 grid
   fitPage(50);
@@ -6717,9 +6720,11 @@ const renderExecutiveContext = (
   });
   yPosition += (pressureBoxHeight + 4) * 2 + 6;
 
-  // 3. Context paragraph box
-  const contextLines = doc.splitTextToSize(sanitizeText(data.contextParagraph), maxWidth - 16);
-  const contextHeight = 16 + contextLines.length * bodyLine;
+  // 3. Context paragraph box - tighter with justified text
+  const ctxPadding = 8;
+  const ctxTextWidth = maxWidth - ctxPadding * 2;
+  const contextLines = doc.splitTextToSize(sanitizeText(data.contextParagraph), ctxTextWidth);
+  const contextHeight = 8 + contextLines.length * (bodyLine * 1.25);
   fitPage(contextHeight + 6);
 
   doc.setFillColor(...slateBg);
@@ -6731,18 +6736,18 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = yPosition + 10;
-  contextLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.contextParagraph), margin + ctxPadding, yPosition + 8, {
+    maxWidth: ctxTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.25,
   });
   yPosition += contextHeight + 6;
 
-  // 4. Hobson positioning box (purple themed) - centered with circle aligned
-  const posLines = doc.splitTextToSize(sanitizeText(data.hobsonPositioning), maxWidth - 40);
-  const posLineHeight = PDF_CONFIG.lineHeight.loose;
-  const posContentHeight = posLines.length * posLineHeight;
-  const posHeight = 16 + posContentHeight;
+  // 4. Hobson positioning box (purple themed) - tighter with justified text
+  const posPadding = 8;
+  const posTextWidth = maxWidth - posPadding * 2 - 14; // account for circle
+  const posLines = doc.splitTextToSize(sanitizeText(data.hobsonPositioning), posTextWidth);
+  const posHeight = 8 + posLines.length * (bodyLine * 1.25);
   fitPage(posHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -6753,21 +6758,24 @@ const renderExecutiveContext = (
 
   // Circle aligned with first line of text
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  textY = yPosition + 12;
-  posLines.forEach((line: string) => {
-    doc.text(line, margin + 22, textY);
-    textY += posLineHeight;
+  doc.text(sanitizeText(data.hobsonPositioning), margin + 20, yPosition + 8, {
+    maxWidth: posTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.25,
   });
-  yPosition += posHeight + 8;
+  yPosition += posHeight + 6;
 
-  // 5. Mission Statement - compact layout
-  const missionContentLines = doc.splitTextToSize(sanitizeText(data.missionStatement.content), maxWidth - 16);
-  const missionHeight = 22 + missionContentLines.length * bodyLine;
+  // 5. Mission Statement - compact layout with justified text
+  const missionPadding = 8;
+  const missionTextWidth = maxWidth - missionPadding * 2;
+  const missionContentLines = doc.splitTextToSize(sanitizeText(data.missionStatement.content), missionTextWidth);
+  const missionBoxHeight = missionContentLines.length * (bodyLine * 1.25) + 6;
+  const missionHeight = 18 + missionBoxHeight;
   fitPage(missionHeight + 4);
 
   // Header row
@@ -6786,7 +6794,6 @@ const renderExecutiveContext = (
 
   // Content box
   const missionBoxY = yPosition + 18;
-  const missionBoxHeight = missionContentLines.length * bodyLine + 8;
   doc.setFillColor(...tealBg);
   doc.roundedRect(margin, missionBoxY, maxWidth, missionBoxHeight, 3, 3, "F");
   doc.setDrawColor(...tealBorder);
@@ -6796,16 +6803,19 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = missionBoxY + 6;
-  missionContentLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.missionStatement.content), margin + missionPadding, missionBoxY + 6, {
+    maxWidth: missionTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.25,
   });
   yPosition = missionBoxY + missionBoxHeight + 5;
 
-  // 6. Positioning Statement - compact layout
-  const positionContentLines = doc.splitTextToSize(sanitizeText(data.positioningStatement.content), maxWidth - 16);
-  const positionHeight = 22 + positionContentLines.length * bodyLine;
+  // 6. Positioning Statement - compact layout with justified text
+  const posStmtPadding = 8;
+  const posStmtTextWidth = maxWidth - posStmtPadding * 2;
+  const positionContentLines = doc.splitTextToSize(sanitizeText(data.positioningStatement.content), posStmtTextWidth);
+  const positionBoxHeight = positionContentLines.length * (bodyLine * 1.25) + 6;
+  const positionHeight = 18 + positionBoxHeight;
   fitPage(positionHeight + 4);
 
   // Header row
@@ -6824,7 +6834,6 @@ const renderExecutiveContext = (
 
   // Content box
   const positionBoxY = yPosition + 18;
-  const positionBoxHeight = positionContentLines.length * bodyLine + 8;
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, positionBoxY, maxWidth, positionBoxHeight, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
@@ -6834,16 +6843,18 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = positionBoxY + 6;
-  positionContentLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.positioningStatement.content), margin + posStmtPadding, positionBoxY + 6, {
+    maxWidth: posStmtTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.25,
   });
-  yPosition = positionBoxY + positionBoxHeight + 6;
+  yPosition = positionBoxY + positionBoxHeight + 5;
 
-  // 7. Conclusion box (amber themed)
-  const conclusionLines = doc.splitTextToSize(sanitizeText(data.conclusion), maxWidth - 16);
-  const conclusionHeight = 16 + conclusionLines.length * bodyLine;
+  // 7. Conclusion box (amber themed) - tighter with justified text
+  const concPadding = 8;
+  const concTextWidth = maxWidth - concPadding * 2;
+  const conclusionLines = doc.splitTextToSize(sanitizeText(data.conclusion), concTextWidth);
+  const conclusionHeight = 8 + conclusionLines.length * (bodyLine * 1.25);
   fitPage(conclusionHeight + 6);
 
   doc.setFillColor(...amberBg);
@@ -6855,10 +6866,10 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = yPosition + 10;
-  conclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.conclusion), margin + concPadding, yPosition + 8, {
+    maxWidth: concTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.25,
   });
   yPosition += conclusionHeight + 6;
 
@@ -6926,10 +6937,11 @@ const renderSituationAnalysis = (
 
   yPosition += headerHeight + 6;
 
-  // 2. Intro paragraph - increased box size with proper text wrapping
-  const introTextWidth = maxWidth - 24; // more padding for text
+  // 2. Intro paragraph - tighter with justified text
+  const introPadding = 8;
+  const introTextWidth = maxWidth - introPadding * 2;
   const introLines = doc.splitTextToSize(sanitizeText(data.intro), introTextWidth);
-  const introHeight = 16 + introLines.length * bodyLine; // increased vertical padding
+  const introHeight = 8 + introLines.length * (bodyLine * 1.25);
   fitPage(introHeight + 6);
 
   doc.setFillColor(...slateBg);
@@ -6941,12 +6953,13 @@ const renderSituationAnalysis = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  let textY = yPosition + 8;
-  introLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.intro), margin + introPadding, yPosition + 8, {
+    maxWidth: introTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.25,
   });
-  yPosition += introHeight + 8;
+  let textY = 0;
+  yPosition += introHeight + 6;
 
   // 3. Segments
   data.segments.forEach((segment, idx) => {
@@ -7105,10 +7118,12 @@ const renderSituationAnalysis = (
   });
   yPosition += 6;
 
-  // 5. Summary
-  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), maxWidth - 32);
-  const summaryHeight = 26 + summaryLines.length * bodyLine;
-  fitPage(summaryHeight + 10);
+  // 5. Summary - tighter with justified text
+  const summaryPadding = 10;
+  const summaryTextWidth = maxWidth - summaryPadding * 2;
+  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), summaryTextWidth);
+  const summaryHeight = 18 + summaryLines.length * (bodyLine * 1.25);
+  fitPage(summaryHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "F");
@@ -7119,17 +7134,17 @@ const renderSituationAnalysis = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Summary", margin + 10, yPosition + 12);
+  doc.text("Summary", margin + summaryPadding, yPosition + 12);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = yPosition + 22;
-  summaryLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.summary), margin + summaryPadding, yPosition + 20, {
+    maxWidth: summaryTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.25,
   });
-  yPosition += summaryHeight + 10;
+  yPosition += summaryHeight + 6;
 
   return yPosition;
 };
@@ -7187,10 +7202,12 @@ const renderCustomerPersonas = (
 
   yPosition += headerHeight + 6;
 
-  // Intro
-  const introLines = doc.splitTextToSize(sanitizeText(data.intro), maxWidth - 40);
-  const introHeight = 24 + introLines.length * bodyLine;
-  fitPage(introHeight + 8);
+  // Intro - tighter with justified text
+  const introPadding = 10;
+  const introTextWidth = maxWidth - introPadding * 2;
+  const introLines = doc.splitTextToSize(sanitizeText(data.intro), introTextWidth);
+  const introHeight = 10 + introLines.length * (bodyLine * 1.25);
+  fitPage(introHeight + 6);
 
   doc.setFillColor(248, 250, 252);
   doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "F");
@@ -7198,11 +7215,12 @@ const renderCustomerPersonas = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  let textY = yPosition + 14;
-  introLines.forEach((line: string) => {
-    doc.text(line, margin + 12, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.intro), margin + introPadding, yPosition + 10, {
+    maxWidth: introTextWidth,
+    align: "justify",
+    lineHeightFactor: 1.25,
   });
+  let textY = 0;
   yPosition += introHeight + 14;
 
   yPosition += 3; // Extra spacing before persona cards
@@ -7293,10 +7311,12 @@ const renderCustomerPersonas = (
     yPosition += cardHeight + 6;
   });
 
-  // Summary
-  const summaryIntroLines = doc.splitTextToSize(sanitizeText(data.summary.intro), maxWidth - 16);
-  const conclusionLines = doc.splitTextToSize(sanitizeText(data.summary.conclusion), maxWidth - 16);
-  const summaryHeight = 24 + summaryIntroLines.length * bodyLine + data.summary.personas.length * (bodyLine + 2) + 8 + conclusionLines.length * bodyLine + 8;
+  // Summary - tighter layout
+  const summaryPadding = 8;
+  const summaryTextWidth = maxWidth - summaryPadding * 2;
+  const summaryIntroLines = doc.splitTextToSize(sanitizeText(data.summary.intro), summaryTextWidth);
+  const conclusionLines = doc.splitTextToSize(sanitizeText(data.summary.conclusion), summaryTextWidth);
+  const summaryHeight = 18 + summaryIntroLines.length * (bodyLine * 1.2) + data.summary.personas.length * (bodyLine + 1) + 6 + conclusionLines.length * (bodyLine * 1.2) + 4;
   fitPage(summaryHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -7308,30 +7328,31 @@ const renderCustomerPersonas = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Summary", margin + 8, yPosition + 10);
+  doc.text("Summary", margin + summaryPadding, yPosition + 10);
 
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = yPosition + 18;
-  summaryIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.summary.intro), margin + summaryPadding, yPosition + 18, {
+    maxWidth: summaryTextWidth,
+    lineHeightFactor: 1.2,
   });
-  textY += 4;
+  textY = yPosition + 18 + summaryIntroLines.length * (bodyLine * 1.2) + 3;
 
   data.summary.personas.forEach((p) => {
     doc.setFont("helvetica", "bold");
-    doc.text(`${p.name}: `, margin + 8, textY);
+    doc.text(`${p.name}: `, margin + summaryPadding, textY);
     doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(p.insight), margin + 8 + doc.getTextWidth(`${p.name}: `), textY);
-    textY += bodyLine + 2;
+    const insightWidth = summaryTextWidth - doc.getTextWidth(`${p.name}: `);
+    const insightLines = doc.splitTextToSize(sanitizeText(p.insight), insightWidth);
+    doc.text(insightLines[0] || "", margin + summaryPadding + doc.getTextWidth(`${p.name}: `), textY);
+    textY += bodyLine + 1;
   });
-  textY += 4;
+  textY += 3;
 
   doc.setTextColor(...PDF_CONFIG.textGray);
-  conclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
-    textY += bodyLine;
+  doc.text(sanitizeText(data.summary.conclusion), margin + summaryPadding, textY, {
+    maxWidth: summaryTextWidth,
+    lineHeightFactor: 1.2,
   });
 
   yPosition += summaryHeight + 6;
