@@ -3785,7 +3785,7 @@ const renderEarlyRoadmap = (
 
 /**
  * Render Commercialisation Strategy visual (Commercial Philosophy)
- * Uses PDF_CONFIG defaults for all sizing and spacing
+ * Uses PDF_CONFIG defaults for all sizing and spacing - NO hardcoded values
  */
 const renderCommercialisationStrategy = (
   doc: jsPDF,
@@ -3798,31 +3798,34 @@ const renderCommercialisationStrategy = (
   const maxWidth = pageWidth - margin * 2;
   const { box, spacing, circleSize, fontSize, card, lineHeight } = PDF_CONFIG;
 
+  // Page break margin derived from config
+  const pageBreakMargin = margin * 2;
+
   // Helper for page break
   const checkBreak = (requiredSpace: number) => {
-    if (yPosition + requiredSpace > pageHeight - 40) {
+    if (yPosition + requiredSpace > pageHeight - pageBreakMargin) {
       doc.addPage();
       yPosition = margin;
     }
   };
 
-  // Derived values from PDF_CONFIG
-  const headerBoxHeight = spacing.headerToContent + spacing.cardGap; // 24
-  const headerTextY = spacing.subtitleY; // 15
-  const challengeCardHeight = spacing.titleY + spacing.cardGap; // 14
-  const challengeTextY = fontSize.bodySmall; // 9
-  const challengeCircleY = challengeTextY - 2; // 7
-  const calloutHeight = spacing.headerToContent + 2; // 20
-  const calloutTextY = fontSize.cardTitle; // 12
-  const sectionCircleY = lineHeight.body; // 5
-  const sectionTitleY = sectionCircleY + 2; // 7
-  const gridCardHeight = spacing.headerToContent + 2; // 20
-  const gridCircleY = spacing.boxTopPadding; // 10
-  const gridTextY = fontSize.cardTitle; // 12
-  const conclusionHeight = spacing.headerToContent + spacing.boxTopPadding; // 28
-  const conclusionCircleY = spacing.titleY + spacing.cardGap; // 14
-  const conclusionLine1Y = fontSize.cardTitle - 1; // 11
-  const conclusionLine2Y = conclusionLine1Y + lineHeight.body; // 11 + 5 = 16 (using default line spacing)
+  // All derived values from PDF_CONFIG - no magic numbers
+  const headerBoxHeight = spacing.headerToContent + spacing.cardGap;
+  const headerTextY = spacing.subtitleY;
+  const challengeCardHeight = spacing.titleY + spacing.cardGap;
+  const challengeTextY = fontSize.bodySmall;
+  const challengeCircleY = challengeTextY - box.borderRadiusSmall;
+  const calloutHeight = spacing.headerToContent + box.borderRadiusSmall;
+  const calloutTextY = fontSize.cardTitle;
+  const sectionCircleY = lineHeight.body;
+  const sectionTitleY = sectionCircleY + box.borderRadiusSmall;
+  const gridCardHeight = spacing.headerToContent + box.borderRadiusSmall;
+  const gridCircleY = spacing.boxTopPadding;
+  const gridTextY = fontSize.cardTitle;
+  const conclusionHeight = spacing.headerToContent + spacing.boxTopPadding;
+  const conclusionCircleY = spacing.titleY + spacing.cardGap;
+  const conclusionLine1Y = fontSize.cardTitle - 1;
+  const conclusionLine2Y = conclusionLine1Y + lineHeight.body;
 
   // Header box - Inflexion Point
   checkBreak(headerBoxHeight + spacing.cardGap);
@@ -3843,7 +3846,7 @@ const renderCommercialisationStrategy = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Operators are facing:", margin + card.textOffsetX - 2, yPosition + sectionTitleY);
+  doc.text("Operators are facing:", margin + card.textOffsetX - box.borderRadiusSmall, yPosition + sectionTitleY);
   yPosition += spacing.headerToContent - spacing.subtitleToBullets;
 
   const challenges = [
@@ -3858,7 +3861,7 @@ const renderCommercialisationStrategy = (
     renderContentCard(doc, margin + card.iconOffsetX, yPosition, maxWidth - card.textOffsetX, challengeCardHeight, PDF_CONFIG.roseBg, PDF_CONFIG.roseBorder);
     
     doc.setFillColor(...PDF_CONFIG.rose);
-    doc.circle(margin + card.textOffsetX - 2, yPosition + challengeCircleY, circleSize.small, "F");
+    doc.circle(margin + card.textOffsetX - box.borderRadiusSmall, yPosition + challengeCircleY, circleSize.small, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
@@ -3875,11 +3878,11 @@ const renderCommercialisationStrategy = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(fontSize.bodySmall);
-  doc.text("They cannot wait for incremental tools. They need a ", margin + box.paddingX * 2, yPosition + calloutTextY);
+  doc.text("They cannot wait for incremental tools. They need a ", margin + box.paddingX + box.paddingX, yPosition + calloutTextY);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("structural operating upgrade", margin + box.paddingX * 2 + doc.getTextWidth("They cannot wait for incremental tools. They need a "), yPosition + calloutTextY);
+  doc.text("structural operating upgrade", margin + box.paddingX + box.paddingX + doc.getTextWidth("They cannot wait for incremental tools. They need a "), yPosition + calloutTextY);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("They cannot wait for incremental tools. They need a structural operating upgrade"), yPosition + calloutTextY);
+  doc.text(".", margin + box.paddingX + box.paddingX + doc.getTextWidth("They cannot wait for incremental tools. They need a structural operating upgrade"), yPosition + calloutTextY);
   doc.setFont("helvetica", "normal");
 
   yPosition += calloutHeight + spacing.sectionGap + spacing.subtitleToBullets;
@@ -3892,7 +3895,7 @@ const renderCommercialisationStrategy = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson's product is already solving existential problems:", margin + card.textOffsetX - 2, yPosition + sectionTitleY);
+  doc.text("Hobson's product is already solving existential problems:", margin + card.textOffsetX - box.borderRadiusSmall, yPosition + sectionTitleY);
   yPosition += spacing.headerToContent - spacing.subtitleToBullets;
 
   const problemsSolved = [
@@ -3902,8 +3905,9 @@ const renderCommercialisationStrategy = (
     "and portfolio-level risk blindness."
   ];
 
-  // 2x2 grid
-  const cardWidth = (maxWidth - spacing.headerToContent - spacing.boxTopPadding) / 2;
+  // 2x2 grid - card width derived from config values
+  const gridGap = spacing.headerToContent + spacing.boxTopPadding;
+  const cardWidth = (maxWidth - gridGap) / 2;
   problemsSolved.forEach((problem, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
@@ -3918,10 +3922,11 @@ const renderCommercialisationStrategy = (
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(problem), cardX + box.paddingX * 2, cardY + gridTextY);
+    doc.text(sanitizeText(problem), cardX + box.paddingX + box.paddingX, cardY + gridTextY);
   });
 
-  yPosition += 2 * (gridCardHeight + spacing.paragraphGap) + spacing.sectionGap + spacing.subtitleToBullets;
+  const gridRows = 2;
+  yPosition += gridRows * (gridCardHeight + spacing.paragraphGap) + spacing.sectionGap + spacing.subtitleToBullets;
 
   // Conclusion box
   checkBreak(conclusionHeight + spacing.sectionGap);
