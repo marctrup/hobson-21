@@ -97,6 +97,7 @@ const PDF_CONFIG = {
     medium: 2.0,          // Section header icons (PDF_CONFIG.circleSize.medium)
     large: 3.2,           // Numbered badges
     xlarge: 4.0,          // Hero section icons
+    xxlarge: 6.0,         // Large card header icons (Commercial Philosophy, etc.)
   },
 
   // ============================================================================
@@ -4050,7 +4051,7 @@ const renderCommercials = (
 
   // Header with circle icon
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + card.textOffsetX, yPosition + spacing.headerToContent - smallOffset, circleSize.xlarge + smallOffset, "F");
+  doc.circle(margin + card.textOffsetX, yPosition + spacing.headerToContent - smallOffset, circleSize.xxlarge, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -4111,7 +4112,7 @@ const renderCommercials = (
 
   // Header with circle icon
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + card.textOffsetX, yPosition + spacing.headerToContent - smallOffset, circleSize.xlarge + smallOffset, "F");
+  doc.circle(margin + card.textOffsetX, yPosition + spacing.headerToContent - smallOffset, circleSize.xxlarge, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
