@@ -7594,8 +7594,8 @@ const renderMarketDescription = (
   };
 
   // Header with intro
-  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), maxWidth - 16);
-  const headerHeight = 20 + introLines.length * bodyLine;
+  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), maxWidth - 40);
+  const headerHeight = 28 + introLines.length * bodyLine;
   fitPage(headerHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.emeraldBg);
@@ -7615,9 +7615,9 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  let textY = yPosition + 24;
+  let textY = yPosition + 28;
   introLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 12, textY);
     textY += bodyLine;
   });
 
