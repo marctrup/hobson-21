@@ -8322,25 +8322,27 @@ const renderMarketDescription = (
   yPosition += whyNowHeight + PDF_CONFIG.spacing.cardGap;
 
   // 8. HOBSON'S STRATEGIC POSITION (Primary/purple box) - matches visual primary box
+  const conclusionBoxPadding = spacing.cardGap * 2;
+  const conclusionTextWidth = maxWidth - conclusionBoxPadding - spacing.contentPadding * 2;
   const posIntroLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.intro), innerTextWidth, "body", false);
-  const posConclusionLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.conclusion), innerTextWidth - PDF_CONFIG.spacing.cardGap, "body", false);
-  const posHeight = 20 + posIntroLines.length * bodyLine + PDF_CONFIG.spacing.circleOffset + posConclusionLines.length * bodyLine + 14;
-  fitPage(posHeight + PDF_CONFIG.spacing.sectionGap);
+  const posConclusionLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.conclusion), conclusionTextWidth, "body", false);
+  const posHeight = spacing.contentBoxStart + posIntroLines.length * bodyLine + spacing.circleOffset + posConclusionLines.length * bodyLine + spacing.contentPadding;
+  fitPage(posHeight + spacing.sectionGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, posHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, posHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.setLineWidth(PDF_CONFIG.box.borderWidth);
-  doc.roundedRect(margin, yPosition, maxWidth, posHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, posHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson's Strategic Position", margin + PDF_CONFIG.spacing.circleOffset, yPosition + 14);
+  doc.text("Hobson's Strategic Position", margin + spacing.circleOffset, yPosition + spacing.contentPadding);
 
-  textY = yPosition + 26;
+  textY = yPosition + spacing.contentBoxStart;
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
   posIntroLines.forEach((line: string, idx: number) => {
     doc.text(line, margin + innerPaddingX, textY, {
@@ -8349,25 +8351,26 @@ const renderMarketDescription = (
     });
     textY += bodyLine;
   });
-  textY += PDF_CONFIG.spacing.sectionGap;
+  textY += spacing.sectionGap;
 
   // Conclusion in highlighted box
-  const conclusionBoxHeight = posConclusionLines.length * bodyLine + PDF_CONFIG.spacing.circleOffset;
+  const conclusionBoxWidth = maxWidth - conclusionBoxPadding;
+  const conclusionBoxHeight = posConclusionLines.length * bodyLine + spacing.circleOffset;
   doc.setFillColor(236, 253, 245); // emerald-50
-  doc.roundedRect(margin + PDF_CONFIG.spacing.cardGap, textY - PDF_CONFIG.spacing.paragraphGap, maxWidth - 16, conclusionBoxHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
+  doc.roundedRect(margin + spacing.cardGap, textY - spacing.paragraphGap, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(167, 243, 208); // emerald-200
-  doc.setLineWidth(PDF_CONFIG.box.borderWidthThin);
-  doc.roundedRect(margin + PDF_CONFIG.spacing.cardGap, textY - PDF_CONFIG.spacing.paragraphGap, maxWidth - 16, conclusionBoxHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
+  doc.setLineWidth(box.borderWidthThin);
+  doc.roundedRect(margin + spacing.cardGap, textY - spacing.paragraphGap, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  textY += 2;
+  textY += spacing.boxGap;
   posConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + PDF_CONFIG.spacing.contentPadding, textY);
+    doc.text(line, margin + spacing.contentPadding, textY);
     textY += bodyLine;
   });
 
-  yPosition += posHeight + PDF_CONFIG.spacing.sectionGap;
+  yPosition += posHeight + spacing.sectionGap;
   return yPosition;
 };
 
