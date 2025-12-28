@@ -3999,8 +3999,8 @@ const renderCommercialisationStrategy = (
 };
 
 /**
- * Render Commercials visual
- * Uses PDF_CONFIG defaults for all sizing and spacing
+ * Render Commercials visual (Commercial Philosophy)
+ * Uses PDF_CONFIG defaults for all sizing and spacing - NO hardcoded values
  */
 const renderCommercials = (
   doc: jsPDF,
@@ -4011,46 +4011,53 @@ const renderCommercials = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const { box, spacing, circleSize, lineHeight } = PDF_CONFIG;
+  const { box, spacing, circleSize, lineHeight, fontSize, card } = PDF_CONFIG;
+
+  // Derived values from config
+  const pageBreakMargin = margin * 2;
+  const smallOffset = box.borderRadiusSmall;
+  const standardBoxHeight = box.minHeight + smallOffset;
 
   // Helper for page break
   const checkBreak = (requiredSpace: number) => {
-    if (yPosition + requiredSpace > pageHeight - 40) {
+    if (yPosition + requiredSpace > pageHeight - pageBreakMargin) {
       doc.addPage();
       yPosition = margin;
     }
   };
 
   // Header - Intro text
-  checkBreak(20);
+  const introHeight = standardBoxHeight;
+  checkBreak(introHeight + spacing.sectionGap);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "italic");
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(fontSize.body);
   const introText = "This is designed to kill procurement friction and accelerate viral adoption inside organisations.";
-  const introLines = doc.splitTextToSize(introText, maxWidth);
+  const introLines = splitTextWithFont(doc, introText, maxWidth, "body", false);
+  doc.setFont("helvetica", "italic"); // Reset after splitTextWithFont
   doc.text(introLines, pageWidth / 2, yPosition, { align: "center" });
-  yPosition += introLines.length * lineHeight.loose + spacing.sectionGap + 8;
+  yPosition += introLines.length * lineHeight.loose + spacing.sectionGap + box.paddingX;
 
   // Section 1: Revenue Expansion Engine
-  checkBreak(100);
-  const revenueCardHeight = 90;
+  const revenueCardHeight = spacing.boxTopPadding * 9;
+  checkBreak(revenueCardHeight + spacing.sectionGap);
   renderContentCard(doc, margin, yPosition, maxWidth, revenueCardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
   // Header with circle icon
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + PDF_CONFIG.card.textOffsetX, yPosition + 14, circleSize.xlarge + 2, "F");
+  doc.circle(margin + card.textOffsetX, yPosition + spacing.headerToContent - smallOffset, circleSize.xlarge + smallOffset, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Built-In Revenue Expansion Engine", margin + PDF_CONFIG.card.textOffsetX + 12, yPosition + spacing.headerToContent);
+  doc.text("Built-In Revenue Expansion Engine", margin + card.textOffsetX + card.iconOffsetX + smallOffset, yPosition + spacing.headerToContent);
 
-  yPosition += 28;
+  yPosition += standardBoxHeight + spacing.cardGap;
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
   const revenueIntro = "Hobson has something most startups do not: automatic net revenue retention growth.";
   doc.text(revenueIntro, margin + box.paddingX * 2, yPosition);
-  yPosition += spacing.sectionGap + 2;
+  yPosition += spacing.sectionGap + smallOffset;
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
@@ -4068,9 +4075,9 @@ const renderCommercials = (
   doc.setFont("helvetica", "normal");
   expansionDrivers.forEach((driver) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + PDF_CONFIG.card.textOffsetX + 2, yPosition - 1, circleSize.small + 0.3, "F");
+    doc.circle(margin + card.textOffsetX + smallOffset, yPosition - 1, circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(driver, margin + PDF_CONFIG.card.textOffsetX + box.paddingX, yPosition);
+    doc.text(driver, margin + card.textOffsetX + box.paddingX, yPosition);
     yPosition += spacing.cardGap;
   });
 
@@ -4078,33 +4085,34 @@ const renderCommercials = (
 
   // Callout
   const calloutY = yPosition;
-  doc.setFillColor(...PDF_CONFIG.emeraldBg);
-  doc.roundedRect(margin + box.paddingX + 4, calloutY - spacing.paragraphGap, maxWidth - box.paddingX * 3, 14, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+  const calloutHeight = spacing.headerToContent - smallOffset;
+  doc.setFillColor(...PDF_CONFIG.emeraldBgLight);
+  doc.roundedRect(margin + box.paddingX + smallOffset, calloutY - spacing.paragraphGap, maxWidth - box.paddingX * 3, calloutHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "normal");
-  doc.text("Their HEU consumption rises ", margin + PDF_CONFIG.card.textOffsetX, calloutY + lineHeight.body);
+  doc.text("Their HEU consumption rises ", margin + card.textOffsetX, calloutY + lineHeight.body);
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFont("helvetica", "bold");
-  doc.text("without a single sales conversation", margin + PDF_CONFIG.card.textOffsetX + doc.getTextWidth("Their HEU consumption rises "), calloutY + lineHeight.body);
+  doc.text("without a single sales conversation", margin + card.textOffsetX + doc.getTextWidth("Their HEU consumption rises "), calloutY + lineHeight.body);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + PDF_CONFIG.card.textOffsetX + doc.getTextWidth("Their HEU consumption rises without a single sales conversation"), calloutY + lineHeight.body);
+  doc.text(".", margin + card.textOffsetX + doc.getTextWidth("Their HEU consumption rises without a single sales conversation"), calloutY + lineHeight.body);
 
-  yPosition += 24;
+  yPosition += standardBoxHeight + spacing.cardGap;
 
   // Section 2: Transparency
-  checkBreak(80);
-  const transparencyCardHeight = 70;
+  const transparencyCardHeight = spacing.boxTopPadding * 7;
+  checkBreak(transparencyCardHeight + spacing.sectionGap);
   renderContentCard(doc, margin, yPosition, maxWidth, transparencyCardHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
 
   // Header with circle icon
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + PDF_CONFIG.card.textOffsetX, yPosition + 14, circleSize.xlarge + 2, "F");
+  doc.circle(margin + card.textOffsetX, yPosition + spacing.headerToContent - smallOffset, circleSize.xlarge + smallOffset, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Unmatched Transparency = Enterprise Trust", margin + PDF_CONFIG.card.textOffsetX + 12, yPosition + spacing.headerToContent);
+  doc.text("Unmatched Transparency = Enterprise Trust", margin + card.textOffsetX + card.iconOffsetX + smallOffset, yPosition + spacing.headerToContent);
 
-  yPosition += 28;
+  yPosition += standardBoxHeight + spacing.cardGap;
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
@@ -4121,36 +4129,38 @@ const renderCommercials = (
   doc.setFont("helvetica", "normal");
   transparencyFeatures.forEach((feature) => {
     doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(margin + PDF_CONFIG.card.textOffsetX + 2, yPosition - 1, circleSize.small + 0.3, "F");
+    doc.circle(margin + card.textOffsetX + smallOffset, yPosition - 1, circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(feature, margin + PDF_CONFIG.card.textOffsetX + box.paddingX, yPosition);
+    doc.text(feature, margin + card.textOffsetX + box.paddingX, yPosition);
     yPosition += spacing.cardGap;
   });
 
-  yPosition += spacing.sectionGap + 2;
+  yPosition += spacing.sectionGap + smallOffset;
 
   // Bottom callout box
-  checkBreak(30);
-  const bottomCalloutHeight = 24;
+  const bottomCalloutHeight = standardBoxHeight + spacing.cardGap;
+  checkBreak(bottomCalloutHeight + spacing.sectionGap);
   renderContentCard(doc, margin, yPosition, maxWidth, bottomCalloutHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.text("This gives finance teams ", margin + box.paddingX * 2, yPosition + spacing.sectionGap + 2);
+  doc.setFontSize(fontSize.bodySmall);
+  const line1Y = yPosition + spacing.sectionGap + smallOffset;
+  doc.text("This gives finance teams ", margin + box.paddingX * 2, line1Y);
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFont("helvetica", "bold");
-  doc.text("absolute certainty on cost control", margin + box.paddingX * 2 + doc.getTextWidth("This gives finance teams "), yPosition + spacing.sectionGap + 2);
+  doc.text("absolute certainty on cost control", margin + box.paddingX * 2 + doc.getTextWidth("This gives finance teams "), line1Y);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("This gives finance teams absolute certainty on cost control"), yPosition + spacing.sectionGap + 2);
+  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("This gives finance teams absolute certainty on cost control"), line1Y);
 
   doc.setFont("helvetica", "normal");
-  doc.text("It removes the biggest objection enterprises have to AI: ", margin + box.paddingX * 2, yPosition + spacing.headerToContent);
+  const line2Y = yPosition + spacing.headerToContent;
+  doc.text("It removes the biggest objection enterprises have to AI: ", margin + box.paddingX * 2, line2Y);
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFont("helvetica", "bold");
-  doc.text("unpredictable cost", margin + box.paddingX * 2 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: "), yPosition + spacing.headerToContent);
+  doc.text("unpredictable cost", margin + box.paddingX * 2 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: "), line2Y);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: unpredictable cost"), yPosition + spacing.headerToContent);
+  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: unpredictable cost"), line2Y);
 
   yPosition += bottomCalloutHeight + spacing.sectionGap;
   return yPosition;
