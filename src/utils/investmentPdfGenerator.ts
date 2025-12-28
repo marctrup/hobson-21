@@ -3778,6 +3778,7 @@ const renderEarlyRoadmap = (
 
 /**
  * Render Commercialisation Strategy visual
+ * Uses PDF_CONFIG defaults for all sizing and spacing
  */
 const renderCommercialisationStrategy = (
   doc: jsPDF,
@@ -3788,9 +3789,10 @@ const renderCommercialisationStrategy = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
+  const { box, spacing, circleSize, lineHeightFactor } = PDF_CONFIG;
 
   // Helper for page break
-  const checkPageBreak = (requiredSpace: number) => {
+  const checkBreak = (requiredSpace: number) => {
     if (yPosition + requiredSpace > pageHeight - 40) {
       doc.addPage();
       yPosition = margin;
@@ -3798,25 +3800,25 @@ const renderCommercialisationStrategy = (
   };
 
   // Header box - Inflexion Point
-  checkPageBreak(28);
+  checkBreak(28);
   const headerHeight = 24;
   renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The Real Estate industry is at an inflexion point.", margin + 12, yPosition + 15);
+  doc.text("The Real Estate industry is at an inflexion point.", margin + box.paddingX + 4, yPosition + 15);
 
-  yPosition += headerHeight + 12;
+  yPosition += headerHeight + spacing.sectionGap + 4;
 
   // Section 1: Operators Are Facing
-  checkPageBreak(70);
+  checkBreak(70);
   doc.setFillColor(...PDF_CONFIG.rose);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Operators are facing:", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("Operators are facing:", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7);
+  yPosition += spacing.headerToContent - 4;
 
   const challenges = [
     "exploding regulatory complexity,",
@@ -3828,44 +3830,44 @@ const renderCommercialisationStrategy = (
 
   challenges.forEach((challenge) => {
     const cardHeight = 14;
-    renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, cardHeight, PDF_CONFIG.roseBg, PDF_CONFIG.roseBorder);
+    renderContentCard(doc, margin + PDF_CONFIG.card.iconOffsetX, yPosition, maxWidth - PDF_CONFIG.card.textOffsetX, cardHeight, PDF_CONFIG.roseBg, PDF_CONFIG.roseBorder);
     
     doc.setFillColor(...PDF_CONFIG.rose);
-    doc.circle(margin + 18, yPosition + 7, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7, circleSize.small, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    doc.text(sanitizeText(challenge), margin + 24, yPosition + 9);
+    doc.text(sanitizeText(challenge), margin + PDF_CONFIG.card.textOffsetX + 4, yPosition + 9);
     yPosition += cardHeight + 3;
   });
 
-  yPosition += 4;
+  yPosition += spacing.paragraphGap;
 
   // Callout box
   const calloutHeight = 20;
-  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, calloutHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+  renderContentCard(doc, margin + PDF_CONFIG.card.iconOffsetX, yPosition, maxWidth - PDF_CONFIG.card.textOffsetX, calloutHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.text("They cannot wait for incremental tools. They need a ", margin + 16, yPosition + 12);
+  doc.text("They cannot wait for incremental tools. They need a ", margin + box.paddingX * 2, yPosition + 12);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("structural operating upgrade", margin + 16 + doc.getTextWidth("They cannot wait for incremental tools. They need a "), yPosition + 12);
+  doc.text("structural operating upgrade", margin + box.paddingX * 2 + doc.getTextWidth("They cannot wait for incremental tools. They need a "), yPosition + 12);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + 16 + doc.getTextWidth("They cannot wait for incremental tools. They need a structural operating upgrade"), yPosition + 12);
+  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("They cannot wait for incremental tools. They need a structural operating upgrade"), yPosition + 12);
   doc.setFont("helvetica", "normal");
 
-  yPosition += calloutHeight + 12;
+  yPosition += calloutHeight + spacing.sectionGap + 4;
 
   // Section 2: Hobson's Product
-  checkPageBreak(60);
+  checkBreak(60);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Hobson's product is already solving existential problems:", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("Hobson's product is already solving existential problems:", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7);
+  yPosition += spacing.headerToContent - 4;
 
   const problemsSolved = [
     "compliance exposure,",
@@ -3880,49 +3882,50 @@ const renderCommercialisationStrategy = (
   problemsSolved.forEach((problem, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
-    const cardX = margin + 10 + col * (cardWidth + 6);
-    const cardY = yPosition + row * (cardHeight + 4);
+    const cardX = margin + PDF_CONFIG.card.iconOffsetX + col * (cardWidth + spacing.cardGap);
+    const cardY = yPosition + row * (cardHeight + spacing.paragraphGap);
 
     renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(cardX + 10, cardY + 10, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(cardX + PDF_CONFIG.card.iconOffsetX, cardY + 10, circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    doc.text(sanitizeText(problem), cardX + 16, cardY + 12);
+    doc.text(sanitizeText(problem), cardX + box.paddingX * 2, cardY + 12);
   });
 
-  yPosition += 2 * (cardHeight + 4) + 12;
+  yPosition += 2 * (cardHeight + spacing.paragraphGap) + spacing.sectionGap + 4;
 
   // Conclusion box
-  checkPageBreak(32);
+  checkBreak(32);
   const conclusionHeight = 28;
   renderContentCard(doc, margin, yPosition, maxWidth, conclusionHeight, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + box.paddingX + 4, yPosition + 14, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.text("Commercialisation is not an experiment. It is an ", margin + 20, yPosition + 11);
+  doc.text("Commercialisation is not an experiment. It is an ", margin + PDF_CONFIG.card.textOffsetX, yPosition + 11);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("inevitability", margin + 20 + doc.getTextWidth("Commercialisation is not an experiment. It is an "), yPosition + 11);
+  doc.text("inevitability", margin + PDF_CONFIG.card.textOffsetX + doc.getTextWidth("Commercialisation is not an experiment. It is an "), yPosition + 11);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + 20 + doc.getTextWidth("Commercialisation is not an experiment. It is an inevitability"), yPosition + 11);
+  doc.text(".", margin + PDF_CONFIG.card.textOffsetX + doc.getTextWidth("Commercialisation is not an experiment. It is an inevitability"), yPosition + 11);
 
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(10);
-  doc.text("The only question is who captures the category.", margin + 20, yPosition + 21);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.text("The only question is who captures the category.", margin + PDF_CONFIG.card.textOffsetX, yPosition + 21);
   doc.setFont("helvetica", "normal");
 
-  yPosition += conclusionHeight + PDF_CONFIG.spacing.sectionGap;
+  yPosition += conclusionHeight + spacing.sectionGap;
   return yPosition;
 };
 
 /**
  * Render Commercials visual
+ * Uses PDF_CONFIG defaults for all sizing and spacing
  */
 const renderCommercials = (
   doc: jsPDF,
@@ -3933,9 +3936,10 @@ const renderCommercials = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
+  const { box, spacing, circleSize, lineHeight } = PDF_CONFIG;
 
   // Helper for page break
-  const checkPageBreak = (requiredSpace: number) => {
+  const checkBreak = (requiredSpace: number) => {
     if (yPosition + requiredSpace > pageHeight - 40) {
       doc.addPage();
       yPosition = margin;
@@ -3943,40 +3947,40 @@ const renderCommercials = (
   };
 
   // Header - Intro text
-  checkPageBreak(20);
+  checkBreak(20);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "italic");
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   const introText = "This is designed to kill procurement friction and accelerate viral adoption inside organisations.";
   const introLines = doc.splitTextToSize(introText, maxWidth);
   doc.text(introLines, pageWidth / 2, yPosition, { align: "center" });
-  yPosition += introLines.length * 6 + 16;
+  yPosition += introLines.length * lineHeight.loose + spacing.sectionGap + 8;
 
   // Section 1: Revenue Expansion Engine
-  checkPageBreak(100);
+  checkBreak(100);
   const revenueCardHeight = 90;
   renderContentCard(doc, margin, yPosition, maxWidth, revenueCardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
   // Header with circle icon
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 20, yPosition + 14, 6, "F");
+  doc.circle(margin + PDF_CONFIG.card.textOffsetX, yPosition + 14, circleSize.xlarge + 2, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Built-In Revenue Expansion Engine", margin + 32, yPosition + 18);
+  doc.text("Built-In Revenue Expansion Engine", margin + PDF_CONFIG.card.textOffsetX + 12, yPosition + spacing.headerToContent);
 
   yPosition += 28;
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
   const revenueIntro = "Hobson has something most startups do not: automatic net revenue retention growth.";
-  doc.text(revenueIntro, margin + 16, yPosition);
-  yPosition += 10;
+  doc.text(revenueIntro, margin + box.paddingX * 2, yPosition);
+  yPosition += spacing.sectionGap + 2;
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.text("As operators:", margin + 16, yPosition);
-  yPosition += 8;
+  doc.text("As operators:", margin + box.paddingX * 2, yPosition);
+  yPosition += box.paddingX;
 
   const expansionDrivers = [
     "grow portfolios,",
@@ -3989,49 +3993,49 @@ const renderCommercials = (
   doc.setFont("helvetica", "normal");
   expansionDrivers.forEach((driver) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 22, yPosition - 1, 1.5, "F");
+    doc.circle(margin + PDF_CONFIG.card.textOffsetX + 2, yPosition - 1, circleSize.small + 0.3, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(driver, margin + 28, yPosition);
-    yPosition += 6;
+    doc.text(driver, margin + PDF_CONFIG.card.textOffsetX + box.paddingX, yPosition);
+    yPosition += spacing.cardGap;
   });
 
-  yPosition += 6;
+  yPosition += spacing.cardGap;
 
   // Callout
   const calloutY = yPosition;
   doc.setFillColor(...PDF_CONFIG.emeraldBg);
-  doc.roundedRect(margin + 12, calloutY - 4, maxWidth - 24, 14, 2, 2, "F");
+  doc.roundedRect(margin + box.paddingX + 4, calloutY - spacing.paragraphGap, maxWidth - box.paddingX * 3, 14, box.borderRadiusSmall, box.borderRadiusSmall, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "normal");
-  doc.text("Their HEU consumption rises ", margin + 20, calloutY + 5);
+  doc.text("Their HEU consumption rises ", margin + PDF_CONFIG.card.textOffsetX, calloutY + lineHeight.body);
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFont("helvetica", "bold");
-  doc.text("without a single sales conversation", margin + 20 + doc.getTextWidth("Their HEU consumption rises "), calloutY + 5);
+  doc.text("without a single sales conversation", margin + PDF_CONFIG.card.textOffsetX + doc.getTextWidth("Their HEU consumption rises "), calloutY + lineHeight.body);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + 20 + doc.getTextWidth("Their HEU consumption rises without a single sales conversation"), calloutY + 5);
+  doc.text(".", margin + PDF_CONFIG.card.textOffsetX + doc.getTextWidth("Their HEU consumption rises without a single sales conversation"), calloutY + lineHeight.body);
 
   yPosition += 24;
 
   // Section 2: Transparency
-  checkPageBreak(80);
+  checkBreak(80);
   const transparencyCardHeight = 70;
   renderContentCard(doc, margin, yPosition, maxWidth, transparencyCardHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
 
   // Header with circle icon
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 20, yPosition + 14, 6, "F");
+  doc.circle(margin + PDF_CONFIG.card.textOffsetX, yPosition + 14, circleSize.xlarge + 2, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Unmatched Transparency = Enterprise Trust", margin + 32, yPosition + 18);
+  doc.text("Unmatched Transparency = Enterprise Trust", margin + PDF_CONFIG.card.textOffsetX + 12, yPosition + spacing.headerToContent);
 
   yPosition += 28;
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   setBodySmallFont(doc);
-  doc.text("Hobson provides:", margin + 16, yPosition);
-  yPosition += 8;
+  doc.text("Hobson provides:", margin + box.paddingX * 2, yPosition);
+  yPosition += box.paddingX;
 
   const transparencyFeatures = [
     "real-time HEU usage bars,",
@@ -4042,43 +4046,44 @@ const renderCommercials = (
   doc.setFont("helvetica", "normal");
   transparencyFeatures.forEach((feature) => {
     doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(margin + 22, yPosition - 1, 1.5, "F");
+    doc.circle(margin + PDF_CONFIG.card.textOffsetX + 2, yPosition - 1, circleSize.small + 0.3, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(feature, margin + 28, yPosition);
-    yPosition += 6;
+    doc.text(feature, margin + PDF_CONFIG.card.textOffsetX + box.paddingX, yPosition);
+    yPosition += spacing.cardGap;
   });
 
-  yPosition += 10;
+  yPosition += spacing.sectionGap + 2;
 
   // Bottom callout box
-  checkPageBreak(30);
+  checkBreak(30);
   const bottomCalloutHeight = 24;
   renderContentCard(doc, margin, yPosition, maxWidth, bottomCalloutHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "normal");
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.text("This gives finance teams ", margin + 16, yPosition + 10);
+  doc.text("This gives finance teams ", margin + box.paddingX * 2, yPosition + spacing.sectionGap + 2);
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFont("helvetica", "bold");
-  doc.text("absolute certainty on cost control", margin + 16 + doc.getTextWidth("This gives finance teams "), yPosition + 10);
+  doc.text("absolute certainty on cost control", margin + box.paddingX * 2 + doc.getTextWidth("This gives finance teams "), yPosition + spacing.sectionGap + 2);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + 16 + doc.getTextWidth("This gives finance teams absolute certainty on cost control"), yPosition + 10);
+  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("This gives finance teams absolute certainty on cost control"), yPosition + spacing.sectionGap + 2);
 
   doc.setFont("helvetica", "normal");
-  doc.text("It removes the biggest objection enterprises have to AI: ", margin + 16, yPosition + 18);
+  doc.text("It removes the biggest objection enterprises have to AI: ", margin + box.paddingX * 2, yPosition + spacing.headerToContent);
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFont("helvetica", "bold");
-  doc.text("unpredictable cost", margin + 16 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: "), yPosition + 18);
+  doc.text("unpredictable cost", margin + box.paddingX * 2 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: "), yPosition + spacing.headerToContent);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(".", margin + 16 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: unpredictable cost"), yPosition + 18);
+  doc.text(".", margin + box.paddingX * 2 + doc.getTextWidth("It removes the biggest objection enterprises have to AI: unpredictable cost"), yPosition + spacing.headerToContent);
 
-  yPosition += bottomCalloutHeight + PDF_CONFIG.spacing.sectionGap;
+  yPosition += bottomCalloutHeight + spacing.sectionGap;
   return yPosition;
 };
 
 /**
  * Render Business Objectives visual
+ * Uses PDF_CONFIG defaults for all sizing and spacing
  */
 const renderBusinessObjectives = (
   doc: jsPDF,
@@ -4089,6 +4094,7 @@ const renderBusinessObjectives = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
+  const { box, spacing, circleSize, lineHeight, lineHeightFactor } = PDF_CONFIG;
 
   // Helper for page break
   const checkBreak = (requiredSpace: number) => {
@@ -4101,42 +4107,39 @@ const renderBusinessObjectives = (
   // Intro box
   checkBreak(40);
   const introText = "The next 12 months are focused on completing the MVP for early 2026, validating Hobson in real operational settings, and building the foundations needed for commercial rollout and long-term scale.";
-  const innerPadding = 8;
-  const innerTextWidth = maxWidth - innerPadding * 2;
-  const introLineSpacing = 5.5; // tighter line spacing
+  const innerTextWidth = maxWidth - box.paddingX * 2;
   const introLines = doc.splitTextToSize(introText, innerTextWidth);
-  // Compact box: text lines + minimal padding
-  const introHeight = introLines.length * introLineSpacing + 10;
+  const introHeight = introLines.length * lineHeight.body + spacing.sectionGap + 2;
   
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, box.borderRadius, box.borderRadius, "S");
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  // Single justified paragraph with tighter line height
-  doc.text(introText, margin + innerPadding, yPosition + 8, {
+  doc.text(introText, margin + box.paddingX, yPosition + spacing.contentStart, {
     maxWidth: innerTextWidth,
     align: "justify",
-    lineHeightFactor: 1.3,
+    lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition += introHeight + 10;
+  yPosition += introHeight + spacing.sectionGap + 2;
 
   // Top-Level Organisational Goals
   checkBreak(65);
+  const orgGoalsHeight = 62;
   doc.setFillColor(...PDF_CONFIG.emeraldBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 62, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, orgGoalsHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.emeraldBorder);
-  doc.roundedRect(margin, yPosition, maxWidth, 62, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, orgGoalsHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 14, yPosition + 12, 4, "F");
+  doc.circle(margin + box.paddingX + 6, yPosition + 12, circleSize.large + 0.8, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Top-Level Organisational Goals", margin + 24, yPosition + 14);
+  doc.text("Top-Level Organisational Goals", margin + PDF_CONFIG.card.textOffsetX + 4, yPosition + 14);
   
   const orgGoals = [
     "Validate Hobson's usefulness and reliability across a broader range of Real Estate operators",
@@ -4147,49 +4150,51 @@ const renderBusinessObjectives = (
   
   let goalY = yPosition + 24;
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   orgGoals.forEach((goal) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 12, goalY - 1, 1, "F");
+    doc.circle(margin + box.paddingX + 4, goalY - 1, circleSize.bullet, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     const goalLines = doc.splitTextToSize(goal, maxWidth - 24);
     goalLines.forEach((line: string, idx: number) => {
-      doc.text(line, margin + 16, goalY + idx * 4);
+      doc.text(line, margin + box.paddingX * 2, goalY + idx * lineHeight.tight);
     });
-    goalY += goalLines.length * 4 + 2;
+    goalY += goalLines.length * lineHeight.tight + 2;
   });
-  yPosition += 68;
+  yPosition += orgGoalsHeight + spacing.cardGap + 2;
 
   // Mid- to Long-Term Vision
   checkBreak(60);
+  const visionHeight = 55;
   doc.setFillColor(...PDF_CONFIG.blueBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, visionHeight, box.borderRadius, box.borderRadius, "F");
   
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 16, yPosition + 14, 5, "F");
+  doc.circle(margin + box.paddingX * 2, yPosition + 14, circleSize.xlarge + 1, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Mid- to Long-Term Vision (2-3+ Years)", margin + 28, yPosition + 18);
+  doc.text("Mid- to Long-Term Vision (2-3+ Years)", margin + PDF_CONFIG.card.textOffsetX + 8, yPosition + spacing.headerToContent);
   
   doc.setFont("helvetica", "normal");
   setBodySmallFont(doc);
   doc.setTextColor(...PDF_CONFIG.textGray);
   const visionText = "Hobson will evolve from a retrieval-focused MVP (2026) into a proactive AI assistant replacing manual document work in Real Estate with AI-driven reasoning, delivering instant, traceable answers.";
-  const visionLines = doc.splitTextToSize(visionText, maxWidth - 20);
+  const visionLines = doc.splitTextToSize(visionText, maxWidth - box.paddingX * 2.5);
   visionLines.forEach((line: string, idx: number) => {
-    doc.text(line, margin + 10, yPosition + 30 + idx * 5);
+    doc.text(line, margin + box.paddingX + 2, yPosition + 30 + idx * lineHeight.body);
   });
-  yPosition += 65;
+  yPosition += visionHeight + spacing.sectionGap + 2;
 
   // Market Validation Stats
   checkBreak(45);
+  const statsHeight = 40;
   doc.setFillColor(...PDF_CONFIG.amberBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 40, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, statsHeight, box.borderRadius, box.borderRadius, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Market Validation Shows Strong Tailwinds", margin + 10, yPosition + 14);
+  doc.text("Market Validation Shows Strong Tailwinds", margin + box.paddingX + 2, yPosition + 14);
 
   const stats = [
     { value: "36.1%", label: "CAGR in AI for Real Estate" },
@@ -4197,11 +4202,11 @@ const renderBusinessObjectives = (
     { value: "10-20%", label: "Efficiency gains with AI" }
   ];
   
-  const statWidth = (maxWidth - 20) / 3;
+  const statWidth = (maxWidth - box.paddingX * 2.5) / 3;
   stats.forEach((stat, idx) => {
-    const xPos = margin + 10 + idx * statWidth;
+    const xPos = margin + box.paddingX + 2 + idx * statWidth;
     doc.setTextColor(...PDF_CONFIG.amber);
-    doc.setFontSize(12);
+    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
     doc.text(stat.value, xPos + statWidth / 2, yPosition + 28, { align: "center" });
     doc.setTextColor(...PDF_CONFIG.textGray);
@@ -4209,7 +4214,7 @@ const renderBusinessObjectives = (
     doc.setFont("helvetica", "normal");
     doc.text(stat.label, xPos + statWidth / 2, yPosition + 35, { align: "center" });
   });
-  yPosition += 50;
+  yPosition += statsHeight + spacing.sectionGap + 2;
 
   // SMART Objectives Header
   checkBreak(20);
@@ -4217,7 +4222,7 @@ const renderBusinessObjectives = (
   doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
   doc.text("SMART Objectives (2025-2027 Timeline)", margin, yPosition);
-  yPosition += 14;
+  yPosition += spacing.headerToContent - 4;
 
   // Objectives grid - 4 categories
   const objectives = [
@@ -4265,83 +4270,83 @@ const renderBusinessObjectives = (
     }
   ];
 
-  const colWidth = (maxWidth - 8) / 2;
-  const cardHeight = 55;
-  const cardGap = 6;
+  const colWidth = (maxWidth - spacing.cardGap - 2) / 2;
+  const objCardHeight = 55;
   
   // Row 1 - first two objectives
-  checkBreak(cardHeight * 2 + cardGap + 20);
+  checkBreak(objCardHeight * 2 + spacing.cardGap + 20);
   
   // Draw first row (2 cards side by side)
   for (let i = 0; i < 2; i++) {
     const obj = objectives[i];
-    const xPos = margin + i * (colWidth + 8);
+    const xPos = margin + i * (colWidth + spacing.cardGap + 2);
     
     doc.setFillColor(...obj.bgColor);
-    doc.roundedRect(xPos, yPosition, colWidth, cardHeight, 3, 3, "F");
+    doc.roundedRect(xPos, yPosition, colWidth, objCardHeight, box.borderRadius, box.borderRadius, "F");
     
     doc.setFillColor(...obj.color);
-    doc.circle(xPos + 10, yPosition + 10, 3, "F");
+    doc.circle(xPos + box.paddingX + 2, yPosition + 10, circleSize.large - 0.2, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(9);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(obj.title, xPos + 18, yPosition + 12);
+    doc.text(obj.title, xPos + PDF_CONFIG.card.textOffsetX - 2, yPosition + 12);
     
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
     let itemY = yPosition + 22;
     obj.items.forEach((item) => {
       doc.setFillColor(...obj.color);
-      doc.circle(xPos + 10, itemY - 1, 1, "F");
+      doc.circle(xPos + box.paddingX + 2, itemY - 1, circleSize.bullet, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
-      const itemLines = doc.splitTextToSize(item, colWidth - 20);
+      const itemLines = doc.splitTextToSize(item, colWidth - box.paddingX * 2.5);
       itemLines.forEach((line: string, lineIdx: number) => {
-        doc.text(line, xPos + 14, itemY + lineIdx * 4);
+        doc.text(line, xPos + box.paddingX + 6, itemY + lineIdx * lineHeight.tight);
       });
-      itemY += itemLines.length * 4 + 2;
+      itemY += itemLines.length * lineHeight.tight + 2;
     });
   }
-  yPosition += cardHeight + cardGap;
+  yPosition += objCardHeight + spacing.cardGap;
 
   // Row 2 - second two objectives
   for (let i = 2; i < 4; i++) {
     const obj = objectives[i];
-    const xPos = margin + (i - 2) * (colWidth + 8);
+    const xPos = margin + (i - 2) * (colWidth + spacing.cardGap + 2);
     
     doc.setFillColor(...obj.bgColor);
-    doc.roundedRect(xPos, yPosition, colWidth, cardHeight, 3, 3, "F");
+    doc.roundedRect(xPos, yPosition, colWidth, objCardHeight, box.borderRadius, box.borderRadius, "F");
     
     doc.setFillColor(...obj.color);
-    doc.circle(xPos + 10, yPosition + 10, 3, "F");
+    doc.circle(xPos + box.paddingX + 2, yPosition + 10, circleSize.large - 0.2, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(9);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(obj.title, xPos + 18, yPosition + 12);
+    doc.text(obj.title, xPos + PDF_CONFIG.card.textOffsetX - 2, yPosition + 12);
     
     doc.setFont("helvetica", "normal");
     doc.setFontSize(7);
     let itemY = yPosition + 22;
     obj.items.forEach((item) => {
       doc.setFillColor(...obj.color);
-      doc.circle(xPos + 10, itemY - 1, 1, "F");
+      doc.circle(xPos + box.paddingX + 2, itemY - 1, circleSize.bullet, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
-      const itemLines = doc.splitTextToSize(item, colWidth - 20);
+      const itemLines = doc.splitTextToSize(item, colWidth - box.paddingX * 2.5);
       itemLines.forEach((line: string, lineIdx: number) => {
-        doc.text(line, xPos + 14, itemY + lineIdx * 4);
+        doc.text(line, xPos + box.paddingX + 6, itemY + lineIdx * lineHeight.tight);
       });
-      itemY += itemLines.length * 4 + 2;
+      itemY += itemLines.length * lineHeight.tight + 2;
     });
   }
-  yPosition += cardHeight + 12;
+  yPosition += objCardHeight + spacing.sectionGap + 4;
 
   // Timeline Progression
   checkBreak(50);
+  const timelineBoxHeight = 45;
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, timelineBoxHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, timelineBoxHeight, box.borderRadius, box.borderRadius, "S");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
@@ -4353,9 +4358,9 @@ const renderBusinessObjectives = (
     { year: "2028+", desc: "Enter Europe and global markets" }
   ];
   
-  const timelineWidth = (maxWidth - 20) / 3;
+  const timelineWidth = (maxWidth - box.paddingX * 2.5) / 3;
   timeline.forEach((t, idx) => {
-    const xPos = margin + 10 + idx * timelineWidth;
+    const xPos = margin + box.paddingX + 2 + idx * timelineWidth;
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(11);
     doc.setFont("helvetica", "bold");
@@ -4365,10 +4370,10 @@ const renderBusinessObjectives = (
     doc.setFont("helvetica", "normal");
     const descLines = doc.splitTextToSize(t.desc, timelineWidth - 10);
     descLines.forEach((line: string, lineIdx: number) => {
-      doc.text(line, xPos + timelineWidth / 2, yPosition + 34 + lineIdx * 4, { align: "center" });
+      doc.text(line, xPos + timelineWidth / 2, yPosition + 34 + lineIdx * lineHeight.tight, { align: "center" });
     });
   });
-  yPosition += 55;
+  yPosition += timelineBoxHeight + spacing.sectionGap + 2;
 
   // Flow: Prove -> Refine -> Scale -> Commercialise -> Expand
   checkBreak(20);
@@ -4376,11 +4381,11 @@ const renderBusinessObjectives = (
   const flowItemWidth = (maxWidth - 30) / flowItems.length;
   
   flowItems.forEach((item, idx) => {
-    const xPos = margin + idx * flowItemWidth + idx * 6;
+    const xPos = margin + idx * flowItemWidth + idx * spacing.cardGap;
     doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-    doc.roundedRect(xPos, yPosition, flowItemWidth, 14, 2, 2, "F");
+    doc.roundedRect(xPos, yPosition, flowItemWidth, 14, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
     doc.text(item, xPos + flowItemWidth / 2, yPosition + 9, { align: "center" });
     
@@ -4789,6 +4794,7 @@ const renderSimpleUI = (
 
 /**
  * Render HEU Pricing visual with standardized fonts
+ * Uses PDF_CONFIG defaults for all sizing and spacing
  */
 const renderHEUPricing = (
   doc: jsPDF,
@@ -4799,9 +4805,10 @@ const renderHEUPricing = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
+  const { box, spacing, circleSize, lineHeight } = PDF_CONFIG;
 
   // Helper for page break
-  const checkPageBreak = (requiredSpace: number) => {
+  const checkBreak = (requiredSpace: number) => {
     if (yPosition + requiredSpace > pageHeight - 40) {
       doc.addPage();
       yPosition = margin;
@@ -4809,61 +4816,61 @@ const renderHEUPricing = (
   };
 
   // Header - The HEU Model
-  checkPageBreak(32);
+  checkBreak(32);
   const headerHeight = 28;
   renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + box.paddingX + 4, yPosition + 14, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The HEU Model", margin + 22, yPosition + 12);
+  doc.text("The HEU Model", margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + 12);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  doc.text("Hobson's pricing model is a ", margin + 22, yPosition + 21);
+  doc.text("Hobson's pricing model is a ", margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + 21);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.text("usage-based infrastructure monetisation model", margin + 22 + doc.getTextWidth("Hobson's pricing model is a "), yPosition + 21);
+  doc.text("usage-based infrastructure monetisation model", margin + PDF_CONFIG.card.textOffsetX + 2 + doc.getTextWidth("Hobson's pricing model is a "), yPosition + 21);
   doc.setFont("helvetica", "normal");
 
-  yPosition += headerHeight + 12;
+  yPosition += headerHeight + spacing.sectionGap + 4;
 
   // Section 1: What HEUs Measure
-  checkPageBreak(40);
+  checkBreak(40);
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Hobson Energy Units (HEUs) measure AI effort:", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("Hobson Energy Units (HEUs) measure AI effort:", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7);
+  yPosition += spacing.headerToContent - 4;
 
   const heuBoxHeight = 20;
-  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, heuBoxHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
+  renderContentCard(doc, margin + PDF_CONFIG.card.iconOffsetX, yPosition, maxWidth - PDF_CONFIG.card.textOffsetX, heuBoxHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const heuText = "Every document read, lease abstracted, compliance workflow executed, risk model run, or report built consumes HEUs.";
-  const heuLines = doc.splitTextToSize(sanitizeText(heuText), maxWidth - 40);
-  let heuY = yPosition + 8;
+  const heuLines = doc.splitTextToSize(sanitizeText(heuText), maxWidth - box.paddingX * 5);
+  let heuY = yPosition + spacing.contentStart;
   heuLines.forEach((line: string) => {
-    doc.text(line, margin + 18, heuY);
-    heuY += PDF_CONFIG.lineHeight.body;
+    doc.text(line, margin + PDF_CONFIG.card.textOffsetX - 2, heuY);
+    heuY += lineHeight.body;
   });
 
-  yPosition += heuBoxHeight + 12;
+  yPosition += heuBoxHeight + spacing.sectionGap + 4;
 
   // Section 2: What Hobson Monetises
-  checkPageBreak(65);
+  checkBreak(65);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("This means Hobson monetises:", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("This means Hobson monetises:", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7);
+  yPosition += spacing.headerToContent - 4;
 
   const monetises = [
     "operator dependency",
@@ -4878,63 +4885,63 @@ const renderHEUPricing = (
   monetises.forEach((item, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
-    const cardX = margin + 10 + col * (cardWidth + 6);
-    const cardY = yPosition + row * (cardHeight + 4);
+    const cardX = margin + PDF_CONFIG.card.iconOffsetX + col * (cardWidth + spacing.cardGap);
+    const cardY = yPosition + row * (cardHeight + spacing.paragraphGap);
 
     renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(cardX + 10, cardY + 8, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(cardX + PDF_CONFIG.card.iconOffsetX, cardY + 8, circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-    doc.text(sanitizeText(item), cardX + 16, cardY + 10);
+    doc.text(sanitizeText(item), cardX + box.paddingX * 2, cardY + 10);
   });
 
-  yPosition += 2 * (cardHeight + 4) + 6;
+  yPosition += 2 * (cardHeight + spacing.paragraphGap) + spacing.cardGap;
 
   // "not headcount" note
-  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, 12, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+  renderContentCard(doc, margin + PDF_CONFIG.card.iconOffsetX, yPosition, maxWidth - PDF_CONFIG.card.textOffsetX, 12, PDF_CONFIG.bgLight, PDF_CONFIG.border);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(7);
-  doc.text("not", margin + 18, yPosition + 8);
+  doc.text("not", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + spacing.contentStart);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text(" headcount or asset count", margin + 18 + doc.getTextWidth("not "), yPosition + 8);
+  doc.text(" headcount or asset count", margin + PDF_CONFIG.card.textOffsetX - 2 + doc.getTextWidth("not "), yPosition + spacing.contentStart);
 
   yPosition += 20;
 
   // Key insight box
-  checkPageBreak(28);
+  checkBreak(28);
   const insightHeight = 24;
   renderContentCard(doc, margin, yPosition, maxWidth, insightHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
 
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + 10, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.card.iconOffsetX, yPosition + 12, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const insightText = "Traditional property software caps revenue. Hobson's model scales automatically with operational stress. The more complex the operator's world becomes, the more valuable and profitable Hobson becomes.";
-  const insightLines = doc.splitTextToSize(sanitizeText(insightText), maxWidth - 28);
-  let insightY = yPosition + 8;
+  const insightLines = doc.splitTextToSize(sanitizeText(insightText), maxWidth - box.paddingX * 3.5);
+  let insightY = yPosition + spacing.contentStart;
   insightLines.slice(0, 2).forEach((line: string) => {
-    doc.text(line, margin + 18, insightY);
-    insightY += PDF_CONFIG.lineHeight.body;
+    doc.text(line, margin + PDF_CONFIG.card.textOffsetX - 2, insightY);
+    insightY += lineHeight.body;
   });
 
-  yPosition += insightHeight + 12;
+  yPosition += insightHeight + spacing.sectionGap + 4;
 
   // Section 3: Pricing Table
-  checkPageBreak(80);
+  checkBreak(80);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Pricing That Forces Adoption", margin + 16, yPosition + 7);
-  yPosition += 14;
+  doc.text("Pricing That Forces Adoption", margin + box.paddingX * 2, yPosition + 7);
+  yPosition += spacing.headerToContent - 4;
 
   // Table headers
   const colWidths = [35, 30, 22, 70];
@@ -4945,22 +4952,22 @@ const renderHEUPricing = (
   renderContentCard(doc, tableX, yPosition, maxWidth, rowHeight, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   
-  let headerX = tableX + 4;
+  let headerX = tableX + spacing.paragraphGap;
   ["Plan", "Monthly Price", "HEUs", "Strategic Intent"].forEach((header, idx) => {
-    doc.text(header, headerX, yPosition + 8);
-    headerX += colWidths[idx] + 4;
+    doc.text(header, headerX, yPosition + spacing.contentStart);
+    headerX += colWidths[idx] + spacing.paragraphGap;
   });
   yPosition += rowHeight;
 
   // Data rows
   const plans = [
-    { plan: "Free", price: "£0", heus: "18", intent: "Frictionless market entry" },
-    { plan: "Essential", price: "£19.50", heus: "275", intent: "Hook small operators" },
-    { plan: "Essential Plus", price: "£49.75", heus: "700", intent: "Convert growing teams" },
-    { plan: "Enterprise", price: "£148.50", heus: "2,000", intent: "Lock in serious operators" },
-    { plan: "HEU Top-Up", price: "£15", heus: "150", intent: "Expand ARPU naturally" },
+    { plan: "Free", price: "GBP 0", heus: "18", intent: "Frictionless market entry" },
+    { plan: "Essential", price: "GBP 19.50", heus: "275", intent: "Hook small operators" },
+    { plan: "Essential Plus", price: "GBP 49.75", heus: "700", intent: "Convert growing teams" },
+    { plan: "Enterprise", price: "GBP 148.50", heus: "2,000", intent: "Lock in serious operators" },
+    { plan: "HEU Top-Up", price: "GBP 15", heus: "150", intent: "Expand ARPU naturally" },
   ];
 
   plans.forEach((row, idx) => {
@@ -4968,45 +4975,45 @@ const renderHEUPricing = (
     renderContentCard(doc, tableX, yPosition, maxWidth, rowHeight, bgColor, PDF_CONFIG.border);
     
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setTextColor(...PDF_CONFIG.textDark);
     
-    let cellX = tableX + 4;
-    doc.text(row.plan, cellX, yPosition + 8);
-    cellX += colWidths[0] + 4;
+    let cellX = tableX + spacing.paragraphGap;
+    doc.text(row.plan, cellX, yPosition + spacing.contentStart);
+    cellX += colWidths[0] + spacing.paragraphGap;
     
     doc.setFont("helvetica", "normal");
-    doc.text(row.price, cellX, yPosition + 8);
-    cellX += colWidths[1] + 4;
+    doc.text(row.price, cellX, yPosition + spacing.contentStart);
+    cellX += colWidths[1] + spacing.paragraphGap;
     
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFont("helvetica", "bold");
-    doc.text(row.heus, cellX, yPosition + 8);
-    cellX += colWidths[2] + 4;
+    doc.text(row.heus, cellX, yPosition + spacing.contentStart);
+    cellX += colWidths[2] + spacing.paragraphGap;
     
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.text(row.intent, cellX, yPosition + 8);
+    doc.text(row.intent, cellX, yPosition + spacing.contentStart);
     
     yPosition += rowHeight;
   });
 
-  yPosition += 10;
+  yPosition += spacing.sectionGap + 2;
 
   // Footer - No Fees
-  checkPageBreak(24);
+  checkBreak(24);
   const footerHeight = 20;
   renderContentCard(doc, margin, yPosition, maxWidth, footerHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + maxWidth / 2 - 80, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + maxWidth / 2 - 80, yPosition + 10, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(10);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.text("No per-user fees. No per-asset fees. Unlimited scale.", margin + maxWidth / 2, yPosition + 12, { align: "center" });
 
-  yPosition += footerHeight + PDF_CONFIG.spacing.sectionGap;
+  yPosition += footerHeight + spacing.sectionGap;
   return yPosition;
 };
 
