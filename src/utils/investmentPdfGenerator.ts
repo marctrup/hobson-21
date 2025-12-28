@@ -2019,11 +2019,11 @@ const renderStrategicApproach = (
 
   // Number badge
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Product", margin + 18, yPosition + 7);
+  doc.text("Product", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
 
   // Subtitle - wrap long text
   doc.setTextColor(...PDF_CONFIG.textGray);
@@ -2061,11 +2061,11 @@ const renderStrategicApproach = (
 
   // Number badge
   doc.setFillColor(...PDF_CONFIG.rose);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Brand", margin + 18, yPosition + 7);
+  doc.text("Brand", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
 
   // Subtitle - wrap long text
   doc.setTextColor(...PDF_CONFIG.textGray);
@@ -2103,11 +2103,11 @@ const renderStrategicApproach = (
 
   // Number badge
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Business Model", margin + 18, yPosition + 7);
+  doc.text("Business Model", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
 
   // Subtitle
   doc.setTextColor(...PDF_CONFIG.textGray);
@@ -2163,12 +2163,12 @@ const renderTeamCredibility = (
 
   // Section 1: Direct Market Experience
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Direct Market Experience", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("Direct Market Experience", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+  yPosition += PDF_CONFIG.spacing.contentPadding;
 
   // Experience box
   const expHeight = 24;
@@ -2188,12 +2188,12 @@ const renderTeamCredibility = (
 
   // Section 2: The Team Brings
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The Team Brings", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("The Team Brings", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+  yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const teamBrings = [
     "Proven experience building and scaling enterprise Real Estate software",
@@ -3151,12 +3151,13 @@ const renderUKMarketAssumptions = (
 
   setBodyFont(doc);
   // Item 1 - Core Market
+  const item1CircleY = yPosition + 24;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 16, yPosition + 24, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + 16, item1CircleY, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   doc.setFont("helvetica", "bold");
-  doc.text("1", margin + 14.8, yPosition + 25.5);
+  doc.text("1", margin + 16, item1CircleY + PDF_CONFIG.numberedCircle.textYOffset, { align: "center" });
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
   doc.setFont("helvetica", "bold");
@@ -3166,12 +3167,13 @@ const renderUKMarketAssumptions = (
   doc.text("~90,000 real estate operators where document intelligence is mission-critical", margin + 24, yPosition + 32);
 
   // Item 2 - Expansion Market
+  const item2CircleY = yPosition + 42;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 16, yPosition + 42, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + 16, item2CircleY, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   doc.setFont("helvetica", "bold");
-  doc.text("2", margin + 14.8, yPosition + 43.5);
+  doc.text("2", margin + 16, item2CircleY + PDF_CONFIG.numberedCircle.textYOffset, { align: "center" });
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyFont(doc);
   doc.setFont("helvetica", "bold");
