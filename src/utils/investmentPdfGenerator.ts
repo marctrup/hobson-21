@@ -8239,8 +8239,10 @@ const renderCompetitorBenchmarks = (
   });
 
   // Summary
-  const diffLines = doc.splitTextToSize(`Differentiation: ${sanitizeText(data.summary.differentiation)}`, maxWidth - 16);
-  const posLines = doc.splitTextToSize(`Positioning: ${sanitizeText(data.summary.positioning)}`, maxWidth - 16);
+  const summaryPadding = 8;
+  const summaryTextWidth = maxWidth - summaryPadding * 2;
+  const diffLines = doc.splitTextToSize(`Differentiation: ${sanitizeText(data.summary.differentiation)}`, summaryTextWidth);
+  const posLines = doc.splitTextToSize(`Positioning: ${sanitizeText(data.summary.positioning)}`, summaryTextWidth);
   const summaryHeight = 18 + diffLines.length * bodyLine + 4 + posLines.length * bodyLine + 8;
   fitPage(summaryHeight + 6);
 
@@ -8253,21 +8255,21 @@ const renderCompetitorBenchmarks = (
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Summary", margin + 8, yPosition + 12);
+  doc.text("Summary", margin + summaryPadding, yPosition + 12);
 
   textY = yPosition + 22;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   diffLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + summaryPadding, textY);
     textY += bodyLine;
   });
   textY += 2;
 
   doc.setFont("helvetica", "bold");
   posLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + summaryPadding, textY);
     textY += bodyLine;
   });
 
