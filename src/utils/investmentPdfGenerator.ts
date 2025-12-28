@@ -6946,7 +6946,7 @@ const renderSituationAnalysis = (
 
     // Calculate segment card height
     const descLines = doc.splitTextToSize(sanitizeText(segment.description), maxWidth - 16);
-    const valueLines = doc.splitTextToSize(sanitizeText(segment.hobsonValue), maxWidth - 24);
+    const valueLines = doc.splitTextToSize(sanitizeText(segment.hobsonValue), maxWidth - 52);
     const useCaseHeight = segment.useCases.length * (bodyLine + 1);
     const feedbackLines = doc.splitTextToSize(`Client feedback: "${segment.feedback}"`, maxWidth - 20);
     
@@ -6994,14 +6994,15 @@ const renderSituationAnalysis = (
     });
     textY += 4;
 
-    // Hobson value box
+    // Hobson value box - narrower width
     const valueBoxY = textY;
+    const valueBoxWidth = maxWidth - 40; // narrower box
     const valueBoxHeight = valueLines.length * bodyLine + 10;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(margin + 6, valueBoxY, maxWidth - 12, valueBoxHeight, 2, 2, "F");
+    doc.roundedRect(margin + 6, valueBoxY, valueBoxWidth, valueBoxHeight, 2, 2, "F");
     doc.setDrawColor(...theme.border);
     doc.setLineWidth(0.2);
-    doc.roundedRect(margin + 6, valueBoxY, maxWidth - 12, valueBoxHeight, 2, 2, "S");
+    doc.roundedRect(margin + 6, valueBoxY, valueBoxWidth, valueBoxHeight, 2, 2, "S");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
