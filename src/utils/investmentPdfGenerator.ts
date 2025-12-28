@@ -7248,7 +7248,7 @@ const renderSituationAnalysis = (
     const targetBoxPadding = spacing.boxGap;
     const targetBoxWidth = targetTextWidth + targetBoxPadding * 2;
     const targetBoxHeight = lineHeight.body + spacing.boxGap;
-    const targetX = margin + spacing.bulletTextOffset + doc.getTextWidth(`Segment ${segment.id}:`) + spacing.cardGap;
+    const targetX = margin + spacing.bulletTextOffset + doc.getTextWidth(`Segment ${segment.id}:`) + spacing.cardGap + spacing.paragraphGap;
     const targetBoxY = segmentHeaderY - targetBoxHeight / 2 - 1;
     
     // Draw target box with accent color background
