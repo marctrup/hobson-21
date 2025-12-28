@@ -17,45 +17,124 @@ import { jsPDF } from "jspdf";
 import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
-// PDF Configuration - Colors matched to design system (index.css)
+// ============================================================================
+// PDF CONFIGURATION - MASTER DEFAULTS
+// ============================================================================
+// All sizing, spacing, and typography values are defined here.
+// These values supersede any hardcoded values in render functions.
+// When modifying PDF appearance, update these values FIRST.
+// ============================================================================
+
+// Colors matched to design system (index.css)
 // Primary: HSL 269 91% 52% = RGB 124, 58, 237 (#7c3aed)
 // Primary Light: HSL 269 75% 65% = RGB 168, 113, 246 (#a871f6)
 // Background: HSL 0 0% 100% = RGB 255, 255, 255
 // Foreground: HSL 222.2 84% 4.9% = RGB 9, 9, 25 (~dark)
 // Muted: HSL 210 40% 96.1% = RGB 241, 245, 249 (#f1f5f9)
 // Border: HSL 214.3 31.8% 91.4% = RGB 226, 232, 240 (#e2e8f0)
+
 const PDF_CONFIG = {
+  // ============================================================================
+  // PAGE LAYOUT
+  // ============================================================================
   margin: 20,
-  // STANDARDIZED FONT SIZES (for print readability)
+
+  // ============================================================================
+  // FONT SIZES (in points) - MASTER DEFAULTS
+  // ============================================================================
   fontSize: {
-    pageTitle: 18,      // Tab/page titles
-    sectionTitle: 13,   // Section headers within content
-    cardTitle: 12,      // Card/box titles
-    body: 10,           // Standard body text (was 8-9, now 10)
-    bodySmall: 9,       // Secondary info, labels
-    caption: 8,         // Footnotes, sources
-    stat: 16,           // Large statistics/numbers
+    pageTitle: 18,        // Tab/page titles (H1 equivalent)
+    sectionTitle: 13,     // Section headers within content (H2)
+    cardTitle: 12,        // Card/box titles (H3)
+    body: 10,             // Standard body text
+    bodySmall: 9,         // Secondary info, labels
+    caption: 8,           // Footnotes, sources
+    stat: 16,             // Large statistics/numbers
   },
+
+  // ============================================================================
+  // LINE HEIGHT / LINE SPACING - MASTER DEFAULTS
+  // ============================================================================
   lineHeight: {
-    body: 5,            // Standard line spacing (tighter)
-    tight: 4,           // Compact lists
-    loose: 6,           // Headers, titles
+    body: 5,              // Standard line spacing for body text
+    tight: 4,             // Compact lists, dense content
+    loose: 6,             // Headers, titles with more breathing room
   },
+
+  // ============================================================================
+  // LINE HEIGHT FACTOR (multiplier for text rendering)
+  // Used with doc.text() lineHeightFactor option
+  // ============================================================================
+  lineHeightFactor: {
+    body: 1.25,           // Standard paragraphs
+    tight: 1.15,          // Compact text blocks
+    loose: 1.35,          // Headers, titles
+    justified: 1.25,      // Justified paragraph text
+  },
+
+  // ============================================================================
+  // SPACING - MASTER DEFAULTS (in points)
+  // ============================================================================
   spacing: {
-    sectionGap: 8,       // Gap between major sections
-    cardGap: 6,          // Gap between cards
-    headingGap: 5,       // Gap between title and subtitle (was 3, now 5)
-    paragraphGap: 4,     // Gap between paragraphs
-    titleToContent: 6,   // Gap between header area and main content
+    sectionGap: 8,        // Gap between major sections
+    cardGap: 6,           // Gap between cards/boxes
+    headingGap: 5,        // Gap between title and subtitle
+    paragraphGap: 4,      // Gap between paragraphs
+    titleToContent: 6,    // Gap between header area and main content
+    subtitleToBullets: 4, // Gap between subtitle and bullet list
+    bulletIndent: 6,      // Indent for bullet point text from bullet
+    listItemGap: 1,       // Extra gap after each list item
   },
-  // Standardized circle sizes - 3 sizes only
+
+  // ============================================================================
+  // CIRCLE SIZES (radius in points) - MASTER DEFAULTS
+  // Used for bullets, badges, icons
+  // ============================================================================
   circleSize: {
-    small: 0.8,          // Bullet points
-    medium: 2.0,         // Card badges, icons
-    large: 3.2,          // Section headers, numbered badges
+    bullet: 0.8,          // Small bullet points in lists
+    small: 1.2,           // Secondary badges, small indicators
+    medium: 2.0,          // Card badges, icons in headers
+    large: 3.2,           // Section headers, numbered badges
+    xlarge: 4.0,          // Hero section icons
   },
-  subtitleToBullets: 4,  // Gap between subtitle and bullet list
-  // Colors
+
+  // ============================================================================
+  // BOX/CARD SIZING - MASTER DEFAULTS (in points)
+  // ============================================================================
+  box: {
+    paddingTop: 8,        // Top padding inside boxes
+    paddingBottom: 6,     // Bottom padding inside boxes
+    paddingX: 8,          // Horizontal padding (left/right)
+    paddingCompact: 6,    // Compact padding for dense cards
+    borderRadius: 3,      // Corner radius for rounded boxes
+    borderWidth: 0.3,     // Default border stroke width
+    borderWidthThin: 0.2, // Thin border for subtle cards
+  },
+
+  // ============================================================================
+  // CARD LAYOUT - MASTER DEFAULTS
+  // ============================================================================
+  card: {
+    iconSize: 8,          // Icon dimensions in cards
+    iconGap: 4,           // Gap after icon before text
+    titleHeight: 5,       // Height occupied by title text line
+    subtitleGap: 4,       // Gap between title and subtitle
+    contentGap: 6,        // Gap between header area and content
+    headerHeight: 20,     // Total header area (title + subtitle + gaps)
+    minHeight: 30,        // Minimum card height
+  },
+
+  // ============================================================================
+  // TEXT RENDERING DEFAULTS
+  // ============================================================================
+  text: {
+    align: "justify" as const, // Default text alignment for paragraphs
+    maxLines: 50,         // Safety limit for text wrapping
+  },
+
+  // ============================================================================
+  // COLORS - RGB values matched to design system
+  // ============================================================================
   primaryColor: [124, 58, 237] as [number, number, number],       // hsl(269 91% 52%) - brand purple
   primaryLight: [168, 113, 246] as [number, number, number],      // hsl(269 75% 65%) - lighter purple
   primaryBg: [240, 235, 255] as [number, number, number],         // Very light purple for Hobson row
@@ -86,6 +165,22 @@ const PDF_CONFIG = {
   amber: [217, 119, 6] as [number, number, number],               // amber-600
   amberBg: [255, 251, 235] as [number, number, number],           // amber-50
   amberBorder: [253, 230, 138] as [number, number, number],       // amber-200
+};
+
+// ============================================================================
+// DERIVED HELPERS - Use PDF_CONFIG values
+// ============================================================================
+
+// Legacy compatibility - maps old BOX_SIZING to new PDF_CONFIG.box
+const BOX_SIZING = {
+  paddingTop: PDF_CONFIG.box.paddingTop,
+  paddingBottom: PDF_CONFIG.box.paddingBottom,
+  paddingX: PDF_CONFIG.box.paddingX,
+  iconSize: PDF_CONFIG.card.iconSize,
+  iconGap: PDF_CONFIG.card.iconGap,
+  titleHeight: PDF_CONFIG.card.titleHeight,
+  subtitleGap: PDF_CONFIG.card.subtitleGap,
+  contentGap: PDF_CONFIG.card.contentGap,
 };
 
 // Types for tab/page content
@@ -170,27 +265,6 @@ const sanitizeText = (text: string): string => {
 };
 
 /**
- * STANDARDIZED BOX SIZING SYSTEM
- * All box heights should be calculated dynamically based on content
- * to ensure consistent spacing across all PDF sections.
- * 
- * Standard padding values:
- * - paddingTop: 8pt (space from box top to first content)
- * - paddingBottom: 6pt (space from last content to box bottom)
- * - paddingX: 8pt (horizontal padding)
- */
-const BOX_SIZING = {
-  paddingTop: 6,
-  paddingBottom: 4,
-  paddingX: 6,
-  iconSize: 8,         // Reduced from 12
-  iconGap: 4,          // Gap after icon (reduced)
-  titleHeight: 5,      // Height occupied by title text
-  subtitleGap: 4,      // Gap between title and subtitle (reduced)
-  contentGap: 4,       // Gap between header area and content (reduced)
-};
-
-/**
  * Calculate hero box height dynamically based on content
  * @param doc - jsPDF instance for measuring text
  * @param descText - Description text to measure
@@ -209,7 +283,7 @@ const calculateHeroBoxHeight = (
   // Header: title + subtitle + gap to description
   const titleHeight = 5; // Title line
   const subtitleHeight = hasSubtitle ? BOX_SIZING.subtitleGap + 5 : 0; // Subtitle line
-  const subtitleToDescGap = PDF_CONFIG.subtitleToBullets + 4; // Gap between subtitle and description
+  const subtitleToDescGap = PDF_CONFIG.spacing.subtitleToBullets + 4; // Gap between subtitle and description
   
   return BOX_SIZING.paddingTop + titleHeight + subtitleHeight + subtitleToDescGap + descHeight + BOX_SIZING.paddingBottom;
 };
@@ -413,7 +487,7 @@ const renderSectionHeader = (
     doc.setTextColor(...textColor);
     setBodyFont(doc);
     doc.text(subtitle, x + 14, newY);
-    newY += hasBulletsFollowing ? PDF_CONFIG.subtitleToBullets : PDF_CONFIG.spacing.paragraphGap;
+    newY += hasBulletsFollowing ? PDF_CONFIG.spacing.subtitleToBullets : PDF_CONFIG.spacing.paragraphGap;
   }
   
   return newY;
@@ -1972,7 +2046,7 @@ const renderStrategicApproach = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
   doc.text("Hobson has been designed to become the default intelligence layer", margin + 18, yPosition + 14);
-  yPosition += 14 + PDF_CONFIG.subtitleToBullets + PDF_CONFIG.lineHeight.body;
+  yPosition += 14 + PDF_CONFIG.spacing.subtitleToBullets + PDF_CONFIG.lineHeight.body;
 
   const businessItems = [
     "Usage-based pricing aligned to value delivered (HEU)",
@@ -4389,7 +4463,7 @@ const renderGanttChart = (
     // Calculate tighter card height: header area (32) + gap (4) + objectives + bottom padding (6)
     const headerHeight = 30; // Year badge + title + goal
     const objectivesHeight = yearData.objectives.length * PDF_CONFIG.lineHeight.body;
-    const cardHeight = headerHeight + PDF_CONFIG.subtitleToBullets + objectivesHeight + 8;
+    const cardHeight = headerHeight + PDF_CONFIG.spacing.subtitleToBullets + objectivesHeight + 8;
     
     yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
     
@@ -4419,7 +4493,7 @@ const renderGanttChart = (
     doc.text(`Goal: ${yearData.goal}`, margin + 12, yPosition + 24);
 
     // Objectives - start after header with proper gap
-    let objY = yPosition + headerHeight + PDF_CONFIG.subtitleToBullets;
+    let objY = yPosition + headerHeight + PDF_CONFIG.spacing.subtitleToBullets;
     setBodySmallFont(doc);
     yearData.objectives.forEach((obj) => {
       doc.setFillColor(...yearData.color);
@@ -4599,7 +4673,7 @@ const renderTechStack = (
   categories.forEach((category) => {
     // Calculate content height: title + gap + items
     const titleHeight = 10;
-    const titleToItemsGap = PDF_CONFIG.subtitleToBullets;
+    const titleToItemsGap = PDF_CONFIG.spacing.subtitleToBullets;
     const itemsHeight = category.items.length * PDF_CONFIG.lineHeight.body;
     const contentHeight = titleHeight + titleToItemsGap + itemsHeight;
     
