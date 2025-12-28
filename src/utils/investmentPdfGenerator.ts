@@ -7594,7 +7594,7 @@ const renderMarketDescription = (
   };
 
   // Header with intro
-  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), maxWidth - 40);
+  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), maxWidth - 20);
   const headerHeight = 28 + introLines.length * bodyLine;
   fitPage(headerHeight + 6);
 
@@ -7617,7 +7617,7 @@ const renderMarketDescription = (
   doc.setFont("helvetica", "normal");
   let textY = yPosition + 28;
   introLines.forEach((line: string) => {
-    doc.text(line, margin + 12, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
 
