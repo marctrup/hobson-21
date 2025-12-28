@@ -7651,8 +7651,11 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  trendsIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  trendsIntroLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === trendsIntroLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
   textY += 4;
@@ -7669,8 +7672,11 @@ const renderMarketDescription = (
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "italic");
-  trendsConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  trendsConclusionLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === trendsConclusionLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
 
@@ -7705,8 +7711,11 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  automationIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  automationIntroLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === automationIntroLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
   textY += 6;
@@ -7744,8 +7753,11 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  automationConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  automationConclusionLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === automationConclusionLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
 
@@ -7776,8 +7788,11 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  docIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  docIntroLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === docIntroLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
   textY += 4;
@@ -7794,8 +7809,11 @@ const renderMarketDescription = (
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "italic");
-  docConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  docConclusionLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === docConclusionLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
 
@@ -7827,8 +7845,11 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  compIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  compIntroLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === compIntroLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
   textY += 6;
@@ -7869,8 +7890,11 @@ const renderMarketDescription = (
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "italic");
-  compConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  compConclusionLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === compConclusionLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
 
@@ -7966,8 +7990,11 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  whyNowIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  whyNowIntroLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === whyNowIntroLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
   textY += 6;
@@ -8002,8 +8029,11 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  whyNowConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  whyNowConclusionLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === whyNowConclusionLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
 
@@ -8030,8 +8060,11 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  posIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  posIntroLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === posIntroLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
   textY += 6;
