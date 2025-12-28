@@ -85,6 +85,14 @@ const PDF_CONFIG = {
     headerToContent: 18,  // Alias for contentBoxStart
     boxTopPadding: 10,    // Top padding for box height calc (10 + lines * factor)
     boxContentPadding: 6, // Content box internal padding (+6 in height calc)
+    pageBreakMargin: 40,  // Bottom margin for page break check
+    circleOffset: 10,     // X offset for circle from margin
+    itemGap: 12,          // Gap between items/sections
+    textIndent: 18,       // Standard text indent from margin
+    contentPadding: 14,   // Padding for content areas
+    bulletOffset: 8,      // X offset for bullet circles
+    bulletTextOffset: 20, // X offset for text after bullets
+    gridGap: 10,          // Gap between grid columns
   },
 
   // ============================================================================
@@ -2229,7 +2237,7 @@ const renderFoundingLeadership = (
 
   // Helper for page break
   const checkPageBreak = (requiredSpace: number) => {
-    if (yPosition + requiredSpace > pageHeight - 40) {
+    if (yPosition + requiredSpace > pageHeight - PDF_CONFIG.spacing.pageBreakMargin) {
       doc.addPage();
       yPosition = margin;
     }
@@ -2241,42 +2249,42 @@ const renderFoundingLeadership = (
   renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 10, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.circleOffset, yPosition + PDF_CONFIG.spacing.itemGap, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Proven Operators. Repeat Exits. Category Builders", margin + 18, yPosition + 14);
+  doc.text("Proven Operators. Repeat Exits. Category Builders", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.contentPadding);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const headerText = "Hobson is led by a team that has built, scaled, and exited technology companies across three decades through multiple economic cycles and technology shifts. This is not a first venture.";
-  const headerLines = doc.splitTextToSize(sanitizeText(headerText), maxWidth - 24);
-  let headerY = yPosition + 24;
+  const headerLines = doc.splitTextToSize(sanitizeText(headerText), maxWidth - PDF_CONFIG.spacing.textIndent - PDF_CONFIG.spacing.itemGap);
+  let headerY = yPosition + PDF_CONFIG.spacing.textIndent + PDF_CONFIG.spacing.itemGap;
   headerLines.forEach((line: string) => {
-    doc.text(line, margin + 12, headerY);
+    doc.text(line, margin + PDF_CONFIG.spacing.itemGap, headerY);
     headerY += PDF_CONFIG.lineHeight.body;
   });
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson is the next evolution of a proven execution engine.", margin + 12, headerY + 2);
+  doc.text("Hobson is the next evolution of a proven execution engine.", margin + PDF_CONFIG.spacing.itemGap, headerY + 2);
   doc.setFont("helvetica", "normal");
 
-  yPosition += headerHeight + 12;
+  yPosition += headerHeight + PDF_CONFIG.spacing.itemGap;
 
   // Section 1: The founding leadership has
   checkPageBreak(45);
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2, PDF_CONFIG.circleSize.large, "F");
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setTextColor(...PDF_CONFIG.bgWhite);
-  doc.setFontSize(8);
-  doc.text("1", margin + 8, yPosition + 7, { align: "center" });
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
+  doc.text("1", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The founding leadership has:", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("The founding leadership has:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2);
+  yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const foundingExperience = [
     "built businesses throughout the 1990s, 2000s, and 2010s,",
@@ -2286,47 +2294,47 @@ const renderFoundingLeadership = (
 
   foundingExperience.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.blue);
-    doc.circle(margin + 14, yPosition + 2, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + 2, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    doc.text(sanitizeText(item), margin + 20, yPosition + 3);
+    doc.text(sanitizeText(item), margin + PDF_CONFIG.spacing.bulletTextOffset, yPosition + 3);
     yPosition += PDF_CONFIG.lineHeight.body + 1;
   });
 
-  yPosition += 8;
+  yPosition += PDF_CONFIG.spacing.bulletOffset;
 
   // Section 2: Arthur & Aareon Experience
   checkPageBreak(65);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2, PDF_CONFIG.circleSize.large, "F");
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setTextColor(...PDF_CONFIG.bgWhite);
-  doc.setFontSize(8);
-  doc.text("2", margin + 8, yPosition + 7, { align: "center" });
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
+  doc.text("2", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Arthur & Aareon Experience", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("Arthur & Aareon Experience", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2);
+  yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const arthurBoxHeight = 52;
-  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, arthurBoxHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
+  renderContentCard(doc, margin + PDF_CONFIG.spacing.circleOffset, yPosition, maxWidth - PDF_CONFIG.spacing.bulletTextOffset, arthurBoxHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const arthurText1 = "Most notably, the team previously founded and scaled Arthur, a category-leading property management platform that Advent International and Aareon ultimately acquired in 2021.";
-  const arthurLines1 = doc.splitTextToSize(sanitizeText(arthurText1), maxWidth - 40);
-  let arthurY = yPosition + 8;
+  const arthurLines1 = doc.splitTextToSize(sanitizeText(arthurText1), maxWidth - PDF_CONFIG.spacing.pageBreakMargin);
+  let arthurY = yPosition + PDF_CONFIG.spacing.bulletOffset;
   arthurLines1.forEach((line: string) => {
-    doc.text(line, margin + 18, arthurY);
+    doc.text(line, margin + PDF_CONFIG.spacing.textIndent, arthurY);
     arthurY += PDF_CONFIG.lineHeight.body;
   });
 
   arthurY += 2;
   const arthurText2 = "Following that acquisition, the leadership remained deeply involved in enterprise growth and strategic expansion inside Aareon's global organisation, where they:";
-  const arthurLines2 = doc.splitTextToSize(sanitizeText(arthurText2), maxWidth - 40);
+  const arthurLines2 = doc.splitTextToSize(sanitizeText(arthurText2), maxWidth - PDF_CONFIG.spacing.pageBreakMargin);
   arthurLines2.forEach((line: string) => {
-    doc.text(line, margin + 18, arthurY);
+    doc.text(line, margin + PDF_CONFIG.spacing.textIndent, arthurY);
     arthurY += PDF_CONFIG.lineHeight.body;
   });
 
@@ -2339,52 +2347,52 @@ const renderFoundingLeadership = (
 
   aareonExperience.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 22, arthurY - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(margin + PDF_CONFIG.spacing.bulletTextOffset + 2, arthurY - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(sanitizeText(item), margin + 28, arthurY);
+    doc.text(sanitizeText(item), margin + PDF_CONFIG.spacing.bulletTextOffset + PDF_CONFIG.spacing.bulletOffset, arthurY);
     arthurY += PDF_CONFIG.lineHeight.body;
   });
 
-  yPosition += arthurBoxHeight + 12;
+  yPosition += arthurBoxHeight + PDF_CONFIG.spacing.itemGap;
 
   // Section 3: Key Insight
   checkPageBreak(30);
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2, PDF_CONFIG.circleSize.large, "F");
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setTextColor(...PDF_CONFIG.bgWhite);
-  doc.setFontSize(8);
-  doc.text("3", margin + 8, yPosition + 7, { align: "center" });
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
+  doc.text("3", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("This experience gives Hobson something few startups ever possess:", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("This experience gives Hobson something few startups ever possess:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2);
+  yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const insightBoxHeight = 16;
-  renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, insightBoxHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
+  renderContentCard(doc, margin + PDF_CONFIG.spacing.circleOffset, yPosition, maxWidth - PDF_CONFIG.spacing.bulletTextOffset, insightBoxHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.text("Direct, operational knowledge of how to build, scale, integrate, and exit Real Estate technology businesses.", margin + 18, yPosition + 10);
+  doc.text("Direct, operational knowledge of how to build, scale, integrate, and exit Real Estate technology businesses.", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.circleOffset);
   doc.setFont("helvetica", "normal");
 
-  yPosition += insightBoxHeight + 12;
+  yPosition += insightBoxHeight + PDF_CONFIG.spacing.itemGap;
 
   // Section 4: What Team Has Navigated
   checkPageBreak(60);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2, PDF_CONFIG.circleSize.large, "F");
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setTextColor(...PDF_CONFIG.bgWhite);
-  doc.setFontSize(8);
-  doc.text("4", margin + 8, yPosition + 7, { align: "center" });
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
+  doc.text("4", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Hobson's team has already navigated:", margin + 18, yPosition + 7);
-  yPosition += 14;
+  doc.text("Hobson's team has already navigated:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2);
+  yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const teamNavigated = [
     "product-market fit,",
@@ -2396,25 +2404,25 @@ const renderFoundingLeadership = (
   ];
 
   // 2x3 grid
-  const cardWidth = (maxWidth - 30) / 2;
+  const cardWidth = (maxWidth - PDF_CONFIG.spacing.gridGap * 3) / 2;
   const cardHeight = 16;
   teamNavigated.forEach((item, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
-    const cardX = margin + 10 + col * (cardWidth + 6);
-    const cardY = yPosition + row * (cardHeight + 4);
+    const cardX = margin + PDF_CONFIG.spacing.circleOffset + col * (cardWidth + PDF_CONFIG.spacing.cardGap);
+    const cardY = yPosition + row * (cardHeight + PDF_CONFIG.spacing.boxGap);
 
     renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(cardX + 8, cardY + 8, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(cardX + PDF_CONFIG.spacing.bulletOffset, cardY + PDF_CONFIG.spacing.bulletOffset, PDF_CONFIG.circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    doc.text(sanitizeText(item), cardX + 14, cardY + 10);
+    doc.text(sanitizeText(item), cardX + PDF_CONFIG.spacing.contentPadding, cardY + PDF_CONFIG.spacing.circleOffset);
   });
 
-  yPosition += 3 * (cardHeight + 4) + 12;
+  yPosition += 3 * (cardHeight + PDF_CONFIG.spacing.boxGap) + PDF_CONFIG.spacing.itemGap;
 
   // Conclusion box
   checkPageBreak(24);
@@ -2422,13 +2430,13 @@ const renderFoundingLeadership = (
   renderContentCard(doc, margin, yPosition, maxWidth, conclusionHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.circleOffset, yPosition + PDF_CONFIG.spacing.circleOffset, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   const conclusionText = "Hobson enters the market with dramatically reduced execution risk and a clear blueprint for both scale and exit.";
-  doc.text(sanitizeText(conclusionText), margin + 18, yPosition + 12);
+  doc.text(sanitizeText(conclusionText), margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.itemGap);
   doc.setFont("helvetica", "normal");
 
   yPosition += conclusionHeight + PDF_CONFIG.spacing.sectionGap;
