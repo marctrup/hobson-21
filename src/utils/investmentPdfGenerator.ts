@@ -22,16 +22,8 @@ import { competitorData } from "@/components/investor/data/competitorData";
 // ============================================================================
 // All sizing, spacing, and typography values are defined here.
 // These values supersede any hardcoded values in render functions.
-// When modifying PDF appearance, update these values FIRST.
+// Values extracted from Strategy & Approach cards as the baseline.
 // ============================================================================
-
-// Colors matched to design system (index.css)
-// Primary: HSL 269 91% 52% = RGB 124, 58, 237 (#7c3aed)
-// Primary Light: HSL 269 75% 65% = RGB 168, 113, 246 (#a871f6)
-// Background: HSL 0 0% 100% = RGB 255, 255, 255
-// Foreground: HSL 222.2 84% 4.9% = RGB 9, 9, 25 (~dark)
-// Muted: HSL 210 40% 96.1% = RGB 241, 245, 249 (#f1f5f9)
-// Border: HSL 214.3 31.8% 91.4% = RGB 226, 232, 240 (#e2e8f0)
 
 const PDF_CONFIG = {
   // ============================================================================
@@ -40,7 +32,7 @@ const PDF_CONFIG = {
   margin: 20,
 
   // ============================================================================
-  // FONT SIZES (in points) - MASTER DEFAULTS
+  // FONT SIZES (in points) - from Strategy & Approach cards
   // ============================================================================
   fontSize: {
     pageTitle: 18,        // Tab/page titles (H1 equivalent)
@@ -53,7 +45,7 @@ const PDF_CONFIG = {
   },
 
   // ============================================================================
-  // LINE HEIGHT / LINE SPACING - MASTER DEFAULTS
+  // LINE HEIGHT (in points) - vertical spacing between lines
   // ============================================================================
   lineHeight: {
     body: 5,              // Standard line spacing for body text
@@ -62,66 +54,72 @@ const PDF_CONFIG = {
   },
 
   // ============================================================================
-  // LINE HEIGHT FACTOR (multiplier for text rendering)
-  // Used with doc.text() lineHeightFactor option
+  // LINE HEIGHT FACTOR - multiplier for doc.text() lineHeightFactor option
+  // From Strategy & Approach: 1.2 for headers, 1.25 for body paragraphs
   // ============================================================================
   lineHeightFactor: {
-    body: 1.25,           // Standard paragraphs
-    tight: 1.15,          // Compact text blocks
-    loose: 1.35,          // Headers, titles
-    justified: 1.25,      // Justified paragraph text
+    tight: 1.2,           // Compact headers, inflexion point text
+    body: 1.25,           // Standard paragraphs, justified text
+    loose: 1.35,          // Headers with more breathing room
   },
 
   // ============================================================================
-  // SPACING - MASTER DEFAULTS (in points)
+  // SPACING (in points) - gaps between elements
+  // From Strategy & Approach cards
   // ============================================================================
   spacing: {
     sectionGap: 8,        // Gap between major sections
-    cardGap: 6,           // Gap between cards/boxes
+    cardGap: 6,           // Gap between cards/boxes (yPosition += height + 6)
     headingGap: 5,        // Gap between title and subtitle
     paragraphGap: 4,      // Gap between paragraphs
     titleToContent: 6,    // Gap between header area and main content
     subtitleToBullets: 4, // Gap between subtitle and bullet list
     bulletIndent: 6,      // Indent for bullet point text from bullet
     listItemGap: 1,       // Extra gap after each list item
+    boxToBox: 5,          // Gap between adjacent boxes (missionBoxY + missionBoxHeight + 5)
+    contentStart: 8,      // Y offset for first content line inside box (yPosition + 8)
+    headerToContent: 18,  // Header row height before content box
   },
 
   // ============================================================================
-  // CIRCLE SIZES (radius in points) - MASTER DEFAULTS
-  // Used for bullets, badges, icons
+  // CIRCLE SIZES (radius in points) - from Strategy & Approach
   // ============================================================================
   circleSize: {
     bullet: 0.8,          // Small bullet points in lists
-    small: 1.2,           // Secondary badges, small indicators
-    medium: 2.0,          // Card badges, icons in headers
+    small: 1.2,           // Pressure box warning icons (PDF_CONFIG.circleSize.small)
+    medium: 2.0,          // Card header icons, badges
     large: 3.2,           // Section headers, numbered badges
     xlarge: 4.0,          // Hero section icons
   },
 
   // ============================================================================
-  // BOX/CARD SIZING - MASTER DEFAULTS (in points)
+  // BOX/CARD SIZING (in points) - from Strategy & Approach
   // ============================================================================
   box: {
+    paddingX: 8,          // Horizontal padding (innerPadding, ctxPadding, posPadding, etc.)
     paddingTop: 8,        // Top padding inside boxes
     paddingBottom: 6,     // Bottom padding inside boxes
-    paddingX: 8,          // Horizontal padding (left/right)
     paddingCompact: 6,    // Compact padding for dense cards
-    borderRadius: 3,      // Corner radius for rounded boxes
+    borderRadius: 3,      // Corner radius for roundedRect (3, 3)
+    borderRadiusSmall: 2, // Smaller radius for pressure boxes
     borderWidth: 0.3,     // Default border stroke width
-    borderWidthThin: 0.2, // Thin border for subtle cards
+    borderWidthThin: 0.2, // Thin border for subtle cards/content boxes
+    minBoxHeight: 18,     // Minimum box height (pressureBoxHeight)
+    contentBoxPadding: 6, // Padding inside content boxes (missionBoxHeight calculation +6)
   },
 
   // ============================================================================
-  // CARD LAYOUT - MASTER DEFAULTS
+  // CARD LAYOUT - from Strategy & Approach
   // ============================================================================
   card: {
     iconSize: 8,          // Icon dimensions in cards
     iconGap: 4,           // Gap after icon before text
+    iconOffsetX: 10,      // X position of icon from card edge (margin + 10)
+    textOffsetX: 20,      // X position of text after icon (margin + 20)
     titleHeight: 5,       // Height occupied by title text line
-    subtitleGap: 4,       // Gap between title and subtitle
+    subtitleGap: 7,       // Gap from title baseline to subtitle (yPosition + 8 vs + 15)
     contentGap: 6,        // Gap between header area and content
-    headerHeight: 20,     // Total header area (title + subtitle + gaps)
-    minHeight: 30,        // Minimum card height
+    headerHeight: 18,     // Total header area before content box starts
   },
 
   // ============================================================================
@@ -135,36 +133,32 @@ const PDF_CONFIG = {
   // ============================================================================
   // COLORS - RGB values matched to design system
   // ============================================================================
-  primaryColor: [124, 58, 237] as [number, number, number],       // hsl(269 91% 52%) - brand purple
-  primaryLight: [168, 113, 246] as [number, number, number],      // hsl(269 75% 65%) - lighter purple
-  primaryBg: [240, 235, 255] as [number, number, number],         // Very light purple for Hobson row
-  primaryBgLight: [250, 245, 255] as [number, number, number],    // from-primary/5 - very subtle purple
-  primaryBgMedium: [245, 238, 255] as [number, number, number],   // via-primary/10 - subtle purple
-  textDark: [9, 9, 25] as [number, number, number],               // hsl(222.2 84% 4.9%) - foreground
-  textGray: [100, 116, 139] as [number, number, number],          // hsl(215.4 16.3% 46.9%) - muted-foreground
-  textLight: [148, 163, 184] as [number, number, number],         // lighter muted
-  bgLight: [241, 245, 249] as [number, number, number],           // hsl(210 40% 96.1%) - muted bg
-  bgWhite: [255, 255, 255] as [number, number, number],           // white
-  border: [226, 232, 240] as [number, number, number],            // hsl(214.3 31.8% 91.4%) - border color
-  headerBg: [245, 243, 255] as [number, number, number],          // primary/10 - light purple header
-  // Emerald colors for market section
-  emerald: [5, 150, 105] as [number, number, number],             // emerald-600
-  emeraldLight: [16, 185, 129] as [number, number, number],       // emerald-500
-  emeraldBg: [236, 253, 245] as [number, number, number],         // emerald-50
-  emeraldBgLight: [240, 253, 248] as [number, number, number],    // from-emerald-50
-  emeraldBorder: [167, 243, 208] as [number, number, number],     // emerald-200/50
-  // Blue colors for traction section
-  blue: [37, 99, 235] as [number, number, number],                // blue-600
-  blueBg: [239, 246, 255] as [number, number, number],            // blue-50/50
-  blueBorder: [219, 234, 254] as [number, number, number],        // blue-100
-  // Rose colors for brand section
-  rose: [225, 29, 72] as [number, number, number],                // rose-600
-  roseBg: [255, 241, 242] as [number, number, number],            // rose-50
-  roseBorder: [254, 205, 211] as [number, number, number],        // rose-200
-  // Amber colors for business section
-  amber: [217, 119, 6] as [number, number, number],               // amber-600
-  amberBg: [255, 251, 235] as [number, number, number],           // amber-50
-  amberBorder: [253, 230, 138] as [number, number, number],       // amber-200
+  primaryColor: [124, 58, 237] as [number, number, number],
+  primaryLight: [168, 113, 246] as [number, number, number],
+  primaryBg: [240, 235, 255] as [number, number, number],
+  primaryBgLight: [250, 245, 255] as [number, number, number],
+  primaryBgMedium: [245, 238, 255] as [number, number, number],
+  textDark: [9, 9, 25] as [number, number, number],
+  textGray: [100, 116, 139] as [number, number, number],
+  textLight: [148, 163, 184] as [number, number, number],
+  bgLight: [241, 245, 249] as [number, number, number],
+  bgWhite: [255, 255, 255] as [number, number, number],
+  border: [226, 232, 240] as [number, number, number],
+  headerBg: [245, 243, 255] as [number, number, number],
+  emerald: [5, 150, 105] as [number, number, number],
+  emeraldLight: [16, 185, 129] as [number, number, number],
+  emeraldBg: [236, 253, 245] as [number, number, number],
+  emeraldBgLight: [240, 253, 248] as [number, number, number],
+  emeraldBorder: [167, 243, 208] as [number, number, number],
+  blue: [37, 99, 235] as [number, number, number],
+  blueBg: [239, 246, 255] as [number, number, number],
+  blueBorder: [219, 234, 254] as [number, number, number],
+  rose: [225, 29, 72] as [number, number, number],
+  roseBg: [255, 241, 242] as [number, number, number],
+  roseBorder: [254, 205, 211] as [number, number, number],
+  amber: [217, 119, 6] as [number, number, number],
+  amberBg: [255, 251, 235] as [number, number, number],
+  amberBorder: [253, 230, 138] as [number, number, number],
 };
 
 // ============================================================================
