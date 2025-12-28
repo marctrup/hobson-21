@@ -7574,7 +7574,7 @@ const renderCustomerUserJourneys = (
 };
 
 /**
- * Render Market Description - matches UI layout
+ * Render Market Description - matches UI layout exactly
  */
 const renderMarketDescription = (
   doc: jsPDF,
@@ -7593,24 +7593,21 @@ const renderMarketDescription = (
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
   };
 
-  // Header with intro
+  // 1. INTRO SECTION (Blue gradient box) - matches visual blue box
   const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), maxWidth - 20);
   const headerHeight = 28 + introLines.length * bodyLine;
   fitPage(headerHeight + 6);
 
-  doc.setFillColor(...PDF_CONFIG.emeraldBg);
+  doc.setFillColor(...PDF_CONFIG.blueBg);
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.emeraldBorder);
+  doc.setDrawColor(...PDF_CONFIG.blueBorder);
   doc.setLineWidth(0.3);
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "S");
-
-  doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + 22, yPosition + 14);
+  doc.text(data.header.title, margin + 10, yPosition + 14);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
@@ -7623,54 +7620,29 @@ const renderMarketDescription = (
 
   yPosition += headerHeight + 8;
 
-  // Market stats (2x2 grid)
-  const statWidth = (maxWidth - 8) / 2;
-  const statHeight = 28;
-  fitPage(statHeight * 2 + 12);
-
-  data.marketStats.forEach((stat, idx) => {
-    const row = Math.floor(idx / 2);
-    const col = idx % 2;
-    const x = margin + col * (statWidth + 8);
-    const y = yPosition + row * (statHeight + 4);
-
-    doc.setFillColor(...PDF_CONFIG.emeraldBg);
-    doc.roundedRect(x, y, statWidth, statHeight, 3, 3, "F");
-
-    doc.setTextColor(...PDF_CONFIG.emerald);
-    doc.setFontSize(PDF_CONFIG.fontSize.stat);
-    doc.setFont("helvetica", "bold");
-    doc.text(stat.value, x + 8, y + 14);
-
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-    doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(stat.label), x + 8, y + 22);
-
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.caption);
-    doc.text(`Source: ${stat.source}`, x + statWidth - 8, y + 22, { align: "right" });
-  });
-
-  yPosition += statHeight * 2 + 12;
-
-  // Key Trends section
-  const trendsIntroLines = doc.splitTextToSize(sanitizeText(data.keyTrends.intro), maxWidth - 28);
+  // 2. KEY ACTIONABLE TRENDS SECTION (Slate/gray box) - matches visual slate box
+  const trendsIntroLines = doc.splitTextToSize(sanitizeText(data.keyTrends.intro), maxWidth - 20);
   const trendsItemsHeight = data.keyTrends.items.length * (bodyLine + 2);
-  const trendsConclusionLines = doc.splitTextToSize(sanitizeText(data.keyTrends.conclusion), maxWidth - 28);
+  const trendsConclusionLines = doc.splitTextToSize(sanitizeText(data.keyTrends.conclusion), maxWidth - 20);
   const trendsHeight = 24 + trendsIntroLines.length * bodyLine + 6 + trendsItemsHeight + 6 + trendsConclusionLines.length * bodyLine + 10;
   fitPage(trendsHeight + 6);
 
-  doc.setFillColor(248, 250, 252);
+  doc.setFillColor(248, 250, 252); // slate-50
   doc.roundedRect(margin, yPosition, maxWidth, trendsHeight, 3, 3, "F");
+  doc.setDrawColor(226, 232, 240); // slate-200
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, trendsHeight, 3, 3, "S");
 
-  doc.setTextColor(...PDF_CONFIG.emerald);
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText(data.keyTrends.title), margin + 10, yPosition + 14);
+  doc.text(sanitizeText(data.keyTrends.title), margin + 22, yPosition + 14);
 
-  textY = yPosition + 24;
-  doc.setTextColor(...PDF_CONFIG.textDark);
+  textY = yPosition + 26;
+  doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   trendsIntroLines.forEach((line: string) => {
@@ -7680,9 +7652,10 @@ const renderMarketDescription = (
   textY += 4;
 
   data.keyTrends.items.forEach((item) => {
-    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.setFillColor(...PDF_CONFIG.blue);
     doc.circle(margin + 14, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const itemLines = doc.splitTextToSize(sanitizeText(item), maxWidth - 32);
+    const itemLines = doc.splitTextToSize(sanitizeText(item), maxWidth - 28);
+    doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(itemLines[0] || "", margin + 20, textY);
     textY += bodyLine + 2;
   });
@@ -7697,39 +7670,118 @@ const renderMarketDescription = (
 
   yPosition += trendsHeight + 8;
 
-  // Document Overload section
-  const docIntroLines = doc.splitTextToSize(sanitizeText(data.documentOverload.intro), maxWidth - 16);
+  // 3. GROWING DEMAND FOR AUTOMATION (Purple box with stats) - matches visual purple box
+  const automationIntro = "Automation is no longer optional in property operations. Global research consistently shows that companies adopting AI and automation are outperforming those that do not:";
+  const automationIntroLines = doc.splitTextToSize(sanitizeText(automationIntro), maxWidth - 20);
+  const automationConclusion = "Operators increasingly recognise that manual administrative work is not scalable, especially in a market with leaner teams, higher data demands, and greater expectation for operational transparency.";
+  const automationConclusionLines = doc.splitTextToSize(sanitizeText(automationConclusion), maxWidth - 20);
+  
+  const statRowHeight = 32;
+  const automationHeight = 26 + automationIntroLines.length * bodyLine + 8 + statRowHeight * 2 + 8 + automationConclusionLines.length * bodyLine + 10;
+  fitPage(automationHeight + 6);
+
+  // Purple gradient background
+  doc.setFillColor(250, 245, 255); // purple-50
+  doc.roundedRect(margin, yPosition, maxWidth, automationHeight, 3, 3, "F");
+  doc.setDrawColor(233, 213, 255); // purple-200
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, automationHeight, 3, 3, "S");
+
+  doc.setFillColor(147, 51, 234); // purple-600
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Growing Demand for Automation", margin + 22, yPosition + 14);
+
+  textY = yPosition + 26;
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  automationIntroLines.forEach((line: string) => {
+    doc.text(line, margin + 10, textY);
+    textY += bodyLine;
+  });
+  textY += 6;
+
+  // Stats grid (2x2)
+  const statWidth = (maxWidth - 24) / 2;
+  data.marketStats.forEach((stat, idx) => {
+    const row = Math.floor(idx / 2);
+    const col = idx % 2;
+    const x = margin + 8 + col * (statWidth + 8);
+    const y = textY + row * (statRowHeight + 4);
+
+    doc.setFillColor(255, 255, 255); // white background
+    doc.roundedRect(x, y, statWidth, statRowHeight, 3, 3, "F");
+    doc.setDrawColor(233, 213, 255); // purple-200
+    doc.setLineWidth(0.2);
+    doc.roundedRect(x, y, statWidth, statRowHeight, 3, 3, "S");
+
+    doc.setTextColor(147, 51, 234); // purple-600
+    doc.setFontSize(PDF_CONFIG.fontSize.stat);
+    doc.setFont("helvetica", "bold");
+    doc.text(stat.value, x + statWidth / 2, y + 12, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(sanitizeText(stat.label), x + statWidth / 2, y + 20, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.text(`Ref: ${stat.source}`, x + statWidth / 2, y + 27, { align: "center" });
+  });
+
+  textY += statRowHeight * 2 + 12;
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  automationConclusionLines.forEach((line: string) => {
+    doc.text(line, margin + 10, textY);
+    textY += bodyLine;
+  });
+
+  yPosition += automationHeight + 8;
+
+  // 4. DOCUMENT OVERLOAD SECTION (Amber box) - matches visual amber box
+  const docIntroLines = doc.splitTextToSize(sanitizeText(data.documentOverload.intro), maxWidth - 20);
   const docItemsHeight = data.documentOverload.items.length * (bodyLine + 2);
-  const docConclusionLines = doc.splitTextToSize(sanitizeText(data.documentOverload.conclusion), maxWidth - 16);
-  const docHeight = 20 + docIntroLines.length * bodyLine + 6 + docItemsHeight + 6 + docConclusionLines.length * bodyLine + 8;
+  const docConclusionLines = doc.splitTextToSize(sanitizeText(data.documentOverload.conclusion), maxWidth - 20);
+  const docHeight = 26 + docIntroLines.length * bodyLine + 6 + docItemsHeight + 6 + docConclusionLines.length * bodyLine + 8;
   fitPage(docHeight + 6);
 
-  doc.setFillColor(...PDF_CONFIG.amberBg);
+  doc.setFillColor(255, 251, 235); // amber-50
   doc.roundedRect(margin, yPosition, maxWidth, docHeight, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.amberBorder);
+  doc.setDrawColor(253, 230, 138); // amber-200
   doc.setLineWidth(0.3);
   doc.roundedRect(margin, yPosition, maxWidth, docHeight, 3, 3, "S");
 
-  doc.setTextColor(...PDF_CONFIG.amber);
+  doc.setFillColor(217, 119, 6); // amber-600
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText(data.documentOverload.title), margin + 8, yPosition + 12);
+  doc.text(sanitizeText(data.documentOverload.title), margin + 22, yPosition + 14);
 
-  textY = yPosition + 20;
-  doc.setTextColor(...PDF_CONFIG.textDark);
+  textY = yPosition + 26;
+  doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   docIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
   textY += 4;
 
   data.documentOverload.items.forEach((item) => {
-    doc.setFillColor(...PDF_CONFIG.amber);
-    doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const itemLines = doc.splitTextToSize(sanitizeText(item), maxWidth - 24);
-    doc.text(itemLines[0] || "", margin + 18, textY);
+    doc.setFillColor(217, 119, 6); // amber-600
+    doc.circle(margin + 14, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    const itemLines = doc.splitTextToSize(sanitizeText(item), maxWidth - 28);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(itemLines[0] || "", margin + 20, textY);
     textY += bodyLine + 2;
   });
   textY += 4;
@@ -7737,58 +7789,74 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "italic");
   docConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
 
   yPosition += docHeight + 8;
 
-  // Compliance section
-  const compIntroLines = doc.splitTextToSize(sanitizeText(data.compliance.intro), maxWidth - 16);
+  // 5. PRESSURE FOR SPEED, COMPLIANCE, ACCURACY (Emerald box) - matches visual emerald box
+  const compIntroLines = doc.splitTextToSize(sanitizeText(data.compliance.intro), maxWidth - 20);
   const demandsHeight = data.compliance.demands.length * (bodyLine + 2);
   const mustDeliverHeight = data.compliance.mustDeliver.length * (bodyLine + 2);
-  const compConclusionLines = doc.splitTextToSize(sanitizeText(data.compliance.conclusion), maxWidth - 16);
-  const compHeight = 20 + compIntroLines.length * bodyLine + 6 + demandsHeight + 12 + mustDeliverHeight + 6 + compConclusionLines.length * bodyLine + 8;
+  const compConclusionLines = doc.splitTextToSize(sanitizeText(data.compliance.conclusion), maxWidth - 20);
+  const compHeight = 26 + compIntroLines.length * bodyLine + 6 + 12 + demandsHeight + 12 + 12 + mustDeliverHeight + 6 + compConclusionLines.length * bodyLine + 8;
   fitPage(compHeight + 6);
 
-  doc.setFillColor(...PDF_CONFIG.roseBg);
+  doc.setFillColor(236, 253, 245); // emerald-50
   doc.roundedRect(margin, yPosition, maxWidth, compHeight, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.roseBorder);
+  doc.setDrawColor(167, 243, 208); // emerald-200
   doc.setLineWidth(0.3);
   doc.roundedRect(margin, yPosition, maxWidth, compHeight, 3, 3, "S");
 
-  doc.setTextColor(...PDF_CONFIG.rose);
+  doc.setFillColor(5, 150, 105); // emerald-600
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(sanitizeText(data.compliance.title), margin + 8, yPosition + 12);
+  doc.text(sanitizeText(data.compliance.title), margin + 22, yPosition + 14);
 
-  textY = yPosition + 20;
-  doc.setTextColor(...PDF_CONFIG.textDark);
+  textY = yPosition + 26;
+  doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   compIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
-  textY += 4;
+  textY += 6;
 
+  // Regulatory & Investor Demands subheader
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.text("Regulatory & Investor Demands:", margin + 10, textY);
+  textY += bodyLine + 2;
+
+  doc.setFont("helvetica", "normal");
   data.compliance.demands.forEach((item) => {
-    doc.setFillColor(...PDF_CONFIG.rose);
-    doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    doc.text(sanitizeText(item), margin + 18, textY);
+    doc.setFillColor(5, 150, 105); // emerald-600
+    doc.circle(margin + 14, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(sanitizeText(item), margin + 20, textY);
     textY += bodyLine + 2;
   });
   textY += 6;
 
+  // Organisations Must Deliver subheader
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.text("Must Deliver:", margin + 8, textY);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.text("Organisations Must Deliver:", margin + 10, textY);
   textY += bodyLine + 2;
-  doc.setFont("helvetica", "normal");
 
+  doc.setFont("helvetica", "normal");
   data.compliance.mustDeliver.forEach((item) => {
-    doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    doc.text(sanitizeText(item), margin + 18, textY);
+    doc.setFillColor(5, 150, 105); // emerald-600
+    doc.circle(margin + 14, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(sanitizeText(item), margin + 20, textY);
     textY += bodyLine + 2;
   });
   textY += 4;
@@ -7796,63 +7864,185 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "italic");
   compConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
 
   yPosition += compHeight + 8;
 
-  // Convergence pressures
-  const pressuresHeight = 18 + data.convergencePressures.length * (bodyLine + 2);
-  fitPage(pressuresHeight + 6);
+  // 6. ACTIONABLE INSIGHTS (4 colored cards in 2x2 grid) - matches visual insight cards
+  const insightCardWidth = (maxWidth - 8) / 2;
+  const insightCardHeight = 48;
+  const insights = [
+    { title: "Data-Intensive Operations", insight: "Real Estate teams now need tools that turn static documents into usable, queryable information.", color: "blue" },
+    { title: "Strategic Automation", insight: "Automation is now a strategic priority, not a future aspiration.", color: "purple" },
+    { title: "Document Overload", insight: "AI-driven document interpretation is the only scalable solution to unstructured portfolio data.", color: "amber" },
+    { title: "Speed & Compliance", insight: "Speed is no longer a competitive advantage - it is a compliance and credibility requirement.", color: "emerald" },
+  ];
 
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, pressuresHeight, 3, 3, "F");
+  fitPage(insightCardHeight * 2 + 12);
 
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Convergence of Pressures", margin + 8, yPosition + 12);
+  insights.forEach((item, idx) => {
+    const row = Math.floor(idx / 2);
+    const col = idx % 2;
+    const x = margin + col * (insightCardWidth + 8);
+    const y = yPosition + row * (insightCardHeight + 4);
 
-  textY = yPosition + 20;
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
-  data.convergencePressures.forEach((item) => {
-    doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    doc.text(sanitizeText(item), margin + 18, textY);
-    textY += bodyLine + 2;
+    // Set colors based on type
+    let bgColor: [number, number, number], borderColor: [number, number, number], iconColor: [number, number, number];
+    switch (item.color) {
+      case "blue":
+        bgColor = [239, 246, 255]; borderColor = [191, 219, 254]; iconColor = [37, 99, 235];
+        break;
+      case "purple":
+        bgColor = [250, 245, 255]; borderColor = [233, 213, 255]; iconColor = [147, 51, 234];
+        break;
+      case "amber":
+        bgColor = [255, 251, 235]; borderColor = [253, 230, 138]; iconColor = [217, 119, 6];
+        break;
+      case "emerald":
+      default:
+        bgColor = [236, 253, 245]; borderColor = [167, 243, 208]; iconColor = [5, 150, 105];
+        break;
+    }
+
+    doc.setFillColor(...bgColor);
+    doc.roundedRect(x, y, insightCardWidth, insightCardHeight, 3, 3, "F");
+    doc.setDrawColor(...borderColor);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(x, y, insightCardWidth, insightCardHeight, 3, 3, "S");
+
+    doc.setFillColor(...iconColor);
+    doc.circle(x + 10, y + 14, PDF_CONFIG.circleSize.medium, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text("ACTIONABLE INSIGHT", x + 20, y + 12);
+
+    const insightLines = doc.splitTextToSize(sanitizeText(item.insight), insightCardWidth - 24);
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "normal");
+    let insightY = y + 22;
+    insightLines.forEach((line: string) => {
+      doc.text(line, x + 10, insightY);
+      insightY += bodyLine;
+    });
   });
 
-  yPosition += pressuresHeight + 8;
+  yPosition += insightCardHeight * 2 + 12;
 
-  // Hobson Position
-  const posIntroLines = doc.splitTextToSize(sanitizeText(data.hobsonPosition.intro), maxWidth - 16);
-  const posConclusionLines = doc.splitTextToSize(sanitizeText(data.hobsonPosition.conclusion), maxWidth - 16);
-  const posHeight = 16 + posIntroLines.length * bodyLine + 6 + posConclusionLines.length * bodyLine + 8;
+  // 7. WHY THE PROBLEM MATTERS NOW (Red box) - matches visual red box
+  const whyNowIntro = "The operational landscape shows a clear convergence of pressures:";
+  const whyNowConclusion = "Real estate operators urgently need tools that deliver clarity from complexity, without requiring system overhauls or disruptive implementation.";
+  const whyNowIntroLines = doc.splitTextToSize(sanitizeText(whyNowIntro), maxWidth - 20);
+  const whyNowConclusionLines = doc.splitTextToSize(sanitizeText(whyNowConclusion), maxWidth - 20);
+  const pressuresGridHeight = Math.ceil(data.convergencePressures.length / 2) * 24;
+  const whyNowHeight = 26 + whyNowIntroLines.length * bodyLine + 6 + pressuresGridHeight + 8 + whyNowConclusionLines.length * bodyLine + 8;
+  fitPage(whyNowHeight + 6);
+
+  doc.setFillColor(254, 242, 242); // red-50
+  doc.roundedRect(margin, yPosition, maxWidth, whyNowHeight, 3, 3, "F");
+  doc.setDrawColor(254, 202, 202); // red-200
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, whyNowHeight, 3, 3, "S");
+
+  doc.setFillColor(220, 38, 38); // red-600
+  doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Why the Problem Matters Now", margin + 22, yPosition + 14);
+
+  textY = yPosition + 26;
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  whyNowIntroLines.forEach((line: string) => {
+    doc.text(line, margin + 10, textY);
+    textY += bodyLine;
+  });
+  textY += 6;
+
+  // Pressures as numbered grid
+  const pressureCardWidth = (maxWidth - 24) / 3;
+  data.convergencePressures.forEach((pressure, idx) => {
+    const row = Math.floor(idx / 3);
+    const col = idx % 3;
+    const x = margin + 8 + col * (pressureCardWidth + 4);
+    const y = textY + row * 22;
+
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(x, y, pressureCardWidth, 18, 2, 2, "F");
+    doc.setDrawColor(254, 202, 202);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(x, y, pressureCardWidth, 18, 2, 2, "S");
+
+    doc.setTextColor(220, 38, 38); // red-600
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${idx + 1}.`, x + 4, y + 11);
+
+    const pressureLines = doc.splitTextToSize(sanitizeText(pressure), pressureCardWidth - 18);
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text(pressureLines[0] || "", x + 14, y + 11);
+  });
+
+  textY += pressuresGridHeight + 6;
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  whyNowConclusionLines.forEach((line: string) => {
+    doc.text(line, margin + 10, textY);
+    textY += bodyLine;
+  });
+
+  yPosition += whyNowHeight + 8;
+
+  // 8. HOBSON'S STRATEGIC POSITION (Primary/purple box) - matches visual primary box
+  const posIntroLines = doc.splitTextToSize(sanitizeText(data.hobsonPosition.intro), maxWidth - 20);
+  const posConclusionLines = doc.splitTextToSize(sanitizeText(data.hobsonPosition.conclusion), maxWidth - 24);
+  const posHeight = 20 + posIntroLines.length * bodyLine + 10 + posConclusionLines.length * bodyLine + 14;
   fitPage(posHeight + 6);
 
-  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, posHeight, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(0.3);
   doc.roundedRect(margin, yPosition, maxWidth, posHeight, 3, 3, "S");
 
-  textY = yPosition + 10;
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Hobson's Strategic Position", margin + 10, yPosition + 14);
+
+  textY = yPosition + 26;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   posIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
-  textY += 4;
+  textY += 6;
 
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  // Conclusion in highlighted box
+  const conclusionBoxHeight = posConclusionLines.length * bodyLine + 10;
+  doc.setFillColor(236, 253, 245); // emerald-50
+  doc.roundedRect(margin + 8, textY - 4, maxWidth - 16, conclusionBoxHeight, 3, 3, "F");
+  doc.setDrawColor(167, 243, 208); // emerald-200
+  doc.setLineWidth(0.2);
+  doc.roundedRect(margin + 8, textY - 4, maxWidth - 16, conclusionBoxHeight, 3, 3, "S");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
+  textY += 2;
   posConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + 14, textY);
     textY += bodyLine;
   });
 
