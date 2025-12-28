@@ -9356,18 +9356,18 @@ const renderSWOTAnalysis = (
 
   // Pillars Evaluation Matrix - full table with explanations
   const pillarsData = [
-    { pillar: "Personalization", rating: 4, explanation: "We work closely with each client, understanding their needs and adapting Hobson to their specific workflows. Every partner has undergone individual discovery and follow-up, but the process is still conducted manually rather than automated." },
-    { pillar: "Resolution", rating: 2, explanation: "Because we're an early-stage company, we've had a few breakdowns, but we also lack formal processes to recover from them. Resolution is our most enormous future gap." },
-    { pillar: "Integrity", rating: 4, explanation: "Transparency is at the core of how we communicate. We're clear about what Hobson can and can't do, and our pricing model reflects that honesty." },
-    { pillar: "Time & Effort", rating: 5, explanation: "Hobson is built to reduce friction and effort by making every interaction intuitive and efficient." },
-    { pillar: "Expectations", rating: 4, explanation: "We're focused on the MVP and what it can do today as defined. But as trust grows, we must shift from 'it was expected' to 'beating expectations'." },
-    { pillar: "Empathy", rating: 4, explanation: "We've shaped the MVP around real client pain. Our early interactions - especially discovery and feedback - show we listen closely." }
+    { pillar: "Personalization", rating: 4, explanation: "We work closely with each client, adapting Hobson to their workflows. Manual discovery process." },
+    { pillar: "Resolution", rating: 2, explanation: "Early-stage gaps in formal recovery processes. Our biggest area for improvement." },
+    { pillar: "Integrity", rating: 4, explanation: "Transparent communication about capabilities. Honest pricing model." },
+    { pillar: "Time & Effort", rating: 5, explanation: "Built to reduce friction with intuitive, efficient interactions." },
+    { pillar: "Expectations", rating: 4, explanation: "Focused on MVP delivery. Need to shift from 'expected' to 'exceeding'." },
+    { pillar: "Empathy", rating: 4, explanation: "Shaped by real client pain. Discovery and feedback show we listen." }
   ];
 
   // Calculate total height for pillars table
-  const pillarRowHeight = 22;
-  const pillarTableHeaderHeight = 16;
-  const pillarTableHeight = pillarTableHeaderHeight + pillarsData.length * pillarRowHeight + 8;
+  const pillarRowHeight = 16;
+  const pillarTableHeaderHeight = 20;
+  const pillarTableHeight = pillarTableHeaderHeight + pillarsData.length * pillarRowHeight + 6;
   
   // Force new page to ensure entire table fits
   fitPage(pillarTableHeight + 20);
@@ -9386,11 +9386,11 @@ const renderSWOTAnalysis = (
 
   // Column headers
   const col1X = margin + 8;
-  const col2X = margin + 55;
-  const col3X = margin + 85;
-  const headerY = yPosition + pillarTableHeaderHeight + 6;
+  const col2X = margin + 48;
+  const col3X = margin + 72;
+  const headerY = yPosition + pillarTableHeaderHeight;
 
-  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFontSize(7);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.text("Pillar", col1X, headerY);
@@ -9403,36 +9403,27 @@ const renderSWOTAnalysis = (
   doc.line(margin + 8, headerY + 3, margin + maxWidth - 8, headerY + 3);
 
   // Table rows
-  let rowY = headerY + 10;
-  const explanationWidth = maxWidth - 95;
+  let rowY = headerY + 12;
+  const explanationWidth = maxWidth - 80;
 
   pillarsData.forEach((pillar) => {
     // Pillar name
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(7);
     doc.setFont("helvetica", "bold");
     doc.text(pillar.pillar, col1X, rowY);
 
-    // Rating with dots
-    doc.setFont("helvetica", "normal");
-    for (let i = 1; i <= 5; i++) {
-      if (i <= pillar.rating) {
-        doc.setFillColor(...PDF_CONFIG.primaryColor);
-      } else {
-        doc.setFillColor(...PDF_CONFIG.border);
-      }
-      doc.circle(col2X + (i - 1) * 5, rowY - 1.5, 1.5, "F");
-    }
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(6);
-    doc.text(pillar.rating + "/5", col2X + 28, rowY);
+    // Rating
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFont("helvetica", "bold");
+    doc.text(pillar.rating + "/5", col2X, rowY);
 
-    // Explanation - wrap text
+    // Explanation - properly wrapped
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(7);
     doc.setFont("helvetica", "normal");
     const explLines = doc.splitTextToSize(sanitizeText(pillar.explanation), explanationWidth);
-    doc.text(explLines.slice(0, 2).join(" "), col3X, rowY);
+    doc.text(explLines[0] || "", col3X, rowY);
 
     rowY += pillarRowHeight;
   });
