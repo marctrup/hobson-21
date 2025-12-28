@@ -6964,25 +6964,21 @@ const renderSituationAnalysis = (
     doc.setLineWidth(0.3);
     doc.roundedRect(margin, yPosition, maxWidth, segmentHeight, 3, 3, "S");
 
-    // Segment header
+    // Segment header - circle aligned with text
     doc.setFillColor(...theme.accent);
-    doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+    doc.circle(margin + 12, yPosition + 12, PDF_CONFIG.circleSize.medium, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
-    doc.text(`Segment ${segment.id}:`, margin + 22, yPosition + 12);
+    doc.text(`Segment ${segment.id}:`, margin + 22, yPosition + 14);
 
-    // Target badge
-    const badgeX = margin + 22 + doc.getTextWidth(`Segment ${segment.id}: `) + 4;
-    const badgeText = `${segment.targetLevel} Target`;
-    const badgeWidth = doc.getTextWidth(badgeText) + 8;
-    doc.setFillColor(...theme.accent);
-    doc.roundedRect(badgeX, yPosition + 5, badgeWidth, 10, 2, 2, "F");
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    // Target label (no box, just colored text)
+    doc.setTextColor(...theme.accent);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(badgeText, badgeX + 4, yPosition + 11.5);
+    const targetX = margin + 22 + doc.getTextWidth(`Segment ${segment.id}: `) + 4;
+    doc.text(`${segment.targetLevel} Target`, targetX, yPosition + 14);
 
     // Title
     doc.setTextColor(...PDF_CONFIG.textDark);
