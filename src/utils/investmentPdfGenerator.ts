@@ -4909,7 +4909,7 @@ const renderSimpleUI = (
 
 /**
  * Render HEU Pricing visual with standardized fonts
- * Uses PDF_CONFIG defaults for all sizing and spacing
+ * Uses PDF_CONFIG defaults for all sizing and spacing - NO hardcoded values
  */
 const renderHEUPricing = (
   doc: jsPDF,
@@ -4920,72 +4920,81 @@ const renderHEUPricing = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const { box, spacing, circleSize, lineHeight } = PDF_CONFIG;
+  const { box, spacing, circleSize, lineHeight, fontSize, card } = PDF_CONFIG;
+
+  // Derived values from config
+  const pageBreakMargin = margin * 2;
+  const smallOffset = box.borderRadiusSmall;
+  const standardBoxHeight = box.minHeight + smallOffset;
+  const rowHeight = box.minHeight - spacing.boxGap;
 
   // Helper for page break
   const checkBreak = (requiredSpace: number) => {
-    if (yPosition + requiredSpace > pageHeight - 40) {
+    if (yPosition + requiredSpace > pageHeight - pageBreakMargin) {
       doc.addPage();
       yPosition = margin;
     }
   };
 
   // Header - The HEU Model
-  checkBreak(32);
-  const headerHeight = 28;
+  const headerHeight = standardBoxHeight + spacing.cardGap;
+  checkBreak(headerHeight + spacing.sectionGap);
   renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + box.paddingX + 4, yPosition + 14, circleSize.medium, "F");
+  doc.circle(margin + box.paddingX + smallOffset, yPosition + headerHeight / 2, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The HEU Model", margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + 12);
+  doc.text("The HEU Model", margin + card.textOffsetX + smallOffset, yPosition + spacing.contentStart + smallOffset);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  doc.text("Hobson's pricing model is a ", margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + 21);
+  const pricingIntroY = yPosition + spacing.contentStart + spacing.cardGap + lineHeight.body;
+  doc.text("Hobson's pricing model is a ", margin + card.textOffsetX + smallOffset, pricingIntroY);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.text("usage-based infrastructure monetisation model", margin + PDF_CONFIG.card.textOffsetX + 2 + doc.getTextWidth("Hobson's pricing model is a "), yPosition + 21);
+  doc.text("usage-based infrastructure monetisation model", margin + card.textOffsetX + smallOffset + doc.getTextWidth("Hobson's pricing model is a "), pricingIntroY);
   doc.setFont("helvetica", "normal");
 
-  yPosition += headerHeight + spacing.sectionGap + 4;
+  yPosition += headerHeight + spacing.sectionGap + smallOffset;
 
   // Section 1: What HEUs Measure
-  checkBreak(40);
+  const heuSectionHeight = standardBoxHeight + spacing.cardGap;
+  checkBreak(heuSectionHeight + spacing.sectionGap);
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.large, "F");
+  doc.circle(margin + box.paddingX, yPosition + lineHeight.body, circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Hobson Energy Units (HEUs) measure AI effort:", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7);
-  yPosition += spacing.headerToContent - 4;
+  doc.text("Hobson Energy Units (HEUs) measure AI effort:", margin + card.textOffsetX - smallOffset, yPosition + lineHeight.body + smallOffset);
+  yPosition += spacing.headerToContent - smallOffset;
 
-  const heuBoxHeight = 20;
-  renderContentCard(doc, margin + PDF_CONFIG.card.iconOffsetX, yPosition, maxWidth - PDF_CONFIG.card.textOffsetX, heuBoxHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
+  const heuBoxHeight = standardBoxHeight;
+  renderContentCard(doc, margin + card.iconOffsetX, yPosition, maxWidth - card.textOffsetX, heuBoxHeight, PDF_CONFIG.blueBg, PDF_CONFIG.blueBorder);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const heuText = "Every document read, lease abstracted, compliance workflow executed, risk model run, or report built consumes HEUs.";
-  const heuLines = doc.splitTextToSize(sanitizeText(heuText), maxWidth - box.paddingX * 5);
+  const heuLines = splitTextWithFont(doc, heuText, maxWidth - box.paddingX * 5, "bodySmall", false);
   let heuY = yPosition + spacing.contentStart;
   heuLines.forEach((line: string) => {
-    doc.text(line, margin + PDF_CONFIG.card.textOffsetX - 2, heuY);
+    doc.text(line, margin + card.textOffsetX - smallOffset, heuY);
     heuY += lineHeight.body;
   });
 
-  yPosition += heuBoxHeight + spacing.sectionGap + 4;
+  yPosition += heuBoxHeight + spacing.sectionGap + smallOffset;
 
   // Section 2: What Hobson Monetises
-  checkBreak(65);
+  const monetisesGridHeight = (box.minHeight * 2) + spacing.paragraphGap + spacing.cardGap;
+  checkBreak(monetisesGridHeight + spacing.sectionGap);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.large, "F");
+  doc.circle(margin + box.paddingX, yPosition + lineHeight.body, circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("This means Hobson monetises:", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + 7);
-  yPosition += spacing.headerToContent - 4;
+  doc.text("This means Hobson monetises:", margin + card.textOffsetX - smallOffset, yPosition + lineHeight.body + smallOffset);
+  yPosition += spacing.headerToContent - smallOffset;
 
   const monetises = [
     "operator dependency",
@@ -4995,79 +5004,87 @@ const renderHEUPricing = (
   ];
 
   // 2x2 grid
-  const cardWidth = (maxWidth - 30) / 2;
-  const cardHeight = 16;
+  const gridGap = margin + spacing.cardGap;
+  const cardWidth = (maxWidth - gridGap) / 2;
+  const cardHeight = box.minHeight;
   monetises.forEach((item, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
-    const cardX = margin + PDF_CONFIG.card.iconOffsetX + col * (cardWidth + spacing.cardGap);
+    const cardX = margin + card.iconOffsetX + col * (cardWidth + spacing.cardGap);
     const cardY = yPosition + row * (cardHeight + spacing.paragraphGap);
 
     renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
     doc.setFillColor(...PDF_CONFIG.emerald);
-    doc.circle(cardX + PDF_CONFIG.card.iconOffsetX, cardY + 8, circleSize.small, "F");
+    doc.circle(cardX + card.iconOffsetX, cardY + cardHeight / 2, circleSize.small, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-    doc.text(sanitizeText(item), cardX + box.paddingX * 2, cardY + 10);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.text(sanitizeText(item), cardX + box.paddingX * 2, cardY + cardHeight / 2 + smallOffset);
   });
 
   yPosition += 2 * (cardHeight + spacing.paragraphGap) + spacing.cardGap;
 
   // "not headcount" note
-  renderContentCard(doc, margin + PDF_CONFIG.card.iconOffsetX, yPosition, maxWidth - PDF_CONFIG.card.textOffsetX, 12, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+  const noteHeight = rowHeight;
+  renderContentCard(doc, margin + card.iconOffsetX, yPosition, maxWidth - card.textOffsetX, noteHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(7);
-  doc.text("not", margin + PDF_CONFIG.card.textOffsetX - 2, yPosition + spacing.contentStart);
+  doc.setFontSize(fontSize.caption);
+  doc.text("not", margin + card.textOffsetX - smallOffset, yPosition + spacing.contentStart);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text(" headcount or asset count", margin + PDF_CONFIG.card.textOffsetX - 2 + doc.getTextWidth("not "), yPosition + spacing.contentStart);
+  doc.text(" headcount or asset count", margin + card.textOffsetX - smallOffset + doc.getTextWidth("not "), yPosition + spacing.contentStart);
 
-  yPosition += 20;
+  yPosition += noteHeight + spacing.sectionGap;
 
   // Key insight box
-  checkBreak(28);
-  const insightHeight = 24;
+  const insightHeight = standardBoxHeight + spacing.cardGap;
+  checkBreak(insightHeight + spacing.sectionGap);
   renderContentCard(doc, margin, yPosition, maxWidth, insightHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
 
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + PDF_CONFIG.card.iconOffsetX, yPosition + 12, circleSize.medium, "F");
+  doc.circle(margin + card.iconOffsetX, yPosition + insightHeight / 2, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const insightText = "Traditional property software caps revenue. Hobson's model scales automatically with operational stress. The more complex the operator's world becomes, the more valuable and profitable Hobson becomes.";
-  const insightLines = doc.splitTextToSize(sanitizeText(insightText), maxWidth - box.paddingX * 3.5);
+  const insightLines = splitTextWithFont(doc, insightText, maxWidth - box.paddingX * 4, "bodySmall", false);
   let insightY = yPosition + spacing.contentStart;
   insightLines.slice(0, 2).forEach((line: string) => {
-    doc.text(line, margin + PDF_CONFIG.card.textOffsetX - 2, insightY);
+    doc.text(line, margin + card.textOffsetX - smallOffset, insightY);
     insightY += lineHeight.body;
   });
 
-  yPosition += insightHeight + spacing.sectionGap + 4;
+  yPosition += insightHeight + spacing.sectionGap + smallOffset;
 
   // Section 3: Pricing Table
-  checkBreak(80);
+  const tableRows = 6; // header + 5 data rows
+  const tableHeight = tableRows * rowHeight + spacing.sectionGap;
+  checkBreak(tableHeight + spacing.sectionGap);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + box.paddingX, yPosition + 5, circleSize.medium, "F");
+  doc.circle(margin + box.paddingX, yPosition + lineHeight.body, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Pricing That Forces Adoption", margin + box.paddingX * 2, yPosition + 7);
-  yPosition += spacing.headerToContent - 4;
+  doc.text("Pricing That Forces Adoption", margin + box.paddingX * 2, yPosition + lineHeight.body + smallOffset);
+  yPosition += spacing.headerToContent - smallOffset;
 
-  // Table headers
-  const colWidths = [35, 30, 22, 70];
+  // Table headers - column widths as proportions of maxWidth
+  const colWidths = [
+    maxWidth * 0.20,  // Plan
+    maxWidth * 0.18,  // Monthly Price
+    maxWidth * 0.13,  // HEUs
+    maxWidth * 0.41   // Strategic Intent
+  ];
   const tableX = margin;
-  const rowHeight = 12;
 
   // Header row
   renderContentCard(doc, tableX, yPosition, maxWidth, rowHeight, PDF_CONFIG.primaryBgMedium, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(PDF_CONFIG.fontSize.caption);
+  doc.setFontSize(fontSize.caption);
   
   let headerX = tableX + spacing.paragraphGap;
   ["Plan", "Monthly Price", "HEUs", "Strategic Intent"].forEach((header, idx) => {
@@ -5090,7 +5107,7 @@ const renderHEUPricing = (
     renderContentCard(doc, tableX, yPosition, maxWidth, rowHeight, bgColor, PDF_CONFIG.border);
     
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFontSize(fontSize.caption);
     doc.setTextColor(...PDF_CONFIG.textDark);
     
     let cellX = tableX + spacing.paragraphGap;
@@ -5113,20 +5130,21 @@ const renderHEUPricing = (
     yPosition += rowHeight;
   });
 
-  yPosition += spacing.sectionGap + 2;
+  yPosition += spacing.sectionGap + smallOffset;
 
   // Footer - No Fees
-  checkBreak(24);
-  const footerHeight = 20;
+  const footerHeight = standardBoxHeight;
+  checkBreak(footerHeight + spacing.sectionGap);
   renderContentCard(doc, margin, yPosition, maxWidth, footerHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + maxWidth / 2 - 80, yPosition + 10, circleSize.medium, "F");
+  const footerCircleX = margin + maxWidth / 2 - box.paddingX * spacing.boxTopPadding;
+  doc.circle(footerCircleX, yPosition + footerHeight / 2, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.text("No per-user fees. No per-asset fees. Unlimited scale.", margin + maxWidth / 2, yPosition + 12, { align: "center" });
+  doc.setFontSize(fontSize.body);
+  doc.text("No per-user fees. No per-asset fees. Unlimited scale.", margin + maxWidth / 2, yPosition + footerHeight / 2 + smallOffset, { align: "center" });
 
   yPosition += footerHeight + spacing.sectionGap;
   return yPosition;
