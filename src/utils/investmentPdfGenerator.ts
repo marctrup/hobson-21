@@ -1880,6 +1880,7 @@ const renderWhyNowSpeed = (
 
 /**
  * Render Customers & Market Sources visual with clickable links
+ * Uses PDF_CONFIG defaults for all sizing and spacing - NO hardcoded values
  */
 const renderCustomersMarketSources = (
   doc: jsPDF,
@@ -1890,6 +1891,11 @@ const renderCustomersMarketSources = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
+  const { box, spacing, circleSize, lineHeight, card } = PDF_CONFIG;
+
+  // Derived values from config
+  const smallOffset = box.borderRadiusSmall;
+  const itemHeight = spacing.headerToContent + lineHeight.body * 2;
 
   const sources = [
     {
@@ -1932,50 +1938,49 @@ const renderCustomersMarketSources = (
 
   // Section header
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 4, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + box.paddingX, yPosition + spacing.paragraphGap, circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Data Sources", margin + 18, yPosition + 6);
-  yPosition += 16;
+  doc.text("Data Sources", margin + card.textOffsetX, yPosition + spacing.cardGap);
+  yPosition += spacing.headerToContent;
 
   // Sources list
   sources.forEach((source, index) => {
-    yPosition = checkPageBreak(doc, yPosition, 24, pageHeight, margin);
+    yPosition = checkPageBreak(doc, yPosition, itemHeight, pageHeight, margin);
     
-    // Title
+    // Title - use splitTextWithFont for correct wrapping
     doc.setTextColor(...PDF_CONFIG.textDark);
-    setBodyBoldFont(doc);
-    const titleLines = doc.splitTextToSize(sanitizeText(source.title), maxWidth - 10);
+    const titleLines = splitTextWithFont(doc, source.title, maxWidth - card.iconOffsetX, "body", true);
     titleLines.forEach((line: string) => {
-      doc.text(line, margin + 4, yPosition);
-      yPosition += PDF_CONFIG.lineHeight.body;
+      doc.text(line, margin + spacing.paragraphGap, yPosition);
+      yPosition += lineHeight.body;
     });
     
     // Stat
     doc.setTextColor(...PDF_CONFIG.textGray);
     setBodySmallFont(doc);
-    doc.text(sanitizeText(source.stat), margin + 4, yPosition);
-    yPosition += PDF_CONFIG.lineHeight.body;
+    doc.text(sanitizeText(source.stat), margin + spacing.paragraphGap, yPosition);
+    yPosition += lineHeight.body;
     
     // Link
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     setBodySmallFont(doc);
     const linkText = source.linkText;
-    doc.text(linkText, margin + 4, yPosition);
+    doc.text(linkText, margin + spacing.paragraphGap, yPosition);
     const linkWidth = doc.getTextWidth(linkText);
-    doc.link(margin + 4, yPosition - 3, linkWidth, 5, { url: source.linkUrl });
+    doc.link(margin + spacing.paragraphGap, yPosition - smallOffset, linkWidth, lineHeight.body, { url: source.linkUrl });
     
-    yPosition += 8;
+    yPosition += box.paddingX;
     
     // Divider (except for last item)
     if (index < sources.length - 1) {
       doc.setDrawColor(...PDF_CONFIG.primaryLight);
-      doc.setLineWidth(0.2);
-      doc.line(margin + 4, yPosition - 2, margin + maxWidth - 4, yPosition - 2);
+      doc.setLineWidth(box.borderWidthThin);
+      doc.line(margin + spacing.paragraphGap, yPosition - smallOffset, margin + maxWidth - spacing.paragraphGap, yPosition - smallOffset);
     }
   });
 
-  yPosition += PDF_CONFIG.spacing.sectionGap;
+  yPosition += spacing.sectionGap;
   return yPosition;
 };
 
