@@ -38,9 +38,10 @@ const PDF_CONFIG = {
     pageTitle: 18,        // Tab/page titles
     sectionTitle: 13,     // Section headers
     cardTitle: 12,        // Card/box titles (doc.setFontSize(PDF_CONFIG.fontSize.cardTitle))
-    body: 10,             // Standard body text (doc.setFontSize(PDF_CONFIG.fontSize.body))
-    bodySmall: 9,         // Secondary info, labels (doc.setFontSize(PDF_CONFIG.fontSize.bodySmall))
+    body: 9,              // Standard body text (doc.setFontSize(PDF_CONFIG.fontSize.body))
+    bodySmall: 8,         // Secondary info, labels (doc.setFontSize(PDF_CONFIG.fontSize.bodySmall))
     caption: 8,           // Footnotes, sources
+    tiny: 7,              // Smallest text (descriptions, fine print)
     stat: 16,             // Large statistics
   },
 
@@ -2458,7 +2459,7 @@ const renderTeam = (
 
   // Helper for page break
   const checkPageBreak = (requiredSpace: number) => {
-    if (yPosition + requiredSpace > pageHeight - 40) {
+    if (yPosition + requiredSpace > pageHeight - PDF_CONFIG.spacing.pageBreakMargin) {
       doc.addPage();
       yPosition = margin;
     }
@@ -2480,19 +2481,19 @@ const renderTeam = (
   // Section 1: Core Operational Team Header
   checkPageBreak(30);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 8, yPosition + 6, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.cardGap, PDF_CONFIG.circleSize.large, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Core Operational Team", margin + 18, yPosition + 8);
+  doc.text("Core Operational Team", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("The team driving Hobson's growth and innovation", margin + 18, yPosition + 16);
+  doc.text("The team driving Hobson's growth and innovation", margin + PDF_CONFIG.spacing.textIndent, yPosition + 16);
   yPosition += 24;
 
   // Team member cards - 2 columns
-  const cardWidth = (maxWidth - 8) / 2;
+  const cardWidth = (maxWidth - PDF_CONFIG.spacing.bulletOffset) / 2;
   const cardHeight = 36;
   
   coreTeam.forEach((member, idx) => {
@@ -2500,10 +2501,10 @@ const renderTeam = (
     const row = Math.floor(idx / 2);
     
     if (col === 0) {
-      checkPageBreak(cardHeight + 6);
+      checkPageBreak(cardHeight + PDF_CONFIG.spacing.cardGap);
     }
     
-    const cardX = margin + col * (cardWidth + 8);
+    const cardX = margin + col * (cardWidth + PDF_CONFIG.spacing.bulletOffset);
     const cardY = col === 0 ? yPosition : yPosition;
 
     // Card background
@@ -2512,78 +2513,78 @@ const renderTeam = (
     // TBC badge
     if (member.isTBC) {
       doc.setFillColor(...PDF_CONFIG.amberBg);
-      doc.roundedRect(cardX + cardWidth - 22, cardY + 4, 18, 8, 2, 2, "F");
+      doc.roundedRect(cardX + cardWidth - 22, cardY + PDF_CONFIG.spacing.boxGap, 18, PDF_CONFIG.spacing.bulletOffset, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
       doc.setTextColor(...PDF_CONFIG.amber);
-      doc.setFontSize(6);
+      doc.setFontSize(PDF_CONFIG.fontSize.tiny);
       doc.text("TBC", cardX + cardWidth - 13, cardY + 9.5, { align: "center" });
     }
 
     // Initials circle
     const initials = member.name.split(' ').map(n => n[0]).join('');
     doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-    doc.circle(cardX + 14, cardY + 14, 8, "F");
+    doc.circle(cardX + PDF_CONFIG.spacing.contentPadding, cardY + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.spacing.bulletOffset, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(initials, cardX + 14, cardY + 16.5, { align: "center" });
+    doc.text(initials, cardX + PDF_CONFIG.spacing.contentPadding, cardY + 16.5, { align: "center" });
 
     // Name and role
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(9);
-    doc.text(member.name, cardX + 26, cardY + 12);
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.text(member.name, cardX + 26, cardY + PDF_CONFIG.spacing.itemGap);
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFont("helvetica", "normal");
-    doc.setFontSize(8);
-    doc.text(member.role, cardX + 26, cardY + 18);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.text(member.role, cardX + 26, cardY + PDF_CONFIG.spacing.textIndent);
 
     // Description
     if (member.description) {
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(7);
+      doc.setFontSize(PDF_CONFIG.fontSize.tiny);
       const descLines = doc.splitTextToSize(sanitizeText(member.description), cardWidth - 32);
       let descY = cardY + 25;
       descLines.slice(0, 2).forEach((line: string) => {
         doc.text(line, cardX + 26, descY);
-        descY += 4;
+        descY += PDF_CONFIG.spacing.boxGap;
       });
     }
 
     if (col === 1 || idx === coreTeam.length - 1) {
-      yPosition += cardHeight + 4;
+      yPosition += cardHeight + PDF_CONFIG.spacing.boxGap;
     }
   });
 
-  yPosition += 8;
+  yPosition += PDF_CONFIG.spacing.bulletOffset;
 
   // Divider
-  checkPageBreak(40);
+  checkPageBreak(PDF_CONFIG.spacing.pageBreakMargin);
   doc.setDrawColor(...PDF_CONFIG.border);
-  doc.setLineWidth(0.3);
-  doc.line(margin + 40, yPosition, margin + maxWidth - 40, yPosition);
+  doc.setLineWidth(PDF_CONFIG.box.borderWidth);
+  doc.line(margin + PDF_CONFIG.spacing.pageBreakMargin, yPosition, margin + maxWidth - PDF_CONFIG.spacing.pageBreakMargin, yPosition);
   
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   const dividerText = "STRATEGIC GUIDANCE";
   const dividerTextWidth = doc.getTextWidth(dividerText) + 16;
-  doc.rect(margin + (maxWidth - dividerTextWidth) / 2, yPosition - 4, dividerTextWidth, 8, "F");
+  doc.rect(margin + (maxWidth - dividerTextWidth) / 2, yPosition - PDF_CONFIG.spacing.boxGap, dividerTextWidth, PDF_CONFIG.spacing.bulletOffset, "F");
   
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(7);
+  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
   doc.text(dividerText, margin + maxWidth / 2, yPosition + 2, { align: "center" });
   yPosition += 16;
 
   // Section 2: Advisory Board Header
   doc.setFillColor(...PDF_CONFIG.textGray);
-  doc.circle(margin + 8, yPosition + 6, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.cardGap, PDF_CONFIG.circleSize.large, "F");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Advisory Board", margin + 18, yPosition + 8);
+  doc.text("Advisory Board", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("Experienced advisors providing strategic guidance", margin + 18, yPosition + 16);
+  doc.text("Experienced advisors providing strategic guidance", margin + PDF_CONFIG.spacing.textIndent, yPosition + 16);
   yPosition += 24;
 
   // Advisor card
@@ -2593,57 +2594,57 @@ const renderTeam = (
   // Initials
   doc.setFillColor(...PDF_CONFIG.bgLight);
   doc.setDrawColor(...PDF_CONFIG.border);
-  doc.circle(margin + 14, yPosition + 14, 8, "FD");
+  doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.spacing.bulletOffset, "FD");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   doc.setFont("helvetica", "bold");
-  doc.text("ND", margin + 14, yPosition + 16.5, { align: "center" });
+  doc.text("ND", margin + PDF_CONFIG.spacing.contentPadding, yPosition + 16.5, { align: "center" });
 
   // Name and role
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(9);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.text("Nick Doffman", margin + 26, yPosition + 11);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   doc.text("Commercial Advisor", margin + 26, yPosition + 17);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(7);
+  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
   doc.text("Bringing deep commercial and industry experience to guide strategic growth", margin + 26, yPosition + 24);
 
-  yPosition += advisorCardHeight + 10;
+  yPosition += advisorCardHeight + PDF_CONFIG.spacing.circleOffset;
 
   // Upcoming advisors box
-  checkPageBreak(40);
+  checkPageBreak(PDF_CONFIG.spacing.pageBreakMargin);
   const upcomingHeight = 32;
   renderContentCard(doc, margin, yPosition, maxWidth, upcomingHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 10, yPosition + 8, PDF_CONFIG.circleSize.small, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.circleOffset, yPosition + PDF_CONFIG.spacing.bulletOffset, PDF_CONFIG.circleSize.small, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(8);
-  doc.text("Additional advisors currently in formation to support:", margin + 16, yPosition + 10);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
+  doc.text("Additional advisors currently in formation to support:", margin + 16, yPosition + PDF_CONFIG.spacing.circleOffset);
 
   const upcomingAreas = ["International expansion", "Enterprise partnerships", "Regulatory strategy"];
   const areaWidth = (maxWidth - 24) / 3;
   
   upcomingAreas.forEach((area, idx) => {
-    const areaX = margin + 8 + idx * areaWidth;
+    const areaX = margin + PDF_CONFIG.spacing.bulletOffset + idx * areaWidth;
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(areaX, yPosition + 16, areaWidth - 4, 12, 2, 2, "F");
+    doc.roundedRect(areaX, yPosition + 16, areaWidth - PDF_CONFIG.spacing.boxGap, PDF_CONFIG.spacing.itemGap, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
     
     doc.setFillColor(...PDF_CONFIG.textGray);
-    doc.circle(areaX + 6, yPosition + 22, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(areaX + PDF_CONFIG.spacing.cardGap, yPosition + 22, PDF_CONFIG.circleSize.small, "F");
     
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.setFontSize(7);
-    doc.text(area, areaX + 12, yPosition + 24);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+    doc.text(area, areaX + PDF_CONFIG.spacing.itemGap, yPosition + 24);
   });
 
   yPosition += upcomingHeight + PDF_CONFIG.spacing.sectionGap;
