@@ -96,6 +96,14 @@ const PDF_CONFIG = {
   },
 
   // ============================================================================
+  // NUMBERED CIRCLE - positioning for numbers inside circles
+  // ============================================================================
+  numberedCircle: {
+    yOffset: 5,           // Y offset from yPosition for circle center
+    textYOffset: 2,       // Additional Y offset for text centering inside circle
+  },
+
+  // ============================================================================
   // CIRCLE SIZES (radius in points) - from Strategy & Approach
   // From: PDF_CONFIG.circleSize.small, PDF_CONFIG.circleSize.medium
   // ============================================================================
@@ -2275,15 +2283,15 @@ const renderFoundingLeadership = (
   // Section 1: The founding leadership has
   checkPageBreak(45);
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setTextColor(...PDF_CONFIG.bgWhite);
   doc.setFontSize(PDF_CONFIG.fontSize.caption);
-  doc.text("1", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2, { align: "center" });
+  doc.text("1", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The founding leadership has:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2);
+  doc.text("The founding leadership has:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const foundingExperience = [
@@ -2306,15 +2314,15 @@ const renderFoundingLeadership = (
   // Section 2: Arthur & Aareon Experience
   checkPageBreak(65);
   doc.setFillColor(...PDF_CONFIG.emerald);
-  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setTextColor(...PDF_CONFIG.bgWhite);
   doc.setFontSize(PDF_CONFIG.fontSize.caption);
-  doc.text("2", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2, { align: "center" });
+  doc.text("2", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Arthur & Aareon Experience", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2);
+  doc.text("Arthur & Aareon Experience", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const arthurBoxHeight = 52;
@@ -2358,15 +2366,15 @@ const renderFoundingLeadership = (
   // Section 3: Key Insight
   checkPageBreak(30);
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setTextColor(...PDF_CONFIG.bgWhite);
   doc.setFontSize(PDF_CONFIG.fontSize.caption);
-  doc.text("3", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2, { align: "center" });
+  doc.text("3", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("This experience gives Hobson something few startups ever possess:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2);
+  doc.text("This experience gives Hobson something few startups ever possess:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const insightBoxHeight = 16;
@@ -2383,15 +2391,15 @@ const renderFoundingLeadership = (
   // Section 4: What Team Has Navigated
   checkPageBreak(60);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2, PDF_CONFIG.circleSize.large, "F");
+  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setTextColor(...PDF_CONFIG.bgWhite);
   doc.setFontSize(PDF_CONFIG.fontSize.caption);
-  doc.text("4", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2, { align: "center" });
+  doc.text("4", margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset, { align: "center" });
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Hobson's team has already navigated:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset / 2 + 2);
+  doc.text("Hobson's team has already navigated:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const teamNavigated = [
