@@ -7040,6 +7040,472 @@ const renderBrandIntegrity = (
 };
 
 /**
+ * Render PESTLE Analysis visual
+ */
+const renderPESTLEAnalysis = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  const fitPage = (required: number) => {
+    yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Header
+  fitPage(45);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, 3, 3, "F");
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("PESTLE Analysis", margin + 24, yPosition + 16);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Macro-environmental factors shaping the UK PropTech landscape", margin + 24, yPosition + 26);
+  yPosition += 48;
+
+  // Key drivers
+  const keyDrivers = [
+    "Fast, reliable document insight",
+    "Transparent, referenced answers",
+    "Minimal onboarding and implementation friction",
+    "Affordable, measurable efficiency gains",
+    "Reduced compliance and documentation risk"
+  ];
+
+  fitPage(50);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text("The environment is shifting towards tools that provide:", margin + 8, yPosition + 10);
+  let ky = yPosition + 18;
+  keyDrivers.forEach((driver) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(margin + 12, ky - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(driver, margin + 18, ky);
+    ky += 5;
+  });
+  yPosition += 53;
+
+  // PESTLE factors
+  const factors = [
+    { letter: "P", title: "Political", subtitle: "Rising Regulation & Data Governance", color: PDF_CONFIG.blueBg, accent: PDF_CONFIG.blue, items: ["Building Safety Act compliance", "Renters Reform Bill documentation", "EPC and sustainability reporting", "AML documentation checks", "GDPR audit trails"] },
+    { letter: "E", title: "Economic", subtitle: "Cost Pressure & Efficiency", color: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald, items: ["Cost constraints limit headcount", "Market cycles increase pressure", "Lean teams handle growing workloads", "10%+ NOI improvement from AI", "Up to 20% cost savings possible"] },
+    { letter: "S", title: "Social", subtitle: "AI Comfort & Trust", color: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor, items: ["Growing AI openness", "Low tolerance for error", "High demand for transparency", "Hybrid working increases file reliance", "Aversion to rip and replace"] },
+    { letter: "T", title: "Technological", subtitle: "Fast-Moving AI & PropTech", color: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber, items: ["LLM and RAG advances", "Verifiable AI expectations", "Legacy PropTech moves slowly", "Cybersecurity expectations grow", "No integration tools in demand"] },
+    { letter: "L", title: "Legal", subtitle: "Compliance & Documentation Risk", color: PDF_CONFIG.roseBg, accent: PDF_CONFIG.rose, items: ["GDPR transparency demands", "Audit evidence requirements", "Contractual risk from missed details", "AI governance and explainability"] },
+    { letter: "E", title: "Environmental", subtitle: "ESG & Paper Reduction", color: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emeraldLight, items: ["ESG reporting documentation", "Paperless workflow pressure", "EPC data requirements"] }
+  ];
+
+  const cardHeight = 50;
+  const cardWidth = (maxWidth - 8) / 2;
+
+  factors.forEach((factor, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    
+    if (col === 0) {
+      fitPage(cardHeight + 8);
+    }
+    
+    const xPos = margin + col * (cardWidth + 8);
+    const cardY = col === 0 ? yPosition : yPosition;
+
+    doc.setFillColor(...factor.color);
+    doc.roundedRect(xPos, cardY, cardWidth, cardHeight, 3, 3, "F");
+    
+    doc.setFillColor(...factor.accent);
+    doc.circle(xPos + 10, cardY + 10, PDF_CONFIG.circleSize.medium, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "bold");
+    doc.text(factor.letter, xPos + 8, cardY + 12);
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(factor.title, xPos + 20, cardY + 12);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text(factor.subtitle, xPos + 20, cardY + 18);
+
+    let itemY = cardY + 26;
+    factor.items.forEach((item) => {
+      doc.setFillColor(...factor.accent);
+      doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.setFontSize(7);
+      const wrapped = doc.splitTextToSize(item, cardWidth - 20);
+      doc.text(wrapped[0], xPos + 16, itemY);
+      itemY += 5;
+    });
+
+    if (col === 1) {
+      yPosition += cardHeight + 6;
+    }
+  });
+
+  if (factors.length % 2 === 1) {
+    yPosition += cardHeight + 6;
+  }
+
+  return yPosition;
+};
+
+/**
+ * Render Internal Capability Assessment visual
+ */
+const renderInternalCapabilityAssessment = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  const fitPage = (required: number) => {
+    yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Header
+  fitPage(50);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Internal Capability Assessment", margin + 24, yPosition + 16);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  const introText = "Hobson combines deep domain knowledge, strong technical design, and a differentiated brand aligned with market need.";
+  const introLines = doc.splitTextToSize(introText, maxWidth - 32);
+  introLines.forEach((line: string, i: number) => {
+    doc.text(line, margin + 24, yPosition + 26 + i * 5);
+  });
+  yPosition += 53;
+
+  // Strengths
+  const strengths = [
+    { title: "Team Skills", items: ["30+ years Real Estate experience", "Built/scaled/exited UK RE software", "AI/ML specialists in-house"] },
+    { title: "Technical Capabilities", items: ["Document-first architecture", "Hybrid RAG + knowledge graph", "Zero-integration deployment"] },
+    { title: "Brand Positioning", items: ["Owl = wisdom and clarity", "Calm AI assistant positioning", "Strong early resonance"] },
+    { title: "Customer Access", items: ["Direct portfolio operator relationships", "Warm industry introductions", "Early adopters co-shaping MVP"] },
+    { title: "Clear Differentiators", items: ["Document-native AI focus", "Referenced answers always", "No replacement positioning"] }
+  ];
+
+  fitPage(20);
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 6, yPosition + 4, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Strengths", margin + 16, yPosition + 6);
+  yPosition += 14;
+
+  const strengthCardWidth = (maxWidth - 8) / 2;
+  const strengthCardHeight = 42;
+
+  strengths.forEach((strength, idx) => {
+    const col = idx % 2;
+    if (col === 0) {
+      fitPage(strengthCardHeight + 6);
+    }
+    const xPos = margin + col * (strengthCardWidth + 8);
+    
+    doc.setFillColor(...PDF_CONFIG.emeraldBg);
+    doc.roundedRect(xPos, yPosition, strengthCardWidth, strengthCardHeight, 3, 3, "F");
+    
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(xPos + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(strength.title, xPos + 20, yPosition + 12);
+
+    let itemY = yPosition + 20;
+    strength.items.forEach((item) => {
+      doc.setFillColor(...PDF_CONFIG.emerald);
+      doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.setFontSize(7);
+      doc.setFont("helvetica", "normal");
+      doc.text(item, xPos + 16, itemY);
+      itemY += 6;
+    });
+
+    if (col === 1 || idx === strengths.length - 1) {
+      yPosition += strengthCardHeight + 6;
+    }
+  });
+
+  // Gaps
+  fitPage(20);
+  doc.setFillColor(...PDF_CONFIG.amber);
+  doc.circle(margin + 6, yPosition + 4, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Limitations & Gaps", margin + 16, yPosition + 6);
+  yPosition += 14;
+
+  const gaps = [
+    { title: "Brand Visibility", need: "Thought leadership, case studies" },
+    { title: "Technical Scaling", need: "Fine-tuning and expanded testing" },
+    { title: "Product Breadth", need: "Proactive insight expansion" },
+    { title: "Support Infrastructure", need: "Customer success frameworks" },
+    { title: "Resource Constraints", need: "Investment for systematic growth" }
+  ];
+
+  const gapCardWidth = (maxWidth - 16) / 3;
+  const gapCardHeight = 28;
+
+  gaps.forEach((gap, idx) => {
+    const col = idx % 3;
+    if (col === 0) {
+      fitPage(gapCardHeight + 6);
+    }
+    const xPos = margin + col * (gapCardWidth + 8);
+    
+    doc.setFillColor(...PDF_CONFIG.amberBg);
+    doc.roundedRect(xPos, yPosition, gapCardWidth, gapCardHeight, 3, 3, "F");
+    
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text(gap.title, xPos + 6, yPosition + 10);
+    
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "normal");
+    doc.text("Need: " + gap.need, xPos + 6, yPosition + 20);
+
+    if (col === 2 || idx === gaps.length - 1) {
+      yPosition += gapCardHeight + 6;
+    }
+  });
+
+  return yPosition;
+};
+
+/**
+ * Render SWOT Analysis visual
+ */
+const renderSWOTAnalysis = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  const fitPage = (required: number) => {
+    yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Header
+  fitPage(45);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, 3, 3, "F");
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SWOT Analysis", margin + 24, yPosition + 16);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Strategic assessment of Hobson's market position", margin + 24, yPosition + 26);
+  yPosition += 48;
+
+  const swotData = [
+    { 
+      title: "Strengths", 
+      color: PDF_CONFIG.emeraldBg, 
+      accent: PDF_CONFIG.emerald,
+      items: ["AI-native architecture for RE docs", "Reference-backed answers", "Zero-onboarding experience", "30+ years domain expertise", "Clear brand positioning"]
+    },
+    { 
+      title: "Weaknesses", 
+      color: PDF_CONFIG.roseBg, 
+      accent: PDF_CONFIG.rose,
+      items: ["Limited brand visibility", "MVP still maturing", "Small team constraints", "Support infrastructure emerging", "Resolution processes light"]
+    },
+    { 
+      title: "Opportunities", 
+      color: PDF_CONFIG.blueBg, 
+      accent: PDF_CONFIG.blue,
+      items: ["Growing regulatory burden", "Underserved SMB segment", "Legacy PropTech slow on AI", "Cost pressures favour automation", "International expansion potential"]
+    },
+    { 
+      title: "Threats", 
+      color: PDF_CONFIG.amberBg, 
+      accent: PDF_CONFIG.amber,
+      items: ["Fast-moving AI competitors", "Legacy platforms adding AI", "AI hallucination trust risks", "Economic pressure on tech spend", "Competitor emotional storytelling"]
+    }
+  ];
+
+  const cardWidth = (maxWidth - 8) / 2;
+  const cardHeight = 55;
+
+  swotData.forEach((quadrant, idx) => {
+    const col = idx % 2;
+    if (col === 0) {
+      fitPage(cardHeight + 8);
+    }
+    const xPos = margin + col * (cardWidth + 8);
+
+    doc.setFillColor(...quadrant.color);
+    doc.roundedRect(xPos, yPosition, cardWidth, cardHeight, 3, 3, "F");
+    
+    doc.setFillColor(...quadrant.accent);
+    doc.circle(xPos + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(quadrant.title, xPos + 20, yPosition + 12);
+
+    let itemY = yPosition + 22;
+    quadrant.items.forEach((item) => {
+      doc.setFillColor(...quadrant.accent);
+      doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.setFontSize(7);
+      doc.setFont("helvetica", "normal");
+      doc.text(item, xPos + 16, itemY);
+      itemY += 6;
+    });
+
+    if (col === 1) {
+      yPosition += cardHeight + 6;
+    }
+  });
+
+  // Pillars matrix
+  fitPage(60);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Pillars Evaluation Matrix", margin + 8, yPosition + 12);
+
+  const pillars = [
+    { name: "Personalization", rating: 4 },
+    { name: "Resolution", rating: 2 },
+    { name: "Integrity", rating: 4 },
+    { name: "Time & Effort", rating: 5 },
+    { name: "Expectations", rating: 4 },
+    { name: "Empathy", rating: 4 }
+  ];
+
+  let pillarY = yPosition + 22;
+  const pillarColWidth = maxWidth / 3;
+  pillars.forEach((pillar, idx) => {
+    const col = idx % 3;
+    const xPos = margin + col * pillarColWidth + 8;
+    
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text(pillar.name, xPos, pillarY);
+    
+    // Rating dots
+    for (let i = 1; i <= 5; i++) {
+      if (i <= pillar.rating) {
+        doc.setFillColor(...PDF_CONFIG.primaryColor);
+      } else {
+        doc.setFillColor(...PDF_CONFIG.border);
+      }
+      doc.circle(xPos + 45 + i * 5, pillarY - 2, 1.5, "F");
+    }
+    
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "normal");
+    doc.text(pillar.rating + "/5", xPos + 75, pillarY);
+
+    if (col === 2) {
+      pillarY += 10;
+    }
+  });
+  yPosition += 63;
+
+  // Recommendations header
+  fitPage(20);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 6, yPosition + 4, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Recommendations", margin + 16, yPosition + 6);
+  yPosition += 14;
+
+  const recommendations = [
+    { title: "Strengthen Trust", items: ["Confidence scores", "Clear resolution process", "Early case studies"] },
+    { title: "Expand Storytelling", items: ["Human testimonials", "Consistent metaphors", "Clarity partner positioning"] },
+    { title: "Accelerate Visibility", items: ["LinkedIn engagement", "Quiz as entry point", "Thought leadership"] },
+    { title: "Product Differentiation", items: ["Retrieval to insight path", "Hobson Blueprints", "Personalisation at scale"] },
+    { title: "Protect Advantage", items: ["Lightweight positioning", "MVP client advocates", "Scalable processes"] }
+  ];
+
+  const recCardWidth = (maxWidth - 16) / 3;
+  const recCardHeight = 38;
+
+  recommendations.forEach((rec, idx) => {
+    const col = idx % 3;
+    if (col === 0) {
+      fitPage(recCardHeight + 6);
+    }
+    const xPos = margin + col * (recCardWidth + 8);
+    
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(xPos, yPosition, recCardWidth, recCardHeight, 3, 3, "F");
+    
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text((idx + 1) + ". " + rec.title, xPos + 6, yPosition + 10);
+
+    let itemY = yPosition + 18;
+    rec.items.forEach((item) => {
+      doc.setFillColor(...PDF_CONFIG.primaryColor);
+      doc.circle(xPos + 8, itemY - 1, PDF_CONFIG.circleSize.small, "F");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.setFontSize(6);
+      doc.setFont("helvetica", "normal");
+      doc.text(item, xPos + 13, itemY);
+      itemY += 6;
+    });
+
+    if (col === 2 || idx === recommendations.length - 1) {
+      yPosition += recCardHeight + 6;
+    }
+  });
+
+  return yPosition;
+};
+
+/**
  * Create cover page for a section PDF
  */
 const createCoverPage = (
@@ -7307,6 +7773,12 @@ const renderTabContent = (
       yPosition = renderProviderCards(doc, yPosition, margin, pageWidth, pageHeight, componentType);
     } else if (componentType === "brandIntegrity") {
       yPosition = renderBrandIntegrity(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "pestleAnalysis") {
+      yPosition = renderPESTLEAnalysis(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "internalCapabilityAssessment") {
+      yPosition = renderInternalCapabilityAssessment(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "swotAnalysis") {
+      yPosition = renderSWOTAnalysis(doc, yPosition, margin, pageWidth, pageHeight);
     } else {
       const customContent = getCustomVisualContent(componentType);
       if (customContent.length > 0) {
