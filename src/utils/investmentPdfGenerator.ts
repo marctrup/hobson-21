@@ -7594,8 +7594,9 @@ const renderMarketDescription = (
   };
 
   // 1. INTRO SECTION (Blue gradient box) - matches visual blue box
-  const textWidth = maxWidth - 16; // Standard text padding from box edges
-  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), textWidth);
+  const innerPaddingX = 10;
+  const innerTextWidth = maxWidth - innerPaddingX * 2;
+  const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), innerTextWidth);
   const headerHeight = 28 + introLines.length * bodyLine;
   fitPage(headerHeight + 6);
 
@@ -7608,22 +7609,26 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + 10, yPosition + 14);
+  doc.text(data.header.title, margin + innerPaddingX, yPosition + 14);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   let textY = yPosition + 28;
-  introLines.forEach((line: string) => {
-    doc.text(line, margin + 10, textY);
+  // Render as a justified paragraph within the box width
+  introLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + innerPaddingX, textY, {
+      maxWidth: innerTextWidth,
+      align: idx === introLines.length - 1 ? "left" : "justify",
+    });
     textY += bodyLine;
   });
 
   yPosition += headerHeight + 8;
 
   // 2. KEY ACTIONABLE TRENDS SECTION (Slate/gray box) - matches visual slate box
-  const trendsIntroLines = doc.splitTextToSize(sanitizeText(data.keyTrends.intro), textWidth);
-  const trendsConclusionLines = doc.splitTextToSize(sanitizeText(data.keyTrends.conclusion), textWidth);
+  const trendsIntroLines = doc.splitTextToSize(sanitizeText(data.keyTrends.intro), innerTextWidth);
+  const trendsConclusionLines = doc.splitTextToSize(sanitizeText(data.keyTrends.conclusion), innerTextWidth);
   const trendsItemsHeight = data.keyTrends.items.length * (bodyLine + 2);
   const trendsHeight = 24 + trendsIntroLines.length * bodyLine + 6 + trendsItemsHeight + 6 + trendsConclusionLines.length * bodyLine + 10;
   fitPage(trendsHeight + 6);
@@ -7655,7 +7660,7 @@ const renderMarketDescription = (
   data.keyTrends.items.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.blue);
     doc.circle(margin + 14, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const itemLines = doc.splitTextToSize(sanitizeText(item), textWidth - 14);
+    const itemLines = doc.splitTextToSize(sanitizeText(item), innerTextWidth - 14);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(itemLines[0] || "", margin + 20, textY);
     textY += bodyLine + 2;
@@ -7673,9 +7678,9 @@ const renderMarketDescription = (
 
   // 3. GROWING DEMAND FOR AUTOMATION (Purple box with stats) - matches visual purple box
   const automationIntro = "Automation is no longer optional in property operations. Global research consistently shows that companies adopting AI and automation are outperforming those that do not:";
-  const automationIntroLines = doc.splitTextToSize(sanitizeText(automationIntro), textWidth);
+  const automationIntroLines = doc.splitTextToSize(sanitizeText(automationIntro), innerTextWidth);
   const automationConclusion = "Operators increasingly recognise that manual administrative work is not scalable, especially in a market with leaner teams, higher data demands, and greater expectation for operational transparency.";
-  const automationConclusionLines = doc.splitTextToSize(sanitizeText(automationConclusion), textWidth);
+  const automationConclusionLines = doc.splitTextToSize(sanitizeText(automationConclusion), innerTextWidth);
   
   const statRowHeight = 32;
   const automationHeight = 26 + automationIntroLines.length * bodyLine + 8 + statRowHeight * 2 + 8 + automationConclusionLines.length * bodyLine + 10;
@@ -7747,8 +7752,8 @@ const renderMarketDescription = (
   yPosition += automationHeight + 8;
 
   // 4. DOCUMENT OVERLOAD SECTION (Amber box) - matches visual amber box
-  const docIntroLines = doc.splitTextToSize(sanitizeText(data.documentOverload.intro), textWidth);
-  const docConclusionLines = doc.splitTextToSize(sanitizeText(data.documentOverload.conclusion), textWidth);
+  const docIntroLines = doc.splitTextToSize(sanitizeText(data.documentOverload.intro), innerTextWidth);
+  const docConclusionLines = doc.splitTextToSize(sanitizeText(data.documentOverload.conclusion), innerTextWidth);
   const docItemsHeight = data.documentOverload.items.length * (bodyLine + 2);
   const docHeight = 26 + docIntroLines.length * bodyLine + 6 + docItemsHeight + 6 + docConclusionLines.length * bodyLine + 8;
   fitPage(docHeight + 6);
@@ -7780,7 +7785,7 @@ const renderMarketDescription = (
   data.documentOverload.items.forEach((item) => {
     doc.setFillColor(217, 119, 6); // amber-600
     doc.circle(margin + 14, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const itemLines = doc.splitTextToSize(sanitizeText(item), textWidth - 14);
+    const itemLines = doc.splitTextToSize(sanitizeText(item), innerTextWidth - 14);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(itemLines[0] || "", margin + 20, textY);
     textY += bodyLine + 2;
@@ -7797,8 +7802,8 @@ const renderMarketDescription = (
   yPosition += docHeight + 8;
 
   // 5. PRESSURE FOR SPEED, COMPLIANCE, ACCURACY (Emerald box) - matches visual emerald box
-  const compIntroLines = doc.splitTextToSize(sanitizeText(data.compliance.intro), textWidth);
-  const compConclusionLines = doc.splitTextToSize(sanitizeText(data.compliance.conclusion), textWidth);
+  const compIntroLines = doc.splitTextToSize(sanitizeText(data.compliance.intro), innerTextWidth);
+  const compConclusionLines = doc.splitTextToSize(sanitizeText(data.compliance.conclusion), innerTextWidth);
   const demandsHeight = data.compliance.demands.length * (bodyLine + 2);
   const mustDeliverHeight = data.compliance.mustDeliver.length * (bodyLine + 2);
   const compHeight = 26 + compIntroLines.length * bodyLine + 6 + 12 + demandsHeight + 12 + 12 + mustDeliverHeight + 6 + compConclusionLines.length * bodyLine + 8;
@@ -7937,8 +7942,8 @@ const renderMarketDescription = (
   // 7. WHY THE PROBLEM MATTERS NOW (Red box) - matches visual red box
   const whyNowIntro = "The operational landscape shows a clear convergence of pressures:";
   const whyNowConclusion = "Real estate operators urgently need tools that deliver clarity from complexity, without requiring system overhauls or disruptive implementation.";
-  const whyNowIntroLines = doc.splitTextToSize(sanitizeText(whyNowIntro), textWidth);
-  const whyNowConclusionLines = doc.splitTextToSize(sanitizeText(whyNowConclusion), textWidth);
+  const whyNowIntroLines = doc.splitTextToSize(sanitizeText(whyNowIntro), innerTextWidth);
+  const whyNowConclusionLines = doc.splitTextToSize(sanitizeText(whyNowConclusion), innerTextWidth);
   const pressuresGridHeight = Math.ceil(data.convergencePressures.length / 2) * 24;
   const whyNowHeight = 26 + whyNowIntroLines.length * bodyLine + 6 + pressuresGridHeight + 8 + whyNowConclusionLines.length * bodyLine + 8;
   fitPage(whyNowHeight + 6);
@@ -8005,8 +8010,8 @@ const renderMarketDescription = (
   yPosition += whyNowHeight + 8;
 
   // 8. HOBSON'S STRATEGIC POSITION (Primary/purple box) - matches visual primary box
-  const posIntroLines = doc.splitTextToSize(sanitizeText(data.hobsonPosition.intro), textWidth);
-  const posConclusionLines = doc.splitTextToSize(sanitizeText(data.hobsonPosition.conclusion), textWidth - 8);
+  const posIntroLines = doc.splitTextToSize(sanitizeText(data.hobsonPosition.intro), innerTextWidth);
+  const posConclusionLines = doc.splitTextToSize(sanitizeText(data.hobsonPosition.conclusion), innerTextWidth - 8);
   const posHeight = 20 + posIntroLines.length * bodyLine + 10 + posConclusionLines.length * bodyLine + 14;
   fitPage(posHeight + 6);
 
