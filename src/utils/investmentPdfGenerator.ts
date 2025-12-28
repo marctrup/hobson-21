@@ -2867,13 +2867,15 @@ const renderCustomerSegmentation = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
+  const { box, spacing, circleSize, fontSize, lineHeight } = PDF_CONFIG;
+  const bodyLine = lineHeight.body;
 
   // Description - left aligned
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
   const introText = "ONS size-band data shows the Real Estate sector skews heavily toward small- and mid-sized operators, but value is concentrated higher up. While smaller firms are numerous, document complexity, regulatory exposure, and spend focus grow rapidly as portfolios scale, creating a strong wedge for platforms that embed early and expand upward.";
-  yPosition = renderSpacedText(doc, introText, margin, yPosition, maxWidth, PDF_CONFIG.lineHeight.body);
-  yPosition += 10;
+  yPosition = renderSpacedText(doc, introText, margin, yPosition, maxWidth, bodyLine);
+  yPosition += spacing.cardGap;
 
   const segments = [
     {
@@ -2922,93 +2924,92 @@ const renderCustomerSegmentation = (
   segments.forEach((segment) => {
     // Calculate dynamic card height based on content
     setBodySmallFont(doc);
-    const pressureLines = doc.splitTextToSize(sanitizeText(segment.pressure), maxWidth / 2 - 45);
+    const pressureLines = doc.splitTextToSize(sanitizeText(segment.pressure), maxWidth / 2 - spacing.bulletTextOffset - spacing.contentPadding);
     const driverLines = segment.adoptionDrivers.length;
     const contentLines = Math.max(pressureLines.length, driverLines + 1);
-    const cardHeight = Math.max(75, 45 + contentLines * 5);
+    const cardHeight = Math.max(75, spacing.bulletTextOffset + spacing.contentPadding + contentLines * bodyLine);
 
-    yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
+    yPosition = checkPageBreak(doc, yPosition, cardHeight + spacing.cardGap, pageHeight, margin);
     renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, segment.bgColor, segment.color);
 
     // Header row - icon and title inline
-    const headerY = yPosition + 14;
-    const headerIconSize = PDF_CONFIG.circleSize.large;
+    const headerY = yPosition + spacing.contentPadding;
+    const headerIconSize = circleSize.large;
     doc.setFillColor(...segment.color);
-    doc.circle(margin + 12, headerY - 2, headerIconSize, "F");
+    doc.circle(margin + spacing.circleOffset, headerY, headerIconSize, "F");
 
     // Title - aligned with icon center
     doc.setTextColor(...PDF_CONFIG.textDark);
     setCardTitleFont(doc);
-    doc.text(segment.title, margin + 22, headerY);
+    doc.text(segment.title, margin + spacing.bulletTextOffset, headerY + 1);
 
     // Percentage and description on second line
     doc.setTextColor(...segment.color);
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(9);
-    doc.text(segment.percentage, margin + 22, yPosition + 22);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.text(segment.percentage, margin + spacing.bulletTextOffset, yPosition + spacing.contentBoxStart);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.text(segment.description, margin + 22 + doc.getTextWidth(segment.percentage + " "), yPosition + 22);
+    doc.text(segment.description, margin + spacing.bulletTextOffset + doc.getTextWidth(segment.percentage + " "), yPosition + spacing.contentBoxStart);
 
     // Two-column layout for PRESSURE and WHAT FORCES ADOPTION
-    const colStartY = yPosition + 34;
-    const iconSize = PDF_CONFIG.circleSize.medium;
+    const colStartY = yPosition + spacing.contentBoxStart + spacing.contentPadding;
 
     // PRESSURE section - left column
-    const leftColIconX = margin + 12;
-    const leftColTextX = margin + 22;
+    const leftColIconX = margin + spacing.circleOffset;
+    const leftColTextX = margin + spacing.bulletTextOffset;
     
     // Pressure header with inline icon
     doc.setFillColor(...segment.color);
-    doc.circle(leftColIconX, colStartY - 1, iconSize, "F");
+    doc.circle(leftColIconX, colStartY, circleSize.medium, "F");
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("PRESSURE", leftColTextX, colStartY);
+    doc.text("PRESSURE", leftColTextX, colStartY + 1);
     
     // Pressure content
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    renderSpacedText(doc, segment.pressure, leftColTextX, colStartY + 8, maxWidth / 2 - 40, PDF_CONFIG.lineHeight.body);
+    renderSpacedText(doc, segment.pressure, leftColTextX, colStartY + spacing.cardGap, maxWidth / 2 - spacing.bulletTextOffset - spacing.circleOffset, bodyLine);
 
     // WHAT FORCES ADOPTION section - right column
-    const rightColIconX = margin + maxWidth / 2 + 12;
-    const rightColTextX = margin + maxWidth / 2 + 22;
+    const rightColIconX = margin + maxWidth / 2 + spacing.circleOffset;
+    const rightColTextX = margin + maxWidth / 2 + spacing.bulletTextOffset;
 
     // Adoption header with inline icon
     doc.setFillColor(...segment.color);
-    doc.circle(rightColIconX, colStartY - 1, iconSize, "F");
+    doc.circle(rightColIconX, colStartY, circleSize.medium, "F");
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text("WHAT FORCES ADOPTION", rightColTextX, colStartY);
+    doc.text("WHAT FORCES ADOPTION", rightColTextX, colStartY + 1);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    const rightColMaxWidth = maxWidth / 2 - 30;
-    let driverY = colStartY + 8;
+    const rightColMaxWidth = maxWidth / 2 - spacing.bulletTextOffset;
+    let driverY = colStartY + spacing.cardGap;
     segment.adoptionDrivers.forEach((driver) => {
       const wrappedDriver = doc.splitTextToSize(sanitizeText(driver), rightColMaxWidth);
       wrappedDriver.forEach((line: string, lineIndex: number) => {
         const prefix = lineIndex === 0 ? "•  " : "   ";
         doc.text(`${prefix}${line}`, rightColTextX, driverY);
-        driverY += PDF_CONFIG.lineHeight.tight + 1;
+        driverY += lineHeight.tight + 1;
       });
     });
 
-    yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
+    yPosition += cardHeight + spacing.cardGap;
   });
 
   // Footer insight - purple text with spacing
-  yPosition = checkPageBreak(doc, yPosition, 22, pageHeight, margin);
-  yPosition += 4; // Add gap from last card
-  renderContentCard(doc, margin, yPosition, maxWidth, 14, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
+  yPosition = checkPageBreak(doc, yPosition, spacing.contentBoxStart + spacing.cardGap, pageHeight, margin);
+  yPosition += spacing.boxGap; // Add gap from last card
+  renderContentCard(doc, margin, yPosition, maxWidth, spacing.contentPadding, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodySmallFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("One platform.  One intelligence layer.  Forced adoption across segments.", pageWidth / 2, yPosition + 9, { align: "center" });
-  yPosition += 18;
+  doc.text("One platform.  One intelligence layer.  Forced adoption across segments.", pageWidth / 2, yPosition + spacing.cardGap, { align: "center" });
+  yPosition += spacing.bulletTextOffset;
 
   return yPosition;
 };
