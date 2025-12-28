@@ -8183,7 +8183,7 @@ const renderMarketDescription = (
   yPosition += compHeight + PDF_CONFIG.spacing.cardGap;
 
   // 6. ACTIONABLE INSIGHTS (4 colored cards in 2x2 grid) - matches visual insight cards
-  const insightCardWidth = (maxWidth - PDF_CONFIG.spacing.cardGap) / 2;
+  const insightCardWidth = (maxWidth - spacing.cardGap) / 2;
   const insightCardHeight = 48;
   const insights = [
     { title: "Data-Intensive Operations", insight: "Real Estate teams now need tools that turn static documents into usable, queryable information.", color: "blue" },
@@ -8192,13 +8192,13 @@ const renderMarketDescription = (
     { title: "Speed & Compliance", insight: "Speed is no longer a competitive advantage - it is a compliance and credibility requirement.", color: "emerald" },
   ];
 
-  fitPage(insightCardHeight * 2 + 12);
+  fitPage(insightCardHeight * 2 + spacing.paragraphGap);
 
   insights.forEach((item, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
-    const x = margin + col * (insightCardWidth + PDF_CONFIG.spacing.cardGap);
-    const y = yPosition + row * (insightCardHeight + PDF_CONFIG.spacing.paragraphGap);
+    const x = margin + col * (insightCardWidth + spacing.cardGap);
+    const y = yPosition + row * (insightCardHeight + spacing.paragraphGap);
 
     // Set colors based on type
     let bgColor: [number, number, number], borderColor: [number, number, number], iconColor: [number, number, number];
@@ -8219,31 +8219,37 @@ const renderMarketDescription = (
     }
 
     doc.setFillColor(...bgColor);
-    doc.roundedRect(x, y, insightCardWidth, insightCardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
+    doc.roundedRect(x, y, insightCardWidth, insightCardHeight, box.borderRadius, box.borderRadius, "F");
     doc.setDrawColor(...borderColor);
-    doc.setLineWidth(PDF_CONFIG.box.borderWidthThin);
-    doc.roundedRect(x, y, insightCardWidth, insightCardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(x, y, insightCardWidth, insightCardHeight, box.borderRadius, box.borderRadius, "S");
 
+    // Circle positioned to align with text baseline
+    const circleY = y + spacing.contentPadding;
     doc.setFillColor(...iconColor);
-    doc.circle(x + PDF_CONFIG.spacing.circleOffset, y + 14, PDF_CONFIG.circleSize.medium, "F");
+    doc.circle(x + spacing.circleOffset, circleY, circleSize.medium, "F");
 
+    // "ACTIONABLE INSIGHT" label aligned with circle center
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text("ACTIONABLE INSIGHT", x + PDF_CONFIG.spacing.bulletTextOffset, y + 12);
+    doc.text("ACTIONABLE INSIGHT", x + spacing.bulletTextOffset, circleY + 1);
 
-    const insightLines = splitTextWithFont(doc, sanitizeText(item.insight), insightCardWidth - 16, "bodySmall", false);
+    // Insight text below label
+    const insightTextPadding = spacing.circleOffset;
+    const insightTextWidth = insightCardWidth - insightTextPadding * 2;
+    const insightLines = splitTextWithFont(doc, sanitizeText(item.insight), insightTextWidth, "bodySmall", false);
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    let insightY = y + 22;
+    let insightY = y + spacing.contentBoxStart;
     insightLines.forEach((line: string) => {
-      doc.text(line, x + PDF_CONFIG.spacing.circleOffset, insightY);
+      doc.text(line, x + insightTextPadding, insightY);
       insightY += bodyLine;
     });
   });
 
-  yPosition += insightCardHeight * 2 + 12;
+  yPosition += insightCardHeight * 2 + spacing.paragraphGap;
 
   // 7. WHY THE PROBLEM MATTERS NOW (Red box) - matches visual red box
   const whyNowIntro = "The operational landscape shows a clear convergence of pressures:";
