@@ -4031,12 +4031,14 @@ const renderBusinessObjectives = (
   };
 
   // Intro box
-  checkBreak(50);
+  checkBreak(40);
   const introText = "The next 12 months are focused on completing the MVP for early 2026, validating Hobson in real operational settings, and building the foundations needed for commercial rollout and long-term scale.";
   const innerPadding = 8;
   const innerTextWidth = maxWidth - innerPadding * 2;
+  const introLineSpacing = 5.5; // tighter line spacing
   const introLines = doc.splitTextToSize(introText, innerTextWidth);
-  const introHeight = introLines.length * 6 + 12;
+  // Compact box: text lines + minimal padding
+  const introHeight = introLines.length * introLineSpacing + 10;
   
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "F");
@@ -4046,12 +4048,13 @@ const renderBusinessObjectives = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  // Single justified paragraph rendering
-  doc.text(introText, margin + innerPadding, yPosition + 10, {
+  // Single justified paragraph with tighter line height
+  doc.text(introText, margin + innerPadding, yPosition + 8, {
     maxWidth: innerTextWidth,
     align: "justify",
+    lineHeightFactor: 1.3,
   });
-  yPosition += introHeight + 12;
+  yPosition += introHeight + 10;
 
   // Top-Level Organisational Goals
   checkBreak(65);
@@ -7600,9 +7603,10 @@ const renderMarketDescription = (
   // 1. INTRO SECTION (Blue gradient box) - matches visual blue box
   const innerPaddingX = 10;
   const innerTextWidth = maxWidth - innerPaddingX * 2;
+  const introLineSpacing = 5.5; // tighter line spacing
   const introLines = doc.splitTextToSize(sanitizeText(data.header.intro), innerTextWidth);
-  // Tighter box: 16 for title area + text lines + 6 bottom padding
-  const headerHeight = 16 + introLines.length * bodyLine + 6;
+  // Compact box: title area (14) + text lines + small bottom padding (4)
+  const headerHeight = 14 + introLines.length * introLineSpacing + 4;
   fitPage(headerHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
@@ -7614,20 +7618,21 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + innerPaddingX, yPosition + 14);
+  doc.text(data.header.title, margin + innerPaddingX, yPosition + 12);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  let textY = yPosition + 22;
+  let textY = yPosition + 18;
 
-  // Render as a single justified paragraph so jsPDF can distribute spacing properly
+  // Render as a single justified paragraph with tighter line height
   doc.text(sanitizeText(data.header.intro), margin + innerPaddingX, textY, {
     maxWidth: innerTextWidth,
     align: "justify",
+    lineHeightFactor: 1.3,
   });
 
-  yPosition += headerHeight + 8;
+  yPosition += headerHeight + 6;
 
   // 2. KEY ACTIONABLE TRENDS SECTION (Slate/gray box) - matches visual slate box
   const trendsIntroLines = doc.splitTextToSize(sanitizeText(data.keyTrends.intro), innerTextWidth);
