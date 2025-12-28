@@ -7099,8 +7099,8 @@ const renderSituationAnalysis = (
   yPosition += 6;
 
   // 5. Summary
-  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), maxWidth - 24);
-  const summaryHeight = 24 + summaryLines.length * bodyLine;
+  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), maxWidth - 32);
+  const summaryHeight = 26 + summaryLines.length * bodyLine;
   fitPage(summaryHeight + 10);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -7112,14 +7112,14 @@ const renderSituationAnalysis = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Summary", margin + 8, yPosition + 10);
+  doc.text("Summary", margin + 10, yPosition + 12);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  textY = yPosition + 20;
+  textY = yPosition + 22;
   summaryLines.forEach((line: string) => {
-    doc.text(line, margin + 12, textY);
+    doc.text(line, margin + 10, textY);
     textY += bodyLine;
   });
   yPosition += summaryHeight + 10;
