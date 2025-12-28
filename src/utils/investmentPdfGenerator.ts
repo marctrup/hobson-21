@@ -6973,11 +6973,11 @@ const renderSituationAnalysis = (
     doc.setFont("helvetica", "bold");
     doc.text(`Segment ${segment.id}:`, margin + 22, yPosition + 14);
 
-    // Target label (no box, just colored text)
+    // Target label (no box, just colored text) - add spacing between segment and target
     doc.setTextColor(...theme.accent);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    const targetX = margin + 22 + doc.getTextWidth(`Segment ${segment.id}: `) + 4;
+    const targetX = margin + 22 + doc.getTextWidth(`Segment ${segment.id}:`) + 12; // 12pt gap
     doc.text(`${segment.targetLevel} Target`, targetX, yPosition + 14);
 
     // Title
