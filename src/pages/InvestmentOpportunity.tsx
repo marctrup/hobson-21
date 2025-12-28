@@ -85,6 +85,8 @@ import { CustomerOnlineBehaviourVisual } from "@/components/investor/CustomerOnl
 import { BrandIntegrityVisual } from "@/components/investor/BrandIntegrityVisual";
 import { PESTLEAnalysisVisual } from "@/components/investor/PESTLEAnalysisVisual";
 import { InternalCapabilityAssessmentVisual } from "@/components/investor/InternalCapabilityAssessmentVisual";
+import { SWOTAnalysisVisual } from "@/components/investor/SWOTAnalysisVisual";
+
 
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
@@ -681,6 +683,15 @@ const sections = [
         title: "Internal Capability Assessment",
         showCustomVisual: true,
         customVisualComponent: "internalCapabilityAssessment",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "SWOT Analysis",
+        showCustomVisual: true,
+        customVisualComponent: "swotAnalysis",
         content: {
           overview: "",
           sections: [],
@@ -1575,6 +1586,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Internal Capability Assessment */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "internalCapabilityAssessment" && (
                       <InternalCapabilityAssessmentVisual />
+                    )}
+
+                    {/* Custom Visual Component for SWOT Analysis */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "swotAnalysis" && (
+                      <SWOTAnalysisVisual />
                     )}
                     {/* Custom Visual Component for AI Processing */}
                     {(selectedSection.pages[currentPageIndex] as any).isVisual && <AIProcessingVisual />}
