@@ -1299,31 +1299,32 @@ export const getMarketingSalesStrategyPdfContent = (): string[] => [
   "maximises market coverage while optimising customer acquisition costs.",
 ];
 
-export const getExecutiveContextPdfContent = (): string[] => [
-  "Executive Context:",
-  "",
-  "The Real Estate industry has entered a structural inflexion point.",
-  "",
-  "Key Pressures:",
-  "- Regulatory complexity",
-  "- Operating cost inflation",
-  "- Chronic labour shortages",
-  "- Rising compliance exposure",
-  "",
-  "Traditional property management systems can no longer scale to meet the demands placed upon them. Operators are under immediate pressure to transform how they manage risk, compliance, documentation, and decision-making - not as an optimisation, but as a necessity for survival.",
-  "",
-  "Hobson will establish the AI operating layer for the Real Estate sector before the market consolidates around a new standard.",
-  "",
-  "Mission Statement: Innovation without disruption",
-  "",
-  "To become the intelligence layer real estate runs on - ensuring every operational decision is based on instant, auditable insight rather than manual search, institutional memory, or guesswork.",
-  "",
-  "Positioning Statement: Disruption without displacement",
-  "",
-  "Hobson replaces manual document work in real estate with AI-driven reasoning, delivering instant, traceable answers that reduce staffing costs, prevent costly errors, and accelerate operational decision-making. It embeds directly into existing workflows, becoming the intelligence infrastructure modern real estate operations require to compete.",
-  "",
-  "The following go-to-market strategy is therefore not incremental; it is designed for rapid validation, accelerated adoption, and decisive category capture - creating a narrow, highly investable window in which early capital enables Hobson to define the industry's future operating model.",
-];
+// Structured data for dedicated PDF renderer
+export const getExecutiveContextStructuredData = () => ({
+  inflexionPoint: "The Real Estate industry has entered a structural inflexion point.",
+  pressures: [
+    "Regulatory complexity",
+    "Operating cost inflation",
+    "Chronic labour shortages",
+    "Rising compliance exposure",
+  ],
+  contextParagraph: "Traditional property management systems can no longer scale to meet the demands placed upon them. Operators are under immediate pressure to transform how they manage risk, compliance, documentation, and decision-making - not as an optimisation, but as a necessity for survival.",
+  hobsonPositioning: "Hobson will establish the AI operating layer for the Real Estate sector before the market consolidates around a new standard.",
+  missionStatement: {
+    title: "Mission Statement",
+    subtitle: "Innovation without disruption",
+    content: "To become the intelligence layer real estate runs on - ensuring every operational decision is based on instant, auditable insight rather than manual search, institutional memory, or guesswork.",
+  },
+  positioningStatement: {
+    title: "Positioning Statement",
+    subtitle: "Disruption without displacement",
+    content: "Hobson replaces manual document work in real estate with AI-driven reasoning, delivering instant, traceable answers that reduce staffing costs, prevent costly errors, and accelerate operational decision-making. It embeds directly into existing workflows, becoming the intelligence infrastructure modern real estate operations require to compete.",
+  },
+  conclusion: "The following go-to-market strategy is therefore not incremental; it is designed for rapid validation, accelerated adoption, and decisive category capture - creating a narrow, highly investable window in which early capital enables Hobson to define the industry's future operating model.",
+});
+
+// String array version for backward compatibility with generic renderer
+export const getExecutiveContextPdfContent = (): string[] => [];
 
 export const getSituationAnalysisPdfContent = (): string[] => [
   "Customer Segmentation and Targeting:",
