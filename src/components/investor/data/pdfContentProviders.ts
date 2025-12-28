@@ -1326,46 +1326,63 @@ export const getExecutiveContextStructuredData = () => ({
 // String array version for backward compatibility with generic renderer
 export const getExecutiveContextPdfContent = (): string[] => [];
 
-export const getSituationAnalysisPdfContent = (): string[] => [
-  "Customer Segmentation and Targeting:",
-  "",
-  "Hobson serves Real Estate organisations that manage operational documents such as",
-  "leases, agreements, and compliance files. Through discovery interviews and early",
-  "product testing, three distinct segments emerged. Each differs in maturity,",
-  "administrative load, and appetite for technology, but all share the same core pain:",
-  "the time and risk of manually searching structured and unstructured documents.",
-  "",
-  "Segment 1: Large Portfolio Operators with Heavy Administration (Primary Target)",
-  "- Organisations managing hundreds of assets with layered approval structures",
-  "- Complex, decentralised systems with multiple document repositories",
-  "- Hobson retrieves clauses, dates, terms and summaries in seconds",
-  "- Use cases: rapid query response, board reporting, junior staff support",
-  "- Client feedback: 'It takes us too long to find even simple information.'",
-  "",
-  "Segment 2: Medium-Sized Real Estate Companies with Agile Workflows (Secondary Target)",
-  "- Lean, fast-moving teams managing mid-sized portfolios",
-  "- Lack centralised knowledge systems, rely on shared drives and email",
-  "- Hobson provides clarity without requiring system overhaul",
-  "- Use cases: asset reviews, staff onboarding, internal reports",
-  "- Client feedback: 'Information is spread across inboxes, folders and individuals.'",
-  "",
-  "Segment 3: Small Portfolio Owners / Owner-Managers (Future Target)",
-  "- Hands-on owner-operators with limited admin support",
-  "- Rely on manual workflows, email, paper files and spreadsheets",
-  "- Hobson becomes a simple, intelligent digital assistant",
-  "- Use cases: preparing renewals, answering day-to-day questions",
-  "- Client feedback: 'I just want something simple that works.'",
-  "",
-  "Targeting Strategy:",
-  "- Primary: Large Portfolio Operators - highest burden, clear ROI, word-of-mouth",
-  "- Secondary: Medium-Sized Companies - agile, low barriers, ideal for case studies",
-  "- Future: Small Owners - high volume, suits long-term self-serve model",
-  "",
-  "Summary:",
-  "Across all segments, critical information resides in documents, not systems,",
-  "which slows decision-making and increases operational risk. Hobson solves this",
-  "by delivering fast, accurate, referenced answers using existing files.",
-];
+// Structured data for dedicated PDF renderer
+export const getSituationAnalysisStructuredData = () => ({
+  header: {
+    title: "Customer Segmentation & Targeting",
+    subtitle: "Three distinct segments with shared core pain: time and risk of manual document search",
+  },
+  intro: "Hobson serves Real Estate organisations that manage operational documents such as leases, agreements, and compliance files. Through discovery interviews and early product testing, three distinct segments emerged. Each differs in maturity, administrative load, and appetite for technology, but all share the same core pain.",
+  segments: [
+    {
+      id: 1,
+      title: "Large Portfolio Operators with Heavy Administration",
+      targetLevel: "Primary",
+      description: "Organisations managing hundreds of assets with layered approval structures and multiple document repositories (legacy CRMs, shared drives, email archives). Their systems are complex, decentralised, and historically built.",
+      hobsonValue: "Hobson behaves like a rapid information assistant. It retrieves clauses, dates, terms, and summaries from large volumes of documents in seconds.",
+      useCases: [
+        "Responding quickly to a person's queries",
+        "Supporting internal and board reporting by querying portfolio-wide documents",
+        "Helping junior staff access information without constant senior oversight",
+      ],
+      feedback: "It takes us too long to find even simple information.",
+      targetReason: "Highest administrative burden, clear ROI, larger teams for word-of-mouth",
+    },
+    {
+      id: 2,
+      title: "Medium-Sized Real Estate Companies with Agile Workflows",
+      targetLevel: "Secondary",
+      description: "Lean, fast-moving teams managing mid-sized portfolios. These organisations often lack centralised knowledge systems and rely on shared drives, email threads, and informal knowledge.",
+      hobsonValue: "Hobson provides clarity and structure without requiring a system overhaul. It acts as an instant-access layer over existing files.",
+      useCases: [
+        "Asset reviews and operational audits",
+        "Onboarding new staff, reducing dependency on legacy knowledge",
+        "Producing internal summary reports and board updates",
+      ],
+      feedback: "Information is spread across inboxes, folders and individuals' knowledge.",
+      targetReason: "Agile decision-making, low barriers, ideal for early case studies",
+    },
+    {
+      id: 3,
+      title: "Small Portfolio Owners / Owner-Managers",
+      targetLevel: "Future",
+      description: "Hands-on owner-operators running small portfolios with limited administrative support and minimal technology infrastructure. They rely on manual workflows, email, paper files, and spreadsheets.",
+      hobsonValue: "Hobson becomes a simple, intelligent digital assistant that finds and summarises lease terms, deadlines, and answers without requiring training.",
+      useCases: [
+        "Preparing renewals, notices, or legal letters",
+        "Answering day-to-day operational questions",
+        "Organising portfolio details and key dates",
+      ],
+      feedback: "I just want something simple that works and doesn't require onboarding.",
+      targetReason: "High volume potential, suits long-term self-serve model",
+    },
+  ],
+  strategyIntro: "While all three segments benefit from Hobson's document-native AI, the go-to-market focus is phased:",
+  summary: "Across all segments, the underlying problem is consistent: critical information resides in documents, not systems, which slows decision-making and increases operational risk. Hobson solves this by delivering fast, accurate, referenced answers using the files teams already rely on. This makes it valuable for organisations of every size, but especially for those with complex, document-heavy portfolios and high compliance pressure.",
+});
+
+// String array version for backward compatibility
+export const getSituationAnalysisPdfContent = (): string[] => [];
 
 export const getCustomerPersonasPdfContent = (): string[] => [
   "Customer Personas:",

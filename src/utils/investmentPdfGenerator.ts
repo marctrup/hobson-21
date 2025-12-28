@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // PDF Configuration - Colors matched to design system (index.css)
@@ -6855,6 +6855,283 @@ const renderExecutiveContext = (
 };
 
 /**
+ * Render Customer Segmentation & Targeting (Situation Analysis) - matches UI layout
+ */
+const renderSituationAnalysis = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const bodyLine = PDF_CONFIG.lineHeight.body;
+
+  const data = getSituationAnalysisStructuredData();
+
+  const fitPage = (required: number) => {
+    yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Color themes for segments
+  const segmentThemes = [
+    { bg: [239, 246, 255] as [number, number, number], border: [191, 219, 254] as [number, number, number], accent: [37, 99, 235] as [number, number, number] }, // blue
+    { bg: [250, 245, 255] as [number, number, number], border: [221, 214, 254] as [number, number, number], accent: [124, 58, 237] as [number, number, number] }, // purple
+    { bg: [236, 253, 245] as [number, number, number], border: [167, 243, 208] as [number, number, number], accent: [5, 150, 105] as [number, number, number] }, // emerald
+  ];
+
+  // Teal theme
+  const tealBg: [number, number, number] = [240, 253, 250];
+  const tealBorder: [number, number, number] = [153, 246, 228];
+  const tealAccent: [number, number, number] = [20, 184, 166];
+
+  // Slate theme
+  const slateBg: [number, number, number] = [248, 250, 252];
+  const slateBorder: [number, number, number] = [226, 232, 240];
+
+  // 1. Header box
+  const headerHeight = 28;
+  fitPage(headerHeight + 6);
+
+  doc.setFillColor(...tealBg);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "F");
+  doc.setDrawColor(...tealBorder);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "S");
+
+  doc.setFillColor(...tealAccent);
+  doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.header.title, margin + 22, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text(sanitizeText(data.header.subtitle), margin + 22, yPosition + 22);
+
+  yPosition += headerHeight + 6;
+
+  // 2. Intro paragraph
+  const introLines = doc.splitTextToSize(sanitizeText(data.intro), maxWidth - 16);
+  const introHeight = 12 + introLines.length * bodyLine;
+  fitPage(introHeight + 6);
+
+  doc.setFillColor(...slateBg);
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "F");
+  doc.setDrawColor(...slateBorder);
+  doc.setLineWidth(0.2);
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "S");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  let textY = yPosition + 8;
+  introLines.forEach((line: string) => {
+    doc.text(line, margin + 8, textY);
+    textY += bodyLine;
+  });
+  yPosition += introHeight + 8;
+
+  // 3. Segments
+  data.segments.forEach((segment, idx) => {
+    const theme = segmentThemes[idx];
+
+    // Calculate segment card height
+    const descLines = doc.splitTextToSize(sanitizeText(segment.description), maxWidth - 16);
+    const valueLines = doc.splitTextToSize(sanitizeText(segment.hobsonValue), maxWidth - 24);
+    const useCaseHeight = segment.useCases.length * (bodyLine + 1);
+    const feedbackLines = doc.splitTextToSize(`Client feedback: "${segment.feedback}"`, maxWidth - 20);
+    
+    const segmentHeight = 32 + descLines.length * bodyLine + 8 + valueLines.length * bodyLine + 12 + useCaseHeight + 8 + feedbackLines.length * bodyLine + 12;
+    fitPage(segmentHeight + 8);
+
+    // Main segment card
+    doc.setFillColor(...theme.bg);
+    doc.roundedRect(margin, yPosition, maxWidth, segmentHeight, 3, 3, "F");
+    doc.setDrawColor(...theme.border);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(margin, yPosition, maxWidth, segmentHeight, 3, 3, "S");
+
+    // Segment header
+    doc.setFillColor(...theme.accent);
+    doc.circle(margin + 12, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Segment ${segment.id}:`, margin + 22, yPosition + 12);
+
+    // Target badge
+    const badgeX = margin + 22 + doc.getTextWidth(`Segment ${segment.id}: `) + 4;
+    const badgeText = `${segment.targetLevel} Target`;
+    const badgeWidth = doc.getTextWidth(badgeText) + 8;
+    doc.setFillColor(...theme.accent);
+    doc.roundedRect(badgeX, yPosition + 5, badgeWidth, 10, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(badgeText, badgeX + 4, yPosition + 11.5);
+
+    // Title
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.setFont("helvetica", "bold");
+    doc.text(sanitizeText(segment.title), margin + 22, yPosition + 24);
+
+    textY = yPosition + 32;
+
+    // Description
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "normal");
+    descLines.forEach((line: string) => {
+      doc.text(line, margin + 8, textY);
+      textY += bodyLine;
+    });
+    textY += 4;
+
+    // Hobson value box
+    const valueBoxY = textY;
+    const valueBoxHeight = valueLines.length * bodyLine + 10;
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(margin + 6, valueBoxY, maxWidth - 12, valueBoxHeight, 2, 2, "F");
+    doc.setDrawColor(...theme.border);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(margin + 6, valueBoxY, maxWidth - 12, valueBoxHeight, 2, 2, "S");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    textY = valueBoxY + 6;
+    valueLines.forEach((line: string) => {
+      doc.text(line, margin + 12, textY);
+      textY += bodyLine;
+    });
+    textY = valueBoxY + valueBoxHeight + 4;
+
+    // Use cases
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "normal");
+    segment.useCases.forEach((useCase) => {
+      doc.setFillColor(...theme.accent);
+      doc.circle(margin + 12, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+      doc.text(sanitizeText(useCase), margin + 18, textY);
+      textY += bodyLine + 1;
+    });
+    textY += 4;
+
+    // Client feedback
+    const feedbackBoxY = textY;
+    const feedbackBoxHeight = feedbackLines.length * bodyLine + 8;
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(margin + 6, feedbackBoxY, maxWidth - 12, feedbackBoxHeight, 2, 2, "F");
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.rect(margin + 6, feedbackBoxY, 3, feedbackBoxHeight, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "italic");
+    textY = feedbackBoxY + 6;
+    feedbackLines.forEach((line: string) => {
+      doc.text(line, margin + 14, textY);
+      textY += bodyLine;
+    });
+
+    yPosition += segmentHeight + 6;
+  });
+
+  // 4. Targeting Strategy
+  fitPage(60);
+  
+  doc.setFillColor(...tealAccent);
+  doc.circle(margin + 8, yPosition + 5, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Targeting Strategy", margin + 18, yPosition + 8);
+  yPosition += 14;
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const strategyLines = doc.splitTextToSize(sanitizeText(data.strategyIntro), maxWidth);
+  strategyLines.forEach((line: string) => {
+    doc.text(line, margin, yPosition);
+    yPosition += bodyLine;
+  });
+  yPosition += 4;
+
+  // Strategy boxes (3 columns)
+  const stratBoxWidth = (maxWidth - 12) / 3;
+  const stratBoxHeight = 40;
+  
+  data.segments.forEach((segment, idx) => {
+    const theme = segmentThemes[idx];
+    const x = margin + idx * (stratBoxWidth + 6);
+
+    doc.setFillColor(...theme.bg);
+    doc.roundedRect(x, yPosition, stratBoxWidth, stratBoxHeight, 2, 2, "F");
+    doc.setDrawColor(...theme.border);
+    doc.setLineWidth(0.2);
+    doc.roundedRect(x, yPosition, stratBoxWidth, stratBoxHeight, 2, 2, "S");
+
+    doc.setTextColor(...theme.accent);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${segment.targetLevel} Target`, x + 4, yPosition + 8);
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(`Segment ${segment.id}`, x + 4, yPosition + 16);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const reasonLines = doc.splitTextToSize(sanitizeText(segment.targetReason), stratBoxWidth - 8);
+    let reasonY = yPosition + 24;
+    reasonLines.forEach((line: string) => {
+      doc.text(line, x + 4, reasonY);
+      reasonY += 4;
+    });
+  });
+  yPosition += stratBoxHeight + 8;
+
+  // 5. Summary
+  const summaryLines = doc.splitTextToSize(sanitizeText(data.summary), maxWidth - 16);
+  const summaryHeight = 18 + summaryLines.length * bodyLine;
+  fitPage(summaryHeight + 6);
+
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(0.3);
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, 3, 3, "S");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Summary", margin + 8, yPosition + 10);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  textY = yPosition + 18;
+  summaryLines.forEach((line: string) => {
+    doc.text(line, margin + 8, textY);
+    textY += bodyLine;
+  });
+  yPosition += summaryHeight + 6;
+
+  return yPosition;
+};
+
+/**
  * Render Brand Integrity, Perception & Positioning visual
  */
 const renderBrandIntegrity = (
@@ -7995,8 +8272,9 @@ const renderTabContent = (
     // Marketing & Sales Strategy renderers
     else if (componentType === "executiveContext") {
       yPosition = renderExecutiveContext(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "situationAnalysis") {
+      yPosition = renderSituationAnalysis(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (
-      componentType === "situationAnalysis" ||
       componentType === "customerPersonas" ||
       componentType === "customerUserJourneys" ||
       componentType === "marketDescription" ||
