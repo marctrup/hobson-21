@@ -4010,6 +4010,289 @@ const renderCommercials = (
 };
 
 /**
+ * Render Business Objectives visual
+ */
+const renderBusinessObjectives = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Helper for page break
+  const checkBreak = (requiredSpace: number) => {
+    if (yPosition + requiredSpace > pageHeight - 40) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Intro box
+  checkBreak(50);
+  const introText = "The next 12 months are focused on completing the MVP for early 2026, validating Hobson in real operational settings, and building the foundations needed for commercial rollout and long-term scale.";
+  const introLines = doc.splitTextToSize(introText, maxWidth - 16);
+  const introHeight = introLines.length * 6 + 16;
+  
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.roundedRect(margin, yPosition, maxWidth, introHeight, 3, 3, "S");
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  introLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + 8, yPosition + 12 + idx * 6);
+  });
+  yPosition += introHeight + 12;
+
+  // Top-Level Organisational Goals
+  checkBreak(80);
+  doc.setFillColor(...PDF_CONFIG.emeraldBg);
+  doc.roundedRect(margin, yPosition, maxWidth, 85, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.emeraldBorder);
+  doc.roundedRect(margin, yPosition, maxWidth, 85, 3, 3, "S");
+
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 16, yPosition + 14, 5, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Top-Level Organisational Goals", margin + 28, yPosition + 18);
+  
+  const orgGoals = [
+    "Validate Hobson's usefulness and reliability across a broader range of Real Estate operators",
+    "Establish a stable, predictable MVP that supports ongoing refinement and automation",
+    "Build scalable internal systems for support, onboarding, and data operations",
+    "Create a commercial foundation capable of driving paid adoption during 2026-2027"
+  ];
+  
+  let goalY = yPosition + 30;
+  doc.setFont("helvetica", "normal");
+  setBodySmallFont(doc);
+  orgGoals.forEach((goal) => {
+    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.circle(margin + 14, goalY - 1, 1.2, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    const goalLines = doc.splitTextToSize(goal, maxWidth - 30);
+    goalLines.forEach((line: string, idx: number) => {
+      doc.text(line, margin + 20, goalY + idx * 5);
+    });
+    goalY += goalLines.length * 5 + 3;
+  });
+  yPosition += 95;
+
+  // Mid- to Long-Term Vision
+  checkBreak(60);
+  doc.setFillColor(...PDF_CONFIG.blueBg);
+  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
+  
+  doc.setFillColor(...PDF_CONFIG.blue);
+  doc.circle(margin + 16, yPosition + 14, 5, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Mid- to Long-Term Vision (2-3+ Years)", margin + 28, yPosition + 18);
+  
+  doc.setFont("helvetica", "normal");
+  setBodySmallFont(doc);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  const visionText = "Hobson will evolve from a retrieval-focused MVP (2026) into a proactive AI assistant replacing manual document work in Real Estate with AI-driven reasoning, delivering instant, traceable answers.";
+  const visionLines = doc.splitTextToSize(visionText, maxWidth - 20);
+  visionLines.forEach((line: string, idx: number) => {
+    doc.text(line, margin + 10, yPosition + 30 + idx * 5);
+  });
+  yPosition += 65;
+
+  // Market Validation Stats
+  checkBreak(45);
+  doc.setFillColor(...PDF_CONFIG.amberBg);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, 3, 3, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Market Validation Shows Strong Tailwinds", margin + 10, yPosition + 14);
+
+  const stats = [
+    { value: "36.1%", label: "CAGR in AI for Real Estate" },
+    { value: "$1.8T", label: "Global market by 2030" },
+    { value: "10-20%", label: "Efficiency gains with AI" }
+  ];
+  
+  const statWidth = (maxWidth - 20) / 3;
+  stats.forEach((stat, idx) => {
+    const xPos = margin + 10 + idx * statWidth;
+    doc.setTextColor(...PDF_CONFIG.amber);
+    doc.setFontSize(12);
+    doc.setFont("helvetica", "bold");
+    doc.text(stat.value, xPos + statWidth / 2, yPosition + 28, { align: "center" });
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    doc.text(stat.label, xPos + statWidth / 2, yPosition + 35, { align: "center" });
+  });
+  yPosition += 50;
+
+  // SMART Objectives Header
+  checkBreak(20);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SMART Objectives (2025-2027 Timeline)", margin, yPosition);
+  yPosition += 14;
+
+  // Objectives grid - 4 categories
+  const objectives = [
+    {
+      title: "Product & Market Validation (2026)",
+      color: PDF_CONFIG.primaryColor,
+      bgColor: PDF_CONFIG.primaryBgLight,
+      items: [
+        "Add five new non-paying pilot customers by Q1 2026",
+        "Achieve 80%+ satisfaction across pilot users by Q3 2026",
+        "Reduce average retrieval friction by 30% by Q4 2026",
+        "Demonstrate willingness to pay by Q4 2026"
+      ]
+    },
+    {
+      title: "Commercial & Revenue (2026-2027)",
+      color: PDF_CONFIG.emerald,
+      bgColor: PDF_CONFIG.emeraldBg,
+      items: [
+        "Convert 3-5 pilots into paying accounts by Q4 2026",
+        "Reach GBP 50k-100k MRR by Q4 2027",
+        "Maintain 70%+ retention across early paid users by Q4 2027",
+        "Validate ROI across small, medium, and large operators"
+      ]
+    },
+    {
+      title: "Brand & Market Presence (2026)",
+      color: PDF_CONFIG.rose,
+      bgColor: PDF_CONFIG.roseBg,
+      items: [
+        "Increase brand awareness by 25% by Q4 2026",
+        "Publish three case studies by Q3 2026",
+        "Introduce confidence indicators by Q4 2026"
+      ]
+    },
+    {
+      title: "Operational & Internal (2026-2027)",
+      color: PDF_CONFIG.textGray,
+      bgColor: PDF_CONFIG.bgLight,
+      items: [
+        "Establish lightweight support framework by Q4 2026",
+        "Automate 30% of internal workflows by Q1 2027",
+        "Deliver Phase 2 development by Q4 2026"
+      ]
+    }
+  ];
+
+  const colWidth = (maxWidth - 6) / 2;
+  objectives.forEach((obj, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    
+    if (col === 0) {
+      checkBreak(55);
+    }
+    
+    const xPos = margin + col * (colWidth + 6);
+    const cardY = row === 0 ? yPosition : yPosition + 60;
+    
+    if (col === 0 && row > 0) {
+      yPosition += 60;
+    }
+    
+    const cardHeight = 52;
+    doc.setFillColor(...obj.bgColor);
+    doc.roundedRect(xPos, cardY, colWidth, cardHeight, 3, 3, "F");
+    
+    doc.setFillColor(...obj.color);
+    doc.circle(xPos + 10, cardY + 10, 3, "F");
+    
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "bold");
+    doc.text(obj.title, xPos + 18, cardY + 12);
+    
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(7);
+    let itemY = cardY + 22;
+    obj.items.forEach((item) => {
+      doc.setFillColor(...obj.color);
+      doc.circle(xPos + 10, itemY - 1, 1, "F");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      const itemLines = doc.splitTextToSize(item, colWidth - 20);
+      itemLines.forEach((line: string, lineIdx: number) => {
+        doc.text(line, xPos + 14, itemY + lineIdx * 4);
+      });
+      itemY += itemLines.length * 4 + 2;
+    });
+  });
+  yPosition += 120;
+
+  // Timeline Progression
+  checkBreak(50);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "S");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  setCardTitleFont(doc);
+  doc.text("Business Objectives Create a Clean Progression", pageWidth / 2, yPosition + 12, { align: "center" });
+
+  const timeline = [
+    { year: "2026", desc: "Deliver MVP + expand pilots, validate market" },
+    { year: "2027", desc: "Public launch, commercial expansion" },
+    { year: "2028+", desc: "Enter Europe and global markets" }
+  ];
+  
+  const timelineWidth = (maxWidth - 20) / 3;
+  timeline.forEach((t, idx) => {
+    const xPos = margin + 10 + idx * timelineWidth;
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(11);
+    doc.setFont("helvetica", "bold");
+    doc.text(t.year, xPos + timelineWidth / 2, yPosition + 26, { align: "center" });
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(t.desc, timelineWidth - 10);
+    descLines.forEach((line: string, lineIdx: number) => {
+      doc.text(line, xPos + timelineWidth / 2, yPosition + 34 + lineIdx * 4, { align: "center" });
+    });
+  });
+  yPosition += 55;
+
+  // Flow: Prove -> Refine -> Scale -> Commercialise -> Expand
+  checkBreak(20);
+  const flowItems = ["Prove", "Refine", "Scale", "Commercialise", "Expand Globally"];
+  const flowItemWidth = (maxWidth - 30) / flowItems.length;
+  
+  flowItems.forEach((item, idx) => {
+    const xPos = margin + idx * flowItemWidth + idx * 6;
+    doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+    doc.roundedRect(xPos, yPosition, flowItemWidth, 14, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "bold");
+    doc.text(item, xPos + flowItemWidth / 2, yPosition + 9, { align: "center" });
+    
+    if (idx < flowItems.length - 1) {
+      doc.setTextColor(...PDF_CONFIG.primaryColor);
+      doc.text("->", xPos + flowItemWidth + 1, yPosition + 9);
+    }
+  });
+  yPosition += 24;
+
+  return yPosition;
+};
+
+/**
  * Render Gantt Chart (2026-2028) visual
  */
 const renderGanttChart = (
@@ -6951,6 +7234,8 @@ const renderTabContent = (
     // Commercials renderers
     else if (componentType === "commercialisationStrategy") {
       yPosition = renderCommercialisationStrategy(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "businessObjectives") {
+      yPosition = renderBusinessObjectives(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "heuPricing") {
       yPosition = renderHEUPricing(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "commercials") {
