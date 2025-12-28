@@ -7240,12 +7240,24 @@ const renderSituationAnalysis = (
     doc.setFont("helvetica", "bold");
     doc.text(`Segment ${segment.id}:`, margin + spacing.bulletTextOffset, segmentHeaderY + 1);
 
-    // Target label (no box, just colored text) - separated from segment label
-    doc.setTextColor(...theme.accent);
+    // Target label in a colored box
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
+    const targetText = `${segment.targetLevel} Target`;
+    const targetTextWidth = doc.getTextWidth(targetText);
+    const targetBoxPadding = spacing.boxGap;
+    const targetBoxWidth = targetTextWidth + targetBoxPadding * 2;
+    const targetBoxHeight = lineHeight.body + spacing.boxGap;
     const targetX = margin + spacing.bulletTextOffset + doc.getTextWidth(`Segment ${segment.id}:`) + spacing.cardGap;
-    doc.text(`${segment.targetLevel} Target`, targetX, segmentHeaderY + 1);
+    const targetBoxY = segmentHeaderY - targetBoxHeight / 2 - 1;
+    
+    // Draw target box with accent color background
+    doc.setFillColor(...theme.accent);
+    doc.roundedRect(targetX, targetBoxY, targetBoxWidth, targetBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    
+    // Draw target text in white
+    doc.setTextColor(255, 255, 255);
+    doc.text(targetText, targetX + targetBoxPadding, segmentHeaderY + 1);
 
     // Title - positioned below header with proper spacing
     const titleY = segmentHeaderY + lineHeight.body + spacing.boxGap;
