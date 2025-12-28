@@ -7641,7 +7641,7 @@ const renderCustomerUserJourneys = (
   ];
 
   // Header
-  const headerHeight = 28;
+  const headerHeight = spacing.contentBoxStart + lineHeight.body;
   fitPage(headerHeight + spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -7650,18 +7650,22 @@ const renderCustomerUserJourneys = (
   doc.setLineWidth(box.borderWidth);
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "S");
 
+  // Circle aligned with title text baseline
+  const headerCircleY = yPosition + spacing.contentPadding;
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + spacing.itemGap, yPosition + spacing.contentPadding, circleSize.medium, "F");
+  doc.circle(margin + spacing.circleOffset, headerCircleY, circleSize.medium, "F");
 
+  // Title aligned with circle
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.itemGap);
+  doc.text(data.header.title, margin + spacing.bulletTextOffset, headerCircleY + 1);
 
+  // Subtitle below title
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.header.subtitle), margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.bulletTextOffset + spacing.paragraphGap);
+  doc.text(sanitizeText(data.header.subtitle), margin + spacing.bulletTextOffset, headerCircleY + lineHeight.body + spacing.boxGap);
 
   yPosition += headerHeight + spacing.cardGap;
 
