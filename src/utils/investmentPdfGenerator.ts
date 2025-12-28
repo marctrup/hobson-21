@@ -3822,7 +3822,7 @@ const renderCommercialisationStrategy = (
   const conclusionHeight = spacing.headerToContent + spacing.boxTopPadding; // 28
   const conclusionCircleY = spacing.titleY + spacing.cardGap; // 14
   const conclusionLine1Y = fontSize.cardTitle - 1; // 11
-  const conclusionLine2Y = spacing.headerToContent + spacing.cardGap - 1; // 21
+  const conclusionLine2Y = conclusionLine1Y + lineHeight.body; // 11 + 5 = 16 (using default line spacing)
 
   // Header box - Inflexion Point
   checkBreak(headerBoxHeight + spacing.cardGap);
