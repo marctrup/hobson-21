@@ -7665,8 +7665,8 @@ const renderCustomerUserJourneys = (
     [107, 114, 128] as [number, number, number], // gray
   ];
 
-  // Header
-  const headerHeight = spacing.contentBoxStart + lineHeight.body;
+  // Header - height includes title + subtitle + padding
+  const headerHeight = spacing.contentPadding + lineHeight.body + lineHeight.body + spacing.contentPadding;
   fitPage(headerHeight + spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
