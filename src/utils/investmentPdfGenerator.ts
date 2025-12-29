@@ -7441,8 +7441,8 @@ const renderCustomerPersonas = (
     { bg: [236, 253, 245] as [number, number, number], border: [167, 243, 208] as [number, number, number], accent: [5, 150, 105] as [number, number, number] }, // emerald - Future
   ];
 
-  // Header
-  const headerHeight = spacing.contentBoxStart + lineHeight.body;
+  // Header - increased height to fit title and subtitle
+  const headerHeight = spacing.contentPadding + lineHeight.body + lineHeight.body + spacing.contentPadding;
   fitPage(headerHeight + spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
