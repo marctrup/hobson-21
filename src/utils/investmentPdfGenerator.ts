@@ -8056,7 +8056,7 @@ const renderMarketDescription = (
     doc.text(sanitizeText(stat.label), x + statWidth / 2, y + spacing.bulletTextOffset, { align: "center" });
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.text(`Ref: ${stat.source}`, x + statWidth / 2, y + 27, { align: "center" });
   });
 
@@ -9392,7 +9392,7 @@ const renderPESTLEAnalysis = (
     doc.setFillColor(...factor.accent);
     doc.circle(xPos + 10, cardY + 10, PDF_CONFIG.circleSize.medium, "F");
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
     doc.text(factor.letter, xPos + 8, cardY + 12);
 
@@ -9401,7 +9401,7 @@ const renderPESTLEAnalysis = (
     doc.setFont("helvetica", "bold");
     doc.text(factor.title, xPos + 20, cardY + 12);
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
     doc.text(factor.subtitle, xPos + 20, cardY + 18);
 
@@ -9410,10 +9410,10 @@ const renderPESTLEAnalysis = (
       doc.setFillColor(...factor.accent);
       doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(7);
+      doc.setFontSize(PDF_CONFIG.fontSize.caption);
       const wrapped = doc.splitTextToSize(item, cardWidth - 20);
       doc.text(wrapped[0], xPos + 16, itemY);
-      itemY += 5;
+      itemY += PDF_CONFIG.lineHeight.body;
     });
 
     if (col === 1) {
@@ -9508,10 +9508,10 @@ const renderInternalCapabilityAssessment = (
       doc.setFillColor(...PDF_CONFIG.emerald);
       doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(7);
+      doc.setFontSize(PDF_CONFIG.fontSize.caption);
       doc.setFont("helvetica", "normal");
       doc.text(item, xPos + 16, itemY);
-      itemY += 6;
+      itemY += PDF_CONFIG.lineHeight.loose;
     });
 
     if (col === 1 || idx === strengths.length - 1) {
@@ -9551,12 +9551,12 @@ const renderInternalCapabilityAssessment = (
     doc.roundedRect(xPos, yPosition, gapCardWidth, gapCardHeight, 3, 3, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
     doc.text(gap.title, xPos + 6, yPosition + 10);
     
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(6);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
     doc.text("Need: " + gap.need, xPos + 6, yPosition + 20);
 
@@ -9653,10 +9653,10 @@ const renderSWOTAnalysis = (
       doc.setFillColor(...quadrant.accent);
       doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(7);
+      doc.setFontSize(PDF_CONFIG.fontSize.caption);
       doc.setFont("helvetica", "normal");
       doc.text(item, xPos + 16, itemY);
-      itemY += 6;
+      itemY += PDF_CONFIG.lineHeight.loose;
     });
 
     if (col === 1) {
@@ -9700,7 +9700,7 @@ const renderSWOTAnalysis = (
   const col3X = margin + 72;
   const headerY = yPosition + pillarTableHeaderHeight;
 
-  doc.setFontSize(7);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.text("Pillar", col1X, headerY);
@@ -9719,7 +9719,7 @@ const renderSWOTAnalysis = (
   pillarsData.forEach((pillar) => {
     // Pillar name
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
     doc.text(pillar.pillar, col1X, rowY);
 
@@ -9730,7 +9730,7 @@ const renderSWOTAnalysis = (
 
     // Explanation - properly wrapped
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
     const explLines = doc.splitTextToSize(sanitizeText(pillar.explanation), explanationWidth);
     doc.text(explLines[0] || "", col3X, rowY);
@@ -9772,7 +9772,7 @@ const renderSWOTAnalysis = (
     doc.roundedRect(xPos, yPosition, recCardWidth, recCardHeight, 3, 3, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
     doc.text((idx + 1) + ". " + rec.title, xPos + 6, yPosition + 10);
 
@@ -9781,10 +9781,10 @@ const renderSWOTAnalysis = (
       doc.setFillColor(...PDF_CONFIG.primaryColor);
       doc.circle(xPos + 8, itemY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(6);
+      doc.setFontSize(PDF_CONFIG.fontSize.caption);
       doc.setFont("helvetica", "normal");
       doc.text(item, xPos + 13, itemY);
-      itemY += 6;
+      itemY += PDF_CONFIG.lineHeight.loose;
     });
 
     if (col === 2 || idx === recommendations.length - 1) {
