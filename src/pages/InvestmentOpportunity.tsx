@@ -716,42 +716,6 @@ const sections = [
           sections: [],
         },
       },
-      {
-        title: "Acquisition Strategy Overview",
-        showCustomVisual: true,
-        customVisualComponent: "acquisitionStrategyOverview",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Sales Funnel",
-        showCustomVisual: true,
-        customVisualComponent: "salesFunnel",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Lead Generation",
-        showCustomVisual: true,
-        customVisualComponent: "leadGeneration",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Conversion Strategy",
-        showCustomVisual: true,
-        customVisualComponent: "conversionStrategy",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
     ],
   },
   {
