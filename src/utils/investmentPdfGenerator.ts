@@ -9948,23 +9948,25 @@ const renderAcquisitionExecutiveSummary = (
 
   strategyCombines.forEach((pillar, idx) => {
     const xPos = margin + idx * (pillarWidth + spacing.gridGap);
+    const textStartX = xPos + circleSize.medium * 2 + spacing.paragraphGap;
+    const textMaxWidth = pillarWidth - (circleSize.medium * 2 + spacing.paragraphGap) - box.paddingX;
 
     doc.setFillColor(...pillar.bgColor);
     doc.roundedRect(xPos, yPosition, pillarWidth, pillarHeight, box.borderRadius, box.borderRadius, "F");
     
     doc.setFillColor(...pillar.color);
-    doc.circle(xPos + spacing.circleOffset, yPosition + 14, circleSize.medium, "F");
+    doc.circle(xPos + circleSize.medium + 4, yPosition + 14, circleSize.medium, "F");
 
     doc.setTextColor(...pillar.color);
-    doc.setFontSize(fontSize.body);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(pillar.title, xPos + spacing.bulletTextOffset, yPosition + 16);
+    doc.text(pillar.title, textStartX, yPosition + 14);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const descLines = doc.splitTextToSize(pillar.desc, pillarWidth - box.paddingX * 2);
-    doc.text(descLines, xPos + box.paddingX, yPosition + 28, { lineHeightFactor: lineHeightFactor.body });
+    const descLines = splitTextWithFont(doc, pillar.desc, textMaxWidth, "caption", false);
+    doc.text(descLines, textStartX, yPosition + 24, { lineHeightFactor: lineHeightFactor.body });
   });
 
   yPosition += pillarHeight + spacing.sectionGap;
