@@ -88,7 +88,7 @@ import { InternalCapabilityAssessmentVisual } from "@/components/investor/Intern
 import { SWOTAnalysisVisual } from "@/components/investor/SWOTAnalysisVisual";
 import { AcquisitionExecutiveSummaryVisual } from "@/components/investor/AcquisitionExecutiveSummaryVisual";
 import { StrategicContextPositioningVisual } from "@/components/investor/StrategicContextPositioningVisual";
-
+import { SegmentationStrategyVisual } from "@/components/investor/SegmentationStrategyVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -721,6 +721,15 @@ const sections = [
         title: "Strategic Context & Positioning",
         showCustomVisual: true,
         customVisualComponent: "strategicContextPositioning",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Segmentation Strategy",
+        showCustomVisual: true,
+        customVisualComponent: "segmentationStrategy",
         content: {
           overview: "",
           sections: [],
@@ -1630,6 +1639,10 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Strategic Context & Positioning */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "strategicContextPositioning" && (
                       <StrategicContextPositioningVisual />
+                    )}
+                    {/* Custom Visual Component for Segmentation Strategy */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "segmentationStrategy" && (
+                      <SegmentationStrategyVisual />
                     )}
                     {/* Custom Visual Component for AI Processing */}
                     {(selectedSection.pages[currentPageIndex] as any).isVisual && <AIProcessingVisual />}

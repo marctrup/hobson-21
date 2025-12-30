@@ -10429,6 +10429,177 @@ const renderStrategicContextPositioning = (
 };
 
 /**
+ * Render Segmentation Strategy visual
+ */
+const renderSegmentationStrategy = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { fontSize, lineHeight, lineHeightFactor, spacing, box } = PDF_CONFIG;
+
+  const fitPage = (requiredHeight: number) => {
+    if (yPosition + requiredHeight > pageHeight - spacing.pageBreakMargin) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Header
+  const headerHeight = spacing.contentPadding + lineHeight.body + lineHeight.body + spacing.contentPadding;
+  fitPage(headerHeight);
+  
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Segmentation Strategy", margin + box.paddingX, yPosition + spacing.contentPadding);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Customer segments across UK property sector", margin + box.paddingX, yPosition + spacing.contentPadding + lineHeight.loose);
+  
+  yPosition += headerHeight + spacing.sectionGap;
+
+  // Overview
+  fitPage(40);
+  const overviewText = "Hobson's market segmentation identifies distinct customer groups with specific needs, behaviours, and adoption patterns across the UK property sector.";
+  
+  doc.setFillColor(248, 250, 252);
+  const overviewLines = splitTextWithFont(doc, overviewText, maxWidth - box.paddingX * 2, "body", false);
+  const overviewHeight = overviewLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom;
+  
+  doc.roundedRect(margin, yPosition, maxWidth, overviewHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(226, 232, 240);
+  doc.setLineWidth(box.borderWidthThin);
+  doc.roundedRect(margin, yPosition, maxWidth, overviewHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text(overviewLines, margin + box.paddingX, yPosition + box.paddingTop, { lineHeightFactor: lineHeightFactor.body });
+  
+  yPosition += overviewHeight + spacing.sectionGap;
+
+  // Primary Segments
+  fitPage(100);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Primary Customer Segments", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const segments = [
+    { title: "Property Management Companies", desc: "Mid-sized firms managing 100-1,000+ units" },
+    { title: "Estate Agents & Letting Agents", desc: "Agents handling tenancy and compliance docs" },
+    { title: "Portfolio Landlords", desc: "Private landlords with 5+ properties" },
+    { title: "Build-to-Rent Operators", desc: "Institutional operators with large portfolios" },
+  ];
+
+  const segmentWidth = (maxWidth - spacing.gridGap) / 2;
+  const segmentHeight = 38;
+
+  segments.forEach((segment, idx) => {
+    const row = Math.floor(idx / 2);
+    const col = idx % 2;
+    const xPos = margin + col * (segmentWidth + spacing.gridGap);
+    const yPos = yPosition + row * (segmentHeight + spacing.gridGap);
+
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(xPos, yPos, segmentWidth, segmentHeight, box.borderRadius, box.borderRadius, "F");
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(segment.title, xPos + box.paddingX, yPos + 14);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(segment.desc, xPos + box.paddingX, yPos + 26);
+  });
+
+  yPosition += (segmentHeight * 2) + spacing.gridGap + spacing.sectionGap;
+
+  // Segmentation Criteria
+  fitPage(55);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Segmentation Criteria", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const criteria = [
+    { title: "Portfolio Size", desc: "Number of units under management" },
+    { title: "Tech Maturity", desc: "Current digital adoption level" },
+    { title: "Pain Intensity", desc: "Urgency of document challenges" },
+  ];
+
+  const criteriaWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  const criteriaHeight = 40;
+
+  criteria.forEach((item, idx) => {
+    const xPos = margin + idx * (criteriaWidth + spacing.gridGap);
+
+    doc.setFillColor(249, 250, 251);
+    doc.roundedRect(xPos, yPosition, criteriaWidth, criteriaHeight, box.borderRadius, box.borderRadius, "F");
+    
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.rect(xPos, yPosition, 3, criteriaHeight, "F");
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.title, xPos + box.paddingX, yPosition + 14);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const descLines = splitTextWithFont(doc, item.desc, criteriaWidth - box.paddingX * 2, "caption", false);
+    doc.text(descLines, xPos + box.paddingX, yPosition + 26);
+  });
+
+  yPosition += criteriaHeight + spacing.sectionGap;
+
+  // Priority Focus
+  fitPage(45);
+  const focusText = "The pilot phase prioritises mid-sized property management companies (100-500 units) as they represent the optimal balance of operational complexity, decision-making speed, and growth potential.";
+  
+  doc.setFillColor(240, 253, 244);
+  const focusLines = splitTextWithFont(doc, focusText, maxWidth - box.paddingX * 2, "body", false);
+  const focusHeight = focusLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom + 10;
+  
+  doc.roundedRect(margin, yPosition, maxWidth, focusHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(134, 239, 172);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, focusHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(22, 101, 52);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Initial Focus: Mid-Market Property Managers", margin + box.paddingX, yPosition + box.paddingTop);
+  
+  doc.setTextColor(21, 128, 61);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text(focusLines, margin + box.paddingX, yPosition + box.paddingTop + 12, { lineHeightFactor: lineHeightFactor.tight });
+  
+  yPosition += focusHeight + spacing.sectionGap;
+
+  return yPosition;
+};
+
+/**
  * Render Acquisition Strategy Overview visual
  */
 const renderAcquisitionStrategyOverview = (
@@ -11166,6 +11337,8 @@ const renderTabContent = (
       yPosition = renderAcquisitionExecutiveSummary(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "strategicContextPositioning") {
       yPosition = renderStrategicContextPositioning(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "segmentationStrategy") {
+      yPosition = renderSegmentationStrategy(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "acquisitionStrategyOverview") {
       yPosition = renderAcquisitionStrategyOverview(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "salesFunnel") {
