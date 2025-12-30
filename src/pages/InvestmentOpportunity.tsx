@@ -86,6 +86,7 @@ import { BrandIntegrityVisual } from "@/components/investor/BrandIntegrityVisual
 import { PESTLEAnalysisVisual } from "@/components/investor/PESTLEAnalysisVisual";
 import { InternalCapabilityAssessmentVisual } from "@/components/investor/InternalCapabilityAssessmentVisual";
 import { SWOTAnalysisVisual } from "@/components/investor/SWOTAnalysisVisual";
+import { AcquisitionExecutiveSummaryVisual } from "@/components/investor/AcquisitionExecutiveSummaryVisual";
 
 
 
@@ -1611,6 +1612,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for SWOT Analysis */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "swotAnalysis" && (
                       <SWOTAnalysisVisual />
+                    )}
+
+                    {/* Custom Visual Component for Acquisition Executive Summary */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "acquisitionExecutiveSummary" && (
+                      <AcquisitionExecutiveSummaryVisual />
                     )}
                     {/* Custom Visual Component for AI Processing */}
                     {(selectedSection.pages[currentPageIndex] as any).isVisual && <AIProcessingVisual />}
