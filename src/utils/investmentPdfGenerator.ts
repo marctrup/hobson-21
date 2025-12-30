@@ -10010,19 +10010,20 @@ const renderAcquisitionExecutiveSummary = (
     doc.setFillColor(...stage.color);
     doc.rect(xPos, yPosition, 3, stageHeight, "F");
 
-    // Year badge
+    // Year badge - dynamic width based on text
+    const badgeWidth = stage.year.length > 5 ? 40 : 30;
     doc.setFillColor(...stage.color);
-    doc.roundedRect(xPos + box.paddingX, yPosition + 8, 35, 12, 2, 2, "F");
+    doc.roundedRect(xPos + box.paddingX, yPosition + 8, badgeWidth, 12, 2, 2, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(stage.year, xPos + box.paddingX + 17.5, yPosition + 16, { align: "center" });
+    doc.text(stage.year, xPos + box.paddingX + badgeWidth / 2, yPosition + 16, { align: "center" });
 
-    // Phase title
+    // Phase title - positioned right after badge
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(stage.phase, xPos + box.paddingX + 40, yPosition + 16);
+    doc.text(stage.phase, xPos + box.paddingX + badgeWidth + 4, yPosition + 16);
 
     // Description
     doc.setTextColor(...PDF_CONFIG.textGray);
