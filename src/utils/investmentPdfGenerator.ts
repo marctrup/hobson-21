@@ -10125,7 +10125,7 @@ const renderAcquisitionExecutiveSummary = (
   const targetingText = "Hobson's targeting and segmentation strategy is designed to guide the organisation from early MVP validation in the UK to scalable commercial expansion and, ultimately, global market entry. The strategy is grounded in real discovery work, behavioural insight, industry adoption patterns, and the brand's Sage archetype - positioning Hobson as a calm, intelligent guide in a complex, high-pressure industry.";
   
   doc.setFillColor(248, 250, 252);
-  const targetingLines = doc.splitTextToSize(targetingText, maxWidth - box.paddingX * 2);
+  const targetingLines = splitTextWithFont(doc, targetingText, maxWidth - box.paddingX * 2, "body", false);
   const targetingHeight = targetingLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom;
   
   doc.roundedRect(margin, yPosition, maxWidth, targetingHeight, box.borderRadius, box.borderRadius, "F");
