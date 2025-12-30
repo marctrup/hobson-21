@@ -87,7 +87,7 @@ import { PESTLEAnalysisVisual } from "@/components/investor/PESTLEAnalysisVisual
 import { InternalCapabilityAssessmentVisual } from "@/components/investor/InternalCapabilityAssessmentVisual";
 import { SWOTAnalysisVisual } from "@/components/investor/SWOTAnalysisVisual";
 import { AcquisitionExecutiveSummaryVisual } from "@/components/investor/AcquisitionExecutiveSummaryVisual";
-
+import { StrategicContextPositioningVisual } from "@/components/investor/StrategicContextPositioningVisual";
 
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
@@ -712,6 +712,15 @@ const sections = [
         title: "Executive Summary",
         showCustomVisual: true,
         customVisualComponent: "acquisitionExecutiveSummary",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Strategic Context & Positioning",
+        showCustomVisual: true,
+        customVisualComponent: "strategicContextPositioning",
         content: {
           overview: "",
           sections: [],
@@ -1617,6 +1626,10 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Acquisition Executive Summary */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "acquisitionExecutiveSummary" && (
                       <AcquisitionExecutiveSummaryVisual />
+                    )}
+                    {/* Custom Visual Component for Strategic Context & Positioning */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "strategicContextPositioning" && (
+                      <StrategicContextPositioningVisual />
                     )}
                     {/* Custom Visual Component for AI Processing */}
                     {(selectedSection.pages[currentPageIndex] as any).isVisual && <AIProcessingVisual />}
