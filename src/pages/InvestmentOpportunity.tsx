@@ -708,6 +708,15 @@ const sections = [
     iconColor: "text-cyan-600",
     pages: [
       {
+        title: "Executive Summary",
+        showCustomVisual: true,
+        customVisualComponent: "acquisitionExecutiveSummary",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Acquisition Strategy Overview",
         showCustomVisual: true,
         customVisualComponent: "acquisitionStrategyOverview",
