@@ -9841,6 +9841,510 @@ const createCoverPage = (
   doc.text(currentDate, pageWidth / 2, pageHeight - 20, { align: "center" });
 };
 
+// ============================================================================
+// ACQUISITION & SALES STRATEGY RENDERERS
+// ============================================================================
+
+/**
+ * Render Acquisition Strategy Overview visual
+ */
+const renderAcquisitionStrategyOverview = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { fontSize, lineHeight, lineHeightFactor, spacing, box, circleSize } = PDF_CONFIG;
+
+  // Fit page helper
+  const fitPage = (requiredHeight: number) => {
+    if (yPosition + requiredHeight > pageHeight - spacing.pageBreakMargin) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Header
+  const headerHeight = spacing.contentPadding + lineHeight.body + lineHeight.body + spacing.contentPadding;
+  fitPage(headerHeight);
+  
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Acquisition Strategy Overview", margin + box.paddingX, yPosition + spacing.contentPadding);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Targeted approach to customer acquisition in the property management sector", margin + box.paddingX, yPosition + spacing.contentPadding + lineHeight.loose);
+  
+  yPosition += headerHeight + spacing.sectionGap;
+
+  // Acquisition Channels
+  const channels = [
+    { title: "Enterprise Sales", desc: "Direct outreach to property management companies with 50+ properties" },
+    { title: "Strategic Partnerships", desc: "Collaborations with industry associations and PropTech vendors" },
+    { title: "Content Marketing", desc: "Thought leadership through whitepapers, webinars, and case studies" },
+    { title: "Referral Programs", desc: "Incentivised referrals from existing satisfied clients" },
+  ];
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Key Acquisition Channels", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const channelWidth = (maxWidth - spacing.gridGap) / 2;
+  const channelHeight = 40;
+
+  channels.forEach((channel, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    
+    if (col === 0 && row > 0) {
+      yPosition += channelHeight + spacing.cardGap;
+    }
+    
+    if (col === 0) {
+      fitPage(channelHeight);
+    }
+
+    const xPos = margin + col * (channelWidth + spacing.gridGap);
+    const yPos = col === 0 ? yPosition : yPosition;
+
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(xPos, yPos, channelWidth, channelHeight, box.borderRadius, box.borderRadius, "F");
+    doc.setDrawColor(226, 232, 240);
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(xPos, yPos, channelWidth, channelHeight, box.borderRadius, box.borderRadius, "S");
+
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(xPos + spacing.circleOffset, yPos + 12, circleSize.medium, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.body);
+    doc.setFont("helvetica", "bold");
+    doc.text(channel.title, xPos + spacing.bulletTextOffset, yPos + 12);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(channel.desc, channelWidth - spacing.bulletTextOffset - box.paddingX);
+    doc.text(descLines, xPos + spacing.bulletTextOffset, yPos + 22, { lineHeightFactor: lineHeightFactor.body });
+  });
+
+  yPosition += channelHeight + spacing.sectionGap;
+
+  // Target Metrics
+  fitPage(50);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Acquisition Targets", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const metrics = [
+    { value: "100", label: "Pilot clients by Y1", sublabel: "Property managers" },
+    { value: "15%", label: "Conversion rate", sublabel: "Lead to customer" },
+    { value: "GBP 500", label: "CAC target", sublabel: "Cost per acquisition" },
+  ];
+
+  const metricWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  const metricHeight = 45;
+
+  metrics.forEach((metric, idx) => {
+    const xPos = margin + idx * (metricWidth + spacing.gridGap);
+
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(xPos, yPosition, metricWidth, metricHeight, box.borderRadius, box.borderRadius, "F");
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.stat);
+    doc.setFont("helvetica", "bold");
+    doc.text(metric.value, xPos + metricWidth / 2, yPosition + 18, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(metric.label, xPos + metricWidth / 2, yPosition + 30, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(metric.sublabel, xPos + metricWidth / 2, yPosition + 38, { align: "center" });
+  });
+
+  yPosition += metricHeight + spacing.sectionGap;
+
+  return yPosition;
+};
+
+/**
+ * Render Sales Funnel visual
+ */
+const renderSalesFunnel = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { fontSize, lineHeight, lineHeightFactor, spacing, box, circleSize } = PDF_CONFIG;
+
+  const fitPage = (requiredHeight: number) => {
+    if (yPosition + requiredHeight > pageHeight - spacing.pageBreakMargin) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Header
+  const headerHeight = spacing.contentPadding + lineHeight.body + lineHeight.body + spacing.contentPadding;
+  fitPage(headerHeight);
+  
+  doc.setFillColor(236, 254, 255);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(165, 243, 252);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(8, 145, 178);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Sales Funnel", margin + box.paddingX, yPosition + spacing.contentPadding);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("End-to-end customer journey from awareness to conversion", margin + box.paddingX, yPosition + spacing.contentPadding + lineHeight.loose);
+  
+  yPosition += headerHeight + spacing.sectionGap;
+
+  // Funnel Stages
+  const stages = [
+    { stage: "Awareness", volume: "1,000", rate: "100%", activities: "Content marketing, industry events, SEO" },
+    { stage: "Interest", volume: "300", rate: "30%", activities: "Webinars, whitepapers, email nurture" },
+    { stage: "Consideration", volume: "100", rate: "33%", activities: "Demo requests, consultations" },
+    { stage: "Intent", volume: "50", rate: "50%", activities: "Proposals, pilot programs" },
+    { stage: "Conversion", volume: "15", rate: "30%", activities: "Contract negotiation, onboarding" },
+  ];
+
+  const stageHeight = 28;
+  const tableWidth = maxWidth;
+  const colWidths = [tableWidth * 0.15, tableWidth * 0.12, tableWidth * 0.1, tableWidth * 0.63];
+
+  // Table header
+  fitPage(stageHeight);
+  doc.setFillColor(241, 245, 249);
+  doc.rect(margin, yPosition, tableWidth, stageHeight - 4, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  
+  let xPos = margin + box.paddingX;
+  doc.text("Stage", xPos, yPosition + 10);
+  xPos += colWidths[0];
+  doc.text("Volume", xPos, yPosition + 10);
+  xPos += colWidths[1];
+  doc.text("Rate", xPos, yPosition + 10);
+  xPos += colWidths[2];
+  doc.text("Key Activities", xPos, yPosition + 10);
+  
+  yPosition += stageHeight - 4;
+
+  // Table rows
+  stages.forEach((stage, idx) => {
+    fitPage(stageHeight);
+    
+    if (idx % 2 === 0) {
+      doc.setFillColor(249, 250, 251);
+      doc.rect(margin, yPosition, tableWidth, stageHeight - 4, "F");
+    }
+
+    doc.setFontSize(fontSize.bodySmall);
+    xPos = margin + box.paddingX;
+    
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFont("helvetica", "bold");
+    doc.text(stage.stage, xPos, yPosition + 10);
+    xPos += colWidths[0];
+    
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFont("helvetica", "bold");
+    doc.text(stage.volume, xPos, yPosition + 10);
+    xPos += colWidths[1];
+    
+    doc.setTextColor(22, 163, 74);
+    doc.setFont("helvetica", "normal");
+    doc.text(stage.rate, xPos, yPosition + 10);
+    xPos += colWidths[2];
+    
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    const actLines = doc.splitTextToSize(stage.activities, colWidths[3] - box.paddingX);
+    doc.text(actLines[0], xPos, yPosition + 10);
+    
+    yPosition += stageHeight - 4;
+  });
+
+  yPosition += spacing.sectionGap;
+
+  return yPosition;
+};
+
+/**
+ * Render Lead Generation visual
+ */
+const renderLeadGeneration = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { fontSize, lineHeight, lineHeightFactor, spacing, box, circleSize } = PDF_CONFIG;
+
+  const fitPage = (requiredHeight: number) => {
+    if (yPosition + requiredHeight > pageHeight - spacing.pageBreakMargin) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Header
+  const headerHeight = spacing.contentPadding + lineHeight.body + lineHeight.body + spacing.contentPadding;
+  fitPage(headerHeight);
+  
+  doc.setFillColor(240, 253, 244);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(134, 239, 172);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(22, 163, 74);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Lead Generation Strategy", margin + box.paddingX, yPosition + spacing.contentPadding);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Multi-channel approach to generating qualified leads", margin + box.paddingX, yPosition + spacing.contentPadding + lineHeight.loose);
+  
+  yPosition += headerHeight + spacing.sectionGap;
+
+  // Lead Sources
+  const sources = [
+    { 
+      channel: "Inbound Marketing", 
+      percentage: "40%",
+      tactics: ["SEO-optimised content", "Industry blog posts", "Webinar series", "Case studies"]
+    },
+    { 
+      channel: "Outbound Sales", 
+      percentage: "35%",
+      tactics: ["Targeted email campaigns", "LinkedIn outreach", "Cold calling", "Industry events"]
+    },
+    { 
+      channel: "Partnerships", 
+      percentage: "25%",
+      tactics: ["PropTech integrations", "Industry associations", "Referral programs", "Co-marketing"]
+    },
+  ];
+
+  sources.forEach((source, idx) => {
+    const sourceHeight = 50;
+    fitPage(sourceHeight);
+
+    doc.setFillColor(249, 250, 251);
+    doc.roundedRect(margin, yPosition, maxWidth, sourceHeight, box.borderRadius, box.borderRadius, "F");
+    doc.setDrawColor(226, 232, 240);
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(margin, yPosition, maxWidth, sourceHeight, box.borderRadius, box.borderRadius, "S");
+
+    // Channel name and percentage
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.body);
+    doc.setFont("helvetica", "bold");
+    doc.text(source.channel, margin + box.paddingX, yPosition + 12);
+
+    doc.setTextColor(22, 163, 74);
+    doc.setFontSize(fontSize.sectionTitle);
+    doc.setFont("helvetica", "bold");
+    doc.text(source.percentage, margin + maxWidth - 30, yPosition + 12);
+
+    // Tactics
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    
+    let tacticX = margin + box.paddingX;
+    source.tactics.forEach((tactic, tIdx) => {
+      const tacticY = yPosition + 24 + Math.floor(tIdx / 2) * lineHeight.body;
+      const tacticXPos = tacticX + (tIdx % 2) * (maxWidth / 2 - box.paddingX);
+      
+      doc.setFillColor(...PDF_CONFIG.primaryColor);
+      doc.circle(tacticXPos, tacticY - 1, circleSize.bullet, "F");
+      doc.text(tactic, tacticXPos + 4, tacticY);
+    });
+
+    yPosition += sourceHeight + spacing.cardGap;
+  });
+
+  yPosition += spacing.sectionGap;
+
+  return yPosition;
+};
+
+/**
+ * Render Conversion Strategy visual
+ */
+const renderConversionStrategy = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { fontSize, lineHeight, lineHeightFactor, spacing, box, circleSize } = PDF_CONFIG;
+
+  const fitPage = (requiredHeight: number) => {
+    if (yPosition + requiredHeight > pageHeight - spacing.pageBreakMargin) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Header
+  const headerHeight = spacing.contentPadding + lineHeight.body + lineHeight.body + spacing.contentPadding;
+  fitPage(headerHeight);
+  
+  doc.setFillColor(254, 249, 195);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(253, 224, 71);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(161, 98, 7);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Conversion Strategy", margin + box.paddingX, yPosition + spacing.contentPadding);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Optimising the path from prospect to paying customer", margin + box.paddingX, yPosition + spacing.contentPadding + lineHeight.loose);
+  
+  yPosition += headerHeight + spacing.sectionGap;
+
+  // Conversion Steps
+  const steps = [
+    { step: "1", title: "Discovery Call", desc: "Understand pain points and document workflows" },
+    { step: "2", title: "Product Demo", desc: "Tailored demonstration with client's actual documents" },
+    { step: "3", title: "Pilot Program", desc: "30-day free trial with dedicated onboarding support" },
+    { step: "4", title: "ROI Review", desc: "Quantify time savings and efficiency gains" },
+    { step: "5", title: "Contract", desc: "Flexible pricing based on portfolio size" },
+  ];
+
+  const stepWidth = (maxWidth - spacing.gridGap * 4) / 5;
+  const stepHeight = 70;
+
+  fitPage(stepHeight);
+
+  steps.forEach((step, idx) => {
+    const xPos = margin + idx * (stepWidth + spacing.gridGap);
+
+    doc.setFillColor(249, 250, 251);
+    doc.roundedRect(xPos, yPosition, stepWidth, stepHeight, box.borderRadius, box.borderRadius, "F");
+    doc.setDrawColor(226, 232, 240);
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(xPos, yPosition, stepWidth, stepHeight, box.borderRadius, box.borderRadius, "S");
+
+    // Step number
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(xPos + stepWidth / 2, yPosition + 15, circleSize.large, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(fontSize.body);
+    doc.setFont("helvetica", "bold");
+    doc.text(step.step, xPos + stepWidth / 2, yPosition + 17, { align: "center" });
+
+    // Title
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    const titleLines = doc.splitTextToSize(step.title, stepWidth - 4);
+    doc.text(titleLines, xPos + stepWidth / 2, yPosition + 32, { align: "center" });
+
+    // Description
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(step.desc, stepWidth - 6);
+    doc.text(descLines, xPos + stepWidth / 2, yPosition + 45, { align: "center", lineHeightFactor: lineHeightFactor.body });
+  });
+
+  yPosition += stepHeight + spacing.sectionGap;
+
+  // Key Conversion Metrics
+  fitPage(50);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Key Conversion Metrics", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const convMetrics = [
+    { value: "30%", label: "Demo to Pilot", desc: "Conversion rate" },
+    { value: "70%", label: "Pilot to Paid", desc: "After 30-day trial" },
+    { value: "14 days", label: "Avg Sales Cycle", desc: "From demo to close" },
+  ];
+
+  const metricWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  const metricHeight = 45;
+
+  convMetrics.forEach((metric, idx) => {
+    const xPos = margin + idx * (metricWidth + spacing.gridGap);
+
+    doc.setFillColor(240, 253, 244);
+    doc.roundedRect(xPos, yPosition, metricWidth, metricHeight, box.borderRadius, box.borderRadius, "F");
+
+    doc.setTextColor(22, 163, 74);
+    doc.setFontSize(fontSize.stat);
+    doc.setFont("helvetica", "bold");
+    doc.text(metric.value, xPos + metricWidth / 2, yPosition + 18, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(metric.label, xPos + metricWidth / 2, yPosition + 30, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(metric.desc, xPos + metricWidth / 2, yPosition + 38, { align: "center" });
+  });
+
+  yPosition += metricHeight + spacing.sectionGap;
+
+  return yPosition;
+};
+
 /**
  * Render a tab's content to PDF
  */
@@ -10073,6 +10577,16 @@ const renderTabContent = (
       yPosition = renderInternalCapabilityAssessment(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "swotAnalysis") {
       yPosition = renderSWOTAnalysis(doc, yPosition, margin, pageWidth, pageHeight);
+    }
+    // Acquisition & Sales Strategy renderers
+    else if (componentType === "acquisitionStrategyOverview") {
+      yPosition = renderAcquisitionStrategyOverview(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "salesFunnel") {
+      yPosition = renderSalesFunnel(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "leadGeneration") {
+      yPosition = renderLeadGeneration(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "conversionStrategy") {
+      yPosition = renderConversionStrategy(doc, yPosition, margin, pageWidth, pageHeight);
     } else {
       const customContent = getCustomVisualContent(componentType);
       if (customContent.length > 0) {
@@ -10324,6 +10838,7 @@ export interface BusinessPlanCards {
   commercials: CardSection;
   team: CardSection;
   marketingSales: CardSection;
+  acquisitionSales: CardSection;
   financials: CardSection;
 }
 
@@ -10359,6 +10874,7 @@ export const generateFullBusinessPlanPdf = (
     cards.commercials,
     cards.team,
     cards.marketingSales,
+    cards.acquisitionSales,
     cards.financials,
   ];
   
