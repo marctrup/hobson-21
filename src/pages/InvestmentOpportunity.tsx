@@ -700,6 +700,34 @@ const sections = [
     ],
   },
   {
+    id: "acquisition-sales",
+    title: "Acquisition & Sales Strategy",
+    subtitle: "Customer Acquisition Plan",
+    icon: TrendingUp,
+    color: "from-cyan-500/10 to-cyan-600/10",
+    iconColor: "text-cyan-600",
+    pages: [
+      {
+        title: "Acquisition Strategy Overview",
+        showCustomVisual: false,
+        content: {
+          overview: "Our customer acquisition strategy focuses on targeted outreach to property management companies and real estate operators.",
+          sections: [
+            {
+              title: "Key Acquisition Channels",
+              items: [
+                "Direct enterprise sales to property management companies",
+                "Strategic partnerships with industry associations",
+                "Content marketing and thought leadership",
+                "Referral programs from existing clients",
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  },
+  {
     id: "financials",
     title: "Financials",
     subtitle: "Forecasts & Assumptions",
