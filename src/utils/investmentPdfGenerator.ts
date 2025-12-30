@@ -9899,7 +9899,7 @@ const renderAcquisitionExecutiveSummary = (
   const overviewText = "Hobson's acquisition and sales strategy is engineered to deliver rapid, defensible revenue growth while building long-term category leadership in AI-driven Real Estate intelligence.";
   
   doc.setFillColor(248, 250, 252);
-  const overviewLines = doc.splitTextToSize(overviewText, maxWidth - box.paddingX * 2);
+  const overviewLines = splitTextWithFont(doc, overviewText, maxWidth - box.paddingX * 2, "body", false);
   const overviewHeight = overviewLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom;
   
   doc.roundedRect(margin, yPosition, maxWidth, overviewHeight, box.borderRadius, box.borderRadius, "F");
