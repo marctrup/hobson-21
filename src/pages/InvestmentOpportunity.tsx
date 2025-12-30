@@ -709,20 +709,38 @@ const sections = [
     pages: [
       {
         title: "Acquisition Strategy Overview",
-        showCustomVisual: false,
+        showCustomVisual: true,
+        customVisualComponent: "acquisitionStrategyOverview",
         content: {
-          overview: "Our customer acquisition strategy focuses on targeted outreach to property management companies and real estate operators.",
-          sections: [
-            {
-              title: "Key Acquisition Channels",
-              items: [
-                "Direct enterprise sales to property management companies",
-                "Strategic partnerships with industry associations",
-                "Content marketing and thought leadership",
-                "Referral programs from existing clients",
-              ],
-            },
-          ],
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Sales Funnel",
+        showCustomVisual: true,
+        customVisualComponent: "salesFunnel",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Lead Generation",
+        showCustomVisual: true,
+        customVisualComponent: "leadGeneration",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Conversion Strategy",
+        showCustomVisual: true,
+        customVisualComponent: "conversionStrategy",
+        content: {
+          overview: "",
+          sections: [],
         },
       },
     ],
@@ -907,7 +925,8 @@ const InvestmentOpportunity = () => {
       commercials: sections[3] as CardSection,           // Commercials
       team: sections[4] as CardSection,                  // Team
       marketingSales: sections[5] as CardSection,        // Marketing & Sales Strategy
-      financials: sections[6] as CardSection,            // Financials
+      acquisitionSales: sections[6] as CardSection,      // Acquisition & Sales Strategy
+      financials: sections[7] as CardSection,            // Financials
     };
     
     // Funding requirement data for cover page
