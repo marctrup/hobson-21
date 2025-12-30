@@ -4,11 +4,20 @@ import { Target, TrendingUp, Shield, Zap, Globe, Calendar, CheckCircle2, Lightbu
 export const AcquisitionExecutiveSummaryVisual = () => {
   return (
     <div className="space-y-6">
-      {/* Opening Statement - Full Width Box */}
-      <div className="w-full rounded-xl border border-primary/30 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-6">
-        <p className="text-base leading-relaxed text-foreground">
-          Hobson's acquisition and sales strategy is engineered to deliver <span className="text-primary font-semibold">rapid, defensible revenue growth</span> while building long-term category leadership in AI-driven Real Estate intelligence.
-        </p>
+      {/* Header - Full Width Box */}
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-primary/10 p-6 border border-primary/20">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+        <div className="relative flex items-start gap-4">
+          <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-primary/10 text-primary flex-shrink-0">
+            <Target className="w-6 h-6" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-xl font-bold text-foreground mb-2">Acquisition & Sales Strategy</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              Hobson's acquisition and sales strategy is engineered to deliver <span className="text-primary font-semibold">rapid, defensible revenue growth</span> while building long-term category leadership in AI-driven Real Estate intelligence.
+            </p>
+          </div>
+        </div>
       </div>
 
       {/* Strategy Combines */}
