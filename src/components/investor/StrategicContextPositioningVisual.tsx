@@ -1,5 +1,5 @@
 import React from 'react';
-import { Target, Users, Compass, Shield, TrendingUp, Lightbulb, Globe, CheckCircle2 } from 'lucide-react';
+import { Target, Compass, Eye, Users, TrendingUp, Lightbulb, CheckCircle2 } from 'lucide-react';
 
 export const StrategicContextPositioningVisual = () => {
   return (
@@ -14,7 +14,7 @@ export const StrategicContextPositioningVisual = () => {
           <div className="flex-1">
             <h3 className="text-xl font-bold text-foreground mb-2">Strategic Context & Positioning</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Hobson's targeting and segmentation strategy is designed to guide the organisation from early MVP validation in the UK to scalable commercial expansion and global market entry.
+              Hobson's targeting and segmentation strategy guides the organisation from early MVP validation in the UK to scalable commercial expansion and global market entry.
             </p>
           </div>
         </div>
@@ -29,97 +29,77 @@ export const StrategicContextPositioningVisual = () => {
           Strategy Foundation
         </h3>
         <div className="rounded-lg border border-primary/20 bg-primary/5 p-4">
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            The strategy is grounded in real discovery work, behavioural insight, industry adoption patterns, and the brand's Sage archetype - positioning Hobson as a calm, intelligent guide in a complex, high-pressure industry.
+          <p className="text-sm text-foreground mb-3">The strategy is grounded in:</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <div className="flex items-center gap-2 p-2 rounded bg-background/50">
+              <Eye className="w-4 h-4 text-primary flex-shrink-0" />
+              <span className="text-sm text-muted-foreground">Real discovery work</span>
+            </div>
+            <div className="flex items-center gap-2 p-2 rounded bg-background/50">
+              <Users className="w-4 h-4 text-primary flex-shrink-0" />
+              <span className="text-sm text-muted-foreground">Observed behavioural patterns</span>
+            </div>
+            <div className="flex items-center gap-2 p-2 rounded bg-background/50">
+              <TrendingUp className="w-4 h-4 text-primary flex-shrink-0" />
+              <span className="text-sm text-muted-foreground">Industry adoption dynamics</span>
+            </div>
+            <div className="flex items-center gap-2 p-2 rounded bg-background/50">
+              <Lightbulb className="w-4 h-4 text-primary flex-shrink-0" />
+              <span className="text-sm text-muted-foreground">Calm, intelligent guide positioning</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* High-Level Positioning */}
+      <div className="space-y-3">
+        <h3 className="text-base font-bold text-foreground flex items-center gap-2">
+          <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
+            <Compass className="w-3 h-3 text-primary" />
+          </div>
+          High-Level Positioning
+        </h3>
+        <div className="rounded-lg bg-primary/10 border border-primary/30 p-4">
+          <p className="text-sm text-foreground leading-relaxed">
+            Hobson is positioned as <span className="text-primary font-semibold">the clarity engine for Real Estate</span> - simple, intelligent, and trustworthy.
           </p>
         </div>
       </div>
 
-      {/* Key Strategic Pillars */}
+      {/* Marketing Mix */}
       <div className="space-y-3">
-        <h3 className="text-base font-bold text-foreground flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-            <Shield className="w-3 h-3 text-primary" />
+        <h3 className="text-base font-bold text-foreground">Marketing Mix Reinforcement</h3>
+        <p className="text-sm text-muted-foreground">The marketing mix reinforces this positioning at every layer:</p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+          <div className="rounded-lg bg-muted/30 border-l-4 border-primary p-3">
+            <p className="text-xs font-bold text-primary mb-0.5">Brand Identity</p>
+            <p className="text-xs text-muted-foreground leading-relaxed">Calm presence</p>
           </div>
-          Key Strategic Pillars
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          <div className="rounded-lg bg-primary/5 border border-primary/20 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Users className="w-4 h-4 text-primary" />
-              <h4 className="font-semibold text-sm text-primary">Behavioural Insight</h4>
-            </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Deep understanding of how property professionals make decisions under pressure
-            </p>
+          <div className="rounded-lg bg-muted/30 border-l-4 border-primary p-3">
+            <p className="text-xs font-bold text-primary mb-0.5">Product Design</p>
+            <p className="text-xs text-muted-foreground leading-relaxed">Lightweight</p>
           </div>
-          <div className="rounded-lg bg-primary/5 border border-primary/20 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="w-4 h-4 text-primary" />
-              <h4 className="font-semibold text-sm text-primary">Industry Adoption Patterns</h4>
-            </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Aligning with proven technology adoption curves in real estate
-            </p>
+          <div className="rounded-lg bg-muted/30 border-l-4 border-primary p-3">
+            <p className="text-xs font-bold text-primary mb-0.5">Pricing</p>
+            <p className="text-xs text-muted-foreground leading-relaxed">Accessible</p>
           </div>
-          <div className="rounded-lg bg-primary/5 border border-primary/20 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Lightbulb className="w-4 h-4 text-primary" />
-              <h4 className="font-semibold text-sm text-primary">Sage Archetype</h4>
-            </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Brand positioning as a calm, intelligent guide in complexity
-            </p>
-          </div>
-          <div className="rounded-lg bg-primary/5 border border-primary/20 p-4">
-            <div className="flex items-center gap-2 mb-2">
-              <Globe className="w-4 h-4 text-primary" />
-              <h4 className="font-semibold text-sm text-primary">Global Scalability</h4>
-            </div>
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Framework designed for UK validation then international expansion
-            </p>
+          <div className="rounded-lg bg-muted/30 border-l-4 border-primary p-3">
+            <p className="text-xs font-bold text-primary mb-0.5">Promotion</p>
+            <p className="text-xs text-muted-foreground leading-relaxed">Educational</p>
           </div>
         </div>
       </div>
 
-      {/* Growth Trajectory */}
-      <div className="space-y-3">
-        <h3 className="text-base font-bold text-foreground flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center">
-            <TrendingUp className="w-3 h-3 text-primary" />
-          </div>
-          Growth Trajectory
-        </h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <div className="rounded-lg bg-muted/50 border-l-4 border-muted-foreground p-4">
-            <p className="text-xs font-bold text-muted-foreground mb-1">Phase 1</p>
-            <p className="text-sm font-semibold text-foreground mb-1">UK MVP Validation</p>
-            <p className="text-xs text-muted-foreground leading-relaxed">Early product-market fit through pilots</p>
-          </div>
-          <div className="rounded-lg bg-primary/5 border-l-4 border-primary p-4">
-            <p className="text-xs font-bold text-primary mb-1">Phase 2</p>
-            <p className="text-sm font-semibold text-foreground mb-1">Commercial Expansion</p>
-            <p className="text-xs text-muted-foreground leading-relaxed">Scale across UK property sectors</p>
-          </div>
-          <div className="rounded-lg bg-primary/10 border-l-4 border-primary p-4">
-            <p className="text-xs font-bold text-primary mb-1">Phase 3</p>
-            <p className="text-sm font-semibold text-foreground mb-1">Global Market Entry</p>
-            <p className="text-xs text-muted-foreground leading-relaxed">International expansion as category leader</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Positioning Statement */}
+      {/* Commercial Pathway */}
       <div className="rounded-lg bg-accent/50 border border-accent p-4">
         <div className="flex items-start gap-3">
           <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0 mt-0.5">
             <CheckCircle2 className="w-3 h-3 text-primary" />
           </div>
           <div>
-            <h4 className="font-bold text-sm text-foreground mb-1">Market Positioning</h4>
+            <h4 className="font-bold text-sm text-foreground mb-1">Commercial Pathway</h4>
             <p className="text-xs text-muted-foreground leading-relaxed">
-              Hobson is positioned as the clarity engine for Real Estate - simple, intelligent, and trustworthy. This positioning creates a coherent pathway from early UK validation to global expansion by 2028-2030.
+              Together, these elements create a coherent commercial pathway from early UK validation to international expansion by 2028-2030.
             </p>
           </div>
         </div>
