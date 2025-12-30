@@ -10212,26 +10212,23 @@ const renderAcquisitionExecutiveSummary = (
   const positionText = "Hobson establishes itself as the clarity engine for Real Estate - simple, intelligent, and trustworthy. These elements create a coherent pathway from early UK validation to global expansion by 2028-2030.";
   
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  const positionLines = doc.splitTextToSize(positionText, maxWidth - box.paddingX * 2 - spacing.bulletTextOffset);
-  const positionHeight = positionLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom + 8;
+  const positionLines = splitTextWithFont(doc, positionText, maxWidth - box.paddingX * 2, "body", false);
+  const positionHeight = positionLines.length * (lineHeight.body * lineHeightFactor.tight) + box.paddingTop + box.paddingBottom + 14;
   
   doc.roundedRect(margin, yPosition, maxWidth, positionHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(box.borderWidth);
   doc.roundedRect(margin, yPosition, maxWidth, positionHeight, box.borderRadius, box.borderRadius, "S");
   
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + spacing.circleOffset, yPosition + box.paddingTop + 2, circleSize.medium, "F");
-  
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(fontSize.body);
+  doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text("The Clarity Engine for Real Estate", margin + spacing.bulletTextOffset, yPosition + box.paddingTop + 4);
+  doc.text("The Clarity Engine for Real Estate", margin + box.paddingX, yPosition + box.paddingTop);
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(positionLines, margin + box.paddingX, yPosition + box.paddingTop + 16, { lineHeightFactor: lineHeightFactor.body });
+  doc.text(positionLines, margin + box.paddingX, yPosition + box.paddingTop + 10, { lineHeightFactor: lineHeightFactor.tight });
   
   yPosition += positionHeight + spacing.sectionGap;
 
