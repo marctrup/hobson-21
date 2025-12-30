@@ -9846,6 +9846,214 @@ const createCoverPage = (
 // ============================================================================
 
 /**
+ * Render Acquisition Executive Summary visual
+ */
+const renderAcquisitionExecutiveSummary = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { fontSize, lineHeight, lineHeightFactor, spacing, box, circleSize } = PDF_CONFIG;
+
+  const fitPage = (requiredHeight: number) => {
+    if (yPosition + requiredHeight > pageHeight - spacing.pageBreakMargin) {
+      doc.addPage();
+      yPosition = margin;
+    }
+  };
+
+  // Header
+  const headerHeight = spacing.contentPadding + lineHeight.body + lineHeight.body + spacing.contentPadding;
+  fitPage(headerHeight);
+  
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Executive Summary", margin + box.paddingX, yPosition + spacing.contentPadding);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Overview of Hobson AI's acquisition and sales strategy for market penetration", margin + box.paddingX, yPosition + spacing.contentPadding + lineHeight.loose);
+  
+  yPosition += headerHeight + spacing.sectionGap;
+
+  // Strategic Overview
+  fitPage(60);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Strategic Overview", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const overviewText = "Hobson AI employs a focused B2B acquisition strategy targeting property management companies and real estate operators. Our approach combines direct enterprise sales with strategic partnerships, supported by content-led inbound marketing. The strategy prioritises high-value accounts while building scalable acquisition channels for long-term growth.";
+  
+  doc.setFillColor(248, 250, 252);
+  const overviewLines = doc.splitTextToSize(overviewText, maxWidth - box.paddingX * 2);
+  const overviewHeight = overviewLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom;
+  
+  doc.roundedRect(margin, yPosition, maxWidth, overviewHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(226, 232, 240);
+  doc.setLineWidth(box.borderWidthThin);
+  doc.roundedRect(margin, yPosition, maxWidth, overviewHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text(overviewLines, margin + box.paddingX, yPosition + box.paddingTop, { lineHeightFactor: lineHeightFactor.body });
+  
+  yPosition += overviewHeight + spacing.sectionGap;
+
+  // Key Metrics Summary
+  fitPage(60);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Key Metrics", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const metrics = [
+    { value: "100", label: "Target Pilots Y1", sublabel: "Property managers" },
+    { value: "GBP 1.2M", label: "ARR Target Y2", sublabel: "Annual recurring revenue" },
+    { value: "15%", label: "Conversion Rate", sublabel: "Lead to customer" },
+    { value: "21%", label: "Pilot Conversion", sublabel: "Pilot to paid" },
+  ];
+
+  const metricWidth = (maxWidth - spacing.gridGap * 3) / 4;
+  const metricHeight = 50;
+
+  metrics.forEach((metric, idx) => {
+    const xPos = margin + idx * (metricWidth + spacing.gridGap);
+
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(xPos, yPosition, metricWidth, metricHeight, box.borderRadius, box.borderRadius, "F");
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.stat);
+    doc.setFont("helvetica", "bold");
+    doc.text(metric.value, xPos + metricWidth / 2, yPosition + 18, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(metric.label, xPos + metricWidth / 2, yPosition + 32, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(metric.sublabel, xPos + metricWidth / 2, yPosition + 42, { align: "center" });
+  });
+
+  yPosition += metricHeight + spacing.sectionGap;
+
+  // Strategic Pillars
+  fitPage(80);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Strategic Pillars", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const pillars = [
+    { 
+      title: "Enterprise-First Sales", 
+      desc: "Direct sales to property management companies managing 50+ properties, with dedicated account executives and tailored demos.",
+      color: [139, 92, 246] as [number, number, number]
+    },
+    { 
+      title: "Partnership Ecosystem", 
+      desc: "Strategic alliances with PropTech vendors, industry associations, and complementary service providers for co-selling opportunities.",
+      color: [6, 182, 212] as [number, number, number]
+    },
+    { 
+      title: "Content-Led Inbound", 
+      desc: "Thought leadership through whitepapers, webinars, and case studies to establish Hobson as the authority in property document AI.",
+      color: [34, 197, 94] as [number, number, number]
+    },
+  ];
+
+  const pillarWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  const pillarHeight = 65;
+
+  pillars.forEach((pillar, idx) => {
+    const xPos = margin + idx * (pillarWidth + spacing.gridGap);
+
+    doc.setFillColor(249, 250, 251);
+    doc.roundedRect(xPos, yPosition, pillarWidth, pillarHeight, box.borderRadius, box.borderRadius, "F");
+    
+    // Colored top border
+    doc.setFillColor(...pillar.color);
+    doc.rect(xPos, yPosition, pillarWidth, 3, "F");
+
+    doc.setTextColor(...pillar.color);
+    doc.setFontSize(fontSize.body);
+    doc.setFont("helvetica", "bold");
+    doc.text(pillar.title, xPos + box.paddingX, yPosition + 14);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(pillar.desc, pillarWidth - box.paddingX * 2);
+    doc.text(descLines, xPos + box.paddingX, yPosition + 26, { lineHeightFactor: lineHeightFactor.body });
+  });
+
+  yPosition += pillarHeight + spacing.sectionGap;
+
+  // Sales Cycle Summary
+  fitPage(45);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Sales Cycle", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const stages = [
+    { stage: "Discovery", days: "1-3 days" },
+    { stage: "Demo", days: "1-2 days" },
+    { stage: "Pilot", days: "30 days" },
+    { stage: "Contract", days: "7-14 days" },
+    { stage: "Onboarding", days: "7 days" },
+  ];
+
+  const stageWidth = (maxWidth - spacing.gridGap * 4) / 5;
+  const stageHeight = 35;
+
+  stages.forEach((stage, idx) => {
+    const xPos = margin + idx * (stageWidth + spacing.gridGap);
+
+    doc.setFillColor(236, 254, 255);
+    doc.roundedRect(xPos, yPosition, stageWidth, stageHeight, box.borderRadius, box.borderRadius, "F");
+
+    doc.setFillColor(8, 145, 178);
+    doc.circle(xPos + stageWidth / 2, yPosition + 12, circleSize.small, "F");
+
+    doc.setTextColor(8, 145, 178);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(stage.stage, xPos + stageWidth / 2, yPosition + 22, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(stage.days, xPos + stageWidth / 2, yPosition + 30, { align: "center" });
+  });
+
+  yPosition += stageHeight + spacing.sectionGap;
+
+  return yPosition;
+};
+
+/**
  * Render Acquisition Strategy Overview visual
  */
 const renderAcquisitionStrategyOverview = (
@@ -10579,7 +10787,9 @@ const renderTabContent = (
       yPosition = renderSWOTAnalysis(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Acquisition & Sales Strategy renderers
-    else if (componentType === "acquisitionStrategyOverview") {
+    else if (componentType === "acquisitionExecutiveSummary") {
+      yPosition = renderAcquisitionExecutiveSummary(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "acquisitionStrategyOverview") {
       yPosition = renderAcquisitionStrategyOverview(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "salesFunnel") {
       yPosition = renderSalesFunnel(doc, yPosition, margin, pageWidth, pageHeight);
