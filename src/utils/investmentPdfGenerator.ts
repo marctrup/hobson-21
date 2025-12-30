@@ -9968,7 +9968,7 @@ const renderAcquisitionExecutiveSummary = (
   yPosition += pillarHeight + spacing.sectionGap;
 
   // Growth Timeline - Staged approach
-  fitPage(85);
+  fitPage(70);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
@@ -9989,7 +9989,7 @@ const renderAcquisitionExecutiveSummary = (
       color: [139, 92, 246] as [number, number, number]
     },
     { 
-      year: "2028-2030", 
+      year: "2028-30", 
       phase: "Expand", 
       desc: "Expand internationally as category leader",
       color: [34, 197, 94] as [number, number, number]
@@ -9997,50 +9997,44 @@ const renderAcquisitionExecutiveSummary = (
   ];
 
   const stageWidth = (maxWidth - spacing.gridGap * 2) / 3;
-  const stageHeight = 65;
+  const stageHeight = 50;
 
   growthStages.forEach((stage, idx) => {
     const xPos = margin + idx * (stageWidth + spacing.gridGap);
+    const textMaxWidth = stageWidth - box.paddingX * 2;
 
     doc.setFillColor(249, 250, 251);
     doc.roundedRect(xPos, yPosition, stageWidth, stageHeight, box.borderRadius, box.borderRadius, "F");
     
-    // Colored top bar
+    // Colored left border
     doc.setFillColor(...stage.color);
-    doc.rect(xPos, yPosition, stageWidth, 4, "F");
+    doc.rect(xPos, yPosition, 3, stageHeight, "F");
 
     // Year badge
     doc.setFillColor(...stage.color);
-    doc.roundedRect(xPos + box.paddingX, yPosition + 10, 45, 14, 2, 2, "F");
+    doc.roundedRect(xPos + box.paddingX, yPosition + 8, 35, 12, 2, 2, "F");
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(fontSize.bodySmall);
+    doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(stage.year, xPos + box.paddingX + 22.5, yPosition + 19, { align: "center" });
+    doc.text(stage.year, xPos + box.paddingX + 17.5, yPosition + 16, { align: "center" });
 
     // Phase title
-    doc.setTextColor(...stage.color);
-    doc.setFontSize(fontSize.body);
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(stage.phase, xPos + box.paddingX + 50, yPosition + 19);
+    doc.text(stage.phase, xPos + box.paddingX + 40, yPosition + 16);
 
     // Description
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const descLines = doc.splitTextToSize(stage.desc, stageWidth - box.paddingX * 2);
-    doc.text(descLines, xPos + box.paddingX, yPosition + 35, { lineHeightFactor: lineHeightFactor.body });
-
-    // Arrow connector (except last)
-    if (idx < growthStages.length - 1) {
-      doc.setFillColor(...PDF_CONFIG.textLight);
-      const arrowX = xPos + stageWidth + spacing.gridGap / 2;
-      doc.triangle(arrowX - 3, yPosition + stageHeight / 2 - 4, arrowX - 3, yPosition + stageHeight / 2 + 4, arrowX + 3, yPosition + stageHeight / 2, "F");
-    }
+    const descLines = splitTextWithFont(doc, stage.desc, textMaxWidth, "caption", false);
+    doc.text(descLines, xPos + box.paddingX, yPosition + 30, { lineHeightFactor: lineHeightFactor.body });
   });
 
   yPosition += stageHeight + spacing.sectionGap;
 
-  // Key Benefits
+  // Strategic Benefits
   fitPage(50);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
@@ -10059,51 +10053,47 @@ const renderAcquisitionExecutiveSummary = (
 
   benefits.forEach((benefit, idx) => {
     const xPos = margin + idx * (benefitWidth + spacing.gridGap);
+    const textMaxWidth = benefitWidth - box.paddingX * 2;
 
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
     doc.roundedRect(xPos, yPosition, benefitWidth, benefitHeight, box.borderRadius, box.borderRadius, "F");
 
-    doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(xPos + spacing.circleOffset, yPosition + 14, circleSize.medium, "F");
-
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(fontSize.body);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(benefit.title, xPos + spacing.bulletTextOffset, yPosition + 16);
+    doc.text(benefit.title, xPos + box.paddingX, yPosition + 14);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(benefit.desc, xPos + box.paddingX, yPosition + 30);
+    const descLines = splitTextWithFont(doc, benefit.desc, textMaxWidth, "caption", false);
+    doc.text(descLines, xPos + box.paddingX, yPosition + 26, { lineHeightFactor: lineHeightFactor.body });
   });
 
   yPosition += benefitHeight + spacing.sectionGap;
 
-  // Trust & Dependency Statement
+  // Key Insight Box
   fitPage(45);
   const trustText = "Rather than aggressive short-term selling, Hobson compounds trust and dependency - critical in a risk-sensitive industry where switching costs rise rapidly once systems become operational infrastructure.";
   
   doc.setFillColor(254, 249, 195);
-  const trustLines = doc.splitTextToSize(trustText, maxWidth - box.paddingX * 2 - spacing.bulletTextOffset);
-  const trustHeight = trustLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom;
+  const trustLines = splitTextWithFont(doc, trustText, maxWidth - box.paddingX * 2, "body", false);
+  const trustHeight = trustLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom + 10;
   
   doc.roundedRect(margin, yPosition, maxWidth, trustHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(253, 224, 71);
   doc.setLineWidth(box.borderWidth);
   doc.roundedRect(margin, yPosition, maxWidth, trustHeight, box.borderRadius, box.borderRadius, "S");
   
-  doc.setFillColor(161, 98, 7);
-  doc.circle(margin + spacing.circleOffset, yPosition + box.paddingTop + 2, circleSize.medium, "F");
-  
   doc.setTextColor(161, 98, 7);
-  doc.setFontSize(fontSize.body);
+  doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text("Key Insight", margin + spacing.bulletTextOffset, yPosition + box.paddingTop + 4);
+  doc.text("Key Insight", margin + box.paddingX, yPosition + box.paddingTop);
   
   doc.setTextColor(113, 63, 18);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(trustLines, margin + box.paddingX, yPosition + box.paddingTop + 14, { lineHeightFactor: lineHeightFactor.body });
+  doc.text(trustLines, margin + box.paddingX, yPosition + box.paddingTop + 12, { lineHeightFactor: lineHeightFactor.body });
   
   yPosition += trustHeight + spacing.sectionGap;
 
