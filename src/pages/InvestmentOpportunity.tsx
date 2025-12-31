@@ -728,7 +728,7 @@ const sections = [
         },
       },
       {
-        title: "Segmentation Strategy",
+        title: "Organisational Positioning",
         showCustomVisual: true,
         customVisualComponent: "segmentationStrategy",
         content: {
