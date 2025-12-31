@@ -5333,6 +5333,100 @@ const renderRevenueModel = (
 };
 
 /**
+ * Render Financials Executive Summary
+ * Provides overview of Hobson's financial profile and key metrics
+ */
+const renderFinancialsExecutiveSummary = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+
+  // Header
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.pageTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Executive Summary", margin, yPosition);
+  yPosition += PDF_CONFIG.spacing.sectionGap + 4;
+
+  // Introduction paragraphs
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+
+  const introParagraphs = [
+    "Hobson's financial profile reflects the creation of a new infrastructure layer for Real Estate operations.",
+    "This is not a conventional SaaS growth story. It is the monetisation of unavoidable structural change in one of the world's largest, most document-intensive industries, driven by regulatory escalation, labour scarcity, margin compression, and compounding operational complexity.",
+    "The business converts existing, locked-in operating costs into high-margin, recurring revenue, producing a growth model that is both aggressive in trajectory and unusually low in commercial risk.",
+    "With a £1.8M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens."
+  ];
+
+  introParagraphs.forEach((para) => {
+    const wrapped = doc.splitTextToSize(para, maxWidth);
+    doc.text(wrapped, margin, yPosition, { lineHeightFactor: PDF_CONFIG.lineHeightFactor.body });
+    yPosition += wrapped.length * PDF_CONFIG.lineHeight.body + PDF_CONFIG.spacing.paragraphGap;
+  });
+  yPosition += PDF_CONFIG.spacing.sectionGap;
+
+  // Five-Year Financial Model section
+  if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
+  
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 70, 4, 4, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Five-Year Financial Model Delivers", margin + 10, yPosition + 12);
+  yPosition += 20;
+
+  const metrics = [
+    "Revenue growth from £1.17M in 2027 to £14.92M by 2031",
+    "~90% five-year CAGR",
+    "85–90%+ gross margins with net margins expanding toward 40–55% at scale",
+    "EBITDA breakeven above £5M ARR, reached early in the forecast period",
+    "Infrastructure-grade unit economics with rapid CAC payback"
+  ];
+
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  metrics.forEach((metric) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(margin + 14, yPosition - 1, 1.5, "F");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.text(metric, margin + 20, yPosition);
+    yPosition += PDF_CONFIG.lineHeight.body + 2;
+  });
+  yPosition += 24;
+
+  // Structural Performance section
+  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
+  
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 44, 4, 4, "F");
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Structural Performance", margin + 10, yPosition + 12);
+  
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "normal");
+  
+  const structuralText = "This performance is driven by structural market forces, not discretionary software demand. Hobson's usage-based model scales automatically with customer complexity, regulatory burden, and portfolio growth, creating built-in net revenue expansion and durable long-term defensibility.";
+  const structuralWrapped = doc.splitTextToSize(structuralText, maxWidth - 20);
+  doc.text(structuralWrapped, margin + 10, yPosition + 22, { lineHeightFactor: PDF_CONFIG.lineHeightFactor.body });
+  yPosition += 54;
+
+  return yPosition;
+};
+
+/**
  * Render Capital Raise Strategy visual with standardized fonts
  * IMPORTANT: This must match CapitalRaiseStrategyVisual.tsx exactly
  */
@@ -11295,7 +11389,9 @@ const renderTabContent = (
       yPosition = renderOnboardingCosts(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Financials renderers
-    else if (componentType === "plGrowth") {
+    else if (componentType === "financialsExecutiveSummary") {
+      yPosition = renderFinancialsExecutiveSummary(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "plGrowth") {
       yPosition = renderPLGrowth(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "revenueGrowth") {
       yPosition = renderRevenueGrowth(doc, yPosition, margin, pageWidth, pageHeight);

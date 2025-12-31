@@ -89,6 +89,7 @@ import { SWOTAnalysisVisual } from "@/components/investor/SWOTAnalysisVisual";
 import { AcquisitionExecutiveSummaryVisual } from "@/components/investor/AcquisitionExecutiveSummaryVisual";
 import { StrategicContextPositioningVisual } from "@/components/investor/StrategicContextPositioningVisual";
 import { SegmentationStrategyVisual } from "@/components/investor/SegmentationStrategyVisual";
+import { FinancialsExecutiveSummaryVisual } from "@/components/investor/FinancialsExecutiveSummaryVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -747,7 +748,8 @@ const sections = [
     pages: [
       {
         title: "Executive Summary",
-        showCustomVisual: false,
+        showCustomVisual: true,
+        customVisualComponent: "financialsExecutiveSummary",
         content: {
           overview: "Hobson's financial profile reflects the creation of a new infrastructure layer for Real Estate operations.\n\nThis is not a conventional SaaS growth story. It is the monetisation of unavoidable structural change in one of the world's largest, most document-intensive industries, driven by regulatory escalation, labour scarcity, margin compression, and compounding operational complexity.\n\nThe business converts existing, locked-in operating costs into high-margin, recurring revenue, producing a growth model that is both aggressive in trajectory and unusually low in commercial risk.\n\nWith a £1.8M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens.",
           sections: [
@@ -1581,6 +1583,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Revenue Growth */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "revenueGrowth" && (
                       <RevenueGrowthVisual />
+                    )}
+
+                    {/* Custom Visual Component for Financials Executive Summary */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "financialsExecutiveSummary" && (
+                      <FinancialsExecutiveSummaryVisual />
                     )}
 
                     {/* Custom Visual Component for Capital Raise Strategy */}
