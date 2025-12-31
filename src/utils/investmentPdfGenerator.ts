@@ -3438,12 +3438,6 @@ const renderProductVision = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Subtitle
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  setBodyFont(doc);
-  doc.text("The AI Operating Layer for Real Estate", pageWidth / 2, yPosition, { align: "center" });
-  yPosition += 12;
-
   // Industry Context box
   const industryPains = [
     "Escalating regulatory complexity",
@@ -3596,12 +3590,6 @@ const renderEarlyRoadmap = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-
-  // Subtitle
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  setBodyFont(doc);
-  doc.text("Strategic product development timeline covering discovery, validation, and development phases", margin, yPosition);
-  yPosition += 12;
 
   // Phase 1: Discover & De-Risk
   const phase1Height = 55;
