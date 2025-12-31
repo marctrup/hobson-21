@@ -28,13 +28,6 @@ const ProductVisionVisual: React.FC = () => {
 
   return (
     <div className="bg-white rounded-lg p-6 space-y-8">
-      {/* Header */}
-      <div className="text-center mb-6">
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">Product Vision</h3>
-        <p className="text-lg text-primary font-medium">
-          The AI Operating Layer for Real Estate
-        </p>
-      </div>
 
       {/* Industry Context */}
       <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-6 border border-amber-200">
