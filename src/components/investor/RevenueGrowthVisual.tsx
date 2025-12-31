@@ -1,5 +1,5 @@
 import React from "react";
-import { TrendingUp, Info } from "lucide-react";
+import { TrendingUp, Info, Target, Globe, DollarSign, Users } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -20,14 +20,196 @@ const RevenueGrowthVisual = () => {
     { year: "2031", ukRevenue: 2.33, globalRevenue: 12.59, total: 14.92 },
   ];
 
+  const phases = [
+    { phase: "2026", focus: "Platform build, pilots, validation" },
+    { phase: "2027", focus: "UK commercial launch" },
+    { phase: "2028+", focus: "UK scale and global expansion" },
+  ];
+
+  const marketPenetration = [
+    { year: "2027", share: "0.4%" },
+    { year: "2028", share: "1.4%" },
+    { year: "2029", share: "3%" },
+    { year: "2030", share: "6–10% category leadership" },
+  ];
+
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="text-center mb-6">
-        <h3 className="text-2xl font-bold text-foreground mb-2">Revenue Growth (2027–2031)</h3>
-        <p className="text-muted-foreground max-w-2xl mx-auto">
-          5-year revenue projection from UK launch through global expansion
-        </p>
+      {/* Phase Timeline */}
+      <div className="bg-card rounded-xl p-6 border border-border">
+        <h4 className="text-lg font-semibold text-foreground mb-4">Commercial Phases</h4>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">Phase</th>
+                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">Focus</th>
+              </tr>
+            </thead>
+            <tbody>
+              {phases.map((item, index) => (
+                <tr key={index} className="border-b border-border/50">
+                  <td className="py-3 px-4 text-sm font-semibold text-primary">{item.phase}</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground">{item.focus}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Five-Year Revenue Projection */}
+      <div className="bg-card rounded-xl p-6 border border-border">
+        <div className="flex items-center gap-2 mb-4">
+          <TrendingUp className="w-5 h-5 text-primary" />
+          <h4 className="text-lg font-semibold text-foreground">Five-Year Revenue Projection</h4>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">Year</th>
+                <th className="text-right py-2 px-4 text-sm font-semibold text-foreground">UK Revenue</th>
+                <th className="text-right py-2 px-4 text-sm font-semibold text-foreground">Global Revenue</th>
+                <th className="text-right py-2 px-4 text-sm font-semibold text-foreground">Total Revenue</th>
+              </tr>
+            </thead>
+            <tbody>
+              {revenueData.map((item, index) => (
+                <tr key={index} className="border-b border-border/50">
+                  <td className="py-3 px-4 text-sm font-semibold text-foreground">{item.year}</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£{item.ukRevenue.toFixed(2)}M</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">{item.globalRevenue > 0 ? `£${item.globalRevenue.toFixed(2)}M` : "—"}</td>
+                  <td className="py-3 px-4 text-sm font-semibold text-primary text-right">£{item.total.toFixed(2)}M</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20 text-center">
+          <span className="text-sm font-semibold text-primary">5-Year CAGR: ~90%</span>
+        </div>
+      </div>
+
+      {/* Market & Revenue Assumptions */}
+      <div className="grid md:grid-cols-2 gap-4">
+        {/* UK Market */}
+        <div className="bg-card rounded-xl p-5 border border-border">
+          <div className="flex items-center gap-2 mb-3">
+            <Target className="w-5 h-5 text-amber-600" />
+            <h5 className="font-semibold text-foreground">UK Market</h5>
+          </div>
+          <div className="space-y-2 text-sm">
+            <p className="text-muted-foreground">235,200 real estate businesses</p>
+            <p className="text-muted-foreground">Annual efficiency saving: £6,000 per role</p>
+            <p className="text-muted-foreground">65% of businesses primed for AI investment</p>
+            <div className="pt-2 border-t border-border mt-3">
+              <p className="text-foreground font-medium">UK TAM: £1.41B</p>
+              <p className="text-foreground font-medium">UK SAM: £917M</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Global Market */}
+        <div className="bg-card rounded-xl p-5 border border-border">
+          <div className="flex items-center gap-2 mb-3">
+            <Globe className="w-5 h-5 text-sky-600" />
+            <h5 className="font-semibold text-foreground">Global Market</h5>
+          </div>
+          <div className="space-y-2 text-sm">
+            <p className="text-muted-foreground">4.23M comparable businesses</p>
+            <div className="pt-2 border-t border-border mt-3">
+              <p className="text-foreground font-medium">Global TAM: £155.6B</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Pricing Model */}
+      <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-5 border border-primary/20">
+        <div className="flex items-center gap-2 mb-3">
+          <DollarSign className="w-5 h-5 text-primary" />
+          <h5 className="font-semibold text-foreground">Pricing Model</h5>
+        </div>
+        <div className="space-y-2 text-sm">
+          <p className="text-muted-foreground">Blended ARPU: <span className="text-foreground font-semibold">£495.72 per year</span></p>
+          <p className="text-muted-foreground">Tier mix: <span className="text-foreground font-semibold">Essential (60%), Plus (30%), Enterprise (10%)</span></p>
+          <p className="text-muted-foreground">No per-user or per-asset fees</p>
+        </div>
+      </div>
+
+      {/* Market Penetration */}
+      <div className="bg-card rounded-xl p-6 border border-border">
+        <div className="flex items-center gap-2 mb-4">
+          <Users className="w-5 h-5 text-primary" />
+          <h4 className="text-lg font-semibold text-foreground">Market Penetration</h4>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">Year</th>
+                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">UK Share</th>
+              </tr>
+            </thead>
+            <tbody>
+              {marketPenetration.map((item, index) => (
+                <tr key={index} className="border-b border-border/50">
+                  <td className="py-3 px-4 text-sm font-semibold text-foreground">{item.year}</td>
+                  <td className="py-3 px-4 text-sm text-primary font-medium">{item.share}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Revenue Model Summary */}
+      <div className="bg-muted/30 rounded-xl p-6 border border-border">
+        <h4 className="text-lg font-semibold text-foreground mb-4">Revenue Model</h4>
+        <div className="space-y-2 mb-4">
+          <div className="flex items-start gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
+            <p className="text-sm text-muted-foreground">Blended ARPU: £495.72 / year</p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
+            <p className="text-sm text-muted-foreground">Tier mix: Essential 60% | Plus 30% | Enterprise 10%</p>
+          </div>
+          <div className="flex items-start gap-2">
+            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
+            <p className="text-sm text-muted-foreground">No per-user or per-asset fees.</p>
+          </div>
+        </div>
+
+        {/* Revenue table */}
+        <div className="overflow-x-auto">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-2 px-3 text-xs font-semibold text-foreground">Year</th>
+                <th className="text-right py-2 px-3 text-xs font-semibold text-foreground">UK Revenue</th>
+                <th className="text-right py-2 px-3 text-xs font-semibold text-foreground">Global</th>
+                <th className="text-right py-2 px-3 text-xs font-semibold text-foreground">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {revenueData.map((item, index) => (
+                <tr key={index} className="border-b border-border/50">
+                  <td className="py-2 px-3 text-xs font-medium text-foreground">{item.year}</td>
+                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">£{item.ukRevenue.toFixed(2)}M</td>
+                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">{item.globalRevenue > 0 ? `£${item.globalRevenue.toFixed(2)}M` : "—"}</td>
+                  <td className="py-2 px-3 text-xs font-semibold text-primary text-right">£{item.total.toFixed(2)}M</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* Customer ROI */}
+      <div className="bg-primary/10 rounded-xl p-5 border border-primary/20 text-center">
+        <p className="text-foreground font-semibold">Customer ROI: ~12× (£6,000 saving vs £495.72)</p>
       </div>
 
       {/* Explainer Box */}
