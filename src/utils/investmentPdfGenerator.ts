@@ -10717,13 +10717,295 @@ const renderStrategicContextPositioning = (
   
   yPosition += pathwayHeight + spacing.sectionGap;
 
+  // NEW: Segmentation Strategy Section
+  doc.addPage();
+  yPosition = margin;
+
+  // Segmentation Strategy Header
+  fitPage(50);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Segmentation Strategy (UK, 2024-2027)", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  // Core Drivers
+  const driversText = "Segmentation is based on four core drivers:";
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text(driversText, margin, yPosition);
+  yPosition += lineHeight.body + spacing.paragraphGap;
+
+  const drivers = [
+    "Document volume",
+    "Workflow complexity",
+    "Decision-making structure",
+    "Psychographic orientation (VALS)"
+  ];
+
+  const driverWidth = (maxWidth - spacing.gridGap * 3) / 4;
+  const driverHeight = 28;
+
+  drivers.forEach((driver, idx) => {
+    const xPos = margin + idx * (driverWidth + spacing.gridGap);
+    
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(xPos, yPosition, driverWidth, driverHeight, box.borderRadius, box.borderRadius, "F");
+    
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(driver, xPos + box.paddingX, yPosition + 17);
+  });
+
+  yPosition += driverHeight + spacing.sectionGap;
+
+  // Three Customer Segments
+  fitPage(50);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text("Hobson serves three actionable customer groups, validated through MVP discovery:", margin, yPosition);
+  yPosition += lineHeight.body + spacing.sectionGap;
+
+  const segments = [
+    {
+      title: "Segment 1: Large Portfolio Operators",
+      characteristics: "High administrative load, multiple systems, compliance risk, slow information retrieval.",
+      vals: "Achievers, Thinkers who value reliability, accuracy, and professional competence.",
+      why: "High-value accounts with strong long-term retention potential."
+    },
+    {
+      title: "Segment 2: Medium Real Estate Companies",
+      characteristics: "Fast-paced, agile, scaling portfolios; information scattered across drives and emails.",
+      vals: "Strivers, Innovators who value simplicity, speed, and practical tools.",
+      why: "Quick adopters of lightweight AI tools with minimal friction."
+    },
+    {
+      title: "Segment 3: Small Firms & Owner-Managers",
+      characteristics: "Limited time, minimal tech stack, fragmented document handling.",
+      vals: "Makers, Survivors that value timesaving, stress reduction, clarity.",
+      why: "Large volume of potential customers and the lowest barriers to use."
+    }
+  ];
+
+  segments.forEach((segment) => {
+    fitPage(75);
+    
+    // Segment card
+    const segmentCardHeight = 70;
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(margin, yPosition, maxWidth, segmentCardHeight, box.borderRadius, box.borderRadius, "F");
+    doc.setDrawColor(...PDF_CONFIG.primaryLight);
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(margin, yPosition, maxWidth, segmentCardHeight, box.borderRadius, box.borderRadius, "S");
+    
+    // Title
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(segment.title, margin + box.paddingX, yPosition + 12);
+    
+    // Characteristics
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text("Characteristics: ", margin + box.paddingX, yPosition + 26);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    const charLines = splitTextWithFont(doc, segment.characteristics, maxWidth - box.paddingX * 2 - 50, "caption", false);
+    doc.text(charLines, margin + box.paddingX + 50, yPosition + 26);
+    
+    // VALS Profile
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text("VALS Profile: ", margin + box.paddingX, yPosition + 40);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    const valsLines = splitTextWithFont(doc, segment.vals, maxWidth - box.paddingX * 2 - 45, "caption", false);
+    doc.text(valsLines, margin + box.paddingX + 45, yPosition + 40);
+    
+    // Why Segment Matters
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text("Why Segment Matters: ", margin + box.paddingX, yPosition + 58);
+    doc.setFont("helvetica", "normal");
+    doc.text(segment.why, margin + box.paddingX + 70, yPosition + 58);
+    
+    yPosition += segmentCardHeight + spacing.gridGap;
+  });
+
+  // MVP Findings note
+  fitPage(30);
+  const mvpNote = "This segmentation reflects our MVP findings: the core pain, \"information is too hard to find,\" is universal, but the intensity and business value differ by segment.";
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "italic");
+  const mvpLines = splitTextWithFont(doc, mvpNote, maxWidth, "caption", false);
+  doc.text(mvpLines, margin, yPosition, { lineHeightFactor: lineHeightFactor.body });
+  yPosition += mvpLines.length * (lineHeight.body * lineHeightFactor.body) + spacing.sectionGap;
+
+  // Core Insight
+  fitPage(50);
+  const insightText = "Across all segments, the underlying pain is identical - \"Information is too hard to find\". What varies is the intensity of pain and the commercial value of resolving it, which determines prioritisation and revenue weighting.";
+  
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  const insightLines = splitTextWithFont(doc, insightText, maxWidth - box.paddingX * 2, "body", false);
+  const insightHeight = insightLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom + 10;
+  
+  doc.roundedRect(margin, yPosition, maxWidth, insightHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, insightHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Core Insight", margin + box.paddingX, yPosition + box.paddingTop);
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text(insightLines, margin + box.paddingX, yPosition + box.paddingTop + 14, { lineHeightFactor: lineHeightFactor.tight });
+  
+  yPosition += insightHeight + spacing.sectionGap;
+
+  // Mindset-Based Targeting
+  doc.addPage();
+  yPosition = margin;
+
+  fitPage(50);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Mindset-Based Targeting", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const mindsetIntro = "Strategic targeting aligns with our consumer attitude model, where customers progress through:";
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text(mindsetIntro, margin, yPosition);
+  yPosition += lineHeight.body + spacing.sectionGap;
+
+  // Funnel stages
+  const stages = ["Awareness", "Consideration", "Liking", "Conversion"];
+  const stageWidth = 35;
+  const arrowWidth = 15;
+  const totalWidth = stages.length * stageWidth + (stages.length - 1) * arrowWidth;
+  const startX = margin + (maxWidth - totalWidth) / 2;
+
+  stages.forEach((stage, idx) => {
+    const xPos = startX + idx * (stageWidth + arrowWidth);
+    
+    // Stage bubble
+    const opacity = 0.2 + (idx * 0.2);
+    if (idx === stages.length - 1) {
+      doc.setFillColor(...PDF_CONFIG.primaryColor);
+    } else {
+      doc.setFillColor(99, 102, 241, opacity * 255);
+    }
+    doc.roundedRect(xPos, yPosition, stageWidth, 18, 9, 9, "F");
+    
+    if (idx === stages.length - 1) {
+      doc.setTextColor(255, 255, 255);
+    } else {
+      doc.setTextColor(...PDF_CONFIG.primaryColor);
+    }
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    const textWidth = doc.getTextWidth(stage);
+    doc.text(stage, xPos + (stageWidth - textWidth) / 2, yPosition + 12);
+    
+    // Arrow
+    if (idx < stages.length - 1) {
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.text("→", xPos + stageWidth + 4, yPosition + 12);
+    }
+  });
+
+  yPosition += 28 + spacing.sectionGap;
+
+  // Stage details
+  const stageDetails = [
+    { stage: "Awareness", desc: "Learning that Hobson exists", channel: "LinkedIn + thought leadership" },
+    { stage: "Consideration", desc: "Understanding what Hobson does", channel: "Website clarity, demos, video explainers" },
+    { stage: "Liking", desc: "Emotional trust & brand connection", channel: "Hobson quiz, brand storytelling, case studies" },
+    { stage: "Conversion", desc: "Requesting a demo or pilot", channel: "Retargeting, email, onboarding flows" },
+  ];
+
+  const detailWidth = (maxWidth - spacing.gridGap) / 2;
+  const detailHeight = 45;
+
+  stageDetails.forEach((detail, idx) => {
+    const row = Math.floor(idx / 2);
+    const col = idx % 2;
+    const xPos = margin + col * (detailWidth + spacing.gridGap);
+    const yPos = yPosition + row * (detailHeight + spacing.gridGap);
+
+    if (row === 0 && col === 0) {
+      fitPage(detailHeight * 2 + spacing.gridGap);
+    }
+
+    doc.setFillColor(249, 250, 251);
+    doc.roundedRect(xPos, yPos, detailWidth, detailHeight, box.borderRadius, box.borderRadius, "F");
+    
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.rect(xPos, yPos, 3, detailHeight, "F");
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(detail.stage, xPos + box.paddingX, yPos + 12);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(detail.desc, xPos + box.paddingX, yPos + 24);
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text("→ " + detail.channel, xPos + box.paddingX, yPos + 36);
+  });
+
+  yPosition += (detailHeight * 2) + spacing.gridGap + spacing.sectionGap;
+
+  // Trust-First Approach
+  fitPage(45);
+  const trustText = "This mindset-first approach ensures that Hobson builds trust before asking for adoption, which is essential in risk-sensitive sectors such as real estate.";
+  
+  doc.setFillColor(240, 253, 244);
+  const trustLines = splitTextWithFont(doc, trustText, maxWidth - box.paddingX * 2, "body", false);
+  const trustHeight = trustLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom + 10;
+  
+  doc.roundedRect(margin, yPosition, maxWidth, trustHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(134, 239, 172);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, trustHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(22, 101, 52);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Trust-First Approach", margin + box.paddingX, yPosition + box.paddingTop);
+  
+  doc.setTextColor(21, 128, 61);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text(trustLines, margin + box.paddingX, yPosition + box.paddingTop + 12, { lineHeightFactor: lineHeightFactor.tight });
+  
+  yPosition += trustHeight + spacing.sectionGap;
+
   return yPosition;
 };
 
 /**
- * Render Segmentation Strategy visual
+ * Render Organisational Positioning visual (formerly Segmentation Strategy)
  */
-const renderSegmentationStrategy = (
+const renderOrganisationalPositioning = (
   doc: jsPDF,
   startY: number,
   margin: number,
@@ -10754,7 +11036,7 @@ const renderSegmentationStrategy = (
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Segmentation Strategy", margin + box.paddingX, yPosition + spacing.contentPadding);
+  doc.text("Organisational Positioning", margin + box.paddingX, yPosition + spacing.contentPadding);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
@@ -11632,7 +11914,7 @@ const renderTabContent = (
     } else if (componentType === "strategicContextPositioning") {
       yPosition = renderStrategicContextPositioning(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "segmentationStrategy") {
-      yPosition = renderSegmentationStrategy(doc, yPosition, margin, pageWidth, pageHeight);
+      yPosition = renderOrganisationalPositioning(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "acquisitionStrategyOverview") {
       yPosition = renderAcquisitionStrategyOverview(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "salesFunnel") {
