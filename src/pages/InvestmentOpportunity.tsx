@@ -594,7 +594,7 @@ const sections = [
   },
   {
     id: "marketing-sales",
-    title: "Marketing & Sales Strategy",
+    title: "Marketing & Brand Strategy",
     subtitle: "Go-to-Market Plan",
     icon: Target,
     color: "from-teal-500/10 to-teal-600/10",
