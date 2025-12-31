@@ -5346,13 +5346,6 @@ const renderFinancialsExecutiveSummary = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Header
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.pageTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Executive Summary", margin, yPosition);
-  yPosition += PDF_CONFIG.spacing.sectionGap + 4;
-
   // Introduction paragraphs
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
