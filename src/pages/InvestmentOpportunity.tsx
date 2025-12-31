@@ -783,7 +783,7 @@ const sections = [
         },
       },
       {
-        title: "Revenue Growth",
+        title: "Commercial Trajectory",
         showCustomVisual: true,
         customVisualComponent: "revenueGrowth",
         pdfImage: revenueGrowthChart,
