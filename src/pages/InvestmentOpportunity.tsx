@@ -740,7 +740,7 @@ const sections = [
   },
   {
     id: "financials",
-    title: "Financials",
+    title: "Financial Overview & Assumptions",
     subtitle: "Forecasts & Assumptions",
     icon: PieChart,
     color: "from-red-500/10 to-red-600/10",
