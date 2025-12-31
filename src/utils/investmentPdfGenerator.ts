@@ -10539,12 +10539,42 @@ const renderTheProposition = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
   const { fontSize, lineHeight, lineHeightFactor, spacing, box } = PDF_CONFIG;
+  let currentPageNum = 1;
+  const sectionName = "The Proposition";
+
+  // Helper to render page header with section name and page number
+  const renderPageHeader = (subsection: string) => {
+    // Section header bar
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.rect(0, 0, pageWidth, 12, "F");
+    
+    // Section name on left
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text(sectionName, margin, 8);
+    
+    // Subsection name in center
+    doc.setFont("helvetica", "normal");
+    doc.text(subsection, pageWidth / 2, 8, { align: "center" });
+    
+    // Page indicator on right
+    doc.text(`Page ${currentPageNum}`, pageWidth - margin, 8, { align: "right" });
+    
+    currentPageNum++;
+  };
 
   const fitPage = (requiredHeight: number) => {
     if (yPosition + requiredHeight > pageHeight - spacing.pageBreakMargin) {
       doc.addPage();
-      yPosition = margin;
+      yPosition = margin + 16; // Extra space for header
     }
+  };
+
+  const startNewPage = (subsection: string) => {
+    doc.addPage();
+    renderPageHeader(subsection);
+    yPosition = margin + 16; // Start content below header
   };
 
   // Colors
@@ -10659,8 +10689,7 @@ const renderTheProposition = (
   yPosition += prodColHeight + spacing.sectionGap;
 
   // Price Strategy Section (New Page)
-  doc.addPage();
-  yPosition = margin;
+  startNewPage("Price & Place Strategy");
 
   fitPage(40);
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -10765,8 +10794,7 @@ const renderTheProposition = (
   yPosition += channelColHeight + spacing.sectionGap;
 
   // Promotion Strategy Section (New Page)
-  doc.addPage();
-  yPosition = margin;
+  startNewPage("Promotion Strategy");
 
   fitPage(40);
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -10861,8 +10889,7 @@ const renderTheProposition = (
   yPosition += lineHeight.body + spacing.sectionGap;
 
   // Supporting Strategies: People, Process, Physical Evidence (New Page)
-  doc.addPage();
-  yPosition = margin;
+  startNewPage("Supporting Strategies");
 
   fitPage(40);
   doc.setTextColor(...PDF_CONFIG.textDark);
