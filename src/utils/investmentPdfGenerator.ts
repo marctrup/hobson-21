@@ -11003,7 +11003,7 @@ const renderStrategicContextPositioning = (
 };
 
 /**
- * Render Organisational Positioning visual (formerly Segmentation Strategy)
+ * Render Organisational Positioning visual (comprehensive positioning strategy)
  */
 const renderOrganisationalPositioning = (
   doc: jsPDF,
@@ -11041,13 +11041,13 @@ const renderOrganisationalPositioning = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text("Customer segments across UK property sector", margin + box.paddingX, yPosition + spacing.contentPadding + lineHeight.loose);
+  doc.text("Strategic positioning for Real Estate professionals", margin + box.paddingX, yPosition + spacing.contentPadding + lineHeight.loose);
   
   yPosition += headerHeight + spacing.sectionGap;
 
   // Overview
-  fitPage(40);
-  const overviewText = "Hobson's market segmentation identifies distinct customer groups with specific needs, behaviours, and adoption patterns across the UK property sector.";
+  fitPage(50);
+  const overviewText = "Hobson's long-term positioning centres on supporting Real Estate professionals with an intelligence layer that enhances the systems they already use. The goal is to be recognised for delivering reliable document insight without requiring significant operational change.";
   
   doc.setFillColor(248, 250, 252);
   const overviewLines = splitTextWithFont(doc, overviewText, maxWidth - box.paddingX * 2, "body", false);
@@ -11065,110 +11065,598 @@ const renderOrganisationalPositioning = (
   
   yPosition += overviewHeight + spacing.sectionGap;
 
-  // Primary Segments
-  fitPage(100);
+  // Strategic Positioning Vision
+  fitPage(60);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Primary Customer Segments", margin, yPosition);
+  doc.text("Strategic Positioning Vision", margin, yPosition);
   yPosition += lineHeight.loose + spacing.paragraphGap;
 
-  const segments = [
-    { title: "Property Management Companies", desc: "Mid-sized firms managing 100-1,000+ units" },
-    { title: "Estate Agents & Letting Agents", desc: "Agents handling tenancy and compliance docs" },
-    { title: "Portfolio Landlords", desc: "Private landlords with 5+ properties" },
-    { title: "Build-to-Rent Operators", desc: "Institutional operators with large portfolios" },
+  const visionText = "Hobson will be positioned as a practical, document-focused AI assistant that helps teams work faster and make decisions with clearer information. The emphasis is on complementing, not replacing, existing workflows. As the product matures, positioning will expand from retrieval to broader insight and guidance.";
+  
+  doc.setFillColor(248, 250, 252);
+  const visionLines = splitTextWithFont(doc, visionText, maxWidth - box.paddingX * 2, "body", false);
+  const visionHeight = visionLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom;
+  
+  doc.roundedRect(margin, yPosition, maxWidth, visionHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text(visionLines, margin + box.paddingX, yPosition + box.paddingTop, { lineHeightFactor: lineHeightFactor.body });
+  
+  yPosition += visionHeight + spacing.sectionGap;
+
+  // Positioning Principles
+  fitPage(80);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Positioning Principles", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const principles = [
+    { title: "Direct Clarity", desc: "Answers that reduce effort and uncertainty" },
+    { title: "Reliability", desc: "Outputs that users can treat as dependable inputs to their work" },
+    { title: "Low Friction", desc: "A tool that is simple to adopt and easy to maintain" },
+    { title: "Supportive Role", desc: "An assistant that fits around current systems and processes" },
   ];
 
-  const segmentWidth = (maxWidth - spacing.gridGap) / 2;
-  const segmentHeight = 38;
+  const principleWidth = (maxWidth - spacing.gridGap) / 2;
+  const principleHeight = 32;
 
-  segments.forEach((segment, idx) => {
+  principles.forEach((principle, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
-    const xPos = margin + col * (segmentWidth + spacing.gridGap);
-    const yPos = yPosition + row * (segmentHeight + spacing.gridGap);
+    const xPos = margin + col * (principleWidth + spacing.gridGap);
+    const yPos = yPosition + row * (principleHeight + spacing.gridGap);
 
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-    doc.roundedRect(xPos, yPos, segmentWidth, segmentHeight, box.borderRadius, box.borderRadius, "F");
+    doc.roundedRect(xPos, yPos, principleWidth, principleHeight, box.borderRadius, box.borderRadius, "F");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(segment.title, xPos + box.paddingX, yPos + 14);
+    doc.text(principle.title, xPos + box.paddingX, yPos + 12);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(segment.desc, xPos + box.paddingX, yPos + 26);
+    doc.text(principle.desc, xPos + box.paddingX, yPos + 22);
   });
 
-  yPosition += (segmentHeight * 2) + spacing.gridGap + spacing.sectionGap;
+  yPosition += (principleHeight * 2) + spacing.gridGap + spacing.sectionGap;
 
-  // Segmentation Criteria
+  // How Users Should Understand Hobson
+  fitPage(60);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("How Users Should Understand Hobson", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const userUnderstanding = [
+    "Helps them locate information quickly",
+    "Reduces the effort required in manual document review",
+    "Provides outputs that support confident decision-making",
+  ];
+
+  doc.setFillColor(248, 250, 252);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "F");
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.rect(margin, yPosition, 3, 40, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  doc.text("Across user groups, Hobson should be understood as a tool that:", margin + box.paddingX, yPosition + 10);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.body);
+  userUnderstanding.forEach((item, idx) => {
+    doc.text("- " + item, margin + box.paddingX, yPosition + 20 + idx * lineHeight.body);
+  });
+
+  yPosition += 45 + spacing.sectionGap;
+
+  // Positioning Across Customer Journey
+  fitPage(60);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Positioning Across the Customer Journey", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const journeyStages = [
+    { stage: "Awareness", desc: "A practical AI option built for property operations", color: [59, 130, 246] as [number, number, number] },
+    { stage: "Consideration", desc: "A simple way to access document insight quickly", color: [168, 85, 247] as [number, number, number] },
+    { stage: "Conversion", desc: "A low-effort tool suitable for pilot use", color: [34, 197, 94] as [number, number, number] },
+    { stage: "Retention", desc: "A dependable part of recurring workflows", color: [245, 158, 11] as [number, number, number] },
+  ];
+
+  const stageWidth = (maxWidth - spacing.gridGap * 3) / 4;
+  const stageHeight = 45;
+
+  journeyStages.forEach((stage, idx) => {
+    const xPos = margin + idx * (stageWidth + spacing.gridGap);
+
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(xPos, yPosition, stageWidth, stageHeight, box.borderRadius, box.borderRadius, "F");
+
+    doc.setTextColor(...stage.color);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(stage.stage, xPos + 4, yPosition + 12);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    const descLines = splitTextWithFont(doc, stage.desc, stageWidth - 8, "caption", false);
+    doc.text(descLines, xPos + 4, yPosition + 22, { lineHeightFactor: lineHeightFactor.tight });
+  });
+
+  yPosition += stageHeight + spacing.sectionGap;
+
+  // Strategic Advantages
   fitPage(55);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Segmentation Criteria", margin, yPosition);
+  doc.text("Strategic Advantages of the Positioning", margin, yPosition);
   yPosition += lineHeight.loose + spacing.paragraphGap;
 
-  const criteria = [
-    { title: "Portfolio Size", desc: "Number of units under management" },
-    { title: "Tech Maturity", desc: "Current digital adoption level" },
-    { title: "Pain Intensity", desc: "Urgency of document challenges" },
+  const advantages = [
+    { title: "1. Clear Category Definition", desc: "Focus on document intelligence avoids overlap with leasing automation" },
+    { title: "2. Low-Resistance Adoption", desc: "Enhancing existing tools reduces organisational barriers" },
+    { title: "3. Scalable Narrative", desc: "Positioning can expand naturally from retrieval to insight" },
   ];
 
-  const criteriaWidth = (maxWidth - spacing.gridGap * 2) / 3;
-  const criteriaHeight = 40;
+  const advantageWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  const advantageHeight = 40;
 
-  criteria.forEach((item, idx) => {
-    const xPos = margin + idx * (criteriaWidth + spacing.gridGap);
+  advantages.forEach((adv, idx) => {
+    const xPos = margin + idx * (advantageWidth + spacing.gridGap);
 
     doc.setFillColor(249, 250, 251);
-    doc.roundedRect(xPos, yPosition, criteriaWidth, criteriaHeight, box.borderRadius, box.borderRadius, "F");
-    
+    doc.roundedRect(xPos, yPosition, advantageWidth, advantageHeight, box.borderRadius, box.borderRadius, "F");
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.rect(xPos, yPosition, 3, criteriaHeight, "F");
+    doc.rect(xPos, yPosition, 3, advantageHeight, "F");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(fontSize.bodySmall);
+    doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(item.title, xPos + box.paddingX, yPosition + 14);
+    doc.text(adv.title, xPos + box.paddingX, yPosition + 12);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "normal");
+    const descLines = splitTextWithFont(doc, adv.desc, advantageWidth - box.paddingX * 2, "caption", false);
+    doc.text(descLines, xPos + box.paddingX, yPosition + 22, { lineHeightFactor: lineHeightFactor.tight });
+  });
+
+  yPosition += advantageHeight + spacing.sectionGap;
+
+  // Global Positioning Direction
+  fitPage(50);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Global Positioning Direction (2028-2030)", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  doc.setFillColor(240, 253, 244);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(134, 239, 172);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "S");
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  doc.text("As Hobson enters additional markets, the positioning will scale to:", margin + box.paddingX, yPosition + 10);
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "bolditalic");
+  doc.text("\"Hobson is a reliable AI assistant for Real Estate infrastructure management.\"", margin + box.paddingX, yPosition + 22);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  doc.text("This creates a consistent global identity that can adapt to local regulations and workflows.", margin + box.paddingX, yPosition + 32);
+
+  yPosition += 45 + spacing.sectionGap;
+
+  // SMART Positioning Objectives
+  fitPage(90);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SMART Positioning Objectives (2025-2030)", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const smartObjectives = [
+    { year: "2025", title: "Positioning Framework", desc: "Publish complete, scalable positioning framework by Q4 2025" },
+    { year: "2026", title: "Brand Recognition", desc: "Improve brand recall by 20% by Q4 2026" },
+    { year: "2027", title: "Industry Credibility", desc: "Appear in two respected industry reports by Q4 2027" },
+    { year: "2028", title: "Category Definition", desc: "Establish 'document intelligence assistant' as recognised category term" },
+    { year: "2029", title: "Global Consistency", desc: "Achieve consistent brand positioning across UK, EU, and US markets" },
+  ];
+
+  smartObjectives.forEach((obj, idx) => {
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(margin, yPosition, maxWidth, 14, 2, 2, "F");
+
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.roundedRect(margin + 4, yPosition + 3, 24, 8, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "bold");
+    doc.text(obj.year, margin + 10, yPosition + 8);
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(obj.title + ":", margin + 32, yPosition + 9);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.text(obj.desc, margin + 75, yPosition + 9);
+
+    yPosition += 16;
+  });
+
+  yPosition += spacing.sectionGap;
+
+  // Positioning Vision Summary
+  fitPage(40);
+  const summaryText = "Hobson is the accessible intelligence layer for Real Estate teams. It creates room for product evolution, supports commercial adoption, and offers a stable message for the UK and future international markets.";
+  
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  const summaryLines = splitTextWithFont(doc, summaryText, maxWidth - box.paddingX * 2, "body", false);
+  const summaryHeight = summaryLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom + 10;
+  
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, box.borderRadius, box.borderRadius, "S");
+  
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Positioning Vision Summary", margin + box.paddingX, yPosition + box.paddingTop);
+  
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.text(summaryLines, margin + box.paddingX, yPosition + box.paddingTop + 12, { lineHeightFactor: lineHeightFactor.body });
+  
+  yPosition += summaryHeight + spacing.sectionGap;
+
+  // UK Targeting Strategy
+  doc.addPage();
+  yPosition = margin;
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("UK Targeting Strategy (2025-2027)", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.sectionGap;
+
+  // Phase 1
+  fitPage(70);
+  doc.setFillColor(239, 246, 255);
+  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(191, 219, 254);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "S");
+
+  doc.setFillColor(59, 130, 246);
+  doc.circle(margin + 12, yPosition + 12, 5, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("1", margin + 10, yPosition + 14);
+
+  doc.setTextColor(29, 78, 216);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Phase 1: Validation & MVP Readiness (Q1 2026)", margin + 22, yPosition + 14);
+
+  doc.setTextColor(59, 130, 246);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  doc.text("Target: Existing partners and up to 5 new non-paying pilot organisations", margin + 22, yPosition + 24);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  const phase1Items = ["Finalise the MVP for Q1 2026", "Build trust through early testing", "Validate accuracy, referencing, and core workflows"];
+  phase1Items.forEach((item, idx) => {
+    doc.text("- " + item, margin + 22, yPosition + 34 + idx * 6);
+  });
+
+  doc.setTextColor(29, 78, 216);
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "italic");
+  doc.text("Brand Role: Hobson acts as the Sage, a calm, intelligent guide helping teams see through document complexity.", margin + 8, yPosition + 54);
+
+  yPosition += 65 + spacing.cardGap;
+
+  // Phase 2
+  fitPage(70);
+  doc.setFillColor(250, 245, 255);
+  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(221, 214, 254);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "S");
+
+  doc.setFillColor(168, 85, 247);
+  doc.circle(margin + 12, yPosition + 12, 5, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("2", margin + 10, yPosition + 14);
+
+  doc.setTextColor(126, 34, 206);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Phase 2: Pilot Expansion & Evidence Building (Q2-Q3 2026)", margin + 22, yPosition + 14);
+
+  doc.setTextColor(168, 85, 247);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  doc.text("Target: Medium-sized Real Estate firms, small professional portfolios, selective large operators", margin + 22, yPosition + 24);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  const phase2Items = ["Reach 10 active pilot organisations", "Produce segment-specific proof points and case studies", "Convert 3-5 pilots to paid accounts"];
+  phase2Items.forEach((item, idx) => {
+    doc.text("- " + item, margin + 22, yPosition + 34 + idx * 6);
+  });
+
+  doc.setTextColor(126, 34, 206);
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "italic");
+  doc.text("Brand Role: A trusted, lightweight companion that delivers clarity without requiring system change.", margin + 8, yPosition + 54);
+
+  yPosition += 65 + spacing.cardGap;
+
+  // Phase 3
+  fitPage(70);
+  doc.setFillColor(240, 253, 244);
+  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(187, 247, 208);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "S");
+
+  doc.setFillColor(34, 197, 94);
+  doc.circle(margin + 12, yPosition + 12, 5, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(8);
+  doc.setFont("helvetica", "bold");
+  doc.text("3", margin + 10, yPosition + 14);
+
+  doc.setTextColor(21, 128, 61);
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Phase 3: Commercialisation & UK Market Entry (2027)", margin + 22, yPosition + 14);
+
+  doc.setTextColor(34, 197, 94);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  doc.text("Target: Pilot-to-paid conversions and new inbound paying customers", margin + 22, yPosition + 24);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  const phase3Items = ["Launch public website and onboarding flows in Q1 2027", "Establish predictable acquisition -> activation -> retention funnels", "Build the ARR foundation for scale"];
+  phase3Items.forEach((item, idx) => {
+    doc.text("- " + item, margin + 22, yPosition + 34 + idx * 6);
+  });
+
+  doc.setTextColor(21, 128, 61);
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "italic");
+  doc.text("Brand Role: A dependable, intelligent assistant that enhances existing systems.", margin + 8, yPosition + 54);
+
+  yPosition += 65 + spacing.sectionGap;
+
+  // Global Expansion Strategy
+  fitPage(100);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Global Expansion Strategy (2028-2030)", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  doc.setFillColor(248, 250, 252);
+  doc.roundedRect(margin, yPosition, maxWidth, 85, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Grounded in verified market growth data:", margin + box.paddingX, yPosition + 10);
+
+  // Stats row
+  const statsData = [
+    { value: "36.1%", label: "CAGR AI in Real Estate" },
+    { value: "$1.8T", label: "Market by 2030" },
+    { value: "10%+", label: "NOI improvements (McKinsey)" },
+    { value: "49%", label: "Firms saving costs (Forbes)" },
+  ];
+
+  const statWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  statsData.forEach((stat, idx) => {
+    const xPos = margin + box.paddingX + idx * (statWidth + spacing.gridGap);
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(xPos, yPosition + 15, statWidth, 18, 2, 2, "F");
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "bold");
+    doc.text(stat.value, xPos + statWidth / 2, yPosition + 24, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "normal");
+    doc.text(stat.label, xPos + statWidth / 2, yPosition + 30, { align: "center" });
+  });
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Global Targeting Priorities:", margin + box.paddingX, yPosition + 42);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  doc.text("- US & Canada - most mature Proptech ecosystems", margin + box.paddingX, yPosition + 50);
+  doc.text("- EU (Germany, Netherlands, Nordics) - strong regulatory burden -> high document complexity", margin + box.paddingX, yPosition + 56);
+  doc.text("- UAE & Singapore - fast adopters of digital-first property innovation", margin + box.paddingX, yPosition + 62);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Global SMART Objectives (2028-2030):", margin + box.paddingX, yPosition + 72);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  doc.text("- Enter two international markets by 2028", margin + box.paddingX, yPosition + 80);
+  doc.text("- Secure 10 global pilot clients by mid-2029", margin + box.paddingX + 70, yPosition + 80);
+
+  yPosition += 90 + spacing.sectionGap;
+
+  // SMART Objectives for UK Targeting
+  fitPage(80);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SMART Objectives for UK Targeting (2025-2027)", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const ukObjectives = [
+    { stage: "Validation", period: "2025-Q1 2026", objective: "Secure five additional non-paying pilots by end of Q1 2026" },
+    { stage: "User Satisfaction", period: "Q1-Q2 2026", objective: "Achieve 80%+ satisfaction by Q2 2026" },
+    { stage: "Segment Representation", period: "Q2-Q3 2026", objective: "Activate at least one pilot in each core segment by Q3 2026" },
+    { stage: "Messaging Frameworks", period: "Q3-Q4 2026", objective: "Develop fully segment-specific messaging by Q4 2026" },
+    { stage: "Commercial Validation", period: "2027", objective: "Convert 3-5 pilot organisations into paying clients by Q3 2027" },
+  ];
+
+  ukObjectives.forEach((obj, idx) => {
+    doc.setFillColor(248, 250, 252);
+    doc.roundedRect(margin, yPosition, maxWidth, 12, 2, 2, "F");
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text(obj.stage, margin + 4, yPosition + 7);
+
+    doc.setTextColor(...PDF_CONFIG.textLight);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "normal");
+    doc.text(obj.period, margin + 50, yPosition + 7);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
-    doc.setFont("helvetica", "normal");
-    const descLines = splitTextWithFont(doc, item.desc, criteriaWidth - box.paddingX * 2, "caption", false);
-    doc.text(descLines, xPos + box.paddingX, yPosition + 26);
+    doc.text(obj.objective, margin + 75, yPosition + 7);
+
+    yPosition += 14;
   });
 
-  yPosition += criteriaHeight + spacing.sectionGap;
+  yPosition += spacing.sectionGap;
 
-  // Priority Focus
-  fitPage(45);
-  const focusText = "The pilot phase prioritises mid-sized property management companies (100-500 units) as they represent the optimal balance of operational complexity, decision-making speed, and growth potential.";
-  
-  doc.setFillColor(240, 253, 244);
-  const focusLines = splitTextWithFont(doc, focusText, maxWidth - box.paddingX * 2, "body", false);
-  const focusHeight = focusLines.length * (lineHeight.body * lineHeightFactor.body) + box.paddingTop + box.paddingBottom + 10;
-  
-  doc.roundedRect(margin, yPosition, maxWidth, focusHeight, box.borderRadius, box.borderRadius, "F");
-  doc.setDrawColor(134, 239, 172);
-  doc.setLineWidth(box.borderWidth);
-  doc.roundedRect(margin, yPosition, maxWidth, focusHeight, box.borderRadius, box.borderRadius, "S");
-  
-  doc.setTextColor(22, 101, 52);
+  // How This Targeting Strategy Supports Hobson's Goals
+  fitPage(70);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("How This Targeting Strategy Supports Hobson's Goals", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const halfWidth = (maxWidth - spacing.gridGap) / 2;
+
+  // Top-Level Benefits
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, halfWidth, 50, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text("Initial Focus: Mid-Market Property Managers", margin + box.paddingX, yPosition + box.paddingTop);
-  
-  doc.setTextColor(21, 128, 61);
-  doc.setFontSize(fontSize.body);
+  doc.text("Top-Level Organisational Benefits", margin + box.paddingX, yPosition + 10);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
   doc.setFont("helvetica", "normal");
-  doc.text(focusLines, margin + box.paddingX, yPosition + box.paddingTop + 12, { lineHeightFactor: lineHeightFactor.tight });
-  
-  yPosition += focusHeight + spacing.sectionGap;
+  const benefits = [
+    "Reduced market risk through staged validation",
+    "Strong proof-of-value before scaling",
+    "Clear roadmap from MVP -> Pilot -> Paid -> Global",
+    "Supports ARR, retention, and brand trust targets",
+  ];
+  benefits.forEach((item, idx) => {
+    doc.text("- " + item, margin + box.paddingX, yPosition + 20 + idx * 7);
+  });
+
+  // Vision Alignment
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin + halfWidth + spacing.gridGap, yPosition, halfWidth, 50, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Mid- to Long-Term Vision Alignment", margin + halfWidth + spacing.gridGap + box.paddingX, yPosition + 10);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  const visionItems = [
+    "UK foundation -> scalable international model",
+    "Clear positioning as 'AI that brings clarity'",
+    "Alignment with global adoption curves and ROI",
+  ];
+  visionItems.forEach((item, idx) => {
+    doc.text("- " + item, margin + halfWidth + spacing.gridGap + box.paddingX, yPosition + 20 + idx * 7);
+  });
+
+  yPosition += 55 + spacing.cardGap;
+
+  // Digital Strategy Areas
+  fitPage(45);
+  doc.setFillColor(248, 250, 252);
+  doc.roundedRect(margin, yPosition, maxWidth, 35, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Supports Digital Strategy Areas", margin + box.paddingX, yPosition + 10);
+
+  const strategyAreas = [
+    { area: "Acquisition", desc: "Prioritises segments with highest pain" },
+    { area: "Engagement", desc: "Persona-driven messaging + quiz" },
+    { area: "Lead Gen", desc: "Clear segment funnels" },
+    { area: "Conversion", desc: "Phased targeting reduces friction" },
+    { area: "Growth", desc: "Base for global expansion" },
+  ];
+
+  const areaWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 4) / 5;
+  strategyAreas.forEach((item, idx) => {
+    const xPos = margin + box.paddingX + idx * (areaWidth + spacing.gridGap);
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(xPos, yPosition + 15, areaWidth, 16, 2, 2, "F");
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(7);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.area, xPos + areaWidth / 2, yPosition + 21, { align: "center" });
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(5);
+    doc.setFont("helvetica", "normal");
+    const descLines = doc.splitTextToSize(item.desc, areaWidth - 4);
+    doc.text(descLines[0], xPos + areaWidth / 2, yPosition + 27, { align: "center" });
+  });
+
+  yPosition += 40 + spacing.sectionGap;
 
   return yPosition;
 };
