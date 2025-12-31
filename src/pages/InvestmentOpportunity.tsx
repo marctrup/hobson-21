@@ -749,8 +749,26 @@ const sections = [
         title: "Executive Summary",
         showCustomVisual: false,
         content: {
-          overview: "",
-          sections: [],
+          overview: "Hobson's financial profile reflects the creation of a new infrastructure layer for Real Estate operations.\n\nThis is not a conventional SaaS growth story. It is the monetisation of unavoidable structural change in one of the world's largest, most document-intensive industries, driven by regulatory escalation, labour scarcity, margin compression, and compounding operational complexity.\n\nThe business converts existing, locked-in operating costs into high-margin, recurring revenue, producing a growth model that is both aggressive in trajectory and unusually low in commercial risk.\n\nWith a £1.8M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens.",
+          sections: [
+            {
+              title: "Five-Year Financial Model Delivers",
+              items: [
+                "Revenue growth from £1.17M in 2027 to £14.92M by 2031",
+                "~90% five-year CAGR",
+                "85–90%+ gross margins with net margins expanding toward 40–55% at scale",
+                "EBITDA breakeven above £5M ARR, reached early in the forecast period",
+                "Infrastructure-grade unit economics with rapid CAC payback",
+              ],
+            },
+            {
+              title: "Structural Performance",
+              items: [
+                "This performance is driven by structural market forces, not discretionary software demand.",
+                "Hobson's usage-based model scales automatically with customer complexity, regulatory burden, and portfolio growth, creating built-in net revenue expansion and durable long-term defensibility.",
+              ],
+            },
+          ],
         },
       },
       {
