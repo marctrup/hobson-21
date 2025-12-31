@@ -109,13 +109,6 @@ export const EarlyRoadmapVisual: React.FC = () => {
     return "border-l-purple-500 bg-purple-50/50";
   };
   return <div className="w-full space-y-8">
-      {/* Header */}
-      <div className="text-center">
-        <h2 className="text-2xl font-bold text-foreground mb-2">Timeline and Innovation</h2>
-        <p className="text-muted-foreground">
-          Strategic product development timeline covering discovery, validation, and development phases
-        </p>
-      </div>
 
       {/* Development Timeline */}
       <div className="space-y-4">
