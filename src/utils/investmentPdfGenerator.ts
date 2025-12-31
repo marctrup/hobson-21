@@ -5441,13 +5441,6 @@ const renderCapitalRaiseStrategy = (
   const maxWidth = pageWidth - margin * 2;
   const valueCol = margin + maxWidth - 10;
 
-  // Header
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.pageTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Capital Raise Strategy", margin, yPosition);
-  yPosition += PDF_CONFIG.spacing.sectionGap;
-
   // Target Raise badge
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, 120, 16, 4, 4, "F");
