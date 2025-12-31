@@ -89,6 +89,7 @@ import { SWOTAnalysisVisual } from "@/components/investor/SWOTAnalysisVisual";
 import { AcquisitionExecutiveSummaryVisual } from "@/components/investor/AcquisitionExecutiveSummaryVisual";
 import { StrategicContextPositioningVisual } from "@/components/investor/StrategicContextPositioningVisual";
 import { SegmentationStrategyVisual } from "@/components/investor/SegmentationStrategyVisual";
+import { ThePropositionVisual } from "@/components/investor/ThePropositionVisual";
 import { FinancialsExecutiveSummaryVisual } from "@/components/investor/FinancialsExecutiveSummaryVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
@@ -731,6 +732,15 @@ const sections = [
         title: "Organisational Positioning",
         showCustomVisual: true,
         customVisualComponent: "segmentationStrategy",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "The Proposition",
+        showCustomVisual: true,
+        customVisualComponent: "theProposition",
         content: {
           overview: "",
           sections: [],
@@ -1676,6 +1686,10 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Segmentation Strategy */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "segmentationStrategy" && (
                       <SegmentationStrategyVisual />
+                    )}
+                    {/* Custom Visual Component for The Proposition */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "theProposition" && (
+                      <ThePropositionVisual />
                     )}
                     {/* Custom Visual Component for AI Processing */}
                     {(selectedSection.pages[currentPageIndex] as any).isVisual && <AIProcessingVisual />}
