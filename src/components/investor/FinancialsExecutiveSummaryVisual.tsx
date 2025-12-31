@@ -12,12 +12,6 @@ export const FinancialsExecutiveSummaryVisual: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-foreground mb-2">Executive Summary</h2>
-        <p className="text-muted-foreground">Financials Overview</p>
-      </div>
-
       {/* Introduction */}
       <div className="bg-card rounded-lg p-6 border border-border space-y-4">
         <p className="text-foreground leading-relaxed">
