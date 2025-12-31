@@ -601,7 +601,7 @@ const sections = [
     iconColor: "text-teal-600",
     pages: [
       {
-        title: "Executive Context",
+        title: "Executive Summary",
         showCustomVisual: true,
         customVisualComponent: "executiveContext",
         content: {
