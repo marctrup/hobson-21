@@ -746,6 +746,14 @@ const sections = [
     iconColor: "text-red-600",
     pages: [
       {
+        title: "Executive Summary",
+        showCustomVisual: false,
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Capital Raise Strategy",
         showCustomVisual: true,
         customVisualComponent: "capitalRaiseStrategy",
