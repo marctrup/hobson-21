@@ -8447,7 +8447,8 @@ const renderMarketDescription = (
 
   // 8. HOBSON'S STRATEGIC POSITION - using PDF_CONFIG values
   const conclusionBoxPadding = box.paddingX;
-  const conclusionTextWidth = maxWidth - conclusionBoxPadding * 2 - box.paddingX;
+  const conclusionBoxWidth = maxWidth - conclusionBoxPadding * 2;
+  const conclusionTextWidth = conclusionBoxWidth - box.paddingX * 2; // Proper inner padding
   const posIntroLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.intro), maxWidth - box.paddingX * 2, "body", false);
   const posConclusionLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.conclusion), conclusionTextWidth, "body", false);
   
@@ -8480,7 +8481,6 @@ const renderMarketDescription = (
   textY += spacing.sectionGap;
 
   // Conclusion in highlighted box with proper padding
-  const conclusionBoxWidth = maxWidth - conclusionBoxPadding * 2;
   const conclusionBoxY = textY;
   doc.setFillColor(...PDF_CONFIG.emeraldBg);
   doc.roundedRect(margin + conclusionBoxPadding, conclusionBoxY, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "F");
