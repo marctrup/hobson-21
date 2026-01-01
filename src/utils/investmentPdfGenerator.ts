@@ -2063,13 +2063,6 @@ const renderCustomersMarketSources = (
     doc.link(margin + spacing.paragraphGap, yPosition - smallOffset, linkWidth, lineHeight.body, { url: source.linkUrl });
     
     yPosition += box.paddingX;
-    
-    // Divider (except for last item)
-    if (index < sources.length - 1) {
-      doc.setDrawColor(...PDF_CONFIG.primaryLight);
-      doc.setLineWidth(box.borderWidthThin);
-      doc.line(margin + spacing.paragraphGap, yPosition - smallOffset, margin + maxWidth - spacing.paragraphGap, yPosition - smallOffset);
-    }
   });
 
   yPosition += spacing.sectionGap;
