@@ -8623,25 +8623,27 @@ const renderMarketDescription = (
     doc.setLineWidth(box.borderWidthThin);
     doc.roundedRect(x, y, insightCardWidth, insightCardHeight, box.borderRadius, box.borderRadius, "S");
 
-    // Circle positioned to align with text baseline
-    const circleY = y + spacing.contentPadding;
+    // Circle positioned at top left of card
+    const circleY = y + 10;
+    const circleX = x + 8;
     doc.setFillColor(...iconColor);
-    doc.circle(x + spacing.circleOffset, circleY, circleSize.medium, "F");
+    doc.circle(circleX, circleY, circleSize.medium, "F");
 
-    // "ACTIONABLE INSIGHT" label aligned with circle center
+    // "ACTIONABLE INSIGHT" label - positioned to the right of circle with proper gap
+    const labelX = circleX + circleSize.medium + 4; // Circle radius + gap
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text("ACTIONABLE INSIGHT", x + spacing.bulletTextOffset, circleY + 1);
+    doc.text("ACTIONABLE INSIGHT", labelX, circleY + 1);
 
-    // Insight text below label
-    const insightTextPadding = spacing.circleOffset;
+    // Insight text below label - starts from left edge with padding
+    const insightTextPadding = 8;
     const insightTextWidth = insightCardWidth - insightTextPadding * 2;
     const insightLines = splitTextWithFont(doc, sanitizeText(item.insight), insightTextWidth, "bodySmall", false);
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    let insightY = y + spacing.contentBoxStart;
+    let insightY = y + 20; // Fixed position below the label row
     insightLines.forEach((line: string) => {
       doc.text(line, x + insightTextPadding, insightY);
       insightY += bodyLine;
