@@ -618,6 +618,7 @@ const renderSectionHeader = (
 /**
  * Render bullet list with consistent styling
  * Returns the Y position after the list
+ * Uses calculatedLineHeight.body for proper text spacing (9pt × 1.25 = 11.25pt)
  */
 const renderBulletList = (
   doc: jsPDF,
@@ -626,7 +627,8 @@ const renderBulletList = (
   y: number,
   maxWidth: number,
   bulletColor: [number, number, number],
-  textColor: [number, number, number]
+  textColor: [number, number, number],
+  lineHeight: number = PDF_CONFIG.calculatedLineHeight.body
 ): number => {
   let currentY = y;
   setBodyFont(doc);
@@ -636,12 +638,12 @@ const renderBulletList = (
     doc.setFillColor(...bulletColor);
     doc.circle(x + 3, currentY - 2, PDF_CONFIG.circleSize.small, "F");
     
-    // Text - closer to bullet
+    // Text - use splitTextWithFont for correct wrapping
     doc.setTextColor(...textColor);
-    const lines = doc.splitTextToSize(sanitizeText(item), maxWidth - 10);
+    const lines = splitTextWithFont(doc, item, maxWidth - 10, "body", false);
     lines.forEach((line: string) => {
       doc.text(line, x + 7, currentY);
-      currentY += PDF_CONFIG.lineHeight.body;
+      currentY += lineHeight;
     });
     currentY += 2; // Extra spacing between items
   });
@@ -727,13 +729,14 @@ const renderStatCard = (
 /**
  * Render text with explicit line spacing (prevents cramped text)
  * This is the default method for multi-line text rendering.
+ * Uses calculatedLineHeight.body by default for proper text spacing (9pt × 1.25 = 11.25pt)
  * 
  * @param doc - jsPDF instance
  * @param text - Text to render (will be split to fit width)
  * @param x - X position
  * @param y - Starting Y position
  * @param maxWidth - Maximum width for text wrapping
- * @param lineHeight - Height between lines (default: PDF_CONFIG.lineHeight.body)
+ * @param lineHeight - Height between lines (default: calculatedLineHeight.body = 11.25pt)
  * @returns The Y position after the last line
  */
 const renderSpacedText = (
@@ -742,9 +745,9 @@ const renderSpacedText = (
   x: number,
   y: number,
   maxWidth: number,
-  lineHeight: number = PDF_CONFIG.lineHeight.body
+  lineHeight: number = PDF_CONFIG.calculatedLineHeight.body
 ): number => {
-  const lines = doc.splitTextToSize(sanitizeText(text), maxWidth);
+  const lines = splitTextWithFont(doc, text, maxWidth, "body", false);
   let currentY = y;
   lines.forEach((line: string) => {
     doc.text(line, x, currentY);
@@ -755,6 +758,7 @@ const renderSpacedText = (
 
 /**
  * Render centered text with explicit line spacing
+ * Uses calculatedLineHeight.body by default for proper text spacing
  */
 const renderSpacedTextCentered = (
   doc: jsPDF,
@@ -762,9 +766,9 @@ const renderSpacedTextCentered = (
   centerX: number,
   y: number,
   maxWidth: number,
-  lineHeight: number = PDF_CONFIG.lineHeight.body
+  lineHeight: number = PDF_CONFIG.calculatedLineHeight.body
 ): number => {
-  const lines = doc.splitTextToSize(sanitizeText(text), maxWidth);
+  const lines = splitTextWithFont(doc, text, maxWidth, "body", false);
   let currentY = y;
   lines.forEach((line: string) => {
     doc.text(line, centerX, currentY, { align: "center" });
@@ -1541,10 +1545,10 @@ const renderExecutiveSummary = (
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
   const introText = "Hobson demonstrates production-grade capability against Real Estate operational workflows.";
-  const introLines = doc.splitTextToSize(introText, maxWidth);
+  const introLines = splitTextWithFont(doc, introText, maxWidth, "body", false);
   introLines.forEach((line: string) => {
     doc.text(line, margin, yPosition);
-    yPosition += PDF_CONFIG.lineHeight.body;
+    yPosition += PDF_CONFIG.calculatedLineHeight.body;
   });
   yPosition += 4;
 
@@ -1565,10 +1569,10 @@ const renderExecutiveSummary = (
     doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.setFont("helvetica", "normal");
     
-    const bulletLines = doc.splitTextToSize(bullet, maxWidth - 10);
+    const bulletLines = splitTextWithFont(doc, bullet, maxWidth - 10, "body", false);
     bulletLines.forEach((line: string) => {
       doc.text(line, margin + 8, yPosition);
-      yPosition += PDF_CONFIG.lineHeight.body;
+      yPosition += PDF_CONFIG.calculatedLineHeight.body;
     });
     yPosition += 2;
   });
@@ -1655,23 +1659,24 @@ const renderWhyNow = (
   ];
 
   sections.forEach((section) => {
-    // Measure text with correct font for wrapping
+    // Measure text with correct font for wrapping - use splitTextWithFont
     setBodySmallFont(doc);
     const contentWidth = maxWidth - 32; // padding + number badge gutter
-    const introLines = section.intro ? doc.splitTextToSize(sanitizeText(section.intro), contentWidth) : [];
+    const introLines = section.intro ? splitTextWithFont(doc, section.intro, contentWidth, "bodySmall", false) : [];
     const bulletLinesByItem = section.bullets.map((b) =>
-      doc.splitTextToSize(sanitizeText(b), contentWidth - 12)
+      splitTextWithFont(doc, b, contentWidth - 12, "bodySmall", false)
     );
     const conclusionLines = section.conclusion
-      ? doc.splitTextToSize(sanitizeText(section.conclusion), contentWidth)
+      ? splitTextWithFont(doc, section.conclusion, contentWidth, "bodySmall", false)
       : [];
 
-    // Dynamic card height based on wrapped content
+    // Dynamic card height based on wrapped content - use calculatedLineHeight.small for bodySmall font
+    const smallLineHeight = PDF_CONFIG.calculatedLineHeight.small;
     const titleHeight = section.title ? 10 : 4;
-    const introHeight = introLines.length * PDF_CONFIG.lineHeight.body;
+    const introHeight = introLines.length * smallLineHeight;
     const bulletsHeight =
-      bulletLinesByItem.reduce((sum, lines) => sum + lines.length * PDF_CONFIG.lineHeight.body + 2, 0) || 0;
-    const conclusionHeight = conclusionLines.length * PDF_CONFIG.lineHeight.body;
+      bulletLinesByItem.reduce((sum, lines) => sum + lines.length * smallLineHeight + 2, 0) || 0;
+    const conclusionHeight = conclusionLines.length * smallLineHeight;
     const padding = 8; // reduced internal padding
     const cardHeight = titleHeight + 4 + introHeight + 4 + bulletsHeight + 4 + conclusionHeight + padding;
 
@@ -1693,16 +1698,16 @@ const renderWhyNow = (
       doc.text(section.title, margin + 20, cursorY);
     }
 
-    // Intro
+    // Intro - use calculatedLineHeight.small
     cursorY = yPosition + 19; // moved down 3px for more spacing after title
     doc.setTextColor(...PDF_CONFIG.textGray);
     setBodySmallFont(doc);
     introLines.forEach((line: string) => {
       doc.text(line, margin + 20, cursorY);
-      cursorY += PDF_CONFIG.lineHeight.body;
+      cursorY += smallLineHeight;
     });
 
-    // Bullets
+    // Bullets - use calculatedLineHeight.small
     cursorY += 2;
     setBodySmallFont(doc);
     bulletLinesByItem.forEach((lines) => {
@@ -1711,14 +1716,14 @@ const renderWhyNow = (
       doc.setTextColor(...PDF_CONFIG.textDark);
       lines.forEach((line: string) => {
         doc.text(line, margin + 28, cursorY);
-        cursorY += PDF_CONFIG.lineHeight.body;
+        cursorY += smallLineHeight;
       });
       cursorY += 1;
     });
 
-    // Conclusion (left border accent)
+    // Conclusion (left border accent) - use calculatedLineHeight.small
     cursorY += 2;
-    const accentH = Math.max(6, conclusionLines.length * PDF_CONFIG.lineHeight.body);
+    const accentH = Math.max(6, conclusionLines.length * smallLineHeight);
     doc.setFillColor(...PDF_CONFIG.primaryColor);
     doc.rect(margin + 6, cursorY - 4, 2, accentH, "F");
 
@@ -1727,7 +1732,7 @@ const renderWhyNow = (
     doc.setFont("helvetica", "italic");
     conclusionLines.forEach((line: string) => {
       doc.text(line, margin + 12, cursorY);
-      cursorY += PDF_CONFIG.lineHeight.body;
+      cursorY += smallLineHeight;
     });
 
     yPosition += cardHeight + 6; // reduced gap between cards
@@ -2100,11 +2105,11 @@ const renderStrategicApproach = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
   const productSubtitle = "Hobson has been built to replace document-driven human reasoning without disrupting existing workflows";
-  const productSubLines = doc.splitTextToSize(sanitizeText(productSubtitle), maxWidth - 30);
+  const productSubLines = splitTextWithFont(doc, productSubtitle, maxWidth - 30, "bodySmall", false);
   let subY = yPosition + 14;
   productSubLines.forEach((line: string) => {
     doc.text(line, margin + 18, subY);
-    subY += PDF_CONFIG.lineHeight.body;
+    subY += PDF_CONFIG.calculatedLineHeight.small;
   });
   yPosition = subY + 4;
 
@@ -2142,11 +2147,11 @@ const renderStrategicApproach = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
   const brandSubtitle = "Hobson has been designed for high-stakes operational environments where accuracy, traceability, and defensibility are non-negotiable";
-  const brandSubLines = doc.splitTextToSize(sanitizeText(brandSubtitle), maxWidth - 30);
+  const brandSubLines = splitTextWithFont(doc, brandSubtitle, maxWidth - 30, "bodySmall", false);
   subY = yPosition + 14;
   brandSubLines.forEach((line: string) => {
     doc.text(line, margin + 18, subY);
-    subY += PDF_CONFIG.lineHeight.body;
+    subY += PDF_CONFIG.calculatedLineHeight.small;
   });
   yPosition = subY + 4;
 
@@ -2223,11 +2228,11 @@ const renderTeamCredibility = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const headerText = "Hobson was founded by the team behind Arthur Online, a Real Estate operations platform built and scaled for institutional adoption, which was acquired by Advent and Aareon in 2021.";
-  const headerLines = doc.splitTextToSize(sanitizeText(headerText), maxWidth - 24);
+  const headerLines = splitTextWithFont(doc, headerText, maxWidth - 24, "bodySmall", false);
   let headerY = yPosition + 22;
   headerLines.forEach((line: string) => {
     doc.text(line, margin + 12, headerY);
-    headerY += PDF_CONFIG.lineHeight.body;
+    headerY += PDF_CONFIG.calculatedLineHeight.small;
   });
 
   yPosition += headerHeight + 12;
@@ -2248,11 +2253,11 @@ const renderTeamCredibility = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const expText = "That experience provides direct insight into how Real Estate platforms are bought, deployed, and relied upon at scale - and where they break under document complexity, compliance pressure, and operational load.";
-  const expLines = doc.splitTextToSize(sanitizeText(expText), maxWidth - 40);
+  const expLines = splitTextWithFont(doc, expText, maxWidth - 40, "bodySmall", false);
   let expY = yPosition + 8;
   expLines.forEach((line: string) => {
     doc.text(line, margin + 18, expY);
-    expY += PDF_CONFIG.lineHeight.body;
+    expY += PDF_CONFIG.calculatedLineHeight.small;
   });
 
   yPosition += expHeight + 12;
@@ -2289,11 +2294,11 @@ const renderTeamCredibility = (
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    const itemLines = doc.splitTextToSize(sanitizeText(item), cardWidth - 20);
+    const itemLines = splitTextWithFont(doc, item, cardWidth - 20, "bodySmall", false);
     let itemY = cardY + 8;
     itemLines.forEach((line: string) => {
       doc.text(line, cardX + 14, itemY);
-      itemY += PDF_CONFIG.lineHeight.body;
+      itemY += PDF_CONFIG.calculatedLineHeight.small;
     });
   });
 
@@ -2337,11 +2342,11 @@ const renderFoundingLeadership = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const headerText = "Hobson is led by a team that has built, scaled, and exited technology companies across three decades through multiple economic cycles and technology shifts. This is not a first venture.";
-  const headerLines = doc.splitTextToSize(sanitizeText(headerText), maxWidth - PDF_CONFIG.spacing.textIndent - PDF_CONFIG.spacing.itemGap);
+  const headerLines = splitTextWithFont(doc, headerText, maxWidth - PDF_CONFIG.spacing.textIndent - PDF_CONFIG.spacing.itemGap, "bodySmall", false);
   let headerY = yPosition + PDF_CONFIG.spacing.textIndent + PDF_CONFIG.spacing.itemGap;
   headerLines.forEach((line: string) => {
     doc.text(line, margin + PDF_CONFIG.spacing.itemGap, headerY);
-    headerY += PDF_CONFIG.lineHeight.body;
+    headerY += PDF_CONFIG.calculatedLineHeight.small;
   });
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
@@ -2377,7 +2382,7 @@ const renderFoundingLeadership = (
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
     doc.text(sanitizeText(item), margin + PDF_CONFIG.spacing.bulletTextOffset, yPosition + 3);
-    yPosition += PDF_CONFIG.lineHeight.body + 1;
+    yPosition += PDF_CONFIG.calculatedLineHeight.small;
   });
 
   yPosition += PDF_CONFIG.spacing.bulletOffset;
@@ -2402,19 +2407,19 @@ const renderFoundingLeadership = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const arthurText1 = "Most notably, the team previously founded and scaled Arthur, a category-leading property management platform that Advent International and Aareon ultimately acquired in 2021.";
-  const arthurLines1 = doc.splitTextToSize(sanitizeText(arthurText1), maxWidth - PDF_CONFIG.spacing.pageBreakMargin);
+  const arthurLines1 = splitTextWithFont(doc, arthurText1, maxWidth - PDF_CONFIG.spacing.pageBreakMargin, "bodySmall", false);
   let arthurY = yPosition + PDF_CONFIG.spacing.bulletOffset;
   arthurLines1.forEach((line: string) => {
     doc.text(line, margin + PDF_CONFIG.spacing.textIndent, arthurY);
-    arthurY += PDF_CONFIG.lineHeight.body;
+    arthurY += PDF_CONFIG.calculatedLineHeight.small;
   });
 
   arthurY += 2;
   const arthurText2 = "Following that acquisition, the leadership remained deeply involved in enterprise growth and strategic expansion inside Aareon's global organisation, where they:";
-  const arthurLines2 = doc.splitTextToSize(sanitizeText(arthurText2), maxWidth - PDF_CONFIG.spacing.pageBreakMargin);
+  const arthurLines2 = splitTextWithFont(doc, arthurText2, maxWidth - PDF_CONFIG.spacing.pageBreakMargin, "bodySmall", false);
   arthurLines2.forEach((line: string) => {
     doc.text(line, margin + PDF_CONFIG.spacing.textIndent, arthurY);
-    arthurY += PDF_CONFIG.lineHeight.body;
+    arthurY += PDF_CONFIG.calculatedLineHeight.small;
   });
 
   arthurY += 2;
@@ -2429,7 +2434,7 @@ const renderFoundingLeadership = (
     doc.circle(margin + PDF_CONFIG.spacing.bulletTextOffset + 2, arthurY - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(sanitizeText(item), margin + PDF_CONFIG.spacing.bulletTextOffset + PDF_CONFIG.spacing.bulletOffset, arthurY);
-    arthurY += PDF_CONFIG.lineHeight.body;
+    arthurY += PDF_CONFIG.calculatedLineHeight.small;
   });
 
   yPosition += arthurBoxHeight + PDF_CONFIG.spacing.itemGap;
