@@ -11458,15 +11458,15 @@ const renderPrimaryConversionChannels = (
     yPosition = margin;
   }
 
-  // Key Metrics - centered text in boxes
+  // Key Metrics - using content from provider (centered text in boxes)
   const metrics = [
-    "Homepage CTR",
-    "Free sign-ups",
-    "Dwell time",
+    "Homepage click-through rate",
+    "Free-package sign-ups",
+    "Dwell time on product pages",
     "Bounce rate",
-    "Retargeting conv.",
+    "Retargeting conversions",
     "Demo requests",
-    "High-intent conv."
+    "High-intent conversion"
   ];
 
   // 2-row layout so labels stay readable
@@ -11510,29 +11510,35 @@ const renderPrimaryConversionChannels = (
 
   yPosition += keyMetricsHeight + spacing.sectionGap;
 
-  // SMART Objectives
-  doc.setFillColor(245, 243, 255);
-  doc.roundedRect(margin, yPosition, maxWidth, 38, 3, 3, "F");
+  // SMART Conversion Objectives - using latest content from provider
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.roundedRect(margin, yPosition, maxWidth, spacing.contentBoxStart * 2 + spacing.sectionGap, box.borderRadius, box.borderRadius, "F");
   
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("SMART Conversion Objectives", margin + box.paddingX, yPosition + spacing.titleY);
+  doc.text("SMART Conversion Objectives", margin + box.paddingX, yPosition + spacing.sectionGap + fontSize.cardTitle / 3);
   
-  doc.setFontSize(fontSize.body);
+  doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textDark);
   const objectives = [
-    "20-30% CTA click-through increase by Q2 2026 | 10% high-intent to free package by Q4 2026",
-    "5 new pilot participants by Q1 2026 | 2+ min product-page dwell time by Q2 2026",
-    "<40% bounce rate by Q3 2026 | 10% retargeting to enquiries by Q4 2026 | 5% demo rate by Q4 2026"
+    "Increase CTA click-through rates by 20-30% by Q2 2026",
+    "Achieve 10% conversion from high-intent visitors into free package by Q4 2026",
+    "Secure 5 new pilot participants by Q1 2026",
+    "Raise product-page dwell time to 2+ minutes by Q2 2026",
+    "Reduce bounce rates to below 40% by Q3 2026",
+    "Convert 10% of retargeting audiences into enquiries by Q4 2026",
+    "Reach a 5% demo-request rate by Q4 2026"
   ];
-  let objY = yPosition + 16;
+  let objY = yPosition + spacing.contentPadding;
   objectives.forEach((obj) => {
-    doc.text(obj, margin + box.paddingX, objY);
-    objY += lineHeight.body + 1;
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(margin + box.paddingX + spacing.paragraphGap, objY, PDF_CONFIG.circleSize.bullet, "F");
+    doc.text(obj, margin + box.paddingX + spacing.sectionGap, objY + 1);
+    objY += lineHeight.body;
   });
-  yPosition += 44;
+  yPosition += spacing.contentBoxStart * 2 + spacing.sectionGap + spacing.sectionGap;
 
   return yPosition;
 };
