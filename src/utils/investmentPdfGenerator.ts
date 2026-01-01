@@ -3012,7 +3012,7 @@ const renderCustomerSegmentation = (
     const pressureLines = doc.splitTextToSize(sanitizeText(segment.pressure), maxWidth / 2 - spacing.bulletTextOffset - spacing.contentPadding);
     const driverLines = segment.adoptionDrivers.length;
     const contentLines = Math.max(pressureLines.length, driverLines + 1);
-    const cardHeight = Math.max(75, spacing.bulletTextOffset + spacing.contentPadding + contentLines * bodyLine);
+    const cardHeight = Math.max(85, spacing.bulletTextOffset + spacing.contentPadding + contentLines * bodyLine + 10); // Extra height for looser spacing
 
     yPosition = checkPageBreak(doc, yPosition, cardHeight + spacing.cardGap, pageHeight, margin);
     renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, segment.bgColor, segment.color);
@@ -3028,17 +3028,18 @@ const renderCustomerSegmentation = (
     setCardTitleFont(doc);
     doc.text(segment.title, margin + spacing.bulletTextOffset, headerY + 1);
 
-    // Percentage and description on second line
+    // Percentage and description on second line (with extra spacing from header)
+    const percentageY = yPosition + spacing.contentBoxStart + 4; // Extra 4pt spacing
     doc.setTextColor(...segment.color);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(fontSize.bodySmall);
-    doc.text(segment.percentage, margin + spacing.bulletTextOffset, yPosition + spacing.contentBoxStart);
+    doc.text(segment.percentage, margin + spacing.bulletTextOffset, percentageY);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.text(segment.description, margin + spacing.bulletTextOffset + doc.getTextWidth(segment.percentage + " "), yPosition + spacing.contentBoxStart);
+    doc.text(segment.description, margin + spacing.bulletTextOffset + doc.getTextWidth(segment.percentage + " "), percentageY);
 
-    // Two-column layout for PRESSURE and WHAT FORCES ADOPTION
-    const colStartY = yPosition + spacing.contentBoxStart + spacing.contentPadding;
+    // Two-column layout for PRESSURE and WHAT FORCES ADOPTION (extra spacing from percentage row)
+    const colStartY = percentageY + spacing.contentPadding + 4; // Extra 4pt spacing
 
     // PRESSURE section - left column
     const leftColIconX = margin + spacing.circleOffset;
