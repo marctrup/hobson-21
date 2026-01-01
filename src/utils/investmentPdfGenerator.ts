@@ -158,6 +158,7 @@ const PDF_CONFIG = {
   // COLORS - RGB values
   // ============================================================================
   primaryColor: [124, 58, 237] as [number, number, number],
+  primaryDark: [147, 51, 234] as [number, number, number],    // purple-600 for timeline stages
   primaryLight: [168, 113, 246] as [number, number, number],
   primaryBg: [240, 235, 255] as [number, number, number],
   primaryBgLight: [250, 245, 255] as [number, number, number],
@@ -928,15 +929,15 @@ const renderOurVision = (
   doc.text("The Evolution of Hobson AI", pageWidth / 2, yPosition, { align: "center" });
   yPosition += 14;
 
-  // Define stage colors to match the visual exactly
-  const slateColor: [number, number, number] = [100, 116, 139];  // slate-500
-  const purpleColor: [number, number, number] = [147, 51, 234];  // purple-600
-  const primaryColor = PDF_CONFIG.primaryColor;                   // brand purple
+  // Define stage colors using PDF_CONFIG values
+  const slateColor = PDF_CONFIG.textGray;                          // slate-500 equivalent
+  const purpleColor = PDF_CONFIG.primaryDark;                      // purple-600
+  const primaryColor = PDF_CONFIG.primaryColor;                     // brand purple
 
-  // Light background colors for each stage
-  const slateBg: [number, number, number] = [241, 245, 249];     // slate-100
-  const purpleBg: [number, number, number] = [253, 251, 255];    // very light purple
-  const primaryBg: [number, number, number] = [245, 238, 255];   // primary/20
+  // Light background colors for each stage using PDF_CONFIG
+  const slateBg = PDF_CONFIG.bgLight;                              // slate-100 equivalent
+  const purpleBg = PDF_CONFIG.primaryBgLight;                      // very light purple
+  const primaryBg = PDF_CONFIG.primaryBgMedium;                    // primary/20
 
   const stages = [
     {
