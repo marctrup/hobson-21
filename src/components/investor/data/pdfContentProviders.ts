@@ -140,6 +140,151 @@ export const getEuropeanGlobalPdfContent = (): string[] => [
   "Positions Hobson as an export-ready solution capable of adapting across geographies and regulatory contexts.",
 ];
 
+// Structured data for ProductVision PDF renderer - matches ProductVisionVisual.tsx
+export const getProductVisionStructuredData = () => ({
+  industryContext: {
+    title: "The global Real Estate industry is primed for change",
+    intro: "Operators are drowning in:",
+    pains: [
+      "Escalating regulatory complexity",
+      "Fragmented systems",
+      "Chronic labour shortages",
+      "Rising operating costs",
+      "Increasingly sophisticated landlord and tenant expectations",
+    ],
+  },
+  visionStatement: "Hobson is building the AI operating layer for the Real Estate industry.",
+  marketGap: {
+    title: "The Market Gap Hobson Fills",
+    intro: "Today, no platform:",
+    gaps: [
+      "Understands leases at scale",
+      "Enforces compliance continuously",
+      "Orchestrates maintenance and finance",
+      "Predicts risk across entire portfolios",
+    ],
+  },
+  coreCapabilities: {
+    title: "Hobson becomes the intelligence layer above every PMS",
+    intro: "One Core Engine that delivers:",
+    capabilities: [
+      "Property master data",
+      "Lease abstraction",
+      "Compliance calendars",
+      "Financial intelligence",
+      "Maintenance orchestration",
+      "Communications automation",
+    ],
+  },
+  conclusion: "This makes Hobson the only platform capable of running a single operating model across residential and commercial portfolios.",
+});
+
+// Structured data for EarlyRoadmap PDF renderer - matches EarlyRoadmapVisual.tsx
+export const getEarlyRoadmapStructuredData = () => ({
+  phases: [
+    {
+      phase: "May – Aug 2024",
+      title: "Phase 1: Discover & De-Risk",
+      status: "completed",
+      objectives: ["Validated the systemic failure of existing property management systems through direct operator discovery:"],
+      subItems: [["Compliance risk", "Lease complexity", "Arrears management", "Maintenance chaos", "Portfolio fragmentation"]],
+    },
+    {
+      phase: "Sep – Dec 2024",
+      title: "Phase 2: Validate Core Engine",
+      status: "completed",
+      objectives: ["Product-market fit is emerging.", "Four active pilot partners across operator sizes and system environments:"],
+      subItems: [
+        ["Large multi-system commercial operator", "Medium single-system operator", "Small owner-operator investment firms"],
+        ["Abstract leases", "Normalise residential and commercial workflows", "Surface compliance and financial risk"],
+      ],
+    },
+    {
+      phase: "Jan – Dec 2025",
+      title: "Phase 3: Develop the MVP",
+      status: "in-progress",
+      objectives: [
+        "Build MVP: Phase 1 with core AI capabilities",
+        "Build online presence and branding",
+        "Testing MVP with key clients' data",
+        "Build a pricing strategy based on usage data",
+        "Build pricing plans, marketing plan, business plan and financial model first draft",
+      ],
+    },
+    {
+      phase: "Jan – Sep 2026",
+      title: "Phase 4: Build the Industry Operating Layer",
+      status: "upcoming",
+      objectives: [
+        "Hobson MVP expands from \"document AI\" into full workflow intelligence.",
+        "By the end of 2026, Hobson will become the AI operating backbone for Real Estate portfolios.",
+      ],
+    },
+  ],
+  productPillars: [
+    { workflow: "Onboarding & Setup", capability: "AI document ingestion, lease abstraction, risk flags" },
+    { workflow: "Compliance & Safety", capability: "Compliance rule engines, predictive failure" },
+    { workflow: "Leasing & Occupier", capability: "Risk scoring, deal forecasting" },
+    { workflow: "Lease Management", capability: "Market intelligence, renewal modelling" },
+    { workflow: "Rent Collection & Finance", capability: "Arrears prediction, cashflow forecasting" },
+    { workflow: "Maintenance & Asset", capability: "Predictive maintenance, cost optimisation" },
+    { workflow: "Inspections", capability: "Computer vision defect detection" },
+    { workflow: "Legal & Risk", capability: "Litigation risk scoring" },
+    { workflow: "Voids & Re-leasing", capability: "Void forecasting, incentive modelling" },
+    { workflow: "Portfolio Strategy", capability: "Scenario modelling, portfolio optimisation" },
+  ],
+  businessTimeline: [
+    { year: "2026", title: "Prove Commercial Model", items: ["10+ pilot organisations", "3-5 converted to paying enterprise customers", "Billing engine & compliance-grade audit logging", "Full UK market readiness"] },
+    { year: "2027", title: "UK Market Capture", items: ["Public launch Q1", "Aggressive go-to-market", "Platform hardened for national scale", "Expansion readiness for EU & Global"] },
+    { year: "2028", title: "Global Expansion", items: ["Multi-market release", "Local compliance models", "Global enterprise partnerships"] },
+  ],
+  commercialImpact: [
+    { metric: "35–45%", description: "Reduction in operating cost per unit" },
+    { metric: "Sub-linear", description: "Headcount growth" },
+    { metric: "Near-zero", description: "Compliance failures" },
+    { metric: "Material", description: "Improvement in cashflow predictability" },
+  ],
+  closing: {
+    primary: "Hobson is not selling software. Hobson is becoming the operating system for Real Estate management.",
+    secondary: "The market is enormous, the pain is immediate, and the transformation window is open now.",
+  },
+});
+
+// Structured data for TechStack PDF renderer - matches TechStackVisual.tsx
+export const getTechStackStructuredData = () => ({
+  intro: "Hobson runs on trusted, industry-standard platforms designed for security, performance, and scalability.",
+  categories: [
+    {
+      title: "AI & Intelligence",
+      colorType: "primary",
+      items: [{ name: "OpenAI", desc: "Powers natural language understanding and AI-driven responses" }],
+    },
+    {
+      title: "Cloud Infrastructure",
+      colorType: "blue",
+      items: [
+        { name: "OVH Cloud", desc: "Stores your uploaded files and documents (secure UK/EU-based cloud storage)" },
+        { name: "Vercel", desc: "Runs the Hobson web app (fast, stable interface)" },
+      ],
+    },
+    {
+      title: "Data & Storage",
+      colorType: "emerald",
+      items: [
+        { name: "MongoDB", desc: "Handles structured data such as units, portfolios, users, and document metadata" },
+        { name: "Neo4j", desc: "Used for knowledge-graph structures to understand relationships" },
+        { name: "Pinecone", desc: "Stores vector embeddings for quick document search" },
+      ],
+    },
+    {
+      title: "Communication & Admin",
+      colorType: "amber",
+      items: [{ name: "Google Workspace", desc: "Supports email delivery, team communication, and secure internal admin" }],
+    },
+  ],
+  keyFeatures: ["UK/EU Data Residency", "High Availability", "Vector Search"],
+});
+
 export const getEarlyRoadmapPdfContent = (): string[] => [
   "Roadmap 2024-2025:",
   "",
