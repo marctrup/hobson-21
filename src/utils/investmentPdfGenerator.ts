@@ -1031,21 +1031,29 @@ const renderOurVision = (
     setCardTitleFont(doc);
     doc.text(stage.label, cardX + cardWidth / 2, yPosition + 24, { align: "center" });
 
-    // Icon labels as pills
-    setBodySmallFont(doc);
+    // Icon labels as pills - use smaller font for better fit
+    doc.setFontSize(6);
     const iconY = yPosition + 34;
+    const pillPadding = 4;
+    const pillGap = 2;
     let iconTotalWidth = 0;
     stage.icons.forEach((icon) => {
-      iconTotalWidth += doc.getTextWidth(icon) + 12;
+      iconTotalWidth += doc.getTextWidth(icon) + pillPadding * 2;
     });
-    let iconX = cardX + (cardWidth - iconTotalWidth) / 2;
+    iconTotalWidth += (stage.icons.length - 1) * pillGap;
+    
+    // Ensure icons fit within card with margins
+    const maxIconsWidth = cardWidth - 8;
+    const scale = iconTotalWidth > maxIconsWidth ? maxIconsWidth / iconTotalWidth : 1;
+    
+    let iconX = cardX + (cardWidth - Math.min(iconTotalWidth, maxIconsWidth)) / 2;
     stage.icons.forEach((icon) => {
-      const pillWidth = doc.getTextWidth(icon) + 8;
+      const pillWidth = (doc.getTextWidth(icon) + pillPadding * 2) * scale;
       doc.setFillColor(...PDF_CONFIG.bgWhite);
-      doc.roundedRect(iconX, iconY - 4, pillWidth, 9, 2, 2, "F");
+      doc.roundedRect(iconX, iconY - 4, pillWidth, 8, 2, 2, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.text(icon, iconX + 4, iconY + 2);
-      iconX += pillWidth + 4;
+      doc.text(icon, iconX + pillWidth / 2, iconY + 1, { align: "center" });
+      iconX += pillWidth + pillGap;
     });
 
     // Description
