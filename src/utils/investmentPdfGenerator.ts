@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -3407,14 +3407,11 @@ const renderProductVision = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // Source content from provider
+  const data = getProductVisionStructuredData();
+
   // Industry Context box
-  const industryPains = [
-    "Escalating regulatory complexity",
-    "Fragmented systems",
-    "Chronic labour shortages",
-    "Rising operating costs",
-    "Increasingly sophisticated landlord and tenant expectations",
-  ];
+  const industryPains = data.industryContext.pains;
   
   const industryBoxHeight = 70;
   yPosition = checkPageBreak(doc, yPosition, industryBoxHeight + 8, pageHeight, margin);
@@ -3424,11 +3421,11 @@ const renderProductVision = (
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The global Real Estate industry is primed for change", margin + 8, yPosition + 12);
+  doc.text(data.industryContext.title, margin + 8, yPosition + 12);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("Operators are drowning in:", margin + 8, yPosition + 22);
+  doc.text(data.industryContext.intro, margin + 8, yPosition + 22);
   
   let painY = yPosition + 30;
   industryPains.forEach((pain) => {
@@ -3449,16 +3446,11 @@ const renderProductVision = (
   
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
-  doc.text("Hobson is building the AI operating layer for the Real Estate industry.", pageWidth / 2, yPosition + 12, { align: "center" });
+  doc.text(data.visionStatement, pageWidth / 2, yPosition + 12, { align: "center" });
   yPosition += 28;
 
   // Market Gap box
-  const marketGaps = [
-    "Understands leases at scale",
-    "Enforces compliance continuously",
-    "Orchestrates maintenance and finance",
-    "Predicts risk across entire portfolios",
-  ];
+  const marketGaps = data.marketGap.gaps;
   
   const gapBoxHeight = 58;
   yPosition = checkPageBreak(doc, yPosition, gapBoxHeight + 8, pageHeight, margin);
@@ -3470,11 +3462,11 @@ const renderProductVision = (
   doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The Market Gap Hobson Fills", margin + 16, yPosition + 12);
+  doc.text(data.marketGap.title, margin + 16, yPosition + 12);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("Today, no platform:", margin + 8, yPosition + 24);
+  doc.text(data.marketGap.intro, margin + 8, yPosition + 24);
   
   let gapY = yPosition + 32;
   marketGaps.forEach((gap) => {
@@ -3487,14 +3479,7 @@ const renderProductVision = (
   yPosition += gapBoxHeight + 8;
 
   // Core Capabilities box
-  const coreCapabilities = [
-    "Property master data",
-    "Lease abstraction",
-    "Compliance calendars",
-    "Financial intelligence",
-    "Maintenance orchestration",
-    "Communications automation",
-  ];
+  const coreCapabilities = data.coreCapabilities.capabilities;
   
   const capBoxHeight = 52;
   yPosition = checkPageBreak(doc, yPosition, capBoxHeight + 8, pageHeight, margin);
@@ -3506,11 +3491,11 @@ const renderProductVision = (
   doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Hobson becomes the intelligence layer above every PMS", margin + 16, yPosition + 12);
+  doc.text(data.coreCapabilities.title, margin + 16, yPosition + 12);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("One Core Engine that delivers:", margin + 8, yPosition + 22);
+  doc.text(data.coreCapabilities.intro, margin + 8, yPosition + 22);
   
   // 2x3 grid of capabilities
   let capY = yPosition + 30;
@@ -3534,7 +3519,7 @@ const renderProductVision = (
   
   doc.setTextColor(...PDF_CONFIG.bgWhite);
   setBodyBoldFont(doc);
-  const closingText = "This makes Hobson the only platform capable of running a single operating model across residential and commercial portfolios.";
+  const closingText = data.conclusion;
   const closingLines = doc.splitTextToSize(sanitizeText(closingText), maxWidth - 20);
   const closingLineHeight = 6;
   const closingTotalHeight = closingLines.length * closingLineHeight;
@@ -4728,12 +4713,15 @@ const renderTechStack = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // Source content from provider
+  const techStackData = getTechStackStructuredData();
+
   // Intro
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
   yPosition = renderSpacedText(
     doc,
-    "Hobson runs on trusted, industry-standard platforms designed for security, performance, and scalability.",
+    techStackData.intro,
     margin,
     yPosition,
     maxWidth,
@@ -4741,45 +4729,21 @@ const renderTechStack = (
   );
   yPosition += 10;
 
-  const categories = [
-    {
-      title: "AI & Intelligence",
-      color: PDF_CONFIG.primaryColor,
-      bgColor: PDF_CONFIG.primaryBgLight,
-      items: ["OpenAI - Powers natural language understanding and AI-driven responses"],
-    },
-    {
-      title: "Cloud Infrastructure",
-      color: PDF_CONFIG.blue,
-      bgColor: PDF_CONFIG.blueBg,
-      items: [
-        "OVH Cloud - Stores uploaded files and documents (secure UK/EU-based storage)",
-        "Vercel - Runs the Hobson web app (fast, stable interface)",
-      ],
-    },
-    {
-      title: "Data & Storage",
-      color: PDF_CONFIG.emerald,
-      bgColor: PDF_CONFIG.emeraldBg,
-      items: [
-        "MongoDB - Handles structured data (units, portfolios, users, metadata)",
-        "Neo4j - Used for knowledge-graph structures to understand relationships",
-        "Pinecone - Stores vector embeddings for quick document search",
-      ],
-    },
-    {
-      title: "Communication & Admin",
-      color: PDF_CONFIG.amber,
-      bgColor: PDF_CONFIG.amberBg,
-      items: ["Google Workspace - Email delivery, team communication, secure internal admin"],
-    },
-  ];
+  // Map color types to PDF_CONFIG colors
+  const colorMap: Record<string, { color: [number, number, number]; bgColor: [number, number, number] }> = {
+    primary: { color: PDF_CONFIG.primaryColor, bgColor: PDF_CONFIG.primaryBgLight },
+    blue: { color: PDF_CONFIG.blue, bgColor: PDF_CONFIG.blueBg },
+    emerald: { color: PDF_CONFIG.emerald, bgColor: PDF_CONFIG.emeraldBg },
+    amber: { color: PDF_CONFIG.amber, bgColor: PDF_CONFIG.amberBg },
+  };
 
-  categories.forEach((category) => {
+  techStackData.categories.forEach((category) => {
+    const colors = colorMap[category.colorType] || colorMap.primary;
+    const items = category.items.map(item => `${item.name} - ${item.desc}`);
     // Calculate content height: title + gap + items
     const titleHeight = 10;
     const titleToItemsGap = PDF_CONFIG.spacing.subtitleToBullets;
-    const itemsHeight = category.items.length * PDF_CONFIG.lineHeight.body;
+    const itemsHeight = items.length * PDF_CONFIG.lineHeight.body;
     const contentHeight = titleHeight + titleToItemsGap + itemsHeight;
     
     // Add vertical padding for centering
@@ -4789,17 +4753,17 @@ const renderTechStack = (
     yPosition = checkPageBreak(doc, yPosition, cardHeight + 8, pageHeight, margin);
     
     // Card background
-    renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, category.bgColor, category.color);
+    renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, colors.bgColor, colors.color);
     
     // Left accent
-    doc.setFillColor(...category.color);
+    doc.setFillColor(...colors.color);
     doc.rect(margin, yPosition, 4, cardHeight, "F");
 
     // Calculate vertical center offset
     const contentStartY = yPosition + verticalPadding;
     
     // Title - centered in top portion
-    doc.setTextColor(...category.color);
+    doc.setTextColor(...colors.color);
     setBodyFont(doc);
     doc.setFont("helvetica", "bold");
     doc.text(category.title, margin + 12, contentStartY + 8);
@@ -4808,8 +4772,8 @@ const renderTechStack = (
     let itemY = contentStartY + titleHeight + titleToItemsGap;
     setBodySmallFont(doc);
     doc.setFont("helvetica", "normal");
-    category.items.forEach((item) => {
-      doc.setFillColor(...category.color);
+    items.forEach((item) => {
+      doc.setFillColor(...colors.color);
       doc.circle(margin + 14, itemY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textDark);
       doc.text(item, margin + 20, itemY);
@@ -4825,7 +4789,7 @@ const renderTechStack = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("Key Features: UK/EU Data Residency  |  High Availability  |  Vector Search", pageWidth / 2, yPosition + 12, { align: "center" });
+  doc.text(`Key Features: ${techStackData.keyFeatures.join("  |  ")}`, pageWidth / 2, yPosition + 12, { align: "center" });
   yPosition += 26;
 
   return yPosition;
