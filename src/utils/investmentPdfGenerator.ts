@@ -1233,7 +1233,12 @@ const renderExecutiveSummary = (
   const founderHeight = founderLines.length * bodyLineHeight + 8; // box padding
   const para2Height = para2Lines.length * bodyLineHeight;
   const closingHeight = closingLines.length * looseLineHeight;
-  const enablesItemsHeight = enablesItems.length * (bodyLineHeight * 2 + bulletGap);
+  // Calculate enables items height based on actual wrapped lines
+  let enablesItemsHeight = 0;
+  enablesItems.forEach((item) => {
+    const lines = doc.splitTextToSize(sanitizeText(item), contentMaxWidth - 10);
+    enablesItemsHeight += lines.length * bodyLineHeight + bulletGap;
+  });
 
   const rationaleCalloutHeight = 12;
 
@@ -1255,6 +1260,13 @@ const renderExecutiveSummary = (
     gapMd +
     closingHeight +
     2; // Reduced bottom padding
+
+  // Check if Investment Rationale box fits on current page
+  const rationaleFooterReserve = 18;
+  if (yPosition + boxH > pageHeight - rationaleFooterReserve) {
+    doc.addPage();
+    yPosition = margin;
+  }
 
   // --- Draw card ---
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
