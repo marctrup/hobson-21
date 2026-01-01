@@ -7601,16 +7601,19 @@ const renderCustomerPersonas = (
     doc.setLineWidth(box.borderWidth);
     doc.roundedRect(margin, yPosition, maxWidth, cardHeight, box.borderRadius, box.borderRadius, "S");
 
-    // Header row
+    // Header row - align circle with name text
+    const circleY = yPosition + spacing.contentPadding;
     doc.setFillColor(...theme.accent);
-    doc.circle(margin + spacing.itemGap, yPosition + spacing.contentPadding, circleSize.medium, "F");
+    doc.circle(margin + spacing.itemGap, circleY, circleSize.medium, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
-    doc.text(persona.name, margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.itemGap);
+    // Align name text vertically with circle center
+    const nameY = circleY + 1;
+    doc.text(persona.name, margin + spacing.bulletTextOffset, nameY);
 
-    // Segment badge - centered text
+    // Segment badge - centered text, aligned with name
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
     const badgeText = persona.segment;
@@ -7618,19 +7621,19 @@ const renderCustomerPersonas = (
     const badgePadding = spacing.boxGap;
     const badgeWidth = badgeTextWidth + badgePadding * 2;
     const badgeHeight = spacing.circleOffset;
-    const badgeX = margin + spacing.bulletTextOffset + spacing.paragraphGap + doc.getTextWidth(persona.name) + box.paddingX;
-    const badgeY = yPosition + spacing.boxToBox;
+    const badgeX = margin + spacing.bulletTextOffset + doc.getTextWidth(persona.name) + box.paddingX;
+    const badgeY = circleY - badgeHeight / 2;
     
     doc.setFillColor(...theme.accent);
     doc.roundedRect(badgeX, badgeY, badgeWidth, badgeHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setTextColor(255, 255, 255);
     doc.text(badgeText, badgeX + badgePadding, badgeY + badgeHeight / 2 + 1);
 
-    // Role
+    // Role - positioned below name with proper spacing
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(persona.role), margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + 24);
+    doc.text(sanitizeText(persona.role), margin + spacing.bulletTextOffset, circleY + lineHeight.body + 2);
 
     textY = yPosition + 36;
 
