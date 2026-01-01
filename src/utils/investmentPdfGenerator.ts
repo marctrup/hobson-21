@@ -7686,9 +7686,9 @@ const renderSituationAnalysis = (
     });
     textY += spacing.paragraphGap;
 
-    // Client feedback
+    // Client feedback - box sized to fit text with proper padding
     const feedbackBoxY = textY;
-    const feedbackBoxHeight = feedbackLines.length * bodyLine + box.paddingX;
+    const feedbackBoxHeight = feedbackLines.length * bodyLine + box.paddingTop + box.paddingBottom;
     doc.setFillColor(255, 255, 255);
     doc.roundedRect(margin + spacing.paragraphGap, feedbackBoxY, maxWidth - spacing.sectionGap, feedbackBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setFillColor(...PDF_CONFIG.primaryColor);
@@ -7697,10 +7697,10 @@ const renderSituationAnalysis = (
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "italic");
-    textY = feedbackBoxY + spacing.paragraphGap;
+    let feedbackTextY = feedbackBoxY + box.paddingTop;
     feedbackLines.forEach((line: string) => {
-      doc.text(line, margin + spacing.contentPadding, textY);
-      textY += bodyLine;
+      doc.text(line, margin + spacing.contentPadding, feedbackTextY);
+      feedbackTextY += bodyLine;
     });
 
     yPosition += segmentHeight + spacing.paragraphGap;
