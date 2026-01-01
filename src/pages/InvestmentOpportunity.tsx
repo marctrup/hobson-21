@@ -89,6 +89,7 @@ import { SWOTAnalysisVisual } from "@/components/investor/SWOTAnalysisVisual";
 import { MarketingObjectivesVisual } from "@/components/investor/MarketingObjectivesVisual";
 import { BrandStrategyVisual } from "@/components/investor/BrandStrategyVisual";
 import { ContentEngagementStrategyVisual } from "@/components/investor/ContentEngagementStrategyVisual";
+import { PrimaryConversionChannelsVisual } from "@/components/investor/PrimaryConversionChannelsVisual";
 import { AcquisitionExecutiveSummaryVisual } from "@/components/investor/AcquisitionExecutiveSummaryVisual";
 import { StrategicContextPositioningVisual } from "@/components/investor/StrategicContextPositioningVisual";
 import { SegmentationStrategyVisual } from "@/components/investor/SegmentationStrategyVisual";
@@ -725,6 +726,15 @@ const sections = [
         title: "Content and Engagement Strategy",
         showCustomVisual: true,
         customVisualComponent: "contentEngagementStrategy",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Primary Conversion Channels",
+        showCustomVisual: true,
+        customVisualComponent: "primaryConversionChannels",
         content: {
           overview: "",
           sections: [],
@@ -1718,6 +1728,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Content and Engagement Strategy */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "contentEngagementStrategy" && (
                       <ContentEngagementStrategyVisual />
+                    )}
+
+                    {/* Custom Visual Component for Primary Conversion Channels */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "primaryConversionChannels" && (
+                      <PrimaryConversionChannelsVisual />
                     )}
 
                     {/* Custom Visual Component for Acquisition Executive Summary */}

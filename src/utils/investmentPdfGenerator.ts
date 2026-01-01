@@ -11094,6 +11094,83 @@ const renderContentEngagementStrategy = (
   return yPosition;
 };
 
+/**
+ * Render Primary Conversion Channels visual
+ */
+const renderPrimaryConversionChannels = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { spacing, box, numberedCircle, fontSize } = PDF_CONFIG;
+
+  // Title
+  doc.setFontSize(fontSize.pageTitle);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.text("Primary Conversion Channels", margin, yPosition);
+  yPosition += spacing.sectionGap + 6;
+
+  // Introduction
+  doc.setFontSize(fontSize.body);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  const introText = "Hobson's conversion strategy centres on three primary channels: the website, the quiz, and the product itself.";
+  const introLines = doc.splitTextToSize(introText, maxWidth);
+  doc.text(introLines, margin, yPosition);
+  yPosition += introLines.length * 5 + spacing.sectionGap;
+
+  // Channel boxes
+  const channelData = [
+    { num: "1", title: "Website", color: PDF_CONFIG.primaryColor, bgColor: [245, 243, 255] as [number, number, number], points: ["Explain what Hobson does clearly", "Build credibility through case examples", "Target: 40% traffic increase by Q4 2027"] },
+    { num: "2", title: "The Quiz", color: PDF_CONFIG.emerald, bgColor: [240, 253, 250] as [number, number, number], points: ["Low-friction engagement entry point", "Segment users by role and need", "Target: 500+ completions by Q2 2027"] },
+    { num: "3", title: "Product (Free Tier)", color: PDF_CONFIG.amber, bgColor: [255, 251, 235] as [number, number, number], points: ["Demonstrate value through real use", "Build habit before payment discussion", "Target: 20% free-to-paid conversion"] }
+  ];
+
+  channelData.forEach((channel) => {
+    if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
+    
+    doc.setFillColor(...channel.bgColor);
+    doc.roundedRect(margin, yPosition, maxWidth, 35, 3, 3, "F");
+    
+    doc.setFillColor(...channel.color);
+    doc.circle(margin + 10, yPosition + 8, 5, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(8);
+    doc.setFont("helvetica", "bold");
+    doc.text(channel.num, margin + 8, yPosition + 10);
+    
+    doc.setTextColor(...channel.color);
+    doc.setFontSize(12);
+    doc.text(channel.title, margin + 20, yPosition + 10);
+    
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(9);
+    doc.setFont("helvetica", "normal");
+    let pointY = yPosition + 18;
+    channel.points.forEach((point) => {
+      doc.text("- " + point, margin + 8, pointY);
+      pointY += 5;
+    });
+    yPosition += 40;
+  });
+
+  // Summary box
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "bold");
+  doc.text("Flow: Website -> Quiz -> Product (prospects can enter at any point)", margin + 8, yPosition + 12);
+  yPosition += 28;
+
+  return yPosition;
+};
+
 
 const createCoverPage = (
   doc: jsPDF,
@@ -13860,6 +13937,8 @@ const renderTabContent = (
       yPosition = renderBrandStrategy(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "contentEngagementStrategy") {
       yPosition = renderContentEngagementStrategy(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "primaryConversionChannels") {
+      yPosition = renderPrimaryConversionChannels(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Acquisition & Sales Strategy renderers
     else if (componentType === "acquisitionExecutiveSummary") {
