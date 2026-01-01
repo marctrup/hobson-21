@@ -7672,9 +7672,9 @@ const renderSituationAnalysis = (
     valueLines.forEach((line: string, lineIdx: number) => {
       doc.text(line, valueBoxX + box.paddingX, valueTextStartY + lineIdx * bodyLine);
     });
-    textY = valueBoxY + valueBoxHeight + spacing.paragraphGap;
+    textY = valueBoxY + valueBoxHeight + spacing.sectionGap;
 
-    // Use cases
+    // Use cases - with more spacing from box above
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
