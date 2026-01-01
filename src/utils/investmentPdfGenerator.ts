@@ -9166,9 +9166,10 @@ const renderCustomerOnlineBehaviour = (
 
   yPosition += Math.ceil(data.evaluationCriteria.length / 2) * (evalCardHeight + PDF_CONFIG.spacing.paragraphGap) + PDF_CONFIG.spacing.cardGap;
 
-  // What Triggers Distrust section
-  const distrustHeight = PDF_CONFIG.card.headerHeight + data.distrustTriggers.length * (bodyLine + PDF_CONFIG.spacing.itemGap);
-  fitPage(distrustHeight + PDF_CONFIG.spacing.cardGap);
+  // What Triggers Distrust section - proper bullet spacing
+  const bulletSpacing = bodyLine + 2; // 5pt line + 2pt gap = 7pt per bullet
+  const distrustHeight = 16 + data.distrustTriggers.length * bulletSpacing + 4;
+  fitPage(distrustHeight + 6);
 
   doc.setFillColor(...PDF_CONFIG.roseBg);
   doc.roundedRect(margin, yPosition, maxWidth, distrustHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
@@ -9179,21 +9180,21 @@ const renderCustomerOnlineBehaviour = (
   doc.setTextColor(...PDF_CONFIG.rose);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("What Triggers Distrust or Hesitation", margin + PDF_CONFIG.box.paddingX, yPosition + PDF_CONFIG.spacing.circleOffset + 2);
+  doc.text("What Triggers Distrust or Hesitation", margin + 8, yPosition + 10);
 
-  textY = yPosition + PDF_CONFIG.card.textOffsetX + 2;
+  textY = yPosition + 18;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   data.distrustTriggers.forEach((trigger) => {
     doc.setFillColor(...PDF_CONFIG.rose);
-    doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-    const triggerLines = splitTextWithFont(doc, sanitizeText(trigger), maxWidth - 24, "bodySmall", false);
-    doc.text(triggerLines[0] || "", margin + PDF_CONFIG.spacing.textIndent, textY);
-    textY += bodyLine + PDF_CONFIG.spacing.itemGap;
+    doc.circle(margin + 8, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+    const triggerLines = splitTextWithFont(doc, sanitizeText(trigger), maxWidth - 20, "bodySmall", false);
+    doc.text(triggerLines[0] || "", margin + 14, textY);
+    textY += bulletSpacing;
   });
 
-  yPosition += distrustHeight + PDF_CONFIG.spacing.cardGap;
+  yPosition += distrustHeight + 6;
 
   // Channel Strategy Summary section
   fitPage(PDF_CONFIG.card.textOffsetX);
