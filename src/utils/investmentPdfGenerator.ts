@@ -9007,10 +9007,11 @@ const renderBrandIntegrity = (
     splitTextWithFont(doc, sanitizeText(text), width, fontStyle, bold);
 
   // -------- Brand Summary --------
-  const summaryLines = measureWrappedLines(data.summaryText, maxWidth - 16);
+  const summaryLines = measureWrappedLines(data.summaryText, maxWidth - 20);
+  const nextPhaseGap = 8; // Gap between paragraph and bullet points
 
   const summaryHeight =
-    28 + summaryLines.length * bodyLine + data.nextPhase.length * (smallLine + 1) + 16;
+    32 + summaryLines.length * bodyLine + nextPhaseGap + data.nextPhase.length * (smallLine + 3) + 12;
   fitPage(summaryHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -9030,16 +9031,22 @@ const renderBrandIntegrity = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text("Clear, Coherent, and Authentic Brand Foundation", margin + 24, yPosition + 24);
+  doc.text("Clear, Coherent, and Authentic Brand Foundation", margin + 24, yPosition + 26);
 
+  // Main paragraph text
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  let textY = yPosition + 34;
+  let textY = yPosition + 38;
   summaryLines.forEach((line: string) => {
     doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
     textY += bodyLine;
   });
 
+  // Add gap before bullet points
+  textY += nextPhaseGap;
+
+  // Bullet point items
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   data.nextPhase.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
@@ -9050,7 +9057,7 @@ const renderBrandIntegrity = (
       doc.text(w, margin + PDF_CONFIG.spacing.textIndent, textY);
       textY += smallLine;
     });
-    textY += 1;
+    textY += 3;
   });
 
   yPosition += summaryHeight + PDF_CONFIG.spacing.cardGap;
