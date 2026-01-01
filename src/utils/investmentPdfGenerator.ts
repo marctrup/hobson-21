@@ -10947,28 +10947,43 @@ const renderContentEngagementStrategy = (
     { stage: "4. Care (Retention)", goal: "Support ongoing use", items: ["Onboarding materials", "Guidance tips", "Feature updates"], success: "Continued usage", color: [255, 228, 230] as [number, number, number] }
   ];
 
-  const stageWidth = (maxWidth - spacing.gridGap * 3) / 4;
+  const stageWidth = (maxWidth - spacing.gridGap) / 2;
+  const stageHeight = 65;
+  
   journeyStages.forEach((stage, idx) => {
-    const xPos = margin + idx * (stageWidth + spacing.gridGap);
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    if (col === 0) {
+      fitPage(stageHeight + spacing.gridGap);
+    }
+    const xPos = margin + col * (stageWidth + spacing.gridGap);
+    const yPos = yPosition + row * (stageHeight + spacing.gridGap);
+    const textMaxWidth = stageWidth - 10;
+    
     doc.setFillColor(...stage.color);
-    doc.roundedRect(xPos, yPosition, stageWidth, 70, 2, 2, "F");
+    doc.roundedRect(xPos, yPos, stageWidth, stageHeight, 2, 2, "F");
+    
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(stage.stage, xPos + 4, yPosition + 10);
+    doc.text(stage.stage, xPos + 5, yPos + 10);
+    
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.tiny);
     doc.setFont("helvetica", "normal");
-    doc.text(stage.goal, xPos + 4, yPosition + 18);
+    doc.text(stage.goal, xPos + 5, yPos + 18);
+    
     stage.items.forEach((item, iIdx) => {
-      doc.text("- " + item.slice(0, 28), xPos + 4, yPosition + 26 + iIdx * PDF_CONFIG.lineHeight.relaxed);
+      const itemText = doc.splitTextToSize("- " + item, textMaxWidth);
+      doc.text(itemText[0], xPos + 5, yPos + 27 + iIdx * PDF_CONFIG.lineHeight.relaxed);
     });
+    
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(PDF_CONFIG.fontSize.micro);
-    doc.text("Success: " + stage.success, xPos + 4, yPosition + 64);
+    doc.text("Success: " + stage.success, xPos + 5, yPos + 58);
   });
 
-  yPosition += 78;
+  yPosition += (stageHeight + spacing.gridGap) * 2 + 4;
 
   // Engagement Methods
   fitPage(50);
@@ -10985,23 +11000,34 @@ const renderContentEngagementStrategy = (
     { title: "Insight Content", desc: "Examples of guidance, pattern spotting, or saved effort as product matures" }
   ];
 
-  const methodWidth = (maxWidth - spacing.gridGap * 3) / 4;
+  const methodWidth = (maxWidth - spacing.gridGap) / 2;
+  const methodHeight = 38;
+  
   methods.forEach((method, idx) => {
-    const xPos = margin + idx * (methodWidth + spacing.gridGap);
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    if (col === 0) {
+      fitPage(methodHeight + spacing.gridGap);
+    }
+    const xPos = margin + col * (methodWidth + spacing.gridGap);
+    const yPos = yPosition + row * (methodHeight + spacing.gridGap);
     const bgColors = [PDF_CONFIG.primaryBgLight, PDF_CONFIG.emeraldBg, [255, 243, 224] as [number, number, number], [255, 228, 230] as [number, number, number]];
+    
     doc.setFillColor(...bgColors[idx]);
-    doc.roundedRect(xPos, yPosition, methodWidth, 32, 2, 2, "F");
+    doc.roundedRect(xPos, yPos, methodWidth, methodHeight, 2, 2, "F");
+    
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(method.title, xPos + 4, yPosition + 10);
+    doc.text(method.title, xPos + 5, yPos + 11);
+    
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    const descLines = splitTextWithFont(doc, method.desc, methodWidth - 8, "caption", false);
-    doc.text(descLines.slice(0, 3), xPos + 4, yPosition + 18);
+    const descLines = splitTextWithFont(doc, method.desc, methodWidth - 10, "caption", false);
+    doc.text(descLines.slice(0, 2), xPos + 5, yPos + 21);
   });
 
-  yPosition += 40;
+  yPosition += (methodHeight + spacing.gridGap) * 2 + 4;
 
   // Channel Use Table
   fitPage(55);
