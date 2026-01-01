@@ -3262,6 +3262,181 @@ export const getHEUPricingStructuredData = (): HEUPricingData => ({
   footer: "No per-user fees. No per-asset fees. Unlimited scale."
 });
 
+/**
+ * Structured data for Team Credibility section
+ * Matches TeamCredibilityVisual.tsx exactly
+ */
+export interface TeamCredibilityData {
+  header: {
+    title: string;
+    description: string;
+  };
+  directExperience: {
+    title: string;
+    description: string;
+  };
+  teamBrings: {
+    title: string;
+    items: string[];
+  };
+}
+
+export const getTeamCredibilityStructuredData = (): TeamCredibilityData => ({
+  header: {
+    title: "Founded by the Team Behind Arthur Online",
+    description: "Hobson was founded by the team behind Arthur Online, a Real Estate operations platform built and scaled for institutional adoption, which was acquired by Advent and Aareon in 2021."
+  },
+  directExperience: {
+    title: "Direct Market Experience",
+    description: "That experience provides direct insight into how Real Estate platforms are bought, deployed, and relied upon at scale - and where they break under document complexity, compliance pressure, and operational load."
+  },
+  teamBrings: {
+    title: "The Team Brings",
+    items: [
+      "Proven experience building and scaling enterprise Real Estate software",
+      "Deep understanding of document-heavy, regulated environments",
+      "Credibility with institutional buyers and partners",
+      "Prior experience navigating governance, security, and M&A processes"
+    ]
+  }
+});
+
+/**
+ * Structured data for Founding Leadership section
+ * Matches FoundingLeadershipVisual.tsx exactly
+ */
+export interface FoundingLeadershipData {
+  header: {
+    title: string;
+    description: string;
+    highlight: string;
+  };
+  foundingExperience: {
+    title: string;
+    items: string[];
+  };
+  arthurAareon: {
+    title: string;
+    intro1: string;
+    intro2: string;
+    items: string[];
+  };
+  keyInsight: {
+    title: string;
+    text: string;
+  };
+  teamNavigated: {
+    title: string;
+    items: string[];
+  };
+  conclusion: string;
+}
+
+export const getFoundingLeadershipStructuredData = (): FoundingLeadershipData => ({
+  header: {
+    title: "Proven Operators. Repeat Exits. Category Builders",
+    description: "Hobson is led by a team that has built, scaled, and exited technology companies across three decades through multiple economic cycles and technology shifts. This is not a first venture.",
+    highlight: "Hobson is the next evolution of a proven execution engine."
+  },
+  foundingExperience: {
+    title: "The founding leadership has:",
+    items: [
+      "built businesses throughout the 1990s, 2000s, and 2010s,",
+      "scaled enterprise software platforms in regulated industries,",
+      "and executed successful exits."
+    ]
+  },
+  arthurAareon: {
+    title: "Arthur & Aareon Experience",
+    intro1: "Most notably, the team previously founded and scaled Arthur, a category-leading property management platform that Advent International and Aareon ultimately acquired in 2021.",
+    intro2: "Following that acquisition, the leadership remained deeply involved in enterprise growth and strategic expansion inside Aareon's global organisation, where they:",
+    items: [
+      "led complex platform implementations,",
+      "managed large enterprise clients,",
+      "and executed additional acquisitions, including Fixflo and Tilt Property Software."
+    ]
+  },
+  keyInsight: {
+    title: "This experience gives Hobson something few startups ever possess:",
+    text: "Direct, operational knowledge of how to build, scale, integrate, and exit Real Estate technology businesses."
+  },
+  teamNavigated: {
+    title: "Hobson's team has already navigated:",
+    items: [
+      "product-market fit,",
+      "hypergrowth,",
+      "enterprise implementation,",
+      "cross-border expansion,",
+      "post-acquisition integration,",
+      "and strategic M&A execution."
+    ]
+  },
+  conclusion: "Hobson enters the market with dramatically reduced execution risk and a clear blueprint for both scale and exit."
+});
+
+/**
+ * Structured data for Team section
+ * Matches TeamVisual.tsx exactly
+ */
+export interface TeamMemberData {
+  name: string;
+  role: string;
+  description?: string;
+  isTBC?: boolean;
+}
+
+export interface TeamData {
+  coreTeam: {
+    title: string;
+    subtitle: string;
+    members: TeamMemberData[];
+  };
+  advisors: {
+    title: string;
+    subtitle: string;
+    dividerText: string;
+    members: TeamMemberData[];
+  };
+  upcomingAdvisory: {
+    title: string;
+    areas: string[];
+  };
+}
+
+export const getTeamStructuredData = (): TeamData => ({
+  coreTeam: {
+    title: "Core Operational Team",
+    subtitle: "The team driving Hobson's growth and innovation",
+    members: [
+      { name: "—", role: "CEO", isTBC: true },
+      { name: "Marc Trup", role: "Commercial Lead", description: "Driving enterprise sales, go-to-market execution, and customer growth" },
+      { name: "Rochelle Trup", role: "Commercial Lead", description: "Leading commercial strategy, partnerships, and market expansion" },
+      { name: "Julia Szaltoni", role: "Product Lead", description: "Driving product strategy, design, and customer outcomes with deep domain understanding of property operations and user behaviour" },
+      { name: "Denis Kosenkov", role: "Senior AI Developer", description: "Architecting Hobson's AI systems and execution pipelines" },
+      { name: "Kumar Ankit", role: "AI & Technical Lead", description: "Leading the core AI architecture and platform development" },
+      { name: "Harriet Taylor", role: "Marketing Lead", isTBC: true },
+      { name: "Max Grey", role: "Sales Lead", isTBC: true },
+      { name: "Saul Trup", role: "Client Success Lead", isTBC: true }
+    ]
+  },
+  advisors: {
+    title: "Advisory Board",
+    subtitle: "Experienced advisors providing strategic guidance",
+    dividerText: "STRATEGIC GUIDANCE",
+    members: [
+      { name: "Nick Doffman", role: "Commercial Advisor", description: "Bringing deep commercial and industry experience to guide strategic growth" }
+    ]
+  },
+  upcomingAdvisory: {
+    title: "Additional advisors currently in formation to support:",
+    areas: [
+      "International expansion",
+      "Enterprise partnerships",
+      "Regulatory strategy"
+    ]
+  }
+});
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
