@@ -51,11 +51,12 @@ const PDF_CONFIG = {
 
   // ============================================================================
   // LINE HEIGHT (in points) - vertical spacing between lines
-  // From: bodyLine = PDF_CONFIG.lineHeight.body (value = 5)
+  // DEFAULT: Use lineHeight.body (5pt) for standard compact text spacing
+  // These are the PRIMARY values to use for consistent PDF output
   // ============================================================================
   lineHeight: {
-    body: 5,              // Standard line spacing (use for most text)
-    tight: 4,             // Compact lists
+    body: 5,              // DEFAULT - Standard line spacing (use for most text)
+    tight: 4,             // Compact lists, dense tables
     loose: 6,             // Headers, titles, relaxed spacing
     relaxed: 7,           // Extra relaxed spacing
     spacious: 8,          // Large gaps between items
@@ -73,14 +74,15 @@ const PDF_CONFIG = {
 
   // ============================================================================
   // CALCULATED LINE HEIGHTS (in points) - fontSize × lineHeightFactor
-  // Use these for manual line-by-line text rendering (forEach loops)
-  // These are the CORRECT values for proper text spacing
+  // AVOID: These create airy spacing. Only use for special cases requiring 
+  // extra breathing room (e.g., large headings, callout boxes)
+  // PREFER: lineHeight.body (5pt) for standard text rendering
   // ============================================================================
   calculatedLineHeight: {
-    body: 9 * 1.25,       // 11.25pt - body text (9pt × 1.25)
-    bodyLoose: 9 * 1.35,  // 12.15pt - body text with extra breathing room
-    bodyTight: 9 * 1.2,   // 10.8pt - compact body text
-    small: 8 * 1.25,      // 10pt - small text (8pt × 1.25)
+    body: 9 * 1.25,       // 11.25pt - AIRY - only for special cases
+    bodyLoose: 9 * 1.35,  // 12.15pt - VERY AIRY - callouts only
+    bodyTight: 9 * 1.2,   // 10.8pt - still airy compared to lineHeight.body
+    small: 8 * 1.25,      // 10pt - small text with extra space
     smallTight: 8 * 1.2,  // 9.6pt - compact small text
     caption: 8 * 1.2,     // 9.6pt - caption/footnote text
     title: 12 * 1.2,      // 14.4pt - card titles
@@ -2951,7 +2953,7 @@ const renderCustomerSegmentation = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
   const { box, spacing, circleSize, fontSize, lineHeight } = PDF_CONFIG;
-  const bodyLine = PDF_CONFIG.calculatedLineHeight.body;
+  const bodyLine = lineHeight.body; // Use tight 5pt spacing as default
 
   // Description - left aligned
   doc.setTextColor(...PDF_CONFIG.textGray);
@@ -8792,7 +8794,7 @@ const renderCompetitorBenchmarks = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const bodyLine = PDF_CONFIG.calculatedLineHeight.body;
+  const bodyLine = PDF_CONFIG.lineHeight.body; // Use tight 5pt spacing as default
 
   const data = getCompetitorBenchmarksStructuredData();
 
@@ -8970,7 +8972,7 @@ const renderCustomerOnlineBehaviour = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const bodyLine = PDF_CONFIG.calculatedLineHeight.body;
+  const bodyLine = PDF_CONFIG.lineHeight.body; // Use tight 5pt spacing as default
 
   const data = getCustomerOnlineBehaviourStructuredData();
 
@@ -9271,8 +9273,8 @@ const renderBrandIntegrity = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  const bodyLine = PDF_CONFIG.calculatedLineHeight.body;
-  const smallLine = PDF_CONFIG.calculatedLineHeight.small;
+  const bodyLine = PDF_CONFIG.lineHeight.body; // Use tight 5pt spacing as default
+  const smallLine = PDF_CONFIG.lineHeight.tight; // Use tight 4pt for small text
 
   const fitPage = (required: number) => {
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
