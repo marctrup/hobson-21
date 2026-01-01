@@ -7652,7 +7652,7 @@ const renderSituationAnalysis = (
     });
     textY += spacing.boxGap;
 
-    // Hobson value box - centered text
+    // Hobson value box - left justified text, vertically centered
     const valueBoxY = textY;
     const valueBoxWidth = maxWidth - spacing.bulletTextOffset;
     const valueBoxHeight = valueLines.length * bodyLine + spacing.boxTopPadding;
@@ -7666,12 +7666,11 @@ const renderSituationAnalysis = (
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    // Calculate vertical center position
+    // Vertically centered, left aligned
     const valueTotalTextHeight = valueLines.length * bodyLine;
     const valueTextStartY = valueBoxY + (valueBoxHeight - valueTotalTextHeight) / 2 + fontSize.bodySmall / 2;
-    const valueBoxCenterX = valueBoxX + valueBoxWidth / 2;
     valueLines.forEach((line: string, lineIdx: number) => {
-      doc.text(line, valueBoxCenterX, valueTextStartY + lineIdx * bodyLine, { align: "center" });
+      doc.text(line, valueBoxX + box.paddingX, valueTextStartY + lineIdx * bodyLine);
     });
     textY = valueBoxY + valueBoxHeight + spacing.paragraphGap;
 
