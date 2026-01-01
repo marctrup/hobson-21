@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData, getMarketingObjectivesStructuredData, getBrandStrategyStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -9950,7 +9950,7 @@ const renderSWOTAnalysis = (
 };
 
 /**
- * Render Marketing Objectives visual
+ * Render Marketing Objectives visual - uses structured data from provider
  */
 const renderMarketingObjectives = (
   doc: jsPDF,
@@ -9963,11 +9963,21 @@ const renderMarketingObjectives = (
   const maxWidth = pageWidth - margin * 2;
   const { fontSize, lineHeight, spacing, box, circleSize } = PDF_CONFIG;
 
+  const data = getMarketingObjectivesStructuredData();
+
   const fitPage = (required: number) => {
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
   };
 
-  // Header - using PDF_CONFIG light colors
+  // Color mapping for timeline and stages
+  const colorMap: Record<string, { bg: [number, number, number]; accent: [number, number, number] }> = {
+    amber: { bg: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber },
+    emerald: { bg: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald },
+    purple: { bg: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor },
+    rose: { bg: PDF_CONFIG.roseBg, accent: PDF_CONFIG.rose }
+  };
+
+  // Header
   fitPage(50);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 45, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
@@ -9976,12 +9986,11 @@ const renderMarketingObjectives = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Marketing Objectives", margin + spacing.bulletTextOffset + 4, yPosition + 16);
+  doc.text(data.header.title, margin + spacing.bulletTextOffset + 4, yPosition + 16);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  const headerText = "Aligned with 2026-2028 timeline for measurable growth across awareness, consideration, conversion, retention, and advocacy.";
-  const headerLines = splitTextWithFont(doc, headerText, maxWidth - 32, "bodySmall", false);
+  const headerLines = splitTextWithFont(doc, data.header.subtitle, maxWidth - 32, "bodySmall", false);
   doc.text(headerLines, margin + spacing.bulletTextOffset + 4, yPosition + 26);
   yPosition += 53;
 
@@ -9993,17 +10002,10 @@ const renderMarketingObjectives = (
   doc.text("Top-Level Marketing Goals", margin, yPosition);
   yPosition += lineHeight.loose + spacing.paragraphGap;
 
-  const goals = [
-    "Increase visibility across the UK real estate sector as the MVP moves into pilot expansion during 2026",
-    "Build credibility through evidence, pilot success stories, and trustworthy product education",
-    "Establish a predictable acquisition and activation funnel in preparation for the 2027 public launch",
-    "Support long-term adoption with consistent engagement and communication across all customer segments"
-  ];
-
   const goalCardWidth = (maxWidth - spacing.gridGap) / 2;
   const goalCardHeight = 35;
 
-  goals.forEach((goal, idx) => {
+  data.topLevelGoals.forEach((goal, idx) => {
     const col = idx % 2;
     if (col === 0) {
       fitPage(goalCardHeight + spacing.gridGap);
@@ -10023,7 +10025,7 @@ const renderMarketingObjectives = (
       yPosition += goalCardHeight + spacing.gridGap;
     }
   });
-  if (goals.length % 2 === 0) {
+  if (data.topLevelGoals.length % 2 === 0) {
     yPosition += goalCardHeight + spacing.gridGap;
   }
 
@@ -10035,24 +10037,18 @@ const renderMarketingObjectives = (
   doc.text("Mid- to Long-Term Direction", margin, yPosition);
   yPosition += lineHeight.loose + spacing.paragraphGap;
 
-  // Using light backgrounds only from PDF_CONFIG
-  const timeline = [
-    { period: "By Q4 2026", text: "Marketing should show strong early awareness, predictable interest in pilots, and growing engagement with educational content.", bgColor: PDF_CONFIG.amberBg, accentColor: PDF_CONFIG.amber },
-    { period: "By Q4 2027", text: "Hobson should operate a scalable acquisition engine with mature digital channels, predictable lead flow, and clear conversion pathways.", bgColor: PDF_CONFIG.emeraldBg, accentColor: PDF_CONFIG.emerald },
-    { period: "By 2028", text: "Marketing expands into two international regions and supports globalised demand, localisation, and partnerships.", bgColor: PDF_CONFIG.primaryBgLight, accentColor: PDF_CONFIG.primaryColor }
-  ];
-
   const timelineCardWidth = (maxWidth - spacing.gridGap * 2) / 3;
   const timelineCardHeight = 55;
   fitPage(timelineCardHeight + spacing.sectionGap);
 
-  timeline.forEach((item, idx) => {
+  data.timeline.forEach((item, idx) => {
+    const colors = colorMap[item.colorKey];
     const xPos = margin + idx * (timelineCardWidth + spacing.gridGap);
 
-    doc.setFillColor(...item.bgColor);
+    doc.setFillColor(...colors.bg);
     doc.roundedRect(xPos, yPosition, timelineCardWidth, timelineCardHeight, box.borderRadius, box.borderRadius, "F");
 
-    doc.setTextColor(...item.accentColor);
+    doc.setTextColor(...colors.accent);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
     doc.text(item.period, xPos + box.paddingX, yPosition + 12);
@@ -10077,80 +10073,25 @@ const renderMarketingObjectives = (
   doc.text("SMART Marketing Objectives (By Journey Stage)", margin, yPosition);
   yPosition += lineHeight.loose + spacing.sectionGap;
 
-  // Using PDF_CONFIG light backgrounds only
-  const stages = [
-    {
-      stage: "Awareness",
-      period: "Build through 2026 to scale in 2027 and expand in 2028",
-      bgColor: PDF_CONFIG.primaryBgLight,
-      accentColor: PDF_CONFIG.primaryColor,
-      objectives: [
-        "Increase visibility among UK real estate professionals",
-        "Drive consistent top-of-funnel traffic",
-        "Strengthen brand recall using distinctive digital assets"
-      ],
-      metrics: "Website sessions, quiz completions, LinkedIn impressions",
-      targets: ["500 monthly visits by Q1 2027", "1,000+ quiz completions by Q2 2027", "200k+ LinkedIn impressions/quarter"]
-    },
-    {
-      stage: "Consideration",
-      period: "2026-2027",
-      bgColor: PDF_CONFIG.emeraldBg,
-      accentColor: PDF_CONFIG.emerald,
-      objectives: [
-        "Turn awareness into informed interest",
-        "Support evaluation with demos and walkthroughs",
-        "Build confidence in reliability and accuracy"
-      ],
-      metrics: "Demo requests, time on product pages, retargeting CTR",
-      targets: ["50 demo requests by Q1 2027", "1 educational asset/month", ">3% retargeting CTR by Q4 2027"]
-    },
-    {
-      stage: "Conversion",
-      period: "Pilot conversion 2026, paid expansion 2027",
-      bgColor: PDF_CONFIG.amberBg,
-      accentColor: PDF_CONFIG.amber,
-      objectives: [
-        "Convert interested organisations into active pilots",
-        "Reduce activation friction",
-        "Demonstrate commercial value through pilot outcomes"
-      ],
-      metrics: "New pilot sign-ups, activation rate, pilot-to-paid conversion",
-      targets: ["5 new pilots by Q2 2026", "60%+ activation in 14 days", "GBP 50k-100k MRR by Q4 2027"]
-    },
-    {
-      stage: "Retention & Advocacy",
-      period: "Foundational 2026, strengthen 2027, scale 2028",
-      bgColor: PDF_CONFIG.roseBg,
-      accentColor: PDF_CONFIG.rose,
-      objectives: [
-        "Build strong user loyalty during pilot phase",
-        "Encourage advocacy from high-satisfaction teams",
-        "Maintain consistent communication as usage scales"
-      ],
-      metrics: "CSAT, NPS, retention rate, weekly active usage",
-      targets: ["80%+ satisfaction by Q4 2026", "NPS > 50 by Q4 2026", "9+ case studies by Q4 2027"]
-    }
-  ];
-
   const stageCardWidth = (maxWidth - spacing.gridGap) / 2;
   const stageCardHeight = 95;
 
-  stages.forEach((stage, idx) => {
+  data.journeyStages.forEach((stage, idx) => {
+    const colors = colorMap[stage.colorKey];
     const col = idx % 2;
     if (col === 0) {
       fitPage(stageCardHeight + spacing.gridGap);
     }
     const xPos = margin + col * (stageCardWidth + spacing.gridGap);
 
-    // Card background - using light colors
-    doc.setFillColor(...stage.bgColor);
+    // Card background
+    doc.setFillColor(...colors.bg);
     doc.setDrawColor(...PDF_CONFIG.border);
     doc.setLineWidth(box.borderWidthThin);
     doc.roundedRect(xPos, yPosition, stageCardWidth, stageCardHeight, box.borderRadius, box.borderRadius, "FD");
 
     // Header - stage name
-    doc.setTextColor(...stage.accentColor);
+    doc.setTextColor(...colors.accent);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
     doc.text(stage.stage, xPos + box.paddingX, yPosition + 12);
@@ -10161,13 +10102,13 @@ const renderMarketingObjectives = (
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(stage.period, xPos + box.paddingX, yPosition + 20);
 
-    // Objectives - start below period
+    // Objectives
     let textY = yPosition + 30;
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
     stage.objectives.forEach((obj) => {
-      doc.setFillColor(...stage.accentColor);
+      doc.setFillColor(...colors.accent);
       doc.circle(xPos + 8, textY - 1, circleSize.bullet, "F");
       doc.text(sanitizeText(obj).slice(0, 50), xPos + 12, textY);
       textY += lineHeight.body;
@@ -10184,9 +10125,9 @@ const renderMarketingObjectives = (
     textY += lineHeight.body + 2;
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.setTextColor(...stage.accentColor);
+    doc.setTextColor(...colors.accent);
     stage.targets.slice(0, 2).forEach((target) => {
-      doc.text("- " + sanitizeText(target).slice(0, 35), xPos + box.paddingX, textY);
+      doc.text("- " + sanitizeText(target.value + " " + target.label).slice(0, 35), xPos + box.paddingX, textY);
       textY += lineHeight.body;
     });
 
@@ -10195,7 +10136,7 @@ const renderMarketingObjectives = (
     }
   });
 
-  if (stages.length % 2 === 0) {
+  if (data.journeyStages.length % 2 === 0) {
     yPosition += stageCardHeight + spacing.gridGap;
   }
 
@@ -10207,19 +10148,10 @@ const renderMarketingObjectives = (
   doc.text("How This Framework Supports the Strategy", margin, yPosition);
   yPosition += lineHeight.loose + spacing.paragraphGap;
 
-  const frameworkItems = [
-    "Builds early visibility before the 2027 launch",
-    "Guides prospects into precise, structured evaluation",
-    "Supports conversion and commercial validation throughout 2026",
-    "Strengthens long-term retention and advocacy as Hobson scales",
-    "Creates a predictable funnel ready for UK expansion in 2027",
-    "Enables international expansion from 2028 onward"
-  ];
-
   const frameworkCardWidth = (maxWidth - spacing.gridGap * 2) / 3;
   const frameworkCardHeight = 24;
 
-  frameworkItems.forEach((item, idx) => {
+  data.frameworkItems.forEach((item, idx) => {
     const col = idx % 3;
     if (col === 0) {
       fitPage(frameworkCardHeight + spacing.paragraphGap);
@@ -10237,7 +10169,7 @@ const renderMarketingObjectives = (
     const itemLines = splitTextWithFont(doc, sanitizeText(item), frameworkCardWidth - 16, "caption", false);
     doc.text(itemLines.slice(0, 2), xPos + 14, yPosition + 10);
 
-    if (col === 2 || idx === frameworkItems.length - 1) {
+    if (col === 2 || idx === data.frameworkItems.length - 1) {
       yPosition += frameworkCardHeight + spacing.paragraphGap;
     }
   });
@@ -10253,7 +10185,7 @@ const renderMarketingObjectives = (
   doc.text("Channel and Metric Justification", margin, yPosition);
   yPosition += lineHeight.loose + spacing.sectionGap;
 
-  // Table header - using light background
+  // Table header
   const colWidths = [32, 45, 45, maxWidth - 122];
   const tableHeaderHeight = 14;
   const tableRowHeight = 18;
@@ -10272,16 +10204,7 @@ const renderMarketingObjectives = (
   });
   yPosition += tableHeaderHeight;
 
-  const tableData = [
-    { area: "Acquisition", channels: "LinkedIn, Website", metrics: "Impressions, Sessions", benefit: "Builds visibility before launch" },
-    { area: "Lead Generation", channels: "Website, Quiz, Retargeting", metrics: "Demo requests, Quiz sign-ups", benefit: "Creates pilot onboarding pipeline" },
-    { area: "Engagement", channels: "Quiz, LinkedIn content", metrics: "Engagement rate, Dwell time", benefit: "Strengthens Liking and brand connection" },
-    { area: "Conversion", channels: "Retargeting, Email", metrics: "CTR, Demo completions", benefit: "Turns interest into pilots" },
-    { area: "Development", channels: "Email onboarding, Support", metrics: "CSAT, activation metrics", benefit: "Improves early experience" },
-    { area: "Growth", channels: "Advocacy, Testimonials", metrics: "NPS, case studies", benefit: "Builds long-term brand equity" }
-  ];
-
-  tableData.forEach((row, idx) => {
+  data.channelTable.forEach((row, idx) => {
     fitPage(tableRowHeight);
     const rowBg = idx % 2 === 0 ? PDF_CONFIG.bgWhite : PDF_CONFIG.bgLight;
     doc.setFillColor(...rowBg);
@@ -10308,7 +10231,7 @@ const renderMarketingObjectives = (
 
   yPosition += spacing.sectionGap;
 
-  // Alignment Summary - using light background
+  // Alignment Summary
   fitPage(70);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 65, box.borderRadius, box.borderRadius, "F");
@@ -10326,14 +10249,8 @@ const renderMarketingObjectives = (
   doc.setFont("helvetica", "normal");
   doc.text("Hobson's channel and metric choices are tightly aligned to:", margin + box.paddingX, yPosition + 26);
 
-  const alignmentItems = [
-    { text: "Organisational goals", sub: "Builds long-term brand equity" },
-    { text: "Long-term vision", sub: "Sustainable growth focus" },
-    { text: "Mindset-first marketing", sub: "Trust before transactions" },
-    { text: "2026-2027 objectives", sub: "Phased milestone targets" }
-  ];
   const alignItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap) / 2;
-  alignmentItems.forEach((item, idx) => {
+  data.alignmentItems.forEach((item, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const xPos = margin + box.paddingX + col * (alignItemWidth + spacing.gridGap);
@@ -10352,7 +10269,7 @@ const renderMarketingObjectives = (
 };
 
 /**
- * Render Brand Strategy visual
+ * Render Brand Strategy visual - uses structured data from provider
  */
 const renderBrandStrategy = (
   doc: jsPDF,
@@ -10364,6 +10281,8 @@ const renderBrandStrategy = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
   const { fontSize, lineHeight, lineHeightFactor, spacing, box } = PDF_CONFIG;
+
+  const data = getBrandStrategyStructuredData();
 
   const fitPage = (required: number) => {
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
@@ -10378,246 +10297,346 @@ const renderBrandStrategy = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Brand Strategy", margin + 24, yPosition + 16);
+  doc.text(data.header.title, margin + 24, yPosition + 16);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  const headerText = "Built on authenticity, clarity, and trust - positioning Hobson as the calm, intelligent guide for real estate documents.";
-  const headerLines = splitTextWithFont(doc, headerText, maxWidth - 32, "bodySmall", false);
+  const headerLines = splitTextWithFont(doc, data.header.subtitle, maxWidth - 32, "bodySmall", false);
   doc.text(headerLines, margin + 24, yPosition + 26);
   yPosition += 53;
 
-  // Brand Positioning - using light background for readability (2x2 grid for readability)
-  const posBoxHeight = 70;
-  fitPage(posBoxHeight + spacing.paragraphGap);
+  // Brand Essence
+  const essenceHeight = 40;
+  fitPage(essenceHeight + spacing.paragraphGap);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, posBoxHeight, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, essenceHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(box.borderWidth);
-  doc.roundedRect(margin, yPosition, maxWidth, posBoxHeight, box.borderRadius, box.borderRadius, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, essenceHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Brand Positioning", margin + box.paddingX, yPosition + fontSize.cardTitle);
+  doc.text(data.brandEssence.title, margin + box.paddingX, yPosition + 12);
 
-  const positioningItems = [
-    { label: "Tagline", value: "Innovation Without Disruption" },
-    { label: "Archetype", value: "The Sage" },
-    { label: "Promise", value: "Instant, referenced answers from your property documents" },
-    { label: "Differentiation", value: "The only AI built for real estate document intelligence" }
-  ];
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const essenceLines = splitTextWithFont(doc, sanitizeText(data.brandEssence.content), maxWidth - box.paddingX * 2, "bodySmall", false);
+  doc.text(essenceLines.slice(0, 2), margin + box.paddingX, yPosition + 24);
+  yPosition += essenceHeight + spacing.sectionGap;
 
-  const posItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap) / 2;
-  const posItemHeight = 20;
-  const posRowGap = spacing.paragraphGap;
-  positioningItems.forEach((item, idx) => {
-    const col = idx % 2;
-    const row = Math.floor(idx / 2);
-    const xPos = margin + box.paddingX + col * (posItemWidth + spacing.gridGap);
-    const yPos = yPosition + 20 + row * (posItemHeight + posRowGap);
-    doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPos, posItemWidth, posItemHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(fontSize.small);
-    doc.setFont("helvetica", "normal");
-    doc.text(item.label, xPos + spacing.paragraphGap, yPos + lineHeight.loose);
-    doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(fontSize.bodySmall);
-    doc.setFont("helvetica", "bold");
-    const valLines = splitTextWithFont(doc, item.value, posItemWidth - spacing.sectionGap, "bodySmall", false);
-    doc.text(valLines[0] || "", xPos + spacing.paragraphGap, yPos + fontSize.bodySmall + lineHeight.loose);
-  });
-
-  yPosition += posBoxHeight + spacing.sectionGap;
-
-  // Brand Pillars
-  fitPage(20);
+  // Visual Direction
+  fitPage(70);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Brand Pillars", margin, yPosition);
-  yPosition += lineHeight.loose + spacing.paragraphGap;
+  doc.text(data.visualDirection.title, margin, yPosition);
+  yPosition += lineHeight.loose;
 
-  const pillars = [
-    { title: "Clarity", color: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor, items: ["Referenced answers that can be verified", "Simple, jargon-free language", "Transparent pricing"] },
-    { title: "Trust", color: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald, items: ["Never overstate capabilities", "Acknowledge limitations openly", "Consistent delivery on promises"] },
-    { title: "Simplicity", color: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber, items: ["Zero-onboarding experience", "Works alongside existing tools", "Intuitive, clean interface"] },
-    { title: "Accessibility", color: PDF_CONFIG.roseBg, accent: PDF_CONFIG.rose, items: ["Affordable pricing tiers", "No technical expertise required", "Scales with business needs"] }
-  ];
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text(data.visualDirection.intro, margin, yPosition);
+  yPosition += lineHeight.body + spacing.paragraphGap;
 
-  const pillarCardWidth = (maxWidth - spacing.gridGap) / 2;
-  const pillarCardHeight = 52;
+  const visualCardWidth = (maxWidth - spacing.gridGap) / 2;
+  const visualCardHeight = 32;
 
-  pillars.forEach((pillar, idx) => {
+  data.visualDirection.items.forEach((item, idx) => {
     const col = idx % 2;
     if (col === 0) {
-      fitPage(pillarCardHeight + spacing.gridGap);
+      fitPage(visualCardHeight + spacing.paragraphGap);
     }
-    const xPos = margin + col * (pillarCardWidth + spacing.gridGap);
+    const xPos = margin + col * (visualCardWidth + spacing.gridGap);
 
-    doc.setFillColor(...pillar.color);
-    doc.roundedRect(xPos, yPosition, pillarCardWidth, pillarCardHeight, box.borderRadius, box.borderRadius, "F");
+    doc.setFillColor(...PDF_CONFIG.bgLight);
+    doc.roundedRect(xPos, yPosition, visualCardWidth, visualCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.rect(xPos, yPosition, 4, visualCardHeight, "F");
 
-    doc.setFillColor(...pillar.accent);
-    doc.circle(xPos + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
-    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(pillar.title, xPos + 20, yPosition + 12);
+    doc.text(item.title, xPos + 10, yPosition + 10);
 
-    let itemY = yPosition + 22;
-    pillar.items.forEach((item) => {
-      doc.setFillColor(...pillar.accent);
-      doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
-      doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(fontSize.caption);
-      doc.setFont("helvetica", "normal");
-      doc.text(item, xPos + 16, itemY);
-      itemY += lineHeight.body;
-    });
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const descLines = splitTextWithFont(doc, sanitizeText(item.description), visualCardWidth - 14, "caption", false);
+    doc.text(descLines.slice(0, 2), xPos + 10, yPosition + 20);
 
     if (col === 1) {
-      yPosition += pillarCardHeight + spacing.gridGap;
+      yPosition += visualCardHeight + spacing.paragraphGap;
     }
   });
-
-  if (pillars.length % 2 === 0) {
-    yPosition += pillarCardHeight + spacing.gridGap;
+  if (data.visualDirection.items.length % 2 !== 0) {
+    yPosition += visualCardHeight + spacing.paragraphGap;
   }
 
-  // Brand Personality
-  fitPage(45);
+  yPosition += spacing.sectionGap;
+
+  // Verbal Direction
+  fitPage(55);
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Brand Personality", margin + box.paddingX, yPosition + 14);
+  doc.text(data.verbalDirection.title, margin + box.paddingX, yPosition + 14);
 
-  const personality = ["Calm", "Knowledgeable", "Helpful", "Honest", "Friendly"];
-  const persWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 4) / 5;
-  personality.forEach((trait, idx) => {
-    const xPos = margin + box.paddingX + idx * (persWidth + spacing.gridGap);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text(data.verbalDirection.intro, margin + box.paddingX, yPosition + 24);
+
+  const principleWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  data.verbalDirection.principles.forEach((principle, idx) => {
+    const xPos = margin + box.paddingX + idx * (principleWidth + spacing.gridGap);
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-    doc.roundedRect(xPos, yPosition + 22, persWidth, 14, 2, 2, "F");
+    doc.roundedRect(xPos, yPosition + 32, principleWidth, 14, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
-    doc.setFont("helvetica", "bold");
-    doc.text(trait, xPos + 4, yPosition + 31);
+    doc.setFont("helvetica", "normal");
+    doc.text(principle, xPos + 4, yPosition + 41);
   });
 
-  yPosition += 48;
+  yPosition += 58;
 
-  // Visual Identity
-  fitPage(55);
+  // Experience & Interaction Approach
+  fitPage(60);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Visual Identity Elements", margin, yPosition);
-  yPosition += lineHeight.loose + spacing.paragraphGap;
+  doc.text(data.experienceApproach.title, margin, yPosition);
+  yPosition += lineHeight.loose;
 
-  const identity = [
-    { title: "The Owl Mascot", text: "Embodies wisdom, observation, and guidance", color: PDF_CONFIG.primaryColor },
-    { title: "Purple Palette", text: "Signifies insight, innovation, and clear thinking", color: PDF_CONFIG.primaryLight },
-    { title: "HUE System", text: "Creates transparency and gamified engagement", color: PDF_CONFIG.amber }
-  ];
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text(data.experienceApproach.intro, margin, yPosition);
+  yPosition += lineHeight.body + spacing.paragraphGap;
 
-  identity.forEach((item, idx) => {
-    doc.setFillColor(...item.color);
-    doc.rect(margin, yPosition, 4, 14, "F");
+  const expCardWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  const expCardHeight = 45;
+  fitPage(expCardHeight + spacing.paragraphGap);
+
+  const expColors: [number, number, number][] = [PDF_CONFIG.primaryBgLight, PDF_CONFIG.emeraldBg, PDF_CONFIG.amberBg];
+  data.experienceApproach.items.forEach((item, idx) => {
+    const xPos = margin + idx * (expCardWidth + spacing.gridGap);
+    doc.setFillColor(...expColors[idx]);
+    doc.roundedRect(xPos, yPosition, expCardWidth, expCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(item.title, margin + 10, yPosition + 6);
+    doc.text(item.title, xPos + 6, yPosition + 12);
+
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(item.text, margin + 10, yPosition + 12);
-    yPosition += 18;
+    const descLines = splitTextWithFont(doc, sanitizeText(item.description), expCardWidth - 12, "caption", false);
+    doc.text(descLines.slice(0, 3), xPos + 6, yPosition + 22);
+  });
+
+  yPosition += expCardHeight + spacing.sectionGap;
+
+  // Internal Brand Alignment
+  fitPage(40);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 35, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.internalAlignment.title, margin + box.paddingX, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text(data.internalAlignment.intro, margin + box.paddingX, yPosition + 22);
+
+  const alignPrincipleWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 2) / 3;
+  data.internalAlignment.principles.forEach((principle, idx) => {
+    const xPos = margin + box.paddingX + idx * (alignPrincipleWidth + spacing.gridGap);
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(xPos, yPosition + 28, alignPrincipleWidth, 10, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.caption);
+    doc.text(principle, xPos + 4, yPosition + 35);
+  });
+
+  yPosition += 43;
+
+  // Long-Term Branding Direction
+  fitPage(65);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "S");
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.longTermDirection.title, margin + box.paddingX, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const ltdIntroLines = splitTextWithFont(doc, sanitizeText(data.longTermDirection.intro), maxWidth - box.paddingX * 2, "bodySmall", false);
+  doc.text(ltdIntroLines.slice(0, 2), margin + box.paddingX, yPosition + 22);
+
+  let ltdY = yPosition + 36;
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.caption);
+  data.longTermDirection.items.forEach((item) => {
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(margin + box.paddingX + 4, ltdY - 1, PDF_CONFIG.circleSize.small, "F");
+    doc.text(sanitizeText(item), margin + box.paddingX + 10, ltdY);
+    ltdY += lineHeight.body;
+  });
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.longTermDirection.goal, margin + box.paddingX, yPosition + 56);
+
+  yPosition += 68;
+
+  // SMART Branding Objectives
+  fitPage(80);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SMART Branding Objectives (2026-2028 Timeline)", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const objColors: Record<string, { bg: [number, number, number]; accent: [number, number, number] }> = {
+    purple: { bg: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor },
+    teal: { bg: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald },
+    amber: { bg: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber }
+  };
+
+  data.brandingObjectives.forEach((obj) => {
+    const colors = objColors[obj.colorKey];
+    const objHeight = 12 + obj.objectives.length * 10;
+    fitPage(objHeight + spacing.paragraphGap);
+
+    doc.setFillColor(...colors.bg);
+    doc.roundedRect(margin, yPosition, maxWidth, objHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+
+    doc.setTextColor(...colors.accent);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${obj.phase}. ${obj.title}`, margin + box.paddingX, yPosition + 10);
+
+    let objY = yPosition + 20;
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    obj.objectives.forEach((objective) => {
+      doc.setFillColor(...colors.accent);
+      doc.circle(margin + box.paddingX + 4, objY - 1, PDF_CONFIG.circleSize.small, "F");
+      const objLines = splitTextWithFont(doc, sanitizeText(objective), maxWidth - box.paddingX * 2 - 10, "caption", false);
+      doc.text(objLines[0] || "", margin + box.paddingX + 10, objY);
+      objY += 10;
+    });
+
+    yPosition += objHeight + spacing.paragraphGap;
+  });
+
+  // Online Presence Section - new page for readability
+  doc.addPage();
+  yPosition = margin;
+
+  fitPage(50);
+  doc.setFillColor(...PDF_CONFIG.emeraldBg);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, box.borderRadius, box.borderRadius, "F");
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.onlinePresence.title, margin + 24, yPosition + 16);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const opIntroLines = splitTextWithFont(doc, sanitizeText(data.onlinePresence.intro), maxWidth - 32, "bodySmall", false);
+  doc.text(opIntroLines.slice(0, 2), margin + 24, yPosition + 26);
+  yPosition += 53;
+
+  // Online channels
+  data.onlinePresence.channels.forEach((channel) => {
+    const channelHeight = 28;
+    fitPage(channelHeight + spacing.paragraphGap);
+
+    doc.setFillColor(...PDF_CONFIG.bgLight);
+    doc.roundedRect(margin, yPosition, maxWidth, channelHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(`${channel.id}. ${channel.title}`, margin + box.paddingX, yPosition + 10);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const channelDescLines = splitTextWithFont(doc, sanitizeText(channel.description), maxWidth - box.paddingX * 2, "caption", false);
+    doc.text(channelDescLines.slice(0, 2), margin + box.paddingX, yPosition + 20);
+
+    yPosition += channelHeight + spacing.paragraphGap;
   });
 
   yPosition += spacing.sectionGap;
 
-  // Brand Voice
-  fitPage(55);
+  // SMART Objectives for Online Presence
+  fitPage(20);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Brand Voice Principles", margin, yPosition);
+  doc.text("SMART Objectives for Online Presence", margin, yPosition);
   yPosition += lineHeight.loose + spacing.paragraphGap;
 
-  const voice = [
-    { principle: "Explain, Don't Sell", doText: "We help you find answers", avoidText: "Revolutionary AI transforms" },
-    { principle: "Be Specific", doText: "Answers include page references", avoidText: "Smart document analysis" },
-    { principle: "Stay Humble", doText: "We're still learning", avoidText: "The ultimate solution" },
-    { principle: "Focus on Outcomes", doText: "Save 2 hours per week", avoidText: "Cutting-edge technology" }
-  ];
+  data.onlineObjectives.forEach((obj, idx) => {
+    const colors = [PDF_CONFIG.primaryBgLight, PDF_CONFIG.emeraldBg, PDF_CONFIG.amberBg][idx];
+    const objHeight = 12 + obj.objectives.length * 10;
+    fitPage(objHeight + spacing.paragraphGap);
 
-  const voiceCardWidth = (maxWidth - spacing.gridGap) / 2;
-  const voiceCardHeight = 32;
+    doc.setFillColor(...colors);
+    doc.roundedRect(margin, yPosition, maxWidth, objHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
 
-  voice.forEach((item, idx) => {
-    const col = idx % 2;
-    if (col === 0) {
-      fitPage(voiceCardHeight + spacing.paragraphGap);
-    }
-    const xPos = margin + col * (voiceCardWidth + spacing.gridGap);
-
-    doc.setFillColor(...PDF_CONFIG.bgLight);
-    doc.roundedRect(xPos, yPosition, voiceCardWidth, voiceCardHeight, box.borderRadius, box.borderRadius, "F");
-
-    doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(fontSize.caption);
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(item.principle, xPos + box.paddingX, yPosition + 10);
+    doc.text(`${obj.phase}. ${obj.title}`, margin + box.paddingX, yPosition + 10);
 
-    doc.setFontSize(fontSize.caption);
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(...PDF_CONFIG.emerald);
-    doc.text("Do: " + item.doText, xPos + box.paddingX, yPosition + 18);
-    doc.setTextColor(...PDF_CONFIG.textLight);
-    doc.text("Avoid: " + item.avoidText, xPos + box.paddingX, yPosition + 26);
-
-    if (col === 1) {
-      yPosition += voiceCardHeight + spacing.paragraphGap;
-    }
-  });
-
-  yPosition += voiceCardHeight + spacing.sectionGap;
-
-  // Brand Metaphors
-  fitPage(50);
-  doc.setFillColor(...PDF_CONFIG.emeraldBg);
-  doc.roundedRect(margin, yPosition, maxWidth, 45, box.borderRadius, box.borderRadius, "F");
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Core Brand Metaphors", margin + box.paddingX, yPosition + 14);
-
-  const metaphors = [
-    { title: "GPS for Documents", text: "Guides directly to the information you need" },
-    { title: "Desk Lamp of Truth", text: "Illuminates hidden details" },
-    { title: "Wise Owl Advisor", text: "Observes, understands, offers guidance" }
-  ];
-
-  const metaWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 2) / 3;
-  metaphors.forEach((meta, idx) => {
-    const xPos = margin + box.paddingX + idx * (metaWidth + spacing.gridGap);
-    doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPosition + 22, metaWidth, 18, 2, 2, "F");
-    doc.setTextColor(...PDF_CONFIG.emerald);
-    doc.setFontSize(fontSize.caption);
-    doc.setFont("helvetica", "bold");
-    doc.text(meta.title, xPos + 4, yPosition + 30);
+    let objY = yPosition + 20;
     doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(meta.text.slice(0, 25) + "...", xPos + 4, yPosition + 36);
+    obj.objectives.forEach((objective) => {
+      doc.setFillColor(...PDF_CONFIG.primaryColor);
+      doc.circle(margin + box.paddingX + 4, objY - 1, PDF_CONFIG.circleSize.small, "F");
+      const objLines = splitTextWithFont(doc, sanitizeText(objective), maxWidth - box.paddingX * 2 - 10, "caption", false);
+      doc.text(objLines[0] || "", margin + box.paddingX + 10, objY);
+      objY += 10;
+    });
+
+    yPosition += objHeight + spacing.paragraphGap;
   });
 
-  yPosition += 53;
+  // Timeline Summary
+  fitPage(25);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 20, box.borderRadius, box.borderRadius, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text(sanitizeText(data.timelineSummary), margin + maxWidth / 2, yPosition + 12, { align: "center" });
+
+  yPosition += 28;
 
   return yPosition;
 };

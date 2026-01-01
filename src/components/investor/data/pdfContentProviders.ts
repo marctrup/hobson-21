@@ -3437,6 +3437,338 @@ export const getTeamStructuredData = (): TeamData => ({
   }
 });
 
+// ==========================================
+// Marketing Objectives Structured Data
+// ==========================================
+
+interface MarketingObjectivesData {
+  header: {
+    title: string;
+    subtitle: string;
+  };
+  topLevelGoals: string[];
+  timeline: Array<{
+    period: string;
+    text: string;
+    colorKey: "amber" | "emerald" | "purple";
+  }>;
+  journeyStages: Array<{
+    stage: string;
+    period: string;
+    colorKey: "purple" | "emerald" | "amber" | "rose";
+    objectives: string[];
+    metrics: string;
+    targets: Array<{ value: string; label: string }>;
+  }>;
+  frameworkItems: string[];
+  channelTable: Array<{
+    area: string;
+    channels: string;
+    metrics: string;
+    benefit: string;
+  }>;
+  alignmentItems: Array<{ text: string; sub: string }>;
+}
+
+export const getMarketingObjectivesStructuredData = (): MarketingObjectivesData => ({
+  header: {
+    title: "Marketing Objectives",
+    subtitle: "Aligned with 2026-2028 timeline for measurable growth across awareness, consideration, conversion, retention, and advocacy."
+  },
+  topLevelGoals: [
+    "Increase visibility across the UK real estate sector as the MVP moves into pilot expansion during 2026",
+    "Build credibility through evidence, pilot success stories, and trustworthy product education",
+    "Establish a predictable acquisition and activation funnel in preparation for the 2027 public launch",
+    "Support long-term adoption with consistent engagement and communication across all customer segments"
+  ],
+  timeline: [
+    { period: "By Q4 2026", text: "Marketing should show strong early awareness, predictable interest in pilots, and growing engagement with educational content.", colorKey: "amber" },
+    { period: "By Q4 2027", text: "Hobson should operate a scalable acquisition engine with mature digital channels, predictable lead flow, and clear conversion pathways following the public launch.", colorKey: "emerald" },
+    { period: "By 2028", text: "Marketing expands into two international regions and supports globalised demand, localisation, and partnerships.", colorKey: "purple" }
+  ],
+  journeyStages: [
+    {
+      stage: "Awareness",
+      period: "Build through 2026 to scale in 2027 and expand in 2028",
+      colorKey: "purple",
+      objectives: [
+        "Increase visibility among UK real estate professionals ahead of and during pilot expansion (2026)",
+        "Drive consistent top-of-funnel traffic using clarity-based educational content",
+        "Strengthen brand recall using distinctive digital assets (owl, HUE, metaphors, clarity style)"
+      ],
+      metrics: "Website sessions, quiz completions, LinkedIn impressions & engagement, brand recall survey signals and awareness coefficient",
+      targets: [
+        { value: "500", label: "monthly website visits by Q1 2027" },
+        { value: "1,000+", label: "quiz completions by Q2 2027" },
+        { value: "200k+", label: "LinkedIn impressions per quarter by Q4 2027" }
+      ]
+    },
+    {
+      stage: "Consideration",
+      period: "2026-2027",
+      colorKey: "emerald",
+      objectives: [
+        "Turn awareness into informed interest through more precise product explanations",
+        "Support evaluation with demos, walkthroughs, retargeting, and repeated exposure",
+        "Build confidence in Hobson's reliability, accuracy, and referencing approach"
+      ],
+      metrics: "Demo requests, time on product pages, lead magnet downloads, retargeting CTR and consideration coefficient",
+      targets: [
+        { value: "50", label: "demo requests by Q1 2027" },
+        { value: "1/month", label: "educational asset release throughout 2026-2027" },
+        { value: ">3%", label: "retargeting CTR by Q4 2027" }
+      ]
+    },
+    {
+      stage: "Conversion",
+      period: "Pilot conversion throughout 2026, extending to paid expansion in 2027",
+      colorKey: "amber",
+      objectives: [
+        "Convert interested organisations into active pilots during 2026",
+        "Reduce activation friction (first upload -> first question)",
+        "Demonstrate commercial value through pilot outcomes ahead of 2027 launch"
+      ],
+      metrics: "New pilot sign-ups, activation rate (upload + first question), pilot-to-paid conversion, early ARR and sales coefficient",
+      targets: [
+        { value: "5", label: "new pilots by Q2 2026" },
+        { value: "60%+", label: "activation within 14 days" },
+        { value: "GBP 50k-100k", label: "MRR by Q4 2027" },
+        { value: ">=20%", label: "conversion rate post-launch" }
+      ]
+    },
+    {
+      stage: "Retention & Advocacy",
+      period: "Foundational in 2026, strengthen in 2027, scale in 2028",
+      colorKey: "rose",
+      objectives: [
+        "Build strong user loyalty throughout the 2026 pilot phase",
+        "Encourage advocacy from high-satisfaction teams",
+        "Maintain clear and consistent communication across accounts as usage scales"
+      ],
+      metrics: "Satisfaction score (CSAT), Net Promoter Score (NPS), retention rate, weekly active usage, testimonials, case studies and liking coefficient",
+      targets: [
+        { value: "80%+", label: "satisfaction by Q4 2026" },
+        { value: "NPS > 50", label: "by Q4 2026" },
+        { value: "80%+", label: "retention by Q4 2027" },
+        { value: "9+", label: "case studies by Q4 2027" }
+      ]
+    }
+  ],
+  frameworkItems: [
+    "Builds early visibility before the 2027 launch",
+    "Guides prospects into precise, structured evaluation",
+    "Supports conversion and commercial validation throughout 2026",
+    "Strengthens long-term retention and advocacy as Hobson scales",
+    "Creates a predictable funnel ready for UK expansion in 2027",
+    "Enables international expansion from 2028 onward"
+  ],
+  channelTable: [
+    { area: "Acquisition", channels: "LinkedIn, Website", metrics: "Impressions, Sessions", benefit: "Builds visibility before launch" },
+    { area: "Lead Generation", channels: "Website, Quiz, Retargeting", metrics: "Demo requests, Quiz sign-ups", benefit: "Creates pilot onboarding pipeline" },
+    { area: "Engagement", channels: "Quiz, LinkedIn content", metrics: "Engagement rate, Dwell time", benefit: "Strengthens Liking and brand connection" },
+    { area: "Conversion", channels: "Retargeting, Email", metrics: "CTR, Demo completions", benefit: "Turns interest into pilots" },
+    { area: "Development", channels: "Email onboarding, Support", metrics: "CSAT, activation metrics", benefit: "Improves early experience" },
+    { area: "Growth", channels: "Advocacy, Testimonials", metrics: "NPS, case studies", benefit: "Builds long-term brand equity" }
+  ],
+  alignmentItems: [
+    { text: "Organisational goals", sub: "Builds long-term brand equity" },
+    { text: "Long-term vision", sub: "Sustainable growth focus" },
+    { text: "Mindset-first marketing", sub: "Trust before transactions" },
+    { text: "2026-2027 objectives", sub: "Phased milestone targets" }
+  ]
+});
+
+// ==========================================
+// Brand Strategy Structured Data
+// ==========================================
+
+interface BrandStrategyData {
+  header: {
+    title: string;
+    subtitle: string;
+  };
+  brandEssence: {
+    title: string;
+    content: string;
+  };
+  visualDirection: {
+    title: string;
+    intro: string;
+    items: Array<{ title: string; description: string; colorKey: string }>;
+  };
+  verbalDirection: {
+    title: string;
+    intro: string;
+    principles: string[];
+    messagingNote: string;
+  };
+  experienceApproach: {
+    title: string;
+    intro: string;
+    items: Array<{ title: string; description: string; colorKey: string }>;
+  };
+  internalAlignment: {
+    title: string;
+    intro: string;
+    principles: string[];
+    conclusion: string;
+  };
+  longTermDirection: {
+    title: string;
+    intro: string;
+    items: string[];
+    goal: string;
+  };
+  brandingObjectives: Array<{
+    phase: string;
+    title: string;
+    colorKey: string;
+    objectives: string[];
+  }>;
+  onlinePresence: {
+    title: string;
+    intro: string;
+    channels: Array<{ id: string; title: string; description: string; points?: string[] }>;
+  };
+  onlineObjectives: Array<{
+    phase: string;
+    title: string;
+    objectives: string[];
+  }>;
+  timelineSummary: string;
+}
+
+export const getBrandStrategyStructuredData = (): BrandStrategyData => ({
+  header: {
+    title: "Brand Strategy",
+    subtitle: "Built on authenticity, clarity, and trust - positioning Hobson as the calm, intelligent guide for real estate documents."
+  },
+  brandEssence: {
+    title: "Brand Essence",
+    content: "Hobson's brand centres on one idea: making information easier to work with. All brand decisions - visual, verbal, and experiential - reinforce this idea by emphasising ease, reliability, and straightforward communication."
+  },
+  visualDirection: {
+    title: "Visual Direction",
+    intro: "The visual identity is designed to make the product immediately understandable and easy to use.",
+    items: [
+      { title: "Colour System", description: "A simple palette is used to ensure clarity, reduce visual noise, and create consistent recognition across channels.", colorKey: "purple" },
+      { title: "Illustrated Elements (Owl Iconography)", description: "Illustration supports a friendly and recognisable identity without adding complexity. These elements appear lightly across product and marketing surfaces to provide continuity.", colorKey: "purple" },
+      { title: "HUE Coin System", description: "Create a distinct brand asset that can scale into loyalty or rewards in future.", colorKey: "amber" },
+      { title: "Interface Approach", description: "The product UI favours simplicity: minimal actions, clear outputs, and unobtrusive signposting. This reinforces Hobson's commitment to removing friction from document work.", colorKey: "teal" }
+    ]
+  },
+  verbalDirection: {
+    title: "Verbal Direction",
+    intro: "Hobson's voice emphasises clarity, straightforwardness, and helpfulness.",
+    principles: [
+      "Be concise",
+      "Explain technical concepts plainly",
+      "Avoid exaggeration",
+      "Focus on what the user gains in practical terms"
+    ],
+    messagingNote: "The brand's messaging framework is organised around showing value through clarity, trust, ease, and usefulness. These themes inform all external communication, from the website to demos."
+  },
+  experienceApproach: {
+    title: "Experience & Interaction Approach",
+    intro: "Brand experience extends beyond visuals and language into how users interact with the product and marketing.",
+    items: [
+      { title: "Lightweight Engagement Tools", description: "The quiz and similar assets create a soft entry point into the brand, helping users understand Hobson's value without heavy explanation.", colorKey: "purple" },
+      { title: "Progression From First Use to Trust", description: "The experience aims to give users quick wins, followed by dependable performance, building confidence over repeated use.", colorKey: "teal" },
+      { title: "Trust Signals", description: "Clear referencing, transparent behaviour, and consistent communication form part of the brand experience, helping reduce hesitation around AI tools.", colorKey: "amber" }
+    ]
+  },
+  internalAlignment: {
+    title: "Internal Brand Alignment",
+    intro: "Internally, the brand acts as a guide for decision-making. It encourages:",
+    principles: [
+      "Simple solutions over complex ones",
+      "Transparency in communication",
+      "Prioritising user effort reduction"
+    ],
+    conclusion: "This internal consistency ensures the brand remains coherent as the organisation grows."
+  },
+  longTermDirection: {
+    title: "Long-Term Branding Direction (2028-2030)",
+    intro: "As Hobson enters more markets and the product evolves beyond retrieval, the brand will shift from being seen as a helpful assistant to a broader intelligence layer for real estate operations.",
+    items: [
+      "Developing a stronger narrative through real user stories",
+      "Expanding the HUE concept into a wider engagement system",
+      "Building a more visible presence across industry communities",
+      "Maturing support and documentation to match enterprise expectations"
+    ],
+    goal: "The goal is for Hobson to become a recognised standard for document intelligence."
+  },
+  brandingObjectives: [
+    {
+      phase: "1",
+      title: "Strengthen Brand Foundations During the Pilot Phase (By Q4 2026)",
+      colorKey: "purple",
+      objectives: [
+        "Achieve consistent use of all core brand assets across every channel by Q4 2026, including tone, colour system, metaphors, messaging blocks, and visual identity.",
+        "Publish at least three UK-based pilot case studies and two thought-leadership pieces by Q4 2026, establishing credibility ahead of the 2027 commercial launch.",
+        "Record measurable improvements in positive brand associations - clarity, reliability, and ease of use - through structured user feedback by mid-2026."
+      ]
+    },
+    {
+      phase: "2",
+      title: "Scale Brand Awareness for the Commercial Launch (By Q4 2027)",
+      colorKey: "teal",
+      objectives: [
+        "Improve brand awareness among UK property professionals by 60% by Q4 2027, using LinkedIn analytics, branded search volume, website sessions, and quiz completions as indicators.",
+        "Strengthen recognition of Hobson's brand archetype (Sage: calm, intelligent, trustworthy) through consistent messaging across product, website, and social channels."
+      ]
+    },
+    {
+      phase: "3",
+      title: "International Brand Readiness (2028+)",
+      colorKey: "amber",
+      objectives: [
+        "Prepare brand assets and messaging frameworks for localisation in Hobson's first two international markets (EU/US) beginning in 2028."
+      ]
+    }
+  ],
+  onlinePresence: {
+    title: "Online Presence",
+    intro: "Hobson's online presence is intentionally limited at this stage. The focus is on credibility, controlled exposure, and preparing the foundations for a scalable digital footprint once the product is ready for broader adoption.",
+    channels: [
+      { id: "A", title: "Website (hobsonschoice.ai)", description: "The website operates as the central source of information about Hobson. It provides a simple explanation of the product, a consistent visual identity, and an initial base for search visibility.", points: ["Introducing Hobson's purpose", "Directing users to early materials such as the quiz", "Supporting SEO indexing for future content", "Serving as a reference point for partners and investors"] },
+      { id: "B", title: "Product Presence (MVP Access Only)", description: "Hobson is currently available only to selected pilot users. The online product environment reflects this controlled stage: a minimalist interface, steady iteration, and limited external visibility." },
+      { id: "C", title: "Social Presence (LinkedIn)", description: "LinkedIn is currently Hobson's primary public channel, used for sharing updates, simple insights, and early brand signalling. Engagement is modest but aligned with the validation phase." },
+      { id: "D", title: "Search Presence (SEO and AI Discovery)", description: "The current site is optimised for indexing, clear metadata, and structured copy so that both search engines and AI crawlers can interpret content effectively." },
+      { id: "E", title: "Deliberate Non-Presence in Other Channels", description: "At this stage there are no newsletters, communities, paid campaigns, or additional social channels. This is intentional - to avoid premature scaling, manage expectations, and keep focus on validating product performance before increasing reach." },
+      { id: "F", title: "Consistency Across Touchpoints", description: "All existing digital touchpoints show a unified look and feel, ensuring early recognition. As the ecosystem expands, this consistency will support clearer user journeys and smoother conversion paths." }
+    ]
+  },
+  onlineObjectives: [
+    {
+      phase: "1",
+      title: "Build a Strong and Credible Online Foundation (By Q4 2026)",
+      objectives: [
+        "Increase website traffic by 40% through expanded educational content, LinkedIn distribution, and targeted SEO",
+        "Achieve an average dwell time of 2+ minutes",
+        "Publish 10 high-quality educational pieces (guides, explainers, demos)"
+      ]
+    },
+    {
+      phase: "2",
+      title: "Expand Digital Reach for the Commercial Launch (Q1-Q2 2027)",
+      objectives: [
+        "Launch at least two new online channels by Q1 2027",
+        "Grow Hobson's LinkedIn audience to 1,000 followers by Q1 2027",
+        "Prepare full public-facing online presence by Q2 2027"
+      ]
+    },
+    {
+      phase: "3",
+      title: "Online Presence Expansion for Global Scale (2028+)",
+      objectives: [
+        "Localise web content, educational assets, and messaging for first two international markets"
+      ]
+    }
+  ],
+  timelineSummary: "2026 builds the foundation >> 2027 scales visibility + conversion >> 2028 prepares global readiness."
+});
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
