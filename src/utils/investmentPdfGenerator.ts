@@ -1209,11 +1209,15 @@ const renderExecutiveSummary = (
   const gapMd = 4;
   const bulletGap = 1;
 
-  const para1Height = para1Lines.length * PDF_CONFIG.lineHeight.body;
-  const founderHeight = founderLines.length * PDF_CONFIG.lineHeight.body + 8; // box padding
-  const para2Height = para2Lines.length * PDF_CONFIG.lineHeight.body;
-  const closingHeight = closingLines.length * PDF_CONFIG.lineHeight.loose;
-  const enablesItemsHeight = enablesItems.length * (PDF_CONFIG.lineHeight.body * 2 + bulletGap);
+  // Use proper line height: fontSize × lineHeightFactor (9pt × 1.25 ≈ 11pt)
+  const bodyLineHeight = PDF_CONFIG.fontSize.body * PDF_CONFIG.lineHeightFactor.body;
+  const looseLineHeight = PDF_CONFIG.fontSize.body * PDF_CONFIG.lineHeightFactor.loose;
+  
+  const para1Height = para1Lines.length * bodyLineHeight;
+  const founderHeight = founderLines.length * bodyLineHeight + 8; // box padding
+  const para2Height = para2Lines.length * bodyLineHeight;
+  const closingHeight = closingLines.length * looseLineHeight;
+  const enablesItemsHeight = enablesItems.length * (bodyLineHeight * 2 + bulletGap);
 
   const rationaleCalloutHeight = 12;
 
@@ -1227,7 +1231,7 @@ const renderExecutiveSummary = (
     gapMd + 6 + // Extra spacing before callout
     rationaleCalloutHeight +
     gapMd +
-    PDF_CONFIG.lineHeight.body + // "Hobson enables:"
+    bodyLineHeight + // "Hobson enables:"
     gapSm +
     enablesItemsHeight +
     gapMd +
@@ -1263,14 +1267,14 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   para1Lines.forEach((l: string) => {
     doc.text(l, textX, contentY);
-    contentY += PDF_CONFIG.lineHeight.body;
+    contentY += bodyLineHeight;
   });
 
   contentY += gapMd;
 
   // Founder note box
   const founderBoxY = contentY - 4;
-  const founderBoxH = founderLines.length * PDF_CONFIG.lineHeight.body + 8;
+  const founderBoxH = founderLines.length * bodyLineHeight + 8;
   doc.setFillColor(...PDF_CONFIG.bgLight);
   doc.roundedRect(textX, founderBoxY, textContentWidth, founderBoxH, 2, 2, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
@@ -1295,7 +1299,7 @@ const renderExecutiveSummary = (
     } else {
       doc.text(l, textX + 8, contentY);
     }
-    contentY += PDF_CONFIG.lineHeight.body;
+    contentY += bodyLineHeight;
   });
 
   contentY += gapMd + 12; // Extra spacing between founder note and callout
@@ -1314,7 +1318,7 @@ const renderExecutiveSummary = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.text("Hobson enables:", textX, contentY);
-  contentY += PDF_CONFIG.lineHeight.body + gapSm;
+  contentY += bodyLineHeight + gapSm;
 
   // Enables bullets with icons
   doc.setFont("helvetica", "normal");
@@ -1342,7 +1346,7 @@ const renderExecutiveSummary = (
       } else {
         doc.text(line, textX + 7, contentY);
       }
-      contentY += PDF_CONFIG.lineHeight.body;
+      contentY += bodyLineHeight;
     });
     contentY += bulletGap;
   });
@@ -1354,7 +1358,7 @@ const renderExecutiveSummary = (
   doc.setFont("helvetica", "normal");
   para2Lines.forEach((l: string) => {
     doc.text(l, textX, contentY);
-    contentY += PDF_CONFIG.lineHeight.body;
+    contentY += bodyLineHeight;
   });
 
   contentY += gapMd;
@@ -1375,7 +1379,7 @@ const renderExecutiveSummary = (
     } else {
       doc.text(l, textX, contentY);
     }
-    contentY += PDF_CONFIG.lineHeight.loose;
+    contentY += looseLineHeight;
   });
 
   yPosition += boxH + PDF_CONFIG.spacing.sectionGap;
