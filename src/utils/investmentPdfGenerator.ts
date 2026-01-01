@@ -4846,21 +4846,23 @@ const renderHEUPricing = (
   yPosition += noteHeight + spacing.sectionGap;
 
   // Key insight box - use provider content
-  const insightHeight = standardBoxHeight + spacing.cardGap;
+  const insightHeight = standardBoxHeight + spacing.cardGap + 8;
   checkBreak(insightHeight + spacing.sectionGap);
   renderContentCard(doc, margin, yPosition, maxWidth, insightHeight, PDF_CONFIG.amberBg, PDF_CONFIG.amberBorder);
 
   doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + card.iconOffsetX, yPosition + insightHeight / 2, circleSize.medium, "F");
+  const circleY = yPosition + spacing.contentStart + 2;
+  doc.circle(margin + card.iconOffsetX, circleY, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
   const insightLines = splitTextWithFont(doc, data.keyInsight, maxWidth - box.paddingX * 4, "bodySmall", false);
-  let insightY = yPosition + spacing.contentStart;
-  insightLines.slice(0, 2).forEach((line: string) => {
-    doc.text(line, margin + card.textOffsetX - smallOffset, insightY);
-    insightY += lineHeight.body;
-  });
+  // First line aligned with circle center
+  doc.text(insightLines[0] || "", margin + card.textOffsetX - smallOffset, circleY + 1);
+  // Second line with larger gap
+  if (insightLines[1]) {
+    doc.text(insightLines[1], margin + card.textOffsetX - smallOffset, circleY + lineHeight.body + 6);
+  }
 
   yPosition += insightHeight + spacing.sectionGap + smallOffset;
 
