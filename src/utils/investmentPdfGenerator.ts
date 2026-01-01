@@ -39,9 +39,13 @@ const PDF_CONFIG = {
     pageTitle: 18,        // Tab/page titles
     sectionTitle: 13,     // Section headers
     cardTitle: 12,        // Card/box titles (doc.setFontSize(PDF_CONFIG.fontSize.cardTitle))
+    statLarge: 10,        // Large stat values
     body: 9,              // Standard body text (doc.setFontSize(PDF_CONFIG.fontSize.body))
     bodySmall: 8,         // Secondary info, labels (doc.setFontSize(PDF_CONFIG.fontSize.bodySmall))
-    caption: 8,           // Footnotes, sources
+    caption: 8,           // Footnotes, sources (same as bodySmall)
+    small: 7,             // Small labels, badges
+    tiny: 6,              // Very small text (sublabels, fine print)
+    micro: 5,             // Smallest text (dense tables)
     stat: 16,             // Large statistics
   },
 
@@ -155,35 +159,71 @@ const PDF_CONFIG = {
   },
 
   // ============================================================================
-  // COLORS - RGB values
+  // COLORS - RGB values (single source of truth for all PDF rendering)
   // ============================================================================
+  // Primary/Purple
   primaryColor: [124, 58, 237] as [number, number, number],
-  primaryDark: [147, 51, 234] as [number, number, number],    // purple-600 for timeline stages
+  primaryDark: [147, 51, 234] as [number, number, number],    // purple-600
   primaryLight: [168, 113, 246] as [number, number, number],
   primaryBg: [240, 235, 255] as [number, number, number],
   primaryBgLight: [250, 245, 255] as [number, number, number],
   primaryBgMedium: [245, 238, 255] as [number, number, number],
+  primaryBorder: [221, 214, 254] as [number, number, number], // purple-200
+  
+  // Text
   textDark: [9, 9, 25] as [number, number, number],
   textGray: [100, 116, 139] as [number, number, number],
   textLight: [148, 163, 184] as [number, number, number],
-  bgLight: [241, 245, 249] as [number, number, number],
+  
+  // Backgrounds
+  bgLight: [241, 245, 249] as [number, number, number],       // slate-100
   bgWhite: [255, 255, 255] as [number, number, number],
-  border: [226, 232, 240] as [number, number, number],
+  border: [226, 232, 240] as [number, number, number],        // slate-200
   headerBg: [245, 243, 255] as [number, number, number],
-  emerald: [5, 150, 105] as [number, number, number],
+  
+  // Slate
+  slate: [100, 116, 139] as [number, number, number],         // slate-500
+  slateBg: [248, 250, 252] as [number, number, number],       // slate-50
+  slateBorder: [226, 232, 240] as [number, number, number],   // slate-200
+  
+  // Emerald/Green
+  emerald: [5, 150, 105] as [number, number, number],         // emerald-600
   emeraldLight: [16, 185, 129] as [number, number, number],
-  emeraldBg: [236, 253, 245] as [number, number, number],
+  emeraldBg: [236, 253, 245] as [number, number, number],     // emerald-50
   emeraldBgLight: [240, 253, 248] as [number, number, number],
-  emeraldBorder: [167, 243, 208] as [number, number, number],
-  blue: [37, 99, 235] as [number, number, number],
-  blueBg: [239, 246, 255] as [number, number, number],
-  blueBorder: [219, 234, 254] as [number, number, number],
-  rose: [225, 29, 72] as [number, number, number],
-  roseBg: [255, 241, 242] as [number, number, number],
-  roseBorder: [254, 205, 211] as [number, number, number],
-  amber: [217, 119, 6] as [number, number, number],
-  amberBg: [255, 251, 235] as [number, number, number],
-  amberBorder: [253, 230, 138] as [number, number, number],
+  emeraldBorder: [167, 243, 208] as [number, number, number], // emerald-200
+  green: [34, 197, 94] as [number, number, number],           // green-500
+  greenBg: [240, 253, 244] as [number, number, number],       // green-50
+  
+  // Blue
+  blue: [37, 99, 235] as [number, number, number],            // blue-600
+  blueLight: [59, 130, 246] as [number, number, number],      // blue-500
+  blueBg: [239, 246, 255] as [number, number, number],        // blue-50
+  blueBorder: [219, 234, 254] as [number, number, number],    // blue-200
+  
+  // Teal
+  teal: [20, 184, 166] as [number, number, number],           // teal-500
+  tealBg: [240, 253, 250] as [number, number, number],        // teal-50
+  tealBorder: [153, 246, 228] as [number, number, number],    // teal-200
+  
+  // Rose/Red
+  rose: [225, 29, 72] as [number, number, number],            // rose-600
+  roseBg: [255, 241, 242] as [number, number, number],        // rose-50
+  roseBorder: [254, 205, 211] as [number, number, number],    // rose-200
+  red: [220, 38, 38] as [number, number, number],             // red-600
+  redLight: [239, 68, 68] as [number, number, number],        // red-500
+  redBg: [254, 242, 242] as [number, number, number],         // red-50
+  redBorder: [254, 202, 202] as [number, number, number],     // red-200
+  
+  // Amber
+  amber: [217, 119, 6] as [number, number, number],           // amber-600
+  amberBg: [255, 251, 235] as [number, number, number],       // amber-50
+  amberBorder: [253, 230, 138] as [number, number, number],   // amber-200
+  
+  // Pink
+  pink: [219, 39, 119] as [number, number, number],           // pink-600
+  pinkBg: [253, 242, 248] as [number, number, number],        // pink-50
+  pinkBorder: [251, 207, 232] as [number, number, number],    // pink-200
 };
 
 // ============================================================================
@@ -3131,7 +3171,7 @@ const renderUKMarketAssumptions = (
   ];
   const section4Height = 30 + adjacentMarkets.length * 8;
   yPosition = checkPageBreak(doc, yPosition, section4Height + 8, pageHeight, margin);
-  const greenBg: [number, number, number] = [236, 253, 245];
+  const greenBg = PDF_CONFIG.emeraldBg;
   renderContentCard(doc, margin, yPosition, maxWidth, section4Height, greenBg, PDF_CONFIG.emerald);
   doc.setFillColor(...PDF_CONFIG.emerald);
   doc.circle(margin + 8, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
@@ -3458,8 +3498,8 @@ const renderProductVision = (
   
   const industryBoxHeight = 70;
   yPosition = checkPageBreak(doc, yPosition, industryBoxHeight + 8, pageHeight, margin);
-  doc.setFillColor(255, 251, 235); // amber-50
-  doc.setDrawColor(253, 230, 138); // amber-200
+  doc.setFillColor(...PDF_CONFIG.amberBg);
+  doc.setDrawColor(...PDF_CONFIG.amberBorder);
   doc.roundedRect(margin, yPosition, maxWidth, industryBoxHeight, 3, 3, "FD");
   
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -3472,7 +3512,7 @@ const renderProductVision = (
   
   let painY = yPosition + 30;
   industryPains.forEach((pain) => {
-    doc.setFillColor(217, 119, 6); // amber-600
+    doc.setFillColor(...PDF_CONFIG.amber);
     doc.circle(margin + 14, painY - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(pain, margin + 20, painY);
@@ -3518,7 +3558,7 @@ const renderProductVision = (
   
   let gapY = yPosition + 32;
   marketGaps.forEach((gap) => {
-    doc.setFillColor(239, 68, 68); // red-500
+    doc.setFillColor(...PDF_CONFIG.redLight);
     doc.circle(margin + 14, gapY - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.text(gap, margin + 20, gapY);
@@ -3572,7 +3612,7 @@ const renderProductVision = (
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.roundedRect(margin, yPosition, maxWidth, 24, 3, 3, "F");
   
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...PDF_CONFIG.bgWhite);
   setBodyBoldFont(doc);
   const closingText = "This makes Hobson the only platform capable of running a single operating model across residential and commercial portfolios.";
   const closingLines = doc.splitTextToSize(sanitizeText(closingText), maxWidth - 20);
@@ -3603,12 +3643,12 @@ const renderEarlyRoadmap = (
   // Phase 1: Discover & De-Risk
   const phase1Height = 55;
   yPosition = checkPageBreak(doc, yPosition, phase1Height + 8, pageHeight, margin);
-  doc.setFillColor(236, 253, 245); // green-50
+  doc.setFillColor(...PDF_CONFIG.emeraldBg);
   doc.roundedRect(margin, yPosition, maxWidth, phase1Height, 3, 3, "F");
-  doc.setFillColor(5, 150, 105); // green-600
+  doc.setFillColor(...PDF_CONFIG.emerald);
   doc.rect(margin, yPosition, 4, phase1Height, "F");
 
-  doc.setTextColor(5, 150, 105);
+  doc.setTextColor(...PDF_CONFIG.emerald);
   setCardTitleFont(doc);
   doc.text("Phase 1: Discover & De-Risk", margin + 12, yPosition + 12);
   doc.setTextColor(...PDF_CONFIG.textGray);
@@ -3629,7 +3669,7 @@ const renderEarlyRoadmap = (
     const row = Math.floor(idx / 3);
     const xPos = margin + 12 + (col * 55);
     const yPos = p1Y + (row * 6);
-    doc.setFillColor(5, 150, 105);
+    doc.setFillColor(...PDF_CONFIG.emerald);
     doc.circle(xPos + 2, yPos - 1, PDF_CONFIG.circleSize.small, "F");
     doc.text(item, xPos + 6, yPos);
   });
@@ -3638,12 +3678,12 @@ const renderEarlyRoadmap = (
   // Phase 2: Validate Core Engine
   const phase2Height = 98;
   yPosition = checkPageBreak(doc, yPosition, phase2Height + 8, pageHeight, margin);
-  doc.setFillColor(236, 253, 245);
+  doc.setFillColor(...PDF_CONFIG.emeraldBg);
   doc.roundedRect(margin, yPosition, maxWidth, phase2Height, 3, 3, "F");
-  doc.setFillColor(5, 150, 105);
+  doc.setFillColor(...PDF_CONFIG.emerald);
   doc.rect(margin, yPosition, 4, phase2Height, "F");
 
-  doc.setTextColor(5, 150, 105);
+  doc.setTextColor(...PDF_CONFIG.emerald);
   setCardTitleFont(doc);
   doc.text("Phase 2: Validate Core Engine", margin + 12, yPosition + 12);
   doc.setTextColor(...PDF_CONFIG.textGray);
@@ -3657,7 +3697,7 @@ const renderEarlyRoadmap = (
   const phase2PilotItems = ["Large multi-system commercial operator", "Medium single-system operator", "Small owner-operator investment firms"];
   let p2Y = yPosition + 40;
   phase2PilotItems.forEach((item) => {
-    doc.setFillColor(5, 150, 105);
+    doc.setFillColor(...PDF_CONFIG.emerald);
     doc.circle(margin + 14, p2Y - 1, PDF_CONFIG.circleSize.small, "F");
     doc.text(item, margin + 18, p2Y);
     p2Y += 6;
@@ -3670,7 +3710,7 @@ const renderEarlyRoadmap = (
   const phase2AbilityItems = ["Abstract leases", "Normalise residential and commercial workflows", "Surface compliance and financial risk"];
   p2Y += 10;
   phase2AbilityItems.forEach((item) => {
-    doc.setFillColor(5, 150, 105);
+    doc.setFillColor(...PDF_CONFIG.emerald);
     doc.circle(margin + 14, p2Y - 1, PDF_CONFIG.circleSize.small, "F");
     doc.text(item, margin + 18, p2Y);
     p2Y += 6;
@@ -3706,12 +3746,12 @@ const renderEarlyRoadmap = (
     phase3ItemsStartOffset + phase3ItemsHeight + phase3BottomPadding;
 
   yPosition = checkPageBreak(doc, yPosition, phase3Height + 8, pageHeight, margin);
-  doc.setFillColor(255, 251, 235); // amber-50
+  doc.setFillColor(...PDF_CONFIG.amberBg);
   doc.roundedRect(margin, yPosition, maxWidth, phase3Height, 3, 3, "F");
-  doc.setFillColor(217, 119, 6); // amber-600
+  doc.setFillColor(...PDF_CONFIG.amber);
   doc.rect(margin, yPosition, 4, phase3Height, "F");
 
-  doc.setTextColor(217, 119, 6);
+  doc.setTextColor(...PDF_CONFIG.amber);
   setCardTitleFont(doc);
   doc.text("Phase 3: Develop the MVP", margin + 12, yPosition + 12);
   doc.setTextColor(...PDF_CONFIG.textGray);
@@ -3725,7 +3765,7 @@ const renderEarlyRoadmap = (
     const lines = doc.splitTextToSize(sanitizeText(item), phase3TextMaxWidth);
 
     // bullet for first line
-    doc.setFillColor(217, 119, 6);
+    doc.setFillColor(...PDF_CONFIG.amber);
     doc.circle(phase3BulletX, p3Y - 1, PDF_CONFIG.circleSize.small, "F");
 
     // first line
@@ -3786,8 +3826,8 @@ const renderEarlyRoadmap = (
     
     doc.setFillColor(...PDF_CONFIG.primaryColor);
     doc.roundedRect(cardX + 4, yPosition + 4, 24, 8, 2, 2, "F");
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(7);
+    doc.setTextColor(...PDF_CONFIG.bgWhite);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setFont("helvetica", "bold");
     doc.text(phase.year, cardX + 16, yPosition + 9, { align: "center" });
     
@@ -7198,23 +7238,20 @@ const renderExecutiveContext = (
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
   };
 
-  // Teal theme colors
-  const tealAccent: [number, number, number] = [20, 184, 166]; // teal-500
-  const tealBg: [number, number, number] = [240, 253, 250]; // teal-50
-  const tealBorder: [number, number, number] = [153, 246, 228]; // teal-200
+  // Use PDF_CONFIG colors instead of local variables
+  const tealAccent = PDF_CONFIG.teal;
+  const tealBg = PDF_CONFIG.tealBg;
+  const tealBorder = PDF_CONFIG.tealBorder;
   
-  // Slate theme colors
-  const slateBg: [number, number, number] = [248, 250, 252]; // slate-50
-  const slateBorder: [number, number, number] = [226, 232, 240]; // slate-200
+  const slateBg = PDF_CONFIG.slateBg;
+  const slateBorder = PDF_CONFIG.slateBorder;
   
-  // Red/amber colors for pressures
-  const redAccent: [number, number, number] = [220, 38, 38]; // red-600
-  const redBg: [number, number, number] = [254, 242, 242]; // red-50
-  const redBorder: [number, number, number] = [254, 202, 202]; // red-200
+  const redAccent = PDF_CONFIG.red;
+  const redBg = PDF_CONFIG.redBg;
+  const redBorder = PDF_CONFIG.redBorder;
   
-  // Amber colors for conclusion
-  const amberBg: [number, number, number] = [255, 251, 235]; // amber-50
-  const amberBorder: [number, number, number] = [253, 230, 138]; // amber-200
+  const amberBg = PDF_CONFIG.amberBg;
+  const amberBorder = PDF_CONFIG.amberBorder;
 
   // 1. Inflexion Point header box - tighter sizing with justified text
   const innerPadding = box.paddingX;
@@ -7453,14 +7490,13 @@ const renderSituationAnalysis = (
     { bg: [236, 253, 245] as [number, number, number], border: [167, 243, 208] as [number, number, number], accent: [5, 150, 105] as [number, number, number] }, // emerald
   ];
 
-  // Teal theme
-  const tealBg: [number, number, number] = [240, 253, 250];
-  const tealBorder: [number, number, number] = [153, 246, 228];
-  const tealAccent: [number, number, number] = [20, 184, 166];
+  // Use PDF_CONFIG colors
+  const tealBg = PDF_CONFIG.tealBg;
+  const tealBorder = PDF_CONFIG.tealBorder;
+  const tealAccent = PDF_CONFIG.teal;
 
-  // Slate theme
-  const slateBg: [number, number, number] = [248, 250, 252];
-  const slateBorder: [number, number, number] = [226, 232, 240];
+  const slateBg = PDF_CONFIG.slateBg;
+  const slateBorder = PDF_CONFIG.slateBorder;
 
   // 1. Header box
   const headerHeight = 28;
@@ -9267,8 +9303,8 @@ const renderBrandIntegrity = (
   yPosition += summaryHeight + PDF_CONFIG.spacing.cardGap;
 
   // -------- Brand Background --------
-  const purpleBg: [number, number, number] = [250, 245, 255];
-  const purpleBorder: [number, number, number] = [221, 214, 254];
+  const purpleBg = PDF_CONFIG.primaryBgLight;
+  const purpleBorder = PDF_CONFIG.primaryBorder;
 
   const bgText =
     "Hobson is a calm, intelligent, and dependable AI assistant built for Real Estate professionals who work with complex, document-heavy workflows. The brand stands for clarity, trust, and simplicity.";
@@ -9310,7 +9346,7 @@ const renderBrandIntegrity = (
   const archWidth = (maxWidth - 24) / 3;
   archetypes.forEach((arch, idx) => {
     const xPos = margin + PDF_CONFIG.box.paddingX + idx * (archWidth + PDF_CONFIG.spacing.paragraphGap);
-    doc.setFillColor(255, 255, 255);
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, archTop, archWidth, 24, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
@@ -9334,10 +9370,10 @@ const renderBrandIntegrity = (
   fitPage(90);
   const colWidth = (maxWidth - PDF_CONFIG.spacing.cardGap) / 2;
 
-  const emeraldBg: [number, number, number] = [236, 253, 245];
-  const emeraldBorder: [number, number, number] = [167, 243, 208];
-  const amberBg: [number, number, number] = [255, 251, 235];
-  const amberBorder: [number, number, number] = [253, 230, 138];
+  const emeraldBg = PDF_CONFIG.emeraldBg;
+  const emeraldBorder = PDF_CONFIG.emeraldBorder;
+  const amberBg = PDF_CONFIG.amberBg;
+  const amberBorder = PDF_CONFIG.amberBorder;
 
   const strengths = [
     "Simplifies document retrieval and reduces cognitive load",
@@ -9426,13 +9462,13 @@ const renderBrandIntegrity = (
   yPosition += swHeight + PDF_CONFIG.spacing.cardGap;
 
   // -------- Emotional & Cognitive Appeal --------
-  const pinkBg: [number, number, number] = [253, 242, 248];
-  const pinkBorder: [number, number, number] = [251, 207, 232];
-  const pink: [number, number, number] = [219, 39, 119];
+  const pinkBg = PDF_CONFIG.pinkBg;
+  const pinkBorder = PDF_CONFIG.pinkBorder;
+  const pink = PDF_CONFIG.pink;
 
-  const blueBg: [number, number, number] = [239, 246, 255];
-  const blueBorder: [number, number, number] = [191, 219, 254];
-  const blue: [number, number, number] = [37, 99, 235];
+  const blueBg = PDF_CONFIG.blueBg;
+  const blueBorder = PDF_CONFIG.blueBorder;
+  const blue = PDF_CONFIG.blue;
 
   const emotionalText =
     "Hobson's emotional promise is reassurance. It reduces stress by making hard-to-find information easy to access, and gives professionals a sense of control in high-pressure, chaotic environments.";
@@ -11850,15 +11886,15 @@ const renderTheProposition = (
     yPosition = margin + 16; // Start content below header
   };
 
-  // Colors
-  const blueColor: [number, number, number] = [59, 130, 246];
-  const blueBg: [number, number, number] = [239, 246, 255];
-  const purpleColor: [number, number, number] = [147, 51, 234];
-  const purpleBg: [number, number, number] = [250, 245, 255];
-  const greenColor: [number, number, number] = [34, 197, 94];
-  const greenBg: [number, number, number] = [240, 253, 244];
-  const amberColor: [number, number, number] = [217, 119, 6];
-  const amberBg: [number, number, number] = [255, 251, 235];
+  // Use PDF_CONFIG colors
+  const blueColor = PDF_CONFIG.blueLight;
+  const blueBg = PDF_CONFIG.blueBg;
+  const purpleColor = PDF_CONFIG.primaryDark;
+  const purpleBg = PDF_CONFIG.primaryBgLight;
+  const greenColor = PDF_CONFIG.green;
+  const greenBg = PDF_CONFIG.greenBg;
+  const amberColor = PDF_CONFIG.amber;
+  const amberBg = PDF_CONFIG.amberBg;
 
   // Header
   fitPage(45);
