@@ -8780,7 +8780,7 @@ const renderCompetitorBenchmarks = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const bodyLine = PDF_CONFIG.lineHeight.body;
+  const bodyLine = PDF_CONFIG.calculatedLineHeight.body;
 
   const data = getCompetitorBenchmarksStructuredData();
 
@@ -8958,7 +8958,7 @@ const renderCustomerOnlineBehaviour = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const bodyLine = PDF_CONFIG.lineHeight.body;
+  const bodyLine = PDF_CONFIG.calculatedLineHeight.body;
 
   const data = getCustomerOnlineBehaviourStructuredData();
 
@@ -9258,8 +9258,8 @@ const renderBrandIntegrity = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  const bodyLine = PDF_CONFIG.lineHeight.body;
-  const smallLine = PDF_CONFIG.lineHeight.body;
+  const bodyLine = PDF_CONFIG.calculatedLineHeight.body;
+  const smallLine = PDF_CONFIG.calculatedLineHeight.small;
 
   const fitPage = (required: number) => {
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
