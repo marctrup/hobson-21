@@ -11323,7 +11323,7 @@ const renderPrimaryConversionChannels = (
     yPosition = margin;
   }
 
-  // Key Metrics - using content from provider (centered text in boxes)
+  // Key Metrics - 2-row layout with larger boxes for readability
   const metrics = [
     "Homepage click-through rate",
     "Free-package sign-ups",
@@ -11334,43 +11334,46 @@ const renderPrimaryConversionChannels = (
     "High-intent conversion"
   ];
 
-  // 2-row layout so labels stay readable
   const metricsRow1 = metrics.slice(0, 4);
   const metricsRow2 = metrics.slice(4);
 
-  const keyMetricsHeight = spacing.contentBoxStart * 2 + spacing.sectionGap;
+  const metricBoxHeight = 22;
+  const rowGap = 8;
+  const headerHeight = 18;
+  const keyMetricsHeight = headerHeight + metricBoxHeight + rowGap + metricBoxHeight + 12;
+
   doc.setFillColor(...PDF_CONFIG.bgLight);
   doc.roundedRect(margin, yPosition, maxWidth, keyMetricsHeight, box.borderRadius, box.borderRadius, "F");
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Key Metrics", margin + box.paddingX, yPosition + spacing.sectionGap + fontSize.cardTitle / 3);
+  doc.text("Key Metrics", margin + box.paddingX, yPosition + 14);
 
-  const metricFontSize = PDF_CONFIG.fontSize.caption;
-  doc.setFontSize(metricFontSize);
+  doc.setFontSize(PDF_CONFIG.fontSize.caption);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textDark);
 
-  const metricBoxHeight = spacing.contentPadding;
   const row1Width = (maxWidth - box.paddingX * 2 - spacing.gridGap * (metricsRow1.length - 1)) / metricsRow1.length;
+  const row1Y = yPosition + headerHeight + 4;
   metricsRow1.forEach((metric, idx) => {
     const xPos = margin + box.paddingX + idx * (row1Width + spacing.gridGap);
-    const yPos = yPosition + spacing.contentPadding;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(xPos, yPos, row1Width, metricBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
-    // Center text horizontally and vertically
-    doc.text(metric, xPos + row1Width / 2, yPos + metricBoxHeight / 2 + metricFontSize / 3, { align: "center" });
+    doc.roundedRect(xPos, row1Y, row1Width, metricBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    const metricLines = splitTextWithFont(doc, sanitizeText(metric), row1Width - 8, "caption", false);
+    const textY = row1Y + metricBoxHeight / 2 + 2;
+    doc.text(metricLines.slice(0, 2), xPos + row1Width / 2, textY, { align: "center" });
   });
 
   const row2Width = (maxWidth - box.paddingX * 2 - spacing.gridGap * (metricsRow2.length - 1)) / metricsRow2.length;
+  const row2Y = row1Y + metricBoxHeight + rowGap;
   metricsRow2.forEach((metric, idx) => {
     const xPos = margin + box.paddingX + idx * (row2Width + spacing.gridGap);
-    const yPos = yPosition + spacing.contentPadding + metricBoxHeight + spacing.paragraphGap;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(xPos, yPos, row2Width, metricBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
-    // Center text horizontally and vertically
-    doc.text(metric, xPos + row2Width / 2, yPos + metricBoxHeight / 2 + metricFontSize / 3, { align: "center" });
+    doc.roundedRect(xPos, row2Y, row2Width, metricBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    const metricLines = splitTextWithFont(doc, sanitizeText(metric), row2Width - 8, "caption", false);
+    const textY = row2Y + metricBoxHeight / 2 + 2;
+    doc.text(metricLines.slice(0, 2), xPos + row2Width / 2, textY, { align: "center" });
   });
 
   yPosition += keyMetricsHeight + spacing.sectionGap;
