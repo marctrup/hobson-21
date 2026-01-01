@@ -7394,26 +7394,26 @@ const renderExecutiveContext = (
   const missionTextWidth = maxWidth - missionPadding * 2;
   const missionContentLines = splitTextWithFont(doc, data.missionStatement.content, missionTextWidth, "body", false);
   const missionBoxHeight = missionContentLines.length * lineHeight.body + box.paddingTop + box.paddingBottom;
-  const missionHeaderHeight = spacing.contentBoxStart; // Space for title + subtitle
+  const missionHeaderHeight = spacing.contentBoxStart + spacing.paragraphGap; // Space for title + subtitle + gap before box
   const missionHeight = missionHeaderHeight + missionBoxHeight;
-  fitPage(missionHeight + spacing.paragraphGap);
+  fitPage(missionHeight + spacing.sectionGap);
 
-  // Header row - title
+  // Header row - title with circle
   doc.setFillColor(...tealAccent);
   doc.circle(margin + spacing.circleOffset, yPosition + spacing.sectionGap, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.title, margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + 1);
+  doc.text(data.missionStatement.title, margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + fontSize.cardTitle / 3);
 
   // Subtitle - positioned below title with proper gap
   doc.setTextColor(...tealAccent);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.subtitle, margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + lineHeight.loose + spacing.paragraphGap);
+  doc.text(data.missionStatement.subtitle, margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + fontSize.cardTitle + spacing.paragraphGap);
 
-  // Content box - starts below header
+  // Content box - starts below header with gap
   const missionBoxY = yPosition + missionHeaderHeight;
   doc.setFillColor(...tealBg);
   doc.roundedRect(margin, missionBoxY, maxWidth, missionBoxHeight, box.borderRadius, box.borderRadius, "F");
@@ -7426,10 +7426,10 @@ const renderExecutiveContext = (
   doc.setFont("helvetica", "normal");
   doc.text(sanitizeText(data.missionStatement.content), margin + missionPadding, missionBoxY + box.paddingTop, {
     maxWidth: missionTextWidth,
-    align: "justify",
+    align: PDF_CONFIG.text.align,
     lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition = missionBoxY + missionBoxHeight + spacing.paragraphGap;
+  yPosition = missionBoxY + missionBoxHeight + spacing.sectionGap;
 
   // 6. Positioning Statement - compact layout with justified text
   const posStmtPadding = box.paddingX;
