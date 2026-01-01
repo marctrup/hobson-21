@@ -10584,24 +10584,73 @@ const renderBrandStrategy = (
   doc.text(opIntroLines.slice(0, 2), margin + 24, yPosition + 26);
   yPosition += 53;
 
-  // Online channels
+  // Online channels (render optional 2x2 point boxes inside each channel card)
   data.onlinePresence.channels.forEach((channel) => {
-    const channelHeight = 28;
+    const descLines = splitTextWithFont(
+      doc,
+      sanitizeText(channel.description),
+      maxWidth - box.paddingX * 2,
+      "caption",
+      false
+    );
+
+    const pointCols = 2;
+    const pointGap = 6;
+    const hasPoints = Array.isArray(channel.points) && channel.points.length > 0;
+    const points = hasPoints ? channel.points!.slice(0, 4) : [];
+    const pointBoxW = hasPoints
+      ? (maxWidth - box.paddingX * 2 - pointGap) / pointCols
+      : 0;
+
+    const pointBoxH = 12;
+    const pointRows = hasPoints ? Math.ceil(points.length / pointCols) : 0;
+
+    const channelHeight =
+      12 + // top padding + title baseline
+      Math.min(3, descLines.length) * lineHeight.body +
+      (hasPoints ? 8 + pointRows * pointBoxH + (pointRows - 1) * 4 : 0) +
+      10; // bottom padding
+
     fitPage(channelHeight + spacing.paragraphGap);
 
     doc.setFillColor(...PDF_CONFIG.bgLight);
     doc.roundedRect(margin, yPosition, maxWidth, channelHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
 
+    // Title
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`${channel.id}. ${channel.title}`, margin + box.paddingX, yPosition + 10);
+    doc.text(`${channel.id}. ${channel.title}`, margin + box.paddingX, yPosition + 12);
 
+    // Description
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const channelDescLines = splitTextWithFont(doc, sanitizeText(channel.description), maxWidth - box.paddingX * 2, "caption", false);
-    doc.text(channelDescLines.slice(0, 2), margin + box.paddingX, yPosition + 20);
+    let channelY = yPosition + 22;
+    descLines.slice(0, 3).forEach((l: string) => {
+      doc.text(l, margin + box.paddingX, channelY);
+      channelY += lineHeight.body;
+    });
+
+    // 2x2 point boxes (if present)
+    if (hasPoints) {
+      channelY += 4;
+      points.forEach((pt, idx) => {
+        const col = idx % pointCols;
+        const row = Math.floor(idx / pointCols);
+        const x = margin + box.paddingX + col * (pointBoxW + pointGap);
+        const y = channelY + row * (pointBoxH + 4);
+
+        doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+        doc.roundedRect(x, y, pointBoxW, pointBoxH, 2, 2, "F");
+
+        doc.setTextColor(...PDF_CONFIG.primaryColor);
+        doc.setFontSize(fontSize.caption);
+        doc.setFont("helvetica", "normal");
+        const ptLines = splitTextWithFont(doc, sanitizeText(pt), pointBoxW - 10, "caption", false);
+        doc.text(ptLines[0] || "", x + 5, y + 8);
+      });
+    }
 
     yPosition += channelHeight + spacing.paragraphGap;
   });
