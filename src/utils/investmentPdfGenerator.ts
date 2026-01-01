@@ -7707,64 +7707,72 @@ const renderSituationAnalysis = (
     yPosition += segmentHeight + spacing.sectionGap;
   });
 
-  // 4. Targeting Strategy - force new page
+  // 4. Targeting Strategy - force new page with proper card layout
   doc.addPage();
   yPosition = margin;
   
-  const strategyHeaderHeight = spacing.contentPadding + lineHeight.body;
+  // Header section
+  doc.setFillColor(...tealBg);
+  const headerBoxHeight = spacing.contentBoxStart + spacing.sectionGap;
+  doc.roundedRect(margin, yPosition, maxWidth, headerBoxHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...tealBorder);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, headerBoxHeight, box.borderRadius, box.borderRadius, "S");
   
   doc.setFillColor(...tealAccent);
-  doc.circle(margin + spacing.circleOffset, yPosition + spacing.paragraphGap, circleSize.medium, "F");
+  doc.circle(margin + spacing.circleOffset, yPosition + spacing.sectionGap, circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Targeting Strategy", margin + spacing.bulletTextOffset, yPosition + lineHeight.loose);
-  yPosition += spacing.contentPadding;
-
+  doc.text("Targeting Strategy", margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + fontSize.cardTitle / 3);
+  
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  const strategyLines = splitTextWithFont(doc, data.strategyIntro, maxWidth, "bodySmall", false);
-  strategyLines.forEach((line: string) => {
-    doc.text(line, margin, yPosition);
-    yPosition += bodyLine;
-  });
-  yPosition += spacing.paragraphGap;
+  doc.text(data.strategyIntro, margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + fontSize.cardTitle + spacing.paragraphGap);
+  
+  yPosition += headerBoxHeight + spacing.sectionGap;
 
-  // Strategy items - vertical layout for each segment to avoid overlap
+  // Strategy items - each in its own styled row
+  const segmentCardHeight = lineHeight.body + bodyLine + box.paddingTop + box.paddingBottom;
   data.segments.forEach((segment, idx) => {
     const theme = segmentThemes[idx];
     
+    // Segment card background
+    doc.setFillColor(...theme.bg);
+    doc.roundedRect(margin, yPosition, maxWidth, segmentCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    doc.setDrawColor(...theme.border);
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(margin, yPosition, maxWidth, segmentCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "S");
+    
     // Circle indicator
     doc.setFillColor(...theme.accent);
-    doc.circle(margin + spacing.paragraphGap, yPosition + circleSize.small + 1, circleSize.small, "F");
+    doc.circle(margin + spacing.sectionGap, yPosition + segmentCardHeight / 2, circleSize.small, "F");
     
     // Target level label + Segment label on same line
+    const labelY = yPosition + box.paddingTop + fontSize.bodySmall / 2;
     doc.setTextColor(...theme.accent);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`${segment.targetLevel} Target`, margin + spacing.sectionGap, yPosition + lineHeight.body);
+    doc.text(`${segment.targetLevel} Target`, margin + spacing.textIndent, labelY);
     
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
     const targetLabelWidth = doc.getTextWidth(`${segment.targetLevel} Target `);
-    doc.text(`Segment ${segment.id}`, margin + spacing.sectionGap + targetLabelWidth + spacing.paragraphGap, yPosition + lineHeight.body);
+    doc.text(`Segment ${segment.id}`, margin + spacing.textIndent + targetLabelWidth + spacing.paragraphGap, labelY);
     
-    yPosition += lineHeight.body + spacing.paragraphGap;
-    
-    // Reason text on next line with indent
+    // Reason text on next line
+    const reasonY = labelY + lineHeight.body + spacing.paragraphGap;
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    const reasonLines = splitTextWithFont(doc, segment.targetReason, maxWidth - spacing.textIndent, "bodySmall", false);
-    reasonLines.forEach((line: string) => {
-      doc.text(line, margin + spacing.textIndent, yPosition);
-      yPosition += bodyLine;
-    });
+    doc.text(sanitizeText(segment.targetReason), margin + spacing.textIndent, reasonY);
     
-    yPosition += spacing.sectionGap;
+    yPosition += segmentCardHeight + spacing.paragraphGap;
   });
+  
+  yPosition += spacing.sectionGap;
 
   // 5. Summary - tighter with justified text
   const summaryPadding = spacing.circleOffset;
