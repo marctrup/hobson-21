@@ -7730,37 +7730,40 @@ const renderSituationAnalysis = (
   });
   yPosition += spacing.paragraphGap;
 
-  // Strategy items (inline with circles)
-  const segmentLabelX = margin + spacing.bulletTextOffset + spacing.sectionGap;
-  const reasonX = margin + spacing.bulletTextOffset + spacing.pageBreakMargin + spacing.sectionGap;
+  // Strategy items - vertical layout for each segment to avoid overlap
   data.segments.forEach((segment, idx) => {
     const theme = segmentThemes[idx];
     
     // Circle indicator
     doc.setFillColor(...theme.accent);
-    doc.circle(margin + spacing.paragraphGap, yPosition + box.borderRadius, circleSize.small, "F");
+    doc.circle(margin + spacing.paragraphGap, yPosition + circleSize.small + 1, circleSize.small, "F");
     
-    // Target level label
+    // Target level label + Segment label on same line
     doc.setTextColor(...theme.accent);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`${segment.targetLevel} Target`, margin + spacing.sectionGap, yPosition + spacing.paragraphGap);
+    doc.text(`${segment.targetLevel} Target`, margin + spacing.sectionGap, yPosition + lineHeight.body);
     
-    // Segment label
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`Segment ${segment.id}`, segmentLabelX, yPosition + spacing.paragraphGap);
+    const targetLabelWidth = doc.getTextWidth(`${segment.targetLevel} Target `);
+    doc.text(`Segment ${segment.id}`, margin + spacing.sectionGap + targetLabelWidth + spacing.paragraphGap, yPosition + lineHeight.body);
     
-    // Reason text
+    yPosition += lineHeight.body + spacing.paragraphGap;
+    
+    // Reason text on next line with indent
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(segment.targetReason), reasonX, yPosition + spacing.paragraphGap);
+    const reasonLines = splitTextWithFont(doc, segment.targetReason, maxWidth - spacing.textIndent, "bodySmall", false);
+    reasonLines.forEach((line: string) => {
+      doc.text(line, margin + spacing.textIndent, yPosition);
+      yPosition += bodyLine;
+    });
     
-    yPosition += spacing.circleOffset;
+    yPosition += spacing.sectionGap;
   });
-  yPosition += spacing.paragraphGap;
 
   // 5. Summary - tighter with justified text
   const summaryPadding = spacing.circleOffset;
