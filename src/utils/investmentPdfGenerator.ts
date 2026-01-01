@@ -10762,7 +10762,7 @@ const renderContentEngagementStrategy = (
   // Header
   fitPage(50);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 40, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 45, box.borderRadius, box.borderRadius, "F");
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -10772,12 +10772,12 @@ const renderContentEngagementStrategy = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  const headerText = "Building awareness, educating the market, and generating trust through consistent, high-value communication.";
+  const headerText = "Built to clearly introduce the product, reduce uncertainty around AI in real estate, and support smooth progression from initial interest to long-term use. Prioritising clarity and credibility over volume.";
   const headerLines = splitTextWithFont(doc, headerText, maxWidth - 32, "bodySmall", false);
   doc.text(headerLines, margin + 24, yPosition + 26);
-  yPosition += 48;
+  yPosition += 53;
 
-  // Content Pillars
+  // Purpose of Content
   fitPage(55);
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
@@ -10785,168 +10785,311 @@ const renderContentEngagementStrategy = (
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Content Pillars", margin + box.paddingX, yPosition + 14);
+  doc.text("Purpose of Content", margin + box.paddingX, yPosition + 14);
 
-  const pillars = [
-    { title: "Education", desc: "Demystifying AI for property professionals" },
-    { title: "Proof", desc: "Case studies and measurable results" },
-    { title: "Thought Leadership", desc: "Industry insights on PropTech" },
-    { title: "Product Value", desc: "Demonstrations of problem-solving" }
+  const purposes = [
+    { title: "Understanding", desc: "Help the market understand what Hobson does and why it matters" },
+    { title: "Confidence", desc: "Show how the product works and handles information" },
+    { title: "Support", desc: "Support users through each stage with simple, useful materials" }
   ];
 
-  const pillarWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
-  pillars.forEach((pillar, idx) => {
-    const xPos = margin + box.paddingX + idx * (pillarWidth + spacing.gridGap);
+  const purposeWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 2) / 3;
+  purposes.forEach((purpose, idx) => {
+    const xPos = margin + box.paddingX + idx * (purposeWidth + spacing.gridGap);
     doc.setFillColor(255, 255, 255, 0.15);
-    doc.roundedRect(xPos, yPosition + 22, pillarWidth, 22, 2, 2, "F");
+    doc.roundedRect(xPos, yPosition + 22, purposeWidth, 24, 2, 2, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(pillar.title, xPos + 4, yPosition + 30);
+    doc.text(purpose.title, xPos + 4, yPosition + 30);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(255, 255, 255, 0.9);
-    const descLines = splitTextWithFont(doc, pillar.desc, pillarWidth - 8, "caption", false);
+    const descLines = splitTextWithFont(doc, purpose.desc, purposeWidth - 8, "caption", false);
     doc.text(descLines[0] || "", xPos + 4, yPosition + 38);
   });
 
   yPosition += 58;
 
-  // Content Types
-  fitPage(55);
+  // Core Content Themes
+  fitPage(45);
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Content Types & Formats", margin + box.paddingX, yPosition + 14);
+  doc.text("Core Content Themes", margin + box.paddingX, yPosition + 14);
 
-  const contentTypes = [
-    { title: "Written", items: "Blog articles, case studies, white papers, LinkedIn posts" },
-    { title: "Video", items: "Product demos, explainers, testimonials, tutorials" },
-    { title: "Interactive", items: "Document chaos quiz, ROI calculators, webinars, Q&A sessions" }
+  const themes = [
+    { title: "Clarity", desc: "Explaining how Hobson simplifies document work" },
+    { title: "Trust", desc: "Showing how answers are produced and referenced" },
+    { title: "Ease", desc: "Emphasising simple workflows and minimal effort" },
+    { title: "Practical Guidance", desc: "Examples reflecting day-to-day tasks" }
   ];
 
-  const typeWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 2) / 3;
-  contentTypes.forEach((type, idx) => {
-    const xPos = margin + box.paddingX + idx * (typeWidth + spacing.gridGap);
+  const themeWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  themes.forEach((theme, idx) => {
+    const xPos = margin + box.paddingX + idx * (themeWidth + spacing.gridGap);
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPosition + 22, typeWidth, 24, 2, 2, "F");
+    doc.roundedRect(xPos, yPosition + 22, themeWidth, 14, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(type.title, xPos + 4, yPosition + 30);
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFont("helvetica", "normal");
-    const itemLines = splitTextWithFont(doc, type.items, typeWidth - 8, "caption", false);
-    doc.text(itemLines.slice(0, 2), xPos + 4, yPosition + 38);
+    doc.text(theme.title, xPos + 4, yPosition + 30);
   });
 
-  yPosition += 58;
+  yPosition += 48;
 
-  // Engagement Channels
+  // Content by Journey Stage (See-Think-Do-Care)
+  fitPage(85);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Content by Journey Stage (See-Think-Do-Care)", margin, yPosition);
+  yPosition += 12;
+
+  const journeyStages = [
+    { stage: "1. See (Awareness)", goal: "Show the problem and introduce Hobson", items: ["Visual examples of document pain points", "Simple explanations of what Hobson does", "Interactive entry points (quiz)"], success: "Increased visibility and curiosity", color: PDF_CONFIG.primaryBgLight },
+    { stage: "2. Think (Consideration)", goal: "Explain how Hobson works", items: ["Q&A output walkthroughs", "Comparisons with manual workflows", "Examples of referenced answers"], success: "Longer engagement", color: PDF_CONFIG.emeraldBg },
+    { stage: "3. Do (Conversion)", goal: "Encourage pilot participation", items: ["Case summaries from partners", "Clear pages on how to start", "Pilot invitations"], success: "Enquiries and sign-ups", color: [255, 243, 224] as [number, number, number] },
+    { stage: "4. Care (Retention)", goal: "Support ongoing use", items: ["Onboarding materials", "Guidance tips", "Feature updates"], success: "Continued usage", color: [255, 228, 230] as [number, number, number] }
+  ];
+
+  const stageWidth = (maxWidth - spacing.gridGap * 3) / 4;
+  journeyStages.forEach((stage, idx) => {
+    const xPos = margin + idx * (stageWidth + spacing.gridGap);
+    doc.setFillColor(...stage.color);
+    doc.roundedRect(xPos, yPosition, stageWidth, 70, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(stage.stage, xPos + 4, yPosition + 10);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(6);
+    doc.setFont("helvetica", "normal");
+    doc.text(stage.goal, xPos + 4, yPosition + 18);
+    stage.items.forEach((item, iIdx) => {
+      doc.text("- " + item.slice(0, 28), xPos + 4, yPosition + 26 + iIdx * 7);
+    });
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(5);
+    doc.text("Success: " + stage.success, xPos + 4, yPosition + 64);
+  });
+
+  yPosition += 78;
+
+  // Engagement Methods
   fitPage(50);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Engagement Channels", margin, yPosition);
+  doc.text("Engagement Methods", margin, yPosition);
   yPosition += 10;
 
-  const channelWidth = (maxWidth - spacing.gridGap) / 2;
+  const methods = [
+    { title: "The Quiz", desc: "Accessible way to introduce the problem space and create early emotional connection" },
+    { title: "Simple Stories", desc: "Day-to-day scenarios illustrate value more effectively than abstract claims" },
+    { title: "Feedback Loops", desc: "1:1 conversations, polls, and structured partner feedback" },
+    { title: "Insight Content", desc: "Examples of guidance, pattern spotting, or saved effort as product matures" }
+  ];
 
-  // Primary Channels
-  doc.setFillColor(...PDF_CONFIG.bgWhite);
-  doc.roundedRect(margin, yPosition, channelWidth, 35, 2, 2, "F");
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(fontSize.bodySmall);
+  const methodWidth = (maxWidth - spacing.gridGap * 3) / 4;
+  methods.forEach((method, idx) => {
+    const xPos = margin + idx * (methodWidth + spacing.gridGap);
+    const bgColors = [PDF_CONFIG.primaryBgLight, PDF_CONFIG.emeraldBg, [255, 243, 224] as [number, number, number], [255, 228, 230] as [number, number, number]];
+    doc.setFillColor(...bgColors[idx]);
+    doc.roundedRect(xPos, yPosition, methodWidth, 32, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(method.title, xPos + 4, yPosition + 10);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    const descLines = splitTextWithFont(doc, method.desc, methodWidth - 8, "caption", false);
+    doc.text(descLines.slice(0, 3), xPos + 4, yPosition + 18);
+  });
+
+  yPosition += 40;
+
+  // Channel Use Table
+  fitPage(55);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Primary Channels (Active Now)", margin + 6, yPosition + 10);
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("- LinkedIn - thought leadership and updates", margin + 6, yPosition + 18);
-  doc.text("- Website - central content hub", margin + 6, yPosition + 25);
-  doc.text("- Direct outreach - pilot engagement", margin + 6, yPosition + 32);
+  doc.text("Channel Use", margin, yPosition);
+  yPosition += 10;
 
-  // Planned Channels
-  doc.setFillColor(...PDF_CONFIG.bgWhite);
-  doc.roundedRect(margin + channelWidth + spacing.gridGap, yPosition, channelWidth, 35, 2, 2, "F");
-  doc.setTextColor(...PDF_CONFIG.emerald);
-  doc.setFontSize(fontSize.bodySmall);
+  // Table header
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 12, 2, 2, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.caption);
   doc.setFont("helvetica", "bold");
-  doc.text("Planned Channels (2027)", margin + channelWidth + spacing.gridGap + 6, yPosition + 10);
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.text("- Email newsletter", margin + channelWidth + spacing.gridGap + 6, yPosition + 18);
-  doc.text("- YouTube demo series", margin + channelWidth + spacing.gridGap + 6, yPosition + 25);
-  doc.text("- Resource community or forum", margin + channelWidth + spacing.gridGap + 6, yPosition + 32);
+  doc.text("Channel", margin + 4, yPosition + 8);
+  doc.text("Role", margin + 45, yPosition + 8);
+  doc.text("Examples", margin + 100, yPosition + 8);
+  yPosition += 14;
 
-  yPosition += 43;
+  const channels = [
+    { channel: "Website", role: "Education & conversion", examples: "Demos, explanations, case summaries" },
+    { channel: "LinkedIn", role: "Awareness & credibility", examples: "Updates, commentary, product examples" },
+    { channel: "Quiz", role: "Engagement & lead capture", examples: "Interactive entry point" },
+    { channel: "Email (later)", role: "Nurture & retention", examples: "Onboarding steps, feature highlights" },
+    { channel: "Product UI", role: "Ongoing engagement", examples: "Prompts, tips, clear output formatting" }
+  ];
 
-  // SMART Objectives
+  channels.forEach((ch, idx) => {
+    doc.setFillColor(...(idx % 2 === 0 ? PDF_CONFIG.bgWhite : PDF_CONFIG.bgLight));
+    doc.roundedRect(margin, yPosition, maxWidth, 8, 0, 0, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(ch.channel, margin + 4, yPosition + 6);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.text(ch.role, margin + 45, yPosition + 6);
+    doc.text(ch.examples, margin + 100, yPosition + 6);
+    yPosition += 8;
+  });
+
+  yPosition += spacing.sectionGap;
+
+  // SMART Targets
   fitPage(70);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("SMART Content & Engagement Objectives", margin, yPosition);
+  doc.text("SMART Targets (2026-2027)", margin, yPosition);
   yPosition += 10;
 
-  const objectives = [
-    { phase: "Q4 2026", title: "Establish Foundation", items: ["10 educational pieces", "500+ LinkedIn followers", "3 UK case studies", "200+ quiz completions"] },
-    { phase: "Q4 2027", title: "Scale Reach", items: ["1,000+ LinkedIn followers", "500+ newsletter subscribers", "4 webinars (50+ each)", "40% traffic increase"] },
-    { phase: "2028+", title: "International", items: ["Localise for EU/US", "PropTech communities", "Region-specific content"] }
+  const smartSections = [
+    { title: "Content & Education (2026)", items: ["Publish 10 educational pieces by Q4 2026", "Deliver 3 onboarding guides for user roles by Q4 2026"], color: PDF_CONFIG.primaryBgLight },
+    { title: "Engagement & Awareness (2026)", items: ["Increase LinkedIn engagement by 15% by Q4 2026", "Introduce email prompts by Q4 2026"], color: PDF_CONFIG.emeraldBg },
+    { title: "Scaled Reach (2027)", items: ["Achieve 500+ quiz completions by Q2 2027"], color: [255, 243, 224] as [number, number, number] }
   ];
 
-  const objWidth = (maxWidth - spacing.gridGap * 2) / 3;
-  const phaseColors = [PDF_CONFIG.primaryBgLight, PDF_CONFIG.emeraldBg, [255, 243, 224] as [number, number, number]];
-
-  objectives.forEach((obj, idx) => {
-    const xPos = margin + idx * (objWidth + spacing.gridGap);
-    doc.setFillColor(...phaseColors[idx]);
-    doc.roundedRect(xPos, yPosition, objWidth, 55, 2, 2, "F");
-    doc.setTextColor(...PDF_CONFIG.primaryColor);
+  const smartWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  smartSections.forEach((section, idx) => {
+    const xPos = margin + idx * (smartWidth + spacing.gridGap);
+    doc.setFillColor(...section.color);
+    doc.roundedRect(xPos, yPosition, smartWidth, 45, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(obj.phase + ": " + obj.title, xPos + 4, yPosition + 10);
+    doc.text(section.title, xPos + 4, yPosition + 10);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    obj.items.forEach((item, iIdx) => {
-      doc.text("- " + item, xPos + 4, yPosition + 18 + iIdx * 7);
+    section.items.forEach((item, iIdx) => {
+      const itemLines = splitTextWithFont(doc, "- " + item, smartWidth - 8, "caption", false);
+      doc.text(itemLines[0] || "", xPos + 4, yPosition + 20 + iIdx * 12);
     });
   });
 
-  yPosition += 63;
+  yPosition += 53;
 
-  // Measurement Framework
-  fitPage(35);
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.roundedRect(margin, yPosition, maxWidth, 30, box.borderRadius, box.borderRadius, "F");
+  // Digital Channel Acquisition Strategy
+  fitPage(70);
+  doc.setFillColor(...PDF_CONFIG.textDark);
+  doc.roundedRect(margin, yPosition, maxWidth, 65, box.borderRadius, box.borderRadius, "F");
 
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Measurement Framework", margin + box.paddingX, yPosition + 12);
+  doc.text("Digital Channel Acquisition Strategy", margin + box.paddingX, yPosition + 14);
 
-  const metrics = [
-    { title: "Reach", desc: "Followers, impressions, traffic" },
-    { title: "Engagement", desc: "Likes, comments, shares" },
-    { title: "Conversion", desc: "Quiz, demos, sign-ups" },
-    { title: "Advocacy", desc: "Referrals, NPS scores" }
+  const acqGoals = [
+    "Make Hobson visible to real estate professionals with document-heavy workflows",
+    "Bring qualified traffic to the website and quiz",
+    "Build interest in the 2026 pilot programme",
+    "Test channels and messaging for 2027 scale"
   ];
 
-  const metricWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
-  metrics.forEach((metric, idx) => {
-    const xPos = margin + box.paddingX + idx * (metricWidth + spacing.gridGap);
-    doc.setFillColor(255, 255, 255, 0.15);
-    doc.roundedRect(xPos, yPosition + 16, metricWidth, 10, 2, 2, "F");
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(fontSize.caption);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "normal");
+  acqGoals.forEach((goal, idx) => {
+    doc.text("- " + goal, margin + box.paddingX, yPosition + 24 + idx * 7);
+  });
+
+  // Channel targets on right side
+  const channelTargets = [
+    { channel: "LinkedIn", target: "1,000 followers by Q4 2027" },
+    { channel: "Website", target: "40% traffic increase by Q2 2027" },
+    { channel: "Paid Search", target: "3-5% CTR by Q4 2027" }
+  ];
+
+  const targetX = margin + maxWidth / 2 + 10;
+  doc.setFont("helvetica", "bold");
+  doc.text("Channel Targets:", targetX, yPosition + 24);
+  doc.setFont("helvetica", "normal");
+  channelTargets.forEach((ct, idx) => {
+    doc.text(ct.channel + ": " + ct.target, targetX, yPosition + 32 + idx * 7);
+  });
+
+  yPosition += 73;
+
+  // SMART Acquisition Targets
+  fitPage(35);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 30, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SMART Acquisition Targets", margin + box.paddingX, yPosition + 12);
+
+  const acqTargets = [
+    { metric: "500+", desc: "Quiz completions Q2 2027" },
+    { metric: "40%", desc: "Traffic increase Q4 2027" },
+    { metric: "1,000", desc: "LinkedIn followers Q4 2027" },
+    { metric: "5+", desc: "Pilot participants Q4 2026" },
+    { metric: "10%", desc: "Retargeting conversion Q4 2027" },
+    { metric: "Q1 2028", desc: "International readiness" }
+  ];
+
+  const targetWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 5) / 6;
+  acqTargets.forEach((target, idx) => {
+    const xPos = margin + box.paddingX + idx * (targetWidth + spacing.gridGap);
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
+    doc.roundedRect(xPos, yPosition + 16, targetWidth, 10, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(6);
     doc.setFont("helvetica", "bold");
-    doc.text(metric.title + ": ", xPos + 4, yPosition + 22);
-    doc.setFont("helvetica", "normal");
-    doc.text(metric.desc, xPos + 22, yPosition + 22);
+    doc.text(target.metric, xPos + 2, yPosition + 22);
   });
 
   yPosition += 38;
+
+  // Digital Channel Conversion Strategy
+  fitPage(45);
+  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Digital Channel Conversion Strategy", margin + box.paddingX, yPosition + 14);
+
+  const conversionPoints = [
+    "Straightforward path from curiosity to hands-on experience",
+    "Reduce perceived risk through free entry point",
+    "Demonstrate value early through real interactions",
+    "Continual measurement and improvement",
+    "Build funnel for future paid tiers"
+  ];
+
+  const convWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 4) / 5;
+  conversionPoints.forEach((point, idx) => {
+    const xPos = margin + box.paddingX + idx * (convWidth + spacing.gridGap);
+    doc.setFillColor(255, 255, 255, 0.15);
+    doc.roundedRect(xPos, yPosition + 20, convWidth, 16, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(5);
+    doc.setFont("helvetica", "normal");
+    const pointLines = splitTextWithFont(doc, point, convWidth - 4, "caption", false);
+    doc.text(pointLines.slice(0, 2), xPos + 2, yPosition + 26);
+  });
+
+  yPosition += 48;
 
   return yPosition;
 };
