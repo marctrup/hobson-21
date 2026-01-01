@@ -9762,11 +9762,14 @@ const renderPESTLEAnalysis = (
     doc.roundedRect(xPos, cardY, cardWidth, cardHeight, 3, 3, "F");
     
     doc.setFillColor(...factor.accent);
-    doc.circle(xPos + 10, cardY + 10, PDF_CONFIG.circleSize.medium, "F");
+    const circleX = xPos + 10;
+    const circleY = cardY + 10;
+    doc.circle(circleX, circleY, PDF_CONFIG.circleSize.medium, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(factor.letter, xPos + 8, cardY + 12);
+    const letterWidth = doc.getTextWidth(factor.letter);
+    doc.text(factor.letter, circleX - letterWidth / 2, circleY + 3);
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
