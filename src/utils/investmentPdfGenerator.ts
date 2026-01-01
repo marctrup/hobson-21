@@ -11125,11 +11125,13 @@ const renderContentEngagementStrategy = (
     "Test channels and messaging for 2027 scale"
   ];
 
+  const leftColWidth = (maxWidth / 2) - box.paddingX - 5;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.caption);
   doc.setFont("helvetica", "normal");
   acqGoals.forEach((goal, idx) => {
-    doc.text("- " + goal, margin + box.paddingX, yPosition + 24 + idx * 7);
+    const goalLines = doc.splitTextToSize("- " + goal, leftColWidth);
+    doc.text(goalLines[0], margin + box.paddingX, yPosition + 24 + idx * 7);
   });
 
   // Channel targets on right side
