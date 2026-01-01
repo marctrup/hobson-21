@@ -10480,6 +10480,268 @@ const renderMarketingObjectives = (
 };
 
 /**
+ * Render Brand Strategy visual
+ */
+const renderBrandStrategy = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { fontSize, lineHeight, lineHeightFactor, spacing, box } = PDF_CONFIG;
+
+  const fitPage = (required: number) => {
+    yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Header
+  fitPage(50);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Strategy", margin + 24, yPosition + 16);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const headerText = "Built on authenticity, clarity, and trust - positioning Hobson as the calm, intelligent guide for real estate documents.";
+  const headerLines = splitTextWithFont(doc, headerText, maxWidth - 32, "bodySmall", false);
+  doc.text(headerLines, margin + 24, yPosition + 26);
+  yPosition += 53;
+
+  // Brand Positioning
+  fitPage(55);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Positioning", margin + box.paddingX, yPosition + 14);
+
+  const positioningItems = [
+    { label: "Tagline", value: "Innovation Without Disruption" },
+    { label: "Archetype", value: "The Sage" },
+    { label: "Promise", value: "Instant, referenced answers from your property documents" },
+    { label: "Differentiation", value: "The only AI built for real estate document intelligence" }
+  ];
+
+  const posItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  positioningItems.forEach((item, idx) => {
+    const xPos = margin + box.paddingX + idx * (posItemWidth + spacing.gridGap);
+    doc.setFillColor(255, 255, 255, 0.15);
+    doc.roundedRect(xPos, yPosition + 22, posItemWidth, 22, 2, 2, "F");
+    doc.setTextColor(255, 255, 255, 0.8);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(item.label, xPos + 4, yPosition + 30);
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    const valLines = splitTextWithFont(doc, item.value, posItemWidth - 8, "caption", false);
+    doc.text(valLines[0] || "", xPos + 4, yPosition + 38);
+  });
+
+  yPosition += 58;
+
+  // Brand Pillars
+  fitPage(20);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Pillars", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const pillars = [
+    { title: "Clarity", color: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor, items: ["Referenced answers that can be verified", "Simple, jargon-free language", "Transparent pricing"] },
+    { title: "Trust", color: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald, items: ["Never overstate capabilities", "Acknowledge limitations openly", "Consistent delivery on promises"] },
+    { title: "Simplicity", color: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber, items: ["Zero-onboarding experience", "Works alongside existing tools", "Intuitive, clean interface"] },
+    { title: "Accessibility", color: PDF_CONFIG.roseBg, accent: PDF_CONFIG.rose, items: ["Affordable pricing tiers", "No technical expertise required", "Scales with business needs"] }
+  ];
+
+  const pillarCardWidth = (maxWidth - spacing.gridGap) / 2;
+  const pillarCardHeight = 52;
+
+  pillars.forEach((pillar, idx) => {
+    const col = idx % 2;
+    if (col === 0) {
+      fitPage(pillarCardHeight + spacing.gridGap);
+    }
+    const xPos = margin + col * (pillarCardWidth + spacing.gridGap);
+
+    doc.setFillColor(...pillar.color);
+    doc.roundedRect(xPos, yPosition, pillarCardWidth, pillarCardHeight, box.borderRadius, box.borderRadius, "F");
+
+    doc.setFillColor(...pillar.accent);
+    doc.circle(xPos + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(pillar.title, xPos + 20, yPosition + 12);
+
+    let itemY = yPosition + 22;
+    pillar.items.forEach((item) => {
+      doc.setFillColor(...pillar.accent);
+      doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.setFontSize(fontSize.caption);
+      doc.setFont("helvetica", "normal");
+      doc.text(item, xPos + 16, itemY);
+      itemY += lineHeight.body;
+    });
+
+    if (col === 1) {
+      yPosition += pillarCardHeight + spacing.gridGap;
+    }
+  });
+
+  if (pillars.length % 2 === 0) {
+    yPosition += pillarCardHeight + spacing.gridGap;
+  }
+
+  // Brand Personality
+  fitPage(45);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Personality", margin + box.paddingX, yPosition + 14);
+
+  const personality = ["Calm", "Knowledgeable", "Helpful", "Honest", "Friendly"];
+  const persWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 4) / 5;
+  personality.forEach((trait, idx) => {
+    const xPos = margin + box.paddingX + idx * (persWidth + spacing.gridGap);
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(xPos, yPosition + 22, persWidth, 14, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(trait, xPos + 4, yPosition + 31);
+  });
+
+  yPosition += 48;
+
+  // Visual Identity
+  fitPage(55);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Visual Identity Elements", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const identity = [
+    { title: "The Owl Mascot", text: "Embodies wisdom, observation, and guidance", color: PDF_CONFIG.primaryColor },
+    { title: "Purple Palette", text: "Signifies insight, innovation, and clear thinking", color: PDF_CONFIG.primaryLight },
+    { title: "HUE System", text: "Creates transparency and gamified engagement", color: PDF_CONFIG.amber }
+  ];
+
+  identity.forEach((item, idx) => {
+    doc.setFillColor(...item.color);
+    doc.rect(margin, yPosition, 4, 14, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.title, margin + 10, yPosition + 6);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(item.text, margin + 10, yPosition + 12);
+    yPosition += 18;
+  });
+
+  yPosition += spacing.sectionGap;
+
+  // Brand Voice
+  fitPage(55);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Brand Voice Principles", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const voice = [
+    { principle: "Explain, Don't Sell", doText: "We help you find answers", avoidText: "Revolutionary AI transforms" },
+    { principle: "Be Specific", doText: "Answers include page references", avoidText: "Smart document analysis" },
+    { principle: "Stay Humble", doText: "We're still learning", avoidText: "The ultimate solution" },
+    { principle: "Focus on Outcomes", doText: "Save 2 hours per week", avoidText: "Cutting-edge technology" }
+  ];
+
+  const voiceCardWidth = (maxWidth - spacing.gridGap) / 2;
+  const voiceCardHeight = 32;
+
+  voice.forEach((item, idx) => {
+    const col = idx % 2;
+    if (col === 0) {
+      fitPage(voiceCardHeight + spacing.paragraphGap);
+    }
+    const xPos = margin + col * (voiceCardWidth + spacing.gridGap);
+
+    doc.setFillColor(...PDF_CONFIG.bgLight);
+    doc.roundedRect(xPos, yPosition, voiceCardWidth, voiceCardHeight, box.borderRadius, box.borderRadius, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.principle, xPos + box.paddingX, yPosition + 10);
+
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.emerald);
+    doc.text("Do: " + item.doText, xPos + box.paddingX, yPosition + 18);
+    doc.setTextColor(...PDF_CONFIG.textLight);
+    doc.text("Avoid: " + item.avoidText, xPos + box.paddingX, yPosition + 26);
+
+    if (col === 1) {
+      yPosition += voiceCardHeight + spacing.paragraphGap;
+    }
+  });
+
+  yPosition += voiceCardHeight + spacing.sectionGap;
+
+  // Brand Metaphors
+  fitPage(50);
+  doc.setFillColor(...PDF_CONFIG.emeraldBg);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Core Brand Metaphors", margin + box.paddingX, yPosition + 14);
+
+  const metaphors = [
+    { title: "GPS for Documents", text: "Guides directly to the information you need" },
+    { title: "Desk Lamp of Truth", text: "Illuminates hidden details" },
+    { title: "Wise Owl Advisor", text: "Observes, understands, offers guidance" }
+  ];
+
+  const metaWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 2) / 3;
+  metaphors.forEach((meta, idx) => {
+    const xPos = margin + box.paddingX + idx * (metaWidth + spacing.gridGap);
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
+    doc.roundedRect(xPos, yPosition + 22, metaWidth, 18, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.emerald);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(meta.title, xPos + 4, yPosition + 30);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.text(meta.text.slice(0, 25) + "...", xPos + 4, yPosition + 36);
+  });
+
+  yPosition += 53;
+
+  return yPosition;
+};
+
+/**
  * Create cover page for a section PDF
  */
 const createCoverPage = (
@@ -13243,6 +13505,8 @@ const renderTabContent = (
       yPosition = renderSWOTAnalysis(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "marketingObjectives") {
       yPosition = renderMarketingObjectives(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "brandStrategy") {
+      yPosition = renderBrandStrategy(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Acquisition & Sales Strategy renderers
     else if (componentType === "acquisitionExecutiveSummary") {
