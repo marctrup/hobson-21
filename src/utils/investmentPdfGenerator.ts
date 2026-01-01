@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -1606,67 +1606,15 @@ const renderWhyNow = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // Source content from provider
+  const whyNowData = getWhyNowStructuredData();
+  const { sections } = whyNowData;
+
   // Subtitle only - main title "Why Now?" already rendered by renderTabContent
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodyFont(doc);
   doc.text("The Perfect Moment for AI Clarity in Real Estate", pageWidth / 2, yPosition, { align: "center" });
   yPosition += 14;
-
-  const sections = [
-    {
-      number: "1",
-      title: "Technology Has Reached the Threshold",
-      intro: "AI systems can now meet the accuracy, traceability, and reliability requirements of Real Estate decision-making:",
-      bullets: [
-        "Production-grade document extraction exceeding 95%",
-        "Multi-document reasoning at scale",
-        "Cost-effective real-time inference",
-      ],
-      conclusion: "This problem could not be solved before. Now it can be done economically.",
-    },
-    {
-      number: "2",
-      title: "The Real Estate Industry is Ready and Desperate for Efficiency",
-      intro: "Real Estate operators face converging pressure:",
-      bullets: [
-        "Rising regulatory and reporting burden",
-        "Headcount constraints and labour inflation",
-        "Margin compression",
-        "Increased complexity per asset",
-      ],
-      conclusion: "Manual processes are no longer inefficient; they are financially irresponsible.",
-    },
-    {
-      number: "3",
-      title: "Competitive White Space Is Closing",
-      intro: "Despite the scale of the opportunity:",
-      bullets: [
-        "No AI-native leader exists in Real Estate document intelligence",
-        "Legacy PropTech platforms are too embedded to replace manual reasoning",
-        "Horizontal AI tools cannot meet regulatory or accuracy expectations",
-      ],
-      conclusion: "A narrow 12-18-month window exists to define the default category standard.",
-    },
-    {
-      number: "4",
-      title: "Regulation & Economics",
-      intro: "Regulatory requirements are increasing document volume and complexity:",
-      bullets: [
-        "ESG reporting now requires document-linked evidence",
-        "Auditability and traceability are mandatory",
-        "Risk and safety obligations expand annually",
-        "Data residency rules favour compliant, regional AI solutions",
-      ],
-      conclusion: "At the same time, labour inflation makes manual document work structurally unaffordable.",
-    },
-    {
-      number: "5",
-      title: "The Economics Are Clear",
-      intro: "",
-      bullets: [],
-      conclusion: "AI delivers approximately GBP 6,000 per role per year in reclaimed capacity. Tools that remove labour, not merely optimise it, are adopted first.",
-    },
-  ];
 
   sections.forEach((section) => {
     // Measure text with correct font for wrapping
@@ -1760,10 +1708,10 @@ const renderWhyNow = (
   // Header - purple text on white background
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
-  doc.text("The Convergence", pageWidth / 2, yPosition + 14, { align: "center" });
+  doc.text(whyNowData.convergence.title, pageWidth / 2, yPosition + 14, { align: "center" });
 
   // Points as pills with light purple background (matches on-screen bg-purple-50 border-purple-200)
-  const points = ["Technology ready", "Market ready", "Competition absent", "Regulation rising", "Economics demand efficiency"];
+  const points = whyNowData.convergence.points;
   setBodySmallFont(doc);
   
   // Row 1: first 3 points
@@ -1786,7 +1734,7 @@ const renderWhyNow = (
     pillX += textWidth + 4;
   });
   
-  // Row 2: last 2 points
+  // Row 2: remaining points
   pillY += 13;
   let totalWidth2 = 0;
   points.slice(3).forEach((point) => {
@@ -1806,10 +1754,11 @@ const renderWhyNow = (
     pillX += textWidth + 4;
   });
 
-  // Closing statement - dark text with purple highlight
+  // Closing statement - combines conclusion and call to action
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodyBoldFont(doc);
-  doc.text("'documents everywhere' -> 'answers instantly.' Hobson leads this shift.", pageWidth / 2, yPosition + 54, { align: "center" });
+  const closingText = `${whyNowData.convergence.conclusion} ${whyNowData.convergence.callToAction}`;
+  doc.text(closingText, pageWidth / 2, yPosition + 54, { align: "center" });
 
   yPosition += convergenceHeight + PDF_CONFIG.spacing.sectionGap;
   return yPosition;

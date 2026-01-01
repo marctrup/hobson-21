@@ -1197,6 +1197,77 @@ export const getUKAssumptionsFinancialsPdfContent = (): string[] => [
   "2. Clear segmentation by business size, with 96% being small operators",
 ];
 
+// Structured data for dedicated PDF renderer
+export const getWhyNowStructuredData = () => ({
+  sections: [
+    {
+      number: "1",
+      title: "Technology Has Reached the Threshold",
+      intro: "AI systems can now meet the accuracy, traceability, and reliability requirements of Real Estate decision-making:",
+      bullets: [
+        "Production-grade document extraction exceeding 95%",
+        "Multi-document reasoning at scale",
+        "Cost-effective real-time inference",
+      ],
+      conclusion: "This problem could not be solved before. Now it can be done economically.",
+    },
+    {
+      number: "2",
+      title: "The Real Estate Industry is Ready and Desperate for Efficiency",
+      intro: "Real Estate operators face converging pressure:",
+      bullets: [
+        "Rising regulatory and reporting burden",
+        "Headcount constraints and labour inflation",
+        "Margin compression",
+        "Increased complexity per asset",
+      ],
+      conclusion: "Manual processes are no longer inefficient; they are financially irresponsible.",
+    },
+    {
+      number: "3",
+      title: "Competitive White Space Is Closing",
+      intro: "Despite the scale of the opportunity:",
+      bullets: [
+        "No AI-native leader exists in Real Estate document intelligence",
+        "Legacy PropTech platforms are too embedded to replace manual reasoning",
+        "Horizontal AI tools cannot meet regulatory or accuracy expectations",
+      ],
+      conclusion: "A narrow 12-18-month window exists to define the default category standard.",
+    },
+    {
+      number: "4",
+      title: "Regulation & Economics",
+      intro: "Regulatory requirements are increasing document volume and complexity:",
+      bullets: [
+        "ESG reporting now requires document-linked evidence",
+        "Auditability and traceability are mandatory",
+        "Risk and safety obligations expand annually",
+        "Data residency rules favour compliant, regional AI solutions",
+      ],
+      conclusion: "At the same time, labour inflation makes manual document work structurally unaffordable.",
+    },
+    {
+      number: "5",
+      title: "The Economics Are Clear",
+      intro: "",
+      bullets: [],
+      conclusion: "AI delivers approximately GBP 6,000 per role per year in reclaimed capacity. Tools that remove labour, not merely optimise it, are adopted first.",
+    },
+  ],
+  convergence: {
+    title: "THE CONVERGENCE",
+    points: [
+      "Technology is ready",
+      "The market is ready",
+      "Competition is absent",
+      "Regulation is rising",
+      "Economics demand efficiency",
+    ],
+    conclusion: "This is the exact moment the industry shifts from 'documents everywhere' to 'answers instantly.'",
+    callToAction: "And Hobson is positioned to lead that shift.",
+  },
+});
+
 export const getWhyNowPdfContent = (): string[] => [
   "WHY NOW?",
   "",
