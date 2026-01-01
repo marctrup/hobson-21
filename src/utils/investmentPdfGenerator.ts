@@ -2045,13 +2045,16 @@ const renderCustomersMarketSources = (
   doc.text("Data Sources", margin + card.textOffsetX, yPosition + spacing.cardGap);
   yPosition += spacing.headerToContent;
 
-  // Sources list
-  sources.forEach((source, index) => {
-    yPosition = checkPageBreak(doc, yPosition, itemHeight, pageHeight, margin);
-    
-    // Title - use splitTextWithFont for correct wrapping
+  // Sources list (no horizontal dividers - text wraps naturally)
+  sources.forEach((source) => {
+    // Calculate actual height needed for this item
     doc.setTextColor(...PDF_CONFIG.textDark);
     const titleLines = splitTextWithFont(doc, source.title, maxWidth - card.iconOffsetX, "body", true);
+    const actualItemHeight = titleLines.length * lineHeight.body + lineHeight.body * 2 + spacing.cardGap;
+    
+    yPosition = checkPageBreak(doc, yPosition, actualItemHeight, pageHeight, margin);
+    
+    // Title
     titleLines.forEach((line: string) => {
       doc.text(line, margin + spacing.paragraphGap, yPosition);
       yPosition += lineHeight.body;
@@ -2071,14 +2074,7 @@ const renderCustomersMarketSources = (
     const linkWidth = doc.getTextWidth(linkText);
     doc.link(margin + spacing.paragraphGap, yPosition - smallOffset, linkWidth, lineHeight.body, { url: source.linkUrl });
     
-    yPosition += box.paddingX;
-    
-    // Divider (except for last item)
-    if (index < sources.length - 1) {
-      doc.setDrawColor(...PDF_CONFIG.primaryLight);
-      doc.setLineWidth(box.borderWidthThin);
-      doc.line(margin + spacing.paragraphGap, yPosition - smallOffset, margin + maxWidth - spacing.paragraphGap, yPosition - smallOffset);
-    }
+    yPosition += spacing.cardGap + 2; // Gap between items instead of divider line
   });
 
   yPosition += spacing.sectionGap;
