@@ -11361,8 +11361,14 @@ const renderPrimaryConversionChannels = (
     doc.setFillColor(255, 255, 255);
     doc.roundedRect(xPos, row1Y, row1Width, metricBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     const metricLines = splitTextWithFont(doc, sanitizeText(metric), row1Width - 8, "caption", false);
-    const textY = row1Y + metricBoxHeight / 2 + 2;
-    doc.text(metricLines.slice(0, 2), xPos + row1Width / 2, textY, { align: "center" });
+    // Center vertically: for 1 line, center at box midpoint; for 2 lines, offset upward
+    const lineCount = Math.min(2, metricLines.length);
+    const lineH = 4;
+    const totalTextH = lineCount * lineH;
+    const textStartY = row1Y + (metricBoxHeight - totalTextH) / 2 + lineH;
+    metricLines.slice(0, 2).forEach((line: string, lIdx: number) => {
+      doc.text(line, xPos + row1Width / 2, textStartY + lIdx * lineH, { align: "center" });
+    });
   });
 
   const row2Width = (maxWidth - box.paddingX * 2 - spacing.gridGap * (metricsRow2.length - 1)) / metricsRow2.length;
@@ -11372,8 +11378,14 @@ const renderPrimaryConversionChannels = (
     doc.setFillColor(255, 255, 255);
     doc.roundedRect(xPos, row2Y, row2Width, metricBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     const metricLines = splitTextWithFont(doc, sanitizeText(metric), row2Width - 8, "caption", false);
-    const textY = row2Y + metricBoxHeight / 2 + 2;
-    doc.text(metricLines.slice(0, 2), xPos + row2Width / 2, textY, { align: "center" });
+    // Center vertically: for 1 line, center at box midpoint; for 2 lines, offset upward
+    const lineCount = Math.min(2, metricLines.length);
+    const lineH = 4;
+    const totalTextH = lineCount * lineH;
+    const textStartY = row2Y + (metricBoxHeight - totalTextH) / 2 + lineH;
+    metricLines.slice(0, 2).forEach((line: string, lIdx: number) => {
+      doc.text(line, xPos + row2Width / 2, textStartY + lIdx * lineH, { align: "center" });
+    });
   });
 
   yPosition += keyMetricsHeight + spacing.sectionGap;
