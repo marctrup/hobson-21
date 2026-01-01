@@ -7650,23 +7650,26 @@ const renderSituationAnalysis = (
     });
     textY += spacing.boxGap;
 
-    // Hobson value box - narrower width
+    // Hobson value box - centered text
     const valueBoxY = textY;
     const valueBoxWidth = maxWidth - spacing.bulletTextOffset;
     const valueBoxHeight = valueLines.length * bodyLine + spacing.boxTopPadding;
+    const valueBoxX = margin + spacing.paragraphGap;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(margin + spacing.paragraphGap, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    doc.roundedRect(valueBoxX, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setDrawColor(...theme.border);
     doc.setLineWidth(box.borderWidthThin);
-    doc.roundedRect(margin + spacing.paragraphGap, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "S");
+    doc.roundedRect(valueBoxX, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "S");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    textY = valueBoxY + spacing.paragraphGap;
-    valueLines.forEach((line: string) => {
-      doc.text(line, margin + spacing.sectionGap, textY);
-      textY += bodyLine;
+    // Calculate vertical center position
+    const valueTotalTextHeight = valueLines.length * bodyLine;
+    const valueTextStartY = valueBoxY + (valueBoxHeight - valueTotalTextHeight) / 2 + fontSize.bodySmall / 2;
+    const valueBoxCenterX = valueBoxX + valueBoxWidth / 2;
+    valueLines.forEach((line: string, lineIdx: number) => {
+      doc.text(line, valueBoxCenterX, valueTextStartY + lineIdx * bodyLine, { align: "center" });
     });
     textY = valueBoxY + valueBoxHeight + spacing.paragraphGap;
 
