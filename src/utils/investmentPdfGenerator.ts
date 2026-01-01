@@ -8984,14 +8984,14 @@ const renderCustomerOnlineBehaviour = (
     { bg: [236, 253, 245] as [number, number, number], accent: [5, 150, 105] as [number, number, number] }, // emerald - Priya
   ];
 
-  // Header - tight spacing using bodyLine
+  // Header - properly sized box with intro text
   const innerPadding = 8;
   const innerTextWidth = maxWidth - innerPadding * 2;
   const introText = sanitizeText(data.header.intro);
   const introLines = splitTextWithFont(doc, introText, innerTextWidth, "body", false);
-  // Compact header: title row (18) + intro lines + padding (4)
-  const headerHeight = 18 + introLines.length * bodyLine + 4;
-  fitPage(headerHeight + 4);
+  // Box height: title+subtitle area (24) + intro text + bottom padding (6)
+  const headerHeight = 24 + introLines.length * bodyLine + 6;
+  fitPage(headerHeight + 12);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
@@ -9012,7 +9012,7 @@ const renderCustomerOnlineBehaviour = (
   doc.setFont("helvetica", "normal");
   doc.text(sanitizeText(data.header.subtitle), margin + 16, yPosition + 18);
 
-  // Intro text with tight line spacing
+  // Intro text starting below title/subtitle
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   let introY = yPosition + 26;
@@ -9022,7 +9022,7 @@ const renderCustomerOnlineBehaviour = (
   });
 
   let textY = 0;
-  yPosition += headerHeight + 4;
+  yPosition += headerHeight + 10; // Extra spacing after header box
 
   // Where Customers Research Tools section
   fitPage(12);
@@ -9030,7 +9030,7 @@ const renderCustomerOnlineBehaviour = (
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Where Customers Research Tools", margin, yPosition);
-  yPosition += 8;
+  yPosition += 10; // More spacing after section header
 
   // Research channels for each persona - tight cards
   data.researchChannels.forEach((persona, idx) => {
