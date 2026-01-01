@@ -11432,27 +11432,53 @@ const renderPrimaryConversionChannels = (
   }
 
   // Key Metrics
+  const metrics = [
+    "Homepage CTR",
+    "Free sign-ups",
+    "Dwell time",
+    "Bounce rate",
+    "Retargeting conv.",
+    "Demo requests",
+    "High-intent conv."
+  ];
+
+  // 2-row layout so labels stay readable
+  const metricsRow1 = metrics.slice(0, 4);
+  const metricsRow2 = metrics.slice(4);
+
+  const keyMetricsHeight = 44;
   doc.setFillColor(245, 245, 245);
-  doc.roundedRect(margin, yPosition, maxWidth, 28, 3, 3, "F");
-  
+  doc.roundedRect(margin, yPosition, maxWidth, keyMetricsHeight, 3, 3, "F");
+
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Key Metrics", margin + box.paddingX, yPosition + spacing.titleY);
-  
-  const metrics = ["Homepage CTR", "Free sign-ups", "Dwell time", "Bounce rate", "Retargeting conv.", "Demo requests", "High-intent conv."];
-  const metricWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 6) / 7;
-  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+
+  const metricFontSize = PDF_CONFIG.fontSize.caption;
+  doc.setFontSize(metricFontSize);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  metrics.forEach((metric, idx) => {
-    const xPos = margin + box.paddingX + idx * (metricWidth + spacing.gridGap);
+
+  const row1Width = (maxWidth - box.paddingX * 2 - spacing.gridGap * (metricsRow1.length - 1)) / metricsRow1.length;
+  metricsRow1.forEach((metric, idx) => {
+    const xPos = margin + box.paddingX + idx * (row1Width + spacing.gridGap);
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(xPos, yPosition + 12, metricWidth, 12, 2, 2, "F");
-    const metricLines = doc.splitTextToSize(metric, metricWidth - 2);
-    doc.text(metricLines, xPos + 1, yPosition + 18);
+    doc.roundedRect(xPos, yPosition + 12, row1Width, 12, 2, 2, "F");
+    const metricLines = doc.splitTextToSize(metric, row1Width - 4);
+    doc.text(metricLines.slice(0, 2), xPos + 2, yPosition + 18);
   });
-  yPosition += 34;
+
+  const row2Width = (maxWidth - box.paddingX * 2 - spacing.gridGap * (metricsRow2.length - 1)) / metricsRow2.length;
+  metricsRow2.forEach((metric, idx) => {
+    const xPos = margin + box.paddingX + idx * (row2Width + spacing.gridGap);
+    doc.setFillColor(255, 255, 255);
+    doc.roundedRect(xPos, yPosition + 28, row2Width, 12, 2, 2, "F");
+    const metricLines = doc.splitTextToSize(metric, row2Width - 4);
+    doc.text(metricLines.slice(0, 2), xPos + 2, yPosition + 34);
+  });
+
+  yPosition += keyMetricsHeight + 6;
 
   // SMART Objectives
   doc.setFillColor(245, 243, 255);
