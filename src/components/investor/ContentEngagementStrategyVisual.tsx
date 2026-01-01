@@ -290,12 +290,12 @@ export const ContentEngagementStrategyVisual: React.FC = () => {
       </div>
 
       {/* Digital Channel Acquisition Strategy */}
-      <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-xl p-6 text-white">
+      <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl p-6 text-white">
         <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
           <TrendingUp className="w-5 h-5" />
           Digital Channel Acquisition Communication Strategy
         </h3>
-        <p className="text-gray-300 mb-4">
+        <p className="text-purple-100 mb-4">
           Hobson's acquisition strategy aims to build early awareness, attract suitable prospects, and guide them into pilot participation. The approach uses steady, informative communication rather than volume-driven tactics.
         </p>
 
@@ -303,7 +303,7 @@ export const ContentEngagementStrategyVisual: React.FC = () => {
           {/* Strategic Goals */}
           <div className="bg-white/10 rounded-lg p-4">
             <p className="font-semibold mb-2">A. Strategic Acquisition Goals</p>
-            <ul className="space-y-1 text-sm text-gray-300">
+            <ul className="space-y-1 text-sm text-purple-100">
               <li>• Make Hobson visible to real estate professionals with document-heavy workflows</li>
               <li>• Bring qualified traffic to the website and quiz</li>
               <li>• Build interest in the 2026 pilot programme</li>
@@ -314,11 +314,11 @@ export const ContentEngagementStrategyVisual: React.FC = () => {
           {/* Messaging Focus */}
           <div className="bg-white/10 rounded-lg p-4">
             <p className="font-semibold mb-2">B. Acquisition Messaging Focus</p>
-            <ul className="space-y-1 text-sm text-gray-300">
-              <li>• <span className="text-purple-300">Clear outcomes:</span> fast answers from existing documents</li>
-              <li>• <span className="text-purple-300">Reliable behaviour:</span> transparent outputs and referenced info</li>
-              <li>• <span className="text-purple-300">Time savings:</span> reduced administrative load</li>
-              <li>• <span className="text-purple-300">Ease of adoption:</span> minimal change to existing workflows</li>
+            <ul className="space-y-1 text-sm text-purple-100">
+              <li>• <span className="text-amber-200">Clear outcomes:</span> fast answers from existing documents</li>
+              <li>• <span className="text-amber-200">Reliable behaviour:</span> transparent outputs and referenced info</li>
+              <li>• <span className="text-amber-200">Time savings:</span> reduced administrative load</li>
+              <li>• <span className="text-amber-200">Ease of adoption:</span> minimal change to existing workflows</li>
             </ul>
           </div>
         </div>
@@ -327,37 +327,37 @@ export const ContentEngagementStrategyVisual: React.FC = () => {
         <div className="mb-4">
           <p className="font-semibold mb-3">C. Channel Strategy</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="bg-white/5 rounded-lg p-3">
+            <div className="bg-white/10 rounded-lg p-3">
               <div className="flex items-center gap-2 mb-2">
-                <Linkedin className="w-4 h-4 text-blue-400" />
+                <Linkedin className="w-4 h-4 text-blue-200" />
                 <p className="font-medium text-sm">LinkedIn (Primary)</p>
               </div>
-              <p className="text-xs text-gray-400">Simple explanations, examples, case summaries, quiz distribution</p>
-              <p className="text-xs text-purple-300 mt-1">Target: 1,000 followers by Q4 2027</p>
+              <p className="text-xs text-purple-200">Simple explanations, examples, case summaries, quiz distribution</p>
+              <p className="text-xs text-amber-200 mt-1">Target: 1,000 followers by Q4 2027</p>
             </div>
-            <div className="bg-white/5 rounded-lg p-3">
+            <div className="bg-white/10 rounded-lg p-3">
               <div className="flex items-center gap-2 mb-2">
-                <Monitor className="w-4 h-4 text-teal-400" />
+                <Monitor className="w-4 h-4 text-teal-200" />
                 <p className="font-medium text-sm">Website & Search</p>
               </div>
-              <p className="text-xs text-gray-400">Clear landing pages, case examples, search-optimised content</p>
-              <p className="text-xs text-purple-300 mt-1">Target: 40% organic traffic increase by Q2 2027</p>
+              <p className="text-xs text-purple-200">Clear landing pages, case examples, search-optimised content</p>
+              <p className="text-xs text-amber-200 mt-1">Target: 40% organic traffic increase by Q2 2027</p>
             </div>
-            <div className="bg-white/5 rounded-lg p-3">
+            <div className="bg-white/10 rounded-lg p-3">
               <div className="flex items-center gap-2 mb-2">
-                <Search className="w-4 h-4 text-amber-400" />
+                <Search className="w-4 h-4 text-rose-200" />
                 <p className="font-medium text-sm">Paid Search (Later)</p>
               </div>
-              <p className="text-xs text-gray-400">Capture high-intent users after pages are developed</p>
-              <p className="text-xs text-purple-300 mt-1">Target: 3–5% CTR by Q4 2027</p>
+              <p className="text-xs text-purple-200">Capture high-intent users after pages are developed</p>
+              <p className="text-xs text-amber-200 mt-1">Target: 3–5% CTR by Q4 2027</p>
             </div>
-            <div className="bg-white/5 rounded-lg p-3">
+            <div className="bg-white/10 rounded-lg p-3">
               <div className="flex items-center gap-2 mb-2">
-                <Users className="w-4 h-4 text-rose-400" />
+                <Users className="w-4 h-4 text-teal-200" />
                 <p className="font-medium text-sm">Retargeting (Later)</p>
               </div>
-              <p className="text-xs text-gray-400">Feature clips, case snippets, testimonial extracts</p>
-              <p className="text-xs text-purple-300 mt-1">Target: 10% retargeted visitors to enquiries by Q4 2027</p>
+              <p className="text-xs text-purple-200">Feature clips, case snippets, testimonial extracts</p>
+              <p className="text-xs text-amber-200 mt-1">Target: 10% retargeted visitors to enquiries by Q4 2027</p>
             </div>
           </div>
         </div>
