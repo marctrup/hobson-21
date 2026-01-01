@@ -35,3 +35,18 @@ verify_jwt = false
 
 [functions.generate-investment-pdf]
 verify_jwt = false
+
+[functions.update-investment-password]
+verify_jwt = true
+
+[functions.store-reward-email]
+verify_jwt = false
+
+[functions.send-test-contact-email]
+verify_jwt = true
+
+[functions.send-test-pilot-email]
+verify_jwt = true
+
+[functions.upload-blog-images]
+verify_jwt = true

@@ -175,13 +175,31 @@ export default function Admin() {
     setIsUpdatingPassword(true);
 
     try {
-      // Update the password in the database
-      const { error } = await supabase
-        .from('investment_page_settings')
-        .update({ password_hash: newPassword })
-        .eq('id', (await supabase.from('investment_page_settings').select('id').single()).data?.id);
+      // Get the current session for authentication
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (!session) {
+        throw new Error('No active session');
+      }
 
-      if (error) throw error;
+      // Call edge function to update password (server-side hashing)
+      const response = await fetch(
+        'https://awfyhgeflakjhxtntokd.supabase.co/functions/v1/update-investment-password',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({ newPassword }),
+        }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to update password');
+      }
 
       toast({
         title: "Password Updated",
@@ -190,11 +208,11 @@ export default function Admin() {
 
       setNewPassword('');
       setConfirmPassword('');
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error updating password:', error);
       toast({
         title: "Update Failed",
-        description: "Failed to update the password. Please try again.",
+        description: error.message || "Failed to update the password. Please try again.",
         variant: "destructive",
       });
     } finally {
