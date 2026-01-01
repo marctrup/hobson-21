@@ -8799,14 +8799,13 @@ const renderCompetitorBenchmarks = (
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
   };
 
-  // Header - tighter spacing
-  const innerPadding = PDF_CONFIG.spacing.sectionGap;
+  // Header - tight spacing using PDF_CONFIG defaults
+  const innerPadding = PDF_CONFIG.spacing.cardGap;
   const innerTextWidth = maxWidth - innerPadding * 2;
-  const introLineSpacing = bodyLine + 0.5;
   const introLines = splitTextWithFont(doc, sanitizeText(data.header.intro), innerTextWidth, "body", false);
   const detailLines = splitTextWithFont(doc, sanitizeText(data.header.detail), innerTextWidth, "body", false);
-  // Compact header: title area (22) + intro lines + gap (2) + detail lines + bottom padding (3)
-  const headerHeight = PDF_CONFIG.card.textOffsetX + 2 + introLines.length * introLineSpacing + PDF_CONFIG.spacing.itemGap + detailLines.length * introLineSpacing + PDF_CONFIG.box.borderRadius;
+  // Compact header using tight line heights
+  const headerHeight = 22 + introLines.length * bodyLine + 2 + detailLines.length * bodyLine + 4;
   fitPage(headerHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
@@ -8828,24 +8827,22 @@ const renderCompetitorBenchmarks = (
   doc.setFont("helvetica", "normal");
   doc.text(sanitizeText(data.header.subtitle), margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + 17);
 
-  // Single justified paragraph for intro
+  // Intro paragraph - tight line spacing
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  const introStartY = yPosition + 24;
-  doc.text(sanitizeText(data.header.intro), margin + innerPadding, introStartY, {
-    maxWidth: innerTextWidth,
-    align: "justify",
-    lineHeightFactor: PDF_CONFIG.lineHeightFactor.loose,
+  let introY = yPosition + 24;
+  introLines.forEach((line: string) => {
+    doc.text(line, margin + innerPadding, introY);
+    introY += bodyLine;
   });
 
-  // Single justified paragraph for detail - reduced gap
-  const detailStartY = introStartY + introLines.length * introLineSpacing + PDF_CONFIG.spacing.itemGap;
+  // Detail paragraph - tight spacing
+  introY += 2;
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text(sanitizeText(data.header.detail), margin + innerPadding, detailStartY, {
-    maxWidth: innerTextWidth,
-    align: "justify",
-    lineHeightFactor: PDF_CONFIG.lineHeightFactor.loose,
+  detailLines.forEach((line: string) => {
+    doc.text(line, margin + innerPadding, introY);
+    introY += bodyLine;
   });
 
   yPosition += headerHeight + PDF_CONFIG.spacing.cardGap;
@@ -8858,8 +8855,10 @@ const renderCompetitorBenchmarks = (
     const socialLines = splitTextWithFont(doc, `Social: ${sanitizeText(competitor.social)}`, maxWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
     const implLines = splitTextWithFont(doc, `Implications: ${sanitizeText(competitor.implications)}`, maxWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
 
-    const cardHeight = 24 + personaLines.length * bodyLine + PDF_CONFIG.spacing.paragraphGap + seoLines.length * bodyLine + PDF_CONFIG.spacing.paragraphGap + socialLines.length * bodyLine + PDF_CONFIG.spacing.paragraphGap + implLines.length * bodyLine + PDF_CONFIG.spacing.cardGap + 2;
-    fitPage(cardHeight + PDF_CONFIG.spacing.cardGap);
+    // Tighter card height calculation
+    const sectionGap = 1; // Minimal gap between sections
+    const cardHeight = 18 + personaLines.length * bodyLine + sectionGap + seoLines.length * bodyLine + sectionGap + socialLines.length * bodyLine + sectionGap + implLines.length * bodyLine + 4;
+    fitPage(cardHeight + 4);
 
     const isHobson = competitor.isHobson;
     const bgColor = isHobson ? PDF_CONFIG.primaryBgLight : [248, 250, 252] as [number, number, number];
@@ -8874,14 +8873,14 @@ const renderCompetitorBenchmarks = (
 
     // Name
     doc.setFillColor(...accentColor);
-    doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2, PDF_CONFIG.circleSize.medium, "F");
+    doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + 8, PDF_CONFIG.circleSize.medium, "F");
 
     doc.setTextColor(...(isHobson ? PDF_CONFIG.primaryColor : PDF_CONFIG.textDark));
     doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
-    doc.text(competitor.name, margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.contentPadding);
+    doc.text(competitor.name, margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + 9);
 
-    textY = yPosition + PDF_CONFIG.card.headerHeight + PDF_CONFIG.spacing.cardGap + 2;
+    textY = yPosition + 16;
 
     // Personas
     doc.setTextColor(...PDF_CONFIG.textDark);
@@ -8891,21 +8890,21 @@ const renderCompetitorBenchmarks = (
       doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
       textY += bodyLine;
     });
-    textY += PDF_CONFIG.spacing.itemGap;
+    textY += sectionGap;
 
     // SEO
     seoLines.forEach((line: string) => {
       doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
       textY += bodyLine;
     });
-    textY += PDF_CONFIG.spacing.itemGap;
+    textY += sectionGap;
 
     // Social
     socialLines.forEach((line: string) => {
       doc.text(line, margin + PDF_CONFIG.box.paddingX, textY);
       textY += bodyLine;
     });
-    textY += PDF_CONFIG.spacing.itemGap;
+    textY += sectionGap;
 
     // Implications
     doc.setTextColor(...(isHobson ? PDF_CONFIG.primaryColor : PDF_CONFIG.textGray));
@@ -8915,7 +8914,7 @@ const renderCompetitorBenchmarks = (
       textY += bodyLine;
     });
 
-    yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
+    yPosition += cardHeight + 4;
   });
 
   // Summary
