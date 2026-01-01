@@ -7592,8 +7592,9 @@ const renderSituationAnalysis = (
     const useCaseHeight = segment.useCases.length * (bodyLine + spacing.paragraphGap / 2);
     const feedbackLines = splitTextWithFont(doc, `Client feedback: "${segment.feedback}"`, maxWidth - spacing.bulletTextOffset, "bodySmall", false);
     
-    const segmentHeight = spacing.contentBoxStart + lineHeight.loose + descLines.length * bodyLine + spacing.paragraphGap + valueLines.length * bodyLine + spacing.boxTopPadding + spacing.paragraphGap + useCaseHeight + spacing.paragraphGap + feedbackLines.length * bodyLine + box.paddingX + spacing.paragraphGap;
-    fitPage(segmentHeight + spacing.paragraphGap);
+    // Segment height with proper padding for feedback box
+    const segmentHeight = spacing.contentBoxStart + lineHeight.loose + descLines.length * bodyLine + spacing.sectionGap + valueLines.length * bodyLine + spacing.boxTopPadding + spacing.sectionGap + useCaseHeight + spacing.sectionGap + feedbackLines.length * bodyLine + box.paddingTop + box.paddingBottom + spacing.sectionGap;
+    fitPage(segmentHeight + spacing.sectionGap);
 
     // Main segment card
     doc.setFillColor(...theme.bg);
@@ -7703,7 +7704,7 @@ const renderSituationAnalysis = (
       feedbackTextY += bodyLine;
     });
 
-    yPosition += segmentHeight + spacing.paragraphGap;
+    yPosition += segmentHeight + spacing.sectionGap;
   });
 
   // 4. Targeting Strategy - force new page
