@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData, getMarketingObjectivesStructuredData, getBrandStrategyStructuredData, getBrandIntegrityStructuredData, getSegmentationStrategyStructuredData, getContentEngagementStrategyStructuredData, getPrimaryConversionChannelsStructuredData, getAcquisitionExecutiveSummaryStructuredData, getGoToMarketStrategyStructuredData, getCustomerSegmentationVisualStructuredData, getFinancialsExecutiveSummaryStructuredData, getPLAssumptionsDetailedStructuredData, getCostAssumptionsDetailedStructuredData, getOnboardingCostsDetailedStructuredData, getUKAssumptionsFinancialsDetailedStructuredData, getCACAssumptionsDetailedStructuredData, getBurnRateAssumptionsDetailedStructuredData, getPESTLEAnalysisStructuredData, getInternalCapabilityAssessmentStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData, getMarketingObjectivesStructuredData, getBrandStrategyStructuredData, getBrandIntegrityStructuredData, getSegmentationStrategyStructuredData, getContentEngagementStrategyStructuredData, getPrimaryConversionChannelsStructuredData, getAcquisitionExecutiveSummaryStructuredData, getGoToMarketStrategyStructuredData, getCustomerSegmentationVisualStructuredData, getFinancialsExecutiveSummaryStructuredData, getPLAssumptionsDetailedStructuredData, getCostAssumptionsDetailedStructuredData, getOnboardingCostsDetailedStructuredData, getUKAssumptionsFinancialsDetailedStructuredData, getCACAssumptionsDetailedStructuredData, getBurnRateAssumptionsDetailedStructuredData, getPESTLEAnalysisStructuredData, getInternalCapabilityAssessmentStructuredData, getOurVisionStructuredData, getStrategicApproachStructuredData, getRaiseStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -983,71 +983,42 @@ const renderOurVision = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // Source content from provider
+  const data = getOurVisionStructuredData();
+
   // Subtitle
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodyFont(doc);
-  doc.text("The Evolution of Hobson AI", pageWidth / 2, yPosition, { align: "center" });
+  doc.text(data.header.subtitle, pageWidth / 2, yPosition, { align: "center" });
   yPosition += 14;
 
-  // Define stage colors using PDF_CONFIG values
-  const slateColor = PDF_CONFIG.textGray;                          // slate-500 equivalent
-  const purpleColor = PDF_CONFIG.primaryDark;                      // purple-600
-  const primaryColor = PDF_CONFIG.primaryColor;                     // brand purple
+  // Color mapping for stages
+  const colorMap: Record<string, { color: [number, number, number]; bgColor: [number, number, number] }> = {
+    slate: { color: PDF_CONFIG.textGray, bgColor: PDF_CONFIG.bgLight },
+    purple: { color: PDF_CONFIG.primaryDark, bgColor: PDF_CONFIG.primaryBgLight },
+    primary: { color: PDF_CONFIG.primaryColor, bgColor: PDF_CONFIG.primaryBgMedium }
+  };
 
-  // Light background colors for each stage using PDF_CONFIG
-  const slateBg = PDF_CONFIG.bgLight;                              // slate-100 equivalent
-  const purpleBg = PDF_CONFIG.primaryBgLight;                      // very light purple
-  const primaryBg = PDF_CONFIG.primaryBgMedium;                    // primary/20
-
-  const stages = [
-    {
-      label: "Reactive Agent",
-      timeframe: "Today",
-      description: "AI retrieves when asked with accuracy",
-      icons: ["Prompts", "Retrieves"],
-      visualNote: "Human-led, AI responds",
-      color: slateColor,
-      bgColor: slateBg,
-    },
-    {
-      label: "Proactive Agent",
-      timeframe: "~1 Year",
-      description: "AI suggests & prepares, humans approve",
-      icons: ["Drafts", "Approvals"],
-      visualNote: "AI prepares, human confirms",
-      color: purpleColor,
-      bgColor: purpleBg,
-    },
-    {
-      label: "Autonomous Agent",
-      timeframe: "3-5 Years",
-      description: "AI executes & reports outcomes",
-      icons: ["Executes", "Audits"],
-      visualNote: "AI operates, human monitors",
-      color: primaryColor,
-      bgColor: primaryBg,
-    },
-  ];
-
-  // Calculate card dimensions - taller cards to fit all content
-  const cardWidth = (maxWidth - 12) / 3; // 3 cards with gaps
-  const cardHeight = 72; // Increased height
+  // Calculate card dimensions
+  const cardWidth = (maxWidth - 12) / 3;
+  const cardHeight = 72;
 
   // Render timeline cards
-  stages.forEach((stage, index) => {
+  data.stages.forEach((stage, index) => {
     const cardX = margin + index * (cardWidth + 6);
+    const colors = colorMap[stage.colorType] || colorMap.slate;
 
-    // Card background with distinct color per stage
-    doc.setFillColor(...stage.bgColor);
+    // Card background
+    doc.setFillColor(...colors.bgColor);
     doc.roundedRect(cardX, yPosition, cardWidth, cardHeight, 3, 3, "F");
 
-    // Card border with stage color
-    doc.setDrawColor(...stage.color);
+    // Card border
+    doc.setDrawColor(...colors.color);
     doc.setLineWidth(1);
     doc.roundedRect(cardX, yPosition, cardWidth, cardHeight, 3, 3, "S");
 
-    // Timeframe badge with stage color
-    doc.setFillColor(...stage.color);
+    // Timeframe badge
+    doc.setFillColor(...colors.color);
     setBodySmallFont(doc);
     const badgeWidth = doc.getTextWidth(stage.timeframe) + 10;
     const badgeX = cardX + (cardWidth - badgeWidth) / 2;
@@ -1055,8 +1026,8 @@ const renderOurVision = (
     doc.setTextColor(...PDF_CONFIG.bgWhite);
     doc.text(stage.timeframe, cardX + cardWidth / 2, yPosition + 11, { align: "center" });
 
-    // Stage label with stage color
-    doc.setTextColor(...stage.color);
+    // Stage label
+    doc.setTextColor(...colors.color);
     setCardTitleFont(doc);
     doc.text(stage.label, cardX + cardWidth / 2, yPosition + 24, { align: "center" });
 
@@ -1083,7 +1054,7 @@ const renderOurVision = (
     const descLines = doc.splitTextToSize(stage.description, cardWidth - 10);
     doc.text(descLines, cardX + cardWidth / 2, yPosition + 48, { align: "center" });
 
-    // Visual note at bottom
+    // Visual note
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.text(stage.visualNote, cardX + cardWidth / 2, yPosition + 66, { align: "center" });
@@ -1091,36 +1062,32 @@ const renderOurVision = (
 
   yPosition += cardHeight + 14;
 
-  // Progression indicators section
+  // Progression indicators
   yPosition = checkPageBreak(doc, yPosition, 30, pageHeight, margin);
 
-  // Use the exact same colors for dots as the cards
-  const indicators = [
-    { label: "Automation", direction: "Increasing", colors: [slateColor, purpleColor, primaryColor] },
-    { label: "Human Effort", direction: "Decreasing", colors: [primaryColor, purpleColor, slateColor] },
-    { label: "Scale", direction: "Expanding", colors: [slateColor, purpleColor, primaryColor] },
+  const indicatorWidth = maxWidth / 3;
+  const indicatorColors = [
+    [PDF_CONFIG.textGray, PDF_CONFIG.primaryDark, PDF_CONFIG.primaryColor],
+    [PDF_CONFIG.primaryColor, PDF_CONFIG.primaryDark, PDF_CONFIG.textGray],
+    [PDF_CONFIG.textGray, PDF_CONFIG.primaryDark, PDF_CONFIG.primaryColor]
   ];
 
-  const indicatorWidth = maxWidth / 3;
-  indicators.forEach((indicator, index) => {
+  data.progressionIndicators.forEach((indicator, index) => {
     const indX = margin + index * indicatorWidth + indicatorWidth / 2;
 
-    // Label
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.text(indicator.label.toUpperCase(), indX, yPosition, { align: "center" });
 
-    // Dots with correct colors
     const dotY = yPosition + 7;
     const dotRadius = 2.5;
     const dotGap = 10;
-    indicator.colors.forEach((color, dotIndex) => {
+    indicatorColors[index].forEach((color, dotIndex) => {
       const dotX = indX - dotGap + dotIndex * dotGap;
       doc.setFillColor(...color);
       doc.circle(dotX, dotY, dotRadius, "F");
     });
 
-    // Direction
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.text(indicator.direction, indX, yPosition + 16, { align: "center" });
@@ -2016,117 +1983,58 @@ const renderStrategicApproach = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // ===== PILLAR 1: PRODUCT =====
-  yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
+  // Source content from provider
+  const data = getStrategicApproachStructuredData();
 
-  // Number badge
-  doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
+  // Color mapping for pillars
+  const colorMap: Record<string, { accent: [number, number, number]; bg: [number, number, number] }> = {
+    blue: { accent: PDF_CONFIG.blue, bg: PDF_CONFIG.blueBg },
+    rose: { accent: PDF_CONFIG.rose, bg: PDF_CONFIG.roseBg },
+    amber: { accent: PDF_CONFIG.amber, bg: PDF_CONFIG.amberBg }
+  };
 
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("Product", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+  data.pillars.forEach((pillar) => {
+    yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
+    const colors = colorMap[pillar.colorType] || colorMap.blue;
 
-  // Subtitle - wrap long text
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  setBodySmallFont(doc);
-  const productSubtitle = "Hobson has been built to replace document-driven human reasoning without disrupting existing workflows";
-  const productSubLines = doc.splitTextToSize(sanitizeText(productSubtitle), maxWidth - 30);
-  let subY = yPosition + 14;
-  productSubLines.forEach((line: string) => {
-    doc.text(line, margin + 18, subY);
-    subY += PDF_CONFIG.lineHeight.body;
+    // Number badge
+    doc.setFillColor(...colors.accent);
+    doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    setCardTitleFont(doc);
+    doc.text(pillar.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+
+    // Subtitle - wrap long text
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    setBodySmallFont(doc);
+    const subLines = doc.splitTextToSize(sanitizeText(pillar.subtitle), maxWidth - 30);
+    let subY = yPosition + 14;
+    subLines.forEach((line: string) => {
+      doc.text(line, margin + 18, subY);
+      subY += PDF_CONFIG.lineHeight.body;
+    });
+    yPosition = subY + 4;
+
+    yPosition = renderBulletList(doc, pillar.items, margin + 4, yPosition, maxWidth - 8, colors.accent, PDF_CONFIG.textDark);
+    yPosition += 2;
+
+    // Conclusion box (if exists)
+    if (pillar.conclusion) {
+      doc.setFillColor(...colors.bg);
+      const conclusionLines = doc.splitTextToSize(sanitizeText(pillar.conclusion), maxWidth - 30);
+      const conclusionHeight = 6 + conclusionLines.length * 5;
+      doc.roundedRect(margin + 8, yPosition, maxWidth - 16, conclusionHeight, 2, 2, "F");
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      setBodySmallFont(doc);
+      doc.text(conclusionLines, margin + 14, yPosition + 6);
+      yPosition += conclusionHeight + 8;
+    } else {
+      yPosition += 8;
+    }
   });
-  yPosition = subY + 4;
 
-  const productItems = [
-    "Operates inside current systems",
-    "Zero onboarding or behavioural change",
-    "Unifies reasoning across documents, emails, and platforms",
-    "Transparent citations and verifiable outputs",
-  ];
-
-  yPosition = renderBulletList(doc, productItems, margin + 4, yPosition, maxWidth - 8, PDF_CONFIG.blue, PDF_CONFIG.textDark);
-  yPosition += 2;
-
-  // Conclusion box
-  doc.setFillColor(...PDF_CONFIG.blueBg);
-  const productConclusionHeight = 12;
-  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, productConclusionHeight, 2, 2, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setBodySmallFont(doc);
-  doc.text("Trust is earned first. Expansion into proactive guidance and automation will follow.", margin + 14, yPosition + 7);
-  yPosition += productConclusionHeight + 8;
-
-  // ===== PILLAR 2: BRAND =====
-  yPosition = checkPageBreak(doc, yPosition, 70, pageHeight, margin);
-
-  // Number badge
-  doc.setFillColor(...PDF_CONFIG.rose);
-  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("Brand", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
-
-  // Subtitle - wrap long text
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  setBodySmallFont(doc);
-  const brandSubtitle = "Hobson has been designed for high-stakes operational environments where accuracy, traceability, and defensibility are non-negotiable";
-  const brandSubLines = doc.splitTextToSize(sanitizeText(brandSubtitle), maxWidth - 30);
-  subY = yPosition + 14;
-  brandSubLines.forEach((line: string) => {
-    doc.text(line, margin + 18, subY);
-    subY += PDF_CONFIG.lineHeight.body;
-  });
-  yPosition = subY + 4;
-
-  const brandItems = [
-    "Predictable behaviour",
-    "Transparent sources",
-    "Clear expectations",
-    "Fast feedback loops",
-  ];
-
-  yPosition = renderBulletList(doc, brandItems, margin + 4, yPosition, maxWidth - 8, PDF_CONFIG.rose, PDF_CONFIG.textDark);
-  yPosition += 2;
-
-  // Conclusion box
-  doc.setFillColor(...PDF_CONFIG.roseBg);
-  const brandConclusionHeight = 10;
-  doc.roundedRect(margin + 8, yPosition, maxWidth - 16, brandConclusionHeight, 2, 2, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setBodySmallFont(doc);
-  doc.text("The brand signals reliability under pressure.", margin + 14, yPosition + 6);
-  yPosition += brandConclusionHeight + 8;
-
-  // ===== PILLAR 3: BUSINESS MODEL =====
-  yPosition = checkPageBreak(doc, yPosition, 60, pageHeight, margin);
-
-  // Number badge
-  doc.setFillColor(...PDF_CONFIG.amber);
-  doc.circle(margin + PDF_CONFIG.spacing.bulletOffset, yPosition + PDF_CONFIG.numberedCircle.yOffset, PDF_CONFIG.circleSize.large, "F");
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  setCardTitleFont(doc);
-  doc.text("Business Model", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
-
-  // Subtitle
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  setBodySmallFont(doc);
-  doc.text("Hobson has been designed to become the default intelligence layer", margin + 18, yPosition + 14);
-  yPosition += 14 + PDF_CONFIG.spacing.subtitleToBullets + PDF_CONFIG.lineHeight.body;
-
-  const businessItems = [
-    "Usage-based pricing aligned to value delivered (HEU)",
-    "No licence, per-user, or per-asset fees",
-    "Low base cost enabling broad adoption",
-    "Full transparency into AI actions",
-  ];
-
-  yPosition = renderBulletList(doc, businessItems, margin + 4, yPosition, maxWidth - 8, PDF_CONFIG.amber, PDF_CONFIG.textDark);
   yPosition += PDF_CONFIG.spacing.sectionGap;
-
   return yPosition;
 };
 
@@ -2637,21 +2545,24 @@ const renderRaise = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // Source content from provider
+  const data = getRaiseStructuredData();
+
   // Funding header box
   const headerHeight = 32;
   renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
-  // Funding icon circle - aligned with FUNDING REQUIREMENT text
+  // Funding icon circle
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 20, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("FUNDING REQUIREMENT", margin + 28, yPosition + 12);
+  doc.text(data.fundingRequirement.label, margin + 28, yPosition + 12);
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setStatFont(doc);
-  doc.text("GBP 1.8M", margin + 36, yPosition + 24);
+  doc.text(data.fundingRequirement.amount, margin + 36, yPosition + 24);
 
   yPosition += headerHeight + 12;
 
@@ -2661,16 +2572,10 @@ const renderRaise = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Use of Funds", margin + 18, yPosition + 7);
+  doc.text(data.useOfFunds.title, margin + 18, yPosition + 7);
   yPosition += 14;
 
-  const useOfFunds = [
-    "To secure category leadership with a production-grade platform, QA, and security",
-    "Core technical and go-to-market hiring",
-    "Conversion of pilots into contracted deployments",
-  ];
-
-  useOfFunds.forEach((item) => {
+  data.useOfFunds.items.forEach((item) => {
     const cardHeight = 16;
     renderContentCard(doc, margin + 10, yPosition, maxWidth - 20, cardHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
 
@@ -2679,7 +2584,7 @@ const renderRaise = (
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     setBodySmallFont(doc);
-    doc.text(item, margin + 28, yPosition + 10);
+    doc.text(sanitizeText(item), margin + 28, yPosition + 10);
 
     yPosition += cardHeight + 4;
   });

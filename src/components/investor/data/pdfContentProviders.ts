@@ -5728,3 +5728,102 @@ export const getInternalCapabilityAssessmentStructuredData = () => ({
     }
   ]
 });
+
+// Our Vision structured data provider - matches OurVisionVisual.tsx
+export const getOurVisionStructuredData = () => ({
+  header: {
+    title: "Our Vision",
+    subtitle: "The Evolution of Hobson AI"
+  },
+  stages: [
+    {
+      label: "Reactive Agent",
+      timeframe: "Today",
+      description: "AI retrieves when asked with accuracy",
+      icons: ["Prompts", "Retrieves"],
+      visualNote: "Human-led, AI responds",
+      colorType: "slate"
+    },
+    {
+      label: "Proactive Agent",
+      timeframe: "~1 Year",
+      description: "AI suggests & prepares, humans approve",
+      icons: ["Drafts", "Approvals"],
+      visualNote: "AI prepares, human confirms",
+      colorType: "purple"
+    },
+    {
+      label: "Autonomous Agent",
+      timeframe: "3-5 Years",
+      description: "AI executes & reports outcomes",
+      icons: ["Executes", "Reports", "Audits"],
+      visualNote: "AI operates, human monitors",
+      colorType: "primary"
+    }
+  ],
+  progressionIndicators: [
+    { label: "Automation", direction: "Increasing" },
+    { label: "Human Effort", direction: "Decreasing" },
+    { label: "Scale", direction: "Expanding" }
+  ]
+});
+
+// Strategic Approach structured data provider - matches ApproachVisual.tsx
+export const getStrategicApproachStructuredData = () => ({
+  pillars: [
+    {
+      number: 1,
+      title: "Product",
+      subtitle: "Hobson has been built to replace document-driven human reasoning without disrupting existing workflows",
+      colorType: "blue",
+      items: [
+        "Operates inside current systems",
+        "Zero onboarding or behavioural change",
+        "Unifies reasoning across documents, emails, and platforms",
+        "Transparent citations and verifiable outputs"
+      ],
+      conclusion: "Trust is earned first. Expansion into proactive guidance and automation will follow."
+    },
+    {
+      number: 2,
+      title: "Brand",
+      subtitle: "Hobson has been designed for high-stakes operational environments where accuracy, traceability, and defensibility are non-negotiable",
+      colorType: "rose",
+      items: [
+        "Predictable behaviour",
+        "Transparent sources",
+        "Clear expectations",
+        "Fast feedback loops"
+      ],
+      conclusion: "The brand signals reliability under pressure."
+    },
+    {
+      number: 3,
+      title: "Business Model",
+      subtitle: "Hobson has been designed to become the default intelligence layer",
+      colorType: "amber",
+      items: [
+        "Usage-based pricing aligned to value delivered (HEU)",
+        "No licence, per-user, or per-asset fees",
+        "Low base cost enabling broad adoption",
+        "Full transparency into AI actions"
+      ]
+    }
+  ]
+});
+
+// Raise structured data provider - matches RaiseVisual.tsx
+export const getRaiseStructuredData = () => ({
+  fundingRequirement: {
+    label: "FUNDING REQUIREMENT",
+    amount: "GBP 1.8M"
+  },
+  useOfFunds: {
+    title: "Use of Funds",
+    items: [
+      "To secure category leadership with a production-grade platform, QA, and security",
+      "Core technical and go-to-market hiring",
+      "Conversion of pilots into contracted deployments"
+    ]
+  }
+});
