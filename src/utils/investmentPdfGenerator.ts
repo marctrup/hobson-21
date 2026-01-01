@@ -8984,14 +8984,14 @@ const renderCustomerOnlineBehaviour = (
     { bg: [236, 253, 245] as [number, number, number], accent: [5, 150, 105] as [number, number, number] }, // emerald - Priya
   ];
 
-  // Header - single justified paragraph
-  const innerPadding = PDF_CONFIG.spacing.sectionGap;
+  // Header - tight spacing using bodyLine
+  const innerPadding = 8;
   const innerTextWidth = maxWidth - innerPadding * 2;
   const introText = sanitizeText(data.header.intro);
   const introLines = splitTextWithFont(doc, introText, innerTextWidth, "body", false);
-  const introHeight = introLines.length * (bodyLine * PDF_CONFIG.lineHeightFactor.tight) + PDF_CONFIG.spacing.paragraphGap;
-  const headerHeight = 28 + introHeight;
-  fitPage(headerHeight + PDF_CONFIG.spacing.cardGap);
+  // Compact header: title row (18) + intro lines + padding (4)
+  const headerHeight = 18 + introLines.length * bodyLine + 4;
+  fitPage(headerHeight + 4);
 
   doc.setFillColor(...PDF_CONFIG.blueBg);
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
@@ -9000,79 +9000,79 @@ const renderCustomerOnlineBehaviour = (
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "S");
 
   doc.setFillColor(...PDF_CONFIG.blue);
-  doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + 8, yPosition + 9, PDF_CONFIG.circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2);
+  doc.text(data.header.title, margin + 16, yPosition + 10);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.header.subtitle), margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.card.textOffsetX + 2);
+  doc.text(sanitizeText(data.header.subtitle), margin + 16, yPosition + 18);
 
+  // Intro text with tight line spacing
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.text(introText, margin + innerPadding, yPosition + 32, {
-    maxWidth: innerTextWidth,
-    align: "justify",
-    lineHeightFactor: PDF_CONFIG.lineHeightFactor.tight,
+  let introY = yPosition + 26;
+  introLines.forEach((line: string) => {
+    doc.text(line, margin + innerPadding, introY);
+    introY += bodyLine;
   });
 
   let textY = 0;
-
-  yPosition += headerHeight + PDF_CONFIG.spacing.cardGap;
+  yPosition += headerHeight + 4;
 
   // Where Customers Research Tools section
-  fitPage(PDF_CONFIG.card.textOffsetX);
+  fitPage(12);
   doc.setTextColor(...PDF_CONFIG.blue);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Where Customers Research Tools", margin, yPosition);
-  yPosition += PDF_CONFIG.spacing.circleOffset + 2;
+  yPosition += 8;
 
-  // Research channels for each persona
+  // Research channels for each persona - tight cards
   data.researchChannels.forEach((persona, idx) => {
     const colors = personaColors[idx];
-    const channelsHeight = persona.channels.length * (bodyLine + PDF_CONFIG.spacing.itemGap);
-    const cardHeight = 24 + channelsHeight + PDF_CONFIG.spacing.cardGap + 2;
-    fitPage(cardHeight + PDF_CONFIG.spacing.cardGap);
+    const channelsHeight = persona.channels.length * (bodyLine + 1);
+    const cardHeight = 18 + channelsHeight + 4;
+    fitPage(cardHeight + 4);
 
     doc.setFillColor(...colors.bg);
     doc.roundedRect(margin, yPosition, maxWidth, cardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
 
     // Persona initial circle
     doc.setFillColor(...colors.accent);
-    doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.circleSize.medium, "F");
+    doc.circle(margin + 8, yPosition + 9, PDF_CONFIG.circleSize.medium, "F");
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(persona.persona.charAt(0), margin + PDF_CONFIG.spacing.circleOffset, yPosition + 16);
+    doc.text(persona.persona.charAt(0), margin + 6, yPosition + 10);
 
     // Persona name and role
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
     doc.setFont("helvetica", "bold");
-    doc.text(persona.persona, margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.spacing.circleOffset + 2);
+    doc.text(persona.persona, margin + 16, yPosition + 9);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(persona.role), margin + PDF_CONFIG.card.textOffsetX + 2, yPosition + PDF_CONFIG.card.textOffsetX);
+    doc.text(sanitizeText(persona.role), margin + 16, yPosition + 16);
 
-    textY = yPosition + 28;
+    textY = yPosition + 22;
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     persona.channels.forEach((channel) => {
       doc.setFillColor(...colors.accent);
-      doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
-      const channelLines = splitTextWithFont(doc, sanitizeText(channel), maxWidth - 24, "bodySmall", false);
-      doc.text(channelLines[0] || "", margin + PDF_CONFIG.spacing.textIndent, textY);
-      textY += bodyLine + PDF_CONFIG.spacing.itemGap;
+      doc.circle(margin + 8, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
+      const channelLines = splitTextWithFont(doc, sanitizeText(channel), maxWidth - 20, "bodySmall", false);
+      doc.text(channelLines[0] || "", margin + 14, textY);
+      textY += bodyLine + 1;
     });
 
-    yPosition += cardHeight + PDF_CONFIG.spacing.cardGap;
+    yPosition += cardHeight + 4;
   });
 
   // What Content They Trust section
