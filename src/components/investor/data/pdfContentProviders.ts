@@ -3769,6 +3769,587 @@ export const getBrandStrategyStructuredData = (): BrandStrategyData => ({
   timelineSummary: "2026 builds the foundation >> 2027 scales visibility + conversion >> 2028 prepares global readiness."
 });
 
+// ============================================================================
+// BRAND INTEGRITY STRUCTURED DATA PROVIDER
+// Matches BrandIntegrityVisual.tsx exactly
+// ============================================================================
+
+export interface BrandIntegrityData {
+  summaryText: string;
+  nextPhase: string[];
+  closingNote: string;
+  brandBackground: {
+    description: string;
+    archetypes: Array<{ name: string; trait: string; desc: string }>;
+    visualElements: string;
+  };
+  strengths: string[];
+  weaknesses: string[];
+  emotionalAppeal: {
+    promise: string;
+    deepenedBy: string[];
+  };
+  cognitiveAppeal: {
+    intro: string;
+    features: Array<{ title: string; desc: string }>;
+    internalNote: string;
+  };
+  authenticity: {
+    description: string;
+    enhancements: string;
+  };
+  metaphors: Array<{ metaphor: string; description: string }>;
+  internalUseCases: string[];
+  currentPosition: {
+    description: string;
+    opportunity: string;
+  };
+}
+
+export const getBrandIntegrityStructuredData = (): BrandIntegrityData => ({
+  summaryText: "Hobson has a clear, coherent, and authentic brand foundation. Its voice, visual identity, archetypes, and interactive elements all convey calm intelligence and dependable guidance.",
+  nextPhase: [
+    "Scaling emotional storytelling",
+    "Building structured support and resolution processes",
+    "Demonstrating the move from retrieval to proactive insight and strategic clarity"
+  ],
+  closingNote: "With these in place, Hobson can move from promising to preferred in the emerging category of AI document intelligence for Real Estate.",
+  brandBackground: {
+    description: "Hobson is a calm, intelligent, and dependable AI assistant built for Real Estate professionals who work with complex, document-heavy workflows. The brand stands for clarity, trust, and simplicity, turning source-of-truth documents into fast, accurate, fully referenced answers.",
+    archetypes: [
+      { name: "Sage", trait: "Primary Archetype", desc: "Wisdom, guidance, truth" },
+      { name: "Ruler", trait: "Supporting Trait", desc: "Order, reliability" },
+      { name: "Creator", trait: "Supporting Trait", desc: "Innovation" }
+    ],
+    visualElements: "The purple palette signals insight and clear thinking rather than noisy disruption. The owl mascot embodies Hobson's role as a quiet, observant guide. The Hobson Energy Unit (HUE) adds a coin-based 'energy' layer for engagement, rewards, or recognition."
+  },
+  strengths: [
+    "Simplifies document retrieval and reduces cognitive load",
+    "Saves meaningful time on routine information search",
+    "Provides transparent, referenced answers that build trust",
+    "Calm, clear, and jargon-free tone matching the Sage archetype",
+    "Consistent, modern, and recognisable visual assets",
+    "Interactive tools like the quiz reinforce Hobson as knowledgeable yet friendly"
+  ],
+  weaknesses: [
+    "Emotionally, the brand is not yet fully expressed - users understand what Hobson does but fewer cues about deeper human-level impact",
+    "Seen as reliable and helpful, but not yet as a source of ongoing strategic insight or proactive guidance",
+    "Still building resolution and support structures that mature brands rely on"
+  ],
+  emotionalAppeal: {
+    promise: "Hobson's emotional promise is reassurance. It reduces stress by making hard-to-find information easy to access, giving professionals a sense of control in high-pressure, chaotic environments.",
+    deepenedBy: [
+      "Before/after stories showing real relief and time saved",
+      "User narratives highlighting confidence and reduced risk",
+      "Visuals showing Hobson as calm presence in hectic workflows"
+    ]
+  },
+  cognitiveAppeal: {
+    intro: "The logical argument for Hobson is equally strong. Its architecture is designed for:",
+    features: [
+      { title: "Measurable outcomes", desc: "time saved, fewer errors, quicker decisions" },
+      { title: "Transparent referencing", desc: "every answer traced back to its source" }
+    ],
+    internalNote: "'Practice what we preach' - Hobson uses AI internally for testing, content refinement, and support tasks."
+  },
+  authenticity: {
+    description: "Authenticity is one of Hobson's core strengths. The brand avoids hype, is open about its limitations, and is built around clarity, not mystery. Showing sources for every answer is a direct expression of that principle.",
+    enhancements: "Confidence scores, incomplete-data alerts, and clearer 'how this answer was generated' views will deepen honesty. Case studies, short trials, and measurable results will provide external proof."
+  },
+  metaphors: [
+    { metaphor: "GPS for documents", description: "Takes you straight to the answer" },
+    { metaphor: "Master key", description: "Unlocks information hidden in dense files" },
+    { metaphor: "Compass in a document jungle", description: "Navigates complexity safely" },
+    { metaphor: "Desk lamp", description: "Quietly illuminates the truth whenever needed" }
+  ],
+  internalUseCases: [
+    "Automate testing and quality checks",
+    "Refine content and documentation",
+    "Support parts of customer communication"
+  ],
+  currentPosition: {
+    description: "Today, Hobson's market presence is selective and relationship-led. The focus is on deep MVP partnerships rather than broad public awareness. The brand is visually strong, the story is coherent, and the touchpoints - site, quiz, mascot, and interface - are consistent.",
+    opportunity: "Shift from being a quiet, validating presence into a confident, educational voice that helps shape expectations for AI-native assistants in real estate: what 'good' looks like, what transparency means, and how document intelligence should behave."
+  }
+});
+
+// ============================================================================
+// SEGMENTATION STRATEGY STRUCTURED DATA PROVIDER
+// Matches SegmentationStrategyVisual.tsx exactly
+// ============================================================================
+
+export interface SegmentationStrategyData {
+  header: {
+    title: string;
+    description: string;
+  };
+  positioningVision: string;
+  positioningPrinciples: Array<{ title: string; desc: string }>;
+  userUnderstanding: string[];
+  customerJourney: Array<{ stage: string; desc: string }>;
+  strategicAdvantages: Array<{ title: string; desc: string }>;
+  globalDirection: {
+    intro: string;
+    quote: string;
+    conclusion: string;
+  };
+  smartObjectives: Array<{ year: string; title: string; desc: string }>;
+  ukTargetingPhases: Array<{
+    phase: string;
+    title: string;
+    target: string;
+    objectives: string[];
+    brandRole: string;
+  }>;
+  globalExpansion: {
+    stats: Array<{ value: string; label: string }>;
+    priorities: string[];
+    smartObjectives: string[];
+  };
+  ukSmartObjectives: Array<{ stage: string; period: string; objective: string }>;
+  benefits: {
+    organisational: string[];
+    longTermVision: string[];
+    digitalStrategy: Array<{ area: string; desc: string }>;
+  };
+}
+
+export const getSegmentationStrategyStructuredData = (): SegmentationStrategyData => ({
+  header: {
+    title: "Organisational Positioning",
+    description: "Hobson's long-term positioning centres on supporting Real Estate professionals with an intelligence layer that enhances the systems they already use. The goal is to be recognised for delivering reliable document insight without requiring significant operational change."
+  },
+  positioningVision: "Hobson will be positioned as a practical, document-focused AI assistant that helps teams work faster and make decisions with clearer information. The emphasis is on complementing, not replacing, existing workflows. As the product matures, positioning will expand from retrieval to broader insight and guidance.",
+  positioningPrinciples: [
+    { title: "Direct Clarity", desc: "Answers that reduce effort and uncertainty" },
+    { title: "Reliability", desc: "Outputs that users can treat as dependable inputs to their work" },
+    { title: "Low Friction", desc: "A tool that is simple to adopt and easy to maintain" },
+    { title: "Supportive Role", desc: "An assistant that fits around current systems and processes" }
+  ],
+  userUnderstanding: [
+    "Helps them locate information quickly",
+    "Reduces the effort required in manual document review",
+    "Provides outputs that support confident decision-making"
+  ],
+  customerJourney: [
+    { stage: "Awareness", desc: "A practical AI option built for property operations" },
+    { stage: "Consideration", desc: "A simple way to access document insight quickly" },
+    { stage: "Conversion", desc: "A low-effort tool suitable for pilot use" },
+    { stage: "Retention", desc: "A dependable part of recurring workflows" }
+  ],
+  strategicAdvantages: [
+    { title: "1. Clear Category Definition", desc: "Focus on document intelligence avoids overlap with leasing automation or full-stack platforms" },
+    { title: "2. Low-Resistance Adoption", desc: "Enhancing existing tools reduces the organisational barriers often seen with new systems" },
+    { title: "3. Scalable Narrative", desc: "As the product evolves from retrieval to insight, the positioning can expand naturally without contradiction" }
+  ],
+  globalDirection: {
+    intro: "As Hobson enters additional markets, the positioning will scale to a universal, simple description:",
+    quote: "Hobson is a reliable AI assistant for Real Estate infrastructure management.",
+    conclusion: "This creates a consistent global identity that can adapt to local regulations and workflows."
+  },
+  smartObjectives: [
+    { year: "2025", title: "Positioning Framework", desc: "Publish a complete, scalable positioning framework by Q4 2025, ready to support the Q1 2026 MVP and pilot expansion." },
+    { year: "2026", title: "Brand Recognition", desc: "Improve brand recall by 20% by Q4 2026, driven by consistent messaging, educational content, and pilot storytelling." },
+    { year: "2027", title: "Industry Credibility", desc: "Appear in two respected industry reports by Q4 2027 as a leading AI solution for document intelligence in real estate." },
+    { year: "2028", title: "Category Definition", desc: "Establish 'document intelligence assistant' as a recognised category term in UK real estate by Q4 2028." },
+    { year: "2029", title: "Global Consistency", desc: "Achieve consistent brand positioning across the UK, EU, and US markets by Q4 2029." }
+  ],
+  ukTargetingPhases: [
+    {
+      phase: "1",
+      title: "Validation & MVP Readiness (Q1 2026)",
+      target: "Existing partners and up to 5 new non-paying pilot organisations",
+      objectives: [
+        "Finalise the MVP for Q1 2026",
+        "Build trust through early testing",
+        "Validate accuracy, referencing, and core workflows"
+      ],
+      brandRole: "Hobson acts as the Sage, a calm, intelligent guide helping teams see through document complexity."
+    },
+    {
+      phase: "2",
+      title: "Pilot Expansion & Evidence Building (Q2-Q3 2026)",
+      target: "Medium-sized Real Estate firms, small professional portfolios, selective large operators",
+      objectives: [
+        "Reach 10 active pilot organisations",
+        "Produce segment-specific proof points and case studies",
+        "Convert 3-5 pilots to paid accounts"
+      ],
+      brandRole: "A trusted, lightweight companion that delivers clarity without requiring system change."
+    },
+    {
+      phase: "3",
+      title: "Commercialisation & UK Market Entry (2027)",
+      target: "Pilot-to-paid conversions and new inbound paying customers",
+      objectives: [
+        "Launch public website and onboarding flows in Q1 2027",
+        "Establish predictable acquisition -> activation -> retention funnels",
+        "Build the ARR foundation for scale"
+      ],
+      brandRole: "A dependable, intelligent assistant that enhances existing systems."
+    }
+  ],
+  globalExpansion: {
+    stats: [
+      { value: "36.1%", label: "CAGR AI in Real Estate" },
+      { value: "$1.8T", label: "Market by 2030" },
+      { value: "10%+", label: "NOI improvements (McKinsey)" },
+      { value: "49%", label: "Firms saving costs (Forbes)" }
+    ],
+    priorities: [
+      "US & Canada - most mature Proptech ecosystems",
+      "EU (Germany, Netherlands, Nordics) - strong regulatory burden -> high document complexity",
+      "UAE & Singapore - fast adopters of digital-first property innovation"
+    ],
+    smartObjectives: [
+      "Enter two international markets by 2028",
+      "Secure 10 global pilot clients by mid-2029",
+      "Generate GBP 250k-400k global ARR by 2030",
+      "Publish 5 international case studies by 2030"
+    ]
+  },
+  ukSmartObjectives: [
+    { stage: "Validation", period: "2025-Q1 2026", objective: "Secure five additional non-paying pilots by end of Q1 2026" },
+    { stage: "User Satisfaction", period: "Q1-Q2 2026", objective: "Achieve 80%+ satisfaction by Q2 2026, measured through clarity, speed, and ease of use" },
+    { stage: "Segment Representation", period: "Q2-Q3 2026", objective: "Activate at least one pilot in each core segment by Q3 2026" },
+    { stage: "Messaging Frameworks", period: "Q3-Q4 2026", objective: "Develop fully segment-specific messaging by Q4 2026" },
+    { stage: "Commercial Validation", period: "2027", objective: "Convert 3-5 pilot organisations into paying clients by Q3 2027" }
+  ],
+  benefits: {
+    organisational: [
+      "Reduced market risk through staged validation",
+      "Strong proof-of-value before scaling",
+      "Clear roadmap from MVP -> Pilot -> Paid -> Global",
+      "Supports ARR, retention, and brand trust targets"
+    ],
+    longTermVision: [
+      "UK foundation -> scalable international model",
+      "Clear positioning as 'AI that brings clarity without disruption'",
+      "Alignment with global adoption curves and ROI trends"
+    ],
+    digitalStrategy: [
+      { area: "Acquisition", desc: "Prioritises segments with highest pain and readiness" },
+      { area: "Engagement", desc: "Persona-driven messaging + quiz + Sage brand identity" },
+      { area: "Lead Gen", desc: "Clear segment funnels feeding demos & pilots" },
+      { area: "Conversion", desc: "Phased targeting reduces friction to trial" },
+      { area: "Growth", desc: "Creates base for long-term global expansion" }
+    ]
+  }
+});
+
+// ============================================================================
+// CONTENT ENGAGEMENT STRATEGY STRUCTURED DATA PROVIDER
+// Matches ContentEngagementStrategyVisual.tsx exactly
+// ============================================================================
+
+export interface ContentEngagementStrategyData {
+  headerText: string;
+  purposeIntro: string;
+  purposes: Array<{ title: string; desc: string }>;
+  purposeNote: string;
+  coreThemes: Array<{ title: string; desc: string }>;
+  themesNote: string;
+  journeyStages: Array<{
+    stage: string;
+    goal: string;
+    items: string[];
+    success: string;
+  }>;
+  engagementMethods: Array<{ title: string; desc: string }>;
+  channels: Array<{ channel: string; role: string; examples: string }>;
+  channelNote: string;
+  smartTargets: Array<{
+    category: string;
+    items: string[];
+  }>;
+  strategyConclusion: string;
+  acquisitionStrategy: {
+    intro: string;
+    goals: string[];
+    messagingFocus: Array<{ highlight: string; desc: string }>;
+    channels: Array<{ name: string; icon: string; desc: string; target: string }>;
+  };
+  journeyCommunications: Array<{ stage: string; desc: string }>;
+  acquisitionTargets: Array<{ metric: string; desc: string }>;
+  conversionStrategy: {
+    intro: string;
+    points: string[];
+  };
+  finalSummary: string;
+}
+
+export const getContentEngagementStrategyStructuredData = (): ContentEngagementStrategyData => ({
+  headerText: "Hobson's content and engagement strategy is built to clearly introduce the product, reduce uncertainty around AI in real estate, and support a smooth progression from initial interest to long-term use. Because the product is still in an MVP phase, the strategy prioritises clarity and credibility over volume.",
+  purposeIntro: "Content exists to support three practical goals:",
+  purposes: [
+    { title: "Understanding", desc: "Help the market understand what Hobson does and why it matters" },
+    { title: "Confidence", desc: "Build confidence by showing how the product works and handles information" },
+    { title: "Support", desc: "Support users and prospects through each stage with simple, useful materials" }
+  ],
+  purposeNote: "The emphasis is on being informative and practical, without overstating capability.",
+  coreThemes: [
+    { title: "Clarity", desc: "Explaining how Hobson simplifies document work" },
+    { title: "Trust", desc: "Showing how answers are produced and referenced" },
+    { title: "Ease", desc: "Emphasising simple workflows and minimal effort" },
+    { title: "Practical Guidance", desc: "Offering examples reflecting day-to-day tasks" }
+  ],
+  themesNote: "These themes shape every asset, from short posts to onboarding material.",
+  journeyStages: [
+    {
+      stage: "1. See (Awareness)",
+      goal: "Show the problem and introduce Hobson",
+      items: [
+        "Short visual examples of document pain points",
+        "Simple explanations of what Hobson does",
+        "Interactive entry points such as the quiz"
+      ],
+      success: "Increased visibility and early curiosity"
+    },
+    {
+      stage: "2. Think (Consideration)",
+      goal: "Explain how Hobson works and what makes it different",
+      items: [
+        "Walkthroughs of question-and-answer outputs",
+        "Comparisons with manual workflows",
+        "Examples of referenced answers"
+      ],
+      success: "Longer engagement with product content"
+    },
+    {
+      stage: "3. Do (Conversion)",
+      goal: "Encourage pilot participation through clear pathways",
+      items: [
+        "Case summaries from early partners",
+        "Clear pages showing how to start",
+        "Invitations to limited pilot opportunities"
+      ],
+      success: "Enquiries and pilot sign-ups"
+    },
+    {
+      stage: "4. Care (Retention & Advocacy)",
+      goal: "Support ongoing use and create feedback loops",
+      items: [
+        "Simple onboarding materials",
+        "Short guidance tips",
+        "Updates on improvements or new features"
+      ],
+      success: "Continued usage and positive feedback"
+    }
+  ],
+  engagementMethods: [
+    { title: "The Quiz", desc: "An accessible way to introduce the problem space, gather light insights, and create an early emotional connection." },
+    { title: "Simple Stories and Examples", desc: "Day-to-day scenarios illustrate value more effectively than abstract claims." },
+    { title: "Direct Feedback Loops", desc: "1:1 conversations, polls, and structured partner feedback provide more value than large-scale community efforts at this stage." },
+    { title: "Emerging Insight Content", desc: "As the product matures, content will highlight examples of guidance, pattern spotting, or saved effort." }
+  ],
+  channels: [
+    { channel: "Website", role: "Education & conversion", examples: "Demos, explanations, case summaries" },
+    { channel: "LinkedIn", role: "Awareness & credibility", examples: "Updates, commentary, product examples" },
+    { channel: "Quiz", role: "Engagement & lead capture", examples: "Interactive entry point" },
+    { channel: "Email (later)", role: "Nurture & retention", examples: "Onboarding steps, feature highlights" },
+    { channel: "Product UI", role: "Ongoing engagement", examples: "Prompts, tips, clear output formatting" }
+  ],
+  channelNote: "This division keeps each channel focused and avoids over-communication during the MVP stage.",
+  smartTargets: [
+    {
+      category: "Content & Education (2026 Foundation)",
+      items: [
+        "Publish 10 clear, educational pieces by Q4 2026 to strengthen awareness, improve consideration, and support pilot onboarding.",
+        "Deliver three short onboarding guides for common user roles (COO, Asset Manager, Owner-Manager) by Q4 2026."
+      ]
+    },
+    {
+      category: "Engagement & Awareness (2026 Performance Targets)",
+      items: [
+        "Increase LinkedIn engagement by 15% by Q4 2026, driven by consistent educational posts, thought leadership, and early pilot insights.",
+        "Introduce simple feature-based email prompts by Q4 2026 to support continued use across pilots and early free-package users."
+      ]
+    },
+    {
+      category: "Scaled Reach for Launch (Early 2027)",
+      items: [
+        "Achieve 500+ quiz completions by Q2 2027, providing a healthy top-of-funnel audience ahead of the public commercial launch."
+      ]
+    }
+  ],
+  strategyConclusion: "This strategy creates a content ecosystem that explains Hobson, builds confidence gradually, and supports users at each stage with practical, low-effort materials.",
+  acquisitionStrategy: {
+    intro: "Hobson's acquisition strategy aims to build early awareness, attract suitable prospects, and guide them into pilot participation. The approach uses steady, informative communication rather than volume-driven tactics.",
+    goals: [
+      "Make Hobson visible to real estate professionals with document-heavy workflows",
+      "Bring qualified traffic to the website and quiz",
+      "Build interest in the 2026 pilot programme",
+      "Test channels and messaging for 2027 scale"
+    ],
+    messagingFocus: [
+      { highlight: "Clear outcomes", desc: "fast answers from existing documents" },
+      { highlight: "Reliable behaviour", desc: "transparent outputs and referenced info" },
+      { highlight: "Time savings", desc: "reduced administrative load" },
+      { highlight: "Ease of adoption", desc: "minimal change to existing workflows" }
+    ],
+    channels: [
+      { name: "LinkedIn (Primary)", icon: "linkedin", desc: "Simple explanations, examples, case summaries, quiz distribution", target: "1,000 followers by Q4 2027" },
+      { name: "Website & Search", icon: "monitor", desc: "Clear landing pages, case examples, search-optimised content", target: "40% organic traffic increase by Q2 2027" },
+      { name: "Paid Search (Later)", icon: "search", desc: "Capture high-intent users after pages are developed", target: "3-5% CTR by Q4 2027" },
+      { name: "Retargeting (Later)", icon: "users", desc: "Feature clips, case snippets, testimonial extracts", target: "10% retargeted visitors to enquiries by Q4 2027" }
+    ]
+  },
+  journeyCommunications: [
+    { stage: "Awareness", desc: "Introduce the problem and show how Hobson addresses it. Short visual comparisons or simple explanations of common pain points." },
+    { stage: "Consideration", desc: "More detail on how Hobson works using examples of referenced answers or simple walkthroughs. Reduce uncertainty and help assess fit." },
+    { stage: "Pilot Acquisition (2026)", desc: "Clarity around expectations, limited availability, and examples of value from earlier partners. Support a controlled, high-quality pilot group." },
+    { stage: "International Acquisition (2028+)", desc: "Adapt channels and messaging for markets with strong AI and digital tool adoption. Localisation, partnerships, and region-specific campaigns." }
+  ],
+  acquisitionTargets: [
+    { metric: "500+", desc: "Quiz completions by Q2 2027" },
+    { metric: "40%", desc: "Website traffic increase by Q4 2027" },
+    { metric: "1,000", desc: "LinkedIn followers by Q4 2027" },
+    { metric: "5+", desc: "Additional pilot participants by Q4 2026" },
+    { metric: "10%", desc: "Retargeted visitors converting by Q4 2027" },
+    { metric: "Q1 2028", desc: "International acquisition readiness" }
+  ],
+  conversionStrategy: {
+    intro: "Hobson's conversion strategy focuses on turning qualified interest into practical use by keeping the journey simple, lowering barriers to trial, and showing value quickly.",
+    points: [
+      "Give prospective users a straightforward path from curiosity to hands-on experience",
+      "Reduce perceived risk through a free entry point",
+      "Demonstrate value early through real interactions with uploaded documents",
+      "Improve conversion performance through continual measurement",
+      "Build a funnel that can support future paid tiers"
+    ]
+  },
+  finalSummary: "This acquisition strategy builds a patient, steady funnel that supports Hobson's stage of development. By using targeted channels, clear explanations, and evidence-led communication, Hobson can grow visibility, attract suitable prospects, and prepare for broader expansion once the product is ready for public rollout."
+});
+
+// ============================================================================
+// PRIMARY CONVERSION CHANNELS STRUCTURED DATA PROVIDER
+// Matches PrimaryConversionChannelsVisual.tsx exactly
+// ============================================================================
+
+export interface PrimaryConversionChannelsData {
+  headerText: string;
+  channels: Array<{
+    number: number;
+    title: string;
+    description: string;
+    items: string[];
+    note?: string;
+  }>;
+  keyTactics: Array<{
+    number: number;
+    title: string;
+    description: string;
+    items?: string[];
+    note?: string;
+  }>;
+  keyMetrics: string[];
+  metricsNote: string;
+  smartObjectives: Array<{ target: string; desc: string }>;
+  summary: string;
+}
+
+export const getPrimaryConversionChannelsStructuredData = (): PrimaryConversionChannelsData => ({
+  headerText: "The goal of the conversion strategy is to make it as easy as possible for prospects to try Hobson, see value quickly, and progress toward deeper engagement. Through clear entry points, behavioural insight, and ongoing optimisation, Hobson builds a conversion engine suited for early-stage pilots today and scalable commercial activity in the coming years.",
+  channels: [
+    {
+      number: 1,
+      title: "Website",
+      description: "The website acts as the main route into trials and enquiries. Conversion paths include:",
+      items: [
+        "Starting the free package",
+        "Requesting a demo",
+        "Submitting pilot enquiries",
+        "Moving from the quiz into a guided trial"
+      ],
+      note: "Pages will be optimised around clear calls to action, simple explanations, and trust signals."
+    },
+    {
+      number: 2,
+      title: "LinkedIn",
+      description: "LinkedIn brings warm, relevant traffic to the website. Its role in conversion is to:",
+      items: [
+        "Explain what the free experience involves",
+        "Show quick, concrete examples of value",
+        "Direct users to try the product without commitment"
+      ]
+    },
+    {
+      number: 3,
+      title: "Retargeting (Later Phase)",
+      description: "Retargeting will support users who need several exposures before acting. These campaigns will highlight:",
+      items: [
+        "What users can do immediately in the free package",
+        "Small examples of outcomes",
+        "Invitations to try the workflow for themselves"
+      ]
+    },
+    {
+      number: 4,
+      title: "Email (For Users Already Engaged)",
+      description: "Email will help users understand the product once they have expressed interest. It supports conversion by:",
+      items: [
+        "Guiding them through first steps",
+        "Giving prompts based on typical tasks",
+        "Reducing hesitation around accuracy or data handling"
+      ]
+    }
+  ],
+  keyTactics: [
+    {
+      number: 1,
+      title: "Free Package as Entry Point",
+      description: "A no-cost option removes the most significant practical and psychological barriers. It shifts the decision from 'should we commit?' to 'should we try this now?' The focus is on letting users experience the core value with minimal effort."
+    },
+    {
+      number: 2,
+      title: "Optimising Calls to Action",
+      description: "Conversion performance will be improved by testing:",
+      items: ["Wording", "Placement (especially above the fold)", "Number of CTAs per page", "Clarity of next steps"],
+      note: "Small changes here often produce meaningful gains."
+    },
+    {
+      number: 3,
+      title: "Improving Search-Driven Conversion",
+      description: "As search visibility grows, ensure visitors find clear, relevant information and a direct route to trial:",
+      items: ["Refining headings and page structure", "Ensuring pages match search intent", "Creating content aligned with typical tasks"],
+      note: "Better-matched traffic increases conversion efficiency."
+    },
+    {
+      number: 4,
+      title: "Behaviour-Driven Improvements",
+      description: "Heatmaps, scroll depth, and path analysis will be used to identify where users hesitate or leave. Findings inform:",
+      items: ["CTA placement", "Copy revisions", "Example positioning", "Layout simplification"],
+      note: "The aim is to make the journey feel effortless."
+    },
+    {
+      number: 5,
+      title: "Content Supporting Conversion",
+      description: "Short demos, simple examples, and case summaries help prospects understand what Hobson does in practice. Content is used to close the gap between interest and action by showing:",
+      items: ["How the product behaves", "What users can achieve in a first session", "Real cases that reflect day-to-day tasks"]
+    }
+  ],
+  keyMetrics: [
+    "Homepage click-through rate",
+    "Free-package sign-ups",
+    "Dwell time on core product pages",
+    "Bounce rate",
+    "Retargeting conversions",
+    "Demo requests",
+    "Conversion from high-intent organic traffic"
+  ],
+  metricsNote: "These measures show where to refine the journey.",
+  smartObjectives: [
+    { target: "20-30%", desc: "Increase CTA click-through rates by Q2 2026" },
+    { target: "10%", desc: "Conversion from high-intent visitors into free package by Q4 2026" },
+    { target: "5", desc: "New pilot participants by Q1 2026" },
+    { target: "2+ min", desc: "Product-page dwell time by Q2 2026" },
+    { target: "<40%", desc: "Reduce bounce rates by Q3 2026" },
+    { target: "10%", desc: "Convert retargeting audiences into enquiries by Q4 2026" },
+    { target: "5%", desc: "Demo-request rate by Q4 2026" }
+  ],
+  summary: "Through clear entry points, behavioural insight, and ongoing optimisation, Hobson builds a conversion engine suited for early-stage pilots today and scalable commercial activity in the coming years."
+});
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
