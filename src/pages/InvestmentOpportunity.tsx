@@ -86,6 +86,7 @@ import { BrandIntegrityVisual } from "@/components/investor/BrandIntegrityVisual
 import { PESTLEAnalysisVisual } from "@/components/investor/PESTLEAnalysisVisual";
 import { InternalCapabilityAssessmentVisual } from "@/components/investor/InternalCapabilityAssessmentVisual";
 import { SWOTAnalysisVisual } from "@/components/investor/SWOTAnalysisVisual";
+import { MarketingObjectivesVisual } from "@/components/investor/MarketingObjectivesVisual";
 import { AcquisitionExecutiveSummaryVisual } from "@/components/investor/AcquisitionExecutiveSummaryVisual";
 import { StrategicContextPositioningVisual } from "@/components/investor/StrategicContextPositioningVisual";
 import { SegmentationStrategyVisual } from "@/components/investor/SegmentationStrategyVisual";
@@ -695,6 +696,15 @@ const sections = [
         title: "SWOT Analysis",
         showCustomVisual: true,
         customVisualComponent: "swotAnalysis",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Marketing Objectives",
+        showCustomVisual: true,
+        customVisualComponent: "marketingObjectives",
         content: {
           overview: "",
           sections: [],
@@ -1673,6 +1683,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for SWOT Analysis */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "swotAnalysis" && (
                       <SWOTAnalysisVisual />
+                    )}
+
+                    {/* Custom Visual Component for Marketing Objectives */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "marketingObjectives" && (
+                      <MarketingObjectivesVisual />
                     )}
 
                     {/* Custom Visual Component for Acquisition Executive Summary */}
