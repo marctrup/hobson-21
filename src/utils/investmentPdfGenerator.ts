@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -2143,18 +2143,20 @@ const renderTeamCredibility = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // Source content from provider - single source of truth
+  const data = getTeamCredibilityStructuredData();
+
   // Header box
   const headerHeight = 36;
   renderContentCard(doc, margin, yPosition, maxWidth, headerHeight, PDF_CONFIG.primaryBgLight, PDF_CONFIG.primaryLight);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Founded by the Team Behind Arthur Online", margin + 12, yPosition + 14);
+  doc.text(data.header.title, margin + 12, yPosition + 14);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  const headerText = "Hobson was founded by the team behind Arthur Online, a Real Estate operations platform built and scaled for institutional adoption, which was acquired by Advent and Aareon in 2021.";
-  const headerLines = doc.splitTextToSize(sanitizeText(headerText), maxWidth - 24);
+  const headerLines = doc.splitTextToSize(sanitizeText(data.header.description), maxWidth - 24);
   let headerY = yPosition + 22;
   headerLines.forEach((line: string) => {
     doc.text(line, margin + 12, headerY);
@@ -2169,7 +2171,7 @@ const renderTeamCredibility = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Direct Market Experience", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+  doc.text(data.directExperience.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
   // Experience box
@@ -2178,8 +2180,7 @@ const renderTeamCredibility = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  const expText = "That experience provides direct insight into how Real Estate platforms are bought, deployed, and relied upon at scale - and where they break under document complexity, compliance pressure, and operational load.";
-  const expLines = doc.splitTextToSize(sanitizeText(expText), maxWidth - 40);
+  const expLines = doc.splitTextToSize(sanitizeText(data.directExperience.description), maxWidth - 40);
   let expY = yPosition + 8;
   expLines.forEach((line: string) => {
     doc.text(line, margin + 18, expY);
@@ -2194,20 +2195,13 @@ const renderTeamCredibility = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The Team Brings", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+  doc.text(data.teamBrings.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
-  const teamBrings = [
-    "Proven experience building and scaling enterprise Real Estate software",
-    "Deep understanding of document-heavy, regulated environments",
-    "Credibility with institutional buyers and partners",
-    "Prior experience navigating governance, security, and M&A processes",
-  ];
-
-  // 2x2 grid of cards
+  // 2x2 grid of cards - use provider content
   const cardWidth = (maxWidth - 30) / 2;
   const cardHeight = 24;
-  teamBrings.forEach((item, idx) => {
+  data.teamBrings.items.forEach((item, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const cardX = margin + 10 + col * (cardWidth + 6);
@@ -2253,6 +2247,9 @@ const renderFoundingLeadership = (
     }
   };
 
+  // Source content from provider - single source of truth
+  const data = getFoundingLeadershipStructuredData();
+
   // Header box - Proven Operators
   checkPageBreak(50);
   const headerHeight = 48;
@@ -2263,12 +2260,11 @@ const renderFoundingLeadership = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Proven Operators. Repeat Exits. Category Builders", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.contentPadding);
+  doc.text(data.header.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.contentPadding);
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  const headerText = "Hobson is led by a team that has built, scaled, and exited technology companies across three decades through multiple economic cycles and technology shifts. This is not a first venture.";
-  const headerLines = doc.splitTextToSize(sanitizeText(headerText), maxWidth - PDF_CONFIG.spacing.textIndent - PDF_CONFIG.spacing.itemGap);
+  const headerLines = doc.splitTextToSize(sanitizeText(data.header.description), maxWidth - PDF_CONFIG.spacing.textIndent - PDF_CONFIG.spacing.itemGap);
   let headerY = yPosition + PDF_CONFIG.spacing.textIndent + PDF_CONFIG.spacing.itemGap;
   headerLines.forEach((line: string) => {
     doc.text(line, margin + PDF_CONFIG.spacing.itemGap, headerY);
@@ -2277,7 +2273,7 @@ const renderFoundingLeadership = (
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson is the next evolution of a proven execution engine.", margin + PDF_CONFIG.spacing.itemGap, headerY + 2);
+  doc.text(data.header.highlight, margin + PDF_CONFIG.spacing.itemGap, headerY + 2);
   doc.setFont("helvetica", "normal");
 
   yPosition += headerHeight + PDF_CONFIG.spacing.itemGap;
@@ -2293,16 +2289,10 @@ const renderFoundingLeadership = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("The founding leadership has:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+  doc.text(data.foundingExperience.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
-  const foundingExperience = [
-    "built businesses throughout the 1990s, 2000s, and 2010s,",
-    "scaled enterprise software platforms in regulated industries,",
-    "and executed successful exits."
-  ];
-
-  foundingExperience.forEach((item) => {
+  data.foundingExperience.items.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.blue);
     doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + 2, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
@@ -2324,7 +2314,7 @@ const renderFoundingLeadership = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Arthur & Aareon Experience", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+  doc.text(data.arthurAareon.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const arthurBoxHeight = 52;
@@ -2332,8 +2322,7 @@ const renderFoundingLeadership = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodySmallFont(doc);
-  const arthurText1 = "Most notably, the team previously founded and scaled Arthur, a category-leading property management platform that Advent International and Aareon ultimately acquired in 2021.";
-  const arthurLines1 = doc.splitTextToSize(sanitizeText(arthurText1), maxWidth - PDF_CONFIG.spacing.pageBreakMargin);
+  const arthurLines1 = doc.splitTextToSize(sanitizeText(data.arthurAareon.intro1), maxWidth - PDF_CONFIG.spacing.pageBreakMargin);
   let arthurY = yPosition + PDF_CONFIG.spacing.bulletOffset;
   arthurLines1.forEach((line: string) => {
     doc.text(line, margin + PDF_CONFIG.spacing.textIndent, arthurY);
@@ -2341,21 +2330,14 @@ const renderFoundingLeadership = (
   });
 
   arthurY += 2;
-  const arthurText2 = "Following that acquisition, the leadership remained deeply involved in enterprise growth and strategic expansion inside Aareon's global organisation, where they:";
-  const arthurLines2 = doc.splitTextToSize(sanitizeText(arthurText2), maxWidth - PDF_CONFIG.spacing.pageBreakMargin);
+  const arthurLines2 = doc.splitTextToSize(sanitizeText(data.arthurAareon.intro2), maxWidth - PDF_CONFIG.spacing.pageBreakMargin);
   arthurLines2.forEach((line: string) => {
     doc.text(line, margin + PDF_CONFIG.spacing.textIndent, arthurY);
     arthurY += PDF_CONFIG.lineHeight.body;
   });
 
   arthurY += 2;
-  const aareonExperience = [
-    "led complex platform implementations,",
-    "managed large enterprise clients,",
-    "and executed additional acquisitions, including Fixflo and Tilt Property Software."
-  ];
-
-  aareonExperience.forEach((item) => {
+  data.arthurAareon.items.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
     doc.circle(margin + PDF_CONFIG.spacing.bulletTextOffset + 2, arthurY - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
@@ -2376,7 +2358,7 @@ const renderFoundingLeadership = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("This experience gives Hobson something few startups ever possess:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+  doc.text(data.keyInsight.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
   const insightBoxHeight = 16;
@@ -2385,7 +2367,7 @@ const renderFoundingLeadership = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  doc.text("Direct, operational knowledge of how to build, scale, integrate, and exit Real Estate technology businesses.", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.circleOffset);
+  doc.text(data.keyInsight.text, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.circleOffset);
   doc.setFont("helvetica", "normal");
 
   yPosition += insightBoxHeight + PDF_CONFIG.spacing.itemGap;
@@ -2401,22 +2383,13 @@ const renderFoundingLeadership = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Hobson's team has already navigated:", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
+  doc.text(data.teamNavigated.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.numberedCircle.yOffset + PDF_CONFIG.numberedCircle.textYOffset);
   yPosition += PDF_CONFIG.spacing.contentPadding;
 
-  const teamNavigated = [
-    "product-market fit,",
-    "hypergrowth,",
-    "enterprise implementation,",
-    "cross-border expansion,",
-    "post-acquisition integration,",
-    "and strategic M&A execution."
-  ];
-
-  // 2x3 grid
+  // 2x3 grid - use provider content
   const cardWidth = (maxWidth - PDF_CONFIG.spacing.gridGap * 3) / 2;
   const cardHeight = 16;
-  teamNavigated.forEach((item, idx) => {
+  data.teamNavigated.items.forEach((item, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const cardX = margin + PDF_CONFIG.spacing.circleOffset + col * (cardWidth + PDF_CONFIG.spacing.cardGap);
@@ -2434,7 +2407,7 @@ const renderFoundingLeadership = (
 
   yPosition += 3 * (cardHeight + PDF_CONFIG.spacing.boxGap) + PDF_CONFIG.spacing.itemGap;
 
-  // Conclusion box
+  // Conclusion box - use provider content
   checkPageBreak(24);
   const conclusionHeight = 20;
   renderContentCard(doc, margin, yPosition, maxWidth, conclusionHeight, PDF_CONFIG.emeraldBg, PDF_CONFIG.emeraldBorder);
@@ -2445,8 +2418,7 @@ const renderFoundingLeadership = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  const conclusionText = "Hobson enters the market with dramatically reduced execution risk and a clear blueprint for both scale and exit.";
-  doc.text(sanitizeText(conclusionText), margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.itemGap);
+  doc.text(sanitizeText(data.conclusion), margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.itemGap);
   doc.setFont("helvetica", "normal");
 
   yPosition += conclusionHeight + PDF_CONFIG.spacing.sectionGap;
@@ -2474,18 +2446,8 @@ const renderTeam = (
     }
   };
 
-  // Core Team data
-  const coreTeam = [
-    { name: "—", role: "CEO", description: "", isTBC: true },
-    { name: "Marc Trup", role: "Commercial Lead", description: "Driving enterprise sales, go-to-market execution, and customer growth" },
-    { name: "Rochelle Trup", role: "Commercial Lead", description: "Leading commercial strategy, partnerships, and market expansion" },
-    { name: "Julia Szaltoni", role: "Product Lead", description: "Driving product strategy, design, and customer outcomes with deep domain understanding of property operations and user behaviour" },
-    { name: "Denis Kosenkov", role: "Senior AI Developer", description: "Architecting Hobson's AI systems and execution pipelines" },
-    { name: "Kumar Ankit", role: "AI & Technical Lead", description: "Leading the core AI architecture and platform development" },
-    { name: "Harriet Taylor", role: "Marketing Lead", description: "", isTBC: true },
-    { name: "Max Grey", role: "Sales Lead", description: "", isTBC: true },
-    { name: "Saul Trup", role: "Client Success Lead", description: "", isTBC: true },
-  ];
+  // Source content from provider - single source of truth
+  const data = getTeamStructuredData();
 
   // Section 1: Core Operational Team Header
   checkPageBreak(30);
@@ -2494,27 +2456,26 @@ const renderTeam = (
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Core Operational Team", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset);
+  doc.text(data.coreTeam.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("The team driving Hobson's growth and innovation", margin + PDF_CONFIG.spacing.textIndent, yPosition + 16);
+  doc.text(data.coreTeam.subtitle, margin + PDF_CONFIG.spacing.textIndent, yPosition + 16);
   yPosition += 24;
 
   // Team member cards - 2 columns
   const cardWidth = (maxWidth - PDF_CONFIG.spacing.bulletOffset) / 2;
   const cardHeight = 36;
   
-  coreTeam.forEach((member, idx) => {
+  data.coreTeam.members.forEach((member, idx) => {
     const col = idx % 2;
-    const row = Math.floor(idx / 2);
     
     if (col === 0) {
       checkPageBreak(cardHeight + PDF_CONFIG.spacing.cardGap);
     }
     
     const cardX = margin + col * (cardWidth + PDF_CONFIG.spacing.bulletOffset);
-    const cardY = col === 0 ? yPosition : yPosition;
+    const cardY = yPosition;
 
     // Card background
     renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
@@ -2560,7 +2521,7 @@ const renderTeam = (
       });
     }
 
-    if (col === 1 || idx === coreTeam.length - 1) {
+    if (col === 1 || idx === data.coreTeam.members.length - 1) {
       yPosition += cardHeight + PDF_CONFIG.spacing.boxGap;
     }
   });
@@ -2574,13 +2535,12 @@ const renderTeam = (
   doc.line(margin + PDF_CONFIG.spacing.pageBreakMargin, yPosition, margin + maxWidth - PDF_CONFIG.spacing.pageBreakMargin, yPosition);
   
   doc.setFillColor(...PDF_CONFIG.bgWhite);
-  const dividerText = "STRATEGIC GUIDANCE";
-  const dividerTextWidth = doc.getTextWidth(dividerText) + 16;
+  const dividerTextWidth = doc.getTextWidth(data.advisors.dividerText) + 16;
   doc.rect(margin + (maxWidth - dividerTextWidth) / 2, yPosition - PDF_CONFIG.spacing.boxGap, dividerTextWidth, PDF_CONFIG.spacing.bulletOffset, "F");
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.caption);
-  doc.text(dividerText, margin + maxWidth / 2, yPosition + 2, { align: "center" });
+  doc.text(data.advisors.dividerText, margin + maxWidth / 2, yPosition + 2, { align: "center" });
   yPosition += 16;
 
   // Section 2: Advisory Board Header
@@ -2589,44 +2549,49 @@ const renderTeam = (
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
-  doc.text("Advisory Board", margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset);
+  doc.text(data.advisors.title, margin + PDF_CONFIG.spacing.textIndent, yPosition + PDF_CONFIG.spacing.bulletOffset);
   
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodySmallFont(doc);
-  doc.text("Experienced advisors providing strategic guidance", margin + PDF_CONFIG.spacing.textIndent, yPosition + 16);
+  doc.text(data.advisors.subtitle, margin + PDF_CONFIG.spacing.textIndent, yPosition + 16);
   yPosition += 24;
 
-  // Advisor card
+  // Advisor cards - use provider content
   const advisorCardHeight = 28;
-  renderContentCard(doc, margin, yPosition, cardWidth, advisorCardHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+  data.advisors.members.forEach((advisor) => {
+    renderContentCard(doc, margin, yPosition, cardWidth, advisorCardHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
 
-  // Initials
-  doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.setDrawColor(...PDF_CONFIG.border);
-  doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.spacing.bulletOffset, "FD");
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.caption);
-  doc.setFont("helvetica", "bold");
-  doc.text("ND", margin + PDF_CONFIG.spacing.contentPadding, yPosition + 16.5, { align: "center" });
+    // Initials
+    const initials = advisor.name.split(' ').map(n => n[0]).join('');
+    doc.setFillColor(...PDF_CONFIG.bgLight);
+    doc.setDrawColor(...PDF_CONFIG.border);
+    doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.spacing.bulletOffset, "FD");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(initials, margin + PDF_CONFIG.spacing.contentPadding, yPosition + 16.5, { align: "center" });
 
-  // Name and role
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.text("Nick Doffman", margin + 26, yPosition + 11);
+    // Name and role
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.text(advisor.name, margin + 26, yPosition + 11);
 
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFont("helvetica", "normal");
-  doc.setFontSize(PDF_CONFIG.fontSize.caption);
-  doc.text("Commercial Advisor", margin + 26, yPosition + 17);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.text(advisor.role, margin + 26, yPosition + 17);
 
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.caption);
-  doc.text("Bringing deep commercial and industry experience to guide strategic growth", margin + 26, yPosition + 24);
+    if (advisor.description) {
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      doc.setFontSize(PDF_CONFIG.fontSize.caption);
+      doc.text(advisor.description, margin + 26, yPosition + 24);
+    }
+  });
 
   yPosition += advisorCardHeight + PDF_CONFIG.spacing.circleOffset;
 
-  // Upcoming advisors box
+  // Upcoming advisors box - use provider content
   checkPageBreak(PDF_CONFIG.spacing.pageBreakMargin);
   const upcomingHeight = 32;
   renderContentCard(doc, margin, yPosition, maxWidth, upcomingHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
@@ -2637,12 +2602,11 @@ const renderTeam = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.setFontSize(PDF_CONFIG.fontSize.caption);
-  doc.text("Additional advisors currently in formation to support:", margin + 16, yPosition + PDF_CONFIG.spacing.circleOffset);
+  doc.text(data.upcomingAdvisory.title, margin + 16, yPosition + PDF_CONFIG.spacing.circleOffset);
 
-  const upcomingAreas = ["International expansion", "Enterprise partnerships", "Regulatory strategy"];
   const areaWidth = (maxWidth - 24) / 3;
   
-  upcomingAreas.forEach((area, idx) => {
+  data.upcomingAdvisory.areas.forEach((area, idx) => {
     const areaX = margin + PDF_CONFIG.spacing.bulletOffset + idx * areaWidth;
     doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(areaX, yPosition + 16, areaWidth - PDF_CONFIG.spacing.boxGap, PDF_CONFIG.spacing.itemGap, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
