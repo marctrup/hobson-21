@@ -11187,8 +11187,14 @@ const renderPrimaryConversionChannels = (
     doc.setFont("helvetica", "normal");
 
     const pathLines = splitTextWithFont(doc, sanitizeText(path), pathWidth - 8, "caption", false).slice(0, 2);
-    const textY = boxY + 9; // vertically centered baseline for 1–2 lines
-    doc.text(pathLines, xPos + 4, textY);
+    // Center vertically
+    const lineCount = pathLines.length;
+    const lineH = 4;
+    const totalTextH = lineCount * lineH;
+    const textStartY = boxY + (pathBoxH - totalTextH) / 2 + lineH;
+    pathLines.forEach((line: string, lIdx: number) => {
+      doc.text(line, xPos + pathWidth / 2, textStartY + lIdx * lineH, { align: "center" });
+    });
   });
   yPosition += 52;
 
