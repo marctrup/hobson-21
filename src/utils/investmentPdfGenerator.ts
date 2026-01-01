@@ -10273,10 +10273,14 @@ const renderBrandStrategy = (
 
   yPosition += spacing.sectionGap;
 
-  // Verbal Direction
-  fitPage(55);
+  // Verbal Direction - 2 columns layout for better readability
+  const verbalPrincipleWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap) / 2;
+  const verbalPrincipleRows = Math.ceil(data.verbalDirection.principles.length / 2);
+  const verbalBoxHeight = 34 + verbalPrincipleRows * 18;
+  
+  fitPage(verbalBoxHeight + 8);
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, verbalBoxHeight, box.borderRadius, box.borderRadius, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
@@ -10288,21 +10292,23 @@ const renderBrandStrategy = (
   doc.setFont("helvetica", "normal");
   doc.text(data.verbalDirection.intro, margin + box.paddingX, yPosition + 24);
 
-  const principleWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
   data.verbalDirection.principles.forEach((principle, idx) => {
-    const xPos = margin + box.paddingX + idx * (principleWidth + spacing.gridGap);
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + box.paddingX + col * (verbalPrincipleWidth + spacing.gridGap);
+    const yPos = yPosition + 32 + row * 18;
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-    doc.roundedRect(xPos, yPosition + 32, principleWidth, 14, 2, 2, "F");
+    doc.roundedRect(xPos, yPos, verbalPrincipleWidth, 14, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(principle, xPos + 4, yPosition + 41);
+    doc.text(principle, xPos + 6, yPos + 9);
   });
 
-  yPosition += 58;
+  yPosition += verbalBoxHeight + 8;
 
-  // Experience & Interaction Approach
-  fitPage(60);
+  // Experience & Interaction Approach - 2 columns layout
+  fitPage(80);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
@@ -10315,26 +10321,33 @@ const renderBrandStrategy = (
   doc.text(data.experienceApproach.intro, margin, yPosition);
   yPosition += lineHeight.body + spacing.paragraphGap;
 
-  const expCardWidth = (maxWidth - spacing.gridGap * 2) / 3;
-  const expCardHeight = 45;
-  fitPage(expCardHeight + spacing.paragraphGap);
+  const expCardWidth = (maxWidth - spacing.gridGap) / 2;
+  const expCardHeight = 50;
+  fitPage(expCardHeight * 2 + spacing.paragraphGap * 2);
 
   const expColors: [number, number, number][] = [PDF_CONFIG.primaryBgLight, PDF_CONFIG.emeraldBg, PDF_CONFIG.amberBg];
   data.experienceApproach.items.forEach((item, idx) => {
-    const xPos = margin + idx * (expCardWidth + spacing.gridGap);
-    doc.setFillColor(...expColors[idx]);
-    doc.roundedRect(xPos, yPosition, expCardWidth, expCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    if (col === 0 && row > 0) {
+      yPosition += expCardHeight + spacing.paragraphGap;
+    }
+    const xPos = margin + col * (expCardWidth + spacing.gridGap);
+    const yPos = yPosition;
+    
+    doc.setFillColor(...expColors[idx % expColors.length]);
+    doc.roundedRect(xPos, yPos, expCardWidth, expCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(item.title, xPos + 6, yPosition + 12);
+    doc.text(item.title, xPos + 8, yPos + 14);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const descLines = splitTextWithFont(doc, sanitizeText(item.description), expCardWidth - 12, "caption", false);
-    doc.text(descLines.slice(0, 3), xPos + 6, yPosition + 22);
+    const descLines = splitTextWithFont(doc, sanitizeText(item.description), expCardWidth - 16, "caption", false);
+    doc.text(descLines.slice(0, 4), xPos + 8, yPos + 26);
   });
 
   yPosition += expCardHeight + spacing.sectionGap;
