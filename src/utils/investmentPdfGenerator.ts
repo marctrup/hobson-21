@@ -10960,7 +10960,7 @@ const renderContentEngagementStrategy = (
     yPosition += 8;
   });
 
-  yPosition += spacing.sectionGap;
+  yPosition += spacing.sectionGap * 2; // extra gap before next section
 
   // SMART Targets
   fitPage(70);
