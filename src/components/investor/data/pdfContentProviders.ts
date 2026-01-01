@@ -3092,6 +3092,176 @@ export const getPrimaryConversionChannelsPdfContent = (): string[] => [
   "Through clear entry points, behavioural insight, and ongoing optimisation, Hobson builds a conversion engine suited for early-stage pilots today and scalable commercial activity in the coming years.",
 ];
 
+// ============================================================================
+// STRUCTURED DATA PROVIDERS FOR PDF RENDERING
+// These provide typed data structures that match UI component content exactly
+// ============================================================================
+
+/**
+ * Structured data for Commercialisation Strategy section
+ * Matches CommercialisationStrategyVisual.tsx exactly
+ */
+export interface CommercialisationStrategyData {
+  headerText: string;
+  operatorChallenges: string[];
+  calloutText: { prefix: string; highlighted: string; suffix: string };
+  problemsSolved: string[];
+  conclusionLine1: { prefix: string; highlighted: string; suffix: string };
+  conclusionLine2: string;
+}
+
+export const getCommercialisationStrategyStructuredData = (): CommercialisationStrategyData => ({
+  headerText: "The Real Estate industry is at an inflexion point.",
+  operatorChallenges: [
+    "exploding regulatory complexity,",
+    "shrinking operating margins,",
+    "acute labour shortages,",
+    "rising compliance penalties,",
+    "and mounting portfolio risk."
+  ],
+  calloutText: {
+    prefix: "They cannot wait for incremental tools. They need a ",
+    highlighted: "structural operating upgrade",
+    suffix: "."
+  },
+  problemsSolved: [
+    "compliance exposure,",
+    "lease complexity,",
+    "maintenance volatility,",
+    "and portfolio-level risk blindness."
+  ],
+  conclusionLine1: {
+    prefix: "Commercialisation is not an experiment. It is an ",
+    highlighted: "inevitability",
+    suffix: "."
+  },
+  conclusionLine2: "The only question is who captures the category."
+});
+
+/**
+ * Structured data for Commercials section
+ * Matches CommercialsVisual.tsx exactly
+ */
+export interface CommercialsData {
+  introText: string;
+  revenueExpansion: {
+    title: string;
+    intro: string;
+    asOperatorsLabel: string;
+    drivers: string[];
+    callout: { prefix: string; highlighted: string; suffix: string };
+  };
+  transparency: {
+    title: string;
+    providesLabel: string;
+    features: string[];
+    callout1: { prefix: string; highlighted: string; suffix: string };
+    callout2: { prefix: string; highlighted: string; suffix: string };
+  };
+}
+
+export const getCommercialsStructuredData = (): CommercialsData => ({
+  introText: "This is designed to kill procurement friction and accelerate viral adoption inside organisations.",
+  revenueExpansion: {
+    title: "Built-In Revenue Expansion Engine",
+    intro: "Hobson has something most startups do not: automatic net revenue retention growth.",
+    asOperatorsLabel: "As operators:",
+    drivers: [
+      "grow portfolios",
+      "expand into new jurisdictions",
+      "face more compliance",
+      "manage more complex leases",
+      "increase reporting demands"
+    ],
+    callout: {
+      prefix: "Their HEU consumption rises ",
+      highlighted: "without a single sales conversation",
+      suffix: "."
+    }
+  },
+  transparency: {
+    title: "Unmatched Transparency = Enterprise Trust",
+    providesLabel: "Hobson provides:",
+    features: [
+      "real-time HEU usage bars",
+      "per-message cost breakdowns",
+      "full audit trails of AI effort"
+    ],
+    callout1: {
+      prefix: "This gives finance teams ",
+      highlighted: "absolute certainty on cost control",
+      suffix: "."
+    },
+    callout2: {
+      prefix: "It removes the biggest objection enterprises have to AI: ",
+      highlighted: "unpredictable cost",
+      suffix: "."
+    }
+  }
+});
+
+/**
+ * Structured data for HEU Pricing section
+ * Matches HEUPricingVisual.tsx exactly
+ */
+export interface HEUPricingData {
+  headerTitle: string;
+  headerIntro: { prefix: string; highlighted: string };
+  heuMeasure: {
+    title: string;
+    description: string;
+  };
+  monetises: {
+    title: string;
+    items: string[];
+    note: { bold: string; suffix: string };
+  };
+  keyInsight: string;
+  pricingTitle: string;
+  plans: Array<{
+    plan: string;
+    price: string;
+    heus: string;
+    intent: string;
+  }>;
+  footer: string;
+}
+
+export const getHEUPricingStructuredData = (): HEUPricingData => ({
+  headerTitle: "The HEU Model",
+  headerIntro: {
+    prefix: "Hobson's pricing model is a ",
+    highlighted: "usage-based infrastructure monetisation model"
+  },
+  heuMeasure: {
+    title: "Hobson Energy Units (HEUs) measure AI effort:",
+    description: "Every document read, lease abstracted, compliance workflow executed, risk model run, or report built consumes HEUs."
+  },
+  monetises: {
+    title: "This means Hobson monetises:",
+    items: [
+      "operator dependency",
+      "portfolio scale",
+      "regulatory complexity",
+      "decision intensity"
+    ],
+    note: {
+      bold: "not",
+      suffix: " headcount or asset count"
+    }
+  },
+  keyInsight: "Traditional property software caps revenue. Hobson's model scales automatically with operational stress. The more complex the operator's world becomes, the more valuable and profitable Hobson becomes.",
+  pricingTitle: "Pricing That Forces Adoption",
+  plans: [
+    { plan: "Free", price: "GBP 0", heus: "18", intent: "Frictionless market entry" },
+    { plan: "Essential", price: "GBP 19.50", heus: "275", intent: "Hook small operators" },
+    { plan: "Essential Plus", price: "GBP 49.75", heus: "700", intent: "Convert growing teams" },
+    { plan: "Enterprise", price: "GBP 148.50", heus: "2,000", intent: "Lock in serious operators" },
+    { plan: "HEU Top-Up", price: "GBP 15", heus: "150", intent: "Expand ARPU naturally" }
+  ],
+  footer: "No per-user fees. No per-asset fees. Unlimited scale."
+});
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
