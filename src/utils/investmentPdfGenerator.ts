@@ -8750,15 +8750,16 @@ const renderMarketDescription = (
 
   yPosition += whyNowHeight + PDF_CONFIG.spacing.cardGap;
 
-  // 8. HOBSON'S STRATEGIC POSITION - tight spacing using PDF_CONFIG.lineHeight.body
-  const conclusionBoxPadding = 8;
-  const conclusionTextWidth = maxWidth - conclusionBoxPadding * 2;
-  const posIntroLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.intro), maxWidth - 16, "body", false);
-  const posConclusionLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.conclusion), conclusionTextWidth - 8, "body", false);
-  // Compact height: header (14) + intro lines + gap (4) + conclusion box + padding (4)
-  const conclusionBoxHeight = posConclusionLines.length * bodyLine + 8;
-  const posHeight = 14 + posIntroLines.length * bodyLine + 4 + conclusionBoxHeight + 4;
-  fitPage(posHeight + 4);
+  // 8. HOBSON'S STRATEGIC POSITION - using PDF_CONFIG values
+  const conclusionBoxPadding = box.paddingX;
+  const conclusionTextWidth = maxWidth - conclusionBoxPadding * 2 - box.paddingX;
+  const posIntroLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.intro), maxWidth - box.paddingX * 2, "body", false);
+  const posConclusionLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.conclusion), conclusionTextWidth, "body", false);
+  
+  // Height calculation with proper padding
+  const conclusionBoxHeight = posConclusionLines.length * bodyLine + box.paddingTop + box.paddingBottom;
+  const posHeight = spacing.contentPadding + posIntroLines.length * bodyLine + spacing.sectionGap + conclusionBoxHeight + spacing.paragraphGap;
+  fitPage(posHeight + spacing.paragraphGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, posHeight, box.borderRadius, box.borderRadius, "F");
@@ -8769,35 +8770,36 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson's Strategic Position", margin + 8, yPosition + 10);
+  doc.text("Hobson's Strategic Position", margin + box.paddingX, yPosition + spacing.sectionGap + fontSize.cardTitle / 3);
 
-  textY = yPosition + 18;
+  textY = yPosition + spacing.contentPadding;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
   posIntroLines.forEach((line: string) => {
-    doc.text(line, margin + 8, textY);
+    doc.text(line, margin + box.paddingX, textY);
     textY += bodyLine;
   });
-  textY += 4;
+  textY += spacing.sectionGap;
 
-  // Conclusion in highlighted box
+  // Conclusion in highlighted box with proper padding
   const conclusionBoxWidth = maxWidth - conclusionBoxPadding * 2;
-  doc.setFillColor(236, 253, 245); // emerald-50
-  doc.roundedRect(margin + conclusionBoxPadding, textY - 2, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "F");
-  doc.setDrawColor(167, 243, 208); // emerald-200
+  const conclusionBoxY = textY;
+  doc.setFillColor(...PDF_CONFIG.emeraldBg);
+  doc.roundedRect(margin + conclusionBoxPadding, conclusionBoxY, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.emeraldBorder);
   doc.setLineWidth(box.borderWidthThin);
-  doc.roundedRect(margin + conclusionBoxPadding, textY - 2, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "S");
+  doc.roundedRect(margin + conclusionBoxPadding, conclusionBoxY, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  textY += 4;
+  let conclusionTextY = conclusionBoxY + box.paddingTop;
   posConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + conclusionBoxPadding + 4, textY);
-    textY += bodyLine;
+    doc.text(line, margin + conclusionBoxPadding + box.paddingX, conclusionTextY);
+    conclusionTextY += bodyLine;
   });
 
-  yPosition += posHeight + 4;
+  yPosition += posHeight + spacing.paragraphGap;
   return yPosition;
 };
 
