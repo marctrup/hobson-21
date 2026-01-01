@@ -8919,13 +8919,14 @@ const renderCompetitorBenchmarks = (
     yPosition += cardHeight + 4;
   });
 
-  // Summary
+  // Summary - tight spacing using PDF_CONFIG.lineHeight.body
   const summaryPadding = PDF_CONFIG.box.paddingX;
   const summaryTextWidth = maxWidth - summaryPadding * 2;
   const diffLines = splitTextWithFont(doc, `Differentiation: ${sanitizeText(data.summary.differentiation)}`, summaryTextWidth, "body", false);
   const posLines = splitTextWithFont(doc, `Positioning: ${sanitizeText(data.summary.positioning)}`, summaryTextWidth, "body", true);
-  const summaryHeight = PDF_CONFIG.card.headerHeight + diffLines.length * bodyLine + PDF_CONFIG.spacing.paragraphGap + posLines.length * bodyLine + PDF_CONFIG.spacing.cardGap + 2;
-  fitPage(summaryHeight + PDF_CONFIG.spacing.cardGap);
+  // Compact height: header (14) + diff lines + gap (2) + pos lines + bottom padding (4)
+  const summaryHeight = 14 + diffLines.length * bodyLine + 2 + posLines.length * bodyLine + 4;
+  fitPage(summaryHeight + 4);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
   doc.roundedRect(margin, yPosition, maxWidth, summaryHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
@@ -8936,9 +8937,9 @@ const renderCompetitorBenchmarks = (
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Summary", margin + summaryPadding, yPosition + PDF_CONFIG.spacing.circleOffset + 2);
+  doc.text("Summary", margin + summaryPadding, yPosition + 9);
 
-  textY = yPosition + PDF_CONFIG.card.textOffsetX + 2;
+  textY = yPosition + 16;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
@@ -8946,7 +8947,7 @@ const renderCompetitorBenchmarks = (
     doc.text(line, margin + summaryPadding, textY);
     textY += bodyLine;
   });
-  textY += PDF_CONFIG.spacing.itemGap;
+  textY += 2; // Tight gap between sections
 
   doc.setFont("helvetica", "bold");
   posLines.forEach((line: string) => {
@@ -8954,7 +8955,7 @@ const renderCompetitorBenchmarks = (
     textY += bodyLine;
   });
 
-  yPosition += summaryHeight + PDF_CONFIG.spacing.cardGap;
+  yPosition += summaryHeight + 4;
   return yPosition;
 };
 
