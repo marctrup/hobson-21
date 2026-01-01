@@ -10099,28 +10099,28 @@ const renderMarketingObjectives = (
 ): number => {
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
-  const { fontSize, lineHeight, lineHeightFactor, spacing, box } = PDF_CONFIG;
+  const { fontSize, lineHeight, spacing, box, circleSize } = PDF_CONFIG;
 
   const fitPage = (required: number) => {
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
   };
 
-  // Header
+  // Header - using PDF_CONFIG light colors
   fitPage(50);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 45, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
   doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.circle(margin + spacing.contentPadding, yPosition + spacing.contentPadding, circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Marketing Objectives", margin + 24, yPosition + 16);
+  doc.text("Marketing Objectives", margin + spacing.bulletTextOffset + 4, yPosition + 16);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   const headerText = "Aligned with 2026-2028 timeline for measurable growth across awareness, consideration, conversion, retention, and advocacy.";
   const headerLines = splitTextWithFont(doc, headerText, maxWidth - 32, "bodySmall", false);
-  doc.text(headerLines, margin + 24, yPosition + 26);
+  doc.text(headerLines, margin + spacing.bulletTextOffset + 4, yPosition + 26);
   yPosition += 53;
 
   // Top-Level Marketing Goals
@@ -10142,24 +10142,22 @@ const renderMarketingObjectives = (
   const goalCardHeight = 35;
 
   goals.forEach((goal, idx) => {
-    const row = Math.floor(idx / 2);
     const col = idx % 2;
     if (col === 0) {
       fitPage(goalCardHeight + spacing.gridGap);
     }
     const xPos = margin + col * (goalCardWidth + spacing.gridGap);
-    const yPos = col === 0 ? yPosition : yPosition;
 
     doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.setDrawColor(...PDF_CONFIG.border);
     doc.setLineWidth(box.borderWidthThin);
-    doc.roundedRect(xPos, yPos, goalCardWidth, goalCardHeight, box.borderRadius, box.borderRadius, "FD");
+    doc.roundedRect(xPos, yPosition, goalCardWidth, goalCardHeight, box.borderRadius, box.borderRadius, "FD");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     const goalLines = splitTextWithFont(doc, sanitizeText(goal), goalCardWidth - box.paddingX * 2, "bodySmall", false);
-    doc.text(goalLines.slice(0, 3), xPos + box.paddingX, yPos + 12);
+    doc.text(goalLines.slice(0, 3), xPos + box.paddingX, yPosition + 12);
 
     if (col === 1) {
       yPosition += goalCardHeight + spacing.gridGap;
@@ -10177,10 +10175,11 @@ const renderMarketingObjectives = (
   doc.text("Mid- to Long-Term Direction", margin, yPosition);
   yPosition += lineHeight.loose + spacing.paragraphGap;
 
+  // Using light backgrounds only from PDF_CONFIG
   const timeline = [
-    { period: "By Q4 2026", text: "Marketing should show strong early awareness, predictable interest in pilots, and growing engagement with educational content.", color: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber },
-    { period: "By Q4 2027", text: "Hobson should operate a scalable acquisition engine with mature digital channels, predictable lead flow, and clear conversion pathways.", color: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald },
-    { period: "By 2028", text: "Marketing expands into two international regions and supports globalised demand, localisation, and partnerships.", color: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor }
+    { period: "By Q4 2026", text: "Marketing should show strong early awareness, predictable interest in pilots, and growing engagement with educational content.", bgColor: PDF_CONFIG.amberBg, accentColor: PDF_CONFIG.amber },
+    { period: "By Q4 2027", text: "Hobson should operate a scalable acquisition engine with mature digital channels, predictable lead flow, and clear conversion pathways.", bgColor: PDF_CONFIG.emeraldBg, accentColor: PDF_CONFIG.emerald },
+    { period: "By 2028", text: "Marketing expands into two international regions and supports globalised demand, localisation, and partnerships.", bgColor: PDF_CONFIG.primaryBgLight, accentColor: PDF_CONFIG.primaryColor }
   ];
 
   const timelineCardWidth = (maxWidth - spacing.gridGap * 2) / 3;
@@ -10190,10 +10189,10 @@ const renderMarketingObjectives = (
   timeline.forEach((item, idx) => {
     const xPos = margin + idx * (timelineCardWidth + spacing.gridGap);
 
-    doc.setFillColor(...item.color);
+    doc.setFillColor(...item.bgColor);
     doc.roundedRect(xPos, yPosition, timelineCardWidth, timelineCardHeight, box.borderRadius, box.borderRadius, "F");
 
-    doc.setTextColor(...item.accent);
+    doc.setTextColor(...item.accentColor);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
     doc.text(item.period, xPos + box.paddingX, yPosition + 12);
@@ -10218,12 +10217,13 @@ const renderMarketingObjectives = (
   doc.text("SMART Marketing Objectives (By Journey Stage)", margin, yPosition);
   yPosition += lineHeight.loose + spacing.sectionGap;
 
+  // Using PDF_CONFIG light backgrounds only
   const stages = [
     {
       stage: "Awareness",
       period: "Build through 2026 to scale in 2027 and expand in 2028",
-      color: PDF_CONFIG.primaryBgLight,
-      accent: PDF_CONFIG.primaryColor,
+      bgColor: PDF_CONFIG.primaryBgLight,
+      accentColor: PDF_CONFIG.primaryColor,
       objectives: [
         "Increase visibility among UK real estate professionals",
         "Drive consistent top-of-funnel traffic",
@@ -10235,8 +10235,8 @@ const renderMarketingObjectives = (
     {
       stage: "Consideration",
       period: "2026-2027",
-      color: PDF_CONFIG.emeraldBg,
-      accent: PDF_CONFIG.emerald,
+      bgColor: PDF_CONFIG.emeraldBg,
+      accentColor: PDF_CONFIG.emerald,
       objectives: [
         "Turn awareness into informed interest",
         "Support evaluation with demos and walkthroughs",
@@ -10248,8 +10248,8 @@ const renderMarketingObjectives = (
     {
       stage: "Conversion",
       period: "Pilot conversion 2026, paid expansion 2027",
-      color: PDF_CONFIG.amberBg,
-      accent: PDF_CONFIG.amber,
+      bgColor: PDF_CONFIG.amberBg,
+      accentColor: PDF_CONFIG.amber,
       objectives: [
         "Convert interested organisations into active pilots",
         "Reduce activation friction",
@@ -10261,8 +10261,8 @@ const renderMarketingObjectives = (
     {
       stage: "Retention & Advocacy",
       period: "Foundational 2026, strengthen 2027, scale 2028",
-      color: PDF_CONFIG.roseBg,
-      accent: PDF_CONFIG.rose,
+      bgColor: PDF_CONFIG.roseBg,
+      accentColor: PDF_CONFIG.rose,
       objectives: [
         "Build strong user loyalty during pilot phase",
         "Encourage advocacy from high-satisfaction teams",
@@ -10283,23 +10283,22 @@ const renderMarketingObjectives = (
     }
     const xPos = margin + col * (stageCardWidth + spacing.gridGap);
 
-    // Card background
-    doc.setFillColor(...PDF_CONFIG.bgWhite);
+    // Card background - using light colors
+    doc.setFillColor(...stage.bgColor);
     doc.setDrawColor(...PDF_CONFIG.border);
     doc.setLineWidth(box.borderWidthThin);
     doc.roundedRect(xPos, yPosition, stageCardWidth, stageCardHeight, box.borderRadius, box.borderRadius, "FD");
 
-    // Header bar
-    doc.setFillColor(...stage.accent);
-    doc.rect(xPos, yPosition, stageCardWidth, 14, "F");
-    doc.setTextColor(255, 255, 255);
+    // Header text on light background
+    doc.setTextColor(...stage.accentColor);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(stage.stage, xPos + box.paddingX, yPosition + 10);
+    doc.text(stage.stage, xPos + box.paddingX, yPosition + 12);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textGray);
     const periodWidth = doc.getTextWidth(stage.period);
-    doc.text(stage.period, xPos + stageCardWidth - box.paddingX - periodWidth, yPosition + 10);
+    doc.text(stage.period, xPos + stageCardWidth - box.paddingX - periodWidth, yPosition + 12);
 
     // Objectives
     let textY = yPosition + 22;
@@ -10307,8 +10306,8 @@ const renderMarketingObjectives = (
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
     stage.objectives.forEach((obj) => {
-      doc.setFillColor(...stage.accent);
-      doc.circle(xPos + 8, textY - 1, PDF_CONFIG.circleSize.bullet, "F");
+      doc.setFillColor(...stage.accentColor);
+      doc.circle(xPos + 8, textY - 1, circleSize.bullet, "F");
       doc.text(sanitizeText(obj).slice(0, 50), xPos + 12, textY);
       textY += lineHeight.body;
     });
@@ -10324,7 +10323,7 @@ const renderMarketingObjectives = (
     textY += lineHeight.body + 2;
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.setTextColor(...stage.accent);
+    doc.setTextColor(...stage.accentColor);
     stage.targets.slice(0, 2).forEach((target) => {
       doc.text("- " + sanitizeText(target).slice(0, 35), xPos + box.paddingX, textY);
       textY += lineHeight.body;
@@ -10365,18 +10364,17 @@ const renderMarketingObjectives = (
       fitPage(frameworkCardHeight + spacing.paragraphGap);
     }
     const xPos = margin + col * (frameworkCardWidth + spacing.gridGap);
-    const yPos = col === 0 ? yPosition : yPosition;
 
     doc.setFillColor(...PDF_CONFIG.bgLight);
-    doc.roundedRect(xPos, yPos, frameworkCardWidth, frameworkCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    doc.roundedRect(xPos, yPosition, frameworkCardWidth, frameworkCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
 
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(xPos + 8, yPos + frameworkCardHeight / 2, PDF_CONFIG.circleSize.small, "F");
+    doc.circle(xPos + 8, yPosition + frameworkCardHeight / 2, circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
     const itemLines = splitTextWithFont(doc, sanitizeText(item), frameworkCardWidth - 16, "caption", false);
-    doc.text(itemLines.slice(0, 2), xPos + 14, yPos + 10);
+    doc.text(itemLines.slice(0, 2), xPos + 14, yPosition + 10);
 
     if (col === 2 || idx === frameworkItems.length - 1) {
       yPosition += frameworkCardHeight + spacing.paragraphGap;
@@ -10394,7 +10392,7 @@ const renderMarketingObjectives = (
   doc.text("Channel and Metric Justification", margin, yPosition);
   yPosition += lineHeight.loose + spacing.sectionGap;
 
-  // Table header
+  // Table header - using light background
   const colWidths = [32, 45, 45, maxWidth - 122];
   const tableHeaderHeight = 14;
   const tableRowHeight = 18;
@@ -10449,16 +10447,20 @@ const renderMarketingObjectives = (
 
   yPosition += spacing.sectionGap;
 
-  // Alignment Summary
+  // Alignment Summary - using light background
   fitPage(55);
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "S");
 
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Channel & Metric Alignment", margin + box.paddingX, yPosition + 14);
 
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
   doc.text("Hobson's channel and metric choices are tightly aligned to:", margin + box.paddingX, yPosition + 26);
@@ -10467,10 +10469,11 @@ const renderMarketingObjectives = (
   const alignItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
   alignmentItems.forEach((item, idx) => {
     const xPos = margin + box.paddingX + idx * (alignItemWidth + spacing.gridGap);
-    doc.setFillColor(255, 255, 255, 0.2);
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, yPosition + 32, alignItemWidth, 12, 2, 2, "F");
-    doc.setTextColor(255, 255, 255);
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
     doc.text(item, xPos + 4, yPosition + 40);
   });
 
@@ -10515,12 +10518,15 @@ const renderBrandStrategy = (
   doc.text(headerLines, margin + 24, yPosition + 26);
   yPosition += 53;
 
-  // Brand Positioning
+  // Brand Positioning - using light background for readability
   fitPage(55);
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "S");
 
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Brand Positioning", margin + box.paddingX, yPosition + 14);
@@ -10535,13 +10541,13 @@ const renderBrandStrategy = (
   const posItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
   positioningItems.forEach((item, idx) => {
     const xPos = margin + box.paddingX + idx * (posItemWidth + spacing.gridGap);
-    doc.setFillColor(255, 255, 255, 0.15);
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, yPosition + 22, posItemWidth, 22, 2, 2, "F");
-    doc.setTextColor(255, 255, 255, 0.8);
+    doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
     doc.text(item.label, xPos + 4, yPosition + 30);
-    doc.setTextColor(255, 255, 255);
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
     const valLines = splitTextWithFont(doc, item.value, posItemWidth - 8, "caption", false);
@@ -10777,12 +10783,15 @@ const renderContentEngagementStrategy = (
   doc.text(headerLines, margin + 24, yPosition + 26);
   yPosition += 53;
 
-  // Purpose of Content
+  // Purpose of Content - using light background for readability
   fitPage(55);
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "S");
 
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Purpose of Content", margin + box.paddingX, yPosition + 14);
@@ -10796,14 +10805,14 @@ const renderContentEngagementStrategy = (
   const purposeWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 2) / 3;
   purposes.forEach((purpose, idx) => {
     const xPos = margin + box.paddingX + idx * (purposeWidth + spacing.gridGap);
-    doc.setFillColor(255, 255, 255, 0.15);
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, yPosition + 22, purposeWidth, 24, 2, 2, "F");
-    doc.setTextColor(255, 255, 255);
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
     doc.text(purpose.title, xPos + 4, yPosition + 30);
     doc.setFont("helvetica", "normal");
-    doc.setTextColor(255, 255, 255, 0.9);
+    doc.setTextColor(...PDF_CONFIG.textGray);
     const descLines = splitTextWithFont(doc, purpose.desc, purposeWidth - 8, "caption", false);
     doc.text(descLines[0] || "", xPos + 4, yPosition + 38);
   });
@@ -10987,12 +10996,15 @@ const renderContentEngagementStrategy = (
 
   yPosition += 53;
 
-  // Digital Channel Acquisition Strategy
+  // Digital Channel Acquisition Strategy - using light background
   fitPage(70);
-  doc.setFillColor(...PDF_CONFIG.textDark);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 65, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 65, box.borderRadius, box.borderRadius, "S");
 
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Digital Channel Acquisition Strategy", margin + box.paddingX, yPosition + 14);
@@ -11004,6 +11016,7 @@ const renderContentEngagementStrategy = (
     "Test channels and messaging for 2027 scale"
   ];
 
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.caption);
   doc.setFont("helvetica", "normal");
   acqGoals.forEach((goal, idx) => {
@@ -11018,8 +11031,10 @@ const renderContentEngagementStrategy = (
   ];
 
   const targetX = margin + maxWidth / 2 + 10;
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
   doc.text("Channel Targets:", targetX, yPosition + 24);
+  doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
   channelTargets.forEach((ct, idx) => {
     doc.text(ct.channel + ": " + ct.target, targetX, yPosition + 32 + idx * 7);
@@ -11059,12 +11074,15 @@ const renderContentEngagementStrategy = (
 
   yPosition += 38;
 
-  // Digital Channel Conversion Strategy
+  // Digital Channel Conversion Strategy - using light background
   fitPage(45);
-  doc.setFillColor(...PDF_CONFIG.emerald);
+  doc.setFillColor(...PDF_CONFIG.emeraldBg);
   doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.emeraldBorder);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "S");
 
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Digital Channel Conversion Strategy", margin + box.paddingX, yPosition + 14);
@@ -11080,9 +11098,9 @@ const renderContentEngagementStrategy = (
   const convWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 4) / 5;
   conversionPoints.forEach((point, idx) => {
     const xPos = margin + box.paddingX + idx * (convWidth + spacing.gridGap);
-    doc.setFillColor(255, 255, 255, 0.15);
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, yPosition + 20, convWidth, 16, 2, 2, "F");
-    doc.setTextColor(255, 255, 255);
+    doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(5);
     doc.setFont("helvetica", "normal");
     const pointLines = splitTextWithFont(doc, point, convWidth - 4, "caption", false);
@@ -11124,15 +11142,19 @@ const renderPrimaryConversionChannels = (
   doc.text(introLines, margin, yPosition);
   yPosition += introLines.length * lineHeight.body + spacing.sectionGap;
 
-  // Channel 1: Website
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.roundedRect(margin, yPosition, maxWidth, 42, 3, 3, "F");
+  // Channel 1: Website - using light background for readability
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 42, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 42, box.borderRadius, box.borderRadius, "S");
   
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("1. Website", margin + box.paddingX, yPosition + spacing.titleY);
   
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
   doc.text("The website acts as the main route into trials and enquiries. Conversion paths include:", margin + box.paddingX, yPosition + 16);
@@ -11141,8 +11163,9 @@ const renderPrimaryConversionChannels = (
   const pathWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
   websitePaths.forEach((path, idx) => {
     const xPos = margin + box.paddingX + idx * (pathWidth + spacing.gridGap);
-    doc.setFillColor(255, 255, 255, 0.15);
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, yPosition + 22, pathWidth, 14, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(6);
     const pathLines = doc.splitTextToSize(path, pathWidth - 4);
     doc.text(pathLines, xPos + 2, yPosition + 28);
@@ -11245,15 +11268,19 @@ const renderPrimaryConversionChannels = (
     yPosition = margin;
   }
 
-  // Key Conversion Tactics
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
+  // Key Conversion Tactics - using light background for readability
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 55, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, 55, box.borderRadius, box.borderRadius, "S");
   
-  doc.setTextColor(255, 255, 255);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
   doc.text("Key Conversion Tactics", margin + box.paddingX, yPosition + spacing.titleY);
   
+  doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
   const tactics = [
