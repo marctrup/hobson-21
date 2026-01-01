@@ -2233,6 +2233,52 @@ export const getInternalCapabilityAssessmentPdfContent = (): string[] => [
   "- Need: Investment to support systematic growth",
 ];
 
+// Structured data for dedicated PDF renderer
+export const getSWOTAnalysisStructuredData = () => ({
+  header: {
+    title: "SWOT Analysis",
+    subtitle: "Strategic assessment of Hobson's market position",
+  },
+  intro: "Hobson enters the market with substantial structural advantages: a focused product, a clear brand, and a solution that matches real, urgent needs. The key to moving from promising to category-defining will be making trust explicit and measurable, turning early successes into stories and proof, and building scalable processes beneath the brand and product.",
+  quadrants: [
+    { 
+      title: "Strengths", 
+      colorType: "emerald",
+      items: ["AI-native architecture for RE docs", "Reference-backed answers", "Zero-onboarding experience", "30+ years domain expertise", "Clear brand positioning"]
+    },
+    { 
+      title: "Weaknesses", 
+      colorType: "rose",
+      items: ["Limited brand visibility", "MVP still maturing", "Small team constraints", "Support infrastructure emerging", "Resolution processes light"]
+    },
+    { 
+      title: "Opportunities", 
+      colorType: "blue",
+      items: ["Growing regulatory burden", "Underserved SMB segment", "Legacy PropTech slow on AI", "Cost pressures favour automation", "International expansion potential"]
+    },
+    { 
+      title: "Threats", 
+      colorType: "amber",
+      items: ["Fast-moving AI competitors", "Legacy platforms adding AI", "AI hallucination trust risks", "Economic pressure on tech spend", "Competitor emotional storytelling"]
+    }
+  ],
+  pillars: [
+    { pillar: "Personalization", rating: 4, explanation: "We work closely with each client, adapting Hobson to their workflows. Manual discovery process." },
+    { pillar: "Resolution", rating: 2, explanation: "Early-stage gaps in formal recovery processes. Our biggest area for improvement." },
+    { pillar: "Integrity", rating: 4, explanation: "Transparent communication about capabilities. Honest pricing model." },
+    { pillar: "Time & Effort", rating: 5, explanation: "Built to reduce friction with intuitive, efficient interactions." },
+    { pillar: "Expectations", rating: 4, explanation: "Focused on MVP delivery. Need to shift from 'expected' to 'exceeding'." },
+    { pillar: "Empathy", rating: 4, explanation: "Shaped by real client pain. Discovery and feedback show we listen." }
+  ],
+  recommendations: [
+    { title: "Strengthen Trust", items: ["Confidence scores", "Clear resolution process", "Early case studies"] },
+    { title: "Expand Storytelling", items: ["Human testimonials", "Consistent metaphors", "Clarity partner positioning"] },
+    { title: "Accelerate Visibility", items: ["LinkedIn engagement", "Quiz as entry point", "Thought leadership"] },
+    { title: "Product Differentiation", items: ["Retrieval to insight path", "Hobson Blueprints", "Personalisation at scale"] },
+    { title: "Protect Advantage", items: ["Lightweight positioning", "MVP client advocates", "Scalable processes"] }
+  ],
+});
+
 export const getSWOTAnalysisPdfContent = (): string[] => [
   "SWOT ANALYSIS",
   "",

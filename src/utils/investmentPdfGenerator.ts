@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -9937,6 +9937,9 @@ const renderSWOTAnalysis = (
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
   };
 
+  // Source content from provider
+  const swotData = getSWOTAnalysisStructuredData();
+
   // Header
   fitPage(45);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -9946,54 +9949,36 @@ const renderSWOTAnalysis = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("SWOT Analysis", margin + 24, yPosition + 16);
+  doc.text(swotData.header.title, margin + 24, yPosition + 16);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text("Strategic assessment of Hobson's market position", margin + 24, yPosition + 26);
+  doc.text(swotData.header.subtitle, margin + 24, yPosition + 26);
   yPosition += 48;
 
-  const swotData = [
-    { 
-      title: "Strengths", 
-      color: PDF_CONFIG.emeraldBg, 
-      accent: PDF_CONFIG.emerald,
-      items: ["AI-native architecture for RE docs", "Reference-backed answers", "Zero-onboarding experience", "30+ years domain expertise", "Clear brand positioning"]
-    },
-    { 
-      title: "Weaknesses", 
-      color: PDF_CONFIG.roseBg, 
-      accent: PDF_CONFIG.rose,
-      items: ["Limited brand visibility", "MVP still maturing", "Small team constraints", "Support infrastructure emerging", "Resolution processes light"]
-    },
-    { 
-      title: "Opportunities", 
-      color: PDF_CONFIG.blueBg, 
-      accent: PDF_CONFIG.blue,
-      items: ["Growing regulatory burden", "Underserved SMB segment", "Legacy PropTech slow on AI", "Cost pressures favour automation", "International expansion potential"]
-    },
-    { 
-      title: "Threats", 
-      color: PDF_CONFIG.amberBg, 
-      accent: PDF_CONFIG.amber,
-      items: ["Fast-moving AI competitors", "Legacy platforms adding AI", "AI hallucination trust risks", "Economic pressure on tech spend", "Competitor emotional storytelling"]
-    }
-  ];
+  // Map color types to PDF_CONFIG colors
+  const colorMap: Record<string, { bg: [number, number, number]; accent: [number, number, number] }> = {
+    emerald: { bg: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald },
+    rose: { bg: PDF_CONFIG.roseBg, accent: PDF_CONFIG.rose },
+    blue: { bg: PDF_CONFIG.blueBg, accent: PDF_CONFIG.blue },
+    amber: { bg: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber },
+  };
 
   const cardWidth = (maxWidth - 8) / 2;
   const cardHeight = 55;
 
-  swotData.forEach((quadrant, idx) => {
+  swotData.quadrants.forEach((quadrant, idx) => {
     const col = idx % 2;
     if (col === 0) {
       fitPage(cardHeight + 8);
     }
     const xPos = margin + col * (cardWidth + 8);
+    const colors = colorMap[quadrant.colorType] || colorMap.blue;
 
-    doc.setFillColor(...quadrant.color);
+    doc.setFillColor(...colors.bg);
     doc.roundedRect(xPos, yPosition, cardWidth, cardHeight, 3, 3, "F");
     
-    doc.setFillColor(...quadrant.accent);
+    doc.setFillColor(...colors.accent);
     doc.circle(xPos + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
@@ -10002,7 +9987,7 @@ const renderSWOTAnalysis = (
 
     let itemY = yPosition + 22;
     quadrant.items.forEach((item) => {
-      doc.setFillColor(...quadrant.accent);
+      doc.setFillColor(...colors.accent);
       doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
       doc.setFontSize(PDF_CONFIG.fontSize.caption);
@@ -10017,14 +10002,7 @@ const renderSWOTAnalysis = (
   });
 
   // Pillars Evaluation Matrix - full table with explanations
-  const pillarsData = [
-    { pillar: "Personalization", rating: 4, explanation: "We work closely with each client, adapting Hobson to their workflows. Manual discovery process." },
-    { pillar: "Resolution", rating: 2, explanation: "Early-stage gaps in formal recovery processes. Our biggest area for improvement." },
-    { pillar: "Integrity", rating: 4, explanation: "Transparent communication about capabilities. Honest pricing model." },
-    { pillar: "Time & Effort", rating: 5, explanation: "Built to reduce friction with intuitive, efficient interactions." },
-    { pillar: "Expectations", rating: 4, explanation: "Focused on MVP delivery. Need to shift from 'expected' to 'exceeding'." },
-    { pillar: "Empathy", rating: 4, explanation: "Shaped by real client pain. Discovery and feedback show we listen." }
-  ];
+  const pillarsData = swotData.pillars;
 
   // Calculate total height for pillars table
   const pillarRowHeight = 16;
@@ -10102,13 +10080,7 @@ const renderSWOTAnalysis = (
   doc.text("Recommendations", margin + 16, yPosition + 6);
   yPosition += 14;
 
-  const recommendations = [
-    { title: "Strengthen Trust", items: ["Confidence scores", "Clear resolution process", "Early case studies"] },
-    { title: "Expand Storytelling", items: ["Human testimonials", "Consistent metaphors", "Clarity partner positioning"] },
-    { title: "Accelerate Visibility", items: ["LinkedIn engagement", "Quiz as entry point", "Thought leadership"] },
-    { title: "Product Differentiation", items: ["Retrieval to insight path", "Hobson Blueprints", "Personalisation at scale"] },
-    { title: "Protect Advantage", items: ["Lightweight positioning", "MVP client advocates", "Scalable processes"] }
-  ];
+  const recommendations = swotData.recommendations;
 
   const recCardWidth = (maxWidth - 16) / 3;
   const recCardHeight = 38;
