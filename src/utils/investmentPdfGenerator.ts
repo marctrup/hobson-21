@@ -10790,9 +10790,10 @@ const renderContentEngagementStrategy = (
   yPosition += 58;
 
   // Core Content Themes
-  fitPage(45);
+  const themeContainerHeight = 65;
+  fitPage(themeContainerHeight);
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 40, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, themeContainerHeight, box.borderRadius, box.borderRadius, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
@@ -10825,7 +10826,7 @@ const renderContentEngagementStrategy = (
     doc.text(theme.title, textX, textY);
   });
 
-  yPosition += 62;
+  yPosition += themeContainerHeight + 8;
 
   // Content by Journey Stage (See-Think-Do-Care)
   fitPage(85);
