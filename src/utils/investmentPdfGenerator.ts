@@ -11174,18 +11174,23 @@ const renderPrimaryConversionChannels = (
   
   const websitePaths = ["Starting the free package", "Requesting a demo", "Submitting pilot enquiries", "Moving from quiz to guided trial"];
   const pathWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
-  const pathBoxH = 18;
+  const pathBoxH = 22;
   websitePaths.forEach((path, idx) => {
     const xPos = margin + box.paddingX + idx * (pathWidth + spacing.gridGap);
+    const boxY = yPosition + 22;
+
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPosition + 22, pathWidth, pathBoxH, 2, 2, "F");
+    doc.roundedRect(xPos, boxY, pathWidth, pathBoxH, 2, 2, "F");
+
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const pathLines = splitTextWithFont(doc, sanitizeText(path), pathWidth - 6, "caption", false);
-    doc.text(pathLines.slice(0, 2), xPos + 3, yPosition + 29);
+
+    const pathLines = splitTextWithFont(doc, sanitizeText(path), pathWidth - 8, "caption", false).slice(0, 2);
+    const textY = boxY + 9; // vertically centered baseline for 1–2 lines
+    doc.text(pathLines, xPos + 4, textY);
   });
-  yPosition += 48;
+  yPosition += 52;
 
   // Channel 2: LinkedIn
   doc.setFillColor(239, 246, 255);
