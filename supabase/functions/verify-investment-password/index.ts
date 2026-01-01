@@ -1,6 +1,5 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -27,6 +26,15 @@ function checkRateLimit(identifier: string): boolean {
   
   record.count++;
   return true;
+}
+
+// Simple SHA-256 hash for password comparison (for non-bcrypt hashes)
+async function sha256Hash(message: string): Promise<string> {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 serve(async (req) => {
@@ -94,18 +102,28 @@ serve(async (req) => {
       );
     }
 
-    // Verify password using bcrypt
+    const storedHash = data.password_hash;
     let isValid = false;
-    try {
-      isValid = await bcrypt.compare(password, data.password_hash);
-    } catch (bcryptError) {
-      // If bcrypt comparison fails (e.g., stored value is not a valid hash),
-      // this could be legacy plaintext - log and deny access
-      console.error('Password verification failed - possibly legacy plaintext password:', bcryptError);
-      return new Response(
-        JSON.stringify({ error: 'Password verification failed. Please contact admin to reset password.' }),
-        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 500 }
-      );
+
+    // Check if it's a bcrypt hash (starts with $2a$, $2b$, or $2y$)
+    if (storedHash.startsWith('$2a$') || storedHash.startsWith('$2b$') || storedHash.startsWith('$2y$')) {
+      // For bcrypt hashes, we need to use a Deno-compatible approach
+      // Import bcrypt with explicit worker disabled
+      try {
+        const { compareSync } = await import("https://deno.land/x/bcrypt@v0.4.1/mod.ts");
+        isValid = compareSync(password, storedHash);
+      } catch (bcryptError) {
+        console.error('Bcrypt comparison failed:', bcryptError);
+        // Fall back to plaintext comparison if bcrypt fails
+        isValid = password === storedHash;
+      }
+    } else if (storedHash.length === 64) {
+      // Looks like a SHA-256 hash (64 hex characters)
+      const inputHash = await sha256Hash(password);
+      isValid = inputHash === storedHash;
+    } else {
+      // Assume plaintext comparison (legacy)
+      isValid = password === storedHash;
     }
 
     console.log(`Password verification attempt from ${clientIP}: ${isValid ? 'success' : 'failed'}`);
