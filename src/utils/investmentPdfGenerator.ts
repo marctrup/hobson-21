@@ -8448,7 +8448,8 @@ const renderMarketDescription = (
   // 8. HOBSON'S STRATEGIC POSITION - using PDF_CONFIG values
   const conclusionBoxPadding = box.paddingX;
   const conclusionBoxWidth = maxWidth - conclusionBoxPadding * 2;
-  const conclusionTextWidth = conclusionBoxWidth - box.paddingX * 2; // Proper inner padding
+  const conclusionInnerPadding = box.paddingX * 1.5; // Extra padding for text inside conclusion box
+  const conclusionTextWidth = conclusionBoxWidth - conclusionInnerPadding * 2; // Proper inner padding on both sides
   const posIntroLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.intro), maxWidth - box.paddingX * 2, "body", false);
   const posConclusionLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.conclusion), conclusionTextWidth, "body", false);
   
@@ -8492,7 +8493,7 @@ const renderMarketDescription = (
   doc.setFont("helvetica", "bold");
   let conclusionTextY = conclusionBoxY + box.paddingTop;
   posConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + conclusionBoxPadding + box.paddingX, conclusionTextY);
+    doc.text(line, margin + conclusionBoxPadding + conclusionInnerPadding, conclusionTextY);
     conclusionTextY += bodyLine;
   });
 
