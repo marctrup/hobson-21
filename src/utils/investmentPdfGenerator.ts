@@ -2951,7 +2951,7 @@ const renderCustomerSegmentation = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
   const { box, spacing, circleSize, fontSize, lineHeight } = PDF_CONFIG;
-  const bodyLine = lineHeight.body;
+  const bodyLine = PDF_CONFIG.calculatedLineHeight.body;
 
   // Description - left aligned
   doc.setTextColor(...PDF_CONFIG.textGray);
