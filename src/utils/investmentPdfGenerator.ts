@@ -10807,17 +10807,22 @@ const renderContentEngagementStrategy = (
   ];
 
   const themeWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap) / 2;
+  const themeBoxHeight = 16;
   themes.forEach((theme, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const xPos = margin + box.paddingX + col * (themeWidth + spacing.gridGap);
-    const yPos = yPosition + 22 + row * 18;
+    const yPos = yPosition + 22 + row * (themeBoxHeight + 4);
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPos, themeWidth, 14, 2, 2, "F");
+    doc.roundedRect(xPos, yPos, themeWidth, themeBoxHeight, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(theme.title, xPos + 4, yPos + 10);
+    // Center text vertically and horizontally
+    const textWidth = doc.getTextWidth(theme.title);
+    const textX = xPos + (themeWidth - textWidth) / 2;
+    const textY = yPos + (themeBoxHeight / 2) + 3;
+    doc.text(theme.title, textX, textY);
   });
 
   yPosition += 62;
