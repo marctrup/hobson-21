@@ -9194,7 +9194,7 @@ const renderCustomerOnlineBehaviour = (
     textY += bulletSpacing;
   });
 
-  yPosition += distrustHeight + 4;
+  yPosition += distrustHeight + 10; // Extra spacing after distrust box
 
   // Channel Strategy Summary section
   fitPage(PDF_CONFIG.card.textOffsetX);
