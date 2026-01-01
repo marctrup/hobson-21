@@ -11375,18 +11375,7 @@ const renderPrimaryConversionChannels = (
 
   yPosition += keyMetricsHeight + spacing.sectionGap;
 
-  // SMART Conversion Objectives - using latest content from provider
-  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-  doc.roundedRect(margin, yPosition, maxWidth, spacing.contentBoxStart * 2 + spacing.sectionGap, box.borderRadius, box.borderRadius, "F");
-  
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("SMART Conversion Objectives", margin + box.paddingX, yPosition + spacing.sectionGap + fontSize.cardTitle / 3);
-  
-  doc.setFontSize(fontSize.bodySmall);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(...PDF_CONFIG.textDark);
+  // SMART Conversion Objectives - dynamically sized box
   const objectives = [
     "Increase CTA click-through rates by 20-30% by Q2 2026",
     "Achieve 10% conversion from high-intent visitors into free package by Q4 2026",
@@ -11396,14 +11385,35 @@ const renderPrimaryConversionChannels = (
     "Convert 10% of retargeting audiences into enquiries by Q4 2026",
     "Reach a 5% demo-request rate by Q4 2026"
   ];
-  let objY = yPosition + spacing.contentPadding;
+
+  const objBoxPaddingTop = 16; // space before title
+  const titleToListGap = 12; // space between title and first bullet
+  const objItemHeight = lineHeight.body + 2; // slightly more breathing room per item
+  const objBoxPaddingBottom = 12;
+  const objBoxHeight = objBoxPaddingTop + titleToListGap + objectives.length * objItemHeight + objBoxPaddingBottom;
+
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.roundedRect(margin, yPosition, maxWidth, objBoxHeight, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SMART Conversion Objectives", margin + box.paddingX, yPosition + objBoxPaddingTop);
+
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+
+  let objY = yPosition + objBoxPaddingTop + titleToListGap;
   objectives.forEach((obj) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + box.paddingX + spacing.paragraphGap, objY, PDF_CONFIG.circleSize.bullet, "F");
-    doc.text(obj, margin + box.paddingX + spacing.sectionGap, objY + 1);
-    objY += lineHeight.body;
+    doc.circle(margin + box.paddingX + 4, objY - 1, PDF_CONFIG.circleSize.bullet, "F");
+    const wrappedObj = splitTextWithFont(doc, sanitizeText(obj), maxWidth - box.paddingX * 2 - 14, "bodySmall", false);
+    doc.text(wrappedObj[0] || "", margin + box.paddingX + 12, objY);
+    objY += objItemHeight;
   });
-  yPosition += spacing.contentBoxStart * 2 + spacing.sectionGap + spacing.sectionGap;
+
+  yPosition += objBoxHeight + spacing.sectionGap;
 
   return yPosition;
 };
