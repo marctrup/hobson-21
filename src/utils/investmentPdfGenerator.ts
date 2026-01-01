@@ -10088,6 +10088,398 @@ const renderSWOTAnalysis = (
 };
 
 /**
+ * Render Marketing Objectives visual
+ */
+const renderMarketingObjectives = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { fontSize, lineHeight, lineHeightFactor, spacing, box } = PDF_CONFIG;
+
+  const fitPage = (required: number) => {
+    yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Header
+  fitPage(50);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Marketing Objectives", margin + 24, yPosition + 16);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const headerText = "Aligned with 2026-2028 timeline for measurable growth across awareness, consideration, conversion, retention, and advocacy.";
+  const headerLines = splitTextWithFont(doc, headerText, maxWidth - 32, "bodySmall", false);
+  doc.text(headerLines, margin + 24, yPosition + 26);
+  yPosition += 53;
+
+  // Top-Level Marketing Goals
+  fitPage(60);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Top-Level Marketing Goals", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const goals = [
+    "Increase visibility across the UK real estate sector as the MVP moves into pilot expansion during 2026",
+    "Build credibility through evidence, pilot success stories, and trustworthy product education",
+    "Establish a predictable acquisition and activation funnel in preparation for the 2027 public launch",
+    "Support long-term adoption with consistent engagement and communication across all customer segments"
+  ];
+
+  const goalCardWidth = (maxWidth - spacing.gridGap) / 2;
+  const goalCardHeight = 35;
+
+  goals.forEach((goal, idx) => {
+    const row = Math.floor(idx / 2);
+    const col = idx % 2;
+    if (col === 0) {
+      fitPage(goalCardHeight + spacing.gridGap);
+    }
+    const xPos = margin + col * (goalCardWidth + spacing.gridGap);
+    const yPos = col === 0 ? yPosition : yPosition;
+
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
+    doc.setDrawColor(...PDF_CONFIG.border);
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(xPos, yPos, goalCardWidth, goalCardHeight, box.borderRadius, box.borderRadius, "FD");
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "normal");
+    const goalLines = splitTextWithFont(doc, sanitizeText(goal), goalCardWidth - box.paddingX * 2, "bodySmall", false);
+    doc.text(goalLines.slice(0, 3), xPos + box.paddingX, yPos + 12);
+
+    if (col === 1) {
+      yPosition += goalCardHeight + spacing.gridGap;
+    }
+  });
+  if (goals.length % 2 === 0) {
+    yPosition += goalCardHeight + spacing.gridGap;
+  }
+
+  // Mid- to Long-Term Direction
+  fitPage(50);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Mid- to Long-Term Direction", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const timeline = [
+    { period: "By Q4 2026", text: "Marketing should show strong early awareness, predictable interest in pilots, and growing engagement with educational content.", color: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber },
+    { period: "By Q4 2027", text: "Hobson should operate a scalable acquisition engine with mature digital channels, predictable lead flow, and clear conversion pathways.", color: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald },
+    { period: "By 2028", text: "Marketing expands into two international regions and supports globalised demand, localisation, and partnerships.", color: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor }
+  ];
+
+  const timelineCardWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  const timelineCardHeight = 55;
+  fitPage(timelineCardHeight + spacing.sectionGap);
+
+  timeline.forEach((item, idx) => {
+    const xPos = margin + idx * (timelineCardWidth + spacing.gridGap);
+
+    doc.setFillColor(...item.color);
+    doc.roundedRect(xPos, yPosition, timelineCardWidth, timelineCardHeight, box.borderRadius, box.borderRadius, "F");
+
+    doc.setTextColor(...item.accent);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.period, xPos + box.paddingX, yPosition + 12);
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const textLines = splitTextWithFont(doc, sanitizeText(item.text), timelineCardWidth - box.paddingX * 2, "caption", false);
+    doc.text(textLines.slice(0, 4), xPos + box.paddingX, yPosition + 22);
+  });
+
+  yPosition += timelineCardHeight + spacing.sectionGap;
+
+  // SMART Marketing Objectives - Journey Stages
+  doc.addPage();
+  yPosition = margin;
+
+  fitPage(20);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SMART Marketing Objectives (By Journey Stage)", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.sectionGap;
+
+  const stages = [
+    {
+      stage: "Awareness",
+      period: "Build through 2026 to scale in 2027 and expand in 2028",
+      color: PDF_CONFIG.primaryBgLight,
+      accent: PDF_CONFIG.primaryColor,
+      objectives: [
+        "Increase visibility among UK real estate professionals",
+        "Drive consistent top-of-funnel traffic",
+        "Strengthen brand recall using distinctive digital assets"
+      ],
+      metrics: "Website sessions, quiz completions, LinkedIn impressions",
+      targets: ["500 monthly visits by Q1 2027", "1,000+ quiz completions by Q2 2027", "200k+ LinkedIn impressions/quarter"]
+    },
+    {
+      stage: "Consideration",
+      period: "2026-2027",
+      color: PDF_CONFIG.emeraldBg,
+      accent: PDF_CONFIG.emerald,
+      objectives: [
+        "Turn awareness into informed interest",
+        "Support evaluation with demos and walkthroughs",
+        "Build confidence in reliability and accuracy"
+      ],
+      metrics: "Demo requests, time on product pages, retargeting CTR",
+      targets: ["50 demo requests by Q1 2027", "1 educational asset/month", ">3% retargeting CTR by Q4 2027"]
+    },
+    {
+      stage: "Conversion",
+      period: "Pilot conversion 2026, paid expansion 2027",
+      color: PDF_CONFIG.amberBg,
+      accent: PDF_CONFIG.amber,
+      objectives: [
+        "Convert interested organisations into active pilots",
+        "Reduce activation friction",
+        "Demonstrate commercial value through pilot outcomes"
+      ],
+      metrics: "New pilot sign-ups, activation rate, pilot-to-paid conversion",
+      targets: ["5 new pilots by Q2 2026", "60%+ activation in 14 days", "GBP 50k-100k MRR by Q4 2027"]
+    },
+    {
+      stage: "Retention & Advocacy",
+      period: "Foundational 2026, strengthen 2027, scale 2028",
+      color: PDF_CONFIG.roseBg,
+      accent: PDF_CONFIG.rose,
+      objectives: [
+        "Build strong user loyalty during pilot phase",
+        "Encourage advocacy from high-satisfaction teams",
+        "Maintain consistent communication as usage scales"
+      ],
+      metrics: "CSAT, NPS, retention rate, weekly active usage",
+      targets: ["80%+ satisfaction by Q4 2026", "NPS > 50 by Q4 2026", "9+ case studies by Q4 2027"]
+    }
+  ];
+
+  const stageCardWidth = (maxWidth - spacing.gridGap) / 2;
+  const stageCardHeight = 85;
+
+  stages.forEach((stage, idx) => {
+    const col = idx % 2;
+    if (col === 0) {
+      fitPage(stageCardHeight + spacing.gridGap);
+    }
+    const xPos = margin + col * (stageCardWidth + spacing.gridGap);
+
+    // Card background
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
+    doc.setDrawColor(...PDF_CONFIG.border);
+    doc.setLineWidth(box.borderWidthThin);
+    doc.roundedRect(xPos, yPosition, stageCardWidth, stageCardHeight, box.borderRadius, box.borderRadius, "FD");
+
+    // Header bar
+    doc.setFillColor(...stage.accent);
+    doc.rect(xPos, yPosition, stageCardWidth, 14, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(stage.stage, xPos + box.paddingX, yPosition + 10);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const periodWidth = doc.getTextWidth(stage.period);
+    doc.text(stage.period, xPos + stageCardWidth - box.paddingX - periodWidth, yPosition + 10);
+
+    // Objectives
+    let textY = yPosition + 22;
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    stage.objectives.forEach((obj) => {
+      doc.setFillColor(...stage.accent);
+      doc.circle(xPos + 8, textY - 1, PDF_CONFIG.circleSize.bullet, "F");
+      doc.text(sanitizeText(obj).slice(0, 50), xPos + 12, textY);
+      textY += lineHeight.body;
+    });
+
+    // Metrics
+    textY += 2;
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "italic");
+    doc.text("Metrics: " + stage.metrics.slice(0, 45) + "...", xPos + box.paddingX, textY);
+
+    // Targets
+    textY += lineHeight.body + 2;
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...stage.accent);
+    stage.targets.slice(0, 2).forEach((target) => {
+      doc.text("- " + sanitizeText(target).slice(0, 35), xPos + box.paddingX, textY);
+      textY += lineHeight.body;
+    });
+
+    if (col === 1) {
+      yPosition += stageCardHeight + spacing.gridGap;
+    }
+  });
+
+  if (stages.length % 2 === 0) {
+    yPosition += stageCardHeight + spacing.gridGap;
+  }
+
+  // Framework Support Section
+  fitPage(50);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("How This Framework Supports the Strategy", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.paragraphGap;
+
+  const frameworkItems = [
+    "Builds early visibility before the 2027 launch",
+    "Guides prospects into precise, structured evaluation",
+    "Supports conversion and commercial validation throughout 2026",
+    "Strengthens long-term retention and advocacy as Hobson scales",
+    "Creates a predictable funnel ready for UK expansion in 2027",
+    "Enables international expansion from 2028 onward"
+  ];
+
+  const frameworkCardWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  const frameworkCardHeight = 24;
+
+  frameworkItems.forEach((item, idx) => {
+    const col = idx % 3;
+    if (col === 0) {
+      fitPage(frameworkCardHeight + spacing.paragraphGap);
+    }
+    const xPos = margin + col * (frameworkCardWidth + spacing.gridGap);
+    const yPos = col === 0 ? yPosition : yPosition;
+
+    doc.setFillColor(...PDF_CONFIG.bgLight);
+    doc.roundedRect(xPos, yPos, frameworkCardWidth, frameworkCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+
+    doc.setFillColor(...PDF_CONFIG.primaryColor);
+    doc.circle(xPos + 8, yPos + frameworkCardHeight / 2, PDF_CONFIG.circleSize.small, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const itemLines = splitTextWithFont(doc, sanitizeText(item), frameworkCardWidth - 16, "caption", false);
+    doc.text(itemLines.slice(0, 2), xPos + 14, yPos + 10);
+
+    if (col === 2 || idx === frameworkItems.length - 1) {
+      yPosition += frameworkCardHeight + spacing.paragraphGap;
+    }
+  });
+
+  // Channel & Metrics Table
+  doc.addPage();
+  yPosition = margin;
+
+  fitPage(20);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Channel and Metric Justification", margin, yPosition);
+  yPosition += lineHeight.loose + spacing.sectionGap;
+
+  // Table header
+  const colWidths = [32, 45, 45, maxWidth - 122];
+  const tableHeaderHeight = 14;
+  const tableRowHeight = 18;
+
+  fitPage(tableHeaderHeight + 10);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.rect(margin, yPosition, maxWidth, tableHeaderHeight, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.caption);
+  doc.setFont("helvetica", "bold");
+  let colX = margin + 4;
+  ["Strategy Area", "Channels", "Metrics", "How It Benefits Hobson"].forEach((header, idx) => {
+    doc.text(header, colX, yPosition + 10);
+    colX += colWidths[idx];
+  });
+  yPosition += tableHeaderHeight;
+
+  const tableData = [
+    { area: "Acquisition", channels: "LinkedIn, Website", metrics: "Impressions, Sessions", benefit: "Builds visibility before launch" },
+    { area: "Lead Generation", channels: "Website, Quiz, Retargeting", metrics: "Demo requests, Quiz sign-ups", benefit: "Creates pilot onboarding pipeline" },
+    { area: "Engagement", channels: "Quiz, LinkedIn content", metrics: "Engagement rate, Dwell time", benefit: "Strengthens Liking and brand connection" },
+    { area: "Conversion", channels: "Retargeting, Email", metrics: "CTR, Demo completions", benefit: "Turns interest into pilots" },
+    { area: "Development", channels: "Email onboarding, Support", metrics: "CSAT, activation metrics", benefit: "Improves early experience" },
+    { area: "Growth", channels: "Advocacy, Testimonials", metrics: "NPS, case studies", benefit: "Builds long-term brand equity" }
+  ];
+
+  tableData.forEach((row, idx) => {
+    fitPage(tableRowHeight);
+    const rowBg = idx % 2 === 0 ? PDF_CONFIG.bgWhite : PDF_CONFIG.bgLight;
+    doc.setFillColor(...rowBg);
+    doc.rect(margin, yPosition, maxWidth, tableRowHeight, "F");
+
+    doc.setFontSize(fontSize.caption);
+    colX = margin + 4;
+    doc.setFont("helvetica", "bold");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.text(row.area, colX, yPosition + 12);
+    colX += colWidths[0];
+
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(row.channels, colX, yPosition + 12);
+    colX += colWidths[1];
+    doc.text(row.metrics, colX, yPosition + 12);
+    colX += colWidths[2];
+    const benefitLines = splitTextWithFont(doc, sanitizeText(row.benefit), colWidths[3] - 4, "caption", false);
+    doc.text(benefitLines[0] || "", colX, yPosition + 12);
+
+    yPosition += tableRowHeight;
+  });
+
+  yPosition += spacing.sectionGap;
+
+  // Alignment Summary
+  fitPage(55);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Channel & Metric Alignment", margin + box.paddingX, yPosition + 14);
+
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  doc.text("Hobson's channel and metric choices are tightly aligned to:", margin + box.paddingX, yPosition + 26);
+
+  const alignmentItems = ["Organisational goals", "Long-term vision", "Mindset-first marketing", "2026-2027 objectives"];
+  const alignItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  alignmentItems.forEach((item, idx) => {
+    const xPos = margin + box.paddingX + idx * (alignItemWidth + spacing.gridGap);
+    doc.setFillColor(255, 255, 255, 0.2);
+    doc.roundedRect(xPos, yPosition + 32, alignItemWidth, 12, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(fontSize.caption);
+    doc.text(item, xPos + 4, yPosition + 40);
+  });
+
+  yPosition += 58;
+
+  return yPosition;
+};
+
+/**
  * Create cover page for a section PDF
  */
 const createCoverPage = (
@@ -12849,6 +13241,8 @@ const renderTabContent = (
       yPosition = renderInternalCapabilityAssessment(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "swotAnalysis") {
       yPosition = renderSWOTAnalysis(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "marketingObjectives") {
+      yPosition = renderMarketingObjectives(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Acquisition & Sales Strategy renderers
     else if (componentType === "acquisitionExecutiveSummary") {
