@@ -54,9 +54,11 @@ const PDF_CONFIG = {
   // From: bodyLine = PDF_CONFIG.lineHeight.body (value = 5)
   // ============================================================================
   lineHeight: {
-    body: 5,              // Standard line spacing
+    body: 5,              // Standard line spacing (use for most text)
     tight: 4,             // Compact lists
-    loose: 6,             // Headers, titles
+    loose: 6,             // Headers, titles, relaxed spacing
+    relaxed: 7,           // Extra relaxed spacing
+    spacious: 8,          // Large gaps between items
   },
 
   // ============================================================================
@@ -1065,7 +1067,7 @@ const renderOurVision = (
 
     // Visual note at bottom
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.text(stage.visualNote, cardX + cardWidth / 2, yPosition + 66, { align: "center" });
   });
 
@@ -1087,7 +1089,7 @@ const renderOurVision = (
 
     // Label
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.text(indicator.label.toUpperCase(), indX, yPosition, { align: "center" });
 
     // Dots with correct colors
@@ -1102,7 +1104,7 @@ const renderOurVision = (
 
     // Direction
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.text(indicator.direction, indX, yPosition + 16, { align: "center" });
   });
 
@@ -2869,11 +2871,11 @@ const renderSectorScaleOpportunity = (
     const xPos = margin + 10 + (idx * statWidth);
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFont("helvetica", "bold");
-    doc.setFontSize(10);
+    doc.setFontSize(PDF_CONFIG.fontSize.statLarge);
     doc.text(stat.title, xPos, yPosition + 34);
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.text(stat.subtitle, xPos, yPosition + 40);
   });
 
@@ -3871,7 +3873,7 @@ const renderEarlyRoadmap = (
     setBodyBoldFont(doc);
     doc.text(impact.value, xPos, yPosition + 20);
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.text(impact.label, xPos, yPosition + 26);
   });
   yPosition += 40;
@@ -5801,7 +5803,7 @@ const renderCACAssumptions = (
   doc.setFillColor(...PDF_CONFIG.headerBg);
   doc.rect(margin, yPosition, maxWidth, 12, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
   
   let xPos = margin + 4;
@@ -5820,7 +5822,7 @@ const renderCACAssumptions = (
   ];
 
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   cacData.forEach((row, rowIdx) => {
     if (rowIdx % 2 === 0) {
       doc.setFillColor(...PDF_CONFIG.bgLight);
@@ -6318,7 +6320,7 @@ const renderPLGrowth = (
   cacMetrics.forEach((metric, idx) => {
     const xPos = margin + 8 + idx * (cacColWidth + 6);
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setFont("helvetica", "normal");
     doc.text(metric.label, xPos, yPosition + 24);
     doc.setTextColor(...PDF_CONFIG.primaryColor);
@@ -6327,7 +6329,7 @@ const renderPLGrowth = (
     doc.text(metric.value, xPos, yPosition + 32);
     if (metric.sublabel) {
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(6);
+      doc.setFontSize(PDF_CONFIG.fontSize.tiny);
       doc.setFont("helvetica", "normal");
       doc.text(metric.sublabel, xPos, yPosition + 38);
     }
@@ -6356,7 +6358,7 @@ const renderPLGrowth = (
   doc.setFont("helvetica", "italic");
   const plNoteText = "See the interactive P/L Forecast Chart in the web version. Shows Infrastructure/COGS, Operating Costs, and Net Profit 2027-2031.";
   const wrappedPlNote = doc.splitTextToSize(plNoteText, maxWidth - 12);
-  const plNoteLineHeight = 7;
+  const plNoteLineHeight = PDF_CONFIG.lineHeight.relaxed;
   const plNoteBoxHeight = wrappedPlNote.length * plNoteLineHeight + 12;
   
   doc.setFillColor(...PDF_CONFIG.bgLight);
@@ -6384,14 +6386,14 @@ const renderPLGrowth = (
     doc.roundedRect(xPos, yPosition, colWidth, 28, 3, 3, "S");
 
     doc.setTextColor(...metric.color);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setFont("helvetica", "bold");
     doc.text(metric.label, xPos + colWidth / 2, yPosition + 8, { align: "center" });
 
     doc.setFontSize(PDF_CONFIG.fontSize.body);
     doc.text(metric.value, xPos + colWidth / 2, yPosition + 17, { align: "center" });
 
-    doc.setFontSize(6);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
     doc.setFont("helvetica", "normal");
     doc.text(metric.sublabel, xPos + colWidth / 2, yPosition + 24, { align: "center" });
   });
@@ -6467,7 +6469,7 @@ const renderRevenueGrowth = (
   ];
 
   let tableY = yPosition + 22;
-  doc.setFontSize(7);
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.text("Year", margin + 10, tableY);
@@ -6494,7 +6496,7 @@ const renderRevenueGrowth = (
   doc.roundedRect(margin + 6, yPosition + 48, maxWidth - 12, 6, 2, 2, "F");
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(7);
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.text("5-Year CAGR: ~90%", margin + maxWidth / 2, yPosition + 52, { align: "center" });
   yPosition += 62;
 
@@ -6564,7 +6566,7 @@ const renderRevenueGrowth = (
     doc.roundedRect(xPos, yPosition, colWidth, 28, 3, 3, "S");
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setFont("helvetica", "normal");
     doc.text(stat.label, xPos + colWidth / 2, yPosition + 8, { align: "center" });
 
@@ -10919,14 +10921,14 @@ const renderContentEngagementStrategy = (
     doc.setFont("helvetica", "bold");
     doc.text(stage.stage, xPos + 4, yPosition + 10);
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(6);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
     doc.setFont("helvetica", "normal");
     doc.text(stage.goal, xPos + 4, yPosition + 18);
     stage.items.forEach((item, iIdx) => {
-      doc.text("- " + item.slice(0, 28), xPos + 4, yPosition + 26 + iIdx * 7);
+      doc.text("- " + item.slice(0, 28), xPos + 4, yPosition + 26 + iIdx * PDF_CONFIG.lineHeight.relaxed);
     });
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(5);
+    doc.setFontSize(PDF_CONFIG.fontSize.micro);
     doc.text("Success: " + stage.success, xPos + 4, yPosition + 64);
   });
 
@@ -11112,7 +11114,7 @@ const renderContentEngagementStrategy = (
     doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, yPosition + 16, targetWidth, 10, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(6);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
     doc.setFont("helvetica", "bold");
     doc.text(target.metric, xPos + 2, yPosition + 22);
   });
@@ -11146,7 +11148,7 @@ const renderContentEngagementStrategy = (
     doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, yPosition + 20, convWidth, 16, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(5);
+    doc.setFontSize(PDF_CONFIG.fontSize.micro);
     doc.setFont("helvetica", "normal");
     const pointLines = splitTextWithFont(doc, point, convWidth - 4, "caption", false);
     doc.text(pointLines.slice(0, 2), xPos + 2, yPosition + 26);
@@ -11211,7 +11213,7 @@ const renderPrimaryConversionChannels = (
     doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, yPosition + 22, pathWidth, 14, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(6);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
     const pathLines = doc.splitTextToSize(path, pathWidth - 4);
     doc.text(pathLines, xPos + 2, yPosition + 28);
   });
@@ -11359,7 +11361,7 @@ const renderPrimaryConversionChannels = (
   
   const metrics = ["Homepage CTR", "Free sign-ups", "Dwell time", "Bounce rate", "Retargeting conv.", "Demo requests", "High-intent conv."];
   const metricWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 6) / 7;
-  doc.setFontSize(6);
+  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textDark);
   metrics.forEach((metric, idx) => {
@@ -11430,7 +11432,7 @@ const createCoverPage = (
   doc.text(subtitleLines, pageWidth / 2, 140, { align: "center" });
 
   // Label
-  doc.setFontSize(10);
+  doc.setFontSize(PDF_CONFIG.fontSize.statLarge);
   doc.text("Investment Opportunity Document", pageWidth / 2, 170, { align: "center" });
 
   // Date
@@ -11859,7 +11861,7 @@ const renderTheProposition = (
     
     // Section name on left
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setFont("helvetica", "bold");
     doc.text(sectionName, margin, 8);
     
@@ -12245,7 +12247,7 @@ const renderTheProposition = (
     let suppY = yPosition + 22;
     if (strat.subtitle) {
       doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.setFontSize(7);
+      doc.setFontSize(PDF_CONFIG.fontSize.small);
       doc.setFont("helvetica", "normal");
       doc.text(strat.subtitle, xPos + box.paddingX, suppY);
       suppY += 10;
@@ -12952,7 +12954,7 @@ const renderOrganisationalPositioning = (
     doc.text(stage.stage, xPos + 4, yPosition + 12);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setFont("helvetica", "normal");
     const descLines = splitTextWithFont(doc, stage.desc, stageWidth - 8, "caption", false);
     doc.text(descLines, xPos + 4, yPosition + 22, { lineHeightFactor: lineHeightFactor.tight });
@@ -12991,7 +12993,7 @@ const renderOrganisationalPositioning = (
     doc.text(adv.title, xPos + box.paddingX, yPosition + 12);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setFont("helvetica", "normal");
     const descLines = splitTextWithFont(doc, adv.desc, advantageWidth - box.paddingX * 2, "caption", false);
     doc.text(descLines, xPos + box.paddingX, yPosition + 22, { lineHeightFactor: lineHeightFactor.tight });
@@ -13053,7 +13055,7 @@ const renderOrganisationalPositioning = (
     doc.setFillColor(...PDF_CONFIG.primaryColor);
     doc.roundedRect(margin + 4, yPosition + 3, 24, 8, 2, 2, "F");
     doc.setTextColor(255, 255, 255);
-    doc.setFontSize(6);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
     doc.setFont("helvetica", "bold");
     doc.text(obj.year, margin + 10, yPosition + 8);
 
@@ -13117,7 +13119,7 @@ const renderOrganisationalPositioning = (
   doc.setFillColor(59, 130, 246);
   doc.circle(margin + 12, yPosition + 12, 5, "F");
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
   doc.text("1", margin + 10, yPosition + 14);
 
@@ -13139,7 +13141,7 @@ const renderOrganisationalPositioning = (
   });
 
   doc.setTextColor(29, 78, 216);
-  doc.setFontSize(7);
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setFont("helvetica", "italic");
   doc.text("Brand Role: Hobson acts as the Sage, a calm, intelligent guide helping teams see through document complexity.", margin + 8, yPosition + 54);
 
@@ -13156,7 +13158,7 @@ const renderOrganisationalPositioning = (
   doc.setFillColor(168, 85, 247);
   doc.circle(margin + 12, yPosition + 12, 5, "F");
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
   doc.text("2", margin + 10, yPosition + 14);
 
@@ -13178,7 +13180,7 @@ const renderOrganisationalPositioning = (
   });
 
   doc.setTextColor(126, 34, 206);
-  doc.setFontSize(7);
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setFont("helvetica", "italic");
   doc.text("Brand Role: A trusted, lightweight companion that delivers clarity without requiring system change.", margin + 8, yPosition + 54);
 
@@ -13195,7 +13197,7 @@ const renderOrganisationalPositioning = (
   doc.setFillColor(34, 197, 94);
   doc.circle(margin + 12, yPosition + 12, 5, "F");
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(8);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
   doc.text("3", margin + 10, yPosition + 14);
 
@@ -13217,7 +13219,7 @@ const renderOrganisationalPositioning = (
   });
 
   doc.setTextColor(21, 128, 61);
-  doc.setFontSize(7);
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setFont("helvetica", "italic");
   doc.text("Brand Role: A dependable, intelligent assistant that enhances existing systems.", margin + 8, yPosition + 54);
 
@@ -13254,12 +13256,12 @@ const renderOrganisationalPositioning = (
     doc.roundedRect(xPos, yPosition + 15, statWidth, 18, 2, 2, "F");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(10);
+    doc.setFontSize(PDF_CONFIG.fontSize.statLarge);
     doc.setFont("helvetica", "bold");
     doc.text(stat.value, xPos + statWidth / 2, yPosition + 24, { align: "center" });
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(6);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
     doc.setFont("helvetica", "normal");
     doc.text(stat.label, xPos + statWidth / 2, yPosition + 30, { align: "center" });
   });
@@ -13310,12 +13312,12 @@ const renderOrganisationalPositioning = (
     doc.roundedRect(margin, yPosition, maxWidth, 12, 2, 2, "F");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setFont("helvetica", "bold");
     doc.text(obj.stage, margin + 4, yPosition + 7);
 
     doc.setTextColor(...PDF_CONFIG.textLight);
-    doc.setFontSize(6);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
     doc.setFont("helvetica", "normal");
     doc.text(obj.period, margin + 50, yPosition + 7);
 
@@ -13408,12 +13410,12 @@ const renderOrganisationalPositioning = (
     doc.roundedRect(xPos, yPosition + 15, areaWidth, 16, 2, 2, "F");
 
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(7);
+    doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setFont("helvetica", "bold");
     doc.text(item.area, xPos + areaWidth / 2, yPosition + 21, { align: "center" });
 
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(5);
+    doc.setFontSize(PDF_CONFIG.fontSize.micro);
     doc.setFont("helvetica", "normal");
     const descLines = doc.splitTextToSize(item.desc, areaWidth - 4);
     doc.text(descLines[0], xPos + areaWidth / 2, yPosition + 27, { align: "center" });
@@ -13872,7 +13874,7 @@ const renderConversionStrategy = (
 
     // Description
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(6);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
     doc.setFont("helvetica", "normal");
     const descLines = doc.splitTextToSize(step.desc, stepWidth - 6);
     doc.text(descLines, xPos + stepWidth / 2, yPosition + 45, { align: "center", lineHeightFactor: lineHeightFactor.body });
@@ -14024,7 +14026,7 @@ const renderTabContent = (
   if (tab.content?.overview) {
     doc.setFillColor(...PDF_CONFIG.bgLight);
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(10);
+    doc.setFontSize(PDF_CONFIG.fontSize.statLarge);
     doc.setFont("helvetica", "normal");
     const cleanedOverview = sanitizeText(tab.content.overview);
     const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 16);
@@ -14281,7 +14283,7 @@ const renderTabContent = (
           doc.setFillColor(...PDF_CONFIG.primaryColor);
           doc.rect(xPos + 2, finalYPos, cardWidth - 6, 10, "F");
           doc.setTextColor(255, 255, 255);
-          doc.setFontSize(8);
+          doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
           doc.setFont("helvetica", "bold");
           doc.text(member.role, xPos + cardWidth / 2, finalYPos + 7, { align: "center" });
 
@@ -14295,7 +14297,7 @@ const renderTabContent = (
           // LinkedIn - positioned lower
           if (member.linkedin) {
             doc.setTextColor(...PDF_CONFIG.primaryColor);
-            doc.setFontSize(8);
+            doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
             doc.setFont("helvetica", "normal");
             const linkText = "LinkedIn Profile";
             const linkY = finalYPos + 32;
@@ -14304,7 +14306,7 @@ const renderTabContent = (
             doc.link(xPos + (cardWidth - textWidth) / 2, linkY - 3, textWidth, 4, { url: member.linkedin });
           } else {
             doc.setTextColor(...PDF_CONFIG.textLight);
-            doc.setFontSize(8);
+            doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
             doc.setFont("helvetica", "italic");
             doc.text("Coming Soon", xPos + cardWidth / 2, finalYPos + 32, { align: "center" });
           }
@@ -14385,7 +14387,7 @@ const addFooters = (doc: jsPDF): void => {
   for (let i = 2; i <= totalPages; i++) {
     doc.setPage(i);
     doc.setTextColor(...PDF_CONFIG.textLight);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     doc.text(
       `(C) ${new Date().getFullYear()} Hobson AI - Confidential Investment Materials`,
@@ -14525,7 +14527,7 @@ export const generateFullBusinessPlanPdf = (
     month: "long",
     day: "numeric",
   });
-  doc.setFontSize(10);
+  doc.setFontSize(PDF_CONFIG.fontSize.statLarge);
   doc.text(currentDate, pageWidth / 2, pageHeight - 20, { align: "center" });
 
   // Index page
@@ -14587,7 +14589,7 @@ export const generateFullBusinessPlanPdf = (
     doc.rect(cardX, cardY, cardWidth, 3, "F");
 
     doc.setTextColor(r, g, b);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
     doc.text(`${idx + 1}`, cardX + 8, cardY + 15);
 
@@ -14598,7 +14600,7 @@ export const generateFullBusinessPlanPdf = (
     doc.text(titleLines, cardX + 20, cardY + 15);
 
     doc.setTextColor(...PDF_CONFIG.textLight);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     const subtitleLines = doc.splitTextToSize(section.subtitle, cardWidth - 20);
     doc.text(subtitleLines[0] || "", cardX + 8, cardY + 30);
@@ -14676,7 +14678,7 @@ export const generateFullBusinessPlanPdf = (
   for (let i = 3; i <= totalPages; i++) {
     doc.setPage(i);
     doc.setTextColor(...PDF_CONFIG.textLight);
-    doc.setFontSize(8);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     doc.text(
       `(C) ${new Date().getFullYear()} Hobson AI - Confidential Investment Materials`,
