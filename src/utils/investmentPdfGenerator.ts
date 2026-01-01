@@ -1696,26 +1696,26 @@ const renderWhyNow = (
   });
 
   // Convergence section - light background matching on-screen update
-  yPosition = checkPageBreak(doc, yPosition, 65, pageHeight, margin);
+  yPosition = checkPageBreak(doc, yPosition, 85, pageHeight, margin);
 
   // Convergence background - white with purple border (matches on-screen bg-white border-2 border-purple-200)
-  const convergenceHeight = 60;
+  const convergenceBoxHeight = 50; // Box only contains title and pills
   doc.setFillColor(...PDF_CONFIG.bgWhite);
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(1);
-  doc.roundedRect(margin, yPosition, maxWidth, convergenceHeight, 4, 4, "FD");
+  doc.roundedRect(margin, yPosition, maxWidth, convergenceBoxHeight, 4, 4, "FD");
 
   // Header - purple text on white background
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
-  doc.text(whyNowData.convergence.title, pageWidth / 2, yPosition + 14, { align: "center" });
+  doc.text(whyNowData.convergence.title, pageWidth / 2, yPosition + 12, { align: "center" });
 
   // Points as pills with light purple background (matches on-screen bg-purple-50 border-purple-200)
   const points = whyNowData.convergence.points;
   setBodySmallFont(doc);
   
   // Row 1: first 3 points
-  let pillY = yPosition + 26;
+  let pillY = yPosition + 24;
   let totalWidth1 = 0;
   points.slice(0, 3).forEach((point) => {
     totalWidth1 += doc.getTextWidth(point) + 14;
@@ -1754,13 +1754,20 @@ const renderWhyNow = (
     pillX += textWidth + 4;
   });
 
-  // Closing statement - combines conclusion and call to action
+  // Move yPosition past the box
+  yPosition += convergenceBoxHeight + 8;
+
+  // Closing statement - BELOW the box, centered
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodyBoldFont(doc);
   const closingText = `${whyNowData.convergence.conclusion} ${whyNowData.convergence.callToAction}`;
-  doc.text(closingText, pageWidth / 2, yPosition + 54, { align: "center" });
+  const closingLines = doc.splitTextToSize(closingText, maxWidth - 20);
+  closingLines.forEach((line: string) => {
+    doc.text(line, pageWidth / 2, yPosition, { align: "center" });
+    yPosition += PDF_CONFIG.lineHeight.body;
+  });
 
-  yPosition += convergenceHeight + PDF_CONFIG.spacing.sectionGap;
+  yPosition += PDF_CONFIG.spacing.sectionGap;
   return yPosition;
 };
 
