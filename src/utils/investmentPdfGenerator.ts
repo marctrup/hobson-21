@@ -7610,7 +7610,7 @@ const renderSituationAnalysis = (
     doc.setFont("helvetica", "bold");
     doc.text(`Segment ${segment.id}:`, margin + spacing.bulletTextOffset, segmentHeaderY + 1);
 
-    // Target label in a colored box
+    // Target label in a colored box - centered within box
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
     const targetText = `${segment.targetLevel} Target`;
@@ -7625,9 +7625,11 @@ const renderSituationAnalysis = (
     doc.setFillColor(...theme.accent);
     doc.roundedRect(targetX, targetBoxY, targetBoxWidth, targetBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     
-    // Draw target text in white
+    // Draw target text in white - centered horizontally and vertically
     doc.setTextColor(255, 255, 255);
-    doc.text(targetText, targetX + targetBoxPadding, segmentHeaderY + 1);
+    const targetTextCenterX = targetX + targetBoxWidth / 2;
+    const targetTextCenterY = targetBoxY + targetBoxHeight / 2 + fontSize.bodySmall / 3;
+    doc.text(targetText, targetTextCenterX, targetTextCenterY, { align: "center" });
 
     // Title - positioned below header with proper spacing
     const titleY = segmentHeaderY + lineHeight.body + spacing.boxGap;
