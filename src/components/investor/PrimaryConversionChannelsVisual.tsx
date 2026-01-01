@@ -15,12 +15,12 @@ export const PrimaryConversionChannelsVisual: React.FC = () => {
       </div>
 
       {/* Channel 1: Website */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl p-6 text-white">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <div className="bg-gradient-to-r from-purple-100 to-purple-200 rounded-xl p-6">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-purple-800">
           <Globe className="w-5 h-5" />
           1. Website
         </h3>
-        <p className="text-purple-100 mb-4">
+        <p className="text-purple-700 mb-4">
           The website acts as the main route into trials and enquiries. Conversion paths include:
         </p>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
@@ -30,12 +30,12 @@ export const PrimaryConversionChannelsVisual: React.FC = () => {
             "Submitting pilot enquiries",
             "Moving from the quiz into a guided trial"
           ].map((item, index) => (
-            <div key={index} className="bg-white/10 rounded-lg p-3 text-center">
-              <p className="text-sm">{item}</p>
+            <div key={index} className="bg-white/80 rounded-lg p-3 text-center border border-purple-200">
+              <p className="text-sm text-gray-700">{item}</p>
             </div>
           ))}
         </div>
-        <p className="text-purple-200 text-sm italic">
+        <p className="text-purple-600 text-sm italic">
           Pages will be optimised around clear calls to action, simple explanations, and trust signals.
         </p>
       </div>
@@ -109,47 +109,47 @@ export const PrimaryConversionChannelsVisual: React.FC = () => {
       </div>
 
       {/* Key Conversion Tactics */}
-      <div className="bg-gradient-to-r from-purple-600 to-teal-600 rounded-xl p-6 text-white">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <div className="bg-gradient-to-r from-purple-100 to-teal-100 rounded-xl p-6">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-purple-800">
           <Zap className="w-5 h-5" />
           Key Conversion Tactics
         </h3>
         
         <div className="space-y-4">
           {/* Tactic 1 */}
-          <div className="bg-white/10 rounded-lg p-4">
-            <p className="font-semibold mb-2">1. Free Package as Entry Point</p>
-            <p className="text-sm text-purple-100">
+          <div className="bg-white/80 rounded-lg p-4 border border-purple-200">
+            <p className="font-semibold mb-2 text-purple-800">1. Free Package as Entry Point</p>
+            <p className="text-sm text-gray-700">
               A no-cost option removes the most significant practical and psychological barriers. It shifts the decision from "should we commit?" to "should we try this now?" The focus is on letting users experience the core value with minimal effort.
             </p>
           </div>
 
           {/* Tactic 2 */}
-          <div className="bg-white/10 rounded-lg p-4">
-            <p className="font-semibold mb-2">2. Optimising Calls to Action</p>
-            <p className="text-sm text-purple-100 mb-2">
+          <div className="bg-white/80 rounded-lg p-4 border border-purple-200">
+            <p className="font-semibold mb-2 text-purple-800">2. Optimising Calls to Action</p>
+            <p className="text-sm text-gray-700 mb-2">
               Conversion performance will be improved by testing:
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
               {["Wording", "Placement (especially above the fold)", "Number of CTAs per page", "Clarity of next steps"].map((item, idx) => (
-                <div key={idx} className="bg-white/10 rounded px-2 py-1 text-xs text-center">{item}</div>
+                <div key={idx} className="bg-purple-50 rounded px-2 py-1 text-xs text-center text-purple-700">{item}</div>
               ))}
             </div>
-            <p className="text-xs text-purple-200 mt-2">Small changes here often produce meaningful gains.</p>
+            <p className="text-xs text-gray-600 mt-2">Small changes here often produce meaningful gains.</p>
           </div>
 
           {/* Tactic 3 */}
-          <div className="bg-white/10 rounded-lg p-4">
-            <p className="font-semibold mb-2">3. Improving Search-Driven Conversion</p>
-            <p className="text-sm text-purple-100 mb-2">
+          <div className="bg-white/80 rounded-lg p-4 border border-purple-200">
+            <p className="font-semibold mb-2 text-purple-800">3. Improving Search-Driven Conversion</p>
+            <p className="text-sm text-gray-700 mb-2">
               As search visibility grows, ensure visitors find clear, relevant information and a direct route to trial:
             </p>
-            <ul className="text-xs text-purple-200 space-y-1 ml-4">
+            <ul className="text-xs text-gray-600 space-y-1 ml-4">
               <li>- Refining headings and page structure</li>
               <li>- Ensuring pages match search intent</li>
               <li>- Creating content aligned with typical tasks</li>
             </ul>
-            <p className="text-xs text-purple-200 mt-2 italic">Better-matched traffic increases conversion efficiency.</p>
+            <p className="text-xs text-gray-500 mt-2 italic">Better-matched traffic increases conversion efficiency.</p>
           </div>
         </div>
       </div>

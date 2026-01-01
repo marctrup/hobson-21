@@ -15,13 +15,13 @@ export const BrandStrategyVisual: React.FC = () => {
       </div>
 
       {/* Brand Essence */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl p-6 text-white">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <div className="bg-gradient-to-r from-purple-100 to-purple-200 rounded-xl p-6">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-purple-800">
           <Target className="w-5 h-5" />
           Brand Essence
         </h3>
-        <p className="text-purple-100 mb-4">
-          Hobson's brand centres on one idea: <span className="font-semibold text-white">making information easier to work with</span>. All brand decisions—visual, verbal, and experiential—reinforce this idea by emphasising ease, reliability, and straightforward communication.
+        <p className="text-purple-700 mb-4">
+          Hobson's brand centres on one idea: <span className="font-semibold text-purple-900">making information easier to work with</span>. All brand decisions—visual, verbal, and experiential—reinforce this idea by emphasising ease, reliability, and straightforward communication.
         </p>
       </div>
 
@@ -122,12 +122,12 @@ export const BrandStrategyVisual: React.FC = () => {
       </div>
 
       {/* Long-Term Branding Direction */}
-      <div className="bg-gradient-to-r from-purple-600 to-teal-600 rounded-xl p-6 text-white">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <div className="bg-gradient-to-r from-purple-100 to-teal-100 rounded-xl p-6">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-purple-800">
           <TrendingUp className="w-5 h-5" />
           Long-Term Branding Direction (2028–2030)
         </h3>
-        <p className="text-purple-100 mb-4">
+        <p className="text-purple-700 mb-4">
           As Hobson enters more markets and the product evolves beyond retrieval, the brand will shift from being seen as a helpful assistant to a broader intelligence layer for real estate operations.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -137,13 +137,13 @@ export const BrandStrategyVisual: React.FC = () => {
             "Building a more visible presence across industry communities",
             "Maturing support and documentation to match enterprise expectations"
           ].map((item, index) => (
-            <div key={index} className="bg-white/10 rounded-lg p-3 flex items-start gap-2">
-              <ArrowRight className="w-4 h-4 mt-0.5 flex-shrink-0" />
-              <p className="text-sm">{item}</p>
+            <div key={index} className="bg-white/80 rounded-lg p-3 flex items-start gap-2 border border-purple-200">
+              <ArrowRight className="w-4 h-4 mt-0.5 flex-shrink-0 text-purple-600" />
+              <p className="text-sm text-gray-700">{item}</p>
             </div>
           ))}
         </div>
-        <p className="text-white font-semibold mt-4 text-center">
+        <p className="text-purple-800 font-semibold mt-4 text-center">
           The goal is for Hobson to become a recognised standard for document intelligence.
         </p>
       </div>
@@ -214,24 +214,24 @@ export const BrandStrategyVisual: React.FC = () => {
       </div>
 
       {/* Online Presence Section */}
-      <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-xl p-6 text-white">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <div className="bg-gradient-to-r from-teal-100 to-teal-200 rounded-xl p-6">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-teal-800">
           <Globe className="w-5 h-5" />
           Online Presence
         </h3>
-        <p className="text-teal-100 mb-6">
+        <p className="text-teal-700 mb-6">
           Hobson's online presence is intentionally limited at this stage. The focus is on credibility, controlled exposure, and preparing the foundations for a scalable digital footprint once the product is ready for broader adoption.
         </p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Website */}
-          <div className="bg-white/10 rounded-lg p-4">
+          <div className="bg-white/80 rounded-lg p-4 border border-teal-200">
             <div className="flex items-center gap-2 mb-2">
-              <Monitor className="w-5 h-5 text-purple-200" />
-              <p className="font-semibold">A. Website (hobsonschoice.ai)</p>
+              <Monitor className="w-5 h-5 text-purple-600" />
+              <p className="font-semibold text-gray-900">A. Website (hobsonschoice.ai)</p>
             </div>
-            <p className="text-sm text-teal-100 mb-3">The website operates as the central source of information about Hobson. It provides a simple explanation of the product, a consistent visual identity, and an initial base for search visibility.</p>
-            <ul className="space-y-1 text-sm text-teal-200">
+            <p className="text-sm text-gray-700 mb-3">The website operates as the central source of information about Hobson. It provides a simple explanation of the product, a consistent visual identity, and an initial base for search visibility.</p>
+            <ul className="space-y-1 text-sm text-gray-600">
               <li>• Introducing Hobson's purpose</li>
               <li>• Directing users to early materials such as the quiz</li>
               <li>• Supporting SEO indexing for future content</li>
@@ -240,45 +240,45 @@ export const BrandStrategyVisual: React.FC = () => {
           </div>
 
           {/* Product Presence */}
-          <div className="bg-white/10 rounded-lg p-4">
+          <div className="bg-white/80 rounded-lg p-4 border border-teal-200">
             <div className="flex items-center gap-2 mb-2">
-              <Layers className="w-5 h-5 text-amber-200" />
-              <p className="font-semibold">B. Product Presence (MVP Access Only)</p>
+              <Layers className="w-5 h-5 text-amber-600" />
+              <p className="font-semibold text-gray-900">B. Product Presence (MVP Access Only)</p>
             </div>
-            <p className="text-sm text-teal-100">Hobson is currently available only to selected pilot users. The online product environment reflects this controlled stage: a minimalist interface, steady iteration, and limited external visibility.</p>
-            <p className="text-sm text-teal-200 mt-2">This approach allows the team to refine accuracy, gather feedback, and validate workflows without broad market exposure.</p>
+            <p className="text-sm text-gray-700">Hobson is currently available only to selected pilot users. The online product environment reflects this controlled stage: a minimalist interface, steady iteration, and limited external visibility.</p>
+            <p className="text-sm text-gray-600 mt-2">This approach allows the team to refine accuracy, gather feedback, and validate workflows without broad market exposure.</p>
           </div>
 
           {/* Social Presence */}
-          <div className="bg-white/10 rounded-lg p-4">
+          <div className="bg-white/80 rounded-lg p-4 border border-teal-200">
             <div className="flex items-center gap-2 mb-2">
-              <Linkedin className="w-5 h-5 text-blue-200" />
-              <p className="font-semibold">C. Social Presence (LinkedIn)</p>
+              <Linkedin className="w-5 h-5 text-blue-600" />
+              <p className="font-semibold text-gray-900">C. Social Presence (LinkedIn)</p>
             </div>
-            <p className="text-sm text-teal-100">LinkedIn is currently Hobson's primary public channel, used for sharing updates, simple insights, and early brand signalling. Engagement is modest but aligned with the validation phase.</p>
-            <p className="text-sm text-teal-200 mt-2">The platform will gradually grow into a consistent stream of educational and trust-building content as the product becomes more widely available.</p>
+            <p className="text-sm text-gray-700">LinkedIn is currently Hobson's primary public channel, used for sharing updates, simple insights, and early brand signalling. Engagement is modest but aligned with the validation phase.</p>
+            <p className="text-sm text-gray-600 mt-2">The platform will gradually grow into a consistent stream of educational and trust-building content as the product becomes more widely available.</p>
           </div>
 
           {/* Search Presence */}
-          <div className="bg-white/10 rounded-lg p-4">
+          <div className="bg-white/80 rounded-lg p-4 border border-teal-200">
             <div className="flex items-center gap-2 mb-2">
-              <Search className="w-5 h-5 text-rose-200" />
-              <p className="font-semibold">D. Search Presence (SEO and AI Discovery)</p>
+              <Search className="w-5 h-5 text-rose-600" />
+              <p className="font-semibold text-gray-900">D. Search Presence (SEO and AI Discovery)</p>
             </div>
-            <p className="text-sm text-teal-100">The current site is optimised for indexing, clear metadata, and structured copy so that both search engines and AI crawlers can interpret content effectively. This positions Hobson for visibility as natural-language search becomes more common.</p>
+            <p className="text-sm text-gray-700">The current site is optimised for indexing, clear metadata, and structured copy so that both search engines and AI crawlers can interpret content effectively. This positions Hobson for visibility as natural-language search becomes more common.</p>
           </div>
         </div>
 
         {/* Non-Presence */}
-        <div className="mt-4 bg-white/10 rounded-lg p-4">
-          <p className="font-semibold text-white mb-2">E. Deliberate Non-Presence in Other Channels</p>
-          <p className="text-sm text-teal-200">At this stage there are no newsletters, communities, paid campaigns, or additional social channels. This is intentional—to avoid premature scaling, manage expectations, and keep focus on validating product performance before increasing reach.</p>
+        <div className="mt-4 bg-white/80 rounded-lg p-4 border border-teal-200">
+          <p className="font-semibold text-gray-900 mb-2">E. Deliberate Non-Presence in Other Channels</p>
+          <p className="text-sm text-gray-600">At this stage there are no newsletters, communities, paid campaigns, or additional social channels. This is intentional—to avoid premature scaling, manage expectations, and keep focus on validating product performance before increasing reach.</p>
         </div>
 
         {/* Consistency */}
-        <div className="mt-4 bg-white/10 rounded-lg p-4">
-          <p className="font-semibold text-white mb-2">F. Consistency Across Touchpoints</p>
-          <p className="text-sm text-teal-200">All existing digital touchpoints show a unified look and feel, ensuring early recognition. As the ecosystem expands, this consistency will support clearer user journeys and smoother conversion paths.</p>
+        <div className="mt-4 bg-white/80 rounded-lg p-4 border border-teal-200">
+          <p className="font-semibold text-gray-900 mb-2">F. Consistency Across Touchpoints</p>
+          <p className="text-sm text-gray-600">All existing digital touchpoints show a unified look and feel, ensuring early recognition. As the ecosystem expands, this consistency will support clearer user journeys and smoother conversion paths.</p>
         </div>
       </div>
 
