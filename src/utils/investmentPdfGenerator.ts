@@ -1225,9 +1225,9 @@ const renderExecutiveSummary = (
   const gapMd = 4;
   const bulletGap = 1;
 
-  // Use slightly tighter line heights for this dense card to avoid airy spacing
-  const bodyLineHeight = PDF_CONFIG.calculatedLineHeight.bodyTight;
-  const looseLineHeight = PDF_CONFIG.calculatedLineHeight.body;
+  // Use tight line heights for dense card content (matches default compact look)
+  const bodyLineHeight = PDF_CONFIG.lineHeight.body + 1; // 6pt - compact but readable
+  const looseLineHeight = PDF_CONFIG.lineHeight.loose; // 6pt for closing statement
   
   const para1Height = para1Lines.length * bodyLineHeight;
   const founderHeight = founderLines.length * bodyLineHeight + 8; // box padding
