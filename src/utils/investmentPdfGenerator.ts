@@ -8705,9 +8705,10 @@ const renderMarketDescription = (
   const posIntroLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.intro), maxWidth - box.paddingX * 2, "body", false);
   const posConclusionLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.conclusion), conclusionTextWidth, "body", false);
   
-  // Height calculation with proper padding
+  // Height calculation with proper padding - include title height
+  const titleHeight = fontSize.cardTitle + spacing.sectionGap;
   const conclusionBoxHeight = posConclusionLines.length * bodyLine + box.paddingTop + box.paddingBottom;
-  const posHeight = spacing.contentPadding + posIntroLines.length * bodyLine + spacing.sectionGap + conclusionBoxHeight + spacing.paragraphGap;
+  const posHeight = titleHeight + spacing.contentPadding + posIntroLines.length * bodyLine + spacing.sectionGap + conclusionBoxHeight + spacing.paragraphGap;
   fitPage(posHeight + spacing.paragraphGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -8719,9 +8720,10 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson's Strategic Position", margin + box.paddingX, yPosition + spacing.sectionGap + fontSize.cardTitle / 3);
+  doc.text("Hobson's Strategic Position", margin + box.paddingX, yPosition + spacing.sectionGap + fontSize.cardTitle / 2);
 
-  textY = yPosition + spacing.contentPadding;
+  // Start intro text AFTER title with proper spacing
+  textY = yPosition + titleHeight + spacing.contentPadding;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
