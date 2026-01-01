@@ -99,7 +99,6 @@ export const MarketingObjectivesVisual: React.FC = () => {
         <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-purple-500/20 to-teal-500/20 mb-4">
           <Target className="w-8 h-8 text-purple-600" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Marketing Objectives</h2>
         <p className="text-gray-600 max-w-3xl mx-auto">
           Aligned with the 2026-2028 timeline, Hobson's marketing objectives define the outcomes needed to progress 
           from MVP validation to a scalable commercial presence. They focus on measurable growth across awareness, 
