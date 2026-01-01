@@ -11043,16 +11043,7 @@ const renderContentEngagementStrategy = (
 
   yPosition += 73;
 
-  // SMART Acquisition Targets
-  fitPage(35);
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 30, box.borderRadius, box.borderRadius, "F");
-
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("SMART Acquisition Targets", margin + box.paddingX, yPosition + 12);
-
+  // SMART Acquisition Targets - 2-row layout with larger boxes
   const acqTargets = [
     { metric: "500+", desc: "Quiz completions Q2 2027" },
     { metric: "40%", desc: "Traffic increase Q4 2027" },
@@ -11062,18 +11053,44 @@ const renderContentEngagementStrategy = (
     { metric: "Q1 2028", desc: "International readiness" }
   ];
 
-  const targetWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 5) / 6;
+  const acqCols = 3;
+  const acqRows = Math.ceil(acqTargets.length / acqCols);
+  const acqBoxW = (maxWidth - box.paddingX * 2 - spacing.gridGap * (acqCols - 1)) / acqCols;
+  const acqBoxH = 28;
+  const acqContainerH = 20 + acqRows * acqBoxH + (acqRows - 1) * 6 + 10;
+
+  fitPage(acqContainerH + 8);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, acqContainerH, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SMART Acquisition Targets", margin + box.paddingX, yPosition + 14);
+
+  const acqStartY = yPosition + 22;
   acqTargets.forEach((target, idx) => {
-    const xPos = margin + box.paddingX + idx * (targetWidth + spacing.gridGap);
+    const col = idx % acqCols;
+    const row = Math.floor(idx / acqCols);
+    const xPos = margin + box.paddingX + col * (acqBoxW + spacing.gridGap);
+    const yPos = acqStartY + row * (acqBoxH + 6);
+
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPosition + 16, targetWidth, 10, 2, 2, "F");
+    doc.roundedRect(xPos, yPos, acqBoxW, acqBoxH, 3, 3, "F");
+
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+    doc.setFontSize(fontSize.body);
     doc.setFont("helvetica", "bold");
-    doc.text(target.metric, xPos + 2, yPosition + 22);
+    doc.text(target.metric, xPos + 8, yPos + 12);
+
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const descLines = splitTextWithFont(doc, sanitizeText(target.desc), acqBoxW - 16, "caption", false);
+    doc.text(descLines.slice(0, 2), xPos + 8, yPos + 22);
   });
 
-  yPosition += 38;
+  yPosition += acqContainerH + 8;
 
   // Digital Channel Conversion Strategy - using light background
   fitPage(45);
