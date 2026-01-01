@@ -72,6 +72,22 @@ const PDF_CONFIG = {
   },
 
   // ============================================================================
+  // CALCULATED LINE HEIGHTS (in points) - fontSize × lineHeightFactor
+  // Use these for manual line-by-line text rendering (forEach loops)
+  // These are the CORRECT values for proper text spacing
+  // ============================================================================
+  calculatedLineHeight: {
+    body: 9 * 1.25,       // 11.25pt - body text (9pt × 1.25)
+    bodyLoose: 9 * 1.35,  // 12.15pt - body text with extra breathing room
+    bodyTight: 9 * 1.2,   // 10.8pt - compact body text
+    small: 8 * 1.25,      // 10pt - small text (8pt × 1.25)
+    smallTight: 8 * 1.2,  // 9.6pt - compact small text
+    caption: 8 * 1.2,     // 9.6pt - caption/footnote text
+    title: 12 * 1.2,      // 14.4pt - card titles
+    sectionTitle: 13 * 1.2, // 15.6pt - section headers
+  },
+
+  // ============================================================================
   // SPACING (in points) - gaps between elements
   // Extracted from Strategy & Approach exact values
   // ============================================================================
@@ -1209,9 +1225,9 @@ const renderExecutiveSummary = (
   const gapMd = 4;
   const bulletGap = 1;
 
-  // Use proper line height: fontSize × lineHeightFactor (9pt × 1.25 ≈ 11pt)
-  const bodyLineHeight = PDF_CONFIG.fontSize.body * PDF_CONFIG.lineHeightFactor.body;
-  const looseLineHeight = PDF_CONFIG.fontSize.body * PDF_CONFIG.lineHeightFactor.loose;
+  // Use calculated line heights from PDF_CONFIG (fontSize × lineHeightFactor)
+  const bodyLineHeight = PDF_CONFIG.calculatedLineHeight.body;
+  const looseLineHeight = PDF_CONFIG.calculatedLineHeight.bodyLoose;
   
   const para1Height = para1Lines.length * bodyLineHeight;
   const founderHeight = founderLines.length * bodyLineHeight + 8; // box padding
