@@ -84,8 +84,8 @@ const ProductVisionVisual: React.FC = () => {
       {/* Hobson Solution */}
       <div className="bg-gradient-to-br from-primary/5 to-purple-50 rounded-xl p-6 border border-primary/20">
         <div className="flex items-center gap-3 mb-4">
-          <div className="p-2 bg-primary rounded-lg">
-            <Layers className="w-6 h-6 text-white" />
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <Layers className="w-6 h-6 text-primary" />
           </div>
           <h4 className="text-lg font-semibold text-gray-900">
             Hobson becomes the intelligence layer above every PMS
@@ -118,8 +118,8 @@ const ProductVisionVisual: React.FC = () => {
       </div>
 
       {/* Conclusion */}
-      <div className="bg-primary text-white rounded-xl p-6 text-center">
-        <p className="text-lg font-semibold">
+      <div className="bg-gradient-to-r from-primary/10 to-purple-100 border border-primary/20 rounded-xl p-6 text-center">
+        <p className="text-lg font-semibold text-primary">
           This makes Hobson the only platform capable of running a single operating model 
           across residential and commercial portfolios.
         </p>

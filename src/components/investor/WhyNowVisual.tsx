@@ -89,7 +89,7 @@ const WhyNowVisual: React.FC = () => {
             className="relative bg-gradient-to-br from-purple-50 to-white border border-purple-100 rounded-xl p-6 hover:shadow-lg transition-shadow"
           >
             {/* Section Number Badge */}
-            <div className="absolute -top-3 -left-3 w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-md">
+            <div className="absolute -top-3 -left-3 w-10 h-10 bg-purple-100 border-2 border-purple-300 rounded-full flex items-center justify-center text-purple-700 font-bold text-lg shadow-md">
               {section.number}
             </div>
 
@@ -130,16 +130,16 @@ const WhyNowVisual: React.FC = () => {
       </div>
 
       {/* The Convergence */}
-      <div className="mt-12 bg-gradient-to-br from-primary via-primary/90 to-violet-600 rounded-xl p-6 sm:p-8 border border-primary/30">
+      <div className="mt-12 bg-gradient-to-br from-purple-100 via-purple-50 to-violet-100 rounded-xl p-6 sm:p-8 border border-purple-200">
         <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
-          <h4 className="text-lg sm:text-xl font-bold text-white">The Convergence</h4>
+          <h4 className="text-lg sm:text-xl font-bold text-purple-800">The Convergence</h4>
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
           {convergencePoints.map((point, index) => (
             <span
               key={index}
-              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-white/20 rounded-full text-xs sm:text-sm font-medium text-white"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-200/60 rounded-full text-xs sm:text-sm font-medium text-purple-800"
             >
               {point}
             </span>
@@ -147,13 +147,13 @@ const WhyNowVisual: React.FC = () => {
         </div>
 
         <div className="text-center space-y-2 sm:space-y-3">
-          <p className="text-sm sm:text-lg font-medium text-white/90">
+          <p className="text-sm sm:text-lg font-medium text-purple-700">
             This is the exact moment the industry shifts from
           </p>
-          <p className="text-base sm:text-xl font-bold text-white">
+          <p className="text-base sm:text-xl font-bold text-purple-800">
             'documents everywhere' → 'answers instantly.'
           </p>
-          <p className="text-sm sm:text-lg font-semibold text-white mt-3 sm:mt-4">
+          <p className="text-sm sm:text-lg font-semibold text-purple-700 mt-3 sm:mt-4">
             And Hobson is positioned to lead that shift.
           </p>
         </div>

@@ -346,22 +346,22 @@ export const BrandStrategyVisual: React.FC = () => {
       </div>
 
       {/* Timeline Summary */}
-      <div className="bg-gradient-to-r from-purple-600 via-teal-600 to-amber-600 rounded-xl p-6 text-white text-center">
-        <h3 className="text-lg font-semibold mb-4">Brand Development Timeline</h3>
+      <div className="bg-gradient-to-r from-purple-100 via-teal-100 to-amber-100 rounded-xl p-6 text-center border border-purple-200">
+        <h3 className="text-lg font-semibold mb-4 text-gray-900">Brand Development Timeline</h3>
         <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-          <div className="bg-white/20 rounded-lg px-6 py-3">
-            <p className="text-2xl font-bold">2026</p>
-            <p className="text-sm text-white/80">Builds the Foundation</p>
+          <div className="bg-purple-200/60 rounded-lg px-6 py-3">
+            <p className="text-2xl font-bold text-purple-800">2026</p>
+            <p className="text-sm text-purple-700">Builds the Foundation</p>
           </div>
-          <ArrowRight className="w-6 h-6 hidden md:block" />
-          <div className="bg-white/20 rounded-lg px-6 py-3">
-            <p className="text-2xl font-bold">2027</p>
-            <p className="text-sm text-white/80">Scales Visibility + Conversion</p>
+          <ArrowRight className="w-6 h-6 hidden md:block text-gray-500" />
+          <div className="bg-teal-200/60 rounded-lg px-6 py-3">
+            <p className="text-2xl font-bold text-teal-800">2027</p>
+            <p className="text-sm text-teal-700">Scales Visibility + Conversion</p>
           </div>
-          <ArrowRight className="w-6 h-6 hidden md:block" />
-          <div className="bg-white/20 rounded-lg px-6 py-3">
-            <p className="text-2xl font-bold">2028</p>
-            <p className="text-sm text-white/80">Prepares Global Readiness</p>
+          <ArrowRight className="w-6 h-6 hidden md:block text-gray-500" />
+          <div className="bg-amber-200/60 rounded-lg px-6 py-3">
+            <p className="text-2xl font-bold text-amber-800">2028</p>
+            <p className="text-sm text-amber-700">Prepares Global Readiness</p>
           </div>
         </div>
       </div>

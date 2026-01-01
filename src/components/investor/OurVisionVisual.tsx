@@ -9,7 +9,7 @@ const OurVisionVisual: React.FC = () => {
       description: "AI retrieves when asked with accuracy",
       color: "from-slate-100 to-slate-200",
       borderColor: "border-slate-300",
-      accentColor: "bg-slate-500",
+      accentColor: "bg-slate-200",
       textColor: "text-slate-700",
       icons: [
         { Icon: MessageSquare, label: "Prompts" },
@@ -23,7 +23,7 @@ const OurVisionVisual: React.FC = () => {
       description: "AI suggests & prepares, humans approve",
       color: "from-purple-50/70 to-purple-50",
       borderColor: "border-purple-300",
-      accentColor: "bg-purple-500",
+      accentColor: "bg-purple-200",
       textColor: "text-purple-700",
       icons: [
         { Icon: ClipboardCheck, label: "Drafts" },
@@ -37,7 +37,7 @@ const OurVisionVisual: React.FC = () => {
       description: "AI executes & reports outcomes",
       color: "from-primary/20 to-violet-200",
       borderColor: "border-primary/40",
-      accentColor: "bg-primary",
+      accentColor: "bg-purple-200",
       textColor: "text-primary",
       icons: [
         { Icon: Zap, label: "Executes" },
@@ -68,7 +68,7 @@ const OurVisionVisual: React.FC = () => {
               <div className={`w-full h-full bg-gradient-to-br ${stage.color} ${stage.borderColor} border-2 rounded-xl p-5 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col`}>
                 {/* Timeframe Badge */}
                 <div className="flex justify-center mb-3">
-                  <span className={`${stage.accentColor} text-white text-xs font-bold px-3 py-1 rounded-full`}>
+                  <span className={`${stage.accentColor} ${stage.textColor} text-xs font-bold px-3 py-1 rounded-full`}>
                     {stage.timeframe}
                   </span>
                 </div>
