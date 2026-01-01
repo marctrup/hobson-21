@@ -7706,9 +7706,11 @@ const renderSituationAnalysis = (
     yPosition += segmentHeight + spacing.paragraphGap;
   });
 
-  // 4. Targeting Strategy
+  // 4. Targeting Strategy - force new page
+  doc.addPage();
+  yPosition = margin;
+  
   const strategyHeaderHeight = spacing.contentPadding + lineHeight.body;
-  fitPage(strategyHeaderHeight + spacing.sectionGap);
   
   doc.setFillColor(...tealAccent);
   doc.circle(margin + spacing.circleOffset, yPosition + spacing.paragraphGap, circleSize.medium, "F");
