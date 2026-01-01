@@ -26,3 +26,4 @@ export { PilotClientsVisual } from './PilotClientsVisual';
 export { TechStackVisual } from './TechStackVisual';
 export { MarketingObjectivesVisual } from './MarketingObjectivesVisual';
 export { BrandStrategyVisual } from './BrandStrategyVisual';
+export { ContentEngagementStrategyVisual } from './ContentEngagementStrategyVisual';
