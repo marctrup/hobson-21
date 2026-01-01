@@ -9909,11 +9909,13 @@ const renderInternalCapabilityAssessment = (
     { title: "Resource Constraints", need: "Investment for systematic growth" }
   ];
 
-  const gapCardWidth = (maxWidth - 16) / 3;
-  const gapCardHeight = 28;
+  const gapCardWidth = (maxWidth - 8) / 2; // 2 columns instead of 3 for more width
+  const gapCardHeight = 32;
+  const gapCardPadding = 6;
+  const gapTextMaxWidth = gapCardWidth - gapCardPadding * 2;
 
   gaps.forEach((gap, idx) => {
-    const col = idx % 3;
+    const col = idx % 2;
     if (col === 0) {
       fitPage(gapCardHeight + 6);
     }
@@ -9925,14 +9927,16 @@ const renderInternalCapabilityAssessment = (
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(gap.title, xPos + 6, yPosition + 10);
+    doc.text(gap.title, xPos + gapCardPadding, yPosition + 11);
     
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text("Need: " + gap.need, xPos + 6, yPosition + 20);
+    const needText = "Need: " + gap.need;
+    const needLines = doc.splitTextToSize(needText, gapTextMaxWidth);
+    doc.text(needLines[0], xPos + gapCardPadding, yPosition + 22);
 
-    if (col === 2 || idx === gaps.length - 1) {
+    if (col === 1 || idx === gaps.length - 1) {
       yPosition += gapCardHeight + 6;
     }
   });
