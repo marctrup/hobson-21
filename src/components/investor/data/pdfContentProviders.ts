@@ -679,6 +679,94 @@ export const getRaisePdfContent = (): string[] => [
   "- Conversion of pilots into contracted deployments",
 ];
 
+// Structured data for dedicated PDF renderer - matches CustomerSegmentationVisual.tsx
+export const getCustomerSegmentationStructuredData = () => ({
+  intro: "ONS size-band data shows the Real Estate sector skews heavily toward small- and mid-sized operators, but value is concentrated higher up. While smaller firms are numerous, document complexity, regulatory exposure, and spend focus grow rapidly as portfolios scale, creating a strong wedge for platforms that embed early and expand upward.",
+  segments: [
+    {
+      title: "Large Operators",
+      employees: "50–250 employees",
+      percentage: "~5–10%",
+      description: "larger and institutional operators (50+ employees)",
+      colorType: "blue",
+      pressure: "Rising compliance and audit requirements, high document volumes driving staffing growth, and increasing exposure from missed obligations",
+      adoptionDrivers: [
+        "Need to control cost without adding headcount",
+        "Requirement for traceable, defensible answers",
+        "Pressure from LPs, lenders, and regulators",
+      ],
+    },
+    {
+      title: "Medium Operators",
+      employees: "10–49 employees",
+      percentage: "~20–25%",
+      description: "small–mid firms (10–49 employees)",
+      colorType: "primary",
+      pressure: "Scaling portfolios without proportional hiring, fragmented information across inboxes and shared drives, and decision bottlenecks are slowing transactions",
+      adoptionDrivers: [
+        "Margin compression",
+        "Speed expectations from partners and capital providers",
+        "Inability to scale manual processes",
+      ],
+    },
+    {
+      title: "Small Operators",
+      employees: "1–9 employees",
+      percentage: "~65–70%",
+      description: "micro firms (1–9 employees)",
+      colorType: "emerald",
+      pressure: "Severe time scarcity, no tolerance for complex tools, increasing regulatory and reporting burden",
+      adoptionDrivers: [
+        "Survival and competitiveness",
+        "Need for instant answers without overhead",
+      ],
+    },
+  ],
+  footer: "One platform. One intelligence layer. Forced adoption across segments.",
+});
+
+// Structured data for CustomersMarketSources - matches CustomersMarketSourcesVisual.tsx
+export const getCustomersMarketSourcesStructuredData = () => ({
+  sources: [
+    {
+      title: "Office for National Statistics (ONS), Business Population Estimates 2025",
+      stat: "5.7M UK private sector businesses",
+      linkText: "GOV.UK",
+      linkUrl: "https://www.gov.uk/government/statistics/business-population-estimates-2024"
+    },
+    {
+      title: "ONS UK Business Activity, Size and Location 2025",
+      stat: "2.7M VAT/PAYE registered businesses",
+      linkText: "Office for National Statistics",
+      linkUrl: "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation"
+    },
+    {
+      title: "ONS Business Detailed Tables",
+      stat: "Real Estate activities by SIC (Section L)",
+      linkText: "GOV.UK",
+      linkUrl: "https://www.gov.uk/government/statistics/business-population-estimates-2024"
+    },
+    {
+      title: "McKinsey Global Survey on AI (2025)",
+      stat: "~88% AI adoption in business functions",
+      linkText: "McKinsey & Company",
+      linkUrl: "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai"
+    },
+    {
+      title: "McKinsey, Gen AI Real Estate Value",
+      stat: "$110–$180B+ global value potential",
+      linkText: "McKinsey & Company",
+      linkUrl: "https://www.mckinsey.com/industries/real-estate/our-insights"
+    },
+    {
+      title: "Deloitte Centre for Financial Services",
+      stat: ">$7.2B AI/ML venture investment (relevant industry signalling)",
+      linkText: "Deloitte United Kingdom",
+      linkUrl: "https://www.deloitte.com/uk/en/industries/financial-services.html"
+    }
+  ],
+});
+
 export const getCustomerSegmentationPdfContent = (): string[] => [
   "Customer Segmentation - Who We Serve:",
   "",

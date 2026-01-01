@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -1954,44 +1954,9 @@ const renderCustomersMarketSources = (
   const smallOffset = box.borderRadiusSmall;
   const itemHeight = spacing.headerToContent + lineHeight.body * 2;
 
-  const sources = [
-    {
-      title: "Office for National Statistics (ONS), Business Population Estimates 2025",
-      stat: "5.7M UK private sector businesses",
-      linkText: "GOV.UK",
-      linkUrl: "https://www.gov.uk/government/statistics/business-population-estimates-2024"
-    },
-    {
-      title: "ONS UK Business Activity, Size and Location 2025",
-      stat: "2.7M VAT/PAYE registered businesses",
-      linkText: "Office for National Statistics",
-      linkUrl: "https://www.ons.gov.uk/businessindustryandtrade/business/activitysizeandlocation"
-    },
-    {
-      title: "ONS Business Detailed Tables",
-      stat: "Real Estate activities by SIC (Section L)",
-      linkText: "GOV.UK",
-      linkUrl: "https://www.gov.uk/government/statistics/business-population-estimates-2024"
-    },
-    {
-      title: "McKinsey Global Survey on AI (2025)",
-      stat: "~88% AI adoption in business functions",
-      linkText: "McKinsey & Company",
-      linkUrl: "https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai"
-    },
-    {
-      title: "McKinsey, Gen AI Real Estate Value",
-      stat: "$110-$180B+ global value potential",
-      linkText: "McKinsey & Company",
-      linkUrl: "https://www.mckinsey.com/industries/real-estate/our-insights"
-    },
-    {
-      title: "Deloitte Centre for Financial Services",
-      stat: ">$7.2B AI/ML venture investment (relevant industry signalling)",
-      linkText: "Deloitte United Kingdom",
-      linkUrl: "https://www.deloitte.com/uk/en/industries/financial-services.html"
-    }
-  ];
+  // Source content from provider
+  const data = getCustomersMarketSourcesStructuredData();
+  const sources = data.sources;
 
   // Section header
   doc.setFillColor(...PDF_CONFIG.primaryColor);
@@ -2907,58 +2872,24 @@ const renderCustomerSegmentation = (
   const { box, spacing, circleSize, fontSize, lineHeight } = PDF_CONFIG;
   const bodyLine = lineHeight.body; // Use tight 5pt spacing as default
 
+  // Source content from provider
+  const segmentData = getCustomerSegmentationStructuredData();
+
   // Description - left aligned
   doc.setTextColor(...PDF_CONFIG.textGray);
   setBodyFont(doc);
-  const introText = "ONS size-band data shows the Real Estate sector skews heavily toward small- and mid-sized operators, but value is concentrated higher up. While smaller firms are numerous, document complexity, regulatory exposure, and spend focus grow rapidly as portfolios scale, creating a strong wedge for platforms that embed early and expand upward.";
-  yPosition = renderSpacedText(doc, introText, margin, yPosition, maxWidth, bodyLine);
+  yPosition = renderSpacedText(doc, segmentData.intro, margin, yPosition, maxWidth, bodyLine);
   yPosition += spacing.cardGap;
 
-  const segments = [
-    {
-      title: "Large Operators",
-      employees: "50–250 employees",
-      percentage: "~5–10%",
-      description: "larger and institutional operators (50+ employees)",
-      color: PDF_CONFIG.blue,
-      bgColor: [239, 246, 255] as [number, number, number],
-      pressure: "Rising compliance and audit requirements, high document volumes driving staffing growth, and increasing exposure from missed obligations",
-      adoptionDrivers: [
-        "Need to control cost without adding headcount",
-        "Requirement for traceable, defensible answers",
-        "Pressure from LPs, lenders, and regulators",
-      ],
-    },
-    {
-      title: "Medium Operators",
-      employees: "10–49 employees",
-      percentage: "~20–25%",
-      description: "small–mid firms (10–49 employees)",
-      color: PDF_CONFIG.primaryColor,
-      bgColor: PDF_CONFIG.primaryBgLight,
-      pressure: "Scaling portfolios without proportional hiring, fragmented information across inboxes and shared drives, and decision bottlenecks are slowing transactions",
-      adoptionDrivers: [
-        "Margin compression",
-        "Speed expectations from partners and capital providers",
-        "Inability to scale manual processes",
-      ],
-    },
-    {
-      title: "Small Operators",
-      employees: "1–9 employees",
-      percentage: "~65–70%",
-      description: "micro firms (1–9 employees)",
-      color: PDF_CONFIG.emerald,
-      bgColor: [236, 253, 245] as [number, number, number],
-      pressure: "Severe time scarcity, no tolerance for complex tools, increasing regulatory and reporting burden",
-      adoptionDrivers: [
-        "Survival and competitiveness",
-        "Need for instant answers without overhead",
-      ],
-    },
-  ];
+  // Map color types to PDF_CONFIG colors
+  const colorMap: Record<string, { color: [number, number, number]; bgColor: [number, number, number] }> = {
+    blue: { color: PDF_CONFIG.blue, bgColor: [239, 246, 255] as [number, number, number] },
+    primary: { color: PDF_CONFIG.primaryColor, bgColor: PDF_CONFIG.primaryBgLight },
+    emerald: { color: PDF_CONFIG.emerald, bgColor: [236, 253, 245] as [number, number, number] },
+  };
 
-  segments.forEach((segment) => {
+  segmentData.segments.forEach((segment) => {
+    const colors = colorMap[segment.colorType] || colorMap.primary;
     // Calculate dynamic card height based on content
     setBodySmallFont(doc);
     const pressureLines = doc.splitTextToSize(sanitizeText(segment.pressure), maxWidth / 2 - spacing.bulletTextOffset - spacing.contentPadding);
@@ -2967,12 +2898,12 @@ const renderCustomerSegmentation = (
     const cardHeight = Math.max(85, spacing.bulletTextOffset + spacing.contentPadding + contentLines * bodyLine + 10); // Extra height for looser spacing
 
     yPosition = checkPageBreak(doc, yPosition, cardHeight + spacing.cardGap, pageHeight, margin);
-    renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, segment.bgColor, segment.color);
+    renderContentCard(doc, margin, yPosition, maxWidth, cardHeight, colors.bgColor, colors.color);
 
     // Header row - icon and title inline
     const headerY = yPosition + spacing.contentPadding;
     const headerIconSize = circleSize.large;
-    doc.setFillColor(...segment.color);
+    doc.setFillColor(...colors.color);
     doc.circle(margin + spacing.circleOffset, headerY, headerIconSize, "F");
 
     // Title - aligned with icon center
@@ -2982,7 +2913,7 @@ const renderCustomerSegmentation = (
 
     // Percentage and description on second line (with extra spacing from header)
     const percentageY = yPosition + spacing.contentBoxStart + 4; // Extra 4pt spacing
-    doc.setTextColor(...segment.color);
+    doc.setTextColor(...colors.color);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(fontSize.bodySmall);
     doc.text(segment.percentage, margin + spacing.bulletTextOffset, percentageY);
@@ -2998,7 +2929,7 @@ const renderCustomerSegmentation = (
     const leftColTextX = margin + spacing.bulletTextOffset;
     
     // Pressure header with inline icon
-    doc.setFillColor(...segment.color);
+    doc.setFillColor(...colors.color);
     doc.circle(leftColIconX, colStartY, circleSize.medium, "F");
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
@@ -3016,7 +2947,7 @@ const renderCustomerSegmentation = (
     const rightColTextX = margin + maxWidth / 2 + spacing.bulletTextOffset;
 
     // Adoption header with inline icon
-    doc.setFillColor(...segment.color);
+    doc.setFillColor(...colors.color);
     doc.circle(rightColIconX, colStartY, circleSize.medium, "F");
     setCaptionFont(doc);
     doc.setFont("helvetica", "bold");
@@ -3046,7 +2977,7 @@ const renderCustomerSegmentation = (
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodySmallFont(doc);
   doc.setFont("helvetica", "bold");
-  doc.text("One platform.  One intelligence layer.  Forced adoption across segments.", pageWidth / 2, yPosition + spacing.cardGap, { align: "center" });
+  doc.text(segmentData.footer, pageWidth / 2, yPosition + spacing.cardGap, { align: "center" });
   yPosition += spacing.bulletTextOffset;
 
   return yPosition;
