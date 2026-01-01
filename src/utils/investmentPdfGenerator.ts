@@ -11144,12 +11144,7 @@ const renderPrimaryConversionChannels = (
   const maxWidth = pageWidth - margin * 2;
   const { spacing, box, numberedCircle, fontSize, lineHeight } = PDF_CONFIG;
 
-  // Title
-  doc.setFontSize(fontSize.pageTitle);
-  doc.setFont("helvetica", "bold");
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("Primary Conversion Channels", margin, yPosition);
-  yPosition += spacing.sectionGap + 6;
+  // Note: Title already rendered by renderTabContent, skip duplicate
 
   // Introduction
   doc.setFontSize(fontSize.body);
