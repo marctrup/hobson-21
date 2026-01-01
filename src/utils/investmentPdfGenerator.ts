@@ -10356,7 +10356,7 @@ const renderMarketingObjectives = (
   ];
 
   const stageCardWidth = (maxWidth - spacing.gridGap) / 2;
-  const stageCardHeight = 85;
+  const stageCardHeight = 95;
 
   stages.forEach((stage, idx) => {
     const col = idx % 2;
@@ -10371,19 +10371,20 @@ const renderMarketingObjectives = (
     doc.setLineWidth(box.borderWidthThin);
     doc.roundedRect(xPos, yPosition, stageCardWidth, stageCardHeight, box.borderRadius, box.borderRadius, "FD");
 
-    // Header text on light background
+    // Header - stage name
     doc.setTextColor(...stage.accentColor);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
     doc.text(stage.stage, xPos + box.paddingX, yPosition + 12);
+    
+    // Period - below header
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    const periodWidth = doc.getTextWidth(stage.period);
-    doc.text(stage.period, xPos + stageCardWidth - box.paddingX - periodWidth, yPosition + 12);
+    doc.text(stage.period, xPos + box.paddingX, yPosition + 20);
 
-    // Objectives
-    let textY = yPosition + 22;
+    // Objectives - start below period
+    let textY = yPosition + 30;
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
