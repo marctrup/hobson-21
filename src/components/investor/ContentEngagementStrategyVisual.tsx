@@ -15,25 +15,25 @@ export const ContentEngagementStrategyVisual: React.FC = () => {
       </div>
 
       {/* Purpose of Content */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl p-6 text-white">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <div className="bg-gradient-to-r from-purple-100 to-purple-200 rounded-xl p-6">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-purple-800">
           <Target className="w-5 h-5" />
           Purpose of Content
         </h3>
-        <p className="text-purple-100 mb-4">Content exists to support three practical goals:</p>
+        <p className="text-purple-700 mb-4">Content exists to support three practical goals:</p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
             { title: "Understanding", desc: "Help the market understand what Hobson does and why it matters" },
             { title: "Confidence", desc: "Build confidence by showing how the product works and handles information" },
             { title: "Support", desc: "Support users and prospects through each stage with simple, useful materials" }
           ].map((item, index) => (
-            <div key={index} className="bg-white/10 rounded-lg p-4">
-              <p className="font-semibold mb-2">{item.title}</p>
-              <p className="text-sm text-purple-100">{item.desc}</p>
+            <div key={index} className="bg-white/80 rounded-lg p-4 border border-purple-200">
+              <p className="font-semibold mb-2 text-purple-800">{item.title}</p>
+              <p className="text-sm text-gray-700">{item.desc}</p>
             </div>
           ))}
         </div>
-        <p className="text-purple-200 text-sm mt-4 text-center italic">
+        <p className="text-purple-600 text-sm mt-4 text-center italic">
           The emphasis is on being informative and practical, without overstating capability.
         </p>
       </div>
@@ -290,20 +290,20 @@ export const ContentEngagementStrategyVisual: React.FC = () => {
       </div>
 
       {/* Digital Channel Acquisition Strategy */}
-      <div className="bg-gradient-to-r from-purple-600 to-purple-700 rounded-xl p-6 text-white">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <div className="bg-gradient-to-r from-purple-100 to-purple-200 rounded-xl p-6">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-purple-800">
           <TrendingUp className="w-5 h-5" />
           Digital Channel Acquisition Communication Strategy
         </h3>
-        <p className="text-purple-100 mb-4">
+        <p className="text-purple-700 mb-4">
           Hobson's acquisition strategy aims to build early awareness, attract suitable prospects, and guide them into pilot participation. The approach uses steady, informative communication rather than volume-driven tactics.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
           {/* Strategic Goals */}
-          <div className="bg-white/10 rounded-lg p-4">
-            <p className="font-semibold mb-2">A. Strategic Acquisition Goals</p>
-            <ul className="space-y-1 text-sm text-purple-100">
+          <div className="bg-white/80 rounded-lg p-4 border border-purple-200">
+            <p className="font-semibold mb-2 text-purple-800">A. Strategic Acquisition Goals</p>
+            <ul className="space-y-1 text-sm text-gray-700">
               <li>• Make Hobson visible to real estate professionals with document-heavy workflows</li>
               <li>• Bring qualified traffic to the website and quiz</li>
               <li>• Build interest in the 2026 pilot programme</li>
@@ -312,52 +312,52 @@ export const ContentEngagementStrategyVisual: React.FC = () => {
           </div>
 
           {/* Messaging Focus */}
-          <div className="bg-white/10 rounded-lg p-4">
-            <p className="font-semibold mb-2">B. Acquisition Messaging Focus</p>
-            <ul className="space-y-1 text-sm text-purple-100">
-              <li>• <span className="text-amber-200">Clear outcomes:</span> fast answers from existing documents</li>
-              <li>• <span className="text-amber-200">Reliable behaviour:</span> transparent outputs and referenced info</li>
-              <li>• <span className="text-amber-200">Time savings:</span> reduced administrative load</li>
-              <li>• <span className="text-amber-200">Ease of adoption:</span> minimal change to existing workflows</li>
+          <div className="bg-white/80 rounded-lg p-4 border border-purple-200">
+            <p className="font-semibold mb-2 text-purple-800">B. Acquisition Messaging Focus</p>
+            <ul className="space-y-1 text-sm text-gray-700">
+              <li>• <span className="text-amber-700 font-medium">Clear outcomes:</span> fast answers from existing documents</li>
+              <li>• <span className="text-amber-700 font-medium">Reliable behaviour:</span> transparent outputs and referenced info</li>
+              <li>• <span className="text-amber-700 font-medium">Time savings:</span> reduced administrative load</li>
+              <li>• <span className="text-amber-700 font-medium">Ease of adoption:</span> minimal change to existing workflows</li>
             </ul>
           </div>
         </div>
 
         {/* Channel Strategy */}
         <div className="mb-4">
-          <p className="font-semibold mb-3">C. Channel Strategy</p>
+          <p className="font-semibold mb-3 text-purple-800">C. Channel Strategy</p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="bg-white/10 rounded-lg p-3">
+            <div className="bg-white/80 rounded-lg p-3 border border-purple-200">
               <div className="flex items-center gap-2 mb-2">
-                <Linkedin className="w-4 h-4 text-blue-200" />
-                <p className="font-medium text-sm">LinkedIn (Primary)</p>
+                <Linkedin className="w-4 h-4 text-blue-600" />
+                <p className="font-medium text-sm text-gray-900">LinkedIn (Primary)</p>
               </div>
-              <p className="text-xs text-purple-200">Simple explanations, examples, case summaries, quiz distribution</p>
-              <p className="text-xs text-amber-200 mt-1">Target: 1,000 followers by Q4 2027</p>
+              <p className="text-xs text-gray-600">Simple explanations, examples, case summaries, quiz distribution</p>
+              <p className="text-xs text-amber-700 font-medium mt-1">Target: 1,000 followers by Q4 2027</p>
             </div>
-            <div className="bg-white/10 rounded-lg p-3">
+            <div className="bg-white/80 rounded-lg p-3 border border-purple-200">
               <div className="flex items-center gap-2 mb-2">
-                <Monitor className="w-4 h-4 text-teal-200" />
-                <p className="font-medium text-sm">Website & Search</p>
+                <Monitor className="w-4 h-4 text-teal-600" />
+                <p className="font-medium text-sm text-gray-900">Website & Search</p>
               </div>
-              <p className="text-xs text-purple-200">Clear landing pages, case examples, search-optimised content</p>
-              <p className="text-xs text-amber-200 mt-1">Target: 40% organic traffic increase by Q2 2027</p>
+              <p className="text-xs text-gray-600">Clear landing pages, case examples, search-optimised content</p>
+              <p className="text-xs text-amber-700 font-medium mt-1">Target: 40% organic traffic increase by Q2 2027</p>
             </div>
-            <div className="bg-white/10 rounded-lg p-3">
+            <div className="bg-white/80 rounded-lg p-3 border border-purple-200">
               <div className="flex items-center gap-2 mb-2">
-                <Search className="w-4 h-4 text-rose-200" />
-                <p className="font-medium text-sm">Paid Search (Later)</p>
+                <Search className="w-4 h-4 text-rose-600" />
+                <p className="font-medium text-sm text-gray-900">Paid Search (Later)</p>
               </div>
-              <p className="text-xs text-purple-200">Capture high-intent users after pages are developed</p>
-              <p className="text-xs text-amber-200 mt-1">Target: 3–5% CTR by Q4 2027</p>
+              <p className="text-xs text-gray-600">Capture high-intent users after pages are developed</p>
+              <p className="text-xs text-amber-700 font-medium mt-1">Target: 3–5% CTR by Q4 2027</p>
             </div>
-            <div className="bg-white/10 rounded-lg p-3">
+            <div className="bg-white/80 rounded-lg p-3 border border-purple-200">
               <div className="flex items-center gap-2 mb-2">
-                <Users className="w-4 h-4 text-teal-200" />
-                <p className="font-medium text-sm">Retargeting (Later)</p>
+                <Users className="w-4 h-4 text-teal-600" />
+                <p className="font-medium text-sm text-gray-900">Retargeting (Later)</p>
               </div>
-              <p className="text-xs text-purple-200">Feature clips, case snippets, testimonial extracts</p>
-              <p className="text-xs text-amber-200 mt-1">Target: 10% retargeted visitors to enquiries by Q4 2027</p>
+              <p className="text-xs text-gray-600">Feature clips, case snippets, testimonial extracts</p>
+              <p className="text-xs text-amber-700 font-medium mt-1">Target: 10% retargeted visitors to enquiries by Q4 2027</p>
             </div>
           </div>
         </div>
@@ -413,12 +413,12 @@ export const ContentEngagementStrategyVisual: React.FC = () => {
       </div>
 
       {/* Digital Channel Conversion Strategy */}
-      <div className="bg-gradient-to-r from-teal-600 to-teal-700 rounded-xl p-6 text-white">
-        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <div className="bg-gradient-to-r from-teal-100 to-teal-200 rounded-xl p-6">
+        <h3 className="text-lg font-semibold mb-4 flex items-center gap-2 text-teal-800">
           <Zap className="w-5 h-5" />
           Digital Channel Conversion Strategy
         </h3>
-        <p className="text-teal-100 mb-4">
+        <p className="text-teal-700 mb-4">
           Hobson's conversion strategy focuses on turning qualified interest into practical use by keeping the journey simple, lowering barriers to trial, and showing value quickly.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -429,9 +429,9 @@ export const ContentEngagementStrategyVisual: React.FC = () => {
             "Improve conversion performance through continual measurement",
             "Build a funnel that can support future paid tiers"
           ].map((item, index) => (
-            <div key={index} className="bg-white/10 rounded-lg p-3 flex items-start gap-2">
-              <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-teal-300" />
-              <p className="text-sm">{item}</p>
+            <div key={index} className="bg-white/80 rounded-lg p-3 flex items-start gap-2 border border-teal-200">
+              <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-teal-600" />
+              <p className="text-sm text-gray-700">{item}</p>
             </div>
           ))}
         </div>

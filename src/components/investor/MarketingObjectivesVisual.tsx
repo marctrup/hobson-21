@@ -5,7 +5,9 @@ const smartObjectives = [
   {
     stage: "Awareness",
     icon: Eye,
-    color: "bg-purple-500",
+    color: "bg-purple-100",
+    textColor: "text-purple-800",
+    iconColor: "text-purple-600",
     description: "Build through 2026 to scale in 2027 and expand in 2028",
     objectives: [
       "Increase visibility among UK real estate professionals ahead of and during pilot expansion (2026)",
@@ -22,7 +24,9 @@ const smartObjectives = [
   {
     stage: "Consideration",
     icon: Target,
-    color: "bg-teal-500",
+    color: "bg-teal-100",
+    textColor: "text-teal-800",
+    iconColor: "text-teal-600",
     description: "2026-2027",
     objectives: [
       "Turn awareness into informed interest through more precise product explanations",
@@ -39,7 +43,9 @@ const smartObjectives = [
   {
     stage: "Conversion",
     icon: TrendingUp,
-    color: "bg-amber-500",
+    color: "bg-amber-100",
+    textColor: "text-amber-800",
+    iconColor: "text-amber-600",
     description: "Pilot conversion throughout 2026, extending to paid expansion in 2027",
     objectives: [
       "Convert interested organisations into active pilots during 2026",
@@ -57,7 +63,9 @@ const smartObjectives = [
   {
     stage: "Retention & Advocacy",
     icon: Heart,
-    color: "bg-rose-500",
+    color: "bg-rose-100",
+    textColor: "text-rose-800",
+    iconColor: "text-rose-600",
     description: "Foundational in 2026, strengthen in 2027, scale in 2028",
     objectives: [
       "Build strong user loyalty throughout the 2026 pilot phase",
@@ -171,10 +179,10 @@ export const MarketingObjectivesVisual: React.FC = () => {
               <div key={index} className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
                 <div className={`${stage.color} px-4 py-3 flex items-center justify-between`}>
                   <div className="flex items-center gap-3">
-                    <IconComponent className="w-5 h-5 text-white" />
-                    <h4 className="font-semibold text-white">{stage.stage}</h4>
+                    <IconComponent className={`w-5 h-5 ${stage.iconColor}`} />
+                    <h4 className={`font-semibold ${stage.textColor}`}>{stage.stage}</h4>
                   </div>
-                  <span className="text-xs text-white/80 bg-white/20 px-2 py-1 rounded">{stage.description}</span>
+                  <span className={`text-xs ${stage.textColor} bg-white/50 px-2 py-1 rounded`}>{stage.description}</span>
                 </div>
                 
                 <div className="p-4 space-y-4">
@@ -309,9 +317,9 @@ export const MarketingObjectivesVisual: React.FC = () => {
       </div>
 
       {/* Alignment Summary */}
-      <div className="bg-purple-600 rounded-xl p-6 text-white">
-        <h3 className="text-lg font-semibold mb-4">Channel & Metric Alignment</h3>
-        <p className="text-purple-100 mb-4">Hobson's channel and metric choices are tightly aligned to:</p>
+      <div className="bg-gradient-to-r from-purple-100 to-purple-200 rounded-xl p-6">
+        <h3 className="text-lg font-semibold mb-4 text-purple-800">Channel & Metric Alignment</h3>
+        <p className="text-purple-700 mb-4">Hobson's channel and metric choices are tightly aligned to:</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
           {[
             "Organisational goals",
@@ -319,12 +327,12 @@ export const MarketingObjectivesVisual: React.FC = () => {
             "Mindset-first marketing approach",
             "Commercial objectives for 2026-2027"
           ].map((item, index) => (
-            <div key={index} className="bg-white/10 rounded-lg p-3 text-center">
-              <p className="text-sm text-white">{item}</p>
+            <div key={index} className="bg-white/80 rounded-lg p-3 text-center border border-purple-200">
+              <p className="text-sm text-gray-700">{item}</p>
             </div>
           ))}
         </div>
-        <p className="text-sm text-purple-200 mt-4 text-center">
+        <p className="text-sm text-purple-600 mt-4 text-center">
           Each channel has been selected because it directly contributes to measurable progress across acquisition, 
           consideration, conversion, retention, and advocacy — ensuring Hobson builds both short-term traction and long-term competitive advantage.
         </p>
