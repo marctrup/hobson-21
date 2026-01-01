@@ -9065,7 +9065,14 @@ const renderCustomerOnlineBehaviour = (
   });
 
   // What Content They Trust section
-  fitPage(PDF_CONFIG.card.textOffsetX);
+  // Calculate total height needed for entire section upfront
+  const trustCardWidth = (maxWidth - PDF_CONFIG.spacing.cardGap) / 2;
+  const trustCardHeight = 32;
+  const totalTrustRows = Math.ceil(data.trustedContent.length / 2);
+  const totalTrustSectionHeight = PDF_CONFIG.spacing.cardGap + PDF_CONFIG.spacing.circleOffset + 
+    totalTrustRows * (trustCardHeight + PDF_CONFIG.spacing.paragraphGap) + PDF_CONFIG.spacing.cardGap;
+  fitPage(totalTrustSectionHeight);
+
   doc.setTextColor(...PDF_CONFIG.emerald);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
@@ -9078,20 +9085,14 @@ const renderCustomerOnlineBehaviour = (
   doc.text("Across all personas, the content that builds trust is:", margin, yPosition);
   yPosition += PDF_CONFIG.spacing.circleOffset;
 
-  // Trust content cards (2 column grid)
-  const trustCardWidth = (maxWidth - PDF_CONFIG.spacing.cardGap) / 2;
-  const trustCardHeight = 32;
-
+  // Trust content cards (2 column grid) - render all at once since we reserved space
+  const trustStartY = yPosition;
   data.trustedContent.forEach((item, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
-    
-    if (col === 0) {
-      fitPage(trustCardHeight + PDF_CONFIG.spacing.paragraphGap);
-    }
 
     const x = margin + col * (trustCardWidth + PDF_CONFIG.spacing.cardGap);
-    const y = yPosition + row * (trustCardHeight + PDF_CONFIG.spacing.paragraphGap);
+    const y = trustStartY + row * (trustCardHeight + PDF_CONFIG.spacing.paragraphGap);
 
     doc.setFillColor(...PDF_CONFIG.emeraldBg);
     doc.roundedRect(x, y, trustCardWidth, trustCardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
@@ -9108,7 +9109,7 @@ const renderCustomerOnlineBehaviour = (
     doc.text(descLines.slice(0, 2), x + PDF_CONFIG.spacing.sectionGap, y + PDF_CONFIG.spacing.textIndent);
   });
 
-  yPosition += Math.ceil(data.trustedContent.length / 2) * (trustCardHeight + PDF_CONFIG.spacing.paragraphGap) + PDF_CONFIG.spacing.cardGap;
+  yPosition = trustStartY + totalTrustRows * (trustCardHeight + PDF_CONFIG.spacing.paragraphGap) + PDF_CONFIG.spacing.cardGap;
 
   // How Customers Evaluate AI Solutions section
   // Calculate total height needed for entire section
