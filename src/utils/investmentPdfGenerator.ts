@@ -10632,23 +10632,26 @@ const renderBrandStrategy = (
     { label: "Differentiation", value: "The only AI built for real estate document intelligence" }
   ];
 
-  const posItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  const posItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap) / 2;
   positioningItems.forEach((item, idx) => {
-    const xPos = margin + box.paddingX + idx * (posItemWidth + spacing.gridGap);
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + box.paddingX + col * (posItemWidth + spacing.gridGap);
+    const yPos = yPosition + 22 + row * 26;
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPosition + 22, posItemWidth, 22, 2, 2, "F");
+    doc.roundedRect(xPos, yPos, posItemWidth, 22, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(item.label, xPos + 4, yPosition + 30);
+    doc.text(item.label, xPos + 4, yPos + 8);
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
     const valLines = splitTextWithFont(doc, item.value, posItemWidth - 8, "caption", false);
-    doc.text(valLines[0] || "", xPos + 4, yPosition + 38);
+    doc.text(valLines[0] || "", xPos + 4, yPos + 16);
   });
 
-  yPosition += 58;
+  yPosition += 80;
 
   // Brand Pillars
   fitPage(20);
@@ -10930,18 +10933,21 @@ const renderContentEngagementStrategy = (
     { title: "Practical Guidance", desc: "Examples reflecting day-to-day tasks" }
   ];
 
-  const themeWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  const themeWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap) / 2;
   themes.forEach((theme, idx) => {
-    const xPos = margin + box.paddingX + idx * (themeWidth + spacing.gridGap);
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + box.paddingX + col * (themeWidth + spacing.gridGap);
+    const yPos = yPosition + 22 + row * 18;
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPosition + 22, themeWidth, 14, 2, 2, "F");
+    doc.roundedRect(xPos, yPos, themeWidth, 14, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(theme.title, xPos + 4, yPosition + 30);
+    doc.text(theme.title, xPos + 4, yPos + 10);
   });
 
-  yPosition += 48;
+  yPosition += 62;
 
   // Content by Journey Stage (See-Think-Do-Care)
   fitPage(85);
@@ -12584,22 +12590,25 @@ const renderStrategicContextPositioning = (
     "Psychographic orientation (VALS)"
   ];
 
-  const driverWidth = (maxWidth - spacing.gridGap * 3) / 4;
+  const driverWidth = (maxWidth - spacing.gridGap) / 2;
   const driverHeight = 28;
 
   drivers.forEach((driver, idx) => {
-    const xPos = margin + idx * (driverWidth + spacing.gridGap);
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + col * (driverWidth + spacing.gridGap);
+    const yPos = yPosition + row * (driverHeight + spacing.gridGap);
     
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-    doc.roundedRect(xPos, yPosition, driverWidth, driverHeight, box.borderRadius, box.borderRadius, "F");
+    doc.roundedRect(xPos, yPos, driverWidth, driverHeight, box.borderRadius, box.borderRadius, "F");
     
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(driver, xPos + box.paddingX, yPosition + 17);
+    doc.text(driver, xPos + box.paddingX, yPos + 17);
   });
 
-  yPosition += driverHeight + spacing.sectionGap;
+  yPosition += (driverHeight + spacing.gridGap) * 2;
 
   // Three Customer Segments
   fitPage(50);
