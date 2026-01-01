@@ -12777,59 +12777,65 @@ const renderStrategicContextPositioning = (
   doc.addPage();
   yPosition = margin;
 
-  fitPage(50);
+  // Header
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, spacing.contentBoxStart + spacing.sectionGap, box.borderRadius, box.borderRadius, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(box.borderWidth);
+  doc.roundedRect(margin, yPosition, maxWidth, spacing.contentBoxStart + spacing.sectionGap, box.borderRadius, box.borderRadius, "S");
+
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + spacing.circleOffset, yPosition + spacing.sectionGap, PDF_CONFIG.circleSize.medium, "F");
+  
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Mindset-Based Targeting", margin, yPosition);
-  yPosition += lineHeight.loose + spacing.paragraphGap;
+  doc.text("Mindset-Based Targeting", margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + fontSize.sectionTitle / 3);
 
   const mindsetIntro = "Strategic targeting aligns with our consumer attitude model, where customers progress through:";
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(fontSize.body);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(mindsetIntro, margin, yPosition);
-  yPosition += lineHeight.body + spacing.sectionGap;
+  doc.text(mindsetIntro, margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + fontSize.sectionTitle + spacing.paragraphGap);
+  
+  yPosition += spacing.contentBoxStart + spacing.sectionGap + spacing.sectionGap;
 
-  // Funnel stages
+  // Funnel stages - horizontal flow
   const stages = ["Awareness", "Consideration", "Liking", "Conversion"];
-  const stageWidth = 35;
-  const arrowWidth = 15;
-  const totalWidth = stages.length * stageWidth + (stages.length - 1) * arrowWidth;
-  const startX = margin + (maxWidth - totalWidth) / 2;
+  const stageWidth = (maxWidth - (stages.length - 1) * spacing.sectionGap) / stages.length;
+  const stageHeight = spacing.contentBoxStart;
 
   stages.forEach((stage, idx) => {
-    const xPos = startX + idx * (stageWidth + arrowWidth);
+    const xPos = margin + idx * (stageWidth + spacing.sectionGap);
     
-    // Stage bubble
-    const opacity = 0.2 + (idx * 0.2);
+    // Stage bubble with gradient effect
     if (idx === stages.length - 1) {
       doc.setFillColor(...PDF_CONFIG.primaryColor);
     } else {
-      doc.setFillColor(99, 102, 241, opacity * 255);
+      doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
     }
-    doc.roundedRect(xPos, yPosition, stageWidth, 18, 9, 9, "F");
+    doc.roundedRect(xPos, yPosition, stageWidth, stageHeight, box.borderRadius, box.borderRadius, "F");
     
     if (idx === stages.length - 1) {
       doc.setTextColor(255, 255, 255);
     } else {
       doc.setTextColor(...PDF_CONFIG.primaryColor);
     }
-    doc.setFontSize(fontSize.caption);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    const textWidth = doc.getTextWidth(stage);
-    doc.text(stage, xPos + (stageWidth - textWidth) / 2, yPosition + 12);
+    doc.text(stage, xPos + stageWidth / 2, yPosition + stageHeight / 2 + fontSize.bodySmall / 3, { align: "center" });
     
-    // Arrow
+    // Arrow between stages
     if (idx < stages.length - 1) {
-      doc.setTextColor(...PDF_CONFIG.textGray);
-      doc.text("→", xPos + stageWidth + 4, yPosition + 12);
+      doc.setTextColor(...PDF_CONFIG.primaryColor);
+      doc.setFontSize(fontSize.body);
+      doc.text("→", xPos + stageWidth + spacing.sectionGap / 2 - 3, yPosition + stageHeight / 2 + 1);
     }
   });
 
-  yPosition += 28 + spacing.sectionGap;
+  yPosition += stageHeight + spacing.sectionGap;
 
-  // Stage details
+  // Stage details - 2x2 grid with proper text wrapping
   const stageDetails = [
     { stage: "Awareness", desc: "Learning that Hobson exists", channel: "LinkedIn + thought leadership" },
     { stage: "Consideration", desc: "Understanding what Hobson does", channel: "Website clarity, demos, video explainers" },
@@ -12838,41 +12844,52 @@ const renderStrategicContextPositioning = (
   ];
 
   const detailWidth = (maxWidth - spacing.gridGap) / 2;
-  const detailHeight = 45;
+  const detailHeight = spacing.contentBoxStart * 2 + spacing.paragraphGap;
 
   stageDetails.forEach((detail, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
     const xPos = margin + col * (detailWidth + spacing.gridGap);
-    const yPos = yPosition + row * (detailHeight + spacing.gridGap);
+    const yPos = yPosition + row * (detailHeight + spacing.paragraphGap);
 
     if (row === 0 && col === 0) {
-      fitPage(detailHeight * 2 + spacing.gridGap);
+      fitPage(detailHeight * 2 + spacing.paragraphGap);
     }
 
-    doc.setFillColor(249, 250, 251);
+    // Card background
+    doc.setFillColor(...PDF_CONFIG.bgLight);
     doc.roundedRect(xPos, yPos, detailWidth, detailHeight, box.borderRadius, box.borderRadius, "F");
     
+    // Left accent bar
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.rect(xPos, yPos, 3, detailHeight, "F");
+    doc.rect(xPos, yPos + box.borderRadius, box.borderRadius, detailHeight - box.borderRadius * 2, "F");
 
+    // Stage title
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(detail.stage, xPos + box.paddingX, yPos + 12);
+    doc.text(detail.stage, xPos + box.paddingX + spacing.paragraphGap, yPos + box.paddingTop + fontSize.bodySmall);
 
+    // Description
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    doc.text(detail.desc, xPos + box.paddingX, yPos + 24);
+    doc.text(detail.desc, xPos + box.paddingX + spacing.paragraphGap, yPos + box.paddingTop + fontSize.bodySmall + lineHeight.body + spacing.paragraphGap);
 
+    // Channel with arrow - wrap if needed
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text("→ " + detail.channel, xPos + box.paddingX, yPos + 36);
+    const channelText = "→ " + detail.channel;
+    const channelLines = splitTextWithFont(doc, channelText, detailWidth - box.paddingX * 2, "caption", false);
+    let channelY = yPos + box.paddingTop + fontSize.bodySmall + lineHeight.body * 2 + spacing.paragraphGap;
+    channelLines.forEach((line: string) => {
+      doc.text(line, xPos + box.paddingX + spacing.paragraphGap, channelY);
+      channelY += lineHeight.tight;
+    });
   });
 
-  yPosition += (detailHeight * 2) + spacing.gridGap + spacing.sectionGap;
+  yPosition += (detailHeight * 2) + spacing.paragraphGap + spacing.sectionGap;
 
   // Trust-First Approach
   fitPage(45);
