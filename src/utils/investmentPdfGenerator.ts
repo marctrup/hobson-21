@@ -1083,11 +1083,8 @@ const renderOurVision = (
   data.progressionIndicators.forEach((indicator, index) => {
     const indX = margin + index * indicatorWidth + indicatorWidth / 2;
 
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-    doc.text(indicator.label.toUpperCase(), indX, yPosition, { align: "center" });
-
-    const dotY = yPosition + 7;
+    // Dots first
+    const dotY = yPosition;
     const dotRadius = 2.5;
     const dotGap = 10;
     indicatorColors[index].forEach((color, dotIndex) => {
@@ -1096,9 +1093,15 @@ const renderOurVision = (
       doc.circle(dotX, dotY, dotRadius, "F");
     });
 
+    // Label aligned with dots
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.text(indicator.label.toUpperCase(), indX, yPosition + 10, { align: "center" });
+
+    // Direction with larger gap
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.small);
-    doc.text(indicator.direction, indX, yPosition + 16, { align: "center" });
+    doc.text(indicator.direction, indX, yPosition + 20, { align: "center" });
   });
 
   yPosition += PDF_CONFIG.spacing.sectionGap;
