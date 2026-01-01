@@ -214,8 +214,8 @@ export const SegmentationStrategyVisual = () => {
         {/* Phase 1 */}
         <div className="rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800 p-4">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center">
-              <span className="text-[10px] font-bold text-white">1</span>
+            <div className="w-6 h-6 rounded-full bg-blue-200 border border-blue-400 flex items-center justify-center">
+              <span className="text-[10px] font-bold text-blue-800">1</span>
             </div>
             <h4 className="font-semibold text-sm text-blue-700 dark:text-blue-400">Validation & MVP Readiness (Q1 2026)</h4>
           </div>
@@ -240,8 +240,8 @@ export const SegmentationStrategyVisual = () => {
         {/* Phase 2 */}
         <div className="rounded-lg bg-purple-50 dark:bg-purple-950/30 border border-purple-200 dark:border-purple-800 p-4">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-full bg-purple-500 flex items-center justify-center">
-              <span className="text-[10px] font-bold text-white">2</span>
+            <div className="w-6 h-6 rounded-full bg-purple-200 border border-purple-400 flex items-center justify-center">
+              <span className="text-[10px] font-bold text-purple-800">2</span>
             </div>
             <h4 className="font-semibold text-sm text-purple-700 dark:text-purple-400">Pilot Expansion & Evidence Building (Q2-Q3 2026)</h4>
           </div>
@@ -266,8 +266,8 @@ export const SegmentationStrategyVisual = () => {
         {/* Phase 3 */}
         <div className="rounded-lg bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800 p-4">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 rounded-full bg-green-500 flex items-center justify-center">
-              <span className="text-[10px] font-bold text-white">3</span>
+            <div className="w-6 h-6 rounded-full bg-green-200 border border-green-400 flex items-center justify-center">
+              <span className="text-[10px] font-bold text-green-800">3</span>
             </div>
             <h4 className="font-semibold text-sm text-green-700 dark:text-green-400">Commercialisation & UK Market Entry (2027)</h4>
           </div>
