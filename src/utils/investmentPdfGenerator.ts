@@ -10453,13 +10453,30 @@ const renderBrandStrategy = (
 
   yPosition += internalBoxHeight + 8;
 
-  // Long-Term Branding Direction
-  fitPage(65);
+  // Long-Term Branding Direction - dynamically sized box
+  const ltdIntroLines = splitTextWithFont(
+    doc,
+    sanitizeText(data.longTermDirection.intro),
+    maxWidth - box.paddingX * 2,
+    "bodySmall",
+    false
+  );
+  const ltdItemCount = data.longTermDirection.items.length;
+  const ltdBoxHeight =
+    14 + // title top padding
+    Math.min(3, ltdIntroLines.length) * lineHeight.body + // intro lines
+    8 + // gap before bullets
+    ltdItemCount * lineHeight.body + // bullet items
+    8 + // gap before goal
+    lineHeight.body + // goal line
+    10; // bottom padding
+
+  fitPage(ltdBoxHeight + 8);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, ltdBoxHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(box.borderWidth);
-  doc.roundedRect(margin, yPosition, maxWidth, 60, box.borderRadius, box.borderRadius, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, ltdBoxHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
@@ -10469,25 +10486,30 @@ const renderBrandStrategy = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  const ltdIntroLines = splitTextWithFont(doc, sanitizeText(data.longTermDirection.intro), maxWidth - box.paddingX * 2, "bodySmall", false);
-  doc.text(ltdIntroLines.slice(0, 2), margin + box.paddingX, yPosition + 22);
+  let ltdTextY = yPosition + 22;
+  ltdIntroLines.slice(0, 3).forEach((line: string) => {
+    doc.text(line, margin + box.paddingX, ltdTextY);
+    ltdTextY += lineHeight.body;
+  });
 
-  let ltdY = yPosition + 36;
+  ltdTextY += 4;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.caption);
   data.longTermDirection.items.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.circle(margin + box.paddingX + 4, ltdY - 1, PDF_CONFIG.circleSize.small, "F");
-    doc.text(sanitizeText(item), margin + box.paddingX + 10, ltdY);
-    ltdY += lineHeight.body;
+    doc.circle(margin + box.paddingX + 4, ltdTextY - 1, PDF_CONFIG.circleSize.small, "F");
+    const wrappedItem = splitTextWithFont(doc, sanitizeText(item), maxWidth - box.paddingX * 2 - 14, "caption", false);
+    doc.text(wrappedItem[0] || "", margin + box.paddingX + 10, ltdTextY);
+    ltdTextY += lineHeight.body;
   });
 
+  ltdTextY += 4;
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(data.longTermDirection.goal, margin + box.paddingX, yPosition + 56);
+  doc.text(data.longTermDirection.goal, margin + box.paddingX, ltdTextY);
 
-  yPosition += 68;
+  yPosition += ltdBoxHeight + 8;
 
   // SMART Branding Objectives
   fitPage(80);
