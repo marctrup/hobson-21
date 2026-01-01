@@ -10534,12 +10534,12 @@ const renderMarketingObjectives = (
   yPosition += spacing.sectionGap;
 
   // Alignment Summary - using light background
-  fitPage(55);
+  fitPage(70);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 65, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(box.borderWidth);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, 65, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
@@ -10551,19 +10551,27 @@ const renderMarketingObjectives = (
   doc.setFont("helvetica", "normal");
   doc.text("Hobson's channel and metric choices are tightly aligned to:", margin + box.paddingX, yPosition + 26);
 
-  const alignmentItems = ["Organisational goals", "Long-term vision", "Mindset-first marketing", "2026-2027 objectives"];
-  const alignItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  const alignmentItems = [
+    { text: "Organisational goals", sub: "Builds long-term brand equity" },
+    { text: "Long-term vision", sub: "Sustainable growth focus" },
+    { text: "Mindset-first marketing", sub: "Trust before transactions" },
+    { text: "2026-2027 objectives", sub: "Phased milestone targets" }
+  ];
+  const alignItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap) / 2;
   alignmentItems.forEach((item, idx) => {
-    const xPos = margin + box.paddingX + idx * (alignItemWidth + spacing.gridGap);
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + box.paddingX + col * (alignItemWidth + spacing.gridGap);
+    const yPos = yPosition + 32 + row * 15;
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPosition + 32, alignItemWidth, 12, 2, 2, "F");
+    doc.roundedRect(xPos, yPos, alignItemWidth, 13, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(item, xPos + 4, yPosition + 40);
+    doc.text(item.text, xPos + 4, yPos + 9);
   });
 
-  yPosition += 58;
+  yPosition += 73;
 
   return yPosition;
 };
