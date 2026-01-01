@@ -8728,13 +8728,15 @@ const renderMarketDescription = (
 
   yPosition += whyNowHeight + PDF_CONFIG.spacing.cardGap;
 
-  // 8. HOBSON'S STRATEGIC POSITION (Primary/purple box) - matches visual primary box
-  const conclusionBoxPadding = spacing.cardGap * 2;
-  const conclusionTextWidth = maxWidth - conclusionBoxPadding - spacing.contentPadding * 2;
-  const posIntroLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.intro), innerTextWidth, "body", false);
-  const posConclusionLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.conclusion), conclusionTextWidth, "body", false);
-  const posHeight = spacing.contentBoxStart + posIntroLines.length * bodyLine + spacing.circleOffset + posConclusionLines.length * bodyLine + spacing.contentPadding;
-  fitPage(posHeight + spacing.sectionGap);
+  // 8. HOBSON'S STRATEGIC POSITION - tight spacing using PDF_CONFIG.lineHeight.body
+  const conclusionBoxPadding = 8;
+  const conclusionTextWidth = maxWidth - conclusionBoxPadding * 2;
+  const posIntroLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.intro), maxWidth - 16, "body", false);
+  const posConclusionLines = splitTextWithFont(doc, sanitizeText(data.hobsonPosition.conclusion), conclusionTextWidth - 8, "body", false);
+  // Compact height: header (14) + intro lines + gap (4) + conclusion box + padding (4)
+  const conclusionBoxHeight = posConclusionLines.length * bodyLine + 8;
+  const posHeight = 14 + posIntroLines.length * bodyLine + 4 + conclusionBoxHeight + 4;
+  fitPage(posHeight + 4);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, posHeight, box.borderRadius, box.borderRadius, "F");
@@ -8745,39 +8747,35 @@ const renderMarketDescription = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson's Strategic Position", margin + spacing.circleOffset, yPosition + spacing.contentPadding);
+  doc.text("Hobson's Strategic Position", margin + 8, yPosition + 10);
 
-  textY = yPosition + spacing.contentBoxStart;
+  textY = yPosition + 18;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  posIntroLines.forEach((line: string, idx: number) => {
-    doc.text(line, margin + innerPaddingX, textY, {
-      maxWidth: innerTextWidth,
-      align: idx === posIntroLines.length - 1 ? "left" : "justify",
-    });
+  posIntroLines.forEach((line: string) => {
+    doc.text(line, margin + 8, textY);
     textY += bodyLine;
   });
-  textY += spacing.sectionGap;
+  textY += 4;
 
   // Conclusion in highlighted box
-  const conclusionBoxWidth = maxWidth - conclusionBoxPadding;
-  const conclusionBoxHeight = posConclusionLines.length * bodyLine + spacing.circleOffset;
+  const conclusionBoxWidth = maxWidth - conclusionBoxPadding * 2;
   doc.setFillColor(236, 253, 245); // emerald-50
-  doc.roundedRect(margin + spacing.cardGap, textY - spacing.paragraphGap, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin + conclusionBoxPadding, textY - 2, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(167, 243, 208); // emerald-200
   doc.setLineWidth(box.borderWidthThin);
-  doc.roundedRect(margin + spacing.cardGap, textY - spacing.paragraphGap, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "S");
+  doc.roundedRect(margin + conclusionBoxPadding, textY - 2, conclusionBoxWidth, conclusionBoxHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  textY += spacing.boxGap;
+  textY += 4;
   posConclusionLines.forEach((line: string) => {
-    doc.text(line, margin + spacing.contentPadding, textY);
+    doc.text(line, margin + conclusionBoxPadding + 4, textY);
     textY += bodyLine;
   });
 
-  yPosition += posHeight + spacing.sectionGap;
+  yPosition += posHeight + 4;
   return yPosition;
 };
 
