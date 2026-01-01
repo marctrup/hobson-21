@@ -2570,20 +2570,20 @@ const renderTeam = (
   doc.text("The team driving Hobson's growth and innovation", margin + PDF_CONFIG.spacing.textIndent, yPosition + 16);
   yPosition += 24;
 
-  // Team member cards - 2 columns - calculate total height upfront
+  // Team member cards - 2 columns
   const cardWidth = (maxWidth - PDF_CONFIG.spacing.bulletOffset) / 2;
   const cardHeight = 36;
-  const totalTeamRows = Math.ceil(coreTeam.length / 2);
-  const totalTeamHeight = totalTeamRows * (cardHeight + PDF_CONFIG.spacing.boxGap);
-  checkPageBreak(totalTeamHeight + PDF_CONFIG.spacing.bulletOffset);
   
-  const teamStartY = yPosition;
   coreTeam.forEach((member, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     
+    if (col === 0) {
+      checkPageBreak(cardHeight + PDF_CONFIG.spacing.cardGap);
+    }
+    
     const cardX = margin + col * (cardWidth + PDF_CONFIG.spacing.bulletOffset);
-    const cardY = teamStartY + row * (cardHeight + PDF_CONFIG.spacing.boxGap);
+    const cardY = col === 0 ? yPosition : yPosition;
 
     // Card background
     renderContentCard(doc, cardX, cardY, cardWidth, cardHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
@@ -2628,9 +2628,13 @@ const renderTeam = (
         descY += PDF_CONFIG.spacing.boxGap;
       });
     }
+
+    if (col === 1 || idx === coreTeam.length - 1) {
+      yPosition += cardHeight + PDF_CONFIG.spacing.boxGap;
+    }
   });
 
-  yPosition = teamStartY + totalTeamHeight + PDF_CONFIG.spacing.bulletOffset;
+  yPosition += PDF_CONFIG.spacing.bulletOffset;
 
   // Divider
   checkPageBreak(PDF_CONFIG.spacing.pageBreakMargin);
@@ -4949,21 +4953,15 @@ const renderSimpleUI = (
     { title: "Any Device", desc: "Works on desktop and mobile with responsive design", color: PDF_CONFIG.amber },
   ];
 
-  // 2x2 grid of feature cards - calculate total height upfront
+  // 2x2 grid of feature cards
   const cardWidth = (maxWidth - 8) / 2;
   const cardHeight = 38;
-  const totalFeatureRows = Math.ceil(features.length / 2);
-  const totalFeaturesHeight = totalFeatureRows * (cardHeight + 6);
-  
-  // Ensure space for grid before rendering
-  yPosition = checkPageBreak(doc, yPosition, totalFeaturesHeight + 10, pageHeight, margin);
 
-  const featuresStartY = yPosition;
   features.forEach((feature, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const xPos = margin + col * (cardWidth + 8);
-    const yPos = featuresStartY + row * (cardHeight + 6);
+    const yPos = yPosition + row * (cardHeight + 6);
 
     // Card background
     renderContentCard(doc, xPos, yPos, cardWidth, cardHeight, PDF_CONFIG.bgLight, feature.color);
@@ -4988,7 +4986,7 @@ const renderSimpleUI = (
     });
   });
 
-  yPosition = featuresStartY + totalFeaturesHeight + 10;
+  yPosition += 2 * (cardHeight + 6) + 10;
 
   // Summary box
   yPosition = checkPageBreak(doc, yPosition, 30, pageHeight, margin);
@@ -7302,19 +7300,16 @@ const renderExecutiveContext = (
 
   let textY = 0;
 
-  // 2. Pressures - 2x2 grid - calculate total height upfront
+  // 2. Pressures - 2x2 grid
+  fitPage(50);
   const pressureBoxWidth = (maxWidth - spacing.cardGap) / 2;
   const pressureBoxHeight = box.minHeight;
-  const totalPressureRows = Math.ceil(data.pressures.length / 2);
-  const totalPressureHeight = totalPressureRows * (pressureBoxHeight + spacing.boxGap);
-  fitPage(totalPressureHeight + spacing.cardGap);
   
-  const pressureStartY = yPosition;
   data.pressures.forEach((pressure, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const x = margin + col * (pressureBoxWidth + spacing.cardGap);
-    const y = pressureStartY + row * (pressureBoxHeight + spacing.boxGap);
+    const y = yPosition + row * (pressureBoxHeight + spacing.boxGap);
 
     doc.setFillColor(...redBg);
     doc.roundedRect(x, y, pressureBoxWidth, pressureBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
@@ -7331,7 +7326,7 @@ const renderExecutiveContext = (
     doc.setFont("helvetica", "bold");
     doc.text(sanitizeText(pressure), x + spacing.textIndent, y + 11);
   });
-  yPosition = pressureStartY + totalPressureHeight + spacing.cardGap;
+  yPosition += (pressureBoxHeight + spacing.boxGap) * 2 + spacing.cardGap;
 
   // 3. Context paragraph box - tighter with justified text
   const ctxPadding = box.paddingX;
@@ -8585,17 +8580,13 @@ const renderMarketDescription = (
     { title: "Speed & Compliance", insight: "Speed is no longer a competitive advantage - it is a compliance and credibility requirement.", color: "emerald" },
   ];
 
-  // Calculate total height for insights grid upfront
-  const totalInsightRows = Math.ceil(insights.length / 2);
-  const totalInsightsHeight = totalInsightRows * (insightCardHeight + spacing.paragraphGap);
-  fitPage(totalInsightsHeight + spacing.cardGap);
+  fitPage(insightCardHeight * 2 + spacing.paragraphGap);
 
-  const insightsStartY = yPosition;
   insights.forEach((item, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
     const x = margin + col * (insightCardWidth + spacing.cardGap);
-    const y = insightsStartY + row * (insightCardHeight + spacing.paragraphGap);
+    const y = yPosition + row * (insightCardHeight + spacing.paragraphGap);
 
     // Set colors based on type
     let bgColor: [number, number, number], borderColor: [number, number, number], iconColor: [number, number, number];
@@ -8646,7 +8637,7 @@ const renderMarketDescription = (
     });
   });
 
-  yPosition = insightsStartY + totalInsightsHeight + spacing.cardGap;
+  yPosition += insightCardHeight * 2 + spacing.paragraphGap;
 
   // 7. WHY THE PROBLEM MATTERS NOW (Red box) - matches visual red box
   const whyNowIntro = "The operational landscape shows a clear convergence of pressures:";
@@ -9133,16 +9124,19 @@ const renderCustomerOnlineBehaviour = (
   doc.text("How Customers Evaluate AI Solutions", margin, yPosition);
   yPosition += PDF_CONFIG.spacing.circleOffset;
 
-  // Evaluation criteria cards (2 column grid) - render all at once since we reserved space
+  // Evaluation criteria cards (2 column grid)
   const evalCardWidth = (maxWidth - PDF_CONFIG.spacing.cardGap) / 2;
-  const evalStartY = yPosition;
 
   data.evaluationCriteria.forEach((item, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
 
+    if (col === 0) {
+      fitPage(evalCardHeight + PDF_CONFIG.spacing.paragraphGap);
+    }
+
     const x = margin + col * (evalCardWidth + PDF_CONFIG.spacing.cardGap);
-    const y = evalStartY + row * (evalCardHeight + PDF_CONFIG.spacing.paragraphGap);
+    const y = yPosition + row * (evalCardHeight + PDF_CONFIG.spacing.paragraphGap);
 
     doc.setFillColor(...PDF_CONFIG.amberBg);
     doc.roundedRect(x, y, evalCardWidth, evalCardHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
@@ -9159,7 +9153,7 @@ const renderCustomerOnlineBehaviour = (
     doc.text(descLines.slice(0, 2), x + PDF_CONFIG.spacing.sectionGap, y + PDF_CONFIG.spacing.textIndent);
   });
 
-  yPosition = evalStartY + totalEvalRows * (evalCardHeight + PDF_CONFIG.spacing.paragraphGap) + PDF_CONFIG.spacing.cardGap;
+  yPosition += Math.ceil(data.evaluationCriteria.length / 2) * (evalCardHeight + PDF_CONFIG.spacing.paragraphGap) + PDF_CONFIG.spacing.cardGap;
 
   // What Triggers Distrust section
   const distrustHeight = PDF_CONFIG.card.headerHeight + data.distrustTriggers.length * (bodyLine + PDF_CONFIG.spacing.itemGap);
@@ -9740,19 +9734,17 @@ const renderPESTLEAnalysis = (
 
   const cardHeight = 50;
   const cardWidth = (maxWidth - 8) / 2;
-  
-  // Calculate total height upfront for PESTLE grid
-  const totalFactorRows = Math.ceil(factors.length / 2);
-  const totalFactorsHeight = totalFactorRows * (cardHeight + 6);
-  fitPage(totalFactorsHeight + 8);
 
-  const factorsStartY = yPosition;
   factors.forEach((factor, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     
+    if (col === 0) {
+      fitPage(cardHeight + 8);
+    }
+    
     const xPos = margin + col * (cardWidth + 8);
-    const cardY = factorsStartY + row * (cardHeight + 6);
+    const cardY = col === 0 ? yPosition : yPosition;
 
     doc.setFillColor(...factor.color);
     doc.roundedRect(xPos, cardY, cardWidth, cardHeight, 3, 3, "F");
@@ -9783,9 +9775,15 @@ const renderPESTLEAnalysis = (
       doc.text(wrapped[0], xPos + 16, itemY);
       itemY += PDF_CONFIG.lineHeight.body;
     });
+
+    if (col === 1) {
+      yPosition += cardHeight + 6;
+    }
   });
 
-  yPosition = factorsStartY + totalFactorsHeight + 8;
+  if (factors.length % 2 === 1) {
+    yPosition += cardHeight + 6;
+  }
 
   return yPosition;
 };
@@ -12395,18 +12393,12 @@ const renderStrategicContextPositioning = (
 
   const foundationWidth = (maxWidth - spacing.gridGap) / 2;
   const foundationHeight = 28;
-  
-  // Calculate total height upfront for foundations grid
-  const totalFoundationRows = Math.ceil(foundations.length / 2);
-  const totalFoundationsHeight = totalFoundationRows * (foundationHeight + spacing.gridGap);
-  fitPage(totalFoundationsHeight + spacing.sectionGap);
 
-  const foundationsStartY = yPosition;
   foundations.forEach((item, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
     const xPos = margin + col * (foundationWidth + spacing.gridGap);
-    const yPos = foundationsStartY + row * (foundationHeight + spacing.gridGap);
+    const yPos = yPosition + row * (foundationHeight + spacing.gridGap);
 
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
     doc.roundedRect(xPos, yPos, foundationWidth, foundationHeight, box.borderRadius, box.borderRadius, "F");
@@ -12417,7 +12409,7 @@ const renderStrategicContextPositioning = (
     doc.text(item, xPos + box.paddingX, yPos + 17);
   });
 
-  yPosition = foundationsStartY + totalFoundationsHeight + spacing.sectionGap;
+  yPosition += (foundationHeight * 2) + spacing.gridGap + spacing.sectionGap;
 
   // High-Level Positioning
   fitPage(40);
@@ -12733,18 +12725,16 @@ const renderStrategicContextPositioning = (
 
   const detailWidth = (maxWidth - spacing.gridGap) / 2;
   const detailHeight = 45;
-  
-  // Calculate total height upfront for stage details grid
-  const totalDetailRows = Math.ceil(stageDetails.length / 2);
-  const totalDetailsHeight = totalDetailRows * (detailHeight + spacing.gridGap);
-  fitPage(totalDetailsHeight + spacing.sectionGap);
 
-  const detailsStartY = yPosition;
   stageDetails.forEach((detail, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
     const xPos = margin + col * (detailWidth + spacing.gridGap);
-    const yPos = detailsStartY + row * (detailHeight + spacing.gridGap);
+    const yPos = yPosition + row * (detailHeight + spacing.gridGap);
+
+    if (row === 0 && col === 0) {
+      fitPage(detailHeight * 2 + spacing.gridGap);
+    }
 
     doc.setFillColor(249, 250, 251);
     doc.roundedRect(xPos, yPos, detailWidth, detailHeight, box.borderRadius, box.borderRadius, "F");
@@ -12765,10 +12755,10 @@ const renderStrategicContextPositioning = (
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text("-> " + detail.channel, xPos + box.paddingX, yPos + 36);
+    doc.text("→ " + detail.channel, xPos + box.paddingX, yPos + 36);
   });
 
-  yPosition = detailsStartY + totalDetailsHeight + spacing.sectionGap;
+  yPosition += (detailHeight * 2) + spacing.gridGap + spacing.sectionGap;
 
   // Trust-First Approach
   fitPage(45);
@@ -12900,18 +12890,12 @@ const renderOrganisationalPositioning = (
 
   const principleWidth = (maxWidth - spacing.gridGap) / 2;
   const principleHeight = 32;
-  
-  // Calculate total height upfront for principles grid
-  const totalPrincipleRows = Math.ceil(principles.length / 2);
-  const totalPrinciplesHeight = totalPrincipleRows * (principleHeight + spacing.gridGap);
-  fitPage(totalPrinciplesHeight + spacing.sectionGap);
 
-  const principlesStartY = yPosition;
   principles.forEach((principle, idx) => {
     const row = Math.floor(idx / 2);
     const col = idx % 2;
     const xPos = margin + col * (principleWidth + spacing.gridGap);
-    const yPos = principlesStartY + row * (principleHeight + spacing.gridGap);
+    const yPos = yPosition + row * (principleHeight + spacing.gridGap);
 
     doc.setFillColor(...PDF_CONFIG.primaryBgLight);
     doc.roundedRect(xPos, yPos, principleWidth, principleHeight, box.borderRadius, box.borderRadius, "F");
@@ -12927,7 +12911,7 @@ const renderOrganisationalPositioning = (
     doc.text(principle.desc, xPos + box.paddingX, yPos + 22);
   });
 
-  yPosition = principlesStartY + totalPrinciplesHeight + spacing.sectionGap;
+  yPosition += (principleHeight * 2) + spacing.gridGap + spacing.sectionGap;
 
   // How Users Should Understand Hobson
   fitPage(60);
