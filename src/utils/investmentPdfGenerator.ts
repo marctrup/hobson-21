@@ -7393,26 +7393,28 @@ const renderExecutiveContext = (
   const missionPadding = box.paddingX;
   const missionTextWidth = maxWidth - missionPadding * 2;
   const missionContentLines = splitTextWithFont(doc, data.missionStatement.content, missionTextWidth, "body", false);
-  const missionBoxHeight = missionContentLines.length * lineHeight.body + box.paddingTop;
-  const missionHeight = spacing.titleToContent + missionBoxHeight;
+  const missionBoxHeight = missionContentLines.length * lineHeight.body + box.paddingTop + box.paddingBottom;
+  const missionHeaderHeight = spacing.contentBoxStart; // Space for title + subtitle
+  const missionHeight = missionHeaderHeight + missionBoxHeight;
   fitPage(missionHeight + spacing.paragraphGap);
 
-  // Header row
+  // Header row - title
   doc.setFillColor(...tealAccent);
-  doc.circle(margin + spacing.circleOffset, yPosition + spacing.paragraphGap, circleSize.medium, "F");
+  doc.circle(margin + spacing.circleOffset, yPosition + spacing.sectionGap, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.title, margin + spacing.bulletTextOffset, yPosition + lineHeight.loose);
+  doc.text(data.missionStatement.title, margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + 1);
 
+  // Subtitle - positioned below title with proper gap
   doc.setTextColor(...tealAccent);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.subtitle, margin + spacing.bulletTextOffset, yPosition + spacing.titleToContent - 2);
+  doc.text(data.missionStatement.subtitle, margin + spacing.bulletTextOffset, yPosition + spacing.sectionGap + lineHeight.loose + spacing.paragraphGap);
 
-  // Content box
-  const missionBoxY = yPosition + spacing.titleToContent;
+  // Content box - starts below header
+  const missionBoxY = yPosition + missionHeaderHeight;
   doc.setFillColor(...tealBg);
   doc.roundedRect(margin, missionBoxY, maxWidth, missionBoxHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...tealBorder);
@@ -7422,7 +7424,7 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.missionStatement.content), margin + missionPadding, missionBoxY + box.paddingTop - 2, {
+  doc.text(sanitizeText(data.missionStatement.content), margin + missionPadding, missionBoxY + box.paddingTop, {
     maxWidth: missionTextWidth,
     align: "justify",
     lineHeightFactor: lineHeightFactor.body,
