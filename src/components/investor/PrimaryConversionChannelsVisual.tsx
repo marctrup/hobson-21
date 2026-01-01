@@ -231,8 +231,8 @@ export const PrimaryConversionChannelsVisual: React.FC = () => {
             { target: "5%", desc: "Demo-request rate by Q4 2026" }
           ].map((item, index) => (
             <div key={index} className="bg-white rounded-lg p-4 shadow-sm flex items-center gap-4">
-              <div className="bg-purple-100 rounded-full w-12 h-12 flex items-center justify-center flex-shrink-0">
-                <span className="text-purple-700 font-bold text-sm">{item.target}</span>
+              <div className="bg-purple-100 rounded-full w-14 h-14 flex items-center justify-center flex-shrink-0">
+                <span className="text-purple-700 font-bold text-xs text-center leading-tight">{item.target}</span>
               </div>
               <p className="text-sm text-gray-700">{item.desc}</p>
             </div>
