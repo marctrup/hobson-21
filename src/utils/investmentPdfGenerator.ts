@@ -8981,6 +8981,7 @@ const renderCustomerOnlineBehaviour = (
 
 /**
  * Render Brand Integrity, Perception & Positioning visual
+ * Uses structured data from provider - no hardcoded content
  */
 const renderBrandIntegrity = (
   doc: jsPDF,
@@ -8992,8 +8993,11 @@ const renderBrandIntegrity = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  const bodyLine = PDF_CONFIG.lineHeight.body; // Use tight 5pt spacing as default
-  const smallLine = PDF_CONFIG.lineHeight.tight; // Use tight 4pt for small text
+  // Source content from provider
+  const data = getBrandIntegrityStructuredData();
+
+  const bodyLine = PDF_CONFIG.lineHeight.body;
+  const smallLine = PDF_CONFIG.lineHeight.tight;
 
   const fitPage = (required: number) => {
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
@@ -9003,17 +9007,10 @@ const renderBrandIntegrity = (
     splitTextWithFont(doc, sanitizeText(text), width, fontStyle, bold);
 
   // -------- Brand Summary --------
-  const summaryText =
-    "Hobson has a clear, coherent, and authentic brand foundation. Its voice, visual identity, archetypes, and interactive elements all convey calm intelligence and dependable guidance.";
-  const summaryLines = measureWrappedLines(summaryText, maxWidth - 16);
-  const nextPhase = [
-    "Scaling emotional storytelling",
-    "Building structured support and resolution processes",
-    "Demonstrating the move from retrieval to proactive insight and strategic clarity",
-  ];
+  const summaryLines = measureWrappedLines(data.summaryText, maxWidth - 16);
 
   const summaryHeight =
-    28 + summaryLines.length * bodyLine + nextPhase.length * (smallLine + 1) + 16;
+    28 + summaryLines.length * bodyLine + data.nextPhase.length * (smallLine + 1) + 16;
   fitPage(summaryHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
@@ -9044,7 +9041,7 @@ const renderBrandIntegrity = (
   });
 
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
-  nextPhase.forEach((item) => {
+  data.nextPhase.forEach((item) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
     doc.circle(margin + PDF_CONFIG.spacing.circleOffset + 2, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
@@ -9062,9 +9059,7 @@ const renderBrandIntegrity = (
   const purpleBg = PDF_CONFIG.primaryBgLight;
   const purpleBorder = PDF_CONFIG.primaryBorder;
 
-  const bgText =
-    "Hobson is a calm, intelligent, and dependable AI assistant built for Real Estate professionals who work with complex, document-heavy workflows. The brand stands for clarity, trust, and simplicity.";
-  const bgLines = measureWrappedLines(bgText, maxWidth - 16);
+  const bgLines = measureWrappedLines(data.brandBackground.description, maxWidth - 16);
 
   const archetypeRowHeight = 30;
   const backgroundHeight = PDF_CONFIG.card.textOffsetX + 2 + bgLines.length * bodyLine + archetypeRowHeight + PDF_CONFIG.card.headerHeight;
@@ -9092,15 +9087,10 @@ const renderBrandIntegrity = (
     textY += bodyLine;
   });
 
-  // Archetypes row (positioned dynamically)
-  const archetypes = [
-    { name: "Sage", trait: "Primary Archetype", desc: "Wisdom, guidance, truth" },
-    { name: "Ruler", trait: "Supporting Trait", desc: "Order, reliability" },
-    { name: "Creator", trait: "Supporting Trait", desc: "Innovation" },
-  ];
+  // Archetypes row
   const archTop = textY + PDF_CONFIG.spacing.sectionGap;
   const archWidth = (maxWidth - 24) / 3;
-  archetypes.forEach((arch, idx) => {
+  data.brandBackground.archetypes.forEach((arch, idx) => {
     const xPos = margin + PDF_CONFIG.box.paddingX + idx * (archWidth + PDF_CONFIG.spacing.paragraphGap);
     doc.setFillColor(...PDF_CONFIG.bgWhite);
     doc.roundedRect(xPos, archTop, archWidth, 24, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
@@ -9131,21 +9121,6 @@ const renderBrandIntegrity = (
   const amberBg = PDF_CONFIG.amberBg;
   const amberBorder = PDF_CONFIG.amberBorder;
 
-  const strengths = [
-    "Simplifies document retrieval and reduces cognitive load",
-    "Saves meaningful time on routine information search",
-    "Provides transparent, referenced answers that build trust",
-    "Calm, clear, jargon-free tone matching the Sage archetype",
-    "Consistent, modern, and recognisable visual assets",
-    "Interactive tools like the quiz reinforce Hobson as knowledgeable yet friendly",
-  ];
-
-  const weaknesses = [
-    "Emotionally, the brand is not yet fully expressed - users understand what Hobson does but have fewer cues about deeper impact",
-    "Seen as reliable and helpful, but not yet as a source of ongoing strategic insight or proactive guidance",
-    "Still building resolution and support structures that mature brands rely on",
-  ];
-
   const calcListHeight = (items: string[], width: number) => {
     let lines = 0;
     items.forEach((it) => {
@@ -9155,8 +9130,8 @@ const renderBrandIntegrity = (
     return PDF_CONFIG.card.textOffsetX + 2 + lines * smallLine + PDF_CONFIG.spacing.circleOffset;
   };
 
-  const strengthsHeight = calcListHeight(strengths, colWidth - PDF_CONFIG.card.textOffsetX);
-  const weaknessesHeight = calcListHeight(weaknesses, colWidth - PDF_CONFIG.card.textOffsetX);
+  const strengthsHeight = calcListHeight(data.strengths, colWidth - PDF_CONFIG.card.textOffsetX);
+  const weaknessesHeight = calcListHeight(data.weaknesses, colWidth - PDF_CONFIG.card.textOffsetX);
   const swHeight = Math.max(strengthsHeight, weaknessesHeight);
   fitPage(swHeight + PDF_CONFIG.spacing.cardGap);
 
@@ -9176,7 +9151,7 @@ const renderBrandIntegrity = (
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
   textY = yPosition + PDF_CONFIG.card.headerHeight + PDF_CONFIG.spacing.cardGap;
-  strengths.forEach((it) => {
+  data.strengths.forEach((it) => {
     doc.setFillColor(...PDF_CONFIG.emerald);
     doc.circle(margin + PDF_CONFIG.box.paddingX, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
     const wrapped = splitTextWithFont(doc, sanitizeText(it), colWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
@@ -9204,7 +9179,7 @@ const renderBrandIntegrity = (
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textGray);
   textY = yPosition + PDF_CONFIG.card.headerHeight + PDF_CONFIG.spacing.cardGap;
-  weaknesses.forEach((it) => {
+  data.weaknesses.forEach((it) => {
     doc.setFillColor(...PDF_CONFIG.amber);
     doc.circle(wx + PDF_CONFIG.box.paddingX, textY - 1.5, PDF_CONFIG.circleSize.small, "F");
     const wrapped = splitTextWithFont(doc, sanitizeText(it), colWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false);
@@ -9226,14 +9201,9 @@ const renderBrandIntegrity = (
   const blueBorder = PDF_CONFIG.blueBorder;
   const blue = PDF_CONFIG.blue;
 
-  const emotionalText =
-    "Hobson's emotional promise is reassurance. It reduces stress by making hard-to-find information easy to access, and gives professionals a sense of control in high-pressure, chaotic environments.";
-  const emotionalLines = measureWrappedLines(emotionalText, colWidth - 16, "bodySmall", false);
+  const emotionalLines = measureWrappedLines(data.emotionalAppeal.promise, colWidth - 16, "bodySmall", false);
 
-  const cognitiveItems = [
-    "Measurable outcomes: time saved, fewer errors, quicker decisions",
-    "Transparent referencing: every answer can be traced back to its source",
-  ];
+  const cognitiveItems = data.cognitiveAppeal.features.map(f => `${f.title}: ${f.desc}`);
 
   const cognitiveLinesCount = cognitiveItems.reduce((acc, it) => {
     return acc + Math.max(1, splitTextWithFont(doc, sanitizeText(it), colWidth - PDF_CONFIG.card.textOffsetX, "bodySmall", false).length);
@@ -9298,14 +9268,7 @@ const renderBrandIntegrity = (
   yPosition += appealHeight + PDF_CONFIG.spacing.cardGap;
 
   // -------- Brand Metaphors --------
-  const metaphors = [
-    { metaphor: "GPS for documents", desc: "Takes you straight to the answer" },
-    { metaphor: "Master key", desc: "Unlocks information hidden in dense files" },
-    { metaphor: "Compass in a document jungle", desc: "Navigates complexity safely" },
-    { metaphor: "Desk lamp", desc: "Quietly illuminates the truth whenever needed" },
-  ];
-
-  const metaphorsHeight = PDF_CONFIG.card.textOffsetX + 2 + 28 + PDF_CONFIG.spacing.circleOffset; // header + tiles + padding
+  const metaphorsHeight = PDF_CONFIG.card.textOffsetX + 2 + 28 + PDF_CONFIG.spacing.circleOffset;
   fitPage(metaphorsHeight + PDF_CONFIG.spacing.cardGap);
 
   doc.setFillColor(...amberBg);
@@ -9322,7 +9285,7 @@ const renderBrandIntegrity = (
   doc.text("Brand Metaphors", margin + 24, yPosition + PDF_CONFIG.spacing.contentPadding);
 
   const metaWidth = (maxWidth - 24) / 4;
-  metaphors.forEach((meta, idx) => {
+  data.metaphors.forEach((meta, idx) => {
     const xPos = margin + PDF_CONFIG.box.paddingX + idx * (metaWidth + PDF_CONFIG.spacing.paragraphGap);
     doc.setFillColor(255, 255, 255);
     doc.roundedRect(xPos, yPosition + PDF_CONFIG.card.textOffsetX + 2, metaWidth, 24, PDF_CONFIG.box.borderRadiusSmall, PDF_CONFIG.box.borderRadiusSmall, "F");
@@ -9336,19 +9299,16 @@ const renderBrandIntegrity = (
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const descLines = splitTextWithFont(doc, meta.desc, metaWidth - PDF_CONFIG.box.paddingX, "caption", false);
+    const descLines = splitTextWithFont(doc, meta.description, metaWidth - PDF_CONFIG.box.paddingX, "caption", false);
     doc.text(descLines[0] || "", xPos + PDF_CONFIG.spacing.paragraphGap, yPosition + 41);
   });
 
   yPosition += metaphorsHeight + PDF_CONFIG.spacing.cardGap;
 
   // -------- Current Marketing Position --------
-  const positionText =
-    "Today, Hobson's market presence is selective and relationship-led. The focus is on deep MVP partnerships rather than broad public awareness. The brand is visually strong and touchpoints are consistent.";
-  const positionLines = measureWrappedLines(positionText, maxWidth - 16);
+  const positionLines = measureWrappedLines(data.currentPosition.description, maxWidth - 16);
 
-  const opportunityText =
-    "Opportunity: Shift from a quiet, validating presence into a confident, educational voice shaping expectations for AI-native assistants in real estate.";
+  const opportunityText = `Opportunity: ${data.currentPosition.opportunity}`;
   const opportunityLines = measureWrappedLines(opportunityText, maxWidth - 28, "caption", true);
 
   const positionHeight = PDF_CONFIG.card.textOffsetX + 2 + positionLines.length * bodyLine + opportunityLines.length * PDF_CONFIG.spacing.paragraphGap + PDF_CONFIG.card.headerHeight;
@@ -9376,7 +9336,7 @@ const renderBrandIntegrity = (
     textY += bodyLine;
   });
 
-  // Opportunity callout (wrapped)
+  // Opportunity callout
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   const calloutY = textY + PDF_CONFIG.spacing.paragraphGap;
   const calloutHeight = opportunityLines.length * PDF_CONFIG.spacing.paragraphGap + PDF_CONFIG.spacing.sectionGap;
