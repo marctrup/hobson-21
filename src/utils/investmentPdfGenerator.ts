@@ -10307,7 +10307,7 @@ const renderBrandStrategy = (
 
   yPosition += verbalBoxHeight + 8;
 
-  // Experience & Interaction Approach - 2 columns layout
+  // Experience & Interaction Approach - responsive card heights (prevents overlap)
   fitPage(80);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.sectionTitle);
@@ -10322,40 +10322,105 @@ const renderBrandStrategy = (
   yPosition += lineHeight.body + spacing.paragraphGap;
 
   const expCardWidth = (maxWidth - spacing.gridGap) / 2;
-  const expCardHeight = 50;
-  fitPage(expCardHeight * 2 + spacing.paragraphGap * 2);
+  const expInnerW = expCardWidth - 16;
+  const expMaxDescLines = 6;
+
+  const expCards = data.experienceApproach.items.map((item) => {
+    const titleLines = splitTextWithFont(doc, sanitizeText(item.title), expInnerW, "bodySmall", true);
+    const descLines = splitTextWithFont(doc, sanitizeText(item.description), expInnerW, "caption", false);
+    const descShown = descLines.slice(0, expMaxDescLines);
+
+    // top padding (10) + title + gap (4) + desc + bottom padding (10)
+    const titleBlockH = Math.min(2, titleLines.length) * lineHeight.body;
+    const descBlockH = descShown.length * lineHeight.body;
+    const computedH = 10 + titleBlockH + 4 + descBlockH + 10;
+
+    return {
+      item,
+      titleLines,
+      descShown,
+      height: Math.max(62, computedH),
+    };
+  });
+
+  const expRowCount = Math.ceil(expCards.length / 2);
+  const expRowHeights = Array.from({ length: expRowCount }, (_, r) => {
+    const left = expCards[r * 2]?.height ?? 0;
+    const right = expCards[r * 2 + 1]?.height ?? 0;
+    return Math.max(left, right);
+  });
+
+  const expTotalHeight =
+    expRowHeights.reduce((acc, h) => acc + h, 0) +
+    (expRowCount > 1 ? (expRowCount - 1) * spacing.paragraphGap : 0);
+
+  fitPage(expTotalHeight + spacing.sectionGap);
 
   const expColors: [number, number, number][] = [PDF_CONFIG.primaryBgLight, PDF_CONFIG.emeraldBg, PDF_CONFIG.amberBg];
-  data.experienceApproach.items.forEach((item, idx) => {
+
+  const expStartY = yPosition;
+  expCards.forEach((card, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
-    if (col === 0 && row > 0) {
-      yPosition += expCardHeight + spacing.paragraphGap;
-    }
+
+    const rowY =
+      expStartY +
+      expRowHeights.slice(0, row).reduce((acc, h) => acc + h, 0) +
+      row * spacing.paragraphGap;
+
     const xPos = margin + col * (expCardWidth + spacing.gridGap);
-    const yPos = yPosition;
-    
+
     doc.setFillColor(...expColors[idx % expColors.length]);
-    doc.roundedRect(xPos, yPos, expCardWidth, expCardHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    doc.roundedRect(xPos, rowY, expCardWidth, expRowHeights[row], box.borderRadiusSmall, box.borderRadiusSmall, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(item.title, xPos + 8, yPos + 14);
+    doc.text(card.titleLines.slice(0, 2), xPos + 8, rowY + 14);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    const descLines = splitTextWithFont(doc, sanitizeText(item.description), expCardWidth - 16, "caption", false);
-    doc.text(descLines.slice(0, 4), xPos + 8, yPos + 26);
+    const descY = rowY + 14 + Math.min(2, card.titleLines.length) * lineHeight.body + 6;
+    doc.text(card.descShown, xPos + 8, descY);
   });
 
-  yPosition += expCardHeight + spacing.sectionGap;
+  yPosition = expStartY + expTotalHeight + spacing.sectionGap;
 
-  // Internal Brand Alignment
-  fitPage(40);
+  // Internal Brand Alignment - wrap intro + 2-column principles (prevents overlap)
+  const internalIntroLines = splitTextWithFont(
+    doc,
+    sanitizeText(data.internalAlignment.intro),
+    maxWidth - box.paddingX * 2,
+    "bodySmall",
+    false
+  );
+
+  const alignPillWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap) / 2;
+  const alignPills = data.internalAlignment.principles.map((p) => {
+    const lines = splitTextWithFont(doc, sanitizeText(p), alignPillWidth - 12, "caption", false);
+    const height = Math.max(14, 6 + Math.min(2, lines.length) * lineHeight.body);
+    return { lines, height };
+  });
+
+  const alignRows = Math.ceil(alignPills.length / 2);
+  const alignRowHeights = Array.from({ length: alignRows }, (_, r) => {
+    const left = alignPills[r * 2]?.height ?? 0;
+    const right = alignPills[r * 2 + 1]?.height ?? 0;
+    return Math.max(left, right);
+  });
+
+  const internalBoxHeight =
+    18 + // title block
+    internalIntroLines.length * lineHeight.body +
+    8 + // gap
+    alignRowHeights.reduce((acc, h) => acc + h, 0) +
+    (alignRows > 1 ? (alignRows - 1) * 6 : 0) +
+    10; // bottom padding
+
+  fitPage(internalBoxHeight + 8);
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 35, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, internalBoxHeight, box.borderRadius, box.borderRadius, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
@@ -10365,19 +10430,28 @@ const renderBrandStrategy = (
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(data.internalAlignment.intro, margin + box.paddingX, yPosition + 22);
-
-  const alignPrincipleWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 2) / 3;
-  data.internalAlignment.principles.forEach((principle, idx) => {
-    const xPos = margin + box.paddingX + idx * (alignPrincipleWidth + spacing.gridGap);
-    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-    doc.roundedRect(xPos, yPosition + 28, alignPrincipleWidth, 10, 2, 2, "F");
-    doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(fontSize.caption);
-    doc.text(principle, xPos + 4, yPosition + 35);
+  let iaY = yPosition + 22;
+  internalIntroLines.forEach((l: string) => {
+    doc.text(l, margin + box.paddingX, iaY);
+    iaY += lineHeight.body;
   });
 
-  yPosition += 43;
+  iaY += 6;
+  alignPills.forEach((pill, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const xPos = margin + box.paddingX + col * (alignPillWidth + spacing.gridGap);
+    const rowY = iaY + alignRowHeights.slice(0, row).reduce((acc, h) => acc + h, 0) + row * 6;
+
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(xPos, rowY, alignPillWidth, alignRowHeights[row], 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    doc.text(pill.lines.slice(0, 2), xPos + 6, rowY + 9);
+  });
+
+  yPosition += internalBoxHeight + 8;
 
   // Long-Term Branding Direction
   fitPage(65);
