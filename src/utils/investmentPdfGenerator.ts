@@ -10232,10 +10232,8 @@ const renderMarketingObjectives = (
     }
     const xPos = margin + col * (goalCardWidth + spacing.gridGap);
 
-    doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.setDrawColor(...PDF_CONFIG.border);
-    doc.setLineWidth(box.borderWidthThin);
-    doc.roundedRect(xPos, yPosition, goalCardWidth, goalCardHeight, box.borderRadius, box.borderRadius, "FD");
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.roundedRect(xPos, yPosition, goalCardWidth, goalCardHeight, box.borderRadius, box.borderRadius, "F");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
