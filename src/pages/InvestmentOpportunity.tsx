@@ -1203,7 +1203,16 @@ const InvestmentOpportunity = () => {
                     <div>
                       <p className="text-sm font-medium text-foreground mb-2">Included:</p>
                       <ul className="space-y-1">
-                        {["Strategy & Approach", "Customers & Market", "Product Vision & Roadmap", "Commercials", "Leadership & Team", "Marketing & Brand Strategy"].map((title) => (
+                        {[
+                          "Strategy & Approach",
+                          "Customers & Market",
+                          "Product Vision & Roadmap",
+                          "Commercials",
+                          "Leadership & Team",
+                          "Marketing & Brand Strategy",
+                          "Acquisition & Sales Strategy",
+                          "Financial Overview & Assumptions"
+                        ].map((title) => (
                           <li key={title} className="flex items-center gap-2 text-sm text-muted-foreground">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
                             {title}
@@ -1214,17 +1223,11 @@ const InvestmentOpportunity = () => {
                     <div>
                       <p className="text-sm font-medium text-foreground mb-2">Not Included:</p>
                       <ul className="space-y-1">
-                        {[
-                          "Acquisition & Sales Strategy",
-                          "Financial Overview & Assumptions", 
-                          "Financial Downloads"
-                        ].map((title) => (
-                          <li key={title} className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50" />
-                            {title}
-                            <span className="text-xs text-muted-foreground/70">(download separately)</span>
-                          </li>
-                        ))}
+                        <li className="flex items-center gap-2 text-sm text-muted-foreground">
+                          <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50" />
+                          Financial Downloads
+                          <span className="text-xs text-muted-foreground/70">(download separately)</span>
+                        </li>
                       </ul>
                     </div>
                   </div>
