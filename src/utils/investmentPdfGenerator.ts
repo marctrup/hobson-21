@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData, getMarketingObjectivesStructuredData, getBrandStrategyStructuredData, getBrandIntegrityStructuredData, getSegmentationStrategyStructuredData, getContentEngagementStrategyStructuredData, getPrimaryConversionChannelsStructuredData, getAcquisitionExecutiveSummaryStructuredData, getGoToMarketStrategyStructuredData, getCustomerSegmentationVisualStructuredData, getFinancialsExecutiveSummaryStructuredData, getPLAssumptionsDetailedStructuredData, getCostAssumptionsDetailedStructuredData, getOnboardingCostsDetailedStructuredData, getUKAssumptionsFinancialsDetailedStructuredData, getCACAssumptionsDetailedStructuredData, getBurnRateAssumptionsDetailedStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData, getMarketingObjectivesStructuredData, getBrandStrategyStructuredData, getBrandIntegrityStructuredData, getSegmentationStrategyStructuredData, getContentEngagementStrategyStructuredData, getPrimaryConversionChannelsStructuredData, getAcquisitionExecutiveSummaryStructuredData, getGoToMarketStrategyStructuredData, getCustomerSegmentationVisualStructuredData, getFinancialsExecutiveSummaryStructuredData, getPLAssumptionsDetailedStructuredData, getCostAssumptionsDetailedStructuredData, getOnboardingCostsDetailedStructuredData, getUKAssumptionsFinancialsDetailedStructuredData, getCACAssumptionsDetailedStructuredData, getBurnRateAssumptionsDetailedStructuredData, getPESTLEAnalysisStructuredData, getInternalCapabilityAssessmentStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -9491,8 +9491,21 @@ const renderPESTLEAnalysis = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // Source content from provider
+  const data = getPESTLEAnalysisStructuredData();
+
   const fitPage = (required: number) => {
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Color mapping for factors
+  const colorMap: Record<string, { bg: [number, number, number]; accent: [number, number, number] }> = {
+    blue: { bg: PDF_CONFIG.blueBg, accent: PDF_CONFIG.blue },
+    emerald: { bg: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald },
+    purple: { bg: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor },
+    amber: { bg: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber },
+    rose: { bg: PDF_CONFIG.roseBg, accent: PDF_CONFIG.rose },
+    teal: { bg: PDF_CONFIG.tealBg, accent: PDF_CONFIG.teal }
   };
 
   // Header
@@ -9504,31 +9517,23 @@ const renderPESTLEAnalysis = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("PESTLE Analysis", margin + 24, yPosition + 16);
+  doc.text(data.header.title, margin + 24, yPosition + 16);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text("Macro-environmental factors shaping the UK PropTech landscape", margin + 24, yPosition + 26);
+  doc.text(data.header.subtitle, margin + 24, yPosition + 26);
   yPosition += 48;
 
   // Key drivers
-  const keyDrivers = [
-    "Fast, reliable document insight",
-    "Transparent, referenced answers",
-    "Minimal onboarding and implementation friction",
-    "Affordable, measurable efficiency gains",
-    "Reduced compliance and documentation risk"
-  ];
-
   fitPage(50);
   doc.setFillColor(...PDF_CONFIG.bgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 45, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text("The environment is shifting towards tools that provide:", margin + 8, yPosition + 10);
+  doc.text(sanitizeText(data.keyDriversIntro), margin + 8, yPosition + 10);
   let ky = yPosition + 18;
-  keyDrivers.forEach((driver) => {
+  data.keyDrivers.forEach((driver) => {
     doc.setFillColor(...PDF_CONFIG.primaryColor);
     doc.circle(margin + 12, ky - 1, PDF_CONFIG.circleSize.small, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
@@ -9538,33 +9543,24 @@ const renderPESTLEAnalysis = (
   yPosition += 53;
 
   // PESTLE factors
-  const factors = [
-    { letter: "P", title: "Political", subtitle: "Rising Regulation & Data Governance", color: PDF_CONFIG.blueBg, accent: PDF_CONFIG.blue, items: ["Building Safety Act compliance", "Renters Reform Bill documentation", "EPC and sustainability reporting", "AML documentation checks", "GDPR audit trails"] },
-    { letter: "E", title: "Economic", subtitle: "Cost Pressure & Efficiency", color: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald, items: ["Cost constraints limit headcount", "Market cycles increase pressure", "Lean teams handle growing workloads", "10%+ NOI improvement from AI", "Up to 20% cost savings possible"] },
-    { letter: "S", title: "Social", subtitle: "AI Comfort & Trust", color: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor, items: ["Growing AI openness", "Low tolerance for error", "High demand for transparency", "Hybrid working increases file reliance", "Aversion to rip and replace"] },
-    { letter: "T", title: "Technological", subtitle: "Fast-Moving AI & PropTech", color: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber, items: ["LLM and RAG advances", "Verifiable AI expectations", "Legacy PropTech moves slowly", "Cybersecurity expectations grow", "No integration tools in demand"] },
-    { letter: "L", title: "Legal", subtitle: "Compliance & Documentation Risk", color: PDF_CONFIG.roseBg, accent: PDF_CONFIG.rose, items: ["GDPR transparency demands", "Audit evidence requirements", "Contractual risk from missed details", "AI governance and explainability"] },
-    { letter: "E", title: "Environmental", subtitle: "ESG & Paper Reduction", color: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emeraldLight, items: ["ESG reporting documentation", "Paperless workflow pressure", "EPC data requirements"] }
-  ];
-
   const cardHeight = 50;
   const cardWidth = (maxWidth - 8) / 2;
 
-  factors.forEach((factor, idx) => {
+  data.factors.forEach((factor, idx) => {
     const col = idx % 2;
-    const row = Math.floor(idx / 2);
+    const colors = colorMap[factor.colorType] || colorMap.blue;
     
     if (col === 0) {
       fitPage(cardHeight + 8);
     }
     
     const xPos = margin + col * (cardWidth + 8);
-    const cardY = col === 0 ? yPosition : yPosition;
+    const cardY = yPosition;
 
-    doc.setFillColor(...factor.color);
+    doc.setFillColor(...colors.bg);
     doc.roundedRect(xPos, cardY, cardWidth, cardHeight, 3, 3, "F");
     
-    doc.setFillColor(...factor.accent);
+    doc.setFillColor(...colors.accent);
     const circleX = xPos + 10;
     const circleY = cardY + 10;
     doc.circle(circleX, circleY, PDF_CONFIG.circleSize.medium, "F");
@@ -9584,12 +9580,14 @@ const renderPESTLEAnalysis = (
     doc.text(factor.subtitle, xPos + 20, cardY + 18);
 
     let itemY = cardY + 26;
-    factor.items.forEach((item) => {
-      doc.setFillColor(...factor.accent);
+    // Show first 5 items max to fit in card
+    const displayItems = factor.items.slice(0, 5);
+    displayItems.forEach((item) => {
+      doc.setFillColor(...colors.accent);
       doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
       doc.setFontSize(PDF_CONFIG.fontSize.caption);
-      const wrapped = doc.splitTextToSize(item, cardWidth - 20);
+      const wrapped = doc.splitTextToSize(sanitizeText(item), cardWidth - 20);
       doc.text(wrapped[0], xPos + 16, itemY);
       itemY += PDF_CONFIG.lineHeight.body;
     });
@@ -9599,7 +9597,7 @@ const renderPESTLEAnalysis = (
     }
   });
 
-  if (factors.length % 2 === 1) {
+  if (data.factors.length % 2 === 1) {
     yPosition += cardHeight + 6;
   }
 
@@ -9619,8 +9617,20 @@ const renderInternalCapabilityAssessment = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
+  // Source content from provider
+  const data = getInternalCapabilityAssessmentStructuredData();
+
   const fitPage = (required: number) => {
     yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Color mapping for strengths
+  const colorMap: Record<string, { bg: [number, number, number]; accent: [number, number, number] }> = {
+    blue: { bg: PDF_CONFIG.blueBg, accent: PDF_CONFIG.blue },
+    purple: { bg: PDF_CONFIG.primaryBgLight, accent: PDF_CONFIG.primaryColor },
+    emerald: { bg: PDF_CONFIG.emeraldBg, accent: PDF_CONFIG.emerald },
+    amber: { bg: PDF_CONFIG.amberBg, accent: PDF_CONFIG.amber },
+    rose: { bg: PDF_CONFIG.roseBg, accent: PDF_CONFIG.rose }
   };
 
   // Header
@@ -9632,26 +9642,17 @@ const renderInternalCapabilityAssessment = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Internal Capability Assessment", margin + 24, yPosition + 16);
+  doc.text(data.header.title, margin + 24, yPosition + 16);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "normal");
-  const introText = "Hobson combines deep domain knowledge, strong technical design, and a differentiated brand aligned with market need.";
-  const introLines = doc.splitTextToSize(introText, maxWidth - 32);
+  const introLines = doc.splitTextToSize(sanitizeText(data.keyMessage.primary), maxWidth - 32);
   introLines.forEach((line: string, i: number) => {
     doc.text(line, margin + 24, yPosition + 26 + i * 5);
   });
   yPosition += 53;
 
-  // Strengths
-  const strengths = [
-    { title: "Team Skills", items: ["30+ years Real Estate experience", "Built/scaled/exited UK RE software", "AI/ML specialists in-house"] },
-    { title: "Technical Capabilities", items: ["Document-first architecture", "Hybrid RAG + knowledge graph", "Zero-integration deployment"] },
-    { title: "Brand Positioning", items: ["Owl = wisdom and clarity", "Calm AI assistant positioning", "Strong early resonance"] },
-    { title: "Customer Access", items: ["Direct portfolio operator relationships", "Warm industry introductions", "Early adopters co-shaping MVP"] },
-    { title: "Clear Differentiators", items: ["Document-native AI focus", "Referenced answers always", "No replacement positioning"] }
-  ];
-
+  // Strengths header
   fitPage(20);
   doc.setFillColor(...PDF_CONFIG.emerald);
   doc.circle(margin + 6, yPosition + 4, PDF_CONFIG.circleSize.medium, "F");
@@ -9664,40 +9665,56 @@ const renderInternalCapabilityAssessment = (
   const strengthCardWidth = (maxWidth - 8) / 2;
   const strengthCardHeight = 42;
 
-  strengths.forEach((strength, idx) => {
+  // Render strengths from provider data
+  data.strengths.forEach((strength, idx) => {
     const col = idx % 2;
+    const colors = colorMap[strength.colorType] || colorMap.emerald;
+    
     if (col === 0) {
       fitPage(strengthCardHeight + 6);
     }
     const xPos = margin + col * (strengthCardWidth + 8);
     
-    doc.setFillColor(...PDF_CONFIG.emeraldBg);
+    doc.setFillColor(...colors.bg);
     doc.roundedRect(xPos, yPosition, strengthCardWidth, strengthCardHeight, 3, 3, "F");
     
-    doc.setFillColor(...PDF_CONFIG.emerald);
+    doc.setFillColor(...colors.accent);
     doc.circle(xPos + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(strength.title, xPos + 20, yPosition + 12);
+    // Truncate title if needed
+    const truncatedTitle = strength.title.length > 25 ? strength.title.substring(0, 22) + "..." : strength.title;
+    doc.text(truncatedTitle, xPos + 20, yPosition + 12);
 
     let itemY = yPosition + 20;
-    strength.items.forEach((item) => {
-      doc.setFillColor(...PDF_CONFIG.emerald);
+    // Get items from subsections or items array
+    const displayItems: string[] = [];
+    if (strength.subsections) {
+      strength.subsections.forEach(sub => {
+        displayItems.push(...sub.items.slice(0, 1));
+      });
+    } else if (strength.items) {
+      displayItems.push(...strength.items.slice(0, 3));
+    }
+    
+    displayItems.slice(0, 3).forEach((item) => {
+      doc.setFillColor(...colors.accent);
       doc.circle(xPos + 10, itemY - 1, PDF_CONFIG.circleSize.small, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
       doc.setFontSize(PDF_CONFIG.fontSize.caption);
       doc.setFont("helvetica", "normal");
-      doc.text(item, xPos + 16, itemY);
+      const truncatedItem = item.length > 35 ? item.substring(0, 32) + "..." : item;
+      doc.text(truncatedItem, xPos + 16, itemY);
       itemY += PDF_CONFIG.lineHeight.loose;
     });
 
-    if (col === 1 || idx === strengths.length - 1) {
+    if (col === 1 || idx === data.strengths.length - 1) {
       yPosition += strengthCardHeight + 6;
     }
   });
 
-  // Gaps
+  // Gaps header
   fitPage(20);
   doc.setFillColor(...PDF_CONFIG.amber);
   doc.circle(margin + 6, yPosition + 4, PDF_CONFIG.circleSize.medium, "F");
@@ -9707,20 +9724,12 @@ const renderInternalCapabilityAssessment = (
   doc.text("Limitations & Gaps", margin + 16, yPosition + 6);
   yPosition += 14;
 
-  const gaps = [
-    { title: "Brand Visibility", need: "Thought leadership, case studies" },
-    { title: "Technical Scaling", need: "Fine-tuning and expanded testing" },
-    { title: "Product Breadth", need: "Proactive insight expansion" },
-    { title: "Support Infrastructure", need: "Customer success frameworks" },
-    { title: "Resource Constraints", need: "Investment for systematic growth" }
-  ];
-
-  const gapCardWidth = (maxWidth - 8) / 2; // 2 columns instead of 3 for more width
+  const gapCardWidth = (maxWidth - 8) / 2;
   const gapCardHeight = 32;
   const gapCardPadding = 6;
   const gapTextMaxWidth = gapCardWidth - gapCardPadding * 2;
 
-  gaps.forEach((gap, idx) => {
+  data.gaps.forEach((gap, idx) => {
     const col = idx % 2;
     if (col === 0) {
       fitPage(gapCardHeight + 6);
@@ -9739,10 +9748,10 @@ const renderInternalCapabilityAssessment = (
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "normal");
     const needText = "Need: " + gap.need;
-    const needLines = doc.splitTextToSize(needText, gapTextMaxWidth);
+    const needLines = doc.splitTextToSize(sanitizeText(needText), gapTextMaxWidth);
     doc.text(needLines[0], xPos + gapCardPadding, yPosition + 22);
 
-    if (col === 1 || idx === gaps.length - 1) {
+    if (col === 1 || idx === data.gaps.length - 1) {
       yPosition += gapCardHeight + 6;
     }
   });

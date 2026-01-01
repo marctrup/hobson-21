@@ -5501,3 +5501,230 @@ export const getBurnRateAssumptionsDetailedStructuredData = () => ({
     { year: "2031", status: "", revenue: "GBP 14.92M", variable: "GBP 273,533", costs: "GBP 344,333", surplus: "GBP 899,000" }
   ]
 });
+
+// PESTLE Analysis structured data provider - matches PESTLEAnalysisVisual.tsx
+export const getPESTLEAnalysisStructuredData = () => ({
+  header: {
+    title: "PESTLE Analysis",
+    subtitle: "Macro-environmental factors shaping the UK PropTech landscape"
+  },
+  intro: "Hobson operates in the Real Estate sector, which is highly regulated, document-heavy, and under pressure to digitise. The following PESTLE review shows why a tool that offers clarity, accuracy, and affordable AI alongside existing systems is increasingly necessary.",
+  keyDrivers: [
+    "Fast, reliable document insight",
+    "Transparent, referenced answers",
+    "Minimal onboarding and implementation friction",
+    "Affordable, measurable efficiency gains",
+    "Reduced compliance and documentation risk"
+  ],
+  keyDriversIntro: "Across all dimensions - political, economic, social, technological, legal, and environmental - the environment is shifting towards tools that provide:",
+  keyDriversConclusion: "Hobson's design and positioning are closely aligned with these pressures, making its solution both timely and strategically relevant.",
+  factors: [
+    {
+      letter: "P",
+      title: "Political",
+      subtitle: "Rising Regulation & Data Governance",
+      colorType: "blue",
+      intro: "The global Real Estate environment is becoming increasingly tightly regulated, with increasing documentation requirements and scrutiny. Key drivers include:",
+      items: [
+        "Building Safety Act: more detailed record-keeping and audit-ready evidence",
+        "Renters Reform Bill: more documentation around tenancy standards and landlord responsibilities",
+        "EPC and sustainability rules: evidence-heavy energy and performance reporting",
+        "AML (Anti-Money Laundering): stronger KYC and documentation checks",
+        "Local authority processes: structured information for planning, licensing, and building control"
+      ],
+      additionalNote: "At the same time, data protection rules (GDPR, ICO guidance) demand secure handling, audit trails, and clear retention policies. Hobson's AI Privacy Policy and Data Breach Protocol are designed to support these requirements.",
+      implication: "More regulation means more documents, higher compliance risk, and a sharper need for fast, accurate retrieval and auditability."
+    },
+    {
+      letter: "E",
+      title: "Economic",
+      subtitle: "Cost Pressure, Efficiency & Market Cycles",
+      colorType: "emerald",
+      intro: "Real Estate organisations face persistent economic challenges:",
+      items: [
+        "Cost constraints limit headcount growth",
+        "Market cycles increase pressure to improve asset performance",
+        "Lean teams must handle growing administrative workloads",
+        "High labour costs make manual document handling expensive",
+        "Large platform upgrades (e.g. MRI/Yardi) are often postponed, favouring lighter tools"
+      ],
+      additionalNote: "Industry research shows that AI and automation can deliver 10%+ NOI improvement through operational efficiencies and up to 20% cost savings from reduced manual work.",
+      implication: "Hobson's low-friction, non-disruptive AI fits organisations looking to cut admin and reduce risk without funding a complete system replacement."
+    },
+    {
+      letter: "S",
+      title: "Social",
+      subtitle: "AI Comfort, Trust & Work Culture",
+      colorType: "purple",
+      intro: "Attitudes toward AI are warming, but trust is still fragile:",
+      items: [
+        "Growing openness to AI for operations, reporting, and document workflows",
+        "Very low tolerance for error; small mistakes can destroy confidence",
+        "High demand for transparency and explainability, especially in risk-averse contexts",
+        "Hybrid working has increased reliance on shared drives, email, and unstructured files",
+        "Teams are wary of tools that require significant process change or rip and replace systems"
+      ],
+      implication: "Hobson's strengths - referenced answers, simple interface, zero onboarding, and coexistence with current tools - map directly onto these trust and adoption requirements."
+    },
+    {
+      letter: "T",
+      title: "Technological",
+      subtitle: "Fast-Moving AI & PropTech",
+      colorType: "amber",
+      intro: "The technology landscape is evolving quickly:",
+      items: [
+        "Advances in LLMs, embeddings, RAG, and knowledge graphs make document understanding far more powerful",
+        "Buyers increasingly expect verifiable, not black-box, AI",
+        "Legacy PropTech moves slowly, creating a gap for AI-native assistants",
+        "Cybersecurity expectations grow as more sensitive contracts and documents are digitised",
+        "Demand rises for no integration tools that can be deployed quickly"
+      ],
+      additionalNote: "Hobson's architecture, combining vector databases, knowledge graphs, and quality checks, is designed to deliver reliable, explainable document intelligence.",
+      implication: "Technological trends favour tools like Hobson that provide modern AI capability without heavy integration overhead."
+    },
+    {
+      letter: "L",
+      title: "Legal",
+      subtitle: "Compliance, Data & Documentation Risk",
+      colorType: "rose",
+      intro: "Legal frameworks reinforce the need for structured, accurate document handling:",
+      items: [
+        "GDPR demands explicit data handling, transparency, and security",
+        "Audits require clear evidence of where information came from and how it was used",
+        "Contractual risk rises when key details are missed or buried in unstructured content",
+        "Emerging AI governance emphasises safety, explainability, and reduced hallucination"
+      ],
+      additionalNote: "Hobson's referenced outputs, combined with privacy and breach policies, help buyers meet these expectations and reduce legal exposure.",
+      implication: "Legal pressure favours AI tools that are traceable, auditable, and designed around accuracy."
+    },
+    {
+      letter: "E",
+      title: "Environmental",
+      subtitle: "ESG Reporting & Paper Reduction",
+      colorType: "teal",
+      intro: "Environmental factors are secondary drivers, but still important:",
+      items: [
+        "ESG reporting adds another layer of documentation and evidence",
+        "Pressure to reduce physical paperwork encourages digital document workflows",
+        "Energy-performance obligations (e.g. EPCs) require structured, retrievable data for reporting"
+      ],
+      implication: "By making it easier to extract and reuse information from documents, Hobson supports more efficient ESG reporting and digital sustainability."
+    }
+  ]
+});
+
+// Internal Capability Assessment structured data provider - matches InternalCapabilityAssessmentVisual.tsx
+export const getInternalCapabilityAssessmentStructuredData = () => ({
+  header: {
+    title: "Internal Capability Assessment",
+    subtitle: "Evaluating organisational strengths and development areas"
+  },
+  intro: "Hobson combines deep domain knowledge, strong technical design, and a differentiated brand aligned with an honest and urgent market need. Hobson is a young company with deep experience in Real Estate operations, software, and AI. Its mission, Innovation Without Disruption, is reflected in how the product is built, how it behaves, and how the team works with early clients.",
+  keyMessage: {
+    primary: "Hobson is well-placed to deliver innovation without disruption in a sector that urgently needs clarity and efficiency in document management.",
+    secondary: "This assessment covers the main internal strengths and the gaps that must be addressed to scale effectively."
+  },
+  strengths: [
+    {
+      title: "Team Skills Across Real Estate, Software, and AI",
+      colorType: "blue",
+      subsections: [
+        {
+          subtitle: "Real Estate Expertise",
+          intro: "The founding team has over 30 years of experience in asset management, operations, and portfolio governance, giving Hobson a grounded understanding of:",
+          items: ["Client workflows", "Compliance and reporting pressures", "Document types and structures", "The practical pain points Hobson is solving"]
+        },
+        {
+          subtitle: "Software & Product Experience",
+          intro: "The team has previously built, scaled, and exited a leading UK Real Estate software platform, bringing skills in:",
+          items: ["Product design and UX", "MVP development and iteration", "Go-to-market strategy"]
+        },
+        {
+          subtitle: "AI & Technical Skills",
+          intro: "Hobson's technical team includes specialists in:",
+          items: ["Large Language Models (LLMs)", "RAG (retrieval-augmented generation)", "Knowledge graphs", "Vector databases", "Prompt design and quality control"]
+        }
+      ],
+      note: "These capabilities are essential to building an AI product that is accurate, referenceable, and safe for a risk-aware sector."
+    },
+    {
+      title: "Technical Capabilities",
+      colorType: "purple",
+      subsections: [
+        {
+          subtitle: "Document-First Architecture",
+          intro: "Hobson is designed to work directly from client documents, using:",
+          items: ["Structured data extraction", "A hybrid RAG + knowledge-graph pipeline", "Quality-checking layers", "Transparent, reference-based outputs"]
+        },
+        {
+          subtitle: "Lightweight Deployment",
+          intro: "The platform is:",
+          items: ["Zero-integration by default", "Quick to start using", "Designed to avoid workflow disruption"]
+        }
+      ],
+      note: "This supports the promise of Disruption Without Displacement - Hobson enhances existing systems rather than replacing them."
+    },
+    {
+      title: "Brand Maturity and Positioning Strength",
+      colorType: "emerald",
+      intro: "Despite being early-stage, Hobson's brand is already clear and distinctive:",
+      items: [
+        "The owl signals wisdom, clarity, and trusted guidance",
+        "Messaging focuses on clarity, simplicity, affordability, and non-disruption",
+        "Early client conversations confirm strong resonance with this narrative"
+      ],
+      note: "Hobson is deliberately positioned as the calm AI assistant - a partner in clarity, not another complex platform."
+    },
+    {
+      title: "Access to Customers",
+      colorType: "amber",
+      intro: "Hobson benefits from:",
+      items: [
+        "Direct relationships with large portfolio operators",
+        "The founding team's established reputation",
+        "Warm introductions through industry networks",
+        "Early adopters willing to co-shape the MVP"
+      ],
+      note: "This gives a strong foundation for feedback, iteration, and early proof points."
+    },
+    {
+      title: "Clear Differentiators",
+      colorType: "rose",
+      intro: "Hobson stands out through:",
+      items: [
+        "Document-Native AI: Focused on extracting clarity from documents themselves, rather than primarily automating communication or CRM workflows",
+        "Referenced Answers: Every answer is tied back to its source, which is crucial in a risk-averse environment",
+        "No Replacement Positioning: Works alongside existing systems, lowering both political and operational friction",
+        "Accessibility and Affordability: Makes advanced AI available to SMB landlords and mid-sized operators, not just large enterprises",
+        "Speed & Simplicity: Tackles document overload without training, heavy rollout, or organisational resistance"
+      ]
+    }
+  ],
+  gaps: [
+    {
+      title: "Brand Visibility and Reach",
+      items: ["Limited social media presence on LinkedIn, events, and forums", "Low awareness in a noisy PropTech and AI space"],
+      need: "Thought leadership, case studies, and systematic visibility"
+    },
+    {
+      title: "Technical Scaling",
+      items: ["Hybrid RAG + knowledge-graph pipeline is powerful but still maturing", "Performance must be robust across diverse document sets"],
+      need: "Ongoing fine-tuning and expanded testing"
+    },
+    {
+      title: "Product Breadth",
+      items: ["Current focus is on retrieval and extraction", "Competitors also offer analytics, automation, or communication tools"],
+      need: "Gradual expansion into proactive insight and workflow support"
+    },
+    {
+      title: "Customer Support Infrastructure",
+      items: ["Documentation and onboarding flows are still light", "Processes for resolution and customer success are emerging"],
+      need: "Structured customer success and support frameworks"
+    },
+    {
+      title: "Resource Constraints",
+      items: ["As a startup, Hobson must prioritise where to invest time and capital", "Scaling marketing, support, and development will require funding"],
+      need: "Investment to support systematic growth"
+    }
+  ]
+});
