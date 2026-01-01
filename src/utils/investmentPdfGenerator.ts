@@ -9599,8 +9599,11 @@ const renderInternalCapabilityAssessment = (
     }
   });
 
-  // Gaps header
-  fitPage(20);
+  // Gaps header - force page break to keep title with content
+  // Calculate space needed: header (14) + at least 2 gap cards (32 + 6 each)
+  const gapsRequiredSpace = 14 + (32 + 6) * 2;
+  fitPage(gapsRequiredSpace);
+  
   doc.setFillColor(...PDF_CONFIG.amber);
   doc.circle(margin + 6, yPosition + 4, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
