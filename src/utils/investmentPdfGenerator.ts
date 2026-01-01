@@ -7393,26 +7393,26 @@ const renderExecutiveContext = (
   const missionPadding = box.paddingX;
   const missionTextWidth = maxWidth - missionPadding * 2;
   const missionContentLines = splitTextWithFont(doc, data.missionStatement.content, missionTextWidth, "body", false);
-  const missionBoxHeight = missionContentLines.length * (bodyLine * lineHeightFactor.body) + spacing.cardGap;
-  const missionHeight = spacing.contentBoxStart + missionBoxHeight;
-  fitPage(missionHeight + spacing.boxGap);
+  const missionBoxHeight = missionContentLines.length * lineHeight.body + box.paddingTop;
+  const missionHeight = spacing.titleToContent + missionBoxHeight;
+  fitPage(missionHeight + spacing.paragraphGap);
 
   // Header row
   doc.setFillColor(...tealAccent);
-  doc.circle(margin + spacing.circleOffset, yPosition + spacing.cardGap, circleSize.medium, "F");
+  doc.circle(margin + spacing.circleOffset, yPosition + spacing.paragraphGap, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.title, margin + spacing.bulletTextOffset, yPosition + box.paddingX);
+  doc.text(data.missionStatement.title, margin + spacing.bulletTextOffset, yPosition + lineHeight.loose);
 
   doc.setTextColor(...tealAccent);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
-  doc.text(data.missionStatement.subtitle, margin + spacing.bulletTextOffset, yPosition + spacing.subtitleY);
+  doc.text(data.missionStatement.subtitle, margin + spacing.bulletTextOffset, yPosition + spacing.titleToContent - 2);
 
   // Content box
-  const missionBoxY = yPosition + spacing.contentBoxStart;
+  const missionBoxY = yPosition + spacing.titleToContent;
   doc.setFillColor(...tealBg);
   doc.roundedRect(margin, missionBoxY, maxWidth, missionBoxHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...tealBorder);
@@ -7422,12 +7422,12 @@ const renderExecutiveContext = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.body);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.missionStatement.content), margin + missionPadding, missionBoxY + spacing.cardGap, {
+  doc.text(sanitizeText(data.missionStatement.content), margin + missionPadding, missionBoxY + box.paddingTop - 2, {
     maxWidth: missionTextWidth,
     align: "justify",
     lineHeightFactor: lineHeightFactor.body,
   });
-  yPosition = missionBoxY + missionBoxHeight + spacing.boxToBox;
+  yPosition = missionBoxY + missionBoxHeight + spacing.paragraphGap;
 
   // 6. Positioning Statement - compact layout with justified text
   const posStmtPadding = box.paddingX;
@@ -10612,18 +10612,19 @@ const renderBrandStrategy = (
   doc.text(headerLines, margin + 24, yPosition + 26);
   yPosition += 53;
 
-  // Brand Positioning - using light background for readability
-  fitPage(55);
+  // Brand Positioning - using light background for readability (2x2 grid for readability)
+  const posBoxHeight = 70;
+  fitPage(posBoxHeight + spacing.paragraphGap);
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, posBoxHeight, box.borderRadius, box.borderRadius, "F");
   doc.setDrawColor(...PDF_CONFIG.primaryLight);
   doc.setLineWidth(box.borderWidth);
-  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, posBoxHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Brand Positioning", margin + box.paddingX, yPosition + 14);
+  doc.text("Brand Positioning", margin + box.paddingX, yPosition + fontSize.cardTitle);
 
   const positioningItems = [
     { label: "Tagline", value: "Innovation Without Disruption" },
@@ -10633,25 +10634,27 @@ const renderBrandStrategy = (
   ];
 
   const posItemWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap) / 2;
+  const posItemHeight = 20;
+  const posRowGap = spacing.paragraphGap;
   positioningItems.forEach((item, idx) => {
     const col = idx % 2;
     const row = Math.floor(idx / 2);
     const xPos = margin + box.paddingX + col * (posItemWidth + spacing.gridGap);
-    const yPos = yPosition + 22 + row * 26;
+    const yPos = yPosition + 20 + row * (posItemHeight + posRowGap);
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPos, posItemWidth, 22, 2, 2, "F");
+    doc.roundedRect(xPos, yPos, posItemWidth, posItemHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.setFontSize(fontSize.caption);
+    doc.setFontSize(fontSize.small);
     doc.setFont("helvetica", "normal");
-    doc.text(item.label, xPos + 4, yPos + 8);
+    doc.text(item.label, xPos + spacing.paragraphGap, yPos + lineHeight.loose);
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(fontSize.caption);
+    doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    const valLines = splitTextWithFont(doc, item.value, posItemWidth - 8, "caption", false);
-    doc.text(valLines[0] || "", xPos + 4, yPos + 16);
+    const valLines = splitTextWithFont(doc, item.value, posItemWidth - spacing.sectionGap, "bodySmall", false);
+    doc.text(valLines[0] || "", xPos + spacing.paragraphGap, yPos + fontSize.bodySmall + lineHeight.loose);
   });
 
-  yPosition += 80;
+  yPosition += posBoxHeight + spacing.sectionGap;
 
   // Brand Pillars
   fitPage(20);
