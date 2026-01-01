@@ -7532,8 +7532,8 @@ const renderSituationAnalysis = (
   const slateBorder = PDF_CONFIG.slateBorder;
 
   // 1. Header box
-  const headerHeight = 28;
-  fitPage(headerHeight + spacing.cardGap);
+  const headerHeight = spacing.contentBoxStart + spacing.sectionGap;
+  fitPage(headerHeight + spacing.paragraphGap);
 
   doc.setFillColor(...tealBg);
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "F");
@@ -7542,19 +7542,19 @@ const renderSituationAnalysis = (
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, box.borderRadius, box.borderRadius, "S");
 
   doc.setFillColor(...tealAccent);
-  doc.circle(margin + spacing.itemGap, yPosition + spacing.contentPadding, circleSize.medium, "F");
+  doc.circle(margin + spacing.circleOffset, yPosition + spacing.contentPadding, circleSize.medium, "F");
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text(data.header.title, margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.itemGap);
+  doc.text(data.header.title, margin + spacing.bulletTextOffset, yPosition + spacing.itemGap);
 
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text(sanitizeText(data.header.subtitle), margin + spacing.bulletTextOffset + spacing.paragraphGap, yPosition + spacing.bulletTextOffset + spacing.paragraphGap);
+  doc.text(sanitizeText(data.header.subtitle), margin + spacing.bulletTextOffset, yPosition + spacing.contentBoxStart);
 
-  yPosition += headerHeight + spacing.cardGap;
+  yPosition += headerHeight + spacing.paragraphGap;
 
   // 2. Intro paragraph - tighter with justified text
   const introPadding = box.paddingX;
@@ -7586,12 +7586,12 @@ const renderSituationAnalysis = (
 
     // Calculate segment card height - use splitTextWithFont for correct metrics
     const descLines = splitTextWithFont(doc, segment.description, maxWidth - spacing.bulletTextOffset, "bodySmall", false);
-    const valueLines = splitTextWithFont(doc, segment.hobsonValue, maxWidth - spacing.pageBreakMargin - spacing.bulletTextOffset, "bodySmall", true);
-    const useCaseHeight = segment.useCases.length * (bodyLine + 1);
+    const valueLines = splitTextWithFont(doc, segment.hobsonValue, maxWidth - spacing.bulletTextOffset * 2, "bodySmall", true);
+    const useCaseHeight = segment.useCases.length * (bodyLine + spacing.paragraphGap / 2);
     const feedbackLines = splitTextWithFont(doc, `Client feedback: "${segment.feedback}"`, maxWidth - spacing.bulletTextOffset, "bodySmall", false);
     
-    const segmentHeight = 32 + descLines.length * bodyLine + box.paddingX + valueLines.length * bodyLine + spacing.itemGap + useCaseHeight + box.paddingX + feedbackLines.length * bodyLine + spacing.itemGap;
-    fitPage(segmentHeight + box.paddingX);
+    const segmentHeight = spacing.contentBoxStart + lineHeight.loose + descLines.length * bodyLine + spacing.paragraphGap + valueLines.length * bodyLine + spacing.boxTopPadding + spacing.paragraphGap + useCaseHeight + spacing.paragraphGap + feedbackLines.length * bodyLine + box.paddingX + spacing.paragraphGap;
+    fitPage(segmentHeight + spacing.paragraphGap);
 
     // Main segment card
     doc.setFillColor(...theme.bg);
@@ -7652,66 +7652,66 @@ const renderSituationAnalysis = (
 
     // Hobson value box - narrower width
     const valueBoxY = textY;
-    const valueBoxWidth = maxWidth - spacing.pageBreakMargin; // narrower box
+    const valueBoxWidth = maxWidth - spacing.bulletTextOffset;
     const valueBoxHeight = valueLines.length * bodyLine + spacing.boxTopPadding;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(margin + spacing.cardGap, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    doc.roundedRect(margin + spacing.paragraphGap, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setDrawColor(...theme.border);
     doc.setLineWidth(box.borderWidthThin);
-    doc.roundedRect(margin + spacing.cardGap, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "S");
+    doc.roundedRect(margin + spacing.paragraphGap, valueBoxY, valueBoxWidth, valueBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "S");
 
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    textY = valueBoxY + spacing.cardGap;
+    textY = valueBoxY + spacing.paragraphGap;
     valueLines.forEach((line: string) => {
-      doc.text(line, margin + spacing.itemGap, textY);
+      doc.text(line, margin + spacing.sectionGap, textY);
       textY += bodyLine;
     });
-    textY = valueBoxY + valueBoxHeight + spacing.boxGap;
+    textY = valueBoxY + valueBoxHeight + spacing.paragraphGap;
 
     // Use cases
-    textY += spacing.paragraphGap;
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
     segment.useCases.forEach((useCase) => {
       doc.setFillColor(...theme.accent);
-      doc.circle(margin + spacing.itemGap, textY - 1.5, circleSize.small, "F");
+      doc.circle(margin + spacing.sectionGap, textY - circleSize.small, circleSize.small, "F");
       doc.text(sanitizeText(useCase), margin + spacing.textIndent, textY);
-      textY += bodyLine + 1;
+      textY += bodyLine + spacing.paragraphGap / 2;
     });
-    textY += spacing.boxGap;
+    textY += spacing.paragraphGap;
 
     // Client feedback
     const feedbackBoxY = textY;
     const feedbackBoxHeight = feedbackLines.length * bodyLine + box.paddingX;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(margin + spacing.cardGap, feedbackBoxY, maxWidth - spacing.itemGap, feedbackBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    doc.roundedRect(margin + spacing.paragraphGap, feedbackBoxY, maxWidth - spacing.sectionGap, feedbackBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
     doc.setFillColor(...PDF_CONFIG.primaryColor);
-    doc.rect(margin + spacing.cardGap, feedbackBoxY, box.borderRadius, feedbackBoxHeight, "F");
+    doc.rect(margin + spacing.paragraphGap, feedbackBoxY, box.borderRadius, feedbackBoxHeight, "F");
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "italic");
-    textY = feedbackBoxY + spacing.cardGap;
+    textY = feedbackBoxY + spacing.paragraphGap;
     feedbackLines.forEach((line: string) => {
       doc.text(line, margin + spacing.contentPadding, textY);
       textY += bodyLine;
     });
 
-    yPosition += segmentHeight + spacing.cardGap;
+    yPosition += segmentHeight + spacing.paragraphGap;
   });
 
   // 4. Targeting Strategy
-  fitPage(60);
+  const strategyHeaderHeight = spacing.contentPadding + lineHeight.body;
+  fitPage(strategyHeaderHeight + spacing.sectionGap);
   
   doc.setFillColor(...tealAccent);
-  doc.circle(margin + box.paddingX, yPosition + spacing.boxToBox, circleSize.medium, "F");
+  doc.circle(margin + spacing.circleOffset, yPosition + spacing.paragraphGap, circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Targeting Strategy", margin + spacing.textIndent, yPosition + box.paddingX);
+  doc.text("Targeting Strategy", margin + spacing.bulletTextOffset, yPosition + lineHeight.loose);
   yPosition += spacing.contentPadding;
 
   doc.setTextColor(...PDF_CONFIG.textGray);
@@ -7722,37 +7722,39 @@ const renderSituationAnalysis = (
     doc.text(line, margin, yPosition);
     yPosition += bodyLine;
   });
-  yPosition += spacing.boxGap;
+  yPosition += spacing.paragraphGap;
 
   // Strategy items (inline with circles)
+  const segmentLabelX = margin + spacing.bulletTextOffset + spacing.sectionGap;
+  const reasonX = margin + spacing.bulletTextOffset + spacing.pageBreakMargin + spacing.sectionGap;
   data.segments.forEach((segment, idx) => {
     const theme = segmentThemes[idx];
     
     // Circle indicator
     doc.setFillColor(...theme.accent);
-    doc.circle(margin + spacing.boxGap, yPosition + box.borderRadius, circleSize.small, "F");
+    doc.circle(margin + spacing.paragraphGap, yPosition + box.borderRadius, circleSize.small, "F");
     
     // Target level label
     doc.setTextColor(...theme.accent);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`${segment.targetLevel} Target`, margin + spacing.itemGap, yPosition + spacing.boxToBox);
+    doc.text(`${segment.targetLevel} Target`, margin + spacing.sectionGap, yPosition + spacing.paragraphGap);
     
     // Segment label
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`Segment ${segment.id}`, margin + 50, yPosition + spacing.boxToBox);
+    doc.text(`Segment ${segment.id}`, segmentLabelX, yPosition + spacing.paragraphGap);
     
     // Reason text
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "normal");
-    doc.text(sanitizeText(segment.targetReason), margin + 75, yPosition + spacing.boxToBox);
+    doc.text(sanitizeText(segment.targetReason), reasonX, yPosition + spacing.paragraphGap);
     
     yPosition += spacing.circleOffset;
   });
-  yPosition += spacing.cardGap;
+  yPosition += spacing.paragraphGap;
 
   // 5. Summary - tighter with justified text
   const summaryPadding = spacing.circleOffset;
