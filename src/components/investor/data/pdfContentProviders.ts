@@ -4745,3 +4745,759 @@ export const getPdfContentForComponent = (componentType: string): string[] | nul
   const provider = pdfContentMap[componentType];
   return provider ? provider() : null;
 };
+
+// ============================================================================
+// FINANCIAL OVERVIEW & ASSUMPTIONS - STRUCTURED DATA PROVIDERS
+// ============================================================================
+
+// Financials Executive Summary content provider
+export const getFinancialsExecutiveSummaryPdfContent = (): string[] => [
+  "Financials Executive Summary",
+  "",
+  "Hobson's financial profile reflects the creation of a new infrastructure layer for Real Estate operations.",
+  "",
+  "This is not a conventional SaaS growth story. It is the monetisation of unavoidable structural change in one of the world's largest, most document-intensive industries, driven by regulatory escalation, labour scarcity, margin compression, and compounding operational complexity.",
+  "",
+  "The business converts existing, locked-in operating costs into high-margin, recurring revenue, producing a growth model that is both aggressive in trajectory and unusually low in commercial risk.",
+  "",
+  "With a GBP 1.8M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens.",
+  "",
+  "FIVE-YEAR FINANCIAL MODEL DELIVERS:",
+  "",
+  "- Revenue growth from GBP 1.17M in 2027 to GBP 14.92M by 2031",
+  "- ~90% five-year CAGR",
+  "- 85-90%+ gross margins with net margins expanding toward 40-55% at scale",
+  "- EBITDA breakeven above GBP 5M ARR, reached early in the forecast period",
+  "- Infrastructure-grade unit economics with rapid CAC payback",
+  "",
+  "STRUCTURAL PERFORMANCE:",
+  "This performance is driven by structural market forces, not discretionary software demand. Hobson's usage-based model scales automatically with customer complexity, regulatory burden, and portfolio growth, creating built-in net revenue expansion and durable long-term defensibility."
+];
+
+// Financials Executive Summary structured data provider
+export const getFinancialsExecutiveSummaryStructuredData = () => ({
+  title: "Financials Executive Summary",
+  introduction: "Hobson's financial profile reflects the creation of a new infrastructure layer for Real Estate operations.",
+  context: [
+    "This is not a conventional SaaS growth story. It is the monetisation of unavoidable structural change in one of the world's largest, most document-intensive industries, driven by regulatory escalation, labour scarcity, margin compression, and compounding operational complexity.",
+    "The business converts existing, locked-in operating costs into high-margin, recurring revenue, producing a growth model that is both aggressive in trajectory and unusually low in commercial risk.",
+    "With a GBP 1.8M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens."
+  ],
+  fiveYearMetrics: [
+    { label: "Revenue growth from GBP 1.17M in 2027 to GBP 14.92M by 2031", icon: "TrendingUp" },
+    { label: "~90% five-year CAGR", icon: "BarChart3" },
+    { label: "85-90%+ gross margins with net margins expanding toward 40-55% at scale", icon: "Target" },
+    { label: "EBITDA breakeven above GBP 5M ARR, reached early in the forecast period", icon: "DollarSign" },
+    { label: "Infrastructure-grade unit economics with rapid CAC payback", icon: "Zap" }
+  ],
+  structuralPerformance: "This performance is driven by structural market forces, not discretionary software demand. Hobson's usage-based model scales automatically with customer complexity, regulatory burden, and portfolio growth, creating built-in net revenue expansion and durable long-term defensibility."
+});
+
+// P&L Assumptions Detailed content provider
+export const getPLAssumptionsDetailedPdfContent = (): string[] => [
+  "P and L Model Assumptions",
+  "",
+  "REVENUE MODEL ASSUMPTIONS:",
+  "",
+  "Pricing (ARR basis):",
+  "- Blended ARPU = GBP 41.31/month -> GBP 495.72/year",
+  "- Pricing includes Essential, Essential Plus, Enterprise mix",
+  "- No implementation fees (frictionless onboarding)",
+  "",
+  "Customer Growth and Penetration (Aligned to GTM Timeline):",
+  "- UK: 1.0% -> 2.0% penetration (2027-2031)",
+  "- Global (OECD markets): 0.25% -> 0.6% penetration (2028-2031)",
+  "- Revenue expands via subscription use + optional HEU top-ups",
+  "",
+  "Market Size Basis:",
+  "- UK real estate businesses: 235,200",
+  "- Global comparable markets: 4.23M (18x UK, OECD-adjusted)",
+  "",
+  "COST OF GOODS SOLD (COGS) ASSUMPTIONS:",
+  "",
+  "AI Processing and Onboarding Costs (Based on OpenAI 5.1 Mini):",
+  "- 1 Complex document: $0.40",
+  "- 3 Medium documents: $0.30",
+  "- 2 Simple documents: $0.04-$0.06",
+  "- Total AI Onboarding Cost/Unit: $0.74-$0.76 (GBP 0.60)",
+  "",
+  "Client Onboarding COGS:",
+  "- Small (5 units): GBP 3-4",
+  "- Medium (100 units): GBP 60-70",
+  "- Large (1,000 units): GBP 600-700",
+  "",
+  "Implication: AI onboarding cost per customer is trivial -> Gross margin ~95-97%",
+  "",
+  "INFRASTRUCTURE COST ASSUMPTIONS:",
+  "",
+  "Core Architecture Components:",
+  "- LLM inference (OpenAI)",
+  "- Vector DB",
+  "- Knowledge Graph engine",
+  "- MongoDB",
+  "- Storage (S3-equivalent)",
+  "- Monitoring and quality checks",
+  "",
+  "Infrastructure Assumptions:",
+  "- Cost = 8-12% of revenue (scales with usage)",
+  "- Efficiency improves over time via document deduplication, shared embeddings, caching",
+  "",
+  "OPERATING EXPENSE (OpEx) ASSUMPTIONS:",
+  "",
+  "Internal Team (Lean, Senior Core):",
+  "- CEO: Fixed salary - Strategic + investor relations",
+  "- Head of Product: Fixed salary - Owns roadmap, QA, user research",
+  "- Head of Marketing: Fixed salary - Controls outsourced execution",
+  "- Head of Sales: Fixed + light commissions - Enterprise / channel development",
+  "- Head of Customer Support: Fixed salary - Manages first-line team",
+  "- Internal Support Agents: Salaries - Scale with customers",
+  "",
+  "Total Internal Team Cost: 30-35% of revenue in early years, falling to ~20% by 2031",
+  "",
+  "Outsourced Functions:",
+  "- Digital marketing execution: Retainer + performance budget",
+  "- External engineering: Project-based (new features, scaling)",
+  "- Corporate services: Legal, compliance, accounting",
+  "- Assumption: 10-15% of revenue",
+  "",
+  "SALES AND MARKETING SPEND:",
+  "- Low due to organic channels (LinkedIn, SEO, quiz funnel)",
+  "- Paid acquisition is selective and ROI-focused",
+  "- Channels scale gradually after 2027 launch",
+  "- Assumption: 15-20% of revenue depending on growth phase",
+  "",
+  "PROFITABILITY TRAJECTORY:",
+  "- Gross margin: 95-97% (AI + infrastructure)",
+  "- EBITDA breakeven expected once ARR > GBP 5M",
+  "- Profits expand as infrastructure % falls, global market grows, onboarding becomes self-serve",
+  "",
+  "SUMMARY:",
+  "Hobson's P/L assumptions demonstrate a high-margin, scalable, predictable AI SaaS model backed by:",
+  "1. Ultra-low onboarding costs (< GBP 1 per unit)",
+  "2. Lean team with outsourced flexibility",
+  "3. Frictionless, low-price adoption",
+  "4. Strong ROI justification (GBP 6,000 saved per employee)",
+  "5. Massive document-driven demand across global markets",
+  "6. Architecture designed for cost efficiency at scale",
+  "",
+  "This supports a path to very high margins, attractive capital efficiency, and global scalability."
+];
+
+// P&L Assumptions Detailed structured data provider
+export const getPLAssumptionsDetailedStructuredData = () => ({
+  title: "P and L Model Assumptions",
+  revenueModel: {
+    pricing: {
+      blendedARPU: "GBP 41.31/month -> GBP 495.72/year",
+      tiers: "Essential, Essential Plus, Enterprise mix",
+      implementationFees: "No implementation fees (frictionless onboarding)"
+    },
+    customerGrowth: {
+      ukPenetration: "1.0% -> 2.0% (2027-2031)",
+      globalPenetration: "0.25% -> 0.6% (2028-2031)",
+      revenueExpansion: "Subscription use + optional HEU top-ups"
+    },
+    marketSize: {
+      uk: "235,200 businesses",
+      global: "4.23M (18x UK, OECD-adjusted)"
+    }
+  },
+  cogs: {
+    aiProcessingCosts: [
+      { type: "Complex", cost: "$0.40" },
+      { type: "Medium (3x)", cost: "$0.30" },
+      { type: "Simple (2x)", cost: "$0.04-$0.06" }
+    ],
+    totalPerUnit: "$0.74-$0.76 (GBP 0.60)",
+    clientOnboarding: [
+      { size: "Small", units: 5, cost: "GBP 3-4" },
+      { size: "Medium", units: 100, cost: "GBP 60-70" },
+      { size: "Large", units: 1000, cost: "GBP 600-700" }
+    ],
+    grossMargin: "~95-97%"
+  },
+  infrastructure: {
+    components: [
+      "LLM inference (OpenAI)",
+      "Vector DB",
+      "Knowledge Graph engine",
+      "MongoDB",
+      "Storage (S3-equivalent)",
+      "Monitoring and quality checks"
+    ],
+    costAsPercentOfRevenue: "8-12%"
+  },
+  opex: {
+    internalTeam: [
+      { role: "CEO", cost: "Fixed salary", notes: "Strategic + investor relations" },
+      { role: "Head of Product", cost: "Fixed salary", notes: "Owns roadmap, QA, user research" },
+      { role: "Head of Marketing", cost: "Fixed salary", notes: "Controls outsourced execution" },
+      { role: "Head of Sales", cost: "Fixed + light commissions", notes: "Enterprise / channel development" },
+      { role: "Head of Customer Support", cost: "Fixed salary", notes: "Manages first-line team" },
+      { role: "Internal Support Agents", cost: "Salaries", notes: "Scale with customers" }
+    ],
+    teamCostPercentage: "30-35% early years, falling to ~20% by 2031",
+    outsourcedFunctions: [
+      { function: "Digital marketing execution", cost: "Retainer + performance budget" },
+      { function: "External engineering", cost: "Project-based" },
+      { function: "Corporate services", cost: "Legal, compliance, accounting" }
+    ],
+    outsourcedPercentage: "10-15% of revenue"
+  },
+  salesMarketing: {
+    channels: "LinkedIn, SEO, quiz funnel",
+    paidAcquisition: "Selective and ROI-focused",
+    assumption: "15-20% of revenue depending on growth phase"
+  },
+  profitability: {
+    grossMargin: "95-97%",
+    ebitdaBreakeven: "ARR > GBP 5M",
+    drivers: "Infrastructure % falls, global market grows, onboarding becomes self-serve"
+  },
+  summary: [
+    "Ultra-low onboarding costs (< GBP 1 per unit)",
+    "Lean team with outsourced flexibility",
+    "Frictionless, low-price adoption",
+    "Strong ROI justification (GBP 6,000 saved per employee)",
+    "Massive document-driven demand across global markets",
+    "Architecture designed for cost efficiency at scale"
+  ]
+});
+
+// Cost Assumptions Detailed content provider
+export const getCostAssumptionsDetailedPdfContent = (): string[] => [
+  "Cost Structure Assumptions",
+  "",
+  "COST STRUCTURE OVERVIEW:",
+  "Hobson operates with an ultra-lean cost base due to its architecture:",
+  "- No office costs",
+  "- No integration or field-support costs",
+  "- Minimal onboarding costs (AI-token based)",
+  "- Core team = 5 roles",
+  "- Engineering and marketing execution outsourced",
+  "",
+  "CORE TEAM COST (Fixed Cost Layer):",
+  "Internal headcount (UK-based realistic salaries):",
+  "- CEO: GBP 120,000",
+  "- Head of Marketing: GBP 70,000",
+  "- Product Owner: GBP 85,000",
+  "- Head of Customer Support: GBP 55,000",
+  "- Head of Sales: GBP 85,000",
+  "- Total Fixed Payroll: GBP 415,000/year",
+  "",
+  "Only these roles are internal. Engineering, design, and marketing execution are outsourced - converting heavy fixed cost into scalable variable cost.",
+  "",
+  "OUTSOURCED COSTS (% of Revenue Layer):",
+  "- Engineering (outsourced): 12% - Model tuning, RAG improvements, K-Graph pipelines, UI updates",
+  "- Digital Marketing (outsourced): 8% - Paid campaigns, SEO, content ops",
+  "- Customer Success: 5% - Training, support tickets, role-based guidance flows",
+  "- Sales/SDR Support: 4% - Commission + outsourced pipeline research",
+  "- General and Admin: 3% - Legal, accounting, compliance, insurance",
+  "- Total Variable Cost Load: 32%",
+  "",
+  "AI AND INFRASTRUCTURE COSTS (Direct COGS Layer):",
+  "Based on actual architectural workflow (LLM ingestion -> MongoDB -> Vector DB -> K-Graph -> query engine -> RAG fallback).",
+  "",
+  "AI Onboarding Cost Per Client (One-Off):",
+  "- Small (5 units): $3.70-$3.80",
+  "- Medium (100 units): $74-$76",
+  "- Large (1,000 units): $740-$760",
+  "- Converted to pounds: GBP 0.59-0.61 per unit",
+  "",
+  "Core insight: Onboarding cost rounds to ~GBP 1 per small client, ~GBP 60 per medium, ~GBP 600 per large. This gives Hobson extremely high gross margins.",
+  "",
+  "Infrastructure Costs (% of revenue):",
+  "- Document Storage + Vector DB: 4%",
+  "- LLM Query API (OpenAI Mini): 5%",
+  "- Knowledge Graph Compute + Retrieval: 2%",
+  "- Monitoring + Logging (Datadog etc.): 1%",
+  "- Total Infra Cost: 12%",
+  "",
+  "FULL COST STRUCTURE SUMMARY:",
+  "- Fixed Headcount: GBP 415,000/year",
+  "- Variable Ops (outsourced): 32% of revenue",
+  "- AI + Infra COGS: 12% of revenue",
+  "- Onboarding AI Cost: GBP 1-600 per client (tiny)",
+  "",
+  "OVERALL GROSS MARGIN EXPECTATION:",
+  "Because onboarding is negligible, and infra is 12%:",
+  "- Expected Gross Margin: 88%",
+  "- Net Margin at Scale: 40-55%",
+  "",
+  "This is excellent for a SaaS model and very investor friendly."
+];
+
+// Cost Assumptions Detailed structured data provider
+export const getCostAssumptionsDetailedStructuredData = () => ({
+  title: "Cost Structure Assumptions",
+  overview: {
+    description: "Hobson operates with an ultra-lean cost base due to its architecture",
+    benefits: [
+      "No office costs",
+      "No integration or field-support costs",
+      "Minimal onboarding costs (AI-token based)",
+      "Core team = 5 roles",
+      "Engineering and marketing execution outsourced"
+    ]
+  },
+  coreTeam: {
+    roles: [
+      { role: "CEO", annualCost: "GBP 120,000" },
+      { role: "Head of Marketing", annualCost: "GBP 70,000" },
+      { role: "Product Owner", annualCost: "GBP 85,000" },
+      { role: "Head of Customer Support", annualCost: "GBP 55,000" },
+      { role: "Head of Sales", annualCost: "GBP 85,000" }
+    ],
+    totalFixedPayroll: "GBP 415,000/year",
+    note: "Only these roles are internal. Engineering, design, and marketing execution are outsourced - converting heavy fixed cost into scalable variable cost."
+  },
+  outsourcedCosts: [
+    { area: "Engineering (outsourced)", percentage: "12%", description: "Model tuning, RAG improvements, K-Graph pipelines, UI updates" },
+    { area: "Digital Marketing (outsourced)", percentage: "8%", description: "Paid campaigns, SEO, content ops" },
+    { area: "Customer Success", percentage: "5%", description: "Training, support tickets, role-based guidance flows" },
+    { area: "Sales/SDR Support", percentage: "4%", description: "Commission + outsourced pipeline research" },
+    { area: "General and Admin", percentage: "3%", description: "Legal, accounting, compliance, insurance" }
+  ],
+  totalVariableCostLoad: "32%",
+  aiInfrastructure: {
+    onboardingCosts: [
+      { clientType: "Small", units: 5, cost: "$3.70-$3.80" },
+      { clientType: "Medium", units: 100, cost: "$74-$76" },
+      { clientType: "Large", units: 1000, cost: "$740-$760" }
+    ],
+    perUnitCostGBP: "GBP 0.59-0.61",
+    infrastructureCosts: [
+      { type: "Document Storage + Vector DB", percentage: "4%" },
+      { type: "LLM Query API (OpenAI Mini)", percentage: "5%" },
+      { type: "Knowledge Graph Compute + Retrieval", percentage: "2%" },
+      { type: "Monitoring + Logging (Datadog etc.)", percentage: "1%" }
+    ],
+    totalInfraCost: "12%"
+  },
+  summary: {
+    fixedHeadcount: "GBP 415,000/year",
+    variableOps: "32% of revenue",
+    aiInfraCOGS: "12% of revenue",
+    onboardingCost: "GBP 1-600 per client"
+  },
+  margins: {
+    expectedGrossMargin: "88%",
+    netMarginAtScale: "40-55%"
+  }
+});
+
+// Onboarding Costs Detailed content provider
+export const getOnboardingCostsDetailedPdfContent = (): string[] => [
+  "AI Onboarding Cost Per Client",
+  "OpenAI 5.1 Mini - Internal Cost Model",
+  "",
+  "1. DOCUMENT PROCESSING COST BENCHMARKS:",
+  "- Complex (Lease): $0.40, ~600k tokens, 8-9 minutes",
+  "- Medium (Deed): $0.10, ~300k tokens, 2-3 minutes",
+  "- Simple (Notice): $0.02-$0.03, ~50k tokens, 30-60 seconds",
+  "",
+  "2. COST PER UNIT (Space/Asset):",
+  "Each unit typically contains 5 onboarding documents:",
+  "- 1 Complex",
+  "- 3 Medium",
+  "- 2 Simple",
+  "",
+  "Unit-Level AI Cost:",
+  "- Complex (1x): $0.40",
+  "- Medium (3x): $0.30",
+  "- Simple (2x): $0.04-$0.06",
+  "- Total Onboarding Cost per Unit: $0.74-$0.76",
+  "",
+  "3. CLIENT ONBOARDING COST SCENARIOS:",
+  "- Small (5 units): $3.70-$3.80",
+  "- Medium (100 units): $74-$76",
+  "- Large (1,000 units): $740-$760",
+  "",
+  "4. STRATEGIC IMPLICATION:",
+  "Hobson Onboarding = Ultra-Low Cost, High Margin",
+  "",
+  "- AI ingestion is the only meaningful onboarding cost",
+  "- Cost remains well under $1 per unit, even for complex portfolios",
+  "- Enables exceptionally high gross margins at scale",
+  "- Supports frictionless self-serve onboarding from 2027 onwards",
+  "",
+  "-> Hobson can acquire and activate clients at extremely low operational cost",
+  "-> Margins expand further as volume increases"
+];
+
+// Onboarding Costs Detailed structured data provider
+export const getOnboardingCostsDetailedStructuredData = () => ({
+  title: "AI Onboarding Cost Per Client",
+  subtitle: "OpenAI 5.1 Mini - Internal Cost Model",
+  documentProcessingBenchmarks: [
+    { type: "Complex (Lease)", cost: "$0.40", tokens: "~600k", time: "8-9 minutes" },
+    { type: "Medium (Deed)", cost: "$0.10", tokens: "~300k", time: "2-3 minutes" },
+    { type: "Simple (Notice)", cost: "$0.02-$0.03", tokens: "~50k", time: "30-60 seconds" }
+  ],
+  unitComposition: {
+    description: "Each unit typically contains 5 onboarding documents",
+    breakdown: ["1 Complex", "3 Medium", "2 Simple"]
+  },
+  unitLevelCost: {
+    complex: "$0.40",
+    medium: "$0.30",
+    simple: "$0.04-$0.06",
+    total: "$0.74-$0.76 per unit"
+  },
+  clientScenarios: [
+    { type: "Small", units: 5, cost: "$3.70-$3.80" },
+    { type: "Medium", units: 100, cost: "$74-$76" },
+    { type: "Large", units: 1000, cost: "$740-$760" }
+  ],
+  strategicImplication: {
+    title: "Hobson Onboarding = Ultra-Low Cost, High Margin",
+    points: [
+      "AI ingestion is the only meaningful onboarding cost",
+      "Cost remains well under $1 per unit, even for complex portfolios",
+      "Enables exceptionally high gross margins at scale",
+      "Supports frictionless self-serve onboarding from 2027 onwards"
+    ],
+    conclusions: [
+      "Hobson can acquire and activate clients at extremely low operational cost",
+      "Margins expand further as volume increases"
+    ]
+  }
+});
+
+// UK Assumptions Financials Detailed content provider
+export const getUKAssumptionsFinancialsDetailedPdfContent = (): string[] => [
+  "UK Assumptions - Financial Modelling Foundation",
+  "",
+  "1. SIZE OF THE UK REAL ESTATE BUSINESS MARKET:",
+  "- Total UK businesses: 5.6 million",
+  "- Real estate businesses (4.2%): 235,200",
+  "- Source: ONS - Real estate activities by employment size",
+  "",
+  "2. BUSINESS SIZE BREAKDOWN (Real Estate Only):",
+  "- Small (1-9 employees): 96% = 225,792 businesses",
+  "- Medium (10-49): 2.7% = 6,350 businesses",
+  "- Large (50-249): 0.6% = 1,411 businesses",
+  "- Enterprise (250+): 0.1% = 235 businesses",
+  "- Source: BEIS / ONS",
+  "",
+  "SUMMARY:",
+  "These assumptions establish the UK market baseline for Hobson's financial modelling:",
+  "1. A large real estate market of 235,200 businesses",
+  "2. Clear segmentation by business size, with 96% being small operators"
+];
+
+// UK Assumptions Financials Detailed structured data provider
+export const getUKAssumptionsFinancialsDetailedStructuredData = () => ({
+  title: "UK Assumptions",
+  subtitle: "Financial modelling foundation for UK market",
+  marketSize: {
+    totalUKBusinesses: "5.6 million",
+    realEstatePercentage: "4.2%",
+    realEstateBusinesses: "235,200",
+    source: "ONS - Real estate activities by employment size"
+  },
+  businessSizeBreakdown: [
+    { size: "Small (1-9 employees)", percentage: "96%", count: "225,792" },
+    { size: "Medium (10-49)", percentage: "2.7%", count: "6,350" },
+    { size: "Large (50-249)", percentage: "0.6%", count: "1,411" },
+    { size: "Enterprise (250+)", percentage: "0.1%", count: "235" }
+  ],
+  source: "Department for Business, Energy and Industrial Strategy (BEIS) / Office for National Statistics (ONS)",
+  summary: [
+    "A large real estate market of 235,200 businesses",
+    "Clear segmentation by business size, with 96% being small operators"
+  ]
+});
+
+// CAC Assumptions Detailed content provider
+export const getCACAssumptionsDetailedPdfContent = (): string[] => [
+  "Customer Acquisition Cost (CAC) Assumptions",
+  "",
+  "CORE INPUTS - Revenue (ARR):",
+  "- 2027: GBP 1.17M",
+  "- 2028: GBP 6.71M",
+  "- 2029: GBP 9.10M",
+  "- 2030: GBP 12.53M",
+  "- 2031: GBP 14.92M",
+  "",
+  "NEW CUSTOMERS ADDED PER YEAR:",
+  "",
+  "UK:",
+  "- 2027: 2,352 customers (2,352 new)",
+  "- 2028: 2,940 customers (588 new)",
+  "- 2029: 3,528 customers (588 new)",
+  "- 2030: 4,116 customers (588 new)",
+  "- 2031: 4,704 customers (588 new)",
+  "",
+  "Global:",
+  "- 2028: 10,584 customers (10,584 new)",
+  "- 2029: 14,818 customers (4,234 new)",
+  "- 2030: 21,168 customers (6,350 new)",
+  "- 2031: 25,402 customers (4,234 new)",
+  "",
+  "ACQUISITION SPEND (% of Revenue):",
+  "- Digital Marketing: 8%",
+  "- Sales/SDR: 4%",
+  "- Total CAC Spend: 12% of Annual Revenue",
+  "",
+  "CAC TABLE (2027-2031):",
+  "Formula: CAC = (Revenue x 12%) / New Customers",
+  "",
+  "- 2027: GBP 1.17M revenue, GBP 140k spend, 2,352 customers -> CAC GBP 60",
+  "- 2028: GBP 6.71M revenue, GBP 805k spend, 11,172 customers -> CAC GBP 72",
+  "- 2029: GBP 9.10M revenue, GBP 1.09M spend, 4,822 customers -> CAC GBP 226",
+  "- 2030: GBP 12.53M revenue, GBP 1.50M spend, 6,938 customers -> CAC GBP 217",
+  "- 2031: GBP 14.92M revenue, GBP 1.79M spend, 4,822 customers -> CAC GBP 371",
+  "",
+  "CAC TREND INTERPRETATION:",
+  "",
+  "Early Years (2027-2028): Low CAC",
+  "- UK-only launch with low marketing intensity",
+  "- High volume of early global customers when global market opens in 2028",
+  "",
+  "Middle Years (2029-2030): Modest Rise",
+  "- CAC rises modestly as marketing becomes more competitive globally",
+  "",
+  "2031 Spike: Normal for Maturing SaaS",
+  "- Penetration slows -> fewer incremental customers",
+  "- Same 12% spend spread across fewer new accounts",
+  "- This is normal for SaaS models approaching market saturation",
+  "",
+  "LTV:CAC RATIO:",
+  "- ARPU: GBP 495.72/year",
+  "- LTV (5-year lifetime): GBP 2,478.60",
+  "",
+  "- 2027: CAC GBP 60, LTV:CAC 41x",
+  "- 2028: CAC GBP 72, LTV:CAC 34x",
+  "- 2029: CAC GBP 226, LTV:CAC 11x",
+  "- 2030: CAC GBP 217, LTV:CAC 11x",
+  "- 2031: CAC GBP 371, LTV:CAC 7x",
+  "",
+  "VC-attractive threshold is 3x. Your model is far above this at 7x-41x.",
+  "",
+  "CAC PAYBACK PERIOD:",
+  "Formula: Payback = CAC / Monthly ARPU (GBP 41.31)",
+  "",
+  "- 2027: 1.5 months",
+  "- 2028: 1.7 months",
+  "- 2029: 5.5 months",
+  "- 2030: 5.3 months",
+  "- 2031: 9.0 months",
+  "",
+  "Sub-12-month payback is strong. Most years are under 6 months."
+];
+
+// CAC Assumptions Detailed structured data provider
+export const getCACAssumptionsDetailedStructuredData = () => ({
+  title: "Customer Acquisition Cost (CAC) Assumptions",
+  revenueByYear: [
+    { year: "2027", value: "GBP 1.17M" },
+    { year: "2028", value: "GBP 6.71M" },
+    { year: "2029", value: "GBP 9.10M" },
+    { year: "2030", value: "GBP 12.53M" },
+    { year: "2031", value: "GBP 14.92M" }
+  ],
+  customersUK: [
+    { year: "2027", total: "2,352", new: "2,352" },
+    { year: "2028", total: "2,940", new: "588" },
+    { year: "2029", total: "3,528", new: "588" },
+    { year: "2030", total: "4,116", new: "588" },
+    { year: "2031", total: "4,704", new: "588" }
+  ],
+  customersGlobal: [
+    { year: "2028", total: "10,584", new: "10,584" },
+    { year: "2029", total: "14,818", new: "4,234" },
+    { year: "2030", total: "21,168", new: "6,350" },
+    { year: "2031", total: "25,402", new: "4,234" }
+  ],
+  acquisitionSpend: {
+    digitalMarketing: "8%",
+    salesSDR: "4%",
+    total: "12% of Annual Revenue"
+  },
+  cacTable: [
+    { year: "2027", revenue: "GBP 1.17M", spend: "GBP 140k", customers: "2,352", cac: "GBP 60" },
+    { year: "2028", revenue: "GBP 6.71M", spend: "GBP 805k", customers: "11,172", cac: "GBP 72" },
+    { year: "2029", revenue: "GBP 9.10M", spend: "GBP 1.09M", customers: "4,822", cac: "GBP 226" },
+    { year: "2030", revenue: "GBP 12.53M", spend: "GBP 1.50M", customers: "6,938", cac: "GBP 217" },
+    { year: "2031", revenue: "GBP 14.92M", spend: "GBP 1.79M", customers: "4,822", cac: "GBP 371" }
+  ],
+  cacTrends: [
+    { period: "Early Years (2027-2028)", title: "Low CAC", points: ["UK-only launch with low marketing intensity", "High volume of early global customers when global market opens in 2028"] },
+    { period: "Middle Years (2029-2030)", title: "Modest Rise", points: ["CAC rises modestly as marketing becomes more competitive globally"] },
+    { period: "2031", title: "Normal for Maturing SaaS", points: ["Penetration slows -> fewer incremental customers", "Same 12% spend spread across fewer new accounts", "This is normal for SaaS models approaching market saturation"] }
+  ],
+  ltvCacRatio: {
+    arpu: "GBP 495.72/year",
+    ltv: "GBP 2,478.60",
+    ratios: [
+      { year: "2027", cac: "GBP 60", ratio: "41x" },
+      { year: "2028", cac: "GBP 72", ratio: "34x" },
+      { year: "2029", cac: "GBP 226", ratio: "11x" },
+      { year: "2030", cac: "GBP 217", ratio: "11x" },
+      { year: "2031", cac: "GBP 371", ratio: "7x" }
+    ],
+    vcThreshold: "3x",
+    modelRange: "7x-41x"
+  },
+  cacPayback: [
+    { year: "2027", months: "1.5" },
+    { year: "2028", months: "1.7" },
+    { year: "2029", months: "5.5" },
+    { year: "2030", months: "5.3" },
+    { year: "2031", months: "9.0" }
+  ]
+});
+
+// Burn Rate Assumptions Detailed content provider
+export const getBurnRateAssumptionsDetailedPdfContent = (): string[] => [
+  "Burn Rate Assumptions (2027-2031)",
+  "A clear and defensible financial model for monthly burn, profitability timing, and fundraise needs",
+  "",
+  "RECOMMENDED SEED RAISE: GBP 1.5M - 2.2M",
+  "Covers 18-24 months and early commercialisation",
+  "",
+  "Breakdown:",
+  "- Pre-2027 engineering: GBP 500k-700k",
+  "- Team hiring and runway: GBP 750k",
+  "- Initial marketing: GBP 150k",
+  "- Buffer: GBP 300k",
+  "",
+  "Key: You avoid unnecessary dilution because the operating model is profitable from Year 1.",
+  "",
+  "Our operating model does not require capital. Our build and go-to-market acceleration do. The model below shows how the business becomes cashflow-positive almost immediately once revenue begins in 2027.",
+  "",
+  "1. CORE OPERATING MODEL ASSUMPTIONS:",
+  "",
+  "Fixed Internal Team (Payroll + Employer Costs):",
+  "- CEO: GBP 120,000",
+  "- Head of Marketing: GBP 80,000",
+  "- Product Owner: GBP 90,000",
+  "- Head of Customer Support: GBP 70,000",
+  "- Head of Sales: GBP 90,000",
+  "- Customer Support Officer: GBP 40,000",
+  "- Total Fixed Payroll: GBP 490,000/year -> GBP 40,800/month",
+  "",
+  "Outsourced Fixed Costs:",
+  "- Engineering (outsourced): GBP 300,000",
+  "- Legal, compliance, finance: GBP 40,000",
+  "- Contractors/overflow: GBP 20,000",
+  "- Total Outsourced Fixed: GBP 360,000/year -> GBP 30,000/month",
+  "",
+  "Total Fixed Operating Cost: GBP 850,000/year -> GBP 70,800/month",
+  "",
+  "2. COGS (INFRASTRUCTURE) ASSUMPTIONS:",
+  "- AI inference: 6%",
+  "- Vector DB: 1.5%",
+  "- Cloud compute: 2%",
+  "- Storage: 0.5%",
+  "- Total COGS: 10% of revenue",
+  "",
+  "3. CUSTOMER ACQUISITION SPEND:",
+  "- Digital Marketing: 8%",
+  "- SDR/Sales comp: 4%",
+  "- Total CAC Spend: 12% of revenue",
+  "",
+  "4. TOTAL VARIABLE COST LOAD:",
+  "COGS 10% + CAC 12% = 22%",
+  "",
+  "5. BURN FORMULA:",
+  "Monthly Burn = Fixed Costs + Variable Costs - Monthly Revenue",
+  "- Fixed Costs: GBP 70,800/month",
+  "- Variable Costs: 22% of revenue",
+  "- Monthly Revenue: Annual / 12",
+  "",
+  "6. BURN RATE BY YEAR (Based on Revenue Model):",
+  "",
+  "2027 - Profitable Year 1:",
+  "- Revenue: GBP 1.17M",
+  "- Variable: GBP 21,450",
+  "- Costs: GBP 92,250",
+  "- Monthly Surplus: GBP 5,250",
+  "",
+  "2028 - High profitability:",
+  "- Revenue: GBP 6.71M",
+  "- Variable: GBP 123,000",
+  "- Costs: GBP 193,800",
+  "- Monthly Surplus: GBP 365,200",
+  "",
+  "2029:",
+  "- Revenue: GBP 9.10M",
+  "- Variable: GBP 166,833",
+  "- Costs: GBP 237,633",
+  "- Monthly Surplus: GBP 520,700",
+  "",
+  "2030:",
+  "- Revenue: GBP 12.53M",
+  "- Variable: GBP 229,680",
+  "- Costs: GBP 300,480",
+  "- Monthly Surplus: GBP 743,520",
+  "",
+  "2031:",
+  "- Revenue: GBP 14.92M",
+  "- Variable: GBP 273,533",
+  "- Costs: GBP 344,333",
+  "- Monthly Surplus: GBP 899,000"
+];
+
+// Burn Rate Assumptions Detailed structured data provider
+export const getBurnRateAssumptionsDetailedStructuredData = () => ({
+  title: "Burn Rate Assumptions (2027-2031)",
+  subtitle: "A clear and defensible financial model for monthly burn, profitability timing, and fundraise needs",
+  seedRaise: {
+    recommended: "GBP 1.5M - 2.2M",
+    coverage: "18-24 months and early commercialisation",
+    breakdown: [
+      { item: "Pre-2027 engineering", amount: "GBP 500k-700k" },
+      { item: "Team hiring and runway", amount: "GBP 750k" },
+      { item: "Initial marketing", amount: "GBP 150k" },
+      { item: "Buffer", amount: "GBP 300k" }
+    ],
+    keyInsight: "You avoid unnecessary dilution because the operating model is profitable from Year 1."
+  },
+  operatingModel: {
+    note: "Our operating model does not require capital. Our build and go-to-market acceleration do. The model below shows how the business becomes cashflow-positive almost immediately once revenue begins in 2027.",
+    fixedTeam: [
+      { role: "CEO", cost: "GBP 120,000" },
+      { role: "Head of Marketing", cost: "GBP 80,000" },
+      { role: "Product Owner", cost: "GBP 90,000" },
+      { role: "Head of Customer Support", cost: "GBP 70,000" },
+      { role: "Head of Sales", cost: "GBP 90,000" },
+      { role: "Customer Support Officer", cost: "GBP 40,000" }
+    ],
+    totalFixedPayroll: { annual: "GBP 490,000", monthly: "GBP 40,800" },
+    outsourcedFixed: [
+      { function: "Engineering (outsourced)", cost: "GBP 300,000" },
+      { function: "Legal, compliance, finance", cost: "GBP 40,000" },
+      { function: "Contractors/overflow", cost: "GBP 20,000" }
+    ],
+    totalOutsourcedFixed: { annual: "GBP 360,000", monthly: "GBP 30,000" },
+    totalFixed: { annual: "GBP 850,000", monthly: "GBP 70,800" }
+  },
+  cogs: {
+    aiInference: "6%",
+    vectorDB: "1.5%",
+    cloudCompute: "2%",
+    storage: "0.5%",
+    total: "10% of revenue"
+  },
+  cacSpend: {
+    digitalMarketing: "8%",
+    sdrSalesComp: "4%",
+    total: "12% of revenue"
+  },
+  totalVariableCostLoad: "22%",
+  burnFormula: {
+    formula: "Monthly Burn = Fixed Costs + Variable Costs - Monthly Revenue",
+    fixedCosts: "GBP 70,800/month",
+    variableCosts: "22% of revenue",
+    monthlyRevenue: "Annual / 12"
+  },
+  yearlyBreakdown: [
+    { year: "2027", status: "Profitable Year 1", revenue: "GBP 1.17M", variable: "GBP 21,450", costs: "GBP 92,250", surplus: "GBP 5,250" },
+    { year: "2028", status: "High profitability", revenue: "GBP 6.71M", variable: "GBP 123,000", costs: "GBP 193,800", surplus: "GBP 365,200" },
+    { year: "2029", status: "", revenue: "GBP 9.10M", variable: "GBP 166,833", costs: "GBP 237,633", surplus: "GBP 520,700" },
+    { year: "2030", status: "", revenue: "GBP 12.53M", variable: "GBP 229,680", costs: "GBP 300,480", surplus: "GBP 743,520" },
+    { year: "2031", status: "", revenue: "GBP 14.92M", variable: "GBP 273,533", costs: "GBP 344,333", surplus: "GBP 899,000" }
+  ]
+});
