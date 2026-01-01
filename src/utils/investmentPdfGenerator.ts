@@ -11458,7 +11458,7 @@ const renderPrimaryConversionChannels = (
     yPosition = margin;
   }
 
-  // Key Metrics
+  // Key Metrics - centered text in boxes
   const metrics = [
     "Homepage CTR",
     "Free sign-ups",
@@ -11473,39 +11473,42 @@ const renderPrimaryConversionChannels = (
   const metricsRow1 = metrics.slice(0, 4);
   const metricsRow2 = metrics.slice(4);
 
-  const keyMetricsHeight = 44;
-  doc.setFillColor(245, 245, 245);
-  doc.roundedRect(margin, yPosition, maxWidth, keyMetricsHeight, 3, 3, "F");
+  const keyMetricsHeight = spacing.contentBoxStart * 2 + spacing.sectionGap;
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, keyMetricsHeight, box.borderRadius, box.borderRadius, "F");
 
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Key Metrics", margin + box.paddingX, yPosition + spacing.titleY);
+  doc.text("Key Metrics", margin + box.paddingX, yPosition + spacing.sectionGap + fontSize.cardTitle / 3);
 
   const metricFontSize = PDF_CONFIG.fontSize.caption;
   doc.setFontSize(metricFontSize);
   doc.setFont("helvetica", "normal");
   doc.setTextColor(...PDF_CONFIG.textDark);
 
+  const metricBoxHeight = spacing.contentPadding;
   const row1Width = (maxWidth - box.paddingX * 2 - spacing.gridGap * (metricsRow1.length - 1)) / metricsRow1.length;
   metricsRow1.forEach((metric, idx) => {
     const xPos = margin + box.paddingX + idx * (row1Width + spacing.gridGap);
+    const yPos = yPosition + spacing.contentPadding;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(xPos, yPosition + 12, row1Width, 12, 2, 2, "F");
-    const metricLines = doc.splitTextToSize(metric, row1Width - 4);
-    doc.text(metricLines.slice(0, 2), xPos + 2, yPosition + 18);
+    doc.roundedRect(xPos, yPos, row1Width, metricBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    // Center text horizontally and vertically
+    doc.text(metric, xPos + row1Width / 2, yPos + metricBoxHeight / 2 + metricFontSize / 3, { align: "center" });
   });
 
   const row2Width = (maxWidth - box.paddingX * 2 - spacing.gridGap * (metricsRow2.length - 1)) / metricsRow2.length;
   metricsRow2.forEach((metric, idx) => {
     const xPos = margin + box.paddingX + idx * (row2Width + spacing.gridGap);
+    const yPos = yPosition + spacing.contentPadding + metricBoxHeight + spacing.paragraphGap;
     doc.setFillColor(255, 255, 255);
-    doc.roundedRect(xPos, yPosition + 28, row2Width, 12, 2, 2, "F");
-    const metricLines = doc.splitTextToSize(metric, row2Width - 4);
-    doc.text(metricLines.slice(0, 2), xPos + 2, yPosition + 34);
+    doc.roundedRect(xPos, yPos, row2Width, metricBoxHeight, box.borderRadiusSmall, box.borderRadiusSmall, "F");
+    // Center text horizontally and vertically
+    doc.text(metric, xPos + row2Width / 2, yPos + metricBoxHeight / 2 + metricFontSize / 3, { align: "center" });
   });
 
-  yPosition += keyMetricsHeight + 6;
+  yPosition += keyMetricsHeight + spacing.sectionGap;
 
   // SMART Objectives
   doc.setFillColor(245, 243, 255);
