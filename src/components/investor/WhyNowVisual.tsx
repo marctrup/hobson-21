@@ -130,16 +130,16 @@ const WhyNowVisual: React.FC = () => {
       </div>
 
       {/* The Convergence */}
-      <div className="mt-12 bg-gradient-to-br from-purple-100 via-purple-50 to-violet-100 rounded-xl p-6 sm:p-8 border border-purple-200">
+      <div className="mt-12 bg-white rounded-xl p-6 sm:p-8 border-2 border-purple-200 shadow-sm">
         <div className="flex items-center justify-center gap-3 mb-4 sm:mb-6">
-          <h4 className="text-lg sm:text-xl font-bold text-purple-800">The Convergence</h4>
+          <h4 className="text-lg sm:text-xl font-bold text-purple-600">The Convergence</h4>
         </div>
 
         <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-6 sm:mb-8">
           {convergencePoints.map((point, index) => (
             <span
               key={index}
-              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-200/60 rounded-full text-xs sm:text-sm font-medium text-purple-800"
+              className="px-3 sm:px-4 py-1.5 sm:py-2 bg-purple-50 border border-purple-200 rounded-full text-xs sm:text-sm font-medium text-purple-600"
             >
               {point}
             </span>
@@ -147,13 +147,13 @@ const WhyNowVisual: React.FC = () => {
         </div>
 
         <div className="text-center space-y-2 sm:space-y-3">
-          <p className="text-sm sm:text-lg font-medium text-purple-700">
+          <p className="text-sm sm:text-lg font-medium text-gray-600">
             This is the exact moment the industry shifts from
           </p>
-          <p className="text-base sm:text-xl font-bold text-purple-800">
+          <p className="text-base sm:text-xl font-bold text-purple-600">
             'documents everywhere' → 'answers instantly.'
           </p>
-          <p className="text-sm sm:text-lg font-semibold text-purple-700 mt-3 sm:mt-4">
+          <p className="text-sm sm:text-lg font-semibold text-gray-700 mt-3 sm:mt-4">
             And Hobson is positioned to lead that shift.
           </p>
         </div>
