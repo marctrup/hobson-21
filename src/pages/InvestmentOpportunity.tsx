@@ -1203,10 +1203,10 @@ const InvestmentOpportunity = () => {
                     <div>
                       <p className="text-sm font-medium text-foreground mb-2">Included:</p>
                       <ul className="space-y-1">
-                        {sections.slice(0, 6).map((section) => (
-                          <li key={section.id} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        {["Strategy & Approach", "Customers & Market", "Product Vision & Roadmap", "Commercials", "Leadership & Team", "Marketing & Brand Strategy"].map((title) => (
+                          <li key={title} className="flex items-center gap-2 text-sm text-muted-foreground">
                             <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-                            {section.title}
+                            {title}
                           </li>
                         ))}
                       </ul>
@@ -1214,10 +1214,14 @@ const InvestmentOpportunity = () => {
                     <div>
                       <p className="text-sm font-medium text-foreground mb-2">Not Included:</p>
                       <ul className="space-y-1">
-                        {sections.slice(6).map((section) => (
-                          <li key={section.id} className="flex items-center gap-2 text-sm text-muted-foreground">
+                        {[
+                          "Acquisition & Sales Strategy",
+                          "Financial Overview & Assumptions", 
+                          "Financial Downloads"
+                        ].map((title) => (
+                          <li key={title} className="flex items-center gap-2 text-sm text-muted-foreground">
                             <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50" />
-                            {section.title}
+                            {title}
                             <span className="text-xs text-muted-foreground/70">(download separately)</span>
                           </li>
                         ))}
