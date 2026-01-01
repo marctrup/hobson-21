@@ -11174,14 +11174,16 @@ const renderPrimaryConversionChannels = (
   
   const websitePaths = ["Starting the free package", "Requesting a demo", "Submitting pilot enquiries", "Moving from quiz to guided trial"];
   const pathWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  const pathBoxH = 18;
   websitePaths.forEach((path, idx) => {
     const xPos = margin + box.paddingX + idx * (pathWidth + spacing.gridGap);
     doc.setFillColor(...PDF_CONFIG.bgWhite);
-    doc.roundedRect(xPos, yPosition + 22, pathWidth, 14, 2, 2, "F");
+    doc.roundedRect(xPos, yPosition + 22, pathWidth, pathBoxH, 2, 2, "F");
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
-    const pathLines = doc.splitTextToSize(path, pathWidth - 4);
-    doc.text(pathLines, xPos + 2, yPosition + 28);
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    doc.setFont("helvetica", "normal");
+    const pathLines = splitTextWithFont(doc, sanitizeText(path), pathWidth - 6, "caption", false);
+    doc.text(pathLines.slice(0, 2), xPos + 3, yPosition + 29);
   });
   yPosition += 48;
 
