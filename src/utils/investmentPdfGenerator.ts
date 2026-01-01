@@ -2476,8 +2476,14 @@ const renderTeam = (
   yPosition += 24;
 
   // Advisor cards - use provider content
-  const advisorCardHeight = 28;
+  const advisorTextMaxWidth = cardWidth - 32; // Account for initials circle and padding
   data.advisors.members.forEach((advisor) => {
+    // Calculate card height based on description wrapping
+    doc.setFontSize(PDF_CONFIG.fontSize.caption);
+    const descLines = advisor.description ? doc.splitTextToSize(sanitizeText(advisor.description), advisorTextMaxWidth) : [];
+    const advisorCardHeight = Math.max(28, 24 + descLines.length * 6);
+    
+    checkPageBreak(advisorCardHeight + PDF_CONFIG.spacing.boxGap);
     renderContentCard(doc, margin, yPosition, cardWidth, advisorCardHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
 
     // Initials
@@ -2501,14 +2507,20 @@ const renderTeam = (
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.text(advisor.role, margin + 26, yPosition + 17);
 
-    if (advisor.description) {
+    if (descLines.length > 0) {
       doc.setTextColor(...PDF_CONFIG.textGray);
       doc.setFontSize(PDF_CONFIG.fontSize.caption);
-      doc.text(advisor.description, margin + 26, yPosition + 24);
+      let descY = yPosition + 24;
+      descLines.forEach((line: string) => {
+        doc.text(line, margin + 26, descY);
+        descY += 6;
+      });
     }
+    
+    yPosition += advisorCardHeight + PDF_CONFIG.spacing.boxGap;
   });
 
-  yPosition += advisorCardHeight + PDF_CONFIG.spacing.circleOffset;
+  yPosition += PDF_CONFIG.spacing.circleOffset - PDF_CONFIG.spacing.boxGap;
 
   // Upcoming advisors box - use provider content
   checkPageBreak(PDF_CONFIG.spacing.pageBreakMargin);
