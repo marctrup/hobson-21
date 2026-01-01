@@ -9166,10 +9166,10 @@ const renderCustomerOnlineBehaviour = (
 
   yPosition += Math.ceil(data.evaluationCriteria.length / 2) * (evalCardHeight + PDF_CONFIG.spacing.paragraphGap) + PDF_CONFIG.spacing.cardGap;
 
-  // What Triggers Distrust section - proper bullet spacing
-  const bulletSpacing = bodyLine + 2; // 5pt line + 2pt gap = 7pt per bullet
-  const distrustHeight = 16 + data.distrustTriggers.length * bulletSpacing + 4;
-  fitPage(distrustHeight + 6);
+  // What Triggers Distrust section - tight bullet spacing
+  const bulletSpacing = bodyLine; // 5pt per bullet - tight
+  const distrustHeight = 14 + data.distrustTriggers.length * bulletSpacing + 2;
+  fitPage(distrustHeight + 4);
 
   doc.setFillColor(...PDF_CONFIG.roseBg);
   doc.roundedRect(margin, yPosition, maxWidth, distrustHeight, PDF_CONFIG.box.borderRadius, PDF_CONFIG.box.borderRadius, "F");
@@ -9180,9 +9180,9 @@ const renderCustomerOnlineBehaviour = (
   doc.setTextColor(...PDF_CONFIG.rose);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("What Triggers Distrust or Hesitation", margin + 8, yPosition + 10);
+  doc.text("What Triggers Distrust or Hesitation", margin + 8, yPosition + 9);
 
-  textY = yPosition + 18;
+  textY = yPosition + 16;
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
@@ -9194,7 +9194,7 @@ const renderCustomerOnlineBehaviour = (
     textY += bulletSpacing;
   });
 
-  yPosition += distrustHeight + 6;
+  yPosition += distrustHeight + 4;
 
   // Channel Strategy Summary section
   fitPage(PDF_CONFIG.card.textOffsetX);
