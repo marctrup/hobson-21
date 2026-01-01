@@ -18,11 +18,12 @@ import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituat
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
-// PDF CONFIGURATION - MASTER DEFAULTS
+// PDF CONFIGURATION - MASTER DEFAULTS (Strategy & Approach Reference)
 // ============================================================================
-// All sizing, spacing, and typography values are defined here.
-// Values extracted EXACTLY from Strategy & Approach (renderExecutiveContext).
-// These are the source of truth for all PDF rendering.
+// All sizing, spacing, typography, and COLOR values are defined here.
+// Values extracted from Strategy & Approach section handlers as the canonical source.
+// These are the SINGLE SOURCE OF TRUTH for all PDF rendering.
+// ALL handlers must use PDF_CONFIG values - no hardcoded colors allowed.
 // ============================================================================
 
 const PDF_CONFIG = {
@@ -990,7 +991,7 @@ const renderOurVision = (
     const badgeWidth = doc.getTextWidth(stage.timeframe) + 10;
     const badgeX = cardX + (cardWidth - badgeWidth) / 2;
     doc.roundedRect(badgeX, yPosition + 5, badgeWidth, 9, 4, 4, "F");
-    doc.setTextColor(255, 255, 255);
+    doc.setTextColor(...PDF_CONFIG.bgWhite);
     doc.text(stage.timeframe, cardX + cardWidth / 2, yPosition + 11, { align: "center" });
 
     // Stage label with stage color
@@ -1008,7 +1009,7 @@ const renderOurVision = (
     let iconX = cardX + (cardWidth - iconTotalWidth) / 2;
     stage.icons.forEach((icon) => {
       const pillWidth = doc.getTextWidth(icon) + 8;
-      doc.setFillColor(255, 255, 255);
+      doc.setFillColor(...PDF_CONFIG.bgWhite);
       doc.roundedRect(iconX, iconY - 4, pillWidth, 9, 2, 2, "F");
       doc.setTextColor(...PDF_CONFIG.textGray);
       doc.text(icon, iconX + 4, iconY + 2);
@@ -1669,20 +1670,22 @@ const renderWhyNow = (
     yPosition += cardHeight + 6; // reduced gap between cards
   });
 
-  // Convergence section - bright purple background with white text
+  // Convergence section - light background matching on-screen update
   yPosition = checkPageBreak(doc, yPosition, 65, pageHeight, margin);
 
-  // Convergence background - solid purple (primary color)
+  // Convergence background - white with purple border (matches on-screen bg-white border-2 border-purple-200)
   const convergenceHeight = 60;
-  doc.setFillColor(...PDF_CONFIG.primaryColor);
-  doc.roundedRect(margin, yPosition, maxWidth, convergenceHeight, 4, 4, "F");
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.setLineWidth(1);
+  doc.roundedRect(margin, yPosition, maxWidth, convergenceHeight, 4, 4, "FD");
 
-  // Header - no icon
-  doc.setTextColor(255, 255, 255); // white text
+  // Header - purple text on white background
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   setCardTitleFont(doc);
   doc.text("The Convergence", pageWidth / 2, yPosition + 14, { align: "center" });
 
-  // Points as pills with lighter purple background
+  // Points as pills with light purple background (matches on-screen bg-purple-50 border-purple-200)
   const points = ["Technology ready", "Market ready", "Competition absent", "Regulation rising", "Economics demand efficiency"];
   setBodySmallFont(doc);
   
@@ -1696,10 +1699,12 @@ const renderWhyNow = (
   
   points.slice(0, 3).forEach((point) => {
     const textWidth = doc.getTextWidth(point) + 10;
-    // Lighter purple pill (blend of purple and white)
-    doc.setFillColor(180, 140, 220); // lighter purple
-    doc.roundedRect(pillX, pillY - 4, textWidth, 10, 5, 5, "F");
-    doc.setTextColor(255, 255, 255);
+    // Light purple pill background (matches on-screen bg-purple-50)
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.setDrawColor(...PDF_CONFIG.primaryLight);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(pillX, pillY - 4, textWidth, 10, 5, 5, "FD");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.text(point, pillX + 5, pillY + 2);
     pillX += textWidth + 4;
   });
@@ -1714,15 +1719,18 @@ const renderWhyNow = (
   
   points.slice(3).forEach((point) => {
     const textWidth = doc.getTextWidth(point) + 10;
-    doc.setFillColor(180, 140, 220); // lighter purple
-    doc.roundedRect(pillX, pillY - 4, textWidth, 10, 5, 5, "F");
-    doc.setTextColor(255, 255, 255);
+    // Light purple pill background
+    doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+    doc.setDrawColor(...PDF_CONFIG.primaryLight);
+    doc.setLineWidth(0.3);
+    doc.roundedRect(pillX, pillY - 4, textWidth, 10, 5, 5, "FD");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.text(point, pillX + 5, pillY + 2);
     pillX += textWidth + 4;
   });
 
-  // Closing statement - white text
-  doc.setTextColor(255, 255, 255);
+  // Closing statement - dark text with purple highlight
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodyBoldFont(doc);
   doc.text("'documents everywhere' -> 'answers instantly.' Hobson leads this shift.", pageWidth / 2, yPosition + 54, { align: "center" });
 
@@ -1744,10 +1752,10 @@ const renderWhyNowSpeed = (
   let yPosition = startY;
   const maxWidth = pageWidth - margin * 2;
 
-  // Header - pale blue box with purple text
+  // Header - pale blue box with purple text (using PDF_CONFIG colors)
   const headerHeight = 16;
-  doc.setFillColor(219, 234, 254); // blue-100
-  doc.setDrawColor(191, 219, 254); // blue-200
+  doc.setFillColor(...PDF_CONFIG.blueBg);
+  doc.setDrawColor(...PDF_CONFIG.blueBorder);
   doc.roundedRect(margin, yPosition, maxWidth, headerHeight, 3, 3, "FD");
   
   doc.setTextColor(...PDF_CONFIG.primaryColor);
@@ -1796,16 +1804,16 @@ const renderWhyNowSpeed = (
   
   yPosition += forcesHeight + 6;
 
-  // Market Reset section - amber background
+  // Market Reset section - amber background (using PDF_CONFIG colors)
   yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
   
   const resetHeight = 46;
-  doc.setFillColor(255, 251, 235); // amber-50
-  doc.setDrawColor(253, 230, 138); // amber-200
+  doc.setFillColor(...PDF_CONFIG.amberBg);
+  doc.setDrawColor(...PDF_CONFIG.amberBorder);
   doc.roundedRect(margin, yPosition, maxWidth, resetHeight, 3, 3, "FD");
   
   // Header with warning icon
-  doc.setFillColor(217, 119, 6); // amber-600
+  doc.setFillColor(...PDF_CONFIG.amber);
   doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.large, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   setCardTitleFont(doc);
