@@ -4350,6 +4350,337 @@ export const getPrimaryConversionChannelsStructuredData = (): PrimaryConversionC
   summary: "Through clear entry points, behavioural insight, and ongoing optimisation, Hobson builds a conversion engine suited for early-stage pilots today and scalable commercial activity in the coming years."
 });
 
+// Acquisition Executive Summary content provider
+export const getAcquisitionExecutiveSummaryPdfContent = (): string[] => [
+  "Acquisition and Sales Strategy",
+  "",
+  "Hobson's acquisition and sales strategy is engineered to deliver rapid, defensible revenue growth while building long-term category leadership in AI-driven Real Estate intelligence.",
+  "",
+  "THE STRATEGY COMBINES:",
+  "",
+  "1. Low-Friction Entry",
+  "   Pilot-led adoption that reduces barriers and builds trust through hands-on experience",
+  "",
+  "2. High-Retention Expansion",
+  "   Operational dependency drives retention as Hobson becomes embedded in daily workflows",
+  "",
+  "3. Scalable International Growth",
+  "   Global expansion path aligned with AI adoption trends and regulatory pressure",
+  "",
+  "STAGED GROWTH TIMELINE:",
+  "",
+  "2026 - De-Risk",
+  "   De-risk product and messaging through pilots",
+  "",
+  "2027 - Convert",
+  "   Convert early trust into predictable UK ARR",
+  "",
+  "2028-30 - Expand",
+  "   Expand internationally as category leader",
+  "",
+  "STRATEGIC BENEFITS:",
+  "",
+  "- Minimised Risk: Commercial risk reduced through staged validation",
+  "- Accelerated Revenue: Faster time-to-revenue via pilot conversions",
+  "- Structural Defensibility: Embedded in daily operational workflows",
+  "",
+  "KEY INSIGHT:",
+  "Rather than aggressive short-term selling, Hobson compounds trust and dependency - critical in a risk-sensitive industry where switching costs rise rapidly once systems become operational infrastructure.",
+  "",
+  "TARGETING AND SEGMENTATION STRATEGY:",
+  "Hobson's targeting and segmentation strategy is designed to guide the organisation from early MVP validation in the UK to scalable commercial expansion and, ultimately, global market entry. The strategy is grounded in real discovery work, behavioural insight, industry adoption patterns, and the brand's Sage archetype - positioning Hobson as a calm, intelligent guide in a complex, high-pressure industry.",
+  "",
+  "HIGH-LEVEL PROPOSITION AND MARKETING MIX:",
+  "",
+  "- Brand Identity: Calm Sage Archetype - Intelligent guide in complex industry",
+  "- Product Design: Lightweight and Simple - Minimal friction, maximum clarity",
+  "- Pricing: Accessible Entry - Low barriers, expansion-based growth",
+  "- Promotion: Education and Credibility - Thought leadership and trust-building",
+  "",
+  "POSITIONING STATEMENT:",
+  "The Clarity Engine for Real Estate - Hobson establishes itself as the clarity engine for Real Estate - simple, intelligent, and trustworthy. These elements create a coherent pathway from early UK validation to global expansion by 2028-2030."
+];
+
+// Acquisition Executive Summary structured data provider
+export const getAcquisitionExecutiveSummaryStructuredData = () => ({
+  title: "Acquisition and Sales Strategy",
+  subtitle: "Rapid, defensible revenue growth with long-term category leadership",
+  strategyCombines: [
+    {
+      title: "Low-Friction Entry",
+      description: "Pilot-led adoption that reduces barriers and builds trust through hands-on experience"
+    },
+    {
+      title: "High-Retention Expansion",
+      description: "Operational dependency drives retention as Hobson becomes embedded in daily workflows"
+    },
+    {
+      title: "Scalable International Growth",
+      description: "Global expansion path aligned with AI adoption trends and regulatory pressure"
+    }
+  ],
+  growthTimeline: [
+    {
+      year: "2026",
+      phase: "De-Risk",
+      description: "De-risk product and messaging through pilots"
+    },
+    {
+      year: "2027",
+      phase: "Convert",
+      description: "Convert early trust into predictable UK ARR"
+    },
+    {
+      year: "2028-30",
+      phase: "Expand",
+      description: "Expand internationally as category leader"
+    }
+  ],
+  strategicBenefits: [
+    {
+      title: "Minimised Risk",
+      description: "Commercial risk reduced through staged validation"
+    },
+    {
+      title: "Accelerated Revenue",
+      description: "Faster time-to-revenue via pilot conversions"
+    },
+    {
+      title: "Structural Defensibility",
+      description: "Embedded in daily operational workflows"
+    }
+  ],
+  keyInsight: "Rather than aggressive short-term selling, Hobson compounds trust and dependency - critical in a risk-sensitive industry where switching costs rise rapidly once systems become operational infrastructure.",
+  targetingStrategy: "Hobson's targeting and segmentation strategy is designed to guide the organisation from early MVP validation in the UK to scalable commercial expansion and, ultimately, global market entry. The strategy is grounded in real discovery work, behavioural insight, industry adoption patterns, and the brand's Sage archetype - positioning Hobson as a calm, intelligent guide in a complex, high-pressure industry.",
+  marketingMix: [
+    {
+      category: "Brand Identity",
+      title: "Calm Sage Archetype",
+      description: "Intelligent guide in complex industry"
+    },
+    {
+      category: "Product Design",
+      title: "Lightweight and Simple",
+      description: "Minimal friction, maximum clarity"
+    },
+    {
+      category: "Pricing",
+      title: "Accessible Entry",
+      description: "Low barriers, expansion-based growth"
+    },
+    {
+      category: "Promotion",
+      title: "Education and Credibility",
+      description: "Thought leadership and trust-building"
+    }
+  ],
+  positioningStatement: {
+    title: "The Clarity Engine for Real Estate",
+    description: "Hobson establishes itself as the clarity engine for Real Estate - simple, intelligent, and trustworthy. These elements create a coherent pathway from early UK validation to global expansion by 2028-2030."
+  }
+});
+
+// Go-to-Market Strategy content provider
+export const getGoToMarketStrategyPdfContent = (): string[] => [
+  "Go-to-Market Strategy",
+  "",
+  "Multi-channel approach targeting UK property professionals",
+  "",
+  "SALES CHANNELS:",
+  "",
+  "1. Direct Sales",
+  "   Targeted outreach to property management companies and landlords",
+  "",
+  "2. Strategic Partnerships",
+  "   Integrations with property management platforms and estate agents",
+  "",
+  "3. Digital Marketing",
+  "   SEO, content marketing, and targeted campaigns for real estate professionals",
+  "",
+  "4. Industry Events",
+  "   PropTech conferences, trade shows, and networking events",
+  "",
+  "SALES PROCESS:",
+  "",
+  "Step 1: Discovery",
+  "   Identify pain points and document challenges",
+  "",
+  "Step 2: Demo",
+  "   Personalised demonstration with client documents",
+  "",
+  "Step 3: Trial",
+  "   Free pilot period to prove value",
+  "",
+  "Step 4: Onboard",
+  "   Seamless setup and training",
+  "",
+  "TARGET METRICS:",
+  "",
+  "- Target CAC: GBP 500 (Customer acquisition cost)",
+  "- LTV:CAC Ratio: 10:1 (Target lifetime value ratio)",
+  "- Sales Cycle: 30 days (Average time to close)",
+  "",
+  "CONCLUSION:",
+  "Our strategy combines low-touch self-service for smaller operators with high-touch enterprise sales for larger portfolios. This dual approach maximises market coverage while optimising customer acquisition costs."
+];
+
+// Go-to-Market Strategy structured data provider
+export const getGoToMarketStrategyStructuredData = () => ({
+  title: "Go-to-Market Strategy",
+  subtitle: "Multi-channel approach targeting UK property professionals",
+  salesChannels: [
+    {
+      title: "Direct Sales",
+      description: "Targeted outreach to property management companies and landlords",
+      colorTheme: "blue"
+    },
+    {
+      title: "Strategic Partnerships",
+      description: "Integrations with property management platforms and estate agents",
+      colorTheme: "purple"
+    },
+    {
+      title: "Digital Marketing",
+      description: "SEO, content marketing, and targeted campaigns for real estate professionals",
+      colorTheme: "emerald"
+    },
+    {
+      title: "Industry Events",
+      description: "PropTech conferences, trade shows, and networking events",
+      colorTheme: "amber"
+    }
+  ],
+  salesProcess: [
+    {
+      step: "Discovery",
+      description: "Identify pain points and document challenges"
+    },
+    {
+      step: "Demo",
+      description: "Personalised demonstration with client documents"
+    },
+    {
+      step: "Trial",
+      description: "Free pilot period to prove value"
+    },
+    {
+      step: "Onboard",
+      description: "Seamless setup and training"
+    }
+  ],
+  targetMetrics: [
+    {
+      label: "Target CAC",
+      value: "GBP 500",
+      subtitle: "Customer acquisition cost"
+    },
+    {
+      label: "LTV:CAC Ratio",
+      value: "10:1",
+      subtitle: "Target lifetime value ratio"
+    },
+    {
+      label: "Sales Cycle",
+      value: "30 days",
+      subtitle: "Average time to close"
+    }
+  ],
+  conclusion: {
+    highlight1: "low-touch self-service",
+    highlight2: "high-touch enterprise sales",
+    summary: "This dual approach maximises market coverage while optimising customer acquisition costs."
+  }
+});
+
+// Customer Segmentation Visual content provider
+export const getCustomerSegmentationVisualPdfContent = (): string[] => [
+  "Customer Segmentation",
+  "",
+  "ONS size-band data shows the Real Estate sector skews heavily toward small- and mid-sized operators, but value is concentrated higher up. While smaller firms are numerous, document complexity, regulatory exposure, and spend focus grow rapidly as portfolios scale, creating a strong wedge for platforms that embed early and expand upward.",
+  "",
+  "SEGMENT 1: LARGE OPERATORS (50-250 employees)",
+  "Market Share: ~5-10%",
+  "",
+  "Pressure:",
+  "Rising compliance and audit requirements, high document volumes driving staffing growth, and increasing exposure from missed obligations",
+  "",
+  "What Forces Adoption:",
+  "- Need to control cost without adding headcount",
+  "- Requirement for traceable, defensible answers",
+  "- Pressure from LPs, lenders, and regulators",
+  "",
+  "SEGMENT 2: MEDIUM OPERATORS (10-49 employees)",
+  "Market Share: ~20-25%",
+  "",
+  "Pressure:",
+  "Scaling portfolios without proportional hiring, fragmented information across inboxes and shared drives, and decision bottlenecks are slowing transactions",
+  "",
+  "What Forces Adoption:",
+  "- Margin compression",
+  "- Speed expectations from partners and capital providers",
+  "- Inability to scale manual processes",
+  "",
+  "SEGMENT 3: SMALL OPERATORS (1-9 employees)",
+  "Market Share: ~65-70%",
+  "",
+  "Pressure:",
+  "Severe time scarcity, no tolerance for complex tools, increasing regulatory and reporting burden",
+  "",
+  "What Forces Adoption:",
+  "- Survival and competitiveness",
+  "- Need for instant answers without overhead",
+  "",
+  "KEY INSIGHT:",
+  "One platform. One intelligence layer. Forced adoption across segments."
+];
+
+// Customer Segmentation Visual structured data provider
+export const getCustomerSegmentationVisualStructuredData = () => ({
+  title: "Customer Segmentation",
+  overview: "ONS size-band data shows the Real Estate sector skews heavily toward small- and mid-sized operators, but value is concentrated higher up. While smaller firms are numerous, document complexity, regulatory exposure, and spend focus grow rapidly as portfolios scale, creating a strong wedge for platforms that embed early and expand upward.",
+  segments: [
+    {
+      title: "Large Operators",
+      employees: "50-250 employees",
+      percentage: "~5-10%",
+      description: "larger and institutional operators (50+ employees)",
+      colorTheme: "blue",
+      pressure: "Rising compliance and audit requirements, high document volumes driving staffing growth, and increasing exposure from missed obligations",
+      adoptionDrivers: [
+        "Need to control cost without adding headcount",
+        "Requirement for traceable, defensible answers",
+        "Pressure from LPs, lenders, and regulators"
+      ]
+    },
+    {
+      title: "Medium Operators",
+      employees: "10-49 employees",
+      percentage: "~20-25%",
+      description: "small-mid firms (10-49 employees)",
+      colorTheme: "purple",
+      pressure: "Scaling portfolios without proportional hiring, fragmented information across inboxes and shared drives, and decision bottlenecks are slowing transactions",
+      adoptionDrivers: [
+        "Margin compression",
+        "Speed expectations from partners and capital providers",
+        "Inability to scale manual processes"
+      ]
+    },
+    {
+      title: "Small Operators",
+      employees: "1-9 employees",
+      percentage: "~65-70%",
+      description: "micro firms (1-9 employees)",
+      colorTheme: "emerald",
+      pressure: "Severe time scarcity, no tolerance for complex tools, increasing regulatory and reporting burden",
+      adoptionDrivers: [
+        "Survival and competitiveness",
+        "Need for instant answers without overhead"
+      ]
+    }
+  ],
+  keyInsight: "One platform. One intelligence layer. Forced adoption across segments."
+});
+
 // Map of component types to their content providers
 export const pdfContentMap: Record<string, () => string[]> = {
   executiveSummary: getExecutiveSummaryPdfContent,
@@ -4403,6 +4734,10 @@ export const pdfContentMap: Record<string, () => string[]> = {
   brandStrategy: getBrandStrategyPdfContent,
   contentEngagementStrategy: getContentEngagementStrategyPdfContent,
   primaryConversionChannels: getPrimaryConversionChannelsPdfContent,
+  // Acquisition & Sales Strategy providers
+  acquisitionExecutiveSummary: getAcquisitionExecutiveSummaryPdfContent,
+  goToMarketStrategy: getGoToMarketStrategyPdfContent,
+  customerSegmentationVisual: getCustomerSegmentationVisualPdfContent,
 };
 
 // Get PDF content for any visual component type
