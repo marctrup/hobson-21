@@ -10527,7 +10527,16 @@ const renderBrandStrategy = (
 
   data.brandingObjectives.forEach((obj) => {
     const colors = objColors[obj.colorKey];
-    const objHeight = 12 + obj.objectives.length * 10;
+    
+    // Calculate dynamic height based on wrapped text
+    let totalObjLines = 0;
+    const wrappedObjectives = obj.objectives.map((objective) => {
+      const lines = splitTextWithFont(doc, sanitizeText(objective), maxWidth - box.paddingX * 2 - 14, "caption", false);
+      totalObjLines += lines.length;
+      return lines;
+    });
+    
+    const objHeight = 16 + totalObjLines * lineHeight.body + 8; // title + lines + padding
     fitPage(objHeight + spacing.paragraphGap);
 
     doc.setFillColor(...colors.bg);
@@ -10536,18 +10545,20 @@ const renderBrandStrategy = (
     doc.setTextColor(...colors.accent);
     doc.setFontSize(fontSize.bodySmall);
     doc.setFont("helvetica", "bold");
-    doc.text(`${obj.phase}. ${obj.title}`, margin + box.paddingX, yPosition + 10);
+    doc.text(`${obj.phase}. ${obj.title}`, margin + box.paddingX, yPosition + 12);
 
-    let objY = yPosition + 20;
+    let objY = yPosition + 22;
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(fontSize.caption);
     doc.setFont("helvetica", "normal");
-    obj.objectives.forEach((objective) => {
+    wrappedObjectives.forEach((lines) => {
       doc.setFillColor(...colors.accent);
       doc.circle(margin + box.paddingX + 4, objY - 1, PDF_CONFIG.circleSize.small, "F");
-      const objLines = splitTextWithFont(doc, sanitizeText(objective), maxWidth - box.paddingX * 2 - 10, "caption", false);
-      doc.text(objLines[0] || "", margin + box.paddingX + 10, objY);
-      objY += 10;
+      lines.forEach((line: string, lineIdx: number) => {
+        const xOffset = lineIdx === 0 ? 10 : 10;
+        doc.text(line, margin + box.paddingX + xOffset, objY);
+        objY += lineHeight.body;
+      });
     });
 
     yPosition += objHeight + spacing.paragraphGap;
