@@ -10742,8 +10742,216 @@ const renderBrandStrategy = (
 };
 
 /**
- * Create cover page for a section PDF
+ * Render Content and Engagement Strategy visual
  */
+const renderContentEngagementStrategy = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const { fontSize, lineHeight, spacing, box } = PDF_CONFIG;
+
+  const fitPage = (required: number) => {
+    yPosition = checkPageBreak(doc, yPosition, required, pageHeight, margin);
+  };
+
+  // Header
+  fitPage(50);
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 40, 3, 3, "F");
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 14, yPosition + 14, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Content and Engagement Strategy", margin + 24, yPosition + 16);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const headerText = "Building awareness, educating the market, and generating trust through consistent, high-value communication.";
+  const headerLines = splitTextWithFont(doc, headerText, maxWidth - 32, "bodySmall", false);
+  doc.text(headerLines, margin + 24, yPosition + 26);
+  yPosition += 48;
+
+  // Content Pillars
+  fitPage(55);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Content Pillars", margin + box.paddingX, yPosition + 14);
+
+  const pillars = [
+    { title: "Education", desc: "Demystifying AI for property professionals" },
+    { title: "Proof", desc: "Case studies and measurable results" },
+    { title: "Thought Leadership", desc: "Industry insights on PropTech" },
+    { title: "Product Value", desc: "Demonstrations of problem-solving" }
+  ];
+
+  const pillarWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  pillars.forEach((pillar, idx) => {
+    const xPos = margin + box.paddingX + idx * (pillarWidth + spacing.gridGap);
+    doc.setFillColor(255, 255, 255, 0.15);
+    doc.roundedRect(xPos, yPosition + 22, pillarWidth, 22, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(pillar.title, xPos + 4, yPosition + 30);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(255, 255, 255, 0.9);
+    const descLines = splitTextWithFont(doc, pillar.desc, pillarWidth - 8, "caption", false);
+    doc.text(descLines[0] || "", xPos + 4, yPosition + 38);
+  });
+
+  yPosition += 58;
+
+  // Content Types
+  fitPage(55);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 50, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Content Types & Formats", margin + box.paddingX, yPosition + 14);
+
+  const contentTypes = [
+    { title: "Written", items: "Blog articles, case studies, white papers, LinkedIn posts" },
+    { title: "Video", items: "Product demos, explainers, testimonials, tutorials" },
+    { title: "Interactive", items: "Document chaos quiz, ROI calculators, webinars, Q&A sessions" }
+  ];
+
+  const typeWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 2) / 3;
+  contentTypes.forEach((type, idx) => {
+    const xPos = margin + box.paddingX + idx * (typeWidth + spacing.gridGap);
+    doc.setFillColor(...PDF_CONFIG.bgWhite);
+    doc.roundedRect(xPos, yPosition + 22, typeWidth, 24, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(type.title, xPos + 4, yPosition + 30);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    const itemLines = splitTextWithFont(doc, type.items, typeWidth - 8, "caption", false);
+    doc.text(itemLines.slice(0, 2), xPos + 4, yPosition + 38);
+  });
+
+  yPosition += 58;
+
+  // Engagement Channels
+  fitPage(50);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Engagement Channels", margin, yPosition);
+  yPosition += 10;
+
+  const channelWidth = (maxWidth - spacing.gridGap) / 2;
+
+  // Primary Channels
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.roundedRect(margin, yPosition, channelWidth, 35, 2, 2, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Primary Channels (Active Now)", margin + 6, yPosition + 10);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  doc.text("- LinkedIn - thought leadership and updates", margin + 6, yPosition + 18);
+  doc.text("- Website - central content hub", margin + 6, yPosition + 25);
+  doc.text("- Direct outreach - pilot engagement", margin + 6, yPosition + 32);
+
+  // Planned Channels
+  doc.setFillColor(...PDF_CONFIG.bgWhite);
+  doc.roundedRect(margin + channelWidth + spacing.gridGap, yPosition, channelWidth, 35, 2, 2, "F");
+  doc.setTextColor(...PDF_CONFIG.emerald);
+  doc.setFontSize(fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Planned Channels (2027)", margin + channelWidth + spacing.gridGap + 6, yPosition + 10);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  doc.text("- Email newsletter", margin + channelWidth + spacing.gridGap + 6, yPosition + 18);
+  doc.text("- YouTube demo series", margin + channelWidth + spacing.gridGap + 6, yPosition + 25);
+  doc.text("- Resource community or forum", margin + channelWidth + spacing.gridGap + 6, yPosition + 32);
+
+  yPosition += 43;
+
+  // SMART Objectives
+  fitPage(70);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("SMART Content & Engagement Objectives", margin, yPosition);
+  yPosition += 10;
+
+  const objectives = [
+    { phase: "Q4 2026", title: "Establish Foundation", items: ["10 educational pieces", "500+ LinkedIn followers", "3 UK case studies", "200+ quiz completions"] },
+    { phase: "Q4 2027", title: "Scale Reach", items: ["1,000+ LinkedIn followers", "500+ newsletter subscribers", "4 webinars (50+ each)", "40% traffic increase"] },
+    { phase: "2028+", title: "International", items: ["Localise for EU/US", "PropTech communities", "Region-specific content"] }
+  ];
+
+  const objWidth = (maxWidth - spacing.gridGap * 2) / 3;
+  const phaseColors = [PDF_CONFIG.primaryBgLight, PDF_CONFIG.emeraldBg, [255, 243, 224] as [number, number, number]];
+
+  objectives.forEach((obj, idx) => {
+    const xPos = margin + idx * (objWidth + spacing.gridGap);
+    doc.setFillColor(...phaseColors[idx]);
+    doc.roundedRect(xPos, yPosition, objWidth, 55, 2, 2, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(obj.phase + ": " + obj.title, xPos + 4, yPosition + 10);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    obj.items.forEach((item, iIdx) => {
+      doc.text("- " + item, xPos + 4, yPosition + 18 + iIdx * 7);
+    });
+  });
+
+  yPosition += 63;
+
+  // Measurement Framework
+  fitPage(35);
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(margin, yPosition, maxWidth, 30, box.borderRadius, box.borderRadius, "F");
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Measurement Framework", margin + box.paddingX, yPosition + 12);
+
+  const metrics = [
+    { title: "Reach", desc: "Followers, impressions, traffic" },
+    { title: "Engagement", desc: "Likes, comments, shares" },
+    { title: "Conversion", desc: "Quiz, demos, sign-ups" },
+    { title: "Advocacy", desc: "Referrals, NPS scores" }
+  ];
+
+  const metricWidth = (maxWidth - box.paddingX * 2 - spacing.gridGap * 3) / 4;
+  metrics.forEach((metric, idx) => {
+    const xPos = margin + box.paddingX + idx * (metricWidth + spacing.gridGap);
+    doc.setFillColor(255, 255, 255, 0.15);
+    doc.roundedRect(xPos, yPosition + 16, metricWidth, 10, 2, 2, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(fontSize.caption);
+    doc.setFont("helvetica", "bold");
+    doc.text(metric.title + ": ", xPos + 4, yPosition + 22);
+    doc.setFont("helvetica", "normal");
+    doc.text(metric.desc, xPos + 22, yPosition + 22);
+  });
+
+  yPosition += 38;
+
+  return yPosition;
+};
+
+
 const createCoverPage = (
   doc: jsPDF,
   title: string,
@@ -13507,6 +13715,8 @@ const renderTabContent = (
       yPosition = renderMarketingObjectives(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "brandStrategy") {
       yPosition = renderBrandStrategy(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "contentEngagementStrategy") {
+      yPosition = renderContentEngagementStrategy(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Acquisition & Sales Strategy renderers
     else if (componentType === "acquisitionExecutiveSummary") {
