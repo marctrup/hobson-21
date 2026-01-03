@@ -9,9 +9,13 @@ import { toast } from "@/hooks/use-toast";
 import { checkRateLimit, sanitizeInput } from "@/utils/security";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Helmet } from "react-helmet-async";
+import { useContent } from "@/contexts/LanguageContext";
 
 const ContactUs = () => {
   const navigate = useNavigate();
+  const content = useContent();
+  const contactContent = content.contact;
+  
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -37,40 +41,36 @@ const ContactUs = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
-    if (isSubmitting) return; // Prevent double submission
+    if (isSubmitting) return;
     
-    // Rate limiting check
     const clientId = `${formData.email}_${Date.now()}`;
-    if (!checkRateLimit(clientId, 3, 300000)) { // 3 requests per 5 minutes
+    if (!checkRateLimit(clientId, 3, 300000)) {
       toast({
-        title: "Too Many Requests",
-        description: "Please wait a few minutes before submitting another message.",
+        title: contactContent.validation.tooManyRequests.title,
+        description: contactContent.validation.tooManyRequests.description,
         variant: "destructive",
       });
       return;
     }
     
-    // Basic validation
     if (!formData.name || !formData.email || !formData.confirmEmail || !formData.reason) {
       toast({
-        title: "Missing Information",
-        description: "Please fill in all required fields.",
+        title: contactContent.validation.missingInfo.title,
+        description: contactContent.validation.missingInfo.description,
         variant: "destructive",
       });
       return;
     }
 
-    // Email confirmation validation
     if (formData.email !== formData.confirmEmail) {
       toast({
-        title: "Email Mismatch",
-        description: "Email addresses must match.",
+        title: contactContent.validation.emailMismatch.title,
+        description: contactContent.validation.emailMismatch.description,
         variant: "destructive",
       });
       return;
     }
 
-    // Sanitize inputs to prevent XSS
     const sanitizedFormData = {
       name: sanitizeInput(formData.name),
       email: sanitizeInput(formData.email),
@@ -79,7 +79,6 @@ const ContactUs = () => {
       confirmEmail: sanitizeInput(formData.confirmEmail)
     };
 
-    // Show anti-bot verification
     setPendingFormData(sanitizedFormData);
     const problem = generateMathProblem();
     setMathProblem(problem);
@@ -109,35 +108,26 @@ const ContactUs = () => {
       const result = await response.json();
 
       if (result.success) {
-        if (result.isDuplicate) {
-          toast({
-            title: "Message Sent!",
-            description: "Thank you for your enquiry. We'll get back to you soon.",
-          });
-        } else {
-          toast({
-            title: "Message Sent!",
-            description: "Thank you for your enquiry. We'll get back to you soon.",
-          });
-        }
+        toast({
+          title: contactContent.success.title,
+          description: contactContent.success.description,
+        });
         
-        // Reset form
         setFormData({ name: "", phone: "", email: "", confirmEmail: "", reason: "" });
         setShowAntiBotDialog(false);
         setPendingFormData(null);
         
-        // Redirect to home page after success
         setTimeout(() => {
           navigate('/');
-        }, 2000); // Wait 2 seconds to let user see the success message
+        }, 2000);
       } else {
         throw new Error(result.error || 'Failed to send message');
       }
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
-        title: "Failed to Send",
-        description: "There was an error sending your message. Please try again.",
+        title: contactContent.validation.sendFailed.title,
+        description: contactContent.validation.sendFailed.description,
         variant: "destructive",
       });
     } finally {
@@ -146,13 +136,13 @@ const ContactUs = () => {
   };
 
   const handleAntiBotSubmit = () => {
-    if (isSubmitting) return; // Prevent double submission
+    if (isSubmitting) return;
     if (parseInt(userAnswer) === mathProblem.answer) {
       submitForm();
     } else {
       toast({
-        title: "Incorrect Answer",
-        description: "Please solve the math problem correctly.",
+        title: contactContent.validation.incorrectAnswer.title,
+        description: contactContent.validation.incorrectAnswer.description,
         variant: "destructive",
       });
     }
@@ -175,72 +165,72 @@ const ContactUs = () => {
       <GlobalHeader />
       <div className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto">
-          <h1 className="text-4xl font-bold mb-8 text-center">Contact Us</h1>
+          <h1 className="text-4xl font-bold mb-8 text-center">{contactContent.title}</h1>
           
           <SimpleCard>
             <div className="p-6">
               <div className="text-center mb-6">
                 <p className="text-xl text-muted-foreground leading-relaxed max-w-xl mx-auto">
-                  We would be delighted to talk to you!
+                  {contactContent.subtitle}
                 </p>
               </div>
             </div>
             <SimpleCardContent>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-2">
-                  <Label htmlFor="name">Name *</Label>
+                  <Label htmlFor="name">{contactContent.form.name.label}</Label>
                   <Input
                     id="name"
                     type="text"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
-                    placeholder="Your full name"
+                    placeholder={contactContent.form.name.placeholder}
                     required
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone</Label>
+                  <Label htmlFor="phone">{contactContent.form.phone.label}</Label>
                   <Input
                     id="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
-                    placeholder="Your phone number"
+                    placeholder={contactContent.form.phone.placeholder}
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="email">Email *</Label>
+                  <Label htmlFor="email">{contactContent.form.email.label}</Label>
                   <Input
                     id="email"
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
-                    placeholder="your.email@example.com"
+                    placeholder={contactContent.form.email.placeholder}
                     required
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="confirmEmail">Confirm Email *</Label>
+                  <Label htmlFor="confirmEmail">{contactContent.form.confirmEmail.label}</Label>
                   <Input
                     id="confirmEmail"
                     type="email"
                     value={formData.confirmEmail}
                     onChange={(e) => handleInputChange("confirmEmail", e.target.value)}
-                    placeholder="Confirm your email address"
+                    placeholder={contactContent.form.confirmEmail.placeholder}
                     required
                   />
                 </div>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="reason">Reason for Enquiry *</Label>
+                  <Label htmlFor="reason">{contactContent.form.reason.label}</Label>
                   <Textarea
                     id="reason"
                     value={formData.reason}
                     onChange={(e) => handleInputChange("reason", e.target.value)}
-                    placeholder="Please describe your enquiry..."
+                    placeholder={contactContent.form.reason.placeholder}
                     rows={4}
                     required
                   />
@@ -252,7 +242,7 @@ const ContactUs = () => {
                     className="w-full text-lg px-8 py-3"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Sending..." : "Send Message"}
+                    {isSubmitting ? contactContent.form.submitting : contactContent.form.submit}
                   </SimpleButton>
                 </div>
               </form>
@@ -261,14 +251,14 @@ const ContactUs = () => {
         </div>
       </div>
 
-      {/* Anti-Bot Verification - Simplified without Dialog */}
+      {/* Anti-Bot Verification */}
       {showAntiBotDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
           <div className="bg-background rounded-lg p-6 max-w-md w-full border shadow-lg">
-            <h3 className="text-lg font-semibold text-center mb-4">Quick Security Check</h3>
+            <h3 className="text-lg font-semibold text-center mb-4">{contactContent.antiBot.title}</h3>
             <div className="space-y-4">
               <p className="text-center text-muted-foreground">
-                Please solve this simple math problem to verify you're human:
+                {contactContent.antiBot.description}
               </p>
               <div className="text-center">
                 <p className="text-2xl font-bold mb-4">
@@ -289,14 +279,14 @@ const ContactUs = () => {
                   onClick={() => setShowAntiBotDialog(false)}
                   className="flex-1"
                 >
-                  Cancel
+                  {contactContent.antiBot.cancel}
                 </SimpleButton>
                 <SimpleButton 
                   onClick={handleAntiBotSubmit}
                   className="flex-1"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? "Submitting..." : "Submit Message"}
+                  {isSubmitting ? contactContent.antiBot.submitting : contactContent.antiBot.submit}
                 </SimpleButton>
               </div>
             </div>

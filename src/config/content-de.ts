@@ -357,4 +357,37 @@ export const CONTENT_DE = {
     getStarted: "Loslegen",
     contactUs: "Kontaktieren Sie uns",
   },
+
+  // Contact Page
+  contact: {
+    title: "Kontakt",
+    subtitle: "Wir freuen uns, von Ihnen zu hören!",
+    form: {
+      name: { label: "Name *", placeholder: "Ihr vollständiger Name" },
+      phone: { label: "Telefon", placeholder: "Ihre Telefonnummer" },
+      email: { label: "E-Mail *", placeholder: "ihre.email@beispiel.com" },
+      confirmEmail: { label: "E-Mail bestätigen *", placeholder: "Bestätigen Sie Ihre E-Mail-Adresse" },
+      reason: { label: "Grund der Anfrage *", placeholder: "Bitte beschreiben Sie Ihre Anfrage..." },
+      submit: "Nachricht senden",
+      submitting: "Wird gesendet...",
+    },
+    validation: {
+      missingInfo: { title: "Fehlende Informationen", description: "Bitte füllen Sie alle erforderlichen Felder aus." },
+      emailMismatch: { title: "E-Mail stimmt nicht überein", description: "Die E-Mail-Adressen müssen übereinstimmen." },
+      tooManyRequests: { title: "Zu viele Anfragen", description: "Bitte warten Sie einige Minuten, bevor Sie eine weitere Nachricht senden." },
+      sendFailed: { title: "Senden fehlgeschlagen", description: "Beim Senden Ihrer Nachricht ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut." },
+      incorrectAnswer: { title: "Falsche Antwort", description: "Bitte lösen Sie die Rechenaufgabe korrekt." },
+    },
+    success: {
+      title: "Nachricht gesendet!",
+      description: "Vielen Dank für Ihre Anfrage. Wir werden uns bald bei Ihnen melden.",
+    },
+    antiBot: {
+      title: "Kurze Sicherheitsüberprüfung",
+      description: "Bitte lösen Sie diese einfache Rechenaufgabe, um zu bestätigen, dass Sie ein Mensch sind:",
+      cancel: "Abbrechen",
+      submit: "Nachricht absenden",
+      submitting: "Wird gesendet...",
+    },
+  },
 } as const;
