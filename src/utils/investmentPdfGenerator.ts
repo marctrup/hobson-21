@@ -6545,19 +6545,114 @@ const renderMarketPenetration = (
       doc.text(cell, xPos, yPosition + 7);
       xPos += colWidths[i];
     });
-    yPosition += 10;
+  yPosition += 10;
   });
-  yPosition += 8;
+  yPosition += 12;
 
-  // Summary box - ensure it fits on page
-  if (yPosition > pageHeight - 35) { doc.addPage(); yPosition = margin; }
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 24, 3, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  // Global Expansion section
+  if (yPosition > pageHeight - 130) { doc.addPage(); yPosition = margin; }
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Global Expansion (Starting 2028)", margin, yPosition);
+  yPosition += 10;
+
+  // Why Global Assumption is Defensible box
+  const defensibleBoxHeight = 52;
+  doc.setFillColor(220, 252, 231); // light green
+  doc.roundedRect(margin, yPosition, maxWidth, defensibleBoxHeight, 3, 3, "F");
+  doc.setDrawColor(34, 197, 94); // green border
+  doc.roundedRect(margin, yPosition, maxWidth, defensibleBoxHeight, 3, 3, "S");
+
+  doc.setTextColor(21, 128, 61); // green text
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Target: 6% UK + 2-4% international = 8-10% combined by 2030", margin + 8, yPosition + 14);
-  yPosition += 30;
+  doc.text("✔ Same market-share percentages are defensible internationally because:", margin + 8, yPosition + 12);
+
+  const defensiblePoints = [
+    "Real estate sectors in US/EU have similar fragmentation",
+    "AI adoption rates globally mirror the UK (35-36% CAGR)",
+    "The category is globally underserved",
+    "No integration required means universal onboarding",
+  ];
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  let defY = yPosition + 22;
+  defensiblePoints.forEach((point) => {
+    doc.text(`• ${point}`, margin + 12, defY);
+    defY += 7;
+  });
+  yPosition += defensibleBoxHeight + 10;
+
+  // Global Expansion table
+  if (yPosition > pageHeight - 70) { doc.addPage(); yPosition = margin; }
+  const globalColWidths = [30, 30, 30, 60];
+  doc.setFillColor(...PDF_CONFIG.headerBg);
+  doc.rect(margin, yPosition, maxWidth, 12, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+
+  xPos = margin + 4;
+  ["Year", "UK", "Global", "Notes"].forEach((header, i) => {
+    doc.text(header, xPos, yPosition + 8);
+    xPos += globalColWidths[i];
+  });
+  yPosition += 12;
+
+  const globalData = [
+    ["2028", "1.4%", "0.6%", "Launch year; initial adoption"],
+    ["2029", "3%", "1.6%", "Growing credibility + referrals"],
+    ["2030", "6%", "2-4%", "Mature positioning + brand leadership"],
+  ];
+
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  globalData.forEach((row, rowIdx) => {
+    if (yPosition > pageHeight - 25) { doc.addPage(); yPosition = margin; }
+    
+    if (rowIdx % 2 === 0) {
+      doc.setFillColor(...PDF_CONFIG.bgLight);
+      doc.rect(margin, yPosition, maxWidth, 10, "F");
+    }
+    xPos = margin + 4;
+    row.forEach((cell, i) => {
+      doc.setTextColor(...(i === 1 || i === 2 ? PDF_CONFIG.primaryColor : PDF_CONFIG.textGray));
+      if (i === 1 || i === 2) doc.setFont("helvetica", "bold");
+      else doc.setFont("helvetica", "normal");
+      doc.text(cell, xPos, yPosition + 7);
+      xPos += globalColWidths[i];
+    });
+    yPosition += 10;
+  });
+  yPosition += 10;
+
+  // Market-Share Thoughts / Investor Thesis box
+  if (yPosition > pageHeight - 50) { doc.addPage(); yPosition = margin; }
+  const thesisBoxHeight = 40;
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, thesisBoxHeight, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.primaryLight);
+  doc.roundedRect(margin, yPosition, maxWidth, thesisBoxHeight, 3, 3, "S");
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Market-Share Thoughts", margin + 8, yPosition + 12);
+
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const thesisText = "Given the category white space, frictionless adoption, strong adoption tailwinds (65% reinvesting in AI), and global expansion from 2028, Hobson can credibly reach 6% UK market share and 2-4% in new international markets by 2030 — achieving 8-10% combined share as category leader.";
+  const thesisLines = doc.splitTextToSize(thesisText, maxWidth - 16);
+  let thesisY = yPosition + 22;
+  thesisLines.forEach((line: string) => {
+    doc.text(line, margin + 8, thesisY);
+    thesisY += 5.5;
+  });
+  yPosition += thesisBoxHeight + 8;
 
   return yPosition;
 };
