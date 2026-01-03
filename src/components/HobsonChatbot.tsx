@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { useLanguage } from '@/contexts/LanguageContext';
 import owlMascotChat from '@/assets/owl-mascot-chat.png';
 import owlChatBubble from '@/assets/owl-chat-bubble.png';
 
@@ -14,9 +15,8 @@ interface Message {
   content: string;
 }
 
-// FAQ questions from ALL sections in /learn/faq
-// Mix questions from "How Hobson works", "Getting the best out of Hobson", and "Hobson Credits"
-const FAQ_QUESTIONS = [
+// FAQ questions from ALL sections in /learn/faq - English
+const FAQ_QUESTIONS_EN = [
   // How Hobson works
   { full: "How are units, groups, portfolios, and documents arranged in Hobson?", short: "Organization?" },
   { full: "Which file types are supported?", short: "File types?" },
@@ -58,56 +58,83 @@ const FAQ_QUESTIONS = [
   { full: "Can I get free credits?", short: "Free credits?" },
 ];
 
+// FAQ questions - German translations
+const FAQ_QUESTIONS_DE = [
+  // How Hobson works
+  { full: "Wie sind Einheiten, Gruppen, Portfolios und Dokumente in Hobson angeordnet?", short: "Organisation?" },
+  { full: "Welche Dateitypen werden unterstützt?", short: "Dateitypen?" },
+  { full: "Welche Arten von Dokumenten kann Hobson lesen?", short: "Dokumenttypen?" },
+  { full: "Wie bekomme ich Dokumente zu Hobson?", short: "Dokumente hochladen?" },
+  { full: "Funktioniert Hobson auf dem Handy?", short: "Mobil?" },
+  { full: "Wem gehören die Daten und Ausgaben?", short: "Dateneigentum?" },
+  { full: "Wie nutzt Hobson OpenAI?", short: "OpenAI-Nutzung?" },
+  { full: "Speichert OpenAI meine Dokumente?", short: "Speicherung?" },
+  { full: "Verwendet OpenAI meine Daten zum Trainieren ihrer Modelle?", short: "Training?" },
+  { full: "Welche Daten sendet Hobson an OpenAI?", short: "Gesendete Daten?" },
+  { full: "Wo werden meine Dokumente tatsächlich gespeichert?", short: "Speicherort?" },
+  { full: "Warum muss Hobson überhaupt etwas an OpenAI senden?", short: "Warum OpenAI?" },
+  { full: "Wer kann meine Dokumente sehen?", short: "Zugang?" },
+  { full: "Wie schützt Hobson meine Daten bei der Nutzung von OpenAI?", short: "Schutz?" },
+  { full: "Weiß OpenAI, wer ich bin oder hat Details zu meinen Immobilienbeständen?", short: "Datenschutz?" },
+  { full: "Was passiert technisch, wenn ein Dokument hochgeladen wird?", short: "Upload-Prozess?" },
+  { full: "Was passiert, wenn ich eine Frage stelle?", short: "Frageprozess?" },
+  // Getting the best out of Hobson
+  { full: "Wie lange braucht Hobson, um ein Dokument zu lesen?", short: "Verarbeitungszeit?" },
+  { full: "Kann Hobson auf die Informationen meines Unternehmens trainiert werden?", short: "Training?" },
+  { full: "Kann ich eine Einheit manuell hinzufügen, ohne ein Dokument hochzuladen?", short: "Manuelle Einheiten?" },
+  { full: "Welche Ebene sollte ich beim Stellen einer Frage verwenden?", short: "Frageebenen?" },
+  { full: "Was soll ich tun, wenn ich eine schlechte Antwort bekomme?", short: "Schlechte Antworten?" },
+  { full: "Wie sollte ich meine Prompts für die besten Ergebnisse strukturieren?", short: "Prompt-Tipps?" },
+  { full: "Kann Hobson sich mit unseren Systemen verbinden?", short: "Integrationen?" },
+  { full: "Kann ich den Zugang kontrollieren?", short: "Zugangskontrolle?" },
+  // Hobson Credits
+  { full: "Was ist ein HEU?", short: "HEU?" },
+  { full: "Wie viel kosten verschiedene Aufgaben in HEUs?", short: "HEU-Kosten?" },
+  { full: "Wie kann ich mein Abonnement upgraden?", short: "Upgrade?" },
+  { full: "Wie kann ich mein Abonnement downgraden?", short: "Downgrade?" },
+  { full: "Wie kann ich mein Abonnement kündigen?", short: "Kündigen?" },
+  { full: "Wie kann ich meine Rechnungsinformationen ändern?", short: "Abrechnung?" },
+  { full: "Wie lade ich meine Rechnungen herunter?", short: "Rechnungen?" },
+  { full: "Wie bekomme ich mehr Credits?", short: "Mehr Credits?" },
+  { full: "Wann wird mein Kreditlimit zurückgesetzt?", short: "Credit-Reset?" },
+  { full: "Wie sehe ich die verbleibenden Credits in einem Workspace?", short: "Credits prüfen?" },
+  { full: "Kann ich kostenlose Credits bekommen?", short: "Gratis Credits?" },
+];
+
+// Chatbot UI translations
+const CHATBOT_UI = {
+  en: {
+    title: "Hobson AI Help",
+    welcomeMessage: "Hey there! What would you like to know about?",
+    placeholder: "Ask about Hobson AI...",
+    tooltip: "Need help? Chat with Hobson!",
+    clearChat: "Chat cleared",
+    clearChatDescription: "Starting fresh conversation",
+    error: "Error",
+    errorDescription: "Failed to get response. Please try again.",
+  },
+  de: {
+    title: "Hobson KI-Hilfe",
+    welcomeMessage: "Hallo! Was möchten Sie gerne wissen?",
+    placeholder: "Fragen Sie über Hobson KI...",
+    tooltip: "Brauchen Sie Hilfe? Chatten Sie mit Hobson!",
+    clearChat: "Chat gelöscht",
+    clearChatDescription: "Neues Gespräch starten",
+    error: "Fehler",
+    errorDescription: "Antwort konnte nicht abgerufen werden. Bitte versuchen Sie es erneut.",
+  },
+};
+
 // Get 2 random FAQ questions for initial display
-const getRandomQuickQuestions = () => {
-  const shuffled = [...FAQ_QUESTIONS].sort(() => Math.random() - 0.5);
+const getRandomQuickQuestions = (isGerman: boolean) => {
+  const questions = isGerman ? FAQ_QUESTIONS_DE : FAQ_QUESTIONS_EN;
+  const shuffled = [...questions].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, 2);
 };
 
-const FOLLOW_UP_QUESTIONS = [
-  // How Hobson works
-  "How are units, groups, portfolios, and documents arranged in Hobson?",
-  "Which file types are supported?",
-  "What types of documents can Hobson read?",
-  "How to get documents to Hobson",
-  "Does Hobson work on mobile?",
-  "Who owns the data and outputs?",
-  "How does Hobson use OpenAI?",
-  "Does OpenAI store my documents?",
-  "Does OpenAI use my data to train their models?",
-  "What data does Hobson send to OpenAI?",
-  "Where are my documents actually stored?",
-  "Why does Hobson need to send anything to OpenAI at all?",
-  "Who can see my documents?",
-  "How does Hobson protect my data when using OpenAI?",
-  "Does OpenAI know who I am or hold details of my property holdings?",
-  "What happens technically when a document is uploaded?",
-  "What happens when I ask a question?",
-  // Getting the best out of Hobson
-  "How long does Hobson take to read a document?",
-  "Can Hobson be trained on my company's information?",
-  "Can I add a unit manually without uploading a document?",
-  "Which level should I use when asking a question?",
-  "What should I do if I get a poor answer?",
-  "How should I structure my prompts for the best results?",
-  "Can Hobson connect to our systems?",
-  "Can I control who has access?",
-  // Hobson Credits
-  "What is a HEU?",
-  "How much do different tasks cost in HEUs?",
-  "How can I upgrade my subscription?",
-  "How can I downgrade my subscription?",
-  "How can I cancel my subscription?",
-  "How can I change my billing information?",
-  "How do I download my invoices?",
-  "How do I get more credits?",
-  "When does my credit limit reset?",
-  "How do I see the remaining credits in a workspace?",
-  "Can I get free credits?",
-];
-
-const getRandomFollowUpQuestion = () => {
-  return FOLLOW_UP_QUESTIONS[Math.floor(Math.random() * FOLLOW_UP_QUESTIONS.length)];
+const getRandomFollowUpQuestion = (isGerman: boolean) => {
+  const questions = isGerman ? FAQ_QUESTIONS_DE : FAQ_QUESTIONS_EN;
+  return questions[Math.floor(Math.random() * questions.length)].full;
 };
 
 export const HobsonChatbot = () => {
@@ -120,6 +147,10 @@ export const HobsonChatbot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
+  const { language } = useLanguage();
+  
+  const isGerman = language === 'de';
+  const ui = CHATBOT_UI[isGerman ? 'de' : 'en'];
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -135,12 +166,12 @@ export const HobsonChatbot = () => {
       setMessages([
         {
           role: 'assistant',
-          content: "Hey there! What would you like to know about?",
+          content: ui.welcomeMessage,
         },
       ]);
-      setQuickQuestions(getRandomQuickQuestions());
+      setQuickQuestions(getRandomQuickQuestions(isGerman));
     }
-  }, [isOpen]);
+  }, [isOpen, isGerman, ui.welcomeMessage]);
 
   // Prevent body scroll when chat is open
   useEffect(() => {
@@ -191,15 +222,15 @@ export const HobsonChatbot = () => {
       if (assistantMessage) {
         setMessages([...newMessages, { role: 'assistant', content: assistantMessage }]);
         // Generate a new random follow-up question after the response
-        setFollowUpQuestion(getRandomFollowUpQuestion());
+        setFollowUpQuestion(getRandomFollowUpQuestion(isGerman));
       } else {
         throw new Error('No response from AI');
       }
     } catch (error) {
       console.error('Chat error:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to get response. Please try again.',
+        title: ui.error,
+        description: ui.errorDescription,
         variant: 'destructive',
       });
     } finally {
@@ -237,8 +268,8 @@ export const HobsonChatbot = () => {
     } catch (error) {
       console.error('Chat error:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to get response. Please try again.',
+        title: ui.error,
+        description: ui.errorDescription,
         variant: 'destructive',
       });
     } finally {
@@ -257,13 +288,13 @@ export const HobsonChatbot = () => {
     setMessages([
       {
         role: 'assistant',
-        content: "Hey there! What would you like to know about?",
+        content: ui.welcomeMessage,
       },
     ]);
-    setQuickQuestions(getRandomQuickQuestions()); // Refresh questions on clear
+    setQuickQuestions(getRandomQuickQuestions(isGerman));
     toast({
-      title: 'Chat cleared',
-      description: 'Starting fresh conversation',
+      title: ui.clearChat,
+      description: ui.clearChatDescription,
     });
   };
 
@@ -354,7 +385,7 @@ export const HobsonChatbot = () => {
               className="w-[81px] h-[81px] sm:w-[101px] sm:h-[101px] drop-shadow-lg"
             />
             <span className="absolute bottom-full right-0 mb-2 px-3 py-2 bg-background border border-border rounded-lg shadow-lg text-sm whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none hidden sm:block">
-              Need help? Chat with Hobson!
+              {ui.tooltip}
             </span>
           </button>
       )}
@@ -366,7 +397,7 @@ export const HobsonChatbot = () => {
           <div className="flex items-center justify-between p-4 border-b border-border bg-muted/50">
             <div className="flex items-center gap-2">
               <MessageCircle className="w-5 h-5 text-primary" />
-              <h3 className="font-semibold text-foreground">Hobson AI Help</h3>
+              <h3 className="font-semibold text-foreground">{ui.title}</h3>
             </div>
             <div className="flex items-center gap-1">
               <Button
@@ -468,7 +499,7 @@ export const HobsonChatbot = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyPress={handleKeyPress}
-                placeholder="Ask about Hobson AI..."
+                placeholder={ui.placeholder}
                 disabled={isLoading}
                 className="flex-1 text-base"
                 style={{ fontSize: '16px' }}
