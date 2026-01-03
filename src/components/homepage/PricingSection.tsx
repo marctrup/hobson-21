@@ -12,6 +12,8 @@ export const PricingSection = () => {
   const { language } = useLanguage();
   const pricing = content.pricing;
   const isGerman = language === 'de';
+  const isUAE = language === 'ae';
+  const hasLongCurrency = isGerman || isUAE;
   
   const [billingCycles, setBillingCycles] = useState({
     essential: false,
@@ -115,7 +117,7 @@ export const PricingSection = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
             <CardHeader className="text-center pb-3 sm:pb-4 flex-shrink-0">
               <CardTitle className="text-base sm:text-lg font-bold">{pricing.plans.free.name}</CardTitle>
-              <div className="text-2xl sm:text-3xl font-bold text-purple-600 mt-2">
+              <div className={`font-bold text-purple-600 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'}`}>
                 {formatPrice(pricing.plans.free.price)}
               </div>
               <div className="text-xs sm:text-sm text-purple-600 font-medium mt-1">{pricing.plans.free.heus} HEUs</div>
@@ -145,8 +147,8 @@ export const PricingSection = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
             <CardHeader className="text-center pb-4 flex-shrink-0">
               <CardTitle className="text-lg font-bold">{pricing.plans.essential.name}</CardTitle>
-              <div className="text-3xl font-bold text-purple-600 mt-2">
-                {formatPrice(getPrice('essential'))}<span className="text-sm font-normal">{pricing.perMonth}</span>
+              <div className={`font-bold text-purple-600 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-3xl'}`}>
+                {formatPrice(getPrice('essential'))}<span className={`font-normal ${hasLongCurrency ? 'text-xs' : 'text-sm'}`}>{pricing.perMonth}</span>
                 {billingCycles.essential && (
                   <div className="text-xs text-muted-foreground line-through">
                     {formatPrice(getOriginalPrice('essential'))}
@@ -186,8 +188,8 @@ export const PricingSection = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
             <CardHeader className="text-center pb-4 pt-6 flex-shrink-0">
               <CardTitle className="text-lg font-bold">{pricing.plans.essentialPlus.name}</CardTitle>
-              <div className="text-3xl font-bold text-purple-700 mt-2">
-                {formatPrice(getPrice('essentialPlus'))}<span className="text-sm font-normal">{pricing.perMonth}</span>
+              <div className={`font-bold text-purple-700 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-3xl'}`}>
+                {formatPrice(getPrice('essentialPlus'))}<span className={`font-normal ${hasLongCurrency ? 'text-xs' : 'text-sm'}`}>{pricing.perMonth}</span>
                 {billingCycles.essentialPlus && (
                   <div className="text-xs text-muted-foreground line-through">
                     {formatPrice(getOriginalPrice('essentialPlus'))}
@@ -222,8 +224,8 @@ export const PricingSection = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
             <CardHeader className="text-center pb-4 flex-shrink-0">
               <CardTitle className="text-lg font-bold">{pricing.plans.enterprise.name}</CardTitle>
-              <div className="text-3xl font-bold text-purple-600 mt-2">
-                {formatPrice(getPrice('enterprise'))}<span className="text-sm font-normal">{pricing.perMonth}</span>
+              <div className={`font-bold text-purple-600 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-3xl'}`}>
+                {formatPrice(getPrice('enterprise'))}<span className={`font-normal ${hasLongCurrency ? 'text-xs' : 'text-sm'}`}>{pricing.perMonth}</span>
                 {billingCycles.enterprise && (
                   <div className="text-xs text-muted-foreground line-through">
                     {formatPrice(getOriginalPrice('enterprise'))}
