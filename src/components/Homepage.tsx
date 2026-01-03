@@ -9,7 +9,7 @@ import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { PricingSection } from "@/components/homepage/PricingSection";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
-import { NAVIGATION_LINKS } from "@/config/navigation";
+
 import owlMascot from "@/assets/owl-mascot.png";
 import { getOrganizationStructuredData, getHomepageStructuredData, getHomepageFAQStructuredData } from "@/utils/seo-data";
 import { useLanguage, useContent } from "@/contexts/LanguageContext";
@@ -346,7 +346,7 @@ export const Homepage = () => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-foreground">{content.footer.company.title}</h4>
                   <div className="space-y-3">
-                    {NAVIGATION_LINKS
+                    {content.navigation.links
                       .filter(link => {
                         if (isGerman && (link.to === '/blog' || link.to === '/learn')) return false;
                         return true;
@@ -358,7 +358,7 @@ export const Homepage = () => {
                           className="block text-muted-foreground hover:text-foreground transition-colors"
                           title={link.title}
                         >
-                          {isGerman ? (link as any).labelDe ?? link.label : link.label}
+                          {link.label}
                         </Link>
                       ))}
                     <Link to="/investment-opportunity" className="block text-muted-foreground hover:text-foreground transition-colors" title={content.footer.company.investmentOpportunity}>

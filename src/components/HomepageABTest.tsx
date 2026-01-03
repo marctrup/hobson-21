@@ -34,11 +34,12 @@ import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { PricingSection } from "@/components/homepage/PricingSection";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
-import { NAVIGATION_LINKS } from "@/config/navigation";
+import { useContent } from "@/contexts/LanguageContext";
 
 export const HomepageABTest = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPilotForm, setShowPilotForm] = useState(false);
+  const content = useContent();
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -328,7 +329,7 @@ export const HomepageABTest = () => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-foreground">Company</h4>
                   <div className="space-y-3">
-                    {NAVIGATION_LINKS.map((link) => (
+                    {content.navigation.links.map((link) => (
                       <Link
                         key={link.to}
                         to={link.to}
