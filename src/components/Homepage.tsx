@@ -358,7 +358,7 @@ export const Homepage = () => {
                   <div className="space-y-3">
                     {content.navigation.links
                       .filter(link => {
-                        if (isGerman && (link.to === '/blog' || link.to === '/learn')) return false;
+                        if (hideExtraNavItems && (link.to === '/blog' || link.to === '/learn')) return false;
                         return true;
                       })
                       .map(link => (
