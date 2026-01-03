@@ -357,4 +357,37 @@ export const CONTENT = {
     getStarted: "Get started",
     contactUs: "Contact us",
   },
+
+  // Contact Page
+  contact: {
+    title: "Contact Us",
+    subtitle: "We would be delighted to talk to you!",
+    form: {
+      name: { label: "Name *", placeholder: "Your full name" },
+      phone: { label: "Phone", placeholder: "Your phone number" },
+      email: { label: "Email *", placeholder: "your.email@example.com" },
+      confirmEmail: { label: "Confirm Email *", placeholder: "Confirm your email address" },
+      reason: { label: "Reason for Enquiry *", placeholder: "Please describe your enquiry..." },
+      submit: "Send Message",
+      submitting: "Sending...",
+    },
+    validation: {
+      missingInfo: { title: "Missing Information", description: "Please fill in all required fields." },
+      emailMismatch: { title: "Email Mismatch", description: "Email addresses must match." },
+      tooManyRequests: { title: "Too Many Requests", description: "Please wait a few minutes before submitting another message." },
+      sendFailed: { title: "Failed to Send", description: "There was an error sending your message. Please try again." },
+      incorrectAnswer: { title: "Incorrect Answer", description: "Please solve the math problem correctly." },
+    },
+    success: {
+      title: "Message Sent!",
+      description: "Thank you for your enquiry. We'll get back to you soon.",
+    },
+    antiBot: {
+      title: "Quick Security Check",
+      description: "Please solve this simple math problem to verify you're human:",
+      cancel: "Cancel",
+      submit: "Submit Message",
+      submitting: "Submitting...",
+    },
+  },
 } as const;
