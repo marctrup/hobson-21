@@ -26,6 +26,36 @@ export const CONTENT = {
     ctaButton: "See pricing",
   },
 
+  // Hero Visualization
+  heroVisualization: {
+    mainHeading: "So many docs, one key date — here's how to find it",
+    todaysProcess: {
+      title: "Today's Process",
+      subtitle: "Bulky. Complex. Expensive - Systems",
+    },
+    theChallenge: {
+      title: "The Challenge",
+      subtitle: "Overwhelming • Scattered • Complex",
+      documents: {
+        leaseAgreements: "20 × Lease Agreements",
+        deedsOfVariation: "12 × Deeds of Variation",
+        reversionaryLeases: "3 × Reversionary Leases",
+        differentDates: "Over 85 different dates",
+      },
+    },
+    hobsonAI: {
+      title: "Hobson AI",
+      subtitle: "Instant • Accurate • Intelligent",
+      answer: "The next rent review date is 26/06/26 for Knight Frank 23 Hampstead High Street NW3",
+      sources: "Sources:",
+      leaseAgreement: "Lease Agreement",
+      leaseAgreementRef: "(Page 5, Clause 3.2)",
+      deedOfVariation: "Deed of Variation",
+      deedOfVariationRef: "(Page 2, Clause 1.1)",
+      askPlaceholder: "Ask Hobson",
+    },
+  },
+
   // How It Works Section
   howItWorks: {
     title: "How It Works",

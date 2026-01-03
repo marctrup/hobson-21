@@ -26,6 +26,36 @@ export const CONTENT_DE = {
     ctaButton: "Preise ansehen",
   },
 
+  // Hero Visualization
+  heroVisualization: {
+    mainHeading: "So viele Dokumente, ein wichtiges Datum — so finden Sie es",
+    todaysProcess: {
+      title: "Heutiger Prozess",
+      subtitle: "Sperrig. Komplex. Teuer - Systeme",
+    },
+    theChallenge: {
+      title: "Die Herausforderung",
+      subtitle: "Überwältigend • Verstreut • Komplex",
+      documents: {
+        leaseAgreements: "20 × Mietverträge",
+        deedsOfVariation: "12 × Änderungsurkunden",
+        reversionaryLeases: "3 × Rückfall-Mietverträge",
+        differentDates: "Über 85 verschiedene Termine",
+      },
+    },
+    hobsonAI: {
+      title: "Hobson AI",
+      subtitle: "Sofort • Genau • Intelligent",
+      answer: "Das nächste Mietüberprüfungsdatum ist der 26.06.26 für Knight Frank 23 Hampstead High Street NW3",
+      sources: "Quellen:",
+      leaseAgreement: "Mietvertrag",
+      leaseAgreementRef: "(Seite 5, Klausel 3.2)",
+      deedOfVariation: "Änderungsurkunde",
+      deedOfVariationRef: "(Seite 2, Klausel 1.1)",
+      askPlaceholder: "Hobson fragen",
+    },
+  },
+
   // How It Works Section
   howItWorks: {
     title: "So funktioniert es",
