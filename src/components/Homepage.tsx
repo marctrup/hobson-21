@@ -37,13 +37,6 @@ export const Homepage = () => {
         </g>
       </svg>
     )},
-    { code: 'fr' as const, name: 'Français', flag: (
-      <svg className="w-5 h-auto rounded-sm" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
-        <rect width="20" height="40" fill="#002395"/>
-        <rect x="20" width="20" height="40" fill="#fff"/>
-        <rect x="40" width="20" height="40" fill="#ED2939"/>
-      </svg>
-    )},
     { code: 'de' as const, name: 'Deutsch', flag: (
       <svg className="w-5 h-auto rounded-sm" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
         <rect width="60" height="12" fill="#000"/>
