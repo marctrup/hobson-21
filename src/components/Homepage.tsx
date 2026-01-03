@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight, MessageCircle, FileText, Lightbulb, Target, CheckCircle, FileHeart } from "lucide-react";
+import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight, MessageCircle, FileText, Lightbulb, Target, CheckCircle, FileHeart, ChevronDown } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { Badge } from "@/components/ui/badge";
 import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
@@ -20,6 +20,41 @@ import { getOrganizationStructuredData, getHomepageStructuredData, getHomepageFA
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPilotForm, setShowPilotForm] = useState(false);
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'fr' | 'de'>('en');
+  
+  const languages = [
+    { code: 'en' as const, name: 'English', flag: (
+      <svg className="w-5 h-auto rounded-sm" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
+        <clipPath id="uk-s"><path d="M0,0 v30 h60 v-30 z"/></clipPath>
+        <clipPath id="uk-t"><path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/></clipPath>
+        <g clipPath="url(#uk-s)">
+          <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+          <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
+          <path d="M0,0 L60,30 M60,0 L0,30" clipPath="url(#uk-t)" stroke="#C8102E" strokeWidth="4"/>
+          <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
+          <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
+        </g>
+      </svg>
+    )},
+    { code: 'fr' as const, name: 'Français', flag: (
+      <svg className="w-5 h-auto rounded-sm" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
+        <rect width="20" height="40" fill="#002395"/>
+        <rect x="20" width="20" height="40" fill="#fff"/>
+        <rect x="40" width="20" height="40" fill="#ED2939"/>
+      </svg>
+    )},
+    { code: 'de' as const, name: 'Deutsch', flag: (
+      <svg className="w-5 h-auto rounded-sm" viewBox="0 0 60 36" xmlns="http://www.w3.org/2000/svg">
+        <rect width="60" height="12" fill="#000"/>
+        <rect y="12" width="60" height="12" fill="#DD0000"/>
+        <rect y="24" width="60" height="12" fill="#FFCE00"/>
+      </svg>
+    )},
+  ];
+  
+  const currentLanguage = languages.find(l => l.code === selectedLanguage) || languages[0];
+  
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -92,24 +127,43 @@ export const Homepage = () => {
                   Learn
                 </Link>
                 
-                {/* Language indicator with UK flag */}
-                <div className="flex items-center gap-1.5 text-sm text-muted-foreground" title="English (UK)">
-                  <svg className="w-5 h-auto rounded-sm shadow-sm" viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg">
-                    <clipPath id="uk-s">
-                      <path d="M0,0 v30 h60 v-30 z"/>
-                    </clipPath>
-                    <clipPath id="uk-t">
-                      <path d="M30,15 h30 v15 z v15 h-30 z h-30 v-15 z v-15 h30 z"/>
-                    </clipPath>
-                    <g clipPath="url(#uk-s)">
-                      <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
-                      <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
-                      <path d="M0,0 L60,30 M60,0 L0,30" clipPath="url(#uk-t)" stroke="#C8102E" strokeWidth="4"/>
-                      <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
-                      <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
-                    </g>
-                  </svg>
-                  <span className="hidden lg:inline">EN</span>
+                {/* Language dropdown */}
+                <div className="relative">
+                  <button
+                    onClick={() => setIsLanguageOpen(!isLanguageOpen)}
+                    className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded-md hover:bg-muted"
+                    title="Select language"
+                  >
+                    {currentLanguage.flag}
+                    <span className="hidden lg:inline">{currentLanguage.code.toUpperCase()}</span>
+                    <ChevronDown className={`w-3 h-3 transition-transform ${isLanguageOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  
+                  {isLanguageOpen && (
+                    <>
+                      <div 
+                        className="fixed inset-0 z-40" 
+                        onClick={() => setIsLanguageOpen(false)}
+                      />
+                      <div className="absolute right-0 top-full mt-2 bg-background border border-border rounded-lg shadow-lg py-1 z-50 min-w-[140px]">
+                        {languages.map((lang) => (
+                          <button
+                            key={lang.code}
+                            onClick={() => {
+                              setSelectedLanguage(lang.code);
+                              setIsLanguageOpen(false);
+                            }}
+                            className={`w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors ${
+                              selectedLanguage === lang.code ? 'bg-muted/50 text-foreground' : 'text-muted-foreground'
+                            }`}
+                          >
+                            {lang.flag}
+                            <span>{lang.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  )}
                 </div>
               </nav>
 
