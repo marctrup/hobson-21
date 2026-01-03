@@ -1,18 +1,20 @@
 import { MessageCircle } from "lucide-react";
 import PropertyMap from "./PropertyMap";
 import React, { memo } from "react";
-import owlMascot from "@/assets/owl-mascot.png";
+import { useContent } from "@/contexts/LanguageContext";
 
-// Updated with Features heading
 const FeatureShowcase = memo(() => {
+  const content = useContent();
+  const showcase = content.features.showcase;
+
   return (
     <div className="mb-20 overflow-hidden">
       <div className="text-center mb-12">
         <h2 className="text-4xl font-bold text-foreground mb-4">
-          Features
+          {content.features.title}
         </h2>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Talk to your documents on the left. See your portfolio come alive on the right. No menus, just flow
+          {content.features.subtitle}
         </p>
       </div>
       
@@ -36,10 +38,10 @@ const FeatureShowcase = memo(() => {
                     <MessageCircle className="w-5 h-5 text-white" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-foreground">Chat with Hobson</h3>
+                    <h3 className="font-semibold text-foreground">{showcase.chatTitle}</h3>
                     <div className="flex items-center gap-2">
                       <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span className="text-sm text-muted-foreground">Online</span>
+                      <span className="text-sm text-muted-foreground">{showcase.online}</span>
                     </div>
                   </div>
                 </div>
@@ -47,31 +49,27 @@ const FeatureShowcase = memo(() => {
                 {/* Chat Messages */}
                 <div className="flex-1 space-y-4 mb-6">
                   <div className="bg-primary/10 rounded-lg p-4 max-w-[85%] animate-fade-in">
-                    <p className="text-sm">👋 Hi there!</p>
-                    <p className="text-sm">Ready to streamline your workload?</p>
-                    <p className="text-sm">Let's make your tasks effortless.</p>
+                    {showcase.greeting.map((line, index) => (
+                      <p key={index} className="text-sm">{line}</p>
+                    ))}
                   </div>
                   
                   {/* Suggested Actions */}
                   <div className="space-y-2 animate-fade-in delay-500">
-                    <p className="text-sm font-medium text-muted-foreground mb-3">Suggested actions:</p>
+                    <p className="text-sm font-medium text-muted-foreground mb-3">{showcase.suggestedActions}</p>
                     <div className="space-y-2">
-                      <button className="w-full text-left p-3 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors text-sm">
-                        List key dates for Unit 2, Technology Park
-                      </button>
-                      <button className="w-full text-left p-3 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors text-sm">
-                        Summarise the rent review clause for Unit 2 Finchley Road
-                      </button>
-                      <button className="w-full text-left p-3 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors text-sm">
-                        Which leases have break clauses coming up?
-                      </button>
+                      {showcase.suggestions.map((suggestion, index) => (
+                        <button key={index} className="w-full text-left p-3 bg-muted/30 hover:bg-muted/50 rounded-lg transition-colors text-sm">
+                          {suggestion}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
                 
                 {/* Chat Input */}
                 <div className="border border-primary/20 rounded-lg p-3 bg-muted/20">
-                  <p className="text-sm text-muted-foreground">Ask Hobson...</p>
+                  <p className="text-sm text-muted-foreground">{showcase.inputPlaceholder}</p>
                 </div>
               </div>
               

@@ -117,24 +117,56 @@ export const CONTENT = {
 
   // Features Section
   features: {
-    title: "Powerful features for property professionals",
-    subtitle: "Everything you need to transform your document workflows",
-    items: [
+    title: "Features",
+    subtitle: "Talk to your documents on the left. See your portfolio come alive on the right. No menus, just flow",
+    
+    // Feature Showcase (Chat panel)
+    showcase: {
+      chatTitle: "Chat with Hobson",
+      online: "Online",
+      greeting: ["👋 Hi there!", "Ready to streamline your workload?", "Let's make your tasks effortless."],
+      suggestedActions: "Suggested actions:",
+      suggestions: [
+        "List key dates for Unit 2, Technology Park",
+        "Summarise the rent review clause for Unit 2 Finchley Road",
+        "Which leases have break clauses coming up?",
+      ],
+      inputPlaceholder: "Ask Hobson...",
+    },
+    
+    // Feature Cards
+    cards: [
       {
-        title: "Document Analysis",
-        description: "AI-powered analysis of leases, contracts, and property documents.",
+        title: "Intelligent Chat Interface",
+        badge: "Beta",
+        badgeType: "secondary",
+        subtitle: "Natural language queries",
+        description: "Ask Hobson anything about your assets. Get instant answers to complex questions with our conversational AI assistant.",
+        features: ["24/7 availability", "Context-aware responses", "Multi-property insights"],
       },
       {
-        title: "Instant Answers",
-        description: "Ask natural language questions and get accurate answers instantly.",
+        title: "Interactive Property Mapping",
+        badge: "On our wish list",
+        badgeType: "outline",
+        subtitle: "Geospatial intelligence",
+        description: "Visualize your entire portfolio on an interactive map. See property locations, market data, and geographical insights at a glance.",
+        features: ["Location-based analytics", "Market trend visualization", "Portfolio distribution insights"],
       },
       {
-        title: "Source Citations",
-        description: "Every answer includes full source citations for verification and trust.",
+        title: "Smart Document Analysis",
+        badge: "Beta",
+        badgeType: "secondary",
+        subtitle: "AI-powered extraction",
+        description: "Upload lease agreements, surveys, and contracts. Hobson extracts key information and identifies important dates automatically.",
+        features: ["Automated data entry", "Key date identification", "Document summarization"],
       },
       {
-        title: "Batch Queries",
-        description: "Analyse multiple documents at once with powerful batch operations.",
+        title: "Predictive Analytics",
+        badge: "On our wish list",
+        badgeType: "outline",
+        subtitle: "Future-focused insights",
+        description: "Get ahead of market changes and lease renewals with AI-driven predictions and recommendations.",
+        features: ["Management forecasting", "Market trend analysis", "Revenue optimization"],
       },
     ],
   },
