@@ -21,6 +21,7 @@ export const Homepage = () => {
   
   const { language, setLanguage } = useLanguage();
   const content = useContent();
+  const isGerman = language === 'de';
   
   const languages = [
     { code: 'en' as const, name: 'English', flag: (
@@ -220,11 +221,11 @@ export const Homepage = () => {
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-center py-6 sm:py-8 lg:py-12">
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
-                  <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                  <h1 id="hero-heading" className={`font-bold leading-tight ${isGerman ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl' : 'text-3xl sm:text-4xl md:text-5xl lg:text-6xl'}`} lang={language} style={isGerman ? { hyphens: 'auto', wordBreak: 'break-word' } : {}}>
                     <span className="text-foreground">{content.hero.title} </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">{content.hero.titleHighlight}</span>
                   </h1>
-                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">{content.hero.subtitle}
+                  <p className={`text-muted-foreground leading-relaxed ${isGerman ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}`} lang={language} style={isGerman ? { hyphens: 'auto' } : {}}>{content.hero.subtitle}
                   </p>
                   
                   <a href="#pricing-section" className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group" id="homepage-hero-pricing-cta">
