@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, Brain, Zap, Search, Shield, Users, Globe, Building2, TrendingUp, MapPin, PenTool, CreditCard, Heart, ArrowRight, MessageCircle, FileText, Lightbulb, Target, CheckCircle, FileHeart, ChevronDown } from "lucide-react";
+import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
-import { Badge } from "@/components/ui/badge";
-import { SimpleCard, SimpleCardContent } from "@/components/ui/simple-card";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
-import { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
 import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
@@ -15,13 +12,15 @@ import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm
 import { NAVIGATION_LINKS } from "@/config/navigation";
 import owlMascot from "@/assets/owl-mascot.png";
 import { getOrganizationStructuredData, getHomepageStructuredData, getHomepageFAQStructuredData } from "@/utils/seo-data";
-// Lazy load video only when needed
+import { useLanguage, useContent } from "@/contexts/LanguageContext";
 
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPilotForm, setShowPilotForm] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState<'en' | 'fr' | 'de'>('en');
+  
+  const { language, setLanguage } = useLanguage();
+  const content = useContent();
   
   const languages = [
     { code: 'en' as const, name: 'English', flag: (
@@ -53,7 +52,7 @@ export const Homepage = () => {
     )},
   ];
   
-  const currentLanguage = languages.find(l => l.code === selectedLanguage) || languages[0];
+  const currentLanguage = languages.find(l => l.code === language) || languages[0];
   
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -61,10 +60,11 @@ export const Homepage = () => {
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
   };
+
   return <>
       <Helmet>
         <title>AI Property Management Software | Document Intelligence | Hobson AI</title>
-        <meta name="description" content="Transform tenancy agreements with intelligent AI analysis, automated insights, and instant answers. Property document intelligence for modern property management." />
+        <meta name="description" content={content.seo.description} />
         <meta name="keywords" content="AI property management, tenancy agreement analysis, property AI, document automation, real estate AI, property technology, AI document analysis" />
         
         {/* OpenAI/ChatGPT specific meta tags */}
@@ -73,7 +73,7 @@ export const Homepage = () => {
         
         {/* Open Graph */}
         <meta property="og:title" content="AI Document Intelligence for Property Management | Hobson AI" />
-        <meta property="og:description" content="Transform tenancy agreements with intelligent AI analysis, automated insights, and instant answers to complex property questions." />
+        <meta property="og:description" content={content.seo.description} />
         <meta property="og:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://hobsonschoice.ai/" />
@@ -82,7 +82,7 @@ export const Homepage = () => {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@HobsonAI" />
         <meta name="twitter:title" content="AI Document Intelligence for Property Management" />
-        <meta name="twitter:description" content="Transform tenancy agreements with intelligent AI analysis and automated insights." />
+        <meta name="twitter:description" content={content.seo.description} />
         <meta name="twitter:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
         
         <link rel="canonical" href="https://hobsonschoice.ai/" />
@@ -111,20 +111,20 @@ export const Homepage = () => {
               {/* Logo */}
               <div className="relative">
                 <Link to="/" onClick={closeMobileMenu}>
-                  <OptimizedImage src="/hobson-logo.png" alt="Hobson AI - AI-powered property management software company logo" className="h-[59px] w-auto" priority />
+                  <OptimizedImage src="/hobson-logo.png" alt={content.header.logoAlt} className="h-[59px] w-auto" priority />
                 </Link>
               </div>
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
                 <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Blog
+                  {content.header.nav.blog}
                 </Link>
                 <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Contact
+                  {content.header.nav.contact}
                 </Link>
                 <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  Learn
+                  {content.header.nav.learn}
                 </Link>
                 
                 {/* Language dropdown */}
@@ -150,11 +150,11 @@ export const Homepage = () => {
                           <button
                             key={lang.code}
                             onClick={() => {
-                              setSelectedLanguage(lang.code);
+                              setLanguage(lang.code);
                               setIsLanguageOpen(false);
                             }}
                             className={`w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors ${
-                              selectedLanguage === lang.code ? 'bg-muted/50 text-foreground' : 'text-muted-foreground'
+                              language === lang.code ? 'bg-muted/50 text-foreground' : 'text-muted-foreground'
                             }`}
                           >
                             {lang.flag}
@@ -177,14 +177,37 @@ export const Homepage = () => {
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Blog
+                    {content.header.nav.blog}
                   </Link>
                   <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Contact
+                    {content.header.nav.contact}
                   </Link>
                   <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    Learn
+                    {content.header.nav.learn}
                   </Link>
+                  
+                  {/* Mobile Language Selector */}
+                  <div className="border-t pt-4 mt-2">
+                    <p className="text-sm text-muted-foreground mb-2">Language</p>
+                    <div className="flex gap-2">
+                      {languages.map((lang) => (
+                        <button
+                          key={lang.code}
+                          onClick={() => {
+                            setLanguage(lang.code);
+                            closeMobileMenu();
+                          }}
+                          className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md border transition-colors ${
+                            language === lang.code 
+                              ? 'bg-primary/10 border-primary text-foreground' 
+                              : 'border-border text-muted-foreground hover:bg-muted'
+                          }`}
+                        >
+                          {lang.flag}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </nav>}
           </div>
@@ -198,15 +221,15 @@ export const Homepage = () => {
                 {/* Left Container - H1 and Strap Line */}
                 <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
                   <h1 id="hero-heading" className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                    <span className="text-foreground">Move toward clarity, simplicity, and affordable AI, </span>
-                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">without replacing the tools you rely on.</span>
+                    <span className="text-foreground">{content.hero.title} </span>
+                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">{content.hero.titleHighlight}</span>
                   </h1>
-                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">Your documents. Your truth. -  Hobson is a specialised AI assistant trained on real estate documents that delivers quick, clear, and trusted answers every time.
+                  <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">{content.hero.subtitle}
                   </p>
                   
                   <a href="#pricing-section" className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group" id="homepage-hero-pricing-cta">
                     <div className="inline-flex items-center gap-3 text-purple-600 hover:text-purple-700 font-medium text-base">
-                      See pricing
+                      {content.hero.ctaButton}
                       <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                     </div>
                   </a>
@@ -238,49 +261,24 @@ export const Homepage = () => {
                   <div className="mb-6 sm:mb-8 flex items-center gap-4">
                     <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" width={80} height={80} priority={true} fetchPriority="high" />
                     <div>
-                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-foreground">How It Works</h2>
-                      <p className="text-lg sm:text-xl text-muted-foreground">Gaining insight and information couldn't be easier</p>
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-foreground">{content.howItWorks.title}</h2>
+                      <p className="text-lg sm:text-xl text-muted-foreground">{content.howItWorks.subtitle}</p>
                     </div>
                   </div>
                   <div className="space-y-6 sm:space-y-8">
-                    {/* Step 1 */}
-                    <div className="flex items-start gap-3 sm:gap-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">
-                        1
+                    {content.howItWorks.steps.map((step, index) => (
+                      <div key={index} className="flex items-start gap-3 sm:gap-4">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">
+                          {index + 1}
+                        </div>
+                        <div>
+                          <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">{step.title}</h3>
+                          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                            {step.description}
+                          </p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">Upload & Connect</h3>
-                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                          Upload your documents or connect your existing systems. Our AI instantly begins processing and indexing your content.
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {/* Step 2 */}
-                    <div className="flex items-start gap-3 sm:gap-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">
-                        2
-                      </div>
-                      <div>
-                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">Ask Questions</h3>
-                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                          Ask natural language questions about your properties, leases, contracts, or any document content.
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {/* Step 3 */}
-                    <div className="flex items-start gap-3 sm:gap-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">
-                        3
-                      </div>
-                      <div>
-                        <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">Get Insights</h3>
-                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                          Receive instant, accurate answers with full source citations and actionable recommendations.
-                        </p>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
 
@@ -309,14 +307,14 @@ export const Homepage = () => {
               <div className="flex items-center justify-center gap-4 mb-4 sm:mb-6">
                 <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" width={80} height={80} />
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold">
-                  Ready to introduce AI into your business?
+                  {content.cta.title}
                 </h2>
               </div>
               <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
-                Join our free pilot program and experience the power of AI-driven property intelligence
+                {content.cta.subtitle}
               </p>
               <SimpleButton onClick={() => setShowPilotForm(true)} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto">
-                Join our free pilot
+                {content.cta.button}
               </SimpleButton>
             </div>
           </section>
@@ -329,37 +327,37 @@ export const Homepage = () => {
               <div className="grid md:grid-cols-3 gap-6 md:gap-12">
                 {/* Logo */}
                 <div>
-                  <OptimizedImage src="/hobson-logo.png" alt="Hobson's AI logo" className="h-[59px] w-auto" />
+                  <OptimizedImage src="/hobson-logo.png" alt={content.header.logoAlt} className="h-[59px] w-auto" />
                 </div>
                 
                 {/* Product Column */}
                 <div>
-                  <h4 className="text-lg font-semibold mb-4 text-foreground">Product</h4>
+                  <h4 className="text-lg font-semibold mb-4 text-foreground">{content.footer.product.title}</h4>
                   <div className="space-y-3">
                     <Link to="/pilot" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Join our pilot programme
+                      {content.footer.product.pilotLink}
                     </Link>
                   </div>
                 </div>
                 
                 {/* Company Column */}
                 <div>
-                  <h4 className="text-lg font-semibold mb-4 text-foreground">Company</h4>
+                  <h4 className="text-lg font-semibold mb-4 text-foreground">{content.footer.company.title}</h4>
                   <div className="space-y-3">
                     {NAVIGATION_LINKS.map(link => <Link key={link.to} to={link.to} className="block text-muted-foreground hover:text-foreground transition-colors" title={link.title}>
                         {link.label}
                       </Link>)}
-                    <Link to="/investment-opportunity" className="block text-muted-foreground hover:text-foreground transition-colors" title="Investment Opportunity">
-                      Investment Opportunity
+                    <Link to="/investment-opportunity" className="block text-muted-foreground hover:text-foreground transition-colors" title={content.footer.company.investmentOpportunity}>
+                      {content.footer.company.investmentOpportunity}
                     </Link>
                     <Link to="/data-protection" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      AI Privacy & Data Protection Policy
+                      {content.footer.company.dataProtection}
                     </Link>
                     <Link to="/breach-protocol" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Data Breach Protocol
+                      {content.footer.company.breachProtocol}
                     </Link>
                     <Link to="/refund-policy" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Refund Policy
+                      {content.footer.company.refundPolicy}
                     </Link>
                   </div>
                 </div>

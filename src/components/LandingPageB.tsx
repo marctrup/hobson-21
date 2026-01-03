@@ -264,7 +264,10 @@ const LandingPageB = () => {
                     <div className="w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
                       {index + 1}
                     </div>
-                    <p className="text-lg">{step}</p>
+                    <div>
+                      <p className="text-lg font-semibold">{step.title}</p>
+                      <p className="text-muted-foreground">{step.description}</p>
+                    </div>
                   </div>
                 ))}
               </div>

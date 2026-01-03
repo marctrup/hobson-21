@@ -1,3 +1,6 @@
+// Master English content - This is the source of truth
+// When updating content here, also update translations in content-de.ts, content-fr.ts, etc.
+
 export const CONTENT = {
   // SEO and Meta
   seo: {
@@ -8,13 +11,132 @@ export const CONTENT = {
   // Header
   header: {
     logoAlt: "Hobson",
+    nav: {
+      blog: "Blog",
+      contact: "Contact",
+      learn: "Learn",
+    },
   },
 
   // Hero Section
   hero: {
-    title: "AI-Powered Answers from the Source of Truth: Your Documents",
-    subtitle: "Hobson is your AI assistant for property documents — delivering instant, verified answers with full citations, built to support confident, efficient decision-making.",
-    ctaButton: "Join Property Management AI Pilot",
+    title: "Move toward clarity, simplicity, and affordable AI,",
+    titleHighlight: "without replacing the tools you rely on.",
+    subtitle: "Your documents. Your truth. - Hobson is a specialised AI assistant trained on real estate documents that delivers quick, clear, and trusted answers every time.",
+    ctaButton: "See pricing",
+  },
+
+  // How It Works Section
+  howItWorks: {
+    title: "How It Works",
+    subtitle: "Gaining insight and information couldn't be easier",
+    steps: [
+      {
+        title: "Upload & Connect",
+        description: "Upload your documents or connect your existing systems. Our AI instantly begins processing and indexing your content.",
+      },
+      {
+        title: "Ask Questions",
+        description: "Ask natural language questions about your properties, leases, contracts, or any document content.",
+      },
+      {
+        title: "Get Insights",
+        description: "Receive instant, accurate answers with full source citations and actionable recommendations.",
+      },
+    ],
+  },
+
+  // CTA Section
+  cta: {
+    title: "Ready to introduce AI into your business?",
+    subtitle: "Join our free pilot program and experience the power of AI-driven property intelligence",
+    button: "Join our free pilot",
+  },
+
+  // Footer
+  footer: {
+    product: {
+      title: "Product",
+      pilotLink: "Join our pilot programme",
+    },
+    company: {
+      title: "Company",
+      investmentOpportunity: "Investment Opportunity",
+      dataProtection: "AI Privacy & Data Protection Policy",
+      breachProtocol: "Data Breach Protocol",
+      refundPolicy: "Refund Policy",
+    },
+  },
+
+  // Pricing Section
+  pricing: {
+    title: "Simple, transparent pricing",
+    subtitle: "Start free, scale as you need",
+    free: {
+      title: "Free",
+      price: "£0",
+      period: "/month",
+      description: "Perfect for trying Hobson",
+      features: [
+        "5 document uploads",
+        "50 questions per month",
+        "Basic document analysis",
+        "Email support",
+      ],
+      button: "Start free",
+    },
+    pro: {
+      title: "Pro",
+      price: "£49",
+      period: "/month",
+      description: "For growing property businesses",
+      features: [
+        "Unlimited document uploads",
+        "Unlimited questions",
+        "Advanced AI analysis",
+        "Priority support",
+        "API access",
+      ],
+      button: "Start Pro",
+    },
+    enterprise: {
+      title: "Enterprise",
+      price: "Custom",
+      period: "",
+      description: "For large organisations",
+      features: [
+        "Everything in Pro",
+        "Dedicated account manager",
+        "Custom integrations",
+        "SLA guarantee",
+        "On-premise option",
+      ],
+      button: "Contact sales",
+    },
+  },
+
+  // Features Section
+  features: {
+    title: "Powerful features for property professionals",
+    subtitle: "Everything you need to transform your document workflows",
+    items: [
+      {
+        title: "Document Analysis",
+        description: "AI-powered analysis of leases, contracts, and property documents.",
+      },
+      {
+        title: "Instant Answers",
+        description: "Ask natural language questions and get accurate answers instantly.",
+      },
+      {
+        title: "Source Citations",
+        description: "Every answer includes full source citations for verification and trust.",
+      },
+      {
+        title: "Batch Queries",
+        description: "Analyse multiple documents at once with powerful batch operations.",
+      },
+    ],
   },
 
   // Industry Teams Section
@@ -62,20 +184,9 @@ export const CONTENT = {
       description: "Free up hours of admin work with instant AI responses.",
     },
     insights: {
-      title: "Surface Critical Insights", 
+      title: "Surface Critical Insights",
       description: "Ask questions or run batch queries—Hobson reads and responds in context.",
     },
-  },
-
-  // How It Works Section
-  howItWorks: {
-    title: "How It Works",
-    steps: [
-      "Upload or connect your documents.",
-      "Ask questions or run batch insight queries.",
-      "Get fast, cited, useful answers.", 
-      "Apply to join our pilot if you haven't already.",
-    ],
   },
 
   // Form Section
@@ -87,7 +198,7 @@ export const CONTENT = {
         placeholder: "Your name",
       },
       company: {
-        label: "Company *", 
+        label: "Company *",
         placeholder: "Company name",
       },
       role: {
@@ -162,8 +273,15 @@ export const CONTENT = {
       description: "There was an error submitting your application. Please try again.",
     },
     incorrectAnswer: {
-      title: "Incorrect Answer", 
+      title: "Incorrect Answer",
       description: "Please solve the math problem correctly.",
     },
+  },
+
+  // Common
+  common: {
+    learnMore: "Learn more",
+    getStarted: "Get started",
+    contactUs: "Contact us",
   },
 } as const;

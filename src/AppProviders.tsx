@@ -7,6 +7,7 @@ import { AuthProvider } from "@/hooks/useAuth";
 import { ToastPortal } from "@/components/ToastPortal";
 import { AppRoutes } from "@/components/AppRoutes";
 import { HobsonChatbot } from "@/components/HobsonChatbot";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,11 +37,13 @@ export function AppProviders() {
       <BrowserRouter>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryClientProvider client={queryClient}>
-            <AuthProvider>
-              <ToastPortal />
-              <AppRoutes />
-              <ChatbotWrapper />
-            </AuthProvider>
+            <LanguageProvider>
+              <AuthProvider>
+                <ToastPortal />
+                <AppRoutes />
+                <ChatbotWrapper />
+              </AuthProvider>
+            </LanguageProvider>
           </QueryClientProvider>
         </ThemeProvider>
       </BrowserRouter>
