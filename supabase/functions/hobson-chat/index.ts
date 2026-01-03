@@ -36,6 +36,28 @@ Visit https://hobsonschoice.ai/learn for more information.`;
   }
 }
 
+// Simple function to detect if text is likely German
+function isGermanText(text: string): boolean {
+  const germanIndicators = [
+    /\b(ich|du|er|sie|es|wir|ihr|Sie)\b/i,
+    /\b(ist|sind|war|waren|habe|haben|wird|werden)\b/i,
+    /\b(und|oder|aber|wenn|dass|weil|obwohl)\b/i,
+    /\b(der|die|das|ein|eine|einer|einem|einen)\b/i,
+    /\b(nicht|auch|nur|noch|schon|sehr|wie|was|wo|wer|wann|warum)\b/i,
+    /\b(kann|können|möchte|möchten|muss|müssen|soll|sollen)\b/i,
+    /[äöüß]/i,
+  ];
+  
+  let matchCount = 0;
+  for (const pattern of germanIndicators) {
+    if (pattern.test(text)) {
+      matchCount++;
+    }
+  }
+  
+  return matchCount >= 2;
+}
+
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
@@ -55,8 +77,19 @@ serve(async (req) => {
       throw new Error("AI service not configured");
     }
 
+    // Detect if user is writing in German by checking the last user message
+    const lastUserMessage = [...messages].reverse().find(m => m.role === 'user');
+    const isGerman = lastUserMessage ? isGermanText(lastUserMessage.content) : false;
+    
+    console.log("Detected language:", isGerman ? "German" : "English");
+
     // Get the latest knowledge base content
     const WEBSITE_CONTENT = await getKnowledgeBase();
+    
+    // Add language instruction based on detection
+    const languageInstruction = isGerman 
+      ? `\n\nIMPORTANT LANGUAGE RULE: The user is writing in German. You MUST respond entirely in German (Deutsch). Translate your response to German while keeping all markdown links intact.`
+      : '';
     
     const systemPrompt = `You are a helpful AI assistant for Hobson's Choice AI website. Your role is to help visitors understand what Hobson AI does, its features, pricing, and use cases.
 
@@ -130,6 +163,7 @@ RESPONSE GUIDELINES:
 
 KNOWLEDGE BASE:
 ${WEBSITE_CONTENT}
+${languageInstruction}
 
 Remember: You're here to help visitors understand Hobson AI better, not to be pushy. Answer their questions clearly and point them to relevant resources.`;
 
