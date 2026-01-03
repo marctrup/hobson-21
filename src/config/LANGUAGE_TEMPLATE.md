@@ -87,16 +87,20 @@ In `pricing.plans`, update:
 - `currencyPosition`: "before" or "after"
 - `priceMonthly` / `priceAnnual`: Converted amounts
 
-### 2. Feature Visibility
-Some features may be hidden per language. Update these files:
-- `src/components/Homepage.tsx` - Desktop/mobile nav filtering
-- `src/components/GlobalHeader.tsx` - Header nav filtering  
-- `src/components/homepage/HomepageFooter.tsx` - Footer link filtering
+### 2. Feature Visibility (IMPORTANT)
+**By default, non-UK sites only show Contact in navigation.** Blog and Learn are hidden.
 
-Example (hiding Blog for German):
+This is already configured in `src/components/Homepage.tsx`:
 ```typescript
-if (isGerman && link.to === '/blog') return false;
+const hideExtraNavItems = isGerman || isUAE || isNewLanguage; // Add your language here
 ```
+
+Files to update when adding a new language:
+- `src/components/Homepage.tsx` - Add to `hideExtraNavItems` check (desktop & mobile nav)
+- `src/components/GlobalHeader.tsx` - Add language check if using GlobalHeader
+- `src/components/homepage/HomepageFooter.tsx` - Add language check for footer links
+
+To re-enable Blog/Learn for a specific language later, simply remove it from the `hideExtraNavItems` check.
 
 ### 3. RTL Languages (Arabic, Hebrew, etc.)
 Additional setup required:
