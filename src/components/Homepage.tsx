@@ -117,9 +117,11 @@ export const Homepage = () => {
                 <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   {content.header.nav.contact}
                 </Link>
-                <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
-                  {content.header.nav.learn}
-                </Link>
+                {!isGerman && (
+                  <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                    {content.header.nav.learn}
+                  </Link>
+                )}
                 
                 {/* Language dropdown */}
                 <div className="relative">
@@ -176,9 +178,11 @@ export const Homepage = () => {
                   <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     {content.header.nav.contact}
                   </Link>
-                  <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    {content.header.nav.learn}
-                  </Link>
+                  {!isGerman && (
+                    <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                      {content.header.nav.learn}
+                    </Link>
+                  )}
                   
                   {/* Mobile Language Selector */}
                   <div className="border-t pt-4 mt-2">
