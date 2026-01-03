@@ -117,24 +117,56 @@ export const CONTENT_DE = {
 
   // Features Section
   features: {
-    title: "Leistungsstarke Funktionen für Immobilienprofis",
-    subtitle: "Alles, was Sie brauchen, um Ihre Dokumenten-Workflows zu transformieren",
-    items: [
+    title: "Funktionen",
+    subtitle: "Sprechen Sie links mit Ihren Dokumenten. Sehen Sie rechts Ihr Portfolio zum Leben erwachen. Keine Menüs, nur Flow",
+    
+    // Feature Showcase (Chat panel)
+    showcase: {
+      chatTitle: "Mit Hobson chatten",
+      online: "Online",
+      greeting: ["👋 Hallo!", "Bereit, Ihre Arbeitslast zu optimieren?", "Lassen Sie uns Ihre Aufgaben mühelos gestalten."],
+      suggestedActions: "Vorgeschlagene Aktionen:",
+      suggestions: [
+        "Wichtige Termine für Einheit 2, Technologiepark auflisten",
+        "Die Mietüberprüfungsklausel für Einheit 2 Finchley Road zusammenfassen",
+        "Welche Mietverträge haben bevorstehende Kündigungsklauseln?",
+      ],
+      inputPlaceholder: "Hobson fragen...",
+    },
+    
+    // Feature Cards
+    cards: [
       {
-        title: "Dokumentenanalyse",
-        description: "KI-gestützte Analyse von Mietverträgen, Verträgen und Immobiliendokumenten.",
+        title: "Intelligente Chat-Oberfläche",
+        badge: "Beta",
+        badgeType: "secondary",
+        subtitle: "Natürlichsprachliche Abfragen",
+        description: "Fragen Sie Hobson alles über Ihre Assets. Erhalten Sie sofortige Antworten auf komplexe Fragen mit unserem KI-Assistenten.",
+        features: ["24/7 Verfügbarkeit", "Kontextbewusste Antworten", "Multi-Immobilien-Einblicke"],
       },
       {
-        title: "Sofortige Antworten",
-        description: "Stellen Sie Fragen in natürlicher Sprache und erhalten Sie sofort genaue Antworten.",
+        title: "Interaktive Immobilienkartierung",
+        badge: "Auf unserer Wunschliste",
+        badgeType: "outline",
+        subtitle: "Geospatiale Intelligenz",
+        description: "Visualisieren Sie Ihr gesamtes Portfolio auf einer interaktiven Karte. Sehen Sie Immobilienstandorte, Marktdaten und geografische Einblicke auf einen Blick.",
+        features: ["Standortbasierte Analytik", "Markttrendvisualisierung", "Portfolio-Verteilungseinblicke"],
       },
       {
-        title: "Quellenangaben",
-        description: "Jede Antwort enthält vollständige Quellenangaben für Verifizierung und Vertrauen.",
+        title: "Intelligente Dokumentenanalyse",
+        badge: "Beta",
+        badgeType: "secondary",
+        subtitle: "KI-gestützte Extraktion",
+        description: "Laden Sie Mietverträge, Gutachten und Verträge hoch. Hobson extrahiert automatisch wichtige Informationen und identifiziert wichtige Termine.",
+        features: ["Automatisierte Dateneingabe", "Identifikation wichtiger Termine", "Dokumentenzusammenfassung"],
       },
       {
-        title: "Batch-Abfragen",
-        description: "Analysieren Sie mehrere Dokumente gleichzeitig mit leistungsstarken Batch-Operationen.",
+        title: "Prädiktive Analytik",
+        badge: "Auf unserer Wunschliste",
+        badgeType: "outline",
+        subtitle: "Zukunftsorientierte Einblicke",
+        description: "Bleiben Sie Marktveränderungen und Mietvertragsverlängerungen mit KI-gestützten Vorhersagen und Empfehlungen voraus.",
+        features: ["Management-Prognosen", "Markttrendanalyse", "Umsatzoptimierung"],
       },
     ],
   },
