@@ -50,7 +50,7 @@ export const GlobalHeader = () => {
                 className="text-base text-muted-foreground hover:text-foreground transition-colors"
                 title={link.title}
               >
-                {link.label}
+                {isGerman ? link.labelDe : link.label}
               </Link>
             ))}
           </nav>
@@ -83,7 +83,7 @@ export const GlobalHeader = () => {
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
-                  {link.label}
+                  {isGerman ? link.labelDe : link.label}
                 </Link>
               ))}
             </div>
