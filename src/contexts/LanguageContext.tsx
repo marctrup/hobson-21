@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
 import { CONTENT } from '@/config/content';
 import { CONTENT_DE } from '@/config/content-de';
+import { CONTENT_AE } from '@/config/content-ae';
 
-export type Language = 'en' | 'de' | 'fr';
+export type Language = 'en' | 'de' | 'ae';
 
 interface LanguageContextType {
   language: Language;
@@ -13,10 +14,10 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 // Content map - add new languages here
-const contentMap: Record<Language, typeof CONTENT | typeof CONTENT_DE | null> = {
+const contentMap: Record<Language, typeof CONTENT | typeof CONTENT_DE | typeof CONTENT_AE | null> = {
   en: CONTENT,
   de: CONTENT_DE,
-  fr: null, // French not yet translated - will fallback to English
+  ae: CONTENT_AE,
 };
 
 // Helper to get nested value from object using dot notation
