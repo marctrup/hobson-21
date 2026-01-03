@@ -346,9 +346,21 @@ export const Homepage = () => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-foreground">{content.footer.company.title}</h4>
                   <div className="space-y-3">
-                    {NAVIGATION_LINKS.map(link => <Link key={link.to} to={link.to} className="block text-muted-foreground hover:text-foreground transition-colors" title={link.title}>
-                        {link.label}
-                      </Link>)}
+                    {NAVIGATION_LINKS
+                      .filter(link => {
+                        if (isGerman && (link.to === '/blog' || link.to === '/learn')) return false;
+                        return true;
+                      })
+                      .map(link => (
+                        <Link
+                          key={link.to}
+                          to={link.to}
+                          className="block text-muted-foreground hover:text-foreground transition-colors"
+                          title={link.title}
+                        >
+                          {isGerman ? (link as any).labelDe ?? link.label : link.label}
+                        </Link>
+                      ))}
                     <Link to="/investment-opportunity" className="block text-muted-foreground hover:text-foreground transition-colors" title={content.footer.company.investmentOpportunity}>
                       {content.footer.company.investmentOpportunity}
                     </Link>
