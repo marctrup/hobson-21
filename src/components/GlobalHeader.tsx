@@ -11,9 +11,9 @@ export const GlobalHeader = () => {
   const { language } = useLanguage();
   const isGerman = language === 'de';
 
-  // Filter out Learn link for German site
+  // Filter out Learn and Blog links for German site
   const filteredLinks = NAVIGATION_LINKS.filter(link => {
-    if (isGerman && link.to === '/learn') return false;
+    if (isGerman && (link.to === '/learn' || link.to === '/blog')) return false;
     return true;
   });
 
