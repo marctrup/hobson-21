@@ -1,10 +1,15 @@
 import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck, Plus, ArrowUp } from "lucide-react";
+import { useContent } from "@/contexts/LanguageContext";
+
 export const PropertyManagementVisualization = () => {
+  const content = useContent();
+  const viz = content.heroVisualization;
+
   return <div className="relative from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 bg-gray-50">
       {/* Main Header */}
       <div className="text-center mb-8">
         <h1 className="text-2xl leading-relaxed font-bold mb-2">
-          <span className="text-gray-500 font-semibold">So many docs, one key date — here's how to find it</span>
+          <span className="text-gray-500 font-semibold">{viz.mainHeading}</span>
         </h1>
       </div>
 
@@ -14,12 +19,12 @@ export const PropertyManagementVisualization = () => {
           <div className="mb-4">
             <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
               <span className="text-gray-500 drop-shadow-sm">
-                Today's Process
+                {viz.todaysProcess.title}
               </span>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gray-400 rounded-full"></div>
             </h4>
             <div className="text-xs text-gray-500 font-bold uppercase tracking-wide opacity-80">
-              Bulky. Complex. Expensive - Systems
+              {viz.todaysProcess.subtitle}
             </div>
           </div>
           
@@ -63,12 +68,12 @@ export const PropertyManagementVisualization = () => {
           <div className="mb-4">
             <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
               <span className="text-gray-500 drop-shadow-sm">
-                The Challenge
+                {viz.theChallenge.title}
               </span>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gray-400 rounded-full"></div>
             </h4>
             <div className="text-xs text-gray-500 font-bold uppercase tracking-wide opacity-80">
-              Overwhelming • Scattered • Complex
+              {viz.theChallenge.subtitle}
             </div>
           </div>
           
@@ -588,11 +593,11 @@ export const PropertyManagementVisualization = () => {
           </div>
           
           <div className="text-xs text-muted-foreground font-bold mt-3 space-y-1">
-            <div className="whitespace-nowrap">20 × Lease Agreements</div>
-            <div className="whitespace-nowrap">12 × Deeds of Variation</div>
-            <div className="whitespace-nowrap">3 × Reversionary Leases</div>
+            <div className="whitespace-nowrap">{viz.theChallenge.documents.leaseAgreements}</div>
+            <div className="whitespace-nowrap">{viz.theChallenge.documents.deedsOfVariation}</div>
+            <div className="whitespace-nowrap">{viz.theChallenge.documents.reversionaryLeases}</div>
             <div className="whitespace-nowrap mt-2 text-green-600">
-              Over 85 different dates
+              {viz.theChallenge.documents.differentDates}
             </div>
           </div>
         </div>
@@ -602,12 +607,12 @@ export const PropertyManagementVisualization = () => {
           <div className="mb-3">
             <h4 className="text-lg font-black uppercase tracking-widest mb-2 relative inline-block">
               <span className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 bg-clip-text text-transparent drop-shadow-sm">
-                Hobson AI
+                {viz.hobsonAI.title}
               </span>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"></div>
             </h4>
             <div className="text-xs text-purple-600 font-bold uppercase tracking-wide opacity-80">
-              Instant • Accurate • Intelligent
+              {viz.hobsonAI.subtitle}
             </div>
           </div>
           
@@ -616,18 +621,18 @@ export const PropertyManagementVisualization = () => {
           padding: 'clamp(15px, 4vw, 22px)'
         }}>
             <div className="text-sm font-normal text-muted-foreground mb-3 font-sans text-left">
-              The next rent review date is 26/06/26 for Knight Frank 23 Hampstead High Street NW3
+              {viz.hobsonAI.answer}
             </div>
             
             <div className="text-left space-y-2 mb-4">
-              <div className="text-xs text-muted-foreground font-bold mb-2">Sources:</div>
+              <div className="text-xs text-muted-foreground font-bold mb-2">{viz.hobsonAI.sources}</div>
               <div className="flex items-start gap-2 text-xs text-muted-foreground">
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
-                <span>Lease Agreement<br />(Page 5, Clause 3.2)</span>
+                <span>{viz.hobsonAI.leaseAgreement}<br />{viz.hobsonAI.leaseAgreementRef}</span>
               </div>
               <div className="flex items-start gap-2 text-xs text-muted-foreground">
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
-                <span>Deed of Variation<br />(Page 2, Clause 1.1)</span>
+                <span>{viz.hobsonAI.deedOfVariation}<br />{viz.hobsonAI.deedOfVariationRef}</span>
               </div>
             </div>
             
@@ -639,7 +644,7 @@ export const PropertyManagementVisualization = () => {
               <div className="w-4 h-4 rounded-full border border-muted-foreground/40 flex items-center justify-center hover:border-muted-foreground cursor-pointer flex-shrink-0">
                 <Plus className="w-2 h-2 text-muted-foreground/60 hover:text-muted-foreground" />
               </div>
-              <textarea placeholder="Ask Hobson" className="flex-1 resize-none bg-transparent text-xs font-bold placeholder:text-muted-foreground border-none outline-none min-h-[24px] max-h-[100px]" style={{
+              <textarea placeholder={viz.hobsonAI.askPlaceholder} className="flex-1 resize-none bg-transparent text-xs font-bold placeholder:text-muted-foreground border-none outline-none min-h-[24px] max-h-[100px]" style={{
               marginTop: '2px'
             }} rows={1} />
               <div className="w-5 h-5 rounded-full bg-black flex items-center justify-center hover:bg-gray-800 cursor-pointer flex-shrink-0">
