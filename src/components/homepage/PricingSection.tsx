@@ -5,11 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle2 } from "lucide-react";
 import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
 import owlMascot from "@/assets/owl-mascot.png";
-import { useContent } from "@/contexts/LanguageContext";
+import { useContent, useLanguage } from "@/contexts/LanguageContext";
 
 export const PricingSection = () => {
   const content = useContent();
+  const { language } = useLanguage();
   const pricing = content.pricing;
+  const isGerman = language === 'de';
   
   const [billingCycles, setBillingCycles] = useState({
     essential: false,
@@ -92,12 +94,14 @@ export const PricingSection = () => {
         <div className="text-center mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-4 mb-4">
             <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">{pricing.title}</h2>
+            <h2 className={`font-bold text-foreground ${isGerman ? 'text-xl sm:text-2xl md:text-3xl' : 'text-2xl sm:text-3xl md:text-4xl'}`}>
+              {pricing.title}
+            </h2>
           </div>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0">
+          <p className={`text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0 ${isGerman ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}`}>
             {pricing.subtitle}
           </p>
-          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4 sm:px-0">
+          <p className={`text-muted-foreground max-w-2xl mx-auto px-4 sm:px-0 ${isGerman ? 'text-sm sm:text-base' : 'text-base sm:text-lg'}`}>
             {pricing.description}{" "}
             <span className="font-semibold text-primary">{pricing.heuLabel}</span>.
           </p>
