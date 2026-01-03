@@ -22,6 +22,8 @@ export const Homepage = () => {
   const { language, setLanguage } = useLanguage();
   const content = useContent();
   const isGerman = language === 'de';
+  const isUAE = language === 'ae';
+  const hideExtraNavItems = isGerman || isUAE;
   
   const languages = [
     { code: 'en' as const, name: 'English', flag: (
@@ -119,7 +121,7 @@ export const Homepage = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-                {!isGerman && (
+                {!hideExtraNavItems && (
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                     {content.header.nav.blog}
                   </Link>
@@ -127,7 +129,7 @@ export const Homepage = () => {
                 <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   {content.header.nav.contact}
                 </Link>
-                {!isGerman && (
+                {!hideExtraNavItems && (
                   <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                     {content.header.nav.learn}
                   </Link>
@@ -182,7 +184,7 @@ export const Homepage = () => {
             {/* Mobile Navigation Menu */}
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
-                  {!isGerman && (
+                  {!hideExtraNavItems && (
                     <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                       {content.header.nav.blog}
                     </Link>
@@ -190,7 +192,7 @@ export const Homepage = () => {
                   <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     {content.header.nav.contact}
                   </Link>
-                  {!isGerman && (
+                  {!hideExtraNavItems && (
                     <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                       {content.header.nav.learn}
                     </Link>
