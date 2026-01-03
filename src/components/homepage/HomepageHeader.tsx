@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { NAVIGATION_LINKS } from "@/config/navigation";
+import { useContent } from "@/contexts/LanguageContext";
 import hobsonLogo from "/hobson-logo.png";
 
 // UK Flag SVG component
@@ -26,6 +26,7 @@ const UKFlag = ({ className }: { className?: string }) => (
 
 export const HomepageHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const content = useContent();
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -56,7 +57,7 @@ export const HomepageHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
-            {NAVIGATION_LINKS.map((link) => (
+            {content.navigation.links.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
@@ -94,7 +95,7 @@ export const HomepageHeader = () => {
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
             <div className="flex flex-col gap-4">
-              {NAVIGATION_LINKS.map((link) => (
+              {content.navigation.links.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}

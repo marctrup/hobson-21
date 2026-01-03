@@ -11,10 +11,11 @@ import { PropertyManagementVisualizationHomeowner } from "@/components/homepage/
 import { HomepageGeorgiaVideoHomeowner } from "@/components/videos/HomepageGeorgiaVideoHomeowner";
 import { HomepagePilotVideoHomeowner } from "@/components/videos/HomepagePilotVideoHomeowner";
 import { FeaturesSectionHomeowner } from "@/components/homepage/FeaturesSectionHomeowner";
-import { NAVIGATION_LINKS } from "@/config/navigation";
+import { useContent } from "@/contexts/LanguageContext";
 
 export const HomepageHomeowner = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const content = useContent();
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -276,7 +277,7 @@ export const HomepageHomeowner = () => {
                 <div>
                   <h4 className="text-lg font-semibold mb-4 text-foreground">Company</h4>
                   <div className="space-y-3">
-                    {NAVIGATION_LINKS.map((link) => (
+                    {content.navigation.links.map((link) => (
                       <Link
                         key={link.to}
                         to={link.to}

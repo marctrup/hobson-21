@@ -1,42 +1,12 @@
 import { Link } from "react-router-dom";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useContent } from "@/contexts/LanguageContext";
 import hobsonLogo from "/hobson-logo.png";
-
-const FOOTER_TEXT = {
-  en: {
-    product: "Product",
-    features: "Features",
-    joinPilot: "Join our pilot programme",
-    company: "Company",
-    blog: "Blog",
-    contact: "Contact",
-    learn: "Learn",
-    investmentOpportunity: "Investment Opportunity",
-    dataProtection: "AI Privacy & Data Protection Policy",
-    breachProtocol: "Data Breach Protocol",
-    refundPolicy: "Refund Policy",
-    copyright: "© 2024 Hobson's Choice AI. All rights reserved.",
-  },
-  de: {
-    product: "Produkt",
-    features: "Funktionen",
-    joinPilot: "Pilotprogramm beitreten",
-    company: "Unternehmen",
-    blog: "Blog",
-    contact: "Kontakt",
-    learn: "Lernen",
-    investmentOpportunity: "Investitionsmöglichkeit",
-    dataProtection: "KI-Datenschutzrichtlinie",
-    breachProtocol: "Datenschutzverletzungsprotokoll",
-    refundPolicy: "Rückerstattungsrichtlinie",
-    copyright: "© 2024 Hobson's Choice AI. Alle Rechte vorbehalten.",
-  },
-};
 
 export const HomepageFooter = () => {
   const { language } = useLanguage();
+  const content = useContent();
   const isGerman = language === 'de';
-  const text = FOOTER_TEXT[isGerman ? 'de' : 'en'];
+  const text = content.sharedFooter;
 
   return (
     <footer className="bg-muted/30 border-t py-16">

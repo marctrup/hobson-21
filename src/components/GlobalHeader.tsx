@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { NAVIGATION_LINKS } from "@/config/navigation";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage, useContent } from "@/contexts/LanguageContext";
 
 export const GlobalHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { language } = useLanguage();
+  const content = useContent();
   const isGerman = language === 'de';
 
   // Filter out Learn and Blog links for German site
-  const filteredLinks = NAVIGATION_LINKS.filter(link => {
+  const filteredLinks = content.navigation.links.filter(link => {
     if (isGerman && (link.to === '/learn' || link.to === '/blog')) return false;
     return true;
   });
@@ -50,7 +50,7 @@ export const GlobalHeader = () => {
                 className="text-base text-muted-foreground hover:text-foreground transition-colors"
                 title={link.title}
               >
-                {isGerman ? link.labelDe : link.label}
+                {link.label}
               </Link>
             ))}
           </nav>
@@ -83,7 +83,7 @@ export const GlobalHeader = () => {
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
-                  {isGerman ? link.labelDe : link.label}
+                  {link.label}
                 </Link>
               ))}
             </div>
