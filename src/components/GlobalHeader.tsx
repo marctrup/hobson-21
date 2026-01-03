@@ -4,9 +4,18 @@ import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NAVIGATION_LINKS } from "@/config/navigation";
 import { OptimizedImage } from "@/components/OptimizedImage";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const GlobalHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { language } = useLanguage();
+  const isGerman = language === 'de';
+
+  // Filter out Learn link for German site
+  const filteredLinks = NAVIGATION_LINKS.filter(link => {
+    if (isGerman && link.to === '/learn') return false;
+    return true;
+  });
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -34,7 +43,7 @@ export const GlobalHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            {NAVIGATION_LINKS.map((link) => (
+            {filteredLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
@@ -66,7 +75,7 @@ export const GlobalHeader = () => {
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4">
             <div className="flex flex-col gap-4">
-              {NAVIGATION_LINKS.map((link) => (
+              {filteredLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
