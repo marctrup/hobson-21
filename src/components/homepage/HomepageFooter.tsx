@@ -5,7 +5,7 @@ import hobsonLogo from "/hobson-logo.png";
 export const HomepageFooter = () => {
   const { language } = useLanguage();
   const content = useContent();
-  const hideExtraNavItems = language === 'de' || language === 'ae';
+  const hideExtraNavItems = language === 'de' || language === 'ae' || language === 'fr';
   const text = content.sharedFooter;
 
   return (

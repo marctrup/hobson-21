@@ -2,8 +2,9 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 import { CONTENT } from '@/config/content';
 import { CONTENT_DE } from '@/config/content-de';
 import { CONTENT_AE } from '@/config/content-ae';
+import { CONTENT_FR } from '@/config/content-fr';
 
-export type Language = 'en' | 'de' | 'ae';
+export type Language = 'en' | 'de' | 'ae' | 'fr';
 
 interface LanguageContextType {
   language: Language;
@@ -14,10 +15,11 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 // Content map - add new languages here
-const contentMap: Record<Language, typeof CONTENT | typeof CONTENT_DE | typeof CONTENT_AE | null> = {
+const contentMap: Record<Language, typeof CONTENT | typeof CONTENT_DE | typeof CONTENT_AE | typeof CONTENT_FR | null> = {
   en: CONTENT,
   de: CONTENT_DE,
   ae: CONTENT_AE,
+  fr: CONTENT_FR,
 };
 
 // Helper to get nested value from object using dot notation
