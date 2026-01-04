@@ -23,7 +23,8 @@ export const Homepage = () => {
   const content = useContent();
   const isGerman = language === 'de';
   const isUAE = language === 'ae';
-  const hideExtraNavItems = isGerman || isUAE;
+  const isFrench = language === 'fr';
+  const hideExtraNavItems = isGerman || isUAE || isFrench;
   
   const languages = [
     { code: 'en' as const, name: 'English', flag: (
@@ -52,6 +53,13 @@ export const Homepage = () => {
         <rect y="10" width="60" height="10" fill="#FFFFFF"/>
         <rect y="20" width="60" height="10" fill="#000000"/>
         <rect width="15" height="30" fill="#FF0000"/>
+      </svg>
+    )},
+    { code: 'fr' as const, name: 'Français', flag: (
+      <svg className="w-5 h-auto rounded-sm" viewBox="0 0 60 40" xmlns="http://www.w3.org/2000/svg">
+        <rect width="20" height="40" fill="#002395"/>
+        <rect x="20" width="20" height="40" fill="#FFFFFF"/>
+        <rect x="40" width="20" height="40" fill="#ED2939"/>
       </svg>
     )},
   ];
