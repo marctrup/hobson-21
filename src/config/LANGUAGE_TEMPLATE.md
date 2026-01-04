@@ -128,6 +128,7 @@ No changes needed unless you want language-specific FAQ content.
 
 After adding a new language:
 
+### Desktop Testing
 - [ ] Language appears in dropdown selector
 - [ ] All navigation items translated
 - [ ] Hero section displays correctly
@@ -139,6 +140,20 @@ After adding a new language:
 - [ ] Contact page fully translated
 - [ ] Hidden features work correctly (if applicable)
 - [ ] No broken layouts or overflow issues
+
+### Mobile Testing
+To test on mobile dimensions in Lovable:
+1. Click the phone/tablet/computer icon above the preview window
+2. Select mobile or tablet view
+
+- [ ] Language selector accessible in mobile menu
+- [ ] Mobile navigation shows correct translated items
+- [ ] Hero text fits without overflow
+- [ ] Pricing cards stack correctly
+- [ ] Forms are usable on small screens
+- [ ] Footer links readable and tappable
+- [ ] Chatbot opens and works on mobile
+- [ ] No horizontal scroll issues
 
 ---
 
