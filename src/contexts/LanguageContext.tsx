@@ -3,8 +3,11 @@ import { CONTENT } from '@/config/content';
 import { CONTENT_DE } from '@/config/content-de';
 import { CONTENT_AE } from '@/config/content-ae';
 import { CONTENT_FR } from '@/config/content-fr';
+import { CONTENT_SG } from '@/config/content-sg';
+import { CONTENT_AU } from '@/config/content-au';
+import { CONTENT_NZ } from '@/config/content-nz';
 
-export type Language = 'en' | 'de' | 'ae' | 'fr';
+export type Language = 'en' | 'de' | 'ae' | 'fr' | 'sg' | 'au' | 'nz';
 
 interface LanguageContextType {
   language: Language;
@@ -15,11 +18,14 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 // Content map - add new languages here
-const contentMap: Record<Language, typeof CONTENT | typeof CONTENT_DE | typeof CONTENT_AE | typeof CONTENT_FR | null> = {
+const contentMap: Record<Language, typeof CONTENT | typeof CONTENT_DE | typeof CONTENT_AE | typeof CONTENT_FR | typeof CONTENT_SG | typeof CONTENT_AU | typeof CONTENT_NZ | null> = {
   en: CONTENT,
   de: CONTENT_DE,
   ae: CONTENT_AE,
   fr: CONTENT_FR,
+  sg: CONTENT_SG,
+  au: CONTENT_AU,
+  nz: CONTENT_NZ,
 };
 
 // Helper to get nested value from object using dot notation
