@@ -209,7 +209,7 @@ export const Homepage = () => {
                   {/* Mobile Language Selector */}
                   <div className="border-t pt-4 mt-2">
                     <p className="text-sm text-muted-foreground mb-2">Language</p>
-                    <div className="flex gap-2">
+                    <div className="flex flex-wrap gap-2">
                       {languages.map((lang) => (
                         <button
                           key={lang.code}
@@ -224,6 +224,7 @@ export const Homepage = () => {
                           }`}
                         >
                           {lang.flag}
+                          <span className="text-xs">{lang.name}</span>
                         </button>
                       ))}
                     </div>
