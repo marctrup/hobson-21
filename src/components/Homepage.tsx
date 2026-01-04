@@ -271,8 +271,8 @@ export const Homepage = () => {
                   
                   {/* Mobile Language Selector */}
                   <div className="border-t pt-4 mt-2">
-                    <p className="text-sm text-muted-foreground mb-2">Language</p>
-                    <div className="flex flex-wrap gap-2">
+                    <p className="text-sm text-muted-foreground mb-3">Region / Language</p>
+                    <div className="grid grid-cols-2 gap-2">
                       {languages.map((lang) => (
                         <button
                           key={lang.code}
@@ -280,14 +280,14 @@ export const Homepage = () => {
                             setLanguage(lang.code);
                             closeMobileMenu();
                           }}
-                          className={`flex items-center gap-2 px-3 py-2 text-sm rounded-md border transition-colors ${
+                          className={`flex items-center gap-2 px-3 py-2.5 text-sm rounded-lg border transition-colors ${
                             language === lang.code 
-                              ? 'bg-primary/10 border-primary text-foreground' 
+                              ? 'bg-primary/10 border-primary text-foreground font-medium' 
                               : 'border-border text-muted-foreground hover:bg-muted'
                           }`}
                         >
                           {lang.flag}
-                          <span className="text-xs">{lang.name}</span>
+                          <span className="text-xs truncate">{lang.name}</span>
                         </button>
                       ))}
                     </div>
