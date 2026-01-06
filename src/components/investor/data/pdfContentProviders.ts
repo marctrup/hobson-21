@@ -3413,7 +3413,6 @@ export const getTeamStructuredData = (): TeamData => ({
       { name: "Rochelle Trup", role: "Commercial Lead", description: "Leading commercial strategy, partnerships, and market expansion" },
       { name: "Julia Szaltoni", role: "Product Lead", description: "Driving product strategy, design, and customer outcomes with deep domain understanding of property operations and user behaviour" },
       { name: "Denis Kosenkov", role: "Senior AI Developer", description: "Architecting Hobson's AI systems and execution pipelines" },
-      { name: "Kumar Ankit", role: "AI & Technical Lead", description: "Leading the core AI architecture and platform development" },
       { name: "Harriet Taylor", role: "Marketing Lead", isTBC: true },
       { name: "Max Grey", role: "Sales Lead", isTBC: true },
       { name: "Saul Trup", role: "Client Success Lead", isTBC: true }
@@ -3424,7 +3423,8 @@ export const getTeamStructuredData = (): TeamData => ({
     subtitle: "Experienced advisors providing strategic guidance",
     dividerText: "STRATEGIC GUIDANCE",
     members: [
-      { name: "Nick Doffman", role: "Commercial Advisor", description: "Bringing deep commercial and industry experience to guide strategic growth" }
+      { name: "Nick Doffman", role: "Commercial Advisor", description: "Bringing deep commercial and industry experience to guide strategic growth" },
+      { name: "Kumar Ankit", role: "AI & Technical Advisor", description: "Advising on core AI architecture and platform development" }
     ]
   },
   upcomingAdvisory: {
