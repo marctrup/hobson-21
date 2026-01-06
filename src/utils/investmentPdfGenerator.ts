@@ -2475,49 +2475,58 @@ const renderTeam = (
   doc.text(data.advisors.subtitle, margin + PDF_CONFIG.spacing.textIndent, yPosition + 16);
   yPosition += 24;
 
-  // Advisor cards - use provider content
+  // Advisor cards - 2 columns like core team
   const advisorTextMaxWidth = cardWidth - 32; // Account for initials circle and padding
-  data.advisors.members.forEach((advisor) => {
-    // Calculate card height based on description wrapping
-    doc.setFontSize(PDF_CONFIG.fontSize.caption);
-    const descLines = advisor.description ? doc.splitTextToSize(sanitizeText(advisor.description), advisorTextMaxWidth) : [];
-    const advisorCardHeight = Math.max(28, 24 + descLines.length * 6);
+  const advisorCardHeight = 36; // Fixed height matching core team cards
+  
+  data.advisors.members.forEach((advisor, idx) => {
+    const col = idx % 2;
     
-    checkPageBreak(advisorCardHeight + PDF_CONFIG.spacing.boxGap);
-    renderContentCard(doc, margin, yPosition, cardWidth, advisorCardHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
+    if (col === 0) {
+      checkPageBreak(advisorCardHeight + PDF_CONFIG.spacing.cardGap);
+    }
+    
+    const cardX = margin + col * (cardWidth + PDF_CONFIG.spacing.bulletOffset);
+    const cardY = yPosition;
+    
+    renderContentCard(doc, cardX, cardY, cardWidth, advisorCardHeight, PDF_CONFIG.bgLight, PDF_CONFIG.border);
 
     // Initials
     const initials = advisor.name.split(' ').map(n => n[0]).join('');
     doc.setFillColor(...PDF_CONFIG.bgLight);
     doc.setDrawColor(...PDF_CONFIG.border);
-    doc.circle(margin + PDF_CONFIG.spacing.contentPadding, yPosition + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.spacing.bulletOffset, "FD");
+    doc.circle(cardX + PDF_CONFIG.spacing.contentPadding, cardY + PDF_CONFIG.spacing.contentPadding, PDF_CONFIG.spacing.bulletOffset, "FD");
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
     doc.setFont("helvetica", "bold");
-    doc.text(initials, margin + PDF_CONFIG.spacing.contentPadding, yPosition + 16.5, { align: "center" });
+    doc.text(initials, cardX + PDF_CONFIG.spacing.contentPadding, cardY + 16.5, { align: "center" });
 
     // Name and role
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFont("helvetica", "bold");
     doc.setFontSize(PDF_CONFIG.fontSize.body);
-    doc.text(advisor.name, margin + 26, yPosition + 11);
+    doc.text(advisor.name, cardX + 26, cardY + PDF_CONFIG.spacing.itemGap);
 
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.setFont("helvetica", "normal");
     doc.setFontSize(PDF_CONFIG.fontSize.caption);
-    doc.text(advisor.role, margin + 26, yPosition + 17);
+    doc.text(advisor.role, cardX + 26, cardY + PDF_CONFIG.spacing.textIndent);
 
-    if (descLines.length > 0) {
+    // Description
+    if (advisor.description) {
       doc.setTextColor(...PDF_CONFIG.textGray);
       doc.setFontSize(PDF_CONFIG.fontSize.caption);
-      let descY = yPosition + 24;
-      descLines.forEach((line: string) => {
-        doc.text(line, margin + 26, descY);
-        descY += 6;
+      const descLines = doc.splitTextToSize(sanitizeText(advisor.description), advisorTextMaxWidth);
+      let descY = cardY + 25;
+      descLines.slice(0, 2).forEach((line: string) => {
+        doc.text(line, cardX + 26, descY);
+        descY += PDF_CONFIG.spacing.boxGap;
       });
     }
     
-    yPosition += advisorCardHeight + PDF_CONFIG.spacing.boxGap;
+    if (col === 1 || idx === data.advisors.members.length - 1) {
+      yPosition += advisorCardHeight + PDF_CONFIG.spacing.boxGap;
+    }
   });
 
   yPosition += PDF_CONFIG.spacing.circleOffset - PDF_CONFIG.spacing.boxGap;
