@@ -600,7 +600,7 @@ const sections = [
   {
     id: "marketing-sales",
     title: "Marketing Strategy",
-    subtitle: "Go-to-Market Plan",
+    subtitle: "Marketing & Branding",
     icon: Target,
     color: "from-teal-500/10 to-teal-600/10",
     iconColor: "text-teal-600",
