@@ -7638,7 +7638,7 @@ const renderGlobalJustification = (
 };
 
 /**
- * Render PDF provider content as visual cards (used for Marketing & Brand Strategy tabs)
+ * Render PDF provider content as visual cards (used for Marketing Strategy tabs)
  * This avoids the plain "text dump" fallback while keeping content sourced from pdfContentProviders.
  */
 const renderProviderCards = (
@@ -15033,7 +15033,7 @@ const renderTabContent = (
     } else if (componentType === "globalJustification") {
       yPosition = renderGlobalJustification(doc, yPosition, margin, pageWidth, pageHeight);
     }
-    // Marketing & Brand Strategy renderers
+    // Marketing Strategy renderers
     else if (componentType === "executiveContext") {
       yPosition = renderExecutiveContext(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "situationAnalysis") {
