@@ -1560,7 +1560,7 @@ export const getWhyNowPdfContent = (): string[] => [
 ];
 
 export const getMarketingSalesStrategyPdfContent = (): string[] => [
-  "Marketing and Sales Strategy - Go-to-Market Plan:",
+  "Marketing and Sales Strategy - Marketing & Branding:",
   "",
   "Multi-channel approach targeting UK property professionals.",
   "",
