@@ -35,11 +35,6 @@ const coreTeam: TeamMember[] = [
     description: "Architecting Hobson's AI systems and execution pipelines",
   },
   {
-    name: "Kumar Ankit",
-    role: "AI & Technical Lead",
-    description: "Leading the core AI architecture and platform development",
-  },
-  {
     name: "Harriet Taylor",
     role: "Marketing Lead",
     isTBC: true,
@@ -61,6 +56,11 @@ const advisors: TeamMember[] = [
     name: "Nick Doffman",
     role: "Commercial Advisor",
     description: "Bringing deep commercial and industry experience to guide strategic growth",
+  },
+  {
+    name: "Kumar Ankit",
+    role: "AI & Technical Advisor",
+    description: "Advising on core AI architecture and platform development",
   },
 ];
 
