@@ -599,7 +599,7 @@ const sections = [
   },
   {
     id: "marketing-sales",
-    title: "Marketing & Brand Strategy",
+    title: "Marketing Strategy",
     subtitle: "Go-to-Market Plan",
     icon: Target,
     color: "from-teal-500/10 to-teal-600/10",
@@ -1209,7 +1209,7 @@ const InvestmentOpportunity = () => {
                           "Product Vision & Roadmap",
                           "Commercials",
                           "Leadership & Team",
-                          "Marketing & Brand Strategy",
+                          "Marketing Strategy",
                           "Acquisition & Sales Strategy",
                           "Financial Overview & Assumptions"
                         ].map((title) => (
