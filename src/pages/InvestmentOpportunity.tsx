@@ -930,7 +930,7 @@ const sections = [
   },
   {
     id: "financial-downloads",
-    title: "Financial Downloads",
+    title: "Financial Modeling Downloads",
     subtitle: "Detailed Financial Spreadsheets",
     icon: FileSpreadsheet,
     color: "from-emerald-500/10 to-emerald-600/10",
@@ -1225,7 +1225,7 @@ const InvestmentOpportunity = () => {
                       <ul className="space-y-1">
                         <li className="flex items-center gap-2 text-sm text-muted-foreground">
                           <span className="w-1.5 h-1.5 rounded-full bg-muted-foreground/50" />
-                          Financial Downloads
+                          Financial Modeling Downloads
                           <span className="text-xs text-muted-foreground/70">(download separately)</span>
                         </li>
                       </ul>
