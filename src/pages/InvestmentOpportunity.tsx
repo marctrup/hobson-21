@@ -1785,9 +1785,11 @@ const InvestmentOpportunity = () => {
                                 }`}>
                                   <Users className={`w-6 h-6 ${isAdvisoryPage ? "text-sky-700" : "text-primary"}`} />
                                 </div>
-                                <p className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed font-medium">
-                                  {selectedSection.pages[currentPageIndex].content.overview}
-                                </p>
+                                <div className="text-sm sm:text-base md:text-lg text-foreground leading-relaxed font-medium space-y-4">
+                                  {selectedSection.pages[currentPageIndex].content.overview.split('\n\n').map((paragraph, idx) => (
+                                    <p key={idx}>{paragraph}</p>
+                                  ))}
+                                </div>
                               </div>
                             </div>
                           );
