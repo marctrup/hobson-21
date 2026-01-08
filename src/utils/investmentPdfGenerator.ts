@@ -14925,21 +14925,39 @@ const renderTabContent = (
     doc.setFontSize(PDF_CONFIG.fontSize.statLarge);
     doc.setFont("helvetica", "normal");
     const cleanedOverview = sanitizeText(tab.content.overview);
-    const overviewLines = doc.splitTextToSize(cleanedOverview, maxWidth - 16);
     
-    // Calculate box height with proper vertical padding
+    // Split by double newlines for paragraphs
+    const paragraphs = cleanedOverview.split('\n\n').filter(p => p.trim());
     const lineHeight = 6;
-    const contentHeight = overviewLines.length * lineHeight;
-    const verticalPadding = 10; // Equal top and bottom padding
-    const boxHeight = contentHeight + verticalPadding * 2;
+    const paragraphGap = 4;
+    
+    // Calculate total content height
+    let totalContentHeight = 0;
+    const allParagraphLines: string[][] = [];
+    paragraphs.forEach((paragraph, idx) => {
+      const lines = doc.splitTextToSize(paragraph.trim(), maxWidth - 16);
+      allParagraphLines.push(lines);
+      totalContentHeight += lines.length * lineHeight;
+      if (idx < paragraphs.length - 1) {
+        totalContentHeight += paragraphGap;
+      }
+    });
+    
+    const verticalPadding = 10;
+    const boxHeight = totalContentHeight + verticalPadding * 2;
     
     doc.rect(margin, yPosition, maxWidth, boxHeight, "F");
     
-    // Center text vertically in box
-    let overviewY = yPosition + verticalPadding + 4; // 4pt offset for text baseline
-    overviewLines.forEach((line: string) => {
-      doc.text(line, margin + 8, overviewY);
-      overviewY += lineHeight;
+    // Render paragraphs
+    let overviewY = yPosition + verticalPadding + 4;
+    allParagraphLines.forEach((lines, idx) => {
+      lines.forEach((line: string) => {
+        doc.text(line, margin + 8, overviewY);
+        overviewY += lineHeight;
+      });
+      if (idx < allParagraphLines.length - 1) {
+        overviewY += paragraphGap;
+      }
     });
     yPosition += boxHeight + 10;
   }
