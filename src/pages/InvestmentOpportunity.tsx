@@ -480,7 +480,7 @@ const sections = [
         image: aiArchitectureDiagram,
         content: {
           overview:
-            "When RAG fell short, we adapted fast—pivoting to a structured retrieval model built around the realities of property data. AI now acts surgically across the journey, giving us predictable, enterprise-grade performance.",
+            "When traditional RAG approaches failed to meet the accuracy and reliability required for property and legal data, we moved quickly—building a structured, governed retrieval model designed for enterprise use. This gives us predictable performance, clear auditability, and a defensible system of record.\n\nWith this foundation in place, we will reintroduce RAG selectively to accelerate onboarding, broaden question coverage, and enhance the user experience through discovery and summarisation—without compromising the integrity of governed facts or legal authority.",
           sections: [],
         },
       },
