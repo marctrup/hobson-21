@@ -13,12 +13,14 @@ import {
 
 const RevenueGrowthVisual = () => {
   const revenueData = [
-    { year: "2027", ukRevenue: 1.17, globalRevenue: 0, total: 1.17 },
+    { year: "2027", ukRevenue: 0.708, globalRevenue: 0, total: 0.708 },
     { year: "2028", ukRevenue: 1.46, globalRevenue: 5.25, total: 6.71 },
-    { year: "2029", ukRevenue: 1.75, globalRevenue: 7.35, total: 9.10 },
+    { year: "2029", ukRevenue: 1.75, globalRevenue: 7.35, total: 9.1 },
     { year: "2030", ukRevenue: 2.04, globalRevenue: 10.49, total: 12.53 },
     { year: "2031", ukRevenue: 2.33, globalRevenue: 12.59, total: 14.92 },
   ];
+
+  const formatMillions = (value: number) => (value === 0.708 ? value.toFixed(3) : value.toFixed(2));
 
   const phases = [
     { phase: "2026", focus: "Platform build, pilots, validation" },
@@ -78,9 +80,9 @@ const RevenueGrowthVisual = () => {
               {revenueData.map((item, index) => (
                 <tr key={index} className="border-b border-border/50">
                   <td className="py-3 px-4 text-sm font-semibold text-foreground">{item.year}</td>
-                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£{item.ukRevenue.toFixed(2)}M</td>
-                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">{item.globalRevenue > 0 ? `£${item.globalRevenue.toFixed(2)}M` : "—"}</td>
-                  <td className="py-3 px-4 text-sm font-semibold text-primary text-right">£{item.total.toFixed(2)}M</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£{formatMillions(item.ukRevenue)}M</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">{item.globalRevenue > 0 ? `£${formatMillions(item.globalRevenue)}M` : "—"}</td>
+                  <td className="py-3 px-4 text-sm font-semibold text-primary text-right">£{formatMillions(item.total)}M</td>
                 </tr>
               ))}
             </tbody>
@@ -197,9 +199,9 @@ const RevenueGrowthVisual = () => {
               {revenueData.map((item, index) => (
                 <tr key={index} className="border-b border-border/50">
                   <td className="py-2 px-3 text-xs font-medium text-foreground">{item.year}</td>
-                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">£{item.ukRevenue.toFixed(2)}M</td>
-                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">{item.globalRevenue > 0 ? `£${item.globalRevenue.toFixed(2)}M` : "—"}</td>
-                  <td className="py-2 px-3 text-xs font-semibold text-primary text-right">£{item.total.toFixed(2)}M</td>
+                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">£{formatMillions(item.ukRevenue)}M</td>
+                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">{item.globalRevenue > 0 ? `£${formatMillions(item.globalRevenue)}M` : "—"}</td>
+                  <td className="py-2 px-3 text-xs font-semibold text-primary text-right">£{formatMillions(item.total)}M</td>
                 </tr>
               ))}
             </tbody>
@@ -254,7 +256,7 @@ const RevenueGrowthVisual = () => {
                 }}
               />
               <Tooltip 
-                formatter={(value: number) => [`£${value.toFixed(2)}M`, '']}
+                formatter={(value: number) => [`£${formatMillions(value)}M`, ""]}
                 contentStyle={{ 
                   backgroundColor: 'hsl(var(--background))',
                   border: '1px solid hsl(var(--border))',
