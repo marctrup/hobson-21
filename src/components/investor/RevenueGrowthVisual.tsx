@@ -13,14 +13,19 @@ import {
 
 const RevenueGrowthVisual = () => {
   const revenueData = [
-    { year: "2027", ukRevenue: 0.708, globalRevenue: 0, total: 0.708 },
-    { year: "2028", ukRevenue: 1.46, globalRevenue: 5.25, total: 6.71 },
-    { year: "2029", ukRevenue: 1.75, globalRevenue: 7.35, total: 9.1 },
-    { year: "2030", ukRevenue: 2.04, globalRevenue: 10.49, total: 12.53 },
-    { year: "2031", ukRevenue: 2.33, globalRevenue: 12.59, total: 14.92 },
+    { year: "2026", ukRevenue: 0, globalRevenue: 0, total: 0 },
+    { year: "2027", ukRevenue: 708368, globalRevenue: 0, total: 708368 },
+    { year: "2028", ukRevenue: 1770920, globalRevenue: 6015707, total: 7786628 },
+    { year: "2029", ukRevenue: 3541840, globalRevenue: 18047122, total: 21588963 },
+    { year: "2030", ukRevenue: 5666945, globalRevenue: 36094244, total: 41761189 },
+    { year: "2031", ukRevenue: 7792049, globalRevenue: 72188489, total: 79980538 },
   ];
 
-  const formatMillions = (value: number) => (value === 0.708 ? value.toFixed(3) : value.toFixed(2));
+  const formatCurrency = (value: number) => {
+    if (value === 0) return "£0";
+    if (value >= 1000000) return `£${(value / 1000000).toFixed(1)}M`;
+    return `£${value.toLocaleString()}`;
+  };
 
   const phases = [
     { phase: "2026", focus: "Platform build, pilots, validation" },
@@ -80,16 +85,16 @@ const RevenueGrowthVisual = () => {
               {revenueData.map((item, index) => (
                 <tr key={index} className="border-b border-border/50">
                   <td className="py-3 px-4 text-sm font-semibold text-foreground">{item.year}</td>
-                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£{formatMillions(item.ukRevenue)}M</td>
-                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">{item.globalRevenue > 0 ? `£${formatMillions(item.globalRevenue)}M` : "—"}</td>
-                  <td className="py-3 px-4 text-sm font-semibold text-primary text-right">£{formatMillions(item.total)}M</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">{formatCurrency(item.ukRevenue)}</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">{item.globalRevenue > 0 ? formatCurrency(item.globalRevenue) : "—"}</td>
+                  <td className="py-3 px-4 text-sm font-semibold text-primary text-right">{formatCurrency(item.total)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20 text-center">
-          <span className="text-sm font-semibold text-primary">5-Year CAGR: ~90%</span>
+          <span className="text-sm font-semibold text-primary">5-Year CAGR: ~160%</span>
         </div>
       </div>
 
@@ -199,9 +204,9 @@ const RevenueGrowthVisual = () => {
               {revenueData.map((item, index) => (
                 <tr key={index} className="border-b border-border/50">
                   <td className="py-2 px-3 text-xs font-medium text-foreground">{item.year}</td>
-                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">£{formatMillions(item.ukRevenue)}M</td>
-                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">{item.globalRevenue > 0 ? `£${formatMillions(item.globalRevenue)}M` : "—"}</td>
-                  <td className="py-2 px-3 text-xs font-semibold text-primary text-right">£{formatMillions(item.total)}M</td>
+                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">{formatCurrency(item.ukRevenue)}</td>
+                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">{item.globalRevenue > 0 ? formatCurrency(item.globalRevenue) : "—"}</td>
+                  <td className="py-2 px-3 text-xs font-semibold text-primary text-right">{formatCurrency(item.total)}</td>
                 </tr>
               ))}
             </tbody>
@@ -231,7 +236,7 @@ const RevenueGrowthVisual = () => {
       <div className="p-6 rounded-xl bg-background border border-border">
         <h4 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
           <TrendingUp className="w-5 h-5 text-primary" />
-          Hobson Revenue Growth (2027–2031)
+          Hobson Revenue Growth (2026–2031)
         </h4>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
@@ -256,7 +261,7 @@ const RevenueGrowthVisual = () => {
                 }}
               />
               <Tooltip 
-                formatter={(value: number) => [`£${formatMillions(value)}M`, ""]}
+                formatter={(value: number) => [formatCurrency(value), ""]}
                 contentStyle={{ 
                   backgroundColor: 'hsl(var(--background))',
                   border: '1px solid hsl(var(--border))',
@@ -287,19 +292,19 @@ const RevenueGrowthVisual = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20 text-center">
           <p className="text-xs text-muted-foreground mb-1">2027 (UK Launch)</p>
-          <p className="text-xl font-bold text-amber-600 dark:text-amber-400">£0.708M</p>
+          <p className="text-xl font-bold text-amber-600 dark:text-amber-400">£708,368</p>
         </div>
         <div className="p-4 rounded-xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20 text-center">
           <p className="text-xs text-muted-foreground mb-1">2028 (Global Start)</p>
-          <p className="text-xl font-bold text-sky-600 dark:text-sky-400">£6.71M</p>
+          <p className="text-xl font-bold text-sky-600 dark:text-sky-400">£7.8M</p>
         </div>
         <div className="p-4 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 text-center">
-          <p className="text-xs text-muted-foreground mb-1">2031 (Year 5)</p>
-          <p className="text-xl font-bold text-primary">£14.92M</p>
+          <p className="text-xs text-muted-foreground mb-1">2031 (Year 6)</p>
+          <p className="text-xl font-bold text-primary">£80.0M</p>
         </div>
         <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 text-center">
           <p className="text-xs text-muted-foreground mb-1">5-Year CAGR</p>
-          <p className="text-xl font-bold text-green-600 dark:text-green-400">~90%</p>
+          <p className="text-xl font-bold text-green-600 dark:text-green-400">~160%</p>
         </div>
       </div>
 
