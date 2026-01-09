@@ -244,7 +244,7 @@ const BurnRateAssumptionsVisual = () => {
               <span className="bg-primary text-primary-foreground text-xs px-2 py-1 rounded-full w-fit">Profitable Year 1</span>
             </div>
             <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="bg-background rounded p-2"><span className="text-muted-foreground text-xs block">Revenue</span><span className="font-semibold text-foreground">£1.17M</span></div>
+              <div className="bg-background rounded p-2"><span className="text-muted-foreground text-xs block">Revenue</span><span className="font-semibold text-foreground">£0.708M</span></div>
               <div className="bg-background rounded p-2"><span className="text-muted-foreground text-xs block">Variable</span><span className="font-semibold text-foreground">£21,450</span></div>
               <div className="bg-background rounded p-2"><span className="text-muted-foreground text-xs block">Costs</span><span className="font-semibold text-foreground">£92,250</span></div>
               <div className="bg-primary/10 rounded p-2"><span className="text-muted-foreground text-xs block">Surplus</span><span className="font-bold text-primary">£5,250</span></div>

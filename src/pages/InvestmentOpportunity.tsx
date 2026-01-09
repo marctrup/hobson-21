@@ -806,7 +806,7 @@ const sections = [
             {
               title: "Five-Year Financial Model Delivers",
               items: [
-                "Revenue growth from £1.17M in 2027 to £14.92M by 2031",
+                "Revenue growth from £0.708M in 2027 to £14.92M by 2031",
                 "~90% five-year CAGR",
                 "85–90%+ gross margins with net margins expanding toward 40–55% at scale",
                 "EBITDA breakeven above £5M ARR, reached early in the forecast period",

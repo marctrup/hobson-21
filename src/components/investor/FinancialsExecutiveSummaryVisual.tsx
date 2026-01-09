@@ -3,7 +3,7 @@ import { TrendingUp, Target, BarChart3, DollarSign, Zap } from "lucide-react";
 
 export const FinancialsExecutiveSummaryVisual: React.FC = () => {
   const metrics = [
-    { label: "Revenue growth from £1.17M in 2027 to £14.92M by 2031", icon: TrendingUp },
+    { label: "Revenue growth from £0.708M in 2027 to £14.92M by 2031", icon: TrendingUp },
     { label: "~90% five-year CAGR", icon: BarChart3 },
     { label: "85–90%+ gross margins with net margins expanding toward 40–55% at scale", icon: Target },
     { label: "EBITDA breakeven above £5M ARR, reached early in the forecast period", icon: DollarSign },

@@ -23,7 +23,7 @@ const CACAssumptionsVisual = () => {
             <h4 className="font-semibold text-foreground mt-3 lg:mt-4 mb-2 lg:mb-3 text-sm lg:text-base">Revenue (ARR)</h4>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 mb-4 lg:mb-6">
               {[
-                { year: "2027", value: "£1.17M" },
+                { year: "2027", value: "£0.708M" },
                 { year: "2028", value: "£6.71M" },
                 { year: "2029", value: "£9.10M" },
                 { year: "2030", value: "£12.53M" },
@@ -184,7 +184,7 @@ const CACAssumptionsVisual = () => {
                 </TableHeader>
                 <TableBody>
                   {[
-                    { year: "2027", revenue: "£1.17M", spend: "£140k", customers: "2,352", cac: "£60" },
+                    { year: "2027", revenue: "£0.708M", spend: "£140k", customers: "2,352", cac: "£60" },
                     { year: "2028", revenue: "£6.71M", spend: "£805k", customers: "11,172", cac: "£72" },
                     { year: "2029", revenue: "£9.10M", spend: "£1.09M", customers: "4,822", cac: "£226" },
                     { year: "2030", revenue: "£12.53M", spend: "£1.50M", customers: "6,938", cac: "£217" },
