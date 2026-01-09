@@ -285,7 +285,7 @@ const RevenueGrowthVisual = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20 text-center">
           <p className="text-xs text-muted-foreground mb-1">2027 (UK Launch)</p>
-          <p className="text-xl font-bold text-amber-600 dark:text-amber-400">£1.17M</p>
+          <p className="text-xl font-bold text-amber-600 dark:text-amber-400">£0.708M</p>
         </div>
         <div className="p-4 rounded-xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20 text-center">
           <p className="text-xs text-muted-foreground mb-1">2028 (Global Start)</p>

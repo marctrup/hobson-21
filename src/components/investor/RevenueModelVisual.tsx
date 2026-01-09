@@ -32,7 +32,7 @@ const RevenueModelVisual = () => {
   ];
 
   const revenueProjection = [
-    { year: "2027", ukRevenue: "£1.17M", globalRevenue: "—", totalRevenue: "£1.17M" },
+    { year: "2027", ukRevenue: "£0.708M", globalRevenue: "—", totalRevenue: "£0.708M" },
     { year: "2028", ukRevenue: "£1.46M", globalRevenue: "£5.25M", totalRevenue: "£6.71M" },
     { year: "2029", ukRevenue: "£1.75M", globalRevenue: "£7.35M", totalRevenue: "£9.10M" },
     { year: "2030", ukRevenue: "£2.04M", globalRevenue: "£10.49M", totalRevenue: "£12.53M" },
@@ -269,7 +269,7 @@ const RevenueModelVisual = () => {
           <p><span className="text-muted-foreground">ARPU:</span> <span className="font-medium">£495.72 annually</span></p>
           <p><span className="text-muted-foreground">UK Penetration:</span> <span className="font-medium">1.0% → 2.0% (2027–2031)</span></p>
           <p><span className="text-muted-foreground">Global Penetration:</span> <span className="font-medium">0.25% → 0.6% (2028–2031)</span></p>
-          <p><span className="text-muted-foreground">Revenue Growth:</span> <span className="font-medium text-primary">£1.17M → £14.92M (2027–2031)</span></p>
+          <p><span className="text-muted-foreground">Revenue Growth:</span> <span className="font-medium text-primary">£0.708M → £14.92M (2027–2031)</span></p>
         </div>
       </div>
     </div>
