@@ -33,11 +33,19 @@ const RevenueGrowthVisual = () => {
     { phase: "2028+", focus: "UK scale and global expansion" },
   ];
 
-  const marketPenetration = [
-    { year: "2027", share: "0.4%" },
-    { year: "2028", share: "1.4%" },
-    { year: "2029", share: "3%" },
-    { year: "2030", share: "6–10% category leadership" },
+  const ukPenetration = [
+    { year: "2027", share: "0.5%" },
+    { year: "2028", share: "1.5%" },
+    { year: "2029", share: "3.0%" },
+    { year: "2030", share: "4.5%" },
+    { year: "2031", share: "5.5%" },
+  ];
+
+  const globalPenetration = [
+    { year: "2028", share: "0.25%" },
+    { year: "2029", share: "1.0%" },
+    { year: "2030", share: "2.0%" },
+    { year: "2031", share: "3.0%" },
   ];
 
   return (
@@ -151,23 +159,57 @@ const RevenueGrowthVisual = () => {
           <Users className="w-5 h-5 text-primary" />
           <h4 className="text-lg font-semibold text-foreground">Market Penetration</h4>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">Year</th>
-                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">UK Share</th>
-              </tr>
-            </thead>
-            <tbody>
-              {marketPenetration.map((item, index) => (
-                <tr key={index} className="border-b border-border/50">
-                  <td className="py-3 px-4 text-sm font-semibold text-foreground">{item.year}</td>
-                  <td className="py-3 px-4 text-sm text-primary font-medium">{item.share}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* UK Penetration */}
+          <div>
+            <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+              <Target className="w-4 h-4 text-amber-600" />
+              UK Penetration
+            </h5>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2 px-3 text-sm font-semibold text-foreground">Year</th>
+                    <th className="text-left py-2 px-3 text-sm font-semibold text-foreground">Share</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {ukPenetration.map((item, index) => (
+                    <tr key={index} className="border-b border-border/50">
+                      <td className="py-2 px-3 text-sm font-semibold text-foreground">{item.year}</td>
+                      <td className="py-2 px-3 text-sm text-amber-600 font-medium">{item.share}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          {/* Global Penetration */}
+          <div>
+            <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+              <Globe className="w-4 h-4 text-sky-600" />
+              Global Penetration
+            </h5>
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2 px-3 text-sm font-semibold text-foreground">Year</th>
+                    <th className="text-left py-2 px-3 text-sm font-semibold text-foreground">Share</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {globalPenetration.map((item, index) => (
+                    <tr key={index} className="border-b border-border/50">
+                      <td className="py-2 px-3 text-sm font-semibold text-foreground">{item.year}</td>
+                      <td className="py-2 px-3 text-sm text-sky-600 font-medium">{item.share}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
 
