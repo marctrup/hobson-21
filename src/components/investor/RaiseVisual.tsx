@@ -28,7 +28,7 @@ export const RaiseVisual = () => {
           </div>
           <div>
             <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-1">Funding Requirement</p>
-            <h3 className="text-3xl font-bold text-primary">£1.8M</h3>
+            <h3 className="text-3xl font-bold text-primary">£5M</h3>
           </div>
         </div>
       </div>

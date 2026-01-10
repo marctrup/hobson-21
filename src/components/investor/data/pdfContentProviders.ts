@@ -815,7 +815,7 @@ export const getTeamCredibilityPdfContent = (): string[] => [
 export const getRaisePdfContent = (): string[] => [
   "RAISE",
   "",
-  "Funding Requirement: GBP 1.8M",
+  "Funding Requirement: GBP 5M",
   "",
   "Use of Funds:",
   "",
@@ -4763,7 +4763,7 @@ export const getFinancialsExecutiveSummaryPdfContent = (): string[] => [
   "",
   "The business converts existing, locked-in operating costs into high-margin, recurring revenue, producing a growth model that is both aggressive in trajectory and unusually low in commercial risk.",
   "",
-  "With a GBP 1.8M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens.",
+  "With a GBP 5M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens.",
   "",
   "FIVE-YEAR FINANCIAL MODEL DELIVERS:",
   "",
@@ -4784,7 +4784,7 @@ export const getFinancialsExecutiveSummaryStructuredData = () => ({
   context: [
     "This is not a conventional SaaS growth story. It is the monetisation of unavoidable structural change in one of the world's largest, most document-intensive industries, driven by regulatory escalation, labour scarcity, margin compression, and compounding operational complexity.",
     "The business converts existing, locked-in operating costs into high-margin, recurring revenue, producing a growth model that is both aggressive in trajectory and unusually low in commercial risk.",
-    "With a GBP 1.8M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens."
+    "With a GBP 5M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens."
   ],
   fiveYearMetrics: [
     { label: "Revenue growth from GBP 708,368 in 2027 to GBP 79.98M by 2031", icon: "TrendingUp" },
@@ -5817,7 +5817,7 @@ export const getStrategicApproachStructuredData = () => ({
 export const getRaiseStructuredData = () => ({
   fundingRequirement: {
     label: "FUNDING REQUIREMENT",
-    amount: "GBP 1.8M"
+    amount: "GBP 5M"
   },
   useOfFunds: {
     title: "Use of Funds",
