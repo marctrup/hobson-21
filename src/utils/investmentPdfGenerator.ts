@@ -5395,7 +5395,7 @@ const renderFinancialsExecutiveSummary = (
     "Hobson's financial profile reflects the creation of a new infrastructure layer for Real Estate operations.",
     "This is not a conventional SaaS growth story. It is the monetisation of unavoidable structural change in one of the world's largest, most document-intensive industries, driven by regulatory escalation, labour scarcity, margin compression, and compounding operational complexity.",
     "The business converts existing, locked-in operating costs into high-margin, recurring revenue, producing a growth model that is both aggressive in trajectory and unusually low in commercial risk.",
-    "With a £1.8M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens."
+    "With a £5M seed round, Hobson funds the full 2026 build year and enters 2027 fully staffed, production-ready, and positioned for rapid commercial expansion. From close to launch, the company becomes cash flow positive quickly, with operating leverage increasing each year as adoption compounds and automation deepens."
   ];
 
   introParagraphs.forEach((para) => {
@@ -5480,7 +5480,7 @@ const renderCapitalRaiseStrategy = (
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Target Raise: £1.8M Seed Round", margin + 8, yPosition + 11);
+  doc.text("Target Raise: £5M Seed Round", margin + 8, yPosition + 11);
   yPosition += 26;
 
   // Introduction paragraphs
@@ -5490,7 +5490,7 @@ const renderCapitalRaiseStrategy = (
 
   const introParagraphs = [
     "This raises funds for the full 2026 build year, supports a strong UK commercial launch in 2027, and establishes Hobson as the category-defining intelligence layer for Real Estate operations.",
-    "The £1.8M raise is calibrated for optimal execution: accelerated product velocity, full go-to-market activation, early enterprise engagement, and controlled international readiness."
+    "The £5M raise is calibrated for optimal execution: accelerated product velocity, full go-to-market activation, early enterprise engagement, and controlled international readiness."
   ];
 
   introParagraphs.forEach((para) => {
@@ -5611,7 +5611,7 @@ const renderCapitalRaiseStrategy = (
 
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.text("The £1.8M seed round:", margin, yPosition);
+  doc.text("The £5M seed round:", margin, yPosition);
   yPosition += 10;
 
   const burnPoints = [

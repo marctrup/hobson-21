@@ -1172,7 +1172,7 @@ export const getCapitalRaiseStrategyPdfContent = (): string[] => [
   "GBP 1.5M - Minimum Credible (12-18 months runway)",
   "Covers early operating costs and supports a stable launch phase. Minimum viable raise.",
   "",
-  "GBP 1.8M - Balanced Seed [RECOMMENDED] (18-22 months runway)",
+  "GBP 5M - Balanced Seed [RECOMMENDED] (18-22 months runway)",
   "Supports product velocity, marketing execution, and early enterprise engagement.",
   "Strategically optimal level for confident execution.",
   "",
