@@ -23,7 +23,7 @@ const CapitalRaiseStrategyVisual = () => {
       <div className="text-center">
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full">
           <DollarSign className="w-5 h-5 text-primary" />
-          <span className="text-lg font-semibold text-primary">Target Raise: £1.8M Seed Round</span>
+          <span className="text-lg font-semibold text-primary">Target Raise: £5M Seed Round</span>
         </div>
       </div>
 
@@ -33,7 +33,7 @@ const CapitalRaiseStrategyVisual = () => {
           This raises funds for the full 2026 build year, supports a strong UK commercial launch in 2027, and establishes Hobson as the category-defining intelligence layer for Real Estate operations.
         </p>
         <p className="text-muted-foreground leading-relaxed">
-          The £1.8M raise is calibrated for optimal execution: accelerated product velocity, full go-to-market activation, early enterprise engagement, and controlled international readiness.
+          The £5M raise is calibrated for optimal execution: accelerated product velocity, full go-to-market activation, early enterprise engagement, and controlled international readiness.
         </p>
         <div className="bg-primary/5 border border-primary/20 rounded-lg p-4">
           <p className="text-foreground font-semibold text-center">This capital establishes readiness, not loss coverage.</p>
@@ -122,7 +122,7 @@ const CapitalRaiseStrategyVisual = () => {
           Burn is planned to be <span className="text-foreground font-bold">pre-revenue</span>.
         </p>
         
-        <p className="text-foreground font-medium mb-3">The £1.8M seed round:</p>
+        <p className="text-foreground font-medium mb-3">The £5M seed round:</p>
         
         <div className="space-y-2 mb-6">
           {burnPoints.map((point, index) => (
