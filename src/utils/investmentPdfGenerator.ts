@@ -7001,10 +7001,10 @@ const renderRevenueGrowth = (
   yPosition = checkPageBreak(doc, yPosition, 36, pageHeight, margin);
   const statsColWidth = (maxWidth - 18) / 4;
   const stats = [
-    { label: "2027 (UK Launch)", value: "GBP 1.17M", color: PDF_CONFIG.amber, bgColor: PDF_CONFIG.amberBg },
-    { label: "2028 (Global Start)", value: "GBP 6.71M", color: PDF_CONFIG.blue, bgColor: PDF_CONFIG.blueBg },
-    { label: "2031 (Year 5)", value: "GBP 14.92M", color: PDF_CONFIG.primaryColor, bgColor: PDF_CONFIG.primaryBgLight },
-    { label: "5-Year CAGR", value: "~90%", color: PDF_CONFIG.emerald, bgColor: PDF_CONFIG.emeraldBg },
+    { label: "2027 (UK Launch)", value: "£708k", color: PDF_CONFIG.amber, bgColor: PDF_CONFIG.amberBg },
+    { label: "2028 (Global Start)", value: "£6.4M", color: PDF_CONFIG.blue, bgColor: PDF_CONFIG.blueBg },
+    { label: "2031 (Year 5)", value: "£99.7M", color: PDF_CONFIG.primaryColor, bgColor: PDF_CONFIG.primaryBgLight },
+    { label: "5-Year CAGR", value: "~160%", color: PDF_CONFIG.emerald, bgColor: PDF_CONFIG.emeraldBg },
   ];
 
   stats.forEach((stat, idx) => {
