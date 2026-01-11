@@ -95,6 +95,7 @@ import { StrategicContextPositioningVisual } from "@/components/investor/Strateg
 import { SegmentationStrategyVisual } from "@/components/investor/SegmentationStrategyVisual";
 import { ThePropositionVisual } from "@/components/investor/ThePropositionVisual";
 import { FinancialsExecutiveSummaryVisual } from "@/components/investor/FinancialsExecutiveSummaryVisual";
+import AssumptionsVisual from "@/components/investor/AssumptionsVisual";
 
 import CapitalRaiseStrategyVisual from "@/components/investor/CapitalRaiseStrategyVisual";
 import { getCompetitorPdfContent } from "@/components/investor/data/competitorData";
@@ -1631,6 +1632,10 @@ const InvestmentOpportunity = () => {
                       <CACAssumptionsVisual />
                     )}
 
+                    {/* Custom Visual Component for Assumptions */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "assumptions" && (
+                      <AssumptionsVisual />
+                    )}
 
                     {/* Custom Visual Component for Global Justification */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "globalJustification" && (
