@@ -5503,40 +5503,73 @@ const renderPLGrowth = (
 
   // Bar Chart Visual Representation
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 65, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 75, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("P/L Forecast Chart (GBP M)", margin + 8, yPosition + 10);
+  doc.text("P/L Forecast Chart", margin + 8, yPosition + 10);
   
   // Draw simplified bar chart
-  const chartY = yPosition + 18;
-  const chartHeight = 38;
+  const chartX = margin + 28;
+  const chartY = yPosition + 20;
+  const chartWidth = maxWidth - 50;
+  const chartHeight = 42;
   const barWidth = 18;
   const maxValue = 100;
-  const barSpacing = (maxWidth - 40) / 6;
+  const barSpacing = chartWidth / 6;
   
-  // Y-axis reference line at 0
+  // Y-axis
   doc.setDrawColor(...PDF_CONFIG.textGray);
-  doc.setLineWidth(0.2);
-  const zeroLineY = chartY + chartHeight * 0.7;
-  doc.line(margin + 15, zeroLineY, margin + maxWidth - 10, zeroLineY);
+  doc.setLineWidth(0.3);
+  doc.line(chartX, chartY, chartX, chartY + chartHeight);
+  
+  // Y-axis label (rotated text simulation - draw vertically)
   doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("0", margin + 10, zeroLineY + 2);
+  doc.setFont("helvetica", "bold");
+  // Draw Y-axis label text vertically (char by char)
+  const yLabel = "GBP M";
+  let yLabelY = chartY + chartHeight / 2 + 6;
+  doc.text(yLabel, margin + 4, yLabelY, { angle: 90 });
+  
+  // Y-axis tick labels
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  const yTicks = [100, 50, 0, -10];
+  yTicks.forEach((tick) => {
+    const tickY = tick >= 0 
+      ? chartY + (1 - tick / 100) * (chartHeight * 0.75)
+      : chartY + chartHeight * 0.75 + Math.abs(tick) / 100 * (chartHeight * 0.25);
+    doc.text(tick.toString(), chartX - 8, tickY + 1);
+    doc.setDrawColor(...PDF_CONFIG.border);
+    doc.setLineWidth(0.1);
+    doc.line(chartX - 2, tickY, chartX, tickY);
+  });
+  
+  // X-axis (zero line)
+  const zeroLineY = chartY + chartHeight * 0.75;
+  doc.setDrawColor(...PDF_CONFIG.textGray);
+  doc.setLineWidth(0.3);
+  doc.line(chartX, zeroLineY, chartX + chartWidth, zeroLineY);
+  
+  // X-axis label
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.text("Year", chartX + chartWidth / 2 - 6, chartY + chartHeight + 12);
   
   plData.forEach((d, i) => {
-    const barX = margin + 25 + i * barSpacing;
+    const barX = chartX + 8 + i * barSpacing;
     
     // Revenue bar (blue)
     if (d.revenue > 0) {
-      const revHeight = (d.revenue / maxValue) * (chartHeight * 0.6);
+      const revHeight = (d.revenue / maxValue) * (chartHeight * 0.7);
       doc.setFillColor(...PDF_CONFIG.blue);
       doc.rect(barX, zeroLineY - revHeight, barWidth / 2 - 1, revHeight, "F");
     }
     
     // EBITDA bar (green or red)
-    const ebitdaHeight = Math.abs(d.ebitda) / maxValue * (chartHeight * 0.6);
+    const ebitdaHeight = Math.abs(d.ebitda) / maxValue * (chartHeight * 0.7);
     if (d.ebitda >= 0) {
       doc.setFillColor(...PDF_CONFIG.emerald);
       doc.rect(barX + barWidth / 2, zeroLineY - ebitdaHeight, barWidth / 2 - 1, ebitdaHeight, "F");
@@ -5548,7 +5581,8 @@ const renderPLGrowth = (
     // Year label
     doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(d.year, barX + 3, chartY + chartHeight + 5);
+    doc.setFont("helvetica", "normal");
+    doc.text(d.year, barX + 2, zeroLineY + 8);
   });
   
   // Legend
@@ -5556,12 +5590,13 @@ const renderPLGrowth = (
   doc.setFillColor(...PDF_CONFIG.blue);
   doc.rect(margin + maxWidth - 60, chartY, 6, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
   doc.text("Revenue", margin + maxWidth - 52, chartY + 4);
   doc.setFillColor(...PDF_CONFIG.emerald);
   doc.rect(margin + maxWidth - 60, chartY + 7, 6, 4, "F");
   doc.text("EBITDA", margin + maxWidth - 52, chartY + 11);
   
-  yPosition += 75;
+  yPosition += 85;
 
   // Check page break for table
   yPosition = checkPageBreak(doc, yPosition, 90, pageHeight, margin);
@@ -5720,21 +5755,57 @@ const renderRevenueGrowth = (
 
   // Bar Chart Visual
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 65, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 75, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Revenue Growth Chart (GBP M)", margin + 8, yPosition + 10);
+  doc.text("Revenue Growth Chart", margin + 8, yPosition + 10);
   
   // Draw simplified stacked bar chart
-  const chartY = yPosition + 18;
-  const chartHeight = 38;
+  const chartX = margin + 28;
+  const chartY = yPosition + 20;
+  const chartWidth = maxWidth - 50;
+  const chartHeight = 42;
   const barWidth = 20;
   const maxValue = 100;
-  const barSpacing = (maxWidth - 40) / 6;
+  const barSpacing = chartWidth / 6;
+  
+  // Y-axis
+  doc.setDrawColor(...PDF_CONFIG.textGray);
+  doc.setLineWidth(0.3);
+  doc.line(chartX, chartY, chartX, chartY + chartHeight);
+  
+  // Y-axis label (rotated)
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "bold");
+  doc.text("GBP M", margin + 4, chartY + chartHeight / 2 + 6, { angle: 90 });
+  
+  // Y-axis tick labels
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  const yTicks = [100, 75, 50, 25, 0];
+  yTicks.forEach((tick) => {
+    const tickY = chartY + (1 - tick / 100) * chartHeight;
+    doc.text(tick.toString(), chartX - 8, tickY + 1);
+    doc.setDrawColor(...PDF_CONFIG.border);
+    doc.setLineWidth(0.1);
+    doc.line(chartX - 2, tickY, chartX, tickY);
+  });
+  
+  // X-axis
+  doc.setDrawColor(...PDF_CONFIG.textGray);
+  doc.setLineWidth(0.3);
+  doc.line(chartX, chartY + chartHeight, chartX + chartWidth, chartY + chartHeight);
+  
+  // X-axis label
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.text("Year", chartX + chartWidth / 2 - 6, chartY + chartHeight + 12);
   
   revenueData.forEach((d, i) => {
-    const barX = margin + 25 + i * barSpacing;
+    const barX = chartX + 8 + i * barSpacing;
     
     // UK bar (amber)
     if (d.uk > 0) {
@@ -5754,7 +5825,8 @@ const renderRevenueGrowth = (
     // Year label
     doc.setFontSize(PDF_CONFIG.fontSize.small);
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(d.year, barX + 3, chartY + chartHeight + 5);
+    doc.setFont("helvetica", "normal");
+    doc.text(d.year, barX + 3, chartY + chartHeight + 8);
   });
   
   // Legend
@@ -5762,12 +5834,13 @@ const renderRevenueGrowth = (
   doc.setFillColor(...PDF_CONFIG.amber);
   doc.rect(margin + maxWidth - 75, chartY, 6, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
   doc.text("UK Market", margin + maxWidth - 67, chartY + 4);
   doc.setFillColor(...PDF_CONFIG.blue);
   doc.rect(margin + maxWidth - 75, chartY + 7, 6, 4, "F");
   doc.text("Global", margin + maxWidth - 67, chartY + 11);
   
-  yPosition += 75;
+  yPosition += 85;
 
   // Check page break for table
   yPosition = checkPageBreak(doc, yPosition, 80, pageHeight, margin);
