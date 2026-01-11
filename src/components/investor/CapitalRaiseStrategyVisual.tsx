@@ -3,11 +3,11 @@ import { Users, Zap, Rocket, DollarSign, TrendingUp, CheckCircle } from 'lucide-
 
 const CapitalRaiseStrategyVisual = () => {
   const useOfFunds = [
-    { category: "Team hiring & 2026 payroll (Jun–Dec)", allocation: "£207k" },
-    { category: "Outsourced engineering (pre-launch build)", allocation: "£200k" },
-    { category: "Legal, compliance, finance", allocation: "£40k" },
-    { category: "Early marketing & GTM preparation", allocation: "£125k" },
-    { category: "Operational buffer & contingency", allocation: "£275k" },
+    { category: "Product & Engineering", allocation: "£2,000,000", description: "Core platform build, data pipelines, reliability/security, roadmap delivery." },
+    { category: "Sales & Marketing", allocation: "£1,750,000", description: "Initial GTM engine: sales and marketing hires, marketing foundations, pipeline build." },
+    { category: "Operations / G&A", allocation: "£750,000", description: "Finance/legal, customer success coverage, tools, basic corporate infrastructure." },
+    { category: "Data / Compliance / Security", allocation: "£250,000", description: "Enterprise readiness: security hardening, policies, light-touch audits." },
+    { category: "Contingency", allocation: "£250,000", description: "Execution buffer for hiring delays, timing variance, and unforeseen costs." },
   ];
 
   const burnPoints = [
@@ -78,7 +78,7 @@ const CapitalRaiseStrategyVisual = () => {
       <div className="bg-card rounded-xl p-6 border border-border">
         <div className="flex items-center gap-2 mb-4">
           <DollarSign className="w-5 h-5 text-primary" />
-          <h3 className="text-lg font-semibold text-foreground">Use of Funds</h3>
+          <h3 className="text-lg font-semibold text-foreground">Use of Funds (planned deployment of £5M)</h3>
         </div>
         
         <div className="overflow-x-auto">
@@ -87,13 +87,15 @@ const CapitalRaiseStrategyVisual = () => {
               <tr className="border-b border-border">
                 <th className="text-left py-3 px-4 text-sm font-semibold text-foreground">Category</th>
                 <th className="text-right py-3 px-4 text-sm font-semibold text-foreground">Allocation</th>
+                <th className="text-left py-3 px-4 text-sm font-semibold text-foreground">Description</th>
               </tr>
             </thead>
             <tbody>
               {useOfFunds.map((item, index) => (
                 <tr key={index} className="border-b border-border/50">
-                  <td className="py-3 px-4 text-sm text-muted-foreground">{item.category}</td>
+                  <td className="py-3 px-4 text-sm font-medium text-foreground">{item.category}</td>
                   <td className="py-3 px-4 text-sm font-semibold text-foreground text-right">{item.allocation}</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground">{item.description}</td>
                 </tr>
               ))}
             </tbody>
@@ -102,11 +104,11 @@ const CapitalRaiseStrategyVisual = () => {
 
         <div className="mt-4 pt-4 border-t border-border">
           <div className="flex justify-between items-center bg-primary/5 rounded-lg p-4">
-            <p className="font-semibold text-foreground">Use of Funds</p>
-            <p className="font-bold text-primary text-xl">£847k</p>
+            <p className="font-semibold text-foreground">Total use of funds</p>
+            <p className="font-bold text-primary text-xl">£5,000,000</p>
           </div>
           <p className="text-sm text-muted-foreground mt-3">
-            Remaining capital extends runway through commercial launch and early scale, providing 18–22 months of total runway.
+            Sum of allocations above
           </p>
         </div>
       </div>
