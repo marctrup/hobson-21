@@ -1254,7 +1254,7 @@ export const getRevenueModelPdfContent = (): string[] => [
   "",
   "Pricing Structure:",
   "- Blended ARPU: GBP 607/year (GBP 50.58/month)",
-  "- Tier Mix: Essential (60%), Essential Plus (30%), Enterprise (10%)",
+  "- Tier Mix: Essential (30%), Essential Plus (60%), Enterprise (10%)",
   "- No per-user or per-asset fees",
   "",
   "UK Market Penetration:",
