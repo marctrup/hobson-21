@@ -5625,6 +5625,15 @@ const renderCapitalRaiseStrategy = (
   });
   yPosition += 8;
 
+  // Founder funding callout
+  doc.setFillColor(255, 243, 224);
+  doc.roundedRect(margin, yPosition, maxWidth, 14, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Pre-raise operating losses funded by founders until £5.0M raise closes", margin + maxWidth / 2, yPosition + 9, { align: "center" });
+  yPosition += 18;
+
   // Cash flow positive callout
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 14, 3, 3, "F");

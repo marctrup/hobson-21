@@ -131,6 +131,12 @@ const CapitalRaiseStrategyVisual = () => {
           ))}
         </div>
 
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
+          <p className="text-foreground font-semibold text-center">
+            Pre-raise operating losses funded by founders until £5.0M raise closes
+          </p>
+        </div>
+
         <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
           <p className="text-foreground font-semibold text-center">
             From 2028 onward, Hobson becomes cash flow positive quickly as revenue scales.
