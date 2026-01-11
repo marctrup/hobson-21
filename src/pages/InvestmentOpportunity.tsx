@@ -608,15 +608,6 @@ const sections = [
     iconColor: "text-teal-600",
     pages: [
       {
-        title: "Executive Summary",
-        showCustomVisual: true,
-        customVisualComponent: "executiveContext",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
         title: "Go To Market Summary",
         showCustomVisual: true,
         customVisualComponent: "goToMarketSummary",
