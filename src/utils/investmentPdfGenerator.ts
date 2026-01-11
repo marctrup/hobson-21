@@ -6554,6 +6554,135 @@ const renderPLGrowth = (
   });
   yPosition += 50;
 
+  // P/L Chart (rendered in-PDF to match updated web visuals)
+  yPosition = checkPageBreak(doc, yPosition, 78, pageHeight, margin);
+
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("P/L Forecast (2026-2031) — GBP M", margin, yPosition);
+  yPosition += 6;
+
+  // Chart settings
+  const chart = {
+    x: margin,
+    y: yPosition,
+    w: maxWidth,
+    h: 60,
+    padding: 8,
+  };
+
+  // Plot range in GBP M
+  const yMin = -10;
+  const yMax = 110;
+  const yRange = yMax - yMin;
+  const toY = (val: number) => {
+    const clamped = Math.max(yMin, Math.min(yMax, val));
+    const rel = (clamped - yMin) / yRange;
+    return chart.y + chart.h - chart.padding - rel * (chart.h - chart.padding * 2);
+  };
+
+  // Background
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(chart.x, chart.y, chart.w, chart.h, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.roundedRect(chart.x, chart.y, chart.w, chart.h, 3, 3, "S");
+
+  // Axis
+  const axisLeft = chart.x + chart.padding + 10;
+  const axisRight = chart.x + chart.w - chart.padding;
+  const axisTop = chart.y + chart.padding;
+  const axisBottom = chart.y + chart.h - chart.padding;
+
+  // Grid + ticks
+  doc.setFontSize(7);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setDrawColor(230, 231, 235);
+
+  [-10, 0, 50, 100].forEach((tick) => {
+    const y = toY(tick);
+    doc.line(axisLeft, y, axisRight, y);
+    doc.text(`GBP ${tick}M`, chart.x + chart.padding, y + 2);
+  });
+
+  // Bars
+  const years = ["2026", "2027", "2028", "2029", "2030", "2031"];
+  const series = [
+    { year: "2026", cogs: 0.113, opex: 1.79, ebitda: -1.9 },
+    { year: "2027", cogs: 0.2, opex: 2.61, ebitda: -2.1 },
+    { year: "2028", cogs: 0.658, opex: 5.084, ebitda: 0.694 },
+    { year: "2029", cogs: 1.852, opex: 10.710, ebitda: 9.837 },
+    { year: "2030", cogs: 3.905, opex: 21.076, ebitda: 23.081 },
+    { year: "2031", cogs: 8.036, opex: 40.701, ebitda: 50.959 },
+  ];
+
+  const barAreaWidth = axisRight - axisLeft;
+  const groupGap = 6;
+  const groupWidth = (barAreaWidth - groupGap * (years.length - 1)) / years.length;
+  const costBarWidth = Math.max(8, groupWidth * 0.45);
+  const ebitdaBarWidth = Math.max(8, groupWidth * 0.45);
+
+  series.forEach((d, idx) => {
+    const gx = axisLeft + idx * (groupWidth + groupGap);
+
+    // Stacked costs: COGS (amber) + OpEx (sky)
+    const costX = gx;
+    const cogsTop = toY(d.cogs);
+    const cogsBottom = toY(0);
+    const opexTop = toY(d.cogs + d.opex);
+
+    // COGS
+    doc.setFillColor(245, 158, 11); // amber-500
+    doc.rect(costX, cogsTop, costBarWidth, cogsBottom - cogsTop, "F");
+
+    // OpEx
+    doc.setFillColor(14, 165, 233); // sky-500
+    doc.rect(costX, opexTop, costBarWidth, cogsTop - opexTop, "F");
+
+    // EBITDA (emerald) - can be negative
+    const ebitdaX = gx + groupWidth - ebitdaBarWidth;
+    const y0 = toY(0);
+    const yE = toY(d.ebitda);
+    doc.setFillColor(16, 185, 129); // emerald-500
+    if (d.ebitda >= 0) {
+      doc.rect(ebitdaX, yE, ebitdaBarWidth, y0 - yE, "F");
+    } else {
+      doc.rect(ebitdaX, y0, ebitdaBarWidth, yE - y0, "F");
+    }
+
+    // Year label
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFontSize(7);
+    doc.text(d.year, gx + groupWidth / 2, axisBottom + 5, { align: "center" });
+  });
+
+  // Zero line
+  doc.setDrawColor(107, 114, 128);
+  doc.setLineWidth(0.7);
+  doc.line(axisLeft, toY(0), axisRight, toY(0));
+  doc.setLineWidth(0.2);
+
+  // Legend
+  const legendY = chart.y + 8;
+  const legendX = axisLeft + 10;
+  doc.setFontSize(7);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+
+  doc.setFillColor(245, 158, 11);
+  doc.rect(legendX, legendY, 4, 4, "F");
+  doc.text("COGS", legendX + 6, legendY + 4);
+
+  doc.setFillColor(14, 165, 233);
+  doc.rect(legendX + 36, legendY, 4, 4, "F");
+  doc.text("OpEx", legendX + 42, legendY + 4);
+
+  doc.setFillColor(16, 185, 129);
+  doc.rect(legendX + 68, legendY, 4, 4, "F");
+  doc.text("EBITDA", legendX + 74, legendY + 4);
+
+  yPosition += chart.h + 10;
+
   // Financial Summary Table
   yPosition = checkPageBreak(doc, yPosition, 80, pageHeight, margin);
   
@@ -14961,7 +15090,8 @@ const renderTabContent = (
   yPosition += 10;
 
   // Handle image if present (either image or pdfImage)
-  const imageToUse = tab.image || tab.pdfImage;
+  // IMPORTANT: If this tab is rendered via a custom visual component, we do NOT embed legacy images.
+  const imageToUse = tab.showCustomVisual ? undefined : (tab.image || tab.pdfImage);
   if (imageToUse) {
     try {
       // AI Architecture gets its own handling for proper display
