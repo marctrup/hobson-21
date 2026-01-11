@@ -119,6 +119,12 @@ const CapitalRaiseStrategyVisual = () => {
           <TrendingUp className="w-5 h-5 text-primary" />
           <h3 className="text-lg font-semibold text-foreground">Burn & Runway Strategy</h3>
         </div>
+
+        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
+          <p className="text-foreground font-semibold text-center">
+            Pre-raise operating losses funded by founders until £5.0M raise closes
+          </p>
+        </div>
         
         <p className="text-foreground font-medium mb-3">The £5M seed round:</p>
         
@@ -129,12 +135,6 @@ const CapitalRaiseStrategyVisual = () => {
               <p className="text-muted-foreground">{point}</p>
             </div>
           ))}
-        </div>
-
-        <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
-          <p className="text-foreground font-semibold text-center">
-            Pre-raise operating losses funded by founders until £5.0M raise closes
-          </p>
         </div>
 
         <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">

@@ -5603,6 +5603,15 @@ const renderCapitalRaiseStrategy = (
   doc.text("Burn & Runway Strategy", margin, yPosition);
   yPosition += 12;
 
+  // Founder funding callout - moved to top
+  doc.setFillColor(255, 243, 224);
+  doc.roundedRect(margin, yPosition, maxWidth, 14, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("Pre-raise operating losses funded by founders until £5.0M raise closes", margin + maxWidth / 2, yPosition + 9, { align: "center" });
+  yPosition += 18;
+
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.text("The £5M seed round:", margin, yPosition);
@@ -5624,15 +5633,6 @@ const renderCapitalRaiseStrategy = (
     yPosition += 7;
   });
   yPosition += 8;
-
-  // Founder funding callout
-  doc.setFillColor(255, 243, 224);
-  doc.roundedRect(margin, yPosition, maxWidth, 14, 3, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "bold");
-  doc.text("Pre-raise operating losses funded by founders until £5.0M raise closes", margin + maxWidth / 2, yPosition + 9, { align: "center" });
-  yPosition += 18;
 
   // Cash flow positive callout
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
