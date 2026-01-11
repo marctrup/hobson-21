@@ -6870,13 +6870,21 @@ const renderRevenueGrowth = (
   });
   yPosition += 46;
 
-  // Revenue Breakdown Table
-  yPosition = checkPageBreak(doc, yPosition, 120, pageHeight, margin);
+  // Revenue Breakdown Table - properly spaced
+  yPosition = checkPageBreak(doc, yPosition, 130, pageHeight, margin);
+  
+  // Calculate proper column widths for the table
+  const tableWidth = maxWidth;
+  const labelColWidth = 55; // Width for row labels
+  const dataColWidth = (tableWidth - labelColWidth - 10) / 6; // 6 year columns
+  
+  // Table container
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 115, 3, 3, "F");
-  doc.setDrawColor(220, 220, 220); // Light border color
-  doc.roundedRect(margin, yPosition, maxWidth, 115, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, tableWidth, 125, 3, 3, "F");
+  doc.setDrawColor(200, 200, 200);
+  doc.roundedRect(margin, yPosition, tableWidth, 125, 3, 3, "S");
 
+  // Title
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -6884,93 +6892,110 @@ const renderRevenueGrowth = (
   doc.setFont("helvetica", "bold");
   doc.text("Revenue", margin + 18, yPosition + 12);
 
-  // Revenue table headers
-  let tableY = yPosition + 22;
-  const years = ["2026", "2027", "2028", "2029", "2030", "2031"];
-  const colWidth = 22;
-  const labelWidth = 48;
-  
   // Header row
+  let tableY = yPosition + 24;
+  const years = ["2026", "2027", "2028", "2029", "2030", "2031"];
+  
   doc.setFillColor(71, 85, 105); // slate-600
-  doc.rect(margin + 4, tableY - 4, maxWidth - 8, 8, "F");
+  doc.rect(margin + 4, tableY - 5, tableWidth - 8, 10, "F");
   doc.setTextColor(255, 255, 255);
-  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  doc.setFontSize(7);
   doc.setFont("helvetica", "bold");
+  
+  // Empty header for label column
+  doc.text("", margin + 8, tableY);
+  
+  // Year headers - centered in each column
   years.forEach((year, i) => {
-    doc.text(year, margin + labelWidth + 8 + (i * colWidth), tableY, { align: "center" });
+    const xPos = margin + labelColWidth + 5 + (i * dataColWidth) + (dataColWidth / 2);
+    doc.text(year, xPos, tableY, { align: "center" });
   });
-  tableY += 8;
+  tableY += 10;
 
-  // Revenue data
+  // Revenue data rows
   const revenueRows = [
-    { label: "UK: Enterprise", values: ["£0", "£208k", "£832k", "£1.9M", "£3.5M", "£5.9M"], bold: false },
-    { label: "UK: Enterprise Plus", values: ["£0", "£418k", "£627k", "£976k", "£1.5M", "£2.3M"], bold: false },
-    { label: "UK: Essential", values: ["£0", "£82k", "£164k", "£301k", "£519k", "£833k"], bold: false },
-    { label: "UK Total", values: ["£0", "£708k", "£1.6M", "£3.1M", "£5.6M", "£9.1M"], bold: true },
-    { label: "", values: ["", "", "", "", "", ""], bold: false }, // spacer
-    { label: "Global: Enterprise", values: ["£0", "£0", "£1.4M", "£5.7M", "£8.5M", "£22.6M"], bold: false },
-    { label: "Global: Ent. Plus", values: ["£0", "£0", "£2.8M", "£11.4M", "£28.4M", "£56.8M"], bold: false },
-    { label: "Global: Essential", values: ["£0", "£0", "£557k", "£2.2M", "£5.6M", "£11.1M"], bold: false },
-    { label: "Global Total", values: ["£0", "£0", "£4.8M", "£19.3M", "£42.5M", "£90.6M"], bold: true },
-    { label: "", values: ["", "", "", "", "", ""], bold: false }, // spacer
+    { label: "UK: Enterprise", values: ["£0", "£208k", "£832k", "£1.9M", "£3.5M", "£5.9M"], bold: false, section: "uk" },
+    { label: "UK: Enterprise Plus", values: ["£0", "£418k", "£627k", "£976k", "£1.5M", "£2.3M"], bold: false, section: "uk" },
+    { label: "UK: Essential", values: ["£0", "£82k", "£164k", "£301k", "£519k", "£833k"], bold: false, section: "uk" },
+    { label: "UK Total", values: ["£0", "£708k", "£1.6M", "£3.1M", "£5.6M", "£9.1M"], bold: true, section: "uk" },
+    { label: "Global: Enterprise", values: ["£0", "£0", "£1.4M", "£5.7M", "£8.5M", "£22.6M"], bold: false, section: "global" },
+    { label: "Global: Ent. Plus", values: ["£0", "£0", "£2.8M", "£11.4M", "£28.4M", "£56.8M"], bold: false, section: "global" },
+    { label: "Global: Essential", values: ["£0", "£0", "£557k", "£2.2M", "£5.6M", "£11.1M"], bold: false, section: "global" },
+    { label: "Global Total", values: ["£0", "£0", "£4.8M", "£19.3M", "£42.5M", "£90.6M"], bold: true, section: "global" },
   ];
 
-  doc.setFontSize(PDF_CONFIG.fontSize.small - 1);
+  doc.setFontSize(6.5);
+  let lastSection = "uk";
+  
   revenueRows.forEach((row) => {
-    if (row.label === "") {
-      tableY += 2;
-      return;
+    // Add spacing between UK and Global sections
+    if (row.section === "global" && lastSection === "uk") {
+      tableY += 3;
     }
+    lastSection = row.section;
+    
+    // Highlight total rows
     if (row.bold) {
-      doc.setFillColor(240, 240, 240);
-      doc.rect(margin + 4, tableY - 3, maxWidth - 8, 6, "F");
+      doc.setFillColor(245, 245, 245);
+      doc.rect(margin + 4, tableY - 4, tableWidth - 8, 7, "F");
     }
+    
+    // Row label
     doc.setTextColor(...PDF_CONFIG.textDark);
     doc.setFont("helvetica", row.bold ? "bold" : "normal");
-    doc.text(row.label, margin + 6, tableY);
+    doc.text(row.label, margin + 8, tableY);
+    
+    // Values - centered within each column
     doc.setTextColor(...(row.bold ? PDF_CONFIG.textDark : PDF_CONFIG.textGray));
     row.values.forEach((val, i) => {
-      doc.text(val, margin + labelWidth + 8 + (i * colWidth), tableY, { align: "center" });
+      const xPos = margin + labelColWidth + 5 + (i * dataColWidth) + (dataColWidth / 2);
+      doc.text(val, xPos, tableY, { align: "center" });
     });
-    tableY += 6;
+    tableY += 7;
   });
 
   // Total revenue row with highlight
+  tableY += 2;
   doc.setFillColor(245, 208, 254); // fuchsia-100
-  doc.rect(margin + 4, tableY - 3, maxWidth - 8, 8, "F");
+  doc.rect(margin + 4, tableY - 4, tableWidth - 8, 9, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.setFontSize(PDF_CONFIG.fontSize.small);
-  doc.text("Total revenue", margin + 6, tableY + 2);
+  doc.setFontSize(7);
+  doc.text("Total Revenue", margin + 8, tableY + 1);
+  
   const totalValues = ["£0", "£708k", "£6.4M", "£22.4M", "£48.1M", "£99.7M"];
   totalValues.forEach((val, i) => {
-    doc.text(val, margin + labelWidth + 8 + (i * colWidth), tableY + 2, { align: "center" });
+    const xPos = margin + labelColWidth + 5 + (i * dataColWidth) + (dataColWidth / 2);
+    doc.text(val, xPos, tableY + 1, { align: "center" });
   });
 
-  yPosition = tableY + 18;
+  yPosition += 135;
 
-  // Revenue Growth Bar Chart Section
-  yPosition = checkPageBreak(doc, yPosition, 90, pageHeight, margin);
+  // Revenue Growth Bar Chart Section - on new area with proper spacing
+  yPosition = checkPageBreak(doc, yPosition, 80, pageHeight, margin);
+  
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 85, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 75, 3, 3, "F");
   doc.setDrawColor(...PDF_CONFIG.border);
-  doc.roundedRect(margin, yPosition, maxWidth, 85, 3, 3, "S");
+  doc.roundedRect(margin, yPosition, maxWidth, 75, 3, 3, "S");
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);
   doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Hobson Revenue Growth (2026–2031)", margin + 18, yPosition + 12);
+  doc.text("Hobson Revenue Growth (2026-2031)", margin + 18, yPosition + 12);
 
-  // Bar chart visualization
-  const chartStartY = yPosition + 22;
-  const chartHeight = 50;
-  const chartWidth = maxWidth - 20;
-  const barAreaWidth = chartWidth - 30;
-  const barWidth = barAreaWidth / 6 - 8;
+  // Bar chart - with proper sizing and spacing
+  const chartStartY = yPosition + 20;
+  const chartHeight = 40;
+  const chartLeftPadding = 15;
+  const chartRightPadding = 10;
+  const chartUsableWidth = maxWidth - chartLeftPadding - chartRightPadding;
+  const barSpacing = 6;
+  const barWidth = (chartUsableWidth - (5 * barSpacing)) / 6;
   
-  // Revenue data for chart (UK in amber, Global in blue)
+  // Revenue data for chart
   const chartRevenue = [
     { year: "2026", uk: 0, global: 0, total: 0 },
     { year: "2027", uk: 708368, global: 0, total: 708368 },
@@ -6980,64 +7005,70 @@ const renderRevenueGrowth = (
     { year: "2031", uk: 9099657, global: 90596196, total: 99695853 },
   ];
   
-  const maxRevenue = 99695853; // Max total for scaling
+  const maxRevenue = 99695853;
   
-  // Draw Y-axis label
+  // Y-axis label
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  doc.setFontSize(6);
   doc.setFont("helvetica", "normal");
-  doc.text("£M", margin + 8, chartStartY + 4);
+  doc.text("£M", margin + 6, chartStartY + 2);
   
-  // Draw bars for each year
+  // Draw baseline
+  doc.setDrawColor(200, 200, 200);
+  doc.setLineWidth(0.3);
+  doc.line(margin + chartLeftPadding, chartStartY + chartHeight, margin + maxWidth - chartRightPadding, chartStartY + chartHeight);
+  
+  // Draw bars
   chartRevenue.forEach((data, i) => {
-    const xPos = margin + 30 + i * (barWidth + 8);
+    const xPos = margin + chartLeftPadding + i * (barWidth + barSpacing);
+    const totalHeight = (data.total / maxRevenue) * chartHeight;
     const ukHeight = (data.uk / maxRevenue) * chartHeight;
     const globalHeight = (data.global / maxRevenue) * chartHeight;
     
-    // UK bar (amber) - bottom
+    // UK bar (amber) - bottom portion
     if (data.uk > 0) {
-      doc.setFillColor(217, 119, 6); // amber-600
+      doc.setFillColor(217, 119, 6);
       doc.rect(xPos, chartStartY + chartHeight - ukHeight, barWidth, ukHeight, "F");
     }
     
-    // Global bar (sky blue) - stacked on top of UK
+    // Global bar (sky blue) - stacked on top
     if (data.global > 0) {
-      doc.setFillColor(14, 165, 233); // sky-500
-      doc.rect(xPos, chartStartY + chartHeight - ukHeight - globalHeight, barWidth, globalHeight, "F");
+      doc.setFillColor(14, 165, 233);
+      doc.rect(xPos, chartStartY + chartHeight - totalHeight, barWidth, globalHeight, "F");
     }
     
     // Year label below bar
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+    doc.setFontSize(6);
     doc.setFont("helvetica", "normal");
-    doc.text(data.year, xPos + barWidth / 2, chartStartY + chartHeight + 6, { align: "center" });
+    doc.text(data.year, xPos + barWidth / 2, chartStartY + chartHeight + 5, { align: "center" });
     
-    // Total value above bar (only for significant values)
+    // Total value above bar
     if (data.total > 0) {
-      const totalLabel = data.total >= 1000000 
+      const label = data.total >= 1000000 
         ? `£${(data.total / 1000000).toFixed(1)}M` 
         : `£${Math.round(data.total / 1000)}k`;
       doc.setTextColor(...PDF_CONFIG.textDark);
-      doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+      doc.setFontSize(5.5);
       doc.setFont("helvetica", "bold");
-      doc.text(totalLabel, xPos + barWidth / 2, chartStartY + chartHeight - ukHeight - globalHeight - 2, { align: "center" });
+      doc.text(label, xPos + barWidth / 2, chartStartY + chartHeight - totalHeight - 2, { align: "center" });
     }
   });
   
-  // Legend
-  const legendY = yPosition + 78;
-  doc.setFillColor(217, 119, 6); // amber-600
-  doc.rect(margin + 10, legendY - 3, 8, 4, "F");
+  // Legend - positioned at bottom right
+  const legendY = yPosition + 70;
+  doc.setFillColor(217, 119, 6);
+  doc.rect(margin + maxWidth - 85, legendY - 3, 6, 4, "F");
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  doc.setFontSize(6);
   doc.setFont("helvetica", "normal");
-  doc.text("UK Revenue", margin + 20, legendY);
+  doc.text("UK", margin + maxWidth - 77, legendY);
   
-  doc.setFillColor(14, 165, 233); // sky-500
-  doc.rect(margin + 65, legendY - 3, 8, 4, "F");
-  doc.text("Global Revenue", margin + 75, legendY);
+  doc.setFillColor(14, 165, 233);
+  doc.rect(margin + maxWidth - 55, legendY - 3, 6, 4, "F");
+  doc.text("Global", margin + maxWidth - 47, legendY);
 
-  yPosition += 92;
+  yPosition += 82;
 
   // Market & Revenue Assumptions - 2 columns
   yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
