@@ -120,10 +120,6 @@ const CapitalRaiseStrategyVisual = () => {
           <h3 className="text-lg font-semibold text-foreground">Burn & Runway Strategy</h3>
         </div>
         
-        <p className="text-muted-foreground leading-relaxed mb-4">
-          Burn is planned to be <span className="text-foreground font-bold">pre-revenue</span>.
-        </p>
-        
         <p className="text-foreground font-medium mb-3">The £5M seed round:</p>
         
         <div className="space-y-2 mb-6">

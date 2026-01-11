@@ -5603,12 +5603,6 @@ const renderCapitalRaiseStrategy = (
   doc.text("Burn & Runway Strategy", margin, yPosition);
   yPosition += 12;
 
-  doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "normal");
-  doc.text("Burn is planned to be pre-revenue.", margin, yPosition);
-  yPosition += 10;
-
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
   doc.text("The £5M seed round:", margin, yPosition);
