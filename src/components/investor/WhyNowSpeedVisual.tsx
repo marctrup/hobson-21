@@ -65,7 +65,7 @@ export const WhyNowSpeedVisual = () => {
         </div>
         <div className="space-y-2 text-xs lg:text-sm text-muted-foreground">
           <p>The first trusted system becomes embedded. Standards form quickly. Switching costs rise. Late entrants struggle to displace incumbents.</p>
-          <p className="font-semibold text-foreground">This creates a narrow 12–18-month window to define the default system of record for AI in Real Estate.</p>
+          <p className="font-semibold text-foreground">This creates a narrow 12–36-month window to define the default system of record for AI in Real Estate.</p>
           <p className="text-primary font-bold">Hobson is positioned to win that window.</p>
         </div>
       </div>

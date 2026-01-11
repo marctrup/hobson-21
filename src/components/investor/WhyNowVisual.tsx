@@ -38,7 +38,7 @@ const WhyNowVisual: React.FC = () => {
         "Legacy PropTech platforms are too embedded to replace manual reasoning",
         "Horizontal AI tools cannot meet regulatory or accuracy expectations",
       ],
-      conclusion: "A narrow 12–18-month window exists to define the default category standard.",
+      conclusion: "A narrow 12–36-month window exists to define the default category standard.",
     },
     {
       number: "4",
