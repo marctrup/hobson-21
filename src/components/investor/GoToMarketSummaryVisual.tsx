@@ -10,7 +10,6 @@ const GoToMarketSummaryVisual = () => {
           <FileText className="w-4 h-4" />
           SOSTAC Framework
         </div>
-        <h2 className="text-3xl font-bold text-slate-900 mb-2">Go-To-Market Summary</h2>
         <p className="text-slate-600 max-w-3xl mx-auto">
           Hobson — Investor Summary. A full SOSTAC-based Marketing Strategy document is available on request.
         </p>
