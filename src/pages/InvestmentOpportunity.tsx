@@ -76,6 +76,7 @@ import BusinessObjectivesVisual from "@/components/investor/BusinessObjectivesVi
 import CommercialsVisual from "@/components/investor/CommercialsVisual";
 import { MarketingSalesStrategyVisual } from "@/components/investor/MarketingSalesStrategyVisual";
 import { ExecutiveContextVisual } from "@/components/investor/ExecutiveContextVisual";
+import GoToMarketSummaryVisual from "@/components/investor/GoToMarketSummaryVisual";
 import { SituationAnalysisVisual } from "@/components/investor/SituationAnalysisVisual";
 import { CustomerPersonasVisual } from "@/components/investor/CustomerPersonasVisual";
 import { CustomerUserJourneysVisual } from "@/components/investor/CustomerUserJourneysVisual";
@@ -610,6 +611,15 @@ const sections = [
         title: "Executive Summary",
         showCustomVisual: true,
         customVisualComponent: "executiveContext",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
+        title: "Go To Market Summary",
+        showCustomVisual: true,
+        customVisualComponent: "goToMarketSummary",
         content: {
           overview: "",
           sections: [],
@@ -1574,6 +1584,11 @@ const InvestmentOpportunity = () => {
                     {/* Custom Visual Component for Executive Context */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "executiveContext" && (
                       <ExecutiveContextVisual />
+                    )}
+
+                    {/* Custom Visual Component for Go To Market Summary */}
+                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "goToMarketSummary" && (
+                      <GoToMarketSummaryVisual />
                     )}
 
                     {/* Custom Visual Component for Situation Analysis */}
