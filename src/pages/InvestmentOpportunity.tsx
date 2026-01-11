@@ -835,8 +835,6 @@ const sections = [
         title: "Commercial Trajectory",
         showCustomVisual: true,
         customVisualComponent: "revenueGrowth",
-        pdfImage: revenueGrowthChart,
-        imageAlt: "Revenue Growth Chart 2027-2031",
         content: {
           overview: "",
           sections: [],
