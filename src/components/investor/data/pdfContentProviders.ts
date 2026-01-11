@@ -750,7 +750,7 @@ export const getExecutiveSummaryPdfContent = (): string[] => [
   "Traction & Execution Momentum:",
   "Hobson demonstrates production-grade capability against Real Estate operational workflows.",
   "",
-  "- Validated across four live Real Estate operating use cases",
+  "- Validated across Real Estate operating use cases",
   "- 98% model accuracy measured on proprietary, industry-specific datasets",
   "- Multi-document reasoning across legal, compliance, and operational sources",
   "- Domain-trained AI purpose-built for auditability and regulatory scrutiny",
