@@ -133,7 +133,7 @@ const CapitalRaiseStrategyVisual = () => {
 
         <div className="bg-primary/10 border border-primary/20 rounded-lg p-4">
           <p className="text-foreground font-semibold text-center">
-            From 2027 onward, Hobson becomes cash flow positive quickly as revenue scales.
+            From 2028 onward, Hobson becomes cash flow positive quickly as revenue scales.
           </p>
         </div>
       </div>

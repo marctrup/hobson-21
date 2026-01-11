@@ -5631,7 +5631,7 @@ const renderCapitalRaiseStrategy = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("From 2027 onward, Hobson becomes cash flow positive quickly as revenue scales.", margin + maxWidth / 2, yPosition + 9, { align: "center" });
+  doc.text("From 2028 onward, Hobson becomes cash flow positive quickly as revenue scales.", margin + maxWidth / 2, yPosition + 9, { align: "center" });
   yPosition += 22;
 
   return yPosition;
