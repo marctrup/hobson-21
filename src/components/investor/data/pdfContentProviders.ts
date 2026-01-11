@@ -5840,3 +5840,72 @@ export const getRaiseStructuredData = () => ({
     ]
   }
 });
+
+// Assumptions structured data provider - matches AssumptionsVisual.tsx
+export const getAssumptionsStructuredData = () => ({
+  keyAssumptions: [
+    { category: "UK Addressable Operators", value: "235,200", source: "ONS Real Estate Activities" },
+    { category: "Global Addressable Operators", value: "4.23M", source: "18x UK baseline (OECD markets)" },
+    { category: "UK Penetration (2031)", value: "1.8%", source: "Conservative SaaS benchmark" },
+    { category: "Global Penetration (2031)", value: "0.8%", source: "Phased rollout from 2028" },
+    { category: "Churn Rate (Maturity)", value: "8%", source: "Competitive for SMB SaaS" },
+    { category: "Gross Margin", value: "88%", source: "Low infra + negligible onboarding" },
+    { category: "Net Margin (at Scale)", value: "40-55%", source: "Lean cost structure" },
+    { category: "AI Onboarding Cost", value: "GBP 0.60/unit", source: "Validated OpenAI 5.1 Mini" },
+  ],
+  ukMarket: {
+    totalBusinesses: "5.6M",
+    realEstateBusinesses: "235,200",
+    realEstateShare: "4.2%",
+    breakdown: [
+      { size: "Small (1-9)", pct: "96.0%", count: "225,792" },
+      { size: "Medium (10-49)", pct: "2.7%", count: "6,350" },
+      { size: "Large (50-249)", pct: "0.6%", count: "1,411" },
+      { size: "Enterprise (250+)", pct: "0.1%", count: "235" },
+    ],
+  },
+  globalScaling: {
+    oecdPopulation: "1.38B",
+    ukPopulation: "67M",
+    multiplier: "18x",
+    globalBusinesses: "4.2M",
+    reGdpShare: "10-14%",
+    reBusinessShare: "4-5%",
+  },
+  costStructure: {
+    fixedTeam: "GBP 415k/yr",
+    variableCosts: "32% of revenue",
+    infraCosts: "12% of revenue",
+    onboardingCosts: {
+      small: "GBP 3-4 (5 units)",
+      medium: "GBP 60 (100 units)",
+      large: "GBP 600 (1,000 units)",
+    },
+  },
+  financialPolicy: {
+    accountingBasis: "Cash basis",
+    revenueRecognition: "On receipt",
+    depreciationAmortisation: "GBP 0",
+    capitalExpenditure: "GBP 0 (all expensed)",
+    workingCapitalImpact: "GBP 0",
+    corporationTaxRate: "20%",
+    modelHorizon: "2026-2031",
+    modelCurrency: "GBP",
+  },
+  marketData: [
+    { stat: "$303B to $1.8T", label: "AI in RE Market (2025-2030)", source: "Business Research Company" },
+    { stat: "10%+", label: "NOI Increase with AI", source: "McKinsey & Company" },
+    { stat: "49%", label: "RE Owners Seeing Cost Cuts", source: "Forbes" },
+    { stat: "GBP 6B UK / GBP 708B Global", label: "Efficiency Savings TAM", source: "Calculated from ONS data" },
+  ],
+  credibilityPoints: [
+    "Uses published national statistics (ONS, BEIS), not guesswork",
+    "Scales only across markets where Hobson can launch (OECD)",
+    "Avoids inflated 'world population' errors common in startup models",
+    "18x multiplier is midpoint of 15-20x feasible range",
+    "Vector DB + K-Graph architecture reduces LLM calls (biggest savings)",
+    "AI ingestion is done once per document - GBP 0.60 per unit",
+    "Query engine only hits LLM for precision - low token spend",
+    "No integration teams, no onboarding teams required",
+  ],
+});

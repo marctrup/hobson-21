@@ -14,7 +14,7 @@
  */
 
 import { jsPDF } from "jspdf";
-import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData, getMarketingObjectivesStructuredData, getBrandStrategyStructuredData, getBrandIntegrityStructuredData, getSegmentationStrategyStructuredData, getContentEngagementStrategyStructuredData, getPrimaryConversionChannelsStructuredData, getAcquisitionExecutiveSummaryStructuredData, getGoToMarketStrategyStructuredData, getCustomerSegmentationVisualStructuredData, getFinancialsExecutiveSummaryStructuredData, getPLAssumptionsDetailedStructuredData, getCostAssumptionsDetailedStructuredData, getOnboardingCostsDetailedStructuredData, getUKAssumptionsFinancialsDetailedStructuredData, getCACAssumptionsDetailedStructuredData, getBurnRateAssumptionsDetailedStructuredData, getPESTLEAnalysisStructuredData, getInternalCapabilityAssessmentStructuredData, getOurVisionStructuredData, getStrategicApproachStructuredData, getRaiseStructuredData } from "@/components/investor/data/pdfContentProviders";
+import { getPdfContentForComponent, getExecutiveContextStructuredData, getSituationAnalysisStructuredData, getCustomerPersonasStructuredData, getCustomerUserJourneysStructuredData, getMarketDescriptionStructuredData, getCompetitorBenchmarksStructuredData, getCustomerOnlineBehaviourStructuredData, getWhyNowStructuredData, getSWOTAnalysisStructuredData, getCustomerSegmentationStructuredData, getCustomersMarketSourcesStructuredData, getProductVisionStructuredData, getEarlyRoadmapStructuredData, getTechStackStructuredData, getCommercialisationStrategyStructuredData, getCommercialsStructuredData, getHEUPricingStructuredData, getTeamCredibilityStructuredData, getFoundingLeadershipStructuredData, getTeamStructuredData, getMarketingObjectivesStructuredData, getBrandStrategyStructuredData, getBrandIntegrityStructuredData, getSegmentationStrategyStructuredData, getContentEngagementStrategyStructuredData, getPrimaryConversionChannelsStructuredData, getAcquisitionExecutiveSummaryStructuredData, getGoToMarketStrategyStructuredData, getCustomerSegmentationVisualStructuredData, getFinancialsExecutiveSummaryStructuredData, getPLAssumptionsDetailedStructuredData, getCostAssumptionsDetailedStructuredData, getOnboardingCostsDetailedStructuredData, getUKAssumptionsFinancialsDetailedStructuredData, getCACAssumptionsDetailedStructuredData, getBurnRateAssumptionsDetailedStructuredData, getPESTLEAnalysisStructuredData, getInternalCapabilityAssessmentStructuredData, getOurVisionStructuredData, getStrategicApproachStructuredData, getRaiseStructuredData, getAssumptionsStructuredData } from "@/components/investor/data/pdfContentProviders";
 import { competitorData } from "@/components/investor/data/competitorData";
 
 // ============================================================================
@@ -6194,6 +6194,280 @@ const renderCACAssumptions = (
   });
 
   return yPosition + 10;
+};
+
+/**
+ * Render Assumptions visual with standardized fonts
+ * Matches AssumptionsVisual.tsx
+ */
+const renderAssumptions = (
+  doc: jsPDF,
+  startY: number,
+  margin: number,
+  pageWidth: number,
+  pageHeight: number
+): number => {
+  let yPosition = startY;
+  const maxWidth = pageWidth - margin * 2;
+  const data = getAssumptionsStructuredData();
+
+  // Title
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.sectionTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Model Assumptions Overview", margin, yPosition);
+  yPosition += 8;
+
+  // Overview box
+  doc.setFillColor(...PDF_CONFIG.primaryBg);
+  doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  const overviewText = "All projections are grounded in published government statistics, OECD benchmarks, and validated cost models. Conservative approach uses midpoint estimates within evidence-based ranges.";
+  const overviewLines = doc.splitTextToSize(overviewText, maxWidth - 16);
+  doc.text(overviewLines, margin + 8, yPosition + 8);
+  yPosition += 28;
+
+  // Key Assumptions Matrix
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Key Assumptions Summary", margin, yPosition);
+  yPosition += 8;
+
+  // Table header
+  const colWidths = [60, 35, 75];
+  doc.setFillColor(...PDF_CONFIG.headerBg);
+  doc.rect(margin, yPosition, maxWidth, 10, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  let xPos = margin + 4;
+  ["Assumption Category", "Value", "Source / Basis"].forEach((header, i) => {
+    doc.text(header, xPos, yPosition + 7);
+    xPos += colWidths[i];
+  });
+  yPosition += 10;
+
+  // Table rows
+  doc.setFont("helvetica", "normal");
+  data.keyAssumptions.forEach((row, idx) => {
+    if (idx % 2 === 0) {
+      doc.setFillColor(255, 255, 255);
+    } else {
+      doc.setFillColor(...PDF_CONFIG.bgLight);
+    }
+    doc.rect(margin, yPosition, maxWidth, 10, "F");
+    
+    xPos = margin + 4;
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(row.category, xPos, yPosition + 7);
+    xPos += colWidths[0];
+    
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFont("helvetica", "bold");
+    doc.text(row.value, xPos, yPosition + 7);
+    xPos += colWidths[1];
+    
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.setFont("helvetica", "normal");
+    doc.text(row.source, xPos, yPosition + 7);
+    yPosition += 10;
+  });
+  yPosition += 10;
+
+  // UK Market section
+  if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("UK Real Estate Market", margin, yPosition);
+  yPosition += 8;
+
+  // UK stats boxes
+  const boxWidth = (maxWidth - 10) / 2;
+  doc.setFillColor(...PDF_CONFIG.primaryBg);
+  doc.roundedRect(margin, yPosition, boxWidth, 22, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.ukMarket.totalBusinesses, margin + boxWidth / 2, yPosition + 12, { align: "center" });
+  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.text("Total UK Businesses", margin + boxWidth / 2, yPosition + 18, { align: "center" });
+
+  doc.setFillColor(235, 233, 254);
+  doc.roundedRect(margin + boxWidth + 10, yPosition, boxWidth, 22, 3, 3, "F");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.ukMarket.realEstateBusinesses, margin + boxWidth + 10 + boxWidth / 2, yPosition + 12, { align: "center" });
+  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.text("Real Estate (" + data.ukMarket.realEstateShare + ")", margin + boxWidth + 10 + boxWidth / 2, yPosition + 18, { align: "center" });
+  yPosition += 28;
+
+  // UK breakdown table
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.text("Size Breakdown", margin, yPosition);
+  yPosition += 6;
+
+  const breakdownColWidths = [50, 30, 40];
+  doc.setFillColor(...PDF_CONFIG.headerBg);
+  doc.rect(margin, yPosition, maxWidth * 0.7, 8, "F");
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  xPos = margin + 4;
+  ["Segment", "Share", "Count"].forEach((h, i) => {
+    doc.text(h, xPos, yPosition + 6);
+    xPos += breakdownColWidths[i];
+  });
+  yPosition += 8;
+
+  doc.setFont("helvetica", "normal");
+  data.ukMarket.breakdown.forEach((row, idx) => {
+    if (idx % 2 === 1) {
+      doc.setFillColor(...PDF_CONFIG.bgLight);
+      doc.rect(margin, yPosition, maxWidth * 0.7, 8, "F");
+    }
+    xPos = margin + 4;
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(row.size, xPos, yPosition + 6);
+    xPos += breakdownColWidths[0];
+    doc.text(row.pct, xPos, yPosition + 6);
+    xPos += breakdownColWidths[1];
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFont("helvetica", "bold");
+    doc.text(row.count, xPos, yPosition + 6);
+    doc.setFont("helvetica", "normal");
+    yPosition += 8;
+  });
+  yPosition += 10;
+
+  // Global scaling
+  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Global Market Scaling", margin, yPosition);
+  yPosition += 8;
+
+  const globalBoxWidth = (maxWidth - 20) / 3;
+  const globalData = [
+    { value: data.globalScaling.oecdPopulation, label: "OECD Pop." },
+    { value: data.globalScaling.ukPopulation, label: "UK Pop." },
+    { value: data.globalScaling.multiplier, label: "Multiplier" },
+  ];
+  globalData.forEach((item, i) => {
+    doc.setFillColor(...(i === 2 ? [235, 233, 254] as [number, number, number] : PDF_CONFIG.primaryBg));
+    doc.roundedRect(margin + i * (globalBoxWidth + 10), yPosition, globalBoxWidth, 20, 3, 3, "F");
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(PDF_CONFIG.fontSize.statLarge);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.value, margin + i * (globalBoxWidth + 10) + globalBoxWidth / 2, yPosition + 10, { align: "center" });
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    doc.text(item.label, margin + i * (globalBoxWidth + 10) + globalBoxWidth / 2, yPosition + 16, { align: "center" });
+  });
+  yPosition += 26;
+
+  // Global result
+  doc.setFillColor(...PDF_CONFIG.primaryBg);
+  doc.setDrawColor(...PDF_CONFIG.primaryColor);
+  doc.roundedRect(margin, yPosition, maxWidth, 18, 3, 3, "FD");
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
+  doc.setFont("helvetica", "bold");
+  doc.text("~" + data.globalScaling.globalBusinesses, pageWidth / 2, yPosition + 10, { align: "center" });
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.text("Global RE Businesses (Conservative)", pageWidth / 2, yPosition + 15, { align: "center" });
+  yPosition += 26;
+
+  // Cost Structure
+  if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Cost Structure Assumptions", margin, yPosition);
+  yPosition += 8;
+
+  const costBoxWidth = (maxWidth - 16) / 3;
+  const costData = [
+    { title: "Fixed Team", value: data.costStructure.fixedTeam },
+    { title: "Variable Costs", value: data.costStructure.variableCosts },
+    { title: "AI & Infra", value: data.costStructure.infraCosts },
+  ];
+  costData.forEach((item, i) => {
+    doc.setFillColor(...PDF_CONFIG.bgLight);
+    doc.roundedRect(margin + i * (costBoxWidth + 8), yPosition, costBoxWidth, 24, 3, 3, "F");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.title, margin + i * (costBoxWidth + 8) + 4, yPosition + 8);
+    doc.setTextColor(...PDF_CONFIG.primaryColor);
+    doc.setFontSize(PDF_CONFIG.fontSize.body);
+    doc.text(item.value, margin + i * (costBoxWidth + 8) + 4, yPosition + 18);
+  });
+  yPosition += 32;
+
+  // AI Onboarding costs
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFont("helvetica", "bold");
+  doc.text("AI Onboarding Cost Per Client (One-Off)", margin, yPosition);
+  yPosition += 8;
+
+  const onboardingData = [
+    { cost: data.costStructure.onboardingCosts.small, label: "Small" },
+    { cost: data.costStructure.onboardingCosts.medium, label: "Medium" },
+    { cost: data.costStructure.onboardingCosts.large, label: "Large" },
+  ];
+  onboardingData.forEach((item, i) => {
+    doc.setFillColor(...PDF_CONFIG.emeraldBg);
+    doc.roundedRect(margin + i * (costBoxWidth + 8), yPosition, costBoxWidth, 20, 3, 3, "F");
+    doc.setTextColor(...PDF_CONFIG.emerald);
+    doc.setFontSize(PDF_CONFIG.fontSize.statLarge);
+    doc.setFont("helvetica", "bold");
+    doc.text(item.cost.split(" ")[0], margin + i * (costBoxWidth + 8) + costBoxWidth / 2, yPosition + 10, { align: "center" });
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+    doc.text(item.label, margin + i * (costBoxWidth + 8) + costBoxWidth / 2, yPosition + 16, { align: "center" });
+  });
+  yPosition += 28;
+
+  // Why credible section
+  if (yPosition > pageHeight - 60) { doc.addPage(); yPosition = margin; }
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Why These Assumptions Are Credible", margin, yPosition);
+  yPosition += 8;
+
+  doc.setFillColor(...PDF_CONFIG.emeraldBg);
+  doc.roundedRect(margin, yPosition, maxWidth, 50, 3, 3, "F");
+  
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "normal");
+  let credY = yPosition + 6;
+  data.credibilityPoints.forEach((point, i) => {
+    if (i < 8) {
+      const col = i < 4 ? 0 : 1;
+      const row = i % 4;
+      const xOffset = col === 0 ? margin + 6 : margin + maxWidth / 2 + 6;
+      const yOffset = credY + row * 10;
+      doc.setFillColor(...PDF_CONFIG.emerald);
+      doc.circle(xOffset, yOffset - 1, 1.5, "F");
+      doc.setTextColor(...PDF_CONFIG.textGray);
+      const truncated = point.length > 45 ? point.substring(0, 42) + "..." : point;
+      doc.text(truncated, xOffset + 5, yOffset);
+    }
+  });
+  yPosition += 58;
+
+  return yPosition;
 };
 
 /**
@@ -15292,6 +15566,8 @@ const renderTabContent = (
       yPosition = renderBurnRateAssumptions(doc, yPosition, margin, pageWidth, pageHeight);
     } else if (componentType === "onboardingCosts") {
       yPosition = renderOnboardingCosts(doc, yPosition, margin, pageWidth, pageHeight);
+    } else if (componentType === "assumptions") {
+      yPosition = renderAssumptions(doc, yPosition, margin, pageWidth, pageHeight);
     }
     // Financials renderers
     else if (componentType === "financialsExecutiveSummary") {
