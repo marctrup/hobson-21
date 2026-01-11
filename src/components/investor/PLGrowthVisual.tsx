@@ -65,7 +65,7 @@ const PLGrowthVisual = () => {
             </div>
             <div className="flex justify-between items-center bg-primary/5 p-3 rounded-lg">
               <span className="text-sm font-medium text-foreground">Expected gross margin</span>
-              <span className="text-sm font-bold text-primary">85–90%+</span>
+              <span className="text-sm font-bold text-primary">90%+</span>
             </div>
           </div>
         </div>

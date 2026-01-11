@@ -5418,9 +5418,9 @@ const renderFinancialsExecutiveSummary = (
   yPosition += 20;
 
   const metrics = [
-    "Revenue growth from £0.708M in 2027 to £14.92M by 2031",
+    "Revenue growth from £0.708M in 2027 to £100M by 2031",
     "~90% five-year CAGR",
-    "85–90%+ gross margins with net margins expanding toward 40–55% at scale",
+    "90%+ gross margins with net margins expanding toward 40–55% at scale",
     "EBITDA breakeven above £5M ARR, reached early in the forecast period",
     "Infrastructure-grade unit economics with rapid CAC payback"
   ];
@@ -6612,7 +6612,7 @@ const renderPLGrowth = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.text("Expected gross margin", margin + 10, itemY + 2);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text("85-90%+", margin + maxWidth - 60, itemY + 2);
+  doc.text("90%+", margin + maxWidth - 60, itemY + 2);
   yPosition += 90;
 
   // Onboarding and AI Economics
