@@ -1842,7 +1842,7 @@ const renderWhyNowSpeed = (
   
   doc.setTextColor(...PDF_CONFIG.textDark);
   setBodyBoldFont(doc);
-  doc.text("This creates a narrow 12-18-month window to define the default system of record for AI in Real Estate.", margin + 8, resetY + 2);
+  doc.text("This creates a narrow 12-36-month window to define the default system of record for AI in Real Estate.", margin + 8, resetY + 2);
   
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   setBodyBoldFont(doc);
