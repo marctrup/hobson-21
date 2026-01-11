@@ -29,7 +29,7 @@ import hobsonLogo from "/hobson-logo.png";
 import mvpArchitecture from "@/assets/mvp-ai-architecture.png";
 import hobsonDevicesCombined from "@/assets/hobson-devices-combined.png";
 import aiArchitectureDiagram from "@/assets/ai-architecture-diagram.jpg";
-import plForecastChart from "@/assets/pl-forecast-chart.png";
+
 import revenueGrowthChart from "@/assets/revenue-growth-chart.png";
 import { CompetitiveLandscapeVisual } from "@/components/investor/CompetitiveLandscapeVisual";
 import { CompetitiveMatrixVisual } from "@/components/investor/CompetitiveMatrixVisual";
@@ -844,7 +844,6 @@ const sections = [
         title: "P/L Growth",
         showCustomVisual: true,
         customVisualComponent: "plGrowth",
-        pdfImage: plForecastChart,
         imageAlt: "P/L Growth Forecast 2027-2031",
         content: {
           overview: "",
