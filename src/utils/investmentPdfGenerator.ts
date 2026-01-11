@@ -5609,7 +5609,7 @@ const renderCapitalRaiseStrategy = (
   yPosition += 10;
 
   const burnPoints = [
-    "Fully funds the 2026 build year",
+    "Fully funds the build",
     "Positions Hobson to enter 2027 fully staffed and production-ready",
     "Supports aggressive go-to-market execution during launch",
     "Preserves sufficient capital for early international readiness",
