@@ -293,7 +293,7 @@ const AssumptionsVisual = () => {
 
         {/* AI Onboarding Costs */}
         <div className="mt-6 border-t border-border pt-4">
-          <h4 className="font-semibold text-foreground mb-3">AI Onboarding Cost Per Client (One-Off)</h4>
+          <h4 className="font-semibold text-foreground mb-3">AI Reading in Document Cost Per Client (One-Off)</h4>
           <div className="grid grid-cols-3 gap-4">
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 text-center">
               <div className="text-xl font-bold text-green-700">£3–4</div>
