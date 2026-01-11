@@ -5102,81 +5102,107 @@ const renderAssumptions = (
   yPosition += 95;
 
   // Check page break
-  yPosition = checkPageBreak(doc, yPosition, 120, pageHeight, margin);
+  yPosition = checkPageBreak(doc, yPosition, 180, pageHeight, margin);
 
-  // UK and Global Market Side by Side
-  const halfWidth = (maxWidth - 10) / 2;
-  
-  // UK Market
+  // UK Market Section (Full Width)
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, halfWidth, 80, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 75, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
   doc.text("UK Real Estate Market", margin + 8, yPosition + 12);
   
-  // UK stats
-  const ukStatsY = yPosition + 20;
+  // UK stats boxes
+  const ukStatsY = yPosition + 18;
+  const ukBoxWidth = 50;
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin + 8, ukStatsY, 35, 25, 2, 2, "F");
-  doc.roundedRect(margin + 48, ukStatsY, 45, 25, 2, 2, "F");
+  doc.roundedRect(margin + 8, ukStatsY, ukBoxWidth, 22, 2, 2, "F");
+  doc.roundedRect(margin + 8 + ukBoxWidth + 6, ukStatsY, ukBoxWidth, 22, 2, 2, "F");
   
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFontSize(PDF_CONFIG.fontSize.stat);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text(data.ukMarket.totalBusinesses, margin + 12, ukStatsY + 12);
-  doc.text(data.ukMarket.realEstateBusinesses, margin + 52, ukStatsY + 12);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.ukMarket.totalBusinesses, margin + 14, ukStatsY + 12);
+  doc.text(data.ukMarket.realEstateBusinesses, margin + 14 + ukBoxWidth + 6, ukStatsY + 12);
   
   doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("Total UK", margin + 12, ukStatsY + 20);
-  doc.text("RE (4.2%)", margin + 52, ukStatsY + 20);
+  doc.setFont("helvetica", "normal");
+  doc.text("Total UK Businesses", margin + 14, ukStatsY + 18);
+  doc.text("Real Estate (4.2%)", margin + 14 + ukBoxWidth + 6, ukStatsY + 18);
   
-  // UK Breakdown
-  let ukBreakdownY = ukStatsY + 32;
-  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  // UK Breakdown Table (right side)
+  const breakdownX = margin + 120;
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text("Size Breakdown:", margin + 8, ukBreakdownY);
-  ukBreakdownY += 6;
+  doc.text("Size Breakdown", breakdownX, ukStatsY + 4);
+  
+  // Table headers
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  doc.setFont("helvetica", "bold");
+  doc.text("Segment", breakdownX, ukStatsY + 12);
+  doc.text("Share", breakdownX + 38, ukStatsY + 12);
+  doc.text("Count", breakdownX + 55, ukStatsY + 12);
+  
+  // Table rows
   doc.setFont("helvetica", "normal");
-  data.ukMarket.breakdown.forEach((item) => {
+  let rowY = ukStatsY + 18;
+  const breakdownItems = [
+    { size: "Small (1-9)", pct: "96.0%", count: "225,792" },
+    { size: "Medium (10-49)", pct: "2.7%", count: "6,350" },
+    { size: "Large (50-249)", pct: "0.6%", count: "1,411" },
+    { size: "Enterprise (250+)", pct: "0.1%", count: "235" },
+  ];
+  breakdownItems.forEach((item) => {
     doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(item.size + ": ", margin + 8, ukBreakdownY);
+    doc.text(item.size, breakdownX, rowY);
+    doc.text(item.pct, breakdownX + 38, rowY);
     doc.setTextColor(...PDF_CONFIG.primaryColor);
-    doc.text(item.count, margin + 55, ukBreakdownY);
-    ukBreakdownY += 5;
+    doc.setFont("helvetica", "bold");
+    doc.text(item.count, breakdownX + 55, rowY);
+    doc.setFont("helvetica", "normal");
+    rowY += 6;
   });
   
-  // Global Market
+  yPosition += 82;
+
+  // Global Market Section (Full Width)
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin + halfWidth + 10, yPosition, halfWidth, 80, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Global Market Scaling", margin + halfWidth + 18, yPosition + 12);
+  doc.text("Global Market Scaling", margin + 8, yPosition + 12);
   
-  // Global stats
-  const globalStatsY = yPosition + 20;
+  // Global stats boxes
+  const globalStatsY = yPosition + 18;
+  const globalBoxWidth = 40;
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin + halfWidth + 14, globalStatsY, 28, 22, 2, 2, "F");
-  doc.roundedRect(margin + halfWidth + 46, globalStatsY, 28, 22, 2, 2, "F");
+  doc.roundedRect(margin + 8, globalStatsY, globalBoxWidth, 28, 2, 2, "F");
+  doc.roundedRect(margin + 8 + globalBoxWidth + 6, globalStatsY, globalBoxWidth, 28, 2, 2, "F");
+  doc.roundedRect(margin + 8 + (globalBoxWidth + 6) * 2, globalStatsY, globalBoxWidth, 28, 2, 2, "F");
   doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-  doc.roundedRect(margin + halfWidth + 14, globalStatsY + 26, 60, 22, 2, 2, "F");
+  doc.roundedRect(margin + 8 + (globalBoxWidth + 6) * 3, globalStatsY, 55, 28, 2, 2, "F");
   
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.text(data.globalScaling.oecdPopulation, margin + halfWidth + 18, globalStatsY + 12);
-  doc.text(data.globalScaling.ukPopulation, margin + halfWidth + 50, globalStatsY + 12);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.globalScaling.oecdPopulation, margin + 14, globalStatsY + 12);
+  doc.text(data.globalScaling.ukPopulation, margin + 14 + globalBoxWidth + 6, globalStatsY + 12);
+  doc.text(data.globalScaling.multiplier, margin + 14 + (globalBoxWidth + 6) * 2, globalStatsY + 12);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.text(data.globalScaling.globalBusinesses, margin + 14 + (globalBoxWidth + 6) * 3, globalStatsY + 12);
+  
   doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setTextColor(...PDF_CONFIG.textGray);
-  doc.text("OECD Pop.", margin + halfWidth + 18, globalStatsY + 18);
-  doc.text("UK Pop.", margin + halfWidth + 50, globalStatsY + 18);
+  doc.setFont("helvetica", "normal");
+  doc.text("OECD Pop.", margin + 14, globalStatsY + 20);
+  doc.text("UK Pop.", margin + 14 + globalBoxWidth + 6, globalStatsY + 20);
+  doc.text("Multiplier", margin + 14 + (globalBoxWidth + 6) * 2, globalStatsY + 20);
+  doc.text("Global RE Businesses", margin + 14 + (globalBoxWidth + 6) * 3, globalStatsY + 20);
   
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text(data.globalScaling.multiplier + " -> " + data.globalScaling.globalBusinesses + " Global RE Businesses", margin + halfWidth + 18, globalStatsY + 38);
-  
-  yPosition += 90;
+  yPosition += 62;
 
   // Check page break
   yPosition = checkPageBreak(doc, yPosition, 100, pageHeight, margin);
