@@ -89,93 +89,6 @@ const RevenueGrowthVisual = () => {
         </div>
       </div>
 
-      {/* Revenue Breakdown Table */}
-      <div className="bg-card rounded-xl p-6 border border-border/30">
-        <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="w-5 h-5 text-primary" />
-          <h4 className="text-lg font-semibold text-foreground">Revenue</h4>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-slate-700 text-white">
-                <th className="text-left py-2 px-3 font-semibold"></th>
-                {revenueBreakdown.years.map((year) => (
-                  <th key={year} className="text-right py-2 px-3 font-semibold">{year}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {/* UK Revenue Section */}
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">UK revenue: Enterprise</td>
-                {revenueBreakdown.ukEnterprise.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">UK revenue: Enterprise Plus</td>
-                {revenueBreakdown.ukEnterprisePlus.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">UK revenue: Essential</td>
-                {revenueBreakdown.ukEssential.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border bg-muted/30">
-                <td className="py-2 px-3 font-semibold text-foreground">UK Total revenue</td>
-                {revenueBreakdown.ukTotal.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right font-semibold text-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-
-              {/* Spacer row */}
-              <tr><td colSpan={7} className="py-1"></td></tr>
-
-              {/* Global Revenue Section */}
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">Global revenue: Enterprise</td>
-                {revenueBreakdown.globalEnterprise.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">Global revenue: Enterprise Plus</td>
-                {revenueBreakdown.globalEnterprisePlus.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">Global revenue: Essential</td>
-                {revenueBreakdown.globalEssential.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border bg-muted/30">
-                <td className="py-2 px-3 font-semibold text-foreground">Global Total revenue</td>
-                {revenueBreakdown.globalTotal.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right font-semibold text-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-
-              {/* Spacer row */}
-              <tr><td colSpan={7} className="py-1"></td></tr>
-
-              {/* Total Revenue */}
-              <tr className="bg-fuchsia-100 dark:bg-fuchsia-900/30">
-                <td className="py-2 px-3 font-bold text-foreground">Total revenue</td>
-                {revenueBreakdown.total.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right font-bold text-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
       {/* Market & Revenue Assumptions */}
       <div className="grid md:grid-cols-2 gap-4">
         {/* UK Market */}
@@ -283,6 +196,92 @@ const RevenueGrowthVisual = () => {
         </div>
       </div>
 
+      {/* Revenue Breakdown Table */}
+      <div className="bg-card rounded-xl p-6 border border-border/30">
+        <div className="flex items-center gap-2 mb-4">
+          <TrendingUp className="w-5 h-5 text-primary" />
+          <h4 className="text-lg font-semibold text-foreground">Revenue</h4>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="bg-slate-700 text-white">
+                <th className="text-left py-2 px-3 font-semibold"></th>
+                {revenueBreakdown.years.map((year) => (
+                  <th key={year} className="text-right py-2 px-3 font-semibold">{year}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {/* UK Revenue Section */}
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">UK revenue: Enterprise</td>
+                {revenueBreakdown.ukEnterprise.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">UK revenue: Enterprise Plus</td>
+                {revenueBreakdown.ukEnterprisePlus.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">UK revenue: Essential</td>
+                {revenueBreakdown.ukEssential.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border bg-muted/30">
+                <td className="py-2 px-3 font-semibold text-foreground">UK Total revenue</td>
+                {revenueBreakdown.ukTotal.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right font-semibold text-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+
+              {/* Spacer row */}
+              <tr><td colSpan={7} className="py-1"></td></tr>
+
+              {/* Global Revenue Section */}
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">Global revenue: Enterprise</td>
+                {revenueBreakdown.globalEnterprise.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">Global revenue: Enterprise Plus</td>
+                {revenueBreakdown.globalEnterprisePlus.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">Global revenue: Essential</td>
+                {revenueBreakdown.globalEssential.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border bg-muted/30">
+                <td className="py-2 px-3 font-semibold text-foreground">Global Total revenue</td>
+                {revenueBreakdown.globalTotal.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right font-semibold text-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+
+              {/* Spacer row */}
+              <tr><td colSpan={7} className="py-1"></td></tr>
+
+              {/* Total Revenue */}
+              <tr className="bg-fuchsia-100 dark:bg-fuchsia-900/30">
+                <td className="py-2 px-3 font-bold text-foreground">Total revenue</td>
+                {revenueBreakdown.total.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right font-bold text-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       {/* Chart */}
       <div className="p-6 rounded-xl bg-background border border-border">
@@ -348,11 +347,11 @@ const RevenueGrowthVisual = () => {
         </div>
         <div className="p-4 rounded-xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20 text-center">
           <p className="text-xs text-muted-foreground mb-1">2028 (Global Start)</p>
-          <p className="text-xl font-bold text-sky-600 dark:text-sky-400">£7.8M</p>
+          <p className="text-xl font-bold text-sky-600 dark:text-sky-400">£6.4M</p>
         </div>
         <div className="p-4 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 text-center">
           <p className="text-xs text-muted-foreground mb-1">2031 (Year 6)</p>
-          <p className="text-xl font-bold text-primary">£80.0M</p>
+          <p className="text-xl font-bold text-primary">£99.7M</p>
         </div>
         <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 text-center">
           <p className="text-xs text-muted-foreground mb-1">5-Year CAGR</p>
