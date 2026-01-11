@@ -5339,8 +5339,8 @@ const renderRevenueModel = (
   const summaryItems = [
     { label: "Market:", value: "UK 235,200 -> Global 4.23M businesses" },
     { label: "ARPU:", value: "GBP 607 annually" },
-    { label: "UK Penetration:", value: "1.0% -> 2.0% (2027-2031)" },
-    { label: "Global Penetration:", value: "0.25% -> 0.6% (2028-2031)" },
+    { label: "UK Penetration:", value: "0.5% -> 1.8% (2027-2031)" },
+    { label: "Global Penetration:", value: "0.2% -> 0.8% (2028-2031)" },
     { label: "Revenue Growth:", value: "GBP 1.17M -> GBP 14.92M (2027-2031)" },
   ];
 
@@ -7429,10 +7429,10 @@ const renderPLAssumptions = (
   doc.text("Revenue Model Assumptions", margin + 12, yPosition + 12);
 
   const revenueItems = [
-    "Blended ARPU = GBP 41.31/month -> GBP 495.72/year",
+    "Blended ARPU = GBP 50.58/month -> GBP 607/year",
     "Pricing mix: Essential, Essential Plus, Enterprise",
-    "UK: 1.0% -> 2.0% penetration (2027-2031)",
-    "Global: 0.25% -> 0.6% penetration (2028-2031)",
+    "UK: 0.5% -> 1.8% penetration (2027-2031)",
+    "Global: 0.2% -> 0.8% penetration (2028-2031)",
     "UK market: 235,200 businesses | Global: 4.23M",
   ];
 

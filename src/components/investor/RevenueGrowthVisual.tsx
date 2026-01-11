@@ -47,18 +47,21 @@ const RevenueGrowthVisual = () => {
   ];
 
   const ukPenetration = [
+    { year: "2026", share: "0.0%" },
     { year: "2027", share: "0.5%" },
-    { year: "2028", share: "1.5%" },
-    { year: "2029", share: "3.0%" },
-    { year: "2030", share: "4.5%" },
-    { year: "2031", share: "5.5%" },
+    { year: "2028", share: "1.0%" },
+    { year: "2029", share: "1.0%" },
+    { year: "2030", share: "1.5%" },
+    { year: "2031", share: "1.8%" },
   ];
 
   const globalPenetration = [
-    { year: "2028", share: "0.25%" },
-    { year: "2029", share: "1.0%" },
-    { year: "2030", share: "2.0%" },
-    { year: "2031", share: "3.0%" },
+    { year: "2026", share: "0.0%" },
+    { year: "2027", share: "0.0%" },
+    { year: "2028", share: "0.2%" },
+    { year: "2029", share: "0.4%" },
+    { year: "2030", share: "0.6%" },
+    { year: "2031", share: "0.8%" },
   ];
 
   return (

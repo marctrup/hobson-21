@@ -17,18 +17,21 @@ const RevenueModelVisual = () => {
   ];
 
   const ukPenetration = [
-    { year: "2027", penetration: "1.0%", customers: "2,352" },
-    { year: "2028", penetration: "1.25%", customers: "2,940" },
-    { year: "2029", penetration: "1.5%", customers: "3,528" },
-    { year: "2030", penetration: "1.75%", customers: "4,116" },
-    { year: "2031", penetration: "2.0%", customers: "4,704" },
+    { year: "2026", penetration: "0.0%", customers: "0" },
+    { year: "2027", penetration: "0.5%", customers: "1,176" },
+    { year: "2028", penetration: "1.0%", customers: "2,352" },
+    { year: "2029", penetration: "1.0%", customers: "2,352" },
+    { year: "2030", penetration: "1.5%", customers: "3,528" },
+    { year: "2031", penetration: "1.8%", customers: "4,234" },
   ];
 
   const globalPenetration = [
-    { year: "2028", penetration: "0.25%", customers: "10,584" },
-    { year: "2029", penetration: "0.35%", customers: "14,818" },
-    { year: "2030", penetration: "0.5%", customers: "21,168" },
-    { year: "2031", penetration: "0.6%", customers: "25,402" },
+    { year: "2026", penetration: "0.0%", customers: "0" },
+    { year: "2027", penetration: "0.0%", customers: "0" },
+    { year: "2028", penetration: "0.2%", customers: "8,467" },
+    { year: "2029", penetration: "0.4%", customers: "16,934" },
+    { year: "2030", penetration: "0.6%", customers: "25,402" },
+    { year: "2031", penetration: "0.8%", customers: "33,869" },
   ];
 
   const revenueProjection = [
@@ -267,8 +270,8 @@ const RevenueModelVisual = () => {
         <div className="space-y-2 text-sm">
           <p><span className="text-muted-foreground">Market:</span> <span className="font-medium">UK 235,200 → Global 4.23M businesses</span></p>
           <p><span className="text-muted-foreground">ARPU:</span> <span className="font-medium">£607 annually</span></p>
-          <p><span className="text-muted-foreground">UK Penetration:</span> <span className="font-medium">1.0% → 2.0% (2027–2031)</span></p>
-          <p><span className="text-muted-foreground">Global Penetration:</span> <span className="font-medium">0.25% → 0.6% (2028–2031)</span></p>
+          <p><span className="text-muted-foreground">UK Penetration:</span> <span className="font-medium">0.5% → 1.8% (2027–2031)</span></p>
+          <p><span className="text-muted-foreground">Global Penetration:</span> <span className="font-medium">0.2% → 0.8% (2028–2031)</span></p>
           <p><span className="text-muted-foreground">Revenue Growth:</span> <span className="font-medium text-primary">£0.708M → £14.92M (2027–2031)</span></p>
         </div>
       </div>
