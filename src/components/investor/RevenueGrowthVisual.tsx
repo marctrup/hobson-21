@@ -283,66 +283,6 @@ const RevenueGrowthVisual = () => {
         </div>
       </div>
 
-      {/* Revenue Model Summary */}
-      <div className="bg-muted/30 rounded-xl p-6 border border-border">
-        <h4 className="text-lg font-semibold text-foreground mb-4">Revenue Model</h4>
-        <div className="space-y-2 mb-4">
-          <div className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
-            <p className="text-sm text-muted-foreground">Blended ARPU: £607 / year</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
-            <p className="text-sm text-muted-foreground">Tier mix: Essential 60% | Plus 30% | Enterprise 10%</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
-            <p className="text-sm text-muted-foreground">No per-user or per-asset fees.</p>
-          </div>
-        </div>
-
-        {/* Revenue table */}
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-2 px-3 text-xs font-semibold text-foreground">Year</th>
-                <th className="text-right py-2 px-3 text-xs font-semibold text-foreground">UK Revenue</th>
-                <th className="text-right py-2 px-3 text-xs font-semibold text-foreground">Global</th>
-                <th className="text-right py-2 px-3 text-xs font-semibold text-foreground">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              {chartData.map((item, index) => (
-                <tr key={index} className="border-b border-border/50">
-                  <td className="py-2 px-3 text-xs font-medium text-foreground">{item.year}</td>
-                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">{formatCurrency(item.ukRevenue)}</td>
-                  <td className="py-2 px-3 text-xs text-muted-foreground text-right">{item.globalRevenue > 0 ? formatCurrency(item.globalRevenue) : "—"}</td>
-                  <td className="py-2 px-3 text-xs font-semibold text-primary text-right">{formatCurrency(item.total)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Customer ROI */}
-      <div className="bg-primary/10 rounded-xl p-5 border border-primary/20 text-center">
-        <p className="text-foreground font-semibold">Customer ROI: ~10× (£6,000 saving vs £607)</p>
-      </div>
-
-      {/* Explainer Box */}
-      <div className="p-4 rounded-xl bg-primary/5 border border-primary/20 flex items-start gap-3">
-        <Info className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
-        <div>
-          <p className="text-sm text-foreground font-medium mb-1">
-            The following tabs explain how this growth is achievable
-          </p>
-          <p className="text-xs text-muted-foreground">
-            Review the UK Assumptions, Global Assumptions, Market Penetration, and Revenue Model tabs for detailed methodology and supporting data.
-          </p>
-        </div>
-      </div>
 
       {/* Chart */}
       <div className="p-6 rounded-xl bg-background border border-border">
