@@ -47,7 +47,7 @@ import { SAMVisual } from "@/components/investor/SAMVisual";
 import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumptionsVisual";
 
 import { GlobalMarketAssumptionsVisual } from "@/components/investor/GlobalMarketAssumptionsVisual";
-import MarketShareJustificationVisual from "@/components/investor/MarketShareJustificationVisual";
+
 import RevenueModelVisual from "@/components/investor/RevenueModelVisual";
 
 import RevenueGrowthVisual from "@/components/investor/RevenueGrowthVisual";
@@ -861,15 +861,6 @@ const sections = [
         },
       },
       {
-        title: "Market Penetration",
-        showCustomVisual: true,
-        customVisualComponent: "marketShareJustification",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
         title: "Revenue Model",
         showCustomVisual: true,
         customVisualComponent: "revenueModel",
@@ -1586,10 +1577,7 @@ const InvestmentOpportunity = () => {
                       <OnboardingCostsVisual />
                     )}
 
-                    {/* Custom Visual Component for Market Share Justification */}
-                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "marketShareJustification" && (
-                      <MarketShareJustificationVisual />
-                    )}
+
 
                     {/* Custom Visual Component for Revenue Model */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "revenueModel" && (
