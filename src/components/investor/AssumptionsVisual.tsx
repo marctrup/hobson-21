@@ -121,19 +121,30 @@ const AssumptionsVisual = () => {
 
           {/* Business Size Breakdown */}
           <h4 className="text-sm font-semibold text-foreground mb-2">Size Breakdown</h4>
-          <div className="space-y-2">
-            {[
-              { size: "Small (1–9)", pct: "96.0%", count: "225,792" },
-              { size: "Medium (10–49)", pct: "2.7%", count: "6,350" },
-              { size: "Large (50–249)", pct: "0.6%", count: "1,411" },
-              { size: "Enterprise (250+)", pct: "0.1%", count: "235" },
-            ].map((item, idx) => (
-              <div key={idx} className="flex justify-between items-center text-sm py-1 border-b border-border/30">
-                <span className="text-muted-foreground">{item.size}</span>
-                <span className="text-foreground font-medium">{item.pct}</span>
-                <span className="text-primary font-bold">{item.count}</span>
-              </div>
-            ))}
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-1.5 text-muted-foreground font-medium">Segment</th>
+                  <th className="text-right py-1.5 text-muted-foreground font-medium">Share</th>
+                  <th className="text-right py-1.5 text-muted-foreground font-medium">Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { size: "Small (1–9)", pct: "96.0%", count: "225,792" },
+                  { size: "Medium (10–49)", pct: "2.7%", count: "6,350" },
+                  { size: "Large (50–249)", pct: "0.6%", count: "1,411" },
+                  { size: "Enterprise (250+)", pct: "0.1%", count: "235" },
+                ].map((item, idx) => (
+                  <tr key={idx} className="border-b border-border/30">
+                    <td className="py-1.5 text-muted-foreground">{item.size}</td>
+                    <td className="py-1.5 text-right text-foreground font-medium">{item.pct}</td>
+                    <td className="py-1.5 text-right text-primary font-bold">{item.count}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
           <div className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
             <LinkIcon className="w-3 h-3" />
