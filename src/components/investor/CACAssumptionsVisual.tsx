@@ -255,7 +255,7 @@ const CACAssumptionsVisual = () => {
             <div className="grid grid-cols-2 gap-2 lg:gap-4 mb-3 lg:mb-4">
               <div className="p-2 lg:p-4 bg-indigo-100/50 rounded-lg">
                 <div className="text-xs lg:text-sm text-muted-foreground">ARPU</div>
-                <div className="text-base lg:text-xl font-bold text-foreground">£495.72 / year</div>
+                <div className="text-base lg:text-xl font-bold text-foreground">£607 / year</div>
               </div>
               <div className="p-2 lg:p-4 bg-indigo-100/50 rounded-lg">
                 <div className="text-xs lg:text-sm text-muted-foreground">LTV (5-year lifetime)</div>

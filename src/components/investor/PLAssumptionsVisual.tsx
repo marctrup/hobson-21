@@ -24,7 +24,7 @@ const PLAssumptionsVisual = () => {
             <ul className="space-y-2 text-sm lg:text-base text-muted-foreground mb-3 lg:mb-4">
               <li className="flex items-start gap-2">
                 <span className="text-primary flex-shrink-0">•</span> 
-                <span>Blended ARPU = <strong>£41.31/month → £495.72/year</strong></span>
+                <span>Blended ARPU = <strong>£50.58/month → £607/year</strong></span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary flex-shrink-0">•</span> 

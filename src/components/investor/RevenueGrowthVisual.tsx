@@ -214,7 +214,7 @@ const RevenueGrowthVisual = () => {
           <h5 className="font-semibold text-foreground">Pricing Model</h5>
         </div>
         <div className="space-y-2 text-sm">
-          <p className="text-muted-foreground">Blended ARPU: <span className="text-foreground font-semibold">£495.72 per year</span></p>
+          <p className="text-muted-foreground">Blended ARPU: <span className="text-foreground font-semibold">£607 per year</span></p>
           <p className="text-muted-foreground">Tier mix: <span className="text-foreground font-semibold">Essential (60%), Plus (30%), Enterprise (10%)</span></p>
           <p className="text-muted-foreground">No per-user or per-asset fees</p>
         </div>
@@ -286,7 +286,7 @@ const RevenueGrowthVisual = () => {
         <div className="space-y-2 mb-4">
           <div className="flex items-start gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
-            <p className="text-sm text-muted-foreground">Blended ARPU: £495.72 / year</p>
+            <p className="text-sm text-muted-foreground">Blended ARPU: £607 / year</p>
           </div>
           <div className="flex items-start gap-2">
             <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0"></span>
@@ -325,7 +325,7 @@ const RevenueGrowthVisual = () => {
 
       {/* Customer ROI */}
       <div className="bg-primary/10 rounded-xl p-5 border border-primary/20 text-center">
-        <p className="text-foreground font-semibold">Customer ROI: ~12× (£6,000 saving vs £495.72)</p>
+        <p className="text-foreground font-semibold">Customer ROI: ~10× (£6,000 saving vs £607)</p>
       </div>
 
       {/* Explainer Box */}

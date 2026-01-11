@@ -5093,7 +5093,7 @@ const renderRevenueModel = (
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("GBP 41.31", margin + 60, yPosition + 10);
+  doc.text("GBP 50.58", margin + 60, yPosition + 10);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
@@ -5101,7 +5101,7 @@ const renderRevenueModel = (
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("GBP 495.72", margin + 135, yPosition + 10);
+  doc.text("GBP 607", margin + 135, yPosition + 10);
   yPosition += 32;
 
   // UK Market Penetration table
@@ -5338,7 +5338,7 @@ const renderRevenueModel = (
 
   const summaryItems = [
     { label: "Market:", value: "UK 235,200 -> Global 4.23M businesses" },
-    { label: "ARPU:", value: "GBP 495.72 annually" },
+    { label: "ARPU:", value: "GBP 607 annually" },
     { label: "UK Penetration:", value: "1.0% -> 2.0% (2027-2031)" },
     { label: "Global Penetration:", value: "0.25% -> 0.6% (2028-2031)" },
     { label: "Revenue Growth:", value: "GBP 1.17M -> GBP 14.92M (2027-2031)" },
