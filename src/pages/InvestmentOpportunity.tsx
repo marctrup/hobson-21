@@ -40,7 +40,7 @@ import { SimpleUIVisual } from "@/components/investor/SimpleUIVisual";
 import { GanttChartVisual } from "@/components/investor/GanttChartVisual";
 import { EarlyRoadmapVisual } from "@/components/investor/EarlyRoadmapVisual";
 import { UKMarketVisual } from "@/components/investor/UKMarketVisual";
-import OnboardingCostsVisual from "@/components/investor/OnboardingCostsVisual";
+
 import CompetitorAnalysisMatrix from "@/components/investor/CompetitorAnalysisMatrix";
 import { TargetMarketVisual } from "@/components/investor/TargetMarketVisual";
 import { SAMVisual } from "@/components/investor/SAMVisual";
@@ -48,13 +48,13 @@ import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumpt
 
 import { GlobalMarketAssumptionsVisual } from "@/components/investor/GlobalMarketAssumptionsVisual";
 
-import RevenueModelVisual from "@/components/investor/RevenueModelVisual";
+
 
 import RevenueGrowthVisual from "@/components/investor/RevenueGrowthVisual";
-import CostAssumptionsVisual from "@/components/investor/CostAssumptionsVisual";
-import PLAssumptionsVisual from "@/components/investor/PLAssumptionsVisual";
+
+
 import PLGrowthVisual from "@/components/investor/PLGrowthVisual";
-import CACAssumptionsVisual from "@/components/investor/CACAssumptionsVisual";
+
 import { ExecutiveSummaryVisual } from "@/components/investor/ExecutiveSummaryVisual";
 import { ApproachVisual } from "@/components/investor/ApproachVisual";
 import { CustomerSegmentationVisual } from "@/components/investor/CustomerSegmentationVisual";
@@ -860,51 +860,6 @@ const sections = [
           sections: [],
         },
       },
-      {
-        title: "Revenue Model",
-        showCustomVisual: true,
-        customVisualComponent: "revenueModel",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Cost Assumptions",
-        showCustomVisual: true,
-        customVisualComponent: "costAssumptions",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "Onboarding Cost Detail",
-        showCustomVisual: true,
-        customVisualComponent: "onboardingCosts",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "P/L Assumptions",
-        showCustomVisual: true,
-        customVisualComponent: "plAssumptions",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
-        title: "CAC Assumptions",
-        showCustomVisual: true,
-        customVisualComponent: "cacAssumptions",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
     ],
   },
   {
@@ -1572,32 +1527,7 @@ const InvestmentOpportunity = () => {
                       <SAMVisual />
                     )}
 
-                    {/* Custom Visual Component for Onboarding Costs */}
-                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "onboardingCosts" && (
-                      <OnboardingCostsVisual />
-                    )}
 
-
-
-                    {/* Custom Visual Component for Revenue Model */}
-                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "revenueModel" && (
-                      <RevenueModelVisual />
-                    )}
-
-                    {/* Custom Visual Component for Cost Assumptions */}
-                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "costAssumptions" && (
-                      <CostAssumptionsVisual />
-                    )}
-
-                    {/* Custom Visual Component for P/L Assumptions */}
-                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "plAssumptions" && (
-                      <PLAssumptionsVisual />
-                    )}
-
-                    {/* Custom Visual Component for CAC Assumptions */}
-                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "cacAssumptions" && (
-                      <CACAssumptionsVisual />
-                    )}
 
                     {/* Custom Visual Component for Assumptions */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "assumptions" && (
