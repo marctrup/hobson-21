@@ -6520,22 +6520,49 @@ const renderGoToMarketSummary = (
   yPosition += timelineBoxHeight + spacing.cardGap;
 
   // ========== Long-Term Vision ==========
-  fitPage(35);
-  const visionBoxHeight = 28;
-  doc.setFillColor(...PDF_CONFIG.blueBg);
-  doc.setDrawColor(...PDF_CONFIG.blueBorder);
-  doc.roundedRect(margin, yPosition, maxWidth, visionBoxHeight, box.borderRadius, box.borderRadius, "FD");
-  
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(fontSize.cardTitle);
-  doc.setFont("helvetica", "bold");
-  doc.text("Long-Term Vision", margin + box.paddingX, yPosition + 10);
-  
-  doc.setFontSize(fontSize.bodySmall);
-  doc.setFont("helvetica", "normal");
-  doc.text("Hobson evolves from answering questions to anticipating risk — becoming the trusted clarity layer for real estate organisations worldwide.", margin + box.paddingX, yPosition + 20);
-  
-  yPosition += visionBoxHeight + spacing.sectionGap;
+  {
+    const visionTitle = "Long-Term Vision";
+    const visionText =
+      "Hobson evolves from answering questions to anticipating risk — becoming the trusted clarity layer for real estate organisations worldwide.";
+
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "normal");
+    const visionLines = doc.splitTextToSize(
+      visionText,
+      maxWidth - box.paddingX * 2
+    );
+
+    const titleY = 10;
+    const textY = 20;
+    const textHeight = visionLines.length * lineHeight.body;
+    const visionBoxHeight = textY + textHeight + box.paddingBottom;
+
+    fitPage(visionBoxHeight + spacing.sectionGap);
+
+    doc.setFillColor(...PDF_CONFIG.blueBg);
+    doc.setDrawColor(...PDF_CONFIG.blueBorder);
+    doc.roundedRect(
+      margin,
+      yPosition,
+      maxWidth,
+      visionBoxHeight,
+      box.borderRadius,
+      box.borderRadius,
+      "FD"
+    );
+
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(fontSize.cardTitle);
+    doc.setFont("helvetica", "bold");
+    doc.text(visionTitle, margin + box.paddingX, yPosition + titleY);
+
+    doc.setFontSize(fontSize.bodySmall);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.text(visionLines, margin + box.paddingX, yPosition + textY);
+
+    yPosition += visionBoxHeight + spacing.sectionGap;
+  }
 
   return yPosition;
 };
