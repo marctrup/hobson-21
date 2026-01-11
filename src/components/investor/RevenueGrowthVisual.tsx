@@ -12,14 +12,27 @@ import {
 } from "recharts";
 
 const RevenueGrowthVisual = () => {
-  const revenueData = [
-    { year: "2026", ukRevenue: 0, globalRevenue: 0, total: 0 },
-    { year: "2027", ukRevenue: 708368, globalRevenue: 0, total: 708368 },
-    { year: "2028", ukRevenue: 1770920, globalRevenue: 6015707, total: 7786628 },
-    { year: "2029", ukRevenue: 3541840, globalRevenue: 18047122, total: 21588963 },
-    { year: "2030", ukRevenue: 5666945, globalRevenue: 36094244, total: 41761189 },
-    { year: "2031", ukRevenue: 7792049, globalRevenue: 72188489, total: 79980538 },
-  ];
+  // Detailed revenue breakdown by tier
+  const revenueBreakdown = {
+    years: ["2026", "2027", "2028", "2029", "2030", "2031"],
+    ukEnterprise: [0, 208096, 832385, 1872866, 3537636, 5930743],
+    ukEnterprisePlus: [0, 418294, 627442, 976020, 1533746, 2335478],
+    ukEssential: [0, 81977, 163955, 300583, 519190, 833436],
+    ukTotal: [0, 708368, 1623781, 3149470, 5590573, 9099657],
+    globalEnterprise: [0, 0, 1413780, 5655122, 8482683, 22620488],
+    globalEnterprisePlus: [0, 0, 2841842, 11367366, 28418416, 56836832],
+    globalEssential: [0, 0, 556944, 2227775, 5569438, 11138877],
+    globalTotal: [0, 0, 4812566, 19250264, 42470537, 90596196],
+    total: [0, 708368, 6436347, 22399734, 48061110, 99695853],
+  };
+
+  // Chart data for bar chart
+  const chartData = revenueBreakdown.years.map((year, i) => ({
+    year,
+    ukRevenue: revenueBreakdown.ukTotal[i],
+    globalRevenue: revenueBreakdown.globalTotal[i],
+    total: revenueBreakdown.total[i],
+  }));
 
   const formatCurrency = (value: number) => {
     if (value === 0) return "£0";
@@ -73,36 +86,90 @@ const RevenueGrowthVisual = () => {
         </div>
       </div>
 
-      {/* Five-Year Revenue Projection */}
+      {/* Revenue Breakdown Table */}
       <div className="bg-card rounded-xl p-6 border border-border">
         <div className="flex items-center gap-2 mb-4">
           <TrendingUp className="w-5 h-5 text-primary" />
-          <h4 className="text-lg font-semibold text-foreground">Five-Year Revenue Projection</h4>
+          <h4 className="text-lg font-semibold text-foreground">Revenue</h4>
         </div>
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">Year</th>
-                <th className="text-right py-2 px-4 text-sm font-semibold text-foreground">UK Revenue</th>
-                <th className="text-right py-2 px-4 text-sm font-semibold text-foreground">Global Revenue</th>
-                <th className="text-right py-2 px-4 text-sm font-semibold text-foreground">Total Revenue</th>
+              <tr className="bg-slate-700 text-white">
+                <th className="text-left py-2 px-3 font-semibold"></th>
+                {revenueBreakdown.years.map((year) => (
+                  <th key={year} className="text-right py-2 px-3 font-semibold">{year}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {revenueData.map((item, index) => (
-                <tr key={index} className="border-b border-border/50">
-                  <td className="py-3 px-4 text-sm font-semibold text-foreground">{item.year}</td>
-                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">{formatCurrency(item.ukRevenue)}</td>
-                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">{item.globalRevenue > 0 ? formatCurrency(item.globalRevenue) : "—"}</td>
-                  <td className="py-3 px-4 text-sm font-semibold text-primary text-right">{formatCurrency(item.total)}</td>
-                </tr>
-              ))}
+              {/* UK Revenue Section */}
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">UK revenue: Enterprise</td>
+                {revenueBreakdown.ukEnterprise.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">UK revenue: Enterprise Plus</td>
+                {revenueBreakdown.ukEnterprisePlus.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">UK revenue: Essential</td>
+                {revenueBreakdown.ukEssential.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border bg-muted/30">
+                <td className="py-2 px-3 font-semibold text-foreground">UK Total revenue</td>
+                {revenueBreakdown.ukTotal.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right font-semibold text-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+
+              {/* Spacer row */}
+              <tr><td colSpan={7} className="py-1"></td></tr>
+
+              {/* Global Revenue Section */}
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">Global revenue: Enterprise</td>
+                {revenueBreakdown.globalEnterprise.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">Global revenue: Enterprise Plus</td>
+                {revenueBreakdown.globalEnterprisePlus.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border/30">
+                <td className="py-2 px-3 text-muted-foreground">Global revenue: Essential</td>
+                {revenueBreakdown.globalEssential.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+              <tr className="border-b border-border bg-muted/30">
+                <td className="py-2 px-3 font-semibold text-foreground">Global Total revenue</td>
+                {revenueBreakdown.globalTotal.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right font-semibold text-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
+
+              {/* Spacer row */}
+              <tr><td colSpan={7} className="py-1"></td></tr>
+
+              {/* Total Revenue */}
+              <tr className="bg-fuchsia-100 dark:bg-fuchsia-900/30">
+                <td className="py-2 px-3 font-bold text-foreground">Total revenue</td>
+                {revenueBreakdown.total.map((val, i) => (
+                  <td key={i} className="py-2 px-3 text-right font-bold text-foreground">{formatCurrency(val)}</td>
+                ))}
+              </tr>
             </tbody>
           </table>
-        </div>
-        <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20 text-center">
-          <span className="text-sm font-semibold text-primary">5-Year CAGR: ~160%</span>
         </div>
       </div>
 
@@ -243,7 +310,7 @@ const RevenueGrowthVisual = () => {
               </tr>
             </thead>
             <tbody>
-              {revenueData.map((item, index) => (
+              {chartData.map((item, index) => (
                 <tr key={index} className="border-b border-border/50">
                   <td className="py-2 px-3 text-xs font-medium text-foreground">{item.year}</td>
                   <td className="py-2 px-3 text-xs text-muted-foreground text-right">{formatCurrency(item.ukRevenue)}</td>
@@ -283,7 +350,7 @@ const RevenueGrowthVisual = () => {
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={revenueData}
+              data={chartData}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
             >
               <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
