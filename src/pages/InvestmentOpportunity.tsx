@@ -823,6 +823,15 @@ const sections = [
         },
       },
       {
+        title: "Assumptions",
+        showCustomVisual: true,
+        customVisualComponent: "assumptions",
+        content: {
+          overview: "",
+          sections: [],
+        },
+      },
+      {
         title: "Capital Raise Strategy",
         showCustomVisual: true,
         customVisualComponent: "capitalRaiseStrategy",
