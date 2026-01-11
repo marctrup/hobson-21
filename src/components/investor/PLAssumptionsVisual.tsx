@@ -40,7 +40,7 @@ const PLAssumptionsVisual = () => {
             <ul className="space-y-2 text-sm lg:text-base text-muted-foreground mb-3 lg:mb-4">
               <li className="flex items-start gap-2">
                 <span className="text-primary flex-shrink-0">•</span> 
-                <span>UK: <strong>1.0% → 2.0% penetration (2027–2031)</strong></span>
+                <span>UK: <strong>0.5% → 1.8% penetration (2027–2031)</strong></span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-primary flex-shrink-0">•</span> 
