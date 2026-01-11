@@ -16,7 +16,7 @@ export { InvitationSlide } from './InvitationSlide';
 export { SimpleUIVisual } from './SimpleUIVisual';
 export { UKMarketVisual } from './UKMarketVisual';
 export { GanttChartVisual } from './GanttChartVisual';
-export { default as CACAssumptionsVisual } from './CACAssumptionsVisual';
+
 export { ExecutiveSummaryVisual } from './ExecutiveSummaryVisual';
 export { ApproachVisual } from './ApproachVisual';
 export { CustomerSegmentationVisual } from './CustomerSegmentationVisual';
