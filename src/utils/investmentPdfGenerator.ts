@@ -1542,7 +1542,7 @@ const renderExecutiveSummary = (
 
   // Bullet points
   const tractionBullets = [
-    "Validated across four live Real Estate operating use cases",
+    "Validated across Real Estate operating use cases",
     "98% model accuracy measured on proprietary, industry-specific datasets",
     "Multi-document reasoning across legal, compliance, and operational sources",
     "Domain-trained AI purpose-built for auditability and regulatory scrutiny",

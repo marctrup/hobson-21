@@ -113,7 +113,7 @@ export const ExecutiveSummaryVisual = () => {
         <div className="space-y-2 pl-4">
           <div className="flex items-start gap-2">
             <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
-            <p className="text-sm text-foreground">Validated across <span className="font-semibold">four live Real Estate operating use cases</span></p>
+            <p className="text-sm text-foreground">Validated across <span className="font-semibold">Real Estate operating use cases</span></p>
           </div>
           <div className="flex items-start gap-2">
             <CheckCircle2 className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
