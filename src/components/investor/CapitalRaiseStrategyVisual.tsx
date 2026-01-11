@@ -100,14 +100,52 @@ const CapitalRaiseStrategyVisual = () => {
           </table>
         </div>
 
-        <div className="mt-4 pt-4 border-t border-border">
-          <div className="flex justify-between items-center bg-primary/5 rounded-lg p-4">
-            <p className="font-semibold text-foreground">Use of Funds</p>
-            <p className="font-bold text-primary text-xl">£847k</p>
+        <div className="mt-6 pt-4 border-t border-border">
+          <h4 className="text-md font-semibold text-foreground mb-4">Revenue Projections</h4>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-3 px-4 text-sm font-semibold text-foreground">Year</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-foreground">2026</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-foreground">2027</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-foreground">2028</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-foreground">2029</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-foreground">2030</th>
+                  <th className="text-right py-3 px-4 text-sm font-semibold text-foreground">2031</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-border/50">
+                  <td className="py-3 px-4 text-sm font-semibold text-foreground">UK revenue — Total</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£0</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£708,368</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£1,770,920</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£3,541,840</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£5,666,945</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£7,792,049</td>
+                </tr>
+                <tr className="border-b border-border/50">
+                  <td className="py-3 px-4 text-sm font-semibold text-foreground">Global revenue — Total</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£0</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£0</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£6,015,707</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£18,047,122</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£36,094,244</td>
+                  <td className="py-3 px-4 text-sm text-muted-foreground text-right">£72,188,489</td>
+                </tr>
+                <tr className="bg-primary/5">
+                  <td className="py-3 px-4 text-sm font-bold text-foreground">Total revenue</td>
+                  <td className="py-3 px-4 text-sm font-bold text-primary text-right">£0</td>
+                  <td className="py-3 px-4 text-sm font-bold text-primary text-right">£708,368</td>
+                  <td className="py-3 px-4 text-sm font-bold text-primary text-right">£7,786,628</td>
+                  <td className="py-3 px-4 text-sm font-bold text-primary text-right">£21,588,963</td>
+                  <td className="py-3 px-4 text-sm font-bold text-primary text-right">£41,761,189</td>
+                  <td className="py-3 px-4 text-sm font-bold text-primary text-right">£79,980,538</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <p className="text-sm text-muted-foreground mt-3">
-            Remaining capital extends runway through commercial launch and early scale, providing 18–22 months of total runway.
-          </p>
         </div>
       </div>
 
