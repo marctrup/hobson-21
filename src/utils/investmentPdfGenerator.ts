@@ -6874,7 +6874,7 @@ const renderRevenueGrowth = (
   yPosition = checkPageBreak(doc, yPosition, 120, pageHeight, margin);
   doc.setFillColor(...PDF_CONFIG.bgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 115, 3, 3, "F");
-  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.setDrawColor(220, 220, 220); // Light border color
   doc.roundedRect(margin, yPosition, maxWidth, 115, 3, 3, "S");
 
   doc.setFillColor(...PDF_CONFIG.primaryColor);

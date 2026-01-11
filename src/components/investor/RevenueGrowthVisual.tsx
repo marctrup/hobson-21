@@ -87,7 +87,7 @@ const RevenueGrowthVisual = () => {
       </div>
 
       {/* Revenue Breakdown Table */}
-      <div className="bg-card rounded-xl p-6 border border-border">
+      <div className="bg-card rounded-xl p-6 border border-border/30">
         <div className="flex items-center gap-2 mb-4">
           <TrendingUp className="w-5 h-5 text-primary" />
           <h4 className="text-lg font-semibold text-foreground">Revenue</h4>
