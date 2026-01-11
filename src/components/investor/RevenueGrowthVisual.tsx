@@ -215,7 +215,7 @@ const RevenueGrowthVisual = () => {
         </div>
         <div className="space-y-2 text-sm">
           <p className="text-muted-foreground">Blended ARPU: <span className="text-foreground font-semibold">£607 per year</span></p>
-          <p className="text-muted-foreground">Tier mix: <span className="text-foreground font-semibold">Essential (60%), Plus (30%), Enterprise (10%)</span></p>
+          <p className="text-muted-foreground">Tier mix: <span className="text-foreground font-semibold">Essential (30%), Plus (60%), Enterprise (10%)</span></p>
           <p className="text-muted-foreground">No per-user or per-asset fees</p>
         </div>
       </div>
