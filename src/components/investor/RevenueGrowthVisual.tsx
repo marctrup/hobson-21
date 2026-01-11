@@ -1,5 +1,5 @@
-import React from "react";
-import { TrendingUp, Info, Target, Globe, DollarSign, Users } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { TrendingUp, Users, Globe, Target, DollarSign, BarChart3, Zap } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -12,370 +12,292 @@ import {
 } from "recharts";
 
 const RevenueGrowthVisual = () => {
-  // Detailed revenue breakdown by tier
-  const revenueBreakdown = {
-    years: ["2026", "2027", "2028", "2029", "2030", "2031"],
-    ukEnterprise: [0, 208096, 832385, 1872866, 3537636, 5930743],
-    ukEnterprisePlus: [0, 418294, 627442, 976020, 1533746, 2335478],
-    ukEssential: [0, 81977, 163955, 300583, 519190, 833436],
-    ukTotal: [0, 708368, 1623781, 3149470, 5590573, 9099657],
-    globalEnterprise: [0, 0, 1413780, 5655122, 8482683, 22620488],
-    globalEnterprisePlus: [0, 0, 2841842, 11367366, 28418416, 56836832],
-    globalEssential: [0, 0, 556944, 2227775, 5569438, 11138877],
-    globalTotal: [0, 0, 4812566, 19250264, 42470537, 90596196],
-    total: [0, 708368, 6436347, 22399734, 48061110, 99695853],
+  // Revenue data from the financial model
+  const revenueData = [
+    { year: "2026", uk: 0, global: 0, total: 0, customers: 0, mrr: 0, arpu: 0, churn: 0 },
+    { year: "2027", uk: 0.708, global: 0, total: 0.708, customers: 1168, mrr: 59031, arpu: 607, churn: 5 },
+    { year: "2028", uk: 1.624, global: 4.813, total: 6.436, customers: 10152, mrr: 536362, arpu: 634, churn: 7 },
+    { year: "2029", uk: 3.149, global: 19.250, total: 22.400, customers: 35705, mrr: 1866644, arpu: 627, churn: 8 },
+    { year: "2030", uk: 5.591, global: 42.471, total: 48.061, customers: 82936, mrr: 4005092, arpu: 579, churn: 8 },
+    { year: "2031", uk: 9.100, global: 90.596, total: 99.696, customers: 166302, mrr: 8307988, arpu: 599, churn: 8 },
+  ];
+
+  const formatCurrency = (value: number): string => {
+    if (value === 0) return "£0";
+    if (value >= 1) return `£${value.toFixed(1)}M`;
+    return `£${(value * 1000).toFixed(0)}k`;
   };
 
-  // Chart data for bar chart
-  const chartData = revenueBreakdown.years.map((year, i) => ({
-    year,
-    ukRevenue: revenueBreakdown.ukTotal[i],
-    globalRevenue: revenueBreakdown.globalTotal[i],
-    total: revenueBreakdown.total[i],
-  }));
-
-  const formatCurrency = (value: number) => {
+  const formatLargeCurrency = (value: number): string => {
     if (value === 0) return "£0";
     if (value >= 1000000) return `£${(value / 1000000).toFixed(1)}M`;
-    return `£${value.toLocaleString()}`;
+    if (value >= 1000) return `£${(value / 1000).toFixed(0)}k`;
+    return `£${value.toFixed(0)}`;
   };
 
-  const phases = [
-    { phase: "2026", focus: "Platform build, pilots, validation" },
-    { phase: "2027", focus: "UK commercial launch" },
-    { phase: "2028+", focus: "UK scale and global expansion" },
-  ];
-
-  const ukPenetration = [
-    { year: "2026", share: "0.0%" },
-    { year: "2027", share: "0.5%" },
-    { year: "2028", share: "1.0%" },
-    { year: "2029", share: "1.0%" },
-    { year: "2030", share: "1.5%" },
-    { year: "2031", share: "1.8%" },
-  ];
-
-  const globalPenetration = [
-    { year: "2026", share: "0.0%" },
-    { year: "2027", share: "0.0%" },
-    { year: "2028", share: "0.2%" },
-    { year: "2029", share: "0.4%" },
-    { year: "2030", share: "0.6%" },
-    { year: "2031", share: "0.8%" },
-  ];
-
   return (
-    <div className="space-y-6">
-      {/* Phase Timeline */}
-      <div className="bg-card rounded-xl p-6 border border-border">
-        <h4 className="text-lg font-semibold text-foreground mb-4">Commercial Phases</h4>
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              <tr className="border-b border-border">
-                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">Phase</th>
-                <th className="text-left py-2 px-4 text-sm font-semibold text-foreground">Focus</th>
-              </tr>
-            </thead>
-            <tbody>
-              {phases.map((item, index) => (
-                <tr key={index} className="border-b border-border/50">
-                  <td className="py-3 px-4 text-sm font-semibold text-primary">{item.phase}</td>
-                  <td className="py-3 px-4 text-sm text-muted-foreground">{item.focus}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+    <div className="space-y-8">
+      {/* Executive Summary */}
+      <div className="bg-gradient-to-r from-sky-50 to-amber-50 border border-sky-200 rounded-xl p-6">
+        <h3 className="text-lg font-bold text-sky-800 mb-3 flex items-center gap-2">
+          <TrendingUp className="w-5 h-5" />
+          Commercial Trajectory: Key Conclusions
+        </h3>
+        <p className="text-gray-700 leading-relaxed">
+          Hobson projects <span className="font-semibold text-sky-700">£99.7M ARR by 2031</span> with 
+          <span className="font-semibold text-sky-700"> 166,000+ customers</span> across UK and global markets. 
+          The model is anchored on <span className="font-semibold text-amber-700">conservative penetration rates</span> (1.8% UK, 0.8% global) 
+          within a vast addressable market of <span className="font-semibold text-amber-700">4.5M operators</span>. 
+          Revenue growth is driven by a land-and-expand strategy with UK launch in 2027 and global expansion from 2028.
+          Churn stabilises at 8% as the platform matures, supporting predictable recurring revenue.
+        </p>
       </div>
 
-      {/* Market & Revenue Assumptions */}
-      <div className="grid md:grid-cols-2 gap-4">
-        {/* UK Market */}
-        <div className="bg-card rounded-xl p-5 border border-border">
-          <div className="flex items-center gap-2 mb-3">
-            <Target className="w-5 h-5 text-amber-600" />
-            <h5 className="font-semibold text-foreground">UK Market</h5>
-          </div>
-          <div className="space-y-2 text-sm">
-            <p className="text-muted-foreground">235,200 real estate businesses</p>
-            <p className="text-muted-foreground">Annual efficiency saving: £6,000 per role</p>
-            <p className="text-muted-foreground">65% of businesses primed for AI investment</p>
-            <div className="pt-2 border-t border-border mt-3">
-              <p className="text-foreground font-medium">UK TAM: £1.41B</p>
-              <p className="text-foreground font-medium">UK SAM: £917M</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Global Market */}
-        <div className="bg-card rounded-xl p-5 border border-border">
-          <div className="flex items-center gap-2 mb-3">
-            <Globe className="w-5 h-5 text-sky-600" />
-            <h5 className="font-semibold text-foreground">Global Market</h5>
-          </div>
-          <div className="space-y-2 text-sm">
-            <p className="text-muted-foreground">4.23M comparable businesses</p>
-            <div className="pt-2 border-t border-border mt-3">
-              <p className="text-foreground font-medium">Global TAM: £155.6B</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Pricing Model */}
-      <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-5 border border-primary/20">
-        <div className="flex items-center gap-2 mb-3">
-          <DollarSign className="w-5 h-5 text-primary" />
-          <h5 className="font-semibold text-foreground">Pricing Model</h5>
-        </div>
-        <div className="space-y-2 text-sm">
-          <p className="text-muted-foreground">Blended ARPU: <span className="text-foreground font-semibold">£607 per year</span></p>
-          <p className="text-muted-foreground">Tier mix: <span className="text-foreground font-semibold">Essential (30%), Plus (60%), Enterprise (10%)</span></p>
-          <p className="text-muted-foreground">No per-user or per-asset fees</p>
-        </div>
-      </div>
-
-      {/* Market Penetration */}
-      <div className="bg-card rounded-xl p-6 border border-border">
-        <div className="flex items-center gap-2 mb-4">
-          <Users className="w-5 h-5 text-primary" />
-          <h4 className="text-lg font-semibold text-foreground">Market Penetration</h4>
-        </div>
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* UK Penetration */}
-          <div>
-            <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-              <Target className="w-4 h-4 text-amber-600" />
-              UK Penetration
-            </h5>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left py-2 px-3 text-sm font-semibold text-foreground">Year</th>
-                    <th className="text-left py-2 px-3 text-sm font-semibold text-foreground">Share</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {ukPenetration.map((item, index) => (
-                    <tr key={index} className="border-b border-border/50">
-                      <td className="py-2 px-3 text-sm font-semibold text-foreground">{item.year}</td>
-                      <td className="py-2 px-3 text-sm text-amber-600 font-medium">{item.share}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          {/* Global Penetration */}
-          <div>
-            <h5 className="font-semibold text-foreground mb-3 flex items-center gap-2">
-              <Globe className="w-4 h-4 text-sky-600" />
-              Global Penetration
-            </h5>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead>
-                  <tr className="border-b border-border">
-                    <th className="text-left py-2 px-3 text-sm font-semibold text-foreground">Year</th>
-                    <th className="text-left py-2 px-3 text-sm font-semibold text-foreground">Share</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {globalPenetration.map((item, index) => (
-                    <tr key={index} className="border-b border-border/50">
-                      <td className="py-2 px-3 text-sm font-semibold text-foreground">{item.year}</td>
-                      <td className="py-2 px-3 text-sm text-sky-600 font-medium">{item.share}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Revenue Breakdown Table */}
-      <div className="bg-card rounded-xl p-6 border border-border/30">
-        <div className="flex items-center gap-2 mb-4">
-          <TrendingUp className="w-5 h-5 text-primary" />
-          <h4 className="text-lg font-semibold text-foreground">Revenue</h4>
-        </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="bg-slate-700 text-white">
-                <th className="text-left py-2 px-3 font-semibold"></th>
-                {revenueBreakdown.years.map((year) => (
-                  <th key={year} className="text-right py-2 px-3 font-semibold">{year}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {/* UK Revenue Section */}
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">UK revenue: Enterprise</td>
-                {revenueBreakdown.ukEnterprise.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">UK revenue: Enterprise Plus</td>
-                {revenueBreakdown.ukEnterprisePlus.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">UK revenue: Essential</td>
-                {revenueBreakdown.ukEssential.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border bg-muted/30">
-                <td className="py-2 px-3 font-semibold text-foreground">UK Total revenue</td>
-                {revenueBreakdown.ukTotal.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right font-semibold text-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-
-              {/* Spacer row */}
-              <tr><td colSpan={7} className="py-1"></td></tr>
-
-              {/* Global Revenue Section */}
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">Global revenue: Enterprise</td>
-                {revenueBreakdown.globalEnterprise.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">Global revenue: Enterprise Plus</td>
-                {revenueBreakdown.globalEnterprisePlus.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border/30">
-                <td className="py-2 px-3 text-muted-foreground">Global revenue: Essential</td>
-                {revenueBreakdown.globalEssential.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right text-muted-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-              <tr className="border-b border-border bg-muted/30">
-                <td className="py-2 px-3 font-semibold text-foreground">Global Total revenue</td>
-                {revenueBreakdown.globalTotal.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right font-semibold text-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-
-              {/* Spacer row */}
-              <tr><td colSpan={7} className="py-1"></td></tr>
-
-              {/* Total Revenue */}
-              <tr className="bg-fuchsia-100 dark:bg-fuchsia-900/30">
-                <td className="py-2 px-3 font-bold text-foreground">Total revenue</td>
-                {revenueBreakdown.total.map((val, i) => (
-                  <td key={i} className="py-2 px-3 text-right font-bold text-foreground">{formatCurrency(val)}</td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      {/* Chart */}
-      <div className="p-6 rounded-xl bg-background border border-border">
-        <h4 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
-          <TrendingUp className="w-5 h-5 text-primary" />
-          Hobson Revenue Growth (2026–2031)
-        </h4>
-        <div className="h-80">
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              data={chartData}
-              margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" className="opacity-30" />
-              <XAxis 
-                dataKey="year" 
-                tick={{ fontSize: 12 }}
-                axisLine={{ stroke: 'hsl(var(--border))' }}
-              />
+      {/* Revenue Chart */}
+      <Card className="border border-border/50">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base flex items-center gap-2">
+            <BarChart3 className="w-4 h-4 text-primary" />
+            Revenue Growth (2026-2031) — £M
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={revenueData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="year" tick={{ fontSize: 12 }} />
               <YAxis 
-                tick={{ fontSize: 12 }}
-                axisLine={{ stroke: 'hsl(var(--border))' }}
-                label={{ 
-                  value: 'Revenue (£M)', 
-                  angle: -90, 
-                  position: 'insideLeft',
-                  style: { fontSize: 12, fill: 'hsl(var(--muted-foreground))' }
-                }}
+                tick={{ fontSize: 11 }} 
+                tickFormatter={(value) => `£${value}M`}
+                domain={[0, 110]}
               />
               <Tooltip 
-                formatter={(value: number) => [formatCurrency(value), ""]}
-                contentStyle={{ 
-                  backgroundColor: 'hsl(var(--background))',
-                  border: '1px solid hsl(var(--border))',
-                  borderRadius: '8px'
-                }}
+                formatter={(value: number, name: string) => [formatCurrency(value), name]}
+                labelStyle={{ fontWeight: "bold" }}
+                contentStyle={{ borderRadius: "8px", border: "1px solid #e5e7eb" }}
               />
-              <Legend />
-              <Bar 
-                dataKey="ukRevenue" 
-                stackId="a" 
-                fill="#D97706" 
-                name="UK Revenue"
-                radius={[0, 0, 0, 0]}
-              />
-              <Bar 
-                dataKey="globalRevenue" 
-                stackId="a" 
-                fill="#0EA5E9" 
-                name="Global Revenue"
-                radius={[4, 4, 0, 0]}
-              />
+              <Legend wrapperStyle={{ paddingTop: "10px" }} />
+              <Bar dataKey="uk" name="UK Revenue" fill="#D97706" stackId="revenue" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="global" name="Global Revenue" fill="#0EA5E9" stackId="revenue" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
-        </div>
-      </div>
+          <div className="flex justify-center gap-6 mt-2 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 rounded bg-amber-600"></span> UK Market (launch 2027)
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 rounded bg-sky-500"></span> Global Markets (launch 2028)
+            </span>
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* Summary Stats */}
+      {/* Key Investor Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-amber-500/5 border border-amber-500/20 text-center">
-          <p className="text-xs text-muted-foreground mb-1">2027 (UK Launch)</p>
-          <p className="text-xl font-bold text-amber-600 dark:text-amber-400">£708,368</p>
+        <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-center">
+          <DollarSign className="w-6 h-6 text-amber-600 mx-auto mb-2" />
+          <div className="text-amber-600 font-semibold text-sm mb-1">2031 ARR</div>
+          <div className="text-2xl font-bold text-amber-700">£99.7M</div>
+          <div className="text-xs text-amber-600/80">total revenue</div>
         </div>
-        <div className="p-4 rounded-xl bg-gradient-to-br from-sky-500/10 to-sky-500/5 border border-sky-500/20 text-center">
-          <p className="text-xs text-muted-foreground mb-1">2028 (Global Start)</p>
-          <p className="text-xl font-bold text-sky-600 dark:text-sky-400">£6.4M</p>
+        <div className="bg-sky-50 border border-sky-200 rounded-lg p-4 text-center">
+          <Users className="w-6 h-6 text-sky-600 mx-auto mb-2" />
+          <div className="text-sky-600 font-semibold text-sm mb-1">Customers</div>
+          <div className="text-2xl font-bold text-sky-700">166k</div>
+          <div className="text-xs text-sky-600/80">by 2031</div>
         </div>
-        <div className="p-4 rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 text-center">
-          <p className="text-xs text-muted-foreground mb-1">2031 (Year 6)</p>
-          <p className="text-xl font-bold text-primary">£99.7M</p>
+        <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4 text-center">
+          <Zap className="w-6 h-6 text-emerald-600 mx-auto mb-2" />
+          <div className="text-emerald-600 font-semibold text-sm mb-1">MRR 2031</div>
+          <div className="text-2xl font-bold text-emerald-700">£8.3M</div>
+          <div className="text-xs text-emerald-600/80">monthly recurring</div>
         </div>
-        <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-green-500/5 border border-green-500/20 text-center">
-          <p className="text-xs text-muted-foreground mb-1">5-Year CAGR</p>
-          <p className="text-xl font-bold text-green-600 dark:text-green-400">~160%</p>
+        <div className="bg-violet-50 border border-violet-200 rounded-lg p-4 text-center">
+          <Target className="w-6 h-6 text-violet-600 mx-auto mb-2" />
+          <div className="text-violet-600 font-semibold text-sm mb-1">Blended ARPU</div>
+          <div className="text-2xl font-bold text-violet-700">~£600</div>
+          <div className="text-xs text-violet-600/80">per customer/year</div>
         </div>
       </div>
 
-      {/* Key Milestones */}
-      <div className="p-4 rounded-xl bg-muted/30 border border-border">
-        <h5 className="font-semibold text-foreground text-sm mb-3">Key Revenue Milestones</h5>
-        <div className="grid md:grid-cols-3 gap-3 text-sm">
-          <div className="flex items-start gap-2">
-            <span className="w-2 h-2 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
-            <p className="text-muted-foreground"><span className="font-medium text-foreground">2027:</span> UK commercial launch, first paying customers</p>
+      {/* Summary Matrix */}
+      <Card className="border border-border/50">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base flex items-center gap-2">
+            <TrendingUp className="w-4 h-4 text-primary" />
+            Investor Summary Matrix
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="bg-muted/50 border-b">
+                  <th className="text-left p-3 font-semibold">Metric</th>
+                  <th className="text-right p-3 font-semibold">2026</th>
+                  <th className="text-right p-3 font-semibold">2027</th>
+                  <th className="text-right p-3 font-semibold">2028</th>
+                  <th className="text-right p-3 font-semibold">2029</th>
+                  <th className="text-right p-3 font-semibold">2030</th>
+                  <th className="text-right p-3 font-semibold">2031</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b">
+                  <td className="p-3 font-medium text-amber-700">UK Revenue</td>
+                  {revenueData.map((d, i) => (
+                    <td key={i} className="text-right p-3 text-amber-700">{formatCurrency(d.uk)}</td>
+                  ))}
+                </tr>
+                <tr className="border-b">
+                  <td className="p-3 font-medium text-sky-700">Global Revenue</td>
+                  {revenueData.map((d, i) => (
+                    <td key={i} className="text-right p-3 text-sky-700">{formatCurrency(d.global)}</td>
+                  ))}
+                </tr>
+                <tr className="border-b bg-primary/5">
+                  <td className="p-3 font-bold text-primary">Total Revenue</td>
+                  {revenueData.map((d, i) => (
+                    <td key={i} className="text-right p-3 font-bold text-primary">{formatCurrency(d.total)}</td>
+                  ))}
+                </tr>
+                <tr className="border-b">
+                  <td className="p-3 font-medium">Total Customers</td>
+                  {revenueData.map((d, i) => (
+                    <td key={i} className="text-right p-3 text-gray-600">{d.customers.toLocaleString()}</td>
+                  ))}
+                </tr>
+                <tr className="border-b">
+                  <td className="p-3 font-medium">MRR</td>
+                  {revenueData.map((d, i) => (
+                    <td key={i} className="text-right p-3 text-gray-600">{formatLargeCurrency(d.mrr)}</td>
+                  ))}
+                </tr>
+                <tr className="border-b">
+                  <td className="p-3 font-medium">Blended ARPU</td>
+                  {revenueData.map((d, i) => (
+                    <td key={i} className="text-right p-3 text-gray-600">{d.arpu ? `£${d.arpu}` : "—"}</td>
+                  ))}
+                </tr>
+                <tr className="border-b">
+                  <td className="p-3 font-medium">Churn Rate</td>
+                  {revenueData.map((d, i) => (
+                    <td key={i} className="text-right p-3 text-gray-600">{d.churn ? `${d.churn}%` : "—"}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
           </div>
-          <div className="flex items-start gap-2">
-            <span className="w-2 h-2 rounded-full bg-sky-500 mt-1.5 flex-shrink-0"></span>
-            <p className="text-muted-foreground"><span className="font-medium text-foreground">2028:</span> Global expansion begins, revenue accelerates</p>
+        </CardContent>
+      </Card>
+
+      {/* Market Assumptions */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="border border-border/50">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-semibold flex items-center gap-2">
+              <Target className="w-4 h-4 text-amber-600" />
+              UK Market
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex justify-between items-center py-2 border-b border-border/30">
+              <span className="text-sm text-muted-foreground">Addressable operators</span>
+              <span className="font-semibold">235,200</span>
+            </div>
+            <div className="flex justify-between items-center py-2 border-b border-border/30">
+              <span className="text-sm text-muted-foreground">Penetration by 2031</span>
+              <span className="font-semibold text-amber-600">1.8%</span>
+            </div>
+            <div className="flex justify-between items-center py-2 border-b border-border/30">
+              <span className="text-sm text-muted-foreground">UK customers 2031</span>
+              <span className="font-semibold">10,802</span>
+            </div>
+            <div className="flex justify-between items-center py-2">
+              <span className="text-sm text-muted-foreground">UK revenue 2031</span>
+              <span className="font-bold text-amber-600">£9.1M</span>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border border-border/50">
+          <CardHeader className="pb-2">
+            <CardTitle className="text-sm font-semibold flex items-center gap-2">
+              <Globe className="w-4 h-4 text-sky-600" />
+              Global Market
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <div className="flex justify-between items-center py-2 border-b border-border/30">
+              <span className="text-sm text-muted-foreground">Addressable operators</span>
+              <span className="font-semibold">4,230,000</span>
+            </div>
+            <div className="flex justify-between items-center py-2 border-b border-border/30">
+              <span className="text-sm text-muted-foreground">Penetration by 2031</span>
+              <span className="font-semibold text-sky-600">0.8%</span>
+            </div>
+            <div className="flex justify-between items-center py-2 border-b border-border/30">
+              <span className="text-sm text-muted-foreground">Global customers 2031</span>
+              <span className="font-semibold">155,500</span>
+            </div>
+            <div className="flex justify-between items-center py-2">
+              <span className="text-sm text-muted-foreground">Global revenue 2031</span>
+              <span className="font-bold text-sky-600">£90.6M</span>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Pricing & Tier Mix */}
+      <Card className="border border-border/50">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-semibold flex items-center gap-2">
+            <DollarSign className="w-4 h-4 text-primary" />
+            Pricing Model & Tier Mix
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="bg-violet-50 border border-violet-200 rounded-lg p-4">
+              <div className="text-violet-700 font-semibold mb-1">Enterprise (Large)</div>
+              <div className="text-2xl font-bold text-violet-800">£1,782/yr</div>
+              <div className="text-xs text-violet-600">10% of customer base</div>
+            </div>
+            <div className="bg-sky-50 border border-sky-200 rounded-lg p-4">
+              <div className="text-sky-700 font-semibold mb-1">Enterprise Plus (Medium)</div>
+              <div className="text-2xl font-bold text-sky-800">£597/yr</div>
+              <div className="text-xs text-sky-600">60% of customer base</div>
+            </div>
+            <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-4">
+              <div className="text-emerald-700 font-semibold mb-1">Essential (Small)</div>
+              <div className="text-2xl font-bold text-emerald-800">£234/yr</div>
+              <div className="text-xs text-emerald-600">30% of customer base</div>
+            </div>
           </div>
-          <div className="flex items-start gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary mt-1.5 flex-shrink-0"></span>
-            <p className="text-muted-foreground"><span className="font-medium text-foreground">2031:</span> ~30,000 customers, category leadership</p>
-          </div>
-        </div>
+        </CardContent>
+      </Card>
+
+      {/* Why This Works */}
+      <div className="bg-gradient-to-r from-primary/10 to-violet-100 border border-primary/20 rounded-xl p-6">
+        <h4 className="font-bold text-primary mb-2">Why This Trajectory Is Achievable</h4>
+        <ul className="space-y-2 text-sm text-gray-700">
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-600 font-bold">✓</span>
+            <span><strong>Conservative penetration:</strong> Only 1.8% UK and 0.8% global by 2031 in a market of 4.5M operators.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-600 font-bold">✓</span>
+            <span><strong>Proven SaaS economics:</strong> Blended ARPU of ~£600 with simple, predictable pricing tiers.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-600 font-bold">✓</span>
+            <span><strong>Manageable churn:</strong> 8% annual churn at maturity is competitive for SMB SaaS.</span>
+          </li>
+          <li className="flex items-start gap-2">
+            <span className="text-emerald-600 font-bold">✓</span>
+            <span><strong>Land and expand:</strong> UK-first strategy builds playbook before global rollout in 2028.</span>
+          </li>
+        </ul>
       </div>
     </div>
   );
