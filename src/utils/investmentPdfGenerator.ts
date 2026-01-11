@@ -7121,7 +7121,10 @@ const renderRevenueGrowth = (
   yPosition += 8;
 
   const tableWidth = maxWidth;
-  const colWidths = [46, 22, 22, 22, 22, 22, 25];
+  const colWidths = [50, 24, 24, 24, 24, 24, 25]; // Adjusted to better fill width
+  const totalColWidth = colWidths.reduce((a, b) => a + b, 0);
+  const colScale = tableWidth / totalColWidth; // Scale columns to fill full width
+  const scaledColWidths = colWidths.map(w => w * colScale);
   let tableY = yPosition;
 
   // Header
@@ -7137,9 +7140,9 @@ const renderRevenueGrowth = (
     if (i === 0) {
       doc.text(header, xPos, tableY + 7);
     } else {
-      doc.text(header, xPos + colWidths[i] - 4, tableY + 7, { align: "right" });
+      doc.text(header, xPos + scaledColWidths[i] - 4, tableY + 7, { align: "right" });
     }
-    xPos += colWidths[i];
+    xPos += scaledColWidths[i];
   });
   tableY += 10;
 
@@ -7182,11 +7185,11 @@ const renderRevenueGrowth = (
       doc.setFont("helvetica", "normal");
     }
     doc.text(row.label, xPos, tableY + 6);
-    xPos += colWidths[0];
+    xPos += scaledColWidths[0];
 
     row.values.forEach((val, i) => {
-      doc.text(val, xPos + colWidths[i + 1] - 4, tableY + 6, { align: "right" });
-      xPos += colWidths[i + 1];
+      doc.text(val, xPos + scaledColWidths[i + 1] - 4, tableY + 6, { align: "right" });
+      xPos += scaledColWidths[i + 1];
     });
 
     doc.setDrawColor(...PDF_CONFIG.border);
