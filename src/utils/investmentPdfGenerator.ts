@@ -5576,23 +5576,63 @@ const renderCapitalRaiseStrategy = (
   });
   yPosition += 6;
 
-  // Pre-Revenue Total
-  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
+  // Revenue Projections Table
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Use of Funds", margin + 8, yPosition + 13);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.text("£847k", valueCol, yPosition + 13, { align: "right" });
-  yPosition += 28;
+  doc.text("Revenue Projections", margin, yPosition + 8);
+  yPosition += 16;
 
-  doc.setTextColor(...PDF_CONFIG.textGray);
+  // Table headers
+  const revenueYears = ["2026", "2027", "2028", "2029", "2030", "2031"];
+  const colWidth = (maxWidth - 80) / 6;
+  const labelCol = margin;
+  const startCol = margin + 80;
+
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
+  doc.setFont("helvetica", "bold");
+  doc.text("Year", labelCol, yPosition);
+  revenueYears.forEach((year, i) => {
+    doc.text(year, startCol + (i * colWidth) + colWidth - 5, yPosition, { align: "right" });
+  });
+  yPosition += 8;
+
+  // UK Revenue row
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text("UK revenue — Total", labelCol, yPosition);
   doc.setFont("helvetica", "normal");
-  doc.text("Remaining capital extends runway through commercial launch and early scale, providing 18–22 months of total runway.", margin, yPosition);
-  yPosition += 14;
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  const ukRevenue = ["£0", "£708,368", "£1,770,920", "£3,541,840", "£5,666,945", "£7,792,049"];
+  ukRevenue.forEach((val, i) => {
+    doc.text(val, startCol + (i * colWidth) + colWidth - 5, yPosition, { align: "right" });
+  });
+  yPosition += 8;
+
+  // Global Revenue row
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text("Global revenue — Total", labelCol, yPosition);
+  doc.setFont("helvetica", "normal");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  const globalRevenue = ["£0", "£0", "£6,015,707", "£18,047,122", "£36,094,244", "£72,188,489"];
+  globalRevenue.forEach((val, i) => {
+    doc.text(val, startCol + (i * colWidth) + colWidth - 5, yPosition, { align: "right" });
+  });
+  yPosition += 8;
+
+  // Total Revenue row (highlighted)
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin, yPosition - 5, maxWidth, 12, 2, 2, "F");
+  doc.setFont("helvetica", "bold");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.text("Total revenue", labelCol, yPosition + 3);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  const totalRevenue = ["£0", "£708,368", "£7,786,628", "£21,588,963", "£41,761,189", "£79,980,538"];
+  totalRevenue.forEach((val, i) => {
+    doc.text(val, startCol + (i * colWidth) + colWidth - 5, yPosition + 3, { align: "right" });
+  });
+  yPosition += 20;
 
   // Burn & Runway Strategy
   if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
