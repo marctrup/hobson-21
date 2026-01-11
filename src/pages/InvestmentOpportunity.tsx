@@ -49,7 +49,7 @@ import { UKMarketAssumptionsVisual } from "@/components/investor/UKMarketAssumpt
 import { GlobalMarketAssumptionsVisual } from "@/components/investor/GlobalMarketAssumptionsVisual";
 import MarketShareJustificationVisual from "@/components/investor/MarketShareJustificationVisual";
 import RevenueModelVisual from "@/components/investor/RevenueModelVisual";
-import GlobalJustificationVisual from "@/components/investor/GlobalJustificationVisual";
+
 import RevenueGrowthVisual from "@/components/investor/RevenueGrowthVisual";
 import CostAssumptionsVisual from "@/components/investor/CostAssumptionsVisual";
 import PLAssumptionsVisual from "@/components/investor/PLAssumptionsVisual";
@@ -861,15 +861,6 @@ const sections = [
         },
       },
       {
-        title: "Global Assumptions",
-        showCustomVisual: true,
-        customVisualComponent: "globalJustification",
-        content: {
-          overview: "",
-          sections: [],
-        },
-      },
-      {
         title: "Market Penetration",
         showCustomVisual: true,
         customVisualComponent: "marketShareJustification",
@@ -1625,10 +1616,7 @@ const InvestmentOpportunity = () => {
                       <AssumptionsVisual />
                     )}
 
-                    {/* Custom Visual Component for Global Justification */}
-                    {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "globalJustification" && (
-                      <GlobalJustificationVisual />
-                    )}
+
 
                     {/* Custom Visual Component for P/L Growth */}
                     {(selectedSection.pages[currentPageIndex] as any).customVisualComponent === "plGrowth" && (
