@@ -5104,35 +5104,44 @@ const renderAssumptions = (
   // Check page break
   yPosition = checkPageBreak(doc, yPosition, 180, pageHeight, margin);
 
-  // UK Market Section (Full Width)
+  // UK Market Section
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 75, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 90, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("UK Real Estate Market", margin + 8, yPosition + 12);
+  doc.text("UK Real Estate Market", margin + 10, yPosition + 14);
   
-  // UK stats boxes
-  const ukStatsY = yPosition + 18;
-  const ukBoxWidth = 50;
+  // Left side: Stats boxes
+  const ukStatsY = yPosition + 22;
+  const ukBoxWidth = 55;
+  
+  // Total UK Businesses box
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin + 8, ukStatsY, ukBoxWidth, 22, 2, 2, "F");
-  doc.roundedRect(margin + 8 + ukBoxWidth + 6, ukStatsY, ukBoxWidth, 22, 2, 2, "F");
-  
-  doc.setFontSize(PDF_CONFIG.fontSize.stat);
+  doc.roundedRect(margin + 10, ukStatsY, ukBoxWidth, 26, 2, 2, "F");
+  doc.setFontSize(14);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFont("helvetica", "bold");
-  doc.text(data.ukMarket.totalBusinesses, margin + 14, ukStatsY + 12);
-  doc.text(data.ukMarket.realEstateBusinesses, margin + 14 + ukBoxWidth + 6, ukStatsY + 12);
-  
+  doc.text(data.ukMarket.totalBusinesses, margin + 15, ukStatsY + 12);
   doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text("Total UK Businesses", margin + 14, ukStatsY + 18);
-  doc.text("Real Estate (4.2%)", margin + 14 + ukBoxWidth + 6, ukStatsY + 18);
+  doc.text("Total UK Businesses", margin + 15, ukStatsY + 21);
   
-  // UK Breakdown Table (right side)
-  const breakdownX = margin + 120;
+  // Real Estate box
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(margin + 10, ukStatsY + 32, ukBoxWidth, 26, 2, 2, "F");
+  doc.setFontSize(14);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.ukMarket.realEstateBusinesses, margin + 15, ukStatsY + 44);
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  doc.text("Real Estate (4.2%)", margin + 15, ukStatsY + 53);
+  
+  // Right side: Size Breakdown Table
+  const breakdownX = margin + 80;
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
   doc.setTextColor(...PDF_CONFIG.textDark);
@@ -5141,13 +5150,13 @@ const renderAssumptions = (
   // Table headers
   doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setFont("helvetica", "bold");
-  doc.text("Segment", breakdownX, ukStatsY + 12);
-  doc.text("Share", breakdownX + 38, ukStatsY + 12);
-  doc.text("Count", breakdownX + 55, ukStatsY + 12);
+  doc.text("Segment", breakdownX, ukStatsY + 14);
+  doc.text("Share", breakdownX + 42, ukStatsY + 14);
+  doc.text("Count", breakdownX + 62, ukStatsY + 14);
   
-  // Table rows
+  // Table rows with proper spacing
   doc.setFont("helvetica", "normal");
-  let rowY = ukStatsY + 18;
+  let rowY = ukStatsY + 24;
   const breakdownItems = [
     { size: "Small (1-9)", pct: "96.0%", count: "225,792" },
     { size: "Medium (10-49)", pct: "2.7%", count: "6,350" },
@@ -5157,52 +5166,80 @@ const renderAssumptions = (
   breakdownItems.forEach((item) => {
     doc.setTextColor(...PDF_CONFIG.textGray);
     doc.text(item.size, breakdownX, rowY);
-    doc.text(item.pct, breakdownX + 38, rowY);
+    doc.text(item.pct, breakdownX + 42, rowY);
     doc.setTextColor(...PDF_CONFIG.primaryColor);
     doc.setFont("helvetica", "bold");
-    doc.text(item.count, breakdownX + 55, rowY);
+    doc.text(item.count, breakdownX + 62, rowY);
     doc.setFont("helvetica", "normal");
-    rowY += 6;
+    rowY += 10;
   });
   
-  yPosition += 82;
+  yPosition += 100;
 
-  // Global Market Section (Full Width)
+  // Global Market Section
   doc.setFillColor(...PDF_CONFIG.bgLight);
-  doc.roundedRect(margin, yPosition, maxWidth, 55, 3, 3, "F");
+  doc.roundedRect(margin, yPosition, maxWidth, 50, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Global Market Scaling", margin + 8, yPosition + 12);
+  doc.text("Global Market Scaling", margin + 10, yPosition + 14);
   
-  // Global stats boxes
-  const globalStatsY = yPosition + 18;
-  const globalBoxWidth = 40;
+  // Global stats boxes - spread across full width
+  const globalStatsY = yPosition + 22;
+  const globalBoxWidth = (maxWidth - 50) / 4;
+  
+  // OECD Pop
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
-  doc.roundedRect(margin + 8, globalStatsY, globalBoxWidth, 28, 2, 2, "F");
-  doc.roundedRect(margin + 8 + globalBoxWidth + 6, globalStatsY, globalBoxWidth, 28, 2, 2, "F");
-  doc.roundedRect(margin + 8 + (globalBoxWidth + 6) * 2, globalStatsY, globalBoxWidth, 28, 2, 2, "F");
-  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-  doc.roundedRect(margin + 8 + (globalBoxWidth + 6) * 3, globalStatsY, 55, 28, 2, 2, "F");
-  
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.roundedRect(margin + 10, globalStatsY, globalBoxWidth, 22, 2, 2, "F");
+  doc.setFontSize(12);
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFont("helvetica", "bold");
-  doc.text(data.globalScaling.oecdPopulation, margin + 14, globalStatsY + 12);
-  doc.text(data.globalScaling.ukPopulation, margin + 14 + globalBoxWidth + 6, globalStatsY + 12);
-  doc.text(data.globalScaling.multiplier, margin + 14 + (globalBoxWidth + 6) * 2, globalStatsY + 12);
-  doc.setTextColor(...PDF_CONFIG.primaryColor);
-  doc.text(data.globalScaling.globalBusinesses, margin + 14 + (globalBoxWidth + 6) * 3, globalStatsY + 12);
-  
+  doc.text(data.globalScaling.oecdPopulation, margin + 15, globalStatsY + 10);
   doc.setFontSize(PDF_CONFIG.fontSize.small);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFont("helvetica", "normal");
-  doc.text("OECD Pop.", margin + 14, globalStatsY + 20);
-  doc.text("UK Pop.", margin + 14 + globalBoxWidth + 6, globalStatsY + 20);
-  doc.text("Multiplier", margin + 14 + (globalBoxWidth + 6) * 2, globalStatsY + 20);
-  doc.text("Global RE Businesses", margin + 14 + (globalBoxWidth + 6) * 3, globalStatsY + 20);
+  doc.text("OECD Pop.", margin + 15, globalStatsY + 18);
   
-  yPosition += 62;
+  // UK Pop
+  const box2X = margin + 15 + globalBoxWidth;
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(box2X, globalStatsY, globalBoxWidth, 22, 2, 2, "F");
+  doc.setFontSize(12);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.globalScaling.ukPopulation, box2X + 5, globalStatsY + 10);
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  doc.text("UK Pop.", box2X + 5, globalStatsY + 18);
+  
+  // Multiplier
+  const box3X = margin + 20 + globalBoxWidth * 2;
+  doc.setFillColor(...PDF_CONFIG.primaryBgLight);
+  doc.roundedRect(box3X, globalStatsY, globalBoxWidth, 22, 2, 2, "F");
+  doc.setFontSize(12);
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.globalScaling.multiplier, box3X + 5, globalStatsY + 10);
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  doc.text("Multiplier", box3X + 5, globalStatsY + 18);
+  
+  // Global RE Businesses (highlighted)
+  const box4X = margin + 25 + globalBoxWidth * 3;
+  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
+  doc.roundedRect(box4X, globalStatsY, globalBoxWidth, 22, 2, 2, "F");
+  doc.setFontSize(12);
+  doc.setTextColor(...PDF_CONFIG.primaryColor);
+  doc.setFont("helvetica", "bold");
+  doc.text(data.globalScaling.globalBusinesses, box4X + 5, globalStatsY + 10);
+  doc.setFontSize(PDF_CONFIG.fontSize.small);
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFont("helvetica", "normal");
+  doc.text("Global RE", box4X + 5, globalStatsY + 18);
+  
+  yPosition += 60;
 
   // Check page break
   yPosition = checkPageBreak(doc, yPosition, 100, pageHeight, margin);
