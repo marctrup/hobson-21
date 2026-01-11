@@ -279,21 +279,21 @@ const GoToMarketSummaryVisual = () => {
       </div>
 
       {/* Long-Term Vision */}
-      <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-6 text-white">
+      <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6 border border-blue-200">
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center">
-            <Globe className="w-5 h-5 text-white" />
+          <div className="w-10 h-10 bg-blue-200 rounded-lg flex items-center justify-center">
+            <Globe className="w-5 h-5 text-blue-700" />
           </div>
-          <h3 className="text-xl font-bold">Long-Term Vision</h3>
+          <h3 className="text-xl font-bold text-slate-900">Long-Term Vision</h3>
         </div>
-        <p className="text-slate-300 mb-4">
+        <p className="text-slate-600 mb-4">
           Hobson evolves from answering questions to anticipating risk and opportunity — surfacing renewals, obligations, anomalies, and portfolio patterns automatically.
         </p>
-        <p className="text-white font-medium mb-4">
+        <p className="text-slate-800 font-medium mb-4">
           The end goal is to become the trusted clarity layer for real estate organisations worldwide.
         </p>
-        <div className="bg-white/10 rounded-lg p-4 border border-white/20">
-          <p className="text-white font-semibold text-center">
+        <div className="bg-white rounded-lg p-4 border border-blue-200">
+          <p className="text-blue-800 font-semibold text-center">
             In short: Hobson solves a growing, painful problem with a simple, defensible approach — delivering immediate value today, while building toward a much larger AI-driven future.
           </p>
         </div>
