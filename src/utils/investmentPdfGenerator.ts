@@ -5419,7 +5419,6 @@ const renderFinancialsExecutiveSummary = (
 
   const metrics = [
     "Revenue growth from £0.708M in 2027 to £100M by 2031",
-    "Five-year CAGR in excess of 150%",
     "90%+ gross margins with net margins expanding toward 40–55% at scale",
     "EBITDA breakeven above £5M ARR, reached early in the forecast period",
     "Infrastructure-grade unit economics with rapid CAC payback"

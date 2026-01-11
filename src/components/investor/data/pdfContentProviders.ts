@@ -4768,7 +4768,6 @@ export const getFinancialsExecutiveSummaryPdfContent = (): string[] => [
   "FIVE-YEAR FINANCIAL MODEL DELIVERS:",
   "",
   "- Revenue growth from GBP 708,368 in 2027 to GBP 79.98M by 2031",
-  "- Five-year CAGR in excess of 150%",
   "- 90%+ gross margins with net margins expanding toward 70%+ at scale",
   "- EBITDA breakeven above GBP 5M ARR, reached early in the forecast period",
   "- Infrastructure-grade unit economics with rapid CAC payback",
@@ -4788,7 +4787,6 @@ export const getFinancialsExecutiveSummaryStructuredData = () => ({
   ],
   fiveYearMetrics: [
     { label: "Revenue growth from GBP 708,368 in 2027 to GBP 79.98M by 2031", icon: "TrendingUp" },
-    { label: "Five-year CAGR in excess of 150%", icon: "BarChart3" },
     { label: "90%+ gross margins with net margins expanding toward 70%+ at scale", icon: "Target" },
     { label: "EBITDA breakeven above GBP 5M ARR, reached early in the forecast period", icon: "DollarSign" },
     { label: "Infrastructure-grade unit economics with rapid CAC payback", icon: "Zap" }
