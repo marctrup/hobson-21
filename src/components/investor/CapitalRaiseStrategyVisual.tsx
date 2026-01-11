@@ -102,7 +102,7 @@ const CapitalRaiseStrategyVisual = () => {
 
         <div className="mt-4 pt-4 border-t border-border">
           <div className="flex justify-between items-center bg-primary/5 rounded-lg p-4">
-            <p className="font-semibold text-foreground">Pre-Revenue Operating Requirement</p>
+            <p className="font-semibold text-foreground">Use of Funds</p>
             <p className="font-bold text-primary text-xl">£847k</p>
           </div>
           <p className="text-sm text-muted-foreground mt-3">

@@ -5582,7 +5582,7 @@ const renderCapitalRaiseStrategy = (
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Pre-Revenue Operating Requirement", margin + 8, yPosition + 13);
+  doc.text("Use of Funds", margin + 8, yPosition + 13);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.text("£847k", valueCol, yPosition + 13, { align: "right" });
