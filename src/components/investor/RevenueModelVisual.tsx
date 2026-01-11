@@ -125,7 +125,7 @@ const RevenueModelVisual = () => {
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Annual ARPU</p>
-              <p className="text-xl font-bold text-primary">£495.72</p>
+              <p className="text-xl font-bold text-primary">£607</p>
             </div>
           </div>
         </div>
@@ -266,7 +266,7 @@ const RevenueModelVisual = () => {
         <h4 className="font-semibold text-foreground mb-3">Model Summary</h4>
         <div className="space-y-2 text-sm">
           <p><span className="text-muted-foreground">Market:</span> <span className="font-medium">UK 235,200 → Global 4.23M businesses</span></p>
-          <p><span className="text-muted-foreground">ARPU:</span> <span className="font-medium">£495.72 annually</span></p>
+          <p><span className="text-muted-foreground">ARPU:</span> <span className="font-medium">£607 annually</span></p>
           <p><span className="text-muted-foreground">UK Penetration:</span> <span className="font-medium">1.0% → 2.0% (2027–2031)</span></p>
           <p><span className="text-muted-foreground">Global Penetration:</span> <span className="font-medium">0.25% → 0.6% (2028–2031)</span></p>
           <p><span className="text-muted-foreground">Revenue Growth:</span> <span className="font-medium text-primary">£0.708M → £14.92M (2027–2031)</span></p>

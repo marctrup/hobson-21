@@ -578,7 +578,7 @@ export const getPLAssumptionsPdfContent = (): string[] => [
   "1. Revenue Model Assumptions:",
   "",
   "Pricing (ARR Basis):",
-  "- Blended ARPU = GBP 41.31/month -> GBP 495.72/year",
+  "- Blended ARPU = GBP 50.58/month -> GBP 607/year",
   "- Pricing includes Essential, Essential Plus, Enterprise mix",
   "- No implementation fees (frictionless onboarding)",
   "",
@@ -1215,7 +1215,7 @@ export const getRevenueGrowthPdfContent = (): string[] => [
   "- UK market penetration: 0.5% -> 5.5% (2027-2031)",
   "- Global expansion begins 2028 with 0.25% penetration",
   "- Global penetration grows to 3.0% by 2031",
-  "- Blended ARPU: GBP 495.72/year",
+  "- Blended ARPU: GBP 607/year",
   "",
   "Revenue Mix Evolution:",
   "- 2027: 100% UK (market launch year)",
@@ -1253,7 +1253,7 @@ export const getRevenueModelPdfContent = (): string[] => [
   "Revenue Model - 6-Year Projections (2026-2031):",
   "",
   "Pricing Structure:",
-  "- Blended ARPU: GBP 495.72/year (GBP 41.31/month)",
+  "- Blended ARPU: GBP 607/year (GBP 50.58/month)",
   "- Tier Mix: Essential (60%), Essential Plus (30%), Enterprise (10%)",
   "- No per-user or per-asset fees",
   "",
@@ -1286,8 +1286,8 @@ export const getRevenueModelPdfContent = (): string[] => [
   "",
   "ROI Justification:",
   "- Annual efficiency saving: GBP 6,000 per role",
-  "- Annual subscription: GBP 495.72",
-  "- ROI: ~12x return on subscription cost",
+  "- Annual subscription: GBP 607",
+  "- ROI: ~10x return on subscription cost",
 ];
 
 export const getGlobalJustificationPdfContent = (): string[] => [
@@ -1369,8 +1369,8 @@ export const getCACAssumptionsPdfContent = (): string[] => [
   "2031 | GBP 14.92M| GBP 1.79M         | 4,822         | GBP 371",
   "",
   "LTV:CAC Analysis:",
-  "- ARPU: GBP 495.72/year",
-  "- 5-year LTV: GBP 2,478.60",
+  "- ARPU: GBP 607/year",
+  "- 5-year LTV: GBP 3,035",
   "",
   "Year | CAC     | LTV:CAC Ratio",
   "2027 | GBP 60  | 41x",
@@ -4809,7 +4809,7 @@ export const getPLAssumptionsDetailedPdfContent = (): string[] => [
   "REVENUE MODEL ASSUMPTIONS:",
   "",
   "Pricing (ARR basis):",
-  "- Blended ARPU = GBP 41.31/month -> GBP 495.72/year",
+  "- Blended ARPU = GBP 50.58/month -> GBP 607/year",
   "- Pricing includes Essential, Essential Plus, Enterprise mix",
   "- No implementation fees (frictionless onboarding)",
   "",
@@ -4897,7 +4897,7 @@ export const getPLAssumptionsDetailedStructuredData = () => ({
   title: "P and L Model Assumptions",
   revenueModel: {
     pricing: {
-      blendedARPU: "GBP 41.31/month -> GBP 495.72/year",
+      blendedARPU: "GBP 50.58/month -> GBP 607/year",
       tiers: "Essential, Essential Plus, Enterprise mix",
       implementationFees: "No implementation fees (frictionless onboarding)"
     },
@@ -5271,8 +5271,8 @@ export const getCACAssumptionsDetailedPdfContent = (): string[] => [
   "- This is normal for SaaS models approaching market saturation",
   "",
   "LTV:CAC RATIO:",
-  "- ARPU: GBP 495.72/year",
-  "- LTV (5-year lifetime): GBP 2,478.60",
+  "- ARPU: GBP 607/year",
+  "- LTV (5-year lifetime): GBP 3,035",
   "",
   "- 2027: CAC GBP 60, LTV:CAC 41x",
   "- 2028: CAC GBP 72, LTV:CAC 34x",
@@ -5283,7 +5283,7 @@ export const getCACAssumptionsDetailedPdfContent = (): string[] => [
   "VC-attractive threshold is 3x. Your model is far above this at 7x-41x.",
   "",
   "CAC PAYBACK PERIOD:",
-  "Formula: Payback = CAC / Monthly ARPU (GBP 41.31)",
+  "Formula: Payback = CAC / Monthly ARPU (GBP 50.58)",
   "",
   "- 2027: 1.5 months",
   "- 2028: 1.7 months",
@@ -5335,8 +5335,8 @@ export const getCACAssumptionsDetailedStructuredData = () => ({
     { period: "2031", title: "Normal for Maturing SaaS", points: ["Penetration growth continues", "Same 12% spend as percentage of revenue", "This is normal for SaaS models at scale"] }
   ],
   ltvCacRatio: {
-    arpu: "GBP 495.72/year",
-    ltv: "GBP 2,478.60",
+    arpu: "GBP 607/year",
+    ltv: "GBP 3,035",
     ratios: [
       { year: "2027", cac: "Optimised", ratio: "Strong" },
       { year: "2028", cac: "Efficient", ratio: "Strong" },
