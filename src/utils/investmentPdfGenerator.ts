@@ -5539,19 +5539,19 @@ const renderCapitalRaiseStrategy = (
   yPosition += 8;
 
   // Use of Funds Table
-  if (yPosition > pageHeight - 90) { doc.addPage(); yPosition = margin; }
+  if (yPosition > pageHeight - 120) { doc.addPage(); yPosition = margin; }
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
   doc.setFont("helvetica", "bold");
-  doc.text("Use of Funds", margin, yPosition);
+  doc.text("Use of Funds (planned deployment of £5M)", margin, yPosition);
   yPosition += 12;
 
   const useOfFunds = [
-    { category: "Team hiring & 2026 payroll (Jun–Dec)", allocation: "£207k" },
-    { category: "Outsourced engineering (pre-launch build)", allocation: "£200k" },
-    { category: "Legal, compliance, finance", allocation: "£40k" },
-    { category: "Early marketing & GTM preparation", allocation: "£125k" },
-    { category: "Operational buffer & contingency", allocation: "£275k" },
+    { category: "Product & Engineering", allocation: "£2,000,000", description: "Core platform build, data pipelines, reliability/security, roadmap delivery." },
+    { category: "Sales & Marketing", allocation: "£1,750,000", description: "Initial GTM engine: sales and marketing hires, marketing foundations, pipeline build." },
+    { category: "Operations / G&A", allocation: "£750,000", description: "Finance/legal, customer success coverage, tools, basic corporate infrastructure." },
+    { category: "Data / Compliance / Security", allocation: "£250,000", description: "Enterprise readiness: security hardening, policies, light-touch audits." },
+    { category: "Contingency", allocation: "£250,000", description: "Execution buffer for hiring delays, timing variance, and unforeseen costs." },
   ];
 
   // Table header
@@ -5561,38 +5561,39 @@ const renderCapitalRaiseStrategy = (
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "bold");
   doc.text("Category", margin + 8, yPosition + 7);
-  doc.text("Allocation", valueCol, yPosition + 7, { align: "right" });
+  doc.text("Allocation", margin + 90, yPosition + 7);
+  doc.text("Description", margin + 130, yPosition + 7);
   yPosition += 14;
 
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
+  doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   useOfFunds.forEach((item) => {
-    doc.setFont("helvetica", "normal");
-    doc.setTextColor(...PDF_CONFIG.textGray);
-    doc.text(item.category, margin + 8, yPosition);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(...PDF_CONFIG.textDark);
-    doc.text(item.allocation, valueCol, yPosition, { align: "right" });
-    yPosition += 8;
+    doc.text(item.category, margin + 8, yPosition);
+    doc.text(item.allocation, margin + 90, yPosition);
+    doc.setFont("helvetica", "normal");
+    doc.setTextColor(...PDF_CONFIG.textGray);
+    const descWrapped = doc.splitTextToSize(item.description, 55);
+    doc.text(descWrapped, margin + 130, yPosition);
+    yPosition += Math.max(descWrapped.length * 5, 10);
   });
   yPosition += 6;
 
-  // Pre-Revenue Total
+  // Total
   doc.setFillColor(...PDF_CONFIG.primaryBgLight);
   doc.roundedRect(margin, yPosition, maxWidth, 20, 3, 3, "F");
   doc.setTextColor(...PDF_CONFIG.textDark);
   doc.setFontSize(PDF_CONFIG.fontSize.body);
   doc.setFont("helvetica", "bold");
-  doc.text("Use of Funds", margin + 8, yPosition + 13);
+  doc.text("Total use of funds", margin + 8, yPosition + 13);
   doc.setTextColor(...PDF_CONFIG.primaryColor);
   doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
-  doc.text("£847k", valueCol, yPosition + 13, { align: "right" });
-  yPosition += 28;
-
+  doc.text("£5,000,000", margin + 90, yPosition + 13);
   doc.setTextColor(...PDF_CONFIG.textGray);
   doc.setFontSize(PDF_CONFIG.fontSize.bodySmall);
   doc.setFont("helvetica", "normal");
-  doc.text("Remaining capital extends runway through commercial launch and early scale, providing 18–22 months of total runway.", margin, yPosition);
-  yPosition += 14;
+  doc.text("Sum of allocations above", margin + 130, yPosition + 13);
+  yPosition += 28;
 
   // Burn & Runway Strategy
   if (yPosition > pageHeight - 80) { doc.addPage(); yPosition = margin; }
