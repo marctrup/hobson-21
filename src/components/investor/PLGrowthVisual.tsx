@@ -1,8 +1,27 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { TrendingUp, DollarSign, Target, Zap, PiggyBank, BarChart3 } from "lucide-react";
-import plForecastChart from "@/assets/pl-forecast-chart.png";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, ReferenceLine } from "recharts";
 
 const PLGrowthVisual = () => {
+  // P/L data from the financial model
+  const plData = [
+    { year: "2026", revenue: 0, cogs: 0.113, opex: 1.79, ebitda: -1.9, grossProfit: -0.113 },
+    { year: "2027", revenue: 0.708, cogs: 0.2, opex: 2.61, ebitda: -2.1, grossProfit: 0.508 },
+    { year: "2028", revenue: 6.4, cogs: 0.66, opex: 5.08, ebitda: 0.69, grossProfit: 5.78 },
+    { year: "2029", revenue: 22.4, cogs: 1.85, opex: 10.71, ebitda: 9.84, grossProfit: 20.55 },
+    { year: "2030", revenue: 48.1, cogs: 3.9, opex: 21.08, ebitda: 23.1, grossProfit: 44.16 },
+    { year: "2031", revenue: 99.7, cogs: 8.04, opex: 40.7, ebitda: 51.0, grossProfit: 91.66 },
+  ];
+
+  const formatCurrency = (value: number): string => {
+    if (value === 0) return "£0";
+    const absValue = Math.abs(value);
+    if (absValue >= 1) {
+      return `${value < 0 ? "-" : ""}£${absValue.toFixed(1)}M`;
+    }
+    return `${value < 0 ? "-" : ""}£${(absValue * 1000).toFixed(0)}k`;
+  };
+
   return (
     <div className="space-y-8">
       {/* Executive Summary */}
@@ -20,20 +39,47 @@ const PLGrowthVisual = () => {
         </p>
       </div>
 
-      {/* P/L Forecast Chart */}
+      {/* P/L Chart */}
       <Card className="border border-border/50">
         <CardHeader className="pb-2">
           <CardTitle className="text-base flex items-center gap-2">
             <BarChart3 className="w-4 h-4 text-primary" />
-            P/L Forecast (2026-2031)
+            P/L Forecast (2026-2031) — £M
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <img
-            src={plForecastChart}
-            alt="Hobson P/L Forecast 2027-2031 showing Infrastructure/COGS, Operating Costs, and Net Profit growth"
-            className="w-full h-auto rounded-lg"
-          />
+          <ResponsiveContainer width="100%" height={320}>
+            <BarChart data={plData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+              <XAxis dataKey="year" tick={{ fontSize: 12 }} />
+              <YAxis 
+                tick={{ fontSize: 11 }} 
+                tickFormatter={(value) => `£${value}M`}
+                domain={[-10, 110]}
+              />
+              <Tooltip 
+                formatter={(value: number, name: string) => [formatCurrency(value), name]}
+                labelStyle={{ fontWeight: "bold" }}
+                contentStyle={{ borderRadius: "8px", border: "1px solid #e5e7eb" }}
+              />
+              <Legend wrapperStyle={{ paddingTop: "10px" }} />
+              <ReferenceLine y={0} stroke="#6b7280" strokeWidth={1} />
+              <Bar dataKey="cogs" name="COGS" fill="#f59e0b" stackId="costs" radius={[0, 0, 0, 0]} />
+              <Bar dataKey="opex" name="Operating Expenses" fill="#0ea5e9" stackId="costs" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="ebitda" name="EBITDA" fill="#10b981" radius={[4, 4, 4, 4]} />
+            </BarChart>
+          </ResponsiveContainer>
+          <div className="flex justify-center gap-6 mt-2 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 rounded bg-amber-500"></span> COGS (8% of revenue)
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 rounded bg-sky-500"></span> OpEx (declining % of revenue)
+            </span>
+            <span className="flex items-center gap-1">
+              <span className="w-3 h-3 rounded bg-emerald-500"></span> EBITDA (profit)
+            </span>
+          </div>
         </CardContent>
       </Card>
 
