@@ -6947,7 +6947,97 @@ const renderRevenueGrowth = (
     doc.text(val, margin + labelWidth + 8 + (i * colWidth), tableY + 2, { align: "center" });
   });
 
-  yPosition += 122;
+  yPosition = tableY + 18;
+
+  // Revenue Growth Bar Chart Section
+  yPosition = checkPageBreak(doc, yPosition, 90, pageHeight, margin);
+  doc.setFillColor(...PDF_CONFIG.bgLight);
+  doc.roundedRect(margin, yPosition, maxWidth, 85, 3, 3, "F");
+  doc.setDrawColor(...PDF_CONFIG.border);
+  doc.roundedRect(margin, yPosition, maxWidth, 85, 3, 3, "S");
+
+  doc.setFillColor(...PDF_CONFIG.primaryColor);
+  doc.circle(margin + 10, yPosition + 10, PDF_CONFIG.circleSize.medium, "F");
+  doc.setTextColor(...PDF_CONFIG.textDark);
+  doc.setFontSize(PDF_CONFIG.fontSize.cardTitle);
+  doc.setFont("helvetica", "bold");
+  doc.text("Hobson Revenue Growth (2026–2031)", margin + 18, yPosition + 12);
+
+  // Bar chart visualization
+  const chartStartY = yPosition + 22;
+  const chartHeight = 50;
+  const chartWidth = maxWidth - 20;
+  const barAreaWidth = chartWidth - 30;
+  const barWidth = barAreaWidth / 6 - 8;
+  
+  // Revenue data for chart (UK in amber, Global in blue)
+  const chartRevenue = [
+    { year: "2026", uk: 0, global: 0, total: 0 },
+    { year: "2027", uk: 708368, global: 0, total: 708368 },
+    { year: "2028", uk: 1623781, global: 4812566, total: 6436347 },
+    { year: "2029", uk: 3149470, global: 19250264, total: 22399734 },
+    { year: "2030", uk: 5590573, global: 42470537, total: 48061110 },
+    { year: "2031", uk: 9099657, global: 90596196, total: 99695853 },
+  ];
+  
+  const maxRevenue = 99695853; // Max total for scaling
+  
+  // Draw Y-axis label
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  doc.setFont("helvetica", "normal");
+  doc.text("£M", margin + 8, chartStartY + 4);
+  
+  // Draw bars for each year
+  chartRevenue.forEach((data, i) => {
+    const xPos = margin + 30 + i * (barWidth + 8);
+    const ukHeight = (data.uk / maxRevenue) * chartHeight;
+    const globalHeight = (data.global / maxRevenue) * chartHeight;
+    
+    // UK bar (amber) - bottom
+    if (data.uk > 0) {
+      doc.setFillColor(217, 119, 6); // amber-600
+      doc.rect(xPos, chartStartY + chartHeight - ukHeight, barWidth, ukHeight, "F");
+    }
+    
+    // Global bar (sky blue) - stacked on top of UK
+    if (data.global > 0) {
+      doc.setFillColor(14, 165, 233); // sky-500
+      doc.rect(xPos, chartStartY + chartHeight - ukHeight - globalHeight, barWidth, globalHeight, "F");
+    }
+    
+    // Year label below bar
+    doc.setTextColor(...PDF_CONFIG.textDark);
+    doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+    doc.setFont("helvetica", "normal");
+    doc.text(data.year, xPos + barWidth / 2, chartStartY + chartHeight + 6, { align: "center" });
+    
+    // Total value above bar (only for significant values)
+    if (data.total > 0) {
+      const totalLabel = data.total >= 1000000 
+        ? `£${(data.total / 1000000).toFixed(1)}M` 
+        : `£${Math.round(data.total / 1000)}k`;
+      doc.setTextColor(...PDF_CONFIG.textDark);
+      doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+      doc.setFont("helvetica", "bold");
+      doc.text(totalLabel, xPos + barWidth / 2, chartStartY + chartHeight - ukHeight - globalHeight - 2, { align: "center" });
+    }
+  });
+  
+  // Legend
+  const legendY = yPosition + 78;
+  doc.setFillColor(217, 119, 6); // amber-600
+  doc.rect(margin + 10, legendY - 3, 8, 4, "F");
+  doc.setTextColor(...PDF_CONFIG.textGray);
+  doc.setFontSize(PDF_CONFIG.fontSize.tiny);
+  doc.setFont("helvetica", "normal");
+  doc.text("UK Revenue", margin + 20, legendY);
+  
+  doc.setFillColor(14, 165, 233); // sky-500
+  doc.rect(margin + 65, legendY - 3, 8, 4, "F");
+  doc.text("Global Revenue", margin + 75, legendY);
+
+  yPosition += 92;
 
   // Market & Revenue Assumptions - 2 columns
   yPosition = checkPageBreak(doc, yPosition, 50, pageHeight, margin);
