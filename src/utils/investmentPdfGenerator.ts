@@ -6987,16 +6987,6 @@ const renderRevenueGrowth = (
   doc.text("Global TAM: GBP 155.6B", margin + halfWidth + 14, yPosition + 34);
   yPosition += 54;
 
-  // Customer ROI highlight
-  yPosition = checkPageBreak(doc, yPosition, 18, pageHeight, margin);
-  doc.setFillColor(...PDF_CONFIG.primaryBgMedium);
-  doc.roundedRect(margin, yPosition, maxWidth, 14, 3, 3, "F");
-  doc.setTextColor(...PDF_CONFIG.textDark);
-  doc.setFontSize(PDF_CONFIG.fontSize.body);
-  doc.setFont("helvetica", "bold");
-  doc.text("Customer ROI: ~12x (GBP 6,000 saving vs GBP 495.72)", margin + maxWidth / 2, yPosition + 9, { align: "center" });
-  yPosition += 22;
-
   // Summary Stats - 4 columns
   yPosition = checkPageBreak(doc, yPosition, 36, pageHeight, margin);
   const statsColWidth = (maxWidth - 18) / 4;
