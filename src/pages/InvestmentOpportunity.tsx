@@ -109,7 +109,7 @@ const sections = [
   {
     id: "strategy",
     title: "Executive Summary",
-    subtitle: "Summary & Strategic Approach",
+    subtitle: "Executive Summary & Strategic Approach",
     icon: Target,
     color: "from-blue-500/10 to-blue-600/10",
     iconColor: "text-blue-600",
