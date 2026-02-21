@@ -2,10 +2,11 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2 } from "lucide-react";
+import { CheckCircle2, Loader2 } from "lucide-react";
 import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
 import owlMascot from "@/assets/owl-mascot.png";
 import { useContent, useLanguage } from "@/contexts/LanguageContext";
+import { supabase } from "@/integrations/supabase/client";
 
 export const PricingSection = () => {
   const content = useContent();
@@ -20,6 +21,34 @@ export const PricingSection = () => {
     essentialPlus: false,
     enterprise: false
   });
+  const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+
+  const handleCheckout = async (priceId: string) => {
+    setLoadingPlan(priceId);
+    try {
+      const { data, error } = await supabase.functions.invoke('create-checkout-session', {
+        body: { priceId },
+      });
+      if (error) throw error;
+      if (data?.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error('Checkout error:', err);
+      alert('Something went wrong. Please try again.');
+    } finally {
+      setLoadingPlan(null);
+    }
+  };
+
+  const getPriceId = (plan: 'free' | 'essential' | 'essentialPlus' | 'enterprise') => {
+    const planData = pricing.plans[plan];
+    const ids = (planData as any).stripePriceIds;
+    if (!ids) return null;
+    if (plan === 'free') return ids.monthly;
+    const isAnnual = billingCycles[plan as keyof typeof billingCycles];
+    return isAnnual && ids.annual ? ids.annual : ids.monthly;
+  };
 
   const formatPrice = (price: number) => {
     const formatted = price.toFixed(2);
@@ -136,8 +165,12 @@ export const PricingSection = () => {
                   ))}
                 </div>
               </div>
-              <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-xs sm:text-sm mt-auto py-2">
-                {pricing.plans.free.button}
+              <Button 
+                className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-xs sm:text-sm mt-auto py-2"
+                onClick={() => handleCheckout(getPriceId('free')!)}
+                disabled={loadingPlan !== null}
+              >
+                {loadingPlan === getPriceId('free') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.free.button}
               </Button>
             </CardContent>
           </Card>
@@ -172,8 +205,12 @@ export const PricingSection = () => {
                   ))}
                 </div>
               </div>
-              <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
-                {pricing.plans.essential.button}
+              <Button 
+                className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto"
+                onClick={() => handleCheckout(getPriceId('essential')!)}
+                disabled={loadingPlan !== null}
+              >
+                {loadingPlan === getPriceId('essential') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.essential.button}
               </Button>
             </CardContent>
           </Card>
@@ -213,8 +250,12 @@ export const PricingSection = () => {
                   ))}
                 </div>
               </div>
-              <Button className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm mt-auto">
-                {pricing.plans.essentialPlus.button}
+              <Button 
+                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm mt-auto"
+                onClick={() => handleCheckout(getPriceId('essentialPlus')!)}
+                disabled={loadingPlan !== null}
+              >
+                {loadingPlan === getPriceId('essentialPlus') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.essentialPlus.button}
               </Button>
             </CardContent>
           </Card>
@@ -249,8 +290,12 @@ export const PricingSection = () => {
                   ))}
                 </div>
               </div>
-              <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto">
-                {pricing.plans.enterprise.button}
+              <Button 
+                className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto"
+                onClick={() => handleCheckout(getPriceId('enterprise')!)}
+                disabled={loadingPlan !== null}
+              >
+                {loadingPlan === getPriceId('enterprise') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.enterprise.button}
               </Button>
             </CardContent>
           </Card>

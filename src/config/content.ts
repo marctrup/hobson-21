@@ -123,6 +123,7 @@ export const CONTENT = {
         tagline: "For light, occasional tasks.",
         features: ["All features", "Unlimited users", "Unlimited documents"],
         button: "Start Free",
+        stripePriceIds: { monthly: "price_1T3Cqd2NA0ttIOr0ndAG6xqA", annual: null },
       },
       essential: {
         name: "Essential",
@@ -132,6 +133,7 @@ export const CONTENT = {
         tagline: "For steady monthly workloads.",
         features: ["Everything in Free", "Priority support"],
         button: "Choose Essential",
+        stripePriceIds: { monthly: "price_1T3Cr12NA0ttIOr0adcLLIXl", annual: "price_1T3IZg2NA0ttIOr0DodJ00dP" },
       },
       essentialPlus: {
         name: "Essential Plus",
@@ -142,6 +144,7 @@ export const CONTENT = {
         features: ["Everything in Essential"],
         button: "Choose Essential +",
         popular: "⭐ Most Popular",
+        stripePriceIds: { monthly: "price_1T3CrJ2NA0ttIOr0PPxXPmVO", annual: "price_1T3Ia92NA0ttIOr0tqhYiiM1" },
       },
       enterprise: {
         name: "Enterprise",
@@ -151,6 +154,7 @@ export const CONTENT = {
         tagline: "For high-volume, daily demands.",
         features: ["Everything in Plus", "Build a knowledge base", "Dedicated support"],
         button: "Contact Sales",
+        stripePriceIds: { monthly: "price_1T3Cri2NA0ttIOr0HUjHQLJF", annual: "price_1T3Iac2NA0ttIOr0oP6MsKev" },
       },
     },
     perMonth: "/month",
