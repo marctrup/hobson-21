@@ -26,7 +26,7 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { priceId } = await req.json();
+    const { priceId, email } = await req.json();
 
     if (!priceId || !VALID_PRICE_IDS.has(priceId)) {
       return new Response(JSON.stringify({ error: 'Invalid price ID' }), {
@@ -45,6 +45,20 @@ Deno.serve(async (req) => {
 
     const origin = req.headers.get('origin') || 'https://hobson-21.lovable.app';
 
+    // Look up existing Stripe customer by email
+    let customerId: string | null = null;
+    if (email) {
+      const searchParams = new URLSearchParams({ email, limit: '1' });
+      const customerRes = await fetch(`https://api.stripe.com/v1/customers?${searchParams}`, {
+        headers: { 'Authorization': `Bearer ${stripeKey}` },
+      });
+      const customerData = await customerRes.json();
+      if (customerRes.ok && customerData.data?.length > 0) {
+        customerId = customerData.data[0].id;
+        console.log('Found existing Stripe customer:', customerId);
+      }
+    }
+
     const body = new URLSearchParams({
       'mode': 'subscription',
       'line_items[0][price]': priceId,
@@ -52,6 +66,12 @@ Deno.serve(async (req) => {
       'success_url': `${origin}?checkout=success`,
       'cancel_url': `${origin}?checkout=cancelled`,
     });
+
+    if (customerId) {
+      body.set('customer', customerId);
+    } else if (email) {
+      body.set('customer_email', email);
+    }
 
     const stripeResponse = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',
