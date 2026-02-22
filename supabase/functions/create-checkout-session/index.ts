@@ -73,6 +73,7 @@ Deno.serve(async (req) => {
       body.set('customer_email', email);
     }
 
+    
     const stripeResponse = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',
       headers: {
