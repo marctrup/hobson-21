@@ -27,6 +27,7 @@ Deno.serve(async (req) => {
 
   try {
     const { priceId, email } = await req.json();
+    console.log('Checkout request - email:', email || 'NOT PROVIDED');
 
     if (!priceId || !VALID_PRICE_IDS.has(priceId)) {
       return new Response(JSON.stringify({ error: 'Invalid price ID' }), {
@@ -73,7 +74,8 @@ Deno.serve(async (req) => {
       body.set('customer_email', email);
     }
 
-    
+    console.log('Stripe params - customer:', customerId || 'NONE', 'customer_email:', !customerId && email ? email : 'NONE');
+
     const stripeResponse = await fetch('https://api.stripe.com/v1/checkout/sessions', {
       method: 'POST',
       headers: {
