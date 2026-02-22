@@ -7,6 +7,17 @@ import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
 import owlMascot from "@/assets/owl-mascot.png";
 import { useContent, useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { z } from "zod";
+
+const emailSchema = z.string().trim().email("Please enter a valid email address").max(255);
 
 export const PricingSection = () => {
   const content = useContent();
@@ -22,14 +33,15 @@ export const PricingSection = () => {
     enterprise: false
   });
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
+  const [emailDialogOpen, setEmailDialogOpen] = useState(false);
+  const [pendingPriceId, setPendingPriceId] = useState<string | null>(null);
+  const [emailInput, setEmailInput] = useState("");
+  const [emailError, setEmailError] = useState("");
 
-  const handleCheckout = async (priceId: string) => {
+  const proceedToCheckout = async (priceId: string, email?: string) => {
     setLoadingPlan(priceId);
+    setEmailDialogOpen(false);
     try {
-      // Get current user's email if logged in
-      const { data: { user } } = await supabase.auth.getUser();
-      const email = user?.email || undefined;
-
       const { data, error } = await supabase.functions.invoke('create-checkout-session', {
         body: { priceId, email },
       });
@@ -42,6 +54,31 @@ export const PricingSection = () => {
       alert('Something went wrong. Please try again.');
     } finally {
       setLoadingPlan(null);
+    }
+  };
+
+  const handleCheckout = async (priceId: string) => {
+    // If logged in, use their email directly
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user?.email) {
+      await proceedToCheckout(priceId, user.email);
+      return;
+    }
+    // Otherwise, ask for email
+    setPendingPriceId(priceId);
+    setEmailInput("");
+    setEmailError("");
+    setEmailDialogOpen(true);
+  };
+
+  const handleEmailSubmit = () => {
+    const result = emailSchema.safeParse(emailInput);
+    if (!result.success) {
+      setEmailError(result.error.errors[0].message);
+      return;
+    }
+    if (pendingPriceId) {
+      proceedToCheckout(pendingPriceId, result.data);
     }
   };
 
@@ -318,6 +355,48 @@ export const PricingSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Email Collection Dialog */}
+      <Dialog open={emailDialogOpen} onOpenChange={setEmailDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Enter your email</DialogTitle>
+            <DialogDescription>
+              We'll use this to set up your subscription account.
+            </DialogDescription>
+          </DialogHeader>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleEmailSubmit();
+            }}
+            className="space-y-4"
+          >
+            <div>
+              <Input
+                type="email"
+                placeholder="you@example.com"
+                value={emailInput}
+                onChange={(e) => {
+                  setEmailInput(e.target.value);
+                  setEmailError("");
+                }}
+                autoFocus
+              />
+              {emailError && (
+                <p className="text-sm text-destructive mt-1">{emailError}</p>
+              )}
+            </div>
+            <Button
+              type="submit"
+              className="w-full"
+              disabled={loadingPlan !== null}
+            >
+              {loadingPlan ? <Loader2 className="h-4 w-4 animate-spin" /> : "Continue to checkout"}
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 };
