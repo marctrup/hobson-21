@@ -26,8 +26,12 @@ export const PricingSection = () => {
   const handleCheckout = async (priceId: string) => {
     setLoadingPlan(priceId);
     try {
+      // Get current user's email if logged in
+      const { data: { user } } = await supabase.auth.getUser();
+      const email = user?.email || undefined;
+
       const { data, error } = await supabase.functions.invoke('create-checkout-session', {
-        body: { priceId },
+        body: { priceId, email },
       });
       if (error) throw error;
       if (data?.url) {
