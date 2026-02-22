@@ -66,7 +66,6 @@ Deno.serve(async (req) => {
       'line_items[0][quantity]': '1',
       'success_url': `${origin}?checkout=success`,
       'cancel_url': `${origin}?checkout=cancelled`,
-      'customer_creation': 'if_required',
     });
 
     if (customerId) {
