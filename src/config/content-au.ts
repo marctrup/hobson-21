@@ -22,8 +22,6 @@ export const CONTENT_AU = {
       },
       enterprise: {
         ...CONTENT.pricing.plans.enterprise,
-        priceMonthly: 295,
-        priceAnnual: 236,
       },
     },
   },
