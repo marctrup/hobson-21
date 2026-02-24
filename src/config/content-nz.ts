@@ -22,8 +22,6 @@ export const CONTENT_NZ = {
       },
       enterprise: {
         ...CONTENT.pricing.plans.enterprise,
-        priceMonthly: 325,
-        priceAnnual: 260,
       },
     },
   },

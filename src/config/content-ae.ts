@@ -136,8 +136,7 @@ export const CONTENT_AE = {
       },
       enterprise: {
         name: "Enterprise",
-        priceMonthly: 685,
-        priceAnnual: 550,
+        customPricing: true,
         tagline: "For high-volume, daily demands.",
         features: ["Everything in Essential", "Flexible document limit", "Flexible question limit", "Build a knowledge base", "Dedicated support"],
         button: "Contact Sales",

@@ -22,8 +22,6 @@ export const CONTENT_SG = {
       },
       enterprise: {
         ...CONTENT.pricing.plans.enterprise,
-        priceMonthly: 265,
-        priceAnnual: 212,
       },
     },
   },

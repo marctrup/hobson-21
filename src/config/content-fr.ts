@@ -136,8 +136,7 @@ export const CONTENT_FR = {
       },
       enterprise: {
         name: "Entreprise",
-        priceMonthly: 172.00,
-        priceAnnual: 137.50,
+        customPricing: true,
         tagline: "Pour des demandes quotidiennes à haut volume.",
         features: ["Tout dans Essentiel", "Limite de documents flexible", "Limite de questions flexible", "Construire une base de connaissances", "Support dédié"],
         button: "Contacter les ventes",

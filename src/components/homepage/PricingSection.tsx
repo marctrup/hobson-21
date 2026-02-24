@@ -31,7 +31,6 @@ export const PricingSection = () => {
   
   const [billingCycles, setBillingCycles] = useState({
     essential: false,
-    enterprise: false
   });
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
@@ -81,11 +80,12 @@ export const PricingSection = () => {
     }
   };
 
-  const getPriceId = (plan: 'essential' | 'enterprise') => {
+  const getPriceId = (plan: 'essential') => {
     const planData = pricing.plans[plan];
     const ids = (planData as any).stripePriceIds;
     if (!ids) return null;
     const isAnnual = billingCycles[plan];
+    return isAnnual && ids.annual ? ids.annual : ids.monthly;
     return isAnnual && ids.annual ? ids.annual : ids.monthly;
   };
 
@@ -97,13 +97,13 @@ export const PricingSection = () => {
     return `${pricing.currency}${formatted}`;
   };
 
-  const getPrice = (plan: 'essential' | 'enterprise') => {
+  const getPrice = (plan: 'essential') => {
     const isAnnual = billingCycles[plan];
     const planData = pricing.plans[plan];
     return isAnnual ? planData.priceAnnual : planData.priceMonthly;
   };
 
-  const getOriginalPrice = (plan: 'essential' | 'enterprise') => {
+  const getOriginalPrice = (plan: 'essential') => {
     return pricing.plans[plan].priceMonthly;
   };
 
@@ -253,13 +253,8 @@ export const PricingSection = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
             <CardHeader className="text-center pb-4 flex-shrink-0">
               <CardTitle className="text-lg font-bold">{pricing.plans.enterprise.name}</CardTitle>
-              <div className={`font-bold text-purple-600 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-3xl'}`}>
-                {formatPrice(getPrice('enterprise'))}<span className={`font-normal ${hasLongCurrency ? 'text-xs' : 'text-sm'}`}>{pricing.perMonth}</span>
-                {billingCycles.enterprise && (
-                  <div className="text-xs text-muted-foreground line-through">
-                    {formatPrice(getOriginalPrice('enterprise'))}
-                  </div>
-                )}
+              <div className={`font-bold text-purple-600 mt-2 text-2xl sm:text-3xl`}>
+                Custom
               </div>
             </CardHeader>
             <CardContent className="flex flex-col flex-grow">
@@ -267,7 +262,6 @@ export const PricingSection = () => {
                 <p className="text-xs text-muted-foreground mb-4">
                   {pricing.plans.enterprise.tagline}
                 </p>
-                <PricingToggle planKey="enterprise" />
                 <div className="space-y-3 mb-6">
                   {pricing.plans.enterprise.features.map((feature, index) => (
                     <div key={index} className="flex items-center gap-2">
