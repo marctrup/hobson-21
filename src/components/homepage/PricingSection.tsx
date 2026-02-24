@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -26,10 +27,10 @@ export const PricingSection = () => {
   const isGerman = language === 'de';
   const isUAE = language === 'ae';
   const hasLongCurrency = isGerman || isUAE;
+  const navigate = useNavigate();
   
   const [billingCycles, setBillingCycles] = useState({
     essential: false,
-    essentialPlus: false,
     enterprise: false
   });
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
@@ -58,13 +59,11 @@ export const PricingSection = () => {
   };
 
   const handleCheckout = async (priceId: string) => {
-    // If logged in, use their email directly
     const { data: { user } } = await supabase.auth.getUser();
     if (user?.email) {
       await proceedToCheckout(priceId, user.email);
       return;
     }
-    // Otherwise, ask for email
     setPendingPriceId(priceId);
     setEmailInput("");
     setEmailError("");
@@ -82,12 +81,11 @@ export const PricingSection = () => {
     }
   };
 
-  const getPriceId = (plan: 'free' | 'essential' | 'essentialPlus' | 'enterprise') => {
+  const getPriceId = (plan: 'essential' | 'enterprise') => {
     const planData = pricing.plans[plan];
     const ids = (planData as any).stripePriceIds;
     if (!ids) return null;
-    if (plan === 'free') return ids.monthly;
-    const isAnnual = billingCycles[plan as keyof typeof billingCycles];
+    const isAnnual = billingCycles[plan];
     return isAnnual && ids.annual ? ids.annual : ids.monthly;
   };
 
@@ -99,13 +97,13 @@ export const PricingSection = () => {
     return `${pricing.currency}${formatted}`;
   };
 
-  const getPrice = (plan: 'essential' | 'essentialPlus' | 'enterprise') => {
+  const getPrice = (plan: 'essential' | 'enterprise') => {
     const isAnnual = billingCycles[plan];
     const planData = pricing.plans[plan];
     return isAnnual ? planData.priceAnnual : planData.priceMonthly;
   };
 
-  const getOriginalPrice = (plan: 'essential' | 'essentialPlus' | 'enterprise') => {
+  const getOriginalPrice = (plan: 'essential' | 'enterprise') => {
     return pricing.plans[plan].priceMonthly;
   };
 
@@ -116,11 +114,7 @@ export const PricingSection = () => {
     }));
   };
 
-  const PricingToggle = ({
-    planKey
-  }: {
-    planKey: keyof typeof billingCycles;
-  }) => {
+  const PricingToggle = ({ planKey }: { planKey: keyof typeof billingCycles }) => {
     const isAnnual = billingCycles[planKey];
     return (
       <div className="space-y-2 mb-4 px-4">
@@ -173,14 +167,10 @@ export const PricingSection = () => {
           <p className={`text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0 ${isGerman ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}`}>
             {pricing.subtitle}
           </p>
-          <p className={`text-muted-foreground max-w-2xl mx-auto px-4 sm:px-0 ${isGerman ? 'text-sm sm:text-base' : 'text-base sm:text-lg'}`}>
-            {pricing.description}{" "}
-            <span className="font-semibold text-primary">{pricing.heuLabel}</span>.
-          </p>
         </div>
         
-        {/* Pricing Plans Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-7xl mx-auto items-stretch px-4 sm:px-0">
+        {/* Pricing Plans Grid - 3 columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto items-stretch px-4 sm:px-0">
           
           {/* Free Plan */}
           <Card className="relative bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
@@ -190,7 +180,6 @@ export const PricingSection = () => {
               <div className={`font-bold text-purple-600 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'}`}>
                 {formatPrice(pricing.plans.free.price)}
               </div>
-              <div className="text-xs sm:text-sm text-purple-600 font-medium mt-1">{pricing.plans.free.heus} HEUs</div>
             </CardHeader>
             <CardContent className="flex flex-col flex-grow px-3 sm:px-6">
               <div className="flex-grow">
@@ -208,20 +197,24 @@ export const PricingSection = () => {
               </div>
               <Button 
                 className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-xs sm:text-sm mt-auto py-2"
-                onClick={() => handleCheckout(getPriceId('free')!)}
-                disabled={loadingPlan !== null}
+                onClick={() => window.open('https://hobson-three.vercel.app/signup', '_blank')}
               >
-                {loadingPlan === getPriceId('free') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.free.button}
+                {pricing.plans.free.button}
               </Button>
             </CardContent>
           </Card>
 
-          {/* Essential Plan */}
-          <Card className="relative bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
-            <CardHeader className="text-center pb-4 flex-shrink-0">
+          {/* Essential Plan - Most Popular */}
+          <Card className="relative bg-gradient-to-br from-purple-50 to-purple-100/50 border-2 border-purple-400 shadow-2xl transform scale-105 hover:scale-110 transition-all duration-300 flex flex-col h-full">
+            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
+              <Badge className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 text-sm font-medium shadow-lg whitespace-nowrap">
+                {pricing.plans.essential.popular}
+              </Badge>
+            </div>
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
+            <CardHeader className="text-center pb-4 pt-6 flex-shrink-0">
               <CardTitle className="text-lg font-bold">{pricing.plans.essential.name}</CardTitle>
-              <div className={`font-bold text-purple-600 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-3xl'}`}>
+              <div className={`font-bold text-purple-700 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-3xl'}`}>
                 {formatPrice(getPrice('essential'))}<span className={`font-normal ${hasLongCurrency ? 'text-xs' : 'text-sm'}`}>{pricing.perMonth}</span>
                 {billingCycles.essential && (
                   <div className="text-xs text-muted-foreground line-through">
@@ -229,7 +222,6 @@ export const PricingSection = () => {
                   </div>
                 )}
               </div>
-              <div className="text-sm text-purple-600 font-medium mt-1">{pricing.plans.essential.heus} HEUs</div>
             </CardHeader>
             <CardContent className="flex flex-col flex-grow">
               <div className="flex-grow">
@@ -240,51 +232,6 @@ export const PricingSection = () => {
                 <div className="space-y-3 mb-6">
                   {pricing.plans.essential.features.map((feature, index) => (
                     <div key={index} className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
-                      <span className="text-xs">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <Button 
-                className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto"
-                onClick={() => handleCheckout(getPriceId('essential')!)}
-                disabled={loadingPlan !== null}
-              >
-                {loadingPlan === getPriceId('essential') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.essential.button}
-              </Button>
-            </CardContent>
-          </Card>
-
-          {/* Essential Plus - Most Popular */}
-          <Card className="relative bg-gradient-to-br from-purple-50 to-purple-100/50 border-2 border-purple-400 shadow-2xl transform scale-105 hover:scale-110 transition-all duration-300 flex flex-col h-full">
-            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
-              <Badge className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 text-sm font-medium shadow-lg whitespace-nowrap">
-                {pricing.plans.essentialPlus.popular}
-              </Badge>
-            </div>
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
-            <CardHeader className="text-center pb-4 pt-6 flex-shrink-0">
-              <CardTitle className="text-lg font-bold">{pricing.plans.essentialPlus.name}</CardTitle>
-              <div className={`font-bold text-purple-700 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-3xl'}`}>
-                {formatPrice(getPrice('essentialPlus'))}<span className={`font-normal ${hasLongCurrency ? 'text-xs' : 'text-sm'}`}>{pricing.perMonth}</span>
-                {billingCycles.essentialPlus && (
-                  <div className="text-xs text-muted-foreground line-through">
-                    {formatPrice(getOriginalPrice('essentialPlus'))}
-                  </div>
-                )}
-              </div>
-              <div className="text-sm text-purple-700 font-medium mt-1">{pricing.plans.essentialPlus.heus} HEUs</div>
-            </CardHeader>
-            <CardContent className="flex flex-col flex-grow">
-              <div className="flex-grow">
-                <p className="text-xs text-muted-foreground mb-4">
-                  {pricing.plans.essentialPlus.tagline}
-                </p>
-                <PricingToggle planKey="essentialPlus" />
-                <div className="space-y-3 mb-6">
-                  {pricing.plans.essentialPlus.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
                       <span className="text-xs">{feature}</span>
                     </div>
@@ -293,10 +240,10 @@ export const PricingSection = () => {
               </div>
               <Button 
                 className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm mt-auto"
-                onClick={() => handleCheckout(getPriceId('essentialPlus')!)}
+                onClick={() => handleCheckout(getPriceId('essential')!)}
                 disabled={loadingPlan !== null}
               >
-                {loadingPlan === getPriceId('essentialPlus') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.essentialPlus.button}
+                {loadingPlan === getPriceId('essential') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.essential.button}
               </Button>
             </CardContent>
           </Card>
@@ -314,7 +261,6 @@ export const PricingSection = () => {
                   </div>
                 )}
               </div>
-              <div className="text-sm text-purple-600 font-medium mt-1">{pricing.plans.enterprise.heus.toLocaleString()} HEUs</div>
             </CardHeader>
             <CardContent className="flex flex-col flex-grow">
               <div className="flex-grow">
@@ -333,10 +279,9 @@ export const PricingSection = () => {
               </div>
               <Button 
                 className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto"
-                onClick={() => handleCheckout(getPriceId('enterprise')!)}
-                disabled={loadingPlan !== null}
+                onClick={() => navigate('/contact')}
               >
-                {loadingPlan === getPriceId('enterprise') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.enterprise.button}
+                {pricing.plans.enterprise.button}
               </Button>
             </CardContent>
           </Card>
