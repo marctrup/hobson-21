@@ -17,11 +17,6 @@ export const CONTENT_AU = {
       },
       essential: {
         ...CONTENT.pricing.plans.essential,
-        priceMonthly: 39,
-        priceAnnual: 31,
-      },
-      essentialPlus: {
-        ...CONTENT.pricing.plans.essentialPlus,
         priceMonthly: 99,
         priceAnnual: 79,
       },

@@ -17,11 +17,6 @@ export const CONTENT_NZ = {
       },
       essential: {
         ...CONTENT.pricing.plans.essential,
-        priceMonthly: 42,
-        priceAnnual: 34,
-      },
-      essentialPlus: {
-        ...CONTENT.pricing.plans.essentialPlus,
         priceMonthly: 109,
         priceAnnual: 87,
       },

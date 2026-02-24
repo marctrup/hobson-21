@@ -17,11 +17,6 @@ export const CONTENT_SG = {
       },
       essential: {
         ...CONTENT.pricing.plans.essential,
-        priceMonthly: 35,
-        priceAnnual: 28,
-      },
-      essentialPlus: {
-        ...CONTENT.pricing.plans.essentialPlus,
         priceMonthly: 89,
         priceAnnual: 71,
       },
