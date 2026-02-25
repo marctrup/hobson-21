@@ -126,8 +126,8 @@ export const CONTENT = {
       },
       essential: {
         name: "Essential",
-        priceMonthly: 49.75,
-        priceAnnual: 39.80,
+        priceMonthly: 19.50,
+        priceAnnual: 15.60,
         tagline: "For heavy, frequent use.",
         features: ["Everything in Essential", "Upload up to 10 documents", "Ask up to 50 questions per month"],
         button: "Choose Essential",
