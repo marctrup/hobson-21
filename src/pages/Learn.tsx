@@ -2355,19 +2355,19 @@ Content-Type: multipart/form-data
                         <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                         <div>
                           <p className="font-semibold text-sm sm:text-base">
-                            Ask about a different building → switch required
+                            Ask about a different building → Hobson switches for you
                           </p>
                           <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-                            Hobson doesn't have access to other buildings' documents from here. You must switch.
+                            Hobson knows it needs different documents and will automatically initiate the switch.
                           </p>
                         </div>
                       </div>
                       <div className="flex items-start gap-2 sm:gap-3 p-3 sm:p-4 bg-red-500/5 border border-red-500/20 rounded-lg">
                         <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                         <div>
-                          <p className="font-semibold text-sm sm:text-base">Ask about the portfolio → switch required</p>
+                          <p className="font-semibold text-sm sm:text-base">Ask about the portfolio → Hobson switches for you</p>
                           <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-                            Portfolio-level data isn't available from a single building. You must go back up.
+                            Hobson recognises this needs portfolio-level data and will take you back up automatically.
                           </p>
                         </div>
                       </div>
@@ -2387,10 +2387,10 @@ Content-Type: multipart/form-data
                         <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                         <div>
                           <p className="font-semibold text-sm sm:text-base">
-                            Ask about any other unit → switch required
+                            Ask about any other unit → Hobson switches for you
                           </p>
                           <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-                            Each unit has its own documents. Hobson must switch to see the right ones.
+                            Each unit has its own documents — Hobson knows this and will automatically take you there.
                           </p>
                         </div>
                       </div>
@@ -2398,10 +2398,10 @@ Content-Type: multipart/form-data
                         <span className="text-lg sm:text-xl md:text-2xl flex-shrink-0">🚫</span>
                         <div>
                           <p className="font-semibold text-sm sm:text-base">
-                            Ask about the building or portfolio → switch required
+                            Ask about the building or portfolio → Hobson switches for you
                           </p>
                           <p className="text-xs sm:text-sm text-muted-foreground mt-1">
-                            You need to navigate up to see broader data.
+                            Hobson knows it needs broader data and will navigate you up automatically.
                           </p>
                         </div>
                       </div>
@@ -2495,19 +2495,19 @@ Content-Type: multipart/form-data
                       <div className="flex flex-wrap items-center gap-2 mb-1">
                         <p className="font-semibold text-sm sm:text-base">Ask about a different unit</p>
                         <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
-                          Switch required
+                          Auto-switch
                         </span>
                       </div>
-                      <p className="text-xs sm:text-sm text-muted-foreground">Different documents — Hobson must switch</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson detects the mismatch and switches you automatically</p>
                     </div>
                     <div className="border-l-4 border-red-500 pl-3 sm:pl-4 py-2">
                       <div className="flex flex-wrap items-center gap-2 mb-1">
                         <p className="font-semibold text-sm sm:text-base">Ask about the building or portfolio</p>
                         <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
-                          Switch required
+                          Auto-switch
                         </span>
                       </div>
-                      <p className="text-xs sm:text-sm text-muted-foreground">Broader data not available at unit level</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson takes you to the right level automatically</p>
                     </div>
                   </div>
                 </div>
@@ -2535,10 +2535,10 @@ Content-Type: multipart/form-data
                           Ask about a different building or portfolio
                         </p>
                         <span className="px-2 sm:px-3 py-0.5 sm:py-1 bg-red-500/10 text-red-700 rounded-full text-xs font-medium whitespace-nowrap">
-                          Switch required
+                          Auto-switch
                         </span>
                       </div>
-                      <p className="text-xs sm:text-sm text-muted-foreground">Wrong documents — Hobson must switch</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground">Hobson detects the mismatch and switches you automatically</p>
                     </div>
                   </div>
                 </div>
