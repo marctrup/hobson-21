@@ -11,30 +11,10 @@ export const HomepageFooter = () => {
   return (
     <footer className="bg-muted/30 border-t py-16">
       <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           <div className="col-span-2">
             <div className="mb-4">
               <img src={hobsonLogo} alt="Hobson's AI" className="h-16" loading="lazy" decoding="async" />
-            </div>
-          </div>
-          
-          <div>
-            <h4 className="font-semibold text-foreground mb-4">{text.product}</h4>
-            <div className="space-y-2">
-              <Link 
-                to="/features"
-                className="block text-muted-foreground hover:text-foreground transition-colors text-left"
-              >
-                {text.features}
-              </Link>
-              <a 
-                href="https://pilot.hobsonschoice.ai"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-muted-foreground hover:text-foreground transition-colors text-left"
-              >
-                {text.joinPilot}
-              </a>
             </div>
           </div>
           
