@@ -391,17 +391,31 @@ export const Homepage = () => {
           <PilotApplicationForm showForm={showPilotForm} setShowForm={setShowPilotForm} />
 
           {/* Footer */}
-          <footer className="py-5 md:py-16 border-t bg-white">
-            <div className="container mx-auto px-4">
-              <div className="grid md:grid-cols-2 gap-6 md:gap-12">
-                {/* Logo */}
-                <div>
-                  <OptimizedImage src="/hobson-logo.png" alt={content.header.logoAlt} className="h-[59px] w-auto" />
+          <footer className="py-12 md:py-20 border-t bg-muted/30">
+            <div className="container mx-auto px-4 max-w-6xl">
+              <div className="grid md:grid-cols-3 gap-10 md:gap-16">
+                {/* Logo & tagline */}
+                <div className="md:col-span-2">
+                  <OptimizedImage src="/hobson-logo.png" alt={content.header.logoAlt} className="h-[48px] w-auto mb-4" />
+                  <p className="text-sm text-muted-foreground max-w-md">
+                    AI-powered property intelligence for modern real estate professionals.
+                  </p>
+                  <div className="flex items-center gap-4 mt-6">
+                    <a
+                      href="https://www.linkedin.com/company/hobsonschoice-ai"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-muted-foreground hover:text-primary transition-colors"
+                      title="Follow Hobson's Choice AI on LinkedIn"
+                    >
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                  </div>
                 </div>
-                
-                {/* Company Column */}
+
+                {/* Company links */}
                 <div>
-                  <h4 className="text-lg font-semibold mb-4 text-foreground">{content.footer.company.title}</h4>
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-5">{content.footer.company.title}</h4>
                   <div className="space-y-3">
                     {content.navigation.links
                       .filter(link => {
@@ -412,26 +426,32 @@ export const Homepage = () => {
                         <Link
                           key={link.to}
                           to={link.to}
-                          className="block text-muted-foreground hover:text-foreground transition-colors"
+                          className="block text-sm text-muted-foreground hover:text-primary transition-colors"
                           title={link.title}
                         >
                           {link.label}
                         </Link>
                       ))}
-                    <Link to="/investment-opportunity" className="block text-muted-foreground hover:text-foreground transition-colors" title={content.footer.company.investmentOpportunity}>
+                    <Link to="/investment-opportunity" className="block text-sm text-muted-foreground hover:text-primary transition-colors" title={content.footer.company.investmentOpportunity}>
                       {content.footer.company.investmentOpportunity}
                     </Link>
-                    <Link to="/data-protection" className="block text-muted-foreground hover:text-foreground transition-colors">
+                    <Link to="/data-protection" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                       {content.footer.company.dataProtection}
                     </Link>
-                    <Link to="/breach-protocol" className="block text-muted-foreground hover:text-foreground transition-colors">
+                    <Link to="/breach-protocol" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                       {content.footer.company.breachProtocol}
                     </Link>
-                    <Link to="/refund-policy" className="block text-muted-foreground hover:text-foreground transition-colors">
+                    <Link to="/refund-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
                       {content.footer.company.refundPolicy}
                     </Link>
                   </div>
                 </div>
+              </div>
+
+              <div className="border-t mt-12 pt-8 text-center">
+                <p className="text-xs text-muted-foreground">
+                  © {new Date().getFullYear()} Hobson's Choice AI Ltd. All rights reserved.
+                </p>
               </div>
             </div>
           </footer>
