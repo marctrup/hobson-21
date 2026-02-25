@@ -347,30 +347,23 @@ export const Homepage = () => {
                 </div>
 
                 <div className="relative">
-                  {/* Timeline connector with gradient */}
-                  <div className="hidden md:block absolute top-14 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] h-0.5 bg-gradient-to-r from-primary/30 via-primary/60 to-primary"></div>
+                  {/* Timeline connector */}
+                  <div className="hidden md:block absolute top-14 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] h-0.5 bg-gradient-to-r from-primary/20 via-primary/50 to-primary/20"></div>
 
                   <div className="grid md:grid-cols-3 gap-8 sm:gap-10">
-                    {content.howItWorks.steps.map((step, index) => {
-                      const circleStyles = [
-                        "bg-gradient-to-br from-primary/40 to-primary/60 shadow-md",
-                        "bg-gradient-to-br from-primary/60 to-primary/80 shadow-lg",
-                        "bg-gradient-to-br from-primary/80 to-primary shadow-xl",
-                      ];
-                      return (
-                        <div key={index} className="relative text-center group">
-                          <div className="relative mb-5 sm:mb-6">
-                            <div className={`w-20 h-20 sm:w-24 sm:h-24 mx-auto rounded-full flex items-center justify-center text-xl sm:text-2xl font-bold text-primary-foreground group-hover:scale-110 transition-transform duration-300 ${circleStyles[index]}`}>
-                              {index + 1}
-                            </div>
+                    {content.howItWorks.steps.map((step, index) => (
+                      <div key={index} className="relative text-center group">
+                        <div className="relative mb-5 sm:mb-6">
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-xl sm:text-2xl font-bold text-primary-foreground shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            {index + 1}
                           </div>
-                          <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-foreground">{step.title}</h3>
-                          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xs mx-auto">
-                            {step.description}
-                          </p>
                         </div>
-                      );
-                    })}
+                        <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-foreground">{step.title}</h3>
+                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                          {step.description}
+                        </p>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
