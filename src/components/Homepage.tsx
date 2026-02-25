@@ -334,32 +334,34 @@ export const Homepage = () => {
             </div>
           </section>
 
-          {/* How It Works & Video Section - Separated Headers and Content */}
-          <section className="py-6 sm:py-8 md:py-16 bg-muted/30">
+          {/* How It Works Section */}
+          <section className="py-12 sm:py-16 md:py-24 bg-gradient-to-b from-background to-muted/20">
             <div className="container mx-auto px-4">
-              {/* Content Row */}
-              <div className="max-w-3xl">
-                {/* How It Works Steps */}
-                <div>
-                  <div className="mb-6 sm:mb-8 flex items-center gap-4">
-                    <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" width={80} height={80} priority={true} fetchPriority="high" />
-                    <div>
-                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 text-foreground">{content.howItWorks.title}</h2>
-                      <p className="text-lg sm:text-xl text-muted-foreground">{content.howItWorks.subtitle}</p>
-                    </div>
+              <div className="max-w-6xl mx-auto">
+                <div className="text-center mb-12 sm:mb-16">
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-14 h-14 sm:w-16 sm:h-16 object-contain" width={64} height={64} priority={true} fetchPriority="high" />
                   </div>
-                  <div className="space-y-6 sm:space-y-8">
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-foreground">{content.howItWorks.title}</h2>
+                  <p className="text-lg sm:text-xl text-muted-foreground">{content.howItWorks.subtitle}</p>
+                </div>
+
+                <div className="relative">
+                  {/* Timeline connector */}
+                  <div className="hidden md:block absolute top-14 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] h-0.5 bg-gradient-to-r from-primary/20 via-primary/50 to-primary/20"></div>
+
+                  <div className="grid md:grid-cols-3 gap-8 sm:gap-10">
                     {content.howItWorks.steps.map((step, index) => (
-                      <div key={index} className="flex items-start gap-3 sm:gap-4">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-base sm:text-lg font-bold flex-shrink-0">
-                          {index + 1}
+                      <div key={index} className="relative text-center group">
+                        <div className="relative mb-5 sm:mb-6">
+                          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-xl sm:text-2xl font-bold text-primary-foreground shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            {index + 1}
+                          </div>
                         </div>
-                        <div>
-                          <h3 className="text-lg sm:text-xl font-bold mb-2 text-foreground">{step.title}</h3>
-                          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                            {step.description}
-                          </p>
-                        </div>
+                        <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-foreground">{step.title}</h3>
+                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                          {step.description}
+                        </p>
                       </div>
                     ))}
                   </div>
