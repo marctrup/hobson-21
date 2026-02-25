@@ -338,7 +338,7 @@ export const Homepage = () => {
           <section className="py-6 sm:py-8 md:py-16 bg-muted/30">
             <div className="container mx-auto px-4">
               {/* Content Row */}
-              <div className="max-w-3xl mx-auto">
+              <div className="max-w-3xl">
                 {/* How It Works Steps */}
                 <div>
                   <div className="mb-6 sm:mb-8 flex items-center gap-4">
