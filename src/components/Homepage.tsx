@@ -5,7 +5,7 @@ import { SimpleButton } from "@/components/ui/simple-button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
-import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
+
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { PricingSection } from "@/components/homepage/PricingSection";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
@@ -338,9 +338,8 @@ export const Homepage = () => {
           <section className="py-6 sm:py-8 md:py-16 bg-muted/30">
             <div className="container mx-auto px-4">
               {/* Content Row */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 lg:gap-12 items-start">
-                
-                {/* Left Content - How It Works Steps */}
+              <div className="max-w-3xl mx-auto">
+                {/* How It Works Steps */}
                 <div>
                   <div className="mb-6 sm:mb-8 flex items-center gap-4">
                     <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" width={80} height={80} priority={true} fetchPriority="high" />
@@ -365,16 +364,6 @@ export const Homepage = () => {
                     ))}
                   </div>
                 </div>
-
-                {/* Right Content - Georgia Video */}
-                <div className="mt-6 lg:mt-0">
-                  <div className="aspect-[3/2] bg-gray-100 rounded-xl overflow-hidden relative" style={{
-                  border: '6px solid #f0f0f0'
-                }}>
-                     <HomepageGeorgiaVideo />
-                  </div>
-                </div>
-
               </div>
             </div>
           </section>
