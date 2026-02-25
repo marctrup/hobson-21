@@ -29,7 +29,7 @@ const Learn = () => {
   const [activeHorizontalTab, setActiveHorizontalTab] = useState("introduction");
   const [activeVerticalTab, setActiveVerticalTab] = useState("welcome");
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
-  const [activeTocSection, setActiveTocSection] = useState("positioning-statement");
+  const [activeTocSection, setActiveTocSection] = useState("hero");
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
   const [isCreatePostDialogOpen, setIsCreatePostDialogOpen] = useState(false);
   const [faqItems, setFaqItems] = useState<any[]>([]);
@@ -74,15 +74,7 @@ const Learn = () => {
           // Introduction section
           introduction: {
             horizontal: "introduction",
-            vertical: "positioning-statement"
-          },
-          "positioning-statement": {
-            horizontal: "introduction",
-            vertical: "positioning-statement"
-          },
-          positioningstatement: {
-            horizontal: "introduction",
-            vertical: "positioning-statement"
+            vertical: "smart-navigation"
           },
           "smart-navigation": {
             horizontal: "introduction",
@@ -237,8 +229,6 @@ const Learn = () => {
       setActiveTocSection("how-hobson-works");
     } else if (activeHorizontalTab === "introduction" && activeVerticalTab === "plans-credits") {
       setActiveTocSection("overview");
-    } else if (activeHorizontalTab === "introduction" && activeVerticalTab === "positioning-statement") {
-      setActiveTocSection("hobson-platform-overview");
     } else if (activeHorizontalTab === "introduction" && activeVerticalTab === "smart-navigation") {
       setActiveTocSection("hero");
     }
@@ -363,10 +353,6 @@ const Learn = () => {
     switch (horizontalTab) {
       case "introduction":
         return [{
-          id: "positioning-statement",
-          label: "Positioning Statement",
-          icon: Play
-        }, {
           id: "smart-navigation",
           label: "Smart Navigation Guide",
           icon: Users
@@ -2576,62 +2562,6 @@ Content-Type: multipart/form-data
         </div>;
     }
 
-    // Handle Positioning Statement content
-    if (activeHorizontalTab === "introduction" && activeVerticalTab === "positioning-statement") {
-      return <div className="flex-1 py-8 px-4">
-          <div className="container mx-auto max-w-5xl">
-            <div className="relative">
-              {/* Decorative background elements */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5 rounded-3xl blur-3xl" />
-
-              {/* Main content card */}
-              <div className="relative bg-card border-2 border-primary/20 rounded-2xl p-8 md:p-12 lg:p-16 shadow-xl hover:shadow-2xl transition-all duration-300 animate-fade-in">
-                {/* Accent line */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-accent to-primary rounded-t-2xl" />
-
-                {/* Icon/Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 border border-primary/20 rounded-full mb-8">
-                  <Lightbulb className="w-5 h-5 text-primary" />
-                  <span className="text-sm font-semibold text-primary">Our Mission</span>
-                </div>
-
-                {/* Title */}
-                <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-8 leading-tight">
-                  Positioning Statement
-                </h1>
-
-                {/* Statement content */}
-                <div className="relative">
-                  <div className="absolute -left-4 top-0 w-1 h-full bg-gradient-to-b from-primary to-accent rounded-full" />
-                  <blockquote className="pl-8 space-y-6">
-                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                      For real estate professionals dealing with costly CRMs, scattered spreadsheets, and the manual
-                      work of digging through source documents, Hobson is the AI-powered assistant that transforms
-                      source-of-truth files into instant, reliable answers. Unlike complex platforms, Hobson is
-                      lightweight, simple to use, and low cost, saving time, ensuring accuracy, and building trust with
-                      fast, referenced responses.
-                      <span className="text-primary font-semibold"> Hobson is the AI-powered assistant</span> that
-                      transforms source-of-truth files into instant, reliable answers.
-                    </p>
-                    <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                      Unlike complex platforms, Hobson is{" "}
-                      <span className="text-foreground/80 font-semibold">lightweight, simple to use, and low cost</span>{" "}
-                      — saving time, ensuring accuracy, and building trust with fast, referenced responses.
-                    </p>
-                  </blockquote>
-                </div>
-
-                {/* Bottom accent */}
-                <div className="mt-12 pt-8 border-t border-border flex items-center justify-center gap-2 text-muted-foreground">
-                  <Heart className="w-5 h-5 text-primary" />
-                  <span className="text-sm">Built for property professionals</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>;
-    }
-
     // Handle Plans and Credits content specifically
     if (activeHorizontalTab === "introduction" && activeVerticalTab === "plans-credits") {
       const tocSections = [{
@@ -3080,12 +3010,6 @@ Content-Type: multipart/form-data
   // Dynamic SEO meta tags based on active section
   const getPageMeta = () => {
     if (activeHorizontalTab === "introduction") {
-      if (activeVerticalTab === "positioning-statement") {
-        return {
-          title: "Positioning Statement - Hobson AI",
-          description: "Learn about Hobson AI: the lightweight, AI-powered assistant that transforms source-of-truth files into instant, reliable answers for real estate professionals."
-        };
-      }
       if (activeVerticalTab === "smart-navigation") {
         return {
           title: "Smart Navigation Guide - Hobson AI",
