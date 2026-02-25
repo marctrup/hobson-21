@@ -2598,50 +2598,6 @@ Content-Type: multipart/form-data
             </div>
 
 
-            {/* Final Tips */}
-            <div id="tips" className="mb-6 sm:mb-8 px-4">
-              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4 sm:mb-6">Good to Know</h2>
-              <div className="bg-card border rounded-lg p-4 sm:p-6">
-                <ul className="space-y-3 sm:space-y-4">
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-xl sm:text-2xl flex-shrink-0">🎯</span>
-                    <div>
-                      <p className="font-semibold text-sm sm:text-base">Hobson always knows where you are</p>
-                      <p className="text-xs sm:text-sm text-muted-foreground">
-                        It tracks your current level automatically — you don't need to tell it.
-                      </p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-xl sm:text-2xl flex-shrink-0">🔒</span>
-                    <div>
-                      <p className="font-semibold text-sm sm:text-base">
-                        It never switches without asking
-                      </p>
-                      <p className="text-xs sm:text-sm text-muted-foreground">Except for clear, unambiguous commands like "Take me to Flat 3" — you're always in control.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-xl sm:text-2xl flex-shrink-0">🧹</span>
-                    <div>
-                      <p className="font-semibold text-sm sm:text-base">
-                        Every switch means a clean start
-                      </p>
-                      <p className="text-xs sm:text-sm text-muted-foreground">Old context is cleared to prevent mix-ups between units, buildings, or portfolios.</p>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-2 sm:gap-3">
-                    <span className="text-xl sm:text-2xl flex-shrink-0">⚠️</span>
-                    <div>
-                      <p className="font-semibold text-sm sm:text-base">
-                        Some questions can only be answered at the right level
-                      </p>
-                      <p className="text-xs sm:text-sm text-muted-foreground">This isn't a limitation — it's how Hobson stays accurate and trustworthy.</p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
 
             {/* Got Questions */}
             <div className="text-center px-4 pb-8">
