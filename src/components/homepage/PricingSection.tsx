@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Loader2 } from "lucide-react";
-import { PricingHeroVideo } from "@/components/videos/PricingHeroVideo";
+
 import owlMascot from "@/assets/owl-mascot.png";
 import { useContent, useLanguage } from "@/contexts/LanguageContext";
 import { supabase } from "@/integrations/supabase/client";
@@ -281,18 +281,6 @@ export const PricingSection = () => {
           </Card>
         </div>
 
-        {/* CTA Section with Video */}
-        <div className="text-center mt-12 sm:mt-16">
-          <p className="text-base sm:text-lg text-muted-foreground mb-2 px-4 sm:px-0">
-            {pricing.videoSection.title}
-          </p>
-          <p className="text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 px-4 sm:px-0">
-            {pricing.videoSection.subtitle}
-          </p>
-          <div className="px-4 sm:px-0">
-            <PricingHeroVideo />
-          </div>
-        </div>
       </div>
 
       {/* Email Collection Dialog */}
