@@ -63,7 +63,7 @@ export const CONTENT_AE = {
     steps: [
       {
         title: "Upload & Connect",
-        description: "Upload your documents or connect your existing systems. Our AI instantly begins processing and indexing your content.",
+        description: "Upload your documents. Our AI instantly begins reading, understanding, and indexing your content.",
       },
       {
         title: "Ask Questions",
