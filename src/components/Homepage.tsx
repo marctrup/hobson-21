@@ -340,7 +340,7 @@ export const Homepage = () => {
               <div className="max-w-6xl mx-auto">
                 <div className="text-center mb-12 sm:mb-16">
                   <div className="flex items-center justify-center gap-4 mb-4">
-                    <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-14 h-14 sm:w-16 sm:h-16 object-contain" width={64} height={64} priority={true} fetchPriority="high" />
+                    <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-[4.2rem] h-[4.2rem] sm:w-[4.8rem] sm:h-[4.8rem] object-contain" width={77} height={77} priority={true} fetchPriority="high" />
                   </div>
                   <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-foreground">{content.howItWorks.title}</h2>
                   <p className="text-lg sm:text-xl text-muted-foreground">{content.howItWorks.subtitle}</p>
