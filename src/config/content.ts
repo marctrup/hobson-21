@@ -59,7 +59,7 @@ export const CONTENT = {
   // How It Works Section
   howItWorks: {
     title: "How It Works",
-    subtitle: "Gaining insight and information couldn't be easier",
+    subtitle: "No more complicated menus - simply ask questions and gain insight",
     steps: [
       {
         title: "Upload & Connect",
