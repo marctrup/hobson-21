@@ -80,7 +80,7 @@ export const CONTENT = {
   cta: {
     title: "Ready to introduce AI into your business?",
     subtitle: "",
-    button: "Join our free pilot",
+    button: "Register your interest",
   },
 
   // Footer

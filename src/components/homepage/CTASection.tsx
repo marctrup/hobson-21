@@ -25,7 +25,7 @@ export const CTASection = () => {
                   title="Get in touch to start your real estate ai journey"
                   id="cta-section-join-pilot"
                 >
-                  Join our pilot
+                  Register your interest
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Link>
             </Button>
