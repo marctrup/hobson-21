@@ -309,20 +309,10 @@ export const HomepageABTest = () => {
           {/* Footer */}
           <footer className="py-5 md:py-16 border-t bg-white">
             <div className="container mx-auto px-4">
-              <div className="grid md:grid-cols-3 gap-6 md:gap-12">
+              <div className="grid md:grid-cols-2 gap-6 md:gap-12">
                 {/* Logo */}
                 <div>
                   <OptimizedImage src="/hobson-logo.png" alt="Hobson's AI logo" className="h-12 w-auto" />
-                </div>
-
-                {/* Product Column */}
-                <div>
-                  <h4 className="text-lg font-semibold mb-4 text-foreground">Product</h4>
-                  <div className="space-y-3">
-                    <Link to="/pilot" className="block text-muted-foreground hover:text-foreground transition-colors">
-                      Join our pilot programme
-                    </Link>
-                  </div>
                 </div>
 
                 {/* Company Column */}
