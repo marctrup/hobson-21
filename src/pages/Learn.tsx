@@ -2597,18 +2597,6 @@ Content-Type: multipart/form-data
               </div>
             </div>
 
-            {/* Download Section */}
-            <div id="download" className="mb-12 sm:mb-16 px-4 text-center">
-              <div className="bg-gradient-to-r from-primary/10 to-accent/10 rounded-xl p-6 sm:p-8">
-                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-3 sm:mb-4">Quick Reference Guide</h2>
-                <p className="text-sm sm:text-base text-muted-foreground mb-4 sm:mb-6">
-                  Download the one-page cheat sheet for easy reference
-                </p>
-                <Button className="text-xs sm:text-sm md:text-base px-4 py-2 sm:px-6 sm:py-3 w-full sm:w-auto" onClick={() => window.open("/Hobson_Cheat_Sheet.pdf", "_blank")}>
-                  Download Cheat Sheet
-                </Button>
-              </div>
-            </div>
 
             {/* Final Tips */}
             <div id="tips" className="mb-6 sm:mb-8 px-4">
