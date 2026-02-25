@@ -64,7 +64,7 @@ Deno.serve(async (req) => {
       'mode': 'subscription',
       'line_items[0][price]': priceId,
       'line_items[0][quantity]': '1',
-      'success_url': `${origin}?checkout=success`,
+      'success_url': 'https://hobson-three.vercel.app/signup',
       'cancel_url': `${origin}?checkout=cancelled`,
     });
 
