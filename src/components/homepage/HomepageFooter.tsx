@@ -33,7 +33,7 @@ export const HomepageFooter = () => {
               <Link to="/breach-protocol" className="block text-muted-foreground hover:text-foreground transition-colors" title="Data Breach Protocol">{text.breachProtocol}</Link>
               <Link to="/refund-policy" className="block text-muted-foreground hover:text-foreground transition-colors" title="Refund Policy">{text.refundPolicy}</Link>
               <a 
-                href="https://www.linkedin.com/company/hobsonschoice-ai"
+                href="https://www.linkedin.com/company/103275921"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block text-muted-foreground hover:text-foreground transition-colors"

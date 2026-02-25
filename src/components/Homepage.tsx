@@ -402,7 +402,7 @@ export const Homepage = () => {
                   </p>
                   <div className="flex items-center gap-4 mt-6">
                     <a
-                      href="https://www.linkedin.com/company/hobsonschoice-ai"
+                      href="https://www.linkedin.com/company/103275921"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-muted-foreground hover:text-primary transition-colors"
