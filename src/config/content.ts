@@ -79,7 +79,7 @@ export const CONTENT = {
   // CTA Section
   cta: {
     title: "Ready to introduce AI into your business?",
-    subtitle: "Join our free pilot program and experience the power of AI-driven property intelligence",
+    subtitle: "",
     button: "Join our free pilot",
   },
 
