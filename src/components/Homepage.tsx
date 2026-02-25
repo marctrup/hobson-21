@@ -376,7 +376,6 @@ export const Homepage = () => {
           {/* CTA Section */}
           <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10">
             <div className="container mx-auto px-4 text-center">
-              <OptimizedImage src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain mx-auto mb-4" width={80} height={80} />
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
                 {content.cta.title}
               </h2>
