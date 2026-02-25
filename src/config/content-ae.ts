@@ -126,10 +126,10 @@ export const CONTENT_AE = {
       },
       essential: {
         name: "Essential",
-        priceMonthly: 230,
-        priceAnnual: 185,
+        priceMonthly: 92,
+        priceAnnual: 73,
         tagline: "More frequent use.",
-        features: ["Everything in Essential", "Upload up to 10 documents", "Ask up to 50 questions per month"],
+        features: ["Everything in Essential", "Upload up to 20 documents", "Ask up to 100 questions per month"],
         button: "Choose Essential",
         popular: "⭐ Most Popular",
         stripePriceIds: { monthly: "price_1T3CrJ2NA0ttIOr0PPxXPmVO", annual: "price_1T3Ia92NA0ttIOr0tqhYiiM1" },
