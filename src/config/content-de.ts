@@ -126,10 +126,10 @@ export const CONTENT_DE = {
       },
       essential: {
         name: "Essential",
-        priceMonthly: 59.00,
-        priceAnnual: 47.20,
+        priceMonthly: 22.99,
+        priceAnnual: 18.50,
         tagline: "Für intensive, häufige Nutzung.",
-        features: ["Alles in Essential", "Bis zu 10 Dokumente hochladen", "Bis zu 50 Fragen pro Monat"],
+        features: ["Alles in Essential", "Bis zu 20 Dokumente hochladen", "Bis zu 100 Fragen pro Monat"],
         button: "Essential wählen",
         popular: "⭐ Am beliebtesten",
         stripePriceIds: { monthly: "price_1T3CrJ2NA0ttIOr0PPxXPmVO", annual: "price_1T3Ia92NA0ttIOr0tqhYiiM1" },
