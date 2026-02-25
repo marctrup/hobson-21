@@ -128,7 +128,7 @@ export const CONTENT_AE = {
         name: "Essential",
         priceMonthly: 230,
         priceAnnual: 185,
-        tagline: "For heavy, frequent use.",
+        tagline: "More frequent use.",
         features: ["Everything in Essential", "Upload up to 10 documents", "Ask up to 50 questions per month"],
         button: "Choose Essential",
         popular: "⭐ Most Popular",
