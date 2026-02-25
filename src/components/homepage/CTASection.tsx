@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle, Users } from "lucide-react";
 import { Link } from "react-router-dom";
+import owlMascot from "@/assets/owl-mascot.png";
 
 export const CTASection = () => {
   return (
     <section className="py-24">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
+          <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain mx-auto mb-4" />
           <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground leading-[1.1]">
             Ready to think about AI in your property business but unsure how?
           </h2>
