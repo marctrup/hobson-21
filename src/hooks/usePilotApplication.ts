@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from "react";
+import { getEdgeFunctionUrl } from "@/utils/supabaseHelpers";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -114,7 +115,7 @@ export const usePilotApplication = () => {
     if (!pendingFormData) return;
     
     try {
-      const response = await fetch('https://awfyhgeflakjhxtntokd.supabase.co/functions/v1/send-pilot-application', {
+      const response = await fetch(getEdgeFunctionUrl('send-pilot-application'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

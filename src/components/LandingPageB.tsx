@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { getEdgeFunctionUrl } from "@/utils/supabaseHelpers";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -110,7 +111,7 @@ const LandingPageB = () => {
     if (!pendingFormData) return;
     
     try {
-      const response = await fetch('https://awfyhgeflakjhxtntokd.supabase.co/functions/v1/send-pilot-application', {
+      const response = await fetch(getEdgeFunctionUrl('send-pilot-application'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

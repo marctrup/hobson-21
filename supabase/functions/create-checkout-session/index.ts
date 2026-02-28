@@ -1,3 +1,5 @@
+import { z } from "npm:zod@3.23.8";
+
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version',
@@ -13,6 +15,11 @@ const VALID_PRICE_IDS = new Set([
   'price_1T3Iac2NA0ttIOr0oP6MsKev',
 ]);
 
+const checkoutSchema = z.object({
+  priceId: z.string().min(1, "Price ID is required"),
+  email: z.string().email("Invalid email address").max(255).optional().nullable(),
+});
+
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -26,10 +33,20 @@ Deno.serve(async (req) => {
   }
 
   try {
-    const { priceId, email } = await req.json();
+    const rawData = await req.json();
+    const validationResult = checkoutSchema.safeParse(rawData);
+    
+    if (!validationResult.success) {
+      return new Response(JSON.stringify({ error: 'Invalid input', details: validationResult.error.errors.map(e => e.message) }), {
+        status: 400,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      });
+    }
+
+    const { priceId, email } = validationResult.data;
     console.log('Checkout request - email:', email || 'NOT PROVIDED');
 
-    if (!priceId || !VALID_PRICE_IDS.has(priceId)) {
+    if (!VALID_PRICE_IDS.has(priceId)) {
       return new Response(JSON.stringify({ error: 'Invalid price ID' }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

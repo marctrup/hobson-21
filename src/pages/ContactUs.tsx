@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import React, { useState, FormEvent } from "react";
 import { toast } from "@/hooks/use-toast";
 import { checkRateLimit, sanitizeInput } from "@/utils/security";
+import { getEdgeFunctionUrl } from "@/utils/supabaseHelpers";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Helmet } from "react-helmet-async";
 import { useContent } from "@/contexts/LanguageContext";
@@ -92,7 +93,7 @@ const ContactUs = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('https://awfyhgeflakjhxtntokd.supabase.co/functions/v1/send-contact-message', {
+      const response = await fetch(getEdgeFunctionUrl('send-contact-message'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
