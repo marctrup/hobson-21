@@ -155,6 +155,8 @@ export const CONTENT = {
       price: "£5 per Boost",
       features: ["Stackable", "No commitment", "Resets monthly"],
       closingNote: "Ideal for busy periods without committing to a higher tier.",
+      button: "Buy AI Boost",
+      stripePriceId: "",
     },
     perMonth: "/month",
   },

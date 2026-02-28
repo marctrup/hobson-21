@@ -292,6 +292,20 @@ export const PricingSection = () => {
                   </div>
                   <p className="text-[11px] text-muted-foreground mt-4 italic">{aiBoost.closingNote}</p>
                 </div>
+                <Button
+                  className="w-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white text-xs sm:text-sm mt-4"
+                  onClick={() => {
+                    const boostPriceId = aiBoost.stripePriceId;
+                    if (boostPriceId) {
+                      handleCheckout(boostPriceId);
+                    } else {
+                      window.open('https://hobson-three.vercel.app/signup', '_blank');
+                    }
+                  }}
+                  disabled={loadingPlan !== null}
+                >
+                  {loadingPlan === aiBoost.stripePriceId ? <Loader2 className="h-4 w-4 animate-spin" /> : (aiBoost.button || "Buy AI Boost")}
+                </Button>
               </CardContent>
             </Card>
           )}
