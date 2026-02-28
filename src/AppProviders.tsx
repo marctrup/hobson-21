@@ -8,6 +8,7 @@ import { ToastPortal } from "@/components/ToastPortal";
 import { AppRoutes } from "@/components/AppRoutes";
 import { HobsonChatbot } from "@/components/HobsonChatbot";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,7 +42,9 @@ export function AppProviders() {
               <AuthProvider>
                 <ToastPortal />
                 <AppRoutes />
-                <ChatbotWrapper />
+                <ErrorBoundary>
+                  <ChatbotWrapper />
+                </ErrorBoundary>
               </AuthProvider>
             </LanguageProvider>
           </QueryClientProvider>
