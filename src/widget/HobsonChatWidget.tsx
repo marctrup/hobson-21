@@ -8,7 +8,7 @@ interface Message {
   content: string;
 }
 
-const SUPABASE_URL = 'https://awfyhgeflakjhxtntokd.supabase.co';
+const SUPABASE_URL = (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_URL) || 'https://awfyhgeflakjhxtntokd.supabase.co';
 const CHAT_FUNCTION_URL = `${SUPABASE_URL}/functions/v1/hobson-chat`;
 
 const OWL_CHAT_BUBBLE = '/lovable-uploads/owl-chat-bubble.png';

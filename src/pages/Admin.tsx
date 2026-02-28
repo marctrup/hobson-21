@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getEdgeFunctionUrl } from "@/utils/supabaseHelpers";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -184,7 +185,7 @@ export default function Admin() {
 
       // Call edge function to update password (server-side hashing)
       const response = await fetch(
-        'https://awfyhgeflakjhxtntokd.supabase.co/functions/v1/update-investment-password',
+        getEdgeFunctionUrl('update-investment-password'),
         {
           method: 'POST',
           headers: {
