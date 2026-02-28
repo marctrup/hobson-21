@@ -90,9 +90,13 @@ serve(async (req) => {
       emailExistsMessage = '\n\nNote: This email has previously submitted a pilot application.'
     }
 
-    // Insert into encrypted contact_messages table using secure function
-    console.log('Attempting to insert encrypted contact message for:', email)
-    const { data: contactId, error: dbError } = await supabase
+    // Try encrypted insert first, fall back to plaintext if encryption fails
+    let isDuplicate = false;
+    let insertSuccess = false;
+
+    // Attempt encrypted storage via RPC
+    console.log('Attempting encrypted contact message insert for:', email)
+    const { data: contactId, error: encryptedError } = await supabase
       .rpc('insert_encrypted_contact_message', {
         p_name: name,
         p_email: email,
@@ -100,25 +104,47 @@ serve(async (req) => {
         p_message: reason
       })
 
-    let isDuplicate = false;
-    if (dbError) {
-      console.error('Database insert error:', dbError)
-      // If it's a unique constraint violation, handle it gracefully
-      if (dbError.code === '23505') {
-        console.log('Unique constraint violation detected - duplicate contact message')
+    if (encryptedError) {
+      if (encryptedError.code === '23505') {
+        console.log('Duplicate contact message detected')
         isDuplicate = true;
+        insertSuccess = true;
       } else {
-        console.error('Failed to store encrypted contact message:', dbError)
-        return new Response(
-          JSON.stringify({ success: false, error: 'Unable to process your request. Please try again.' }),
-          {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-            status: 500,
-          },
-        )
+        console.warn('Encrypted insert failed, falling back to plaintext storage:', encryptedError.message)
+        
+        // Fallback: insert into plaintext contact_messages table (protected by admin-only SELECT RLS)
+        const { error: plaintextError } = await supabase
+          .from('contact_messages')
+          .insert({
+            name: name,
+            email: email,
+            phone: phone || null,
+            message: reason
+          })
+
+        if (plaintextError) {
+          if (plaintextError.code === '23505') {
+            console.log('Duplicate contact message detected (plaintext)')
+            isDuplicate = true;
+            insertSuccess = true;
+          } else {
+            console.error('Both encrypted and plaintext inserts failed:', plaintextError)
+            return new Response(
+              JSON.stringify({ success: false, error: 'Unable to process your request. Please try again.' }),
+              {
+                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                status: 500,
+              },
+            )
+          }
+        } else {
+          console.log('Contact message saved to plaintext storage (fallback)')
+          insertSuccess = true;
+        }
       }
     } else {
-      console.log('New encrypted contact message saved to database')
+      console.log('Contact message saved with encryption')
+      insertSuccess = true;
     }
 
     // Create HTML template with unsubscribe link (escape user input to prevent XSS)
