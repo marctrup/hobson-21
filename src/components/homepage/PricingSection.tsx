@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, Loader2 } from "lucide-react";
+import { CheckCircle2, Loader2, Zap } from "lucide-react";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { useContent, useLanguage } from "@/contexts/LanguageContext";
@@ -20,6 +20,57 @@ import { z } from "zod";
 
 const emailSchema = z.string().trim().email("Please enter a valid email address").max(255);
 
+// --- Sub-components ---
+
+const PricingToggle = ({
+  isAnnual,
+  onToggle,
+  labels,
+}: {
+  isAnnual: boolean;
+  onToggle: () => void;
+  labels: { monthly: string; annual: string; save: string };
+}) => (
+  <div className="space-y-2 mb-4 px-4">
+    <div className="flex items-center justify-center gap-2">
+      <span className={`text-xs ${!isAnnual ? 'font-medium text-primary' : 'text-muted-foreground'} transition-colors`}>
+        {labels.monthly}
+      </span>
+      <div
+        className={`relative w-9 h-5 rounded-full cursor-pointer transition-all duration-300 ${isAnnual ? 'bg-primary shadow-md' : 'bg-primary/30'} touch-manipulation`}
+        onClick={onToggle}
+        role="switch"
+        aria-checked={isAnnual}
+        tabIndex={0}
+        onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onToggle(); } }}
+      >
+        <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300 ${isAnnual ? 'translate-x-4' : 'left-0.5'}`} />
+      </div>
+      <span className={`text-xs ${isAnnual ? 'font-medium text-primary' : 'text-muted-foreground'} transition-colors`}>
+        {labels.annual}
+      </span>
+    </div>
+    {isAnnual && (
+      <div className="flex justify-center">
+        <Badge variant="secondary" className="text-xs bg-primary/10 text-primary px-2 py-1">
+          {labels.save}
+        </Badge>
+      </div>
+    )}
+  </div>
+);
+
+const FeatureList = ({ features, iconClass = "text-primary" }: { features: readonly string[]; iconClass?: string }) => (
+  <div className="space-y-2.5">
+    {features.map((feature, i) => (
+      <div key={i} className="flex items-start gap-2">
+        <CheckCircle2 className={`h-4 w-4 ${iconClass} flex-shrink-0 mt-0.5`} />
+        <span className="text-xs leading-relaxed">{feature}</span>
+      </div>
+    ))}
+  </div>
+);
+
 export const PricingSection = () => {
   const content = useContent();
   const { language } = useLanguage();
@@ -28,10 +79,8 @@ export const PricingSection = () => {
   const isUAE = language === 'ae';
   const hasLongCurrency = isGerman || isUAE;
   const navigate = useNavigate();
-  
-  const [billingCycles, setBillingCycles] = useState({
-    essential: false,
-  });
+
+  const [isAnnual, setIsAnnual] = useState(false);
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [pendingPriceId, setPendingPriceId] = useState<string | null>(null);
@@ -46,9 +95,7 @@ export const PricingSection = () => {
         body: { priceId, email },
       });
       if (error) throw error;
-      if (data?.url) {
-        window.location.href = data.url;
-      }
+      if (data?.url) window.location.href = data.url;
     } catch (err) {
       console.error('Checkout error:', err);
       alert('Something went wrong. Please try again.');
@@ -75,88 +122,32 @@ export const PricingSection = () => {
       setEmailError(result.error.errors[0].message);
       return;
     }
-    if (pendingPriceId) {
-      proceedToCheckout(pendingPriceId, result.data);
-    }
+    if (pendingPriceId) proceedToCheckout(pendingPriceId, result.data);
   };
 
-  const getPriceId = (plan: 'essential') => {
-    const planData = pricing.plans[plan];
-    const ids = (planData as any).stripePriceIds;
+  const getPriceId = () => {
+    const ids = (pricing.plans.essential as any).stripePriceIds;
     if (!ids) return null;
-    const isAnnual = billingCycles[plan];
-    return isAnnual && ids.annual ? ids.annual : ids.monthly;
     return isAnnual && ids.annual ? ids.annual : ids.monthly;
   };
 
   const formatPrice = (price: number) => {
     const formatted = price.toFixed(2);
-    if (pricing.currencyPosition === "after") {
-      return `${formatted}${pricing.currency}`;
-    }
-    return `${pricing.currency}${formatted}`;
+    return pricing.currencyPosition === "after"
+      ? `${formatted}${pricing.currency}`
+      : `${pricing.currency}${formatted}`;
   };
 
-  const getPrice = (plan: 'essential') => {
-    const isAnnual = billingCycles[plan];
-    const planData = pricing.plans[plan];
-    return isAnnual ? planData.priceAnnual : planData.priceMonthly;
-  };
+  const essentialPrice = isAnnual
+    ? pricing.plans.essential.priceAnnual
+    : pricing.plans.essential.priceMonthly;
 
-  const getOriginalPrice = (plan: 'essential') => {
-    return pricing.plans[plan].priceMonthly;
-  };
-
-  const toggleBilling = (plan: keyof typeof billingCycles) => {
-    setBillingCycles(prev => ({
-      ...prev,
-      [plan]: !prev[plan]
-    }));
-  };
-
-  const PricingToggle = ({ planKey }: { planKey: keyof typeof billingCycles }) => {
-    const isAnnual = billingCycles[planKey];
-    return (
-      <div className="space-y-2 mb-4 px-4">
-        <div className="flex items-center justify-center gap-2">
-          <span className={`text-xs ${!isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>
-            {pricing.billingToggle.monthly}
-          </span>
-          <div className="relative">
-            <input type="checkbox" className="sr-only" checked={isAnnual} onChange={() => toggleBilling(planKey)} />
-            <div 
-              className={`w-9 h-5 rounded-full cursor-pointer transition-all duration-300 ease-in-out ${isAnnual ? 'bg-purple-500 shadow-md' : 'bg-purple-200'} touch-manipulation`} 
-              onClick={() => toggleBilling(planKey)} 
-              role="button" 
-              tabIndex={0} 
-              onKeyDown={e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  toggleBilling(planKey);
-                }
-              }}
-            >
-              <div className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow-sm transition-transform duration-300 ease-in-out ${isAnnual ? 'transform translate-x-4' : 'left-0.5'}`}></div>
-            </div>
-          </div>
-          <span className={`text-xs ${isAnnual ? 'font-medium text-purple-700' : 'text-muted-foreground'} transition-colors`}>
-            {pricing.billingToggle.annual}
-          </span>
-        </div>
-        {isAnnual && (
-          <div className="flex justify-center">
-            <Badge variant="secondary" className="text-xs bg-purple-100 text-purple-700 px-2 py-1">
-              {pricing.billingToggle.save}
-            </Badge>
-          </div>
-        )}
-      </div>
-    );
-  };
+  const aiBoost = (pricing as any).aiBoost;
 
   return (
     <section id="pricing-section" className="pt-9 pb-16 md:pt-9 md:pb-24 bg-muted/30">
       <div className="container mx-auto px-4">
+        {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-4 mb-4">
             <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
@@ -164,39 +155,36 @@ export const PricingSection = () => {
               {pricing.title}
             </h2>
           </div>
-          <p className={`text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 px-4 sm:px-0 ${isGerman ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}`}>
+          <p className={`text-muted-foreground max-w-3xl mx-auto px-4 sm:px-0 ${isGerman ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}`}>
             {pricing.subtitle}
           </p>
         </div>
-        
-        {/* Pricing Plans Grid - 3 columns */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto items-stretch px-4 sm:px-0">
-          
-          {/* Free Plan */}
-          <Card className="relative bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
-            <CardHeader className="text-center pb-3 sm:pb-4 flex-shrink-0">
+
+        {/* 4-column grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 max-w-6xl mx-auto items-stretch px-4 sm:px-0">
+
+          {/* FREE */}
+          <Card className="relative bg-gradient-to-br from-card to-primary/5 border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/40 to-primary/60" />
+            <CardHeader className="text-center pb-3 flex-shrink-0">
               <CardTitle className="text-base sm:text-lg font-bold">{pricing.plans.free.name}</CardTitle>
-              <div className={`font-bold text-purple-600 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'}`}>
+              <div className={`font-bold text-primary mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'}`}>
                 {formatPrice(pricing.plans.free.price)}
               </div>
             </CardHeader>
-            <CardContent className="flex flex-col flex-grow px-3 sm:px-6">
+            <CardContent className="flex flex-col flex-grow px-3 sm:px-5">
+              <p className="text-xs text-muted-foreground mb-3">{pricing.plans.free.tagline}</p>
+              <p className="text-[11px] font-semibold text-foreground/70 uppercase tracking-wide mb-2">Includes</p>
               <div className="flex-grow">
-                <p className="text-xs text-muted-foreground mb-3 sm:mb-4">
-                  {pricing.plans.free.tagline}
-                </p>
-                <div className="space-y-2 sm:space-y-3 mb-4 sm:mb-6">
-                  {pricing.plans.free.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <CheckCircle2 className="h-3 w-3 sm:h-4 sm:w-4 text-purple-500 flex-shrink-0" />
-                      <span className="text-xs">{feature}</span>
-                    </div>
-                  ))}
-                </div>
+                <FeatureList features={pricing.plans.free.features} />
+                {(pricing.plans.free as any).upgradeNote && (
+                  <p className="text-[11px] text-muted-foreground mt-4 italic">
+                    {(pricing.plans.free as any).upgradeNote}
+                  </p>
+                )}
               </div>
-              <Button 
-                className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-xs sm:text-sm mt-auto py-2"
+              <Button
+                className="w-full bg-gradient-to-r from-primary/80 to-primary hover:from-primary hover:to-primary/90 text-primary-foreground text-xs sm:text-sm mt-4 py-2"
                 onClick={() => window.open('https://hobson-three.vercel.app/signup', '_blank')}
               >
                 {pricing.plans.free.button}
@@ -204,121 +192,131 @@ export const PricingSection = () => {
             </CardContent>
           </Card>
 
-          {/* Essential Plan - Most Popular */}
-          <Card className="relative bg-gradient-to-br from-purple-50 to-purple-100/50 border-2 border-purple-400 shadow-2xl transform scale-105 hover:scale-110 transition-all duration-300 flex flex-col h-full">
-            <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-10">
+          {/* ESSENTIAL — Most Popular */}
+          <Card className="relative bg-gradient-to-br from-primary/5 to-primary/15 border-2 border-primary shadow-xl flex flex-col h-full">
+            <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-10">
               <Badge className="bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2 text-sm font-medium shadow-lg whitespace-nowrap">
                 {pricing.plans.essential.popular}
               </Badge>
             </div>
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-purple-700"></div>
-            <CardHeader className="text-center pb-4 pt-6 flex-shrink-0">
-              <CardTitle className="text-lg font-bold">{pricing.plans.essential.name}</CardTitle>
-              <div className={`font-bold text-purple-700 mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-3xl'}`}>
-                {formatPrice(getPrice('essential'))}<span className={`font-normal ${hasLongCurrency ? 'text-xs' : 'text-sm'}`}>{pricing.perMonth}</span>
-                {billingCycles.essential && (
-                  <div className="text-xs text-muted-foreground line-through">
-                    {formatPrice(getOriginalPrice('essential'))}
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary/80" />
+            <CardHeader className="text-center pb-3 pt-6 flex-shrink-0">
+              <CardTitle className="text-base sm:text-lg font-bold">{pricing.plans.essential.name}</CardTitle>
+              <div className={`font-bold text-primary mt-2 ${hasLongCurrency ? 'text-lg sm:text-xl' : 'text-2xl sm:text-3xl'}`}>
+                {formatPrice(essentialPrice)}
+                <span className={`font-normal ${hasLongCurrency ? 'text-[10px]' : 'text-xs'}`}> {pricing.perMonth}</span>
+              </div>
+              {isAnnual && (
+                <div className="text-xs text-muted-foreground line-through">
+                  {formatPrice(pricing.plans.essential.priceMonthly)}
+                </div>
+              )}
+            </CardHeader>
+            <CardContent className="flex flex-col flex-grow px-3 sm:px-5">
+              <p className="text-xs text-muted-foreground mb-3">{pricing.plans.essential.tagline}</p>
+              <PricingToggle isAnnual={isAnnual} onToggle={() => setIsAnnual(!isAnnual)} labels={pricing.billingToggle} />
+              <div className="flex-grow">
+                <FeatureList features={pricing.plans.essential.features} />
+
+                {/* Boost callout inside Essential */}
+                {(pricing.plans.essential as any).boostNote && (
+                  <div className="mt-4 p-3 rounded-lg bg-accent/50 border border-accent">
+                    <p className="text-xs font-semibold text-foreground mb-1">{(pricing.plans.essential as any).boostNote}</p>
+                    <p className="text-[11px] text-muted-foreground whitespace-pre-line">{(pricing.plans.essential as any).boostDetail}</p>
+                    <p className="text-[11px] text-muted-foreground mt-2 italic">{(pricing.plans.essential as any).boostTagline}</p>
                   </div>
                 )}
               </div>
-            </CardHeader>
-            <CardContent className="flex flex-col flex-grow">
-              <div className="flex-grow">
-                <p className="text-xs text-muted-foreground mb-4">
-                  {pricing.plans.essential.tagline}
-                </p>
-                <PricingToggle planKey="essential" />
-                <div className="space-y-3 mb-6">
-                  {pricing.plans.essential.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-purple-600 flex-shrink-0" />
-                      <span className="text-xs">{feature}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <Button 
-                className="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white text-sm mt-auto"
-                onClick={() => handleCheckout(getPriceId('essential')!)}
+              <Button
+                className="w-full bg-gradient-to-r from-primary to-primary/90 text-primary-foreground text-xs sm:text-sm mt-4"
+                onClick={() => handleCheckout(getPriceId()!)}
                 disabled={loadingPlan !== null}
               >
-                {loadingPlan === getPriceId('essential') ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.essential.button}
+                {loadingPlan === getPriceId() ? <Loader2 className="h-4 w-4 animate-spin" /> : pricing.plans.essential.button}
               </Button>
             </CardContent>
           </Card>
 
-          {/* Enterprise Plan */}
-          <Card className="relative bg-gradient-to-br from-card to-purple-50/20 border border-purple-200 hover:border-purple-400 transition-all duration-300 hover:scale-105 hover:shadow-xl flex flex-col h-full">
-            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 to-purple-600"></div>
-            <CardHeader className="text-center pb-4 flex-shrink-0">
-              <CardTitle className="text-lg font-bold">{pricing.plans.enterprise.name}</CardTitle>
-              <div className={`font-bold text-purple-600 mt-2 text-2xl sm:text-3xl`}>
-                Custom
-              </div>
+          {/* ENTERPRISE */}
+          <Card className="relative bg-gradient-to-br from-card to-primary/5 border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
+            <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/40 to-primary/60" />
+            <CardHeader className="text-center pb-3 flex-shrink-0">
+              <CardTitle className="text-base sm:text-lg font-bold">{pricing.plans.enterprise.name}</CardTitle>
+              <div className="font-bold text-primary mt-2 text-2xl sm:text-3xl">Custom</div>
             </CardHeader>
-            <CardContent className="flex flex-col flex-grow">
+            <CardContent className="flex flex-col flex-grow px-3 sm:px-5">
+              <p className="text-xs text-muted-foreground mb-3">{pricing.plans.enterprise.tagline}</p>
               <div className="flex-grow">
-                <p className="text-xs text-muted-foreground mb-4">
-                  {pricing.plans.enterprise.tagline}
-                </p>
-                <div className="space-y-3 mb-6">
-                  {pricing.plans.enterprise.features.map((feature, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-purple-500 flex-shrink-0" />
-                      <span className="text-xs">{feature}</span>
-                    </div>
-                  ))}
-                </div>
+                <FeatureList features={pricing.plans.enterprise.features} />
+                {(pricing.plans.enterprise as any).closingNote && (
+                  <p className="text-[11px] text-muted-foreground mt-4 italic">
+                    {(pricing.plans.enterprise as any).closingNote}
+                  </p>
+                )}
               </div>
-              <Button 
-                className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white text-sm mt-auto"
+              <Button
+                className="w-full bg-gradient-to-r from-primary/80 to-primary hover:from-primary hover:to-primary/90 text-primary-foreground text-xs sm:text-sm mt-4"
                 onClick={() => navigate('/contact')}
               >
                 {pricing.plans.enterprise.button}
               </Button>
             </CardContent>
           </Card>
-        </div>
 
+          {/* AI BOOST */}
+          {aiBoost && (
+            <Card className="relative bg-gradient-to-br from-accent/30 to-accent/10 border border-accent hover:border-primary/40 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-amber-400 to-orange-500" />
+              <CardHeader className="text-center pb-3 flex-shrink-0">
+                <CardTitle className="text-base sm:text-lg font-bold flex items-center justify-center gap-2">
+                  <Zap className="h-5 w-5 text-amber-500" />
+                  {aiBoost.name}
+                </CardTitle>
+                <Badge variant="outline" className="mx-auto mt-1 text-[10px] border-amber-400/50 text-amber-700 dark:text-amber-400">
+                  {aiBoost.subtitle}
+                </Badge>
+              </CardHeader>
+              <CardContent className="flex flex-col flex-grow px-3 sm:px-5">
+                <p className="text-xs text-muted-foreground mb-3">{aiBoost.description}</p>
+                <div className="text-center mb-4">
+                  <span className="text-xl sm:text-2xl font-bold text-foreground">{aiBoost.price}</span>
+                </div>
+                <div className="flex-grow">
+                  <div className="space-y-2.5">
+                    {aiBoost.features.map((f: string, i: number) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <CheckCircle2 className="h-4 w-4 text-amber-500 flex-shrink-0" />
+                        <span className="text-xs">{f}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[11px] text-muted-foreground mt-4 italic">{aiBoost.closingNote}</p>
+                </div>
+              </CardContent>
+            </Card>
+          )}
+        </div>
       </div>
 
-      {/* Email Collection Dialog */}
+      {/* Email Dialog */}
       <Dialog open={emailDialogOpen} onOpenChange={setEmailDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Enter your email</DialogTitle>
-            <DialogDescription>
-              We'll use this to set up your subscription account.
-            </DialogDescription>
+            <DialogDescription>We'll use this to set up your subscription account.</DialogDescription>
           </DialogHeader>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              handleEmailSubmit();
-            }}
-            className="space-y-4"
-          >
+          <form onSubmit={e => { e.preventDefault(); handleEmailSubmit(); }} className="space-y-4">
             <div>
               <Input
                 type="email"
                 placeholder="you@example.com"
                 value={emailInput}
-                onChange={(e) => {
-                  setEmailInput(e.target.value);
-                  setEmailError("");
-                }}
+                onChange={e => { setEmailInput(e.target.value); setEmailError(""); }}
                 autoFocus
               />
-              {emailError && (
-                <p className="text-sm text-destructive mt-1">{emailError}</p>
-              )}
+              {emailError && <p className="text-sm text-destructive mt-1">{emailError}</p>}
             </div>
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={loadingPlan !== null}
-            >
+            <Button type="submit" className="w-full" disabled={loadingPlan !== null}>
               {loadingPlan ? <Loader2 className="h-4 w-4 animate-spin" /> : "Continue to checkout"}
             </Button>
           </form>
