@@ -21,14 +21,14 @@ const FeatureShowcase = memo(() => {
         <div 
           className="relative mx-auto max-w-7xl transition-all duration-700"
           style={{
-            transform: 'rotateY(-12deg) scale(0.95)',
+            transform: 'rotateY(12deg) scale(0.95)',
             transformStyle: 'preserve-3d',
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.transform = 'rotateY(0deg) scale(1)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'rotateY(-12deg) scale(0.95)';
+            e.currentTarget.style.transform = 'rotateY(12deg) scale(0.95)';
           }}
         >
           
