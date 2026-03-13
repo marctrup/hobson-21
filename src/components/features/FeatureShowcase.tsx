@@ -54,10 +54,24 @@ const FeatureShowcase = memo(() => {
           
           {/* Main Interface Screenshot */}
           <div className="rounded-2xl border border-primary/20 shadow-2xl shadow-primary/10 overflow-hidden">
+            {/* Desktop/tablet: full image */}
             <img
               src={hobsonUnitInterface}
               alt="Hobson AI unit interface showing chat with document insights and interactive property map"
-              className="w-full h-auto lg:object-fill md:object-fill object-cover object-[0%_center] md:aspect-auto aspect-[4/3]"
+              className="hidden md:block w-full h-auto"
+              loading="lazy"
+              decoding="async"
+            />
+            {/* Mobile: cropped to show mostly chat */}
+            <img
+              src={hobsonUnitInterface}
+              alt="Hobson AI unit interface showing chat with document insights and interactive property map"
+              className="md:hidden w-full"
+              style={{
+                objectFit: 'cover',
+                objectPosition: '0% center',
+                aspectRatio: '3/4',
+              }}
               loading="lazy"
               decoding="async"
             />
