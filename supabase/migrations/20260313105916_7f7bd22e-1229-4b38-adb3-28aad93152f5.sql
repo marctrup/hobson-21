@@ -1,0 +1,2 @@
+UPDATE faq_items SET answer = '**For Today:** Hobson allows for batch uploads via our upload feature.
+**In the Future:** Once we are happy that Hobson can access drives such as Dropbox and Google Drive, we will provide that feature.', updated_at = now() WHERE id = '16bb25e6-0f26-425a-8b54-11a32122c992'
