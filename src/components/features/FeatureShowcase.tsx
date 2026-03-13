@@ -1,9 +1,27 @@
-import React, { memo } from "react";
+import React, { memo, useState, useEffect, useRef } from "react";
 import { useContent } from "@/contexts/LanguageContext";
 import hobsonUnitInterface from "@/assets/hobson-unit-interface.png";
 
 const FeatureShowcase = memo(() => {
   const content = useContent();
+  const [isActive, setIsActive] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // On mobile, trigger the animation when scrolled into view
+  useEffect(() => {
+    const isTouchDevice = window.matchMedia('(hover: none)').matches;
+    if (!isTouchDevice || !containerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsActive(entry.isIntersecting && entry.intersectionRatio >= 0.5);
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="mb-20 overflow-hidden">
@@ -17,19 +35,17 @@ const FeatureShowcase = memo(() => {
       </div>
       
       {/* Angled Interface Display */}
-      <div className="relative" style={{ perspective: '1000px' }}>
+      <div className="relative" style={{ perspective: '1000px' }} ref={containerRef}>
         <div 
           className="relative mx-auto max-w-7xl transition-all duration-700"
           style={{
-            transform: 'rotateY(12deg) scale(0.95)',
+            transform: isActive ? 'rotateY(0deg) scale(1)' : 'rotateY(12deg) scale(0.95)',
             transformStyle: 'preserve-3d',
           }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'rotateY(0deg) scale(1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'rotateY(12deg) scale(0.95)';
-          }}
+          onMouseEnter={() => setIsActive(true)}
+          onMouseLeave={() => setIsActive(false)}
+          onTouchStart={() => setIsActive(true)}
+          onTouchEnd={() => setIsActive(false)}
         >
           
           {/* Floating elements for depth */}
