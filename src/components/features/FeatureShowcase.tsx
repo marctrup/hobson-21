@@ -1,27 +1,13 @@
-import React, { memo, useState, useEffect, useRef } from "react";
+import React, { memo, useState, useRef } from "react";
 import { useContent } from "@/contexts/LanguageContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 import hobsonUnitInterface from "@/assets/hobson-unit-interface.png";
 
 const FeatureShowcase = memo(() => {
   const content = useContent();
   const [isActive, setIsActive] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-
-  // On mobile, trigger the animation when scrolled into view
-  useEffect(() => {
-    const isTouchDevice = window.matchMedia('(hover: none)').matches;
-    if (!isTouchDevice || !containerRef.current) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsActive(entry.isIntersecting && entry.intersectionRatio >= 0.5);
-      },
-      { threshold: 0.5 }
-    );
-
-    observer.observe(containerRef.current);
-    return () => observer.disconnect();
-  }, []);
+  const isMobile = useIsMobile();
 
   return (
     <div className="mb-20 overflow-hidden">
@@ -35,22 +21,24 @@ const FeatureShowcase = memo(() => {
       </div>
       
       {/* Angled Interface Display */}
-      <div className="relative" style={{ perspective: '1000px' }} ref={containerRef}>
+      <div className="relative" style={{ perspective: isMobile ? 'none' : '1000px' }} ref={containerRef}>
         <div 
-          className="relative mx-auto max-w-7xl transition-all duration-700"
+          className="relative mx-auto max-w-7xl md:transition-all md:duration-700"
           style={{
-            transform: isActive ? 'rotateY(0deg) scale(1)' : 'rotateY(12deg) scale(0.95)',
-            transformStyle: 'preserve-3d',
+            transform: isMobile
+              ? 'rotateY(-6deg) scale(0.97)'
+              : isActive
+                ? 'rotateY(0deg) scale(1)'
+                : 'rotateY(12deg) scale(0.95)',
+            transformStyle: isMobile ? 'flat' : 'preserve-3d',
           }}
-          onMouseEnter={() => setIsActive(true)}
-          onMouseLeave={() => setIsActive(false)}
-          onTouchStart={() => setIsActive(true)}
-          onTouchEnd={() => setIsActive(false)}
+          onMouseEnter={() => !isMobile && setIsActive(true)}
+          onMouseLeave={() => !isMobile && setIsActive(false)}
         >
           
-          {/* Floating elements for depth */}
-          <div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full blur-xl animate-pulse delay-1000"></div>
+          {/* Floating elements for depth - hidden on mobile */}
+          <div className="hidden md:block absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full blur-xl animate-pulse"></div>
+          <div className="hidden md:block absolute -bottom-8 -left-8 w-32 h-32 bg-gradient-to-br from-secondary/20 to-secondary/10 rounded-full blur-xl animate-pulse delay-1000"></div>
           
           {/* Main Interface Screenshot */}
           <div className="rounded-2xl border border-primary/20 shadow-2xl shadow-primary/10 overflow-hidden">
@@ -62,7 +50,7 @@ const FeatureShowcase = memo(() => {
               loading="lazy"
               decoding="async"
             />
-            {/* Mobile: cropped to show mostly chat */}
+            {/* Mobile: cropped to show mostly chat, static angled display */}
             <img
               src={hobsonUnitInterface}
               alt="Hobson AI unit interface showing chat with document insights and interactive property map"
