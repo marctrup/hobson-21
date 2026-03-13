@@ -57,7 +57,7 @@ const FeatureShowcase = memo(() => {
             <img
               src={hobsonUnitInterface}
               alt="Hobson AI unit interface showing chat with document insights and interactive property map"
-              className="w-full h-auto lg:object-fill md:object-fill object-cover object-[15%_center] md:aspect-auto aspect-[4/3]"
+              className="w-full h-auto lg:object-fill md:object-fill object-cover object-[5%_center] md:aspect-auto aspect-[4/3]"
               loading="lazy"
               decoding="async"
             />
