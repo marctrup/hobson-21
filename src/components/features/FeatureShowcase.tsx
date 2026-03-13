@@ -21,16 +21,16 @@ const FeatureShowcase = memo(() => {
       </div>
       
       {/* Angled Interface Display */}
-      <div className="relative" style={{ perspective: isMobile ? 'none' : '1000px' }} ref={containerRef}>
+      <div className="relative" style={{ perspective: '1000px' }} ref={containerRef}>
         <div 
           className="relative mx-auto max-w-7xl md:transition-all md:duration-700"
           style={{
             transform: isMobile
-              ? 'rotateY(-6deg) scale(0.97)'
+              ? 'perspective(1000px) rotateY(-6deg) scale(0.97)'
               : isActive
                 ? 'rotateY(0deg) scale(1)'
                 : 'rotateY(12deg) scale(0.95)',
-            transformStyle: isMobile ? 'flat' : 'preserve-3d',
+            transformStyle: 'preserve-3d',
           }}
           onMouseEnter={() => !isMobile && setIsActive(true)}
           onMouseLeave={() => !isMobile && setIsActive(false)}
