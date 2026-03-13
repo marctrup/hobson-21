@@ -28,7 +28,7 @@ const FeatureShowcase = memo(() => {
             e.currentTarget.style.transform = 'rotateY(0deg) scale(1)';
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'rotateY(-12deg) scale(0.95)';
+            e.currentTarget.style.transform = 'rotateY(12deg) scale(0.95)';
           }}
         >
           
