@@ -69,7 +69,7 @@ const FeatureShowcase = memo(() => {
               className="md:hidden w-full"
               style={{
                 objectFit: 'cover',
-                objectPosition: '0% center',
+                objectPosition: '10% center',
                 aspectRatio: '3/4',
               }}
               loading="lazy"
