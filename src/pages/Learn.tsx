@@ -211,8 +211,6 @@ const Learn = () => {
   useEffect(() => {
     if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq") {
       setActiveTocSection("how-hobson-works");
-    } else if (activeHorizontalTab === "introduction" && activeVerticalTab === "plans-credits") {
-      setActiveTocSection("overview");
     } else if (activeHorizontalTab === "introduction" && activeVerticalTab === "smart-navigation") {
       setActiveTocSection("hero");
     }
