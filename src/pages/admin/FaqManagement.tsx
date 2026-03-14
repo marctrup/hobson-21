@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -55,8 +56,12 @@ export default function FaqManagement() {
   const [editingFaq, setEditingFaq] = useState<FaqItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
-  const [initialFormData, setInitialFormData] = useState<typeof formData | null>(null);
+  const [initialFormData, setInitialFormData] = useState<any>(null);
   const [hasUnpublishedChanges, setHasUnpublishedChanges] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checkingAdmin, setCheckingAdmin] = useState(true);
+  const { user, isLoading: authLoading } = useAuth();
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -75,28 +80,7 @@ export default function FaqManagement() {
       formData.is_active !== initialFormData.is_active
     : formData.question.trim() !== "" || formData.answer.trim() !== "";
 
-  // When editing an existing FAQ, always allow submitting (some editors normalize HTML and can
-  // make strict comparisons unreliable).
   const canSubmit = editingFaq ? true : hasFormChanged;
-
-  useEffect(() => {
-    fetchFaqs();
-  }, []);
-
-  // Set initialFormData when editing starts - only when FAQ id changes
-  useEffect(() => {
-    if (editingFaq && isDialogOpen) {
-      const faqData = {
-        question: editingFaq.question,
-        answer: editingFaq.answer,
-        category: editingFaq.category,
-        sort_order: editingFaq.sort_order,
-        is_active: editingFaq.is_active,
-      };
-      setFormData(faqData);
-      setInitialFormData({ ...faqData });
-    }
-  }, [editingFaq?.id, isDialogOpen]);
 
   const fetchFaqs = async () => {
     try {
@@ -118,6 +102,81 @@ export default function FaqManagement() {
     }
   };
 
+  // Set initialFormData when editing starts
+  useEffect(() => {
+    if (editingFaq && isDialogOpen) {
+      const faqData = {
+        question: editingFaq.question,
+        answer: editingFaq.answer,
+        category: editingFaq.category,
+        sort_order: editingFaq.sort_order,
+        is_active: editingFaq.is_active,
+      };
+      setFormData(faqData);
+      setInitialFormData({ ...faqData });
+    }
+  }, [editingFaq?.id, isDialogOpen]);
+
+  // Admin auth guard
+  useEffect(() => {
+    if (authLoading) return;
+
+    if (!user) {
+      navigate("/auth");
+      return;
+    }
+
+    const checkAdminRole = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", user.id)
+          .eq("role", "admin")
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (!data) {
+          toast({
+            title: "Access denied",
+            description: "You need admin privileges to access this page.",
+            variant: "destructive",
+          });
+          navigate("/admin");
+          return;
+        }
+
+        setIsAdmin(true);
+        fetchFaqs();
+      } catch (error: any) {
+        toast({
+          title: "Error checking permissions",
+          description: error.message,
+          variant: "destructive",
+        });
+        navigate("/admin");
+      } finally {
+        setCheckingAdmin(false);
+      }
+    };
+
+    checkAdminRole();
+  }, [user, authLoading]);
+
+  if (authLoading || checkingAdmin) {
+    return (
+      <div className="container mx-auto py-8 text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+        <p className="mt-2 text-muted-foreground">Checking permissions...</p>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return null;
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -131,7 +190,6 @@ export default function FaqManagement() {
         if (error) throw error;
         toast({ title: "FAQ updated successfully" });
       } else {
-        // First, get all FAQs with same or higher sort_order, ordered DESC to avoid conflicts
         const { data: faqsToShift, error: fetchError } = await supabase
           .from("faq_items")
           .select("id, sort_order")
@@ -140,7 +198,6 @@ export default function FaqManagement() {
 
         if (fetchError) throw fetchError;
 
-        // Shift each FAQ up by 1, starting from highest to avoid conflicts
         if (faqsToShift && faqsToShift.length > 0) {
           for (const faq of faqsToShift) {
             const { error: updateError } = await supabase
@@ -152,7 +209,6 @@ export default function FaqManagement() {
           }
         }
 
-        // Then insert the new FAQ
         const { error } = await supabase.from("faq_items").insert([formData]);
 
         if (error) throw error;
@@ -186,7 +242,7 @@ export default function FaqManagement() {
       if (error) throw error;
       toast({ title: "FAQ deleted successfully" });
       setHasUnpublishedChanges(true);
-      fetchFaqs();
+      setFaqs(prev => prev.filter(item => item.id !== id));
     } catch (error: any) {
       toast({
         title: "Error deleting FAQ",
@@ -258,11 +314,9 @@ export default function FaqManagement() {
 
   const fixDuplicateOrders = async () => {
     try {
-      // Close dialog and reset form to avoid stale data
       setIsDialogOpen(false);
       resetForm();
       
-      // Get all FAQs ordered by sort_order and created_at
       const { data: allFaqs, error: fetchError } = await supabase
         .from("faq_items")
         .select("id, sort_order, created_at")
@@ -271,7 +325,6 @@ export default function FaqManagement() {
 
       if (fetchError) throw fetchError;
 
-      // Reassign sort orders sequentially
       for (let i = 0; i < allFaqs.length; i++) {
         const newOrder = i + 1;
         if (allFaqs[i].sort_order !== newOrder) {
