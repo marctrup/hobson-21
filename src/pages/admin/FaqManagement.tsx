@@ -85,6 +85,21 @@ export default function FaqManagement() {
   // make strict comparisons unreliable).
   const canSubmit = editingFaq ? true : hasFormChanged;
 
+  // Set initialFormData when editing starts - only when FAQ id changes
+  useEffect(() => {
+    if (editingFaq && isDialogOpen) {
+      const faqData = {
+        question: editingFaq.question,
+        answer: editingFaq.answer,
+        category: editingFaq.category,
+        sort_order: editingFaq.sort_order,
+        is_active: editingFaq.is_active,
+      };
+      setFormData(faqData);
+      setInitialFormData({ ...faqData });
+    }
+  }, [editingFaq?.id, isDialogOpen]);
+
   useEffect(() => {
     if (authLoading) return;
 
@@ -143,21 +158,6 @@ export default function FaqManagement() {
   if (!isAdmin) {
     return null;
   }
-
-  // Set initialFormData when editing starts - only when FAQ id changes
-  useEffect(() => {
-    if (editingFaq && isDialogOpen) {
-      const faqData = {
-        question: editingFaq.question,
-        answer: editingFaq.answer,
-        category: editingFaq.category,
-        sort_order: editingFaq.sort_order,
-        is_active: editingFaq.is_active,
-      };
-      setFormData(faqData);
-      setInitialFormData({ ...faqData });
-    }
-  }, [editingFaq?.id, isDialogOpen]);
 
   const fetchFaqs = async () => {
     try {
