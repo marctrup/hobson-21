@@ -59,6 +59,10 @@ export default function FaqManagement() {
   const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
   const [initialFormData, setInitialFormData] = useState<typeof formData | null>(null);
   const [hasUnpublishedChanges, setHasUnpublishedChanges] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checkingAdmin, setCheckingAdmin] = useState(true);
+  const { user, isLoading: authLoading } = useAuth();
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
