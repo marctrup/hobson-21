@@ -86,8 +86,63 @@ export default function FaqManagement() {
   const canSubmit = editingFaq ? true : hasFormChanged;
 
   useEffect(() => {
-    fetchFaqs();
-  }, []);
+    if (authLoading) return;
+
+    if (!user) {
+      navigate("/auth");
+      return;
+    }
+
+    const checkAdminRole = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", user.id)
+          .eq("role", "admin")
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (!data) {
+          toast({
+            title: "Access denied",
+            description: "You need admin privileges to access this page.",
+            variant: "destructive",
+          });
+          navigate("/admin");
+          return;
+        }
+
+        setIsAdmin(true);
+        fetchFaqs();
+      } catch (error: any) {
+        toast({
+          title: "Error checking permissions",
+          description: error.message,
+          variant: "destructive",
+        });
+        navigate("/admin");
+      } finally {
+        setCheckingAdmin(false);
+      }
+    };
+
+    checkAdminRole();
+  }, [user, authLoading]);
+
+  if (authLoading || checkingAdmin) {
+    return (
+      <div className="container mx-auto py-8 text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+        <p className="mt-2 text-muted-foreground">Checking permissions...</p>
+      </div>
+    );
+  }
+
+  if (!isAdmin) {
+    return null;
+  }
 
   // Set initialFormData when editing starts - only when FAQ id changes
   useEffect(() => {
