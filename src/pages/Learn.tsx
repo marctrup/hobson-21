@@ -2429,12 +2429,6 @@ Content-Type: multipart/form-data
           description: "Learn how Hobson's AI navigation works across portfolio, unit-group, and unit levels. Understand scope rules and switch behavior for accurate answers."
         };
       }
-      if (activeVerticalTab === "plans-credits") {
-        return {
-          title: "Plans & Credits - Hobson AI",
-          description: "Explore Hobson AI pricing plans and credit options. Find the perfect plan for your real estate document management needs."
-        };
-      }
     }
     if (activeHorizontalTab === "use-cases") {
       return {
