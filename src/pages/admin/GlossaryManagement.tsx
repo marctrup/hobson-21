@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -56,6 +58,10 @@ export default function GlossaryManagement() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
   const [initialFormData, setInitialFormData] = useState<typeof formData | null>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [checkingAdmin, setCheckingAdmin] = useState(true);
+  const { user, isLoading: authLoading } = useAuth();
+  const navigate = useNavigate();
   const { toast } = useToast();
 
   const [formData, setFormData] = useState({
@@ -71,8 +77,50 @@ export default function GlossaryManagement() {
     (formData.term.trim() !== "" || formData.definition.trim() !== "");
 
   useEffect(() => {
-    fetchGlossaryItems();
-  }, []);
+    if (authLoading) return;
+
+    if (!user) {
+      navigate("/auth");
+      return;
+    }
+
+    const checkAdminRole = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("user_roles")
+          .select("role")
+          .eq("user_id", user.id)
+          .eq("role", "admin")
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (!data) {
+          toast({
+            title: "Access denied",
+            description: "You must be logged in as an admin to manage glossary terms.",
+            variant: "destructive",
+          });
+          navigate("/admin");
+          return;
+        }
+
+        setIsAdmin(true);
+        await fetchGlossaryItems();
+      } catch (error: any) {
+        toast({
+          title: "Error verifying permissions",
+          description: error.message,
+          variant: "destructive",
+        });
+        navigate("/admin");
+      } finally {
+        setCheckingAdmin(false);
+      }
+    };
+
+    checkAdminRole();
+  }, [authLoading, user, navigate]);
 
   const fetchGlossaryItems = async () => {
     try {
