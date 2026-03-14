@@ -88,22 +88,6 @@ const Learn = () => {
             horizontal: "introduction",
             vertical: "smart-navigation"
           },
-          "plans-credits": {
-            horizontal: "introduction",
-            vertical: "plans-credits"
-          },
-          planscredits: {
-            horizontal: "introduction",
-            vertical: "plans-credits"
-          },
-          "plans-and-credit": {
-            horizontal: "introduction",
-            vertical: "plans-credits"
-          },
-          plansandcredit: {
-            horizontal: "introduction",
-            vertical: "plans-credits"
-          },
           faq: {
             horizontal: "introduction",
             vertical: "faq"
