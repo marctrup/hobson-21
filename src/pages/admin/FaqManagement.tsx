@@ -238,11 +238,32 @@ export default function FaqManagement() {
 
     try {
       const { error } = await supabase.from("faq_items").delete().eq("id", id);
-
       if (error) throw error;
-      toast({ title: "FAQ deleted successfully" });
+
+      // Re-order remaining FAQs sequentially
+      const { data: remaining, error: fetchError } = await supabase
+        .from("faq_items")
+        .select("id, sort_order")
+        .order("sort_order", { ascending: true });
+
+      if (fetchError) throw fetchError;
+
+      if (remaining) {
+        for (let i = 0; i < remaining.length; i++) {
+          const newOrder = i + 1;
+          if (remaining[i].sort_order !== newOrder) {
+            const { error: updateError } = await supabase
+              .from("faq_items")
+              .update({ sort_order: newOrder })
+              .eq("id", remaining[i].id);
+            if (updateError) throw updateError;
+          }
+        }
+      }
+
+      toast({ title: "FAQ deleted and reordered successfully" });
       setHasUnpublishedChanges(true);
-      setFaqs(prev => prev.filter(item => item.id !== id));
+      fetchFaqs();
     } catch (error: any) {
       toast({
         title: "Error deleting FAQ",
