@@ -4,7 +4,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -57,7 +56,7 @@ export default function FaqManagement() {
   const [editingFaq, setEditingFaq] = useState<FaqItem | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [updatingKnowledge, setUpdatingKnowledge] = useState(false);
-  const [initialFormData, setInitialFormData] = useState<typeof formData | null>(null);
+  const [initialFormData, setInitialFormData] = useState<any>(null);
   const [hasUnpublishedChanges, setHasUnpublishedChanges] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [checkingAdmin, setCheckingAdmin] = useState(true);
@@ -81,11 +80,29 @@ export default function FaqManagement() {
       formData.is_active !== initialFormData.is_active
     : formData.question.trim() !== "" || formData.answer.trim() !== "";
 
-  // When editing an existing FAQ, always allow submitting (some editors normalize HTML and can
-  // make strict comparisons unreliable).
   const canSubmit = editingFaq ? true : hasFormChanged;
 
-  // Set initialFormData when editing starts - only when FAQ id changes
+  const fetchFaqs = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("faq_items")
+        .select("*")
+        .order("sort_order", { ascending: true });
+
+      if (error) throw error;
+      setFaqs(data || []);
+    } catch (error: any) {
+      toast({
+        title: "Error fetching FAQs",
+        description: error.message,
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Set initialFormData when editing starts
   useEffect(() => {
     if (editingFaq && isDialogOpen) {
       const faqData = {
@@ -100,6 +117,7 @@ export default function FaqManagement() {
     }
   }, [editingFaq?.id, isDialogOpen]);
 
+  // Admin auth guard
   useEffect(() => {
     if (authLoading) return;
 
@@ -159,26 +177,6 @@ export default function FaqManagement() {
     return null;
   }
 
-  const fetchFaqs = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("faq_items")
-        .select("*")
-        .order("sort_order", { ascending: true });
-
-      if (error) throw error;
-      setFaqs(data || []);
-    } catch (error: any) {
-      toast({
-        title: "Error fetching FAQs",
-        description: error.message,
-        variant: "destructive",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -192,7 +190,6 @@ export default function FaqManagement() {
         if (error) throw error;
         toast({ title: "FAQ updated successfully" });
       } else {
-        // First, get all FAQs with same or higher sort_order, ordered DESC to avoid conflicts
         const { data: faqsToShift, error: fetchError } = await supabase
           .from("faq_items")
           .select("id, sort_order")
@@ -201,7 +198,6 @@ export default function FaqManagement() {
 
         if (fetchError) throw fetchError;
 
-        // Shift each FAQ up by 1, starting from highest to avoid conflicts
         if (faqsToShift && faqsToShift.length > 0) {
           for (const faq of faqsToShift) {
             const { error: updateError } = await supabase
@@ -213,7 +209,6 @@ export default function FaqManagement() {
           }
         }
 
-        // Then insert the new FAQ
         const { error } = await supabase.from("faq_items").insert([formData]);
 
         if (error) throw error;
@@ -247,7 +242,7 @@ export default function FaqManagement() {
       if (error) throw error;
       toast({ title: "FAQ deleted successfully" });
       setHasUnpublishedChanges(true);
-      fetchFaqs();
+      setFaqs(prev => prev.filter(item => item.id !== id));
     } catch (error: any) {
       toast({
         title: "Error deleting FAQ",
@@ -319,11 +314,9 @@ export default function FaqManagement() {
 
   const fixDuplicateOrders = async () => {
     try {
-      // Close dialog and reset form to avoid stale data
       setIsDialogOpen(false);
       resetForm();
       
-      // Get all FAQs ordered by sort_order and created_at
       const { data: allFaqs, error: fetchError } = await supabase
         .from("faq_items")
         .select("id, sort_order, created_at")
@@ -332,7 +325,6 @@ export default function FaqManagement() {
 
       if (fetchError) throw fetchError;
 
-      // Reassign sort orders sequentially
       for (let i = 0; i < allFaqs.length; i++) {
         const newOrder = i + 1;
         if (allFaqs[i].sort_order !== newOrder) {
