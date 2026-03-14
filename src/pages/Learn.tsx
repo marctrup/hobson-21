@@ -337,10 +337,6 @@ const Learn = () => {
           label: "Smart Navigation Guide",
           icon: Users
         }, {
-          id: "plans-credits",
-          label: "Plans and Credits",
-          icon: CreditCard
-        }, {
           id: "faq",
           label: "FAQ",
           icon: HelpCircle
