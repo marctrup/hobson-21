@@ -143,11 +143,25 @@ export default function GlossaryManagement() {
     if (!confirm("Are you sure you want to delete this glossary term?")) return;
 
     try {
-      const { error } = await supabase.from("glossary_items").delete().eq("id", id);
+      const { error, count } = await supabase
+        .from("glossary_items")
+        .delete({ count: 'exact' })
+        .eq("id", id);
 
       if (error) throw error;
+      
+      if (count === 0) {
+        toast({
+          title: "Delete failed",
+          description: "No rows were deleted. You may not have permission. Please ensure you're logged in as an admin.",
+          variant: "destructive",
+        });
+        return;
+      }
+      
+      // Optimistically remove from local state immediately
+      setGlossaryItems(prev => prev.filter(item => item.id !== id));
       toast({ title: "Glossary term deleted successfully" });
-      fetchGlossaryItems();
     } catch (error: any) {
       toast({
         title: "Error deleting glossary term",
