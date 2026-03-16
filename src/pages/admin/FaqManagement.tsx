@@ -401,12 +401,12 @@ export default function FaqManagement() {
             Fix Duplicate Orders
           </Button>
           <Button 
-            variant={hasUnpublishedChanges ? "default" : "outline"}
+            variant="default"
             onClick={updateKnowledgeBase} 
             disabled={updatingKnowledge}
             className={hasUnpublishedChanges ? "animate-pulse" : ""}
           >
-            {updatingKnowledge ? "Updating..." : hasUnpublishedChanges ? "Publish Changes" : "Update Knowledge Base"}
+            {updatingKnowledge ? "Updating..." : hasUnpublishedChanges ? "Publish Changes ●" : "Publish to Knowledge Base"}
           </Button>
           <Dialog open={isDialogOpen} onOpenChange={(open) => {
             setIsDialogOpen(open);
