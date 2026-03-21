@@ -16,6 +16,7 @@ const EmailPreview = lazy(() => import("../pages/EmailPreview"));
 const PilotForm = lazy(() => import("../pages/PilotForm"));
 const Pilot = lazy(() => import("../pages/Pilot"));
 const Auth = lazy(() => import("../pages/Auth"));
+const LoginGate = lazy(() => import("../pages/LoginGate"));
 const Admin = lazy(() => import("../pages/Admin"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 
