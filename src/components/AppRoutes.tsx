@@ -156,6 +156,7 @@ const AppContent = () => {
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<InvestorSummary />} />
               
+              <Route path="/login-gate" element={<LoginGate />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/faq-management" element={<FaqManagement />} />
