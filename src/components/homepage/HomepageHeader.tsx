@@ -68,6 +68,16 @@ export const HomepageHeader = () => {
               </Link>
             ))}
             
+            {/* Login button */}
+            <a
+              href="https://app.hobsonschoice.ai/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors"
+            >
+              Login
+            </a>
+            
             {/* Language indicator */}
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground" title="English (UK)">
               <UKFlag className="w-5 h-auto rounded-sm shadow-sm" />
