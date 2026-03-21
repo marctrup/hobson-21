@@ -314,7 +314,7 @@ export const Homepage = () => {
           </div>
         </header>
 
-        <main id="main-content" className="min-h-screen bg-background" role="main">
+        <main id="main-content" className="min-h-screen bg-background overflow-x-hidden" role="main">
           {/* Hero Section - Two Column Layout */}
           <section className="pt-12 sm:pt-16 pb-4" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
