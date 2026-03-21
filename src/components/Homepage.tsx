@@ -178,7 +178,7 @@ export const Homepage = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-background overflow-x-hidden">
+      <div className="min-h-screen bg-background">
         {/* Header */}
         <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50" role="banner">
           <div className="container mx-auto px-4 py-1">
@@ -314,7 +314,7 @@ export const Homepage = () => {
           </div>
         </header>
 
-        <main id="main-content" className="min-h-screen bg-background" role="main">
+        <main id="main-content" className="min-h-screen bg-background overflow-x-hidden" role="main">
           {/* Hero Section - Two Column Layout */}
           <section className="pt-12 sm:pt-16 pb-4" aria-labelledby="hero-heading">
             <div className="container mx-auto px-4">
