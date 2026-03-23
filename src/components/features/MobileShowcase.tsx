@@ -11,12 +11,21 @@ const screens = [
 const MobileShowcase = memo(() => {
   const [activeScreen, setActiveScreen] = useState(0);
 
+  const [paused, setPaused] = useState(false);
+
   useEffect(() => {
+    if (paused) return;
     const interval = setInterval(() => {
       setActiveScreen((prev) => (prev + 1) % screens.length);
     }, 4000);
     return () => clearInterval(interval);
-  }, []);
+  }, [paused]);
+
+  const handleScreenSelect = (i: number) => {
+    setActiveScreen(i);
+    setPaused(true);
+    setTimeout(() => setPaused(false), 8000);
+  };
 
   return (
     <section className="py-16 sm:py-20 bg-muted/30">
@@ -44,7 +53,7 @@ const MobileShowcase = memo(() => {
                   return (
                     <button
                       key={screen.label}
-                      onClick={() => setActiveScreen(i)}
+                      onClick={() => handleScreenSelect(i)}
                       className={`flex items-center gap-3 px-5 py-3 rounded-xl border transition-all duration-300 ${
                         activeScreen === i
                           ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
