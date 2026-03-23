@@ -123,7 +123,7 @@ export const CONTENT_DE = {
         features: ["Alle Kernfunktionen", "Bis zu 2 Dokumente pro Monat hochladen", "Bis zu 5 KI-Fragen pro Monat", "Unbegrenzte Benutzer", "Unbegrenzte Dokumente gespeichert"],
         upgradeNote: "Wenn Sie mehr KI-Kapazität benötigen, upgraden Sie auf Essential.",
         button: "Kostenlos starten",
-        externalLink: "https://hobson-three.vercel.app/signup",
+        externalLink: "https://app.hobsonschoice.ai/signup",
       },
       essential: {
         name: "Essential",

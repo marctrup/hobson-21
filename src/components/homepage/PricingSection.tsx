@@ -192,7 +192,7 @@ export const PricingSection = () => {
               </div>
               <Button
                 className="w-full bg-gradient-to-r from-primary/80 to-primary hover:from-primary hover:to-primary/90 text-primary-foreground text-xs sm:text-sm mt-4 py-2"
-                onClick={() => window.open('https://hobson-three.vercel.app/signup', '_blank')}
+                onClick={() => window.open('https://app.hobsonschoice.ai/signup', '_blank')}
               >
                 {pricing.plans.free.button}
               </Button>
@@ -343,7 +343,7 @@ export const PricingSection = () => {
                     if (boostPriceId) {
                       handleCheckout(boostPriceId);
                     } else {
-                      window.open('https://hobson-three.vercel.app/signup', '_blank');
+                      window.open('https://app.hobsonschoice.ai/signup', '_blank');
                     }
                   }}
                   disabled={loadingPlan !== null}
