@@ -372,8 +372,10 @@ export const Homepage = () => {
                 </div>
 
                 <div className="relative">
-                  {/* Timeline connector */}
-                  <div className="hidden md:block absolute top-14 left-[calc(16.67%+1rem)] right-[calc(16.67%+1rem)] h-0.5 bg-gradient-to-r from-primary/20 via-primary/50 to-primary/20"></div>
+                  {/* Line from circle 1 to circle 2 */}
+                  <div className="hidden md:block absolute top-[2.5rem] sm:top-[3rem] h-[2px] bg-primary/30" style={{ left: 'calc(16.67% + 2.5rem)', right: 'calc(50% + 2.5rem)' }}></div>
+                  {/* Line from circle 2 to circle 3 */}
+                  <div className="hidden md:block absolute top-[2.5rem] sm:top-[3rem] h-[2px] bg-primary/30" style={{ left: 'calc(50% + 2.5rem)', right: 'calc(16.67% + 2.5rem)' }}></div>
 
                   <div className="grid md:grid-cols-3 gap-8 sm:gap-10">
                     {content.howItWorks.steps.map((step, index) => (
