@@ -9,6 +9,7 @@ import { PropertyManagementVisualization } from "@/components/homepage/PropertyM
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { PricingSection } from "@/components/homepage/PricingSection";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
+import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { getOrganizationStructuredData, getHomepageStructuredData, getHomepageFAQStructuredData } from "@/utils/seo-data";
