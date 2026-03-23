@@ -21,6 +21,11 @@ export const CONTENT_NZ = {
         priceAnnual: 33.99,
         boostDetail: "Add an AI Boost — NZ$11\n+25 extra AI questions\nInstant access. No plan change.",
       },
+      essentialPlus: {
+        ...(CONTENT.pricing.plans as any).essentialPlus,
+        priceMonthly: 107.50,
+        priceAnnual: 86.00,
+      },
       enterprise: {
         ...CONTENT.pricing.plans.enterprise,
       },

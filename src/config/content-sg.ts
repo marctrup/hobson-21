@@ -21,6 +21,11 @@ export const CONTENT_SG = {
         priceAnnual: 26.99,
         boostDetail: "Add an AI Boost — S$8.50\n+25 extra AI questions\nInstant access. No plan change.",
       },
+      essentialPlus: {
+        ...(CONTENT.pricing.plans as any).essentialPlus,
+        priceMonthly: 85.50,
+        priceAnnual: 68.40,
+      },
       enterprise: {
         ...CONTENT.pricing.plans.enterprise,
       },
