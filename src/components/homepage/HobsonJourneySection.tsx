@@ -68,23 +68,27 @@ export const HobsonJourneySection = () => {
 
           {/* Stages */}
           <div className="relative grid md:grid-cols-3 gap-12 md:gap-8">
-            {/* Progress line — desktop: from edge of circle 1 to edge of circle 3 */}
+            {/* Purple line — edge of circle 1 to edge of circle 2 */}
             <div
-              className="hidden md:block absolute top-[3.25rem] h-[3px] rounded-full"
-              style={{ left: 'calc(16.6% + 2.25rem)', right: 'calc(16.6% + 2.25rem)' }}
+              className="hidden md:block absolute top-[3.25rem] h-[3px] rounded-full overflow-hidden"
+              style={{ left: 'calc(16.6% + 2.25rem)', right: 'calc(50% + 2.25rem)' }}
               aria-hidden="true"
             >
-              {/* Grey "not done" portion between stage 2 and 3 */}
-              <div className="absolute inset-y-0 left-[42%] right-0 rounded-full bg-foreground/10" />
-              {/* Purple filled portion */}
               <div
-                className="absolute inset-y-0 left-0 rounded-full bg-primary"
+                className="absolute inset-0 rounded-full bg-primary"
                 style={{
-                  width: visible ? "42%" : "0%",
-                  transition: "width 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.4s",
+                  transform: visible ? "scaleX(1)" : "scaleX(0)",
+                  transformOrigin: "left",
+                  transition: "transform 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.4s",
                 }}
               />
             </div>
+            {/* Grey line — edge of circle 2 to edge of circle 3 */}
+            <div
+              className="hidden md:block absolute top-[3.25rem] h-[3px] rounded-full bg-foreground/10"
+              style={{ left: 'calc(50% + 2.25rem)', right: 'calc(16.6% + 2.25rem)' }}
+              aria-hidden="true"
+            />
 
             {stages.map((stage, i) => {
               const Icon = stage.icon;
