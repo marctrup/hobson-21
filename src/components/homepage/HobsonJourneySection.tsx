@@ -85,7 +85,7 @@ export const HobsonJourneySection = () => {
 
             {stages.map((stage, i) => {
               const Icon = stage.icon;
-              const opacity = stage.active ? "opacity-100" : "opacity-50";
+              const opacity = "";
 
               return (
                 <div
