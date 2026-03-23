@@ -184,7 +184,7 @@ export const CONTENT = {
     cards: [
       {
         title: "Intelligent Chat Interface",
-        badge: "Beta",
+        badge: "Live",
         badgeType: "secondary",
         subtitle: "Natural language queries",
         description: "Ask Hobson anything about your assets. Get instant answers to complex questions with our conversational AI assistant.",
