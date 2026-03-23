@@ -200,7 +200,7 @@ export const CONTENT = {
       },
       {
         title: "Smart Document Analysis",
-        badge: "Beta",
+        badge: "Live",
         badgeType: "secondary",
         subtitle: "AI-powered extraction",
         description: "Upload lease agreements, surveys, and contracts. Hobson extracts key information and identifies important dates automatically.",

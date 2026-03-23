@@ -198,7 +198,7 @@ export const CONTENT_DE = {
       },
       {
         title: "Intelligente Dokumentenanalyse",
-        badge: "Beta",
+        badge: "Live",
         badgeType: "secondary",
         subtitle: "KI-gestützte Extraktion",
         description: "Laden Sie Mietverträge, Gutachten und Verträge hoch. Hobson extrahiert automatisch wichtige Informationen und identifiziert wichtige Termine.",

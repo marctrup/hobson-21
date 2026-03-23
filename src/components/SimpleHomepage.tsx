@@ -74,7 +74,7 @@ export const SimpleHomepage = () => {
               <div className="space-y-8 text-center lg:text-left lg:pl-8">
                 <div className="space-y-6">
                   <div className="relative">
-                    <Badge className="absolute -top-12 left-0 text-sm">🚀 Now in Beta</Badge>
+                    
                     <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1]">
                       AI-Document Intelligence for the{" "}
                       <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
