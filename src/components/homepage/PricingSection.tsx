@@ -80,7 +80,8 @@ export const PricingSection = () => {
   const hasLongCurrency = isGerman || isUAE;
   const navigate = useNavigate();
 
-  const [isAnnual, setIsAnnual] = useState(false);
+  const [isAnnualEssential, setIsAnnualEssential] = useState(false);
+  const [isAnnualPlus, setIsAnnualPlus] = useState(false);
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [pendingPriceId, setPendingPriceId] = useState<string | null>(null);
@@ -128,7 +129,8 @@ export const PricingSection = () => {
   const getPriceId = (plan: 'essential' | 'essentialPlus' = 'essential') => {
     const ids = (pricing.plans[plan] as any).stripePriceIds;
     if (!ids) return null;
-    return isAnnual && ids.annual ? ids.annual : ids.monthly;
+    const annual = plan === 'essentialPlus' ? isAnnualPlus : isAnnualEssential;
+    return annual && ids.annual ? ids.annual : ids.monthly;
   };
 
   const formatPrice = (price: number) => {
@@ -138,13 +140,13 @@ export const PricingSection = () => {
       : `${pricing.currency}${formatted}`;
   };
 
-  const essentialPrice = isAnnual
+  const essentialPrice = isAnnualEssential
     ? pricing.plans.essential.priceAnnual
     : pricing.plans.essential.priceMonthly;
 
   const essentialPlusData = (pricing.plans as any).essentialPlus;
   const essentialPlusPrice = essentialPlusData
-    ? (isAnnual ? essentialPlusData.priceAnnual : essentialPlusData.priceMonthly)
+    ? (isAnnualPlus ? essentialPlusData.priceAnnual : essentialPlusData.priceMonthly)
     : null;
 
   const aiBoost = (pricing as any).aiBoost;
@@ -211,7 +213,7 @@ export const PricingSection = () => {
                 {formatPrice(essentialPrice)}
                 <span className={`font-normal ${hasLongCurrency ? 'text-[10px]' : 'text-xs'}`}> {pricing.perMonth}</span>
               </div>
-              {isAnnual && (
+              {isAnnualEssential && (
                 <div className="text-xs text-muted-foreground line-through">
                   {formatPrice(pricing.plans.essential.priceMonthly)}
                 </div>
@@ -219,7 +221,7 @@ export const PricingSection = () => {
             </CardHeader>
             <CardContent className="flex flex-col flex-grow px-3 sm:px-5">
               <p className="text-xs text-muted-foreground mb-3">{pricing.plans.essential.tagline}</p>
-              <PricingToggle isAnnual={isAnnual} onToggle={() => setIsAnnual(!isAnnual)} labels={pricing.billingToggle} />
+              <PricingToggle isAnnual={isAnnualEssential} onToggle={() => setIsAnnualEssential(!isAnnualEssential)} labels={pricing.billingToggle} />
               <div className="flex-grow">
                 <FeatureList features={pricing.plans.essential.features} />
 
@@ -252,7 +254,7 @@ export const PricingSection = () => {
                   {formatPrice(essentialPlusPrice)}
                   <span className={`font-normal ${hasLongCurrency ? 'text-[10px]' : 'text-xs'}`}> {pricing.perMonth}</span>
                 </div>
-                {isAnnual && (
+                {isAnnualPlus && (
                   <div className="text-xs text-muted-foreground line-through">
                     {formatPrice(essentialPlusData.priceMonthly)}
                   </div>
@@ -260,7 +262,7 @@ export const PricingSection = () => {
               </CardHeader>
               <CardContent className="flex flex-col flex-grow px-3 sm:px-5">
                 <p className="text-xs text-muted-foreground mb-3">{essentialPlusData.tagline}</p>
-                <PricingToggle isAnnual={isAnnual} onToggle={() => setIsAnnual(!isAnnual)} labels={pricing.billingToggle} />
+                <PricingToggle isAnnual={isAnnualPlus} onToggle={() => setIsAnnualPlus(!isAnnualPlus)} labels={pricing.billingToggle} />
                 <div className="flex-grow">
                   <FeatureList features={essentialPlusData.features} />
                 </div>
