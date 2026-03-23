@@ -262,7 +262,7 @@ export const PricingSection = () => {
               </CardHeader>
               <CardContent className="flex flex-col flex-grow px-3 sm:px-5">
                 <p className="text-xs text-muted-foreground mb-3">{essentialPlusData.tagline}</p>
-                <PricingToggle isAnnual={isAnnual} onToggle={() => setIsAnnual(!isAnnual)} labels={pricing.billingToggle} />
+                <PricingToggle isAnnual={isAnnualPlus} onToggle={() => setIsAnnualPlus(!isAnnualPlus)} labels={pricing.billingToggle} />
                 <div className="flex-grow">
                   <FeatureList features={essentialPlusData.features} />
                 </div>
