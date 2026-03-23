@@ -356,6 +356,12 @@ export const Homepage = () => {
           {/* The Hobson Journey */}
           <HobsonJourneySection />
 
+          {/* Features Section */}
+          <FeaturesSection />
+
+          {/* Mobile App Showcase */}
+          <MobileShowcase />
+
           {/* How It Works Section */}
           <section className="py-12 sm:py-16 md:py-24 bg-background">
             <div className="container mx-auto px-4">
@@ -388,12 +394,6 @@ export const Homepage = () => {
               </div>
             </div>
           </section>
-
-          {/* Features Section */}
-          <FeaturesSection />
-
-          {/* Mobile App Showcase */}
-          <MobileShowcase />
 
           {/* Pricing Section */}
           <PricingSection />
