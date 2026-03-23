@@ -14,7 +14,7 @@ const MobileShowcase = memo(() => {
   useEffect(() => {
     const interval = window.setInterval(() => {
       setActiveScreen((prev) => (prev + 1) % screens.length);
-    }, 2000);
+    }, 3000);
 
     return () => window.clearInterval(interval);
   }, []);
