@@ -80,7 +80,8 @@ export const PricingSection = () => {
   const hasLongCurrency = isGerman || isUAE;
   const navigate = useNavigate();
 
-  const [isAnnual, setIsAnnual] = useState(false);
+  const [isAnnualEssential, setIsAnnualEssential] = useState(false);
+  const [isAnnualPlus, setIsAnnualPlus] = useState(false);
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null);
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [pendingPriceId, setPendingPriceId] = useState<string | null>(null);
