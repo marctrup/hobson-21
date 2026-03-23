@@ -14,7 +14,7 @@ const MobileShowcase = memo(() => {
   useEffect(() => {
     const interval = window.setInterval(() => {
       setActiveScreen((prev) => (prev + 1) % screens.length);
-    }, 2000);
+    }, 3000);
 
     return () => window.clearInterval(interval);
   }, []);
@@ -27,7 +27,7 @@ const MobileShowcase = memo(() => {
     <section className="py-16 sm:py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             
             {/* Text Content */}
             <div className="flex-1 text-center lg:text-left">
