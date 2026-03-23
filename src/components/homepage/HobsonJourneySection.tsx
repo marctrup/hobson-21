@@ -112,7 +112,7 @@ export const HobsonJourneySection = () => {
                   </div>
 
                   <h3 className="text-xl font-bold mb-2">{stage.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed mb-5 max-w-[240px]">
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-5 max-w-[240px]">
                     {stage.copy}
                   </p>
 
