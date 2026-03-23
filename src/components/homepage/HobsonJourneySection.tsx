@@ -49,7 +49,7 @@ export const HobsonJourneySection = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 bg-gradient-to-br from-[hsl(220,40%,22%)] via-[hsl(240,30%,18%)] to-[hsl(260,35%,20%)] text-white relative overflow-hidden"
+      className="py-24 bg-gradient-to-br from-[hsl(220,30%,92%)] via-[hsl(235,25%,88%)] to-[hsl(250,20%,85%)] text-foreground relative overflow-hidden"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
@@ -61,7 +61,7 @@ export const HobsonJourneySection = () => {
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Where we are. Where we're going.
             </h2>
-            <p className="text-lg text-white/60 max-w-xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
               A product roadmap told as a story — not a feature list.
             </p>
           </div>
@@ -70,7 +70,7 @@ export const HobsonJourneySection = () => {
           <div className="relative grid md:grid-cols-3 gap-12 md:gap-8">
             {/* Progress line — desktop */}
             <div
-              className="hidden md:block absolute top-[3.25rem] left-[16.6%] right-[16.6%] h-[3px] bg-white/10 rounded-full"
+              className="hidden md:block absolute top-[3.25rem] left-[16.6%] right-[16.6%] h-[3px] bg-foreground/10 rounded-full"
               aria-hidden="true"
             >
               {/* Filled portion — stops at ~42% (through stage 1, partially into stage 2) */}
@@ -104,15 +104,15 @@ export const HobsonJourneySection = () => {
                       stage.complete
                         ? "bg-primary text-primary-foreground shadow-[0_0_30px_hsl(var(--primary)/0.35)]"
                         : stage.active
-                          ? "bg-white/10 text-white border border-white/20"
-                          : "bg-white/5 text-white/40 border border-white/10"
+                          ? "bg-foreground/10 text-foreground border border-foreground/20"
+                          : "bg-foreground/5 text-foreground/40 border border-foreground/10"
                     }`}
                   >
                     <Icon className="w-7 h-7" strokeWidth={1.8} />
                   </div>
 
                   <h3 className="text-xl font-bold mb-2">{stage.title}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed mb-5 max-w-[240px]">
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-5 max-w-[240px]">
                     {stage.copy}
                   </p>
 
