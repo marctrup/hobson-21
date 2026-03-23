@@ -11,20 +11,16 @@ const screens = [
 const MobileShowcase = memo(() => {
   const [activeScreen, setActiveScreen] = useState(0);
 
-  const [paused, setPaused] = useState(false);
-
   useEffect(() => {
-    if (paused) return;
-    const interval = setInterval(() => {
+    const interval = window.setInterval(() => {
       setActiveScreen((prev) => (prev + 1) % screens.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [paused]);
+    }, 2000);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   const handleScreenSelect = (i: number) => {
     setActiveScreen(i);
-    setPaused(true);
-    setTimeout(() => setPaused(false), 8000);
   };
 
   return (
@@ -79,19 +75,13 @@ const MobileShowcase = memo(() => {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-foreground/90 rounded-b-2xl z-20" />
                 
                 {/* Screen content */}
-                <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[2rem]">
-                  {screens.map((screen, i) => (
-                    <img
-                      key={screen.label}
-                      src={screen.src}
-                      alt={screen.alt}
-                      className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
-                        activeScreen === i
-                          ? "opacity-100 scale-100"
-                          : "opacity-0 scale-105"
-                      }`}
-                    />
-                  ))}
+                <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[2rem] bg-background">
+                  <img
+                    key={screens[activeScreen].label}
+                    src={screens[activeScreen].src}
+                    alt={screens[activeScreen].alt}
+                    className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500 animate-fade-in"
+                  />
                 </div>
 
                 {/* Home indicator */}
