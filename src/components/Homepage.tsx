@@ -392,6 +392,9 @@ export const Homepage = () => {
           {/* Features Section */}
           <FeaturesSection />
 
+          {/* Mobile App Showcase */}
+          <MobileShowcase />
+
           {/* Pricing Section */}
           <PricingSection />
 
