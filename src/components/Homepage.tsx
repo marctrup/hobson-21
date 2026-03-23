@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet-async";
 import { PropertyManagementVisualization } from "@/components/homepage/PropertyManagementVisualization";
 
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
+import MobileShowcase from "@/components/features/MobileShowcase";
 import { PricingSection } from "@/components/homepage/PricingSection";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
