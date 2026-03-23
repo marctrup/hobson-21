@@ -242,6 +242,42 @@ export const PricingSection = () => {
             </CardContent>
           </Card>
 
+          {/* ESSENTIAL PLUS */}
+          {essentialPlusData && (
+            <Card className="relative bg-gradient-to-br from-card to-primary/5 border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/60 to-primary/80" />
+              <CardHeader className="text-center pb-3 flex-shrink-0">
+                <CardTitle className="text-base sm:text-lg font-bold">{essentialPlusData.name}</CardTitle>
+                <div className={`font-bold text-primary mt-2 ${hasLongCurrency ? 'text-lg sm:text-xl' : 'text-2xl sm:text-3xl'}`}>
+                  {formatPrice(essentialPlusPrice)}
+                  <span className={`font-normal ${hasLongCurrency ? 'text-[10px]' : 'text-xs'}`}> {pricing.perMonth}</span>
+                </div>
+                {isAnnual && (
+                  <div className="text-xs text-muted-foreground line-through">
+                    {formatPrice(essentialPlusData.priceMonthly)}
+                  </div>
+                )}
+              </CardHeader>
+              <CardContent className="flex flex-col flex-grow px-3 sm:px-5">
+                <p className="text-xs text-muted-foreground mb-3">{essentialPlusData.tagline}</p>
+                <div className="flex-grow">
+                  <FeatureList features={essentialPlusData.features} />
+                </div>
+                <Button
+                  className="w-full bg-gradient-to-r from-primary/80 to-primary hover:from-primary hover:to-primary/90 text-primary-foreground text-xs sm:text-sm mt-4"
+                  onClick={() => {
+                    const priceId = getPriceId('essentialPlus');
+                    if (priceId) handleCheckout(priceId);
+                    else navigate('/contact');
+                  }}
+                  disabled={loadingPlan !== null}
+                >
+                  {essentialPlusData.button}
+                </Button>
+              </CardContent>
+            </Card>
+          )}
+
           {/* ENTERPRISE */}
           <Card className="relative bg-gradient-to-br from-card to-primary/5 border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/40 to-primary/60" />
