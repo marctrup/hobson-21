@@ -142,7 +142,7 @@ export const CONTENT = {
         name: "Essential Plus",
         priceMonthly: 49.50,
         priceAnnual: 39.60,
-        tagline: "For teams scaling their AI workflows.",
+        tagline: "For teams scaling their AI",
         features: ["Everything in Essential, plus:", "Upload up to 50 documents per month", "Ask up to 300 AI questions per month", "Structured knowledge base"],
         button: "Choose Essential Plus",
         stripePriceIds: { monthly: "", annual: "" },
