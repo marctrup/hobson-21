@@ -182,7 +182,7 @@ export const CONTENT_DE = {
     cards: [
       {
         title: "Intelligente Chat-Oberfläche",
-        badge: "Beta",
+        badge: "Live",
         badgeType: "secondary",
         subtitle: "Natürlichsprachliche Abfragen",
         description: "Fragen Sie Hobson alles über Ihre Assets. Erhalten Sie sofortige Antworten auf komplexe Fragen mit unserem KI-Assistenten.",
