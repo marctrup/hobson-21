@@ -165,8 +165,8 @@ export const PricingSection = () => {
           </p>
         </div>
 
-        {/* 4-column grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 max-w-6xl mx-auto items-stretch px-4 sm:px-0">
+        {/* 5-column grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 sm:gap-5 max-w-7xl mx-auto items-stretch px-4 sm:px-0">
 
           {/* FREE */}
           <Card className="relative bg-gradient-to-br from-card to-primary/5 border border-primary/20 hover:border-primary/40 transition-all duration-300 hover:shadow-lg flex flex-col h-full">
