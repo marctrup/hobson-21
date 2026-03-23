@@ -53,7 +53,7 @@ const MobileShowcase = memo(() => {
                   return (
                     <button
                       key={screen.label}
-                      onClick={() => setActiveScreen(i)}
+                      onClick={() => handleScreenSelect(i)}
                       className={`flex items-center gap-3 px-5 py-3 rounded-xl border transition-all duration-300 ${
                         activeScreen === i
                           ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
