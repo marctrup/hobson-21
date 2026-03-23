@@ -351,6 +351,9 @@ export const Homepage = () => {
             </div>
           </section>
 
+          {/* The Hobson Journey */}
+          <HobsonJourneySection />
+
           {/* How It Works Section */}
           <section className="py-12 sm:py-16 md:py-24 bg-gradient-to-b from-background to-muted/20">
             <div className="container mx-auto px-4">
