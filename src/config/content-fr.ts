@@ -123,7 +123,7 @@ export const CONTENT_FR = {
         features: ["Toutes les fonctionnalités de base", "Télécharger jusqu'à 2 documents par mois", "Poser jusqu'à 5 questions IA par mois", "Utilisateurs illimités", "Documents stockés illimités"],
         upgradeNote: "Quand vous avez besoin de plus de capacité IA, passez à Essentiel.",
         button: "Commencer gratuitement",
-        externalLink: "https://hobson-three.vercel.app/signup",
+        externalLink: "https://app.hobsonschoice.ai/signup",
       },
       essential: {
         name: "Essentiel",

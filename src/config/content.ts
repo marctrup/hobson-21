@@ -123,7 +123,7 @@ export const CONTENT = {
         features: ["All core features", "Upload up to 2 documents per month", "Ask up to 5 AI questions per month", "Unlimited users", "Unlimited documents stored"],
         upgradeNote: "When you need more AI capacity, upgrade to Essential.",
         button: "Start Free",
-        externalLink: "https://hobson-three.vercel.app/signup",
+        externalLink: "https://app.hobsonschoice.ai/signup",
       },
       essential: {
         name: "Essential",

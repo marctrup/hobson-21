@@ -343,7 +343,7 @@ export const PricingSection = () => {
                     if (boostPriceId) {
                       handleCheckout(boostPriceId);
                     } else {
-                      window.open('https://hobson-three.vercel.app/signup', '_blank');
+                      window.open('https://app.hobsonschoice.ai/signup', '_blank');
                     }
                   }}
                   disabled={loadingPlan !== null}
