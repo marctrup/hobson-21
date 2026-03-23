@@ -5,7 +5,7 @@ const stages = [
   {
     icon: FileCheck,
     title: "Read & Understand",
-    copy: "Ask anything about any lease. Instantly.",
+    copy: "Ask anything about any document. Instantly.",
     status: "Live today",
     statusClass: "bg-primary text-primary-foreground",
     active: true,
