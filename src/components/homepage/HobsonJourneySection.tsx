@@ -49,7 +49,7 @@ export const HobsonJourneySection = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 bg-[hsl(220,20%,8%)] text-white relative overflow-hidden"
+      className="py-24 bg-[hsl(220,15%,18%)] text-white relative overflow-hidden"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
