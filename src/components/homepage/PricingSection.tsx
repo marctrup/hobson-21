@@ -213,7 +213,7 @@ export const PricingSection = () => {
                 {formatPrice(essentialPrice)}
                 <span className={`font-normal ${hasLongCurrency ? 'text-[10px]' : 'text-xs'}`}> {pricing.perMonth}</span>
               </div>
-              {isAnnual && (
+              {isAnnualEssential && (
                 <div className="text-xs text-muted-foreground line-through">
                   {formatPrice(pricing.plans.essential.priceMonthly)}
                 </div>
