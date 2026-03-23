@@ -254,7 +254,7 @@ export const PricingSection = () => {
                   {formatPrice(essentialPlusPrice)}
                   <span className={`font-normal ${hasLongCurrency ? 'text-[10px]' : 'text-xs'}`}> {pricing.perMonth}</span>
                 </div>
-                {isAnnual && (
+                {isAnnualPlus && (
                   <div className="text-xs text-muted-foreground line-through">
                     {formatPrice(essentialPlusData.priceMonthly)}
                   </div>
