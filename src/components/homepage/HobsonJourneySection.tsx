@@ -61,7 +61,7 @@ export const HobsonJourneySection = () => {
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
               Where we are. Where we're going.
             </h2>
-            <p className="text-lg text-white/60 max-w-xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
               A product roadmap told as a story — not a feature list.
             </p>
           </div>
