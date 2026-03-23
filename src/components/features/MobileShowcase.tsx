@@ -75,19 +75,13 @@ const MobileShowcase = memo(() => {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-6 bg-foreground/90 rounded-b-2xl z-20" />
                 
                 {/* Screen content */}
-                <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[2rem]">
-                  {screens.map((screen, i) => (
-                    <img
-                      key={screen.label}
-                      src={screen.src}
-                      alt={screen.alt}
-                      className={`absolute inset-0 w-full h-full object-cover object-top transition-all duration-700 ${
-                        activeScreen === i
-                          ? "opacity-100 scale-100"
-                          : "opacity-0 scale-105"
-                      }`}
-                    />
-                  ))}
+                <div className="relative w-full aspect-[9/19.5] overflow-hidden rounded-[2rem] bg-background">
+                  <img
+                    key={screens[activeScreen].label}
+                    src={screens[activeScreen].src}
+                    alt={screens[activeScreen].alt}
+                    className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500 animate-fade-in"
+                  />
                 </div>
 
                 {/* Home indicator */}
