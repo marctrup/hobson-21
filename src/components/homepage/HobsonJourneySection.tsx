@@ -70,7 +70,7 @@ export const HobsonJourneySection = () => {
           <div className="relative grid md:grid-cols-3 gap-12 md:gap-8">
             {/* Progress line — desktop */}
             <div
-              className="hidden md:block absolute top-[3.25rem] left-[16.6%] right-[16.6%] h-[3px] bg-white/10 rounded-full"
+              className="hidden md:block absolute top-[3.25rem] left-[16.6%] right-[16.6%] h-[3px] bg-foreground/10 rounded-full"
               aria-hidden="true"
             >
               {/* Filled portion — stops at ~42% (through stage 1, partially into stage 2) */}
