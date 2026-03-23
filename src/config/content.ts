@@ -130,7 +130,7 @@ export const CONTENT = {
         priceMonthly: 19.50,
         priceAnnual: 15.60,
         tagline: "For regular, growing AI use.",
-        features: ["Everything in Free, plus:", "Upload up to 20 documents per month", "Ask up to 100 AI questions per month", "Unlimited users", "Unlimited documents"],
+        features: ["Everything in Free, plus:", "Upload up to 20 documents per month", "Ask up to 100 AI questions per month"],
         boostNote: "Need more some months?",
         boostDetail: "Add an AI Boost — £5\n+25 extra AI questions\nInstant access. No plan change.",
         boostTagline: "Scale your AI usage without upgrading your whole plan.",
