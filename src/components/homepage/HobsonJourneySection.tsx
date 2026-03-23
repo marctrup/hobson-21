@@ -49,7 +49,7 @@ export const HobsonJourneySection = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 bg-gradient-to-br from-[hsl(220,40%,22%)] via-[hsl(240,30%,18%)] to-[hsl(260,35%,20%)] text-white relative overflow-hidden"
+      className="py-24 bg-gradient-to-br from-[hsl(220,30%,92%)] via-[hsl(235,25%,88%)] to-[hsl(250,20%,85%)] text-foreground relative overflow-hidden"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
