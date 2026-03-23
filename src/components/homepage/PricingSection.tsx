@@ -129,7 +129,8 @@ export const PricingSection = () => {
   const getPriceId = (plan: 'essential' | 'essentialPlus' = 'essential') => {
     const ids = (pricing.plans[plan] as any).stripePriceIds;
     if (!ids) return null;
-    return isAnnual && ids.annual ? ids.annual : ids.monthly;
+    const annual = plan === 'essentialPlus' ? isAnnualPlus : isAnnualEssential;
+    return annual && ids.annual ? ids.annual : ids.monthly;
   };
 
   const formatPrice = (price: number) => {
@@ -139,13 +140,13 @@ export const PricingSection = () => {
       : `${pricing.currency}${formatted}`;
   };
 
-  const essentialPrice = isAnnual
+  const essentialPrice = isAnnualEssential
     ? pricing.plans.essential.priceAnnual
     : pricing.plans.essential.priceMonthly;
 
   const essentialPlusData = (pricing.plans as any).essentialPlus;
   const essentialPlusPrice = essentialPlusData
-    ? (isAnnual ? essentialPlusData.priceAnnual : essentialPlusData.priceMonthly)
+    ? (isAnnualPlus ? essentialPlusData.priceAnnual : essentialPlusData.priceMonthly)
     : null;
 
   const aiBoost = (pricing as any).aiBoost;
