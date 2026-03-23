@@ -19,9 +19,6 @@ export const HeroSection = ({ onShowExplainerVideo }: HeroSectionProps) => {
           <div className="space-y-8">
             <div className="space-y-6">
               <div className="relative">
-                <Badge variant="outline" className="text-primary border-primary/20 mb-6 text-sm">
-                  🚀 Now in Beta
-                </Badge>
                 <h1
                   id="hero-heading"
                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-[1.1]"

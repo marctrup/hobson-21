@@ -184,7 +184,7 @@ export const CONTENT = {
     cards: [
       {
         title: "Intelligent Chat Interface",
-        badge: "Beta",
+        badge: "Live",
         badgeType: "secondary",
         subtitle: "Natural language queries",
         description: "Ask Hobson anything about your assets. Get instant answers to complex questions with our conversational AI assistant.",
@@ -200,7 +200,7 @@ export const CONTENT = {
       },
       {
         title: "Smart Document Analysis",
-        badge: "Beta",
+        badge: "Live",
         badgeType: "secondary",
         subtitle: "AI-powered extraction",
         description: "Upload lease agreements, surveys, and contracts. Hobson extracts key information and identifies important dates automatically.",

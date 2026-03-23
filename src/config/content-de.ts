@@ -182,7 +182,7 @@ export const CONTENT_DE = {
     cards: [
       {
         title: "Intelligente Chat-Oberfläche",
-        badge: "Beta",
+        badge: "Live",
         badgeType: "secondary",
         subtitle: "Natürlichsprachliche Abfragen",
         description: "Fragen Sie Hobson alles über Ihre Assets. Erhalten Sie sofortige Antworten auf komplexe Fragen mit unserem KI-Assistenten.",
@@ -198,7 +198,7 @@ export const CONTENT_DE = {
       },
       {
         title: "Intelligente Dokumentenanalyse",
-        badge: "Beta",
+        badge: "Live",
         badgeType: "secondary",
         subtitle: "KI-gestützte Extraktion",
         description: "Laden Sie Mietverträge, Gutachten und Verträge hoch. Hobson extrahiert automatisch wichtige Informationen und identifiziert wichtige Termine.",
