@@ -9,6 +9,7 @@ import { PropertyManagementVisualization } from "@/components/homepage/PropertyM
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { PricingSection } from "@/components/homepage/PricingSection";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
+import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { getOrganizationStructuredData, getHomepageStructuredData, getHomepageFAQStructuredData } from "@/utils/seo-data";
@@ -350,6 +351,9 @@ export const Homepage = () => {
               </div>
             </div>
           </section>
+
+          {/* The Hobson Journey */}
+          <HobsonJourneySection />
 
           {/* How It Works Section */}
           <section className="py-12 sm:py-16 md:py-24 bg-gradient-to-b from-background to-muted/20">
