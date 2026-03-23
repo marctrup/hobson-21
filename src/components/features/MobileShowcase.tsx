@@ -11,20 +11,16 @@ const screens = [
 const MobileShowcase = memo(() => {
   const [activeScreen, setActiveScreen] = useState(0);
 
-  const [paused, setPaused] = useState(false);
-
   useEffect(() => {
-    if (paused) return;
-    const interval = setInterval(() => {
+    const interval = window.setInterval(() => {
       setActiveScreen((prev) => (prev + 1) % screens.length);
-    }, 4000);
-    return () => clearInterval(interval);
-  }, [paused]);
+    }, 2000);
+
+    return () => window.clearInterval(interval);
+  }, []);
 
   const handleScreenSelect = (i: number) => {
     setActiveScreen(i);
-    setPaused(true);
-    setTimeout(() => setPaused(false), 8000);
   };
 
   return (
