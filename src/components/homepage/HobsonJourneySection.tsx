@@ -68,9 +68,10 @@ export const HobsonJourneySection = () => {
 
           {/* Stages */}
           <div className="relative grid md:grid-cols-3 gap-12 md:gap-8">
-            {/* Progress line — desktop */}
+            {/* Progress line — desktop: from edge of circle 1 to edge of circle 3 */}
             <div
-              className="hidden md:block absolute top-[3.25rem] left-[16.6%] right-[16.6%] h-[3px] rounded-full"
+              className="hidden md:block absolute top-[3.25rem] h-[3px] rounded-full"
+              style={{ left: 'calc(16.6% + 2.25rem)', right: 'calc(16.6% + 2.25rem)' }}
               aria-hidden="true"
             >
               {/* Grey "not done" portion between stage 2 and 3 */}
