@@ -125,8 +125,8 @@ export const PricingSection = () => {
     if (pendingPriceId) proceedToCheckout(pendingPriceId, result.data);
   };
 
-  const getPriceId = () => {
-    const ids = (pricing.plans.essential as any).stripePriceIds;
+  const getPriceId = (plan: 'essential' | 'essentialPlus' = 'essential') => {
+    const ids = (pricing.plans[plan] as any).stripePriceIds;
     if (!ids) return null;
     return isAnnual && ids.annual ? ids.annual : ids.monthly;
   };
@@ -141,6 +141,11 @@ export const PricingSection = () => {
   const essentialPrice = isAnnual
     ? pricing.plans.essential.priceAnnual
     : pricing.plans.essential.priceMonthly;
+
+  const essentialPlusData = (pricing.plans as any).essentialPlus;
+  const essentialPlusPrice = essentialPlusData
+    ? (isAnnual ? essentialPlusData.priceAnnual : essentialPlusData.priceMonthly)
+    : null;
 
   const aiBoost = (pricing as any).aiBoost;
 
