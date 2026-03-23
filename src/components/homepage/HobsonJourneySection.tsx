@@ -104,8 +104,8 @@ export const HobsonJourneySection = () => {
                       stage.complete
                         ? "bg-primary text-primary-foreground shadow-[0_0_30px_hsl(var(--primary)/0.35)]"
                         : stage.active
-                          ? "bg-white/10 text-white border border-white/20"
-                          : "bg-white/5 text-white/40 border border-white/10"
+                          ? "bg-foreground/10 text-foreground border border-foreground/20"
+                          : "bg-foreground/5 text-foreground/40 border border-foreground/10"
                     }`}
                   >
                     <Icon className="w-7 h-7" strokeWidth={1.8} />
