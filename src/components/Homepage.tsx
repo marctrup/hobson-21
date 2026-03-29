@@ -341,7 +341,7 @@ export const Homepage = () => {
                       {content.hero.ctaButton}
                       <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                     </div>
-                  </a>
+                  </Link>
                   
                 </div>
 
