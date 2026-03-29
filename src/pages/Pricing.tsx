@@ -54,7 +54,7 @@ const SlidersIcon = () => (
 
 const tiers = [
   {
-    name: "Entry",
+    name: "Solo",
     tier: 1,
     price: "£19.50",
     priceMonthly: 19.50,
@@ -78,7 +78,7 @@ const tiers = [
     highlighted: false,
   },
   {
-    name: "Professional",
+    name: "Duo",
     tier: 2,
     price: "£125.00",
     priceMonthly: 125.00,
@@ -89,13 +89,13 @@ const tiers = [
     seatCount: 2,
     perSeat: "£62.50/seat",
     label: "Full platform",
-    description: "Hobson learns your business. Contractors, contacts, policies, compliance deadlines and how you work — all stored, all active. Every answer is shaped by what Hobson knows about you.",
+    description: "Hobson learns your business. Contractors, contacts, policies, compliance deadlines and how you work — all stored, all active. Every answer is shaped by what Hobson knows about you. Two seats, full platform.",
     cta: "Start 7-day free trial",
     popular: true,
     highlighted: true,
   },
   {
-    name: "Team",
+    name: "Five",
     tier: 3,
     price: "£249.00",
     priceMonthly: 249.00,
@@ -106,13 +106,13 @@ const tiers = [
     seatCount: 5,
     perSeat: "£49.80/seat",
     label: "Full platform",
-    description: "The same Hobson, for a bigger team. Five seats with full access to every feature — Knowledge Base, workflows, action memory and more.",
+    description: "The full Hobson platform for up to five people. Everything Duo includes — identical features, more seats, better value per seat.",
     cta: "Get started",
     popular: false,
     highlighted: false,
   },
   {
-    name: "Scale",
+    name: "Ten",
     tier: 4,
     price: "£449.00",
     priceMonthly: 449.00,
@@ -123,7 +123,7 @@ const tiers = [
     seatCount: 10,
     perSeat: "£44.90/seat",
     label: "Full platform",
-    description: "Your best per-seat value. Ten seats with full access to every feature. Built for teams running serious portfolios.",
+    description: "The full Hobson platform for up to ten people. Everything Duo includes — identical features, your best per-seat price.",
     cta: "Get started",
     popular: false,
     highlighted: false,
