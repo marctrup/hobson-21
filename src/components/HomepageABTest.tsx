@@ -178,8 +178,8 @@ export const HomepageABTest = () => {
                     documents, delivers quick, clear, and trusted answers every time.
                   </p>
 
-                  <a
-                    href="#pricing-section"
+                  <Link
+                    to="/pricing"
                     className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group"
                     id="homepage-hero-pricing-cta"
                   >
