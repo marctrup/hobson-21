@@ -289,9 +289,13 @@ const Pricing = () => {
               ))}
             </div>
 
-            <p className="mt-12 text-sm font-semibold text-muted-foreground/60">
-              Tier 1 operates without the Knowledge Base. Tiers 2–4 unlock it. This is the difference.
-            </p>
+            <div className="mt-10 sm:mt-12 max-w-xl mx-auto text-center">
+              <div className="rounded-lg px-6 py-4 bg-primary/10 border border-primary/20">
+                <p className="text-sm sm:text-base font-semibold text-primary">
+                  Tier 1 operates without the Knowledge Base. Tiers 2–4 unlock it. This is the difference.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
