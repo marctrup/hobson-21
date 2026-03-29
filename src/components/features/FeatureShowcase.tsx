@@ -12,7 +12,7 @@ const FeatureShowcase = memo(() => {
   return (
     <div className="mb-20 overflow-hidden">
       <div className="text-center mb-12">
-        <h2 className="text-4xl font-bold text-foreground mb-4">
+        <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
           {content.features.title}
         </h2>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">

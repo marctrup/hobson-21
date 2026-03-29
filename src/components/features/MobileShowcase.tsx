@@ -34,7 +34,7 @@ const MobileShowcase = memo(() => {
               <p className="text-sm font-semibold tracking-widest uppercase text-primary mb-3">
                 Always with you
               </p>
-              <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-5">
+              <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-5">
                 Your AI assistant,<br />right in your pocket
               </h2>
               <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto lg:mx-0">
