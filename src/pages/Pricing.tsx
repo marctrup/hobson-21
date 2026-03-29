@@ -180,10 +180,6 @@ const faqs = [
     a: "We are currently working on Tier 1. Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform — are launching later in the year. Join the waitlist to be notified first and to lock in founding member pricing.",
   },
   {
-    q: "Do I need to replace my existing property management software?",
-    a: "No. Hobson works alongside the tools you already use — Arthur, Yardi, MRI, Fixflo, Xero. It reads your documents and acts within your existing workflows. No rip-and-replace required.",
-  },
-  {
     q: "What is the Knowledge Base exactly?",
     a: "It is Hobson's memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your communication style is — and it remembers permanently. Every answer and every action it takes reflects what it knows about you.",
   },
