@@ -534,6 +534,43 @@ serve(async (req) => {
     const useCasesCount = useCasesContent.length > 100 ? 1 : 0;
     const glossaryTermCount = glossaryData?.length || 0;
 
+    // Pricing page FAQ content
+    const pricingFaqContent = `
+## Pricing Page FAQs
+
+**Do I need to replace my existing property management software?**
+No. Hobson works alongside the tools you already use — Arthur, Yardi, MRI, Fixflo, Xero. It reads your documents and acts within your existing workflows. No rip-and-replace required.
+
+**What is the Knowledge Base exactly?**
+It is Hobson's memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your communication style is — and it remembers permanently. Every answer and every action it takes reflects what it knows about you.
+
+**Is my data secure?**
+Every client's data is fully isolated. Hobson never shares data between companies. Every action is sourced, auditable and reversible. Built for the regulated environment of property management.
+
+**What counts as a seat?**
+A seat is a named user who can log in and interact with Hobson. Tier 1 is per person. Tiers 2–4 are per account with a seat allowance — a Tier 3 account supports up to 5 named users.
+
+**What is the difference between tiers?**
+Tier 1 gives you AI document reasoning without the Knowledge Base — ideal for a sole operator testing Hobson. Tiers 2, 3 and 4 are identical in capability. The only difference is how many seats are included and the price per seat. A 5-person team on Tier 3 has exactly the same Hobson as a 2-person team on Tier 2.
+
+**Can I start on Tier 1 and upgrade?**
+Yes. Your Knowledge Base is built as you go — when you upgrade to Tier 2, everything you have taught Hobson stays. There is no reset.
+
+**Is there a free trial?**
+Yes. Tiers 2, 3 and 4 come with a 14-day free trial. No credit card required.
+
+**Are there usage limits?**
+No. All paid plans include unlimited queries, document ingestion and workflow runs. We operate a fair use policy for accounts showing usage patterns inconsistent with normal business operations — but in practice this never affects our clients.
+
+## Pricing Tiers
+- Tier 1 (Entry): £19.50/month, 1 seat, no Knowledge Base — multi-document AI reasoning, plain English queries, real estate domain accuracy, sourced auditable answers.
+- Tier 2 (Professional): £125.00/month, 2 seats (£62.50/seat), full platform including Knowledge Base, workflow automation, action memory.
+- Tier 3 (Team): £249.00/month, 5 seats (£49.80/seat), identical features to Tier 2.
+- Tier 4 (Scale): £449.00/month, 10 seats (£44.90/seat), identical features to Tier 2. Best per-seat value.
+- Enterprise: Contact sales for 10+ users.
+All paid plans include every feature. You are choosing your team size, not your capability.
+    `.trim();
+
     // Construct comprehensive knowledge base
     const knowledgeBase = `
 # Hobson AI Knowledge Base
@@ -545,11 +582,14 @@ The Hobson AI website has the following main sections:
 - Status
 - Contact Us
 - Pilot Program Application
+- Pricing
 
 ## Core Capabilities
 Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.
 
 ${faqContent}
+
+${pricingFaqContent}
 
 ## Plans & Credits Information
 
