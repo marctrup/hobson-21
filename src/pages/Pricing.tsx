@@ -79,18 +79,9 @@ const tiers = [
     price: "£125.00",
     period: "/ month",
     seats: "2 seats",
-    label: "Knowledge Base included",
+    perSeat: "£62.50/seat",
+    label: "Full platform",
     description: "Hobson learns your business. Contractors, contacts, policies, compliance deadlines and how you work — all stored, all active. Every answer is shaped by what Hobson knows about you.",
-    features: [
-      { text: "Everything in Tier 1", included: true },
-      { text: "Knowledge Base", included: true },
-      { text: "Contractor & contact store", included: true },
-      { text: "Compliance register", included: true },
-      { text: "Policy & process memory", included: true },
-      { text: "Document ingestion & indexing", included: true },
-      { text: "Workflow automation", included: false },
-      { text: "Action memory", included: false },
-    ],
     cta: "Start free trial",
     popular: true,
     dark: true,
@@ -102,16 +93,8 @@ const tiers = [
     period: "/ month",
     seats: "5 seats",
     perSeat: "£49.80/seat",
-    label: "Knowledge Base + Workflows",
-    description: "Hobson starts acting, not just answering. Automated workflows fire on compliance deadlines, rent reviews and lease events. Your team gets alerts, drafts and recommendations — without chasing.",
-    features: [
-      { text: "Everything in Tier 2", included: true },
-      { text: "Workflow automation", included: true },
-      { text: "Scheduled triggers & alerts", included: true },
-      { text: "Draft generation", included: true },
-      { text: "Multi-user collaboration", included: true },
-      { text: "Action memory", included: false },
-    ],
+    label: "Full platform",
+    description: "The same Hobson, for a bigger team. Five seats with full access to every feature — Knowledge Base, workflows, action memory and more.",
     cta: "Start free trial",
     popular: false,
     dark: false,
@@ -123,19 +106,28 @@ const tiers = [
     period: "/ month",
     seats: "10 seats",
     perSeat: "£44.90/seat",
-    label: "Full agentic platform",
-    description: "Hobson runs your portfolio. Action memory means it learns from everything — which drafts you accept, which workflows fire, which patterns repeat. It gets better every month.",
-    features: [
-      { text: "Everything in Tier 3", included: true },
-      { text: "Action memory & pattern learning", included: true },
-      { text: "Monthly impact summaries", included: true },
-      { text: "Personal shortcuts", included: true },
-      { text: "Priority support", included: true },
-    ],
+    label: "Full platform",
+    description: "Your best per-seat value. Ten seats with full access to every feature. Built for teams running serious portfolios.",
     cta: "Start free trial",
     popular: false,
     dark: false,
   },
+];
+
+const sharedFeatures = [
+  "Everything in Tier 1",
+  "Knowledge Base",
+  "Contractor and contact store",
+  "Compliance register",
+  "Policy and process memory",
+  "Document ingestion and indexing",
+  "Workflow automation",
+  "Scheduled triggers and alerts",
+  "Draft generation",
+  "Action memory and pattern learning",
+  "Monthly impact summaries",
+  "Personal shortcuts",
+  "Auditable, sourced, reversible actions",
 ];
 
 const faqs = [
@@ -154,6 +146,10 @@ const faqs = [
   {
     q: "What counts as a seat?",
     a: "A seat is a named user who can log in and interact with Hobson. Tier 1 is per person. Tiers 2–4 are per account with a seat allowance — a Tier 3 account supports up to 5 named users.",
+  },
+  {
+    q: "What is the difference between tiers?",
+    a: "Tier 1 gives you AI document reasoning without the Knowledge Base — ideal for a sole operator testing Hobson. Tiers 2, 3 and 4 are identical in capability. The only difference is how many seats are included and the price per seat. A 5-person team on Tier 3 has exactly the same Hobson as a 2-person team on Tier 2.",
   },
   {
     q: "Can I start on Tier 1 and upgrade?",
@@ -287,8 +283,46 @@ const Pricing = () => {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
-              {tiers.map((tier, i) => {
+            {/* Tier 1 — standalone with its own features */}
+            {(() => {
+              const tier1 = tiers[0];
+              return (
+                <div className="max-w-sm mx-auto mb-16">
+                  <div
+                    className="relative rounded-xl p-6 flex flex-col shadow-sm hover:shadow-md transition-all"
+                    style={{ backgroundColor: "#FFFFFF", border: "1px solid #E5E5EA" }}
+                  >
+                    <div className="mb-4">
+                      <p className="text-xs font-medium uppercase tracking-wider mb-1" style={{ color: "#6B6B8A" }}>Tier 1</p>
+                      <h3 className="text-xl font-bold mb-1" style={{ color: "#1A1A2E", fontFamily: "'DM Serif Display', serif" }}>{tier1.name}</h3>
+                      <p className="text-xs" style={{ color: "#6B6B8A" }}>{tier1.label}</p>
+                    </div>
+                    <div className="mb-4">
+                      <span className="text-3xl font-bold" style={{ color: "#1A1A2E" }}>{tier1.price}</span>
+                      <span className="text-sm ml-1" style={{ color: "#6B6B8A" }}>{tier1.period}</span>
+                      <div className="mt-1"><span className="text-xs" style={{ color: "#6B6B8A" }}>{tier1.seats}</span></div>
+                    </div>
+                    <p className="text-sm leading-relaxed mb-6" style={{ color: "#6B6B8A" }}>{tier1.description}</p>
+                    <ul className="space-y-2.5 mb-8 flex-1">
+                      {tier1.features!.map((f, fi) => (
+                        <li key={fi} className="flex items-start gap-2.5 text-sm" style={{ color: "#1A1A2E" }}>
+                          <span className="mt-0.5 flex-shrink-0">{f.included ? <CheckIcon /> : <CrossIcon />}</span>
+                          <span className={f.included ? "" : "opacity-50"}>{f.text}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
+                      className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90"
+                      style={{ backgroundColor: "#1A1A2E", color: "#FFFFFF" }}
+                    >{tier1.cta}</a>
+                  </div>
+                </div>
+              );
+            })()}
+
+            {/* Tiers 2, 3, 4 — cards */}
+            <div className="grid md:grid-cols-3 gap-6">
+              {tiers.slice(1).map((tier, i) => {
                 const isDark = tier.dark;
                 const isPop = tier.popular;
                 return (
@@ -306,98 +340,60 @@ const Pricing = () => {
                     }}
                   >
                     {isPop && (
-                      <span
-                        className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full text-white"
-                        style={{ backgroundColor: "#E94560" }}
-                      >
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full text-white" style={{ backgroundColor: "#E94560" }}>
                         MOST POPULAR
                       </span>
                     )}
-
                     <div className="mb-4">
-                      <p className="text-xs font-medium uppercase tracking-wider mb-1" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>
-                        Tier {tier.tier}
-                      </p>
-                      <h3
-                        className="text-xl font-bold mb-1"
-                        style={{ color: isDark ? "#FFFFFF" : "#1A1A2E", fontFamily: "'DM Serif Display', serif" }}
-                      >
-                        {tier.name}
-                      </h3>
-                      <p className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>
-                        {tier.label}
-                      </p>
+                      <p className="text-xs font-medium uppercase tracking-wider mb-1" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>Tier {tier.tier}</p>
+                      <h3 className="text-xl font-bold mb-1" style={{ color: isDark ? "#FFFFFF" : "#1A1A2E", fontFamily: "'DM Serif Display', serif" }}>{tier.name}</h3>
+                      <p className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>{tier.label}</p>
                     </div>
-
                     <div className="mb-4">
-                      <span className="text-3xl font-bold" style={{ color: isDark ? "#FFFFFF" : "#1A1A2E" }}>
-                        {tier.price}
-                      </span>
-                      <span className="text-sm ml-1" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>
-                        {tier.period}
-                      </span>
+                      <span className="text-3xl font-bold" style={{ color: isDark ? "#FFFFFF" : "#1A1A2E" }}>{tier.price}</span>
+                      <span className="text-sm ml-1" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>{tier.period}</span>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>
-                          {tier.seats}
-                        </span>
+                        <span className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>{tier.seats}</span>
                         {tier.perSeat && (
-                          <span className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.4)" : "#9B9BB0" }}>
-                            ({tier.perSeat})
-                          </span>
+                          <span className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.4)" : "#9B9BB0" }}>({tier.perSeat})</span>
                         )}
                       </div>
                     </div>
-
-                    <p className="text-sm leading-relaxed mb-6" style={{ color: isDark ? "rgba(255,255,255,0.65)" : "#6B6B8A" }}>
-                      {tier.description}
-                    </p>
-
-                    <ul className="space-y-2.5 mb-8 flex-1">
-                      {tier.features.map((f, fi) => (
-                        <li key={fi} className="flex items-start gap-2.5 text-sm" style={{ color: isDark ? "rgba(255,255,255,0.8)" : "#1A1A2E" }}>
-                          <span className="mt-0.5 flex-shrink-0">
-                            {f.included ? <CheckIcon /> : <CrossIcon />}
-                          </span>
-                          <span className={f.included ? "" : "opacity-50"}>{f.text}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <a
-                      href="https://app.hobsonschoice.ai/signup"
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <p className="text-sm leading-relaxed mb-6 flex-1" style={{ color: isDark ? "rgba(255,255,255,0.65)" : "#6B6B8A" }}>{tier.description}</p>
+                    <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
                       className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90"
-                      style={{
-                        backgroundColor: isPop ? "#E94560" : isDark ? "rgba(255,255,255,0.1)" : "#1A1A2E",
-                        color: "#FFFFFF",
-                      }}
-                    >
-                      {tier.cta}
-                    </a>
+                      style={{ backgroundColor: isPop ? "#E94560" : isDark ? "rgba(255,255,255,0.1)" : "#1A1A2E", color: "#FFFFFF" }}
+                    >{tier.cta}</a>
                   </div>
                 );
               })}
             </div>
 
-            {/* Enterprise row */}
-            <div
-              className="mt-10 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-4"
-              style={{ backgroundColor: "#F5F5F7" }}
-            >
-              <div>
-                <p className="text-lg font-semibold" style={{ color: "#1A1A2E" }}>
-                  More than 10 users?
-                </p>
-                <p className="text-sm" style={{ color: "#6B6B8A" }}>
-                  Talk to us. Enterprise pricing is based on portfolio size, not headcount.
-                </p>
+            {/* Shared feature list for Tiers 2-4 */}
+            <div className="mt-8 rounded-xl p-8" style={{ backgroundColor: "#F5F5F7", border: "1px solid #E5E5EA" }}>
+              <h3 className="text-lg font-semibold mb-5" style={{ color: "#1A1A2E" }}>
+                Included in Tiers 2, 3 and 4
+              </h3>
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2.5">
+                {sharedFeatures.map((f, fi) => (
+                  <div key={fi} className="flex items-start gap-2.5 text-sm" style={{ color: "#1A1A2E" }}>
+                    <span className="mt-0.5 flex-shrink-0"><CheckIcon /></span>
+                    <span>{f}</span>
+                  </div>
+                ))}
               </div>
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity whitespace-nowrap"
-                style={{ color: "#E94560" }}
-              >
+              <p className="mt-6 text-sm italic" style={{ color: "#6B6B8A" }}>
+                All paid plans include every feature. You are choosing your team size, not your capability.
+              </p>
+            </div>
+
+            {/* Enterprise row */}
+            <div className="mt-10 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-4" style={{ backgroundColor: "#F5F5F7" }}>
+              <div>
+                <p className="text-lg font-semibold" style={{ color: "#1A1A2E" }}>More than 10 users?</p>
+                <p className="text-sm" style={{ color: "#6B6B8A" }}>Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
+              </div>
+              <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity whitespace-nowrap" style={{ color: "#E94560" }}>
                 Book a call
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.333 8h9.334M8.667 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </Link>
