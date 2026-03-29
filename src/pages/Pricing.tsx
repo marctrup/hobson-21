@@ -230,21 +230,19 @@ const Pricing = () => {
         {/* 2. Knowledge Base Section */}
         <section className="py-20 md:py-28 bg-foreground">
           <div className="max-w-6xl mx-auto px-6">
-            <div className="flex items-start gap-6 mb-6">
-              <div className="flex-1">
-                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-background">
-                  The Knowledge Base
-                </h2>
-                <p className="text-xl md:text-2xl text-background/70 italic mb-8 max-w-3xl">
-                  Most AI tools answer questions. Hobson remembers your business.
-                </p>
-              </div>
+            <div className="flex items-center gap-4 mb-6">
               <img
                 src={owlMascot}
                 alt="Hobson AI owl mascot"
-                className="hidden md:block w-24 h-24 object-contain opacity-90"
+                className="w-14 h-14 md:w-20 md:h-20 object-contain opacity-90"
               />
+              <h2 className="text-3xl md:text-4xl font-bold text-background">
+                The Knowledge Base
+              </h2>
             </div>
+            <p className="text-xl md:text-2xl text-background/70 italic mb-8 max-w-3xl">
+              Most AI tools answer questions. Hobson remembers your business.
+            </p>
             <p className="text-base md:text-lg leading-relaxed mb-14 max-w-4xl text-background/60">
               The Knowledge Base is Hobson's persistent memory about your business. Not just documents — how you operate. It stores your contractors and contacts, your policies and procedures, your compliance register, your communication preferences and your business rules. Every answer Hobson gives, every draft it produces, every action it takes is shaped by what it knows about you. The longer you use Hobson, the better it gets.
             </p>
