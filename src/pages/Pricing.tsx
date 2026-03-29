@@ -255,7 +255,7 @@ const Pricing = () => {
         </section>
 
         {/* 2. Knowledge Base Section */}
-        <section className="py-12 md:py-28 bg-primary/10">
+        <section className="py-12 md:py-28" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
               <img
