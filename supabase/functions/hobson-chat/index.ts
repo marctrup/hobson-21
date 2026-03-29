@@ -116,9 +116,9 @@ RESPONSE GUIDELINES:
 5. ALWAYS include clickable markdown links using these EXACT path routes:
    
    **Main Pages:**
-   - Learn page: [Learn page](/learn/welcome)
-   - Pricing: [Pricing](/) (pricing section on homepage)
-   - Blog: [Blog](/blog)
+    - Learn page: [Learn page](/learn/welcome)
+    - Pricing: [Pricing](/pricing)
+    - Blog: [Blog](/blog)
    - Contact: [Contact Us](/contact)
    
    **Introduction Section:**
