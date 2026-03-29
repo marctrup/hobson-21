@@ -243,42 +243,42 @@ const Pricing = () => {
 
       <main id="main-content">
         {/* 1. Hero Section */}
-        <section className="py-20 md:py-28 bg-background">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-foreground">
+        <section className="py-12 md:py-28 bg-background">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6 text-foreground">
               Finally. An AI that actually knows <span className="text-primary">your business</span>.
             </h1>
-            <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto text-muted-foreground">
+            <p className="text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mx-auto text-muted-foreground">
               Ask about any lease, contract or compliance document in plain English and get an answer you can act on. Then let Hobson act on it for you — chasing, drafting, filing and reporting across everything you manage.
             </p>
           </div>
         </section>
 
         {/* 2. Knowledge Base Section */}
-        <section className="py-20 md:py-28 bg-primary/10">
-          <div className="max-w-6xl mx-auto px-6">
-            <div className="flex items-center gap-4 mb-6">
+        <section className="py-12 md:py-28 bg-primary/10">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
               <img
                 src={owlMascot}
                 alt="Hobson AI owl mascot"
-                className="w-14 h-14 md:w-20 md:h-20 object-contain opacity-90"
+                className="w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 object-contain opacity-90"
               />
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
                 The Knowledge Base
               </h2>
             </div>
-            <p className="text-xl md:text-2xl text-muted-foreground italic mb-8 max-w-3xl">
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground italic mb-6 sm:mb-8 max-w-3xl">
               Most AI tools answer questions. Hobson remembers your business.
             </p>
-            <p className="text-base md:text-lg leading-relaxed mb-14 max-w-4xl text-muted-foreground">
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed mb-10 sm:mb-14 max-w-4xl text-muted-foreground">
               The Knowledge Base is Hobson's persistent memory about your business. Not just documents — how you operate. It stores your contractors and contacts, your policies and procedures, your compliance register, your communication preferences and your business rules. Every answer Hobson gives, every draft it produces, every action it takes is shaped by what it knows about you. The longer you use Hobson, the better it gets.
             </p>
 
-            <div className="grid sm:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
               {knowledgeTiles.map((tile, i) => (
                 <div
                   key={i}
-                  className="p-6 rounded-lg border border-border bg-card hover:border-primary/40 transition-colors"
+                  className="p-4 sm:p-6 rounded-lg border border-border bg-card hover:border-primary/40 transition-colors"
                 >
                   <div className="mb-4">{tile.icon}</div>
                   <h3 className="text-lg font-semibold text-foreground mb-2">{tile.title}</h3>
@@ -296,10 +296,10 @@ const Pricing = () => {
         </section>
 
         {/* 3. Pricing Table */}
-        <section className="py-20 md:py-28 bg-background" id="pricing-table">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-3xl md:text-4xl font-bold mb-3 text-foreground">
+        <section className="py-12 md:py-28 bg-background" id="pricing-table">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6">
+            <div className="text-center mb-8 sm:mb-16">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-foreground">
                 Simple, honest pricing
               </h2>
               <p className="text-lg text-muted-foreground">
@@ -308,7 +308,7 @@ const Pricing = () => {
             </div>
 
             {/* Billing toggle */}
-            <div className="flex items-center justify-center gap-1 mb-10">
+            <div className="flex flex-wrap items-center justify-center gap-1 mb-6 sm:mb-10">
               <div className="inline-flex items-center rounded-full border border-border bg-muted p-1">
                 <button
                   onClick={() => setIsAnnual(false)}
@@ -338,7 +338,7 @@ const Pricing = () => {
 
 
             {/* All tiers in a single row */}
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
               {tiers.map((tier, i) => {
                 const isWaitlist = tier.tier >= 2;
                 const isEntry = tier.tier === 1;
@@ -414,11 +414,11 @@ const Pricing = () => {
             </div>
 
             {/* Shared feature list for Tiers 2-4 */}
-            <div className="mt-8 rounded-xl p-8 bg-muted border border-border">
+            <div className="mt-6 sm:mt-8 rounded-xl p-4 sm:p-8 bg-muted border border-border">
               <h3 className="text-lg font-semibold mb-5 text-foreground">
                 Included in Tiers 2, 3 and 4
               </h3>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2.5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2.5">
                 {sharedFeatures.map((f, fi) => (
                   <div key={fi} className="flex items-start gap-2.5 text-sm text-foreground">
                     <span className="mt-0.5 flex-shrink-0"><CheckIcon /></span>
@@ -432,7 +432,7 @@ const Pricing = () => {
             </div>
 
             {/* Enterprise row */}
-            <div className="mt-10 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-muted">
+            <div className="mt-6 sm:mt-10 rounded-xl p-4 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-muted text-center md:text-left">
               <div>
                 <p className="text-lg font-semibold text-foreground">More than 10 users?</p>
                 <p className="text-sm text-muted-foreground">Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
@@ -448,18 +448,18 @@ const Pricing = () => {
         </section>
 
         {/* 4. Comparison callout */}
-        <section className="py-16 md:py-20 bg-muted">
-          <div className="max-w-4xl mx-auto px-6 text-center">
-            <p className="text-xl md:text-2xl italic leading-relaxed text-foreground">
+        <section className="py-10 md:py-20 bg-muted">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+            <p className="text-base sm:text-xl md:text-2xl italic leading-relaxed text-foreground">
               A 10-user team on individual Tier 2 accounts pays £625/month. Tier 4 costs £449 — and gives them full agentic workflows. The upgrade conversation takes ten seconds.
             </p>
           </div>
         </section>
 
         {/* 5. FAQ */}
-        <section className="py-20 md:py-28 bg-background">
-          <div className="max-w-3xl mx-auto px-6">
-            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-foreground">
+        <section className="py-12 md:py-28 bg-background">
+          <div className="max-w-3xl mx-auto px-4 sm:px-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-center text-foreground">
               Common questions
             </h2>
 
