@@ -187,7 +187,7 @@ export const HomepageABTest = () => {
                       See pricing
                       <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                     </div>
-                  </a>
+                  </Link>
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
