@@ -21,6 +21,7 @@ export const HomepageFooter = () => {
           <div>
             <h4 className="font-semibold text-foreground mb-4">{text.company}</h4>
             <div className="space-y-2">
+              <Link to="/pricing" className="block text-muted-foreground hover:text-foreground transition-colors" title="Hobson AI Pricing Plans">Pricing</Link>
               {!hideExtraNavItems && (
                 <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors" title="Property Management Insights - Expert perspectives on AI and real estate technology">{text.blog}</Link>
               )}

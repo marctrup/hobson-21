@@ -123,6 +123,55 @@ export const getBlogStructuredData = () => ({
   }
 });
 
+export const getPricingStructuredData = () => ({
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Hobson AI Pricing Plans",
+  "description": "Compare Hobson AI pricing tiers. Start free or choose a plan that fits your property management needs with monthly and annual billing options.",
+  "url": "https://hobsonschoice.ai/pricing",
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Hobson's Choice AI",
+    "url": "https://hobsonschoice.ai"
+  },
+  "mainEntity": {
+    "@type": "Product",
+    "name": "Hobson AI",
+    "description": "AI-powered document intelligence for property management professionals.",
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Tier 1",
+        "price": "19.50",
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/InStock",
+        "priceValidUntil": "2026-12-31"
+      },
+      {
+        "@type": "Offer",
+        "name": "Tier 2",
+        "price": "125.00",
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/PreOrder"
+      },
+      {
+        "@type": "Offer",
+        "name": "Tier 3",
+        "price": "195.00",
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/PreOrder"
+      },
+      {
+        "@type": "Offer",
+        "name": "Tier 4",
+        "price": "350.00",
+        "priceCurrency": "GBP",
+        "availability": "https://schema.org/PreOrder"
+      }
+    ]
+  }
+});
+
 export const getBreadcrumbStructuredData = (items: Array<{ name: string; url: string }>) => ({
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",

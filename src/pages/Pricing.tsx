@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 
 import { Helmet } from "react-helmet-async";
+import { getPricingStructuredData, getOrganizationStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import owlMascot from "@/assets/owl-mascot.png";
 
@@ -262,8 +263,14 @@ const Pricing = () => {
     <>
       <Helmet>
         <title>Pricing | Hobson AI — Specialised AI for Property Management</title>
-        <meta name="description" content="Simple, honest pricing for AI-powered property management. Start with what you need — Hobson grows as your trust grows. 7-day free trial on Tier 2, no credit card required." />
+        <meta name="description" content="Compare Hobson AI pricing tiers. Start free or choose a plan that fits your property management needs with monthly and annual billing options." />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
+        <script type="application/ld+json">{JSON.stringify(getPricingStructuredData())}</script>
+        <script type="application/ld+json">{JSON.stringify(getOrganizationStructuredData())}</script>
+        <script type="application/ld+json">{JSON.stringify(getBreadcrumbStructuredData([
+          { name: "Home", url: "https://hobsonschoice.ai" },
+          { name: "Pricing", url: "https://hobsonschoice.ai/pricing" }
+        ]))}</script>
       </Helmet>
 
       <GlobalHeader />
