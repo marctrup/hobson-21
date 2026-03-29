@@ -188,14 +188,6 @@ const faqs = [
     a: "It is Hobson's memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your communication style is — and it remembers permanently. Every answer and every action it takes reflects what it knows about you.",
   },
   {
-    q: "Is my data secure?",
-    a: "Every client's data is fully isolated. Hobson never shares data between companies. Every action is sourced, auditable and reversible. Built for the regulated environment of property management.",
-  },
-  {
-    q: "What counts as a seat?",
-    a: "A seat is a named user who can log in and interact with Hobson. Tier 1 is per person. Tiers 2–4 are per account with a seat allowance — a Tier 3 account supports up to 5 named users.",
-  },
-  {
     q: "What is the difference between tiers?",
     a: "Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced answers. What it does not have is the Knowledge Base. Hobson on Tier 1 does not know your business. It knows your documents.\n\nTiers 2, 3 and 4 are the same product. Every feature, every capability, the full Knowledge Base — identical across all three. The only decision is how many people need access. Same Hobson, more seats, better value per seat as you go up.",
   },
