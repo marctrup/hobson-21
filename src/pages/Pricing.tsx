@@ -197,7 +197,7 @@ const faqs = [
   },
   {
     q: "What is the difference between tiers?",
-    a: "Tier 1 gives you AI document reasoning without the Knowledge Base — ideal for a sole operator testing Hobson. Tiers 2, 3 and 4 are identical in capability. The only difference is how many seats are included and the price per seat. A 5-person team on Tier 3 has exactly the same Hobson as a 2-person team on Tier 2.",
+    a: "Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced answers. What it does not have is the Knowledge Base. Hobson on Tier 1 does not know your business. It knows your documents.\n\nTiers 2, 3 and 4 are the same product. Every feature, every capability, the full Knowledge Base — identical across all three. The only decision is how many people need access. Same Hobson, more seats, better value per seat as you go up.",
   },
   {
     q: "Can I start on Tier 1 and upgrade?",
