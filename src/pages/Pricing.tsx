@@ -250,7 +250,7 @@ const Pricing = () => {
                 The Real Deal — <span className="text-primary">True Agentic Workflows</span>
               </h1>
               <p className="text-lg text-muted-foreground">
-                Hobson grows as it learns.
+                Hobson Grows As It Learns.
               </p>
             </div>
 
