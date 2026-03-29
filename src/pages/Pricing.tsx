@@ -212,6 +212,7 @@ const Pricing = () => {
   const [waitlistOpen, setWaitlistOpen] = useState(false);
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+  const [isAnnual, setIsAnnual] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
