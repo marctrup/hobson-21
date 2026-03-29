@@ -54,7 +54,7 @@ const SlidersIcon = () => (
 
 const tiers = [
   {
-    name: "Solo",
+    name: "",
     tier: 1,
     price: "£19.50",
     priceMonthly: 19.50,
@@ -78,7 +78,7 @@ const tiers = [
     highlighted: false,
   },
   {
-    name: "Duo",
+    name: "",
     tier: 2,
     price: "£125.00",
     priceMonthly: 125.00,
@@ -95,7 +95,7 @@ const tiers = [
     highlighted: true,
   },
   {
-    name: "Five",
+    name: "",
     tier: 3,
     price: "£249.00",
     priceMonthly: 249.00,
@@ -112,7 +112,7 @@ const tiers = [
     highlighted: false,
   },
   {
-    name: "Ten",
+    name: "",
     tier: 4,
     price: "£449.00",
     priceMonthly: 449.00,
@@ -358,7 +358,7 @@ const Pricing = () => {
                   >
                     <div className="mb-4">
                       <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isEntry ? "text-primary" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
-                      <h3 className="text-xl font-bold mb-1 text-foreground">{tier.name}</h3>
+                      {tier.name && <h3 className="text-xl font-bold mb-1 text-foreground">{tier.name}</h3>}
                       <p className="text-xs text-muted-foreground">{tier.label}</p>
                     </div>
                     <div className="mb-4">
