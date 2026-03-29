@@ -246,12 +246,9 @@ const Pricing = () => {
         <section className="pt-12 md:pt-28 pb-12 md:pb-28 bg-background" id="pricing-table">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-8 sm:mb-16">
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-foreground">
-                The Real Deal — <span className="text-primary">True Agentic Workflows</span>
-              </h1>
-              <p className="text-lg text-muted-foreground">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
                 Hobson Grows As It Learns.
-              </p>
+              </h1>
             </div>
 
             {/* Billing toggle */}
