@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import owlMascot from "@/assets/owl-mascot.png";
@@ -133,6 +133,10 @@ const sharedFeatures = [
 
 const faqs = [
   {
+    q: "When will Tiers 2, 3 and 4 be available?",
+    a: "We are currently in live testing with our first clients on Tier 1. Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform — are launching soon. Join the waitlist to be notified first and to lock in founding member pricing.",
+  },
+  {
     q: "Do I need to replace my existing property management software?",
     a: "No. Hobson works alongside the tools you already use — Arthur, Yardi, MRI, Fixflo, Xero. It reads your documents and acts within your existing workflows. No rip-and-replace required.",
   },
@@ -193,6 +197,9 @@ const Pricing = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const tier2Ref = useRef<HTMLDivElement>(null);
   const [tier2Visible, setTier2Visible] = useState(false);
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
+  const [waitlistEmail, setWaitlistEmail] = useState("");
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -284,11 +291,34 @@ const Pricing = () => {
               </p>
             </div>
 
+            {/* Banner for Tiers 2-4 */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {/* Tier 1 card - no banner above */}
+              <div className="col-span-1" />
+              {/* Banner spanning Tiers 2-4 */}
+              <div className="hidden lg:block col-span-3">
+                <div className="rounded-lg px-5 py-3 mb-3 text-center bg-primary/10 border border-primary/20">
+                  <p className="text-sm font-medium text-primary">
+                    Knowledge Base tiers launching soon — join the waitlist for founding member pricing.
+                  </p>
+                </div>
+              </div>
+            </div>
+            {/* Mobile banner */}
+            <div className="lg:hidden mb-4">
+              <div className="rounded-lg px-5 py-3 text-center bg-primary/10 border border-primary/20">
+                <p className="text-sm font-medium text-primary">
+                  Knowledge Base tiers launching soon — join the waitlist for founding member pricing.
+                </p>
+              </div>
+            </div>
+
             {/* All tiers in a single row */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {tiers.map((tier, i) => {
                 const isPop = tier.popular;
                 const isHighlighted = tier.highlighted;
+                const isWaitlist = tier.tier >= 2;
                 return (
                   <div
                     key={i}
@@ -306,20 +336,20 @@ const Pricing = () => {
                     )}
                     <div className="mb-4">
                       <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
-                      <h3 className={`text-xl font-bold mb-1 ${isHighlighted ? "text-foreground" : "text-foreground"}`}>{tier.name}</h3>
-                      <p className={`text-xs ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.label}</p>
+                      <h3 className="text-xl font-bold mb-1 text-foreground">{tier.name}</h3>
+                      <p className="text-xs text-muted-foreground">{tier.label}</p>
                     </div>
                     <div className="mb-4">
-                      <span className={`text-3xl font-bold ${isHighlighted ? "text-foreground" : "text-foreground"}`}>{tier.price}</span>
-                      <span className={`text-sm ml-1 ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.period}</span>
+                      <span className="text-3xl font-bold text-foreground">{tier.price}</span>
+                      <span className="text-sm ml-1 text-muted-foreground">{tier.period}</span>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className={`text-xs ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.seats}</span>
+                        <span className="text-xs text-muted-foreground">{tier.seats}</span>
                         {tier.perSeat && (
-                          <span className={`text-xs ${isHighlighted ? "text-muted-foreground/70" : "text-muted-foreground/70"}`}>({tier.perSeat})</span>
+                          <span className="text-xs text-muted-foreground/70">({tier.perSeat})</span>
                         )}
                       </div>
                     </div>
-                    <p className={`text-sm leading-relaxed mb-6 ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.description}</p>
+                    <p className="text-sm leading-relaxed mb-6 text-muted-foreground">{tier.description}</p>
                     {/* Tier 1 feature list */}
                     {tier.features && (
                       <ul className="space-y-2.5 mb-6">
@@ -332,11 +362,18 @@ const Pricing = () => {
                       </ul>
                     )}
                     <div className="mt-auto">
-                      <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
-                        className={`block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 ${
-                          isPop ? "bg-primary text-primary-foreground" : "bg-primary text-primary-foreground"
-                        }`}
-                      >{tier.cta}</a>
+                      {isWaitlist ? (
+                        <button
+                          onClick={() => { setWaitlistSubmitted(false); setWaitlistEmail(""); setWaitlistOpen(true); }}
+                          className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:bg-primary/10 border-2 border-primary text-primary"
+                        >
+                          Join the waitlist
+                        </button>
+                      ) : (
+                        <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
+                          className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 bg-primary text-primary-foreground"
+                        >{tier.cta}</a>
+                      )}
                     </div>
                   </div>
                 );
@@ -367,10 +404,12 @@ const Pricing = () => {
                 <p className="text-lg font-semibold text-foreground">More than 10 users?</p>
                 <p className="text-sm text-muted-foreground">Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
               </div>
-              <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity whitespace-nowrap text-primary">
-                Book a call
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.333 8h9.334M8.667 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </Link>
+              <button
+                onClick={() => { setWaitlistSubmitted(false); setWaitlistEmail(""); setWaitlistOpen(true); }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:bg-primary/10 border-2 border-primary text-primary whitespace-nowrap"
+              >
+                Register interest
+              </button>
             </div>
           </div>
         </section>
@@ -423,6 +462,51 @@ const Pricing = () => {
         </section>
 
       </main>
+
+      {/* Waitlist Modal */}
+      {waitlistOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 backdrop-blur-sm" onClick={() => setWaitlistOpen(false)}>
+          <div className="bg-card border border-border rounded-xl p-8 max-w-md w-full mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+            {waitlistSubmitted ? (
+              <div className="text-center py-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <CheckIcon />
+                </div>
+                <p className="text-lg font-semibold text-foreground mb-2">You're on the list.</p>
+                <p className="text-sm text-muted-foreground">We'll be in touch.</p>
+                <button onClick={() => setWaitlistOpen(false)} className="mt-6 text-sm font-medium text-primary hover:opacity-80 transition-opacity">
+                  Close
+                </button>
+              </div>
+            ) : (
+              <>
+                <h3 className="text-xl font-bold text-foreground mb-2">Join the waitlist</h3>
+                <p className="text-sm text-muted-foreground mb-6">Be first to know when we launch. No spam, ever.</p>
+                <form onSubmit={e => {
+                  e.preventDefault();
+                  if (waitlistEmail.trim()) setWaitlistSubmitted(true);
+                }}>
+                  <input
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    value={waitlistEmail}
+                    onChange={e => setWaitlistEmail(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 mb-4"
+                    autoFocus
+                  />
+                  <button type="submit" className="w-full py-3 rounded-lg text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
+                    Join waitlist
+                  </button>
+                </form>
+                <button onClick={() => setWaitlistOpen(false)} className="w-full mt-3 text-sm text-muted-foreground hover:text-foreground transition-colors text-center">
+                  Cancel
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };
