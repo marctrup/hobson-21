@@ -5,7 +5,7 @@ const stages = [
   {
     icon: FileCheck,
     title: "Read & Understand",
-    copy: "Ask anything about any document. Instantly.",
+    copy: "Ask anything about any contract, lease or compliance document. Get an instant, sourced answer.",
     status: "Live today",
     statusClass: "bg-primary text-primary-foreground",
     active: true,
@@ -14,7 +14,7 @@ const stages = [
   {
     icon: Brain,
     title: "Know Your Business",
-    copy: "Hobson learns how you work, not just what your leases say.",
+    copy: "Hobson remembers everything that makes your business yours. Your contractors, your contacts, your policies, your obligations. Every answer reflects how you work — not how anyone else does.",
     status: "Building now",
     statusClass: "bg-amber-500/90 text-white",
     active: true,
@@ -22,8 +22,8 @@ const stages = [
   },
   {
     icon: Zap,
-    title: "Act Autonomously",
-    copy: "Your portfolio managed. Before you even ask.",
+    title: "Act on Your Behalf",
+    copy: "Deadlines met. Notices drafted. Certificates filed. Hobson handles the work between the reminder and the resolution — with you in control at every step.",
     status: "Coming soon",
     statusClass: "bg-muted/40 text-muted-foreground border border-border",
     active: false,
@@ -49,7 +49,7 @@ export const HobsonJourneySection = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 bg-muted/30 text-foreground relative overflow-hidden"
+      className="py-16 bg-muted/30 text-foreground relative overflow-hidden"
     >
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
@@ -63,6 +63,9 @@ export const HobsonJourneySection = () => {
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto">
               A product roadmap told as a story — not a feature list.
+            </p>
+            <p className="text-sm text-muted-foreground/70 max-w-xl mx-auto mt-2">
+              A product built on trust — earned one action at a time.
             </p>
           </div>
 
