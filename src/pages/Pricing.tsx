@@ -73,7 +73,7 @@ const tiers = [
       { text: "Workflow automation", included: false },
       { text: "Action memory", included: false },
     ],
-    cta: "Get started",
+    cta: "Start 3-day free trial",
     popular: false,
     highlighted: false,
   },
