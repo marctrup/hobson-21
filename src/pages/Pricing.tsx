@@ -361,7 +361,7 @@ const Pricing = () => {
                 const isPop = tier.popular;
                 const isHighlighted = tier.highlighted;
                 const isWaitlist = tier.tier >= 2;
-                const hasAnnual = isAnnual && tier.tier >= 2 && tier.priceAnnualMonthly;
+                const hasAnnual = isAnnual && tier.priceAnnualMonthly;
                 const displayPrice = hasAnnual ? `£${tier.priceAnnualMonthly!.toFixed(2)}` : tier.price;
                 const displayPerSeat = hasAnnual && tier.seatCount
                   ? `£${(tier.priceAnnualMonthly! / tier.seatCount).toFixed(2)}/seat`
