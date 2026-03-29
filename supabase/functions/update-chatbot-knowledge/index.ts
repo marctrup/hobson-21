@@ -534,40 +534,36 @@ serve(async (req) => {
     const useCasesCount = useCasesContent.length > 100 ? 1 : 0;
     const glossaryTermCount = glossaryData?.length || 0;
 
-    // Pricing page FAQ content
+    // Pricing page FAQ content — kept in sync with src/pages/Pricing.tsx faqs[]
     const pricingFaqContent = `
 ## Pricing Page FAQs
 
-**Do I need to replace my existing property management software?**
-No. Hobson works alongside the tools you already use — Arthur, Yardi, MRI, Fixflo, Xero. It reads your documents and acts within your existing workflows. No rip-and-replace required.
+**When will Tiers 2, 3 and 4 be available?**
+We are currently working on Tier 1. Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform — are launching later in the year. Join the waitlist to be notified first and to lock in founding member pricing.
 
 **What is the Knowledge Base exactly?**
 It is Hobson's memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your communication style is — and it remembers permanently. Every answer and every action it takes reflects what it knows about you.
 
-**Is my data secure?**
-Every client's data is fully isolated. Hobson never shares data between companies. Every action is sourced, auditable and reversible. Built for the regulated environment of property management.
-
-**What counts as a seat?**
-A seat is a named user who can log in and interact with Hobson. Tier 1 is per person. Tiers 2–4 are per account with a seat allowance — a Tier 3 account supports up to 5 named users.
-
 **What is the difference between tiers?**
-Tier 1 gives you AI document reasoning without the Knowledge Base — ideal for a sole operator testing Hobson. Tiers 2, 3 and 4 are identical in capability. The only difference is how many seats are included and the price per seat. A 5-person team on Tier 3 has exactly the same Hobson as a 2-person team on Tier 2.
+Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced answers. What it does not have is the Knowledge Base. Hobson on Tier 1 does not know your business. It knows your documents.
+
+Tiers 2, 3 and 4 are the same product. Every feature, every capability, the full Knowledge Base — identical across all three. The only decision is how many people need access. Same Hobson, more seats, better value per seat as you go up.
 
 **Can I start on Tier 1 and upgrade?**
 Yes. Your Knowledge Base is built as you go — when you upgrade to Tier 2, everything you have taught Hobson stays. There is no reset.
 
 **Is there a free trial?**
-Yes. Tier 2 comes with a 7-day free trial. No credit card required.
+Yes. Tier 1 comes with a 3-day free trial. No credit card required and limited credits to try with.
 
 **Are there usage limits?**
 No. All paid plans include unlimited queries, document ingestion and workflow runs. We operate a fair use policy for accounts showing usage patterns inconsistent with normal business operations — but in practice this never affects our clients.
 
 ## Pricing Tiers
-- Tier 1 (Entry): £19.50/month, 1 seat, no Knowledge Base — multi-document AI reasoning, plain English queries, real estate domain accuracy, sourced auditable answers.
-- Tier 2 (Professional): £125.00/month, 2 seats (£62.50/seat), full platform including Knowledge Base, workflow automation, action memory.
-- Tier 3 (Team): £249.00/month, 5 seats (£49.80/seat), identical features to Tier 2.
-- Tier 4 (Scale): £449.00/month, 10 seats (£44.90/seat), identical features to Tier 2. Best per-seat value.
-- Enterprise: Contact sales for 10+ users.
+- Tier 1 (Entry): £19.50/month (£15.60/month annual), 1 seat, 3-day free trial, no Knowledge Base — multi-document AI reasoning, plain English queries, real estate domain accuracy, sourced auditable answers.
+- Tier 2 (Professional): £125.00/month (£100.00/month annual), 3 seats (£41.67/seat monthly), full platform including Knowledge Base, workflow automation, action memory.
+- Tier 3 (Team): £249.00/month (£199.20/month annual), 5 seats (£49.80/seat monthly), identical features to Tier 2.
+- Tier 4 (Scale): £449.00/month (£359.20/month annual), 10 seats (£44.90/seat monthly), identical features to Tier 2. Best per-seat value.
+- Enterprise: Usage-based pricing, not headcount-based. Contact sales for 10+ users.
 All paid plans include every feature. You are choosing your team size, not your capability.
     `.trim();
 
