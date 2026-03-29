@@ -2,52 +2,53 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import owlMascot from "@/assets/owl-mascot.png";
 
-// Inline SVG icons
+// Inline SVG icons using brand green/red
 const CheckIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16.667 5L7.5 14.167 3.333 10" stroke="#1A7A4A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <path d="M16.667 5L7.5 14.167 3.333 10" stroke="hsl(152 64% 29%)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
 const CrossIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M15 5L5 15M5 5l10 10" stroke="#CC0000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <path d="M15 5L5 15M5 5l10 10" stroke="hsl(0 84% 60%)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
-// Knowledge Base feature tile icons
+// Knowledge Base feature tile icons — using primary purple
 const ContactsIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <circle cx="16" cy="12" r="4" stroke="#E94560" strokeWidth="1.5"/>
-    <circle cx="8" cy="20" r="2.5" stroke="#E94560" strokeWidth="1.5"/>
-    <circle cx="24" cy="20" r="2.5" stroke="#E94560" strokeWidth="1.5"/>
-    <path d="M16 16v4M12 22l-2-1M20 22l2-1" stroke="#E94560" strokeWidth="1.5" strokeLinecap="round"/>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <circle cx="16" cy="12" r="4" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
+    <circle cx="8" cy="20" r="2.5" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
+    <circle cx="24" cy="20" r="2.5" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
+    <path d="M16 16v4M12 22l-2-1M20 22l2-1" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round"/>
   </svg>
 );
 
 const PolicyIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="8" y="4" width="16" height="24" rx="2" stroke="#E94560" strokeWidth="1.5"/>
-    <path d="M12 12h8M12 16h8M12 20h5" stroke="#E94560" strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M22 10l2 2-2 2" stroke="#E94560" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <rect x="8" y="4" width="16" height="24" rx="2" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
+    <path d="M12 12h8M12 16h8M12 20h5" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M22 10l2 2-2 2" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
 const ShieldIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M16 4L6 9v7c0 6.627 4.477 12.164 10 14 5.523-1.836 10-7.373 10-14V9L16 4z" stroke="#E94560" strokeWidth="1.5"/>
-    <circle cx="16" cy="16" r="3" stroke="#E94560" strokeWidth="1.5"/>
-    <path d="M16 13v-2M16 21v-2M19 16h2M11 16h2" stroke="#E94560" strokeWidth="1.5" strokeLinecap="round"/>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M16 4L6 9v7c0 6.627 4.477 12.164 10 14 5.523-1.836 10-7.373 10-14V9L16 4z" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
+    <circle cx="16" cy="16" r="3" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
+    <path d="M16 13v-2M16 21v-2M19 16h2M11 16h2" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round"/>
   </svg>
 );
 
 const SlidersIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M8 10h16M8 16h16M8 22h16" stroke="#E94560" strokeWidth="1.5" strokeLinecap="round"/>
-    <circle cx="13" cy="10" r="2.5" fill="#1A1A2E" stroke="#E94560" strokeWidth="1.5"/>
-    <circle cx="20" cy="16" r="2.5" fill="#1A1A2E" stroke="#E94560" strokeWidth="1.5"/>
-    <circle cx="11" cy="22" r="2.5" fill="#1A1A2E" stroke="#E94560" strokeWidth="1.5"/>
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+    <path d="M8 10h16M8 16h16M8 22h16" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="13" cy="10" r="2.5" fill="hsl(var(--foreground))" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
+    <circle cx="20" cy="16" r="2.5" fill="hsl(var(--foreground))" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
+    <circle cx="11" cy="22" r="2.5" fill="hsl(var(--foreground))" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
   </svg>
 );
 
@@ -71,7 +72,7 @@ const tiers = [
     ],
     cta: "Get started",
     popular: false,
-    dark: false,
+    highlighted: false,
   },
   {
     name: "Professional",
@@ -84,7 +85,7 @@ const tiers = [
     description: "Hobson learns your business. Contractors, contacts, policies, compliance deadlines and how you work — all stored, all active. Every answer is shaped by what Hobson knows about you.",
     cta: "Start free trial",
     popular: true,
-    dark: true,
+    highlighted: true,
   },
   {
     name: "Team",
@@ -97,7 +98,7 @@ const tiers = [
     description: "The same Hobson, for a bigger team. Five seats with full access to every feature — Knowledge Base, workflows, action memory and more.",
     cta: "Start free trial",
     popular: false,
-    dark: false,
+    highlighted: false,
   },
   {
     name: "Scale",
@@ -110,7 +111,7 @@ const tiers = [
     description: "Your best per-seat value. Ten seats with full access to every feature. Built for teams running serious portfolios.",
     cta: "Start free trial",
     popular: false,
-    dark: false,
+    highlighted: false,
   },
 ];
 
@@ -209,40 +210,42 @@ const Pricing = () => {
         <title>Pricing | Hobson AI — Specialised AI for Property Management</title>
         <meta name="description" content="Simple, honest pricing for AI-powered property management. Start with what you need — Hobson grows as your trust grows. 14-day free trial, no credit card required." />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
-        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
       </Helmet>
 
       <GlobalHeader />
 
-      <main id="main-content" style={{ fontFamily: "'DM Sans', sans-serif" }}>
+      <main id="main-content">
         {/* 1. Hero Section */}
-        <section className="py-20 md:py-28" style={{ backgroundColor: "#FFFFFF" }}>
+        <section className="py-20 md:py-28 bg-background">
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <h1
-              className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6"
-              style={{ fontFamily: "'DM Serif Display', serif", color: "#1A1A2E" }}
-            >
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-foreground">
               Your tools remind you. Hobson does the work.
             </h1>
-            <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto" style={{ color: "#6B6B8A" }}>
+            <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto text-muted-foreground">
               Hobson works alongside your existing systems — not instead of them. It reads the lease, books the inspection, drafts the notice and updates the register. The work gets done.
             </p>
           </div>
         </section>
 
         {/* 2. Knowledge Base Section */}
-        <section style={{ backgroundColor: "#1A1A2E" }} className="py-20 md:py-28">
+        <section className="py-20 md:py-28 bg-foreground">
           <div className="max-w-6xl mx-auto px-6">
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-6 text-white"
-              style={{ fontFamily: "'DM Serif Display', serif" }}
-            >
-              The Knowledge Base
-            </h2>
-            <p className="text-xl md:text-2xl text-white/80 italic mb-8 max-w-3xl">
-              Most AI tools answer questions. Hobson remembers your business.
-            </p>
-            <p className="text-base md:text-lg leading-relaxed mb-14 max-w-4xl" style={{ color: "rgba(255,255,255,0.7)" }}>
+            <div className="flex items-start gap-6 mb-6">
+              <div className="flex-1">
+                <h2 className="text-3xl md:text-4xl font-bold mb-6 text-background">
+                  The Knowledge Base
+                </h2>
+                <p className="text-xl md:text-2xl text-background/70 italic mb-8 max-w-3xl">
+                  Most AI tools answer questions. Hobson remembers your business.
+                </p>
+              </div>
+              <img
+                src={owlMascot}
+                alt="Hobson AI owl mascot"
+                className="hidden md:block w-24 h-24 object-contain opacity-90"
+              />
+            </div>
+            <p className="text-base md:text-lg leading-relaxed mb-14 max-w-4xl text-background/60">
               The Knowledge Base is Hobson's persistent memory about your business. Not just documents — how you operate. It stores your contractors and contacts, your policies and procedures, your compliance register, your communication preferences and your business rules. Every answer Hobson gives, every draft it produces, every action it takes is shaped by what it knows about you. The longer you use Hobson, the better it gets.
             </p>
 
@@ -250,70 +253,62 @@ const Pricing = () => {
               {knowledgeTiles.map((tile, i) => (
                 <div
                   key={i}
-                  className="p-6 rounded-lg border transition-colors hover:border-[#E94560]/40"
-                  style={{ backgroundColor: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.1)" }}
+                  className="p-6 rounded-lg border border-background/10 bg-background/[0.04] hover:border-primary/40 transition-colors"
                 >
                   <div className="mb-4">{tile.icon}</div>
-                  <h3 className="text-lg font-semibold text-white mb-2">{tile.title}</h3>
-                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.6)" }}>
+                  <h3 className="text-lg font-semibold text-background mb-2">{tile.title}</h3>
+                  <p className="text-sm leading-relaxed text-background/50">
                     {tile.copy}
                   </p>
                 </div>
               ))}
             </div>
 
-            <p className="mt-12 text-sm" style={{ color: "rgba(255,255,255,0.4)" }}>
+            <p className="mt-12 text-sm text-background/30">
               Tier 1 operates without the Knowledge Base. Tiers 2–4 unlock it. This is the difference.
             </p>
           </div>
         </section>
 
         {/* 3. Pricing Table */}
-        <section className="py-20 md:py-28" style={{ backgroundColor: "#FFFFFF" }} id="pricing-table">
+        <section className="py-20 md:py-28 bg-background" id="pricing-table">
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
-              <h2
-                className="text-3xl md:text-4xl font-bold mb-3"
-                style={{ fontFamily: "'DM Serif Display', serif", color: "#1A1A2E" }}
-              >
+              <h2 className="text-3xl md:text-4xl font-bold mb-3 text-foreground">
                 Simple, honest pricing
               </h2>
-              <p className="text-lg" style={{ color: "#6B6B8A" }}>
+              <p className="text-lg text-muted-foreground">
                 Start with what you need. Hobson grows as your trust grows.
               </p>
             </div>
 
-            {/* Tier 1 — standalone with its own features */}
+            {/* Tier 1 — standalone */}
             {(() => {
               const tier1 = tiers[0];
               return (
                 <div className="max-w-sm mx-auto mb-16">
-                  <div
-                    className="relative rounded-xl p-6 flex flex-col shadow-sm hover:shadow-md transition-all"
-                    style={{ backgroundColor: "#FFFFFF", border: "1px solid #E5E5EA" }}
-                  >
+                  <div className="relative rounded-xl p-6 flex flex-col shadow-sm hover:shadow-md transition-all bg-card border border-border">
                     <div className="mb-4">
-                      <p className="text-xs font-medium uppercase tracking-wider mb-1" style={{ color: "#6B6B8A" }}>Tier 1</p>
-                      <h3 className="text-xl font-bold mb-1" style={{ color: "#1A1A2E", fontFamily: "'DM Serif Display', serif" }}>{tier1.name}</h3>
-                      <p className="text-xs" style={{ color: "#6B6B8A" }}>{tier1.label}</p>
+                      <p className="text-xs font-medium uppercase tracking-wider mb-1 text-muted-foreground">Tier 1</p>
+                      <h3 className="text-xl font-bold mb-1 text-foreground">{tier1.name}</h3>
+                      <p className="text-xs text-muted-foreground">{tier1.label}</p>
                     </div>
                     <div className="mb-4">
-                      <span className="text-3xl font-bold" style={{ color: "#1A1A2E" }}>{tier1.price}</span>
-                      <span className="text-sm ml-1" style={{ color: "#6B6B8A" }}>{tier1.period}</span>
-                      <div className="mt-1"><span className="text-xs" style={{ color: "#6B6B8A" }}>{tier1.seats}</span></div>
+                      <span className="text-3xl font-bold text-foreground">{tier1.price}</span>
+                      <span className="text-sm ml-1 text-muted-foreground">{tier1.period}</span>
+                      <div className="mt-1"><span className="text-xs text-muted-foreground">{tier1.seats}</span></div>
                     </div>
-                    <p className="text-sm leading-relaxed mb-6" style={{ color: "#6B6B8A" }}>{tier1.description}</p>
+                    <p className="text-sm leading-relaxed mb-6 text-muted-foreground">{tier1.description}</p>
                     <ul className="space-y-2.5 mb-8 flex-1">
                       {tier1.features!.map((f, fi) => (
-                        <li key={fi} className="flex items-start gap-2.5 text-sm" style={{ color: "#1A1A2E" }}>
+                        <li key={fi} className="flex items-start gap-2.5 text-sm text-foreground">
                           <span className="mt-0.5 flex-shrink-0">{f.included ? <CheckIcon /> : <CrossIcon />}</span>
                           <span className={f.included ? "" : "opacity-50"}>{f.text}</span>
                         </li>
                       ))}
                     </ul>
                     <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
-                      className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90"
-                      style={{ backgroundColor: "#1A1A2E", color: "#FFFFFF" }}
+                      className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 bg-primary text-primary-foreground"
                     >{tier1.cta}</a>
                   </div>
                 </div>
@@ -323,8 +318,8 @@ const Pricing = () => {
             {/* Tiers 2, 3, 4 — cards */}
             <div className="grid md:grid-cols-3 gap-6">
               {tiers.slice(1).map((tier, i) => {
-                const isDark = tier.dark;
                 const isPop = tier.popular;
+                const isHighlighted = tier.highlighted;
                 return (
                   <div
                     key={i}
@@ -333,36 +328,33 @@ const Pricing = () => {
                       isPop
                         ? `${tier2Visible ? "scale-[1.02] shadow-2xl" : "scale-100 shadow-lg"}`
                         : "shadow-sm hover:shadow-md"
-                    }`}
-                    style={{
-                      backgroundColor: isDark ? "#1A1A2E" : "#FFFFFF",
-                      border: isPop ? "2px solid #E94560" : "1px solid #E5E5EA",
-                    }}
+                    } ${isHighlighted ? "bg-foreground border-2 border-primary" : "bg-card border border-border"}`}
                   >
                     {isPop && (
-                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full text-white" style={{ backgroundColor: "#E94560" }}>
+                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full bg-primary text-primary-foreground">
                         MOST POPULAR
                       </span>
                     )}
                     <div className="mb-4">
-                      <p className="text-xs font-medium uppercase tracking-wider mb-1" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>Tier {tier.tier}</p>
-                      <h3 className="text-xl font-bold mb-1" style={{ color: isDark ? "#FFFFFF" : "#1A1A2E", fontFamily: "'DM Serif Display', serif" }}>{tier.name}</h3>
-                      <p className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>{tier.label}</p>
+                      <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isHighlighted ? "text-background/50" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
+                      <h3 className={`text-xl font-bold mb-1 ${isHighlighted ? "text-background" : "text-foreground"}`}>{tier.name}</h3>
+                      <p className={`text-xs ${isHighlighted ? "text-background/50" : "text-muted-foreground"}`}>{tier.label}</p>
                     </div>
                     <div className="mb-4">
-                      <span className="text-3xl font-bold" style={{ color: isDark ? "#FFFFFF" : "#1A1A2E" }}>{tier.price}</span>
-                      <span className="text-sm ml-1" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>{tier.period}</span>
+                      <span className={`text-3xl font-bold ${isHighlighted ? "text-background" : "text-foreground"}`}>{tier.price}</span>
+                      <span className={`text-sm ml-1 ${isHighlighted ? "text-background/50" : "text-muted-foreground"}`}>{tier.period}</span>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.5)" : "#6B6B8A" }}>{tier.seats}</span>
+                        <span className={`text-xs ${isHighlighted ? "text-background/50" : "text-muted-foreground"}`}>{tier.seats}</span>
                         {tier.perSeat && (
-                          <span className="text-xs" style={{ color: isDark ? "rgba(255,255,255,0.4)" : "#9B9BB0" }}>({tier.perSeat})</span>
+                          <span className={`text-xs ${isHighlighted ? "text-background/40" : "text-muted-foreground/70"}`}>({tier.perSeat})</span>
                         )}
                       </div>
                     </div>
-                    <p className="text-sm leading-relaxed mb-6 flex-1" style={{ color: isDark ? "rgba(255,255,255,0.65)" : "#6B6B8A" }}>{tier.description}</p>
+                    <p className={`text-sm leading-relaxed mb-6 flex-1 ${isHighlighted ? "text-background/60" : "text-muted-foreground"}`}>{tier.description}</p>
                     <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
-                      className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90"
-                      style={{ backgroundColor: isPop ? "#E94560" : isDark ? "rgba(255,255,255,0.1)" : "#1A1A2E", color: "#FFFFFF" }}
+                      className={`block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 ${
+                        isPop ? "bg-primary text-primary-foreground" : isHighlighted ? "bg-background/10 text-background" : "bg-primary text-primary-foreground"
+                      }`}
                     >{tier.cta}</a>
                   </div>
                 );
@@ -370,30 +362,30 @@ const Pricing = () => {
             </div>
 
             {/* Shared feature list for Tiers 2-4 */}
-            <div className="mt-8 rounded-xl p-8" style={{ backgroundColor: "#F5F5F7", border: "1px solid #E5E5EA" }}>
-              <h3 className="text-lg font-semibold mb-5" style={{ color: "#1A1A2E" }}>
+            <div className="mt-8 rounded-xl p-8 bg-muted border border-border">
+              <h3 className="text-lg font-semibold mb-5 text-foreground">
                 Included in Tiers 2, 3 and 4
               </h3>
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2.5">
                 {sharedFeatures.map((f, fi) => (
-                  <div key={fi} className="flex items-start gap-2.5 text-sm" style={{ color: "#1A1A2E" }}>
+                  <div key={fi} className="flex items-start gap-2.5 text-sm text-foreground">
                     <span className="mt-0.5 flex-shrink-0"><CheckIcon /></span>
                     <span>{f}</span>
                   </div>
                 ))}
               </div>
-              <p className="mt-6 text-sm italic" style={{ color: "#6B6B8A" }}>
+              <p className="mt-6 text-sm italic text-muted-foreground">
                 All paid plans include every feature. You are choosing your team size, not your capability.
               </p>
             </div>
 
             {/* Enterprise row */}
-            <div className="mt-10 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-4" style={{ backgroundColor: "#F5F5F7" }}>
+            <div className="mt-10 rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-muted">
               <div>
-                <p className="text-lg font-semibold" style={{ color: "#1A1A2E" }}>More than 10 users?</p>
-                <p className="text-sm" style={{ color: "#6B6B8A" }}>Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
+                <p className="text-lg font-semibold text-foreground">More than 10 users?</p>
+                <p className="text-sm text-muted-foreground">Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
               </div>
-              <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity whitespace-nowrap" style={{ color: "#E94560" }}>
+              <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity whitespace-nowrap text-primary">
                 Book a call
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.333 8h9.334M8.667 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </Link>
@@ -402,35 +394,29 @@ const Pricing = () => {
         </section>
 
         {/* 4. Comparison callout */}
-        <section className="py-16 md:py-20" style={{ backgroundColor: "#F5F5F7" }}>
+        <section className="py-16 md:py-20 bg-muted">
           <div className="max-w-4xl mx-auto px-6 text-center">
-            <p
-              className="text-xl md:text-2xl italic leading-relaxed"
-              style={{ color: "#1A1A2E", fontFamily: "'DM Serif Display', serif" }}
-            >
+            <p className="text-xl md:text-2xl italic leading-relaxed text-foreground">
               A 10-user team on individual Tier 2 accounts pays £625/month. Tier 4 costs £449 — and gives them full agentic workflows. The upgrade conversation takes ten seconds.
             </p>
           </div>
         </section>
 
         {/* 5. FAQ */}
-        <section className="py-20 md:py-28" style={{ backgroundColor: "#FFFFFF" }}>
+        <section className="py-20 md:py-28 bg-background">
           <div className="max-w-3xl mx-auto px-6">
-            <h2
-              className="text-3xl md:text-4xl font-bold mb-12 text-center"
-              style={{ fontFamily: "'DM Serif Display', serif", color: "#1A1A2E" }}
-            >
+            <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center text-foreground">
               Common questions
             </h2>
 
-            <div className="divide-y" style={{ borderColor: "#E5E5EA" }}>
+            <div className="divide-y divide-border">
               {faqs.map((faq, i) => (
                 <div key={i} className="py-5">
                   <button
                     onClick={() => setOpenFaq(openFaq === i ? null : i)}
                     className="w-full flex items-center justify-between text-left gap-4"
                   >
-                    <span className="text-base font-semibold" style={{ color: "#1A1A2E" }}>
+                    <span className="text-base font-semibold text-foreground">
                       {faq.q}
                     </span>
                     <svg
@@ -440,11 +426,11 @@ const Pricing = () => {
                       fill="none"
                       className={`flex-shrink-0 transition-transform duration-200 ${openFaq === i ? "rotate-45" : ""}`}
                     >
-                      <path d="M10 4v12M4 10h12" stroke="#6B6B8A" strokeWidth="1.5" strokeLinecap="round" />
+                      <path d="M10 4v12M4 10h12" stroke="hsl(var(--muted-foreground))" strokeWidth="1.5" strokeLinecap="round" />
                     </svg>
                   </button>
                   {openFaq === i && (
-                    <p className="mt-3 text-sm leading-relaxed" style={{ color: "#6B6B8A" }}>
+                    <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                       {faq.a}
                     </p>
                   )}
@@ -455,15 +441,17 @@ const Pricing = () => {
         </section>
 
         {/* 6. Footer CTA */}
-        <section className="py-20 md:py-28" style={{ backgroundColor: "#1A1A2E" }}>
+        <section className="py-20 md:py-28 bg-foreground">
           <div className="max-w-3xl mx-auto px-6 text-center">
-            <h2
-              className="text-3xl md:text-4xl font-bold text-white mb-4"
-              style={{ fontFamily: "'DM Serif Display', serif" }}
-            >
+            <img
+              src={owlMascot}
+              alt="Hobson AI owl mascot"
+              className="w-16 h-16 mx-auto mb-6 object-contain opacity-80"
+            />
+            <h2 className="text-3xl md:text-4xl font-bold text-background mb-4">
               Your tools remind you. Hobson does the work.
             </h2>
-            <p className="text-base mb-10" style={{ color: "rgba(255,255,255,0.6)" }}>
+            <p className="text-base mb-10 text-background/60">
               Start with a 14-day free trial on any paid tier. No credit card. No commitment.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -471,15 +459,13 @@ const Pricing = () => {
                 href="https://app.hobsonschoice.ai/signup"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                style={{ backgroundColor: "#E94560" }}
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90 bg-primary text-primary-foreground"
               >
                 Start free trial
               </a>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-sm font-semibold text-white transition-colors hover:bg-white/10"
-                style={{ border: "1px solid rgba(255,255,255,0.25)" }}
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-sm font-semibold text-background transition-colors hover:bg-background/10 border border-background/25"
               >
                 Book a demo
               </Link>
