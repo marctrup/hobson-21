@@ -280,42 +280,9 @@ const Pricing = () => {
               </p>
             </div>
 
-            {/* Tier 1 — standalone */}
-            {(() => {
-              const tier1 = tiers[0];
-              return (
-                <div className="max-w-sm mx-auto mb-16">
-                  <div className="relative rounded-xl p-6 flex flex-col shadow-sm hover:shadow-md transition-all bg-card border border-border">
-                    <div className="mb-4">
-                      <p className="text-xs font-medium uppercase tracking-wider mb-1 text-muted-foreground">Tier 1</p>
-                      <h3 className="text-xl font-bold mb-1 text-foreground">{tier1.name}</h3>
-                      <p className="text-xs text-muted-foreground">{tier1.label}</p>
-                    </div>
-                    <div className="mb-4">
-                      <span className="text-3xl font-bold text-foreground">{tier1.price}</span>
-                      <span className="text-sm ml-1 text-muted-foreground">{tier1.period}</span>
-                      <div className="mt-1"><span className="text-xs text-muted-foreground">{tier1.seats}</span></div>
-                    </div>
-                    <p className="text-sm leading-relaxed mb-6 text-muted-foreground">{tier1.description}</p>
-                    <ul className="space-y-2.5 mb-8 flex-1">
-                      {tier1.features!.map((f, fi) => (
-                        <li key={fi} className="flex items-start gap-2.5 text-sm text-foreground">
-                          <span className="mt-0.5 flex-shrink-0">{f.included ? <CheckIcon /> : <CrossIcon />}</span>
-                          <span className={f.included ? "" : "opacity-50"}>{f.text}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
-                      className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 bg-primary text-primary-foreground"
-                    >{tier1.cta}</a>
-                  </div>
-                </div>
-              );
-            })()}
-
-            {/* Tiers 2, 3, 4 — cards */}
-            <div className="grid md:grid-cols-3 gap-6">
-              {tiers.slice(1).map((tier, i) => {
+            {/* All tiers in a single row */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {tiers.map((tier, i) => {
                 const isPop = tier.popular;
                 const isHighlighted = tier.highlighted;
                 return (
@@ -348,12 +315,25 @@ const Pricing = () => {
                         )}
                       </div>
                     </div>
-                    <p className={`text-sm leading-relaxed mb-6 flex-1 ${isHighlighted ? "text-background/60" : "text-muted-foreground"}`}>{tier.description}</p>
-                    <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
-                      className={`block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 ${
-                        isPop ? "bg-primary text-primary-foreground" : isHighlighted ? "bg-background/10 text-background" : "bg-primary text-primary-foreground"
-                      }`}
-                    >{tier.cta}</a>
+                    <p className={`text-sm leading-relaxed mb-6 ${isHighlighted ? "text-background/60" : "text-muted-foreground"}`}>{tier.description}</p>
+                    {/* Tier 1 feature list */}
+                    {tier.features && (
+                      <ul className="space-y-2.5 mb-6">
+                        {tier.features.map((f, fi) => (
+                          <li key={fi} className="flex items-start gap-2.5 text-sm text-foreground">
+                            <span className="mt-0.5 flex-shrink-0">{f.included ? <CheckIcon /> : <CrossIcon />}</span>
+                            <span className={f.included ? "" : "opacity-50"}>{f.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                    <div className="mt-auto">
+                      <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
+                        className={`block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 ${
+                          isPop ? "bg-primary text-primary-foreground" : isHighlighted ? "bg-background/10 text-background" : "bg-primary text-primary-foreground"
+                        }`}
+                      >{tier.cta}</a>
+                    </div>
                   </div>
                 );
               })}
