@@ -129,6 +129,7 @@ const tiers = [
     popular: false,
     highlighted: false,
   },
+  {
     name: "",
     tier: 4,
     price: "£449.00",
