@@ -313,7 +313,7 @@ const Pricing = () => {
                 <button
                   onClick={() => setIsAnnual(false)}
                   className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    !isAnnual ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                    !isAnnual ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   Monthly
@@ -321,7 +321,7 @@ const Pricing = () => {
                 <button
                   onClick={() => setIsAnnual(true)}
                   className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
-                    isAnnual ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                    isAnnual ? "bg-primary text-primary-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   Annual
