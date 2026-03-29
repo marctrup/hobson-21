@@ -208,7 +208,7 @@ export const HomepageABTest = () => {
           </section>
 
           {/* CTA Section - Repositioned after Hero */}
-          <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-primary/5 to-primary/10">
+          <section className="py-12 sm:py-16 md:py-20" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
             <div className="container mx-auto px-4 text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
                 Ready to introduce AI into your business?
