@@ -193,6 +193,9 @@ const Pricing = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const tier2Ref = useRef<HTMLDivElement>(null);
   const [tier2Visible, setTier2Visible] = useState(false);
+  const [waitlistOpen, setWaitlistOpen] = useState(false);
+  const [waitlistEmail, setWaitlistEmail] = useState("");
+  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
