@@ -381,23 +381,6 @@ const Pricing = () => {
               })}
             </div>
 
-            {/* Shared feature list for Tiers 2-4 */}
-            <div className="mt-6 sm:mt-8 rounded-xl p-4 sm:p-8 border border-primary/20 bg-primary/5">
-              <h3 className="text-lg font-semibold mb-5 text-foreground">
-                Included in Tiers 2, 3 and 4
-              </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2.5">
-                {sharedFeatures.map((f, fi) => (
-                  <div key={fi} className="flex items-start gap-2.5 text-sm text-foreground">
-                    <span className="mt-0.5 flex-shrink-0"><CheckIcon /></span>
-                    <span>{f}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="mt-6 text-sm italic text-muted-foreground">
-                All paid plans include every feature. You are choosing your team size, not your capability.
-              </p>
-            </div>
 
             {/* Enterprise row */}
             <div className="mt-6 sm:mt-10 rounded-xl p-4 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-card border border-border text-center md:text-left">
