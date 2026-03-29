@@ -367,6 +367,11 @@ const Pricing = () => {
                       <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
                       <h3 className="text-xl font-bold mb-1 text-foreground">{tier.name}</h3>
                       <p className="text-xs text-muted-foreground">{tier.label}</p>
+                      {tier.tier >= 2 && (
+                        <span className="inline-block mt-2 text-[11px] font-medium px-2.5 py-1 rounded-full" style={{ backgroundColor: "#1A1A2E", color: "#fff" }}>
+                          Coming soon — join the waitlist
+                        </span>
+                      )}
                     </div>
                     <div className="mb-4">
                       {hasAnnual && (
