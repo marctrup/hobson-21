@@ -54,7 +54,7 @@ const SlidersIcon = () => (
 
 const tiers = [
   {
-    name: "Solo",
+    name: "",
     tier: 1,
     price: "£19.50",
     priceMonthly: 19.50,
@@ -78,7 +78,7 @@ const tiers = [
     highlighted: false,
   },
   {
-    name: "Duo",
+    name: "",
     tier: 2,
     price: "£125.00",
     priceMonthly: 125.00,
@@ -95,7 +95,7 @@ const tiers = [
     highlighted: true,
   },
   {
-    name: "Five",
+    name: "",
     tier: 3,
     price: "£249.00",
     priceMonthly: 249.00,
@@ -112,7 +112,7 @@ const tiers = [
     highlighted: false,
   },
   {
-    name: "Ten",
+    name: "",
     tier: 4,
     price: "£449.00",
     priceMonthly: 449.00,
