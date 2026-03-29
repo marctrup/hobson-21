@@ -290,8 +290,8 @@ const Pricing = () => {
             </div>
 
             <div className="mt-10 sm:mt-12 max-w-xl mx-auto text-center">
-              <div className="rounded-lg px-6 py-4 bg-primary/10 border border-primary/20">
-                <p className="text-sm sm:text-base font-semibold text-primary">
+              <div className="rounded-lg px-6 py-4 border" style={{ backgroundColor: "hsl(152 64% 29% / 0.1)", borderColor: "hsl(152 64% 29% / 0.25)" }}>
+                <p className="text-sm sm:text-base font-semibold" style={{ color: "hsl(152 64% 29%)" }}>
                   Tier 1 operates without the Knowledge Base. Tiers 2–4 unlock it. This is the difference.
                 </p>
               </div>
