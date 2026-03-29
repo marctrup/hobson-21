@@ -63,7 +63,7 @@ const tiers = [
     period: "/ month",
     seats: "1 seat",
     label: "No Knowledge Base",
-    description: "Domain-specific AI reasoning across your property documents. Ask questions in plain English across leases, compliance documents and contracts. Powered by AI trained on real estate — not a generic chatbot.",
+    description: "",
     features: [
       { text: "Multi-document AI reasoning", included: true },
       { text: "Plain English queries", included: true },
@@ -89,7 +89,7 @@ const tiers = [
     seatCount: 2,
     perSeat: "£62.50/seat",
     label: "Full platform",
-    description: "Hobson learns your business and never forgets it. Your contractors, contacts, policies, compliance deadlines and how you work — all stored, always active. Ask anything. Get an answer shaped by what Hobson knows about you, not a generic response.",
+    description: "",
     features: [
       { text: "Multi-document AI reasoning", included: true },
       { text: "Plain English queries", included: true },
@@ -115,7 +115,7 @@ const tiers = [
     seatCount: 5,
     perSeat: "£49.80/seat",
     label: "Full platform",
-    description: "Everything in Tier 2, built for a bigger operation. Five people, one shared intelligence. The same Hobson — the same memory, the same workflows, the same action learning — just more hands on deck.",
+    description: "",
     features: [
       { text: "Multi-document AI reasoning", included: true },
       { text: "Plain English queries", included: true },
@@ -141,7 +141,7 @@ const tiers = [
     seatCount: 10,
     perSeat: "£44.90/seat",
     label: "Full platform",
-    description: "Your most cost-effective seat. Ten people running on a single, continuously improving intelligence. The longer you use it, the sharper it gets. Hobson at this scale starts to feel less like software and more like institutional memory.",
+    description: "",
     features: [
       { text: "Multi-document AI reasoning", included: true },
       { text: "Plain English queries", included: true },
