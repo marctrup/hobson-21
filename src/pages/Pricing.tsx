@@ -358,7 +358,7 @@ const Pricing = () => {
                   >
                     <div className="mb-4">
                       <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isEntry ? "text-primary" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
-                      <h3 className="text-xl font-bold mb-1 text-foreground">{tier.name}</h3>
+                      {tier.name && <h3 className="text-xl font-bold mb-1 text-foreground">{tier.name}</h3>}
                       <p className="text-xs text-muted-foreground">{tier.label}</p>
                     </div>
                     <div className="mb-4">
