@@ -304,7 +304,33 @@ const Pricing = () => {
               </p>
             </div>
 
-            {/* Banner for Tiers 2-4 */}
+            {/* Billing toggle */}
+            <div className="flex items-center justify-center gap-1 mb-10">
+              <div className="inline-flex items-center rounded-full border border-border bg-muted p-1">
+                <button
+                  onClick={() => setIsAnnual(false)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    !isAnnual ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Monthly
+                </button>
+                <button
+                  onClick={() => setIsAnnual(true)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    isAnnual ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Annual
+                </button>
+              </div>
+              {isAnnual && (
+                <span className="ml-2 text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: "#E94560", color: "#fff" }}>
+                  Save 20%
+                </span>
+              )}
+            </div>
+
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {/* Tier 1 card - no banner above */}
               <div className="col-span-1" />
