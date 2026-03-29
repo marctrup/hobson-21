@@ -85,9 +85,9 @@ const tiers = [
     priceAnnualMonthly: 100.00,
     priceAnnualYearly: 1200.00,
     period: "/ month",
-    seats: "2 seats",
-    seatCount: 2,
-    perSeat: "£62.50/seat",
+    seats: "3 seats",
+    seatCount: 3,
+    perSeat: "£41.67/seat",
     label: "Full platform",
     description: "",
     features: [
