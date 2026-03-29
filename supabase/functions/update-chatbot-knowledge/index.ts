@@ -560,7 +560,7 @@ No. All paid plans include unlimited queries, document ingestion and workflow ru
 
 ## Pricing Tiers
 - Tier 1 (Entry): £19.50/month (£15.60/month annual), 1 seat, 3-day free trial, no Knowledge Base — multi-document AI reasoning, plain English queries, real estate domain accuracy, sourced auditable answers.
-- Tier 2 (Professional): £125.00/month (£100.00/month annual), 3 seats (£41.67/seat monthly), full platform including Knowledge Base, workflow automation, action memory.
+- Tier 2 (Professional): £125.00/month (£100.00/month annual), 2 seats (£62.50/seat monthly, £50.00/seat annual), full platform including Knowledge Base, workflow automation, action memory.
 - Tier 3 (Team): £249.00/month (£199.20/month annual), 5 seats (£49.80/seat monthly), identical features to Tier 2.
 - Tier 4 (Scale): £449.00/month (£359.20/month annual), 10 seats (£44.90/seat monthly), identical features to Tier 2. Best per-seat value.
 - Enterprise: Usage-based pricing, not headcount-based. Contact sales for 10+ users.
