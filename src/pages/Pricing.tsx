@@ -78,8 +78,12 @@ const tiers = [
     name: "Professional",
     tier: 2,
     price: "£125.00",
+    priceMonthly: 125.00,
+    priceAnnualMonthly: 100.00,
+    priceAnnualYearly: 1200.00,
     period: "/ month",
     seats: "2 seats",
+    seatCount: 2,
     perSeat: "£62.50/seat",
     label: "Full platform",
     description: "Hobson learns your business. Contractors, contacts, policies, compliance deadlines and how you work — all stored, all active. Every answer is shaped by what Hobson knows about you.",
@@ -91,8 +95,12 @@ const tiers = [
     name: "Team",
     tier: 3,
     price: "£249.00",
+    priceMonthly: 249.00,
+    priceAnnualMonthly: 199.20,
+    priceAnnualYearly: 2390.40,
     period: "/ month",
     seats: "5 seats",
+    seatCount: 5,
     perSeat: "£49.80/seat",
     label: "Full platform",
     description: "The same Hobson, for a bigger team. Five seats with full access to every feature — Knowledge Base, workflows, action memory and more.",
@@ -104,8 +112,12 @@ const tiers = [
     name: "Scale",
     tier: 4,
     price: "£449.00",
+    priceMonthly: 449.00,
+    priceAnnualMonthly: 359.20,
+    priceAnnualYearly: 4310.40,
     period: "/ month",
     seats: "10 seats",
+    seatCount: 10,
     perSeat: "£44.90/seat",
     label: "Full platform",
     description: "Your best per-seat value. Ten seats with full access to every feature. Built for teams running serious portfolios.",
@@ -200,6 +212,7 @@ const Pricing = () => {
   const [waitlistOpen, setWaitlistOpen] = useState(false);
   const [waitlistEmail, setWaitlistEmail] = useState("");
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
+  const [isAnnual, setIsAnnual] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -291,7 +304,33 @@ const Pricing = () => {
               </p>
             </div>
 
-            {/* Banner for Tiers 2-4 */}
+            {/* Billing toggle */}
+            <div className="flex items-center justify-center gap-1 mb-10">
+              <div className="inline-flex items-center rounded-full border border-border bg-muted p-1">
+                <button
+                  onClick={() => setIsAnnual(false)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    !isAnnual ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Monthly
+                </button>
+                <button
+                  onClick={() => setIsAnnual(true)}
+                  className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${
+                    isAnnual ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  Annual
+                </button>
+              </div>
+              {isAnnual && (
+                <span className="ml-2 text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: "#E94560", color: "#fff" }}>
+                  Save 20%
+                </span>
+              )}
+            </div>
+
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {/* Tier 1 card - no banner above */}
               <div className="col-span-1" />
@@ -319,6 +358,11 @@ const Pricing = () => {
                 const isPop = tier.popular;
                 const isHighlighted = tier.highlighted;
                 const isWaitlist = tier.tier >= 2;
+                const hasAnnual = isAnnual && tier.tier >= 2 && tier.priceAnnualMonthly;
+                const displayPrice = hasAnnual ? `£${tier.priceAnnualMonthly!.toFixed(2)}` : tier.price;
+                const displayPerSeat = hasAnnual && tier.seatCount
+                  ? `£${(tier.priceAnnualMonthly! / tier.seatCount).toFixed(2)}/seat`
+                  : tier.perSeat;
                 return (
                   <div
                     key={i}
@@ -340,12 +384,20 @@ const Pricing = () => {
                       <p className="text-xs text-muted-foreground">{tier.label}</p>
                     </div>
                     <div className="mb-4">
-                      <span className="text-3xl font-bold text-foreground">{tier.price}</span>
+                      {hasAnnual && (
+                        <div className="text-sm text-muted-foreground line-through mb-0.5">{tier.price}/mo</div>
+                      )}
+                      <span className="text-3xl font-bold text-foreground">{displayPrice}</span>
                       <span className="text-sm ml-1 text-muted-foreground">{tier.period}</span>
+                      {hasAnnual && tier.priceAnnualYearly && (
+                        <div className="text-xs text-muted-foreground mt-1">
+                          billed as £{tier.priceAnnualYearly.toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 2 })} annually
+                        </div>
+                      )}
                       <div className="flex items-center gap-2 mt-1">
                         <span className="text-xs text-muted-foreground">{tier.seats}</span>
-                        {tier.perSeat && (
-                          <span className="text-xs text-muted-foreground/70">({tier.perSeat})</span>
+                        {displayPerSeat && (
+                          <span className="text-xs text-muted-foreground/70">({displayPerSeat})</span>
                         )}
                       </div>
                     </div>
