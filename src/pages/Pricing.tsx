@@ -246,7 +246,7 @@ const Pricing = () => {
         <section className="py-20 md:py-28 bg-background">
           <div className="max-w-4xl mx-auto px-6 text-center">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-foreground">
-              Finally. An AI that actually knows your business.
+              Finally. An AI that actually knows <span className="text-primary">your business</span>.
             </h1>
             <p className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto text-muted-foreground">
               Ask about any lease, contract or compliance document in plain English and get an answer you can act on. Then let Hobson act on it for you — chasing, drafting, filing and reporting across everything you manage.
