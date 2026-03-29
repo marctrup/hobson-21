@@ -78,7 +78,7 @@ const tiers = [
     highlighted: false,
   },
   {
-    name: "Professional",
+    name: "Duo",
     tier: 2,
     price: "£125.00",
     priceMonthly: 125.00,
@@ -89,7 +89,7 @@ const tiers = [
     seatCount: 2,
     perSeat: "£62.50/seat",
     label: "Full platform",
-    description: "Hobson learns your business. Contractors, contacts, policies, compliance deadlines and how you work — all stored, all active. Every answer is shaped by what Hobson knows about you.",
+    description: "Hobson learns your business. Contractors, contacts, policies, compliance deadlines and how you work — all stored, all active. Every answer is shaped by what Hobson knows about you. Two seats, full platform.",
     cta: "Start 7-day free trial",
     popular: true,
     highlighted: true,
