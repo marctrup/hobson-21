@@ -334,26 +334,8 @@ const Pricing = () => {
               )}
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {/* Tier 1 card - no banner above */}
-              <div className="col-span-1" />
-              {/* Banner spanning Tiers 2-4 */}
-              <div className="hidden lg:block col-span-3">
-                <div className="rounded-lg px-5 py-3 mb-3 text-center bg-primary/10 border border-primary/20">
-                  <p className="text-sm font-medium text-primary">
-                    Knowledge Base tiers launching soon — join the waitlist for founding member pricing.
-                  </p>
-                </div>
-              </div>
-            </div>
-            {/* Mobile banner */}
-            <div className="lg:hidden mb-4">
-              <div className="rounded-lg px-5 py-3 text-center bg-primary/10 border border-primary/20">
-                <p className="text-sm font-medium text-primary">
-                  Knowledge Base tiers launching soon — join the waitlist for founding member pricing.
-                </p>
-              </div>
-            </div>
+
+
 
             {/* All tiers in a single row */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -385,6 +367,11 @@ const Pricing = () => {
                       <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
                       <h3 className="text-xl font-bold mb-1 text-foreground">{tier.name}</h3>
                       <p className="text-xs text-muted-foreground">{tier.label}</p>
+                      {tier.tier >= 2 && (
+                        <span className="inline-block mt-2 text-[11px] font-medium px-2.5 py-1 rounded-full" style={{ backgroundColor: "#1A1A2E", color: "#fff" }}>
+                          Coming soon — join the waitlist
+                        </span>
+                      )}
                     </div>
                     <div className="mb-4">
                       {hasAnnual && (
