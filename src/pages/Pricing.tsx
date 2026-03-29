@@ -197,7 +197,7 @@ const faqs = [
   },
   {
     q: "Is there a free trial?",
-    a: "Yes. Tier 2 comes with a 7-day free trial. No credit card required.",
+    a: "Yes. Tier 1 comes with a 3-day free trial. No credit card required and limited credits to try with.",
   },
   {
     q: "Are there usage limits?",
