@@ -228,7 +228,7 @@ const Pricing = () => {
         </section>
 
         {/* 2. Knowledge Base Section */}
-        <section className="py-20 md:py-28 bg-foreground">
+        <section className="py-20 md:py-28 bg-primary/10">
           <div className="max-w-6xl mx-auto px-6">
             <div className="flex items-center gap-4 mb-6">
               <img
@@ -236,14 +236,14 @@ const Pricing = () => {
                 alt="Hobson AI owl mascot"
                 className="w-14 h-14 md:w-20 md:h-20 object-contain opacity-90"
               />
-              <h2 className="text-3xl md:text-4xl font-bold text-background">
+              <h2 className="text-3xl md:text-4xl font-bold text-foreground">
                 The Knowledge Base
               </h2>
             </div>
-            <p className="text-xl md:text-2xl text-background/70 italic mb-8 max-w-3xl">
+            <p className="text-xl md:text-2xl text-muted-foreground italic mb-8 max-w-3xl">
               Most AI tools answer questions. Hobson remembers your business.
             </p>
-            <p className="text-base md:text-lg leading-relaxed mb-14 max-w-4xl text-background/60">
+            <p className="text-base md:text-lg leading-relaxed mb-14 max-w-4xl text-muted-foreground">
               The Knowledge Base is Hobson's persistent memory about your business. Not just documents — how you operate. It stores your contractors and contacts, your policies and procedures, your compliance register, your communication preferences and your business rules. Every answer Hobson gives, every draft it produces, every action it takes is shaped by what it knows about you. The longer you use Hobson, the better it gets.
             </p>
 
@@ -251,18 +251,18 @@ const Pricing = () => {
               {knowledgeTiles.map((tile, i) => (
                 <div
                   key={i}
-                  className="p-6 rounded-lg border border-background/10 bg-background/[0.04] hover:border-primary/40 transition-colors"
+                  className="p-6 rounded-lg border border-border bg-card hover:border-primary/40 transition-colors"
                 >
                   <div className="mb-4">{tile.icon}</div>
-                  <h3 className="text-lg font-semibold text-background mb-2">{tile.title}</h3>
-                  <p className="text-sm leading-relaxed text-background/50">
+                  <h3 className="text-lg font-semibold text-foreground mb-2">{tile.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
                     {tile.copy}
                   </p>
                 </div>
               ))}
             </div>
 
-            <p className="mt-12 text-sm text-background/30">
+            <p className="mt-12 text-sm text-muted-foreground/60">
               Tier 1 operates without the Knowledge Base. Tiers 2–4 unlock it. This is the difference.
             </p>
           </div>
@@ -293,7 +293,7 @@ const Pricing = () => {
                       isPop
                         ? `${tier2Visible ? "scale-[1.02] shadow-2xl" : "scale-100 shadow-lg"}`
                         : "shadow-sm hover:shadow-md"
-                    } ${isHighlighted ? "bg-foreground border-2 border-primary" : "bg-card border border-border"}`}
+                    } ${isHighlighted ? "bg-primary/10 border-2 border-primary" : "bg-card border border-border"}`}
                   >
                     {isPop && (
                       <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full bg-primary text-primary-foreground">
@@ -301,21 +301,21 @@ const Pricing = () => {
                       </span>
                     )}
                     <div className="mb-4">
-                      <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isHighlighted ? "text-background/50" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
-                      <h3 className={`text-xl font-bold mb-1 ${isHighlighted ? "text-background" : "text-foreground"}`}>{tier.name}</h3>
-                      <p className={`text-xs ${isHighlighted ? "text-background/50" : "text-muted-foreground"}`}>{tier.label}</p>
+                      <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
+                      <h3 className={`text-xl font-bold mb-1 ${isHighlighted ? "text-foreground" : "text-foreground"}`}>{tier.name}</h3>
+                      <p className={`text-xs ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.label}</p>
                     </div>
                     <div className="mb-4">
-                      <span className={`text-3xl font-bold ${isHighlighted ? "text-background" : "text-foreground"}`}>{tier.price}</span>
-                      <span className={`text-sm ml-1 ${isHighlighted ? "text-background/50" : "text-muted-foreground"}`}>{tier.period}</span>
+                      <span className={`text-3xl font-bold ${isHighlighted ? "text-foreground" : "text-foreground"}`}>{tier.price}</span>
+                      <span className={`text-sm ml-1 ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.period}</span>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className={`text-xs ${isHighlighted ? "text-background/50" : "text-muted-foreground"}`}>{tier.seats}</span>
+                        <span className={`text-xs ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.seats}</span>
                         {tier.perSeat && (
-                          <span className={`text-xs ${isHighlighted ? "text-background/40" : "text-muted-foreground/70"}`}>({tier.perSeat})</span>
+                          <span className={`text-xs ${isHighlighted ? "text-muted-foreground/70" : "text-muted-foreground/70"}`}>({tier.perSeat})</span>
                         )}
                       </div>
                     </div>
-                    <p className={`text-sm leading-relaxed mb-6 ${isHighlighted ? "text-background/60" : "text-muted-foreground"}`}>{tier.description}</p>
+                    <p className={`text-sm leading-relaxed mb-6 ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.description}</p>
                     {/* Tier 1 feature list */}
                     {tier.features && (
                       <ul className="space-y-2.5 mb-6">
@@ -330,7 +330,7 @@ const Pricing = () => {
                     <div className="mt-auto">
                       <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
                         className={`block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 ${
-                          isPop ? "bg-primary text-primary-foreground" : isHighlighted ? "bg-background/10 text-background" : "bg-primary text-primary-foreground"
+                          isPop ? "bg-primary text-primary-foreground" : "bg-primary text-primary-foreground"
                         }`}
                       >{tier.cta}</a>
                     </div>
@@ -419,17 +419,17 @@ const Pricing = () => {
         </section>
 
         {/* 6. Footer CTA */}
-        <section className="py-20 md:py-28 bg-foreground">
+        <section className="py-20 md:py-28 bg-primary/10">
           <div className="max-w-3xl mx-auto px-6 text-center">
             <img
               src={owlMascot}
               alt="Hobson AI owl mascot"
               className="w-16 h-16 mx-auto mb-6 object-contain opacity-80"
             />
-            <h2 className="text-3xl md:text-4xl font-bold text-background mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               Your tools remind you. Hobson does the work.
             </h2>
-            <p className="text-base mb-10 text-background/60">
+            <p className="text-base mb-10 text-muted-foreground">
               Start with a 14-day free trial on any paid tier. No credit card. No commitment.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -443,7 +443,7 @@ const Pricing = () => {
               </a>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-sm font-semibold text-background transition-colors hover:bg-background/10 border border-background/25"
+                className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-sm font-semibold text-foreground transition-colors hover:bg-muted border border-border"
               >
                 Book a demo
               </Link>
