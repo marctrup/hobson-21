@@ -45,6 +45,7 @@ const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 const InvestorSummary = lazy(() => import("../pages/InvestorSummary"));
+const Pricing = lazy(() => import("../pages/Pricing"));
 
 // Loading component
 const PageLoader = () => (
@@ -126,6 +127,7 @@ const AppContent = () => {
               <Route path="/tenancy-document" element={<Navigate to="/blog/making-light-work-of-a-tenancy-document" replace />} />
               <Route path="/features" element={<Navigate to="/learn/core-features" replace />} />
               <Route path="/features/real_estate_ai" element={<Navigate to="/" replace />} />
+              <Route path="/pricing" element={<Pricing />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<ContactUs />} />

@@ -8,7 +8,7 @@ import { PropertyManagementVisualization } from "@/components/homepage/PropertyM
 
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import MobileShowcase from "@/components/features/MobileShowcase";
-import { PricingSection } from "@/components/homepage/PricingSection";
+
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
 
@@ -194,6 +194,9 @@ export const Homepage = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
+                <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  Pricing
+                </Link>
                 {!hideExtraNavItems && (
                   <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                     {content.header.nav.blog}
@@ -265,6 +268,9 @@ export const Homepage = () => {
             {/* Mobile Navigation Menu */}
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
+                  <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                    Pricing
+                  </Link>
                   {!hideExtraNavItems && (
                     <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                       {content.header.nav.blog}
@@ -330,12 +336,12 @@ export const Homepage = () => {
                   <p className={`text-muted-foreground leading-relaxed ${isGerman ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}`} lang={language} style={isGerman ? { hyphens: 'auto' } : {}}>{content.hero.subtitle}
                   </p>
                   
-                  <a href="#pricing-section" className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group" id="homepage-hero-pricing-cta">
+                  <Link to="/pricing" className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group" id="homepage-hero-pricing-cta">
                     <div className="inline-flex items-center gap-3 text-purple-600 hover:text-purple-700 font-medium text-base">
                       {content.hero.ctaButton}
                       <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                     </div>
-                  </a>
+                  </Link>
                   
                 </div>
 
@@ -397,8 +403,6 @@ export const Homepage = () => {
             </div>
           </section>
 
-          {/* Pricing Section */}
-          <PricingSection />
 
           {/* CTA Section */}
           <section className="py-12 sm:py-16 md:py-20 bg-[hsl(270,40%,95%)]">
