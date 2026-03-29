@@ -133,6 +133,10 @@ const sharedFeatures = [
 
 const faqs = [
   {
+    q: "When will Tiers 2, 3 and 4 be available?",
+    a: "We are currently in live testing with our first clients on Tier 1. Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform — are launching soon. Join the waitlist to be notified first and to lock in founding member pricing.",
+  },
+  {
     q: "Do I need to replace my existing property management software?",
     a: "No. Hobson works alongside the tools you already use — Arthur, Yardi, MRI, Fixflo, Xero. It reads your documents and acts within your existing workflows. No rip-and-replace required.",
   },
