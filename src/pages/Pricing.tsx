@@ -160,6 +160,10 @@ const faqs = [
     q: "Is there a free trial?",
     a: "Yes. Tiers 2, 3 and 4 come with a 14-day free trial. No credit card required.",
   },
+  {
+    q: "Are there usage limits?",
+    a: "No. All paid plans include unlimited queries, document ingestion and workflow runs. We operate a fair use policy for accounts showing usage patterns inconsistent with normal business operations — but in practice this never affects our clients.",
+  },
 ];
 
 const knowledgeTiles = [
