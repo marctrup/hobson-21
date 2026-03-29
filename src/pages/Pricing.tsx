@@ -242,25 +242,13 @@ const Pricing = () => {
       <GlobalHeader />
 
       <main id="main-content">
-        {/* 1. Hero Section */}
-        <section className="py-12 md:py-28 bg-background">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-4 sm:mb-6 text-foreground">
-              Finally. An AI that actually knows <span className="text-primary">your business</span>.
-            </h1>
-            <p className="text-base sm:text-lg md:text-xl leading-relaxed max-w-3xl mx-auto text-muted-foreground">
-              Ask about any lease, contract or compliance document in plain English and get an answer you can act on. Then let Hobson act on it for you — chasing, drafting, filing and reporting across everything you manage.
-            </p>
-          </div>
-        </section>
-
-        {/* 2. Pricing Table */}
-        <section className="py-12 md:py-28 bg-background" id="pricing-table">
+        {/* Pricing Table */}
+        <section className="pt-12 md:pt-28 pb-12 md:pb-28 bg-background" id="pricing-table">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-8 sm:mb-16">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 text-foreground">
-                Simple, honest pricing
-              </h2>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-foreground">
+                The real deal — True Agentic workflows
+              </h1>
               <p className="text-lg text-muted-foreground">
                 Start with what you need. Hobson grows as your trust grows.
               </p>
