@@ -254,52 +254,7 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* 2. Knowledge Base Section */}
-        <section className="py-12 md:py-28" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-              <img
-                src={owlMascot}
-                alt="Hobson AI owl mascot"
-                className="w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 object-contain opacity-90"
-              />
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
-                The Knowledge Base
-              </h2>
-            </div>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground italic mb-6 sm:mb-8 max-w-3xl">
-              Most AI tools answer questions. Hobson remembers your business.
-            </p>
-            <p className="text-sm sm:text-base md:text-lg leading-relaxed mb-10 sm:mb-14 max-w-4xl text-muted-foreground">
-              The Knowledge Base is Hobson's persistent memory about your business. Not just documents — how you operate. It stores your contractors and contacts, your policies and procedures, your compliance register, your communication preferences and your business rules. Every answer Hobson gives, every draft it produces, every action it takes is shaped by what it knows about you. The longer you use Hobson, the better it gets.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {knowledgeTiles.map((tile, i) => (
-                <div
-                  key={i}
-                  className="p-4 sm:p-6 rounded-lg border border-border bg-card hover:border-primary/40 transition-colors"
-                >
-                  <div className="mb-4">{tile.icon}</div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">{tile.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {tile.copy}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 sm:mt-12 max-w-xl mx-auto text-center">
-              <div className="rounded-lg px-6 py-4 bg-primary">
-                <p className="text-sm sm:text-base font-semibold text-primary-foreground">
-                  Tier 1 operates without the Knowledge Base. Tiers 2–4 unlock it. This is the difference.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 3. Pricing Table */}
+        {/* 2. Pricing Table */}
         <section className="py-12 md:py-28 bg-background" id="pricing-table">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-8 sm:mb-16">
@@ -337,9 +292,6 @@ const Pricing = () => {
                 </span>
               )}
             </div>
-
-
-
 
             {/* All tiers in a single row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
@@ -451,16 +403,52 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* 4. Comparison callout */}
-        <section className="py-10 md:py-20 bg-muted">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-            <p className="text-base sm:text-xl md:text-2xl italic leading-relaxed text-foreground">
-              A 10-user team on individual Tier 2 accounts pays £625/month. Tier 4 costs £449 — and gives them full agentic workflows. The upgrade conversation takes ten seconds.
+        {/* 3. Knowledge Base Section */}
+        <section className="py-12 md:py-28" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
+          <div className="max-w-6xl mx-auto px-4 sm:px-6">
+            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <img
+                src={owlMascot}
+                alt="Hobson AI owl mascot"
+                className="w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 object-contain opacity-90"
+              />
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
+                The Knowledge Base
+              </h2>
+            </div>
+            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground italic mb-6 sm:mb-8 max-w-3xl">
+              Most AI tools answer questions. Hobson remembers your business.
             </p>
+            <p className="text-sm sm:text-base md:text-lg leading-relaxed mb-10 sm:mb-14 max-w-4xl text-muted-foreground">
+              The Knowledge Base is Hobson's persistent memory about your business. Not just documents — how you operate. It stores your contractors and contacts, your policies and procedures, your compliance register, your communication preferences and your business rules. Every answer Hobson gives, every draft it produces, every action it takes is shaped by what it knows about you. The longer you use Hobson, the better it gets.
+            </p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              {knowledgeTiles.map((tile, i) => (
+                <div
+                  key={i}
+                  className="p-4 sm:p-6 rounded-lg border border-border bg-card hover:border-primary/40 transition-colors"
+                >
+                  <div className="mb-4">{tile.icon}</div>
+                  <h3 className="text-lg font-semibold text-foreground mb-2">{tile.title}</h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground">
+                    {tile.copy}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 sm:mt-12 max-w-xl mx-auto text-center">
+              <div className="rounded-lg px-6 py-4 bg-primary">
+                <p className="text-sm sm:text-base font-semibold text-primary-foreground">
+                  Tier 1 operates without the Knowledge Base. Tiers 2–4 unlock it. This is the difference.
+                </p>
+              </div>
+            </div>
           </div>
         </section>
 
-        {/* 5. FAQ */}
+        {/* 4. FAQ */}
         <section className="py-12 md:py-28 bg-background">
           <div className="max-w-3xl mx-auto px-4 sm:px-6">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-center text-foreground">
