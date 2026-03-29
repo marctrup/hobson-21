@@ -291,11 +291,34 @@ const Pricing = () => {
               </p>
             </div>
 
+            {/* Banner for Tiers 2-4 */}
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {/* Tier 1 card - no banner above */}
+              <div className="col-span-1" />
+              {/* Banner spanning Tiers 2-4 */}
+              <div className="hidden lg:block col-span-3">
+                <div className="rounded-lg px-5 py-3 mb-3 text-center bg-primary/10 border border-primary/20">
+                  <p className="text-sm font-medium text-primary">
+                    Knowledge Base tiers launching soon — join the waitlist for founding member pricing.
+                  </p>
+                </div>
+              </div>
+            </div>
+            {/* Mobile banner */}
+            <div className="lg:hidden mb-4">
+              <div className="rounded-lg px-5 py-3 text-center bg-primary/10 border border-primary/20">
+                <p className="text-sm font-medium text-primary">
+                  Knowledge Base tiers launching soon — join the waitlist for founding member pricing.
+                </p>
+              </div>
+            </div>
+
             {/* All tiers in a single row */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {tiers.map((tier, i) => {
                 const isPop = tier.popular;
                 const isHighlighted = tier.highlighted;
+                const isWaitlist = tier.tier >= 2;
                 return (
                   <div
                     key={i}
@@ -313,20 +336,20 @@ const Pricing = () => {
                     )}
                     <div className="mb-4">
                       <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
-                      <h3 className={`text-xl font-bold mb-1 ${isHighlighted ? "text-foreground" : "text-foreground"}`}>{tier.name}</h3>
-                      <p className={`text-xs ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.label}</p>
+                      <h3 className="text-xl font-bold mb-1 text-foreground">{tier.name}</h3>
+                      <p className="text-xs text-muted-foreground">{tier.label}</p>
                     </div>
                     <div className="mb-4">
-                      <span className={`text-3xl font-bold ${isHighlighted ? "text-foreground" : "text-foreground"}`}>{tier.price}</span>
-                      <span className={`text-sm ml-1 ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.period}</span>
+                      <span className="text-3xl font-bold text-foreground">{tier.price}</span>
+                      <span className="text-sm ml-1 text-muted-foreground">{tier.period}</span>
                       <div className="flex items-center gap-2 mt-1">
-                        <span className={`text-xs ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.seats}</span>
+                        <span className="text-xs text-muted-foreground">{tier.seats}</span>
                         {tier.perSeat && (
-                          <span className={`text-xs ${isHighlighted ? "text-muted-foreground/70" : "text-muted-foreground/70"}`}>({tier.perSeat})</span>
+                          <span className="text-xs text-muted-foreground/70">({tier.perSeat})</span>
                         )}
                       </div>
                     </div>
-                    <p className={`text-sm leading-relaxed mb-6 ${isHighlighted ? "text-muted-foreground" : "text-muted-foreground"}`}>{tier.description}</p>
+                    <p className="text-sm leading-relaxed mb-6 text-muted-foreground">{tier.description}</p>
                     {/* Tier 1 feature list */}
                     {tier.features && (
                       <ul className="space-y-2.5 mb-6">
@@ -339,11 +362,18 @@ const Pricing = () => {
                       </ul>
                     )}
                     <div className="mt-auto">
-                      <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
-                        className={`block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 ${
-                          isPop ? "bg-primary text-primary-foreground" : "bg-primary text-primary-foreground"
-                        }`}
-                      >{tier.cta}</a>
+                      {isWaitlist ? (
+                        <button
+                          onClick={() => { setWaitlistSubmitted(false); setWaitlistEmail(""); setWaitlistOpen(true); }}
+                          className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:bg-primary/10 border-2 border-primary text-primary"
+                        >
+                          Join the waitlist
+                        </button>
+                      ) : (
+                        <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer"
+                          className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:opacity-90 bg-primary text-primary-foreground"
+                        >{tier.cta}</a>
+                      )}
                     </div>
                   </div>
                 );
@@ -374,8 +404,12 @@ const Pricing = () => {
                 <p className="text-lg font-semibold text-foreground">More than 10 users?</p>
                 <p className="text-sm text-muted-foreground">Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
               </div>
-              <Link to="/contact" className="inline-flex items-center gap-2 text-sm font-semibold hover:opacity-80 transition-opacity whitespace-nowrap text-primary">
-                Book a call
+              <button
+                onClick={() => { setWaitlistSubmitted(false); setWaitlistEmail(""); setWaitlistOpen(true); }}
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:bg-primary/10 border-2 border-primary text-primary whitespace-nowrap"
+              >
+                Register interest
+              </button>
                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.333 8h9.334M8.667 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
               </Link>
             </div>
