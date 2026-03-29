@@ -400,11 +400,7 @@ const Pricing = () => {
                     )}
                     <div className="mt-auto">
                       {isWaitlist && (
-                        <div className="text-center mb-2">
-                          <span className="inline-block text-[11px] font-medium px-2.5 py-0.5 rounded-full bg-primary/15 text-primary">
-                            Coming soon — join the waitlist
-                          </span>
-                        </div>
+                        <p className="text-center text-xs text-muted-foreground mb-2">Coming soon</p>
                       )}
                       {isWaitlist ? (
                         <button
