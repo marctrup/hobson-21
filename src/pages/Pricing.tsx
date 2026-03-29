@@ -83,7 +83,7 @@ const tiers = [
     perSeat: "£62.50/seat",
     label: "Full platform",
     description: "Hobson learns your business. Contractors, contacts, policies, compliance deadlines and how you work — all stored, all active. Every answer is shaped by what Hobson knows about you.",
-    cta: "Start free trial",
+    cta: "Start 7-day free trial",
     popular: true,
     highlighted: true,
   },
@@ -96,7 +96,7 @@ const tiers = [
     perSeat: "£49.80/seat",
     label: "Full platform",
     description: "The same Hobson, for a bigger team. Five seats with full access to every feature — Knowledge Base, workflows, action memory and more.",
-    cta: "Start free trial",
+    cta: "Get started",
     popular: false,
     highlighted: false,
   },
@@ -109,7 +109,7 @@ const tiers = [
     perSeat: "£44.90/seat",
     label: "Full platform",
     description: "Your best per-seat value. Ten seats with full access to every feature. Built for teams running serious portfolios.",
-    cta: "Start free trial",
+    cta: "Get started",
     popular: false,
     highlighted: false,
   },
@@ -158,7 +158,7 @@ const faqs = [
   },
   {
     q: "Is there a free trial?",
-    a: "Yes. Tiers 2, 3 and 4 come with a 14-day free trial. No credit card required.",
+    a: "Yes. Tier 2 comes with a 7-day free trial. No credit card required.",
   },
   {
     q: "Are there usage limits?",
@@ -212,7 +212,7 @@ const Pricing = () => {
     <>
       <Helmet>
         <title>Pricing | Hobson AI — Specialised AI for Property Management</title>
-        <meta name="description" content="Simple, honest pricing for AI-powered property management. Start with what you need — Hobson grows as your trust grows. 14-day free trial, no credit card required." />
+        <meta name="description" content="Simple, honest pricing for AI-powered property management. Start with what you need — Hobson grows as your trust grows. 7-day free trial on Tier 2, no credit card required." />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
       </Helmet>
 
@@ -422,38 +422,6 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* 6. Footer CTA */}
-        <section className="py-20 md:py-28 bg-primary/10">
-          <div className="max-w-3xl mx-auto px-6 text-center">
-            <img
-              src={owlMascot}
-              alt="Hobson AI owl mascot"
-              className="w-16 h-16 mx-auto mb-6 object-contain opacity-80"
-            />
-            <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Your tools remind you. Hobson does the work.
-            </h2>
-            <p className="text-base mb-10 text-muted-foreground">
-              Start with a 14-day free trial on any paid tier. No credit card. No commitment.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="https://app.hobsonschoice.ai/signup"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-sm font-semibold transition-opacity hover:opacity-90 bg-primary text-primary-foreground"
-              >
-                Start free trial
-              </a>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center px-8 py-3.5 rounded-lg text-sm font-semibold text-foreground transition-colors hover:bg-muted border border-border"
-              >
-                Book a demo
-              </Link>
-            </div>
-          </div>
-        </section>
       </main>
     </>
   );

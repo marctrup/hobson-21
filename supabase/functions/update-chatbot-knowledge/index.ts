@@ -557,7 +557,7 @@ Tier 1 gives you AI document reasoning without the Knowledge Base — ideal for 
 Yes. Your Knowledge Base is built as you go — when you upgrade to Tier 2, everything you have taught Hobson stays. There is no reset.
 
 **Is there a free trial?**
-Yes. Tiers 2, 3 and 4 come with a 14-day free trial. No credit card required.
+Yes. Tier 2 comes with a 7-day free trial. No credit card required.
 
 **Are there usage limits?**
 No. All paid plans include unlimited queries, document ingestion and workflow runs. We operate a fair use policy for accounts showing usage patterns inconsistent with normal business operations — but in practice this never affects our clients.
