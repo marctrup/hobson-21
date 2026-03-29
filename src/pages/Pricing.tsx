@@ -250,7 +250,7 @@ const Pricing = () => {
                 The real deal — True Agentic workflows
               </h1>
               <p className="text-lg text-muted-foreground">
-                Start with what you need. Hobson grows as your trust grows.
+                Hobson grows as it learns.
               </p>
             </div>
 
