@@ -385,7 +385,7 @@ const Pricing = () => {
                 onClick={() => { setWaitlistSubmitted(false); setWaitlistEmail(""); setWaitlistOpen(true); }}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all duration-200 hover:bg-primary/10 border-2 border-primary text-primary whitespace-nowrap"
               >
-                Register interest
+                Contact us
               </button>
             </div>
           </div>
