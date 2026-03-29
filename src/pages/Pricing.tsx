@@ -155,6 +155,7 @@ const tiers = [
     popular: false,
     highlighted: false,
   },
+];
 
 const sharedFeatures = [
   "Everything in Tier 1",
