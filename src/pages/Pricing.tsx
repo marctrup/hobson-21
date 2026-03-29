@@ -54,7 +54,7 @@ const SlidersIcon = () => (
 
 const tiers = [
   {
-    name: "Entry",
+    name: "Solo",
     tier: 1,
     price: "£19.50",
     priceMonthly: 19.50,
