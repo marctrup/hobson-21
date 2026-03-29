@@ -8,7 +8,7 @@ import { PropertyManagementVisualization } from "@/components/homepage/PropertyM
 
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import MobileShowcase from "@/components/features/MobileShowcase";
-import { PricingSection } from "@/components/homepage/PricingSection";
+
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
 
@@ -397,8 +397,6 @@ export const Homepage = () => {
             </div>
           </section>
 
-          {/* Pricing Section */}
-          <PricingSection />
 
           {/* CTA Section */}
           <section className="py-12 sm:py-16 md:py-20 bg-[hsl(270,40%,95%)]">
