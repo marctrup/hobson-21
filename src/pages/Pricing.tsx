@@ -340,9 +340,8 @@ const Pricing = () => {
             {/* All tiers in a single row */}
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
               {tiers.map((tier, i) => {
-                const isPop = tier.popular;
-                const isHighlighted = tier.highlighted;
                 const isWaitlist = tier.tier >= 2;
+                const isEntry = tier.tier === 1;
                 const hasAnnual = isAnnual && tier.priceAnnualMonthly;
                 const displayPrice = hasAnnual ? `£${tier.priceAnnualMonthly!.toFixed(2)}` : tier.price;
                 const displayPerSeat = hasAnnual && tier.seatCount
@@ -351,20 +350,14 @@ const Pricing = () => {
                 return (
                   <div
                     key={i}
-                    ref={isPop ? tier2Ref : undefined}
                     className={`relative rounded-xl p-6 flex flex-col transition-all duration-500 ${
-                      isPop
-                        ? `${tier2Visible ? "scale-[1.02] shadow-2xl" : "scale-100 shadow-lg"}`
-                        : "shadow-sm hover:shadow-md"
-                    } ${isHighlighted ? "bg-primary/10 border-2 border-primary" : "bg-card border border-border"}`}
+                      isEntry
+                        ? "bg-card border-2 border-primary shadow-lg"
+                        : "bg-muted/60 border border-border/60 shadow-sm opacity-75"
+                    }`}
                   >
-                    {isPop && (
-                      <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-semibold px-3 py-1 rounded-full bg-primary text-primary-foreground">
-                        MOST POPULAR
-                      </span>
-                    )}
                     <div className="mb-4">
-                      <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
+                      <p className={`text-xs font-medium uppercase tracking-wider mb-1 ${isEntry ? "text-primary" : "text-muted-foreground"}`}>Tier {tier.tier}</p>
                       <h3 className="text-xl font-bold mb-1 text-foreground">{tier.name}</h3>
                       <p className="text-xs text-muted-foreground">{tier.label}</p>
                     </div>
