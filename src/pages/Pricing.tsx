@@ -247,7 +247,7 @@ const Pricing = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-8 sm:mb-16">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-foreground">
-                The real deal — True Agentic workflows
+                The Real Deal — <span className="text-primary">True Agentic Workflows</span>
               </h1>
               <p className="text-lg text-muted-foreground">
                 Hobson grows as it learns.
