@@ -462,6 +462,51 @@ const Pricing = () => {
         </section>
 
       </main>
+
+      {/* Waitlist Modal */}
+      {waitlistOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/40 backdrop-blur-sm" onClick={() => setWaitlistOpen(false)}>
+          <div className="bg-card border border-border rounded-xl p-8 max-w-md w-full mx-4 shadow-2xl" onClick={e => e.stopPropagation()}>
+            {waitlistSubmitted ? (
+              <div className="text-center py-4">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                  <CheckIcon />
+                </div>
+                <p className="text-lg font-semibold text-foreground mb-2">You're on the list.</p>
+                <p className="text-sm text-muted-foreground">We'll be in touch.</p>
+                <button onClick={() => setWaitlistOpen(false)} className="mt-6 text-sm font-medium text-primary hover:opacity-80 transition-opacity">
+                  Close
+                </button>
+              </div>
+            ) : (
+              <>
+                <h3 className="text-xl font-bold text-foreground mb-2">Join the waitlist</h3>
+                <p className="text-sm text-muted-foreground mb-6">Be first to know when we launch. No spam, ever.</p>
+                <form onSubmit={e => {
+                  e.preventDefault();
+                  if (waitlistEmail.trim()) setWaitlistSubmitted(true);
+                }}>
+                  <input
+                    type="email"
+                    required
+                    placeholder="you@example.com"
+                    value={waitlistEmail}
+                    onChange={e => setWaitlistEmail(e.target.value)}
+                    className="w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 mb-4"
+                    autoFocus
+                  />
+                  <button type="submit" className="w-full py-3 rounded-lg text-sm font-semibold bg-primary text-primary-foreground hover:opacity-90 transition-opacity">
+                    Join waitlist
+                  </button>
+                </form>
+                <button onClick={() => setWaitlistOpen(false)} className="w-full mt-3 text-sm text-muted-foreground hover:text-foreground transition-colors text-center">
+                  Cancel
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };
