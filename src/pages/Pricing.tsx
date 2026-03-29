@@ -370,7 +370,7 @@ const Pricing = () => {
             </div>
 
             {/* Shared feature list for Tiers 2-4 */}
-            <div className="mt-6 sm:mt-8 rounded-xl p-4 sm:p-8 bg-muted border border-border">
+            <div className="mt-6 sm:mt-8 rounded-xl p-4 sm:p-8 border border-primary/20 bg-primary/5">
               <h3 className="text-lg font-semibold mb-5 text-foreground">
                 Included in Tiers 2, 3 and 4
               </h3>
@@ -388,7 +388,7 @@ const Pricing = () => {
             </div>
 
             {/* Enterprise row */}
-            <div className="mt-6 sm:mt-10 rounded-xl p-4 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-muted text-center md:text-left">
+            <div className="mt-6 sm:mt-10 rounded-xl p-4 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-card border border-border text-center md:text-left">
               <div>
                 <p className="text-lg font-semibold text-foreground">More than 10 users?</p>
                 <p className="text-sm text-muted-foreground">Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
@@ -404,7 +404,7 @@ const Pricing = () => {
         </section>
 
         {/* 3. Knowledge Base Section */}
-        <section className="py-12 md:py-28" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
+        <section className="py-12 md:py-28 bg-muted">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
               <img
