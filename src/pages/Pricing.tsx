@@ -358,6 +358,11 @@ const Pricing = () => {
                 const isPop = tier.popular;
                 const isHighlighted = tier.highlighted;
                 const isWaitlist = tier.tier >= 2;
+                const hasAnnual = isAnnual && tier.tier >= 2 && tier.priceAnnualMonthly;
+                const displayPrice = hasAnnual ? `£${tier.priceAnnualMonthly!.toFixed(2)}` : tier.price;
+                const displayPerSeat = hasAnnual && tier.seatCount
+                  ? `£${(tier.priceAnnualMonthly! / tier.seatCount).toFixed(2)}/seat`
+                  : tier.perSeat;
                 return (
                   <div
                     key={i}
@@ -379,12 +384,20 @@ const Pricing = () => {
                       <p className="text-xs text-muted-foreground">{tier.label}</p>
                     </div>
                     <div className="mb-4">
-                      <span className="text-3xl font-bold text-foreground">{tier.price}</span>
+                      {hasAnnual && (
+                        <div className="text-sm text-muted-foreground line-through mb-0.5">{tier.price}/mo</div>
+                      )}
+                      <span className="text-3xl font-bold text-foreground">{displayPrice}</span>
                       <span className="text-sm ml-1 text-muted-foreground">{tier.period}</span>
+                      {hasAnnual && tier.priceAnnualYearly && (
+                        <div className="text-xs text-muted-foreground mt-1">
+                          billed as £{tier.priceAnnualYearly.toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 2 })} annually
+                        </div>
+                      )}
                       <div className="flex items-center gap-2 mt-1">
                         <span className="text-xs text-muted-foreground">{tier.seats}</span>
-                        {tier.perSeat && (
-                          <span className="text-xs text-muted-foreground/70">({tier.perSeat})</span>
+                        {displayPerSeat && (
+                          <span className="text-xs text-muted-foreground/70">({displayPerSeat})</span>
                         )}
                       </div>
                     </div>
