@@ -87,7 +87,7 @@ export default function OnboardingSection() {
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">Every document is processed thoroughly on the way in. Once done, it is done. You will never pay for the same document again.</p>
             </div>
             <div>
-              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">The fee reflects the work.</p>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--primary-light))] mb-1">The fee reflects the work.</p>
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">Leases are complex and take more processing. Simpler documents cost less. You only pay for what you bring in.</p>
             </div>
             <div>
