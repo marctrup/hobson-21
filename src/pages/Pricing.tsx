@@ -155,7 +155,7 @@ const Pricing = () => {
       <main id="main-content" style={{ color: C.navy }}>
 
         {/* PAGE HEADER */}
-        <section className="pt-24 md:pt-28 pb-10 md:pb-14 px-4 sm:px-6" style={{ background: C.bg }}>
+        <section className="pt-24 md:pt-28 pb-16 md:pb-24 px-4 sm:px-6" style={{ background: C.bg }}>
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-[11px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: C.purple }}>Pricing</p>
             <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: C.navy }}>Simple, honest pricing.</h1>
