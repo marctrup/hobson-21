@@ -229,6 +229,75 @@ export type Database = {
         }
         Relationships: []
       }
+      document_classification_settings: {
+        Row: {
+          created_at: string
+          id: string
+          lease_threshold: number
+          reclassification_behaviour: string
+          reclassification_message: string
+          simple_document_threshold: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lease_threshold?: number
+          reclassification_behaviour?: string
+          reclassification_message?: string
+          simple_document_threshold?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lease_threshold?: number
+          reclassification_behaviour?: string
+          reclassification_message?: string
+          simple_document_threshold?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      extraction_events: {
+        Row: {
+          actual_tokens: number
+          amount_charged: number
+          charged_type: string
+          created_at: string
+          declared_type: string
+          document_name: string
+          id: string
+          reclassified: boolean
+          user_email: string | null
+          user_id: string | null
+        }
+        Insert: {
+          actual_tokens: number
+          amount_charged?: number
+          charged_type: string
+          created_at?: string
+          declared_type: string
+          document_name: string
+          id?: string
+          reclassified?: boolean
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          actual_tokens?: number
+          amount_charged?: number
+          charged_type?: string
+          created_at?: string
+          declared_type?: string
+          document_name?: string
+          id?: string
+          reclassified?: boolean
+          user_email?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
       faq_items: {
         Row: {
           answer: string
