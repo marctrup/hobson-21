@@ -41,7 +41,7 @@ const Badge = ({ children, variant }: { children: React.ReactNode; variant: "liv
   const styles = {
     live: { backgroundColor: C.greenBg, color: C.greenText },
     coming: { backgroundColor: C.amberBg, color: C.amberText },
-    onetime: { backgroundColor: C.purpleBadgeBg, color: C.purple },
+    onetime: { backgroundColor: '#FFF7ED', color: '#EA580C' },
     tier234: { backgroundColor: C.purpleBadgeBg, color: C.purple },
   };
   return <span className="text-xs font-semibold px-2.5 py-1 rounded-full inline-block" style={styles[variant]}>{children}</span>;
