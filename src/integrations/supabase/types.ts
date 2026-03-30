@@ -768,6 +768,36 @@ export type Database = {
         }
         Relationships: []
       }
+      tier_usage_limits: {
+        Row: {
+          created_at: string
+          id: string
+          monthly_extractions: string
+          monthly_questions: string
+          overage_behaviour: string
+          tier: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          monthly_extractions?: string
+          monthly_questions?: string
+          overage_behaviour?: string
+          tier: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          monthly_extractions?: string
+          monthly_questions?: string
+          overage_behaviour?: string
+          tier?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       use_case_videos: {
         Row: {
           client_name: string | null
