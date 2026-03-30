@@ -156,11 +156,11 @@ const Pricing = () => {
 
         {/* PAGE HEADER */}
         <section className="pt-24 md:pt-28 pb-6 md:pb-8 px-4 sm:px-6" style={{ background: C.bg }}>
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-3xl mx-auto text-center">
             <p className="text-[11px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: C.purple }}>Pricing</p>
             <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: C.navy }}>Simple, honest pricing.</h1>
             <p className="text-sm mb-5" style={{ color: C.muted }}>One-time extraction fee to get started. Then a monthly plan that fits your team.</p>
-            <div className="flex flex-wrap items-center gap-2 mb-1.5">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-1.5">
               {["Extract", "Query", "Learn"].map((step, i) => (
                 <React.Fragment key={step}>
                   <span className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ background: C.stepCircle, color: C.purple }}>{step}</span>
