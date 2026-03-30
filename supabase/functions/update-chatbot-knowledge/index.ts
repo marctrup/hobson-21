@@ -565,6 +565,11 @@ No. All paid plans include unlimited queries, document ingestion and workflow ru
 - Tier 4 (Scale): £449.00/month (£359.20/month annual), 10 seats (£44.90/seat monthly), identical features to Tier 2. Best per-seat value.
 - Enterprise: Usage-based pricing, not headcount-based. Contact sales for 10+ users.
 All paid plans include every feature. You are choosing your team size, not your capability.
+
+## Why the big jump in pricing? — The Knowledge Base
+Tier 1 answers your questions. Tier 2 - 4 knows your business.
+The Knowledge Base is the difference between an AI that retrieves information from your documents and one that understands how you work — your contractors, your contacts, your policies, your obligations, your preferences. Every answer shaped by your business. Every action reflecting how you operate. That transformation is what Tier 2, 3 and 4 deliver. And it is worth considerably more than the difference in price.
+A single hour of a persons time costs more than a month of Tier 2. The Knowledge Base saves multiples of that every week.
     `.trim();
 
     // Construct comprehensive knowledge base
