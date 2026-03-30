@@ -168,7 +168,7 @@ const Pricing = () => {
                 </React.Fragment>
               ))}
             </div>
-            <p className="text-xs" style={{ color: C.muted }}>Extraction and querying are two different things. You pay once to extract. You query as many times as your tier allows.</p>
+            
           </div>
         </section>
 
