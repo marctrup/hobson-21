@@ -139,7 +139,7 @@ const Pricing = () => {
         { text: "Personal shortcuts", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
-      muted: "Coming later this year",
+      muted: null,
     },
   ];
 
