@@ -188,7 +188,6 @@ export default function OnboardingSection() {
             disabled={total === 0}
             className="w-full py-4 rounded-xl text-base font-bold text-primary-foreground bg-[hsl(var(--brand-orange))] transition-all duration-200 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-          >
             Pay onboarding fee and get started
           </button>
           <p className="text-center text-xs text-muted-foreground mt-3">
