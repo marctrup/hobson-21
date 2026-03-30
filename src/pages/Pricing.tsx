@@ -211,9 +211,9 @@ const Pricing = () => {
                     </div>
                     <p className="text-xs mb-2" style={{ color: C.muted }}>Compliance certificates, insurance policies, contracts, process guides, anything else</p>
                     <div className="flex items-center gap-3">
-                      <button type="button" onClick={() => setDocuments(Math.max(0, documents - 1))} className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
-                      <input type="number" min={0} value={documents} onChange={e => setDocuments(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
-                      <button type="button" onClick={() => setDocuments(documents + 1)} className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
+                      <button type="button" onClick={() => setDocuments(Math.max(0, documents - 1))} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
+                      <input type="number" min={0} value={documents} onChange={e => setDocuments(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                      <button type="button" onClick={() => setDocuments(documents + 1)} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
                     </div>
                   </div>
                 </div>
