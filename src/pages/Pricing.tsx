@@ -163,7 +163,7 @@ const Pricing = () => {
             <div className="flex flex-wrap items-center justify-center gap-2.5 mb-2">
               {["Extract", "Query", "Learn"].map((step, i) => (
                 <React.Fragment key={step}>
-                  <span className="text-sm font-medium px-3 py-1.5 rounded-full" style={{ background: C.stepCircle, color: C.purple }}>{step}</span>
+                  <span className="text-sm font-medium px-3 py-1.5 rounded-full text-white" style={{ background: '#F97316' }}>{step}</span>
                   {i < 2 && <span className="text-sm" style={{ color: C.border }}>→</span>}
                 </React.Fragment>
               ))}
