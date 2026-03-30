@@ -321,7 +321,7 @@ const Pricing = () => {
 
 
             {/* Enterprise row */}
-            <div className="mt-6 sm:mt-10 rounded-xl p-4 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-primary/10 border border-primary/20 text-center md:text-left">
+            <div className="mt-6 sm:mt-10 rounded-xl p-4 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-4 bg-muted border border-border text-center md:text-left">
               <div>
                 <p className="text-lg font-semibold text-foreground">More than 10 users?</p>
                 <p className="text-sm text-muted-foreground">Talk to us. Enterprise pricing is based on usage, not headcount.</p>
