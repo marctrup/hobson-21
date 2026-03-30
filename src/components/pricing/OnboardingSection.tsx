@@ -80,9 +80,9 @@ export default function OnboardingSection() {
             Before Hobson can reason across your documents, it needs to read and understand them. This is not a simple file upload — Hobson processes every lease and document using AI, extracting meaning, relationships and obligations so it can answer questions accurately from day one. That processing work happens once, thoroughly, and is never repeated for the same document. The onboarding fee covers exactly that work — nothing more. The more documents you have, the more work is involved. The less you have, the less you pay.
           </p>
           <div className="space-y-2">
-            <p className="text-sm text-white/65">✓ One-time only — never charged again for the same documents</p>
-            <p className="text-sm text-white/65">✓ Processing completes in minutes — Hobson is ready to use immediately after</p>
-            <p className="text-sm text-white/65">✓ Add documents later at any time — each new upload is charged at the same rate</p>
+            <p className="text-sm text-primary-foreground/70">✓ One-time only — never charged again for the same documents</p>
+            <p className="text-sm text-primary-foreground/70">✓ Processing completes in minutes — Hobson is ready to use immediately after</p>
+            <p className="text-sm text-primary-foreground/70">✓ Add documents later at any time — each new upload is charged at the same rate</p>
           </div>
         </div>
 
