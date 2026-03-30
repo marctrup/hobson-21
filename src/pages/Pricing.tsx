@@ -345,7 +345,7 @@ const Pricing = () => {
               Tier 1 answers your questions. Tier 2 - 4 knows your business.
             </p>
             <p className="text-sm sm:text-base leading-relaxed text-muted-foreground max-w-2xl mx-auto">
-              The Knowledge Base is the difference between an AI that retrieves information from your documents and one that understands how you work — your contractors, your contacts, your policies, your obligations, your preferences. Every answer shaped by your business. Every action reflecting how you operate. That transformation is what Tier 2, 3 and 4 deliver. And it is worth considerably more than the difference in price. A single hour of a manager's time costs more than a month of Tier 2. The Knowledge Base saves multiples of that every week.
+              The Knowledge Base is the difference between an AI that retrieves information from your documents and one that understands how you work — your contractors, your contacts, your policies, your obligations, your preferences. Every answer shaped by your business. Every action reflecting how you operate. That transformation is what Tier 2, 3 and 4 deliver. And it is worth considerably more than the difference in price. A single hour of a persons time costs more than a month of Tier 2. The Knowledge Base saves multiples of that every week.
             </p>
           </div>
         </section>
