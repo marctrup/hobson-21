@@ -157,7 +157,7 @@ const Pricing = () => {
         {/* PAGE HEADER */}
         <section className="pt-24 md:pt-28 pb-6 md:pb-8 px-4 sm:px-6" style={{ background: C.bg }}>
           <div className="max-w-6xl mx-auto">
-            <p className="text-[11px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: C.muted }}>Pricing</p>
+            <p className="text-[11px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: C.purple }}>Pricing</p>
             <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: C.navy }}>Simple, honest pricing.</h1>
             <p className="text-sm mb-5" style={{ color: C.muted }}>One-time extraction fee to get started. Then a monthly plan that fits your team.</p>
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
