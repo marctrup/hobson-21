@@ -10,6 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff } from "lucide-react";
+import OnboardingPricingSettings from "@/components/admin/OnboardingPricingSettings";
 
 interface PilotApplication {
   id: string;

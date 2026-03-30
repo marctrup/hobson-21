@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { getPricingStructuredData, getOrganizationStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import OnboardingSection from "@/components/pricing/OnboardingSection";
 
 
 // Inline SVG icons using brand green/red
