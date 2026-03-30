@@ -242,7 +242,6 @@ export default function OnboardingSection() {
               disabled
               className="w-full py-3 rounded-lg text-sm font-semibold text-primary-foreground bg-[hsl(var(--brand-orange))] opacity-50 cursor-not-allowed"
             >
-            >
               Pay £{total.toFixed(2)}
             </button>
             <button onClick={() => setPaymentOpen(false)} className="w-full mt-3 text-sm text-muted-foreground hover:text-foreground transition-colors text-center">
