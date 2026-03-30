@@ -336,15 +336,15 @@ const Pricing = () => {
         </section>
 
         {/* Knowledge Base Callout */}
-        <section className="py-16 md:py-24 px-4 sm:px-6" style={{ backgroundColor: "#1A1A2E" }}>
+        <section className="py-16 md:py-24 px-4 sm:px-6 bg-muted">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
               Why does the Knowledge Base change everything?
             </h2>
-            <p className="text-lg sm:text-xl text-white/70 italic mb-8">
+            <p className="text-lg sm:text-xl text-muted-foreground italic mb-8">
               Tier 1 answers your questions. Tier 2 knows your business.
             </p>
-            <p className="text-sm sm:text-base leading-relaxed text-white/80 max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base leading-relaxed text-muted-foreground max-w-2xl mx-auto">
               The Knowledge Base is the difference between an AI that retrieves information from your documents and one that understands how you work — your contractors, your contacts, your policies, your obligations, your preferences. Every answer shaped by your business. Every action reflecting how you operate. That transformation is what Tier 2, 3 and 4 deliver. And it is worth considerably more than the difference in price. A single hour of a manager's time costs more than a month of Tier 2. The Knowledge Base saves multiples of that every week.
             </p>
           </div>
