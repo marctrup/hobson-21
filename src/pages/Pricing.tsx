@@ -208,7 +208,7 @@ const Pricing = () => {
 
       <main id="main-content">
         {/* Pricing Table */}
-        <section className="pt-12 md:pt-28 pb-12 md:pb-28 bg-background" id="pricing-table">
+        <section className="pt-12 md:pt-28 pb-4 md:pb-8 bg-background" id="pricing-table">
           <div className="max-w-7xl mx-auto px-4 sm:px-6">
             <div className="text-center mb-8 sm:mb-16">
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground">
