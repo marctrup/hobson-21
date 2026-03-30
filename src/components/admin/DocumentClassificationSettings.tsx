@@ -150,11 +150,12 @@ export default function DocumentClassificationSettings() {
                   type="number"
                   min="0"
                   value={leaseThreshold}
-                  disabled
-                  className="opacity-60"
+                  onChange={e => setLeaseThreshold(e.target.value)}
+                  required
+                  disabled={saving}
                 />
                 <p className="text-xs text-muted-foreground mt-1">
-                  Documents at or above this token count are charged at the lease rate. Typical leases use approximately 209,600 tokens. This field auto-sets to one above the simple document threshold.
+                  Documents at or above this token count are charged at the lease rate. Typical leases use approximately 209,600 tokens.
                 </p>
               </div>
 
