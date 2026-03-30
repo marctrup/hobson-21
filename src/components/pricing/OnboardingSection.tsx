@@ -72,17 +72,17 @@ export default function OnboardingSection() {
         </div>
 
         {/* Explanation block */}
-        <div className="rounded-2xl p-8 sm:p-10 mb-10" style={{ backgroundColor: "#1A1A2E" }}>
-          <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
+        <div className="rounded-2xl p-8 sm:p-10 mb-10 bg-primary text-primary-foreground">
+          <h3 className="text-xl sm:text-2xl font-bold text-primary-foreground mb-4">
             Why is there an onboarding fee?
           </h3>
-          <p className="text-sm sm:text-base leading-relaxed text-white/85 mb-6">
+          <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85 mb-6">
             Before Hobson can reason across your documents, it needs to read and understand them. This is not a simple file upload — Hobson processes every lease and document using AI, extracting meaning, relationships and obligations so it can answer questions accurately from day one. That processing work happens once, thoroughly, and is never repeated for the same document. The onboarding fee covers exactly that work — nothing more. The more documents you have, the more work is involved. The less you have, the less you pay.
           </p>
           <div className="space-y-2">
-            <p className="text-sm text-white/65">✓ One-time only — never charged again for the same documents</p>
-            <p className="text-sm text-white/65">✓ Processing completes in minutes — Hobson is ready to use immediately after</p>
-            <p className="text-sm text-white/65">✓ Add documents later at any time — each new upload is charged at the same rate</p>
+            <p className="text-sm text-primary-foreground/70">✓ One-time only — never charged again for the same documents</p>
+            <p className="text-sm text-primary-foreground/70">✓ Processing completes in minutes — Hobson is ready to use immediately after</p>
+            <p className="text-sm text-primary-foreground/70">✓ Add documents later at any time — each new upload is charged at the same rate</p>
           </div>
         </div>
 
@@ -186,8 +186,7 @@ export default function OnboardingSection() {
           <button
             onClick={() => setPaymentOpen(true)}
             disabled={total === 0}
-            className="w-full py-4 rounded-xl text-base font-bold text-white transition-all duration-200 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ backgroundColor: "#E94560" }}
+            className="w-full py-4 rounded-xl text-base font-bold text-primary-foreground bg-[hsl(var(--brand-orange))] transition-all duration-200 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Pay onboarding fee and get started
           </button>
@@ -241,8 +240,7 @@ export default function OnboardingSection() {
 
             <button
               disabled
-              className="w-full py-3 rounded-lg text-sm font-semibold text-white opacity-50 cursor-not-allowed"
-              style={{ backgroundColor: "#E94560" }}
+              className="w-full py-3 rounded-lg text-sm font-semibold text-primary-foreground bg-[hsl(var(--brand-orange))] opacity-50 cursor-not-allowed"
             >
               Pay £{total.toFixed(2)}
             </button>
