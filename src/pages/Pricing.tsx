@@ -103,7 +103,7 @@ const Pricing = () => {
         { text: "Personal shortcuts", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
-      muted: "Coming later this year",
+      muted: null,
     },
     {
       tier: 3, seats: "5 seats", perSeat: "£50.00/seat", label: "Full platform",
@@ -121,7 +121,7 @@ const Pricing = () => {
         { text: "Personal shortcuts", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
-      muted: "Coming later this year",
+      muted: null,
     },
     {
       tier: 4, seats: "10 seats", perSeat: "£45.00/seat", label: "Full platform",
@@ -139,7 +139,7 @@ const Pricing = () => {
         { text: "Personal shortcuts", ok: true },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
-      muted: "Coming later this year",
+      muted: null,
     },
   ];
 
