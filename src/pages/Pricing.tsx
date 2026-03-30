@@ -86,7 +86,7 @@ const Pricing = () => {
         { text: "Action memory", ok: false },
       ],
       cta: "Get started", ctaStyle: "solid" as const, waitlist: false,
-      muted: `Allowances reset on the 1st of each month.`,
+      muted: `Allowances reset on the billing cycle.`,
     },
     {
       tier: 2, seats: "2 seats", perSeat: "£82.50/seat", label: "Full platform",
