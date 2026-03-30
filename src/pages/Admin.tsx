@@ -283,6 +283,7 @@ export default function Admin() {
         </Card>
 
         <PricingSettings />
+        <DocumentClassificationSettings />
 
         <Card className="mt-6">
           <CardHeader>
