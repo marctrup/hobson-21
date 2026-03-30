@@ -391,34 +391,6 @@ const Pricing = () => {
           </div>
         </section>
 
-        {/* STEP 3 — KNOWLEDGE BASE */}
-        <section className="py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bgAlt }}>
-          <div className="max-w-5xl mx-auto">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: C.purple }}>Step 3</p>
-            <div className="flex flex-wrap items-center gap-3 mb-2">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={{ color: C.navy }}>Hobson learns your business</h2>
-              <Badge variant="tier234">Tier 2, 3 and 4 only</Badge>
-            </div>
-            <p className="text-sm sm:text-base mb-10" style={{ color: C.muted }}>
-              Extracted documents give Hobson facts. The Knowledge Base gives Hobson context. It is the difference between an AI that answers questions and one that knows your business.
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div className="rounded-xl p-6" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
-                <h3 className="font-bold mb-2" style={{ color: C.navy }}>Without Knowledge Base</h3>
-                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>Hobson answers questions from your documents. Fast, accurate, sourced. But it does not know who you are or how you work.</p>
-              </div>
-              <div className="rounded-xl p-6" style={{ background: C.callout, border: `2px solid ${C.purple}` }}>
-                <h3 className="font-bold mb-2" style={{ color: C.navy }}>With Knowledge Base</h3>
-                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>Hobson knows your contractors, contacts, policies and preferences. Every answer reflects how your business works — not how anyone else's does.</p>
-              </div>
-              <div className="rounded-xl p-6" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
-                <h3 className="font-bold mb-2" style={{ color: C.navy }}>Over time</h3>
-                <p className="text-sm leading-relaxed" style={{ color: C.muted }}>Action memory means Hobson gets better the longer you use it. It notices patterns, suggests workflows and builds standing instructions from your feedback.</p>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* FAQ */}
         <section className="py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bg }}>
