@@ -337,8 +337,8 @@ const Pricing = () => {
         {/* Knowledge Base Callout */}
         <section className="py-16 md:py-24 px-4 sm:px-6 bg-muted">
           <div className="max-w-3xl mx-auto text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
+            <div className="flex items-start justify-center gap-2 mb-4">
+              <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-10 h-10 sm:w-12 sm:h-12 object-contain flex-shrink-0 mt-1" />
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
                 Why the big jump in pricing? — <span className="text-primary">The Knowledge Base</span>
               </h2>
