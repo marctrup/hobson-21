@@ -157,18 +157,18 @@ const Pricing = () => {
         {/* PAGE HEADER */}
         <section className="pt-24 md:pt-28 pb-16 md:pb-24 px-4 sm:px-6" style={{ background: C.bg }}>
           <div className="max-w-3xl mx-auto text-center">
-            <p className="text-[11px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: C.purple }}>Pricing</p>
-            <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: C.navy }}>Simple, honest pricing.</h1>
-            <p className="text-sm mb-5" style={{ color: C.muted }}>One-time extraction fee to get started. Then a monthly plan that fits your team.</p>
-            <div className="flex flex-wrap items-center justify-center gap-2 mb-1.5">
+            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: C.purple }}>Pricing</p>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3" style={{ color: C.navy }}>Simple, honest pricing.</h1>
+            <p className="text-base sm:text-lg mb-6" style={{ color: C.muted }}>One-time extraction fee to get started. Then a monthly plan that fits your team.</p>
+            <div className="flex flex-wrap items-center justify-center gap-2.5 mb-2">
               {["Extract", "Query", "Learn"].map((step, i) => (
                 <React.Fragment key={step}>
-                  <span className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ background: C.stepCircle, color: C.purple }}>{step}</span>
-                  {i < 2 && <span className="text-xs" style={{ color: C.border }}>→</span>}
+                  <span className="text-sm font-medium px-3 py-1.5 rounded-full" style={{ background: C.stepCircle, color: C.purple }}>{step}</span>
+                  {i < 2 && <span className="text-sm" style={{ color: C.border }}>→</span>}
                 </React.Fragment>
               ))}
             </div>
-            <p className="text-[11px]" style={{ color: C.muted }}>Extraction and querying are two different things. You pay once to extract. You query as many times as your tier allows.</p>
+            <p className="text-xs" style={{ color: C.muted }}>Extraction and querying are two different things. You pay once to extract. You query as many times as your tier allows.</p>
           </div>
         </section>
 
