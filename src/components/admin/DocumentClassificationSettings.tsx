@@ -45,13 +45,6 @@ export default function DocumentClassificationSettings() {
     fetchAll();
   }, []);
 
-  // Auto-set lease threshold to simple + 1
-  useEffect(() => {
-    const simple = parseInt(simpleThreshold);
-    if (!isNaN(simple)) {
-      setLeaseThreshold(String(simple + 1));
-    }
-  }, [simpleThreshold]);
 
   const fetchAll = async () => {
     try {
