@@ -79,19 +79,19 @@ export default function OnboardingSection() {
 
           <div className="space-y-6 mb-8">
             <div>
-              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">It is not a simple upload.</p>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--primary-light))] mb-1">It is not a simple upload.</p>
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">When you add a document, Hobson reads it using AI — extracting meaning, relationships and obligations so it can answer questions accurately from day one.</p>
             </div>
             <div>
-              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">The work happens once.</p>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--primary-light))] mb-1">The work happens once.</p>
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">Every document is processed thoroughly on the way in. Once done, it is done. You will never pay for the same document again.</p>
             </div>
             <div>
-              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">The fee reflects the work.</p>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--primary-light))] mb-1">The fee reflects the work.</p>
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">Leases are complex and take more processing. Simpler documents cost less. You only pay for what you bring in.</p>
             </div>
             <div>
-              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">You are in control.</p>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--primary-light))] mb-1">You are in control.</p>
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">The more documents you have, the more you pay. The fewer you have, the less. Add more later at any time — each new upload is charged at the same rate.</p>
             </div>
           </div>
