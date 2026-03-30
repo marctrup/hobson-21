@@ -3,6 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { getPricingStructuredData, getOrganizationStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
+import OnboardingSection from "@/components/pricing/OnboardingSection";
 
 
 // Inline SVG icons using brand green/red
@@ -334,6 +335,9 @@ const Pricing = () => {
             </div>
           </div>
         </section>
+
+        {/* Onboarding Section */}
+        <OnboardingSection />
 
         {/* Knowledge Base Callout */}
         <section className="py-16 md:py-24 px-4 sm:px-6 bg-muted">
