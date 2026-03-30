@@ -164,7 +164,7 @@ const Pricing = () => {
               {["Extract", "Query", "Learn"].map((step, i) => (
                 <React.Fragment key={step}>
                   <span className="text-sm font-medium px-3 py-1.5 rounded-full text-white" style={{ background: C.purple }}>{step}</span>
-                  {i < 2 && <span className="text-sm" style={{ color: C.border }}>→</span>}
+                  {i < 2 && <span className="text-base font-bold" style={{ color: C.navy }}>→</span>}
                 </React.Fragment>
               ))}
             </div>
