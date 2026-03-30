@@ -72,7 +72,7 @@ export default function OnboardingSection() {
         </div>
 
         {/* Explanation block */}
-        <div className="rounded-2xl p-8 sm:p-10 mb-10" style={{ backgroundColor: "#1A1A2E" }}>
+        <div className="rounded-2xl p-8 sm:p-10 mb-10 bg-primary text-primary-foreground">
           <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
             Why is there an onboarding fee?
           </h3>
