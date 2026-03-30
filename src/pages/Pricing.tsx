@@ -155,7 +155,7 @@ const Pricing = () => {
       <main id="main-content" style={{ color: C.navy }}>
 
         {/* PAGE HEADER */}
-        <section className="pt-24 md:pt-28 pb-16 md:pb-24 px-4 sm:px-6" style={{ background: C.bg }}>
+        <section className="pt-16 sm:pt-24 md:pt-28 pb-10 sm:pb-16 md:pb-24 px-4 sm:px-6" style={{ background: C.bg }}>
           <div className="max-w-3xl mx-auto text-center">
             <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: C.purple }}>Pricing</p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3" style={{ color: C.navy }}>Simple, honest pricing.</h1>
@@ -173,7 +173,7 @@ const Pricing = () => {
         </section>
 
         {/* ONBOARDING */}
-        <section className="py-12 md:py-20 px-4 sm:px-6" style={{ background: '#F7F7F8' }} id="onboarding">
+        <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: '#F7F7F8' }} id="onboarding">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={{ color: C.navy }}>Extract your documents</h2>
@@ -185,7 +185,7 @@ const Pricing = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Calculator */}
-              <div className="rounded-2xl p-6 sm:p-8 shadow-sm" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
                 <h3 className="text-xl font-bold mb-6" style={{ color: C.navy }}>Estimate your onboarding cost</h3>
 
                 <div className="space-y-5 mb-6">
@@ -195,11 +195,11 @@ const Pricing = () => {
                       <label className="text-sm font-semibold" style={{ color: C.navy }}>How many leases?</label>
                       <span className="text-xs" style={{ color: C.muted }}>£{pricing.cost_per_lease.toFixed(2)} each</span>
                     </div>
-                    <p className="text-xs mb-2" style={{ color: C.muted }}><p className="text-xs mb-2" style={{ color: C.muted }}>Complex documents - Leases and occupational licences</p></p>
+                    <p className="text-xs mb-2" style={{ color: C.muted }}>Complex documents - Leases and occupational licences</p>
                     <div className="flex items-center gap-3">
-                      <button type="button" onClick={() => setLeases(Math.max(0, leases - 1))} className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
-                      <input type="number" min={0} value={leases} onChange={e => setLeases(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
-                      <button type="button" onClick={() => setLeases(leases + 1)} className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
+                      <button type="button" onClick={() => setLeases(Math.max(0, leases - 1))} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
+                      <input type="number" min={0} value={leases} onChange={e => setLeases(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                      <button type="button" onClick={() => setLeases(leases + 1)} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
                     </div>
                   </div>
 
@@ -211,9 +211,9 @@ const Pricing = () => {
                     </div>
                     <p className="text-xs mb-2" style={{ color: C.muted }}>Compliance certificates, insurance policies, contracts, process guides, anything else</p>
                     <div className="flex items-center gap-3">
-                      <button type="button" onClick={() => setDocuments(Math.max(0, documents - 1))} className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
-                      <input type="number" min={0} value={documents} onChange={e => setDocuments(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
-                      <button type="button" onClick={() => setDocuments(documents + 1)} className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
+                      <button type="button" onClick={() => setDocuments(Math.max(0, documents - 1))} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
+                      <input type="number" min={0} value={documents} onChange={e => setDocuments(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                      <button type="button" onClick={() => setDocuments(documents + 1)} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
                     </div>
                   </div>
                 </div>
@@ -277,7 +277,7 @@ const Pricing = () => {
         </section>
 
         {/* STEP 2 — SUBSCRIPTION */}
-        <section className="py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bg }} id="plans">
+        <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bg }} id="plans">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: C.navy }}>Choose your plan</h2>
             <p className="text-sm sm:text-base mb-8" style={{ color: C.muted }}>
@@ -374,7 +374,7 @@ const Pricing = () => {
         </section>
 
         {/* KNOWLEDGE BASE CALLOUT */}
-        <section className="py-12 md:py-20 px-4 sm:px-6" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
+        <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3" style={{ color: C.navy }}>
               Why does the Knowledge Base change everything?
@@ -393,9 +393,9 @@ const Pricing = () => {
 
 
         {/* FAQ */}
-        <section className="py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bg }}>
+        <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bg }}>
           <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-8 sm:mb-12 text-center" style={{ color: C.navy }}>Common questions</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-12 text-center" style={{ color: C.navy }}>Common questions</h2>
             <div style={{ borderTop: `1px solid ${C.border}` }}>
               {faqs.map((faq, i) => (
                 <div key={i} style={{ borderBottom: `1px solid ${C.border}` }} className="py-5">
@@ -417,7 +417,7 @@ const Pricing = () => {
       {/* Waitlist Modal */}
       {waitlistOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm" style={{ background: "rgba(26,26,46,0.4)" }} onClick={() => setWaitlistOpen(false)}>
-          <div className="rounded-xl p-8 max-w-md w-full mx-4 shadow-2xl" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
+          <div className="rounded-xl p-5 sm:p-8 max-w-md w-full mx-4 shadow-2xl" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
             {waitlistSubmitted ? (
               <div className="text-center py-4">
                 <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: C.greenBg }}><CheckIcon /></div>
@@ -443,8 +443,8 @@ const Pricing = () => {
       {/* Tier 1 Overage Modal */}
       {overageModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm" style={{ background: "rgba(26,26,46,0.4)" }} onClick={() => setOverageModalOpen(false)}>
-          <div className="rounded-xl p-8 max-w-lg w-full mx-4 shadow-2xl" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
-            <h3 className="text-xl font-bold mb-2" style={{ color: C.navy }}>You have used your {t1.monthly_extractions} included extractions this month.</h3>
+          <div className="rounded-xl p-5 sm:p-8 max-w-lg w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: C.navy }}>You have used your {t1.monthly_extractions} included extractions this month.</h3>
             <p className="text-sm mb-6" style={{ color: C.muted }}>You have two options:</p>
 
             <div className="space-y-4">
