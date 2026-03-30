@@ -2,11 +2,12 @@ import React, { Suspense, lazy, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
+import { Homepage } from "./Homepage";
+import { HomepageABTest } from "./HomepageABTest";
+import { HomepageHomeowner } from "./HomepageHomeowner";
+import Pricing from "../pages/Pricing";
 
-// Lazy load all pages for optimal bundle splitting
-const Homepage = lazy(() => import("./Homepage").then(module => ({ default: module.Homepage })));
-const HomepageABTest = lazy(() => import("./HomepageABTest").then(module => ({ default: module.HomepageABTest })));
-const HomepageHomeowner = lazy(() => import("./HomepageHomeowner").then(module => ({ default: module.HomepageHomeowner })));
+// Lazy load secondary routes to keep initial navigation responsive
 const SimpleHomepage = lazy(() => import("./SimpleHomepage").then(module => ({ default: module.SimpleHomepage })));
 const LandingPageA = lazy(() => import("../pages/LandingPageA"));
 const LandingPageB = lazy(() => import("../pages/LandingPageB"));
@@ -45,7 +46,6 @@ const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 const InvestorSummary = lazy(() => import("../pages/InvestorSummary"));
-const Pricing = lazy(() => import("../pages/Pricing"));
 
 // Loading component
 const PageLoader = () => (
