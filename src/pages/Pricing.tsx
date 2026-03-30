@@ -185,7 +185,7 @@ const Pricing = () => {
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {/* Calculator */}
-              <div className="rounded-2xl p-6 sm:p-8 shadow-sm" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm" style={{ background: C.bg, border: `1px solid ${C.border}` }}>
                 <h3 className="text-xl font-bold mb-6" style={{ color: C.navy }}>Estimate your onboarding cost</h3>
 
                 <div className="space-y-5 mb-6">
