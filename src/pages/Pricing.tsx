@@ -161,9 +161,9 @@ const Pricing = () => {
             <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: C.navy }}>Simple, honest pricing.</h1>
             <p className="text-sm mb-5" style={{ color: C.muted }}>One-time extraction fee to get started. Then a monthly plan that fits your team.</p>
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
-              {["Extract", "Subscribe", "Know"].map((step, i) => (
+              {["Extract", "Query", "Learn"].map((step, i) => (
                 <React.Fragment key={step}>
-                  <span className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ background: C.stepCircle, color: C.purple }}>{i + 1} · {step}</span>
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ background: C.stepCircle, color: C.purple }}>{step}</span>
                   {i < 2 && <span className="text-xs" style={{ color: C.border }}>→</span>}
                 </React.Fragment>
               ))}
