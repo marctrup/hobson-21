@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { getPricingStructuredData, getOrganizationStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
-import owlMascot from "@/assets/owl-mascot.png";
+
 
 // Inline SVG icons using brand green/red
 const CheckIcon = () => (
@@ -15,41 +15,6 @@ const CheckIcon = () => (
 const CrossIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
     <path d="M15 5L5 15M5 5l10 10" stroke="hsl(0 84% 60%)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-// Knowledge Base feature tile icons — using primary purple
-const ContactsIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <circle cx="16" cy="12" r="4" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
-    <circle cx="8" cy="20" r="2.5" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
-    <circle cx="24" cy="20" r="2.5" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
-    <path d="M16 16v4M12 22l-2-1M20 22l2-1" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round"/>
-  </svg>
-);
-
-const PolicyIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <rect x="8" y="4" width="16" height="24" rx="2" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
-    <path d="M12 12h8M12 16h8M12 20h5" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M22 10l2 2-2 2" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-  </svg>
-);
-
-const ShieldIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <path d="M16 4L6 9v7c0 6.627 4.477 12.164 10 14 5.523-1.836 10-7.373 10-14V9L16 4z" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
-    <circle cx="16" cy="16" r="3" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
-    <path d="M16 13v-2M16 21v-2M19 16h2M11 16h2" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round"/>
-  </svg>
-);
-
-const SlidersIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <path d="M8 10h16M8 16h16M8 22h16" stroke="hsl(269 91% 52%)" strokeWidth="1.5" strokeLinecap="round"/>
-    <circle cx="13" cy="10" r="2.5" fill="hsl(var(--foreground))" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
-    <circle cx="20" cy="16" r="2.5" fill="hsl(var(--foreground))" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
-    <circle cx="11" cy="22" r="2.5" fill="hsl(var(--foreground))" stroke="hsl(269 91% 52%)" strokeWidth="1.5"/>
   </svg>
 );
 
@@ -198,29 +163,6 @@ const faqs = [
   {
     q: "Are there usage limits?",
     a: "No. All paid plans include unlimited queries, document ingestion and workflow runs. We operate a fair use policy for accounts showing usage patterns inconsistent with normal business operations — but in practice this never affects our clients.",
-  },
-];
-
-const knowledgeTiles = [
-  {
-    icon: <ContactsIcon />,
-    title: "Contractors & Contacts",
-    copy: "Who handles gas safety at Stanley House. Your preferred electrician. The block manager's direct line. Hobson knows — and never forgets.",
-  },
-  {
-    icon: <PolicyIcon />,
-    title: "Policies & Processes",
-    copy: "Your rent arrears escalation procedure. How you communicate with tenants. What needs sign-off before a contractor is instructed. Built in once. Applied always.",
-  },
-  {
-    icon: <ShieldIcon />,
-    title: "Compliance Register",
-    copy: "Every certificate. Every deadline. Every obligation across every property — live, tracked and acted on before the reminder becomes a problem.",
-  },
-  {
-    icon: <SlidersIcon />,
-    title: "Your Way of Working",
-    copy: "Formal correspondence or warm and friendly? Escalate after 7 days or 14? London rates or Midlands? Hobson learns how you work and works that way.",
   },
 ];
 
@@ -389,51 +331,6 @@ const Pricing = () => {
               >
                 Contact us
               </button>
-            </div>
-          </div>
-        </section>
-
-        {/* 3. Knowledge Base Section */}
-        <section className="py-12 md:py-28 bg-muted">
-          <div className="max-w-6xl mx-auto px-4 sm:px-6">
-            <div className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-              <img
-                src={owlMascot}
-                alt="Hobson AI owl mascot"
-                className="w-10 h-10 sm:w-14 sm:h-14 md:w-20 md:h-20 object-contain opacity-90"
-              />
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
-                The Knowledge Base
-              </h2>
-            </div>
-            <p className="text-lg sm:text-xl md:text-2xl text-muted-foreground italic mb-6 sm:mb-8 max-w-3xl">
-              Most AI tools answer questions. Hobson remembers your business.
-            </p>
-            <p className="text-sm sm:text-base md:text-lg leading-relaxed mb-10 sm:mb-14 max-w-4xl text-muted-foreground">
-              The Knowledge Base is Hobson's persistent memory about your business. Not just documents — how you operate. It stores your contractors and contacts, your policies and procedures, your compliance register, your communication preferences and your business rules. Every answer Hobson gives, every draft it produces, every action it takes is shaped by what it knows about you. The longer you use Hobson, the better it gets.
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              {knowledgeTiles.map((tile, i) => (
-                <div
-                  key={i}
-                  className="p-4 sm:p-6 rounded-lg border border-border bg-card hover:border-primary/40 transition-colors"
-                >
-                  <div className="mb-4">{tile.icon}</div>
-                  <h3 className="text-lg font-semibold text-foreground mb-2">{tile.title}</h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground">
-                    {tile.copy}
-                  </p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 sm:mt-12 max-w-xl mx-auto text-center">
-              <div className="rounded-lg px-6 py-4 bg-primary">
-                <p className="text-sm sm:text-base font-semibold text-primary-foreground">
-                  Tier 1 operates without the Knowledge Base. Tiers 2–4 unlock it. This is the difference.
-                </p>
-              </div>
             </div>
           </div>
         </section>
