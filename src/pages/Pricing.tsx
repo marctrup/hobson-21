@@ -237,7 +237,7 @@ const Pricing = () => {
                 </button>
               </div>
               {isAnnual && (
-                <span className="ml-2 text-xs font-semibold px-2.5 py-1 rounded-full" style={{ backgroundColor: "#E94560", color: "#fff" }}>
+                <span className="ml-2 text-xs font-semibold px-2.5 py-1 rounded-full bg-[hsl(var(--brand-orange))] text-[hsl(var(--brand-orange-foreground))]">
                   Save 20%
                 </span>
               )}
