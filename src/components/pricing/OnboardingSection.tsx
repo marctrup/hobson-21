@@ -116,7 +116,7 @@ export default function OnboardingSection() {
                 <label className="text-sm font-semibold text-foreground">How many leases?</label>
                 <span className="text-xs text-muted-foreground">£{pricing.cost_per_lease.toFixed(2)} each</span>
               </div>
-              <p className="text-xs text-muted-foreground mb-2">Tenancy agreements, commercial leases, licence agreements</p>
+              <p className="text-xs text-muted-foreground mb-2"><p className="text-xs text-muted-foreground mb-2">Complex documents - Leases and occupational licences</p></p>
               <div className="flex items-center gap-3">
                 <button
                   type="button"
