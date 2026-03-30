@@ -281,7 +281,7 @@ export default function Admin() {
           </CardContent>
         </Card>
 
-        <OnboardingPricingSettings />
+        <PricingSettings />
 
         <Card className="mt-6">
           <CardHeader>
