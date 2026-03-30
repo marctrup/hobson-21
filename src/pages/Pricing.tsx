@@ -443,8 +443,8 @@ const Pricing = () => {
       {/* Tier 1 Overage Modal */}
       {overageModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm" style={{ background: "rgba(26,26,46,0.4)" }} onClick={() => setOverageModalOpen(false)}>
-          <div className="rounded-xl p-8 max-w-lg w-full mx-4 shadow-2xl" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
-            <h3 className="text-xl font-bold mb-2" style={{ color: C.navy }}>You have used your {t1.monthly_extractions} included extractions this month.</h3>
+          <div className="rounded-xl p-5 sm:p-8 max-w-lg w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
+            <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: C.navy }}>You have used your {t1.monthly_extractions} included extractions this month.</h3>
             <p className="text-sm mb-6" style={{ color: C.muted }}>You have two options:</p>
 
             <div className="space-y-4">
