@@ -79,7 +79,7 @@ export default function OnboardingSection() {
 
           <div className="space-y-6 mb-8">
             <div>
-              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">It is not a simple upload.</p>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--primary-light))] mb-1">It is not a simple upload.</p>
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">When you add a document, Hobson reads it using AI — extracting meaning, relationships and obligations so it can answer questions accurately from day one.</p>
             </div>
             <div>
