@@ -76,7 +76,7 @@ export default function OnboardingSection() {
           <h3 className="text-xl sm:text-2xl font-bold text-primary-foreground mb-4">
             Why is there an onboarding fee?
           </h3>
-          <p className="text-sm sm:text-base leading-relaxed text-white/85 mb-6">
+          <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85 mb-6">
             Before Hobson can reason across your documents, it needs to read and understand them. This is not a simple file upload — Hobson processes every lease and document using AI, extracting meaning, relationships and obligations so it can answer questions accurately from day one. That processing work happens once, thoroughly, and is never repeated for the same document. The onboarding fee covers exactly that work — nothing more. The more documents you have, the more work is involved. The less you have, the less you pay.
           </p>
           <div className="space-y-2">
