@@ -154,37 +154,41 @@ const Pricing = () => {
 
       <main id="main-content" style={{ color: C.navy }}>
 
-        {/* PAGE HEADER */}
-        <section className="pt-16 md:pt-28 pb-10 md:pb-16 text-center px-4 sm:px-6" style={{ background: C.bg }}>
-          <div className="max-w-3xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6" style={{ color: C.navy }}>
+        {/* PAGE HEADER + STEPS */}
+        <section className="pt-24 md:pt-32 pb-12 md:pb-16 px-4 sm:px-6" style={{ background: C.bg }}>
+          <div className="max-w-4xl mx-auto">
+            {/* Headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center leading-tight mb-5" style={{ color: C.navy }}>
               Finally. An AI that actually knows your business.
             </h1>
-            <p className="text-base sm:text-lg mb-2" style={{ color: C.muted }}>
-              Ask about any contract, lease or compliance document in plain English and get an answer you can act on.
-            </p>
-            <p className="text-base sm:text-lg" style={{ color: C.muted }}>
-              Then let Hobson act on it for you — chasing, drafting, filing and reporting across everything you manage.
-            </p>
-          </div>
-        </section>
 
-        {/* THREE STEP FLOW */}
-        <section className="pb-8 px-4 sm:px-6" style={{ background: C.bg }}>
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-0 justify-between">
-              <div className="flex items-center gap-4 md:gap-0 flex-1">
+            {/* Subtitle lines */}
+            <div className="max-w-2xl mx-auto text-center mb-12">
+              <p className="text-base sm:text-lg leading-relaxed mb-1.5" style={{ color: C.muted }}>
+                Ask about any contract, lease or compliance document in plain English and get an answer you can act on.
+              </p>
+              <p className="text-base sm:text-lg leading-relaxed" style={{ color: C.muted }}>
+                Then let Hobson act on it for you — chasing, drafting, filing and reporting across everything you manage.
+              </p>
+            </div>
+
+            {/* Three-step flow */}
+            <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
+              {/* Steps */}
+              <div className="flex items-center gap-3 sm:gap-4">
                 {["Extract", "Subscribe", "Know"].map((step, i) => (
                   <React.Fragment key={step}>
-                    <div className="flex items-center gap-2">
-                      <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold" style={{ background: C.stepCircle, color: C.purple }}>{i + 1}</div>
-                      <span className="font-semibold text-sm" style={{ color: C.navy }}>{step}</span>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0" style={{ background: C.stepCircle, color: C.purple }}>{i + 1}</div>
+                      <span className="font-semibold text-sm whitespace-nowrap" style={{ color: C.navy }}>{step}</span>
                     </div>
-                    {i < 2 && <div className="hidden md:block flex-1 h-px mx-4" style={{ background: C.border }} />}
+                    {i < 2 && <div className="w-8 sm:w-12 h-px shrink-0" style={{ background: C.border }} />}
                   </React.Fragment>
                 ))}
               </div>
-              <p className="text-xs md:max-w-[280px] text-right" style={{ color: C.muted }}>
+
+              {/* Explainer */}
+              <p className="text-xs text-center lg:text-left lg:ml-auto lg:max-w-[280px]" style={{ color: C.muted }}>
                 Extraction and querying are two different things. You pay once to extract. You query as many times as your tier allows.
               </p>
             </div>
