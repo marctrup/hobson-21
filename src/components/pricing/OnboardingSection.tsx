@@ -91,7 +91,7 @@ export default function OnboardingSection() {
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">Leases are complex and take more processing. Simpler documents cost less. You only pay for what you bring in.</p>
             </div>
             <div>
-              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">You are in control.</p>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--primary-light))] mb-1">You are in control.</p>
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">The more documents you have, the more you pay. The fewer you have, the less. Add more later at any time — each new upload is charged at the same rate.</p>
             </div>
           </div>
