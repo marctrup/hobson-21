@@ -34,7 +34,7 @@ const faqs = [
   { q: "What is the difference between tiers?", a: "Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced answers. What it does not have is the Knowledge Base. Hobson on Tier 1 does not know your business. It knows your documents.\n\nTiers 2, 3 and 4 are the same product. Every feature, every capability, the full Knowledge Base — identical across all three. The only decision is how many people need access. Same Hobson, more seats, better value per seat as you go up." },
   { q: "Can I start on Tier 1 and upgrade?", a: "Yes. Your Knowledge Base is built as you go — when you upgrade to Tier 2, everything you have taught Hobson stays. There is no reset." },
   { q: "Is there a free trial?", a: "Yes. Tier 1 comes with a 3-day free trial. No credit card required and limited credits to try with." },
-  { q: "Are there usage limits?", a: "Tier 1 includes a set number of monthly questions and document extractions — see the plan card for details. Tiers 2, 3 and 4 are unlimited. We operate a fair use policy for accounts showing usage patterns inconsistent with normal business operations — but in practice this never affects our clients." },
+  
 ];
 
 const Badge = ({ children, variant }: { children: React.ReactNode; variant: "live" | "coming" | "onetime" | "tier234" }) => {
