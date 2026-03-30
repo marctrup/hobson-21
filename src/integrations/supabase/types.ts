@@ -510,6 +510,33 @@ export type Database = {
         }
         Relationships: []
       }
+      onboarding_pricing: {
+        Row: {
+          cost_per_document: number
+          cost_per_lease: number
+          created_at: string
+          id: string
+          minimum_fee: number
+          updated_at: string
+        }
+        Insert: {
+          cost_per_document?: number
+          cost_per_lease?: number
+          created_at?: string
+          id?: string
+          minimum_fee?: number
+          updated_at?: string
+        }
+        Update: {
+          cost_per_document?: number
+          cost_per_lease?: number
+          created_at?: string
+          id?: string
+          minimum_fee?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pilot_applications: {
         Row: {
           business_types: string[] | null
