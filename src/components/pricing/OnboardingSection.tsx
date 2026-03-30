@@ -73,16 +73,33 @@ export default function OnboardingSection() {
 
         {/* Explanation block */}
         <div className="rounded-2xl p-8 sm:p-10 mb-10 bg-primary text-primary-foreground">
-          <h3 className="text-xl sm:text-2xl font-bold text-primary-foreground mb-4">
+          <h3 className="text-xl sm:text-2xl font-bold text-primary-foreground mb-8">
             Why is there an onboarding fee?
           </h3>
-          <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85 mb-6">
-            Before Hobson can reason across your documents, it needs to read and understand them. This is not a simple file upload — Hobson processes every lease and document using AI, extracting meaning, relationships and obligations so it can answer questions accurately from day one. That processing work happens once, thoroughly, and is never repeated for the same document. The onboarding fee covers exactly that work — nothing more. The more documents you have, the more work is involved. The less you have, the less you pay.
-          </p>
+
+          <div className="space-y-6 mb-8">
+            <div>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">It is not a simple upload.</p>
+              <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">When you add a document, Hobson reads it using AI — extracting meaning, relationships and obligations so it can answer questions accurately from day one.</p>
+            </div>
+            <div>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">The work happens once.</p>
+              <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">Every document is processed thoroughly on the way in. Once done, it is done. You will never pay for the same document again.</p>
+            </div>
+            <div>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">The fee reflects the work.</p>
+              <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">Leases are complex and take more processing. Simpler documents cost less. You only pay for what you bring in.</p>
+            </div>
+            <div>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">You are in control.</p>
+              <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">The more documents you have, the more you pay. The fewer you have, the less. Add more later at any time — each new upload is charged at the same rate.</p>
+            </div>
+          </div>
+
           <div className="space-y-2">
-            <p className="text-sm text-primary-foreground/70">✓ One-time only — never charged again for the same documents</p>
-            <p className="text-sm text-primary-foreground/70">✓ Processing completes in minutes — Hobson is ready to use immediately after</p>
-            <p className="text-sm text-primary-foreground/70">✓ Add documents later at any time — each new upload is charged at the same rate</p>
+            <p className="text-sm text-primary-foreground/70">✓ One-time only — the same document is never charged twice</p>
+            <p className="text-sm text-primary-foreground/70">✓ Ready in minutes — Hobson can answer questions immediately after processing</p>
+            <p className="text-sm text-primary-foreground/70">✓ Add documents any time — each new upload is charged at the same rate</p>
           </div>
         </div>
 
