@@ -155,36 +155,20 @@ const Pricing = () => {
       <main id="main-content" style={{ color: C.navy }}>
 
         {/* PAGE HEADER */}
-        <section className="pt-28 md:pt-36 pb-14 md:pb-20 px-4 sm:px-6" style={{ background: C.bgAlt }}>
-          <div className="max-w-3xl mx-auto text-center">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-3" style={{ color: C.purple }}>Pricing</p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-5" style={{ color: C.navy }}>
-              Finally. An AI that actually knows your business.
-            </h1>
-            <p className="text-base sm:text-lg leading-relaxed mb-1.5" style={{ color: C.muted }}>
-              Ask about any contract, lease or compliance document in plain English and get an answer you can act on.
-            </p>
-            <p className="text-base sm:text-lg leading-relaxed" style={{ color: C.muted }}>
-              Then let Hobson act on it for you — chasing, drafting, filing and reporting across everything you manage.
-            </p>
-          </div>
-
-          {/* Step flow */}
-          <div className="max-w-lg mx-auto mt-12">
-            <div className="flex items-center justify-center">
+        <section className="pt-24 md:pt-28 pb-6 md:pb-8 px-4 sm:px-6" style={{ background: C.bg }}>
+          <div className="max-w-6xl mx-auto">
+            <p className="text-[11px] font-semibold uppercase tracking-widest mb-1.5" style={{ color: C.muted }}>Pricing</p>
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: C.navy }}>Simple, honest pricing.</h1>
+            <p className="text-sm mb-5" style={{ color: C.muted }}>One-time extraction fee to get started. Then a monthly plan that fits your team.</p>
+            <div className="flex flex-wrap items-center gap-2 mb-1.5">
               {["Extract", "Subscribe", "Know"].map((step, i) => (
                 <React.Fragment key={step}>
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold" style={{ background: C.stepCircle, color: C.purple }}>{i + 1}</div>
-                    <span className="font-semibold text-sm" style={{ color: C.navy }}>{step}</span>
-                  </div>
-                  {i < 2 && <div className="flex-1 h-px mx-3 sm:mx-5 -mt-5" style={{ background: C.border }} />}
+                  <span className="text-xs font-medium px-2.5 py-1 rounded-full" style={{ background: C.stepCircle, color: C.purple }}>{i + 1} · {step}</span>
+                  {i < 2 && <span className="text-xs" style={{ color: C.border }}>→</span>}
                 </React.Fragment>
               ))}
             </div>
-            <p className="text-xs text-center mt-6 leading-relaxed" style={{ color: C.muted }}>
-              Extraction and querying are two different things. You pay once to extract. You query as many times as your tier allows.
-            </p>
+            <p className="text-[11px]" style={{ color: C.muted }}>Extraction and querying are two different things. You pay once to extract. You query as many times as your tier allows.</p>
           </div>
         </section>
 
