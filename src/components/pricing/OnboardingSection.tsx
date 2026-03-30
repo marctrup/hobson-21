@@ -186,8 +186,8 @@ export default function OnboardingSection() {
           <button
             onClick={() => setPaymentOpen(true)}
             disabled={total === 0}
-            className="w-full py-4 rounded-xl text-base font-bold text-white transition-all duration-200 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ backgroundColor: "#E94560" }}
+            className="w-full py-4 rounded-xl text-base font-bold text-primary-foreground bg-[hsl(var(--brand-orange))] transition-all duration-200 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+          >
           >
             Pay onboarding fee and get started
           </button>
