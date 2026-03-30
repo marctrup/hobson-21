@@ -97,9 +97,9 @@ export default function OnboardingSection() {
           </div>
 
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">✓ One-time only — the same document is never charged twice</p>
-            <p className="text-sm text-muted-foreground">✓ Ready in minutes — Hobson can answer questions immediately after processing</p>
-            <p className="text-sm text-muted-foreground">✓ Add documents any time — each new upload is charged at the same rate</p>
+            <p className="text-sm text-muted-foreground"><span className="text-primary">✓</span> One-time only — the same document is never charged twice</p>
+            <p className="text-sm text-muted-foreground"><span className="text-primary">✓</span> Ready in minutes — Hobson can answer questions immediately after processing</p>
+            <p className="text-sm text-muted-foreground"><span className="text-primary">✓</span> Add documents any time — each new upload is charged at the same rate</p>
           </div>
         </div>
 
