@@ -83,7 +83,7 @@ export default function OnboardingSection() {
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">When you add a document, Hobson reads it using AI — extracting meaning, relationships and obligations so it can answer questions accurately from day one.</p>
             </div>
             <div>
-              <p className="text-sm sm:text-base font-bold text-[hsl(var(--brand-orange))] mb-1">The work happens once.</p>
+              <p className="text-sm sm:text-base font-bold text-[hsl(var(--primary-light))] mb-1">The work happens once.</p>
               <p className="text-sm sm:text-base leading-relaxed text-primary-foreground/85">Every document is processed thoroughly on the way in. Once done, it is done. You will never pay for the same document again.</p>
             </div>
             <div>
