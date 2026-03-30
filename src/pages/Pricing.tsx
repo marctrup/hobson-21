@@ -175,7 +175,7 @@ const Pricing = () => {
         {/* STEP 1 — ONBOARDING */}
         <section className="py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bgAlt }} id="onboarding">
           <div className="max-w-6xl mx-auto">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: C.purple }}>Step 1</p>
+            <div className="flex flex-wrap items-center gap-3 mb-2">
             <div className="flex flex-wrap items-center gap-3 mb-2">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold" style={{ color: C.navy }}>Extract your documents</h2>
               <Badge variant="onetime">One-time fee</Badge>
