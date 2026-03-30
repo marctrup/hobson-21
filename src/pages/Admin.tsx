@@ -281,6 +281,8 @@ export default function Admin() {
           </CardContent>
         </Card>
 
+        <OnboardingPricingSettings />
+
         <Card className="mt-6">
           <CardHeader>
             <CardTitle>Investment Page Password</CardTitle>

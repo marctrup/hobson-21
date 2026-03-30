@@ -336,6 +336,9 @@ const Pricing = () => {
           </div>
         </section>
 
+        {/* Onboarding Section */}
+        <OnboardingSection />
+
         {/* Knowledge Base Callout */}
         <section className="py-16 md:py-24 px-4 sm:px-6 bg-muted">
           <div className="max-w-3xl mx-auto text-center">
