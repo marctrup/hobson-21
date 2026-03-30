@@ -241,8 +241,8 @@ export default function OnboardingSection() {
 
             <button
               disabled
-              className="w-full py-3 rounded-lg text-sm font-semibold text-white opacity-50 cursor-not-allowed"
-              style={{ backgroundColor: "#E94560" }}
+              className="w-full py-3 rounded-lg text-sm font-semibold text-primary-foreground bg-[hsl(var(--brand-orange))] opacity-50 cursor-not-allowed"
+            >
             >
               Pay £{total.toFixed(2)}
             </button>
