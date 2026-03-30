@@ -73,7 +73,7 @@ export default function OnboardingSection() {
 
         {/* Explanation block */}
         <div className="rounded-2xl p-8 sm:p-10 mb-10 bg-primary text-primary-foreground">
-          <h3 className="text-xl sm:text-2xl font-bold text-white mb-4">
+          <h3 className="text-xl sm:text-2xl font-bold text-primary-foreground mb-4">
             Why is there an onboarding fee?
           </h3>
           <p className="text-sm sm:text-base leading-relaxed text-white/85 mb-6">
