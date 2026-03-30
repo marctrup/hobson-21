@@ -80,7 +80,7 @@ const Pricing = () => {
         { text: "Sourced, auditable answers", ok: true },
         { text: `${t1.monthly_extractions} document extractions per month`, ok: true },
         { text: `${t1.monthly_questions} questions per month`, ok: true },
-        { text: `Additional extractions — £${p.cost_per_lease.toFixed(2)} per lease, £${p.cost_per_document.toFixed(2)} per document`, ok: true },
+        
         { text: "Knowledge Base", ok: false },
         { text: "Workflow automation", ok: false },
         { text: "Action memory", ok: false },
