@@ -154,43 +154,56 @@ const Pricing = () => {
 
       <main id="main-content" style={{ color: C.navy }}>
 
-        {/* PAGE HEADER + STEPS */}
-        <section className="pt-24 md:pt-32 pb-12 md:pb-16 px-4 sm:px-6" style={{ background: C.bg }}>
-          <div className="max-w-4xl mx-auto">
-            {/* Headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-center leading-tight mb-5" style={{ color: C.navy }}>
-              Finally. An AI that actually knows your business.
-            </h1>
-
-            {/* Subtitle lines */}
-            <div className="max-w-2xl mx-auto text-center mb-12">
+        {/* PAGE HEADER */}
+        <section className="pt-28 md:pt-36 pb-16 md:pb-24 px-4 sm:px-6" style={{ background: C.bg }}>
+          <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            {/* Left — headline + subtitles + CTA */}
+            <div>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-5" style={{ color: C.navy }}>
+                Finally. An AI that actually knows your business.
+              </h1>
               <p className="text-base sm:text-lg leading-relaxed mb-1.5" style={{ color: C.muted }}>
                 Ask about any contract, lease or compliance document in plain English and get an answer you can act on.
               </p>
-              <p className="text-base sm:text-lg leading-relaxed" style={{ color: C.muted }}>
+              <p className="text-base sm:text-lg leading-relaxed mb-8" style={{ color: C.muted }}>
                 Then let Hobson act on it for you — chasing, drafting, filing and reporting across everything you manage.
               </p>
+              <a
+                href="https://app.hobsonschoice.ai/signup"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block px-7 py-3 rounded-lg text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                style={{ background: C.purple }}
+              >
+                Get started
+              </a>
             </div>
 
-            {/* Three-step flow */}
-            <div className="flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
-              {/* Steps */}
-              <div className="flex items-center gap-3 sm:gap-4">
+            {/* Right — vertical step flow */}
+            <div className="flex justify-center lg:justify-end">
+              <div className="flex flex-col items-start">
                 {["Extract", "Subscribe", "Know"].map((step, i) => (
-                  <React.Fragment key={step}>
-                    <div className="flex items-center gap-2 shrink-0">
-                      <div className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0" style={{ background: C.stepCircle, color: C.purple }}>{i + 1}</div>
-                      <span className="font-semibold text-sm whitespace-nowrap" style={{ color: C.navy }}>{step}</span>
+                  <div key={step} className="flex items-start gap-4">
+                    {/* Circle + connector line */}
+                    <div className="flex flex-col items-center">
+                      <div
+                        className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
+                        style={{ background: C.stepCircle, color: C.purple }}
+                      >
+                        {i + 1}
+                      </div>
+                      {i < 2 && (
+                        <div className="w-px h-8" style={{ background: C.border }} />
+                      )}
                     </div>
-                    {i < 2 && <div className="w-8 sm:w-12 h-px shrink-0" style={{ background: C.border }} />}
-                  </React.Fragment>
+                    {/* Label */}
+                    <span className="font-semibold text-base mt-2.5" style={{ color: C.navy }}>{step}</span>
+                  </div>
                 ))}
+                <p className="text-xs mt-5 max-w-[260px] text-right self-end leading-relaxed" style={{ color: C.muted }}>
+                  Extraction and querying are two different things. You pay once to extract. You query as many times as your tier allows.
+                </p>
               </div>
-
-              {/* Explainer */}
-              <p className="text-xs text-center lg:text-left lg:ml-auto lg:max-w-[280px]" style={{ color: C.muted }}>
-                Extraction and querying are two different things. You pay once to extract. You query as many times as your tier allows.
-              </p>
             </div>
           </div>
         </section>
