@@ -374,7 +374,7 @@ const Pricing = () => {
         </section>
 
         {/* KNOWLEDGE BASE CALLOUT */}
-        <section className="py-12 md:py-20 px-4 sm:px-6" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
+        <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3" style={{ color: C.navy }}>
               Why does the Knowledge Base change everything?
