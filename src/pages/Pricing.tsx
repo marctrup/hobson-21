@@ -3,8 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { getPricingStructuredData, getOrganizationStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
-
-
+import owlMascot from "@/assets/owl-mascot.png";
 // Inline SVG icons using brand green/red
 const CheckIcon = () => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -338,9 +337,12 @@ const Pricing = () => {
         {/* Knowledge Base Callout */}
         <section className="py-16 md:py-24 px-4 sm:px-6 bg-muted">
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Why the big jump in pricing? — <span className="text-primary">The Knowledge Base</span>
-            </h2>
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
+                Why the big jump in pricing? — <span className="text-primary">The Knowledge Base</span>
+              </h2>
+            </div>
             <p className="text-lg sm:text-xl text-muted-foreground italic mb-8">
               Tier 1 answers your questions. Tier 2 - 4 knows your business.
             </p>
