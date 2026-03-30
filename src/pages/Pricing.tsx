@@ -127,7 +127,7 @@ const Pricing = () => {
       tier: 4, seats: "10 seats", perSeat: "£45.00/seat", label: "Full platform",
       priceMonthly: 450.00, priceAnnualMonthly: 360.00, priceAnnualYearly: 4320.00,
       badge: "coming" as const, badgeText: "Coming later this year",
-      description: "The full Hobson platform for up to ten people. Everything Tier 2 includes — identical features, your best per-seat price.",
+      
       features: () => [
         { text: "Everything in Tier 1", ok: true },
         { text: "Knowledge Base", ok: true },
