@@ -180,7 +180,7 @@ const Pricing = () => {
         {/* SUBSCRIPTION */}
         <section className="pt-16 sm:pt-24 md:pt-28 pb-8 sm:pb-12 md:pb-20 px-4 sm:px-6" style={{ background: C.bg }} id="plans">
           <div className="max-w-7xl mx-auto">
-            <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3 text-center">Simple Pricing</p>
+            <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3 text-center">Simple & Transparent Pricing</p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-center" style={{ color: C.navy }}>Choose your plan</h1>
 
             {/* Billing toggle */}
