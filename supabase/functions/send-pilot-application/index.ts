@@ -199,7 +199,7 @@ Submitted at: ${new Date().toISOString()}
     const notificationResponse = await resend.emails.send({
       from: 'Hobson AI <noreply@hobsonschoice.ai>',
       to: ['info@hobsonschoice.ai'],
-      subject: `New Pilot Application - ${escapeHtml(name)} from ${escapeHtml(company)}`,
+      subject: `New Enquiry - ${escapeHtml(name)} from ${escapeHtml(company)}`,
       text: emailContent,
     });
 
