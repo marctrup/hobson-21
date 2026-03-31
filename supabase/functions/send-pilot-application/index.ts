@@ -85,10 +85,12 @@ serve(async (req) => {
       }
     }
 
-    // Save to database
+    // Save to database and get the application ID
+    const applicationId = crypto.randomUUID();
     const { error: dbError } = await supabase
       .from('pilot_applications')
       .insert({
+        id: applicationId,
         name,
         company,
         role,
@@ -168,14 +170,32 @@ serve(async (req) => {
     `;
 
     // Send confirmation email to the applicant
-    const confirmationResponse = await resend.emails.send({
-      from: "Hobson AI <noreply@hobsonschoice.ai>",
-      to: [email],
-      subject: "Thanks for your interest in Hobson AI!",
-      html: htmlTemplate,
-    });
+    const confirmationSubject = "Thanks for your interest in Hobson AI!";
+    let confirmationStatus = 'sent';
+    let confirmationError = null;
+    try {
+      const confirmationResponse = await resend.emails.send({
+        from: "Hobson AI <noreply@hobsonschoice.ai>",
+        to: [email],
+        subject: confirmationSubject,
+        html: htmlTemplate,
+      });
+      console.log("Confirmation email sent successfully:", confirmationResponse);
+    } catch (emailErr: any) {
+      confirmationStatus = 'failed';
+      confirmationError = emailErr.message || 'Unknown error';
+      console.error("Confirmation email failed:", emailErr);
+    }
 
-    console.log("Confirmation email sent successfully:", confirmationResponse);
+    // Log confirmation email
+    await supabase.from('email_send_log').insert({
+      application_id: applicationId,
+      recipient_email: email,
+      email_type: 'confirmation',
+      subject: confirmationSubject,
+      status: confirmationStatus,
+      error_message: confirmationError,
+    });
 
     // For team notification, escape user inputs
     const emailContent = `
@@ -196,14 +216,32 @@ Submitted at: ${new Date().toISOString()}
     `.trim()
 
     // Send notification email to team
-    const notificationResponse = await resend.emails.send({
-      from: 'Hobson AI <noreply@hobsonschoice.ai>',
-      to: ['info@hobsonschoice.ai'],
-      subject: `New Enquiry - ${escapeHtml(name)} from ${escapeHtml(company)}`,
-      text: emailContent,
-    });
+    const notificationSubject = `New Enquiry - ${escapeHtml(name)} from ${escapeHtml(company)}`;
+    let notificationStatus = 'sent';
+    let notificationError = null;
+    try {
+      const notificationResponse = await resend.emails.send({
+        from: 'Hobson AI <noreply@hobsonschoice.ai>',
+        to: ['info@hobsonschoice.ai'],
+        subject: notificationSubject,
+        text: emailContent,
+      });
+      console.log("Notification email sent successfully:", notificationResponse);
+    } catch (emailErr: any) {
+      notificationStatus = 'failed';
+      notificationError = emailErr.message || 'Unknown error';
+      console.error("Notification email failed:", emailErr);
+    }
 
-    console.log("Notification email sent successfully:", notificationResponse);
+    // Log notification email
+    await supabase.from('email_send_log').insert({
+      application_id: applicationId,
+      recipient_email: 'info@hobsonschoice.ai',
+      email_type: 'notification',
+      subject: notificationSubject,
+      status: notificationStatus,
+      error_message: notificationError,
+    });
 
     return new Response(
       JSON.stringify({ success: true, message: 'Application submitted successfully' }),

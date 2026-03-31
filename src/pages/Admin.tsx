@@ -27,6 +27,18 @@ interface PilotApplication {
   created_at: string;
 }
 
+interface EmailLog {
+  id: string;
+  application_id: string | null;
+  recipient_email: string;
+  email_type: string;
+  subject: string | null;
+  status: string;
+  error_message: string | null;
+  created_at: string;
+  application_name?: string;
+}
+
 export default function Admin() {
   const { user, isLoading, signOut } = useAuth();
   const [applications, setApplications] = useState<PilotApplication[]>([]);
@@ -36,6 +48,8 @@ export default function Admin() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [emailLogs, setEmailLogs] = useState<EmailLog[]>([]);
+  const [loadingEmailLogs, setLoadingEmailLogs] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -66,6 +80,7 @@ export default function Admin() {
       if (data) {
         setIsAdmin(true);
         fetchApplications();
+        fetchEmailLogs();
       } else {
         toast({
           title: "Access Denied",
@@ -106,6 +121,36 @@ export default function Admin() {
       setLoadingApplications(false);
     }
   };
+
+  const fetchEmailLogs = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("email_send_log")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      // Map application names from the applications list
+      const logs = (data || []).map((log: any) => {
+        const app = applications.find(a => a.id === log.application_id);
+        return { ...log, application_name: app?.name || '—' };
+      });
+
+      setEmailLogs(logs);
+    } catch (error: any) {
+      console.error("Error fetching email logs:", error);
+    } finally {
+      setLoadingEmailLogs(false);
+    }
+  };
+
+  // Re-fetch email logs when applications are loaded (to map names)
+  useEffect(() => {
+    if (isAdmin && applications.length > 0) {
+      fetchEmailLogs();
+    }
+  }, [applications, isAdmin]);
 
   const handleSignOut = async () => {
     await signOut();
@@ -324,6 +369,59 @@ export default function Admin() {
                         </TableRow>
                       );
                     })}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card className="mt-6">
+          <CardHeader>
+            <CardTitle>Email Log ({emailLogs.length})</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {loadingEmailLogs ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                <p className="mt-2 text-muted-foreground">Loading email logs...</p>
+              </div>
+            ) : emailLogs.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                No emails sent yet.
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Applicant</TableHead>
+                      <TableHead>Recipient</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead>Subject</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Sent</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {emailLogs.map((log) => (
+                      <TableRow key={log.id}>
+                        <TableCell className="font-medium">{log.application_name}</TableCell>
+                        <TableCell>{log.recipient_email}</TableCell>
+                        <TableCell>
+                          <Badge variant={log.email_type === 'confirmation' ? 'default' : 'secondary'}>
+                            {log.email_type}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="max-w-xs truncate">{log.subject || '—'}</TableCell>
+                        <TableCell>
+                          <Badge variant={log.status === 'sent' ? 'default' : 'destructive'}>
+                            {log.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{new Date(log.created_at).toLocaleString()}</TableCell>
+                      </TableRow>
+                    ))}
                   </TableBody>
                 </Table>
               </div>
