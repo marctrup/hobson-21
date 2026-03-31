@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { getPricingStructuredData, getOrganizationStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { usePricingData } from "@/hooks/usePricingData";
+import { supabase } from "@/integrations/supabase/client";
 
 // Color constants
 const C = {
