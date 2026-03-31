@@ -262,6 +262,78 @@ export default function Admin() {
         <Card>
           <CardHeader>
             <div className="flex justify-between items-center">
+              <CardTitle>Applications ({applications.length})</CardTitle>
+              <Button onClick={exportToCSV} variant="outline">
+                Export to CSV
+              </Button>
+            </div>
+          </CardHeader>
+          <CardContent>
+            {loadingApplications ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                <p className="mt-2 text-muted-foreground">Loading enquiries...</p>
+              </div>
+            ) : applications.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                No enquiries found.
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Source</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Phone</TableHead>
+                      <TableHead>Message</TableHead>
+                      <TableHead>Submitted</TableHead>
+                      <TableHead></TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {applications.map((app) => {
+                      const source = app.role || "Unknown";
+                      const badgeVariant = source.toLowerCase().includes("contact") ? "default" 
+                        : source.toLowerCase().includes("waitlist") ? "secondary" 
+                        : source.toLowerCase().includes("enterprise") ? "outline"
+                        : "secondary";
+                      return (
+                        <TableRow key={app.id}>
+                          <TableCell>
+                            <Badge variant={badgeVariant}>{source}</Badge>
+                          </TableCell>
+                          <TableCell className="font-medium">{app.name}</TableCell>
+                          <TableCell>{app.email}</TableCell>
+                          <TableCell>{app.phone || "—"}</TableCell>
+                          <TableCell className="max-w-xs truncate">{app.help || "—"}</TableCell>
+                          <TableCell>
+                            {new Date(app.created_at).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDeleteApplication(app.id)}
+                              className="text-destructive hover:text-destructive"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card className="mt-6">
+          <CardHeader>
+            <div className="flex justify-between items-center">
               <CardTitle>Content Management</CardTitle>
             </div>
           </CardHeader>
@@ -346,78 +418,6 @@ export default function Admin() {
                 {isUpdatingPassword ? 'Updating...' : 'Update Password'}
               </Button>
             </form>
-          </CardContent>
-        </Card>
-
-        <Card className="mt-6">
-          <CardHeader>
-            <div className="flex justify-between items-center">
-              <CardTitle>Applications ({applications.length})</CardTitle>
-              <Button onClick={exportToCSV} variant="outline">
-                Export to CSV
-              </Button>
-            </div>
-          </CardHeader>
-          <CardContent>
-            {loadingApplications ? (
-              <div className="text-center py-8">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-                <p className="mt-2 text-muted-foreground">Loading enquiries...</p>
-              </div>
-            ) : applications.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                No enquiries found.
-              </div>
-            ) : (
-              <div className="overflow-x-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Source</TableHead>
-                      <TableHead>Name</TableHead>
-                      <TableHead>Email</TableHead>
-                      <TableHead>Phone</TableHead>
-                      <TableHead>Message</TableHead>
-                      <TableHead>Submitted</TableHead>
-                      <TableHead></TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {applications.map((app) => {
-                      const source = app.role || "Unknown";
-                      const badgeVariant = source.toLowerCase().includes("contact") ? "default" 
-                        : source.toLowerCase().includes("waitlist") ? "secondary" 
-                        : source.toLowerCase().includes("enterprise") ? "outline"
-                        : "secondary";
-                      return (
-                        <TableRow key={app.id}>
-                          <TableCell>
-                            <Badge variant={badgeVariant}>{source}</Badge>
-                          </TableCell>
-                          <TableCell className="font-medium">{app.name}</TableCell>
-                          <TableCell>{app.email}</TableCell>
-                          <TableCell>{app.phone || "—"}</TableCell>
-                          <TableCell className="max-w-xs truncate">{app.help || "—"}</TableCell>
-                          <TableCell>
-                            {new Date(app.created_at).toLocaleDateString()}
-                          </TableCell>
-                          <TableCell>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => handleDeleteApplication(app.id)}
-                              className="text-destructive hover:text-destructive"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </TableCell>
-                        </TableRow>
-                      );
-                    })}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
           </CardContent>
         </Card>
       </main>
