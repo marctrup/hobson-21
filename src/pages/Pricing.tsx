@@ -263,11 +263,11 @@ const Pricing = () => {
 
                     <div className="mt-auto">
                       {tier.waitlist ? (
-                        <button onClick={openWaitlist} className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
+                        <button onClick={() => openSignupModal(`Tier ${tier.tier} waitlist`)} className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
                           {tier.cta}
                         </button>
                       ) : (
-                        <button onClick={() => { setGetStartedSubmitted(false); setGetStartedFirst(""); setGetStartedLast(""); setGetStartedEmail(""); setGetStartedOpen(true); }} className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
+                        <button onClick={() => openSignupModal("Tier 1 interest")} className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
                           {tier.cta}
                         </button>
                       )}
