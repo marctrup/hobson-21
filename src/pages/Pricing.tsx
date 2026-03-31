@@ -56,14 +56,19 @@ const Pricing = () => {
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [leases, setLeases] = useState(0);
   const [documents, setDocuments] = useState(0);
+  const [topUpPacks, setTopUpPacks] = useState(0);
   const [overageModalOpen, setOverageModalOpen] = useState(false);
 
   const t1 = getTierLimit(1);
 
+  const TOPUP_COST = 5.00;
+  const TOPUP_QUESTIONS = 100;
+
   // Calculator
   const leaseSubtotal = leases * pricing.cost_per_lease;
   const docSubtotal = documents * pricing.cost_per_document;
-  const rawTotal = leaseSubtotal + docSubtotal;
+  const topUpSubtotal = topUpPacks * TOPUP_COST;
+  const rawTotal = leaseSubtotal + docSubtotal + topUpSubtotal;
   const minimumApplies = rawTotal > 0 && rawTotal < pricing.minimum_fee;
   const total = rawTotal === 0 ? 0 : Math.max(rawTotal, pricing.minimum_fee);
 
@@ -234,6 +239,20 @@ const Pricing = () => {
                       <button type="button" onClick={() => setDocuments(documents + 1)} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
                     </div>
                   </div>
+
+                  {/* Top-up questions */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="text-sm font-semibold" style={{ color: C.navy }}>Top-up question packs</label>
+                      <span className="text-xs" style={{ color: C.muted }}>£{TOPUP_COST.toFixed(2)} per {TOPUP_QUESTIONS}</span>
+                    </div>
+                    <p className="text-xs mb-2" style={{ color: C.muted }}>Each pack adds {TOPUP_QUESTIONS} extra AI questions to your monthly allowance</p>
+                    <div className="flex items-center gap-3">
+                      <button type="button" onClick={() => setTopUpPacks(Math.max(0, topUpPacks - 1))} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
+                      <input type="number" min={0} value={topUpPacks} onChange={e => setTopUpPacks(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                      <button type="button" onClick={() => setTopUpPacks(topUpPacks + 1)} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
+                    </div>
+                  </div>
                 </div>
 
                 {/* Total */}
@@ -247,6 +266,12 @@ const Pricing = () => {
                       <span>Documents: {documents} × £{pricing.cost_per_document.toFixed(2)}</span>
                       <span>£{docSubtotal.toFixed(2)}</span>
                     </div>
+                    {topUpPacks > 0 && (
+                      <div className="flex justify-between" style={{ color: C.muted }}>
+                        <span>Top-up questions: {topUpPacks} × £{TOPUP_COST.toFixed(2)} ({topUpPacks * TOPUP_QUESTIONS} questions)</span>
+                        <span>£{topUpSubtotal.toFixed(2)}</span>
+                      </div>
+                    )}
                     <div className="my-2" style={{ borderTop: `1px solid ${C.border}` }} />
                     <div className="flex justify-between text-base font-bold" style={{ color: C.navy }}>
                       <span>Your onboarding fee</span>
