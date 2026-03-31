@@ -253,6 +253,9 @@ const Pricing = () => {
                           {tier.cta}
                         </a>
                       )}
+                      {tier.tier === 1 && (
+                        <p className="text-xs text-center mt-2 font-medium" style={{ color: C.purple }}>Free 3-day trial — no card required</p>
+                      )}
                     </div>
                   </div>
                 );
