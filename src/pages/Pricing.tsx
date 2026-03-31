@@ -61,7 +61,7 @@ const Pricing = () => {
 
   const t1 = getTierLimit(1);
 
-  const TOPUP_COST = 5.00;
+  const TOPUP_COST = 7.50;
   const TOPUP_QUESTIONS = 100;
 
   // Calculator
