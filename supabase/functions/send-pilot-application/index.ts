@@ -179,17 +179,17 @@ serve(async (req) => {
 
     // For team notification, escape user inputs
     const emailContent = `
-New Hobson AI Pilot Application
+New Hobson AI Enquiry
 
 Name: ${escapeHtml(name)}
 Company: ${escapeHtml(company)}
-Role: ${escapeHtml(role)}
+Source: ${escapeHtml(role)}
 Email: ${escapeHtml(email)}
 Phone: ${phone ? escapeHtml(phone) : 'Not provided'}
 Preferred Contact: ${preferredContact ? escapeHtml(preferredContact) : 'Not specified'}
 Business Types: ${businessTypes ? businessTypes.map(escapeHtml).join(', ') : 'Not specified'}
 ${formattedWebsite ? `Website: ${escapeHtml(formattedWebsite)}` : ''}
-${help ? `\nWhat they'd like help with:\n${escapeHtml(help)}` : ''}
+${help ? `\nMessage:\n${escapeHtml(help)}` : ''}
 
 ---
 Submitted at: ${new Date().toISOString()}
