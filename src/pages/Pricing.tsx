@@ -523,11 +523,13 @@ const Pricing = () => {
                   if (!getStartedFirst.trim() || !getStartedLast.trim() || !getStartedEmail.trim()) return;
                   setGetStartedLoading(true);
                   try {
-                    await supabase.from("pilot_applications").insert({
-                      name: `${getStartedFirst.trim()} ${getStartedLast.trim()}`,
-                      email: getStartedEmail.trim(),
-                      company: "—",
-                      role: "Tier 1 interest",
+                    await supabase.functions.invoke('send-pilot-application', {
+                      body: {
+                        name: `${getStartedFirst.trim()} ${getStartedLast.trim()}`,
+                        email: getStartedEmail.trim(),
+                        company: "—",
+                        role: "Tier 1 interest",
+                      },
                     });
                     setGetStartedSubmitted(true);
                   } catch {
