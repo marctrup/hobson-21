@@ -259,6 +259,47 @@ export type Database = {
         }
         Relationships: []
       }
+      email_send_log: {
+        Row: {
+          application_id: string | null
+          created_at: string
+          email_type: string
+          error_message: string | null
+          id: string
+          recipient_email: string
+          status: string
+          subject: string | null
+        }
+        Insert: {
+          application_id?: string | null
+          created_at?: string
+          email_type?: string
+          error_message?: string | null
+          id?: string
+          recipient_email: string
+          status?: string
+          subject?: string | null
+        }
+        Update: {
+          application_id?: string | null
+          created_at?: string
+          email_type?: string
+          error_message?: string | null
+          id?: string
+          recipient_email?: string
+          status?: string
+          subject?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_send_log_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "pilot_applications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       extraction_events: {
         Row: {
           actual_tokens: number
