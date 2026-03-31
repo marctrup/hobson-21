@@ -262,7 +262,7 @@ const Pricing = () => {
             <div className="mt-8 rounded-xl p-5 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left" style={{ background: C.bgAlt, border: `1px solid ${C.border}` }}>
               <div>
                 <p className="text-lg font-semibold" style={{ color: C.navy }}>More than 10 users?</p>
-                <p className="text-sm" style={{ color: C.muted }}>Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
+                <p className="text-sm" style={{ color: C.muted }}>Talk to us. Enterprise pricing is based on usage, not headcount or portfolio size.</p>
               </div>
               <button onClick={openWaitlist} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all whitespace-nowrap" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
                 Register interest
