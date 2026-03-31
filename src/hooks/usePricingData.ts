@@ -5,6 +5,7 @@ interface OnboardingPricing {
   cost_per_lease: number;
   cost_per_document: number;
   minimum_fee: number;
+  cost_per_question_pack: number;
 }
 
 interface TierLimit {
