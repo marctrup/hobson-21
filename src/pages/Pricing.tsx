@@ -60,6 +60,15 @@ const Pricing = () => {
   const [overageModalOpen, setOverageModalOpen] = useState(false);
 
   const t1 = getTierLimit(1);
+  const t2 = getTierLimit(2);
+  const t3 = getTierLimit(3);
+  const t4 = getTierLimit(4);
+
+  const formatLimit = (value: string, unit: string) => {
+    const lower = value.toLowerCase();
+    if (lower === "unlimited") return `Unlimited ${unit}`;
+    return `${value} ${unit}/month`;
+  };
 
   const TOPUP_COST = 7.50;
   const TOPUP_QUESTIONS = 100;
