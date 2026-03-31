@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Trash2 } from "lucide-react";
 import PricingSettings from "@/components/admin/PricingSettings";
 import DocumentClassificationSettings from "@/components/admin/DocumentClassificationSettings";
 
@@ -110,6 +110,22 @@ export default function Admin() {
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
+  };
+
+  const handleDeleteApplication = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this application?")) return;
+    try {
+      const { error } = await supabase
+        .from("pilot_applications")
+        .delete()
+        .eq("id", id);
+      if (error) throw error;
+      setApplications(prev => prev.filter(app => app.id !== id));
+      toast({ title: "Deleted", description: "Application removed." });
+    } catch (error: any) {
+      console.error("Error deleting application:", error);
+      toast({ title: "Error", description: "Failed to delete application.", variant: "destructive" });
+    }
   };
 
   const exportToCSV = () => {
@@ -336,7 +352,7 @@ export default function Admin() {
         <Card className="mt-6">
           <CardHeader>
             <div className="flex justify-between items-center">
-              <CardTitle>All Enquiries ({applications.length})</CardTitle>
+              <CardTitle>Applications ({applications.length})</CardTitle>
               <Button onClick={exportToCSV} variant="outline">
                 Export to CSV
               </Button>
@@ -363,6 +379,7 @@ export default function Admin() {
                       <TableHead>Phone</TableHead>
                       <TableHead>Message</TableHead>
                       <TableHead>Submitted</TableHead>
+                      <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -383,6 +400,16 @@ export default function Admin() {
                           <TableCell className="max-w-xs truncate">{app.help || "—"}</TableCell>
                           <TableCell>
                             {new Date(app.created_at).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDeleteApplication(app.id)}
+                              className="text-destructive hover:text-destructive"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
                           </TableCell>
                         </TableRow>
                       );
