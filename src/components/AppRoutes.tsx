@@ -14,8 +14,6 @@ const LandingPageB = lazy(() => import("../pages/LandingPageB"));
 const LandingPageC = lazy(() => import("../pages/LandingPageC"));
 const EmailPreview = lazy(() => import("../pages/EmailPreview"));
 
-const PilotForm = lazy(() => import("../pages/PilotForm"));
-const Pilot = lazy(() => import("../pages/Pilot"));
 const Auth = lazy(() => import("../pages/Auth"));
 const LoginGate = lazy(() => import("../pages/LoginGate"));
 const Admin = lazy(() => import("../pages/Admin"));
@@ -111,7 +109,7 @@ const AppContent = () => {
               <Route path="/landing-a" element={<LandingPageA />} />
               <Route path="/landing-b" element={<LandingPageB />} />
               <Route path="/landing-c" element={<LandingPageC />} />
-              <Route path="/pilot_form" element={<PilotForm />} />
+              <Route path="/pilot_form" element={<Navigate to="/contact" replace />} />
               <Route path="/email-1" element={<EmailPreview />} />
               <Route path="*" element={<LandingPageA />} />
             </>
@@ -131,7 +129,7 @@ const AppContent = () => {
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<ContactUs />} />
-              <Route path="/pilot" element={<Pilot />} />
+              <Route path="/pilot" element={<Navigate to="/contact" replace />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/data-protection" element={<DataProtection />} />
               <Route path="/breach-protocol" element={<BreachProtocol />} />
@@ -172,7 +170,7 @@ const AppContent = () => {
               <Route path="/landing-a" element={<LandingPageA />} />
               <Route path="/landing-b" element={<LandingPageB />} />
               <Route path="/landing-c" element={<LandingPageC />} />
-              <Route path="/pilot_form" element={<PilotForm />} />
+              <Route path="/pilot_form" element={<Navigate to="/contact" replace />} />
               <Route path="/email-1" element={<EmailPreview />} />
               
               {/* Remove the AI-driven-property-management-software route from main domain */}

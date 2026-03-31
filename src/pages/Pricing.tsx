@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 import { getPricingStructuredData, getOrganizationStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { usePricingData } from "@/hooks/usePricingData";
-import { supabase } from "@/integrations/supabase/client";
 
 // Color constants
 const C = {
@@ -52,21 +52,11 @@ const Pricing = () => {
   const { pricing, getTierLimit, loading } = usePricingData();
   const [isAnnual, setIsAnnual] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [waitlistOpen, setWaitlistOpen] = useState(false);
-  const [waitlistEmail, setWaitlistEmail] = useState("");
-  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [leases, setLeases] = useState(0);
   const [documents, setDocuments] = useState(0);
   const [topUpPacks, setTopUpPacks] = useState(0);
   const [overageModalOpen, setOverageModalOpen] = useState(false);
-  const [getStartedOpen, setGetStartedOpen] = useState(false);
-  const [getStartedFirst, setGetStartedFirst] = useState("");
-  const [getStartedLast, setGetStartedLast] = useState("");
-  const [getStartedEmail, setGetStartedEmail] = useState("");
-  const [getStartedPhone, setGetStartedPhone] = useState("");
-  const [getStartedSubmitted, setGetStartedSubmitted] = useState(false);
-  const [getStartedLoading, setGetStartedLoading] = useState(false);
-  const [getStartedSource, setGetStartedSource] = useState("");
+  const navigate = useNavigate();
 
   const t1 = getTierLimit(1);
   const t2 = getTierLimit(2);
@@ -90,8 +80,7 @@ const Pricing = () => {
   const minimumApplies = rawTotal > 0 && rawTotal < pricing.minimum_fee;
   const total = rawTotal === 0 ? 0 : Math.max(rawTotal, pricing.minimum_fee);
 
-  const openSignupModal = (source: string) => { setGetStartedSubmitted(false); setGetStartedFirst(""); setGetStartedLast(""); setGetStartedEmail(""); setGetStartedPhone(""); setGetStartedSource(source); setGetStartedOpen(true); };
-  const openWaitlist = () => openSignupModal("Waitlist interest");
+  const goToContact = () => navigate("/contact");
 
   const tiers = [
     {
@@ -264,11 +253,11 @@ const Pricing = () => {
 
                     <div className="mt-auto">
                       {tier.waitlist ? (
-                        <button onClick={() => openSignupModal(`Tier ${tier.tier} waitlist`)} className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
+                        <button onClick={goToContact} className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
                           {tier.cta}
                         </button>
                       ) : (
-                        <button onClick={() => openSignupModal("Tier 1 interest")} className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
+                        <button onClick={goToContact} className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
                           {tier.cta}
                         </button>
                       )}
@@ -287,8 +276,8 @@ const Pricing = () => {
                 <p className="text-lg font-semibold" style={{ color: C.navy }}>More than 10 users?</p>
                 <p className="text-sm" style={{ color: C.muted }}>Talk to us. Enterprise pricing is based on usage, not headcount or portfolio size.</p>
               </div>
-              <button onClick={() => openSignupModal("Enterprise interest")} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all whitespace-nowrap" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
-                Register interest
+              <button onClick={goToContact} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all whitespace-nowrap" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
+                Contact us
               </button>
             </div>
           </div>
@@ -481,58 +470,6 @@ const Pricing = () => {
         </div>
       )}
 
-      {/* Get Started Modal */}
-      {getStartedOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm" style={{ background: "rgba(26,26,46,0.4)" }} onClick={() => setGetStartedOpen(false)}>
-          <div className="rounded-xl p-5 sm:p-8 max-w-md w-full mx-4 shadow-2xl" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
-            {getStartedSubmitted ? (
-              <div className="text-center py-4">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: C.greenBg }}><CheckIcon /></div>
-                <p className="text-lg font-semibold mb-2" style={{ color: C.navy }}>Thank you! You're on the list 🎉</p>
-                <p className="text-sm" style={{ color: C.muted }}>We'll notify you as soon as we're ready to go live.</p>
-                <button onClick={() => setGetStartedOpen(false)} className="mt-6 text-sm font-medium transition-opacity hover:opacity-80" style={{ color: C.purple }}>Close</button>
-              </div>
-            ) : (
-              <>
-                <h3 className="text-xl font-bold mb-2" style={{ color: C.navy }}>We're not quite open yet!</h3>
-                <p className="text-sm mb-6" style={{ color: C.muted }}>We're putting the finishing touches on Hobson AI. If you'd like to be notified as soon as we launch, leave your details below and we'll be in touch.</p>
-                <form onSubmit={async (e) => {
-                  e.preventDefault();
-                  if (!getStartedFirst.trim() || !getStartedLast.trim() || !getStartedEmail.trim()) return;
-                  setGetStartedLoading(true);
-                  try {
-                    await supabase.functions.invoke('send-pilot-application', {
-                      body: {
-                        name: `${getStartedFirst.trim()} ${getStartedLast.trim()}`,
-                        email: getStartedEmail.trim(),
-                        phone: getStartedPhone.trim() || null,
-                        company: "—",
-                        role: getStartedSource,
-                      },
-                    });
-                    setGetStartedSubmitted(true);
-                  } catch {
-                    setGetStartedSubmitted(true);
-                  } finally {
-                    setGetStartedLoading(false);
-                  }
-                }}>
-                  <div className="grid grid-cols-2 gap-3 mb-3">
-                    <input type="text" required placeholder="First name" value={getStartedFirst} onChange={e => setGetStartedFirst(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} autoFocus />
-                    <input type="text" required placeholder="Last name" value={getStartedLast} onChange={e => setGetStartedLast(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
-                  </div>
-                  <input type="email" required placeholder="you@example.com" value={getStartedEmail} onChange={e => setGetStartedEmail(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm mb-3 focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
-                  <input type="tel" placeholder="Phone (optional)" value={getStartedPhone} onChange={e => setGetStartedPhone(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm mb-4 focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
-                  <button type="submit" disabled={getStartedLoading} className="w-full py-3 rounded-lg text-sm font-semibold text-white hover:opacity-90 transition-opacity disabled:opacity-60" style={{ background: C.purple }}>
-                    {getStartedLoading ? "Submitting…" : "Notify me"}
-                  </button>
-                </form>
-                <button onClick={() => setGetStartedOpen(false)} className="w-full mt-3 text-sm text-center transition-colors hover:opacity-80" style={{ color: C.muted }}>Cancel</button>
-              </>
-            )}
-          </div>
-        </div>
-      )}
     </>
   );
 };
