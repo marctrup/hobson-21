@@ -347,7 +347,7 @@ const Pricing = () => {
                     )}
                     <div className="my-2" style={{ borderTop: `1px solid ${C.border}` }} />
                     <div className="flex justify-between text-base font-bold" style={{ color: C.navy }}>
-                      <span>Your onboarding fee</span>
+                      <span>Total</span>
                       <span>£{total.toFixed(2)}</span>
                     </div>
                     {minimumApplies && <p className="text-xs mt-1" style={{ color: C.muted }}>Minimum fee of £{pricing.minimum_fee.toFixed(2)} applies</p>}
