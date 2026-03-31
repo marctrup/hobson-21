@@ -279,8 +279,8 @@ const Pricing = () => {
                 <p className="text-lg font-semibold" style={{ color: C.navy }}>More than 10 users?</p>
                 <p className="text-sm" style={{ color: C.muted }}>Talk to us. Enterprise pricing is based on usage, not headcount or portfolio size.</p>
               </div>
-              <button onClick={() => openSignupModal("Enterprise interest")} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all whitespace-nowrap" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
-                Register interest
+              <button onClick={goToContact} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all whitespace-nowrap" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
+                Contact us
               </button>
             </div>
           </div>
