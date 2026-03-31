@@ -63,6 +63,7 @@ const Pricing = () => {
   const [getStartedFirst, setGetStartedFirst] = useState("");
   const [getStartedLast, setGetStartedLast] = useState("");
   const [getStartedEmail, setGetStartedEmail] = useState("");
+  const [getStartedPhone, setGetStartedPhone] = useState("");
   const [getStartedSubmitted, setGetStartedSubmitted] = useState(false);
   const [getStartedLoading, setGetStartedLoading] = useState(false);
   const [getStartedSource, setGetStartedSource] = useState("");
@@ -89,7 +90,7 @@ const Pricing = () => {
   const minimumApplies = rawTotal > 0 && rawTotal < pricing.minimum_fee;
   const total = rawTotal === 0 ? 0 : Math.max(rawTotal, pricing.minimum_fee);
 
-  const openSignupModal = (source: string) => { setGetStartedSubmitted(false); setGetStartedFirst(""); setGetStartedLast(""); setGetStartedEmail(""); setGetStartedSource(source); setGetStartedOpen(true); };
+  const openSignupModal = (source: string) => { setGetStartedSubmitted(false); setGetStartedFirst(""); setGetStartedLast(""); setGetStartedEmail(""); setGetStartedPhone(""); setGetStartedSource(source); setGetStartedOpen(true); };
   const openWaitlist = () => openSignupModal("Waitlist interest");
 
   const tiers = [
@@ -504,6 +505,7 @@ const Pricing = () => {
                       body: {
                         name: `${getStartedFirst.trim()} ${getStartedLast.trim()}`,
                         email: getStartedEmail.trim(),
+                        phone: getStartedPhone.trim() || null,
                         company: "—",
                         role: getStartedSource,
                       },
@@ -519,7 +521,8 @@ const Pricing = () => {
                     <input type="text" required placeholder="First name" value={getStartedFirst} onChange={e => setGetStartedFirst(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} autoFocus />
                     <input type="text" required placeholder="Last name" value={getStartedLast} onChange={e => setGetStartedLast(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
                   </div>
-                  <input type="email" required placeholder="you@example.com" value={getStartedEmail} onChange={e => setGetStartedEmail(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm mb-4 focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                  <input type="email" required placeholder="you@example.com" value={getStartedEmail} onChange={e => setGetStartedEmail(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm mb-3 focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                  <input type="tel" placeholder="Phone (optional)" value={getStartedPhone} onChange={e => setGetStartedPhone(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm mb-4 focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
                   <button type="submit" disabled={getStartedLoading} className="w-full py-3 rounded-lg text-sm font-semibold text-white hover:opacity-90 transition-opacity disabled:opacity-60" style={{ background: C.purple }}>
                     {getStartedLoading ? "Submitting…" : "Notify me"}
                   </button>
