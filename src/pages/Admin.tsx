@@ -114,27 +114,19 @@ export default function Admin() {
 
   const exportToCSV = () => {
     const headers = [
+      "Source",
       "Name",
-      "Company", 
-      "Role",
       "Email",
       "Phone",
-      "Preferred Contact",
-      "Website",
-      "Business Types",
-      "Help Needed",
+      "Message",
       "Submitted Date"
     ];
 
     const csvData = applications.map(app => [
+      app.role || "Unknown",
       app.name,
-      app.company,
-      app.role,
       app.email,
       app.phone || "",
-      app.preferred_contact || "",
-      app.website || "",
-      app.business_types?.join("; ") || "",
       app.help || "",
       new Date(app.created_at).toLocaleDateString()
     ]);
@@ -147,7 +139,7 @@ export default function Admin() {
     const link = document.createElement("a");
     const url = URL.createObjectURL(blob);
     link.setAttribute("href", url);
-    link.setAttribute("download", `pilot-applications-${new Date().toISOString().split('T')[0]}.csv`);
+    link.setAttribute("download", `enquiries-${new Date().toISOString().split('T')[0]}.csv`);
     link.style.visibility = "hidden";
     document.body.appendChild(link);
     link.click();
