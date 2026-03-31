@@ -264,9 +264,9 @@ const Pricing = () => {
                           {tier.cta}
                         </button>
                       ) : (
-                        <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer" className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
+                        <button onClick={() => { setGetStartedSubmitted(false); setGetStartedFirst(""); setGetStartedLast(""); setGetStartedEmail(""); setGetStartedOpen(true); }} className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
                           {tier.cta}
-                        </a>
+                        </button>
                       )}
                       {tier.tier === 1 && (
                         <p className="text-xs text-center mt-2 font-medium" style={{ color: C.purple }}>Free 3-day trial — no card required</p>
