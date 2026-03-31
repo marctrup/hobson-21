@@ -378,6 +378,58 @@ export default function Admin() {
 
         <Card className="mt-6">
           <CardHeader>
+            <CardTitle>Email Log ({emailLogs.length})</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {loadingEmailLogs ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
+                <p className="mt-2 text-muted-foreground">Loading email logs...</p>
+              </div>
+            ) : emailLogs.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                No emails sent yet.
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Applicant</TableHead>
+                      <TableHead>Recipient</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead>Subject</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Sent</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {emailLogs.map((log) => (
+                      <TableRow key={log.id}>
+                        <TableCell className="font-medium">{log.application_name}</TableCell>
+                        <TableCell>{log.recipient_email}</TableCell>
+                        <TableCell>
+                          <Badge variant={log.email_type === 'confirmation' ? 'default' : 'secondary'}>
+                            {log.email_type}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="max-w-xs truncate">{log.subject || '—'}</TableCell>
+                        <TableCell>
+                          <Badge variant={log.status === 'sent' ? 'default' : 'destructive'}>
+                            {log.status}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>{new Date(log.created_at).toLocaleString()}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
+          <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>Content Management</CardTitle>
             </div>
