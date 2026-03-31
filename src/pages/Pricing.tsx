@@ -57,7 +57,40 @@ const Pricing = () => {
   const [documents, setDocuments] = useState(0);
   const [topUpPacks, setTopUpPacks] = useState(0);
   const [overageModalOpen, setOverageModalOpen] = useState(false);
+  const [getStartedOpen, setGetStartedOpen] = useState(false);
+  const [getStartedFirst, setGetStartedFirst] = useState("");
+  const [getStartedLast, setGetStartedLast] = useState("");
+  const [getStartedEmail, setGetStartedEmail] = useState("");
+  const [getStartedPhone, setGetStartedPhone] = useState("");
+  const [getStartedCompany, setGetStartedCompany] = useState("");
+  const [getStartedSubmitting, setGetStartedSubmitting] = useState(false);
+  const [getStartedDone, setGetStartedDone] = useState(false);
   const navigate = useNavigate();
+
+  const openSignupModal = () => {
+    setGetStartedFirst(""); setGetStartedLast(""); setGetStartedEmail("");
+    setGetStartedPhone(""); setGetStartedCompany(""); setGetStartedDone(false);
+    setGetStartedOpen(true);
+  };
+
+  const handleGetStartedSubmit = async () => {
+    if (!getStartedFirst.trim() || !getStartedLast.trim() || !getStartedEmail.trim()) return;
+    setGetStartedSubmitting(true);
+    try {
+      await supabase.functions.invoke('send-pilot-application', {
+        body: {
+          name: `${getStartedFirst.trim()} ${getStartedLast.trim()}`,
+          email: getStartedEmail.trim(),
+          phone: getStartedPhone.trim() || null,
+          company: getStartedCompany.trim() || "Not provided",
+          role: "Not provided",
+          source: "pricing-get-started",
+        }
+      });
+      setGetStartedDone(true);
+    } catch { /* ignore */ }
+    setGetStartedSubmitting(false);
+  };
 
   const t1 = getTierLimit(1);
   const t2 = getTierLimit(2);
