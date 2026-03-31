@@ -83,10 +83,11 @@ export default function PricingSettings() {
         }).eq("id", existing.id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("onboarding_pricing").insert({
+        const { error } = await (supabase.from("onboarding_pricing") as any).insert({
           cost_per_lease: parseFloat(costPerLease),
           cost_per_document: parseFloat(costPerDocument),
           minimum_fee: parseFloat(minimumFee),
+          cost_per_question_pack: parseFloat(costPerQuestionPack),
         });
         if (error) throw error;
       }
