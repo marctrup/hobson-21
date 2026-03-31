@@ -65,6 +65,7 @@ const Pricing = () => {
   const [getStartedEmail, setGetStartedEmail] = useState("");
   const [getStartedSubmitted, setGetStartedSubmitted] = useState(false);
   const [getStartedLoading, setGetStartedLoading] = useState(false);
+  const [getStartedSource, setGetStartedSource] = useState("");
 
   const t1 = getTierLimit(1);
   const t2 = getTierLimit(2);
