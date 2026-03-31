@@ -16,6 +16,7 @@ export default function PricingSettings() {
   const [costPerLease, setCostPerLease] = useState("2.00");
   const [costPerDocument, setCostPerDocument] = useState("0.20");
   const [minimumFee, setMinimumFee] = useState("5.00");
+  const [costPerQuestionPack, setCostPerQuestionPack] = useState("7.50");
   const [tierLimits, setTierLimits] = useState<TierLimit[]>([
     { tier: 1, monthly_questions: "300", monthly_extractions: "3", overage_behaviour: "charge" },
     { tier: 2, monthly_questions: "Unlimited", monthly_extractions: "Unlimited", overage_behaviour: "none" },
