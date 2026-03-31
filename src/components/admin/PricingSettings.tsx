@@ -152,6 +152,11 @@ export default function PricingSettings() {
                 <Input type="number" step="0.01" min="0" value={minimumFee} onChange={e => setMinimumFee(e.target.value)} required disabled={saving} />
                 <p className="text-xs text-muted-foreground mt-1">The minimum charge regardless of document count</p>
               </div>
+              <div>
+                <label className="text-sm font-medium mb-1 block">Cost per 100 questions top-up (£)</label>
+                <Input type="number" step="0.01" min="0" value={costPerQuestionPack} onChange={e => setCostPerQuestionPack(e.target.value)} required disabled={saving} />
+                <p className="text-xs text-muted-foreground mt-1">Price charged for each top-up pack of 100 questions</p>
+              </div>
             </div>
           </div>
 
