@@ -5,6 +5,7 @@ interface OnboardingPricing {
   cost_per_lease: number;
   cost_per_document: number;
   minimum_fee: number;
+  cost_per_question_pack: number;
 }
 
 interface TierLimit {
@@ -18,6 +19,7 @@ const DEFAULT_PRICING: OnboardingPricing = {
   cost_per_lease: 2.0,
   cost_per_document: 0.2,
   minimum_fee: 5.0,
+  cost_per_question_pack: 7.50,
 };
 
 const DEFAULT_LIMITS: TierLimit[] = [
@@ -36,7 +38,7 @@ export function usePricingData() {
     const fetch = async () => {
       try {
         const [pRes, tRes] = await Promise.all([
-          supabase.from("onboarding_pricing").select("cost_per_lease, cost_per_document, minimum_fee").limit(1).single(),
+          supabase.from("onboarding_pricing").select("cost_per_lease, cost_per_document, minimum_fee, cost_per_question_pack").limit(1).single(),
           supabase.from("tier_usage_limits" as any).select("*").order("tier" as any),
         ]);
 
@@ -45,6 +47,7 @@ export function usePricingData() {
             cost_per_lease: Number(pRes.data.cost_per_lease),
             cost_per_document: Number(pRes.data.cost_per_document),
             minimum_fee: Number(pRes.data.minimum_fee),
+            cost_per_question_pack: Number((pRes.data as any).cost_per_question_pack ?? 7.50),
           });
         }
 
@@ -69,7 +72,7 @@ export function usePricingData() {
       .channel("pricing-rt")
       .on("postgres_changes", { event: "*", schema: "public", table: "onboarding_pricing" }, (payload) => {
         const d = payload.new as any;
-        if (d) setPricing({ cost_per_lease: Number(d.cost_per_lease), cost_per_document: Number(d.cost_per_document), minimum_fee: Number(d.minimum_fee) });
+        if (d) setPricing({ cost_per_lease: Number(d.cost_per_lease), cost_per_document: Number(d.cost_per_document), minimum_fee: Number(d.minimum_fee), cost_per_question_pack: Number(d.cost_per_question_pack ?? 7.50) });
       })
       .on("postgres_changes", { event: "*", schema: "public", table: "tier_usage_limits" }, (payload) => {
         const d = payload.new as any;

@@ -16,6 +16,7 @@ export default function PricingSettings() {
   const [costPerLease, setCostPerLease] = useState("2.00");
   const [costPerDocument, setCostPerDocument] = useState("0.20");
   const [minimumFee, setMinimumFee] = useState("5.00");
+  const [costPerQuestionPack, setCostPerQuestionPack] = useState("7.50");
   const [tierLimits, setTierLimits] = useState<TierLimit[]>([
     { tier: 1, monthly_questions: "300", monthly_extractions: "3", overage_behaviour: "charge" },
     { tier: 2, monthly_questions: "Unlimited", monthly_extractions: "Unlimited", overage_behaviour: "none" },
@@ -38,9 +39,11 @@ export default function PricingSettings() {
       ]);
 
       if (pricingRes.data) {
-        setCostPerLease(String(pricingRes.data.cost_per_lease));
-        setCostPerDocument(String(pricingRes.data.cost_per_document));
-        setMinimumFee(String(pricingRes.data.minimum_fee));
+        const d = pricingRes.data as any;
+        setCostPerLease(String(d.cost_per_lease));
+        setCostPerDocument(String(d.cost_per_document));
+        setMinimumFee(String(d.minimum_fee));
+        if (d.cost_per_question_pack !== undefined) setCostPerQuestionPack(String(d.cost_per_question_pack));
       }
 
       if (limitsRes.data && (limitsRes.data as any[]).length > 0) {
@@ -71,18 +74,20 @@ export default function PricingSettings() {
       const { data: existing } = await supabase.from("onboarding_pricing").select("id").limit(1).single();
 
       if (existing) {
-        const { error } = await supabase.from("onboarding_pricing").update({
+        const { error } = await (supabase.from("onboarding_pricing") as any).update({
           cost_per_lease: parseFloat(costPerLease),
           cost_per_document: parseFloat(costPerDocument),
           minimum_fee: parseFloat(minimumFee),
+          cost_per_question_pack: parseFloat(costPerQuestionPack),
           updated_at: new Date().toISOString(),
         }).eq("id", existing.id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("onboarding_pricing").insert({
+        const { error } = await (supabase.from("onboarding_pricing") as any).insert({
           cost_per_lease: parseFloat(costPerLease),
           cost_per_document: parseFloat(costPerDocument),
           minimum_fee: parseFloat(minimumFee),
+          cost_per_question_pack: parseFloat(costPerQuestionPack),
         });
         if (error) throw error;
       }
@@ -146,6 +151,11 @@ export default function PricingSettings() {
                 <label className="text-sm font-medium mb-1 block">Minimum onboarding fee (£)</label>
                 <Input type="number" step="0.01" min="0" value={minimumFee} onChange={e => setMinimumFee(e.target.value)} required disabled={saving} />
                 <p className="text-xs text-muted-foreground mt-1">The minimum charge regardless of document count</p>
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-1 block">Cost per 100 questions top-up (£)</label>
+                <Input type="number" step="0.01" min="0" value={costPerQuestionPack} onChange={e => setCostPerQuestionPack(e.target.value)} required disabled={saving} />
+                <p className="text-xs text-muted-foreground mt-1">Price charged for each top-up pack of 100 questions</p>
               </div>
             </div>
           </div>
