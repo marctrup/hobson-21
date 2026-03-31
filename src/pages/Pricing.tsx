@@ -145,8 +145,8 @@ const Pricing = () => {
       features: () => [
         { text: "Everything in Tier 1", ok: true },
         { text: "Knowledge Base", ok: true },
-        { text: "100 document extractions/month", ok: true },
-        { text: "Unlimited questions", ok: true },
+        { text: formatLimit(t4.monthly_extractions, "document extractions"), ok: true },
+        { text: formatLimit(t4.monthly_questions, "questions"), ok: true },
         { text: "Workflow automation", ok: true },
         { text: "Action memory", ok: true },
         { text: "Monthly impact summaries", ok: true },
