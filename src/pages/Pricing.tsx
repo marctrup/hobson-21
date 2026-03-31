@@ -183,7 +183,7 @@ const Pricing = () => {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-8 text-center" style={{ color: C.navy }}>Choose your plan</h1>
 
             {/* Billing toggle */}
-            <div className="flex flex-wrap items-center gap-2 mb-8">
+            <div className="flex flex-wrap items-center justify-center gap-2 mb-8">
               <div className="inline-flex items-center rounded-full p-1" style={{ border: `1px solid ${C.border}`, background: C.bgAlt }}>
                 <button onClick={() => setIsAnnual(false)} className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200" style={{ background: !isAnnual ? C.purple : "transparent", color: !isAnnual ? "#fff" : C.muted }}>Monthly</button>
                 <button onClick={() => setIsAnnual(true)} className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200" style={{ background: isAnnual ? C.purple : "transparent", color: isAnnual ? "#fff" : C.muted }}>Annual</button>
