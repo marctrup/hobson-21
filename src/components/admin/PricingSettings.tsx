@@ -74,10 +74,11 @@ export default function PricingSettings() {
       const { data: existing } = await supabase.from("onboarding_pricing").select("id").limit(1).single();
 
       if (existing) {
-        const { error } = await supabase.from("onboarding_pricing").update({
+        const { error } = await (supabase.from("onboarding_pricing") as any).update({
           cost_per_lease: parseFloat(costPerLease),
           cost_per_document: parseFloat(costPerDocument),
           minimum_fee: parseFloat(minimumFee),
+          cost_per_question_pack: parseFloat(costPerQuestionPack),
           updated_at: new Date().toISOString(),
         }).eq("id", existing.id);
         if (error) throw error;
