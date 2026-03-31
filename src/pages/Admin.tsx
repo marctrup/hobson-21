@@ -80,6 +80,7 @@ export default function Admin() {
       if (data) {
         setIsAdmin(true);
         fetchApplications();
+        fetchEmailLogs();
       } else {
         toast({
           title: "Access Denied",
