@@ -132,18 +132,18 @@ serve(async (req) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to the Hobson AI Pilot Program</title>
+    <title>Thanks for your interest in Hobson AI</title>
 </head>
 <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px;">
     
     <div style="margin-bottom: 30px;">
         <p style="margin-bottom: 20px;">Hi ${firstName},</p>
         
-        <p style="margin-bottom: 20px;">Thank you for applying to the Hobson AI Pilot Program! We're excited about your interest in our AI-powered document intelligence solution.</p>
+        <p style="margin-bottom: 20px;">Thank you for registering your interest in Hobson AI! We're thrilled you want to learn more about our AI-powered document intelligence solution for the property sector.</p>
         
-        <p style="margin-bottom: 20px;">Our team will review your application and get back to you within 2-3 business days with next steps.</p>
+        <p style="margin-bottom: 20px;">A member of our team will be in touch shortly to discuss how Hobson AI can help streamline your property workflow.</p>
         
-        <p style="margin-bottom: 30px;">In the meantime, feel free to explore our website to learn more about how Hobson AI can transform your property management workflow.</p>
+        <p style="margin-bottom: 20px;">In the meantime, feel free to explore our website to learn more about what we do.</p>
         
         <p style="margin-bottom: 10px;">— The Hobson AI Team</p>
         
@@ -154,7 +154,7 @@ serve(async (req) => {
     </div>
     
     <div style="border-top: 1px solid #eee; padding-top: 20px; font-size: 12px; color: #666; text-align: center;">
-        <p>This is a confirmation email for your pilot program application.</p>
+        <p>This is a confirmation email from Hobson AI.</p>
         <p style="margin-top: 15px;">
             <a href="https://hobsonschoice.ai/functions/v1/newsletter-unsubscribe?email=${encodeURIComponent(email)}" 
                style="color: #999; text-decoration: underline; font-size: 11px;">
@@ -171,7 +171,7 @@ serve(async (req) => {
     const confirmationResponse = await resend.emails.send({
       from: "Hobson AI <noreply@hobsonschoice.ai>",
       to: [email],
-      subject: "Welcome to the Hobson AI Pilot Program!",
+      subject: "Thanks for your interest in Hobson AI!",
       html: htmlTemplate,
     });
 
@@ -179,17 +179,17 @@ serve(async (req) => {
 
     // For team notification, escape user inputs
     const emailContent = `
-New Hobson AI Pilot Application
+New Hobson AI Enquiry
 
 Name: ${escapeHtml(name)}
 Company: ${escapeHtml(company)}
-Role: ${escapeHtml(role)}
+Source: ${escapeHtml(role)}
 Email: ${escapeHtml(email)}
 Phone: ${phone ? escapeHtml(phone) : 'Not provided'}
 Preferred Contact: ${preferredContact ? escapeHtml(preferredContact) : 'Not specified'}
 Business Types: ${businessTypes ? businessTypes.map(escapeHtml).join(', ') : 'Not specified'}
 ${formattedWebsite ? `Website: ${escapeHtml(formattedWebsite)}` : ''}
-${help ? `\nWhat they'd like help with:\n${escapeHtml(help)}` : ''}
+${help ? `\nMessage:\n${escapeHtml(help)}` : ''}
 
 ---
 Submitted at: ${new Date().toISOString()}
@@ -199,7 +199,7 @@ Submitted at: ${new Date().toISOString()}
     const notificationResponse = await resend.emails.send({
       from: 'Hobson AI <noreply@hobsonschoice.ai>',
       to: ['info@hobsonschoice.ai'],
-      subject: `New Pilot Application - ${escapeHtml(name)} from ${escapeHtml(company)}`,
+      subject: `New Enquiry - ${escapeHtml(name)} from ${escapeHtml(company)}`,
       text: emailContent,
     });
 
