@@ -52,9 +52,6 @@ const Pricing = () => {
   const { pricing, getTierLimit, loading } = usePricingData();
   const [isAnnual, setIsAnnual] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [waitlistOpen, setWaitlistOpen] = useState(false);
-  const [waitlistEmail, setWaitlistEmail] = useState("");
-  const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [leases, setLeases] = useState(0);
   const [documents, setDocuments] = useState(0);
   const [topUpPacks, setTopUpPacks] = useState(0);
