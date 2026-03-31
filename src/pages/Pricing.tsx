@@ -505,6 +505,7 @@ const Pricing = () => {
                       body: {
                         name: `${getStartedFirst.trim()} ${getStartedLast.trim()}`,
                         email: getStartedEmail.trim(),
+                        phone: getStartedPhone.trim() || null,
                         company: "—",
                         role: getStartedSource,
                       },
