@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { getPricingStructuredData, getOrganizationStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { usePricingData } from "@/hooks/usePricingData";
+import { supabase } from "@/integrations/supabase/client";
 
 // Color constants
 const C = {
@@ -58,6 +59,12 @@ const Pricing = () => {
   const [documents, setDocuments] = useState(0);
   const [topUpPacks, setTopUpPacks] = useState(0);
   const [overageModalOpen, setOverageModalOpen] = useState(false);
+  const [getStartedOpen, setGetStartedOpen] = useState(false);
+  const [getStartedFirst, setGetStartedFirst] = useState("");
+  const [getStartedLast, setGetStartedLast] = useState("");
+  const [getStartedEmail, setGetStartedEmail] = useState("");
+  const [getStartedSubmitted, setGetStartedSubmitted] = useState(false);
+  const [getStartedLoading, setGetStartedLoading] = useState(false);
 
   const t1 = getTierLimit(1);
   const t2 = getTierLimit(2);
@@ -258,9 +265,9 @@ const Pricing = () => {
                           {tier.cta}
                         </button>
                       ) : (
-                        <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer" className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
+                        <button onClick={() => { setGetStartedSubmitted(false); setGetStartedFirst(""); setGetStartedLast(""); setGetStartedEmail(""); setGetStartedOpen(true); }} className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
                           {tier.cta}
-                        </a>
+                        </button>
                       )}
                       {tier.tier === 1 && (
                         <p className="text-xs text-center mt-2 font-medium" style={{ color: C.purple }}>Free 3-day trial — no card required</p>
@@ -486,7 +493,56 @@ const Pricing = () => {
                   <p className="text-sm mb-3" style={{ color: C.muted }}>Pay for additional extractions at £{pricing.cost_per_lease.toFixed(2)} per lease or £{pricing.cost_per_document.toFixed(2)} per document.</p>
                   <button onClick={() => { setOverageModalOpen(false); document.getElementById("onboarding")?.scrollIntoView({ behavior: "smooth" }); }} className="px-5 py-2.5 rounded-lg text-sm font-semibold text-white" style={{ background: C.purple }}>Upload more documents</button>
                 </div>
-              )}
+      )}
+
+      {/* Get Started Modal */}
+      {getStartedOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm" style={{ background: "rgba(26,26,46,0.4)" }} onClick={() => setGetStartedOpen(false)}>
+          <div className="rounded-xl p-5 sm:p-8 max-w-md w-full mx-4 shadow-2xl" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
+            {getStartedSubmitted ? (
+              <div className="text-center py-4">
+                <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: C.greenBg }}><CheckIcon /></div>
+                <p className="text-lg font-semibold mb-2" style={{ color: C.navy }}>Thank you! You're on the list 🎉</p>
+                <p className="text-sm" style={{ color: C.muted }}>We'll notify you as soon as we're ready to go live.</p>
+                <button onClick={() => setGetStartedOpen(false)} className="mt-6 text-sm font-medium transition-opacity hover:opacity-80" style={{ color: C.purple }}>Close</button>
+              </div>
+            ) : (
+              <>
+                <h3 className="text-xl font-bold mb-2" style={{ color: C.navy }}>We're not quite open yet!</h3>
+                <p className="text-sm mb-6" style={{ color: C.muted }}>We're putting the finishing touches on Hobson AI. If you'd like to be notified as soon as we launch, leave your details below and we'll be in touch.</p>
+                <form onSubmit={async (e) => {
+                  e.preventDefault();
+                  if (!getStartedFirst.trim() || !getStartedLast.trim() || !getStartedEmail.trim()) return;
+                  setGetStartedLoading(true);
+                  try {
+                    await supabase.from("pilot_applications").insert({
+                      name: `${getStartedFirst.trim()} ${getStartedLast.trim()}`,
+                      email: getStartedEmail.trim(),
+                      company: "—",
+                      role: "Tier 1 interest",
+                    });
+                    setGetStartedSubmitted(true);
+                  } catch {
+                    setGetStartedSubmitted(true);
+                  } finally {
+                    setGetStartedLoading(false);
+                  }
+                }}>
+                  <div className="grid grid-cols-2 gap-3 mb-3">
+                    <input type="text" required placeholder="First name" value={getStartedFirst} onChange={e => setGetStartedFirst(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} autoFocus />
+                    <input type="text" required placeholder="Last name" value={getStartedLast} onChange={e => setGetStartedLast(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                  </div>
+                  <input type="email" required placeholder="you@example.com" value={getStartedEmail} onChange={e => setGetStartedEmail(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm mb-4 focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                  <button type="submit" disabled={getStartedLoading} className="w-full py-3 rounded-lg text-sm font-semibold text-white hover:opacity-90 transition-opacity disabled:opacity-60" style={{ background: C.purple }}>
+                    {getStartedLoading ? "Submitting…" : "Notify me"}
+                  </button>
+                </form>
+                <button onClick={() => setGetStartedOpen(false)} className="w-full mt-3 text-sm text-center transition-colors hover:opacity-80" style={{ color: C.muted }}>Cancel</button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
               <div className="rounded-xl p-5" style={{ background: C.bgAlt, border: `1px solid ${C.border}` }}>
                 <h4 className="font-bold mb-1" style={{ color: C.navy }}>Wait until next month</h4>
                 <p className="text-sm mb-3" style={{ color: C.muted }}>Your {t1.monthly_extractions} extraction allowance resets on the 1st of next month at no extra cost.</p>
