@@ -70,7 +70,7 @@ const Pricing = () => {
     return `${value} ${unit}/month`;
   };
 
-  const TOPUP_COST = 7.50;
+  const TOPUP_COST = pricing.cost_per_question_pack;
   const TOPUP_QUESTIONS = 100;
 
   // Calculator
