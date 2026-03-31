@@ -505,7 +505,7 @@ const Pricing = () => {
                         name: `${getStartedFirst.trim()} ${getStartedLast.trim()}`,
                         email: getStartedEmail.trim(),
                         company: "—",
-                        role: "Tier 1 interest",
+                        role: getStartedSource,
                       },
                     });
                     setGetStartedSubmitted(true);
