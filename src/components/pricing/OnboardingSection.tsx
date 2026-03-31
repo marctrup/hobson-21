@@ -130,8 +130,8 @@ export default function OnboardingSection() {
                   min={0}
                   value={leases}
                   onChange={(e) => setLeases(Math.max(0, parseInt(e.target.value) || 0))}
-                  className="w-20 text-center rounded-lg border border-border bg-card px-3 py-2 text-sm text-foreground appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:outline-none focus:ring-2 focus:ring-primary/30"
-                  style={{ colorScheme: 'light' }}
+                  className="w-20 text-center rounded-lg border border-border px-3 py-2 text-sm appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:outline-none focus:ring-2 focus:ring-primary/30"
+                  style={{ backgroundColor: '#ffffff', color: '#1a1a1a', colorScheme: 'light', WebkitTextFillColor: '#1a1a1a' }}
                 />
                 <button
                   type="button"
