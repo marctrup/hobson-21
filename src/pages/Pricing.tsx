@@ -195,6 +195,103 @@ const Pricing = () => {
           </div>
         </section>
 
+        {/* STEP 2 — SUBSCRIPTION */}
+        <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bg }} id="plans">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: C.navy }}>Choose your plan</h2>
+            <p className="text-sm sm:text-base mb-8" style={{ color: C.muted }}>
+              Once your documents are extracted, your subscription determines what Hobson can do with them — and how many people can use it.
+            </p>
+
+            {/* Billing toggle */}
+            <div className="flex flex-wrap items-center gap-2 mb-8">
+              <div className="inline-flex items-center rounded-full p-1" style={{ border: `1px solid ${C.border}`, background: C.bgAlt }}>
+                <button onClick={() => setIsAnnual(false)} className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200" style={{ background: !isAnnual ? C.purple : "transparent", color: !isAnnual ? "#fff" : C.muted }}>Monthly</button>
+                <button onClick={() => setIsAnnual(true)} className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200" style={{ background: isAnnual ? C.purple : "transparent", color: isAnnual ? "#fff" : C.muted }}>Annual</button>
+              </div>
+              {isAnnual && <Badge variant="coming">Save 20%</Badge>}
+            </div>
+
+            {/* Tier cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+              {tiers.map(tier => {
+                const hasAnnual = isAnnual;
+                const displayPrice = hasAnnual ? `£${tier.priceAnnualMonthly.toFixed(2)}` : `£${tier.priceMonthly.toFixed(2)}`;
+                const perSeatAnnual = tier.perSeat && tier.seats.includes("2") ? `£${(tier.priceAnnualMonthly / 2).toFixed(2)}/seat`
+                  : tier.perSeat && tier.seats.includes("5") ? `£${(tier.priceAnnualMonthly / 5).toFixed(2)}/seat`
+                  : tier.perSeat && tier.seats.includes("10") ? `£${(tier.priceAnnualMonthly / 10).toFixed(2)}/seat`
+                  : null;
+                const displayPerSeat = hasAnnual ? perSeatAnnual : tier.perSeat;
+                const featureList = tier.features(pricing);
+                const isLive = tier.badge === "live";
+
+                return (
+                  <div key={tier.tier} className="rounded-xl p-6 flex flex-col" style={{ background: C.bg, border: isLive ? `2px solid ${C.purple}` : `1px solid ${C.border}` }}>
+                    <div className="mb-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-xs font-medium uppercase tracking-wider" style={{ color: C.purple }}>Tier {tier.tier}</p>
+                        <Badge variant={tier.badge}>{tier.badgeText}</Badge>
+                      </div>
+                      <p className="text-xs" style={{ color: C.muted }}>{tier.label}</p>
+                    </div>
+
+                    <div className="mb-4">
+                      {hasAnnual && <div className="text-sm line-through mb-0.5" style={{ color: C.muted }}>£{tier.priceMonthly.toFixed(2)}/mo</div>}
+                      <span className="text-3xl font-bold" style={{ color: C.navy }}>{displayPrice}</span>
+                      <span className="text-sm ml-1" style={{ color: C.muted }}>/ month</span>
+                      {hasAnnual && tier.priceAnnualYearly && (
+                        <div className="text-xs mt-1" style={{ color: C.muted }}>billed as £{tier.priceAnnualYearly.toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 })} annually</div>
+                      )}
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs" style={{ color: C.muted }}>{tier.seats}</span>
+                        {displayPerSeat && <span className="text-xs" style={{ color: C.muted }}>({displayPerSeat})</span>}
+                      </div>
+                    </div>
+
+                    {(tier as any).description && <p className="text-sm leading-relaxed mb-4" style={{ color: C.muted }}>{(tier as any).description}</p>}
+
+                    {featureList.length > 0 && (
+                      <ul className="space-y-2 mb-5">
+                        {featureList.map((f, fi) => (
+                          <li key={fi} className="flex items-start gap-2 text-sm" style={{ color: f.ok ? C.navy : C.muted }}>
+                            <span className="mt-0.5 flex-shrink-0">{f.ok ? <CheckIcon /> : <CrossIcon />}</span>
+                            <span className={f.ok ? "" : "opacity-50"}>{f.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    {tier.muted && <p className="text-xs mb-2 mt-auto" style={{ color: C.muted }}>{tier.muted}</p>}
+
+                    <div className="mt-auto">
+                      {tier.waitlist ? (
+                        <button onClick={openWaitlist} className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
+                          {tier.cta}
+                        </button>
+                      ) : (
+                        <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer" className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
+                          {tier.cta}
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Enterprise */}
+            <div className="mt-8 rounded-xl p-5 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left" style={{ background: C.bgAlt, border: `1px solid ${C.border}` }}>
+              <div>
+                <p className="text-lg font-semibold" style={{ color: C.navy }}>More than 10 users?</p>
+                <p className="text-sm" style={{ color: C.muted }}>Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
+              </div>
+              <button onClick={openWaitlist} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all whitespace-nowrap" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
+                Register interest
+              </button>
+            </div>
+          </div>
+        </section>
+
         {/* ONBOARDING */}
         <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: '#F7F7F8' }} id="onboarding">
           <div className="max-w-6xl mx-auto">
@@ -315,103 +412,6 @@ const Pricing = () => {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-        </section>
-
-        {/* STEP 2 — SUBSCRIPTION */}
-        <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bg }} id="plans">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-2" style={{ color: C.navy }}>Choose your plan</h2>
-            <p className="text-sm sm:text-base mb-8" style={{ color: C.muted }}>
-              Once your documents are extracted, your subscription determines what Hobson can do with them — and how many people can use it.
-            </p>
-
-            {/* Billing toggle */}
-            <div className="flex flex-wrap items-center gap-2 mb-8">
-              <div className="inline-flex items-center rounded-full p-1" style={{ border: `1px solid ${C.border}`, background: C.bgAlt }}>
-                <button onClick={() => setIsAnnual(false)} className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200" style={{ background: !isAnnual ? C.purple : "transparent", color: !isAnnual ? "#fff" : C.muted }}>Monthly</button>
-                <button onClick={() => setIsAnnual(true)} className="px-5 py-2 rounded-full text-sm font-medium transition-all duration-200" style={{ background: isAnnual ? C.purple : "transparent", color: isAnnual ? "#fff" : C.muted }}>Annual</button>
-              </div>
-              {isAnnual && <Badge variant="coming">Save 20%</Badge>}
-            </div>
-
-            {/* Tier cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-              {tiers.map(tier => {
-                const hasAnnual = isAnnual;
-                const displayPrice = hasAnnual ? `£${tier.priceAnnualMonthly.toFixed(2)}` : `£${tier.priceMonthly.toFixed(2)}`;
-                const perSeatAnnual = tier.perSeat && tier.seats.includes("2") ? `£${(tier.priceAnnualMonthly / 2).toFixed(2)}/seat`
-                  : tier.perSeat && tier.seats.includes("5") ? `£${(tier.priceAnnualMonthly / 5).toFixed(2)}/seat`
-                  : tier.perSeat && tier.seats.includes("10") ? `£${(tier.priceAnnualMonthly / 10).toFixed(2)}/seat`
-                  : null;
-                const displayPerSeat = hasAnnual ? perSeatAnnual : tier.perSeat;
-                const featureList = tier.features(pricing);
-                const isLive = tier.badge === "live";
-
-                return (
-                  <div key={tier.tier} className="rounded-xl p-6 flex flex-col" style={{ background: C.bg, border: isLive ? `2px solid ${C.purple}` : `1px solid ${C.border}` }}>
-                    <div className="mb-4">
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="text-xs font-medium uppercase tracking-wider" style={{ color: C.purple }}>Tier {tier.tier}</p>
-                        <Badge variant={tier.badge}>{tier.badgeText}</Badge>
-                      </div>
-                      <p className="text-xs" style={{ color: C.muted }}>{tier.label}</p>
-                    </div>
-
-                    <div className="mb-4">
-                      {hasAnnual && <div className="text-sm line-through mb-0.5" style={{ color: C.muted }}>£{tier.priceMonthly.toFixed(2)}/mo</div>}
-                      <span className="text-3xl font-bold" style={{ color: C.navy }}>{displayPrice}</span>
-                      <span className="text-sm ml-1" style={{ color: C.muted }}>/ month</span>
-                      {hasAnnual && tier.priceAnnualYearly && (
-                        <div className="text-xs mt-1" style={{ color: C.muted }}>billed as £{tier.priceAnnualYearly.toLocaleString("en-GB", { minimumFractionDigits: 0, maximumFractionDigits: 0 })} annually</div>
-                      )}
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs" style={{ color: C.muted }}>{tier.seats}</span>
-                        {displayPerSeat && <span className="text-xs" style={{ color: C.muted }}>({displayPerSeat})</span>}
-                      </div>
-                    </div>
-
-                    {(tier as any).description && <p className="text-sm leading-relaxed mb-4" style={{ color: C.muted }}>{(tier as any).description}</p>}
-
-                    {featureList.length > 0 && (
-                      <ul className="space-y-2 mb-5">
-                        {featureList.map((f, fi) => (
-                          <li key={fi} className="flex items-start gap-2 text-sm" style={{ color: f.ok ? C.navy : C.muted }}>
-                            <span className="mt-0.5 flex-shrink-0">{f.ok ? <CheckIcon /> : <CrossIcon />}</span>
-                            <span className={f.ok ? "" : "opacity-50"}>{f.text}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    {tier.muted && <p className="text-xs mb-2 mt-auto" style={{ color: C.muted }}>{tier.muted}</p>}
-
-                    <div className="mt-auto">
-                      {tier.waitlist ? (
-                        <button onClick={openWaitlist} className="block w-full text-center py-3 rounded-lg text-sm font-semibold transition-all" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
-                          {tier.cta}
-                        </button>
-                      ) : (
-                        <a href="https://app.hobsonschoice.ai/signup" target="_blank" rel="noopener noreferrer" className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
-                          {tier.cta}
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Enterprise */}
-            <div className="mt-8 rounded-xl p-5 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left" style={{ background: C.bgAlt, border: `1px solid ${C.border}` }}>
-              <div>
-                <p className="text-lg font-semibold" style={{ color: C.navy }}>More than 10 users?</p>
-                <p className="text-sm" style={{ color: C.muted }}>Talk to us. Enterprise pricing is based on portfolio size, not headcount.</p>
-              </div>
-              <button onClick={openWaitlist} className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-semibold transition-all whitespace-nowrap" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>
-                Register interest
-              </button>
             </div>
           </div>
         </section>
