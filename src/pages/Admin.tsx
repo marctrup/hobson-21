@@ -336,7 +336,7 @@ export default function Admin() {
         <Card className="mt-6">
           <CardHeader>
             <div className="flex justify-between items-center">
-              <CardTitle>All Enquiries ({applications.length})</CardTitle>
+              <CardTitle>Applications ({applications.length})</CardTitle>
               <Button onClick={exportToCSV} variant="outline">
                 Export to CSV
               </Button>
