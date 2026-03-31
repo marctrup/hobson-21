@@ -429,6 +429,7 @@ export default function Admin() {
           </CardContent>
         </Card>
 
+        <Card className="mt-6">
           <CardHeader>
             <div className="flex justify-between items-center">
               <CardTitle>Content Management</CardTitle>
