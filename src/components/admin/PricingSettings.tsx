@@ -158,7 +158,7 @@ export default function PricingSettings() {
             </p>
             <div className="space-y-6">
               {tierLimits.map(limit => {
-                const isUnlimited = limit.tier >= 2;
+                const isUnlimited = false;
                 return (
                   <div key={limit.tier} className="border border-border rounded-lg p-4">
                     <h4 className="font-semibold mb-3">Tier {limit.tier}</h4>
