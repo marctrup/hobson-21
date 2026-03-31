@@ -344,7 +344,7 @@ export default function Admin() {
         <Card className="mt-6">
           <CardHeader>
             <div className="flex justify-between items-center">
-              <CardTitle>Pilot Applications ({applications.length})</CardTitle>
+              <CardTitle>All Enquiries ({applications.length})</CardTitle>
               <Button onClick={exportToCSV} variant="outline">
                 Export to CSV
               </Button>
@@ -354,61 +354,47 @@ export default function Admin() {
             {loadingApplications ? (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-                <p className="mt-2 text-muted-foreground">Loading applications...</p>
+                <p className="mt-2 text-muted-foreground">Loading enquiries...</p>
               </div>
             ) : applications.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
-                No pilot applications found.
+                No enquiries found.
               </div>
             ) : (
               <div className="overflow-x-auto">
                 <Table>
                   <TableHeader>
                     <TableRow>
+                      <TableHead>Source</TableHead>
                       <TableHead>Name</TableHead>
-                      <TableHead>Company</TableHead>
-                      <TableHead>Role</TableHead>
                       <TableHead>Email</TableHead>
                       <TableHead>Phone</TableHead>
-                      <TableHead>Business Types</TableHead>
-                      <TableHead>Website</TableHead>
+                      <TableHead>Message</TableHead>
                       <TableHead>Submitted</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {applications.map((app) => (
-                      <TableRow key={app.id}>
-                        <TableCell className="font-medium">{app.name}</TableCell>
-                        <TableCell>{app.company}</TableCell>
-                        <TableCell>{app.role}</TableCell>
-                        <TableCell>{app.email}</TableCell>
-                        <TableCell>{app.phone || "N/A"}</TableCell>
-                        <TableCell>
-                          {app.business_types?.map((type) => (
-                            <Badge key={type} variant="secondary" className="mr-1 mb-1">
-                              {type}
-                            </Badge>
-                          )) || "N/A"}
-                        </TableCell>
-                        <TableCell>
-                          {app.website ? (
-                            <a 
-                              href={app.website} 
-                              target="_blank" 
-                              rel="noopener noreferrer"
-                              className="text-primary hover:underline"
-                            >
-                              Visit
-                            </a>
-                          ) : (
-                            "N/A"
-                          )}
-                        </TableCell>
-                        <TableCell>
-                          {new Date(app.created_at).toLocaleDateString()}
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    {applications.map((app) => {
+                      const source = app.role || "Unknown";
+                      const badgeVariant = source.toLowerCase().includes("contact") ? "default" 
+                        : source.toLowerCase().includes("waitlist") ? "secondary" 
+                        : source.toLowerCase().includes("enterprise") ? "outline"
+                        : "secondary";
+                      return (
+                        <TableRow key={app.id}>
+                          <TableCell>
+                            <Badge variant={badgeVariant}>{source}</Badge>
+                          </TableCell>
+                          <TableCell className="font-medium">{app.name}</TableCell>
+                          <TableCell>{app.email}</TableCell>
+                          <TableCell>{app.phone || "—"}</TableCell>
+                          <TableCell className="max-w-xs truncate">{app.help || "—"}</TableCell>
+                          <TableCell>
+                            {new Date(app.created_at).toLocaleDateString()}
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </div>
