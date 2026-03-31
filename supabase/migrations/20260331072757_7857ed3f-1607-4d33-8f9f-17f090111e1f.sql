@@ -1,0 +1,1 @@
+ALTER TABLE public.onboarding_pricing ADD COLUMN cost_per_question_pack numeric NOT NULL DEFAULT 7.50;

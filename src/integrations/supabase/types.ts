@@ -583,6 +583,7 @@ export type Database = {
         Row: {
           cost_per_document: number
           cost_per_lease: number
+          cost_per_question_pack: number
           created_at: string
           id: string
           minimum_fee: number
@@ -591,6 +592,7 @@ export type Database = {
         Insert: {
           cost_per_document?: number
           cost_per_lease?: number
+          cost_per_question_pack?: number
           created_at?: string
           id?: string
           minimum_fee?: number
@@ -599,6 +601,7 @@ export type Database = {
         Update: {
           cost_per_document?: number
           cost_per_lease?: number
+          cost_per_question_pack?: number
           created_at?: string
           id?: string
           minimum_fee?: number
