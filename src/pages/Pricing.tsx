@@ -291,7 +291,7 @@ const Pricing = () => {
                           {tier.cta}
                         </button>
                       ) : (
-                        <button onClick={goToContact} className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
+                        <button onClick={openSignupModal} className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
                           {tier.cta}
                         </button>
                       )}
