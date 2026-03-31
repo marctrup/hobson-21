@@ -455,31 +455,6 @@ const Pricing = () => {
 
       </main>
 
-      {/* Waitlist Modal */}
-      {waitlistOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center backdrop-blur-sm" style={{ background: "rgba(26,26,46,0.4)" }} onClick={() => setWaitlistOpen(false)}>
-          <div className="rounded-xl p-5 sm:p-8 max-w-md w-full mx-4 shadow-2xl" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
-            {waitlistSubmitted ? (
-              <div className="text-center py-4">
-                <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: C.greenBg }}><CheckIcon /></div>
-                <p className="text-lg font-semibold mb-2" style={{ color: C.navy }}>You're on the list.</p>
-                <p className="text-sm" style={{ color: C.muted }}>We'll be in touch.</p>
-                <button onClick={() => setWaitlistOpen(false)} className="mt-6 text-sm font-medium transition-opacity hover:opacity-80" style={{ color: C.purple }}>Close</button>
-              </div>
-            ) : (
-              <>
-                <h3 className="text-xl font-bold mb-2" style={{ color: C.navy }}>Join the waitlist</h3>
-                <p className="text-sm mb-6" style={{ color: C.muted }}>Be first to know when we launch. No spam, ever.</p>
-                <form onSubmit={e => { e.preventDefault(); if (waitlistEmail.trim()) setWaitlistSubmitted(true); }}>
-                  <input type="email" required placeholder="you@example.com" value={waitlistEmail} onChange={e => setWaitlistEmail(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm mb-4 focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} autoFocus />
-                  <button type="submit" className="w-full py-3 rounded-lg text-sm font-semibold text-white hover:opacity-90 transition-opacity" style={{ background: C.purple }}>Join waitlist</button>
-                </form>
-                <button onClick={() => setWaitlistOpen(false)} className="w-full mt-3 text-sm text-center transition-colors hover:opacity-80" style={{ color: C.muted }}>Cancel</button>
-              </>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* Tier 1 Overage Modal */}
       {overageModalOpen && (
