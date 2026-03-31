@@ -13,7 +13,7 @@ export const CTASection = () => {
             Ready to think about AI in your property business but unsure how?
           </h2>
           <p className="text-xl text-muted-foreground mb-12 max-w-2xl mx-auto">
-            Join our exclusive pilot program and be among the first to experience the future of property intelligence.
+            Get in touch and be among the first to experience the future of property intelligence.
           </p>
           
           <div className="flex flex-col items-center gap-4">
