@@ -56,14 +56,19 @@ const Pricing = () => {
   const [waitlistSubmitted, setWaitlistSubmitted] = useState(false);
   const [leases, setLeases] = useState(0);
   const [documents, setDocuments] = useState(0);
+  const [topUpPacks, setTopUpPacks] = useState(0);
   const [overageModalOpen, setOverageModalOpen] = useState(false);
 
   const t1 = getTierLimit(1);
 
+  const TOPUP_COST = 5.00;
+  const TOPUP_QUESTIONS = 100;
+
   // Calculator
   const leaseSubtotal = leases * pricing.cost_per_lease;
   const docSubtotal = documents * pricing.cost_per_document;
-  const rawTotal = leaseSubtotal + docSubtotal;
+  const topUpSubtotal = topUpPacks * TOPUP_COST;
+  const rawTotal = leaseSubtotal + docSubtotal + topUpSubtotal;
   const minimumApplies = rawTotal > 0 && rawTotal < pricing.minimum_fee;
   const total = rawTotal === 0 ? 0 : Math.max(rawTotal, pricing.minimum_fee);
 
