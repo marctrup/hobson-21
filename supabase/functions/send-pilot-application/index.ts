@@ -216,14 +216,32 @@ Submitted at: ${new Date().toISOString()}
     `.trim()
 
     // Send notification email to team
-    const notificationResponse = await resend.emails.send({
-      from: 'Hobson AI <noreply@hobsonschoice.ai>',
-      to: ['info@hobsonschoice.ai'],
-      subject: `New Enquiry - ${escapeHtml(name)} from ${escapeHtml(company)}`,
-      text: emailContent,
-    });
+    const notificationSubject = `New Enquiry - ${escapeHtml(name)} from ${escapeHtml(company)}`;
+    let notificationStatus = 'sent';
+    let notificationError = null;
+    try {
+      const notificationResponse = await resend.emails.send({
+        from: 'Hobson AI <noreply@hobsonschoice.ai>',
+        to: ['info@hobsonschoice.ai'],
+        subject: notificationSubject,
+        text: emailContent,
+      });
+      console.log("Notification email sent successfully:", notificationResponse);
+    } catch (emailErr: any) {
+      notificationStatus = 'failed';
+      notificationError = emailErr.message || 'Unknown error';
+      console.error("Notification email failed:", emailErr);
+    }
 
-    console.log("Notification email sent successfully:", notificationResponse);
+    // Log notification email
+    await supabase.from('email_send_log').insert({
+      application_id: applicationId,
+      recipient_email: 'info@hobsonschoice.ai',
+      email_type: 'notification',
+      subject: notificationSubject,
+      status: notificationStatus,
+      error_message: notificationError,
+    });
 
     return new Response(
       JSON.stringify({ success: true, message: 'Application submitted successfully' }),
