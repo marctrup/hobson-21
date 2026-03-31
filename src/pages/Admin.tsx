@@ -122,6 +122,36 @@ export default function Admin() {
     }
   };
 
+  const fetchEmailLogs = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("email_send_log")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (error) throw error;
+
+      // Map application names from the applications list
+      const logs = (data || []).map((log: any) => {
+        const app = applications.find(a => a.id === log.application_id);
+        return { ...log, application_name: app?.name || '—' };
+      });
+
+      setEmailLogs(logs);
+    } catch (error: any) {
+      console.error("Error fetching email logs:", error);
+    } finally {
+      setLoadingEmailLogs(false);
+    }
+  };
+
+  // Re-fetch email logs when applications are loaded (to map names)
+  useEffect(() => {
+    if (isAdmin && applications.length > 0) {
+      fetchEmailLogs();
+    }
+  }, [applications, isAdmin]);
+
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
