@@ -171,7 +171,7 @@ serve(async (req) => {
     const confirmationResponse = await resend.emails.send({
       from: "Hobson AI <noreply@hobsonschoice.ai>",
       to: [email],
-      subject: "Welcome to the Hobson AI Pilot Program!",
+      subject: "Thanks for your interest in Hobson AI!",
       html: htmlTemplate,
     });
 
