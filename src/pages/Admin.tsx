@@ -363,6 +363,7 @@ export default function Admin() {
                       <TableHead>Phone</TableHead>
                       <TableHead>Message</TableHead>
                       <TableHead>Submitted</TableHead>
+                      <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
