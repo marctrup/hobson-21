@@ -118,8 +118,8 @@ const Pricing = () => {
       features: () => [
         { text: "Everything in Tier 1", ok: true },
         { text: "Knowledge Base", ok: true },
-        { text: "20 document extractions per month", ok: true },
-        { text: "2,000 questions per month", ok: true },
+        { text: "20 document extractions /Month", ok: true },
+        { text: "2,000 questions /Month", ok: true },
         { text: "Workflow automation", ok: true },
         { text: "Action memory", ok: true },
         { text: "Monthly impact summaries", ok: true },
