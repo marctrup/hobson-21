@@ -519,8 +519,8 @@ const Pricing = () => {
               </div>
             ) : (
               <>
-                <h3 className="text-xl font-bold mb-1" style={{ color: C.navy }}>Get started with Hobson AI</h3>
-                <p className="text-sm mb-6" style={{ color: C.muted }}>We'll set you up with early access.</p>
+                <h3 className="text-xl font-bold mb-1" style={{ color: C.navy }}>We're not quite open yet</h3>
+                <p className="text-sm mb-6" style={{ color: C.muted }}>Register your interest and we'll be in touch as soon as we go live.</p>
                 <div className="space-y-3">
                   <div className="grid grid-cols-2 gap-3">
                     <input type="text" placeholder="First name *" value={getStartedFirst} onChange={e => setGetStartedFirst(e.target.value)} className="rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
