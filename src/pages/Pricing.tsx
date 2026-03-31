@@ -92,8 +92,8 @@ const Pricing = () => {
         { text: "Multi-document AI reasoning", ok: true },
         { text: "Plain English queries", ok: true },
         { text: "Sourced, auditable answers", ok: true },
-        { text: `${t1.monthly_extractions} document extractions/month`, ok: true },
-        { text: `${t1.monthly_questions} questions/month`, ok: true },
+        { text: formatLimit(t1.monthly_extractions, "document extractions"), ok: true },
+        { text: formatLimit(t1.monthly_questions, "questions"), ok: true },
         
         { text: "Knowledge Base", ok: false },
         { text: "Workflow automation", ok: false },
