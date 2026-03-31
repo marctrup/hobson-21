@@ -89,7 +89,8 @@ const Pricing = () => {
   const minimumApplies = rawTotal > 0 && rawTotal < pricing.minimum_fee;
   const total = rawTotal === 0 ? 0 : Math.max(rawTotal, pricing.minimum_fee);
 
-  const openWaitlist = () => { setWaitlistSubmitted(false); setWaitlistEmail(""); setWaitlistOpen(true); };
+  const openSignupModal = (source: string) => { setGetStartedSubmitted(false); setGetStartedFirst(""); setGetStartedLast(""); setGetStartedEmail(""); setGetStartedSource(source); setGetStartedOpen(true); };
+  const openWaitlist = () => openSignupModal("Waitlist interest");
 
   const tiers = [
     {
