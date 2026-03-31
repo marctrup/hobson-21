@@ -112,6 +112,22 @@ export default function Admin() {
     navigate("/");
   };
 
+  const handleDeleteApplication = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this application?")) return;
+    try {
+      const { error } = await supabase
+        .from("pilot_applications")
+        .delete()
+        .eq("id", id);
+      if (error) throw error;
+      setApplications(prev => prev.filter(app => app.id !== id));
+      toast({ title: "Deleted", description: "Application removed." });
+    } catch (error: any) {
+      console.error("Error deleting application:", error);
+      toast({ title: "Error", description: "Failed to delete application.", variant: "destructive" });
+    }
+  };
+
   const exportToCSV = () => {
     const headers = [
       "Source",
