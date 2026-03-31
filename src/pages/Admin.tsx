@@ -48,6 +48,8 @@ export default function Admin() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false);
+  const [emailLogs, setEmailLogs] = useState<EmailLog[]>([]);
+  const [loadingEmailLogs, setLoadingEmailLogs] = useState(true);
   const navigate = useNavigate();
   const { toast } = useToast();
 
