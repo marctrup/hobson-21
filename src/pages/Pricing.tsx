@@ -58,6 +58,12 @@ const Pricing = () => {
   const [documents, setDocuments] = useState(0);
   const [topUpPacks, setTopUpPacks] = useState(0);
   const [overageModalOpen, setOverageModalOpen] = useState(false);
+  const [getStartedOpen, setGetStartedOpen] = useState(false);
+  const [getStartedFirst, setGetStartedFirst] = useState("");
+  const [getStartedLast, setGetStartedLast] = useState("");
+  const [getStartedEmail, setGetStartedEmail] = useState("");
+  const [getStartedSubmitted, setGetStartedSubmitted] = useState(false);
+  const [getStartedLoading, setGetStartedLoading] = useState(false);
 
   const t1 = getTierLimit(1);
   const t2 = getTierLimit(2);
