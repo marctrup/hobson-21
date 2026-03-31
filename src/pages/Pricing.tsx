@@ -60,6 +60,15 @@ const Pricing = () => {
   const [overageModalOpen, setOverageModalOpen] = useState(false);
 
   const t1 = getTierLimit(1);
+  const t2 = getTierLimit(2);
+  const t3 = getTierLimit(3);
+  const t4 = getTierLimit(4);
+
+  const formatLimit = (value: string, unit: string) => {
+    const lower = value.toLowerCase();
+    if (lower === "unlimited") return `Unlimited ${unit}`;
+    return `${value} ${unit}/month`;
+  };
 
   const TOPUP_COST = 7.50;
   const TOPUP_QUESTIONS = 100;
@@ -83,8 +92,8 @@ const Pricing = () => {
         { text: "Multi-document AI reasoning", ok: true },
         { text: "Plain English queries", ok: true },
         { text: "Sourced, auditable answers", ok: true },
-        { text: `${t1.monthly_extractions} document extractions/month`, ok: true },
-        { text: `${t1.monthly_questions} questions/month`, ok: true },
+        { text: formatLimit(t1.monthly_extractions, "document extractions"), ok: true },
+        { text: formatLimit(t1.monthly_questions, "questions"), ok: true },
         
         { text: "Knowledge Base", ok: false },
         { text: "Workflow automation", ok: false },
@@ -100,8 +109,8 @@ const Pricing = () => {
       features: () => [
         { text: "Everything in Tier 1", ok: true },
         { text: "Knowledge Base", ok: true },
-        { text: "10 document extractions/month", ok: true },
-        { text: "350 questions/month", ok: true },
+        { text: formatLimit(t2.monthly_extractions, "document extractions"), ok: true },
+        { text: formatLimit(t2.monthly_questions, "questions"), ok: true },
         { text: "Workflow automation", ok: true },
         { text: "Action memory", ok: true },
         { text: "Monthly impact summaries", ok: true },
@@ -118,8 +127,8 @@ const Pricing = () => {
       features: () => [
         { text: "Everything in Tier 1", ok: true },
         { text: "Knowledge Base", ok: true },
-        { text: "20 document extractions/month", ok: true },
-        { text: "2,000 questions/month", ok: true },
+        { text: formatLimit(t3.monthly_extractions, "document extractions"), ok: true },
+        { text: formatLimit(t3.monthly_questions, "questions"), ok: true },
         { text: "Workflow automation", ok: true },
         { text: "Action memory", ok: true },
         { text: "Monthly impact summaries", ok: true },
@@ -136,8 +145,8 @@ const Pricing = () => {
       features: () => [
         { text: "Everything in Tier 1", ok: true },
         { text: "Knowledge Base", ok: true },
-        { text: "100 document extractions/month", ok: true },
-        { text: "Unlimited questions", ok: true },
+        { text: formatLimit(t4.monthly_extractions, "document extractions"), ok: true },
+        { text: formatLimit(t4.monthly_questions, "questions"), ok: true },
         { text: "Workflow automation", ok: true },
         { text: "Action memory", ok: true },
         { text: "Monthly impact summaries", ok: true },
