@@ -85,10 +85,12 @@ serve(async (req) => {
       }
     }
 
-    // Save to database
+    // Save to database and get the application ID
+    const applicationId = crypto.randomUUID();
     const { error: dbError } = await supabase
       .from('pilot_applications')
       .insert({
+        id: applicationId,
         name,
         company,
         role,
