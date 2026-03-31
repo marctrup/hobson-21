@@ -367,7 +367,7 @@ const Pricing = () => {
                   className="w-full py-3.5 rounded-xl text-sm font-bold text-white transition-all duration-200 hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
                   style={{ background: C.purple }}
                 >
-                  Pay onboarding fee and get started
+                  Checkout
                 </button>
                 <p className="text-center text-xs mt-2.5" style={{ color: C.muted }}>
                   Secure payment. You will not be charged again for these documents.
