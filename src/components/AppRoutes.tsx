@@ -170,7 +170,7 @@ const AppContent = () => {
               <Route path="/landing-a" element={<LandingPageA />} />
               <Route path="/landing-b" element={<LandingPageB />} />
               <Route path="/landing-c" element={<LandingPageC />} />
-              <Route path="/pilot_form" element={<PilotForm />} />
+              <Route path="/pilot_form" element={<Navigate to="/contact" replace />} />
               <Route path="/email-1" element={<EmailPreview />} />
               
               {/* Remove the AI-driven-property-management-software route from main domain */}
