@@ -149,7 +149,7 @@ export default function OnboardingSection() {
                 <label className="text-sm font-semibold text-foreground">How many other documents?</label>
                 <span className="text-xs text-muted-foreground">£{pricing.cost_per_document.toFixed(2)} each</span>
               </div>
-              <p className="text-xs text-muted-foreground mb-2">Compliance certificates, insurance policies, contracts, process guides, anything else</p>
+              <p className="text-xs text-muted-foreground mb-2"><p className="text-xs text-muted-foreground mb-2">Compliance certificates, Deeds, licences, etc</p></p>
               <div className="flex items-center gap-3">
                 <button
                   type="button"
