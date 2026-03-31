@@ -291,7 +291,7 @@ const Pricing = () => {
                       <label className="text-sm font-semibold" style={{ color: C.navy }}>How many leases?</label>
                       <span className="text-xs" style={{ color: C.muted }}>£{pricing.cost_per_lease.toFixed(2)} each</span>
                     </div>
-                    <p className="text-xs mb-2" style={{ color: C.muted }}>Complex documents - Leases and occupational licences</p>
+                    <p className="text-xs mb-2" style={{ color: C.muted }}><p className="text-xs mb-2" style={{ color: C.muted }}>Complex documents - Leases and occupational licences <span style={{ color: '#F97316', fontWeight: 600 }}>only</span></p></p>
                     <div className="flex items-center gap-3">
                       <button type="button" onClick={() => setLeases(Math.max(0, leases - 1))} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
                       <input type="number" min={0} value={leases} onChange={e => setLeases(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
