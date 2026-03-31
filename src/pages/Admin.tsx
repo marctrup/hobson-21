@@ -27,6 +27,18 @@ interface PilotApplication {
   created_at: string;
 }
 
+interface EmailLog {
+  id: string;
+  application_id: string | null;
+  recipient_email: string;
+  email_type: string;
+  subject: string | null;
+  status: string;
+  error_message: string | null;
+  created_at: string;
+  application_name?: string;
+}
+
 export default function Admin() {
   const { user, isLoading, signOut } = useAuth();
   const [applications, setApplications] = useState<PilotApplication[]>([]);
