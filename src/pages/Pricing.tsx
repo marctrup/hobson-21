@@ -485,7 +485,6 @@ const Pricing = () => {
           <div className="rounded-xl p-5 sm:p-8 max-w-lg w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto" style={{ background: C.bg, border: `1px solid ${C.border}` }} onClick={e => e.stopPropagation()}>
             <h3 className="text-lg sm:text-xl font-bold mb-2" style={{ color: C.navy }}>You have used your {t1.monthly_extractions} included extractions this month.</h3>
             <p className="text-sm mb-6" style={{ color: C.muted }}>You have two options:</p>
-
             <div className="space-y-4">
               {t1.overage_behaviour === "charge" && (
                 <div className="rounded-xl p-5" style={{ background: C.bgAlt, border: `2px solid ${C.purple}` }}>
@@ -493,6 +492,15 @@ const Pricing = () => {
                   <p className="text-sm mb-3" style={{ color: C.muted }}>Pay for additional extractions at £{pricing.cost_per_lease.toFixed(2)} per lease or £{pricing.cost_per_document.toFixed(2)} per document.</p>
                   <button onClick={() => { setOverageModalOpen(false); document.getElementById("onboarding")?.scrollIntoView({ behavior: "smooth" }); }} className="px-5 py-2.5 rounded-lg text-sm font-semibold text-white" style={{ background: C.purple }}>Upload more documents</button>
                 </div>
+              )}
+              <div className="rounded-xl p-5" style={{ background: C.bgAlt, border: `1px solid ${C.border}` }}>
+                <h4 className="font-bold mb-1" style={{ color: C.navy }}>Wait until next month</h4>
+                <p className="text-sm mb-3" style={{ color: C.muted }}>Your {t1.monthly_extractions} extraction allowance resets on the 1st of next month at no extra cost.</p>
+                <button onClick={() => setOverageModalOpen(false)} className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>I'll wait</button>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Get Started Modal */}
@@ -540,15 +548,6 @@ const Pricing = () => {
                 <button onClick={() => setGetStartedOpen(false)} className="w-full mt-3 text-sm text-center transition-colors hover:opacity-80" style={{ color: C.muted }}>Cancel</button>
               </>
             )}
-          </div>
-        </div>
-      )}
-              <div className="rounded-xl p-5" style={{ background: C.bgAlt, border: `1px solid ${C.border}` }}>
-                <h4 className="font-bold mb-1" style={{ color: C.navy }}>Wait until next month</h4>
-                <p className="text-sm mb-3" style={{ color: C.muted }}>Your {t1.monthly_extractions} extraction allowance resets on the 1st of next month at no extra cost.</p>
-                <button onClick={() => setOverageModalOpen(false)} className="px-5 py-2.5 rounded-lg text-sm font-semibold transition-all" style={{ border: `2px solid ${C.purple}`, color: C.purple, background: "transparent" }}>I'll wait</button>
-              </div>
-            </div>
           </div>
         </div>
       )}
