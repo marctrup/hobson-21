@@ -63,6 +63,7 @@ const Pricing = () => {
   const [getStartedFirst, setGetStartedFirst] = useState("");
   const [getStartedLast, setGetStartedLast] = useState("");
   const [getStartedEmail, setGetStartedEmail] = useState("");
+  const [getStartedPhone, setGetStartedPhone] = useState("");
   const [getStartedSubmitted, setGetStartedSubmitted] = useState(false);
   const [getStartedLoading, setGetStartedLoading] = useState(false);
   const [getStartedSource, setGetStartedSource] = useState("");
