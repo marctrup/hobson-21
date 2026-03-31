@@ -266,6 +266,12 @@ const Pricing = () => {
                       <span>Documents: {documents} × £{pricing.cost_per_document.toFixed(2)}</span>
                       <span>£{docSubtotal.toFixed(2)}</span>
                     </div>
+                    {topUpPacks > 0 && (
+                      <div className="flex justify-between" style={{ color: C.muted }}>
+                        <span>Top-up questions: {topUpPacks} × £{TOPUP_COST.toFixed(2)} ({topUpPacks * TOPUP_QUESTIONS} questions)</span>
+                        <span>£{topUpSubtotal.toFixed(2)}</span>
+                      </div>
+                    )}
                     <div className="my-2" style={{ borderTop: `1px solid ${C.border}` }} />
                     <div className="flex justify-between text-base font-bold" style={{ color: C.navy }}>
                       <span>Your onboarding fee</span>
