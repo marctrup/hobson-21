@@ -39,9 +39,11 @@ export default function PricingSettings() {
       ]);
 
       if (pricingRes.data) {
-        setCostPerLease(String(pricingRes.data.cost_per_lease));
-        setCostPerDocument(String(pricingRes.data.cost_per_document));
-        setMinimumFee(String(pricingRes.data.minimum_fee));
+        const d = pricingRes.data as any;
+        setCostPerLease(String(d.cost_per_lease));
+        setCostPerDocument(String(d.cost_per_document));
+        setMinimumFee(String(d.minimum_fee));
+        if (d.cost_per_question_pack !== undefined) setCostPerQuestionPack(String(d.cost_per_question_pack));
       }
 
       if (limitsRes.data && (limitsRes.data as any[]).length > 0) {
