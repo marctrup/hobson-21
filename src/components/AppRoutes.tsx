@@ -129,7 +129,7 @@ const AppContent = () => {
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<ContactUs />} />
-              <Route path="/pilot" element={<Pilot />} />
+              <Route path="/pilot" element={<Navigate to="/contact" replace />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/data-protection" element={<DataProtection />} />
               <Route path="/breach-protocol" element={<BreachProtocol />} />
