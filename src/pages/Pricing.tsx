@@ -504,6 +504,41 @@ const Pricing = () => {
         </div>
       )}
 
+      {/* Get Started Modal */}
+      {getStartedOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" onClick={() => setGetStartedOpen(false)}>
+          <div className="rounded-2xl p-6 sm:p-8 w-full max-w-md shadow-2xl" style={{ background: C.bg }} onClick={e => e.stopPropagation()}>
+            {getStartedDone ? (
+              <div className="text-center py-6">
+                <div className="w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-4" style={{ background: C.greenBg }}>
+                  <svg width="28" height="28" viewBox="0 0 20 20" fill="none"><path d="M16.667 5L7.5 14.167 3.333 10" stroke={C.greenText} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                </div>
+                <h3 className="text-xl font-bold mb-2" style={{ color: C.navy }}>You're on the list!</h3>
+                <p className="text-sm mb-6" style={{ color: C.muted }}>We'll be in touch very soon with your access details.</p>
+                <button onClick={() => setGetStartedOpen(false)} className="px-6 py-2.5 rounded-lg text-sm font-semibold text-white" style={{ background: C.purple }}>Close</button>
+              </div>
+            ) : (
+              <>
+                <h3 className="text-xl font-bold mb-1" style={{ color: C.navy }}>Get started with Hobson AI</h3>
+                <p className="text-sm mb-6" style={{ color: C.muted }}>We'll set you up with early access.</p>
+                <div className="space-y-3">
+                  <div className="grid grid-cols-2 gap-3">
+                    <input type="text" placeholder="First name *" value={getStartedFirst} onChange={e => setGetStartedFirst(e.target.value)} className="rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                    <input type="text" placeholder="Last name *" value={getStartedLast} onChange={e => setGetStartedLast(e.target.value)} className="rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                  </div>
+                  <input type="email" placeholder="Email *" value={getStartedEmail} onChange={e => setGetStartedEmail(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                  <input type="tel" placeholder="Phone (optional)" value={getStartedPhone} onChange={e => setGetStartedPhone(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                  <input type="text" placeholder="Company (optional)" value={getStartedCompany} onChange={e => setGetStartedCompany(e.target.value)} className="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                </div>
+                <button onClick={handleGetStartedSubmit} disabled={getStartedSubmitting || !getStartedFirst.trim() || !getStartedLast.trim() || !getStartedEmail.trim()} className="w-full mt-5 py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50" style={{ background: C.purple }}>
+                  {getStartedSubmitting ? "Submitting…" : "Get early access"}
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
     </>
   );
 };
