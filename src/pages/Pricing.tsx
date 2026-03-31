@@ -100,8 +100,8 @@ const Pricing = () => {
       features: () => [
         { text: "Everything in Tier 1", ok: true },
         { text: "Knowledge Base", ok: true },
-        { text: "Unlimited document extractions", ok: true },
-        { text: "Unlimited questions", ok: true },
+        { text: "10 document extractions per month", ok: true },
+        { text: "350 questions per month", ok: true },
         { text: "Workflow automation", ok: true },
         { text: "Action memory", ok: true },
         { text: "Monthly impact summaries", ok: true },
@@ -118,8 +118,8 @@ const Pricing = () => {
       features: () => [
         { text: "Everything in Tier 1", ok: true },
         { text: "Knowledge Base", ok: true },
-        { text: "Unlimited document extractions", ok: true },
-        { text: "Unlimited questions", ok: true },
+        { text: "20 document extractions per month", ok: true },
+        { text: "2,000 questions per month", ok: true },
         { text: "Workflow automation", ok: true },
         { text: "Action memory", ok: true },
         { text: "Monthly impact summaries", ok: true },
@@ -136,7 +136,7 @@ const Pricing = () => {
       features: () => [
         { text: "Everything in Tier 1", ok: true },
         { text: "Knowledge Base", ok: true },
-        { text: "Unlimited document extractions", ok: true },
+        { text: "100 document extractions per month", ok: true },
         { text: "Unlimited questions", ok: true },
         { text: "Workflow automation", ok: true },
         { text: "Action memory", ok: true },
