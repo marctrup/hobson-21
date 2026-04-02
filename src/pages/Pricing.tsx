@@ -362,10 +362,6 @@ const Pricing = () => {
                 <div className="rounded-xl p-4 mb-4" style={{ background: C.bgAlt, border: `1px solid ${C.border}` }}>
                   <div className="space-y-1.5 text-sm">
                     <div className="flex justify-between" style={{ color: C.muted }}>
-                      <span>Leases: {leases} × £{pricing.cost_per_lease.toFixed(2)}</span>
-                      <span>£{leaseSubtotal.toFixed(2)}</span>
-                    </div>
-                    <div className="flex justify-between" style={{ color: C.muted }}>
                       <span>Documents: {documents} × £{pricing.cost_per_document.toFixed(2)}</span>
                       <span>£{docSubtotal.toFixed(2)}</span>
                     </div>
