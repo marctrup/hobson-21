@@ -338,7 +338,7 @@ const Pricing = () => {
                     <p className="text-xs mb-2" style={{ color: C.muted }}>Leases, compliance certificates, deeds, licences, etc</p>
                     <div className="flex items-center gap-3">
                       <button type="button" onClick={() => setDocuments(Math.max(0, documents - 1))} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
-                      <input type="number" min={0} value={documents} onChange={e => setDocuments(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
+                      <input type="text" inputMode="numeric" pattern="[0-9]*" value={documents === 0 ? '' : String(documents)} onChange={e => { const v = e.target.value.replace(/\D/g, ''); setDocuments(v === '' ? 0 : parseInt(v, 10)); }} placeholder="0" className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
                       <button type="button" onClick={() => setDocuments(documents + 1)} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
                     </div>
                   </div>
