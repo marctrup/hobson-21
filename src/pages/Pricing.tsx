@@ -106,10 +106,9 @@ const Pricing = () => {
   const TOPUP_QUESTIONS = 100;
 
   // Calculator
-  const leaseSubtotal = leases * pricing.cost_per_lease;
   const docSubtotal = documents * pricing.cost_per_document;
   const topUpSubtotal = topUpPacks * TOPUP_COST;
-  const rawTotal = leaseSubtotal + docSubtotal + topUpSubtotal;
+  const rawTotal = docSubtotal + topUpSubtotal;
   const minimumApplies = rawTotal > 0 && rawTotal < pricing.minimum_fee;
   const total = rawTotal === 0 ? 0 : Math.max(rawTotal, pricing.minimum_fee);
 
