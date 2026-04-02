@@ -122,27 +122,17 @@ export default function PricingSettings() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSave} className="space-y-8">
-          {/* Subsection 1 — Onboarding Pricing */}
+          {/* Subsection 1 — Document & Question Pricing */}
           <div>
-            <h3 className="text-lg font-semibold mb-1">Onboarding Pricing</h3>
+            <h3 className="text-lg font-semibold mb-1">Document & Question Pricing</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Set the per-document extraction rates. Changes update the pricing page calculator automatically.
+              Set the price per document and per question top-up pack. Changes update the pricing page calculator automatically.
             </p>
             <div className="space-y-4 max-w-md">
               <div>
-                <label className="text-sm font-medium mb-1 block">Cost per lease (£)</label>
-                <Input type="number" step="0.01" min="0" value={costPerLease} onChange={e => setCostPerLease(e.target.value)} required disabled={saving} />
-                <p className="text-xs text-muted-foreground mt-1">Applied to tenancy agreements, commercial leases and licence agreements</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-1 block">Cost per other document (£)</label>
+                <label className="text-sm font-medium mb-1 block">Price per document (£)</label>
                 <Input type="number" step="0.01" min="0" value={costPerDocument} onChange={e => setCostPerDocument(e.target.value)} required disabled={saving} />
-                <p className="text-xs text-muted-foreground mt-1">Applied to compliance certificates, insurance policies, contracts, process guides and all other documents</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-1 block">Minimum onboarding fee (£)</label>
-                <Input type="number" step="0.01" min="0" value={minimumFee} onChange={e => setMinimumFee(e.target.value)} required disabled={saving} />
-                <p className="text-xs text-muted-foreground mt-1">The minimum charge regardless of document count</p>
+                <p className="text-xs text-muted-foreground mt-1">Applied to all document types — leases, certificates, contracts, etc.</p>
               </div>
               <div>
                 <label className="text-sm font-medium mb-1 block">Cost per 100 questions top-up (£)</label>
