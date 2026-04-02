@@ -71,9 +71,7 @@ export default function PricingSettings() {
 
       if (existing) {
         const { error } = await (supabase.from("onboarding_pricing") as any).update({
-          cost_per_lease: parseFloat(costPerLease),
           cost_per_document: parseFloat(costPerDocument),
-          minimum_fee: parseFloat(minimumFee),
           cost_per_question_pack: parseFloat(costPerQuestionPack),
           updated_at: new Date().toISOString(),
         }).eq("id", existing.id);
