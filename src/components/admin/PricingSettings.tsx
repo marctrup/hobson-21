@@ -38,9 +38,7 @@ export default function PricingSettings() {
 
       if (pricingRes.data) {
         const d = pricingRes.data as any;
-        setCostPerLease(String(d.cost_per_lease));
         setCostPerDocument(String(d.cost_per_document));
-        setMinimumFee(String(d.minimum_fee));
         if (d.cost_per_question_pack !== undefined) setCostPerQuestionPack(String(d.cost_per_question_pack));
       }
 
