@@ -13,9 +13,7 @@ interface TierLimit {
 }
 
 export default function PricingSettings() {
-  const [costPerLease, setCostPerLease] = useState("2.00");
   const [costPerDocument, setCostPerDocument] = useState("0.20");
-  const [minimumFee, setMinimumFee] = useState("5.00");
   const [costPerQuestionPack, setCostPerQuestionPack] = useState("7.50");
   const [tierLimits, setTierLimits] = useState<TierLimit[]>([
     { tier: 1, monthly_questions: "300", monthly_extractions: "3", overage_behaviour: "charge" },
@@ -40,9 +38,7 @@ export default function PricingSettings() {
 
       if (pricingRes.data) {
         const d = pricingRes.data as any;
-        setCostPerLease(String(d.cost_per_lease));
         setCostPerDocument(String(d.cost_per_document));
-        setMinimumFee(String(d.minimum_fee));
         if (d.cost_per_question_pack !== undefined) setCostPerQuestionPack(String(d.cost_per_question_pack));
       }
 
@@ -75,18 +71,14 @@ export default function PricingSettings() {
 
       if (existing) {
         const { error } = await (supabase.from("onboarding_pricing") as any).update({
-          cost_per_lease: parseFloat(costPerLease),
           cost_per_document: parseFloat(costPerDocument),
-          minimum_fee: parseFloat(minimumFee),
           cost_per_question_pack: parseFloat(costPerQuestionPack),
           updated_at: new Date().toISOString(),
         }).eq("id", existing.id);
         if (error) throw error;
       } else {
         const { error } = await (supabase.from("onboarding_pricing") as any).insert({
-          cost_per_lease: parseFloat(costPerLease),
           cost_per_document: parseFloat(costPerDocument),
-          minimum_fee: parseFloat(minimumFee),
           cost_per_question_pack: parseFloat(costPerQuestionPack),
         });
         if (error) throw error;
@@ -130,27 +122,17 @@ export default function PricingSettings() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSave} className="space-y-8">
-          {/* Subsection 1 — Onboarding Pricing */}
+          {/* Subsection 1 — Document & Question Pricing */}
           <div>
-            <h3 className="text-lg font-semibold mb-1">Onboarding Pricing</h3>
+            <h3 className="text-lg font-semibold mb-1">Document & Question Pricing</h3>
             <p className="text-sm text-muted-foreground mb-4">
-              Set the per-document extraction rates. Changes update the pricing page calculator automatically.
+              Set the price per document and per question top-up pack. Changes update the pricing page calculator automatically.
             </p>
             <div className="space-y-4 max-w-md">
               <div>
-                <label className="text-sm font-medium mb-1 block">Cost per lease (£)</label>
-                <Input type="number" step="0.01" min="0" value={costPerLease} onChange={e => setCostPerLease(e.target.value)} required disabled={saving} />
-                <p className="text-xs text-muted-foreground mt-1">Applied to tenancy agreements, commercial leases and licence agreements</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-1 block">Cost per other document (£)</label>
+                <label className="text-sm font-medium mb-1 block">Price per document (£)</label>
                 <Input type="number" step="0.01" min="0" value={costPerDocument} onChange={e => setCostPerDocument(e.target.value)} required disabled={saving} />
-                <p className="text-xs text-muted-foreground mt-1">Applied to compliance certificates, insurance policies, contracts, process guides and all other documents</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-1 block">Minimum onboarding fee (£)</label>
-                <Input type="number" step="0.01" min="0" value={minimumFee} onChange={e => setMinimumFee(e.target.value)} required disabled={saving} />
-                <p className="text-xs text-muted-foreground mt-1">The minimum charge regardless of document count</p>
+                <p className="text-xs text-muted-foreground mt-1">Applied to all document types — leases, certificates, contracts, etc.</p>
               </div>
               <div>
                 <label className="text-sm font-medium mb-1 block">Cost per 100 questions top-up (£)</label>
