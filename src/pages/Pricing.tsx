@@ -53,7 +53,6 @@ const Pricing = () => {
   const { pricing, getTierLimit, loading } = usePricingData();
   const [isAnnual, setIsAnnual] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [leases, setLeases] = useState(0);
   const [documents, setDocuments] = useState(0);
   const [topUpPacks, setTopUpPacks] = useState(0);
   const [overageModalOpen, setOverageModalOpen] = useState(false);
@@ -107,10 +106,9 @@ const Pricing = () => {
   const TOPUP_QUESTIONS = 100;
 
   // Calculator
-  const leaseSubtotal = leases * pricing.cost_per_lease;
   const docSubtotal = documents * pricing.cost_per_document;
   const topUpSubtotal = topUpPacks * TOPUP_COST;
-  const rawTotal = leaseSubtotal + docSubtotal + topUpSubtotal;
+  const rawTotal = docSubtotal + topUpSubtotal;
   const minimumApplies = rawTotal > 0 && rawTotal < pricing.minimum_fee;
   const total = rawTotal === 0 ? 0 : Math.max(rawTotal, pricing.minimum_fee);
 
@@ -331,27 +329,13 @@ const Pricing = () => {
                 <h3 className="text-xl font-bold mb-6" style={{ color: C.navy }}>Estimate what you need</h3>
 
                 <div className="space-y-5 mb-6">
-                  {/* Leases */}
-                  <div>
-                    <div className="flex items-center justify-between mb-1">
-                      <label className="text-sm font-semibold" style={{ color: C.navy }}>How many leases?</label>
-                      <span className="text-xs" style={{ color: C.muted }}>£{pricing.cost_per_lease.toFixed(2)} each</span>
-                    </div>
-                    <p className="text-xs mb-2" style={{ color: C.muted }}><p className="text-xs mb-2" style={{ color: C.muted }}>Complex documents - Leases and occupational licences <span style={{ color: '#F97316', fontWeight: 600 }}>only</span></p></p>
-                    <div className="flex items-center gap-3">
-                      <button type="button" onClick={() => setLeases(Math.max(0, leases - 1))} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
-                      <input type="number" min={0} value={leases} onChange={e => setLeases(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
-                      <button type="button" onClick={() => setLeases(leases + 1)} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>+</button>
-                    </div>
-                  </div>
-
                   {/* Documents */}
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <label className="text-sm font-semibold" style={{ color: C.navy }}>How many other documents?</label>
+                      <label className="text-sm font-semibold" style={{ color: C.navy }}>How many documents?</label>
                       <span className="text-xs" style={{ color: C.muted }}>£{pricing.cost_per_document.toFixed(2)} each</span>
                     </div>
-                    <p className="text-xs mb-2" style={{ color: C.muted }}><p className="text-xs mb-2" style={{ color: C.muted }}>Compliance certificates, Deeds, licences, etc</p></p>
+                    <p className="text-xs mb-2" style={{ color: C.muted }}>Leases, compliance certificates, deeds, licences, etc</p>
                     <div className="flex items-center gap-3">
                       <button type="button" onClick={() => setDocuments(Math.max(0, documents - 1))} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
                       <input type="number" min={0} value={documents} onChange={e => setDocuments(Math.max(0, parseInt(e.target.value) || 0))} className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
@@ -377,10 +361,6 @@ const Pricing = () => {
                 {/* Total */}
                 <div className="rounded-xl p-4 mb-4" style={{ background: C.bgAlt, border: `1px solid ${C.border}` }}>
                   <div className="space-y-1.5 text-sm">
-                    <div className="flex justify-between" style={{ color: C.muted }}>
-                      <span>Leases: {leases} × £{pricing.cost_per_lease.toFixed(2)}</span>
-                      <span>£{leaseSubtotal.toFixed(2)}</span>
-                    </div>
                     <div className="flex justify-between" style={{ color: C.muted }}>
                       <span>Documents: {documents} × £{pricing.cost_per_document.toFixed(2)}</span>
                       <span>£{docSubtotal.toFixed(2)}</span>
