@@ -177,7 +177,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content="Property Expert Challenge - Interactive Quiz" />
         <meta property="og:description" content="Test your property expertise in our interactive quiz and unlock exclusive Hobson AI benefits." />
-        <link rel="canonical" href="https://hobsonschoice.ai/quiz2" />
+        <meta name="robots" content="noindex, nofollow" />
         
         {/* GTM noscript fallback */}
         <noscript>

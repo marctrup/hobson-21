@@ -178,7 +178,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content="Unlock Property Expertise - Hobson AI Challenge" />
         <meta property="og:description" content="Test your property law knowledge and unlock exclusive Hobson AI benefits. Play our expert challenge." />
-        <link rel="canonical" href="https://hobsonschoice.ai/usehobson2" />
+        <meta name="robots" content="noindex, nofollow" />
         
         {/* GTM noscript fallback */}
         <noscript>
