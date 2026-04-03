@@ -98,7 +98,7 @@ async function prerender() {
     await page.goto(url, { waitUntil: 'networkidle0', timeout: 30000 });
     
     // Wait a bit extra for React Helmet to update <head>
-    await page.waitForTimeout(2000);
+    await new Promise(r => setTimeout(r, 2000));
     
     const html = await page.content();
     
