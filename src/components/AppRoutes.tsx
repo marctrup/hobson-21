@@ -4,7 +4,6 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
 import { Homepage } from "./Homepage";
 import Pricing from "../pages/Pricing";
-const LoginGate = lazy(() => import("../pages/LoginGate"));
 
 // Lazy load secondary routes to keep initial navigation responsive
 const LandingPageA = lazy(() => import("../pages/LandingPageA"));
