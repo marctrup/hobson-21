@@ -103,28 +103,8 @@ serve(async (req) => {
     }
 
     const storedHash = data.password_hash;
-    let isValid = false;
-
-    // Check if it's a bcrypt hash (starts with $2a$, $2b$, or $2y$)
-    if (storedHash.startsWith('$2a$') || storedHash.startsWith('$2b$') || storedHash.startsWith('$2y$')) {
-      // For bcrypt hashes, we need to use a Deno-compatible approach
-      // Import bcrypt with explicit worker disabled
-      try {
-        const { compareSync } = await import("https://deno.land/x/bcrypt@v0.4.1/mod.ts");
-        isValid = compareSync(password, storedHash);
-      } catch (bcryptError) {
-        console.error('Bcrypt comparison failed:', bcryptError);
-        // Fall back to plaintext comparison if bcrypt fails
-        isValid = password === storedHash;
-      }
-    } else if (storedHash.length === 64) {
-      // Looks like a SHA-256 hash (64 hex characters)
-      const inputHash = await sha256Hash(password);
-      isValid = inputHash === storedHash;
-    } else {
-      // Assume plaintext comparison (legacy)
-      isValid = password === storedHash;
-    }
+    const inputHash = await sha256Hash(password);
+    const isValid = inputHash === storedHash;
 
     console.log(`Password verification attempt from ${clientIP}: ${isValid ? 'success' : 'failed'}`);
 
