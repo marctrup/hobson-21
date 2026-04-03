@@ -59,8 +59,7 @@
       .hero-text{font-size:clamp(2rem,5vw,3.5rem);font-weight:700;line-height:1.1;margin-bottom:1rem}
       .fade-in{animation:fadeIn 0.6s ease-out forwards}
       @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-      img{opacity:0;transition:opacity 0.2s ease;content-visibility:auto;contain-intrinsic-size:400px 300px}
-      img[src]{opacity:1}
+      img{content-visibility:auto;contain-intrinsic-size:400px 300px}
       .loading-skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:loading 1.5s infinite}
       @keyframes loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
