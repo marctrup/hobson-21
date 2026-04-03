@@ -1,8 +1,8 @@
 export const getOrganizationStructuredData = () => ({
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Hobson's Choice AI",
-  "legalName": "Hobson's Choice AI Ltd",
+  "name": "Hobson AI Ltd",
+  "legalName": "Hobson AI Ltd",
   "url": "https://hobsonschoice.ai",
   "logo": {
     "@type": "ImageObject",
