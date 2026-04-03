@@ -33,8 +33,6 @@ verify_jwt = true
 [functions.verify-investment-password]
 verify_jwt = false
 
-[functions.generate-investment-pdf]
-verify_jwt = false
 
 [functions.update-investment-password]
 verify_jwt = true
