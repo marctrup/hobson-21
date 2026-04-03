@@ -346,6 +346,9 @@ export const Homepage = () => {
                     <Link to="/in-practice" className="text-primary hover:text-primary/80 font-medium text-base inline-flex items-center gap-1 transition-colors">
                       See Hobson in practice <ArrowRight className="h-4 w-4" />
                     </Link>
+                    <Link to="/features" className="text-primary hover:text-primary/80 font-medium text-base inline-flex items-center gap-1 transition-colors">
+                      Explore the features <ArrowRight className="h-4 w-4" />
+                    </Link>
                   </div>
                   
                 </div>
