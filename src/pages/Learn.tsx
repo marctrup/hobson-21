@@ -2192,7 +2192,7 @@ Content-Type: multipart/form-data
     }
 
     // Handle FAQ content specifically
-    if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq") {
+    if (activeHorizontalTab === "faq" && activeVerticalTab === "faq") {
       const tocSections = [{
         id: "how-hobson-works",
         label: "How Hobson works"
