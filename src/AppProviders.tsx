@@ -54,9 +54,8 @@ export function AppProviders() {
                 <AppRoutes />
                 <ErrorBoundary>
                   <ChatbotWrapper />
-                </ErrorBoundary>
-              </AuthProvider>
-            </LanguageProvider>
+              </ErrorBoundary>
+            </AuthProvider>
           </QueryClientProvider>
         </ThemeProvider>
       </BrowserRouter>
