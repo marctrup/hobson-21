@@ -16,7 +16,7 @@ const Pilot = () => {
         <meta name="keywords" content="pilot program, AI property management, beta testing, early access" />
         <meta property="og:title" content="Join Our Pilot Program - Hobson AI" />
         <meta property="og:description" content="Be among the first to experience the future of property intelligence. Join our exclusive pilot program." />
-        <link rel="canonical" href="https://hobsonschoice.ai/pilot" />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
       <GlobalHeader />
