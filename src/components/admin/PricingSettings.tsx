@@ -75,6 +75,7 @@ export default function PricingSettings() {
         const { error } = await (supabase.from("onboarding_pricing") as any).update({
           cost_per_document: parseFloat(costPerDocument),
           cost_per_question_pack: parseFloat(costPerQuestionPack),
+          questions_per_pack: parseInt(questionsPerPack, 10),
           updated_at: new Date().toISOString(),
         }).eq("id", existing.id);
         if (error) throw error;
