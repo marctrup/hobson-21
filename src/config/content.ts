@@ -410,10 +410,13 @@ export const CONTENT = {
   navigation: {
     links: [
       { to: "/features", label: "Features", title: "What Hobson does, how it works, why it matters" },
+      { to: "/in-practice", label: "In Practice", title: "Real property work, real results" },
       { to: "/pricing", label: "Pricing", title: "Hobson AI Pricing Plans" },
       { to: "/blog", label: "Blog", title: "Property Management Insights" },
+    ],
+    secondary: [
+      { to: "/learn/faq", label: "Learn", title: "FAQ, glossary and integrations" },
       { to: "/contact", label: "Contact", title: "Contact Real Estate Software Support" },
-      { to: "/learn", label: "Learn", title: "Learning Resources" },
     ],
   },
 

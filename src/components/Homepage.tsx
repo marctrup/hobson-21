@@ -451,33 +451,17 @@ export const Homepage = () => {
                 <div>
                   <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-5">{content.footer.company.title}</h4>
                   <div className="space-y-3">
-                    {content.navigation.links
-                      .filter(link => {
-                        if (hideExtraNavItems && (link.to === '/blog' || link.to === '/learn')) return false;
-                        return true;
-                      })
-                      .map(link => (
-                        <Link
-                          key={link.to}
-                          to={link.to}
-                          className="block text-sm text-muted-foreground hover:text-primary transition-colors"
-                          title={link.title}
-                        >
-                          {link.label}
-                        </Link>
-                      ))}
-                    <Link to="/investment-opportunity" className="block text-sm text-muted-foreground hover:text-primary transition-colors" title={content.footer.company.investmentOpportunity}>
-                      {content.footer.company.investmentOpportunity}
-                    </Link>
-                    <Link to="/data-protection" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                      {content.footer.company.dataProtection}
-                    </Link>
-                    <Link to="/breach-protocol" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                      {content.footer.company.breachProtocol}
-                    </Link>
-                    <Link to="/refund-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">
-                      {content.footer.company.refundPolicy}
-                    </Link>
+                    <Link to="/features" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Features</Link>
+                    <Link to="/in-practice" className="block text-sm text-muted-foreground hover:text-primary transition-colors">In Practice</Link>
+                    <Link to="/pricing" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</Link>
+                    {!hideExtraNavItems && (
+                      <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
+                    )}
+                    <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
+                    <Link to="/learn/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Learn</Link>
+                    <Link to="/privacy-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
+                    <Link to="/data-protection" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Data Protection</Link>
+                    <Link to="/refund-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Refund Policy</Link>
                   </div>
                 </div>
               </div>
