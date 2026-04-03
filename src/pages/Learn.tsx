@@ -1932,153 +1932,137 @@ Content-Type: multipart/form-data
 
     // Handle Smart Navigation Guide content
     if (activeHorizontalTab === "introduction" && activeVerticalTab === "smart-navigation") {
-      return <div className="flex-1 py-8 px-4">
+      return <div className="flex-1 py-10 px-4">
           <div className="container mx-auto max-w-3xl">
 
             {/* Hero */}
-            <div className="mb-16">
+            <div className="mb-16 text-center">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+                <span>📍</span> How Hobson finds the right answer
+              </div>
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
                 Smart Navigation
               </h1>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
-                Smart Navigation is one of the ways Hobson ensures every answer it gives is tied to the right property, the right unit and the right document. In a portfolio with hundreds of leases and documents, knowing where to look before answering is as important as knowing how to answer. Here is how it works.
-              </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
-                Your portfolio can contain hundreds of documents — leases, licences, reports, and certificates.
-                Each one belongs to a specific property or a specific unit.
-              </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
-                When you ask Hobson a question, it first checks where it should look for the answer.
-              </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                This is called <strong className="text-foreground">Smart Navigation</strong>.
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                Your portfolio can contain hundreds of documents — leases, licences, reports and certificates. Each one belongs to a specific property or unit. When you ask a question, Hobson checks <em>where</em> to look before it answers.
               </p>
             </div>
 
-            {/* Why this matters */}
-            <div className="mb-14">
-              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4">
+            {/* Why this matters — callout */}
+            <div className="mb-16 rounded-2xl bg-muted/50 border border-border p-6 sm:p-8">
+              <h2 className="text-lg sm:text-xl font-bold text-foreground mb-3">
                 Why this matters
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
-                A lease clause for Flat 3 is not the same as a lease clause for Flat 4.
+              <p className="text-base text-muted-foreground leading-relaxed mb-3">
+                A lease clause for Flat 3 is not the same as a lease clause for Flat 4. If Hobson answered without checking which unit it was reading, you could receive the wrong answer without realising it.
               </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
-                If Hobson answered without checking which unit it was reading, you could receive the wrong answer without realising it. In property management, that risk is unacceptable.
-              </p>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                So Hobson always makes sure it is looking at the right part of your portfolio before returning an answer.
+              <p className="text-base text-muted-foreground leading-relaxed">
+                In property management, that risk is unacceptable — so Hobson always confirms the right context before returning an answer.
               </p>
             </div>
 
             {/* The three levels */}
-            <div className="mb-14">
-              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-6">
-                The three levels Hobson understands
+            <div className="mb-16">
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-2">
+                Three levels Hobson understands
               </h2>
-              <div className="space-y-4">
+              <p className="text-sm text-muted-foreground mb-8">Every question is answered from the right place in your hierarchy.</p>
+
+              <div className="space-y-5">
                 {/* Portfolio */}
-                <div className="p-5 bg-blue-500/5 border border-blue-500/15 rounded-xl">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-11 h-11 bg-blue-500/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl">🏢</span>
+                <div className="relative rounded-2xl border border-border bg-background p-6 sm:p-7 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center flex-shrink-0 text-2xl">🏢</div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground text-base sm:text-lg mb-1">Portfolio</h3>
+                      <p className="text-sm text-muted-foreground mb-3">Your entire estate — every property and unit in one view.</p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-700">"How many units are vacant?"</span>
+                        <span className="text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-700">"Which leases end this year?"</span>
+                        <span className="text-xs px-3 py-1 rounded-full bg-blue-500/10 text-blue-700">"What rent reviews are coming up?"</span>
+                      </div>
                     </div>
-                    <h3 className="font-semibold text-foreground text-base sm:text-lg">Portfolio</h3>
                   </div>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3">
-                    Your entire estate.
-                  </p>
-                  <p className="text-sm sm:text-base text-muted-foreground mb-2">Good for questions such as:</p>
-                  <ul className="text-sm sm:text-base text-muted-foreground space-y-1 ml-4">
-                    <li>• How many units are vacant?</li>
-                    <li>• Which leases end this year?</li>
-                    <li>• What rent reviews are coming up?</li>
-                  </ul>
+                </div>
+
+                {/* Connector */}
+                <div className="flex justify-center">
+                  <div className="w-px h-6 bg-border" />
                 </div>
 
                 {/* Property */}
-                <div className="p-5 bg-green-500/5 border border-green-500/15 rounded-xl">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-11 h-11 bg-green-500/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl">🏛️</span>
+                <div className="relative rounded-2xl border border-border bg-background p-6 sm:p-7 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center flex-shrink-0 text-2xl">🏛️</div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground text-base sm:text-lg mb-1">Property</h3>
+                      <p className="text-sm text-muted-foreground mb-3">A single building or site within your portfolio.</p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="text-xs px-3 py-1 rounded-full bg-green-500/10 text-green-700">"What compliance docs exist for this building?"</span>
+                        <span className="text-xs px-3 py-1 rounded-full bg-green-500/10 text-green-700">"What is the rent roll here?"</span>
+                      </div>
                     </div>
-                    <h3 className="font-semibold text-foreground text-base sm:text-lg">Property</h3>
                   </div>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3">
-                    A single building or site.
-                  </p>
-                  <p className="text-sm sm:text-base text-muted-foreground mb-2">Useful for questions like:</p>
-                  <ul className="text-sm sm:text-base text-muted-foreground space-y-1 ml-4">
-                    <li>• What compliance documents exist for this building?</li>
-                    <li>• What is the rent roll for this property?</li>
-                    <li>• Which units here have upcoming lease events?</li>
-                  </ul>
+                </div>
+
+                {/* Connector */}
+                <div className="flex justify-center">
+                  <div className="w-px h-6 bg-border" />
                 </div>
 
                 {/* Unit */}
-                <div className="p-5 bg-purple-500/5 border border-purple-500/15 rounded-xl">
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-11 h-11 bg-purple-500/10 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-xl">🚪</span>
+                <div className="relative rounded-2xl border border-border bg-background p-6 sm:p-7 hover:shadow-md transition-shadow">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0 text-2xl">🚪</div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground text-base sm:text-lg mb-1">Unit</h3>
+                      <p className="text-sm text-muted-foreground mb-3">One lettable space — the most detailed level.</p>
+                      <div className="flex flex-wrap gap-2">
+                        <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary">"Lease dates"</span>
+                        <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary">"Break clauses"</span>
+                        <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary">"Rent review terms"</span>
+                        <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary">"Deposits"</span>
+                      </div>
                     </div>
-                    <h3 className="font-semibold text-foreground text-base sm:text-lg">Unit</h3>
                   </div>
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-3">
-                    One lettable space.
-                  </p>
-                  <p className="text-sm sm:text-base text-muted-foreground mb-2">This is where Hobson has the most detailed information, including:</p>
-                  <ul className="text-sm sm:text-base text-muted-foreground space-y-1 ml-4">
-                    <li>• Lease dates</li>
-                    <li>• Break clauses</li>
-                    <li>• Rent review terms</li>
-                    <li>• Parties to the lease</li>
-                    <li>• Deposits</li>
-                  </ul>
                 </div>
               </div>
             </div>
 
-            {/* What happens when you ask a question */}
-            <div className="mb-14">
-              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-4">
+            {/* What happens when you ask */}
+            <div className="mb-16">
+              <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-6">
                 What happens when you ask a question
               </h2>
-              <div className="space-y-4 text-base sm:text-lg text-muted-foreground leading-relaxed">
-                <p>
-                  Hobson always starts from where you currently are in the portfolio.
-                </p>
-                <p>
-                  If the answer can be given from that level, Hobson responds immediately.
-                </p>
-                <p>
-                  If a more accurate answer requires looking at a specific property or unit, Hobson will move there first and then return the answer.
-                </p>
-                <p>
-                  If there are multiple possible matches, Hobson will show a short list and ask you to confirm.
-                </p>
-                <p>
-                  If something does not exist, Hobson tells you.
-                  It never guesses.
-                </p>
+              <div className="space-y-4">
+                {[
+                  { step: "1", text: "Hobson starts from where you currently are in the portfolio." },
+                  { step: "2", text: "If the answer can be given from that level, Hobson responds immediately." },
+                  { step: "3", text: "If a more accurate answer requires a specific property or unit, Hobson moves there first — then answers." },
+                  { step: "4", text: "If there are multiple possible matches, Hobson shows a short list and asks you to confirm." },
+                  { step: "5", text: "If something doesn't exist, Hobson tells you. It never guesses." },
+                ].map(item => (
+                  <div key={item.step} className="flex items-start gap-4">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                      <span className="text-sm font-bold text-primary">{item.step}</span>
+                    </div>
+                    <p className="text-base text-muted-foreground leading-relaxed pt-1">{item.text}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* The result */}
-            <div className="mb-8">
-              <div className="border-l-4 border-primary pl-6 py-4">
-                <h2 className="text-xl sm:text-2xl font-bold text-foreground mb-3">
-                  The result
-                </h2>
-                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-3">
-                  Every answer Hobson gives is tied to a specific document and a specific place in your portfolio.
-                </p>
-                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-3">
-                  You always know where the information came from.
-                </p>
-                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed">
-                  That is how Hobson keeps answers accurate and reliable.
-                </p>
-              </div>
+            {/* The result — accent bar */}
+            <div className="rounded-2xl bg-primary/5 border border-primary/15 p-6 sm:p-8">
+              <h2 className="text-lg sm:text-xl font-bold text-foreground mb-3">
+                The result
+              </h2>
+              <p className="text-base text-muted-foreground leading-relaxed mb-2">
+                Every answer Hobson gives is tied to a specific document and a specific place in your portfolio. You always know where the information came from.
+              </p>
+              <p className="text-base font-medium text-foreground">
+                That is how Hobson keeps answers accurate and reliable.
+              </p>
             </div>
 
           </div>
