@@ -437,7 +437,7 @@ export const Homepage = () => {
           {/* Footer */}
           <footer className="py-12 md:py-20 border-t bg-muted/30">
             <div className="container mx-auto px-4 max-w-6xl">
-              <div className="grid md:grid-cols-3 gap-10 md:gap-16">
+              <div className="grid md:grid-cols-4 gap-10 md:gap-12">
                 {/* Logo & tagline */}
                 <div className="md:col-span-2">
                   <OptimizedImage src="/hobson-logo.png" alt={content.header.logoAlt} className="h-[48px] w-auto mb-4" />
@@ -472,7 +472,11 @@ export const Homepage = () => {
                     <Link to="/data-protection" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Data Protection</Link>
                     <Link to="/refund-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Refund Policy</Link>
                   </div>
-                  <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-3 mt-6">Learn</h4>
+                </div>
+
+                {/* Learn links */}
+                <div>
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-5">Learn</h4>
                   <div className="space-y-3">
                     <Link to="/learn/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
                     <Link to="/learn/glossary" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Glossary</Link>
