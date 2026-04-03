@@ -2496,7 +2496,7 @@ Content-Type: multipart/form-data
                   setActiveHorizontalTab(tab.id);
                   setActiveVerticalTab(newVerticalTab);
                   setIsGlobalPageActive(false);
-                  navigate(`/learn/${tab.id === "use-cases" ? "use-cases" : newVerticalTab}`, {
+                  navigate(tab.id === "in-practice" ? "/in-practice" : `/learn/${newVerticalTab}`, {
                     replace: true
                   });
                 }} className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${activeHorizontalTab === tab.id && !isGlobalPageActive ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50"}`}>
