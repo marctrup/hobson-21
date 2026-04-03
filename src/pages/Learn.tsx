@@ -401,7 +401,7 @@ const Learn = () => {
           label: "Advanced Techniques",
           icon: Wand2
         }];
-      case "use-cases":
+      case "in-practice":
         return [];
       case "glossary":
         return [{
