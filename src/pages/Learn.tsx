@@ -437,7 +437,7 @@ const Learn = () => {
             <div className="text-left py-20">
               <div className="mb-6">
                 {activeTab && <activeTab.icon className="w-16 h-16 text-muted-foreground mb-4" />}
-                <h1 className="text-4xl font-bold text-foreground mb-4">{activeTab?.label}</h1>
+                <h1 className="text-3xl font-bold text-foreground mb-6">{activeTab?.label}</h1>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border">
                   <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
                   <span className="text-sm font-medium text-muted-foreground">Coming Soon</span>
@@ -486,7 +486,7 @@ const Learn = () => {
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-6 md:mb-8">
-                  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4">Core Features of Hobson AI</h1>
+                  <h1 className="text-3xl font-bold text-foreground mb-6">Core Features of Hobson AI</h1>
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
                     Hobson AI is an intelligent platform that turns complex documents into clear, usable insights.
                     Designed for property and document management professionals, it helps you save time, reduce risk,
@@ -618,7 +618,7 @@ const Learn = () => {
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-6 md:mb-8">
-                  <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
+                  <h1 className="text-3xl font-bold text-foreground mb-6">
                     Advanced Features of Hobson AI
                   </h1>
                   <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
@@ -741,7 +741,7 @@ const Learn = () => {
               {/* Main Content */}
               <div className="flex-1 max-w-5xl">
                 <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-foreground mb-4">Feature Comparisons</h1>
+                  <h1 className="text-3xl font-bold text-foreground mb-6">Feature Comparisons</h1>
                   <p className="text-lg text-muted-foreground leading-relaxed">
                     Choosing the right approach to document intelligence means understanding the differences. This page
                     shows how Hobson AI compares with manual work and traditional software, so you can see the
@@ -919,7 +919,7 @@ const Learn = () => {
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-8">
-                  <h1 className="text-3xl font-bold text-foreground mb-4">Our Roadmap</h1>
+                  <h1 className="text-3xl font-bold text-foreground mb-6">Our Roadmap</h1>
                   <p className="text-lg text-muted-foreground leading-relaxed">
                     Hobson AI is always evolving. Our roadmap highlights what we've recently delivered, what we're
                     working on now, and where we're heading next. It's designed to give you transparency and confidence
@@ -1940,7 +1940,7 @@ Content-Type: multipart/form-data
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
                 <span>📍</span> How Hobson finds the right answer
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6 tracking-tight">
+              <h1 className="text-3xl font-bold text-foreground mb-6">
                 Smart Navigation
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto">
@@ -2107,7 +2107,7 @@ Content-Type: multipart/form-data
                     </span>
                     Frequently Asked Questions
                   </div>
-                  <h1 className="text-4xl lg:text-5xl font-bold text-foreground mb-4 tracking-tight">
+                  <h1 className="text-3xl font-bold text-foreground mb-6">
                     Everything you need to know
                   </h1>
                   <p className="text-lg text-muted-foreground max-w-2xl">
@@ -2245,7 +2245,7 @@ Content-Type: multipart/form-data
     }
     return <div className="flex-1">
         <div className="container mx-auto p-4 md:p-8 max-w-5xl">
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-4 md:mb-6">
+          <h1 className="text-3xl font-bold text-foreground mb-6">
             {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
           </h1>
           <div className="p-4 md:p-8">
