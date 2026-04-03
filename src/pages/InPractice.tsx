@@ -251,19 +251,6 @@ const InPractice = () => {
           </div>
         </section>
 
-        {/* SECTION 6 — Outcome Strip */}
-        <section className="py-12 sm:py-16">
-          <div className="container mx-auto px-4 max-w-5xl">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
-              {stats.map((s, i) => (
-                <div key={i}>
-                  <p className="text-4xl sm:text-5xl md:text-6xl font-bold text-primary leading-none mb-2">{s.number}</p>
-                  <p className="text-sm text-muted-foreground">{s.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* SECTION 7 — Closing CTA */}
         <section className="py-16 sm:py-20">
