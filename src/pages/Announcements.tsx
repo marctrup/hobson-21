@@ -160,7 +160,7 @@ const Announcements = () => {
   return (
     <>
       <Helmet>
-        <title>Announcements - Hobson AI</title>
+        <title>Announcements | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Latest updates, features, and announcements from Hobson AI" />
       </Helmet>
 

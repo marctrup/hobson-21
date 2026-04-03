@@ -165,7 +165,7 @@ const Blog = () => {
     <HelmetProvider>
       <div className="min-h-screen bg-background">
         <Helmet>
-          <title>Property Management AI Blog | Industry Insights & Tips | Hobson AI</title>
+          <title>Blog | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
           <meta name="description" content="Latest insights, updates, and expert tips for property management professionals using AI-powered document intelligence and automation tools." />
           <meta name="keywords" content="property management blog, real estate AI insights, property technology news, AI automation tips, property management trends" />
           

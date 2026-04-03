@@ -6,7 +6,7 @@ const BreachProtocol = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Data Breach Protocol | Hobson AI - Property Management Software</title>
+        <title>Data Breach Protocol | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Learn about Hobson AI's data breach response protocol including incident response, customer notification, and security measures." />
         <meta name="keywords" content="data breach protocol, incident response, security breach, data protection, customer notification, security measures" />
         <meta property="og:title" content="Data Breach Protocol | Hobson AI" />

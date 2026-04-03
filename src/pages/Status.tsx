@@ -134,7 +134,7 @@ const Status = () => {
   return (
     <>
       <Helmet>
-        <title>System Status - Hobson AI</title>
+        <title>System Status | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Current status of Hobson AI services and infrastructure" />
       </Helmet>
 

@@ -231,7 +231,7 @@ const BlogPost = () => {
   return (
     <>
       <Helmet>
-        <title>{post.meta_title || post.title} | Hobson's Choice AI Blog</title>
+        <title>{post.meta_title || post.title} | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content={post.meta_description || post.excerpt} />
         <meta name="keywords" content="property management, real estate AI, property technology, AI document analysis" />
         

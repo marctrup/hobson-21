@@ -2425,44 +2425,44 @@ Content-Type: multipart/form-data
     if (activeHorizontalTab === "introduction") {
       if (activeVerticalTab === "smart-navigation") {
         return {
-          title: "Smart Navigation Guide - Hobson AI",
+          title: "Smart Navigation Guide | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
           description: "Learn how Hobson's AI navigation works across portfolio, unit-group, and unit levels. Understand scope rules and switch behavior for accurate answers."
         };
       }
     }
     if (activeHorizontalTab === "use-cases") {
       return {
-        title: "Use Cases - Hobson AI",
+        title: "Use Cases | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
         description: "Discover real-world use cases and applications of Hobson AI for property management and real estate document analysis."
       };
     }
     if (activeHorizontalTab === "features") {
       return {
-        title: "Features - Hobson AI",
+        title: "Features | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
         description: "Explore Hobson AI features for intelligent document processing, smart search, and automated property management."
       };
     }
     if (activeHorizontalTab === "integrations") {
       return {
-        title: "Integrations - Hobson AI",
+        title: "Integrations | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
         description: "Learn about Hobson AI integrations with your existing tools and workflows for seamless property management."
       };
     }
     if (activeHorizontalTab === "glossary") {
       return {
-        title: "Glossary - Hobson AI",
+        title: "Glossary | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
         description: "Comprehensive glossary of terms used in Hobson AI and real estate document management."
       };
     }
     if (activeHorizontalTab === "faq") {
       return {
-        title: "FAQ - Hobson AI",
+        title: "FAQ | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
         description: "Frequently asked questions about Hobson AI: AI-powered assistant for real estate professionals."
       };
     }
     return {
-      title: "Learn - Hobson's Choice AI",
-      description: "Learn how to use Hobson's Choice AI with our comprehensive guides, tutorials, and documentation."
+      title: "Learn | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
+      description: "Learn how to use Hobson AI with our comprehensive guides, tutorials, and documentation."
     };
   };
   const pageMeta = getPageMeta();

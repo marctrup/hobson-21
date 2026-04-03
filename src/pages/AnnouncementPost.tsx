@@ -147,7 +147,7 @@ const AnnouncementPost = () => {
   return (
     <>
       <Helmet>
-        <title>{post.meta_title || post.title} - Hobson AI</title>
+        <title>{post.meta_title || post.title} | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content={post.meta_description || post.excerpt} />
         <meta property="og:title" content={post.meta_title || post.title} />
         <meta property="og:description" content={post.meta_description || post.excerpt} />

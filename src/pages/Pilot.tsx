@@ -11,7 +11,7 @@ const Pilot = () => {
   return (
     <>
       <Helmet>
-        <title>Join Our Pilot Program - Hobson AI</title>
+        <title>Pilot Program | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Be among the first to experience the future of property intelligence. Join our exclusive pilot program and help shape the future of AI-powered property management." />
         <meta name="keywords" content="pilot program, AI property management, beta testing, early access" />
         <meta property="og:title" content="Join Our Pilot Program - Hobson AI" />

@@ -6,7 +6,7 @@ const RefundPolicy = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Refund Policy | Hobson AI - Property Management Software</title>
+        <title>Refund Policy | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Learn about Hobson AI's refund policy including eligibility, process, and our commitment to customer satisfaction." />
         <meta name="keywords" content="refund policy, customer satisfaction, billing, service credits, Hobson AI" />
         <meta property="og:title" content="Refund Policy | Hobson AI" />
