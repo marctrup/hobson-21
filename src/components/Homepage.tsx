@@ -343,9 +343,9 @@ export const Homepage = () => {
                         <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                       </div>
                     </Link>
-                    <Link to="/pricing" className="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold text-base transition-all duration-200 shadow-sm hover:shadow-md">
+                    <Link to="/pricing" className="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground font-semibold text-base transition-all duration-200 shadow-sm hover:shadow-md whitespace-nowrap">
                       {(content.hero as any).ctaSecondary || "Join the waitlist for Tier 2-4"}
-                      <ArrowRight className="h-4 w-4" />
+                      <ArrowRight className="h-4 w-4 flex-shrink-0" />
                     </Link>
                   </div>
                   
