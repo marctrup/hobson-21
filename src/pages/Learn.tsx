@@ -227,7 +227,7 @@ const Learn = () => {
     let tocSections: string[] = [];
 
     // Only run scroll spy for pages that have table of contents
-    if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq" || activeHorizontalTab === "features" && ["core-features", "advanced-features", "feature-comparison", "roadmap"].includes(activeVerticalTab) || activeHorizontalTab === "integrations" && ["available-integrations", "setup-guide", "api-reference", "troubleshooting"].includes(activeVerticalTab)) {
+    if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq" || activeHorizontalTab === "features" && ["core-features", "advanced-features", "feature-comparison", "roadmap"].includes(activeVerticalTab) || activeHorizontalTab === "integrations" && activeVerticalTab === "available-integrations") {
       if (activeHorizontalTab === "introduction") {
         if (activeVerticalTab === "faq") {
           tocSections = ["how-hobson-works", "features", "plans-credits-faq"];
