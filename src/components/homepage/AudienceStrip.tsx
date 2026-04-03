@@ -3,7 +3,7 @@ import { Building2, ShoppingBag, UtensilsCrossed, Briefcase } from "lucide-react
 const audiences = [
   {
     icon: Building2,
-    label: "Property managers and asset managers",
+    label: "Property and asset managers",
     description: "Managing portfolios, lease events and compliance across residential and commercial property.",
   },
   {
