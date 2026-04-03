@@ -34,7 +34,7 @@ import { HomepageGeorgiaVideo } from "@/components/videos/HomepageGeorgiaVideo";
 import { FeaturesSection } from "@/components/homepage/FeaturesSection";
 import { PricingSection } from "@/components/homepage/PricingSection";
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
-import { useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 export const HomepageABTest = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
