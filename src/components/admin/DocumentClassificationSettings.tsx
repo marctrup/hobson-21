@@ -4,8 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
 
 interface ClassificationSettings {
@@ -16,18 +14,6 @@ interface ClassificationSettings {
   reclassification_message: string;
 }
 
-interface ExtractionEvent {
-  id: string;
-  created_at: string;
-  user_email: string | null;
-  document_name: string;
-  declared_type: string;
-  actual_tokens: number;
-  charged_type: string;
-  amount_charged: number;
-  reclassified: boolean;
-}
-
 export default function DocumentClassificationSettings() {
   const [settings, setSettings] = useState<ClassificationSettings | null>(null);
   const [simpleThreshold, setSimpleThreshold] = useState("50000");
@@ -36,7 +22,6 @@ export default function DocumentClassificationSettings() {
   const [message, setMessage] = useState(
     "One or more documents you uploaded as standard documents were identified as leases based on their content. The difference in extraction cost has been applied. Leases: £[lease_price]. Standard documents: £[doc_price]."
   );
-  const [events, setEvents] = useState<ExtractionEvent[]>([]);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -48,18 +33,11 @@ export default function DocumentClassificationSettings() {
 
   const fetchAll = async () => {
     try {
-      const [settingsRes, eventsRes] = await Promise.all([
-        supabase
-          .from("document_classification_settings" as any)
-          .select("*")
-          .limit(1)
-          .single(),
-        supabase
-          .from("extraction_events" as any)
-          .select("*")
-          .order("created_at" as any, { ascending: false })
-          .limit(20),
-      ]);
+      const settingsRes = await supabase
+        .from("document_classification_settings" as any)
+        .select("*")
+        .limit(1)
+        .single();
 
       if (settingsRes.data) {
         const d = settingsRes.data as any;
@@ -68,10 +46,6 @@ export default function DocumentClassificationSettings() {
         setLeaseThreshold(String(d.lease_threshold));
         setBehaviour(d.reclassification_behaviour);
         setMessage(d.reclassification_message);
-      }
-
-      if (eventsRes.data) {
-        setEvents(eventsRes.data as any[]);
       }
     } catch (err) {
       console.error("Error fetching classification settings:", err);
@@ -195,56 +169,6 @@ export default function DocumentClassificationSettings() {
           </Button>
         </form>
 
-        {/* Reporting table */}
-        <div className="mt-10">
-          <h3 className="text-lg font-semibold mb-1">Recent Extraction Events</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            Last 20 extraction events showing document classification and charging details.
-          </p>
-
-          {events.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground border rounded-lg">
-              No extraction events recorded yet.
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Date</TableHead>
-                    <TableHead>User</TableHead>
-                    <TableHead>Document name</TableHead>
-                    <TableHead>Declared type</TableHead>
-                    <TableHead>Actual tokens</TableHead>
-                    <TableHead>Charged type</TableHead>
-                    <TableHead>Amount charged</TableHead>
-                    <TableHead>Reclassified</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {events.map((ev) => (
-                    <TableRow key={ev.id}>
-                      <TableCell>{new Date(ev.created_at).toLocaleDateString()}</TableCell>
-                      <TableCell>{ev.user_email || "—"}</TableCell>
-                      <TableCell className="max-w-[200px] truncate">{ev.document_name}</TableCell>
-                      <TableCell>{ev.declared_type}</TableCell>
-                      <TableCell>{ev.actual_tokens.toLocaleString()}</TableCell>
-                      <TableCell>{ev.charged_type}</TableCell>
-                      <TableCell>£{Number(ev.amount_charged).toFixed(2)}</TableCell>
-                      <TableCell>
-                        {ev.reclassified ? (
-                          <Badge variant="destructive">Yes</Badge>
-                        ) : (
-                          <Badge variant="secondary">No</Badge>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
-        </div>
       </CardContent>
     </Card>
   );
