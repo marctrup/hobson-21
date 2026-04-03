@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Map, FileText, TrendingUp, CheckCircle } from "lucide-react";
 import FeatureShowcase from "@/components/features/FeatureShowcase";
-import { useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 const iconMap = {
   0: MessageCircle,
