@@ -49,6 +49,11 @@ const documentIntelligenceFeatures = [
     problem: "For regulated property decisions — rent reviews, dilapidations, compliance obligations, lease renewals — getting the right answer is not enough. You need to be able to show where the answer came from, which clause supports it, and why the conclusion is correct. An answer you cannot audit is an answer you cannot rely on.",
     does: "Every answer Hobson provides is referenced to the exact document and clause it came from. Hobson never generates an answer from general knowledge or makes an inference without telling you it has done so. If the information is in your documents, Hobson cites it precisely. If it is not, Hobson tells you clearly rather than guessing. Every answer is a chain from question to source — traceable, verifiable and defensible.",
     matters: "In property, wrong answers have financial and legal consequences. Sourced answers are not a nice-to-have — they are the minimum standard for decisions that matter.",
+    extraContent: (
+      <Link to="/learn/smart-navigation" className="text-sm text-primary hover:underline transition-colors">
+        Hobson always knows which part of your portfolio it is reading from. Learn how Smart Navigation works →
+      </Link>
+    ),
   },
 ];
 
