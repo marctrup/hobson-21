@@ -209,10 +209,10 @@ export const Homepage = () => {
                     {content.header.nav.blog}
                   </Link>
                 )}
-                <Link to="/learn/faq" className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/learn/faq" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Learn
                 </Link>
-                <Link to="/contact" className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors">
+                <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Contact
                 </Link>
                 
