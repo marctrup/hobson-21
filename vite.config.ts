@@ -1,46 +1,18 @@
-import { defineConfig } from "vite";
+import { defineConfig, type Drop } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(async ({ mode }) => {
+export default defineConfig(({ mode }) => {
   const plugins: any[] = [
     react(),
     mode === 'development' && componentTagger(),
   ];
 
   if (mode === 'production') {
-    try {
-      const { default: Prerender, PuppeteerRenderer } = await import('vite-plugin-prerender');
-      plugins.push(
-        Prerender({
-          staticDir: path.join(__dirname, "dist"),
-          routes: [
-            "/",
-            "/features",
-            "/in-practice",
-            "/pricing",
-            "/blog",
-            "/learn/faq",
-            "/contact",
-          ],
-          renderer: new PuppeteerRenderer({
-            renderAfterTime: 3000,
-            headless: true,
-            executablePath: "/bin/chromium-browser",
-            args: [
-              "--no-sandbox",
-              "--disable-setuid-sandbox",
-              "--disable-dev-shm-usage",
-              "--disable-gpu",
-            ],
-          }),
-        })
-      );
-    } catch (e) {
-      console.warn("Prerender plugin not available, skipping prerendering:", e);
-    }
+    // Prerender plugin is loaded at build time via postbuild script
+    // See package.json "build" script
   }
 
   return {
@@ -122,7 +94,7 @@ export default defineConfig(async ({ mode }) => {
       chunkSizeWarningLimit: 1000,
       rollupOptions: {
         output: {
-          manualChunks: (id) => {
+          manualChunks: (id: string) => {
             if (id.includes('react') || id.includes('react-dom')) {
               return 'react-vendor';
             }
@@ -157,7 +129,7 @@ export default defineConfig(async ({ mode }) => {
               return 'landing-pages';
             }
           },
-          assetFileNames: (assetInfo) => {
+          assetFileNames: (assetInfo: { name?: string }) => {
             const info = assetInfo.name?.split('.') || [];
             const ext = info[info.length - 1];
             if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
@@ -174,13 +146,13 @@ export default defineConfig(async ({ mode }) => {
           chunkFileNames: 'assets/js/[name]-[hash].js',
           entryFileNames: 'assets/js/[name]-[hash].js',
         },
-        external: (id) => {
+        external: (_id: string) => {
           return false;
         },
       },
     },
     esbuild: {
-      drop: mode === 'production' ? ['console', 'debugger'] : [],
+      drop: mode === 'production' ? ['console' as Drop, 'debugger' as Drop] : [],
     },
   };
 });
