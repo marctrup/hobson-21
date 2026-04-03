@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import React, { useState, useCallback } from "react";
+import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import hobsonLogo from "/hobson-logo.png";
 import documentAiIcon from "/lovable-uploads/807ac70f-d32b-415b-a7ac-e51d33f140d7.png";
@@ -151,6 +152,9 @@ const LandingPageB = () => {
   };
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <div className="flex justify-start items-center">

@@ -3,19 +3,15 @@ import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { HuggingFaceCacheManager } from "@/components/HuggingFaceCacheManager";
 import { Homepage } from "./Homepage";
-import { HomepageABTest } from "./HomepageABTest";
-import { HomepageHomeowner } from "./HomepageHomeowner";
 import Pricing from "../pages/Pricing";
 
 // Lazy load secondary routes to keep initial navigation responsive
-const SimpleHomepage = lazy(() => import("./SimpleHomepage").then(module => ({ default: module.SimpleHomepage })));
 const LandingPageA = lazy(() => import("../pages/LandingPageA"));
 const LandingPageB = lazy(() => import("../pages/LandingPageB"));
 const LandingPageC = lazy(() => import("../pages/LandingPageC"));
 const EmailPreview = lazy(() => import("../pages/EmailPreview"));
 
 const Auth = lazy(() => import("../pages/Auth"));
-const LoginGate = lazy(() => import("../pages/LoginGate"));
 const Admin = lazy(() => import("../pages/Admin"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 
@@ -35,11 +31,6 @@ const Announcements = lazy(() => import("../pages/Announcements"));
 const AnnouncementPost = lazy(() => import("../pages/AnnouncementPost"));
 const FeatureRequests = lazy(() => import("../pages/FeatureRequests"));
 const UseHobson = lazy(() => import("../pages/UseHobson").then(module => ({ default: module.UseHobson })));
-const UseHobson2 = lazy(() => import("../pages/UseHobson2").then(module => ({ default: module.UseHobson2 })));
-const UseHobson3 = lazy(() => import("../pages/UseHobson3").then(module => ({ default: module.UseHobson3 })));
-const Rotating = lazy(() => import("../pages/Rotating"));
-const RotatingInvestments = lazy(() => import("../pages/RotatingInvestments"));
-const Banners = lazy(() => import("../pages/Banners"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
@@ -74,21 +65,6 @@ const GTMPageTracker = () => {
         page_path: location.pathname + location.search,
         page_title: document.title,
       });
-
-      // Track homepage variant for A/B testing
-      if (location.pathname === '/') {
-        window.dataLayer.push({
-          event: 'homepage_variant_view',
-          variant: 'control',
-          page_path: '/',
-        });
-      } else if (location.pathname === '/abtest') {
-        window.dataLayer.push({
-          event: 'homepage_variant_view',
-          variant: 'test',
-          page_path: '/abtest',
-        });
-      }
     }
   }, [location]);
 
@@ -109,7 +85,6 @@ const AppContent = () => {
               <Route path="/landing-a" element={<LandingPageA />} />
               <Route path="/landing-b" element={<LandingPageB />} />
               <Route path="/landing-c" element={<LandingPageC />} />
-              <Route path="/pilot_form" element={<Navigate to="/contact" replace />} />
               <Route path="/email-1" element={<EmailPreview />} />
               <Route path="*" element={<LandingPageA />} />
             </>
@@ -117,19 +92,11 @@ const AppContent = () => {
             <>
               {/* Main website routes */}
               <Route path="/" element={<Homepage />} />
-              <Route path="/abtest" element={<HomepageABTest />} />
-              <Route path="/homeowner" element={<HomepageHomeowner />} />
               <Route path="/property-management-software" element={<Navigate to="/" replace />} />
-              <Route path="/home/property-management-software" element={<Navigate to="/" replace />} />
-              <Route path="/real-estate-ai" element={<Navigate to="/" replace />} />
-              <Route path="/tenancy-document" element={<Navigate to="/blog/making-light-work-of-a-tenancy-document" replace />} />
-              <Route path="/features" element={<Navigate to="/learn/core-features" replace />} />
-              <Route path="/features/real_estate_ai" element={<Navigate to="/" replace />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               <Route path="/contact" element={<ContactUs />} />
-              <Route path="/pilot" element={<Navigate to="/contact" replace />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/data-protection" element={<DataProtection />} />
               <Route path="/breach-protocol" element={<BreachProtocol />} />
@@ -148,15 +115,9 @@ const AppContent = () => {
               <Route path="/announcement/:slug" element={<AnnouncementPost />} />
               <Route path="/feature-requests" element={<FeatureRequests />} />
               <Route path="/usehobson" element={<UseHobson />} />
-              <Route path="/quiz1" element={<UseHobson2 />} />
-              <Route path="/quiz2" element={<UseHobson3 />} />
-              <Route path="/carousel" element={<Rotating />} />
-              <Route path="/investment-carousel" element={<RotatingInvestments />} />
-              <Route path="/banners" element={<Banners />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<InvestorSummary />} />
               
-              <Route path="/login-gate" element={<LoginGate />} />
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
               <Route path="/admin/faq-management" element={<FaqManagement />} />
@@ -164,16 +125,7 @@ const AppContent = () => {
               <Route path="/admin/blog" element={<BlogManagement />} />
               <Route path="/admin/blog/new" element={<BlogEditor />} />
               <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
-              {/* Partnership route redirect */}
-              <Route path="/partnership" element={<Navigate to="/" replace />} />
-              {/* Temporary routes for testing landing pages in Lovable */}
-              <Route path="/landing-a" element={<LandingPageA />} />
-              <Route path="/landing-b" element={<LandingPageB />} />
-              <Route path="/landing-c" element={<LandingPageC />} />
-              <Route path="/pilot_form" element={<Navigate to="/contact" replace />} />
-              <Route path="/email-1" element={<EmailPreview />} />
               
-              {/* Remove the AI-driven-property-management-software route from main domain */}
               <Route path="*" element={<NotFound />} />
             </>
           )}

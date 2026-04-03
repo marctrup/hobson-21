@@ -15,6 +15,7 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Building2, TrendingUp, MapPin, PenTool, CreditCard, Shield } from "lucide-react";
 import { CONTENT_VARIANT as CONTENT } from "@/config/content-variant";
+import { Helmet } from "react-helmet-async";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import hobsonLogo from "/hobson-logo.png";
 
@@ -189,6 +190,9 @@ const LandingPageA = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       {/* Header */}
       <header className="border-b">
         <div className="container mx-auto px-4 py-4">
@@ -196,7 +200,7 @@ const LandingPageA = () => {
             <a href="https://hobsonschoice.ai" className="bg-white p-2 rounded-lg">
               <img 
                 src={hobsonLogo} 
-                alt="Hobson AI - AI-powered property management software company logo" 
+                alt="Hobson AI — AI assistance for property operators, occupiers and owners" 
                 className="h-12 md:h-16" 
                 loading="eager"
               />
