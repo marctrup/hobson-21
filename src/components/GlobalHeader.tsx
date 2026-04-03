@@ -46,11 +46,21 @@ export const GlobalHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            {filteredLinks.map((link) => (
+            {primaryLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                title={link.title}
+              >
+                {link.label}
+              </Link>
+            ))}
+            {secondaryLinks.map((link: any) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors"
                 title={link.title}
               >
                 {link.label}
