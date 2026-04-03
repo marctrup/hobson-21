@@ -36,6 +36,7 @@ const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 const InvestorSummary = lazy(() => import("../pages/InvestorSummary"));
+const Features = lazy(() => import("../pages/Features"));
 
 // Loading component
 const PageLoader = () => (
