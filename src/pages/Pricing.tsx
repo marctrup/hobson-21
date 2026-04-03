@@ -223,9 +223,34 @@ const Pricing = () => {
     return (
       <>
         <GlobalHeader />
-        <div className="min-h-screen flex items-center justify-center" style={{ background: C.bg }}>
-          <div className="animate-pulse h-8 w-48 rounded" style={{ background: C.callout }} />
-        </div>
+        <main style={{ background: C.bg, color: C.navy }}>
+          <section className="pt-10 sm:pt-14 md:pt-16 pb-8 sm:pb-12 md:pb-20 px-4 sm:px-6">
+            <div className="max-w-7xl mx-auto">
+              <div className="text-center space-y-3 mb-10">
+                <div className="animate-pulse h-4 w-64 mx-auto rounded" style={{ background: C.callout }} />
+                <div className="animate-pulse h-10 w-80 mx-auto rounded" style={{ background: C.callout }} />
+                <div className="animate-pulse h-5 w-96 mx-auto rounded" style={{ background: C.callout }} />
+              </div>
+              <div className="flex justify-center mb-8">
+                <div className="animate-pulse h-10 w-52 rounded-full" style={{ background: C.callout }} />
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {[1,2,3,4].map(i => (
+                  <div key={i} className="rounded-2xl p-6 space-y-4" style={{ border: `1px solid ${C.border}` }}>
+                    <div className="animate-pulse h-5 w-20 rounded" style={{ background: C.callout }} />
+                    <div className="animate-pulse h-8 w-32 rounded" style={{ background: C.callout }} />
+                    <div className="space-y-2">
+                      {[1,2,3,4,5].map(j => (
+                        <div key={j} className="animate-pulse h-4 w-full rounded" style={{ background: C.callout }} />
+                      ))}
+                    </div>
+                    <div className="animate-pulse h-10 w-full rounded-lg" style={{ background: C.callout }} />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        </main>
       </>
     );
   }
@@ -249,7 +274,7 @@ const Pricing = () => {
       <main id="main-content" style={{ color: C.navy }}>
 
         {/* SUBSCRIPTION */}
-        <section className="pt-16 sm:pt-24 md:pt-28 pb-8 sm:pb-12 md:pb-20 px-4 sm:px-6" style={{ background: C.bg }} id="plans">
+        <section className="pt-10 sm:pt-14 md:pt-16 pb-8 sm:pb-12 md:pb-20 px-4 sm:px-6" style={{ background: C.bg }} id="plans">
           <div className="max-w-7xl mx-auto">
             <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3 text-center">Simple & Transparent Pricing</p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center" style={{ color: C.navy }}>Choose your plan</h1>
