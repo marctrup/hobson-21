@@ -2436,7 +2436,7 @@ Content-Type: multipart/form-data
         };
       }
     }
-    if (activeHorizontalTab === "use-cases") {
+    if (activeHorizontalTab === "in-practice") {
       return {
         title: "Use Cases | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
         description: "Discover real-world use cases and applications of Hobson AI for property management and real estate document analysis."
