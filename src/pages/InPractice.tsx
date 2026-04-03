@@ -224,24 +224,6 @@ const InPractice = () => {
           </div>
         </section>
 
-        {/* SECTION 6 — Outcome Strip */}
-        <section className="py-12 sm:py-16 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
-              {[
-                { number: "Minutes", label: "To get answers across a 22-unit portfolio that previously took a full day" },
-                { number: "24 hours", label: "To complete acquisition due diligence across 6 leases that previously took 10 days" },
-                { number: "Zero", label: "Guesses — every answer is sourced and referenced to the exact lease clause" },
-                { number: "Full stack", label: "Hobson reads the original lease and every document that has varied it — returning the current legal position, not just the original one" }
-              ].map((stat, index) => (
-                <div key={index} className="text-center">
-                  <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-3">{stat.number}</p>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{stat.label}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* SECTION 7 — Closing CTA */}
         <section className="py-16 sm:py-20 md:py-24">
