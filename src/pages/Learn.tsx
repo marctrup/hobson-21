@@ -2040,6 +2040,9 @@ Content-Type: multipart/form-data
                 Smart Navigation
               </h1>
               <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
+                Smart Navigation is one of the ways Hobson ensures every answer it gives is tied to the right property, the right unit and the right document. In a portfolio with hundreds of leases and documents, knowing where to look before answering is as important as knowing how to answer. Here is how it works.
+              </p>
+              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-4">
                 Your portfolio can contain hundreds of documents — leases, licences, reports, and certificates.
                 Each one belongs to a specific property or a specific unit.
               </p>
