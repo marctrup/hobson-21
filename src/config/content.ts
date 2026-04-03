@@ -409,6 +409,7 @@ export const CONTENT = {
   // Navigation (used in GlobalHeader and Homepage)
   navigation: {
     links: [
+      { to: "/features", label: "Features", title: "What Hobson does, how it works, why it matters" },
       { to: "/pricing", label: "Pricing", title: "Hobson AI Pricing Plans" },
       { to: "/blog", label: "Blog", title: "Property Management Insights" },
       { to: "/contact", label: "Contact", title: "Contact Real Estate Software Support" },
