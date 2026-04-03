@@ -72,12 +72,8 @@ const FeatureList = ({ features, iconClass = "text-primary" }: { features: reado
 );
 
 export const PricingSection = () => {
-  const content = useContent();
-  const { language } = useLanguage();
+  const content = CONTENT;
   const pricing = content.pricing;
-  const isGerman = language === 'de';
-  const isUAE = language === 'ae';
-  const hasLongCurrency = isGerman || isUAE;
   const navigate = useNavigate();
 
   const [isAnnualEssential, setIsAnnualEssential] = useState(false);

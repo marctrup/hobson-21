@@ -21,9 +21,7 @@ export const HomepageFooter = () => {
               <Link to="/pricing" className="block text-muted-foreground hover:text-foreground transition-colors" title="Hobson AI Pricing Plans">Pricing</Link>
               <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors" title="Property Management Insights - Expert perspectives on AI and real estate technology">{text.blog}</Link>
               <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors" title="Contact Real Estate Software Support - Get in touch with our AI property management specialists">{text.contact}</Link>
-              {!hideExtraNavItems && (
-                <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors" title="Learning Resources">{text.learn}</Link>
-              )}
+              <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors" title="Learning Resources">{text.learn}</Link>
               <Link to="/investment-opportunity" className="block text-muted-foreground hover:text-foreground transition-colors" title="Investment Opportunity">{text.investmentOpportunity}</Link>
               <Link to="/data-protection" className="block text-muted-foreground hover:text-foreground transition-colors" title="AI Privacy & Data Protection Policy">{text.dataProtection}</Link>
               <Link to="/breach-protocol" className="block text-muted-foreground hover:text-foreground transition-colors" title="Data Breach Protocol">{text.breachProtocol}</Link>

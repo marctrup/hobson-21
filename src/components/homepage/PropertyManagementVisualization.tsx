@@ -2,13 +2,8 @@ import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, Ro
 import { CONTENT } from "@/config/content";
 
 export const PropertyManagementVisualization = () => {
-  const content = useContent();
-  const { language } = useLanguage();
+  const content = CONTENT;
   const viz = content.heroVisualization;
-  const isGerman = language === 'de';
-
-  // Hyphenation style for German text
-  const hyphenStyle = isGerman ? { hyphens: 'auto' as const, wordBreak: 'break-word' as const } : {};
 
   return <div className="relative from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 bg-gray-50">
       {/* Main Header */}
