@@ -181,28 +181,6 @@ export default function PricingSettings() {
                           {isUnlimited ? "Unlimited — no cap" : `Documents a Tier ${limit.tier} user can extract per month at no extra charge`}
                         </p>
                       </div>
-                      <div>
-                        <label className="text-sm font-medium mb-1 block">Overage behaviour</label>
-                        {isUnlimited ? (
-                          <>
-                            <Input value="Not applicable" disabled className="opacity-60" />
-                            <p className="text-xs text-muted-foreground mt-1">Not applicable — Tier {limit.tier} is unlimited</p>
-                          </>
-                        ) : (
-                          <>
-                            <select
-                              value={limit.overage_behaviour}
-                              onChange={e => updateTierLimit(limit.tier, "overage_behaviour", e.target.value)}
-                              disabled={saving}
-                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                            >
-                              <option value="charge">Charge per extraction at onboarding rates</option>
-                              <option value="block">Block until next month</option>
-                            </select>
-                            <p className="text-xs text-muted-foreground mt-1">What happens when the limit is exceeded</p>
-                          </>
-                        )}
-                      </div>
                     </div>
                   </div>
                 );
