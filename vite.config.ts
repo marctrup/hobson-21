@@ -4,18 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-  const plugins: any[] = [
-    react(),
-    mode === 'development' && componentTagger(),
-  ];
-
-  if (mode === 'production') {
-    // Prerender plugin is loaded at build time via postbuild script
-    // See package.json "build" script
-  }
-
-  return {
+export default defineConfig(({ mode }) => ({
     server: {
       host: "::",
       port: 8080,
