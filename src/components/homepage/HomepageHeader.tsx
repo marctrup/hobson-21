@@ -124,6 +124,17 @@ export const HomepageHeader = () => {
                   {link.label}
                 </Link>
                 ))}
+                {(content.navigation as any).secondary?.map((link: any) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors py-2"
+                  onClick={closeMobileMenu}
+                  title={link.title}
+                >
+                  {link.label}
+                </Link>
+                ))}
                 <Link
                   to="/login-gate"
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors w-fit"
