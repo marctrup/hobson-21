@@ -230,7 +230,7 @@ const InPractice = () => {
         {/* SECTION 7 — Closing CTA */}
         <section className="py-16 sm:py-20 md:py-24">
           <div className="container mx-auto px-4 text-center max-w-3xl">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
               Phase 1 is live. Try it on your documents today.
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed mb-8 max-w-2xl mx-auto">
