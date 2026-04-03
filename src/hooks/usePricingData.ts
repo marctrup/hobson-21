@@ -21,6 +21,7 @@ const DEFAULT_PRICING: OnboardingPricing = {
   cost_per_document: 0.2,
   minimum_fee: 5.0,
   cost_per_question_pack: 7.50,
+  questions_per_pack: 100,
 };
 
 const DEFAULT_LIMITS: TierLimit[] = [
