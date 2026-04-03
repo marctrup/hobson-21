@@ -62,10 +62,7 @@ export const HobsonJourneySection = () => {
               Where we are. Where we're going.
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              A product roadmap told as a story — not a feature list.
-            </p>
-            <p className="text-sm text-muted-foreground/70 max-w-xl mx-auto mt-2">
-              A product built on trust — earned one action at a time.
+              Phase 1 is live today. Phase 2 and Phase 3 are coming later this year.
             </p>
           </div>
 
