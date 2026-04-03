@@ -209,6 +209,12 @@ export const Homepage = () => {
                     {content.header.nav.blog}
                   </Link>
                 )}
+                <Link to="/learn/faq" className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors">
+                  Learn
+                </Link>
+                <Link to="/contact" className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors">
+                  Contact
+                </Link>
                 
                 {/* Login button */}
                 <button
@@ -281,7 +287,12 @@ export const Homepage = () => {
                       {content.header.nav.blog}
                     </Link>
                   )}
-                  
+                  <Link to="/learn/faq" className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                    Learn
+                  </Link>
+                  <Link to="/contact" className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                    Contact
+                  </Link>
                   {/* Login button */}
                   <button
                     onClick={() => { closeMobileMenu(); setIsLoginModalOpen(true); }}
