@@ -426,7 +426,7 @@ const Pricing = () => {
               Why does the Knowledge Base change everything?
             </h2>
             <p className="text-lg sm:text-xl italic mb-6" style={{ color: C.muted }}>
-              Tier 1 answers your questions. Tier 2 - 4 knows your business.
+              Tier 1 answers your questions. Tier 2 – 4 answers them, knowing you.
             </p>
             <p className="text-sm sm:text-base leading-relaxed mb-6" style={{ color: C.muted }}>
               The Knowledge Base is the difference between an AI that retrieves information from your documents and one that understands how you work — your contractors, your contacts, your policies, your obligations, your preferences. Every answer shaped by your business. Every action reflecting how you operate. That transformation is what Tier 2, 3 and 4 deliver. And it is worth considerably more than the difference in price.
