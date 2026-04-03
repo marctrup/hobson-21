@@ -37,16 +37,10 @@ All colors MUST be HSL.
     }
   }
 
-  /* Reduce animations on mobile for performance */
+  /* Reduce heavy animations on mobile for performance */
   @media (max-width: 768px) {
-    *, *::before, *::after {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.2s !important;
-    }
-    .animate-fade-in {
-      animation-duration: 0.3s !important;
-      animation-iteration-count: 1 !important;
+    .animate-spin, .animate-pulse, .animate-bounce {
+      animation: none !important;
     }
   }
 
