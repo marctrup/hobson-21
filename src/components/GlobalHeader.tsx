@@ -88,11 +88,22 @@ export const GlobalHeader = () => {
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4">
             <div className="flex flex-col gap-4">
-              {filteredLinks.map((link) => (
+              {primaryLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
                   className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  onClick={closeMobileMenu}
+                  title={link.title}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {secondaryLinks.map((link: any) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors py-2"
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
