@@ -15,6 +15,7 @@ import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Building2, TrendingUp, MapPin, PenTool, CreditCard, Shield } from "lucide-react";
 import { CONTENT_VARIANT as CONTENT } from "@/config/content-variant";
+import { Helmet } from "react-helmet-async";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import hobsonLogo from "/hobson-logo.png";
 
