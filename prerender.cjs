@@ -81,7 +81,7 @@ async function prerender() {
   
   const browser = await puppeteer.launch({
     headless: 'new',
-    executablePath: '/bin/chromium-browser',
+    executablePath: process.env.CHROMIUM_PATH || '/bin/chromium-browser',
     args: [
       '--no-sandbox',
       '--disable-setuid-sandbox',

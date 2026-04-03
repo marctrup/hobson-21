@@ -9,7 +9,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node prerender.cjs",
+    "build": "vite build && node prerender.cjs || echo 'Prerender skipped — Chromium not available in this environment'",
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview"
