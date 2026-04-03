@@ -148,5 +148,7 @@ export const HomepageHeader = () => {
         )}
       </div>
     </header>
+    <InterestModal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} source="login-interest" />
+    </>
   );
 };
