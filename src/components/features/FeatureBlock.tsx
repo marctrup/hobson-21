@@ -57,7 +57,7 @@ const FeatureBlock: React.FC<FeatureBlockProps> = ({
         <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-2">
           Why it matters
         </p>
-        <p className="text-base text-primary leading-relaxed font-medium">
+        <p className="text-base text-muted-foreground leading-relaxed italic">
           {matters}
         </p>
       </div>
