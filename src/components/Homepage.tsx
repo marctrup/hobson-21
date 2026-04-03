@@ -24,7 +24,6 @@ export const Homepage = () => {
   const [showPilotForm, setShowPilotForm] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   
-  const { language } = useLanguage();
   const content = useContent();
   
   const toggleMobileMenu = () => {
