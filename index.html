@@ -12,8 +12,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png?v=9" />
     <link rel="icon" type="image/png" href="/favicon.png?v=9" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=9" />
-    <link rel="preload" href="/src/assets/owl-mascot-chat.png" as="image" />
-    <link rel="preload" href="/src/assets/owl-chat-bubble.png" as="image" />
+    <!-- Chatbot images loaded on demand, not preloaded -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -60,8 +59,7 @@
       .hero-text{font-size:clamp(2rem,5vw,3.5rem);font-weight:700;line-height:1.1;margin-bottom:1rem}
       .fade-in{animation:fadeIn 0.6s ease-out forwards}
       @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-      img{opacity:0;transition:opacity 0.2s ease;content-visibility:auto;contain-intrinsic-size:400px 300px}
-      img[src]{opacity:1}
+      img{content-visibility:auto;contain-intrinsic-size:400px 300px}
       .loading-skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e0e0e0 50%,#f0f0f0 75%);background-size:200% 100%;animation:loading 1.5s infinite}
       @keyframes loading{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
@@ -108,30 +106,8 @@
     <link rel="preconnect" href="https://awfyhgeflakjhxtntokd.supabase.co" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Mobile-first critical resource preloading -->
-    <link rel="preload" href="/hobson-logo.png" as="image" fetchpriority="high" media="(max-width: 768px)" />
-    <link
-      rel="preload"
-      href="/blog-images/boy-praying-with-bible.png"
-      as="image"
-      fetchpriority="high"
-      media="(max-width: 768px)"
-    />
-
-    <!-- Desktop preloading -->
-    <link
-      rel="preload"
-      href="/lovable-uploads/4351fb54-1d77-416e-9474-3c80e483a83c.png"
-      as="image"
-      media="(min-width: 769px)"
-    />
-    <link rel="preload" href="/blog-images/too-good-to-be-true.png" as="image" media="(min-width: 769px)" />
-
-    <!-- Aggressive critical script preloading -->
-    <link rel="modulepreload" href="/src/main.tsx" fetchpriority="high" />
-    <link rel="modulepreload" href="/src/App.tsx" fetchpriority="high" />
-    <link rel="modulepreload" href="/src/pages/Blog.tsx" />
-    <link rel="modulepreload" href="/src/components/blog/BlogHero.tsx" />
+    <!-- Minimal critical preloading - logo only -->
+    <link rel="preload" href="/hobson-logo.png" as="image" fetchpriority="high" />
 
     <!-- Font optimization - inline critical font CSS -->
     <style>

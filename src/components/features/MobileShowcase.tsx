@@ -81,6 +81,10 @@ const MobileShowcase = memo(() => {
                     src={screens[activeScreen].src}
                     alt={screens[activeScreen].alt}
                     className="absolute inset-0 w-full h-full object-cover object-top transition-all duration-500 animate-fade-in"
+                    loading="lazy"
+                    decoding="async"
+                    width={300}
+                    height={650}
                   />
                 </div>
 

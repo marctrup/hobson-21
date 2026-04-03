@@ -35,7 +35,7 @@ export const PropertyManagementVisualization = () => {
           
           {/* Circular Process */}
           <div className="relative w-24 h-24 sm:w-32 sm:h-32 lg:w-36 lg:h-36 mx-auto mb-4">
-            <div className="absolute inset-0 border-2 border-dashed border-purple-300 rounded-full animate-spin" style={{
+            <div className="absolute inset-0 border-2 border-dashed border-purple-300 rounded-full md:animate-spin" style={{
             animationDuration: '8s'
           }}></div>
             
