@@ -97,11 +97,9 @@ export const Homepage = () => {
                 <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
                 </Link>
-                {!hideExtraNavItems && (
-                  <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                     {content.header.nav.blog}
                   </Link>
-                )}
                 <Link to="/learn/faq" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Learn
                 </Link>
