@@ -4,8 +4,7 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
-  // Dynamically import prerender plugin only in production
+export default defineConfig(async ({ mode }) => {
   const plugins: any[] = [
     react(),
     mode === 'development' && componentTagger(),
@@ -13,10 +12,9 @@ export default defineConfig(({ mode }) => {
 
   if (mode === 'production') {
     try {
-      const Prerender = require('vite-plugin-prerender');
-      const PuppeteerRenderer = Prerender.PuppeteerRenderer;
+      const { default: Prerender, PuppeteerRenderer } = await import('vite-plugin-prerender');
       plugins.push(
-        Prerender.default({
+        Prerender({
           staticDir: path.join(__dirname, "dist"),
           routes: [
             "/",
@@ -41,7 +39,7 @@ export default defineConfig(({ mode }) => {
         })
       );
     } catch (e) {
-      console.warn("Prerender plugin not available, skipping prerendering");
+      console.warn("Prerender plugin not available, skipping prerendering:", e);
     }
   }
 
