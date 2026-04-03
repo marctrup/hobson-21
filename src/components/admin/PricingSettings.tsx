@@ -41,6 +41,7 @@ export default function PricingSettings() {
         const d = pricingRes.data as any;
         setCostPerDocument(String(d.cost_per_document));
         if (d.cost_per_question_pack !== undefined) setCostPerQuestionPack(String(d.cost_per_question_pack));
+        if (d.questions_per_pack !== undefined) setQuestionsPerPack(String(d.questions_per_pack));
       }
 
       if (limitsRes.data && (limitsRes.data as any[]).length > 0) {
