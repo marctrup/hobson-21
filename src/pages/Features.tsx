@@ -133,7 +133,7 @@ const Features = () => {
           subtitle="Domain-specific accuracy, zero integration friction and enterprise-grade data protection."
           icon={ShieldCheck}
           features={trustSecurityFeatures}
-          bgClass="bg-secondary/50"
+          bgClass="bg-background"
         />
 
         <FeaturesComingSoon />
