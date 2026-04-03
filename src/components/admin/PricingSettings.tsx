@@ -15,6 +15,7 @@ interface TierLimit {
 export default function PricingSettings() {
   const [costPerDocument, setCostPerDocument] = useState("0.20");
   const [costPerQuestionPack, setCostPerQuestionPack] = useState("7.50");
+  const [questionsPerPack, setQuestionsPerPack] = useState("100");
   const [tierLimits, setTierLimits] = useState<TierLimit[]>([
     { tier: 1, monthly_questions: "300", monthly_extractions: "3", overage_behaviour: "charge" },
     { tier: 2, monthly_questions: "Unlimited", monthly_extractions: "Unlimited", overage_behaviour: "none" },
