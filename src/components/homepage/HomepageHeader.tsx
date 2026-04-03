@@ -81,12 +81,12 @@ export const HomepageHeader = () => {
             ))}
             
             {/* Login button */}
-            <Link
-              to="/login-gate"
+            <button
+              onClick={() => setIsLoginModalOpen(true)}
               className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors"
             >
               Login
-            </Link>
+            </button>
             
             {/* Language indicator */}
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground" title="English (UK)">
