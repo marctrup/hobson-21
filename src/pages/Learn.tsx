@@ -738,7 +738,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-5xl">
                 <div className="mb-8">
@@ -917,7 +916,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-8">
@@ -1079,7 +1077,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-8">
@@ -1518,7 +1515,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="text-center mb-8">
@@ -1590,7 +1586,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-8">
@@ -1906,7 +1901,6 @@ Content-Type: multipart/form-data
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="text-center mb-8">
@@ -2118,7 +2112,6 @@ Content-Type: multipart/form-data
       };
       return <div className="flex-1 bg-gradient-to-b from-background to-muted/20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 {/* Hero Header */}
