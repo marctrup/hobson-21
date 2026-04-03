@@ -197,7 +197,7 @@ const Blog = () => {
           
           {/* Structured Data */}
           <script type="application/ld+json">
-            {JSON.stringify(getBlogStructuredData())}
+            {JSON.stringify(structuredData.blog)}
           </script>
           <script type="application/ld+json">
             {JSON.stringify(getBreadcrumbStructuredData([

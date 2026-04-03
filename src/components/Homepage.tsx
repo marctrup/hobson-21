@@ -168,15 +168,15 @@ export const Homepage = () => {
         <link rel="preload" href="/hobson-logo.png" as="image" />
         <link rel="preload" href={owlMascot} as="image" />
         
-        {/* Structured Data for AI Crawlers */}
+{/* Structured Data for AI Crawlers */}
         <script type="application/ld+json">
-          {JSON.stringify(getOrganizationStructuredData())}
+          {JSON.stringify(structuredData.organization)}
         </script>
         <script type="application/ld+json">
-          {JSON.stringify(getHomepageStructuredData())}
+          {JSON.stringify(structuredData.softwareApplication)}
         </script>
         <script type="application/ld+json">
-          {JSON.stringify(getHomepageFAQStructuredData())}
+          {JSON.stringify(structuredData.faqPage)}
         </script>
       </Helmet>
 
