@@ -301,21 +301,7 @@ const Learn = () => {
   }];
 
   // Static top menu items (separate pages)
-  const staticVerticalTabs = [{
-    id: "announcements",
-    label: "Announcements",
-    icon: Bell,
-    href: "/announcements"
-  }, {
-    id: "status",
-    label: "Status",
-    icon: Activity,
-    href: "/status"
-  }, {
-    id: "feature-requests",
-    label: "Feature requests",
-    icon: MessageSquare
-  }];
+  const staticVerticalTabs: Array<{id: string; label: string; icon: any; href?: string}> = [];
 
   // Dynamic submenu items based on horizontal selection
   const getContextualVerticalTabs = (horizontalTab: string) => {

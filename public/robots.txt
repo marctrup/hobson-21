@@ -23,5 +23,9 @@ Disallow: /features/real_estate_ai
 Disallow: /pilot
 Disallow: /pilot_form
 Disallow: /partnership
+Disallow: /announcements
+Disallow: /announcement/
+Disallow: /status
+Disallow: /feature-requests
 
 Sitemap: https://hobsonschoice.ai/sitemap.xml
