@@ -168,10 +168,16 @@ const Learn = () => {
           },
           // Use Cases section
           "use-cases": {
-            horizontal: "use-cases"
+            horizontal: "in-practice"
           },
           usecases: {
-            horizontal: "use-cases"
+            horizontal: "in-practice"
+          },
+          "in-practice": {
+            horizontal: "in-practice"
+          },
+          inpractice: {
+            horizontal: "in-practice"
           },
           // Glossary section
           glossary: {
