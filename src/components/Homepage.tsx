@@ -13,7 +13,7 @@ import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm
 import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
 
 import owlMascot from "@/assets/owl-mascot.png";
-import { getOrganizationStructuredData, getHomepageStructuredData, getHomepageFAQStructuredData } from "@/utils/seo-data";
+import { structuredData } from "@/utils/seo-data";
 import { useLanguage, useContent } from "@/contexts/LanguageContext";
 
 export const Homepage = () => {

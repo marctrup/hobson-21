@@ -9,7 +9,7 @@ import { BlogPostCard } from "@/components/blog/BlogPostCard";
 import { CategoryFilter } from "@/components/blog/CategoryFilter";
 import { LoadingSkeleton } from "@/components/LoadingSkeleton";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { getBlogStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
+import { structuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 
 // Request deduplication
 const pendingRequests = new Map<string, Promise<any>>();
