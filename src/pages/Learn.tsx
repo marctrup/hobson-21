@@ -281,10 +281,6 @@ const Learn = () => {
     label: "Integrations",
     icon: Puzzle
   }, {
-    id: "in-practice",
-    label: "In Practice",
-    icon: Library
-  }, {
     id: "glossary",
     label: "Glossary",
     icon: FileText

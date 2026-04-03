@@ -11,11 +11,14 @@ export const GlobalHeader = () => {
   const content = useContent();
   const isGerman = language === 'de';
 
-  // Filter out Learn and Blog links for German site
-  const filteredLinks = content.navigation.links.filter(link => {
-    if (isGerman && (link.to === '/learn' || link.to === '/blog')) return false;
+  // Primary nav links
+  const primaryLinks = content.navigation.links.filter(link => {
+    if (isGerman && (link.to === '/blog')) return false;
     return true;
   });
+
+  // Secondary nav links
+  const secondaryLinks = (content.navigation as any).secondary || [];
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -43,11 +46,21 @@ export const GlobalHeader = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
-            {filteredLinks.map((link) => (
+            {primaryLinks.map((link) => (
               <Link
                 key={link.to}
                 to={link.to}
                 className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                title={link.title}
+              >
+                {link.label}
+              </Link>
+            ))}
+            {secondaryLinks.map((link: any) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors"
                 title={link.title}
               >
                 {link.label}
@@ -75,11 +88,22 @@ export const GlobalHeader = () => {
         {isMobileMenuOpen && (
           <nav className="md:hidden mt-4 pb-4 border-t pt-4">
             <div className="flex flex-col gap-4">
-              {filteredLinks.map((link) => (
+              {primaryLinks.map((link) => (
                 <Link
                   key={link.to}
                   to={link.to}
                   className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  onClick={closeMobileMenu}
+                  title={link.title}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              {secondaryLinks.map((link: any) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors py-2"
                   onClick={closeMobileMenu}
                   title={link.title}
                 >

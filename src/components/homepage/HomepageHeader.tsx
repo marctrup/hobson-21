@@ -67,6 +67,16 @@ export const HomepageHeader = () => {
                 {link.label}
               </Link>
             ))}
+            {(content.navigation as any).secondary?.map((link: any) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors"
+                title={link.title}
+              >
+                {link.label}
+              </Link>
+            ))}
             
             {/* Login button */}
             <Link
@@ -108,6 +118,17 @@ export const HomepageHeader = () => {
                   key={link.to}
                   to={link.to}
                   className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  onClick={closeMobileMenu}
+                  title={link.title}
+                >
+                  {link.label}
+                </Link>
+                ))}
+                {(content.navigation as any).secondary?.map((link: any) => (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors py-2"
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
