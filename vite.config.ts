@@ -152,7 +152,7 @@ export default defineConfig(({ mode }) => {
       },
     },
     esbuild: {
-      drop: mode === 'production' ? ['console' as Drop, 'debugger' as Drop] : [],
+      drop: mode === 'production' ? ['console', 'debugger'] as ('console' | 'debugger')[] : [],
     },
   };
 });
