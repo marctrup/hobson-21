@@ -44,7 +44,10 @@ export default defineConfig(({ mode }) => ({
         'next-themes'
       ]
     },
-    plugins: plugins.filter(Boolean),
+    plugins: [
+      react(),
+      mode === 'development' && componentTagger(),
+    ].filter(Boolean),
     resolve: {
       dedupe: [
         "react", 
