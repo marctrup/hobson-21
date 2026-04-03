@@ -195,56 +195,6 @@ export default function DocumentClassificationSettings() {
           </Button>
         </form>
 
-        {/* Reporting table */}
-        <div className="mt-10">
-          <h3 className="text-lg font-semibold mb-1">Recent Extraction Events</h3>
-          <p className="text-sm text-muted-foreground mb-4">
-            Last 20 extraction events showing document classification and charging details.
-          </p>
-
-          {events.length === 0 ? (
-            <div className="text-center py-8 text-muted-foreground border rounded-lg">
-              No extraction events recorded yet.
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Date</TableHead>
-                    <TableHead>User</TableHead>
-                    <TableHead>Document name</TableHead>
-                    <TableHead>Declared type</TableHead>
-                    <TableHead>Actual tokens</TableHead>
-                    <TableHead>Charged type</TableHead>
-                    <TableHead>Amount charged</TableHead>
-                    <TableHead>Reclassified</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {events.map((ev) => (
-                    <TableRow key={ev.id}>
-                      <TableCell>{new Date(ev.created_at).toLocaleDateString()}</TableCell>
-                      <TableCell>{ev.user_email || "—"}</TableCell>
-                      <TableCell className="max-w-[200px] truncate">{ev.document_name}</TableCell>
-                      <TableCell>{ev.declared_type}</TableCell>
-                      <TableCell>{ev.actual_tokens.toLocaleString()}</TableCell>
-                      <TableCell>{ev.charged_type}</TableCell>
-                      <TableCell>£{Number(ev.amount_charged).toFixed(2)}</TableCell>
-                      <TableCell>
-                        {ev.reclassified ? (
-                          <Badge variant="destructive">Yes</Badge>
-                        ) : (
-                          <Badge variant="secondary">No</Badge>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </div>
-          )}
-        </div>
       </CardContent>
     </Card>
   );
