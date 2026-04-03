@@ -1,5 +1,5 @@
 import React, { memo, useState, useRef } from "react";
-import { useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 import { useIsMobile } from "@/hooks/use-mobile";
 import hobsonUnitInterface from "@/assets/hobson-unit-interface.png";
 
