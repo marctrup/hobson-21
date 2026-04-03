@@ -48,7 +48,7 @@ export const GlobalHeader = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                className={`text-base transition-colors ${isActive(link.to) ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
                 title={link.title}
               >
                 {link.label}
@@ -58,7 +58,7 @@ export const GlobalHeader = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                className={`text-base transition-colors ${isActive(link.to) ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
                 title={link.title}
               >
                 {link.label}
