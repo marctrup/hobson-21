@@ -15,7 +15,7 @@ import { CONTENT } from "@/config/content";
 
 export const HomepageHomeowner = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const content = useContent();
+  const content = CONTENT;
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };

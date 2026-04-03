@@ -11,7 +11,7 @@ const iconMap = {
 };
 
 export const FeaturesSection = () => {
-  const content = useContent();
+  const content = CONTENT;
   const cards = content.features.cards;
 
   return (

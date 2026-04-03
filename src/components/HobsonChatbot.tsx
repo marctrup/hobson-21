@@ -37,10 +37,7 @@ export const HobsonChatbot = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
   const navigate = useNavigate();
-  const { language } = useLanguage();
-  const content = useContent();
-  
-  const isGerman = language === 'de';
+  const content = CONTENT;
   const chatbotContent = content.chatbot;
 
   const scrollToBottom = () => {

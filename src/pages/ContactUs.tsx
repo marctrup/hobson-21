@@ -14,7 +14,7 @@ import { CONTENT } from "@/config/content";
 
 const ContactUs = () => {
   const navigate = useNavigate();
-  const content = useContent();
+  const content = CONTENT;
   const contactContent = content.contact;
   
   const [formData, setFormData] = useState({

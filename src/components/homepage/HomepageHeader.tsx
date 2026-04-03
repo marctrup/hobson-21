@@ -28,7 +28,7 @@ const UKFlag = ({ className }: { className?: string }) => (
 export const HomepageHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const content = useContent();
+  const content = CONTENT;
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

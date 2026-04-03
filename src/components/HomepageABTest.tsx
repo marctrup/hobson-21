@@ -39,7 +39,7 @@ import { CONTENT } from "@/config/content";
 export const HomepageABTest = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPilotForm, setShowPilotForm] = useState(false);
-  const content = useContent();
+  const content = CONTENT;
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };

@@ -10,10 +10,7 @@ export const GlobalHeader = () => {
   const content = CONTENT;
 
   // Primary nav links
-  const primaryLinks = content.navigation.links.filter(link => {
-    if (isGerman && (link.to === '/blog')) return false;
-    return true;
-  });
+  const primaryLinks = content.navigation.links;
 
   // Secondary nav links
   const secondaryLinks = (content.navigation as any).secondary || [];
