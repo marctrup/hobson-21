@@ -436,7 +436,7 @@ const Learn = () => {
           <div className="max-w-4xl mx-auto">
             <div className="text-left py-20">
               <div className="mb-6">
-                {activeTab && <activeTab.icon className="w-16 h-16 text-muted-foreground mx-auto mb-4" />}
+                {activeTab && <activeTab.icon className="w-16 h-16 text-muted-foreground mb-4" />}
                 <h1 className="text-4xl font-bold text-foreground mb-4">{activeTab?.label}</h1>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border">
                   <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
