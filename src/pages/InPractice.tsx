@@ -104,7 +104,31 @@ const InPractice = () => {
     <>
       <Helmet>
         <title>In Practice | Hobson AI — Real property work, real results</title>
-        <meta name="description" content="See how property managers, retail operators, hospitality businesses and corporate real estate teams use Hobson AI to manage lease obligations, compliance deadlines and property work — accurately and automatically." />
+        <meta name="description" content="See how property managers, retailers, hospitality businesses and corporate occupiers use Hobson AI to manage leases and compliance." />
+        <link rel="canonical" href="https://hobsonschoice.ai/in-practice" />
+        <meta property="og:title" content="In Practice | Hobson AI — Real property work, real results" />
+        <meta property="og:description" content="See how property managers, retail operators, hospitality businesses and corporate real estate teams use Hobson AI to manage lease obligations and compliance." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://hobsonschoice.ai/in-practice" />
+        <meta property="og:site_name" content="Hobson AI" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="In Practice | Hobson AI — Real property work, real results" />
+        <meta name="twitter:description" content="See how property managers, retail operators, hospitality businesses and corporate real estate teams use Hobson AI to manage lease obligations and compliance." />
+        <meta name="twitter:site" content="@HobsonAI" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "In Practice | Hobson AI",
+            "description": "Real scenarios showing how property managers, retail operators, hospitality businesses and corporate occupiers use Hobson AI to manage lease obligations, compliance deadlines and property work.",
+            "url": "https://hobsonschoice.ai/in-practice",
+            "isPartOf": {
+              "@type": "WebSite",
+              "name": "Hobson AI",
+              "url": "https://hobsonschoice.ai"
+            }
+          })}
+        </script>
       </Helmet>
 
       <GlobalHeader />

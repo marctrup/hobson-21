@@ -178,6 +178,7 @@ const Blog = () => {
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://hobsonschoice.ai/blog" />
           <meta property="og:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
+          <meta property="og:site_name" content="Hobson AI" />
           
           {/* Twitter */}
           <meta name="twitter:card" content="summary_large_image" />

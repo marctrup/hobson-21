@@ -2299,7 +2299,7 @@ Content-Type: multipart/form-data
     if (activeHorizontalTab === "faq") {
       return {
         title: "FAQ | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
-        description: "Frequently asked questions about Hobson AI: AI-powered assistant for real estate professionals."
+        description: "Frequently asked questions about Hobson AI — purpose-built AI assistance for property operators, occupiers and owners of real estate."
       };
     }
     return {

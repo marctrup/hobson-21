@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -58,6 +59,11 @@ export default function Auth() {
   }
 
   return (
+    <>
+    <Helmet>
+      <title>Sign In | Hobson AI</title>
+      <meta name="robots" content="noindex, nofollow" />
+    </Helmet>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
       <AuthForm 
         mode={mode} 
@@ -65,5 +71,6 @@ export default function Auth() {
         onSuccess={handleSuccess}
       />
     </div>
+    </>
   );
 }

@@ -35,7 +35,7 @@ export const HomepageHomeowner = () => {
         <meta name="twitter:title" content="AI-Document Intelligence for the Property Industry" />
         <meta name="twitter:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ." />
         <meta name="twitter:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
-        <link rel="canonical" href="https://hobsonschoice.ai/homeowner" />
+        <meta name="robots" content="noindex, nofollow" />
         
         {/* Preload critical assets - only above-the-fold logo */}
         <link rel="preload" href="/hobson-logo.png" as="image" />
@@ -48,7 +48,7 @@ export const HomepageHomeowner = () => {
             <div className="flex justify-between items-center">
               {/* Logo */}
               <div className="relative">
-                <Link to="/homeowner" onClick={closeMobileMenu}>
+                <Link to="/" onClick={closeMobileMenu}>
                   <OptimizedImage src="/hobson-logo.png" alt="Hobson AI — AI assistance for property operators, occupiers and owners" className="h-12 md:h-16 w-auto" priority />
                 </Link>
               </div>
@@ -243,7 +243,7 @@ export const HomepageHomeowner = () => {
                 </p>
                 <div className="mb-8">
                   <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                    <Link to="/pilot_form" id="homepage-pilot-apply-cta">Apply to join our Pilot →</Link>
+                    <Link to="/contact" id="homepage-pilot-apply-cta">Get in touch →</Link>
                   </SimpleButton>
                 </div>
               </div>

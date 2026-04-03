@@ -16,7 +16,7 @@ const Pilot = () => {
         <meta name="keywords" content="pilot program, AI property management, beta testing, early access" />
         <meta property="og:title" content="Join Our Pilot Program - Hobson AI" />
         <meta property="og:description" content="Be among the first to experience the future of property intelligence. Join our exclusive pilot program." />
-        <link rel="canonical" href="https://hobsonschoice.ai/pilot" />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
       <GlobalHeader />
@@ -34,7 +34,7 @@ const Pilot = () => {
               </p>
               <div className="mb-8">
                 <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                  <Link to="/pilot_form" id="pilot-page-apply-cta">Apply to join our Pilot →</Link>
+                  <Link to="/contact" id="pilot-page-apply-cta">Get in touch →</Link>
                 </SimpleButton>
               </div>
             </div>
@@ -195,8 +195,8 @@ const Pilot = () => {
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                  <Link to="/pilot_form">
-                    Apply for Pilot Access
+                  <Link to="/contact">
+                    Get in touch
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Link>
                 </Button>

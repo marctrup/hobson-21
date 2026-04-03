@@ -52,7 +52,7 @@
 
 
   <url>
-    <loc>https://hobsonschoice.ai/learn/integrations</loc>
+    <loc>https://hobsonschoice.ai/learn/available-integrations</loc>
     <lastmod>2026-04-03</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -77,13 +77,6 @@
     <lastmod>2026-04-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-
-  <url>
-    <loc>https://hobsonschoice.ai/property-management-software</loc>
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
   </url>
 
 

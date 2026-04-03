@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate, Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -1049,6 +1050,10 @@ const InvestmentOpportunity = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Investment Opportunity | Hobson AI</title>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
         {/* Header */}
         <header className="border-b bg-background/95 backdrop-blur sticky top-0 z-40">
