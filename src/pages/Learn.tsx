@@ -317,9 +317,11 @@ const Learn = () => {
       case "introduction":
         return [{
           id: "smart-navigation",
-          label: "Smart Navigation Guide",
+          label: "Smart Navigation",
           icon: Users
-        }, {
+        }];
+      case "faq":
+        return [{
           id: "faq",
           label: "FAQ",
           icon: HelpCircle
