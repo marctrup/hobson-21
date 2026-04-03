@@ -171,6 +171,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </script>
         
         <title>Property Expert Quiz | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
+        <meta name="robots" content="noindex, nofollow" />
         <meta name="description" content="Test your property expertise in our interactive quiz and unlock exclusive Hobson AI benefits. Fun, engaging challenge for property professionals." />
         <meta name="keywords" content="property quiz, legal challenge, Hobson AI, property expertise, interactive quiz" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

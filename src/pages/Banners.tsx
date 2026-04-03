@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { ArrowRight, FileText, Zap, CheckCircle, DollarSign, Clock } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 

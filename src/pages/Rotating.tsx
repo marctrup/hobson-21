@@ -69,6 +69,7 @@ const Rotating = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-background flex items-center justify-center p-2 sm:p-4">
       <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
         {/* Initialize dataLayer before GTM */}
         <script>
           {`window.dataLayer = window.dataLayer || [];`}

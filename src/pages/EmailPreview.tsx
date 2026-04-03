@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const EmailPreview = () => {
   useEffect(() => {
@@ -7,6 +8,9 @@ const EmailPreview = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
+      <Helmet>
+        <meta name="robots" content="noindex, nofollow" />
+      </Helmet>
       <div className="max-w-4xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Email Template Preview</h1>
