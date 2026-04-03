@@ -27,8 +27,8 @@ const Learn = () => {
   } = useParams<{
     section?: string;
   }>();
-  const [activeHorizontalTab, setActiveHorizontalTab] = useState("introduction");
-  const [activeVerticalTab, setActiveVerticalTab] = useState("welcome");
+  const [activeHorizontalTab, setActiveHorizontalTab] = useState("faq");
+  const [activeVerticalTab, setActiveVerticalTab] = useState("faq");
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
   const [activeTocSection, setActiveTocSection] = useState("hero");
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
@@ -72,7 +72,7 @@ const Learn = () => {
           horizontal: string;
           vertical?: string;
         }> = {
-          // Introduction section
+          // Smart Navigation section
           introduction: {
             horizontal: "introduction",
             vertical: "smart-navigation"
@@ -90,7 +90,7 @@ const Learn = () => {
             vertical: "smart-navigation"
           },
           faq: {
-            horizontal: "introduction",
+            horizontal: "faq",
             vertical: "faq"
           },
           // Features section
@@ -216,7 +216,7 @@ const Learn = () => {
 
   // Set initial active section based on current tab
   useEffect(() => {
-    if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq") {
+    if (activeHorizontalTab === "faq" && activeVerticalTab === "faq") {
       setActiveTocSection("how-hobson-works");
     } else if (activeHorizontalTab === "introduction" && activeVerticalTab === "smart-navigation") {
       setActiveTocSection("hero");
@@ -228,8 +228,8 @@ const Learn = () => {
     let tocSections: string[] = [];
 
     // Only run scroll spy for pages that have table of contents
-    if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq" || activeHorizontalTab === "features" && ["core-features", "advanced-features", "feature-comparison", "roadmap"].includes(activeVerticalTab) || activeHorizontalTab === "integrations" && activeVerticalTab === "available-integrations") {
-      if (activeHorizontalTab === "introduction") {
+    if (activeHorizontalTab === "faq" && activeVerticalTab === "faq" || activeHorizontalTab === "features" && ["core-features", "advanced-features", "feature-comparison", "roadmap"].includes(activeVerticalTab) || activeHorizontalTab === "integrations" && activeVerticalTab === "available-integrations") {
+      if (activeHorizontalTab === "faq") {
         if (activeVerticalTab === "faq") {
           tocSections = ["how-hobson-works", "features", "plans-credits-faq"];
         }
@@ -275,8 +275,12 @@ const Learn = () => {
   }, [activeHorizontalTab, activeVerticalTab]);
   const horizontalTabs = [{
     id: "introduction",
-    label: "Introduction",
-    icon: Book
+    label: "Smart Navigation",
+    icon: Users
+  }, {
+    id: "faq",
+    label: "FAQ",
+    icon: HelpCircle
   }, {
     id: "integrations",
     label: "Integrations",
@@ -313,9 +317,11 @@ const Learn = () => {
       case "introduction":
         return [{
           id: "smart-navigation",
-          label: "Smart Navigation Guide",
+          label: "Smart Navigation",
           icon: Users
-        }, {
+        }];
+      case "faq":
+        return [{
           id: "faq",
           label: "FAQ",
           icon: HelpCircle
@@ -2186,7 +2192,7 @@ Content-Type: multipart/form-data
     }
 
     // Handle FAQ content specifically
-    if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq") {
+    if (activeHorizontalTab === "faq" && activeVerticalTab === "faq") {
       const tocSections = [{
         id: "how-hobson-works",
         label: "How Hobson works"
@@ -2523,8 +2529,11 @@ Content-Type: multipart/form-data
                         </h3>
                       </div>
                       <p className="text-sm text-muted-foreground pl-7">
-                        Navigate through{" "}
-                        {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content
+                        {activeHorizontalTab === "introduction" ? "How Hobson navigates your portfolio" :
+                         activeHorizontalTab === "faq" ? "Frequently asked questions" :
+                         activeHorizontalTab === "integrations" ? "Systems Hobson works alongside" :
+                         activeHorizontalTab === "glossary" ? "Property and AI terms explained" :
+                         `Navigate through ${horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content`}
                       </p>
                     </div>
                     <nav className="space-y-1">
