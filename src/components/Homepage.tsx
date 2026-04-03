@@ -135,11 +135,9 @@ export const Homepage = () => {
                   <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Pricing
                   </Link>
-                  {!hideExtraNavItems && (
-                    <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                  <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                       {content.header.nav.blog}
                     </Link>
-                  )}
                   <Link to="/learn/faq" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Learn
                   </Link>
