@@ -5,7 +5,7 @@ const stages = [
   {
     icon: FileCheck,
     title: "Read & Understand",
-    copy: "Ask anything about any contract, lease or compliance document. Get an instant, sourced answer.",
+    copy: "Ask anything about any lease, compliance document or property contract in plain English. Hobson reads the full document stack — including deeds of variation, rent memorandums and supplemental agreements — and returns the current legal position with every answer sourced to the exact clause.",
     status: "Live today",
     statusClass: "bg-primary text-primary-foreground",
     active: true,
@@ -14,16 +14,16 @@ const stages = [
   {
     icon: Brain,
     title: "Know Your Business",
-    copy: "Hobson remembers everything that makes your business yours. Your contractors, your contacts, your policies, your obligations. Every answer reflects how you work — not how anyone else does.",
-    status: "Building now",
-    statusClass: "bg-amber-500/90 text-white",
+    copy: "Hobson learns how your business operates. Your contractors, contacts, policies and preferences — stored permanently and applied to every answer. Every response reflects how your business works, not just what your documents say.",
+    status: "Launching later this year",
+    statusClass: "bg-muted/40 text-muted-foreground border border-border",
     active: true,
     complete: false,
   },
   {
     icon: Zap,
     title: "Act on Your Behalf",
-    copy: "Deadlines met. Notices drafted. Certificates filed. Hobson handles the work between the reminder and the resolution — with you in control at every step.",
+    copy: "Hobson stops answering and starts acting. Rent reviews triggered. Compliance deadlines managed. Lease events handled end-to-end without a human in the loop until a decision is required.",
     status: "Coming soon",
     statusClass: "bg-muted/40 text-muted-foreground border border-border",
     active: false,
@@ -62,10 +62,7 @@ export const HobsonJourneySection = () => {
               Where we are. Where we're going.
             </h2>
             <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              A product roadmap told as a story — not a feature list.
-            </p>
-            <p className="text-sm text-muted-foreground/70 max-w-xl mx-auto mt-2">
-              A product built on trust — earned one action at a time.
+              Phase 1 is live today. Phase 2 and Phase 3 are coming later this year.
             </p>
           </div>
 

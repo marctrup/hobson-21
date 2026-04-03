@@ -11,6 +11,8 @@ import MobileShowcase from "@/components/features/MobileShowcase";
 
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
+import { AudienceStrip } from "@/components/homepage/AudienceStrip";
+import { TrustStrip } from "@/components/homepage/TrustStrip";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { structuredData } from "@/utils/seo-data";
@@ -359,6 +361,9 @@ export const Homepage = () => {
             </div>
           </section>
 
+          {/* Audience Strip */}
+          <AudienceStrip />
+
           {/* The Hobson Journey */}
           <HobsonJourneySection />
 
@@ -404,6 +409,9 @@ export const Homepage = () => {
           </section>
 
 
+          {/* Trust Strip */}
+          <TrustStrip />
+
           {/* CTA Section */}
           <section className="py-12 sm:py-16 md:py-20" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
             <div className="container mx-auto px-4 text-center">
@@ -413,9 +421,14 @@ export const Homepage = () => {
               <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
                 {content.cta.subtitle}
               </p>
-              <SimpleButton onClick={() => setShowPilotForm(true)} size="lg" className="bg-primary text-primary-foreground hover:bg-primary/90 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto">
-                {content.cta.button}
-              </SimpleButton>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/pricing" className="inline-flex items-center justify-center rounded-md font-medium bg-primary text-primary-foreground hover:bg-primary/90 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto transition-colors">
+                  {content.cta.button}
+                </Link>
+                <Link to="/pricing" className="inline-flex items-center justify-center rounded-md font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto transition-colors">
+                  Join the waitlist for Tier 2
+                </Link>
+              </div>
             </div>
           </section>
 
@@ -429,7 +442,7 @@ export const Homepage = () => {
                 <div className="md:col-span-2">
                   <OptimizedImage src="/hobson-logo.png" alt={content.header.logoAlt} className="h-[48px] w-auto mb-4" />
                   <p className="text-sm text-muted-foreground max-w-md">
-                    AI-powered property intelligence for modern real estate professionals.
+                    AI assistance to operators, occupiers and owners of real estate.
                   </p>
                   <div className="flex items-center gap-4 mt-6">
                     <a
@@ -455,10 +468,16 @@ export const Homepage = () => {
                       <Link to="/blog" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Blog</Link>
                     )}
                     <Link to="/contact" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Contact</Link>
-                    <Link to="/learn/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Learn</Link>
                     <Link to="/privacy-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Privacy Policy</Link>
                     <Link to="/data-protection" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Data Protection</Link>
                     <Link to="/refund-policy" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Refund Policy</Link>
+                  </div>
+                  <h4 className="text-sm font-semibold uppercase tracking-wider text-foreground mb-3 mt-6">Learn</h4>
+                  <div className="space-y-3">
+                    <Link to="/learn/faq" className="block text-sm text-muted-foreground hover:text-primary transition-colors">FAQ</Link>
+                    <Link to="/learn/glossary" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Glossary</Link>
+                    <Link to="/learn/smart-navigation" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Smart Navigation</Link>
+                    <Link to="/learn/integrations" className="block text-sm text-muted-foreground hover:text-primary transition-colors">Integrations</Link>
                   </div>
                 </div>
               </div>
