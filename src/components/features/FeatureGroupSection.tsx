@@ -17,6 +17,7 @@ interface FeatureGroupSectionProps {
   icon: LucideIcon;
   features: Feature[];
   startReversed?: boolean;
+  bgClass?: string;
 }
 
 const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
@@ -26,8 +27,9 @@ const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
   icon: GroupIcon,
   features,
   startReversed = false,
+  bgClass = "bg-background",
 }) => (
-  <section id={id} className="scroll-mt-20">
+  <section id={id} className={`scroll-mt-20 ${bgClass}`}>
     {/* Group header */}
     <div className="py-12 sm:py-16 border-b border-border/30">
       <div className="container mx-auto px-4 max-w-5xl text-center">
