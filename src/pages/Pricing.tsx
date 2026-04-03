@@ -267,6 +267,7 @@ const Pricing = () => {
           { name: "Home", url: "https://hobsonschoice.ai" },
           { name: "Pricing", url: "https://hobsonschoice.ai/pricing" }
         ]))}</script>
+        <script type="application/ld+json">{JSON.stringify(structuredData.faqPagePricing)}</script>
       </Helmet>
 
       <GlobalHeader />

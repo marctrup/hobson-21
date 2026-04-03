@@ -176,7 +176,7 @@ export const Homepage = () => {
           {JSON.stringify(structuredData.softwareApplication)}
         </script>
         <script type="application/ld+json">
-          {JSON.stringify(structuredData.faqPage)}
+          {JSON.stringify(structuredData.faqPageLearn)}
         </script>
       </Helmet>
 
