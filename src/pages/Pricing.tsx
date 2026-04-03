@@ -473,19 +473,28 @@ const Pricing = () => {
         <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: C.bg }}>
           <div className="max-w-3xl mx-auto">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 md:mb-12 text-center" style={{ color: C.navy }}>Common questions</h2>
-            <div style={{ borderTop: `1px solid ${C.border}` }}>
-              {faqs.map((faq, i) => (
-                <div key={i} style={{ borderBottom: `1px solid ${C.border}` }} className="py-5">
-                  <button onClick={() => setOpenFaq(openFaq === i ? null : i)} className="w-full flex items-center justify-between text-left gap-4">
-                    <span className="text-base font-semibold" style={{ color: C.navy }}>{faq.q}</span>
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className={`flex-shrink-0 transition-transform duration-200 ${openFaq === i ? "rotate-45" : ""}`}>
-                      <path d="M10 4v12M4 10h12" stroke={C.muted} strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                  </button>
-                  {openFaq === i && <p className="mt-3 text-sm leading-relaxed whitespace-pre-line" style={{ color: C.muted }}>{faq.a}</p>}
+            {faqGroups.map((group, gi) => (
+              <div key={gi} className={gi > 0 ? "mt-8" : ""}>
+                <p className="text-xs font-semibold uppercase tracking-wider mb-3" style={{ color: C.purple }}>{group.heading}</p>
+                <div style={{ borderTop: `1px solid ${C.border}` }}>
+                  {group.items.map((faq, fi) => {
+                    const key = `${gi}-${fi}`;
+                    const isOpen = openFaq === key;
+                    return (
+                      <div key={key} style={{ borderBottom: `1px solid ${C.border}` }} className="py-5">
+                        <button onClick={() => setOpenFaq(isOpen ? null : key)} className="w-full flex items-center justify-between text-left gap-4">
+                          <span className="text-base font-semibold" style={{ color: C.navy }}>{faq.q}</span>
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" className={`flex-shrink-0 transition-transform duration-200 ${isOpen ? "rotate-45" : ""}`}>
+                            <path d="M10 4v12M4 10h12" stroke={C.muted} strokeWidth="1.5" strokeLinecap="round" />
+                          </svg>
+                        </button>
+                        {isOpen && <p className="mt-3 text-sm leading-relaxed whitespace-pre-line" style={{ color: C.muted }}>{faq.a}</p>}
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
         </section>
 
