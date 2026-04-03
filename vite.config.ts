@@ -4,163 +4,185 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
-    hmr: {
-      overlay: false
-    }
-  },
-  optimizeDeps: {
-    include: [
-      "react", 
-      "react-dom", 
-      "react-router-dom",
-      "react/jsx-runtime",
-      "react/jsx-dev-runtime",
-      "@tanstack/react-query",
-      "react-helmet-async",
-      "sonner",
-      "next-themes",
-      "@radix-ui/react-dialog",
-      "lucide-react"
-    ],
-    force: true,
-    esbuildOptions: {
-      target: 'esnext',
-    }
-  },
-  ssr: {
-    noExternal: [
-      'react', 
-      'react-dom', 
-      'sonner', 
-      'react-router-dom', 
-      '@radix-ui/react-dialog',
-      '@radix-ui/react-select',
-      '@radix-ui/react-label',
-      'react-helmet-async',
-      'next-themes'
-    ]
-  },
-  plugins: [
+export default defineConfig(({ mode }) => {
+  // Dynamically import prerender plugin only in production
+  const plugins: any[] = [
     react(),
-    mode === 'development' &&
-    componentTagger(),
-  ].filter(Boolean),
-  resolve: {
-    dedupe: [
-      "react", 
-      "react-dom", 
-      "react/jsx-runtime", 
-      "react/jsx-dev-runtime",
-      "react-router-dom",
-      "react-router",
-      "sonner",
-      "@radix-ui/react-dialog",
-      "@radix-ui/react-select",
-      "@radix-ui/react-label",
-      "@tanstack/react-query",
-      "react-helmet-async",
-      "next-themes"
-    ],
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-      // Force ALL React packages to use same instance
-      "react": path.resolve(__dirname, "./node_modules/react"),
-      "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
-      "react-dom/client": path.resolve(__dirname, "./node_modules/react-dom/client"),
-      "react/jsx-runtime": path.resolve(__dirname, "./node_modules/react/jsx-runtime"),
-      "react/jsx-dev-runtime": path.resolve(__dirname, "./node_modules/react/jsx-dev-runtime"),
+    mode === 'development' && componentTagger(),
+  ];
+
+  if (mode === 'production') {
+    try {
+      const Prerender = require('vite-plugin-prerender');
+      const PuppeteerRenderer = Prerender.PuppeteerRenderer;
+      plugins.push(
+        Prerender.default({
+          staticDir: path.join(__dirname, "dist"),
+          routes: [
+            "/",
+            "/features",
+            "/in-practice",
+            "/pricing",
+            "/blog",
+            "/learn/faq",
+            "/contact",
+          ],
+          renderer: new PuppeteerRenderer({
+            renderAfterTime: 3000,
+            headless: true,
+            executablePath: "/bin/chromium-browser",
+            args: [
+              "--no-sandbox",
+              "--disable-setuid-sandbox",
+              "--disable-dev-shm-usage",
+              "--disable-gpu",
+            ],
+          }),
+        })
+      );
+    } catch (e) {
+      console.warn("Prerender plugin not available, skipping prerendering");
+    }
+  }
+
+  return {
+    server: {
+      host: "::",
+      port: 8080,
+      hmr: {
+        overlay: false
+      }
     },
-  },
-  define: {
-    // Global React availability - using proper JSON string format
-    'global.React': '"React"',
-    'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
-  },
-  clearScreen: false,
-  build: {
-    target: 'esnext',
-    minify: 'esbuild',
-    cssMinify: true,
-    sourcemap: false,
-    chunkSizeWarningLimit: 1000,
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          // Core React chunks
-          if (id.includes('react') || id.includes('react-dom')) {
-            return 'react-vendor';
-          }
-          if (id.includes('react-router')) {
-            return 'react-router';
-          }
-          
-          // Heavy form libraries
-          if (id.includes('react-hook-form') || id.includes('zod') || id.includes('@hookform')) {
-            return 'forms';
-          }
-          
-          // UI libraries (split further)
-          if (id.includes('@radix-ui/react-dialog') || id.includes('@radix-ui/react-select')) {
-            return 'ui-heavy';
-          }
-          if (id.includes('@radix-ui')) {
-            return 'ui-base';
-          }
-          
-          // Backend
-          if (id.includes('supabase')) {
-            return 'supabase';
-          }
-          if (id.includes('@tanstack/react-query')) {
-            return 'query';
-          }
-          
-          // Icons and utilities
-          if (id.includes('lucide-react')) {
-            return 'icons';
-          }
-          if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
-            return 'utils';
-          }
-          
-          // Helmet for SEO
-          if (id.includes('react-helmet-async')) {
-            return 'meta';
-          }
-          
-          // Landing pages (lazy load these)
-          if (id.includes('LandingPage')) {
-            return 'landing-pages';
-          }
-        },
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name?.split('.') || [];
-          const ext = info[info.length - 1];
-          if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
-            return `assets/images/[name]-[hash][extname]`;
-          }
-          if (/css/i.test(ext)) {
-            return `assets/css/[name]-[hash][extname]`;
-          }
-          if (/woff2?|ttf|eot/i.test(ext)) {
-            return `assets/fonts/[name]-[hash][extname]`;
-          }
-          return `assets/[name]-[hash][extname]`;
-        },
-        chunkFileNames: 'assets/js/[name]-[hash].js',
-        entryFileNames: 'assets/js/[name]-[hash].js',
-      },
-      external: (id) => {
-        // Externalize large libraries that can be loaded from CDN
-        return false; // Keep everything bundled for now for better caching
+    optimizeDeps: {
+      include: [
+        "react", 
+        "react-dom", 
+        "react-router-dom",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+        "@tanstack/react-query",
+        "react-helmet-async",
+        "sonner",
+        "next-themes",
+        "@radix-ui/react-dialog",
+        "lucide-react"
+      ],
+      force: true,
+      esbuildOptions: {
+        target: 'esnext',
+      }
+    },
+    ssr: {
+      noExternal: [
+        'react', 
+        'react-dom', 
+        'sonner', 
+        'react-router-dom', 
+        '@radix-ui/react-dialog',
+        '@radix-ui/react-select',
+        '@radix-ui/react-label',
+        'react-helmet-async',
+        'next-themes'
+      ]
+    },
+    plugins: plugins.filter(Boolean),
+    resolve: {
+      dedupe: [
+        "react", 
+        "react-dom", 
+        "react/jsx-runtime", 
+        "react/jsx-dev-runtime",
+        "react-router-dom",
+        "react-router",
+        "sonner",
+        "@radix-ui/react-dialog",
+        "@radix-ui/react-select",
+        "@radix-ui/react-label",
+        "@tanstack/react-query",
+        "react-helmet-async",
+        "next-themes"
+      ],
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+        "react": path.resolve(__dirname, "./node_modules/react"),
+        "react-dom": path.resolve(__dirname, "./node_modules/react-dom"),
+        "react-dom/client": path.resolve(__dirname, "./node_modules/react-dom/client"),
+        "react/jsx-runtime": path.resolve(__dirname, "./node_modules/react/jsx-runtime"),
+        "react/jsx-dev-runtime": path.resolve(__dirname, "./node_modules/react/jsx-dev-runtime"),
       },
     },
-  },
-  esbuild: {
-    drop: mode === 'production' ? ['console', 'debugger'] : [],
-  },
-}));
+    define: {
+      'global.React': '"React"',
+      'process.env.NODE_ENV': JSON.stringify(mode === 'production' ? 'production' : 'development'),
+    },
+    clearScreen: false,
+    build: {
+      target: 'esnext',
+      minify: 'esbuild',
+      cssMinify: true,
+      sourcemap: false,
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks: (id) => {
+            if (id.includes('react') || id.includes('react-dom')) {
+              return 'react-vendor';
+            }
+            if (id.includes('react-router')) {
+              return 'react-router';
+            }
+            if (id.includes('react-hook-form') || id.includes('zod') || id.includes('@hookform')) {
+              return 'forms';
+            }
+            if (id.includes('@radix-ui/react-dialog') || id.includes('@radix-ui/react-select')) {
+              return 'ui-heavy';
+            }
+            if (id.includes('@radix-ui')) {
+              return 'ui-base';
+            }
+            if (id.includes('supabase')) {
+              return 'supabase';
+            }
+            if (id.includes('@tanstack/react-query')) {
+              return 'query';
+            }
+            if (id.includes('lucide-react')) {
+              return 'icons';
+            }
+            if (id.includes('clsx') || id.includes('tailwind-merge') || id.includes('class-variance-authority')) {
+              return 'utils';
+            }
+            if (id.includes('react-helmet-async')) {
+              return 'meta';
+            }
+            if (id.includes('LandingPage')) {
+              return 'landing-pages';
+            }
+          },
+          assetFileNames: (assetInfo) => {
+            const info = assetInfo.name?.split('.') || [];
+            const ext = info[info.length - 1];
+            if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(ext)) {
+              return `assets/images/[name]-[hash][extname]`;
+            }
+            if (/css/i.test(ext)) {
+              return `assets/css/[name]-[hash][extname]`;
+            }
+            if (/woff2?|ttf|eot/i.test(ext)) {
+              return `assets/fonts/[name]-[hash][extname]`;
+            }
+            return `assets/[name]-[hash][extname]`;
+          },
+          chunkFileNames: 'assets/js/[name]-[hash].js',
+          entryFileNames: 'assets/js/[name]-[hash].js',
+        },
+        external: (id) => {
+          return false;
+        },
+      },
+    },
+    esbuild: {
+      drop: mode === 'production' ? ['console', 'debugger'] : [],
+    },
+  };
+});
