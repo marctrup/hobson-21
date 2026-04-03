@@ -175,9 +175,6 @@ export const Homepage = () => {
         <script type="application/ld+json">
           {JSON.stringify(structuredData.softwareApplication)}
         </script>
-        <script type="application/ld+json">
-          {JSON.stringify(structuredData.faqPageLearn)}
-        </script>
       </Helmet>
 
       <div className="min-h-screen bg-background">
