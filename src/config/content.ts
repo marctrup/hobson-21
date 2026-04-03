@@ -24,7 +24,7 @@ export const CONTENT = {
     titleHighlight: "managed automatically.",
     subtitle: "Hobson does the property work every business has but nobody has time for. Purpose-built for leases, compliance and obligations — not adapted from a generic AI tool.",
     ctaButton: "Start free — no card required",
-    ctaSecondary: "Join the waitlist for Tier 2",
+    ctaSecondary: "Join the waitlist for Tier 2-4",
   },
 
   // Hero Visualization
