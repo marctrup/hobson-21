@@ -11,11 +11,14 @@ export const GlobalHeader = () => {
   const content = useContent();
   const isGerman = language === 'de';
 
-  // Filter out Learn and Blog links for German site
-  const filteredLinks = content.navigation.links.filter(link => {
-    if (isGerman && (link.to === '/learn' || link.to === '/blog')) return false;
+  // Primary nav links
+  const primaryLinks = content.navigation.links.filter(link => {
+    if (isGerman && (link.to === '/blog')) return false;
     return true;
   });
+
+  // Secondary nav links
+  const secondaryLinks = (content.navigation as any).secondary || [];
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
