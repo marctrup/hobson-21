@@ -482,7 +482,7 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-4 md:p-8 max-w-7xl">
-            <div className="lg:flex lg:gap-8">
+            
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-6 md:mb-8">
@@ -580,17 +580,6 @@ const Learn = () => {
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
-                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                        {section.label}
-                      </button>)}
-                  </nav>
-                </div>
-              </div>
-            </div>
           </div>
         </div>;
     }
@@ -625,7 +614,7 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-4 md:p-8 max-w-7xl">
-            <div className="lg:flex lg:gap-8">
+            
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-6 md:mb-8">
@@ -724,17 +713,6 @@ const Learn = () => {
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
-                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                        {section.label}
-                      </button>)}
-                  </nav>
-                </div>
-              </div>
-            </div>
           </div>
         </div>;
     }
@@ -760,7 +738,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-5xl">
                 <div className="mb-8">
@@ -911,17 +888,6 @@ const Learn = () => {
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
-                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                        {section.label}
-                      </button>)}
-                  </nav>
-                </div>
-              </div>
-            </div>
           </div>
         </div>;
     }
@@ -950,7 +916,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-8">
@@ -1081,17 +1046,6 @@ const Learn = () => {
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
-                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                        {section.label}
-                      </button>)}
-                  </nav>
-                </div>
-              </div>
-            </div>
           </div>
         </div>;
     }
@@ -1123,7 +1077,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-8">
@@ -1298,17 +1251,6 @@ const Learn = () => {
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
-                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                        {section.label}
-                      </button>)}
-                  </nav>
-                </div>
-              </div>
-            </div>
           </div>
         </div>;
     }
@@ -1353,8 +1295,7 @@ const Learn = () => {
         }
       };
       return <div className="flex-1">
-          <div className="flex gap-8">
-            <div className="flex-1 p-8">
+          <div className="flex-1 p-8">
               <div className="max-w-4xl mx-auto">
                 <h1 className="text-3xl font-bold text-foreground mb-6">API Reference</h1>
 
@@ -1376,17 +1317,6 @@ const Learn = () => {
             </div>
 
             {/* Table of Contents - Right Sidebar */}
-            <div className="hidden lg:block w-64 sticky top-8 h-fit">
-              <div className="border border-border rounded-lg p-4">
-                <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                <nav className="space-y-2">
-                  {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                      {section.label}
-                    </button>)}
-                </nav>
-              </div>
-            </div>
-          </div>
         </div>;
     }
 
@@ -1585,7 +1515,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="text-center mb-8">
@@ -1611,17 +1540,6 @@ const Learn = () => {
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
-                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                        {section.label}
-                      </button>)}
-                  </nav>
-                </div>
-              </div>
-            </div>
           </div>
         </div>;
     }
@@ -1668,7 +1586,6 @@ const Learn = () => {
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="mb-8">
@@ -1959,17 +1876,6 @@ Content-Type: multipart/form-data
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
-                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                        {section.label}
-                      </button>)}
-                  </nav>
-                </div>
-              </div>
-            </div>
           </div>
         </div>;
     }
@@ -1995,7 +1901,6 @@ Content-Type: multipart/form-data
       };
       return <div className="flex-1">
           <div className="container mx-auto p-8 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 <div className="text-center mb-8">
@@ -2021,17 +1926,6 @@ Content-Type: multipart/form-data
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
-                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                        {section.label}
-                      </button>)}
-                  </nav>
-                </div>
-              </div>
-            </div>
           </div>
         </div>;
     }
@@ -2218,7 +2112,6 @@ Content-Type: multipart/form-data
       };
       return <div className="flex-1 bg-gradient-to-b from-background to-muted/20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 max-w-7xl">
-            <div className="flex gap-8">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 {/* Hero Header */}
@@ -2303,17 +2196,6 @@ Content-Type: multipart/form-data
               </div>
 
               {/* Table of Contents - Right Sidebar */}
-              <div className="hidden lg:block w-64 sticky top-8 h-fit">
-                <div className="border border-border rounded-lg p-4">
-                  <h3 className="font-semibold text-foreground mb-4">On This Page</h3>
-                  <nav className="space-y-2">
-                    {tocSections.map(section => <button key={section.id} onClick={() => scrollToSection(section.id)} className={`block w-full text-left px-3 py-2 text-sm rounded transition-colors ${activeTocSection === section.id ? "bg-purple-100 text-purple-700 font-medium" : "text-muted-foreground hover:text-purple-700 hover:bg-accent/5"}`}>
-                        {section.label}
-                      </button>)}
-                  </nav>
-                </div>
-              </div>
-            </div>
           </div>
         </div>;
     }
@@ -2483,80 +2365,9 @@ Content-Type: multipart/form-data
             </div>
           </div>
 
-          {/* Desktop Main Layout with Sidebar and Content */}
-          <div className="flex">
-            {/* Desktop Left Navigation Panel */}
-            <aside className="w-80 min-h-[calc(100vh-8rem)]">
-              <div className="p-4 pt-[38px]">
-                {/* Global Navigation Section */}
-                <div className="mb-8">
-                  <nav className="space-y-1">
-                    {staticVerticalTabs.map(tab => {
-                    const Icon = tab.icon;
-                    return <button key={tab.id} onClick={() => {
-                      setActiveVerticalTab(tab.id);
-                      setIsGlobalPageActive(true);
-                    }} className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${activeVerticalTab === tab.id && isGlobalPageActive ? "bg-primary/10 text-primary border border-primary/20 shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-muted/50"}`}>
-                          <Icon className="w-4 h-4 flex-shrink-0" />
-                          <span className="text-sm font-medium">{tab.label}</span>
-                        </button>;
-                  })}
-                  </nav>
-                </div>
-
-                {/* Visual Separator */}
-                {!isGlobalPageActive && <div className="relative mb-6">
-                    <div className="absolute inset-0 flex items-center">
-                      <div className="w-full border-t border-border"></div>
-                    </div>
-                    <div className="relative flex justify-center">
-                      <div className="bg-background px-3">
-                        <div className="w-2 h-2 bg-muted-foreground/40 rounded-full"></div>
-                      </div>
-                    </div>
-                  </div>}
-
-                {/* Contextual Section - Only show when not on global pages */}
-                {!isGlobalPageActive && <div>
-                    <div className="px-3 pb-4 mb-4 bg-primary/5 rounded-lg border-l-4 border-primary">
-                      <div className="flex items-center gap-2 mb-2">
-                        {(() => {
-                      const ActiveIcon = horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.icon;
-                      return ActiveIcon ? <ActiveIcon className="w-5 h-5 text-primary" /> : null;
-                    })()}
-                        <h3 className="text-lg font-medium text-foreground">
-                          {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label}
-                        </h3>
-                      </div>
-                      <p className="text-sm text-muted-foreground pl-7">
-                        {activeHorizontalTab === "introduction" ? "How Hobson navigates your portfolio" :
-                         activeHorizontalTab === "faq" ? "Frequently asked questions" :
-                         activeHorizontalTab === "integrations" ? "Systems Hobson works alongside" :
-                         activeHorizontalTab === "glossary" ? "Property and AI terms explained" :
-                         `Navigate through ${horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content`}
-                      </p>
-                    </div>
-                    <nav className="space-y-1">
-                      {getContextualVerticalTabs(activeHorizontalTab).map(tab => {
-                    const Icon = tab.icon;
-                    return <button key={tab.id} onClick={() => {
-                      setActiveVerticalTab(tab.id);
-                      setIsGlobalPageActive(false);
-                      navigate(`/learn/${tab.id}`, {
-                        replace: true
-                      });
-                    }} className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-colors ${activeVerticalTab === tab.id && !isGlobalPageActive ? "bg-accent/10 text-accent-foreground border border-accent/20 shadow-sm" : "text-muted-foreground hover:text-foreground hover:bg-accent/5"}`}>
-                            <Icon className="w-4 h-4 flex-shrink-0" />
-                            <span className="text-sm font-medium">{tab.label}</span>
-                          </button>;
-                  })}
-                    </nav>
-                  </div>}
-              </div>
-            </aside>
-
-            {/* Desktop Main Content Area */}
-            <div className="flex-1 min-h-[calc(100vh-8rem)]">{renderContent()}</div>
+          {/* Desktop Main Content Area */}
+          <div className="container mx-auto px-4 md:px-8 min-h-[calc(100vh-8rem)]">
+            {renderContent()}
           </div>
         </div>
 
@@ -2580,21 +2391,6 @@ Content-Type: multipart/form-data
                   </option>)}
               </select>
             </div>
-
-            {/* Mobile Subtopic Navigation */}
-            {!isGlobalPageActive && getContextualVerticalTabs(activeHorizontalTab).length > 0 && <div className="px-4 pb-3">
-                <select value={activeVerticalTab} onChange={e => {
-              setActiveVerticalTab(e.target.value);
-              setIsGlobalPageActive(false);
-              navigate(`/learn/${e.target.value}`, {
-                replace: true
-              });
-            }} className="w-full p-2 border border-border rounded-lg bg-background text-foreground text-sm">
-                  {getContextualVerticalTabs(activeHorizontalTab).map(tab => <option key={tab.id} value={tab.id}>
-                      {tab.label}
-                    </option>)}
-                </select>
-              </div>}
           </div>
 
           <div className="flex-1 min-h-[calc(100vh-8rem)] p-4 md:p-8">{renderContent()}</div>
