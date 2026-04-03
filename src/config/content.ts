@@ -79,7 +79,7 @@ export const CONTENT = {
 
   // CTA Section
   cta: {
-    title: "Your property obligations, managed automatically.",
+    title: "Your real estate obligations, managed automatically.",
     subtitle: "Join the businesses already using Hobson to manage their leases, compliance and property obligations — without the manual work.",
     button: "Start free — no card required",
   },
