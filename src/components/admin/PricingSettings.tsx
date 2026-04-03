@@ -83,6 +83,7 @@ export default function PricingSettings() {
         const { error } = await (supabase.from("onboarding_pricing") as any).insert({
           cost_per_document: parseFloat(costPerDocument),
           cost_per_question_pack: parseFloat(costPerQuestionPack),
+          questions_per_pack: parseInt(questionsPerPack, 10),
         });
         if (error) throw error;
       }
