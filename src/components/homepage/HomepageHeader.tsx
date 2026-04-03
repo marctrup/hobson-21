@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useContent } from "@/contexts/LanguageContext";
+import { InterestModal } from "@/components/InterestModal";
 import hobsonLogo from "/hobson-logo.png";
 
 // UK Flag SVG component
