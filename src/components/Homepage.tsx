@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { InterestModal } from "@/components/InterestModal";
 import { Link } from "react-router-dom";
-import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
+import { Menu, X, ArrowRight } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { Helmet } from "react-helmet-async";
