@@ -6,6 +6,7 @@ interface OnboardingPricing {
   cost_per_document: number;
   minimum_fee: number;
   cost_per_question_pack: number;
+  questions_per_pack: number;
 }
 
 interface TierLimit {
