@@ -1,25 +1,27 @@
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: Twitterbot
-Allow: /
-
-User-agent: facebookexternalhit
-Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: GPTBot
-Allow: /
-
 User-agent: *
 Allow: /
+
+Disallow: /homeowner
+Disallow: /abtest
+Disallow: /quiz1
+Disallow: /quiz2
+Disallow: /carousel
+Disallow: /investment-carousel
+Disallow: /banners
+Disallow: /email-1
+Disallow: /login-gate
+Disallow: /landing-a
+Disallow: /landing-b
+Disallow: /landing-c
+Disallow: /admin
+Disallow: /admin/
+Disallow: /home/property-management-software
+Disallow: /real-estate-ai
+Disallow: /tenancy-document
+Disallow: /features
+Disallow: /features/real_estate_ai
+Disallow: /pilot
+Disallow: /pilot_form
+Disallow: /partnership
 
 Sitemap: https://hobsonschoice.ai/sitemap.xml
