@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { useLanguage, useContent } from '@/contexts/LanguageContext';
+import { CONTENT } from '@/config/content';
 import owlMascotChat from '@/assets/owl-mascot-chat.png';
 import owlChatBubble from '@/assets/owl-chat-bubble.png';
 
