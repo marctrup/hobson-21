@@ -89,11 +89,6 @@ export const HomepageHeader = () => {
               Login
             </button>
             
-            {/* Language indicator */}
-            <div className="flex items-center gap-1.5 text-sm text-muted-foreground" title="English (UK)">
-              <UKFlag className="w-5 h-auto rounded-sm shadow-sm" />
-              <span className="hidden lg:inline">EN</span>
-            </div>
           </nav>
 
           {/* Mobile Menu Button */}
