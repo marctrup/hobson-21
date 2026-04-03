@@ -168,10 +168,16 @@ const Learn = () => {
           },
           // Use Cases section
           "use-cases": {
-            horizontal: "use-cases"
+            horizontal: "in-practice"
           },
           usecases: {
-            horizontal: "use-cases"
+            horizontal: "in-practice"
+          },
+          "in-practice": {
+            horizontal: "in-practice"
+          },
+          inpractice: {
+            horizontal: "in-practice"
           },
           // Glossary section
           glossary: {
@@ -285,8 +291,8 @@ const Learn = () => {
     label: "Integrations",
     icon: Puzzle
   }, {
-    id: "use-cases",
-    label: "Use Cases",
+    id: "in-practice",
+    label: "In Practice",
     icon: Library
   }, {
     id: "glossary",
@@ -395,7 +401,7 @@ const Learn = () => {
           label: "Advanced Techniques",
           icon: Wand2
         }];
-      case "use-cases":
+      case "in-practice":
         return [];
       case "glossary":
         return [{
@@ -2398,7 +2404,7 @@ Content-Type: multipart/form-data
     }
 
     // Handle Use Cases content
-    if (activeHorizontalTab === "use-cases") {
+    if (activeHorizontalTab === "in-practice") {
       return <UseCasesContent />;
     }
     return <div className="flex-1">
@@ -2430,7 +2436,7 @@ Content-Type: multipart/form-data
         };
       }
     }
-    if (activeHorizontalTab === "use-cases") {
+    if (activeHorizontalTab === "in-practice") {
       return {
         title: "Use Cases | Hobson AI — AI assistance to operators, occupiers and owners of real estate",
         description: "Discover real-world use cases and applications of Hobson AI for property management and real estate document analysis."
@@ -2490,7 +2496,7 @@ Content-Type: multipart/form-data
                   setActiveHorizontalTab(tab.id);
                   setActiveVerticalTab(newVerticalTab);
                   setIsGlobalPageActive(false);
-                  navigate(`/learn/${tab.id === "use-cases" ? "use-cases" : newVerticalTab}`, {
+                  navigate(tab.id === "in-practice" ? "/in-practice" : `/learn/${newVerticalTab}`, {
                     replace: true
                   });
                 }} className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${activeHorizontalTab === tab.id && !isGlobalPageActive ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50"}`}>
@@ -2587,7 +2593,7 @@ Content-Type: multipart/form-data
               setActiveHorizontalTab(e.target.value);
               setActiveVerticalTab(newVerticalTab);
               setIsGlobalPageActive(false);
-              navigate(`/learn/${e.target.value === "use-cases" ? "use-cases" : newVerticalTab}`, {
+              navigate(e.target.value === "in-practice" ? "/in-practice" : `/learn/${newVerticalTab}`, {
                 replace: true
               });
             }} className="w-full p-2 border border-border rounded-lg bg-background text-foreground">

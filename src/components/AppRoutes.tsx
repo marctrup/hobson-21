@@ -31,6 +31,7 @@ const Announcements = lazy(() => import("../pages/Announcements"));
 const AnnouncementPost = lazy(() => import("../pages/AnnouncementPost"));
 const FeatureRequests = lazy(() => import("../pages/FeatureRequests"));
 const UseHobson = lazy(() => import("../pages/UseHobson").then(module => ({ default: module.UseHobson })));
+const InPractice = lazy(() => import("../pages/InPractice"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
@@ -115,6 +116,9 @@ const AppContent = () => {
               <Route path="/announcement/:slug" element={<AnnouncementPost />} />
               <Route path="/feature-requests" element={<FeatureRequests />} />
               <Route path="/usehobson" element={<UseHobson />} />
+              <Route path="/in-practice" element={<InPractice />} />
+              <Route path="/learn/use-cases" element={<Navigate to="/in-practice" replace />} />
+              <Route path="/use-cases" element={<Navigate to="/in-practice" replace />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
               <Route path="/investor-summary" element={<InvestorSummary />} />
               
