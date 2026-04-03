@@ -18,6 +18,9 @@ const FeatureShowcase = memo(() => {
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           {content.features.subtitle}
         </p>
+        <p className="text-sm text-muted-foreground/70 max-w-2xl mx-auto mt-2">
+          Hobson reads the original lease and every document that has varied it — returning the current legal position, not just what the original said.
+        </p>
       </div>
       
       {/* Angled Interface Display */}

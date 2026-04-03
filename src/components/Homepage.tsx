@@ -11,6 +11,8 @@ import MobileShowcase from "@/components/features/MobileShowcase";
 
 import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm";
 import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
+import { AudienceStrip } from "@/components/homepage/AudienceStrip";
+import { TrustStrip } from "@/components/homepage/TrustStrip";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { structuredData } from "@/utils/seo-data";
