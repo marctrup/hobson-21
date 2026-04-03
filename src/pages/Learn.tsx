@@ -2323,13 +2323,12 @@ Content-Type: multipart/form-data
       <GlobalHeader />
 
       <div className="min-h-screen">
-        {/* Desktop Layout */}
-        <div className="hidden md:flex flex-col">
-          {/* Horizontal Topics Navigation */}
-          <div className="mt-8">
-            <div className="w-full px-4">
-              <nav className="flex space-x-8 overflow-x-auto">
-                {horizontalTabs.map(tab => {
+        {/* Desktop Layout - Sidebar + Content */}
+        <div className="hidden md:flex">
+          {/* Vertical Sidebar Navigation */}
+          <aside className="w-56 shrink-0 border-r border-border bg-muted/30 min-h-[calc(100vh-4rem)] sticky top-16 self-start">
+            <nav className="flex flex-col gap-1 p-4">
+              {horizontalTabs.map(tab => {
                 const Icon = tab.icon;
                 return <button key={tab.id} onClick={() => {
                   const contextualTabs = getContextualVerticalTabs(tab.id);
@@ -2340,18 +2339,19 @@ Content-Type: multipart/form-data
                   navigate(tab.id === "in-practice" ? "/in-practice" : `/learn/${newVerticalTab}`, {
                     replace: true
                   });
-                }} className={`flex items-center gap-2 px-1 py-4 border-b-2 transition-colors whitespace-nowrap ${activeHorizontalTab === tab.id && !isGlobalPageActive ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground/50"}`}>
-                      <Icon className="w-4 h-4" />
-                      <span className="text-sm font-medium">{tab.label}</span>
+                }} className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-left transition-colors ${activeHorizontalTab === tab.id && !isGlobalPageActive ? "bg-primary/10 text-primary font-medium" : "text-muted-foreground hover:text-foreground hover:bg-muted"}`}>
+                      <Icon className="w-4 h-4 shrink-0" />
+                      <span className="text-sm">{tab.label}</span>
                     </button>;
               })}
-              </nav>
-            </div>
-          </div>
+            </nav>
+          </aside>
 
-          {/* Desktop Main Content Area */}
-          <div className="container mx-auto px-4 md:px-8 min-h-[calc(100vh-8rem)]">
-            {renderContent()}
+          {/* Desktop Main Content Area - Centered */}
+          <div className="flex-1 flex justify-center min-h-[calc(100vh-4rem)]">
+            <div className="w-full max-w-4xl px-8 py-8">
+              {renderContent()}
+            </div>
           </div>
         </div>
 
