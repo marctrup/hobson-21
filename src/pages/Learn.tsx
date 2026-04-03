@@ -2404,7 +2404,7 @@ Content-Type: multipart/form-data
     }
 
     // Handle Use Cases content
-    if (activeHorizontalTab === "use-cases") {
+    if (activeHorizontalTab === "in-practice") {
       return <UseCasesContent />;
     }
     return <div className="flex-1">
