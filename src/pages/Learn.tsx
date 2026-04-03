@@ -2347,8 +2347,8 @@ Content-Type: multipart/form-data
             </nav>
           </aside>
 
-          {/* Desktop Main Content Area - Centered */}
-          <div className="flex-1 flex justify-center min-h-[calc(100vh-4rem)]">
+          {/* Desktop Main Content Area - Left aligned */}
+          <div className="flex-1 min-h-[calc(100vh-4rem)]">
             <div className="w-full max-w-4xl px-8 py-8">
               {renderContent()}
             </div>
