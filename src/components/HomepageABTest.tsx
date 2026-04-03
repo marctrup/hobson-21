@@ -49,24 +49,24 @@ export const HomepageABTest = () => {
   return (
     <>
       <Helmet>
-        <title>AI Property Management Software | Document Intelligence | Hobson AI</title>
+        <title>Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
+        <meta name="robots" content="noindex, nofollow" />
         <meta
           name="description"
-          content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ."
+          content="Hobson reads your leases, manages your obligations and delivers the work — so your team doesn't have to."
         />
-        <meta name="keywords" content="Real Estate AI, tenancy agreement analysis, property AI, automation, " />
-        <meta property="og:title" content="AI-Document Intelligence for the Property Industry | Hobson AI" />
+        <meta property="og:title" content="Hobson AI — The intelligence layer your property portfolio runs on" />
         <meta
           property="og:description"
-          content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ."
+          content="Hobson reads your leases, manages your obligations and delivers the work — so your team doesn't have to."
         />
         <meta property="og:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@HobsonAI" />
-        <meta name="twitter:title" content="AI-Document Intelligence for the Property Industry" />
+        <meta name="twitter:title" content="Hobson AI — The intelligence layer your property portfolio runs on" />
         <meta
           name="twitter:description"
-          content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ."
+          content="Hobson reads your leases, manages your obligations and delivers the work — so your team doesn't have to."
         />
         <meta name="twitter:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
         <link rel="canonical" href="https://hobsonschoice.ai/" />
