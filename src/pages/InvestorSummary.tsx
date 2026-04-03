@@ -166,7 +166,7 @@ const InvestorSummary = () => {
   return (
     <>
       <Helmet>
-        <title>Investor Summary | Hobson AI</title>
+        <title>Investor Summary | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Hobson AI - Specialised AI for the Property Industry. Investment teaser for real estate document intelligence." />
         <meta name="robots" content="noindex, nofollow" />
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />

@@ -172,7 +172,7 @@ const ContactUs = () => {
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
-        <title>Contact Us - Hobson's Choice AI | Get Property Intelligence Support</title>
+        <title>Contact Us | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Contact Hobson's Choice AI for property management support, questions about our AI document intelligence platform, or to discuss your property technology needs." />
         <meta name="keywords" content="contact Hobson AI, property management support, AI document analysis contact, real estate technology help" />
         <meta property="og:title" content="Contact Us - Hobson's Choice AI" />

@@ -394,7 +394,7 @@ const FeatureRequests = () => {
   return (
     <>
       <Helmet>
-        <title>Feature Requests - Hobson AI</title>
+        <title>Feature Requests | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Share your feedback and feature requests for Hobson AI" />
       </Helmet>
 

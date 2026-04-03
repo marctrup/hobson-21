@@ -203,7 +203,7 @@ const Pricing = () => {
   return (
     <>
       <Helmet>
-        <title>Pricing | Hobson AI — Specialised AI for Property Management</title>
+        <title>Pricing | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Compare Hobson AI pricing tiers. Start free or choose a plan that fits your property management needs." />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
 <script type="application/ld+json">{JSON.stringify(structuredData.softwareApplication)}</script>
