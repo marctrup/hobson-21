@@ -79,9 +79,9 @@ export const CONTENT = {
 
   // CTA Section
   cta: {
-    title: "Ready to introduce AI into your business?",
-    subtitle: "",
-    button: "Register your interest",
+    title: "Your property obligations, managed automatically.",
+    subtitle: "Join the businesses already using Hobson to manage their leases, compliance and property obligations — without the manual work.",
+    button: "Start free — no card required",
   },
 
   // Footer
