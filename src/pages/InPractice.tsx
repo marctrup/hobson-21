@@ -193,33 +193,33 @@ const InPractice = () => {
         </section>
 
         {/* SECTION 5 — Coming Soon Strip */}
-        <section className="py-12 sm:py-16 bg-foreground text-background">
+        <section className="py-12 sm:py-16" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
           <div className="container mx-auto px-4 max-w-5xl">
-            <p className="text-xs font-bold uppercase tracking-widest text-background/60 mb-4 text-center">COMING LATER THIS YEAR</p>
-            <h2 className="text-3xl sm:text-4xl font-bold text-center mb-3">What Hobson is building next</h2>
-            <p className="text-lg text-background/70 text-center mb-10">Phase 1 is live now. Here is what is coming.</p>
+            <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-4 text-center">COMING LATER THIS YEAR</p>
+            <h2 className="text-3xl sm:text-4xl font-bold text-foreground text-center mb-3">What Hobson is building next</h2>
+            <p className="text-lg text-muted-foreground text-center mb-10">Phase 1 is live now. Here is what is coming.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="rounded-lg border border-background/20 bg-background/10 p-6 space-y-4">
-                <Badge variant="secondary" className="bg-background/20 text-background border-background/30">Phase 2</Badge>
-                <h3 className="text-xl font-bold">The Knowledge Base</h3>
-                <p className="text-sm text-background/70 leading-relaxed">
+              <Card className="border bg-card p-6 space-y-4">
+                <Badge variant="secondary">Phase 2</Badge>
+                <h3 className="text-xl font-bold text-foreground">The Knowledge Base</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   Hobson learns how your business operates. Your contractors, contacts, policies, approval thresholds and communication preferences — stored permanently and applied to every answer. Hobson stops being a document tool and starts behaving like an informed member of your team.
                 </p>
-                <Link to="/pricing" className="inline-flex items-center gap-2 text-sm font-medium text-background hover:text-background/80 transition-colors">
+                <Link to="/pricing" className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
                   Join the waitlist <ArrowRight className="w-4 h-4" />
                 </Link>
-              </div>
-              <div className="rounded-lg border border-background/20 bg-background/10 p-6 space-y-4">
-                <Badge variant="secondary" className="bg-background/20 text-background border-background/30">Phase 3</Badge>
-                <h3 className="text-xl font-bold">The Application Layer</h3>
-                <p className="text-sm text-background/70 leading-relaxed">
+              </Card>
+              <Card className="border bg-card p-6 space-y-4">
+                <Badge variant="secondary">Phase 3</Badge>
+                <h3 className="text-xl font-bold text-foreground">The Application Layer</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   Hobson stops answering and starts acting. Rent reviews triggered automatically. Compliance deadlines flagged and actioned. Lease events managed end-to-end without a human in the loop until a decision is required. The work gets done.
                 </p>
-                <Link to="/pricing" className="inline-flex items-center gap-2 text-sm font-medium text-background hover:text-background/80 transition-colors">
+                <Link to="/pricing" className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors">
                   Join the waitlist <ArrowRight className="w-4 h-4" />
                 </Link>
-              </div>
+              </Card>
             </div>
           </div>
         </section>
