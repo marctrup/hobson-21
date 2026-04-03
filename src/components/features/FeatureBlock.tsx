@@ -8,6 +8,7 @@ interface FeatureBlockProps {
   matters: string;
   icon: LucideIcon;
   reversed?: boolean;
+  extraContent?: React.ReactNode;
 }
 
 const FeatureBlock: React.FC<FeatureBlockProps> = ({
@@ -17,6 +18,7 @@ const FeatureBlock: React.FC<FeatureBlockProps> = ({
   matters,
   icon: Icon,
   reversed = false,
+  extraContent,
 }) => (
   <div
     className={`flex flex-col ${reversed ? "lg:flex-row-reverse" : "lg:flex-row"} gap-8 lg:gap-14 items-start`}
@@ -61,6 +63,8 @@ const FeatureBlock: React.FC<FeatureBlockProps> = ({
           {matters}
         </p>
       </div>
+
+      {extraContent}
     </div>
   </div>
 );
