@@ -74,7 +74,7 @@ export const HomepageHeader = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-sm text-muted-foreground/70 hover:text-foreground transition-colors"
+                className="text-base text-muted-foreground hover:text-foreground transition-colors"
                 title={link.title}
               >
                 {link.label}
