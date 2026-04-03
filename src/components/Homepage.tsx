@@ -168,7 +168,7 @@ export const Homepage = () => {
                     <span className="text-foreground">{content.hero.title} </span>
                     <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">{content.hero.titleHighlight}</span>
                   </h1>
-                  <p className={`text-muted-foreground leading-relaxed ${isGerman ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}`} lang={language} style={isGerman ? { hyphens: 'auto' } : {}}>{content.hero.subtitle}
+                  <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}
                   </p>
                   
                   <div className="flex flex-col gap-4 items-center lg:items-start">
