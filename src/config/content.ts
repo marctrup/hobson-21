@@ -415,7 +415,7 @@ export const CONTENT = {
       { to: "/blog", label: "Blog", title: "Property Management Insights" },
     ],
     secondary: [
-      { to: "/learn/faq", label: "Learn", title: "FAQ, glossary and integrations" },
+      { to: "/learn/smart-navigation", label: "Learn", title: "FAQ, glossary and integrations" },
       { to: "/contact", label: "Contact", title: "Contact Real Estate Software Support" },
     ],
   },
