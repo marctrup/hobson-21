@@ -285,8 +285,8 @@ const Learn = () => {
     label: "Integrations",
     icon: Puzzle
   }, {
-    id: "use-cases",
-    label: "Use Cases",
+    id: "in-practice",
+    label: "In Practice",
     icon: Library
   }, {
     id: "glossary",
