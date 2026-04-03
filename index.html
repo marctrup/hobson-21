@@ -107,30 +107,8 @@
     <link rel="preconnect" href="https://awfyhgeflakjhxtntokd.supabase.co" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Mobile-first critical resource preloading -->
-    <link rel="preload" href="/hobson-logo.png" as="image" fetchpriority="high" media="(max-width: 768px)" />
-    <link
-      rel="preload"
-      href="/blog-images/boy-praying-with-bible.png"
-      as="image"
-      fetchpriority="high"
-      media="(max-width: 768px)"
-    />
-
-    <!-- Desktop preloading -->
-    <link
-      rel="preload"
-      href="/lovable-uploads/4351fb54-1d77-416e-9474-3c80e483a83c.png"
-      as="image"
-      media="(min-width: 769px)"
-    />
-    <link rel="preload" href="/blog-images/too-good-to-be-true.png" as="image" media="(min-width: 769px)" />
-
-    <!-- Aggressive critical script preloading -->
-    <link rel="modulepreload" href="/src/main.tsx" fetchpriority="high" />
-    <link rel="modulepreload" href="/src/App.tsx" fetchpriority="high" />
-    <link rel="modulepreload" href="/src/pages/Blog.tsx" />
-    <link rel="modulepreload" href="/src/components/blog/BlogHero.tsx" />
+    <!-- Minimal critical preloading - logo only -->
+    <link rel="preload" href="/hobson-logo.png" as="image" fetchpriority="high" />
 
     <!-- Font optimization - inline critical font CSS -->
     <style>
