@@ -11,11 +11,11 @@ import { PropertyManagementVisualizationHomeowner } from "@/components/homepage/
 import { HomepageGeorgiaVideoHomeowner } from "@/components/videos/HomepageGeorgiaVideoHomeowner";
 import { HomepagePilotVideoHomeowner } from "@/components/videos/HomepagePilotVideoHomeowner";
 import { FeaturesSectionHomeowner } from "@/components/homepage/FeaturesSectionHomeowner";
-import { useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 export const HomepageHomeowner = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const content = useContent();
+  const content = CONTENT;
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };

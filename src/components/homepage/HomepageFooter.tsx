@@ -1,12 +1,9 @@
 import { Link } from "react-router-dom";
-import { useLanguage, useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 import hobsonLogo from "/hobson-logo.png";
 
 export const HomepageFooter = () => {
-  const { language } = useLanguage();
-  const content = useContent();
-  const hideExtraNavItems = language === 'de' || language === 'ae' || language === 'fr';
-  const text = content.sharedFooter;
+  const text = CONTENT.sharedFooter;
 
   return (
     <footer className="bg-muted/30 border-t py-16">
@@ -22,13 +19,9 @@ export const HomepageFooter = () => {
             <h4 className="font-semibold text-foreground mb-4">{text.company}</h4>
             <div className="space-y-2">
               <Link to="/pricing" className="block text-muted-foreground hover:text-foreground transition-colors" title="Hobson AI Pricing Plans">Pricing</Link>
-              {!hideExtraNavItems && (
-                <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors" title="Property Management Insights - Expert perspectives on AI and real estate technology">{text.blog}</Link>
-              )}
+              <Link to="/blog" className="block text-muted-foreground hover:text-foreground transition-colors" title="Property Management Insights - Expert perspectives on AI and real estate technology">{text.blog}</Link>
               <Link to="/contact" className="block text-muted-foreground hover:text-foreground transition-colors" title="Contact Real Estate Software Support - Get in touch with our AI property management specialists">{text.contact}</Link>
-              {!hideExtraNavItems && (
-                <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors" title="Learning Resources">{text.learn}</Link>
-              )}
+              <Link to="/learn" className="block text-muted-foreground hover:text-foreground transition-colors" title="Learning Resources">{text.learn}</Link>
               <Link to="/investment-opportunity" className="block text-muted-foreground hover:text-foreground transition-colors" title="Investment Opportunity">{text.investmentOpportunity}</Link>
               <Link to="/data-protection" className="block text-muted-foreground hover:text-foreground transition-colors" title="AI Privacy & Data Protection Policy">{text.dataProtection}</Link>
               <Link to="/breach-protocol" className="block text-muted-foreground hover:text-foreground transition-colors" title="Data Breach Protocol">{text.breachProtocol}</Link>

@@ -6,7 +6,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "@/hooks/useAuth";
 import { ToastPortal } from "@/components/ToastPortal";
 import { AppRoutes } from "@/components/AppRoutes";
-import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const HobsonChatbot = lazy(() => import("@/components/HobsonChatbot").then(m => ({ default: m.HobsonChatbot })));
@@ -50,15 +49,13 @@ export function AppProviders() {
       <BrowserRouter>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryClientProvider client={queryClient}>
-            <LanguageProvider>
-              <AuthProvider>
+            <AuthProvider>
                 <ToastPortal />
                 <AppRoutes />
                 <ErrorBoundary>
                   <ChatbotWrapper />
-                </ErrorBoundary>
-              </AuthProvider>
-            </LanguageProvider>
+              </ErrorBoundary>
+            </AuthProvider>
           </QueryClientProvider>
         </ThemeProvider>
       </BrowserRouter>

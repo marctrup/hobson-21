@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 import { InterestModal } from "@/components/InterestModal";
 import hobsonLogo from "/hobson-logo.png";
 
@@ -28,7 +28,7 @@ const UKFlag = ({ className }: { className?: string }) => (
 export const HomepageHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const content = useContent();
+  const content = CONTENT;
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);

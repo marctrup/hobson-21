@@ -10,11 +10,11 @@ import { checkRateLimit, sanitizeInput } from "@/utils/security";
 import { getEdgeFunctionUrl } from "@/utils/supabaseHelpers";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { Helmet } from "react-helmet-async";
-import { useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 const ContactUs = () => {
   const navigate = useNavigate();
-  const content = useContent();
+  const content = CONTENT;
   const contactContent = content.contact;
   
   const [formData, setFormData] = useState({

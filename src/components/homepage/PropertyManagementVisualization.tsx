@@ -1,19 +1,14 @@
 import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck, Plus, ArrowUp } from "lucide-react";
-import { useContent, useLanguage } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 export const PropertyManagementVisualization = () => {
-  const content = useContent();
-  const { language } = useLanguage();
+  const content = CONTENT;
   const viz = content.heroVisualization;
-  const isGerman = language === 'de';
-
-  // Hyphenation style for German text
-  const hyphenStyle = isGerman ? { hyphens: 'auto' as const, wordBreak: 'break-word' as const } : {};
 
   return <div className="relative from-primary/5 to-secondary/10 rounded-2xl p-8 border border-primary/10 bg-gray-50">
       {/* Main Header */}
       <div className="text-center mb-8">
-        <h1 className={`leading-relaxed font-bold mb-2 ${isGerman ? 'text-lg sm:text-xl' : 'text-2xl'}`} lang={language} style={hyphenStyle}>
+        <h1 className={`leading-relaxed font-bold mb-2 text-2xl`}>
           <span className="text-gray-500 font-semibold">{viz.mainHeading}</span>
         </h1>
       </div>
@@ -22,13 +17,13 @@ export const PropertyManagementVisualization = () => {
         {/* Left: The Pain (Today's World) */}
         <div className="text-center lg:mt-[10px]">
           <div className="mb-4">
-            <h4 className={`font-black uppercase tracking-widest mb-2 relative inline-block ${isGerman ? 'text-sm sm:text-base' : 'text-lg'}`}>
+            <h4 className={`font-black uppercase tracking-widest mb-2 relative inline-block text-lg`}>
               <span className="text-gray-500 drop-shadow-sm">
                 {viz.todaysProcess.title}
               </span>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gray-400 rounded-full"></div>
             </h4>
-            <div className={`text-gray-500 font-bold uppercase tracking-wide opacity-80 ${isGerman ? 'text-[10px]' : 'text-xs'}`} lang={language} style={hyphenStyle}>
+            <div className={`text-gray-500 font-bold uppercase tracking-wide opacity-80 text-xs`}>
               {viz.todaysProcess.subtitle}
             </div>
           </div>
@@ -71,13 +66,13 @@ export const PropertyManagementVisualization = () => {
         {/* Center: The Challenge */}
         <div className="text-center lg:mt-[15px]">
           <div className="mb-4">
-            <h4 className={`font-black uppercase tracking-widest mb-2 relative inline-block ${isGerman ? 'text-sm sm:text-base' : 'text-lg'}`}>
+            <h4 className={`font-black uppercase tracking-widest mb-2 relative inline-block text-lg`}>
               <span className="text-gray-500 drop-shadow-sm">
                 {viz.theChallenge.title}
               </span>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gray-400 rounded-full"></div>
             </h4>
-            <div className={`text-gray-500 font-bold uppercase tracking-wide opacity-80 ${isGerman ? 'text-[10px]' : 'text-xs'}`} lang={language} style={hyphenStyle}>
+            <div className={`text-gray-500 font-bold uppercase tracking-wide opacity-80 text-xs`}>
               {viz.theChallenge.subtitle}
             </div>
           </div>
@@ -597,7 +592,7 @@ export const PropertyManagementVisualization = () => {
             </div>
           </div>
           
-          <div className={`text-muted-foreground font-bold mt-3 space-y-1 ${isGerman ? 'text-[10px]' : 'text-xs'}`} lang={language} style={hyphenStyle}>
+          <div className={`text-muted-foreground font-bold mt-3 space-y-1 text-xs`}>
             <div>{viz.theChallenge.documents.leaseAgreements}</div>
             <div>{viz.theChallenge.documents.deedsOfVariation}</div>
             <div>{viz.theChallenge.documents.reversionaryLeases}</div>
@@ -610,13 +605,13 @@ export const PropertyManagementVisualization = () => {
         {/* Right: The Future (Hobson) */}
         <div className="text-center">
           <div className="mb-3">
-            <h4 className={`font-black uppercase tracking-widest mb-2 relative inline-block ${isGerman ? 'text-sm sm:text-base' : 'text-lg'}`}>
+            <h4 className={`font-black uppercase tracking-widest mb-2 relative inline-block text-lg`}>
               <span className="bg-gradient-to-r from-purple-600 via-indigo-600 to-purple-700 bg-clip-text text-transparent drop-shadow-sm">
                 {viz.hobsonAI.title}
               </span>
               <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-full"></div>
             </h4>
-            <div className={`text-purple-600 font-bold uppercase tracking-wide opacity-80 ${isGerman ? 'text-[10px]' : 'text-xs'}`}>
+            <div className={`text-purple-600 font-bold uppercase tracking-wide opacity-80 text-xs`}>
               {viz.hobsonAI.subtitle}
             </div>
           </div>
@@ -625,19 +620,19 @@ export const PropertyManagementVisualization = () => {
           <div className="bg-gray-50 rounded-lg border border-primary/20 shadow-lg relative" style={{
           padding: 'clamp(15px, 4vw, 22px)'
         }}>
-            <div className={`font-normal text-muted-foreground mb-3 font-sans text-left ${isGerman ? 'text-xs' : 'text-sm'}`} lang={language} style={hyphenStyle}>
+            <div className={`font-normal text-muted-foreground mb-3 font-sans text-left text-sm`}>
               {viz.hobsonAI.answer}
             </div>
             
             <div className="text-left space-y-2 mb-4">
-              <div className={`text-muted-foreground font-bold mb-2 ${isGerman ? 'text-[10px]' : 'text-xs'}`}>{viz.hobsonAI.sources}</div>
-              <div className={`flex items-start gap-2 text-muted-foreground ${isGerman ? 'text-[10px]' : 'text-xs'}`}>
+              <div className={`text-muted-foreground font-bold mb-2 text-xs`}>{viz.hobsonAI.sources}</div>
+              <div className={`flex items-start gap-2 text-muted-foreground text-xs`}>
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
-                <span lang={language} style={hyphenStyle}>{viz.hobsonAI.leaseAgreement}<br />{viz.hobsonAI.leaseAgreementRef}</span>
+                <span>{viz.hobsonAI.leaseAgreement}<br />{viz.hobsonAI.leaseAgreementRef}</span>
               </div>
-              <div className={`flex items-start gap-2 text-muted-foreground ${isGerman ? 'text-[10px]' : 'text-xs'}`}>
+              <div className={`flex items-start gap-2 text-muted-foreground text-xs`}>
                 <CheckCircle className="w-3 h-3 text-green-600 mt-0.5 flex-shrink-0" />
-                <span lang={language} style={hyphenStyle}>{viz.hobsonAI.deedOfVariation}<br />{viz.hobsonAI.deedOfVariationRef}</span>
+                <span>{viz.hobsonAI.deedOfVariation}<br />{viz.hobsonAI.deedOfVariationRef}</span>
               </div>
             </div>
             

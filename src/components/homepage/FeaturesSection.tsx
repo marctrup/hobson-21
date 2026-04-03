@@ -1,7 +1,7 @@
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Map, FileText, TrendingUp, CheckCircle } from "lucide-react";
 import FeatureShowcase from "@/components/features/FeatureShowcase";
-import { useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 const iconMap = {
   0: MessageCircle,
@@ -11,7 +11,7 @@ const iconMap = {
 };
 
 export const FeaturesSection = () => {
-  const content = useContent();
+  const content = CONTENT;
   const cards = content.features.cards;
 
   return (

@@ -3,19 +3,14 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import { useLanguage, useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 export const GlobalHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { language } = useLanguage();
-  const content = useContent();
-  const isGerman = language === 'de';
+  const content = CONTENT;
 
   // Primary nav links
-  const primaryLinks = content.navigation.links.filter(link => {
-    if (isGerman && (link.to === '/blog')) return false;
-    return true;
-  });
+  const primaryLinks = content.navigation.links;
 
   // Secondary nav links
   const secondaryLinks = (content.navigation as any).secondary || [];
