@@ -128,11 +128,11 @@ RESPONSE GUIDELINES:
    - Getting Started: [Getting Started](/learn/getting-started)
    
    **Features Section:**
-   - Features: [Features](/learn/core-features)
-   - Core Features: [Core Features](/learn/core-features)
-   - Advanced Features: [Advanced Features](/learn/advanced-features)
-   - Feature Comparison: [Feature Comparison](/learn/feature-comparison)
-   - Roadmap: [Roadmap](/learn/roadmap)
+   - Features: [Features](/features)
+   - Core Features: [Core Features](/features)
+   - Advanced Features: [Advanced Features](/features)
+   - Feature Comparison: [Feature Comparison](/features)
+   - Roadmap: [Roadmap](/features)
    
    **Integrations Section:**
    - Integrations: [Integrations](/learn/available-integrations)
