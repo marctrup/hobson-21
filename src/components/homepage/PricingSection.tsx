@@ -131,9 +131,7 @@ export const PricingSection = () => {
 
   const formatPrice = (price: number) => {
     const formatted = price.toFixed(2);
-    return pricing.currencyPosition === "after"
-      ? `${formatted}${pricing.currency}`
-      : `${pricing.currency}${formatted}`;
+    return `${pricing.currency}${formatted}`;
   };
 
   const essentialPrice = isAnnualEssential
