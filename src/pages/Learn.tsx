@@ -216,7 +216,7 @@ const Learn = () => {
 
   // Set initial active section based on current tab
   useEffect(() => {
-    if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq") {
+    if (activeHorizontalTab === "faq" && activeVerticalTab === "faq") {
       setActiveTocSection("how-hobson-works");
     } else if (activeHorizontalTab === "introduction" && activeVerticalTab === "smart-navigation") {
       setActiveTocSection("hero");
