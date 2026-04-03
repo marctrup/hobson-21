@@ -144,27 +144,27 @@ const Learn = () => {
           },
           "setup-guide": {
             horizontal: "integrations",
-            vertical: "setup-guide"
+            vertical: "available-integrations"
           },
           setupguide: {
             horizontal: "integrations",
-            vertical: "setup-guide"
+            vertical: "available-integrations"
           },
           "set-up-guide": {
             horizontal: "integrations",
-            vertical: "setup-guide"
+            vertical: "available-integrations"
           },
           "api-reference": {
             horizontal: "integrations",
-            vertical: "api-reference"
+            vertical: "available-integrations"
           },
           apireference: {
             horizontal: "integrations",
-            vertical: "api-reference"
+            vertical: "available-integrations"
           },
           troubleshooting: {
             horizontal: "integrations",
-            vertical: "troubleshooting"
+            vertical: "available-integrations"
           },
           // Use Cases section
           "use-cases": {
