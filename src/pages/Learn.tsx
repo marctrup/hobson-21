@@ -72,7 +72,7 @@ const Learn = () => {
           horizontal: string;
           vertical?: string;
         }> = {
-          // Introduction section
+          // Smart Navigation section
           introduction: {
             horizontal: "introduction",
             vertical: "smart-navigation"
@@ -90,7 +90,7 @@ const Learn = () => {
             vertical: "smart-navigation"
           },
           faq: {
-            horizontal: "introduction",
+            horizontal: "faq",
             vertical: "faq"
           },
           // Features section
