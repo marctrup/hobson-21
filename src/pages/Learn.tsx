@@ -2529,8 +2529,11 @@ Content-Type: multipart/form-data
                         </h3>
                       </div>
                       <p className="text-sm text-muted-foreground pl-7">
-                        Navigate through{" "}
-                        {horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content
+                        {activeHorizontalTab === "introduction" ? "How Hobson navigates your portfolio" :
+                         activeHorizontalTab === "faq" ? "Frequently asked questions" :
+                         activeHorizontalTab === "integrations" ? "Systems Hobson works alongside" :
+                         activeHorizontalTab === "glossary" ? "Property and AI terms explained" :
+                         `Navigate through ${horizontalTabs.find(tab => tab.id === activeHorizontalTab)?.label.toLowerCase()} content`}
                       </p>
                     </div>
                     <nav className="space-y-1">
