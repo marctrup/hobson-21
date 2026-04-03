@@ -34,7 +34,7 @@ const Pilot = () => {
               </p>
               <div className="mb-8">
                 <SimpleButton size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-medium" asChild>
-                  <Link to="/pilot_form" id="pilot-page-apply-cta">Apply to join our Pilot →</Link>
+                  <Link to="/contact" id="pilot-page-apply-cta">Get in touch →</Link>
                 </SimpleButton>
               </div>
             </div>
