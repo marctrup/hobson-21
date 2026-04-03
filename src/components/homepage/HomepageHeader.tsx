@@ -137,13 +137,12 @@ export const HomepageHeader = () => {
                   {link.label}
                 </Link>
                 ))}
-                <Link
-                  to="/login-gate"
+                <button
+                  onClick={() => { closeMobileMenu(); setIsLoginModalOpen(true); }}
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors w-fit"
-                  onClick={closeMobileMenu}
                 >
                   Login
-                </Link>
+                </button>
             </div>
           </nav>
         )}
