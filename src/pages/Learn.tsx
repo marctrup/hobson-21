@@ -2441,6 +2441,11 @@ Content-Type: multipart/form-data
         <title>{pageMeta.title}</title>
         <meta name="description" content={pageMeta.description} />
         <link rel="canonical" href={`https://hobsonschoice.ai/learn/${activeVerticalTab || ""}`} />
+        {activeHorizontalTab === "faq" && (
+          <script type="application/ld+json">
+            {JSON.stringify(structuredData.faqPageLearn)}
+          </script>
+        )}
       </Helmet>
 
       <GlobalHeader />
