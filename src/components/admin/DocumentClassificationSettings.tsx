@@ -14,18 +14,6 @@ interface ClassificationSettings {
   reclassification_message: string;
 }
 
-interface ExtractionEvent {
-  id: string;
-  created_at: string;
-  user_email: string | null;
-  document_name: string;
-  declared_type: string;
-  actual_tokens: number;
-  charged_type: string;
-  amount_charged: number;
-  reclassified: boolean;
-}
-
 export default function DocumentClassificationSettings() {
   const [settings, setSettings] = useState<ClassificationSettings | null>(null);
   const [simpleThreshold, setSimpleThreshold] = useState("50000");
@@ -34,7 +22,6 @@ export default function DocumentClassificationSettings() {
   const [message, setMessage] = useState(
     "One or more documents you uploaded as standard documents were identified as leases based on their content. The difference in extraction cost has been applied. Leases: £[lease_price]. Standard documents: £[doc_price]."
   );
-  const [events, setEvents] = useState<ExtractionEvent[]>([]);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
