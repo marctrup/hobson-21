@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/OptimizedImage";
-import { useLanguage, useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 export const GlobalHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
