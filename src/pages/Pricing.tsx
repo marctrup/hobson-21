@@ -103,7 +103,7 @@ const Pricing = () => {
   };
 
   const TOPUP_COST = pricing.cost_per_question_pack;
-  const TOPUP_QUESTIONS = 100;
+  const TOPUP_QUESTIONS = pricing.questions_per_pack;
 
   // Calculator
   const docSubtotal = documents * pricing.cost_per_document;

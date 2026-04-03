@@ -15,6 +15,7 @@ interface TierLimit {
 export default function PricingSettings() {
   const [costPerDocument, setCostPerDocument] = useState("0.20");
   const [costPerQuestionPack, setCostPerQuestionPack] = useState("7.50");
+  const [questionsPerPack, setQuestionsPerPack] = useState("100");
   const [tierLimits, setTierLimits] = useState<TierLimit[]>([
     { tier: 1, monthly_questions: "300", monthly_extractions: "3", overage_behaviour: "charge" },
     { tier: 2, monthly_questions: "Unlimited", monthly_extractions: "Unlimited", overage_behaviour: "none" },
@@ -40,6 +41,7 @@ export default function PricingSettings() {
         const d = pricingRes.data as any;
         setCostPerDocument(String(d.cost_per_document));
         if (d.cost_per_question_pack !== undefined) setCostPerQuestionPack(String(d.cost_per_question_pack));
+        if (d.questions_per_pack !== undefined) setQuestionsPerPack(String(d.questions_per_pack));
       }
 
       if (limitsRes.data && (limitsRes.data as any[]).length > 0) {
@@ -73,6 +75,7 @@ export default function PricingSettings() {
         const { error } = await (supabase.from("onboarding_pricing") as any).update({
           cost_per_document: parseFloat(costPerDocument),
           cost_per_question_pack: parseFloat(costPerQuestionPack),
+          questions_per_pack: parseInt(questionsPerPack, 10),
           updated_at: new Date().toISOString(),
         }).eq("id", existing.id);
         if (error) throw error;
@@ -80,6 +83,7 @@ export default function PricingSettings() {
         const { error } = await (supabase.from("onboarding_pricing") as any).insert({
           cost_per_document: parseFloat(costPerDocument),
           cost_per_question_pack: parseFloat(costPerQuestionPack),
+          questions_per_pack: parseInt(questionsPerPack, 10),
         });
         if (error) throw error;
       }
@@ -135,9 +139,14 @@ export default function PricingSettings() {
                 <p className="text-xs text-muted-foreground mt-1">Applied to all document types — leases, certificates, contracts, etc.</p>
               </div>
               <div>
-                <label className="text-sm font-medium mb-1 block">Cost per 100 questions top-up (£)</label>
+                <label className="text-sm font-medium mb-1 block">Questions per top-up pack</label>
+                <Input type="number" step="1" min="1" value={questionsPerPack} onChange={e => setQuestionsPerPack(e.target.value)} required disabled={saving} />
+                <p className="text-xs text-muted-foreground mt-1">Number of questions included in each top-up pack</p>
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-1 block">Cost per top-up pack (£)</label>
                 <Input type="number" step="0.01" min="0" value={costPerQuestionPack} onChange={e => setCostPerQuestionPack(e.target.value)} required disabled={saving} />
-                <p className="text-xs text-muted-foreground mt-1">Price charged for each top-up pack of 100 questions</p>
+                <p className="text-xs text-muted-foreground mt-1">Price charged for each top-up pack of {questionsPerPack} questions</p>
               </div>
             </div>
           </div>

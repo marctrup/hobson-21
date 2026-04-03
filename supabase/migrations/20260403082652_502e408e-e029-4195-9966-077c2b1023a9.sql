@@ -1,0 +1,1 @@
+ALTER TABLE public.onboarding_pricing ADD COLUMN questions_per_pack integer NOT NULL DEFAULT 100;
