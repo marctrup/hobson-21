@@ -115,7 +115,7 @@ const InPractice = () => {
         <section className="py-16 sm:py-20 md:py-24">
           <div className="container mx-auto px-4 text-center max-w-4xl">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-              Your property documents, finally working for you.
+              Your property documents, finally working <span className="text-primary">for you.</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
               Phase 1 of Hobson is live now. It reads your leases, compliance documents and property contracts — and makes every clause, obligation and date instantly queryable in plain English. No legal training required. No hours of manual review. Just answers.
