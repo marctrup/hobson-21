@@ -105,6 +105,29 @@ const Features = () => {
         <title>Features | Hobson AI — What Hobson does, how it works, why it matters</title>
         <meta name="description" content="Every Phase 1 feature explained — multi-document reasoning, document hierarchy understanding, plain English querying, sourced answers, cross-portfolio questioning and more. All live today." />
         <link rel="canonical" href="https://hobsonschoice.ai/features" />
+        <meta property="og:title" content="Features | Hobson AI — What Hobson does, how it works, why it matters" />
+        <meta property="og:description" content="Nine Phase 1 features explained — multi-document reasoning, document hierarchy understanding, plain English querying, sourced answers and more. All live today." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://hobsonschoice.ai/features" />
+        <meta property="og:site_name" content="Hobson AI" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Features | Hobson AI — What Hobson does, how it works, why it matters" />
+        <meta name="twitter:description" content="Nine Phase 1 features explained — multi-document reasoning, document hierarchy understanding, plain English querying, sourced answers and more. All live today." />
+        <meta name="twitter:site" content="@HobsonAI" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "Features | Hobson AI",
+            "description": "Every Phase 1 feature of Hobson AI explained — multi-document reasoning, document hierarchy understanding, plain English querying, sourced and auditable answers, cross-portfolio questioning and more.",
+            "url": "https://hobsonschoice.ai/features",
+            "isPartOf": {
+              "@type": "WebSite",
+              "name": "Hobson AI",
+              "url": "https://hobsonschoice.ai"
+            }
+          })}
+        </script>
       </Helmet>
 
       <GlobalHeader />

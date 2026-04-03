@@ -2,18 +2,18 @@ export const HowItWorksSection = () => {
   const steps = [
     {
       step: 1,
-      title: "Upload & Connect",
-      description: "Upload your documents or connect your existing systems. Our AI instantly begins processing and indexing your content."
+      title: "Add your documents",
+      description: "Add any lease, licence, deed, compliance certificate or property document. Hobson reads it thoroughly — understanding the legal meaning, the obligations, and how it relates to every other document in the same property."
     },
     {
       step: 2,
-      title: "Ask Questions",
-      description: "Ask natural language questions about your properties, leases, contracts, or any document content."
+      title: "Ask in plain English",
+      description: "Ask anything about your portfolio the way you would ask a colleague. \"Which leases have a break clause in the next 12 months?\" \"What are my EPC obligations on this site?\" No query language. No training required."
     },
     {
       step: 3,
-      title: "Get Insights",
-      description: "Receive instant, accurate answers with full source citations and actionable recommendations."
+      title: "Get the current legal position",
+      description: "Every answer is sourced to the exact clause it came from. If a later document changes the original terms, Hobson knows — and tells you the current position, not the historical one."
     }
   ];
 
@@ -22,8 +22,8 @@ export const HowItWorksSection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">How It Works</h2>
-            <p className="text-xl text-muted-foreground">Get started in three simple steps</p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">From document to answer in minutes</h2>
+            <p className="text-xl text-muted-foreground">No training. No setup. No integration work required.</p>
           </div>
           
           <div className="relative">

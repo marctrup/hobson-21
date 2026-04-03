@@ -12,7 +12,7 @@ export const BlogHero = () => {
         </div>
         <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 md:mb-8">
           Expert perspectives on AI-powered property management, industry trends, 
-          and best practices for modern real estate professionals.
+          and best practices for property operators, occupiers and owners.
         </p>
       </div>
     </section>

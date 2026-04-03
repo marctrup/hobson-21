@@ -178,6 +178,7 @@ const ContactUs = () => {
         <meta property="og:title" content="Contact Us - Hobson's Choice AI" />
         <meta property="og:description" content="Get support and answers for your property management AI needs. Contact our team today." />
         <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://hobsonschoice.ai/contact" />
       </Helmet>
       <GlobalHeader />
       <div className="container mx-auto px-4 py-8">

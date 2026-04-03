@@ -71,5 +71,6 @@ export default function Auth() {
         onSuccess={handleSuccess}
       />
     </div>
+    </>
   );
 }

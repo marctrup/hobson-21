@@ -261,6 +261,15 @@ const Pricing = () => {
         <title>Pricing | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Compare Hobson AI pricing tiers. Start free or choose a plan that fits your property management needs." />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
+        <meta property="og:title" content="Pricing | Hobson AI — Plans for operators, occupiers and owners of real estate" />
+        <meta property="og:description" content="Start free with Tier 1 or join the waitlist for the full Hobson platform. Plans from £19.50/month. No card required to try." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://hobsonschoice.ai/pricing" />
+        <meta property="og:site_name" content="Hobson AI" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Pricing | Hobson AI — Plans for operators, occupiers and owners of real estate" />
+        <meta name="twitter:description" content="Start free with Tier 1 or join the waitlist for the full Hobson platform. Plans from £19.50/month. No card required to try." />
+        <meta name="twitter:site" content="@HobsonAI" />
 <script type="application/ld+json">{JSON.stringify(structuredData.softwareApplication)}</script>
         <script type="application/ld+json">{JSON.stringify(structuredData.organization)}</script>
         <script type="application/ld+json">{JSON.stringify(getBreadcrumbStructuredData([
