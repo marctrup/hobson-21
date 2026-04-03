@@ -3,10 +3,7 @@ import { CONTENT } from "@/config/content";
 import hobsonLogo from "/hobson-logo.png";
 
 export const HomepageFooter = () => {
-  const { language } = useLanguage();
-  const content = useContent();
-  const hideExtraNavItems = language === 'de' || language === 'ae' || language === 'fr';
-  const text = content.sharedFooter;
+  const text = CONTENT.sharedFooter;
 
   return (
     <footer className="bg-muted/30 border-t py-16">

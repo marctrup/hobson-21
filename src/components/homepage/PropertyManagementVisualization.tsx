@@ -1,5 +1,5 @@
 import { FileText, ArrowRight, Brain, CheckCircle, Users, FolderOpen, Search, RotateCcw, UserCheck, Plus, ArrowUp } from "lucide-react";
-import { useContent, useLanguage } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 export const PropertyManagementVisualization = () => {
   const content = useContent();

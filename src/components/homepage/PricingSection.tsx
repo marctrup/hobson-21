@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle2, Loader2, Zap } from "lucide-react";
 
 import owlMascot from "@/assets/owl-mascot.png";
-import { useContent, useLanguage } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 import { supabase } from "@/integrations/supabase/client";
 import {
   Dialog,
