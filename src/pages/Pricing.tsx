@@ -30,13 +30,43 @@ const CrossIcon = () => (
   <svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M15 5L5 15M5 5l10 10" stroke="#DC2626" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
 );
 
-const faqs = [
-  { q: "When will Tiers 2, 3 and 4 be available?", a: "We are currently working on Tier 1. Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform — are launching later in the year. Join the waitlist to be notified first and to lock in founding member pricing." },
-  { q: "What is the Knowledge Base exactly?", a: "It is Hobson's memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your communication style is — and it remembers permanently. Every answer and every action it takes reflects what it knows about you." },
-  { q: "What is the difference between tiers?", a: "Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced answers. What it does not have is the Knowledge Base. Hobson on Tier 1 does not know your business. It knows your documents.\n\nTiers 2, 3 and 4 are the same product. Every feature, every capability, the full Knowledge Base — identical across all three. The only decision is how many people need access. Same Hobson, more seats, better value per seat as you go up." },
-  { q: "Can I start on Tier 1 and upgrade?", a: "Yes. Your Knowledge Base is built as you go — when you upgrade to Tier 2, everything you have taught Hobson stays. There is no reset." },
-  { q: "Is there a free trial?", a: "Yes. Tier 1 comes with a 3-day free trial. No credit card required and limited credits to try with." },
-  
+const faqGroups = [
+  {
+    heading: "Getting Started & Trials",
+    items: [
+      { q: "Is there a free trial?", a: "Yes. Tier 1 comes with a free 3-day trial — no credit card required. You can upload your first document and start asking questions about it within minutes of signing up. Tier 2, 3 and 4 are available to join the waitlist ahead of their launch later this year, with founding member pricing locked in for early signups." },
+      { q: "When will Tiers 2, 3 and 4 be available?", a: "Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform, workflow automation and action memory — are launching later this year. Join the waitlist now to be notified first and to lock in founding member pricing before public launch." },
+      { q: "Can I start on Tier 1 and upgrade later?", a: "Yes. When you upgrade to Tier 2 or above, everything you have already taught Hobson stays. Your documents remain in your account. Your Knowledge Base carries over. There is no reset, no re-upload and no loss of work. Upgrading simply unlocks the next layer of capability on top of what you have already built." },
+      { q: "Can I use Hobson on my phone?", a: "Yes. Hobson has a mobile version available on Tier 1, giving you access to your portfolio documents and AI query capability from anywhere. No desktop required to get started." },
+    ],
+  },
+  {
+    heading: "Understanding The Tiers",
+    items: [
+      { q: "What is the difference between Tier 1 and Tiers 2, 3 and 4?", a: "Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced, auditable answers. What it does not have is the Knowledge Base. Hobson on Tier 1 knows your documents. It does not yet know your business. Tiers 2, 3 and 4 unlock the full platform — the Knowledge Base, workflow automation, action memory, monthly impact summaries and personal shortcuts. Every feature and capability is identical across Tiers 2, 3 and 4. The only difference is how many seats you need. Same Hobson, more people, better value per seat as you scale." },
+      { q: "What is the Knowledge Base?", a: "The Knowledge Base is Hobson's persistent memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your approval thresholds are, how you like your reports formatted — and it remembers permanently. Every answer and every action it takes reflects what it knows about how your business operates. It is what transforms Hobson from a smart document tool into an AI that behaves like an informed member of your team. The Knowledge Base is included in Tiers 2, 3 and 4 and becomes more valuable the longer you use it." },
+      { q: "What happens to my Knowledge Base if I leave?", a: "Your data belongs to you and can be exported at any time. However it is worth understanding what leaving means in practice — the institutional memory Hobson has built about your business, your contractors, your preferences and your compliance history does not transfer to another tool. That knowledge lives in Hobson because Hobson built it. The longer you use Hobson at Tier 2 or above, the more valuable that memory becomes." },
+      { q: "What if I need more than 10 seats?", a: "Enterprise pricing is available for organisations with more than 10 users. Enterprise packages are based on usage and portfolio size rather than headcount, and include bespoke onboarding and dedicated support. Contact the team at rochelle.t@hobsonschoice.ai to discuss your requirements." },
+    ],
+  },
+  {
+    heading: "Pricing & Billing",
+    items: [
+      { q: "What does annual billing mean and how does the 20% saving work?", a: "Annual billing means you pay for twelve months upfront in a single payment. The saving versus monthly billing is 20% across all tiers. Tier 1 billed annually costs £187 upfront — equivalent to £15.60 per month. Tier 2 costs £1,584 upfront — equivalent to £132 per month. Tier 3 costs £2,400 upfront — equivalent to £200 per month. Tier 4 costs £4,320 upfront — equivalent to £360 per month. Monthly billing is available at the standard rate if you prefer flexibility." },
+      { q: "What if I need more documents or questions than my tier includes?", a: "No problem. Additional document ingestion is available at £0.30 per document, charged once only — the same document is never charged twice. Once Hobson has read and understood a document it stays in your account permanently at no further cost. For additional questions during busy periods, top-up packs are available at £7.50 per 100 questions. You are always in control of what you spend." },
+      { q: "Do I need technical skills to set up or use Hobson?", a: "No. Hobson is designed to be used in plain English. You ask questions the way you would ask a colleague — \"When is the next rent review on Unit 4?\" or \"Which of my properties have EPC certificates expiring in the next six months?\" — and Hobson answers directly from your documents and Knowledge Base. No technical training, no complex interfaces, no specialist knowledge required." },
+    ],
+  },
+  {
+    heading: "Who It Is For & Trust",
+    items: [
+      { q: "We are not a property management company — we are a retailer or hospitality business with leases. Is Hobson for us?", a: "Yes — and this is one of the most important things to understand about Hobson. It is built for any business where property is a material operating cost, not just businesses whose primary activity is property management. A retailer with 30 store leases, a restaurant group with 15 sites, or a corporate with a regional office estate all face exactly the same obligations — rent reviews, break clauses, EPC deadlines, compliance certificates — and Hobson manages all of them. You do not need to be in the property industry to benefit. You just need property to be part of how your business operates." },
+      { q: "We already use property management software. Do we need to replace it?", a: "No. Hobson is designed to work alongside your existing systems, not replace them. Your current software stores and organises information. Hobson reasons across it, acts on it and delivers the work your team currently does manually. There is no rip-and-replace requirement. Hobson connects to your existing document sources and operates inside your current workflows — adding an intelligence layer on top of what you already have." },
+      { q: "Does Hobson help with Building Safety Act and EPC compliance?", a: "Yes. Hobson reads your compliance certificates, builds a live register, flags upcoming deadlines at 90, 60 and 30 days, instructs contractors, verifies completed certificates and files the outcome automatically. This applies to EPC obligations, Building Safety Act requirements, fire safety, EICR, gas safety, HMO licensing, Legionella, asbestos and other compliance categories. Compliance deadlines exist whether or not you manage them efficiently — Hobson makes sure they are never missed." },
+      { q: "How does Hobson handle documents it cannot find an answer in?", a: "Hobson never guesses. If the information you are asking about does not exist in your documents or Knowledge Base, Hobson tells you clearly rather than generating a plausible but potentially incorrect answer. Every answer Hobson provides is sourced and auditable — you can see exactly which document and clause each answer came from. For regulated property decisions, that auditability is not optional. It is essential." },
+      { q: "Where is my data stored and is it secure?", a: "All data is encrypted and UK-hosted. Hobson is aligned to ISO 27001 standards. Your data is never used to train AI models — not Hobson's and not any third-party model. Your documents, your Knowledge Base and your business information remain entirely within your account and are never shared with or visible to other clients." },
+    ],
+  },
 ];
 
 const Badge = ({ children, variant }: { children: React.ReactNode; variant: "live" | "coming" | "onetime" | "tier234" }) => {
