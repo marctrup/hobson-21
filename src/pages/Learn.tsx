@@ -275,8 +275,12 @@ const Learn = () => {
   }, [activeHorizontalTab, activeVerticalTab]);
   const horizontalTabs = [{
     id: "introduction",
-    label: "Introduction",
-    icon: Book
+    label: "Smart Navigation",
+    icon: Users
+  }, {
+    id: "faq",
+    label: "FAQ",
+    icon: HelpCircle
   }, {
     id: "integrations",
     label: "Integrations",
