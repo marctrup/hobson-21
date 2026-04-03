@@ -7,9 +7,7 @@ import { CONTENT } from "@/config/content";
 
 export const GlobalHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { language } = useLanguage();
-  const content = useContent();
-  const isGerman = language === 'de';
+  const content = CONTENT;
 
   // Primary nav links
   const primaryLinks = content.navigation.links.filter(link => {
