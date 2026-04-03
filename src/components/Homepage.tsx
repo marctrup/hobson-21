@@ -115,44 +115,6 @@ export const Homepage = () => {
                   Login
                 </button>
                 
-                {/* Language dropdown */}
-                <div className="relative">
-                  <button
-                    onClick={() => setIsLanguageOpen(!isLanguageOpen)}
-                    className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors px-2 py-1 rounded-md hover:bg-muted"
-                    title="Select language"
-                  >
-                    {currentLanguage.flag}
-                    <span className="hidden lg:inline">{currentLanguage.code.toUpperCase()}</span>
-                    <ChevronDown className={`w-3 h-3 transition-transform ${isLanguageOpen ? 'rotate-180' : ''}`} />
-                  </button>
-                  
-                  {isLanguageOpen && (
-                    <>
-                      <div 
-                        className="fixed inset-0 z-40" 
-                        onClick={() => setIsLanguageOpen(false)}
-                      />
-                      <div className="absolute right-0 top-full mt-2 bg-background border border-border rounded-lg shadow-lg py-1 z-50 min-w-[140px]">
-                        {languages.map((lang) => (
-                          <button
-                            key={lang.code}
-                            onClick={() => {
-                              setLanguage(lang.code);
-                              setIsLanguageOpen(false);
-                            }}
-                            className={`w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted transition-colors ${
-                              language === lang.code ? 'bg-muted/50 text-foreground' : 'text-muted-foreground'
-                            }`}
-                          >
-                            {lang.flag}
-                            <span>{lang.name}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </div>
               </nav>
 
               {/* Mobile Menu Button */}
