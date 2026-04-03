@@ -162,6 +162,7 @@ const Announcements = () => {
       <Helmet>
         <title>Announcements | Hobson AI — AI assistance to operators, occupiers and owners of real estate</title>
         <meta name="description" content="Latest updates, features, and announcements from Hobson AI" />
+        <meta name="robots" content="noindex, nofollow" />
       </Helmet>
 
       <div className="min-h-screen bg-background">

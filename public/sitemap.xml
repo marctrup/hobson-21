@@ -85,26 +85,6 @@
     <priority>0.8</priority>
   </url>
 
-  <url>
-    <loc>https://hobsonschoice.ai/announcements</loc>
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-
-  <url>
-    <loc>https://hobsonschoice.ai/feature-requests</loc>
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-
-  <url>
-    <loc>https://hobsonschoice.ai/status</loc>
-    <lastmod>2026-04-03</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.5</priority>
-  </url>
 
   <url>
     <loc>https://hobsonschoice.ai/investment-opportunity</loc>
