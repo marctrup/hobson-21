@@ -1,0 +1,1 @@
+DROP POLICY "Anyone can read classification settings" ON public.document_classification_settings;
