@@ -1,8 +1,8 @@
 export const getOrganizationStructuredData = () => ({
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Hobson's Choice AI",
-  "legalName": "Hobson's Choice AI Ltd",
+  "name": "Hobson AI Ltd",
+  "legalName": "Hobson AI Ltd",
   "url": "https://hobsonschoice.ai",
   "logo": {
     "@type": "ImageObject",
@@ -27,8 +27,8 @@ export const getOrganizationStructuredData = () => ({
 export const getHomepageStructuredData = () => ({
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
-  "name": "Hobson's Choice AI Property Management Software",
-  "description": "AI-powered document intelligence for property management. Transform property documents with intelligent analysis, automated insights, and instant answers to complex property questions.",
+  "name": "Hobson AI",
+  "description": "AI-powered assistance for those involved in or occupying real estate",
   "url": "https://hobsonschoice.ai",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web Browser",
