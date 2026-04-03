@@ -269,20 +269,15 @@ export const Homepage = () => {
                   <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Features
                   </Link>
+                  <Link to="/in-practice" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                    In Practice
+                  </Link>
                   <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Pricing
                   </Link>
                   {!hideExtraNavItems && (
                     <Link to="/blog" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                       {content.header.nav.blog}
-                    </Link>
-                  )}
-                  <Link to="/contact" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                    {content.header.nav.contact}
-                  </Link>
-                  {!hideExtraNavItems && (
-                    <Link to="/learn" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
-                      {content.header.nav.learn}
                     </Link>
                   )}
                   
