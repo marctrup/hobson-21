@@ -114,9 +114,8 @@ const Features = () => {
           subtitle="How Hobson reads, connects and reasons across your property documents — not one at a time, but as a complete picture."
           icon={Brain}
           features={documentIntelligenceFeatures}
+          bgClass="bg-background"
         />
-
-        <div className="border-b-2 border-primary/10" />
 
         <FeatureGroupSection
           id="portfolio-tools"
@@ -125,9 +124,8 @@ const Features = () => {
           icon={Building2}
           features={portfolioToolsFeatures}
           startReversed
+          bgClass="bg-muted/30"
         />
-
-        <div className="border-b-2 border-primary/10" />
 
         <FeatureGroupSection
           id="trust-and-security"
@@ -135,6 +133,7 @@ const Features = () => {
           subtitle="Domain-specific accuracy, zero integration friction and enterprise-grade data protection."
           icon={ShieldCheck}
           features={trustSecurityFeatures}
+          bgClass="bg-secondary/50"
         />
 
         <FeaturesComingSoon />
