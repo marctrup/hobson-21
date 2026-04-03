@@ -20,10 +20,11 @@ export const CONTENT = {
 
   // Hero Section
   hero: {
-    title: "Move toward clarity, simplicity, and affordable AI,",
-    titleHighlight: "without replacing the tools you rely on.",
-    subtitle: "Your documents. Your truth. - Hobson is a specialised AI assistant trained on real estate documents that delivers quick, clear, and trusted answers every time.",
-    ctaButton: "See pricing",
+    title: "Your property obligations,",
+    titleHighlight: "managed automatically.",
+    subtitle: "Hobson does the property work every business has but nobody has time for. Upload your leases, ask questions in plain English, and let Hobson manage what happens next. Free to try. No card required.",
+    ctaButton: "Start free — no card required",
+    ctaSecondary: "Join the waitlist for Tier 2",
   },
 
   // Hero Visualization

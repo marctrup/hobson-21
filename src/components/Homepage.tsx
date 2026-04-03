@@ -336,12 +336,17 @@ export const Homepage = () => {
                   <p className={`text-muted-foreground leading-relaxed ${isGerman ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}`} lang={language} style={isGerman ? { hyphens: 'auto' } : {}}>{content.hero.subtitle}
                   </p>
                   
-                  <Link to="/pricing" className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group" id="homepage-hero-pricing-cta">
-                    <div className="inline-flex items-center gap-3 text-purple-600 hover:text-purple-700 font-medium text-base">
-                      {content.hero.ctaButton}
-                      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                    </div>
-                  </Link>
+                  <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+                    <Link to="/pricing" className="bg-purple-50 border border-purple-200 rounded-xl px-6 py-3 inline-block hover:bg-purple-100 hover:border-purple-300 hover:scale-105 hover:shadow-lg transition-all duration-200 group" id="homepage-hero-pricing-cta">
+                      <div className="inline-flex items-center gap-3 text-purple-600 hover:text-purple-700 font-medium text-base">
+                        {content.hero.ctaButton}
+                        <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
+                      </div>
+                    </Link>
+                    <Link to="/pricing" className="inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3 border border-border text-muted-foreground hover:bg-muted hover:text-foreground font-medium text-base transition-all duration-200">
+                      {(content.hero as any).ctaSecondary || "Join the waitlist for Tier 2"}
+                    </Link>
+                  </div>
                   
                 </div>
 
