@@ -8,7 +8,7 @@ const groups = [
 ];
 
 const FeaturesAnchorNav = () => (
-  <nav className="py-6 border-b border-border/50 bg-background sticky top-0 z-30">
+  <nav className="py-6 border-b border-border/50 bg-background sticky top-0 z-30 shadow-sm">
     <div className="container mx-auto px-4">
       <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
         {groups.map((g) => (

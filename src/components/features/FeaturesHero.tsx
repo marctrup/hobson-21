@@ -1,7 +1,7 @@
 import React from "react";
 
 const FeaturesHero = () => (
-  <section className="py-16 sm:py-20 md:py-24">
+  <section className="py-16 sm:py-20 md:py-24 border-b border-border/40 bg-muted/20">
     <div className="container mx-auto px-4 text-center max-w-4xl">
       <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
         What Hobson does. How it works. <span className="text-primary">Why it matters.</span>
