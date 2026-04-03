@@ -27,8 +27,8 @@ const Learn = () => {
   } = useParams<{
     section?: string;
   }>();
-  const [activeHorizontalTab, setActiveHorizontalTab] = useState("introduction");
-  const [activeVerticalTab, setActiveVerticalTab] = useState("welcome");
+  const [activeHorizontalTab, setActiveHorizontalTab] = useState("faq");
+  const [activeVerticalTab, setActiveVerticalTab] = useState("faq");
   const [isGlobalPageActive, setIsGlobalPageActive] = useState(false);
   const [activeTocSection, setActiveTocSection] = useState("hero");
   const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false);
