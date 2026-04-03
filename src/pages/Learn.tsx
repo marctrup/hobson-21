@@ -356,18 +356,6 @@ const Learn = () => {
           id: "available-integrations",
           label: "Available Integrations",
           icon: Puzzle
-        }, {
-          id: "setup-guide",
-          label: "Setup Guide",
-          icon: Play
-        }, {
-          id: "api-reference",
-          label: "API Reference",
-          icon: FileText
-        }, {
-          id: "troubleshooting",
-          label: "Troubleshooting",
-          icon: HelpCircle
         }];
       case "tips-tricks":
         return [{
