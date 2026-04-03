@@ -434,9 +434,9 @@ const Learn = () => {
       const activeTab = staticVerticalTabs.find(tab => tab.id === activeVerticalTab);
       return <div className="flex-1 p-8">
           <div className="max-w-4xl mx-auto">
-            <div className="text-center py-20">
+            <div className="text-left py-20">
               <div className="mb-6">
-                {activeTab && <activeTab.icon className="w-16 h-16 text-muted-foreground mx-auto mb-4" />}
+                {activeTab && <activeTab.icon className="w-16 h-16 text-muted-foreground mb-4" />}
                 <h1 className="text-4xl font-bold text-foreground mb-4">{activeTab?.label}</h1>
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-muted border border-border">
                   <div className="w-2 h-2 bg-orange-500 rounded-full animate-pulse"></div>
@@ -880,7 +880,7 @@ const Learn = () => {
 
                 {/* Closing Note */}
                 <div className="bg-muted/30 rounded-lg p-6 border border-primary/10">
-                  <p className="text-muted-foreground text-center leading-relaxed">
+                  <p className="text-muted-foreground text-left leading-relaxed">
                     Every organisation is different. Hobson AI is designed to complement existing tools while providing
                     powerful features you won't find elsewhere.
                   </p>
@@ -1038,7 +1038,7 @@ const Learn = () => {
 
                 {/* Closing Note */}
                 <div className="mt-16 bg-primary/5 rounded-lg p-6 border border-primary/20">
-                  <p className="text-muted-foreground text-center leading-relaxed">
+                  <p className="text-muted-foreground text-left leading-relaxed">
                     We build Hobson AI in close partnership with our users. Your feedback helps shape the roadmap —
                     ensuring the platform grows in ways that bring you the most value.
                   </p>
@@ -1242,7 +1242,7 @@ const Learn = () => {
 
                 {/* Closing Note */}
                 <div className="mt-16 bg-primary/5 rounded-lg p-6 border border-primary/20">
-                  <p className="text-muted-foreground text-center leading-relaxed">
+                  <p className="text-muted-foreground text-left leading-relaxed">
                     Integrations are a key part of our roadmap. By bringing Hobson AI directly into your existing
                     systems, we aim to create a seamless experience where insights are always available when and where
                     you need them.
@@ -1485,7 +1485,7 @@ const Learn = () => {
 
             {/* Closing Note */}
             <div className="mt-16 bg-primary/5 rounded-lg p-6 border border-primary/20">
-              <p className="text-muted-foreground text-center leading-relaxed">
+              <p className="text-muted-foreground text-left leading-relaxed">
                 Integrations are a key part of our roadmap. By bringing Hobson AI directly into your existing systems,
                 we aim to create a seamless experience where insights are always available when and where you need them.
               </p>
@@ -1517,7 +1517,7 @@ const Learn = () => {
           <div className="container mx-auto p-8 max-w-7xl">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
-                <div className="text-center mb-8">
+                <div className="text-left mb-8">
                   <h1 className="text-3xl font-bold text-foreground mb-6">Setup Guide</h1>
 
                   {/* Notice Banner */}
@@ -1903,7 +1903,7 @@ Content-Type: multipart/form-data
           <div className="container mx-auto p-8 max-w-7xl">
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
-                <div className="text-center mb-8">
+                <div className="text-left mb-8">
                   <h1 className="text-3xl font-bold text-foreground mb-6">Troubleshooting</h1>
 
                   {/* Notice Banner */}
@@ -1936,7 +1936,7 @@ Content-Type: multipart/form-data
           <div className="container mx-auto max-w-3xl">
 
             {/* Hero */}
-            <div className="mb-16 text-center">
+            <div className="mb-16 text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
                 <span>📍</span> How Hobson finds the right answer
               </div>
@@ -2099,7 +2099,7 @@ Content-Type: multipart/form-data
               {/* Main Content */}
               <div className="flex-1 max-w-4xl">
                 {/* Hero Header */}
-                <div className="mb-12 text-center lg:text-left">
+                <div className="mb-12 text-left">
                   <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
@@ -2347,8 +2347,8 @@ Content-Type: multipart/form-data
             </nav>
           </aside>
 
-          {/* Desktop Main Content Area - Centered */}
-          <div className="flex-1 flex justify-center min-h-[calc(100vh-4rem)]">
+          {/* Desktop Main Content Area - Left aligned */}
+          <div className="flex-1 min-h-[calc(100vh-4rem)]">
             <div className="w-full max-w-4xl px-8 py-8">
               {renderContent()}
             </div>
