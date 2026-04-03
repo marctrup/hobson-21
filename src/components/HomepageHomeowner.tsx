@@ -35,7 +35,7 @@ export const HomepageHomeowner = () => {
         <meta name="twitter:title" content="AI-Document Intelligence for the Property Industry" />
         <meta name="twitter:description" content="Transform a tenancy agreement with intelligent analysis, automated insights, and instant answers. ." />
         <meta name="twitter:image" content="https://hobsonschoice.ai/hobson-owl-social.png" />
-        <link rel="canonical" href="https://hobsonschoice.ai/homeowner" />
+        <meta name="robots" content="noindex, nofollow" />
         
         {/* Preload critical assets - only above-the-fold logo */}
         <link rel="preload" href="/hobson-logo.png" as="image" />
