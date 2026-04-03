@@ -361,6 +361,9 @@ export const Homepage = () => {
             </div>
           </section>
 
+          {/* Audience Strip */}
+          <AudienceStrip />
+
           {/* The Hobson Journey */}
           <HobsonJourneySection />
 
