@@ -109,7 +109,7 @@ export const Homepage = () => {
                 {/* Login button */}
                 <button
                   onClick={() => setIsLoginModalOpen(true)}
-                  className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors"
+                  className="inline-flex h-9 items-center justify-center rounded-md border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/15"
                 >
                   Login
                 </button>
@@ -146,7 +146,7 @@ export const Homepage = () => {
                   {/* Login button */}
                   <button
                     onClick={() => { closeMobileMenu(); setIsLoginModalOpen(true); }}
-                    className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors w-fit"
+                    className="inline-flex h-9 w-fit items-center justify-center rounded-md border border-primary/20 bg-primary/10 px-4 py-2 text-sm font-medium text-primary transition-colors hover:bg-primary/15"
                   >
                     Login
                   </button>
