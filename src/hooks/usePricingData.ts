@@ -50,6 +50,7 @@ export function usePricingData() {
             cost_per_document: Number(pRes.data.cost_per_document),
             minimum_fee: Number(pRes.data.minimum_fee),
             cost_per_question_pack: Number((pRes.data as any).cost_per_question_pack ?? 7.50),
+            questions_per_pack: Number((pRes.data as any).questions_per_pack ?? 100),
           });
         }
 
