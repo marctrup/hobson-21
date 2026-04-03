@@ -8,6 +8,7 @@ interface Feature {
   does: string;
   matters: string;
   icon: LucideIcon;
+  extraContent?: React.ReactNode;
 }
 
 interface FeatureGroupSectionProps {
