@@ -7,7 +7,10 @@ import { CONTENT } from "@/config/content";
 
 export const GlobalHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
   const content = CONTENT;
+
+  const isActive = (to: string) => location.pathname === to || location.pathname.startsWith(to + '/');
 
   // Primary nav links
   const primaryLinks = content.navigation.links;
