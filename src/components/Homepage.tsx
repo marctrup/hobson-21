@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { InterestModal } from "@/components/InterestModal";
 import { Link } from "react-router-dom";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
@@ -22,6 +23,7 @@ export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showPilotForm, setShowPilotForm] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   
   const { language, setLanguage } = useLanguage();
   const content = useContent();
@@ -209,12 +211,12 @@ export const Homepage = () => {
                 )}
                 
                 {/* Login button */}
-                <Link
-                  to="/login-gate"
+                <button
+                  onClick={() => setIsLoginModalOpen(true)}
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors"
                 >
                   Login
-                </Link>
+                </button>
                 
                 {/* Language dropdown */}
                 <div className="relative">
@@ -281,13 +283,12 @@ export const Homepage = () => {
                   )}
                   
                   {/* Login button */}
-                  <Link
-                    to="/login-gate"
+                  <button
+                    onClick={() => { closeMobileMenu(); setIsLoginModalOpen(true); }}
                     className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors w-fit"
-                    onClick={closeMobileMenu}
                   >
                     Login
-                  </Link>
+                  </button>
                    
                   {/* Mobile Language Selector */}
                   <div className="border-t pt-4 mt-2">
@@ -495,5 +496,6 @@ export const Homepage = () => {
           </footer>
         </main>
       </div>
+      <InterestModal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} source="login-interest" />
     </>;
 };

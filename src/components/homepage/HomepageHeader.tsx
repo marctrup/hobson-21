@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useContent } from "@/contexts/LanguageContext";
+import { InterestModal } from "@/components/InterestModal";
 import hobsonLogo from "/hobson-logo.png";
 
 // UK Flag SVG component
@@ -26,6 +27,7 @@ const UKFlag = ({ className }: { className?: string }) => (
 
 export const HomepageHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const content = useContent();
 
   const toggleMobileMenu = () => {
@@ -37,6 +39,7 @@ export const HomepageHeader = () => {
   };
 
   return (
+    <>
     <header
       className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50"
       role="banner"
@@ -79,12 +82,12 @@ export const HomepageHeader = () => {
             ))}
             
             {/* Login button */}
-            <Link
-              to="/login-gate"
+            <button
+              onClick={() => setIsLoginModalOpen(true)}
               className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors"
             >
               Login
-            </Link>
+            </button>
             
             {/* Language indicator */}
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground" title="English (UK)">
@@ -135,17 +138,18 @@ export const HomepageHeader = () => {
                   {link.label}
                 </Link>
                 ))}
-                <Link
-                  to="/login-gate"
+                <button
+                  onClick={() => { closeMobileMenu(); setIsLoginModalOpen(true); }}
                   className="inline-flex items-center justify-center rounded-md text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 transition-colors w-fit"
-                  onClick={closeMobileMenu}
                 >
                   Login
-                </Link>
+                </button>
             </div>
           </nav>
         )}
       </div>
     </header>
+    <InterestModal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} source="login-interest" />
+    </>
   );
 };
