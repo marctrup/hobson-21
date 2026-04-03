@@ -154,11 +154,11 @@ export const PricingSection = () => {
         <div className="text-center mb-12 sm:mb-16">
           <div className="flex items-center justify-center gap-4 mb-4">
             <img src={owlMascot} alt="Hobson AI Owl Mascot" className="w-16 h-16 sm:w-20 sm:h-20 object-contain" />
-            <h2 className={`font-bold text-foreground ${isGerman ? 'text-xl sm:text-2xl md:text-3xl' : 'text-2xl sm:text-3xl md:text-4xl'}`}>
+            <h2 className={`font-bold text-foreground text-2xl sm:text-3xl md:text-4xl`}>
               {pricing.title}
             </h2>
           </div>
-          <p className={`text-muted-foreground max-w-3xl mx-auto px-4 sm:px-0 ${isGerman ? 'text-base sm:text-lg' : 'text-lg sm:text-xl'}`}>
+          <p className={`text-muted-foreground max-w-3xl mx-auto px-4 sm:px-0 text-lg sm:text-xl`}>
             {pricing.subtitle}
           </p>
         </div>
@@ -171,7 +171,7 @@ export const PricingSection = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/40 to-primary/60" />
             <CardHeader className="text-center pb-3 flex-shrink-0">
               <CardTitle className="text-base sm:text-lg font-bold">{pricing.plans.free.name}</CardTitle>
-              <div className={`font-bold text-primary mt-2 ${hasLongCurrency ? 'text-xl sm:text-2xl' : 'text-2xl sm:text-3xl'}`}>
+              <div className={`font-bold text-primary mt-2 text-2xl sm:text-3xl`}>
                 {formatPrice(pricing.plans.free.price)}
               </div>
             </CardHeader>
@@ -205,9 +205,9 @@ export const PricingSection = () => {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-primary/80" />
             <CardHeader className="text-center pb-3 pt-6 flex-shrink-0">
               <CardTitle className="text-base sm:text-lg font-bold">{pricing.plans.essential.name}</CardTitle>
-              <div className={`font-bold text-primary mt-2 ${hasLongCurrency ? 'text-lg sm:text-xl' : 'text-2xl sm:text-3xl'}`}>
+              <div className={`font-bold text-primary mt-2 text-2xl sm:text-3xl`}>
                 {formatPrice(essentialPrice)}
-                <span className={`font-normal ${hasLongCurrency ? 'text-[10px]' : 'text-xs'}`}> {pricing.perMonth}</span>
+                <span className={`font-normal text-xs`}> {pricing.perMonth}</span>
               </div>
               {isAnnualEssential && (
                 <div className="text-xs text-muted-foreground line-through">
@@ -246,9 +246,9 @@ export const PricingSection = () => {
               <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary/60 to-primary/80" />
               <CardHeader className="text-center pb-3 flex-shrink-0">
                 <CardTitle className="text-base sm:text-lg font-bold">{essentialPlusData.name}</CardTitle>
-                <div className={`font-bold text-primary mt-2 ${hasLongCurrency ? 'text-lg sm:text-xl' : 'text-2xl sm:text-3xl'}`}>
+                <div className={`font-bold text-primary mt-2 text-2xl sm:text-3xl`}>
                   {formatPrice(essentialPlusPrice)}
-                  <span className={`font-normal ${hasLongCurrency ? 'text-[10px]' : 'text-xs'}`}> {pricing.perMonth}</span>
+                  <span className={`font-normal text-xs`}> {pricing.perMonth}</span>
                 </div>
                 {isAnnualPlus && (
                   <div className="text-xs text-muted-foreground line-through">
