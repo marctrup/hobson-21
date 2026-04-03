@@ -104,6 +104,7 @@ const Pricing = () => {
 
   const TOPUP_COST = pricing.cost_per_question_pack;
   const TOPUP_QUESTIONS = pricing.questions_per_pack;
+  const TOPUP_QUESTIONS_LABEL = `${TOPUP_QUESTIONS} question${TOPUP_QUESTIONS === 1 ? "" : "s"}`;
 
   // Calculator
   const docSubtotal = documents * pricing.cost_per_document;
@@ -348,9 +349,9 @@ const Pricing = () => {
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <label className="text-sm font-semibold" style={{ color: C.navy }}>Top-up question packs</label>
-                      <span className="text-xs" style={{ color: C.muted }}>£{TOPUP_COST.toFixed(2)} per {TOPUP_QUESTIONS}</span>
+                      <span className="text-xs" style={{ color: C.muted }}>£{TOPUP_COST.toFixed(2)} per {TOPUP_QUESTIONS_LABEL}</span>
                     </div>
-                    <p className="text-xs mb-2" style={{ color: C.muted }}>Each pack adds {TOPUP_QUESTIONS} extra AI questions to your monthly allowance</p>
+                    <p className="text-xs mb-2" style={{ color: C.muted }}>Each pack adds {TOPUP_QUESTIONS_LABEL} to your monthly allowance</p>
                     <div className="flex items-center gap-3">
                       <button type="button" onClick={() => setTopUpPacks(Math.max(0, topUpPacks - 1))} className="w-11 h-11 sm:w-10 sm:h-10 rounded-lg flex items-center justify-center font-bold text-lg" style={{ border: `1px solid ${C.border}`, color: C.navy }}>−</button>
                       <input type="text" inputMode="numeric" pattern="[0-9]*" value={topUpPacks === 0 ? '' : String(topUpPacks)} onChange={e => { const v = e.target.value.replace(/\D/g, ''); setTopUpPacks(v === '' ? 0 : parseInt(v, 10)); }} placeholder="0" className="w-20 text-center rounded-lg px-3 py-2.5 sm:py-2 text-sm focus:outline-none focus:ring-2" style={{ border: `1px solid ${C.border}`, color: C.navy }} />
