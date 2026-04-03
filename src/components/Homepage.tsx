@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { InterestModal } from "@/components/InterestModal";
 import { Link } from "react-router-dom";
 import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 import { SimpleButton } from "@/components/ui/simple-button";
