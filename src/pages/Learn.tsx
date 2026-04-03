@@ -245,12 +245,6 @@ const Learn = () => {
       } else if (activeHorizontalTab === "integrations") {
         if (activeVerticalTab === "available-integrations" || !activeVerticalTab) {
           tocSections = ["planned-integrations", "why-integrations-matter", "what-were-working-towards", "benefit-for-you"];
-        } else if (activeVerticalTab === "setup-guide") {
-          tocSections = ["coming-soon-notice", "what-to-expect"];
-        } else if (activeVerticalTab === "api-reference") {
-          tocSections = ["overview", "authentication", "endpoints", "document-analysis", "query-interface", "webhooks", "rate-limits", "error-handling", "examples"];
-        } else if (activeVerticalTab === "troubleshooting") {
-          tocSections = ["coming-soon-notice", "what-to-expect"];
         }
       }
       const handleScroll = () => {
