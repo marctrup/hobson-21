@@ -139,9 +139,14 @@ export default function PricingSettings() {
                 <p className="text-xs text-muted-foreground mt-1">Applied to all document types — leases, certificates, contracts, etc.</p>
               </div>
               <div>
-                <label className="text-sm font-medium mb-1 block">Cost per 100 questions top-up (£)</label>
+                <label className="text-sm font-medium mb-1 block">Questions per top-up pack</label>
+                <Input type="number" step="1" min="1" value={questionsPerPack} onChange={e => setQuestionsPerPack(e.target.value)} required disabled={saving} />
+                <p className="text-xs text-muted-foreground mt-1">Number of questions included in each top-up pack</p>
+              </div>
+              <div>
+                <label className="text-sm font-medium mb-1 block">Cost per top-up pack (£)</label>
                 <Input type="number" step="0.01" min="0" value={costPerQuestionPack} onChange={e => setCostPerQuestionPack(e.target.value)} required disabled={saving} />
-                <p className="text-xs text-muted-foreground mt-1">Price charged for each top-up pack of 100 questions</p>
+                <p className="text-xs text-muted-foreground mt-1">Price charged for each top-up pack of {questionsPerPack} questions</p>
               </div>
             </div>
           </div>
