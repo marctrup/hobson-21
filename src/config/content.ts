@@ -173,7 +173,7 @@ export const CONTENT = {
 
   // Features Section
   features: {
-    title: "Features",
+    title: "Built for the way property work actually happens",
     subtitle: "Talk to your documents on the left. See your portfolio come alive on the right. No menus, just flow",
     
     // Feature Showcase (Chat panel)
