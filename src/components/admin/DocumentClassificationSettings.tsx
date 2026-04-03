@@ -33,18 +33,11 @@ export default function DocumentClassificationSettings() {
 
   const fetchAll = async () => {
     try {
-      const [settingsRes, eventsRes] = await Promise.all([
-        supabase
-          .from("document_classification_settings" as any)
-          .select("*")
-          .limit(1)
-          .single(),
-        supabase
-          .from("extraction_events" as any)
-          .select("*")
-          .order("created_at" as any, { ascending: false })
-          .limit(20),
-      ]);
+      const settingsRes = await supabase
+        .from("document_classification_settings" as any)
+        .select("*")
+        .limit(1)
+        .single();
 
       if (settingsRes.data) {
         const d = settingsRes.data as any;
@@ -53,10 +46,6 @@ export default function DocumentClassificationSettings() {
         setLeaseThreshold(String(d.lease_threshold));
         setBehaviour(d.reclassification_behaviour);
         setMessage(d.reclassification_message);
-      }
-
-      if (eventsRes.data) {
-        setEvents(eventsRes.data as any[]);
       }
     } catch (err) {
       console.error("Error fetching classification settings:", err);
