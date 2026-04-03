@@ -98,12 +98,6 @@ const scenarios = [
   },
 ];
 
-const stats = [
-  { number: "98%", label: "Accuracy on real estate datasets" },
-  { number: "3hrs", label: "To review 8 leases vs 3 days manually" },
-  { number: "340+", label: "Units queried simultaneously" },
-  { number: "24hrs", label: "Due diligence on 6 leases vs 10 days" },
-];
 
 const InPractice = () => {
   return (
