@@ -17,7 +17,7 @@ import { TrustStrip } from "@/components/homepage/TrustStrip";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { structuredData } from "@/utils/seo-data";
-import { useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 
 export const Homepage = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
