@@ -113,7 +113,7 @@ const AppContent = () => {
               <Route path="/learn/api-reference" element={<Navigate to="/learn/faq" replace />} />
               <Route path="/learn/troubleshooting" element={<Navigate to="/learn/faq" replace />} />
               <Route path="/learn/fundamentals" element={<Navigate to="/learn/prompt-engineering" replace />} />
-              <Route path="/learn/plans-credits" element={<Navigate to="/learn/smart-navigation" replace />} />
+              <Route path="/learn/plans-credits" element={<Navigate to="/learn/faq" replace />} />
               <Route path="/learn/:section" element={<Learn />} />
               <Route path="/status" element={<Status />} />
               <Route path="/announcements" element={<Announcements />} />
