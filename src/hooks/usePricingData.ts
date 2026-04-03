@@ -75,7 +75,7 @@ export function usePricingData() {
       .channel("pricing-rt")
       .on("postgres_changes", { event: "*", schema: "public", table: "onboarding_pricing" }, (payload) => {
         const d = payload.new as any;
-        if (d) setPricing({ cost_per_lease: Number(d.cost_per_lease), cost_per_document: Number(d.cost_per_document), minimum_fee: Number(d.minimum_fee), cost_per_question_pack: Number(d.cost_per_question_pack ?? 7.50) });
+        if (d) setPricing({ cost_per_lease: Number(d.cost_per_lease), cost_per_document: Number(d.cost_per_document), minimum_fee: Number(d.minimum_fee), cost_per_question_pack: Number(d.cost_per_question_pack ?? 7.50), questions_per_pack: Number(d.questions_per_pack ?? 100) });
       })
       .on("postgres_changes", { event: "*", schema: "public", table: "tier_usage_limits" }, (payload) => {
         const d = payload.new as any;
