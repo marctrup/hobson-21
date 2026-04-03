@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { getPricingStructuredData, getOrganizationStructuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
+import { structuredData, getBreadcrumbStructuredData } from "@/utils/seo-data";
 import { GlobalHeader } from "@/components/GlobalHeader";
 import { usePricingData } from "@/hooks/usePricingData";
 
@@ -206,8 +206,8 @@ const Pricing = () => {
         <title>Pricing | Hobson AI — Specialised AI for Property Management</title>
         <meta name="description" content="Compare Hobson AI pricing tiers. Start free or choose a plan that fits your property management needs." />
         <link rel="canonical" href="https://hobsonschoice.ai/pricing" />
-        <script type="application/ld+json">{JSON.stringify(getPricingStructuredData())}</script>
-        <script type="application/ld+json">{JSON.stringify(getOrganizationStructuredData())}</script>
+<script type="application/ld+json">{JSON.stringify(structuredData.softwareApplication)}</script>
+        <script type="application/ld+json">{JSON.stringify(structuredData.organization)}</script>
         <script type="application/ld+json">{JSON.stringify(getBreadcrumbStructuredData([
           { name: "Home", url: "https://hobsonschoice.ai" },
           { name: "Pricing", url: "https://hobsonschoice.ai/pricing" }

@@ -13,7 +13,7 @@ import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm
 import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
 
 import owlMascot from "@/assets/owl-mascot.png";
-import { getOrganizationStructuredData, getHomepageStructuredData, getHomepageFAQStructuredData } from "@/utils/seo-data";
+import { structuredData } from "@/utils/seo-data";
 import { useLanguage, useContent } from "@/contexts/LanguageContext";
 
 export const Homepage = () => {
@@ -168,15 +168,15 @@ export const Homepage = () => {
         <link rel="preload" href="/hobson-logo.png" as="image" />
         <link rel="preload" href={owlMascot} as="image" />
         
-        {/* Structured Data for AI Crawlers */}
+{/* Structured Data for AI Crawlers */}
         <script type="application/ld+json">
-          {JSON.stringify(getOrganizationStructuredData())}
+          {JSON.stringify(structuredData.organization)}
         </script>
         <script type="application/ld+json">
-          {JSON.stringify(getHomepageStructuredData())}
+          {JSON.stringify(structuredData.softwareApplication)}
         </script>
         <script type="application/ld+json">
-          {JSON.stringify(getHomepageFAQStructuredData())}
+          {JSON.stringify(structuredData.faqPage)}
         </script>
       </Helmet>
 
