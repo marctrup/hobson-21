@@ -104,6 +104,7 @@ const Pricing = () => {
 
   const TOPUP_COST = pricing.cost_per_question_pack;
   const TOPUP_QUESTIONS = pricing.questions_per_pack;
+  const TOPUP_QUESTIONS_LABEL = `${TOPUP_QUESTIONS} question${TOPUP_QUESTIONS === 1 ? "" : "s"}`;
 
   // Calculator
   const docSubtotal = documents * pricing.cost_per_document;
