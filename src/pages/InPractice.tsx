@@ -164,7 +164,7 @@ const InPractice = () => {
                 hobsonDid: "All documents for each unit were added to Hobson — original leases and all subsequent documents together. When the manager asked what the current rent was on Unit 7, Hobson did not return the original rent from the lease. It identified that a rent memorandum had been executed following a rent review, and that a subsequent deed of variation had further modified the rent. It returned the current passing rent with every document in the chain referenced. The same logic applied across every unit — Hobson understood which documents superseded which and answered based on the current legal position, not the original one.",
                 honestly: "This is one of the most important things Hobson does and one of the hardest to replicate. Reading a single document is straightforward. Understanding the legal hierarchy across a stack of documents — knowing that a deed of variation from 2019 changes repair obligations in a lease from 2011, and that a side letter from 2022 further qualifies those obligations — requires multi-document reasoning that generic AI tools cannot reliably deliver. Hobson is built for this from the ground up."
               }
-            ).map((scenario, index) => (
+            ].map((scenario, index) => (
               <Accordion key={index} type="single" collapsible className={index > 0 ? 'border-t border-border' : ''}>
                 <AccordionItem value={`scenario-${index}`} className="border-b-0">
                   <AccordionTrigger className="text-xl sm:text-2xl font-bold text-foreground hover:no-underline py-6">
