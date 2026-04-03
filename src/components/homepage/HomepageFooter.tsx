@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useLanguage, useContent } from "@/contexts/LanguageContext";
+import { CONTENT } from "@/config/content";
 import hobsonLogo from "/hobson-logo.png";
 
 export const HomepageFooter = () => {
