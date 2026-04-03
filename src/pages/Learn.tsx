@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Book, Lightbulb, Puzzle, Wand2, Users, Library, FileText, Clock, Bell, Activity, MessageSquare, Heart, HelpCircle, Play, Plus } from "lucide-react";
+import { structuredData } from "@/utils/seo-data";
 import ReactMarkdown from "react-markdown";
 import remarkBreaks from "remark-breaks";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -2440,6 +2441,11 @@ Content-Type: multipart/form-data
         <title>{pageMeta.title}</title>
         <meta name="description" content={pageMeta.description} />
         <link rel="canonical" href={`https://hobsonschoice.ai/learn/${activeVerticalTab || ""}`} />
+        {activeHorizontalTab === "faq" && (
+          <script type="application/ld+json">
+            {JSON.stringify(structuredData.faqPageLearn)}
+          </script>
+        )}
       </Helmet>
 
       <GlobalHeader />
