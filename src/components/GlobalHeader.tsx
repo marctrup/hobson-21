@@ -10,7 +10,10 @@ export const GlobalHeader = () => {
   const location = useLocation();
   const content = CONTENT;
 
-  const isActive = (to: string) => location.pathname === to || location.pathname.startsWith(to + '/');
+  const isActive = (to: string) => {
+    if (to.startsWith('/learn')) return location.pathname.startsWith('/learn');
+    return location.pathname === to || location.pathname.startsWith(to + '/');
+  };
 
   // Primary nav links
   const primaryLinks = content.navigation.links;
