@@ -64,7 +64,7 @@ const FeatureBlock: React.FC<FeatureBlockProps> = ({
         </p>
       </div>
 
-      {extraContent}
+      {extraContent && <div className="mt-4">{extraContent}</div>}
     </div>
   </div>
 );
