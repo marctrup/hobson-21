@@ -36,6 +36,7 @@ const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
 const InvestorSummary = lazy(() => import("../pages/InvestorSummary"));
+const Features = lazy(() => import("../pages/Features"));
 
 // Loading component
 const PageLoader = () => (
@@ -120,6 +121,9 @@ const AppContent = () => {
               <Route path="/feature-requests" element={<FeatureRequests />} />
               <Route path="/usehobson" element={<UseHobson />} />
               <Route path="/in-practice" element={<InPractice />} />
+              <Route path="/features" element={<Features />} />
+              <Route path="/learn/features" element={<Navigate to="/features" replace />} />
+              <Route path="/learn/core-features" element={<Navigate to="/features" replace />} />
               <Route path="/learn/use-cases" element={<Navigate to="/in-practice" replace />} />
               <Route path="/use-cases" element={<Navigate to="/in-practice" replace />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />

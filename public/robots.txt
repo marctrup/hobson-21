@@ -30,5 +30,7 @@ Disallow: /feature-requests
 Disallow: /learn/setup-guide
 Disallow: /learn/api-reference
 Disallow: /learn/troubleshooting
+Disallow: /learn/features
+Disallow: /learn/core-features
 
 Sitemap: https://hobsonschoice.ai/sitemap.xml

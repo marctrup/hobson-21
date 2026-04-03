@@ -194,6 +194,9 @@ export const Homepage = () => {
 
               {/* Desktop Navigation */}
               <nav className="hidden md:flex items-center gap-6" role="navigation" aria-label="Main navigation">
+                <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors">
+                  Features
+                </Link>
                 <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors">
                   Pricing
                 </Link>
@@ -268,6 +271,9 @@ export const Homepage = () => {
             {/* Mobile Navigation Menu */}
             {isMobileMenuOpen && <nav className="md:hidden mt-4 pb-4 border-t pt-4" role="navigation" aria-label="Mobile navigation">
                 <div className="flex flex-col gap-4">
+                  <Link to="/features" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
+                    Features
+                  </Link>
                   <Link to="/pricing" className="text-base text-muted-foreground hover:text-foreground transition-colors py-2" onClick={closeMobileMenu}>
                     Pricing
                   </Link>
@@ -345,6 +351,9 @@ export const Homepage = () => {
                     </Link>
                     <Link to="/in-practice" className="text-primary hover:text-primary/80 font-medium text-base inline-flex items-center gap-1 transition-colors">
                       See Hobson in practice <ArrowRight className="h-4 w-4" />
+                    </Link>
+                    <Link to="/features" className="text-primary hover:text-primary/80 font-medium text-base inline-flex items-center gap-1 transition-colors">
+                      Explore the features <ArrowRight className="h-4 w-4" />
                     </Link>
                   </div>
                   
