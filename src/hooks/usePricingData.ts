@@ -40,7 +40,7 @@ export function usePricingData() {
     const fetch = async () => {
       try {
         const [pRes, tRes] = await Promise.all([
-          supabase.from("onboarding_pricing").select("cost_per_lease, cost_per_document, minimum_fee, cost_per_question_pack").limit(1).single(),
+          supabase.from("onboarding_pricing").select("cost_per_lease, cost_per_document, minimum_fee, cost_per_question_pack, questions_per_pack").limit(1).single(),
           supabase.from("tier_usage_limits" as any).select("*").order("tier" as any),
         ]);
 
