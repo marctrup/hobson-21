@@ -49,8 +49,7 @@ export function AppProviders() {
       <BrowserRouter>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <QueryClientProvider client={queryClient}>
-            <LanguageProvider>
-              <AuthProvider>
+            <AuthProvider>
                 <ToastPortal />
                 <AppRoutes />
                 <ErrorBoundary>
