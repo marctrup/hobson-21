@@ -59,6 +59,11 @@ export default function Auth() {
   }
 
   return (
+    <>
+    <Helmet>
+      <title>Sign In | Hobson AI</title>
+      <meta name="robots" content="noindex, nofollow" />
+    </Helmet>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
       <AuthForm 
         mode={mode} 
