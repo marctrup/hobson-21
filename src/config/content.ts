@@ -20,7 +20,7 @@ export const CONTENT = {
 
   // Hero Section
   hero: {
-    title: "Your property obligations,",
+    title: "Your real estate obligations,",
     titleHighlight: "managed automatically.",
     subtitle: "Hobson does the property work every business has, but nobody has time for. Purpose-built for real estate documents — not adapted from a generic AI tool.",
     ctaButton: "Start free — no card required",
