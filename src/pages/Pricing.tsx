@@ -82,7 +82,7 @@ const Badge = ({ children, variant }: { children: React.ReactNode; variant: "liv
 const Pricing = () => {
   const { pricing, getTierLimit, loading } = usePricingData();
   const [isAnnual, setIsAnnual] = useState(true);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<string | null>(null);
   const [documents, setDocuments] = useState(0);
   const [topUpPacks, setTopUpPacks] = useState(0);
   const [overageModalOpen, setOverageModalOpen] = useState(false);
