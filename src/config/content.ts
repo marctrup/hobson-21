@@ -59,20 +59,20 @@ export const CONTENT = {
 
   // How It Works Section
   howItWorks: {
-    title: "How It Works",
-    subtitle: "Simply ask questions and gain insights",
+    title: "From document to answer in minutes",
+    subtitle: "No training. No setup. No integration work required.",
     steps: [
       {
-        title: "Upload & Connect",
-        description: "Upload your documents. Our AI instantly begins reading, understanding, and indexing your content.",
+        title: "Add your documents",
+        description: "Add any lease, licence, deed, compliance certificate or property document. Hobson reads it thoroughly — understanding not just the words but the legal meaning, the obligations, and how it relates to every other document in the same property.",
       },
       {
-        title: "Ask Questions",
-        description: "Ask natural language questions about your properties, leases, contracts, or any document content.",
+        title: "Ask in plain English",
+        description: "Ask anything about your portfolio the way you would ask a colleague. \"Which leases have a break clause in the next 12 months?\" \"What are my EPC obligations on this site?\" \"What does the deed of variation change about the repair terms?\" No query language. No training required.",
       },
       {
-        title: "Get Insights",
-        description: "Receive instant, accurate answers with full source citations and actionable recommendations.",
+        title: "Get the current legal position",
+        description: "Every answer is sourced to the exact clause it came from. If a later document changes the original terms, Hobson knows — and tells you the current position, not the historical one. Every answer is traceable, auditable and reliable enough to act on.",
       },
     ],
   },
