@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { OptimizedImage } from "@/components/OptimizedImage";
@@ -7,7 +7,10 @@ import { CONTENT } from "@/config/content";
 
 export const GlobalHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
   const content = CONTENT;
+
+  const isActive = (to: string) => location.pathname === to || location.pathname.startsWith(to + '/');
 
   // Primary nav links
   const primaryLinks = content.navigation.links;
@@ -45,7 +48,7 @@ export const GlobalHeader = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                className={`text-base transition-colors ${isActive(link.to) ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
                 title={link.title}
               >
                 {link.label}
@@ -55,7 +58,7 @@ export const GlobalHeader = () => {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-base text-muted-foreground hover:text-foreground transition-colors"
+                className={`text-base transition-colors ${isActive(link.to) ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
                 title={link.title}
               >
                 {link.label}
@@ -87,7 +90,7 @@ export const GlobalHeader = () => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className={`text-base transition-colors py-2 ${isActive(link.to) ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
@@ -98,7 +101,7 @@ export const GlobalHeader = () => {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="text-base text-muted-foreground hover:text-foreground transition-colors py-2"
+                  className={`text-base transition-colors py-2 ${isActive(link.to) ? 'text-primary font-medium' : 'text-muted-foreground hover:text-foreground'}`}
                   onClick={closeMobileMenu}
                   title={link.title}
                 >
