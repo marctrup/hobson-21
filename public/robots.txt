@@ -27,5 +27,8 @@ Disallow: /announcements
 Disallow: /announcement/
 Disallow: /status
 Disallow: /feature-requests
+Disallow: /learn/setup-guide
+Disallow: /learn/api-reference
+Disallow: /learn/troubleshooting
 
 Sitemap: https://hobsonschoice.ai/sitemap.xml

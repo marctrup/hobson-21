@@ -144,27 +144,27 @@ const Learn = () => {
           },
           "setup-guide": {
             horizontal: "integrations",
-            vertical: "setup-guide"
+            vertical: "available-integrations"
           },
           setupguide: {
             horizontal: "integrations",
-            vertical: "setup-guide"
+            vertical: "available-integrations"
           },
           "set-up-guide": {
             horizontal: "integrations",
-            vertical: "setup-guide"
+            vertical: "available-integrations"
           },
           "api-reference": {
             horizontal: "integrations",
-            vertical: "api-reference"
+            vertical: "available-integrations"
           },
           apireference: {
             horizontal: "integrations",
-            vertical: "api-reference"
+            vertical: "available-integrations"
           },
           troubleshooting: {
             horizontal: "integrations",
-            vertical: "troubleshooting"
+            vertical: "available-integrations"
           },
           // Use Cases section
           "use-cases": {
@@ -227,7 +227,7 @@ const Learn = () => {
     let tocSections: string[] = [];
 
     // Only run scroll spy for pages that have table of contents
-    if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq" || activeHorizontalTab === "features" && ["core-features", "advanced-features", "feature-comparison", "roadmap"].includes(activeVerticalTab) || activeHorizontalTab === "integrations" && ["available-integrations", "setup-guide", "api-reference", "troubleshooting"].includes(activeVerticalTab)) {
+    if (activeHorizontalTab === "introduction" && activeVerticalTab === "faq" || activeHorizontalTab === "features" && ["core-features", "advanced-features", "feature-comparison", "roadmap"].includes(activeVerticalTab) || activeHorizontalTab === "integrations" && activeVerticalTab === "available-integrations") {
       if (activeHorizontalTab === "introduction") {
         if (activeVerticalTab === "faq") {
           tocSections = ["how-hobson-works", "features", "plans-credits-faq"];
@@ -245,12 +245,6 @@ const Learn = () => {
       } else if (activeHorizontalTab === "integrations") {
         if (activeVerticalTab === "available-integrations" || !activeVerticalTab) {
           tocSections = ["planned-integrations", "why-integrations-matter", "what-were-working-towards", "benefit-for-you"];
-        } else if (activeVerticalTab === "setup-guide") {
-          tocSections = ["coming-soon-notice", "what-to-expect"];
-        } else if (activeVerticalTab === "api-reference") {
-          tocSections = ["overview", "authentication", "endpoints", "document-analysis", "query-interface", "webhooks", "rate-limits", "error-handling", "examples"];
-        } else if (activeVerticalTab === "troubleshooting") {
-          tocSections = ["coming-soon-notice", "what-to-expect"];
         }
       }
       const handleScroll = () => {
@@ -356,18 +350,6 @@ const Learn = () => {
           id: "available-integrations",
           label: "Available Integrations",
           icon: Puzzle
-        }, {
-          id: "setup-guide",
-          label: "Setup Guide",
-          icon: Play
-        }, {
-          id: "api-reference",
-          label: "API Reference",
-          icon: FileText
-        }, {
-          id: "troubleshooting",
-          label: "Troubleshooting",
-          icon: HelpCircle
         }];
       case "tips-tricks":
         return [{
