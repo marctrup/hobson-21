@@ -27,7 +27,7 @@ const getFaqContent = () => {
 
 **How Document Types Work:**
 • **Right-to-Occupy (RTO) Documents:** Documents that give an entity the right to use or occupy a space, such as a lease or a Land Registry Title.
-• **Amending Documents (AMDs):** Documents that modify, extend, or support an RTO. This includes formal amendments (deeds of variation, rent memorandums) and supporting documents (notices, identity documents, funding documents).
+• **Accompanying and Modification Documents (AMDs):** Documents that modify, extend, or support an RTO. This includes formal amendments (deeds of variation, rent memorandums) and supporting documents (notices, identity documents, funding documents).
 • **Accompanying Documents (ACDs):** Documents linked to a specific unit or unit group, such as compliance certificates.
 
 ---
