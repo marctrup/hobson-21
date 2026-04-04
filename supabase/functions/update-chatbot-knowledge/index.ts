@@ -40,7 +40,7 @@ Hobson currently supports PDFs. Common text files, as well as CSV/Excel for tabu
 **3. What types of documents can Hobson read?**
 Hobson has been trained to understand a wide range of documents used across residential and commercial real estate. These fall into three main categories:
 • Right-to-Occupy (RTO) Documents: Residential leases, commercial leases, licences to occupy, title deeds
-• Amending Documents (AMDs): Deeds of variation, rent memorandums, notices, works agreements, deposit deeds, identity or supporting documents
+• Accompanying and Modification Documents (AMDs): Deeds of variation, rent memorandums, notices, works agreements, deposit deeds, identity or supporting documents
 • Accompanying Documents (ACDs): Compliance certificates, works reports, funding agreements
 
 Hobson continues to grow. We add new document types regularly.
