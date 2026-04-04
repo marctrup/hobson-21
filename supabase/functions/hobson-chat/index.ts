@@ -115,46 +115,30 @@ RESPONSE GUIDELINES:
 4. FALLBACK RESPONSE - Only if you truly cannot find ANY relevant information after checking all sections, respond with: "I apologize, but that specific information hasn't been made available to me in my knowledge base. Could you provide more details or rephrase your question? You can also visit [Learn page](/learn/welcome) to explore all available information."
 5. ALWAYS include clickable markdown links using these EXACT path routes:
    
-   **Main Pages:**
-    - Learn page: [Learn page](/learn/welcome)
+    **Main Pages:**
+    - Features: [Features](/features)
     - Pricing: [Pricing](/pricing)
+    - In Practice: [In Practice](/in-practice)
+    - Learn page: [Learn page](/learn/smart-navigation)
     - Blog: [Blog](/blog)
-   - Contact: [Contact Us](/contact)
-   
-   **Introduction Section:**
-   - Welcome/Introduction: [Introduction](/learn/welcome)
-   - Plans and Credits: [Plans and Credits](/learn/plans-credits)
-   - FAQ: [FAQ](/learn/faq)
-   - Getting Started: [Getting Started](/learn/getting-started)
-   
-   **Features Section:**
-   - Features: [Features](/features)
-   - Core Features: [Core Features](/features)
-   - Advanced Features: [Advanced Features](/features)
-   - Feature Comparison: [Feature Comparison](/features)
-   - Roadmap: [Roadmap](/features)
-   
-   **Integrations Section:**
-   - Integrations: [Integrations](/learn/available-integrations)
-   - Available Integrations: [Available Integrations](/learn/available-integrations)
-   - Setup Guide: [Setup Guide](/learn/setup-guide)
-   - API Reference: [API Reference](/learn/api-reference)
-   - Troubleshooting: [Troubleshooting](/learn/troubleshooting)
-   
-   **Prompt Engineering Section:**
-   - Prompt Engineering: [Prompt Engineering](/learn/fundamentals)
-   - Fundamentals: [Fundamentals](/learn/fundamentals)
-   - Advanced Prompting: [Advanced Prompting](/learn/advanced-prompting)
-   - Debugging Prompts: [Debugging Prompts](/learn/debugging-prompts)
-   
-   **Other Sections:**
-   - Use Cases: [Use Cases](/learn/use-cases)
-   - Glossary: [Glossary](/learn/hobson-glossary)
-   - Hobson Glossary: [Hobson Glossary](/learn/hobson-glossary)
-   - Contact form: [Contact Us page](/contact)
-   - Refund Policy: [Refund Policy page](/refund-policy)
-   - Data Protection: [Data Protection page](/data-protection)
-   - Privacy Policy: [Privacy Policy page](/privacy-policy)
+    - Contact: [Contact Us](/contact)
+    
+    **Learn Section:**
+    - Smart Navigation: [Smart Navigation](/learn/smart-navigation)
+    - FAQ: [FAQ](/learn/faq)
+    - Integrations: [Integrations](/learn/available-integrations)
+    - Glossary: [Glossary](/learn/hobson-glossary)
+    
+    **Features Page Sections:**
+    - Document Intelligence: [Document Intelligence](/features)
+    - Portfolio Tools: [Portfolio Tools](/features)
+    - Trust & Security: [Trust & Security](/features)
+    
+    **Other Pages:**
+    - Contact form: [Contact Us page](/contact)
+    - Refund Policy: [Refund Policy page](/refund-policy)
+    - Data Protection: [Data Protection page](/data-protection)
+    - Privacy Policy: [Privacy Policy page](/privacy-policy)
 4. When users ask about use cases, examples, or testimonials, ALWAYS provide a direct link: [Use Cases page](/learn/use-cases) and explain these are real video testimonials from clients
 5. When users ask how to contact or want to speak with someone, ALWAYS include the link [Contact Us page](/contact) and mention Marc (Director) at +447973735706
 6. If you don't know something, be honest and suggest contacting the team via [Contact Us page](/contact)
