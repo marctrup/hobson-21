@@ -534,42 +534,208 @@ serve(async (req) => {
     const useCasesCount = useCasesContent.length > 100 ? 1 : 0;
     const glossaryTermCount = glossaryData?.length || 0;
 
-    // Pricing page FAQ content — kept in sync with src/pages/Pricing.tsx faqs[]
+    // Pricing page FAQ content — kept in sync with src/pages/Pricing.tsx faqGroups[]
     const pricingFaqContent = `
 ## Pricing Page FAQs
 
-**When will Tiers 2, 3 and 4 be available?**
-We are currently working on Tier 1. Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform — are launching later in the year. Join the waitlist to be notified first and to lock in founding member pricing.
-
-**What is the Knowledge Base exactly?**
-It is Hobson's memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your communication style is — and it remembers permanently. Every answer and every action it takes reflects what it knows about you.
-
-**What is the difference between tiers?**
-Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced answers. What it does not have is the Knowledge Base. Hobson on Tier 1 does not know your business. It knows your documents.
-
-Tiers 2, 3 and 4 are the same product. Every feature, every capability, the full Knowledge Base — identical across all three. The only decision is how many people need access. Same Hobson, more seats, better value per seat as you go up.
-
-**Can I start on Tier 1 and upgrade?**
-Yes. Your Knowledge Base is built as you go — when you upgrade to Tier 2, everything you have taught Hobson stays. There is no reset.
+### Getting Started & Trials
 
 **Is there a free trial?**
-Yes. Tier 1 comes with a 3-day free trial. No credit card required and limited credits to try with.
+Yes. Tier 1 comes with a free 3-day trial — no credit card required. You can upload your first document and start asking questions about it within minutes of signing up. Tier 2, 3 and 4 are available to join the waitlist ahead of their launch later this year, with founding member pricing locked in for early signups.
 
-**Are there usage limits?**
-No. All paid plans include unlimited queries, document ingestion and workflow runs. We operate a fair use policy for accounts showing usage patterns inconsistent with normal business operations — but in practice this never affects our clients.
+**When will Tiers 2, 3 and 4 be available?**
+Tiers 2, 3 and 4 — which unlock the full Knowledge Base platform, workflow automation and action memory — are launching later this year. Join the waitlist now to be notified first and to lock in founding member pricing before public launch.
+
+**Can I start on Tier 1 and upgrade later?**
+Yes. When you upgrade to Tier 2 or above, everything you have already taught Hobson stays. Your documents remain in your account. Your Knowledge Base carries over. There is no reset, no re-upload and no loss of work. Upgrading simply unlocks the next layer of capability on top of what you have already built.
+
+**Can I use Hobson on my phone?**
+Yes. Hobson has a mobile version available on Tier 1, giving you access to your portfolio documents and AI query capability from anywhere. No desktop required to get started.
+
+### Understanding The Tiers
+
+**What is the difference between Tier 1 and Tiers 2, 3 and 4?**
+Tier 1 gives you Hobson's AI document reasoning — ask anything across your leases, contracts and compliance documents and get instant, sourced, auditable answers. What it does not have is the Knowledge Base. Hobson on Tier 1 knows your documents. It does not yet know your business. Tiers 2, 3 and 4 unlock the full platform — the Knowledge Base, workflow automation, action memory, monthly impact summaries and personal shortcuts. Every feature and capability is identical across Tiers 2, 3 and 4. The only difference is how many seats you need. Same Hobson, more people, better value per seat as you scale.
+
+**What is the Knowledge Base?**
+The Knowledge Base is Hobson's persistent memory about your business. You tell Hobson who your contractors are, how you handle rent arrears, what your approval thresholds are, how you like your reports formatted — and it remembers permanently. Every answer and every action it takes reflects what it knows about how your business operates. It is what transforms Hobson from a smart document tool into an AI that behaves like an informed member of your team. The Knowledge Base is included in Tiers 2, 3 and 4 and becomes more valuable the longer you use it.
+
+**What happens to my Knowledge Base if I leave?**
+Your data belongs to you and can be exported at any time. However it is worth understanding what leaving means in practice — the institutional memory Hobson has built about your business, your contractors, your preferences and your compliance history does not transfer to another tool. That knowledge lives in Hobson because Hobson built it. The longer you use Hobson at Tier 2 or above, the more valuable that memory becomes.
+
+**What if I need more than 10 seats?**
+Enterprise pricing is available for organisations with more than 10 users. Enterprise packages are based on usage and portfolio size rather than headcount, and include bespoke onboarding and dedicated support. Contact the team at rochelle.t@hobsonschoice.ai to discuss your requirements.
+
+### Pricing & Billing
+
+**What does annual billing mean and how does the 20% saving work?**
+Annual billing means you pay for twelve months upfront in a single payment. The saving versus monthly billing is 20% across all tiers. Monthly billing is available at the standard rate if you prefer flexibility.
+
+**What if I need more documents or questions than my tier includes?**
+No problem. Additional document ingestion is available at £0.30 per document, charged once only — the same document is never charged twice. Once Hobson has read and understood a document it stays in your account permanently at no further cost. For additional questions during busy periods, top-up packs are available at £7.50 per 100 questions. You are always in control of what you spend.
+
+**Do I need technical skills to set up or use Hobson?**
+No. Hobson is designed to be used in plain English. You ask questions the way you would ask a colleague and Hobson answers directly from your documents and Knowledge Base. No technical training, no complex interfaces, no specialist knowledge required.
+
+### Who It Is For & Trust
+
+**We are not a property management company — we are a retailer or hospitality business with leases. Is Hobson for us?**
+Yes — and this is one of the most important things to understand about Hobson. It is built for any business where property is a material operating cost, not just businesses whose primary activity is property management. A retailer with 30 store leases, a restaurant group with 15 sites, or a corporate with a regional office estate all face exactly the same obligations.
+
+**We already use property management software. Do we need to replace it?**
+No. Hobson is designed to work alongside your existing systems, not replace them. Your current software stores and organises information. Hobson reasons across it, acts on it and delivers the work your team currently does manually. There is no rip-and-replace requirement.
+
+**Does Hobson help with Building Safety Act and EPC compliance?**
+Yes. Hobson reads your compliance certificates, builds a live register, flags upcoming deadlines at 90, 60 and 30 days, instructs contractors, verifies completed certificates and files the outcome automatically.
+
+**How does Hobson handle documents it cannot find an answer in?**
+Hobson never guesses. If the information you are asking about does not exist in your documents or Knowledge Base, Hobson tells you clearly rather than generating a plausible but potentially incorrect answer. Every answer Hobson provides is sourced and auditable.
+
+**Where is my data stored and is it secure?**
+All data is encrypted and UK-hosted. Hobson is aligned to ISO 27001 standards. Your data is never used to train AI models. Your documents, your Knowledge Base and your business information remain entirely within your account and are never shared with or visible to other clients.
 
 ## Pricing Tiers
 - Tier 1 (Entry): £19.50/month (£15.60/month annual), 1 seat, 3-day free trial, no Knowledge Base — multi-document AI reasoning, plain English queries, real estate domain accuracy, sourced auditable answers.
-- Tier 2 (Professional): £125.00/month (£100.00/month annual), 2 seats (£62.50/seat monthly, £50.00/seat annual), full platform including Knowledge Base, workflow automation, action memory.
-- Tier 3 (Team): £249.00/month (£199.20/month annual), 5 seats (£49.80/seat monthly), identical features to Tier 2.
-- Tier 4 (Scale): £449.00/month (£359.20/month annual), 10 seats (£44.90/seat monthly), identical features to Tier 2. Best per-seat value.
+- Tier 2 (Professional): £165.00/month (£132.00/month annual), 2 seats (£82.50/seat monthly), full platform including Knowledge Base, workflow automation, action memory.
+- Tier 3 (Team): £250.00/month (£200.00/month annual), 5 seats (£50.00/seat monthly), identical features to Tier 2.
+- Tier 4 (Scale): £450.00/month (£360.00/month annual), 10 seats (£45.00/seat monthly), identical features to Tier 2. Best per-seat value.
 - Enterprise: Usage-based pricing, not headcount-based. Contact sales for 10+ users.
 All paid plans include every feature. You are choosing your team size, not your capability.
 
 ## Why the big jump in pricing? — The Knowledge Base
 Tier 1 answers your questions. Tier 2 - 4 knows your business.
-The Knowledge Base is the difference between an AI that retrieves information from your documents and one that understands how you work — your contractors, your contacts, your policies, your obligations, your preferences. Every answer shaped by your business. Every action reflecting how you operate. That transformation is what Tier 2, 3 and 4 deliver. And it is worth considerably more than the difference in price.
-A single hour of a persons time costs more than a month of Tier 2. The Knowledge Base saves multiples of that every week.
+The Knowledge Base is the difference between an AI that retrieves information from your documents and one that understands how you work — your contractors, your contacts, your policies, your obligations, your preferences. Every answer shaped by your business. Every action reflecting how you operate.
+    `.trim();
+
+    // Features page content — kept in sync with src/pages/Features.tsx
+    const featuresPageContent = `
+## Features Page (/features)
+
+Every feature below is live in Phase 1 today. No waitlist. No setup. No technical knowledge required. Just add your first document and start asking questions.
+
+### Document Intelligence
+
+How Hobson reads, connects and reasons across your property documents — not one at a time, but as a complete picture.
+
+**Multi-Document Reasoning**
+Most property questions cannot be answered from a single document. Hobson reads multiple documents simultaneously and reasons across them as a connected set. Ask a question that spans three documents and Hobson draws the answer from all three — identifying where the relevant information sits, how the documents relate to each other, and what the combined position means.
+WHY IT MATTERS: Property decisions are never made from a single document. Hobson is built for the way property work actually happens — across a stack of connected documents.
+
+**Document Hierarchy Understanding**
+Hobson understands document hierarchy. When multiple documents relate to the same property or obligation, Hobson identifies which are original and which are subsequent, reads them in the correct legal sequence, and returns the current position — not the historical one. If a deed of variation changes a repair obligation, Hobson applies the variation. If a rent memorandum confirms a reviewed rent, Hobson uses that figure.
+WHY IT MATTERS: This is one of the hardest things to get right in property AI and one of the most consequential to get wrong. A generic AI tool reads documents. Hobson understands the relationship between them.
+
+**Plain English Querying**
+Hobson accepts questions in plain English and returns answers in plain English. There is no query language to learn, no search syntax to master and no training required. Ask the way you would ask a colleague and Hobson answers directly from the document.
+WHY IT MATTERS: The value of property documents should not be locked behind legal expertise. Hobson makes every clause in every document accessible to everyone in the business who needs to act on it.
+
+**Sourced and Auditable Answers**
+Every answer Hobson provides is referenced to the exact document and clause it came from. Hobson never generates an answer from general knowledge or makes an inference without telling you it has done so. If the information is in your documents, Hobson cites it precisely. If it is not, Hobson tells you clearly rather than guessing.
+WHY IT MATTERS: In property, wrong answers have financial and legal consequences. Sourced answers are not a nice-to-have — they are the minimum standard for decisions that matter.
+Hobson always knows which part of your portfolio it is reading from. Learn how Smart Navigation works at /learn/smart-navigation.
+
+### Portfolio Tools
+
+Ask one question. Get the answer across every document in your portfolio.
+
+**Cross-Portfolio Questioning**
+Hobson answers questions across your entire portfolio simultaneously. Every lease in your account is available as a single queryable dataset. Ask one question and Hobson returns the answer from every relevant document at once — listing which units have break clauses, what the dates are, what the notice periods are and what the pre-conditions are.
+WHY IT MATTERS: Portfolio-level insight is where Hobson delivers its most immediate time saving. Questions that previously took days take minutes.
+
+**Document Type Breadth**
+Hobson is trained to read and reason across the full range of property documents — original leases and residential tenancy agreements, deeds of variation and supplemental deeds, licences to alter, rent memorandums, authorised guarantee agreements, EPC certificates, gas safety certificates, EICR reports, fire safety assessments, surveys and planning documents.
+WHY IT MATTERS: Property obligations do not live only in leases. Hobson reads the full document set that defines what your business is actually required to do.
+
+### Trust & Security
+
+Domain-specific accuracy, zero integration friction and enterprise-grade data protection.
+
+**98% Accuracy on Real Estate Datasets**
+Hobson is fine-tuned on proprietary real estate datasets — not adapted from a general-purpose language model. It is trained specifically for the language, structure and conventions of commercial and residential property documents in the UK. The result is 98% accuracy on industry-specific document reasoning tasks.
+WHY IT MATTERS: The difference between a general AI tool and a domain-specific one is not a matter of degree. For regulated property decisions, it is the difference between an answer you can act on and one you cannot.
+
+**No Integration Required**
+Hobson requires no integration with your existing systems to deliver value. Add your documents directly to Hobson and start asking questions. It works alongside whatever property management system, CRM or document storage you currently use.
+WHY IT MATTERS: The fastest route to value is no friction at all. Hobson is useful from the moment your first document is added.
+
+**UK-Hosted, Encrypted and ISO 27001 Aligned**
+All data is encrypted in transit and at rest. Hobson is hosted entirely within the UK — no data leaves UK jurisdiction. Hobson is aligned to ISO 27001 standards for information security management. Your documents, your Knowledge Base and your business information are never used to train any AI model.
+WHY IT MATTERS: The organisations that trust Hobson with their most sensitive property documents need to know those documents are protected to the highest standard. That is not negotiable.
+
+### What Hobson Is Building Next
+
+**Phase 2 — The Knowledge Base (coming later this year)**
+Hobson learns how your business operates. Your contractors, contacts, policies, approval thresholds and communication preferences — stored permanently and applied to every answer. Every feature above becomes more powerful when Hobson knows your business, not just your documents.
+
+**Phase 3 — The Application Layer (coming later this year)**
+Built on the accuracy of Phase 1 and the business context of Phase 2, Hobson executes workflows autonomously. Rent reviews triggered. Compliance deadlines actioned. Lease events managed end-to-end. The work gets done.
+    `.trim();
+
+    // In Practice page content — kept in sync with src/pages/InPractice.tsx
+    const inPracticeContent = `
+## In Practice Page (/in-practice)
+
+Phase 1 of Hobson is live now. It reads your leases, compliance documents and property contracts — and makes every clause, obligation and date instantly queryable in plain English. No legal training required. No hours of manual review. Just answers.
+
+### What Hobson Does Today
+- Reads any property document: Leases, licences, deeds, compliance certificates, EPCs, surveys — Hobson ingests them and understands them.
+- Answers questions instantly: Ask anything in plain English. Hobson answers from the document, with the source referenced.
+- Understands what supersedes what: Hobson reads the full document stack and understands the current legal position — not just what the original lease said.
+- Every answer is sourced and auditable: Hobson never guesses. Every answer references the exact clause it came from.
+
+### Who Uses Hobson
+
+**Sarah — Portfolio Manager** (Residential and commercial property management firm, 340 units across 12 landlord clients)
+"Before Hobson, answering a simple question about a lease meant finding the document, opening it, searching through it and hoping you found the right clause. Multiply that by 340 units and you understand why my team spent more time reading documents than managing property."
+Her most asked question: "What is the current rent review mechanism and notice period on this lease — taking into account any rent memorandums or deeds of variation?"
+
+**James — Head of Property** (Regional retail operator, 47 stores across the UK)
+"I am not a property lawyer. I am a retailer. But I am responsible for 47 leases and the obligations in them. Before Hobson, getting an answer to a basic lease question meant calling a solicitor and waiting two days. Now I ask Hobson."
+His most asked question: "Which of my leases have a break clause in the next 18 months and what are the pre-conditions for each?"
+
+**Priya — Operations Director** (Hospitality group, 23 restaurant and bar sites)
+"Every one of our sites has a commercial lease. I needed to know what our repair obligations were across all 23 before our annual board review."
+Her most asked question: "What are our tenant repair obligations across all sites and which leases have full repairing and insuring terms?"
+
+**David — COO** (Professional services firm, 8 regional offices)
+"We were acquiring a smaller firm with 6 office leases. We needed to understand what we were taking on within 10 days. Hobson gave us the picture in 24 hours."
+His most asked question: "What are the material obligations and restrictions across these leases and are there any upcoming critical dates?"
+
+### Real Scenarios, Real Answers
+
+**01. Lease Review Before Signing**
+A property manager was asked to review a new management instruction for a commercial portfolio with 8 leases. All 8 leases were added to Hobson. The manager asked plain English questions across the portfolio — rent review mechanisms, break clause dates, repair obligations, alienation restrictions. A summary was produced within three hours instead of two to three days.
+
+**02. Acquisition Due Diligence**
+A professional services firm was acquiring a competitor with 6 office leases across 4 cities within a 10-day due diligence window. All 6 leases were added to Hobson. Hobson identified that one lease contained a keep-open obligation and another had a personal guarantee clause requiring novation on acquisition. Both were flagged clearly with the relevant clause referenced.
+
+**03. Portfolio Question Across Multiple Leases**
+A retail property manager needed to answer which units had rent reviews due in the next 12 months and what the review mechanism was for each across 22 units. Hobson answered across all 22 leases simultaneously, listing each unit, the review date, the mechanism and the relevant notice period.
+
+**04. Understanding Compliance Obligations From Leases**
+A hospitality group operations director needed to understand EPC compliance obligations across 23 sites. Hobson identified 14 where the tenant carried the EPC obligation and 9 where it sat with the landlord — each referenced to the specific lease clause.
+
+**05. When The Lease Is Not The Whole Story**
+A property manager inherited a portfolio of 18 commercial units with years of subsequent documents. Hobson understood which documents superseded which and answered based on the current legal position, not the original one. This is one of the most important things Hobson does — understanding the legal hierarchy across a stack of documents.
+    `.trim();
+
+    // Learn page content — kept in sync with src/pages/Learn.tsx navigation
+    const learnPageContent = `
+## Learn Page (/learn)
+
+The Learn section contains four core areas accessible via sidebar navigation:
+
+### Smart Navigation (/learn/smart-navigation)
+Hobson uses a three-level navigation model — Portfolio, Unit Group, and Unit — that mirrors how property portfolios are actually structured. Users can ask questions at any level: Portfolio for broad questions across everything managed, Unit Group for questions about linked units, and Unit for specific space details. Asking at the right level saves credits, reduces errors, and shows the right context automatically.
+
+### FAQ (/learn/faq)
+Contains 50 frequently asked questions organised into categories: How Hobson Works, Getting the Best Out of Hobson, Hobson Credits, and Hobson Technology. All FAQ content is managed from the database.
+
+### Integrations (/learn/available-integrations)
+Information about planned integrations and the integration roadmap. Hobson currently does not offer bespoke integrations but is building towards connecting with external systems.
+
+### Glossary (/learn/hobson-glossary)
+A comprehensive glossary of Hobson-specific terms and property terminology, managed from the database.
     `.trim();
 
     // Construct comprehensive knowledge base
@@ -578,27 +744,30 @@ A single hour of a persons time costs more than a month of Tier 2. The Knowledge
 
 ## Site Navigation
 The Hobson AI website has the following main sections:
-- Learn (with subsections: Introduction, FAQ, Features, Integrations, Use Cases, Glossary)
-- Blog
-- Status
-- Contact Us
-- Pilot Program Application
-- Pricing
+- Features (/features) — What Hobson does, how it works, why it matters
+- Pricing (/pricing) — Plans for operators, occupiers and owners of real estate
+- In Practice (/in-practice) — Real property work, real results
+- Learn (/learn) — Smart Navigation, FAQ, Integrations, Glossary
+- Blog (/blog)
+- Status (/status)
+- Contact Us (/contact)
 
 ## Core Capabilities
-Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly.
+Hobson is an AI-powered assistant that reads and understands property documents to deliver accurate, cited answers instantly. It is built for any business where property is a material operating cost.
 
 ${faqContent}
 
 ${pricingFaqContent}
 
+${featuresPageContent}
+
+${inPracticeContent}
+
+${learnPageContent}
+
 ## Plans & Credits Information
 
 ${plansCreditsContent}
-
-## Use Cases
-
-${useCasesContent}
 
 ## Hobson Glossary
 
