@@ -823,7 +823,11 @@ The system processes documents using OpenAI's API but stores them securely on OV
           faqCount: faqData?.length || 0,
           plansCreditsCount: plansCreditsCount,
           useCasesCount: useCasesCount,
-          glossaryCount: glossaryTermCount
+          glossaryCount: glossaryTermCount,
+          featuresPage: true,
+          inPracticePage: true,
+          pricingPage: true,
+          learnPage: true,
         },
         preview: {
           firstFaq: faqContent.match(/\*\*1\.\s+([^\*]+)\*\*/)?.[1] || 'Not found'
