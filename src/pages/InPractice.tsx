@@ -194,9 +194,9 @@ const InPractice = () => {
         </section>
 
         {/* SECTION 4 — Scenarios */}
-        <section className="py-12 sm:py-16">
+        <section className="py-8 sm:py-10">
           <div className="container mx-auto px-4 max-w-5xl">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Real scenarios, real answers</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-8">Real scenarios, real answers</h2>
 
             {scenarios.map((s, i) => (
               <div
