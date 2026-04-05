@@ -178,6 +178,7 @@ const InPractice = () => {
                     <h3 className="text-2xl font-bold text-foreground">{p.name}</h3>
                     <p className="text-sm font-medium text-primary">{p.role}</p>
                     <p className="text-sm text-muted-foreground mt-1">{p.business}</p>
+                    <p className="text-xs text-muted-foreground mt-2">Illustrative profile</p>
                   </div>
                   <blockquote className="text-sm text-muted-foreground italic leading-relaxed mb-6">
                     "{p.quote}"
