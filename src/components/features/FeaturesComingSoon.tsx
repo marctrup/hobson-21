@@ -12,10 +12,10 @@ const FeaturesComingSoon = () => (
       </Badge>
 
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
-        What Hobson is building next
+        The journey continues
       </h2>
       <p className="text-lg text-muted-foreground mb-10 max-w-3xl">
-        The features above are live today. Phase 2 and Phase 3 build directly on them.
+        Phase 1 is the foundation. Here is what it enables.
       </p>
 
       <div className="grid md:grid-cols-2 gap-6">

@@ -56,14 +56,44 @@ export const HobsonJourneySection = () => {
           {/* Header */}
           <div className="text-center mb-20">
             <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">
-              The Hobson Journey
+              The Single Idea
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Where we are. Where we're going.
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Property obligations should manage themselves.
             </h2>
-            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
-              Phase 1 is live today. Phase 2 and Phase 3 are coming later this year.
-            </p>
+
+            <div className="max-w-[680px] mx-auto">
+              {/* Part 1 — Problem statement */}
+              <div className="mb-6">
+                <p className="text-lg text-muted-foreground/80 leading-relaxed font-light">
+                  Software gave property professionals better filing cabinets.
+                  <br />
+                  It never gave them fewer things to do.
+                </p>
+                <p className="text-lg text-muted-foreground/80 leading-relaxed font-light mt-4">
+                  A document stored is not a document understood.
+                  <br />
+                  A deadline filed is not a deadline managed.
+                </p>
+              </div>
+
+              {/* Separator */}
+              <div className="flex justify-center mb-6">
+                <div className="w-16 h-px bg-border" />
+              </div>
+
+              {/* Part 2 — The single idea */}
+              <div>
+                <p className="text-xl text-foreground leading-relaxed font-medium mb-3">
+                  The single idea behind Hobson is straightforward:
+                  <br />
+                  <span className="text-primary">property obligations should manage themselves.</span>
+                </p>
+                <p className="text-lg text-muted-foreground/80 leading-relaxed font-light">
+                  Every phase below is a step toward that.
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Stages */}
