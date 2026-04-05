@@ -74,7 +74,7 @@ export const HobsonJourneySection = () => {
             </div>
 
             {/* Bridge line */}
-            <p className="text-base text-foreground leading-relaxed font-bold">
+            <p className="text-lg text-foreground/70 leading-[1.8] font-semibold mt-5">
               Every phase below is a step toward that.
             </p>
           </div>
