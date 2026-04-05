@@ -12,14 +12,28 @@ const FeaturesHero = () => (
         This page explains what each feature does, the problem it solves, and why it matters
         for anyone who manages property documents — told as a single, connected narrative.
       </p>
-      <div className="inline-flex items-center gap-2.5 bg-primary/10 border border-primary/20 rounded-full px-5 py-2.5">
-        <span className="relative flex h-2.5 w-2.5">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/60"></span>
-          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
-        </span>
-        <span className="text-sm sm:text-base font-semibold text-primary tracking-wide">
-          Phase 1 — Live today
-        </span>
+      <div className="flex flex-wrap items-center gap-3">
+        <div className="inline-flex items-center gap-2.5 bg-primary/10 border border-primary/20 rounded-full px-5 py-2.5">
+          <span className="relative flex h-2.5 w-2.5">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary/60"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+          </span>
+          <span className="text-sm sm:text-base font-semibold text-primary tracking-wide">
+            Phase 1 — Live today
+          </span>
+        </div>
+        <div className="inline-flex items-center gap-2 bg-muted border border-border rounded-full px-4 py-2">
+          <span className="w-2 h-2 rounded-full bg-muted-foreground/40"></span>
+          <span className="text-sm font-medium text-muted-foreground">
+            Phase 2 — Year end
+          </span>
+        </div>
+        <div className="inline-flex items-center gap-2 bg-muted border border-border rounded-full px-4 py-2">
+          <span className="w-2 h-2 rounded-full bg-muted-foreground/40"></span>
+          <span className="text-sm font-medium text-muted-foreground">
+            Phase 3 — Year end
+          </span>
+        </div>
       </div>
     </div>
   </section>
