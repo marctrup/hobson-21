@@ -8,16 +8,16 @@ const groups = [
 ];
 
 const FeaturesAnchorNav = () => (
-  <nav className="py-6 border-b border-border/50 bg-background sticky top-0 z-30 shadow-sm">
-    <div className="container mx-auto px-4">
-      <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
+  <nav className="py-4 border-b border-border/40 bg-background/95 backdrop-blur-sm sticky top-0 z-30" aria-label="Feature sections">
+    <div className="container mx-auto px-4 max-w-3xl">
+      <div className="flex flex-wrap justify-start gap-6">
         {groups.map((g) => (
           <a
             key={g.id}
             href={`#${g.id}`}
-            className="flex items-center gap-2 text-sm sm:text-base font-medium text-muted-foreground hover:text-primary transition-colors px-3 py-2 rounded-md hover:bg-muted/50"
+            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
           >
-            <g.icon className="w-4 h-4" />
+            <g.icon className="w-3.5 h-3.5" />
             {g.label}
           </a>
         ))}

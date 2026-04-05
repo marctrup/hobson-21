@@ -9,6 +9,7 @@ interface FeatureBlockProps {
   icon: LucideIcon;
   reversed?: boolean;
   extraContent?: React.ReactNode;
+  chapterNumber?: number;
 }
 
 const FeatureBlock: React.FC<FeatureBlockProps> = ({
@@ -17,56 +18,45 @@ const FeatureBlock: React.FC<FeatureBlockProps> = ({
   does,
   matters,
   icon: Icon,
-  reversed = false,
   extraContent,
+  chapterNumber,
 }) => (
-  <div
-    className={`flex flex-col ${reversed ? "lg:flex-row-reverse" : "lg:flex-row"} gap-8 lg:gap-14 items-start`}
-  >
-    {/* Icon + Feature Name column */}
-    <div className="lg:w-2/5 flex-shrink-0">
-      <div className="flex items-start gap-4 mb-4 lg:sticky lg:top-28">
-        <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-          <Icon className="w-6 h-6 text-primary" />
-        </div>
-        <h3 className="text-xl sm:text-2xl font-bold text-foreground pt-2">
+  <article className="max-w-3xl mx-auto">
+    {/* Chapter number + feature name */}
+    <div className="mb-8">
+      {chapterNumber !== undefined && (
+        <span className="text-sm font-mono tracking-widest text-primary/60 block mb-3">
+          {String(chapterNumber).padStart(2, "0")}
+        </span>
+      )}
+      <div className="flex items-center gap-3 mb-2">
+        <Icon className="w-5 h-5 text-primary flex-shrink-0" />
+        <h3 className="text-2xl sm:text-3xl font-bold text-foreground leading-tight">
           {name}
         </h3>
       </div>
     </div>
 
-    {/* Content column */}
-    <div className="lg:w-3/5 space-y-6">
-      <div>
-        <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-2">
-          The problem it solves
-        </p>
-        <p className="text-base text-muted-foreground leading-relaxed">
-          {problem}
-        </p>
-      </div>
+    {/* Narrative prose — flows as a story */}
+    <div className="space-y-5 text-base sm:text-lg leading-relaxed">
+      <p className="text-muted-foreground">
+        {problem}
+      </p>
 
-      <div>
-        <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-2">
-          What Hobson does
-        </p>
-        <p className="text-base text-foreground leading-relaxed">
-          {does}
-        </p>
-      </div>
+      <p className="text-foreground">
+        {does}
+      </p>
 
-      <div className="border-l-2 border-primary bg-primary/5 rounded-r-lg p-4 sm:p-5">
-        <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-2">
-          Why it matters
-        </p>
-        <p className="text-base text-muted-foreground leading-relaxed">
+      {/* Pull-quote for "why it matters" */}
+      <blockquote className="border-l-2 border-primary pl-5 py-1 my-6">
+        <p className="text-foreground/90 font-medium italic">
           {matters}
         </p>
-      </div>
+      </blockquote>
 
-      {extraContent && <div className="mt-4">{extraContent}</div>}
+      {extraContent && <div>{extraContent}</div>}
     </div>
-  </div>
+  </article>
 );
 
 export default FeatureBlock;
