@@ -64,12 +64,12 @@ export const HobsonJourneySection = () => {
 
             {/* Part 1 — Problem statement */}
             <div className="mb-6">
-              <p className="text-lg text-muted-foreground leading-[1.8] font-light">
+              <p className="text-lg text-foreground/70 leading-[1.8] font-light">
                 Software gave property professionals better filing cabinets.
                 <br />
                 It never gave them fewer things to do.
               </p>
-              <p className="text-lg text-muted-foreground leading-[1.8] font-light mt-5">
+              <p className="text-lg text-foreground/70 leading-[1.8] font-light mt-5">
                 A document stored is not a document understood.
                 <br />
                 A deadline filed is not a deadline managed.
