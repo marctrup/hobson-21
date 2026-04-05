@@ -55,40 +55,44 @@ export const HobsonJourneySection = () => {
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="text-center mb-20">
-            <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-10">
+            <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">
               The Single Idea
             </p>
+            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+              Property obligations should manage themselves.
+            </h2>
 
             <div className="max-w-[680px] mx-auto">
-              {/* Problem statement — small, muted, above the pull-quote */}
-              <p className="text-base text-muted-foreground/70 leading-relaxed font-light">
-                Software gave property professionals better filing cabinets.
-                <br />
-                It never gave them fewer things to do.
-              </p>
-              <p className="text-base text-muted-foreground/70 leading-relaxed font-light mt-3 mb-10">
-                A document stored is not a document understood.
-                <br />
-                A deadline filed is not a deadline managed.
-              </p>
-            </div>
-
-            {/* Pull-quote centrepiece */}
-            <div className="max-w-4xl mx-auto mb-10">
-              <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.1] text-primary">
-                Property obligations should manage themselves.
-              </h2>
-            </div>
-
-            <div className="max-w-[680px] mx-auto">
-              {/* Connector line */}
-              <div className="flex justify-center mb-8">
-                <div className="w-12 h-px bg-primary/30" />
+              {/* Part 1 — Problem statement */}
+              <div className="mb-6">
+                <p className="text-lg text-muted-foreground/80 leading-relaxed font-light">
+                  Software gave property professionals better filing cabinets.
+                  <br />
+                  It never gave them fewer things to do.
+                </p>
+                <p className="text-lg text-muted-foreground/80 leading-relaxed font-light mt-4">
+                  A document stored is not a document understood.
+                  <br />
+                  A deadline filed is not a deadline managed.
+                </p>
               </div>
 
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                Every phase below is a step toward that.
-              </p>
+              {/* Separator */}
+              <div className="flex justify-center mb-6">
+                <div className="w-16 h-px bg-border" />
+              </div>
+
+              {/* Part 2 — The single idea */}
+              <div>
+                <p className="text-xl text-foreground leading-relaxed font-medium mb-3">
+                  The single idea behind Hobson is straightforward:
+                  <br />
+                  <span className="text-primary">property obligations should manage themselves.</span>
+                </p>
+                <p className="text-lg text-muted-foreground/80 leading-relaxed font-light">
+                  Every phase below is a step toward that.
+                </p>
+              </div>
             </div>
           </div>
 
