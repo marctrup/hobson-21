@@ -32,10 +32,10 @@ const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
   chapterOffset = 0,
 }) => (
   <section id={id} className={`scroll-mt-20 ${bgClass}`}>
-    {/* Group intro */}
-    <div className="py-14 sm:py-20">
+    {/* Group intro — tighter spacing */}
+    <div className="pt-14 sm:pt-20 pb-6 sm:pb-8">
       <div className="container mx-auto px-4 max-w-3xl">
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-3 mb-3">
           <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
             <GroupIcon className="w-4.5 h-4.5 text-primary" />
           </div>
@@ -53,7 +53,7 @@ const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
     <div className="container mx-auto px-4">
       {features.map((feature, index) => (
         <div key={feature.name}>
-          <div className="py-10 sm:py-14">
+          <div className="py-8 sm:py-10">
             <FeatureBlock
               {...feature}
               chapterNumber={chapterOffset + index + 1}
