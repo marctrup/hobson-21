@@ -67,9 +67,9 @@ export const HobsonJourneySection = () => {
                 It never gave them fewer things to do.
               </p>
               <p className="text-lg text-foreground/70 leading-[1.8] font-light mt-5">
-                A document stored is not a document understood.
+                A document stored is now a document understood.
                 <br />
-                A deadline filed is not a deadline managed.
+                A deadline filed is now a deadline managed.
               </p>
             </div>
 
