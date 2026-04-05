@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { Brain, Building2, ShieldCheck } from "lucide-react";
 
 const groups = [
@@ -9,6 +9,7 @@ const groups = [
 
 const FeaturesAnchorNav = () => {
   const [activeId, setActiveId] = useState(groups[0].id);
+  const clickLockRef = useRef(false);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -17,7 +18,9 @@ const FeaturesAnchorNav = () => {
       if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setActiveId(g.id);
+          if (entry.isIntersecting && !clickLockRef.current) {
+            setActiveId(g.id);
+          }
         },
         { rootMargin: "-20% 0px -60% 0px" }
       );
@@ -25,6 +28,22 @@ const FeaturesAnchorNav = () => {
       observers.push(obs);
     });
     return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
+  const handleClick = useCallback((e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    setActiveId(id);
+    clickLockRef.current = true;
+
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+
+    // Release lock after scroll settles
+    setTimeout(() => {
+      clickLockRef.current = false;
+    }, 800);
   }, []);
 
   return (
@@ -43,6 +62,7 @@ const FeaturesAnchorNav = () => {
                 )}
                 <a
                   href={`#${g.id}`}
+                  onClick={(e) => handleClick(e, g.id)}
                   className={`flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full transition-all duration-200 ${
                     isActive
                       ? "bg-muted text-foreground"
