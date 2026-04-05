@@ -167,7 +167,10 @@ const InPractice = () => {
         {/* SECTION 3 — Persona Cards */}
         <section className="py-12 sm:py-16">
           <div className="container mx-auto px-4 max-w-5xl">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-12">Who uses Hobson</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-3">Who Hobson is built for</h2>
+            <p className="text-base text-muted-foreground text-center mb-12 max-w-2xl mx-auto">
+              Illustrative profiles based on the real operational challenges Hobson is designed to solve.
+            </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {personas.map((p, i) => (
                 <Card key={i} className="border bg-card p-6 sm:p-8">
@@ -175,6 +178,7 @@ const InPractice = () => {
                     <h3 className="text-2xl font-bold text-foreground">{p.name}</h3>
                     <p className="text-sm font-medium text-primary">{p.role}</p>
                     <p className="text-sm text-muted-foreground mt-1">{p.business}</p>
+                    <p className="text-xs text-muted-foreground mt-2">Illustrative profile</p>
                   </div>
                   <blockquote className="text-sm text-muted-foreground italic leading-relaxed mb-6">
                     "{p.quote}"
