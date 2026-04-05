@@ -45,7 +45,7 @@ const FeaturesAnchorNav = () => {
                   href={`#${g.id}`}
                   className={`flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full transition-all duration-200 ${
                     isActive
-                      ? "bg-primary/10 text-primary"
+                      ? "bg-muted text-foreground"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
