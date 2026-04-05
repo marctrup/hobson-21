@@ -33,8 +33,8 @@ export const AudienceStrip = () => {
               const Icon = item.icon;
               return (
                 <div key={i} className="text-center space-y-3">
-                  <div className="w-12 h-12 mx-auto rounded-xl bg-primary/10 flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-primary" />
+                  <div className="w-12 h-12 mx-auto rounded-xl bg-muted flex items-center justify-center">
+                    <Icon className="w-6 h-6 text-foreground/60" />
                   </div>
                   <h3 className="text-base font-semibold text-foreground">{item.label}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
