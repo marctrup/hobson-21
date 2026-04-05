@@ -54,45 +54,41 @@ export const HobsonJourneySection = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-20">
+          <div className="mb-20 max-w-xl mx-auto">
             <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">
               The Single Idea
             </p>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight">
               Property obligations should manage themselves.
             </h2>
 
-            <div className="max-w-[680px] mx-auto">
-              {/* Part 1 — Problem statement */}
-              <div className="mb-6">
-                <p className="text-lg text-muted-foreground/80 leading-relaxed font-light">
-                  Software gave property professionals better filing cabinets.
-                  <br />
-                  It never gave them fewer things to do.
-                </p>
-                <p className="text-lg text-muted-foreground/80 leading-relaxed font-light mt-4">
-                  A document stored is not a document understood.
-                  <br />
-                  A deadline filed is not a deadline managed.
-                </p>
-              </div>
+            {/* Part 1 — Problem statement */}
+            <div className="mb-6">
+              <p className="text-lg text-muted-foreground/80 leading-[1.8] font-light">
+                Software gave property professionals better filing cabinets.
+                <br />
+                It never gave them fewer things to do.
+              </p>
+              <p className="text-lg text-muted-foreground/80 leading-[1.8] font-light mt-5">
+                A document stored is not a document understood.
+                <br />
+                A deadline filed is not a deadline managed.
+              </p>
+            </div>
 
-              {/* Separator */}
-              <div className="flex justify-center mb-6">
-                <div className="w-16 h-px bg-border" />
-              </div>
+            {/* Separator */}
+            <div className="w-12 h-px bg-border my-7" />
 
-              {/* Part 2 — The single idea */}
-              <div>
-                <p className="text-xl text-foreground leading-relaxed font-medium mb-3">
-                  The single idea behind Hobson is straightforward:
-                  <br />
-                  <span className="text-primary">property obligations should manage themselves.</span>
-                </p>
-                <p className="text-lg text-muted-foreground/80 leading-relaxed font-light">
-                  Every phase below is a step toward that.
-                </p>
-              </div>
+            {/* Part 2 — The single idea */}
+            <div className="border-l-2 border-primary pl-5">
+              <p className="text-xl text-foreground leading-[1.7] font-medium mb-2">
+                The single idea behind Hobson is straightforward:
+                <br />
+                <span className="text-primary">property obligations should manage themselves.</span>
+              </p>
+              <p className="text-base text-muted-foreground/70 leading-relaxed font-light">
+                Every phase below is a step toward that.
+              </p>
             </div>
           </div>
 
