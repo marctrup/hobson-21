@@ -5,7 +5,7 @@ const stages = [
   {
     icon: FileCheck,
     title: "Read & Understand",
-    copy: "Ask anything about any lease, compliance document or property contract in plain English. Hobson reads the full document stack — including deeds of variation, rent memorandums and supplemental agreements — and returns the current legal position with every answer sourced to the exact clause.",
+    copy: "Ask anything about any lease or property document. Hobson reads the full stack and returns the current legal position — sourced to the exact clause.",
     status: "Live today",
     statusClass: "bg-primary text-primary-foreground",
     active: true,
@@ -14,7 +14,7 @@ const stages = [
   {
     icon: Brain,
     title: "Know Your Business",
-    copy: "Hobson learns how your business operates. Your contractors, contacts, policies and preferences — stored permanently and applied to every answer. Every response reflects how your business works, not just what your documents say.",
+    copy: "Hobson learns your contractors, your policies, your preferences. Every answer it gives reflects how your business actually works.",
     status: "Launching later this year",
     statusClass: "bg-muted/40 text-muted-foreground border border-border",
     active: true,
@@ -23,7 +23,7 @@ const stages = [
   {
     icon: Zap,
     title: "Act on Your Behalf",
-    copy: "Hobson stops answering and starts acting. Rent reviews triggered. Compliance deadlines managed. Lease events handled end-to-end without a human in the loop until a decision is required.",
+    copy: "phase3",
     status: "Coming soon",
     statusClass: "bg-muted/40 text-muted-foreground border border-border",
     active: false,
