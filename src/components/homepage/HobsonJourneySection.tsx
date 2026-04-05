@@ -141,9 +141,18 @@ export const HobsonJourneySection = () => {
                   </div>
 
                   <h3 className="text-xl font-bold mb-2">{stage.title}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-5 max-w-[240px]">
-                    {stage.copy}
-                  </p>
+                  <div className="text-muted-foreground text-sm leading-relaxed mb-5 max-w-[240px]">
+                    {stage.copy === "phase3" ? (
+                      <>
+                        <p>Hobson stops answering and starts acting.</p>
+                        <p>Rent reviews triggered.</p>
+                        <p>Deadlines managed.</p>
+                        <p>Work done — without being asked.</p>
+                      </>
+                    ) : (
+                      <p>{stage.copy}</p>
+                    )}
+                  </div>
 
                   {/* Status pill */}
                   <span
