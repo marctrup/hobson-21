@@ -143,6 +143,7 @@ const Features = () => {
           icon={Brain}
           features={documentIntelligenceFeatures}
           bgClass="bg-background"
+          chapterOffset={0}
         />
 
         <FeatureGroupSection
@@ -151,8 +152,8 @@ const Features = () => {
           subtitle="Ask one question. Get the answer across every document in your portfolio."
           icon={Building2}
           features={portfolioToolsFeatures}
-          startReversed
-          bgClass="bg-muted/30"
+          bgClass="bg-muted/20"
+          chapterOffset={4}
         />
 
         <FeatureGroupSection
@@ -162,6 +163,7 @@ const Features = () => {
           icon={ShieldCheck}
           features={trustSecurityFeatures}
           bgClass="bg-background"
+          chapterOffset={6}
         />
 
         <FeaturesComingSoon />

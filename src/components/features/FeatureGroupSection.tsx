@@ -19,6 +19,7 @@ interface FeatureGroupSectionProps {
   features: Feature[];
   startReversed?: boolean;
   bgClass?: string;
+  chapterOffset?: number;
 }
 
 const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
@@ -27,42 +28,42 @@ const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
   subtitle,
   icon: GroupIcon,
   features,
-  startReversed = false,
   bgClass = "bg-background",
+  chapterOffset = 0,
 }) => (
   <section id={id} className={`scroll-mt-20 ${bgClass}`}>
-    {/* Group header */}
-    <div className="py-12 sm:py-16 border-b border-border/30">
-      <div className="container mx-auto px-4 max-w-5xl text-center">
-        <div className="flex items-center justify-center gap-4 mb-3">
-          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-            <GroupIcon className="w-5 h-5 text-primary" />
+    {/* Group intro */}
+    <div className="py-14 sm:py-20">
+      <div className="container mx-auto px-4 max-w-3xl">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
+            <GroupIcon className="w-4.5 h-4.5 text-primary" />
           </div>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground">
+          <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-wide text-primary/80">
             {title}
           </h2>
         </div>
-        <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
+        <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed">
           {subtitle}
         </p>
       </div>
     </div>
 
-    {/* Feature blocks */}
-    <div className="container mx-auto px-4 max-w-5xl">
-      {features.map((feature, index) => {
-        const reversed = startReversed ? index % 2 === 0 : index % 2 === 1;
-        return (
-          <div key={feature.name}>
-            <div className="py-12 sm:py-16">
-              <FeatureBlock {...feature} reversed={reversed} />
-            </div>
-            {index < features.length - 1 && (
-              <div className="border-b border-border/30" />
-            )}
+    {/* Feature chapters */}
+    <div className="container mx-auto px-4">
+      {features.map((feature, index) => (
+        <div key={feature.name}>
+          <div className="py-10 sm:py-14">
+            <FeatureBlock
+              {...feature}
+              chapterNumber={chapterOffset + index + 1}
+            />
           </div>
-        );
-      })}
+          {index < features.length - 1 && (
+            <hr className="max-w-3xl mx-auto border-border/30" />
+          )}
+        </div>
+      ))}
     </div>
   </section>
 );
