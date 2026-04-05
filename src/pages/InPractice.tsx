@@ -61,7 +61,7 @@ const personas = [
     business: "Professional services firm, 8 regional offices",
     quote: "We were acquiring a smaller firm with 6 office leases. We needed to understand what we were taking on — break options, dilapidations exposure, assignment restrictions — across all 6 leases within 10 days. Hobson gave us the picture in 24 hours.",
     questionLabel: "The question David asks Hobson most",
-    question: "What are the material obligations and restrictions across these leases and are there any upcoming critical dates?",
+    question: "Which of our leases have an open market rent review due in the next 18 months and what is the current passing rent on each?",
   },
 ];
 
