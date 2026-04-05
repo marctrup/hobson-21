@@ -35,7 +35,7 @@ const InPractice = lazy(() => import("../pages/InPractice"));
 const FaqManagement = lazy(() => import("../pages/admin/FaqManagement"));
 const GlossaryManagement = lazy(() => import("../pages/admin/GlossaryManagement"));
 const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"));
-const InvestorSummary = lazy(() => import("../pages/InvestorSummary"));
+
 const Features = lazy(() => import("../pages/Features"));
 
 // Loading component
@@ -127,7 +127,7 @@ const AppContent = () => {
               <Route path="/learn/use-cases" element={<Navigate to="/in-practice" replace />} />
               <Route path="/use-cases" element={<Navigate to="/in-practice" replace />} />
               <Route path="/investment-opportunity" element={<InvestmentOpportunity />} />
-              <Route path="/investor-summary" element={<InvestorSummary />} />
+              <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
               
               <Route path="/auth" element={<Auth />} />
               <Route path="/admin" element={<Admin />} />
