@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Brain, Building2, ShieldCheck } from "lucide-react";
 
 const groups = [
@@ -7,23 +7,58 @@ const groups = [
   { id: "trust-and-security", label: "Trust & Security", icon: ShieldCheck },
 ];
 
-const FeaturesAnchorNav = () => (
-  <nav className="py-4 border-b border-border/40 bg-background/95 backdrop-blur-sm sticky top-0 z-30" aria-label="Feature sections">
-    <div className="container mx-auto px-4 max-w-3xl">
-      <div className="flex flex-wrap justify-start gap-6">
-        {groups.map((g) => (
-          <a
-            key={g.id}
-            href={`#${g.id}`}
-            className="flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
-          >
-            <g.icon className="w-3.5 h-3.5" />
-            {g.label}
-          </a>
-        ))}
+const FeaturesAnchorNav = () => {
+  const [activeId, setActiveId] = useState(groups[0].id);
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    groups.forEach((g) => {
+      const el = document.getElementById(g.id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActiveId(g.id);
+        },
+        { rootMargin: "-20% 0px -60% 0px" }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, []);
+
+  return (
+    <nav
+      className="py-3 border-b border-border/40 bg-background/95 backdrop-blur-sm sticky top-0 z-30 shadow-sm"
+      aria-label="Feature sections"
+    >
+      <div className="container mx-auto px-4 max-w-3xl">
+        <div className="flex items-center justify-center gap-1">
+          {groups.map((g, i) => {
+            const isActive = activeId === g.id;
+            return (
+              <React.Fragment key={g.id}>
+                {i > 0 && (
+                  <span className="text-border mx-2 select-none" aria-hidden="true">·</span>
+                )}
+                <a
+                  href={`#${g.id}`}
+                  className={`flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full transition-all duration-200 ${
+                    isActive
+                      ? "bg-primary/10 text-primary"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  <g.icon className="w-3.5 h-3.5" />
+                  {g.label}
+                </a>
+              </React.Fragment>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  </nav>
-);
+    </nav>
+  );
+};
 
 export default FeaturesAnchorNav;
