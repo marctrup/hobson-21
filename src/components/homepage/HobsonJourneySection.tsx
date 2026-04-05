@@ -86,7 +86,7 @@ export const HobsonJourneySection = () => {
                 <br />
                 <span className="text-primary">property obligations should manage themselves.</span>
               </p>
-              <p className="text-base text-muted-foreground leading-relaxed font-light">
+              <p className="text-base text-foreground/60 leading-relaxed font-light">
                 Every phase below is a step toward that.
               </p>
             </div>
