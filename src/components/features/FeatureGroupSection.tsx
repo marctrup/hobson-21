@@ -20,6 +20,7 @@ interface FeatureGroupSectionProps {
   startReversed?: boolean;
   bgClass?: string;
   chapterOffset?: number;
+  startOnMuted?: boolean;
 }
 
 const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
@@ -30,10 +31,11 @@ const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
   features,
   bgClass = "bg-background",
   chapterOffset = 0,
+  startOnMuted = false,
 }) => (
-  <section id={id} className={`scroll-mt-20 ${bgClass}`}>
-    {/* Group intro — tighter spacing */}
-    <div className="pt-14 sm:pt-20 pb-6 sm:pb-8">
+  <section id={id} className="scroll-mt-20">
+    {/* Group intro */}
+    <div className={`pt-14 sm:pt-20 pb-6 sm:pb-8 ${bgClass}`}>
       <div className="container mx-auto px-4 max-w-3xl">
         <div className="flex items-center gap-3 mb-3">
           <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -49,22 +51,20 @@ const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
       </div>
     </div>
 
-    {/* Feature chapters */}
-    <div className="container mx-auto px-4">
-      {features.map((feature, index) => (
-        <div key={feature.name}>
-          <div className="py-8 sm:py-10">
+    {/* Feature chapters with alternating backgrounds */}
+    {features.map((feature, index) => {
+      const isMuted = startOnMuted ? index % 2 === 0 : index % 2 === 1;
+      return (
+        <div key={feature.name} className={isMuted ? "bg-muted/30" : "bg-background"}>
+          <div className="container mx-auto px-4 py-8 sm:py-10">
             <FeatureBlock
               {...feature}
               chapterNumber={chapterOffset + index + 1}
             />
           </div>
-          {index < features.length - 1 && (
-            <hr className="max-w-3xl mx-auto border-border/30" />
-          )}
         </div>
-      ))}
-    </div>
+      );
+    })}
   </section>
 );
 
