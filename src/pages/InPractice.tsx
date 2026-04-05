@@ -53,7 +53,7 @@ const personas = [
     business: "Hospitality group, 23 restaurant and bar sites",
     quote: "Every one of our sites has a commercial lease. I needed to know what our repair obligations were across all 23 before our annual board review. My previous options were pay a solicitor to review them all or spend a week doing it myself. Hobson did it in an afternoon.",
     questionLabel: "The question Priya asks Hobson most",
-    question: "What are our tenant repair obligations across all sites and which leases have full repairing and insuring terms?",
+    question: "Which of our sites have leases contracted out of the Landlord and Tenant Act 1954?",
   },
   {
     name: "David",
