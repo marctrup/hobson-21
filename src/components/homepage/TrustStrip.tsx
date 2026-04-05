@@ -25,7 +25,7 @@ const trustItems = [
 
 export const TrustStrip = () => {
   return (
-    <section className="py-12 sm:py-16 bg-muted/30">
+    <section className="py-12 sm:py-16 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">

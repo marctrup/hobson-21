@@ -24,7 +24,7 @@ const MobileShowcase = memo(() => {
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-muted/30">
+    <section className="py-16 sm:py-20 bg-background">
       <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
           <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-2">
