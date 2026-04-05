@@ -8,9 +8,10 @@ const FeaturesHero = () => (
         <span className="text-primary">Why Hobson exists.</span>
       </h1>
       <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-6">
-        Every capability below is live. No waitlist. No setup. No technical knowledge required.
-        This page explains what each feature does, the problem it solves, and why it matters
-        for anyone who manages property documents — told as a single, connected narrative.
+        Software gave property professionals better filing cabinets. It never gave them fewer things to do.
+        A document stored is not a document understood. A deadline filed is not a deadline managed.
+        Hobson exists because reading the lease is not the hard part — doing what it says is.
+        Every feature below is built around that single idea.
       </p>
       <div className="flex flex-wrap items-center gap-3">
         <div className="inline-flex items-center gap-2.5 bg-primary/10 border border-primary/20 rounded-full px-5 py-2.5">
