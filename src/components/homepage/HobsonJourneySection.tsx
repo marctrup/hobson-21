@@ -55,14 +55,11 @@ export const HobsonJourneySection = () => {
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-20 max-w-xl mx-auto">
-            <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3">
-              The Single Idea
-            </p>
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-8 leading-tight">
               Property obligations should manage themselves.
             </h2>
 
-            {/* Part 1 — Problem statement */}
+            {/* Problem statement */}
             <div className="mb-6">
               <p className="text-lg text-foreground/70 leading-[1.8] font-light">
                 Software gave property professionals better filing cabinets.
@@ -76,20 +73,10 @@ export const HobsonJourneySection = () => {
               </p>
             </div>
 
-            {/* Separator */}
-            <div className="w-12 h-px bg-border my-7" />
-
-            {/* Part 2 — The single idea */}
-            <div className="border-l-2 border-primary pl-5">
-              <p className="text-xl text-foreground leading-[1.7] font-medium mb-2">
-                The single idea behind Hobson is straightforward:
-                <br />
-                <span className="text-primary">property obligations should manage themselves.</span>
-              </p>
-              <p className="text-base text-foreground/60 leading-relaxed font-light">
-                Every phase below is a step toward that.
-              </p>
-            </div>
+            {/* Bridge line */}
+            <p className="text-base text-foreground/60 leading-relaxed font-light">
+              Every phase below is a step toward that.
+            </p>
           </div>
 
           {/* Stages */}
