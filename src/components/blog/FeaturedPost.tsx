@@ -42,19 +42,19 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
     <div>
       <Card className="overflow-hidden">
         <div className="grid md:grid-cols-4 gap-0">
-          <div className="aspect-[3/2]">
+          <div className="aspect-[3/2] bg-muted">
             {post.featured_image_url ? (
                <LazyImage
                 src={post.featured_image_url}
                 alt={post.title}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
                 width={400}
                 height={267}
                 priority={true}
                 sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 400px"
               />
             ) : (
-              <div className="w-full h-full bg-muted flex items-center justify-center">
+              <div className="w-full h-full flex items-center justify-center">
                 <Tag className="w-6 h-6 text-muted-foreground" />
               </div>
             )}

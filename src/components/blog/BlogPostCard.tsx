@@ -41,18 +41,18 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
       <div className="grid md:grid-cols-4 gap-0">
-        <div className="aspect-[3/2]">
+        <div className="aspect-[3/2] bg-muted">
           {post.featured_image_url ? (
             <LazyImage
               src={post.featured_image_url}
               alt={post.title}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-contain"
               width={243}
               height={162}
               sizes="(max-width: 640px) 180px, (max-width: 768px) 220px, 243px"
             />
           ) : (
-            <div className="w-full h-full bg-muted flex items-center justify-center">
+            <div className="w-full h-full flex items-center justify-center">
               <Tag className="w-8 h-8 text-muted-foreground" />
             </div>
           )}
