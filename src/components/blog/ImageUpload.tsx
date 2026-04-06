@@ -113,11 +113,11 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       />
 
       {previewUrl && (
-        <div className="relative w-full max-w-md">
+        <div className="relative w-full max-w-md rounded-lg border bg-muted p-2">
           <img
             src={previewUrl}
             alt="Preview"
-            className="w-full h-48 object-cover rounded-lg border"
+            className="w-full h-48 object-contain rounded-md"
           />
           <div className="absolute top-2 right-2">
             <Button
