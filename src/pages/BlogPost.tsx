@@ -333,11 +333,11 @@ const BlogPost = () => {
 
           {/* Featured Image */}
           {post.featured_image_url && (
-            <div className="aspect-video md:aspect-[16/9] mb-6 md:mb-8 rounded-lg overflow-hidden bg-muted">
+            <div className="mb-6 md:mb-8 rounded-lg overflow-hidden bg-muted">
               <OptimizedImage
                 src={post.featured_image_url}
                 alt={post.featured_image_alt || post.title}
-                className="w-full h-full object-cover"
+                className="w-full h-auto object-contain"
                 width={800}
                 height={450}
                 priority={true}
