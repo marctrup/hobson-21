@@ -1,0 +1,158 @@
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { FileText } from "lucide-react";
+
+const documentCategories: { category: string; items: string[] }[] = [
+  { category: "Agreement", items: ["Service Agreement", "Wayleave"] },
+  {
+    category: "Asset Record",
+    items: ["O&M Manual", "TR1 Transfer", "Warranty", "White Goods Invoice"],
+  },
+  {
+    category: "Certificate",
+    items: [
+      "Alarm",
+      "Deposit",
+      "EICR",
+      "Emergency Lighting",
+      "EPC",
+      "Escalators",
+      "Gas",
+      "Lifts",
+      "Of Incorporation",
+      "PAT",
+      "Smoke Detectors",
+      "Sump Pump",
+    ],
+  },
+  {
+    category: "Deed",
+    items: [
+      "AGA",
+      "Covenant",
+      "Deposit",
+      "Extension",
+      "Guarantor",
+      "Surrender",
+      "Underlease",
+      "Variation",
+    ],
+  },
+  {
+    category: "Lease",
+    items: [
+      "Commercial",
+      "Head/Superior",
+      "Managed Sublease",
+      "Residential",
+      "Reversionary",
+      "Sublease",
+      "Supplemental",
+    ],
+  },
+  {
+    category: "Licence",
+    items: [
+      "Alteration",
+      "Assignment",
+      "Change of Use",
+      "HMO",
+      "Occupational",
+      "Sublet",
+    ],
+  },
+  { category: "Memorandum", items: ["Rent"] },
+  {
+    category: "Notice",
+    items: [
+      "Breach",
+      "LTA Exclusion 1954",
+      "Rent changes",
+      "Statutory Warning",
+      "Vacate",
+    ],
+  },
+  { category: "Report", items: ["Fire Doors", "Fire Risk", "Inventory"] },
+  {
+    category: "Side Letter",
+    items: [
+      "Capital Contribution",
+      "Consent to alter",
+      "Deposit Return",
+      "Lease Change",
+    ],
+  },
+  { category: "Sworn", items: ["Statutory Dec"] },
+];
+
+export const DocumentCategoriesAccordion = () => {
+  const totalDocuments = documentCategories.reduce(
+    (sum, c) => sum + c.items.length,
+    0
+  );
+
+  return (
+    <div className="mt-16 sm:mt-20">
+      <div className="text-center mb-6 sm:mb-8">
+        <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+          Documents Hobson is trained on
+        </h3>
+        <p className="text-muted-foreground">
+          {totalDocuments}+ document types across {documentCategories.length} categories — and growing daily
+        </p>
+      </div>
+
+      <div className="max-w-3xl mx-auto bg-background rounded-xl border border-border shadow-sm p-2 sm:p-4">
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="all-docs" className="border-none">
+            <AccordionTrigger className="px-4 py-3 hover:no-underline">
+              <span className="flex items-center gap-2 text-base font-semibold text-foreground">
+                <FileText className="w-5 h-5 text-primary" />
+                Browse all document types
+              </span>
+            </AccordionTrigger>
+            <AccordionContent className="px-2 pb-2">
+              <Accordion type="multiple" className="w-full">
+                {documentCategories.map((cat) => (
+                  <AccordionItem
+                    key={cat.category}
+                    value={cat.category}
+                    className="border-b border-border/60 last:border-b-0"
+                  >
+                    <AccordionTrigger className="px-3 py-2.5 hover:no-underline">
+                      <span className="flex items-center justify-between w-full pr-2">
+                        <span className="font-medium text-foreground">
+                          {cat.category}
+                        </span>
+                        <span className="text-xs text-muted-foreground ml-3">
+                          {cat.items.length} type{cat.items.length === 1 ? "" : "s"}
+                        </span>
+                      </span>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-3 pb-3">
+                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+                        {cat.items.map((item) => (
+                          <li
+                            key={item}
+                            className="text-sm text-muted-foreground flex items-start gap-2"
+                          >
+                            <span className="text-primary mt-1">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </div>
+    </div>
+  );
+};
