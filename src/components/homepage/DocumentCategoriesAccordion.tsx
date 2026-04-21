@@ -119,7 +119,7 @@ export const DocumentCategoriesAccordion = () => {
             <AccordionTrigger className="px-4 py-3 hover:no-underline">
               <span className="flex items-center gap-2 text-base font-semibold text-foreground">
                 <FileText className="w-5 h-5 text-primary" />
-                Browse all document types
+                Browse current document types
               </span>
             </AccordionTrigger>
             <AccordionContent className="px-2 pb-2">
