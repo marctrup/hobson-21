@@ -90,10 +90,10 @@ const trustSecurityFeatures = [
     matters: "The fastest route to value is no friction at all. Hobson is useful from the moment your first document is added.",
   },
   {
-    name: "UK-Hosted, Encrypted and ISO 27001 Aligned",
+    name: "UK-Hosted and Encrypted",
     icon: ShieldCheck,
     problem: "Property documents contain commercially sensitive information — lease terms, rent figures, break clause positions, compliance status, acquisition strategies. Putting that information into a cloud AI tool raises legitimate questions about where it is stored, who can access it, and whether it is being used to train models that other organisations might benefit from.",
-    does: "All data is encrypted in transit and at rest. Hobson is hosted entirely within the UK — no data leaves UK jurisdiction. Hobson is aligned to ISO 27001 standards for information security management. Your documents, your Knowledge Base and your business information are never used to train any AI model — not Hobson's and not any third-party model. Every client's data is completely isolated — your information is never accessible by or visible to any other client.",
+    does: "All data is encrypted in transit and at rest. Hobson is hosted entirely within the UK — no data leaves UK jurisdiction. Your documents, your Knowledge Base and your business information are never used to train any AI model — not Hobson's and not any third-party model. Every client's data is completely isolated — your information is never accessible by or visible to any other client.",
     matters: "The organisations that trust Hobson with their most sensitive property documents need to know those documents are protected to the highest standard. That is not negotiable.",
   },
 ];
