@@ -14,6 +14,7 @@ import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm
 import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
 import { AudienceStrip } from "@/components/homepage/AudienceStrip";
 import { TrustStrip } from "@/components/homepage/TrustStrip";
+import { DocumentCategoriesAccordion } from "@/components/homepage/DocumentCategoriesAccordion";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { structuredData } from "@/utils/seo-data";
@@ -243,6 +244,9 @@ export const Homepage = () => {
                     ))}
                   </div>
                 </div>
+
+                {/* Documents Hobson is trained on */}
+                <DocumentCategoriesAccordion />
               </div>
             </div>
           </section>
