@@ -35,7 +35,7 @@ const MobileShowcase = memo(() => {
                 Always with you
               </p>
               <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-5">
-                Your AI assistant,<br />right in your pocket
+                AI in your pocket
               </h2>
               <p className="text-lg text-muted-foreground mb-8 max-w-md mx-auto lg:mx-0">
                 Switch seamlessly between conversational AI and your interactive property map. 
