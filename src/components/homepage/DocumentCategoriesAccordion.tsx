@@ -88,7 +88,7 @@ const documentCategories: { category: string; items: string[] }[] = [
       "Lease Change",
     ],
   },
-  { category: "Sworn", items: ["Statutory Dec"] },
+  { category: "Sworn", items: ["Statutory Declaration"] },
 ];
 
 export const DocumentCategoriesAccordion = () => {
