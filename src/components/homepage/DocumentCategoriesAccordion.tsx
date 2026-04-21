@@ -138,9 +138,9 @@ export const DocumentCategoriesAccordion = () => {
                         {cat.items.map((item) => (
                           <li
                             key={item}
-                            className="text-sm text-muted-foreground flex items-start gap-2"
+                            className="text-sm text-muted-foreground flex items-baseline gap-2"
                           >
-                            <span className="text-primary mt-1">•</span>
+                            <span className="text-primary leading-none">•</span>
                             <span>{item}</span>
                           </li>
                         ))}
