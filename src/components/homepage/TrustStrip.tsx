@@ -7,11 +7,6 @@ const trustItems = [
     description: "No data leaves UK jurisdiction",
   },
   {
-    icon: Shield,
-    label: "Encrypted and secure",
-    description: "ISO 27001 aligned",
-  },
-  {
     icon: Ban,
     label: "Never used for training",
     description: "Your data trains no model — ever",
