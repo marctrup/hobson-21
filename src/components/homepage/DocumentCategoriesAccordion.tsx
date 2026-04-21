@@ -48,7 +48,7 @@ const documentCategories: { category: string; items: string[] }[] = [
     items: [
       "Commercial",
       "Head/Superior",
-      "Managed Sublease",
+      "Managed",
       "Residential (APT)",
       "Residential (Non APT)",
       "Reversionary",
