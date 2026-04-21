@@ -99,7 +99,7 @@ export const DocumentCategoriesAccordion = () => {
     <div className="mt-16 sm:mt-20">
       <div className="text-center mb-6 sm:mb-8">
         <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-          Documents Hobson is trained on
+          Documents Hobson is trained to read and understand
         </h3>
         <p className="text-muted-foreground">
           {totalDocuments}+ document types across {documentCategories.length} categories — and growing daily
