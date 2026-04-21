@@ -142,7 +142,12 @@ export const DocumentCategoriesAccordion = () => {
                       </span>
                     </AccordionTrigger>
                     <AccordionContent className="px-3 pb-3">
-                      <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1.5">
+                      <ul
+                        className="grid grid-cols-1 sm:grid-flow-col sm:grid-cols-2 gap-x-4 gap-y-1.5"
+                        style={{
+                          gridTemplateRows: `repeat(${Math.ceil(cat.items.length / 2)}, minmax(0, auto))`,
+                        }}
+                      >
                         {cat.items.map((item) => (
                           <li
                             key={item}
