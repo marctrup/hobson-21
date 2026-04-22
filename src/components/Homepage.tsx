@@ -166,7 +166,21 @@ export const Homepage = () => {
                 <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
                   <h1 id="hero-heading" className="font-bold leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
                     <span className="text-foreground">{content.hero.title} </span>
-                    <span className="bg-gradient-to-r from-primary via-primary/80 to-accent-teal bg-clip-text text-transparent">{content.hero.titleHighlight}</span>
+                    {(() => {
+                      const highlight = content.hero.titleHighlight;
+                      const lastWord = "automatically.";
+                      const prefix = highlight.endsWith(lastWord)
+                        ? highlight.slice(0, -lastWord.length)
+                        : highlight + " ";
+                      return (
+                        <>
+                          <span className="text-primary">{prefix}</span>
+                          <span className="bg-gradient-to-r from-primary via-accent-teal via-accent-amber to-accent-rose bg-clip-text text-transparent">
+                            {lastWord}
+                          </span>
+                        </>
+                      );
+                    })()}
                   </h1>
                   <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}
                   </p>
