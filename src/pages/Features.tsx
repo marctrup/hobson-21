@@ -154,7 +154,7 @@ const Features = () => {
           features={portfolioToolsFeatures}
           chapterOffset={4}
           startOnMuted
-          accent="accent-teal"
+          accent="primary"
         />
 
         <FeatureGroupSection
@@ -164,7 +164,7 @@ const Features = () => {
           icon={ShieldCheck}
           features={trustSecurityFeatures}
           chapterOffset={6}
-          accent="accent-amber"
+          accent="primary"
         />
 
         <FeaturesComingSoon />
