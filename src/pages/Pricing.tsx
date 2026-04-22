@@ -21,6 +21,11 @@ const C = {
   amberBg: "#FFFBEB",
   amberText: "#92400E",
   purpleBadgeBg: "#EEEDFE",
+  // Complementary accents (matched to homepage tokens)
+  teal: "#179B82",
+  tealSoft: "#E6F7F2",
+  amber: "#E89A2B",
+  amberSoft: "#FDF3E0",
 };
 
 const CheckIcon = () => (
