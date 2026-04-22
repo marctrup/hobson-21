@@ -28,8 +28,8 @@ export const TrustStrip = () => {
               const Icon = item.icon;
               return (
                 <div key={i} className="text-center space-y-2">
-                  <div className="w-10 h-10 mx-auto rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-primary" />
+                  <div className="w-10 h-10 mx-auto rounded-lg bg-accent-teal/10 flex items-center justify-center">
+                    <Icon className="w-5 h-5 text-accent-teal" />
                   </div>
                   <h3 className="text-sm font-semibold text-foreground">{item.label}</h3>
                   <p className="text-xs text-muted-foreground">{item.description}</p>
