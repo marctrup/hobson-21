@@ -114,7 +114,7 @@ export const HobsonJourneySection = () => {
                   <div
                     className={`w-[4.5rem] h-[4.5rem] rounded-full flex items-center justify-center mb-6 relative z-10 ${
                       stage.complete
-                        ? "bg-primary text-primary-foreground shadow-[0_0_30px_hsl(var(--primary)/0.35)]"
+                        ? "bg-accent-teal text-accent-teal-foreground shadow-[0_0_30px_hsl(var(--accent-teal)/0.4)]"
                         : stage.active
                           ? "bg-foreground/10 text-foreground border border-foreground/20"
                           : "bg-foreground/5 text-foreground/40 border border-foreground/10"
