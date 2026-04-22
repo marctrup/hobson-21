@@ -157,7 +157,7 @@ const InPractice = () => {
                   { bg: "bg-primary/10", text: "text-primary" },
                   { bg: "bg-accent-teal/10", text: "text-accent-teal" },
                   { bg: "bg-accent-amber/15", text: "text-accent-amber" },
-                  { bg: "bg-accent-teal/10", text: "text-accent-teal" },
+                  { bg: "bg-accent-rose/10", text: "text-accent-rose" },
                 ];
                 const a = accents[i % accents.length];
                 return (
@@ -187,7 +187,7 @@ const InPractice = () => {
                   { text: "text-primary", border: "border-primary", bg: "bg-primary/5", textSoft: "text-primary/70" },
                   { text: "text-accent-teal", border: "border-accent-teal", bg: "bg-accent-teal/10", textSoft: "text-accent-teal/80" },
                   { text: "text-accent-amber", border: "border-accent-amber", bg: "bg-accent-amber/10", textSoft: "text-accent-amber/90" },
-                  { text: "text-accent-teal", border: "border-accent-teal", bg: "bg-accent-teal/10", textSoft: "text-accent-teal/80" },
+                  { text: "text-accent-rose", border: "border-accent-rose", bg: "bg-accent-rose/10", textSoft: "text-accent-rose/80" },
                 ];
                 const a = accents[i % accents.length];
                 return (
@@ -222,8 +222,7 @@ const InPractice = () => {
                 { num: "text-primary/20", textSoft: "text-primary/70", border: "border-primary", bg: "bg-primary/5" },
                 { num: "text-accent-teal/30", textSoft: "text-accent-teal/80", border: "border-accent-teal", bg: "bg-accent-teal/10" },
                 { num: "text-accent-amber/30", textSoft: "text-accent-amber/90", border: "border-accent-amber", bg: "bg-accent-amber/10" },
-                { num: "text-accent-teal/30", textSoft: "text-accent-teal/80", border: "border-accent-teal", bg: "bg-accent-teal/10" },
-                { num: "text-primary/20", textSoft: "text-primary/70", border: "border-primary", bg: "bg-primary/5" },
+                { num: "text-accent-rose/30", textSoft: "text-accent-rose/80", border: "border-accent-rose", bg: "bg-accent-rose/10" },
               ];
               const a = accents[i % accents.length];
               return (

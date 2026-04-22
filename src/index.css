@@ -68,6 +68,8 @@ All colors MUST be HSL.
     --accent-amber-foreground: 30 60% 15%;
     --accent-teal: 168 76% 38%;
     --accent-teal-foreground: 0 0% 100%;
+    --accent-rose: 340 75% 55%;
+    --accent-rose-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 269 91% 52%;

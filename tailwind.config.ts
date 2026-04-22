@@ -43,6 +43,10 @@ export default {
 					DEFAULT: 'hsl(var(--accent-teal))',
 					foreground: 'hsl(var(--accent-teal-foreground))'
 				},
+				'accent-rose': {
+					DEFAULT: 'hsl(var(--accent-rose))',
+					foreground: 'hsl(var(--accent-rose-foreground))'
+				},
 				secondary: {
 					DEFAULT: 'hsl(var(--secondary))',
 					foreground: 'hsl(var(--secondary-foreground))'
