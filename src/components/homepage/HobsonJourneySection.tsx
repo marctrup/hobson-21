@@ -24,7 +24,7 @@ const stages = [
     icon: Zap,
     title: "Act on Your Behalf",
     copy: "phase3",
-    status: "Coming soon",
+    status: "Launching later this year",
     statusClass: "bg-muted/40 text-muted-foreground border border-border",
     active: false,
     complete: false,
