@@ -4,8 +4,26 @@ import mobileMapImg from "@/assets/hobson-mobile-map.png";
 import { MessageCircle, Map } from "lucide-react";
 
 const screens = [
-  { src: mobileChatImg, alt: "Hobson AI chat interface on mobile", label: "Chat", icon: MessageCircle },
-  { src: mobileMapImg, alt: "Hobson AI interactive property map on mobile", label: "Map", icon: Map },
+  {
+    src: mobileChatImg,
+    alt: "Hobson AI chat interface on mobile",
+    label: "Chat",
+    icon: MessageCircle,
+    activeClass: "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20",
+    inactiveClass: "bg-background border-border text-muted-foreground hover:border-primary/40 hover:text-primary",
+    dotClass: "bg-primary",
+    glowClass: "bg-primary/10",
+  },
+  {
+    src: mobileMapImg,
+    alt: "Hobson AI interactive property map on mobile",
+    label: "Map",
+    icon: Map,
+    activeClass: "bg-accent-teal text-white border-accent-teal shadow-lg shadow-accent-teal/20",
+    inactiveClass: "bg-background border-border text-muted-foreground hover:border-accent-teal/40 hover:text-accent-teal",
+    dotClass: "bg-accent-teal",
+    glowClass: "bg-accent-teal/10",
+  },
 ];
 
 const MobileShowcase = memo(() => {
@@ -51,9 +69,7 @@ const MobileShowcase = memo(() => {
                       key={screen.label}
                       onClick={() => handleScreenSelect(i)}
                       className={`flex items-center gap-3 px-5 py-3 rounded-xl border transition-all duration-300 ${
-                        activeScreen === i
-                          ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/20"
-                          : "bg-background border-border text-muted-foreground hover:border-primary/40"
+                        activeScreen === i ? screen.activeClass : screen.inactiveClass
                       }`}
                     >
                       <Icon className="w-5 h-5" />
@@ -67,7 +83,7 @@ const MobileShowcase = memo(() => {
             {/* Phone Mockup */}
             <div className="flex-shrink-0 relative">
               {/* Glow behind phone */}
-              <div className="absolute inset-0 bg-primary/10 rounded-full blur-3xl scale-110" />
+              <div className={`absolute inset-0 ${screens[activeScreen].glowClass} rounded-full blur-3xl scale-110 transition-colors duration-500`} />
               
               {/* Phone frame */}
               <div className="relative w-[280px] sm:w-[300px] rounded-[2.5rem] border-[6px] border-foreground/90 bg-foreground/90 shadow-2xl overflow-hidden">
@@ -94,13 +110,11 @@ const MobileShowcase = memo(() => {
 
               {/* Progress dots */}
               <div className="flex justify-center gap-2 mt-6">
-                {screens.map((_, i) => (
+                {screens.map((screen, i) => (
                   <div
                     key={i}
                     className={`h-1.5 rounded-full transition-all duration-500 ${
-                      activeScreen === i
-                        ? "w-8 bg-primary"
-                        : "w-1.5 bg-muted-foreground/30"
+                      activeScreen === i ? `w-8 ${screen.dotClass}` : "w-1.5 bg-muted-foreground/30"
                     }`}
                   />
                 ))}
