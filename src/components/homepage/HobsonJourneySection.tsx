@@ -7,7 +7,7 @@ const stages = [
     title: "Read & Understand",
     copy: "Ask anything about any lease or property document. Hobson reads the full stack and returns the current legal position — sourced to the exact clause.",
     status: "Live today",
-    statusClass: "bg-primary text-primary-foreground",
+    statusClass: "bg-accent-amber text-accent-amber-foreground",
     active: true,
     complete: true,
   },
