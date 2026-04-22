@@ -292,7 +292,10 @@ const Pricing = () => {
         <section className="pt-10 sm:pt-14 md:pt-16 pb-8 sm:pb-12 md:pb-20 px-4 sm:px-6" style={{ background: C.bg }} id="plans">
           <div className="max-w-7xl mx-auto">
             <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3 text-center">Simple & Transparent Pricing</p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center" style={{ color: C.navy }}>Choose your plan</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center">
+              <span style={{ color: C.navy }}>Choose your </span>
+              <span style={{ background: `linear-gradient(90deg, ${C.purple}, ${C.teal})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>plan</span>
+            </h1>
             <p className="text-base sm:text-lg text-muted-foreground mb-8 text-center">Tier 1 knows your documents. Tier 2 – 4 knows your business.</p>
 
             {/* Billing toggle */}
