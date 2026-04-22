@@ -478,13 +478,13 @@ const Pricing = () => {
               {/* Reason blocks */}
               <div className="space-y-4">
                 {[
-                  { title: "It is not a simple upload.", body: "When you add a document, Hobson reads it using AI — extracting meaning, relationships and obligations so it can answer questions accurately from day one." },
-                  { title: "The work happens once.", body: "Every document is processed thoroughly on the way in. Once done, it is done. You will never pay for the same document again." },
-                  { title: "The fee reflects the work.", body: "Leases are complex and take more processing. Simpler documents cost less. You only pay for what you bring in." },
-                  { title: "You are in control.", body: "The more documents you have, the more you pay. The fewer you have, the less. Add more later at any time at the same rate." },
+                  { title: "It is not a simple upload.", body: "When you add a document, Hobson reads it using AI — extracting meaning, relationships and obligations so it can answer questions accurately from day one.", accent: C.purple },
+                  { title: "The work happens once.", body: "Every document is processed thoroughly on the way in. Once done, it is done. You will never pay for the same document again.", accent: C.teal },
+                  { title: "The fee reflects the work.", body: "Leases are complex and take more processing. Simpler documents cost less. You only pay for what you bring in.", accent: C.amber },
+                  { title: "You are in control.", body: "The more documents you have, the more you pay. The fewer you have, the less. Add more later at any time at the same rate.", accent: C.teal },
                 ].map(r => (
-                  <div key={r.title} className="rounded-xl p-5 sm:p-6" style={{ background: C.bg, border: `1px solid ${C.border}`, borderLeft: `4px solid ${C.purple}` }}>
-                    <p className="text-sm font-bold mb-1" style={{ color: C.purple }}>{r.title}</p>
+                  <div key={r.title} className="rounded-xl p-5 sm:p-6" style={{ background: C.bg, border: `1px solid ${C.border}`, borderLeft: `4px solid ${r.accent}` }}>
+                    <p className="text-sm font-bold mb-1" style={{ color: r.accent }}>{r.title}</p>
                     <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{r.body}</p>
                   </div>
                 ))}
