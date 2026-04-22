@@ -23,6 +23,13 @@ const audiences = [
   },
 ];
 
+const palette = [
+  { icon: "text-primary", bg: "bg-primary/10", heading: "text-primary" },
+  { icon: "text-accent-teal", bg: "bg-accent-teal/10", heading: "text-accent-teal" },
+  { icon: "text-accent-amber", bg: "bg-accent-amber/15", heading: "text-accent-amber" },
+  { icon: "text-accent-rose", bg: "bg-accent-rose/10", heading: "text-accent-rose" },
+];
+
 export const AudienceStrip = () => {
   return (
     <section className="py-12 sm:py-16 bg-muted/30">
@@ -31,12 +38,13 @@ export const AudienceStrip = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {audiences.map((item, i) => {
               const Icon = item.icon;
+              const tone = palette[i % palette.length];
               return (
                 <div key={i} className="text-center space-y-3">
-                  <div className="w-12 h-12 mx-auto rounded-xl bg-muted flex items-center justify-center">
-                    <Icon className="w-6 h-6 text-foreground/60" />
+                  <div className={`w-12 h-12 mx-auto rounded-xl ${tone.bg} flex items-center justify-center`}>
+                    <Icon className={`w-6 h-6 ${tone.icon}`} />
                   </div>
-                  <h3 className="text-base font-semibold text-primary/85">{item.label}</h3>
+                  <h3 className={`text-base font-semibold ${tone.heading}`}>{item.label}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
                 </div>
               );
