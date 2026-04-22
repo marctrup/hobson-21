@@ -85,11 +85,20 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
             
             {post.categories.length > 0 && (
               <div className="flex flex-wrap gap-1 -mt-1">
-                {post.categories.slice(0, 2).map((category) => (
-                  <Badge key={category.slug} variant="outline" className="text-xs">
-                    {category.name}
-                  </Badge>
-                ))}
+                {post.categories.slice(0, 2).map((category, i) => {
+                  const palette = [
+                    "border-primary/40 text-primary",
+                    "border-accent-teal/40 text-accent-teal",
+                    "border-accent-amber/40 text-accent-amber",
+                    "border-accent-rose/40 text-accent-rose",
+                  ];
+                  const tone = palette[i % palette.length];
+                  return (
+                    <Badge key={category.slug} variant="outline" className={`text-xs ${tone}`}>
+                      {category.name}
+                    </Badge>
+                  );
+                })}
               </div>
             )}
           </CardContent>
