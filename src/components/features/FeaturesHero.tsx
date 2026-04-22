@@ -5,7 +5,7 @@ const FeaturesHero = () => (
     <div className="container mx-auto px-4 max-w-3xl">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6">
         Phase 1.{" "}
-        <span className="text-primary">In depth.</span>
+        <span className="bg-gradient-to-r from-primary to-accent-teal bg-clip-text text-transparent">In depth.</span>
       </h1>
       <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl">
         The Hobson Journey starts here. Every feature below is Phase 1 — live today, no waitlist, no setup. This is what makes Phase 2 and Phase 3 possible.
@@ -20,15 +20,15 @@ const FeaturesHero = () => (
             Phase 1 — Live today
           </span>
         </div>
-        <div className="inline-flex items-center gap-2 bg-muted border border-border rounded-full px-4 py-2">
-          <span className="w-2 h-2 rounded-full bg-muted-foreground/40"></span>
-          <span className="text-sm font-medium text-muted-foreground">
+        <div className="inline-flex items-center gap-2 bg-accent-teal/10 border border-accent-teal/30 rounded-full px-4 py-2">
+          <span className="w-2 h-2 rounded-full bg-accent-teal/70"></span>
+          <span className="text-sm font-medium text-accent-teal">
             Phase 2 — Year end
           </span>
         </div>
-        <div className="inline-flex items-center gap-2 bg-muted border border-border rounded-full px-4 py-2">
-          <span className="w-2 h-2 rounded-full bg-muted-foreground/40"></span>
-          <span className="text-sm font-medium text-muted-foreground">
+        <div className="inline-flex items-center gap-2 bg-accent-amber/10 border border-accent-amber/30 rounded-full px-4 py-2">
+          <span className="w-2 h-2 rounded-full bg-accent-amber/70"></span>
+          <span className="text-sm font-medium text-accent-amber">
             Phase 3 — Year end
           </span>
         </div>

@@ -143,6 +143,7 @@ const Features = () => {
           icon={Brain}
           features={documentIntelligenceFeatures}
           chapterOffset={0}
+          accent="primary"
         />
 
         <FeatureGroupSection
@@ -153,6 +154,7 @@ const Features = () => {
           features={portfolioToolsFeatures}
           chapterOffset={4}
           startOnMuted
+          accent="accent-teal"
         />
 
         <FeatureGroupSection
@@ -162,6 +164,7 @@ const Features = () => {
           icon={ShieldCheck}
           features={trustSecurityFeatures}
           chapterOffset={6}
+          accent="accent-amber"
         />
 
         <FeaturesComingSoon />

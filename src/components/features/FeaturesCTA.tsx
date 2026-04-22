@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 const FeaturesCTA = () => (
-  <section className="py-16 sm:py-20">
+  <section
+    className="py-16 sm:py-20"
+    style={{
+      background:
+        "linear-gradient(135deg, hsl(var(--accent-amber) / 0.08), hsl(var(--accent-teal) / 0.08))",
+    }}
+  >
     <div className="container mx-auto px-4 text-center max-w-3xl">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
         Phase 1 is live. Try it on your documents today.
