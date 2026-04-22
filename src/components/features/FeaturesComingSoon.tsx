@@ -20,28 +20,28 @@ const FeaturesComingSoon = () => (
 
       <div className="grid md:grid-cols-2 gap-6">
         <Card className="border-border bg-background p-6 space-y-4">
-          <Badge className="w-fit bg-primary/10 text-primary border-0">Phase 2</Badge>
+          <Badge className="w-fit bg-accent-teal/10 text-accent-teal border-0">Phase 2</Badge>
           <h3 className="text-xl font-bold text-foreground">The Knowledge Base</h3>
           <p className="text-muted-foreground leading-relaxed">
             Hobson learns how your business operates. Your contractors, contacts, policies, approval thresholds and communication preferences — stored permanently and applied to every answer. Every feature above becomes more powerful when Hobson knows your business, not just your documents.
           </p>
           <Link
             to="/pricing"
-            className="inline-flex items-center gap-1 text-primary font-medium hover:underline"
+            className="inline-flex items-center gap-1 text-accent-teal font-medium hover:underline"
           >
             Join the waitlist <ArrowRight className="w-4 h-4" />
           </Link>
         </Card>
 
         <Card className="border-border bg-background p-6 space-y-4">
-          <Badge className="w-fit bg-primary/10 text-primary border-0">Phase 3</Badge>
+          <Badge className="w-fit bg-accent-amber/15 text-accent-amber border-0">Phase 3</Badge>
           <h3 className="text-xl font-bold text-foreground">The Application Layer</h3>
           <p className="text-muted-foreground leading-relaxed">
             Built on the accuracy of Phase 1 and the business context of Phase 2, Hobson executes workflows autonomously. Rent reviews triggered. Compliance deadlines actioned. Lease events managed end-to-end. The work gets done.
           </p>
           <Link
             to="/pricing"
-            className="inline-flex items-center gap-1 text-primary font-medium hover:underline"
+            className="inline-flex items-center gap-1 text-accent-amber font-medium hover:underline"
           >
             Join the waitlist <ArrowRight className="w-4 h-4" />
           </Link>
