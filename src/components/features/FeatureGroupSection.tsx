@@ -65,8 +65,8 @@ const FeatureGroupSection: React.FC<FeatureGroupSectionProps> = ({
     <section id={id} className="scroll-mt-20">
       {/* Group intro */}
       <div className={`pt-14 sm:pt-20 pb-6 sm:pb-8 ${bgClass}`}>
-        <div className="container mx-auto px-4 max-w-3xl">
-          <div className="flex items-center gap-3 mb-3">
+        <div className="container mx-auto px-4 max-w-3xl text-center">
+          <div className="flex items-center justify-center gap-3 mb-3">
             <div className={`w-9 h-9 rounded-lg ${a.bgSoft} flex items-center justify-center`}>
               <GroupIcon className={`w-4.5 h-4.5 ${a.text}`} />
             </div>
