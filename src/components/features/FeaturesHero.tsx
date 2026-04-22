@@ -5,7 +5,7 @@ const FeaturesHero = () => (
     <div className="container mx-auto px-4 max-w-3xl">
       <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight mb-6">
         Phase 1.{" "}
-        <span className="bg-gradient-to-r from-primary to-accent-teal bg-clip-text text-transparent">In depth.</span>
+        <span className="text-primary">In depth.</span>
       </h1>
       <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed mb-8 max-w-2xl">
         The Hobson Journey starts here. Every feature below is Phase 1 — live today, no waitlist, no setup. This is what makes Phase 2 and Phase 3 possible.
