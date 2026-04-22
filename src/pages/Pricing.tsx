@@ -21,6 +21,11 @@ const C = {
   amberBg: "#FFFBEB",
   amberText: "#92400E",
   purpleBadgeBg: "#EEEDFE",
+  // Complementary accents (matched to homepage tokens)
+  teal: "#179B82",
+  tealSoft: "#E6F7F2",
+  amber: "#E89A2B",
+  amberSoft: "#FDF3E0",
 };
 
 const CheckIcon = () => (
@@ -287,7 +292,10 @@ const Pricing = () => {
         <section className="pt-10 sm:pt-14 md:pt-16 pb-8 sm:pb-12 md:pb-20 px-4 sm:px-6" style={{ background: C.bg }} id="plans">
           <div className="max-w-7xl mx-auto">
             <p className="text-primary font-semibold tracking-wide uppercase text-sm mb-3 text-center">Simple & Transparent Pricing</p>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center" style={{ color: C.navy }}>Choose your plan</h1>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-center">
+              <span style={{ color: C.navy }}>Choose your </span>
+              <span style={{ background: `linear-gradient(90deg, ${C.purple}, ${C.teal})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>plan</span>
+            </h1>
             <p className="text-base sm:text-lg text-muted-foreground mb-8 text-center">Tier 1 knows your documents. Tier 2 – 4 knows your business.</p>
 
             {/* Billing toggle */}
@@ -470,13 +478,13 @@ const Pricing = () => {
               {/* Reason blocks */}
               <div className="space-y-4">
                 {[
-                  { title: "It is not a simple upload.", body: "When you add a document, Hobson reads it using AI — extracting meaning, relationships and obligations so it can answer questions accurately from day one." },
-                  { title: "The work happens once.", body: "Every document is processed thoroughly on the way in. Once done, it is done. You will never pay for the same document again." },
-                  { title: "The fee reflects the work.", body: "Leases are complex and take more processing. Simpler documents cost less. You only pay for what you bring in." },
-                  { title: "You are in control.", body: "The more documents you have, the more you pay. The fewer you have, the less. Add more later at any time at the same rate." },
+                  { title: "It is not a simple upload.", body: "When you add a document, Hobson reads it using AI — extracting meaning, relationships and obligations so it can answer questions accurately from day one.", accent: C.purple },
+                  { title: "The work happens once.", body: "Every document is processed thoroughly on the way in. Once done, it is done. You will never pay for the same document again.", accent: C.teal },
+                  { title: "The fee reflects the work.", body: "Leases are complex and take more processing. Simpler documents cost less. You only pay for what you bring in.", accent: C.amber },
+                  { title: "You are in control.", body: "The more documents you have, the more you pay. The fewer you have, the less. Add more later at any time at the same rate.", accent: C.teal },
                 ].map(r => (
-                  <div key={r.title} className="rounded-xl p-5 sm:p-6" style={{ background: C.bg, border: `1px solid ${C.border}`, borderLeft: `4px solid ${C.purple}` }}>
-                    <p className="text-sm font-bold mb-1" style={{ color: C.purple }}>{r.title}</p>
+                  <div key={r.title} className="rounded-xl p-5 sm:p-6" style={{ background: C.bg, border: `1px solid ${C.border}`, borderLeft: `4px solid ${r.accent}` }}>
+                    <p className="text-sm font-bold mb-1" style={{ color: r.accent }}>{r.title}</p>
                     <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{r.body}</p>
                   </div>
                 ))}
@@ -486,7 +494,7 @@ const Pricing = () => {
         </section>
 
         {/* KNOWLEDGE BASE CALLOUT */}
-        <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
+        <section className="py-8 sm:py-12 md:py-20 px-4 sm:px-6" style={{ background: `linear-gradient(135deg, ${C.amberSoft}, ${C.tealSoft})` }}>
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3" style={{ color: C.navy }}>
               Why does the Knowledge Base change everything?
