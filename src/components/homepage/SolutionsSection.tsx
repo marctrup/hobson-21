@@ -48,20 +48,31 @@ export const SolutionsSection = () => {
         </div>
         
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {solutions.map((solution, index) => (
-            <div key={index} className="group relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-              <Card className="relative border-0 bg-background/50 backdrop-blur-sm hover:bg-background/80 transition-all duration-300 hover:scale-105 h-full">
-                <CardContent className="p-8">
-                  <div className="mb-6 inline-flex p-4 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl">
-                    <solution.icon className="h-10 w-10 text-primary" />
-                  </div>
-                  <h3 className="text-2xl font-bold mb-4 text-foreground">{solution.name}</h3>
-                  <p className="text-muted-foreground leading-relaxed">{solution.description}</p>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
+          {solutions.map((solution, index) => {
+            const accents = [
+              { text: "text-primary", bg: "from-primary/10 to-primary/5" },
+              { text: "text-accent-teal", bg: "from-accent-teal/10 to-accent-teal/5" },
+              { text: "text-accent-amber", bg: "from-accent-amber/15 to-accent-amber/5" },
+              { text: "text-primary", bg: "from-primary/10 to-primary/5" },
+              { text: "text-accent-teal", bg: "from-accent-teal/10 to-accent-teal/5" },
+              { text: "text-accent-amber", bg: "from-accent-amber/15 to-accent-amber/5" },
+            ];
+            const a = accents[index % accents.length];
+            return (
+              <div key={index} className="group relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-secondary/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                <Card className="relative border-0 bg-background/50 backdrop-blur-sm hover:bg-background/80 transition-all duration-300 hover:scale-105 h-full">
+                  <CardContent className="p-8">
+                    <div className={`mb-6 inline-flex p-4 bg-gradient-to-br ${a.bg} rounded-2xl`}>
+                      <solution.icon className={`h-10 w-10 ${a.text}`} />
+                    </div>
+                    <h3 className="text-2xl font-bold mb-4 text-foreground">{solution.name}</h3>
+                    <p className="text-muted-foreground leading-relaxed">{solution.description}</p>
+                  </CardContent>
+                </Card>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
