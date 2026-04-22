@@ -175,7 +175,13 @@ export const Homepage = () => {
                       return (
                         <>
                           <span className="text-primary">{prefix}</span>
-                          <span className="bg-gradient-to-r from-primary via-accent-teal via-accent-amber to-accent-rose bg-clip-text text-transparent">
+                          <span
+                            className="bg-clip-text text-transparent"
+                            style={{
+                              backgroundImage:
+                                "linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--accent-teal)) 33%, hsl(var(--accent-amber)) 66%, hsl(var(--accent-rose)) 100%)",
+                            }}
+                          >
                             {lastWord}
                           </span>
                         </>
