@@ -38,15 +38,23 @@ export const BenefitsSection = () => {
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((benefit, index) => (
-              <div key={index} className="text-center group">
-                <div className="w-16 h-16 mx-auto mb-6 bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
-                  <benefit.icon className="w-8 h-8 text-white" />
+            {benefits.map((benefit, index) => {
+              const palettes = [
+                "from-primary to-primary/70",
+                "from-accent-amber to-accent-amber/70",
+                "from-accent-teal to-accent-teal/70",
+                "from-primary to-primary/70",
+              ];
+              return (
+                <div key={index} className="text-center group">
+                  <div className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-br ${palettes[index % palettes.length]} rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <benefit.icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-foreground">{benefit.title}</h3>
+                  <p className="text-muted-foreground leading-relaxed">{benefit.description}</p>
                 </div>
-                <h3 className="text-xl font-bold mb-3 text-foreground">{benefit.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{benefit.description}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
