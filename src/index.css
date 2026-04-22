@@ -63,6 +63,12 @@ All colors MUST be HSL.
     --brand-orange: 25 95% 53%;
     --brand-orange-foreground: 0 0% 100%;
 
+    /* Complementary accent palette */
+    --accent-amber: 38 92% 55%;
+    --accent-amber-foreground: 30 60% 15%;
+    --accent-teal: 168 76% 38%;
+    --accent-teal-foreground: 0 0% 100%;
+
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 269 91% 52%;
 
