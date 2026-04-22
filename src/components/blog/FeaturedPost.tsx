@@ -61,7 +61,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
           </div>
           <CardContent className="md:col-span-3 p-4 flex flex-col justify-center">
             <div className="flex items-center gap-3 mb-2">
-              <Badge variant="secondary" className="text-xs">Featured</Badge>
+              <Badge className="text-xs bg-accent-amber/15 text-accent-amber border border-accent-amber/30 hover:bg-accent-amber/20">Featured</Badge>
               <div className="flex items-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="w-3 h-3" />
                 {post.published_at ? format(new Date(post.published_at), 'MMM dd') : 'Draft'}
@@ -85,11 +85,20 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
             
             {post.categories.length > 0 && (
               <div className="flex flex-wrap gap-1 -mt-1">
-                {post.categories.slice(0, 2).map((category) => (
-                  <Badge key={category.slug} variant="outline" className="text-xs">
-                    {category.name}
-                  </Badge>
-                ))}
+                {post.categories.slice(0, 2).map((category, i) => {
+                  const palette = [
+                    "border-primary/40 text-primary",
+                    "border-accent-teal/40 text-accent-teal",
+                    "border-accent-amber/40 text-accent-amber",
+                    "border-accent-rose/40 text-accent-rose",
+                  ];
+                  const tone = palette[i % palette.length];
+                  return (
+                    <Badge key={category.slug} variant="outline" className={`text-xs ${tone}`}>
+                      {category.name}
+                    </Badge>
+                  );
+                })}
               </div>
             )}
           </CardContent>
