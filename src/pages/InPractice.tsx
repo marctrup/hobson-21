@@ -139,7 +139,8 @@ const InPractice = () => {
         <section className="py-16 sm:py-20 md:py-24">
           <div className="container mx-auto px-4 text-center max-w-4xl">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-6">
-              Your property documents, finally working <span className="text-primary">for you.</span>
+              Your property documents, finally working{" "}
+              <span className="bg-gradient-to-r from-primary to-accent-teal bg-clip-text text-transparent">for you.</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
               Phase 1 of Hobson is live now. It reads your leases, compliance documents and property contracts — and makes every clause, obligation and date instantly queryable in plain English. No legal training required. No hours of manual review. Just answers.
@@ -151,15 +152,24 @@ const InPractice = () => {
         <section className="py-12 sm:py-16 bg-muted/30">
           <div className="container mx-auto px-4 max-w-6xl">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {featureStrip.map((f, i) => (
-                <div key={i} className="text-center sm:text-left">
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-4 mx-auto sm:mx-0">
-                    <f.icon className="w-5 h-5 text-primary" />
+              {featureStrip.map((f, i) => {
+                const accents = [
+                  { bg: "bg-primary/10", text: "text-primary" },
+                  { bg: "bg-accent-teal/10", text: "text-accent-teal" },
+                  { bg: "bg-accent-amber/15", text: "text-accent-amber" },
+                  { bg: "bg-accent-teal/10", text: "text-accent-teal" },
+                ];
+                const a = accents[i % accents.length];
+                return (
+                  <div key={i} className="text-center sm:text-left">
+                    <div className={`w-10 h-10 rounded-lg ${a.bg} flex items-center justify-center mb-4 mx-auto sm:mx-0`}>
+                      <f.icon className={`w-5 h-5 ${a.text}`} />
+                    </div>
+                    <h3 className="text-base font-bold text-foreground mb-2">{f.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{f.body}</p>
                   </div>
-                  <h3 className="text-base font-bold text-foreground mb-2">{f.title}</h3>
-                  <p className="text-sm text-muted-foreground leading-relaxed">{f.body}</p>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
@@ -172,23 +182,32 @@ const InPractice = () => {
               Illustrative profiles based on the real operational challenges Hobson is designed to solve.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {personas.map((p, i) => (
-                <Card key={i} className="border bg-card p-6 sm:p-8">
-                  <div className="mb-4">
-                    <h3 className="text-2xl font-bold text-foreground">{p.name}</h3>
-                    <p className="text-sm font-medium text-primary">{p.role}</p>
-                    <p className="text-sm text-muted-foreground mt-1">{p.business}</p>
-                    <p className="text-xs text-muted-foreground mt-2">Illustrative profile</p>
-                  </div>
-                  <blockquote className="text-sm text-muted-foreground italic leading-relaxed mb-6">
-                    "{p.quote}"
-                  </blockquote>
-                  <div className="border-l-2 border-primary bg-primary/5 rounded-r-lg p-4">
-                    <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-2">{p.questionLabel}</p>
-                    <p className="text-sm text-foreground font-medium leading-relaxed">"{p.question}"</p>
-                  </div>
-                </Card>
-              ))}
+              {personas.map((p, i) => {
+                const accents = [
+                  { text: "text-primary", border: "border-primary", bg: "bg-primary/5", textSoft: "text-primary/70" },
+                  { text: "text-accent-teal", border: "border-accent-teal", bg: "bg-accent-teal/10", textSoft: "text-accent-teal/80" },
+                  { text: "text-accent-amber", border: "border-accent-amber", bg: "bg-accent-amber/10", textSoft: "text-accent-amber/90" },
+                  { text: "text-accent-teal", border: "border-accent-teal", bg: "bg-accent-teal/10", textSoft: "text-accent-teal/80" },
+                ];
+                const a = accents[i % accents.length];
+                return (
+                  <Card key={i} className="border bg-card p-6 sm:p-8">
+                    <div className="mb-4">
+                      <h3 className="text-2xl font-bold text-foreground">{p.name}</h3>
+                      <p className={`text-sm font-medium ${a.text}`}>{p.role}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{p.business}</p>
+                      <p className="text-xs text-muted-foreground mt-2">Illustrative profile</p>
+                    </div>
+                    <blockquote className="text-sm text-muted-foreground italic leading-relaxed mb-6">
+                      "{p.quote}"
+                    </blockquote>
+                    <div className={`border-l-2 ${a.border} ${a.bg} rounded-r-lg p-4`}>
+                      <p className={`text-xs font-bold uppercase tracking-widest ${a.textSoft} mb-2`}>{p.questionLabel}</p>
+                      <p className="text-sm text-foreground font-medium leading-relaxed">"{p.question}"</p>
+                    </div>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -198,45 +217,55 @@ const InPractice = () => {
           <div className="container mx-auto px-4 max-w-5xl">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground text-center mb-8">Real scenarios, real answers</h2>
 
-            {scenarios.map((s, i) => (
-              <div
-                key={i}
-                className={`py-12 sm:py-16 ${i % 2 === 1 ? "bg-muted/30 -mx-4 px-4 sm:-mx-8 sm:px-8 rounded-lg" : ""}`}
-              >
-                <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
-                  {/* Chapter number */}
-                  <div className="lg:w-24 flex-shrink-0">
-                    <span className="text-5xl sm:text-6xl lg:text-7xl font-extralight text-primary/20 leading-none">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+            {scenarios.map((s, i) => {
+              const accents = [
+                { num: "text-primary/20", textSoft: "text-primary/70", border: "border-primary", bg: "bg-primary/5" },
+                { num: "text-accent-teal/30", textSoft: "text-accent-teal/80", border: "border-accent-teal", bg: "bg-accent-teal/10" },
+                { num: "text-accent-amber/30", textSoft: "text-accent-amber/90", border: "border-accent-amber", bg: "bg-accent-amber/10" },
+                { num: "text-accent-teal/30", textSoft: "text-accent-teal/80", border: "border-accent-teal", bg: "bg-accent-teal/10" },
+                { num: "text-primary/20", textSoft: "text-primary/70", border: "border-primary", bg: "bg-primary/5" },
+              ];
+              const a = accents[i % accents.length];
+              return (
+                <div
+                  key={i}
+                  className={`py-12 sm:py-16 ${i % 2 === 1 ? "bg-muted/30 -mx-4 px-4 sm:-mx-8 sm:px-8 rounded-lg" : ""}`}
+                >
+                  <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-start">
+                    {/* Chapter number */}
+                    <div className="lg:w-24 flex-shrink-0">
+                      <span className={`text-5xl sm:text-6xl lg:text-7xl font-extralight ${a.num} leading-none`}>
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 space-y-6">
+                      <h3 className="text-xl sm:text-2xl font-bold text-foreground">{s.title}</h3>
+
+                      <div>
+                        <p className={`text-xs font-bold uppercase tracking-widest ${a.textSoft} mb-2`}>The situation</p>
+                        <p className="text-base text-muted-foreground leading-relaxed">{s.situation}</p>
+                      </div>
+
+                      <div>
+                        <p className={`text-xs font-bold uppercase tracking-widest ${a.textSoft} mb-2`}>What Hobson did</p>
+                        <p className="text-base text-foreground leading-relaxed">{s.hobsonDid}</p>
+                      </div>
+
+                      <div className={`border-l-2 ${a.border} ${a.bg} rounded-r-lg p-4 sm:p-5`}>
+                        <p className={`text-xs font-bold uppercase tracking-widest ${a.textSoft} mb-2`}>What this means honestly</p>
+                        <p className="text-base text-muted-foreground leading-relaxed">{s.honestly}</p>
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Content */}
-                  <div className="flex-1 space-y-6">
-                    <h3 className="text-xl sm:text-2xl font-bold text-foreground">{s.title}</h3>
-
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-2">The situation</p>
-                      <p className="text-base text-muted-foreground leading-relaxed">{s.situation}</p>
-                    </div>
-
-                    <div>
-                      <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-2">What Hobson did</p>
-                      <p className="text-base text-foreground leading-relaxed">{s.hobsonDid}</p>
-                    </div>
-
-                    <div className="border-l-2 border-primary bg-primary/5 rounded-r-lg p-4 sm:p-5">
-                      <p className="text-xs font-bold uppercase tracking-widest text-primary/70 mb-2">What this means honestly</p>
-                      <p className="text-base text-muted-foreground leading-relaxed">{s.honestly}</p>
-                    </div>
-                  </div>
+                  {i < scenarios.length - 1 && !(i % 2 === 1) && (
+                    <div className="border-b border-border/30 mt-12 sm:mt-16" />
+                  )}
                 </div>
-
-                {i < scenarios.length - 1 && !(i % 2 === 1) && (
-                  <div className="border-b border-border/30 mt-12 sm:mt-16" />
-                )}
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
 
@@ -256,22 +285,22 @@ const InPractice = () => {
 
             <div className="grid md:grid-cols-2 gap-6">
               <Card className="border-border bg-background p-6 space-y-4">
-                <Badge className="w-fit bg-primary/10 text-primary border-0">Phase 2</Badge>
+                <Badge className="w-fit bg-accent-teal/10 text-accent-teal border-0">Phase 2</Badge>
                 <h3 className="text-xl font-bold text-foreground">The Knowledge Base</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   Hobson learns how your business operates. Your contractors, contacts, policies, approval thresholds and communication preferences — stored permanently and applied to every answer. Hobson stops being a document tool and starts behaving like an informed member of your team.
                 </p>
-                <Link to="/pricing" className="inline-flex items-center gap-1 text-primary font-medium hover:underline">
+                <Link to="/pricing" className="inline-flex items-center gap-1 text-accent-teal font-medium hover:underline">
                   Join the waitlist <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
               <Card className="border-border bg-background p-6 space-y-4">
-                <Badge className="w-fit bg-primary/10 text-primary border-0">Phase 3</Badge>
+                <Badge className="w-fit bg-accent-amber/15 text-accent-amber border-0">Phase 3</Badge>
                 <h3 className="text-xl font-bold text-foreground">The Application Layer</h3>
                 <p className="text-muted-foreground leading-relaxed">
                   Hobson stops answering and starts acting. Rent reviews triggered automatically. Compliance deadlines flagged and actioned. Lease events managed end-to-end without a human in the loop until a decision is required. The work gets done.
                 </p>
-                <Link to="/pricing" className="inline-flex items-center gap-1 text-primary font-medium hover:underline">
+                <Link to="/pricing" className="inline-flex items-center gap-1 text-accent-amber font-medium hover:underline">
                   Join the waitlist <ArrowRight className="w-4 h-4" />
                 </Link>
               </Card>
@@ -281,7 +310,13 @@ const InPractice = () => {
 
 
         {/* SECTION 7 — Closing CTA */}
-        <section className="py-16 sm:py-20">
+        <section
+          className="py-16 sm:py-20"
+          style={{
+            background:
+              "linear-gradient(135deg, hsl(var(--accent-amber) / 0.08), hsl(var(--accent-teal) / 0.08))",
+          }}
+        >
           <div className="container mx-auto px-4 text-center max-w-3xl">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-4">
               Phase 1 is live. Try it on your documents today.
