@@ -166,7 +166,7 @@ export const Homepage = () => {
                 <div className="space-y-4 sm:space-y-6 text-center lg:text-left">
                   <h1 id="hero-heading" className="font-bold leading-tight text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
                     <span className="text-foreground">{content.hero.title} </span>
-                    <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">{content.hero.titleHighlight}</span>
+                    <span className="bg-gradient-to-r from-primary via-primary/80 to-accent-teal bg-clip-text text-transparent">{content.hero.titleHighlight}</span>
                   </h1>
                   <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}
                   </p>
@@ -223,25 +223,32 @@ export const Homepage = () => {
                 </div>
 
                 <div className="relative">
-                  {/* Line from circle 1 to circle 2 */}
-                  <div className="hidden md:block absolute top-[2.5rem] sm:top-[3rem] h-[2px] bg-primary/30" style={{ left: 'calc(16.67% + 2.5rem)', right: 'calc(50% + 2.5rem)' }}></div>
-                  {/* Line from circle 2 to circle 3 */}
-                  <div className="hidden md:block absolute top-[2.5rem] sm:top-[3rem] h-[2px] bg-primary/30" style={{ left: 'calc(50% + 2.5rem)', right: 'calc(16.67% + 2.5rem)' }}></div>
+                  {/* Line from circle 1 to circle 2 (purple → teal) */}
+                  <div className="hidden md:block absolute top-[2.5rem] sm:top-[3rem] h-[2px] bg-gradient-to-r from-primary/40 to-accent-teal/40" style={{ left: 'calc(16.67% + 2.5rem)', right: 'calc(50% + 2.5rem)' }}></div>
+                  {/* Line from circle 2 to circle 3 (teal → amber) */}
+                  <div className="hidden md:block absolute top-[2.5rem] sm:top-[3rem] h-[2px] bg-gradient-to-r from-accent-teal/40 to-accent-amber/50" style={{ left: 'calc(50% + 2.5rem)', right: 'calc(16.67% + 2.5rem)' }}></div>
 
                   <div className="grid md:grid-cols-3 gap-8 sm:gap-10">
-                    {content.howItWorks.steps.map((step, index) => (
-                      <div key={index} className="relative text-center group">
-                        <div className="relative mb-5 sm:mb-6">
-                          <div className="w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br from-primary to-primary/70 rounded-full flex items-center justify-center text-xl sm:text-2xl font-bold text-primary-foreground shadow-lg group-hover:scale-110 transition-transform duration-300">
-                            {index + 1}
+                    {content.howItWorks.steps.map((step, index) => {
+                      const circleStyles = [
+                        "from-primary to-primary/70 text-primary-foreground",
+                        "from-accent-teal to-accent-teal/70 text-accent-teal-foreground",
+                        "from-accent-amber to-accent-amber/70 text-accent-amber-foreground",
+                      ];
+                      return (
+                        <div key={index} className="relative text-center group">
+                          <div className="relative mb-5 sm:mb-6">
+                            <div className={`w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br ${circleStyles[index % circleStyles.length]} rounded-full flex items-center justify-center text-xl sm:text-2xl font-bold shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                              {index + 1}
+                            </div>
                           </div>
+                          <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-foreground">{step.title}</h3>
+                          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                            {step.description}
+                          </p>
                         </div>
-                        <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-foreground">{step.title}</h3>
-                        <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xs mx-auto">
-                          {step.description}
-                        </p>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
 
@@ -256,7 +263,7 @@ export const Homepage = () => {
           <TrustStrip />
 
           {/* CTA Section */}
-          <section className="py-12 sm:py-16 md:py-20" style={{ background: "linear-gradient(135deg, hsl(210 40% 96%), hsl(210 30% 90%))" }}>
+          <section className="py-12 sm:py-16 md:py-20" style={{ background: "linear-gradient(135deg, hsl(var(--accent-amber) / 0.08), hsl(var(--accent-teal) / 0.08))" }}>
             <div className="container mx-auto px-4 text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
                 {content.cta.title}
