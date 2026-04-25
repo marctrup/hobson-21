@@ -78,7 +78,7 @@ const documentCategories: { category: string; items: string[] }[] = [
       "Vacate",
     ],
   },
-  { category: "Report", items: ["Fire Doors", "Fire Risk", "Inventory"] },
+  { category: "Report", items: ["Check In Inventory", "Check Out Inventory", "Fire Doors", "Fire Risk", "Mid Term Inventory"] },
   {
     category: "Side Letter",
     items: [
