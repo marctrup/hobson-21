@@ -17,7 +17,7 @@ const FeaturesHero = () => (
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
           </span>
           <span className="text-sm sm:text-base font-semibold text-primary tracking-wide">
-            Phase 1 — Live today
+            Phase 1 — Live & Testing
           </span>
         </div>
         <div className="inline-flex items-center gap-2 bg-accent-teal/10 border border-accent-teal/30 rounded-full px-4 py-2">
