@@ -366,10 +366,6 @@ const BlogPost = () => {
                 <Calendar className="w-4 h-4" />
                 {format(new Date(post.published_at), 'MMMM dd, yyyy')}
               </div>
-              <div className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                {post.reading_time} min read
-              </div>
             </div>
           </header>
 

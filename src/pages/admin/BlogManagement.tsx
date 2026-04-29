@@ -340,7 +340,6 @@ const BlogManagement = () => {
                     <TableHead>Author</TableHead>
                     <TableHead>Created</TableHead>
                     <TableHead>Published</TableHead>
-                    <TableHead>Reading Time</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -408,12 +407,6 @@ const BlogManagement = () => {
                         ) : (
                           <span className="text-muted-foreground">-</span>
                         )}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <Clock className="w-3 h-3" />
-                          {post.reading_time} min
-                        </div>
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-2">
