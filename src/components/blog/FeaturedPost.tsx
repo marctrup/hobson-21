@@ -66,10 +66,6 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
                 <Calendar className="w-3 h-3" />
                 {post.published_at ? format(new Date(post.published_at), 'MMM dd') : 'Draft'}
               </div>
-              <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                <Clock className="w-3 h-3" />
-                {post.reading_time}min
-              </div>
             </div>
             <h2 className="text-xl font-bold mb-1 line-clamp-1">{post.title}</h2>
             <p className="text-muted-foreground mb-2 text-sm line-clamp-1">{post.excerpt}</p>

@@ -409,12 +409,6 @@ const BlogManagement = () => {
                         )}
                       </TableCell>
                       <TableCell>
-                        <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                          <Clock className="w-3 h-3" />
-                          {post.reading_time} min
-                        </div>
-                      </TableCell>
-                      <TableCell>
                         <div className="flex items-center gap-2">
                           {post.status === 'published' && (
                             <Button variant="outline" size="sm" asChild className="border-blue-500 text-blue-600 hover:bg-blue-50">

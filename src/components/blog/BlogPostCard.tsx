@@ -61,8 +61,6 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
           <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground">
             <Calendar className="w-4 h-4" />
             {format(new Date(post.published_at), 'MMM dd')}
-            <Clock className="w-4 h-4 ml-2" />
-            {post.reading_time}m
           </div>
           
           <h3 className="text-lg font-semibold mb-1 line-clamp-2 leading-tight">{post.title}</h3>
