@@ -340,7 +340,6 @@ const BlogManagement = () => {
                     <TableHead>Author</TableHead>
                     <TableHead>Created</TableHead>
                     <TableHead>Published</TableHead>
-                    <TableHead>Reading Time</TableHead>
                     <TableHead>Actions</TableHead>
                   </TableRow>
                 </TableHeader>
