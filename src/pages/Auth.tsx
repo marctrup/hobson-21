@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { useAuth } from "@/hooks/useAuth";
@@ -9,6 +9,7 @@ export default function Auth() {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const { user, isLoading } = useAuth();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (user && !isLoading) {
@@ -17,8 +18,15 @@ export default function Auth() {
   }, [user, isLoading, navigate]);
 
   const checkUserRoleAndRedirect = async () => {
+    // Honour ?returnTo=/some/path if present (only same-origin paths)
+    const returnTo = searchParams.get("returnTo");
+    if (returnTo && returnTo.startsWith("/") && !returnTo.startsWith("//")) {
+      navigate(returnTo, { replace: true });
+      return;
+    }
+
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("user_roles")
         .select("role")
         .eq("user_id", user?.id)
@@ -26,14 +34,11 @@ export default function Auth() {
         .single();
 
       if (data) {
-        // User is admin, redirect to admin page
         navigate("/admin");
       } else {
-        // User is not admin, redirect to landing page
         navigate("/");
       }
-    } catch (error) {
-      // If there's an error or no role found, redirect to landing page
+    } catch {
       navigate("/");
     }
   };

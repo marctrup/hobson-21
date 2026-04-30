@@ -51,6 +51,8 @@ import {
   SUBSCRIPTION_STATUS_LABELS,
   formatGBP,
   formatDateUK,
+  formatDateTimeUK,
+  formatSqft,
   SENIORITY_LABELS,
   DEPARTMENTS,
   DEPARTMENT_LABELS,
@@ -60,13 +62,14 @@ import {
 } from "@/lib/crm/labels";
 import { cn } from "@/lib/utils";
 
-type TabKey = "overview" | "contacts" | "users" | "notes";
+type TabKey = "overview" | "contacts" | "users" | "notes" | "activity";
 
 const TABS: { key: TabKey; label: string }[] = [
   { key: "overview", label: "Overview" },
   { key: "contacts", label: "Contacts" },
   { key: "users", label: "Platform users" },
   { key: "notes", label: "Notes" },
+  { key: "activity", label: "Activity" },
 ];
 
 export default function CrmClientDetail() {
@@ -233,6 +236,7 @@ export default function CrmClientDetail() {
           {tab === "contacts" && <ContactsTab clientId={id} canWrite={canWrite} />}
           {tab === "users" && <UsersTab clientId={id} canWrite={canWrite} />}
           {tab === "notes" && <NotesTab clientId={id} userId={user?.id} canWrite={canWrite} />}
+          {tab === "activity" && <ActivityTab clientId={id} />}
         </div>
       </div>
     </CrmLayout>
@@ -290,7 +294,7 @@ const OverviewTab = ({
 
       <Card title="Property profile">
         <Row label="Number of properties" value={c.property_count ?? "—"} />
-        <Row label="Total floor area" value={c.total_floor_area_sqft ? `${c.total_floor_area_sqft.toLocaleString("en-GB")} sq ft` : "—"} />
+        <Row label="Total floor area" value={formatSqft(c.total_floor_area_sqft)} />
         <Row label="Tenure mix" value={c.tenure_mix || "—"} />
         <Row label="Annual property spend" value={formatGBP(c.estimated_annual_property_spend_gbp)} />
         <Row label="Lease events (12m)" value={c.upcoming_lease_events_12m ?? "—"} />
@@ -810,6 +814,50 @@ const NotesTab = ({
                 )}
               </div>
               <div className="text-xs text-slate-500 mt-1">{formatDateUK(n.created_at)}</div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
+
+/* ----------------------------- Activity tab ----------------------------- */
+
+const ActivityTab = ({ clientId }: { clientId: string }) => {
+  const list = useQuery({
+    queryKey: ["crm-activity", clientId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("crm_activity_log")
+        .select("*")
+        .eq("client_id", clientId)
+        .order("created_at", { ascending: false })
+        .limit(200);
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+      {list.isLoading ? (
+        <div className="p-6 text-sm text-slate-500">Loading…</div>
+      ) : !list.data?.length ? (
+        <div className="p-8 text-center text-sm text-slate-500">
+          No activity recorded yet.
+        </div>
+      ) : (
+        <ul className="divide-y divide-slate-100">
+          {list.data.map((a) => (
+            <li key={a.id} className="px-4 py-3 text-sm">
+              <div className="flex items-baseline justify-between gap-3">
+                <div className="font-medium text-slate-900">{a.description ?? a.action_type}</div>
+                <div className="text-xs text-slate-500 shrink-0">{formatDateTimeUK(a.created_at)}</div>
+              </div>
+              <div className="text-xs text-slate-500 mt-0.5">
+                {a.entity_type} · {a.action_type}
+              </div>
             </li>
           ))}
         </ul>
