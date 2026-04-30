@@ -7,6 +7,7 @@ import {
   getCaller,
   isAdmin,
   serviceClient,
+  logRoleAction,
 } from "../_shared/crm-auth.ts";
 
 const CRM_ROLES = ["admin", "crm_write", "crm_read"];
