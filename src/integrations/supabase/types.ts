@@ -545,6 +545,7 @@ export type Database = {
           name: string
           next_action: string | null
           next_action_date: string | null
+          open_issues_count: number
           origin_metadata: Json | null
           owner_id: string | null
           phone: string | null
@@ -603,6 +604,7 @@ export type Database = {
           name: string
           next_action?: string | null
           next_action_date?: string | null
+          open_issues_count?: number
           origin_metadata?: Json | null
           owner_id?: string | null
           phone?: string | null
@@ -661,6 +663,7 @@ export type Database = {
           name?: string
           next_action?: string | null
           next_action_date?: string | null
+          open_issues_count?: number
           origin_metadata?: Json | null
           owner_id?: string | null
           phone?: string | null
@@ -789,6 +792,93 @@ export type Database = {
           role?: Database["public"]["Enums"]["app_role"]
           status?: string
           token_hash?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      crm_issue_comments: {
+        Row: {
+          author_id: string | null
+          body: string
+          created_at: string
+          id: string
+          is_status_change: boolean
+          issue_id: string
+          metadata: Json | null
+        }
+        Insert: {
+          author_id?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          is_status_change?: boolean
+          issue_id: string
+          metadata?: Json | null
+        }
+        Update: {
+          author_id?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          is_status_change?: boolean
+          issue_id?: string
+          metadata?: Json | null
+        }
+        Relationships: []
+      }
+      crm_issues: {
+        Row: {
+          assignee_id: string | null
+          category: Database["public"]["Enums"]["issue_category"]
+          client_id: string
+          created_at: string
+          description: string | null
+          due_date: string | null
+          id: string
+          priority: Database["public"]["Enums"]["issue_priority"]
+          reported_by: string | null
+          reported_via_communication_id: string | null
+          resolution_note: string | null
+          resolved_at: string | null
+          status: Database["public"]["Enums"]["issue_status"]
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assignee_id?: string | null
+          category?: Database["public"]["Enums"]["issue_category"]
+          client_id: string
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: Database["public"]["Enums"]["issue_priority"]
+          reported_by?: string | null
+          reported_via_communication_id?: string | null
+          resolution_note?: string | null
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["issue_status"]
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assignee_id?: string | null
+          category?: Database["public"]["Enums"]["issue_category"]
+          client_id?: string
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          id?: string
+          priority?: Database["public"]["Enums"]["issue_priority"]
+          reported_by?: string | null
+          reported_via_communication_id?: string | null
+          resolution_note?: string | null
+          resolved_at?: string | null
+          status?: Database["public"]["Enums"]["issue_status"]
+          tags?: string[]
+          title?: string
           updated_at?: string
         }
         Relationships: []
@@ -1750,6 +1840,21 @@ export type Database = {
         | "bug-hunting"
         | "lovable-project"
         | "ama"
+      issue_category:
+        | "bug"
+        | "data_quality"
+        | "billing"
+        | "onboarding"
+        | "feature_gap"
+        | "support"
+        | "other"
+      issue_priority: "low" | "medium" | "high" | "urgent"
+      issue_status:
+        | "open"
+        | "in_progress"
+        | "waiting_on_client"
+        | "resolved"
+        | "closed"
       participant_kind:
         | "contact"
         | "platform_user"
@@ -1905,6 +2010,23 @@ export const Constants = {
         "bug-hunting",
         "lovable-project",
         "ama",
+      ],
+      issue_category: [
+        "bug",
+        "data_quality",
+        "billing",
+        "onboarding",
+        "feature_gap",
+        "support",
+        "other",
+      ],
+      issue_priority: ["low", "medium", "high", "urgent"],
+      issue_status: [
+        "open",
+        "in_progress",
+        "waiting_on_client",
+        "resolved",
+        "closed",
       ],
       participant_kind: [
         "contact",
