@@ -130,22 +130,25 @@ export function DeleteClientDialog({ clientId, clientName, onDeleted }: Props) {
           </div>
 
           <div className="pt-2">
-            <Label htmlFor="confirm-name" className="text-sm">
-              To confirm, type the client name below:{" "}
-              <span className="font-semibold">{clientName}</span>
+            <Label htmlFor="confirm-name" className="text-sm block">
+              To confirm, type the client record name exactly as shown:
             </Label>
+            <code className="inline-block mt-1 px-2 py-1 rounded bg-slate-100 border border-slate-200 text-slate-900 text-sm font-mono select-all">
+              {clientName}
+            </code>
             <Input
               id="confirm-name"
               autoComplete="off"
               value={typed}
               onChange={(e) => setTyped(e.target.value)}
-              placeholder={`Type "${clientName}" to confirm`}
-              className="mt-1"
+              placeholder={`Type the name above to confirm`}
+              className="mt-2"
               disabled={del.isPending}
             />
             {typed.length > 0 && !nameMatches && (
               <div className="text-xs text-rose-600 mt-1">
-                Name doesn't match. Type exactly: <strong>{clientName}</strong>
+                That doesn't match the client record name. Type exactly:{" "}
+                <code className="px-1 rounded bg-rose-100">{clientName}</code>
               </div>
             )}
             {preview.isLoading && (
