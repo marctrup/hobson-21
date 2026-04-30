@@ -213,7 +213,7 @@ Submitted at: ${new Date().toISOString()}
 
     // Forward to CRM (fail-soft)
     await postToCrmIngest({
-      formType: 'pilot',
+      formType: 'website',
       idempotencyKey: applicationId,
       contact: { name, email, phone: phone ?? null, company, role },
       payload: {
