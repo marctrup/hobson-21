@@ -1902,6 +1902,17 @@ export type Database = {
         Returns: boolean
       }
       crm_find_user_id_by_email: { Args: { p_email: string }; Returns: string }
+      crm_get_integration_settings: {
+        Args: never
+        Returns: {
+          default_owner_display_name: string
+          default_owner_email: string
+          default_owner_id: string
+          secret_configured: boolean
+          website_ingest_secret_rotated_at: string
+          website_system_user_id: string
+        }[]
+      }
       crm_get_workspace_name: { Args: never; Returns: string }
       crm_list_team_members: {
         Args: never
@@ -1926,6 +1937,7 @@ export type Database = {
         Returns: undefined
       }
       crm_sanitise_email_html: { Args: { p_html: string }; Returns: string }
+      crm_set_default_owner: { Args: { p_user_id: string }; Returns: string }
       crm_update_workspace_name: { Args: { p_name: string }; Returns: string }
       get_current_user_role: {
         Args: never
