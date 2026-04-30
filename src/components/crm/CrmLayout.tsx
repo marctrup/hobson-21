@@ -1,5 +1,4 @@
-import { ReactNode } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   Users,
@@ -17,9 +16,6 @@ import { useAuth } from "@/hooks/useAuth";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { cn } from "@/lib/utils";
 
-interface CrmLayoutProps {
-  children: ReactNode;
-}
 
 const NAV = [
   { to: "/crm", label: "Dashboard", icon: LayoutDashboard, end: true },
@@ -38,7 +34,7 @@ const ROLE_BADGE: Record<string, { label: string; cls: string }> = {
   crm_read: { label: "Read-only", cls: "bg-slate-100 text-slate-700 border-slate-200" },
 };
 
-export const CrmLayout = ({ children }: CrmLayoutProps) => {
+export const CrmLayout = () => {
   const { user, signOut } = useAuth();
   const { role, canWrite } = useCrmAccess();
   const navigate = useNavigate();
@@ -118,7 +114,7 @@ export const CrmLayout = ({ children }: CrmLayoutProps) => {
             </Button>
           )}
         </header>
-        <main className="flex-1 overflow-auto">{children}</main>
+        <main className="flex-1 overflow-auto"><Outlet /></main>
       </div>
     </div>
   );
