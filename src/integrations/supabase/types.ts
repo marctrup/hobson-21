@@ -1068,7 +1068,7 @@ export type Database = {
       make_user_admin: { Args: { user_email: string }; Returns: undefined }
     }
     Enums: {
-      app_role: "admin" | "user"
+      app_role: "admin" | "user" | "crm_write" | "crm_read"
       feature_request_category:
         | "feedback"
         | "feature-request"
@@ -1204,7 +1204,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["admin", "user"],
+      app_role: ["admin", "user", "crm_write", "crm_read"],
       feature_request_category: [
         "feedback",
         "feature-request",
