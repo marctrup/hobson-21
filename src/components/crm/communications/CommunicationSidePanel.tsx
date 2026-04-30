@@ -306,19 +306,34 @@ const PanelBody = ({
           </section>
         )}
 
-        {/* Pending follow-up */}
-        {c.pending_follow_up_note && !c.linked_task_id && (
-          <section className="text-sm bg-amber-50 border border-amber-200 rounded-md p-3">
-            <div className="text-xs uppercase tracking-wide text-amber-800 mb-1">
-              Pending follow-up
-            </div>
-            <div className="text-amber-900">{c.pending_follow_up_note}</div>
+        {/* Linked task indicator (replaces the old amber pending-follow-up banner) */}
+        {c.linked_task_id && (
+          <section className="text-sm bg-emerald-50 border border-emerald-200 rounded-md px-3 py-2 flex items-center gap-2">
+            <CheckSquare className="size-4 text-emerald-700 shrink-0" />
+            <span className="text-emerald-900">
+              A task has been created from this communication.{" "}
+              <Link
+                to={`/crm/tasks?focus=${c.linked_task_id}`}
+                className="underline hover:no-underline"
+              >
+                Open task
+              </Link>
+            </span>
           </section>
         )}
 
         {/* Actions */}
         {(canWrite || canDelete) && (
           <div className="pt-4 border-t border-slate-200 flex flex-wrap gap-2">
+            {canWrite && !c.linked_task_id && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setTaskDialogOpen(true)}
+              >
+                <CheckSquare className="size-4 mr-1" /> Create task from this
+              </Button>
+            )}
             {canWrite && (
               <Button
                 variant="outline"
@@ -365,6 +380,17 @@ const PanelBody = ({
           defaultTitle={issuePrefill.title}
           defaultDescription={issuePrefill.description}
           defaultCategory="support"
+        />
+      )}
+      {canWrite && (
+        <LogTaskDialog
+          open={taskDialogOpen}
+          onOpenChange={setTaskDialogOpen}
+          defaultClientId={c.client_id}
+          defaultCommunicationId={c.id}
+          defaultTitle={taskPrefill.title}
+          defaultNotes={taskPrefill.notes}
+          defaultDueDate={taskPrefill.dueDate}
         />
       )}
     </>
