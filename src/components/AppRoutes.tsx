@@ -46,6 +46,8 @@ const CrmClients = lazy(() => import("../pages/crm/CrmClients"));
 const CrmClientNew = lazy(() => import("../pages/crm/CrmClientNew"));
 const CrmClientDetail = lazy(() => import("../pages/crm/CrmClientDetail"));
 const CrmSettings = lazy(() => import("../pages/crm/CrmSettings"));
+const CrmSettingsTeam = lazy(() => import("../pages/crm/CrmSettingsTeam"));
+const CrmAcceptInvite = lazy(() => import("../pages/crm/CrmAcceptInvite"));
 
 // Loading component
 const PageLoader = () => (
@@ -146,6 +148,9 @@ const AppContent = () => {
               <Route path="/admin/blog/new" element={<BlogEditor />} />
               <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
 
+              {/* CRM accept-invite is public (auth handled inside the page) */}
+              <Route path="/crm/accept-invite" element={<CrmAcceptInvite />} />
+
               {/* CRM */}
               <Route path="/crm" element={<CrmGuard><CrmLayout /></CrmGuard>}>
                 <Route index element={<CrmDashboard />} />
@@ -153,6 +158,7 @@ const AppContent = () => {
                 <Route path="clients/new" element={<CrmClientNew />} />
                 <Route path="clients/:id" element={<CrmClientDetail />} />
                 <Route path="settings" element={<CrmSettings />} />
+                <Route path="settings/team" element={<CrmSettingsTeam />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />

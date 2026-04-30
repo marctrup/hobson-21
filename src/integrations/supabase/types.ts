@@ -582,6 +582,48 @@ export type Database = {
           },
         ]
       }
+      crm_invitations: {
+        Row: {
+          accepted_at: string | null
+          accepted_by: string | null
+          created_at: string
+          email: string
+          expires_at: string
+          id: string
+          invited_by: string | null
+          role: Database["public"]["Enums"]["app_role"]
+          status: string
+          token_hash: string
+          updated_at: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string
+          email: string
+          expires_at?: string
+          id?: string
+          invited_by?: string | null
+          role: Database["public"]["Enums"]["app_role"]
+          status?: string
+          token_hash: string
+          updated_at?: string
+        }
+        Update: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string
+          email?: string
+          expires_at?: string
+          id?: string
+          invited_by?: string | null
+          role?: Database["public"]["Enums"]["app_role"]
+          status?: string
+          token_hash?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       crm_notes: {
         Row: {
           client_id: string
@@ -1394,6 +1436,17 @@ export type Database = {
           p_window_minutes?: number
         }
         Returns: boolean
+      }
+      crm_find_user_id_by_email: { Args: { p_email: string }; Returns: string }
+      crm_list_team_members: {
+        Args: never
+        Returns: {
+          display_name: string
+          email: string
+          granted_at: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }[]
       }
       get_current_user_role: {
         Args: never
