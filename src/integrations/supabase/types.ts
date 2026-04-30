@@ -1448,6 +1448,17 @@ export type Database = {
           user_id: string
         }[]
       }
+      crm_log_role_action: {
+        Args: {
+          p_action: string
+          p_actor: string
+          p_metadata?: Json
+          p_new_role?: Database["public"]["Enums"]["app_role"]
+          p_old_role?: Database["public"]["Enums"]["app_role"]
+          p_target_user: string
+        }
+        Returns: undefined
+      }
       get_current_user_role: {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
