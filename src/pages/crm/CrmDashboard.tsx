@@ -28,7 +28,7 @@ import {
   type IssueStatus,
 } from "@/lib/crm/issuesLabels";
 import { cn } from "@/lib/utils";
-import { PipelineValueCard } from "@/components/crm/dashboard/PipelineValueCard";
+
 import { PipelineDistributionCard } from "@/components/crm/dashboard/PipelineDistributionCard";
 import { RecentCommunicationsCard } from "@/components/crm/dashboard/RecentCommunicationsCard";
 import { CommsByChannelCard } from "@/components/crm/dashboard/CommsByChannelCard";
@@ -267,8 +267,7 @@ export default function CrmDashboard() {
         </div>
 
         {/* Row 3 — Pipeline health */}
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4">
-          <PipelineValueCard userId={userId} />
+        <div className="mt-8">
           <PipelineDistributionCard />
         </div>
 
