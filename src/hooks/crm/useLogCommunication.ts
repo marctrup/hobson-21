@@ -58,15 +58,15 @@ export const useLogCommunication = () => {
 
       // 1. Atomic insert of communication + participants (no attachments yet —
       //    we need the comm id to know the storage path).
+      const rpcPayload = {
+        communication: payload.communication,
+        participants: payload.participants,
+        attachments: [] as unknown[],
+      };
       const { data: commId, error: rpcErr } = await supabase.rpc(
         "crm_log_communication",
-        {
-          p_payload: {
-            communication: payload.communication,
-            participants: payload.participants,
-            attachments: [],
-          } as unknown as Record<string, unknown>,
-        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { p_payload: rpcPayload as any },
       );
       if (rpcErr) throw rpcErr;
       if (!commId) throw new Error("Server did not return a communication id");
