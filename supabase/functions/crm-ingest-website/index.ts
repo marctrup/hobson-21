@@ -98,7 +98,7 @@ serve(async (req) => {
     console.error("CRM ingest failure:", reason, err);
     try {
       await supabase.from("crm_ingest_failures").insert({
-        form_type: body?.form_type ?? "unknown",
+        source: `website:${body?.form_type ?? "unknown"}`,
         payload: body as unknown as Record<string, unknown>,
         error_message: `${reason}: ${err instanceof Error ? err.message : String(err)}`,
       });
@@ -108,16 +108,19 @@ serve(async (req) => {
   };
 
   try {
-    // Idempotency: 5-minute window
+    // Idempotency: 5-minute window keyed by (scope, key)
+    const idemScope = "website_ingest";
     if (body.idempotency_key) {
+      const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
       const { data: existing } = await supabase
         .from("crm_idempotency_keys")
-        .select("id, communication_id")
+        .select("result, created_at")
+        .eq("scope", idemScope)
         .eq("key", body.idempotency_key)
-        .gt("expires_at", new Date().toISOString())
+        .gt("created_at", fiveMinAgo)
         .maybeSingle();
       if (existing) {
-        return new Response(JSON.stringify({ ok: true, deduplicated: true, communication_id: existing.communication_id }), {
+        return new Response(JSON.stringify({ ok: true, deduplicated: true, ...(existing.result as object) }), {
           status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" },
         });
       }
@@ -236,8 +239,9 @@ serve(async (req) => {
     // Idempotency record
     if (body.idempotency_key) {
       await supabase.from("crm_idempotency_keys").insert({
+        scope: idemScope,
         key: body.idempotency_key,
-        communication_id: comm.id,
+        result: { client_id: clientId, communication_id: comm.id },
       });
     }
 
