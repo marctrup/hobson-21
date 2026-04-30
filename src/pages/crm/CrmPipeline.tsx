@@ -1,7 +1,11 @@
 // CRM Pipeline kanban.
-// Columns are loaded from crm_pipeline_stages. Clients with a pipeline_stage
-// value not in the active stage list fall into a virtual "Uncategorised"
-// column so legacy data stays visible for cleanup.
+// Columns are loaded from crm_pipeline_stages, but `on_hold` is excluded
+// from the kanban — it's a status (crm_clients.status), not a draggable
+// column. Use the "Show on-hold clients" toggle to surface them in their
+// current pipeline_stage column with an "ON HOLD" badge.
+//
+// Clients with a pipeline_stage value not in the active stage list fall
+// into a virtual "Uncategorised" column so legacy data stays visible.
 
 import { Helmet } from "react-helmet-async";
 import { useMemo, useState } from "react";
@@ -28,23 +32,30 @@ import {
 } from "@/hooks/crm/usePipelineStages";
 import { formatGBP } from "@/lib/crm/labels";
 import { cn } from "@/lib/utils";
-import { Loader2 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import { Loader2, PauseCircle } from "lucide-react";
 
 interface PipelineClient {
   id: string;
   name: string;
   pipeline_stage: string;
+  status: string;
   estimated_deal_value_gbp: number | null;
   primary_contact_name: string | null;
   segment: string;
 }
 
 const UNCATEGORISED_KEY = "__uncategorised__";
+// Pipeline stages that should NEVER appear as kanban columns even if active
+// in crm_pipeline_stages. on_hold is modelled as a *status*, not a column.
+const NON_KANBAN_STAGE_KEYS = new Set(["on_hold"]);
 
 export default function CrmPipeline() {
   const queryClient = useQueryClient();
   const { canWrite } = useCrmAccess();
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [showOnHold, setShowOnHold] = useState(false);
 
   const { data: stages, isLoading: stagesLoading } = usePipelineStages();
   const { data: clients, isLoading: clientsLoading } = useQuery({
@@ -53,7 +64,7 @@ export default function CrmPipeline() {
       const { data, error } = await supabase
         .from("crm_clients")
         .select(
-          "id,name,pipeline_stage,estimated_deal_value_gbp,primary_contact_name,segment",
+          "id,name,pipeline_stage,status,estimated_deal_value_gbp,primary_contact_name,segment",
         )
         .order("updated_at", { ascending: false });
       if (error) throw error;
@@ -61,19 +72,34 @@ export default function CrmPipeline() {
     },
   });
 
+  // Columns visible on the kanban (on_hold excluded).
+  const kanbanStages = useMemo(
+    () => stages?.filter((s) => !NON_KANBAN_STAGE_KEYS.has(s.key)) ?? [],
+    [stages],
+  );
+
+  const onHoldCount = useMemo(
+    () => clients?.filter((c) => c.status === "on_hold").length ?? 0,
+    [clients],
+  );
+
   const grouped = useMemo(() => {
     const map = new Map<string, PipelineClient[]>();
-    if (stages) for (const s of stages) map.set(s.key, []);
+    for (const s of kanbanStages) map.set(s.key, []);
     map.set(UNCATEGORISED_KEY, []);
-    if (clients && stages) {
-      const known = new Set(stages.map((s) => s.key));
+    if (clients) {
+      const knownKanbanKeys = new Set(kanbanStages.map((s) => s.key));
       for (const c of clients) {
-        const bucket = known.has(c.pipeline_stage) ? c.pipeline_stage : UNCATEGORISED_KEY;
+        // Hide on-hold clients unless toggle is on
+        if (c.status === "on_hold" && !showOnHold) continue;
+        const bucket = knownKanbanKeys.has(c.pipeline_stage)
+          ? c.pipeline_stage
+          : UNCATEGORISED_KEY;
         map.get(bucket)!.push(c);
       }
     }
     return map;
-  }, [clients, stages]);
+  }, [clients, kanbanStages, showOnHold]);
 
   const moveStage = useMutation({
     mutationFn: async ({ clientId, toStage }: { clientId: string; toStage: string }) => {
@@ -98,7 +124,6 @@ export default function CrmPipeline() {
       return { previous };
     },
     onError: (err, vars, ctx) => {
-      // Rollback optimistic update
       if (ctx?.previous) {
         queryClient.setQueryData(["crm-pipeline-clients"], ctx.previous);
       }
@@ -127,7 +152,11 @@ export default function CrmPipeline() {
     if (!over || !canWrite) return;
     const clientId = String(active.id);
     const toStage = String(over.id);
-    if (toStage === UNCATEGORISED_KEY) return; // can't drop into virtual column
+    // Belt-and-braces: virtual / non-kanban targets are not droppable, but
+    // double-check here in case a future change adds them as droppables.
+    if (toStage === UNCATEGORISED_KEY || NON_KANBAN_STAGE_KEYS.has(toStage)) {
+      return;
+    }
     const current = clients?.find((c) => c.id === clientId);
     if (!current || current.pipeline_stage === toStage) return;
     moveStage.mutate({ clientId, toStage });
@@ -147,14 +176,32 @@ export default function CrmPipeline() {
         <meta name="robots" content="noindex,nofollow" />
       </Helmet>
       <div className="p-6">
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-start justify-between mb-6 gap-4">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Pipeline</h1>
             <p className="text-sm text-slate-500 mt-1">
               {canWrite
-                ? "Drag clients between stages to update their pipeline position."
+                ? "Drag clients between stages to update their pipeline position. Set status to On hold from a client's detail page to remove them from the pipeline."
                 : "Read-only view of the current pipeline."}
             </p>
+          </div>
+
+          <div className="flex items-center gap-2 bg-white border border-slate-200 rounded-md px-3 py-2 shrink-0">
+            <Switch
+              id="show-on-hold"
+              checked={showOnHold}
+              onCheckedChange={setShowOnHold}
+            />
+            <Label
+              htmlFor="show-on-hold"
+              className="text-sm text-slate-700 cursor-pointer flex items-center gap-1.5"
+            >
+              <PauseCircle className="size-3.5 text-slate-500" />
+              Show on-hold clients
+              {onHoldCount > 0 && (
+                <span className="text-xs text-slate-500">({onHoldCount})</span>
+              )}
+            </Label>
           </div>
         </div>
 
@@ -169,7 +216,7 @@ export default function CrmPipeline() {
             onDragEnd={handleDragEnd}
           >
             <div className="flex gap-3 overflow-x-auto pb-3">
-              {stages?.map((stage) => (
+              {kanbanStages.map((stage) => (
                 <KanbanColumn
                   key={stage.key}
                   stage={stage}
@@ -251,9 +298,11 @@ function KanbanColumn({
           </p>
         ) : (
           clients.map((c) =>
-            draggable ? (
+            draggable && c.status !== "on_hold" ? (
               <DraggableClientCard key={c.id} client={c} />
             ) : (
+              // On-hold clients are visible-only on the kanban: not draggable.
+              // Status changes happen on the client detail page.
               <Link key={c.id} to={`/crm/clients/${c.id}`} className="block">
                 <ClientCard client={c} />
               </Link>
@@ -328,16 +377,28 @@ function ClientCard({
   client: PipelineClient;
   dragging?: boolean;
 }) {
+  const onHold = client.status === "on_hold";
   return (
     <div
       className={cn(
-        "bg-white border border-slate-200 rounded-md p-2.5 text-xs transition-shadow",
+        "bg-white border rounded-md p-2.5 text-xs transition-shadow",
         dragging
-          ? "shadow-lg ring-2 ring-slate-900/10"
+          ? "shadow-lg ring-2 ring-slate-900/10 border-slate-200"
           : "hover:shadow-sm",
+        onHold ? "border-amber-300 bg-amber-50/40" : "border-slate-200",
       )}
     >
-      <div className="font-medium text-slate-900 truncate">{client.name}</div>
+      <div className="flex items-start justify-between gap-2">
+        <div className="font-medium text-slate-900 truncate flex-1">
+          {client.name}
+        </div>
+        {onHold && (
+          <span className="shrink-0 inline-flex items-center gap-0.5 text-[9px] font-semibold uppercase tracking-wide px-1.5 py-0.5 rounded bg-amber-200 text-amber-900">
+            <PauseCircle className="size-2.5" />
+            On hold
+          </span>
+        )}
+      </div>
       {client.primary_contact_name && (
         <div className="text-slate-500 mt-0.5 truncate">
           {client.primary_contact_name}
