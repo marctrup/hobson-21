@@ -1914,6 +1914,35 @@ export type Database = {
         }[]
       }
       crm_get_workspace_name: { Args: never; Returns: string }
+      crm_list_audit_log: {
+        Args: {
+          p_action?: string
+          p_from?: string
+          p_limit?: number
+          p_offset?: number
+          p_search?: string
+          p_to?: string
+        }
+        Returns: {
+          action: string
+          actor_display_name: string
+          actor_email: string
+          created_at: string
+          id: string
+          new_values: Json
+          old_values: Json
+          record_id: string
+          table_name: string
+          total_count: number
+          user_id: string
+        }[]
+      }
+      crm_list_audit_log_actions: {
+        Args: never
+        Returns: {
+          action: string
+        }[]
+      }
       crm_list_team_members: {
         Args: never
         Returns: {
