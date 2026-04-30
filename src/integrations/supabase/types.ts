@@ -1097,6 +1097,7 @@ export type Database = {
           website_ingest_secret_hash: string | null
           website_ingest_secret_rotated_at: string | null
           website_system_user_id: string
+          workspace_name: string
         }
         Insert: {
           created_at?: string
@@ -1107,6 +1108,7 @@ export type Database = {
           website_ingest_secret_hash?: string | null
           website_ingest_secret_rotated_at?: string | null
           website_system_user_id?: string
+          workspace_name?: string
         }
         Update: {
           created_at?: string
@@ -1117,6 +1119,7 @@ export type Database = {
           website_ingest_secret_hash?: string | null
           website_ingest_secret_rotated_at?: string | null
           website_system_user_id?: string
+          workspace_name?: string
         }
         Relationships: []
       }
@@ -1899,6 +1902,7 @@ export type Database = {
         Returns: boolean
       }
       crm_find_user_id_by_email: { Args: { p_email: string }; Returns: string }
+      crm_get_workspace_name: { Args: never; Returns: string }
       crm_list_team_members: {
         Args: never
         Returns: {
@@ -1922,6 +1926,7 @@ export type Database = {
         Returns: undefined
       }
       crm_sanitise_email_html: { Args: { p_html: string }; Returns: string }
+      crm_update_workspace_name: { Args: { p_name: string }; Returns: string }
       get_current_user_role: {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
