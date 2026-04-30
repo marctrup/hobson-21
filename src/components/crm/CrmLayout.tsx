@@ -15,6 +15,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
+import { useWorkspaceName } from "@/hooks/crm/useWorkspaceName";
 import { cn } from "@/lib/utils";
 import hobsonOwl from "@/assets/hobson-owl.png";
 
@@ -48,9 +49,12 @@ const ROLE_BADGE: Record<string, { label: string; cls: string }> = {
 export const CrmLayout = ({ children }: { children?: ReactNode }) => {
   const { user, signOut } = useAuth();
   const { role, isAdmin, canWrite } = useCrmAccess();
+  const { name: workspaceName } = useWorkspaceName();
   const navigate = useNavigate();
 
   const badge = role ? ROLE_BADGE[role] : null;
+  const showWorkspaceSubtitle =
+    workspaceName && workspaceName !== "Hobson CRM";
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 flex">
@@ -62,7 +66,19 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
             alt="Hobson"
             className="h-8 w-8 object-contain shrink-0"
           />
-          <span className="font-semibold tracking-tight">Hobson CRM</span>
+          <div className="flex flex-col min-w-0">
+            <span className="font-semibold tracking-tight leading-tight">
+              Hobson CRM
+            </span>
+            {showWorkspaceSubtitle && (
+              <span
+                className="text-[11px] text-slate-500 leading-tight truncate"
+                title={workspaceName}
+              >
+                {workspaceName}
+              </span>
+            )}
+          </div>
         </div>
         <nav className="flex-1 px-2 py-3 space-y-1">
           {NAV.filter((item) => !item.adminOnly || isAdmin).map((item) => {

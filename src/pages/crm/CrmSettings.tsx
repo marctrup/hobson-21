@@ -2,7 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import NotFound from "@/pages/NotFound";
-import { Users, Building2, ChevronRight } from "lucide-react";
+import { Users, ChevronRight } from "lucide-react";
+import { WorkspaceNameField } from "@/components/crm/settings/WorkspaceNameField";
 
 export default function CrmSettings() {
   const { isAdmin, isLoading } = useCrmAccess();
@@ -24,6 +25,8 @@ export default function CrmSettings() {
       </p>
 
       <div className="mt-6 grid gap-3">
+        <WorkspaceNameField />
+
         <Link
           to="/crm/settings/team"
           className="bg-white border border-slate-200 rounded-lg p-5 flex items-center gap-4 hover:border-slate-300 hover:shadow-sm transition"
@@ -37,16 +40,6 @@ export default function CrmSettings() {
           </div>
           <ChevronRight className="size-4 text-slate-400" />
         </Link>
-
-        <div className="bg-white border border-slate-200 rounded-lg p-5 flex items-center gap-4 opacity-60">
-          <Building2 className="size-5 text-slate-500" />
-          <div className="flex-1">
-            <div className="text-sm font-medium">Workspace</div>
-            <p className="text-sm text-slate-500 mt-0.5">
-              Single-workspace mode. Multi-workspace support is planned.
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   );
