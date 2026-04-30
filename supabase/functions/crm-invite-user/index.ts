@@ -36,16 +36,43 @@ function isAllowedOrigin(origin: string | null): origin is string {
 
 function getAppOrigin(req: Request): string {
   const origin = req.headers.get("origin");
-  if (isAllowedOrigin(origin)) return origin;
   const referer = req.headers.get("referer");
+
+  console.log("crm-invite-user getAppOrigin input", {
+    origin,
+    referer,
+  });
+
+  if (isAllowedOrigin(origin)) {
+    console.log("crm-invite-user getAppOrigin result", {
+      branch: ALLOWED_EXACT_ORIGINS.has(origin) ? "origin exact match" : "origin preview regex",
+      returnedOrigin: origin,
+    });
+    return origin;
+  }
+
   if (referer) {
     try {
       const refOrigin = new URL(referer).origin;
-      if (isAllowedOrigin(refOrigin)) return refOrigin;
-    } catch {
-      /* ignore */
+      if (isAllowedOrigin(refOrigin)) {
+        console.log("crm-invite-user getAppOrigin result", {
+          branch: ALLOWED_EXACT_ORIGINS.has(refOrigin) ? "referer exact match" : "referer preview regex",
+          returnedOrigin: refOrigin,
+        });
+        return refOrigin;
+      }
+      console.log("crm-invite-user getAppOrigin referer rejected", { refOrigin });
+    } catch (e) {
+      console.log("crm-invite-user getAppOrigin referer parse failed", {
+        error: e instanceof Error ? e.message : String(e),
+      });
     }
   }
+
+  console.log("crm-invite-user getAppOrigin result", {
+    branch: "production fallback",
+    returnedOrigin: FALLBACK_APP_ORIGIN,
+  });
   return FALLBACK_APP_ORIGIN;
 }
 
@@ -219,6 +246,12 @@ Deno.serve(async (req) => {
 
   const appOrigin = getAppOrigin(req);
   const acceptUrl = `${appOrigin}/crm/accept-invite?token=${encodeURIComponent(rawToken)}`;
+  console.log("crm-invite-user accept URL generated", {
+    invitationId: insertRow.id,
+    email,
+    tokenPrefix: rawToken.slice(0, 4),
+    appOrigin,
+  });
 
   const sendResult = await sendInviteEmail(
     email,
