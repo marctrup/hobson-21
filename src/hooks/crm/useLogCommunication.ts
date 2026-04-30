@@ -65,7 +65,7 @@ export const useLogCommunication = () => {
             communication: payload.communication,
             participants: payload.participants,
             attachments: [],
-          },
+          } as unknown as Record<string, unknown>,
         },
       );
       if (rpcErr) throw rpcErr;
