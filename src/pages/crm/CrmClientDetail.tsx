@@ -252,7 +252,13 @@ export default function CrmClientDetail() {
           {tab === "overview" && <OverviewTab client={c} canWrite={canWrite} onSave={(p) => updateClient.mutate(p)} />}
           {tab === "contacts" && <ContactsTab clientId={id} canWrite={canWrite} />}
           {tab === "users" && <UsersTab clientId={id} canWrite={canWrite} />}
-          {tab === "communications" && <ClientCommunicationsTab clientId={id} canWrite={canWrite} />}
+          {tab === "communications" && (
+            <ClientCommunicationsTab
+              clientId={id}
+              canWrite={canWrite}
+              focusCommId={focusCommId}
+            />
+          )}
           {tab === "issues" && <ClientIssuesTab clientId={id} canWrite={canWrite} />}
           {tab === "tasks" && <ClientTasksTab clientId={id} canWrite={canWrite} />}
           {tab === "notes" && <NotesTab clientId={id} userId={user?.id} canWrite={canWrite} />}

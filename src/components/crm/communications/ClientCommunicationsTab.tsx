@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CommunicationFilters } from "@/components/crm/communications/CommunicationFilters";
@@ -14,16 +14,23 @@ import {
 interface Props {
   clientId: string;
   canWrite: boolean;
+  /** When provided, the side panel auto-opens on this communication. */
+  focusCommId?: string | null;
 }
 
-export const ClientCommunicationsTab = ({ clientId, canWrite }: Props) => {
+export const ClientCommunicationsTab = ({ clientId, canWrite, focusCommId }: Props) => {
   const [filters, setFilters] = useState<CommunicationListFilters>({
     clientId,
     direction: "all",
     channels: [],
   });
   const [logOpen, setLogOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedId, setSelectedId] = useState<string | null>(focusCommId ?? null);
+
+  // Re-open if the focus prop changes (e.g. user clicks another deep link).
+  useEffect(() => {
+    if (focusCommId) setSelectedId(focusCommId);
+  }, [focusCommId]);
 
   const {
     data,
