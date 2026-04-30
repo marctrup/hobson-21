@@ -139,10 +139,20 @@ export function DeleteClientDialog({ clientId, clientName, onDeleted }: Props) {
               autoComplete="off"
               value={typed}
               onChange={(e) => setTyped(e.target.value)}
-              placeholder={clientName}
+              placeholder={`Type "${clientName}" to confirm`}
               className="mt-1"
               disabled={del.isPending}
             />
+            {typed.length > 0 && !nameMatches && (
+              <div className="text-xs text-rose-600 mt-1">
+                Name doesn't match. Type exactly: <strong>{clientName}</strong>
+              </div>
+            )}
+            {preview.isLoading && (
+              <div className="text-xs text-slate-500 mt-1">
+                Waiting for record counts to load…
+              </div>
+            )}
           </div>
         </div>
 
