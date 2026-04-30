@@ -28,6 +28,12 @@ import {
   type IssueStatus,
 } from "@/lib/crm/issuesLabels";
 import { cn } from "@/lib/utils";
+import { PipelineValueCard } from "@/components/crm/dashboard/PipelineValueCard";
+import { PipelineDistributionCard } from "@/components/crm/dashboard/PipelineDistributionCard";
+import { RecentCommunicationsCard } from "@/components/crm/dashboard/RecentCommunicationsCard";
+import { CommsByChannelCard } from "@/components/crm/dashboard/CommsByChannelCard";
+import { StaleClientsCard } from "@/components/crm/dashboard/StaleClientsCard";
+import { PlaceholderCard } from "@/components/crm/dashboard/PlaceholderCard";
 
 const PRIORITY_WEIGHT: Record<IssuePriority, number> = {
   urgent: 4,
