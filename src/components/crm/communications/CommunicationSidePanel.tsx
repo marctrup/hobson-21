@@ -206,6 +206,16 @@ const PanelBody = ({
               {formatDateTimeUK(c.occurred_at)}
               {c.sentiment && ` · ${COMM_SENTIMENT_LABELS[c.sentiment as keyof typeof COMM_SENTIMENT_LABELS]}`}
             </div>
+            {c.client_id && (
+              <div className="mt-1">
+                <Link
+                  to={`/crm/clients/${c.client_id}?tab=communications&focusComm=${c.id}`}
+                  className="text-xs text-slate-600 hover:text-slate-900 underline"
+                >
+                  View on client →
+                </Link>
+              </div>
+            )}
           </div>
           <button
             onClick={onClose}

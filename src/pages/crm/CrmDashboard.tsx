@@ -28,6 +28,12 @@ import {
   type IssueStatus,
 } from "@/lib/crm/issuesLabels";
 import { cn } from "@/lib/utils";
+import { PipelineValueCard } from "@/components/crm/dashboard/PipelineValueCard";
+import { PipelineDistributionCard } from "@/components/crm/dashboard/PipelineDistributionCard";
+import { RecentCommunicationsCard } from "@/components/crm/dashboard/RecentCommunicationsCard";
+import { CommsByChannelCard } from "@/components/crm/dashboard/CommsByChannelCard";
+import { StaleClientsCard } from "@/components/crm/dashboard/StaleClientsCard";
+import { PlaceholderCard } from "@/components/crm/dashboard/PlaceholderCard";
 
 const PRIORITY_WEIGHT: Record<IssuePriority, number> = {
   urgent: 4,
@@ -257,6 +263,33 @@ export default function CrmDashboard() {
               right: <TaskStatusPill status={r.status} />,
             }))}
           />
+        </div>
+
+        {/* Row 3 — Pipeline health */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <PipelineValueCard userId={userId} />
+          <PipelineDistributionCard />
+        </div>
+
+        {/* Row 4 — Activity */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2">
+            <RecentCommunicationsCard />
+          </div>
+          <div className="lg:col-span-1">
+            <CommsByChannelCard />
+          </div>
+        </div>
+
+        {/* Row 5 — Attention needed */}
+        <div className="mt-8">
+          <StaleClientsCard />
+        </div>
+
+        {/* Row 6 — Inbound (placeholders) */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <PlaceholderCard variant="website_enquiries" />
+          <PlaceholderCard variant="outbound_emails" />
         </div>
 
         <div className="mt-8 bg-white border border-slate-200 rounded-lg">

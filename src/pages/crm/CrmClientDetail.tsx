@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Star, Plus, Trash2, Mail, Phone, Globe, MapPin } from "lucide-react";
 
@@ -84,7 +84,26 @@ export default function CrmClientDetail() {
   const { user } = useAuth();
   const { canWrite, isAdmin } = useCrmAccess();
   const qc = useQueryClient();
-  const [tab, setTab] = useState<TabKey>("overview");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialTab = (searchParams.get("tab") as TabKey | null) ?? "overview";
+  const [tab, setTabState] = useState<TabKey>(initialTab);
+  const focusCommId = searchParams.get("focusComm");
+
+  // Keep tab in sync with URL when arriving via deep link.
+  useEffect(() => {
+    const t = searchParams.get("tab") as TabKey | null;
+    if (t && t !== tab) setTabState(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
+
+  const setTab = (next: TabKey) => {
+    setTabState(next);
+    const sp = new URLSearchParams(searchParams);
+    if (next === "overview") sp.delete("tab");
+    else sp.set("tab", next);
+    sp.delete("focusComm");
+    setSearchParams(sp, { replace: true });
+  };
 
   const clientQ = useQuery({
     queryKey: ["crm-client", id],
@@ -233,7 +252,13 @@ export default function CrmClientDetail() {
           {tab === "overview" && <OverviewTab client={c} canWrite={canWrite} onSave={(p) => updateClient.mutate(p)} />}
           {tab === "contacts" && <ContactsTab clientId={id} canWrite={canWrite} />}
           {tab === "users" && <UsersTab clientId={id} canWrite={canWrite} />}
-          {tab === "communications" && <ClientCommunicationsTab clientId={id} canWrite={canWrite} />}
+          {tab === "communications" && (
+            <ClientCommunicationsTab
+              clientId={id}
+              canWrite={canWrite}
+              focusCommId={focusCommId}
+            />
+          )}
           {tab === "issues" && <ClientIssuesTab clientId={id} canWrite={canWrite} />}
           {tab === "tasks" && <ClientTasksTab clientId={id} canWrite={canWrite} />}
           {tab === "notes" && <NotesTab clientId={id} userId={user?.id} canWrite={canWrite} />}
