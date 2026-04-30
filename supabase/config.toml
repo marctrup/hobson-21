@@ -65,3 +65,7 @@ verify_jwt = false
 verify_jwt = false
 [functions.crm-ingest-website]
 verify_jwt = false
+
+[functions.crm-rotate-ingest-secret]
+verify_jwt = false
+
