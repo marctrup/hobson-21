@@ -228,16 +228,14 @@ export default function CrmClientNew() {
 
   if (!canWrite) {
     return (
-      <CrmLayout>
-        <div className="p-6 text-sm text-slate-600">
-          You don't have permission to create clients.
-        </div>
-      </CrmLayout>
+      <div className="p-6 text-sm text-slate-600">
+        You don't have permission to create clients.
+      </div>
     );
   }
 
   return (
-    <CrmLayout>
+    <>
       <Helmet>
         <title>New client | CRM</title>
         <meta name="robots" content="noindex,nofollow" />

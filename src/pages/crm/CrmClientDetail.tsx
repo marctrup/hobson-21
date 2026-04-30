@@ -234,7 +234,7 @@ export default function CrmClientDetail() {
           {tab === "activity" && <ActivityTab clientId={id} />}
         </div>
       </div>
-    </CrmLayout>
+    </>
   );
 }
 
