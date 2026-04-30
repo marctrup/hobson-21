@@ -152,6 +152,7 @@ const AppContent = () => {
                 <Route path="clients" element={<CrmClients />} />
                 <Route path="clients/new" element={<CrmClientNew />} />
                 <Route path="clients/:id" element={<CrmClientDetail />} />
+                <Route path="settings" element={<CrmSettings />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />
