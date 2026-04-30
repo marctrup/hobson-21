@@ -38,6 +38,14 @@ const InvestmentOpportunity = lazy(() => import("../pages/InvestmentOpportunity"
 
 const Features = lazy(() => import("../pages/Features"));
 
+// CRM
+const CrmGuard = lazy(() => import("./crm/CrmGuard").then(m => ({ default: m.CrmGuard })));
+const CrmLayout = lazy(() => import("./crm/CrmLayout").then(m => ({ default: m.CrmLayout })));
+const CrmDashboard = lazy(() => import("../pages/crm/CrmDashboard"));
+const CrmClients = lazy(() => import("../pages/crm/CrmClients"));
+const CrmClientNew = lazy(() => import("../pages/crm/CrmClientNew"));
+const CrmClientDetail = lazy(() => import("../pages/crm/CrmClientDetail"));
+
 // Loading component
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center bg-background">
@@ -136,7 +144,15 @@ const AppContent = () => {
               <Route path="/admin/blog" element={<BlogManagement />} />
               <Route path="/admin/blog/new" element={<BlogEditor />} />
               <Route path="/admin/blog/edit/:id" element={<BlogEditor />} />
-              
+
+              {/* CRM */}
+              <Route path="/crm" element={<CrmGuard><CrmLayout /></CrmGuard>}>
+                <Route index element={<CrmDashboard />} />
+                <Route path="clients" element={<CrmClients />} />
+                <Route path="clients/new" element={<CrmClientNew />} />
+                <Route path="clients/:id" element={<CrmClientDetail />} />
+              </Route>
+
               <Route path="*" element={<NotFound />} />
             </>
           )}
