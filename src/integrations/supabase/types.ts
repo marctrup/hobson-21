@@ -546,6 +546,7 @@ export type Database = {
           next_action: string | null
           next_action_date: string | null
           open_issues_count: number
+          open_tasks_count: number
           origin_metadata: Json | null
           owner_id: string | null
           phone: string | null
@@ -605,6 +606,7 @@ export type Database = {
           next_action?: string | null
           next_action_date?: string | null
           open_issues_count?: number
+          open_tasks_count?: number
           origin_metadata?: Json | null
           owner_id?: string | null
           phone?: string | null
@@ -664,6 +666,7 @@ export type Database = {
           next_action?: string | null
           next_action_date?: string | null
           open_issues_count?: number
+          open_tasks_count?: number
           origin_metadata?: Json | null
           owner_id?: string | null
           phone?: string | null
@@ -953,6 +956,82 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      crm_tasks: {
+        Row: {
+          assignee_id: string | null
+          client_id: string | null
+          completed_at: string | null
+          created_at: string
+          created_by: string
+          due_date: string | null
+          id: string
+          linked_issue_id: string | null
+          notes: string | null
+          priority: Database["public"]["Enums"]["task_priority"]
+          source_communication_id: string | null
+          status: Database["public"]["Enums"]["task_status"]
+          tags: string[]
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assignee_id?: string | null
+          client_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by: string
+          due_date?: string | null
+          id?: string
+          linked_issue_id?: string | null
+          notes?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          source_communication_id?: string | null
+          status?: Database["public"]["Enums"]["task_status"]
+          tags?: string[]
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assignee_id?: string | null
+          client_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string
+          due_date?: string | null
+          id?: string
+          linked_issue_id?: string | null
+          notes?: string | null
+          priority?: Database["public"]["Enums"]["task_priority"]
+          source_communication_id?: string | null
+          status?: Database["public"]["Enums"]["task_status"]
+          tags?: string[]
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_tasks_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_tasks_linked_issue_id_fkey"
+            columns: ["linked_issue_id"]
+            isOneToOne: false
+            referencedRelation: "crm_issues"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_tasks_source_communication_id_fkey"
+            columns: ["source_communication_id"]
+            isOneToOne: false
+            referencedRelation: "communications"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       document_classification_settings: {
         Row: {
@@ -1861,6 +1940,8 @@ export type Database = {
         | "workspace_member"
         | "external"
       participant_role: "to" | "from" | "cc" | "bcc" | "attendee" | "organiser"
+      task_priority: "low" | "medium" | "high" | "urgent"
+      task_status: "todo" | "in_progress" | "done" | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2035,6 +2116,8 @@ export const Constants = {
         "external",
       ],
       participant_role: ["to", "from", "cc", "bcc", "attendee", "organiser"],
+      task_priority: ["low", "medium", "high", "urgent"],
+      task_status: ["todo", "in_progress", "done", "cancelled"],
     },
   },
 } as const
