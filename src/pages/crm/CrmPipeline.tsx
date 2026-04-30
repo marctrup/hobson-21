@@ -30,7 +30,7 @@ import {
   stageColourClasses,
   type PipelineStage,
 } from "@/hooks/crm/usePipelineStages";
-import { formatGBP } from "@/lib/crm/labels";
+
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
