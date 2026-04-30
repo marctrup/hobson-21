@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
 import DOMPurify from "dompurify";
-import { AlertCircle, Download, Star, Trash2, X } from "lucide-react";
+import { AlertCircle, CheckSquare, Download, Star, Trash2, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import { LogIssueDialog } from "@/components/crm/issues/LogIssueDialog";
+import { LogTaskDialog } from "@/components/crm/tasks/LogTaskDialog";
 import {
   Sheet,
   SheetContent,
@@ -128,6 +130,7 @@ const PanelBody = ({
   const c = data.communication;
   const channel = c.channel as CommChannel;
   const [issueDialogOpen, setIssueDialogOpen] = useState(false);
+  const [taskDialogOpen, setTaskDialogOpen] = useState(false);
 
   const issuePrefill = useMemo(() => {
     const title =
@@ -137,6 +140,22 @@ const PanelBody = ({
     const description = c.summary || c.body_plain || "";
     return { title, description };
   }, [c.subject, c.summary, c.body_plain]);
+
+  const taskPrefill = useMemo(() => {
+    const baseTitle =
+      (c.pending_follow_up_note &&
+        c.pending_follow_up_note.split("\n")[0].slice(0, 200)) ||
+      (c.subject && c.subject.trim()) ||
+      (c.summary ? c.summary.split("\n")[0].slice(0, 200) : "") ||
+      "Follow up on communication";
+    const notes =
+      c.pending_follow_up_note || c.summary || c.body_plain || "";
+    // Default due: 3 days from the comm's occurred_at (matches backfill logic).
+    const dueBase = c.occurred_at ? new Date(c.occurred_at) : new Date();
+    dueBase.setDate(dueBase.getDate() + 3);
+    const dueDate = dueBase.toISOString().slice(0, 10);
+    return { title: baseTitle, notes, dueDate };
+  }, [c.pending_follow_up_note, c.subject, c.summary, c.body_plain, c.occurred_at]);
 
   const grouped = useMemo(() => {
     const map = new Map<ParticipantRole, typeof data.participants>();
@@ -287,19 +306,34 @@ const PanelBody = ({
           </section>
         )}
 
-        {/* Pending follow-up */}
-        {c.pending_follow_up_note && !c.linked_task_id && (
-          <section className="text-sm bg-amber-50 border border-amber-200 rounded-md p-3">
-            <div className="text-xs uppercase tracking-wide text-amber-800 mb-1">
-              Pending follow-up
-            </div>
-            <div className="text-amber-900">{c.pending_follow_up_note}</div>
+        {/* Linked task indicator (replaces the old amber pending-follow-up banner) */}
+        {c.linked_task_id && (
+          <section className="text-sm bg-emerald-50 border border-emerald-200 rounded-md px-3 py-2 flex items-center gap-2">
+            <CheckSquare className="size-4 text-emerald-700 shrink-0" />
+            <span className="text-emerald-900">
+              A task has been created from this communication.{" "}
+              <Link
+                to={`/crm/tasks?focus=${c.linked_task_id}`}
+                className="underline hover:no-underline"
+              >
+                Open task
+              </Link>
+            </span>
           </section>
         )}
 
         {/* Actions */}
         {(canWrite || canDelete) && (
           <div className="pt-4 border-t border-slate-200 flex flex-wrap gap-2">
+            {canWrite && !c.linked_task_id && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setTaskDialogOpen(true)}
+              >
+                <CheckSquare className="size-4 mr-1" /> Create task from this
+              </Button>
+            )}
             {canWrite && (
               <Button
                 variant="outline"
@@ -346,6 +380,17 @@ const PanelBody = ({
           defaultTitle={issuePrefill.title}
           defaultDescription={issuePrefill.description}
           defaultCategory="support"
+        />
+      )}
+      {canWrite && (
+        <LogTaskDialog
+          open={taskDialogOpen}
+          onOpenChange={setTaskDialogOpen}
+          defaultClientId={c.client_id}
+          defaultCommunicationId={c.id}
+          defaultTitle={taskPrefill.title}
+          defaultNotes={taskPrefill.notes}
+          defaultDueDate={taskPrefill.dueDate}
         />
       )}
     </>
