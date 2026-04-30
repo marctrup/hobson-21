@@ -9,6 +9,7 @@ import { CommunicationSidePanel } from "@/components/crm/communications/Communic
 import { LogCommunicationDialog } from "@/components/crm/communications/LogCommunicationDialog";
 import {
   useCommunications,
+  COMM_PAGE_SIZE,
   type CommunicationListFilters,
 } from "@/hooks/crm/useCommunications";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
@@ -27,7 +28,14 @@ export default function CrmCommunications() {
   const [logOpen, setLogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const { data: rows = [], isLoading } = useCommunications(filters);
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useCommunications(filters);
+  const rows = useMemo(() => (data?.pages ?? []).flat(), [data]);
 
   const exportCsv = () => {
     const headers = [
