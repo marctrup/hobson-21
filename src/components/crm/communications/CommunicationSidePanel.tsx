@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
 import DOMPurify from "dompurify";
-import { AlertCircle, Download, Star, Trash2, X } from "lucide-react";
+import { AlertCircle, CheckSquare, Download, Star, Trash2, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import { LogIssueDialog } from "@/components/crm/issues/LogIssueDialog";
+import { LogTaskDialog } from "@/components/crm/tasks/LogTaskDialog";
 import {
   Sheet,
   SheetContent,
@@ -128,6 +130,7 @@ const PanelBody = ({
   const c = data.communication;
   const channel = c.channel as CommChannel;
   const [issueDialogOpen, setIssueDialogOpen] = useState(false);
+  const [taskDialogOpen, setTaskDialogOpen] = useState(false);
 
   const issuePrefill = useMemo(() => {
     const title =
@@ -137,6 +140,22 @@ const PanelBody = ({
     const description = c.summary || c.body_plain || "";
     return { title, description };
   }, [c.subject, c.summary, c.body_plain]);
+
+  const taskPrefill = useMemo(() => {
+    const baseTitle =
+      (c.pending_follow_up_note &&
+        c.pending_follow_up_note.split("\n")[0].slice(0, 200)) ||
+      (c.subject && c.subject.trim()) ||
+      (c.summary ? c.summary.split("\n")[0].slice(0, 200) : "") ||
+      "Follow up on communication";
+    const notes =
+      c.pending_follow_up_note || c.summary || c.body_plain || "";
+    // Default due: 3 days from the comm's occurred_at (matches backfill logic).
+    const dueBase = c.occurred_at ? new Date(c.occurred_at) : new Date();
+    dueBase.setDate(dueBase.getDate() + 3);
+    const dueDate = dueBase.toISOString().slice(0, 10);
+    return { title: baseTitle, notes, dueDate };
+  }, [c.pending_follow_up_note, c.subject, c.summary, c.body_plain, c.occurred_at]);
 
   const grouped = useMemo(() => {
     const map = new Map<ParticipantRole, typeof data.participants>();
