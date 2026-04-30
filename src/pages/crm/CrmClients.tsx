@@ -26,6 +26,7 @@ import { StageBadge } from "@/components/crm/StageBadge";
 import { InterestBadge } from "@/components/crm/InterestBadge";
 
 export default function CrmClients() {
+  // CrmLayout is the parent route — do NOT wrap children in <CrmLayout> here.
   const [search, setSearch] = useState("");
   const [stage, setStage] = useState<string>("all");
   const [status, setStatus] = useState<string>("all");

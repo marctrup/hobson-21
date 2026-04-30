@@ -821,3 +821,47 @@ const NotesTab = ({
     </div>
   );
 };
+
+/* ----------------------------- Activity tab ----------------------------- */
+
+const ActivityTab = ({ clientId }: { clientId: string }) => {
+  const list = useQuery({
+    queryKey: ["crm-activity", clientId],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("crm_activity_log")
+        .select("*")
+        .eq("client_id", clientId)
+        .order("created_at", { ascending: false })
+        .limit(200);
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  return (
+    <div className="bg-white border border-slate-200 rounded-lg overflow-hidden">
+      {list.isLoading ? (
+        <div className="p-6 text-sm text-slate-500">Loading…</div>
+      ) : !list.data?.length ? (
+        <div className="p-8 text-center text-sm text-slate-500">
+          No activity recorded yet.
+        </div>
+      ) : (
+        <ul className="divide-y divide-slate-100">
+          {list.data.map((a) => (
+            <li key={a.id} className="px-4 py-3 text-sm">
+              <div className="flex items-baseline justify-between gap-3">
+                <div className="font-medium text-slate-900">{a.description ?? a.action_type}</div>
+                <div className="text-xs text-slate-500 shrink-0">{formatDateTimeUK(a.created_at)}</div>
+              </div>
+              <div className="text-xs text-slate-500 mt-0.5">
+                {a.entity_type} · {a.action_type}
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+};
