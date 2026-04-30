@@ -211,6 +211,26 @@ Submitted at: ${new Date().toISOString()}
       error_message: notificationError,
     });
 
+    // Forward to CRM (fail-soft)
+    await postToCrmIngest({
+      formType: 'pilot',
+      idempotencyKey: applicationId,
+      contact: { name, email, phone: phone ?? null, company, role },
+      payload: {
+        name, company, role, email, phone: phone ?? null,
+        preferred_contact: preferredContact,
+        business_types: businessTypes,
+        website: formattedWebsite || null,
+        help: help ?? null,
+        client_ip: clientIP,
+      },
+      confirmationEmail: {
+        sent: confirmationStatus === 'sent',
+        subject: confirmationSubject,
+        error: confirmationError,
+      },
+    });
+
     return new Response(
       JSON.stringify({ success: true, message: 'Application submitted successfully' }),
       {
