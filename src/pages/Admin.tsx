@@ -10,7 +10,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff, ExternalLink } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import PricingSettings from "@/components/admin/PricingSettings";
 
 
@@ -257,14 +256,22 @@ export default function Admin() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
+        <div className="mb-6 rounded-lg border border-primary/30 bg-primary/5 p-4 flex items-start justify-between gap-4">
+          <div>
+            <p className="font-semibold text-foreground">This area is now read-only.</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              All form submissions and email logs are managed from the CRM. The records below are kept for historical reference only.
+            </p>
+          </div>
+          <Button onClick={() => navigate("/crm/communications")} className="shrink-0">
+            Open CRM
+            <ExternalLink className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+
         <Card>
           <CardHeader>
-            <div className="flex justify-between items-center">
-              <CardTitle>Applications ({applications.length})</CardTitle>
-              <Button onClick={exportToCSV} variant="outline">
-                Export to CSV
-              </Button>
-            </div>
+            <CardTitle>Applications ({applications.length}) — Legacy</CardTitle>
           </CardHeader>
           <CardContent>
             {loadingApplications ? (
@@ -274,7 +281,7 @@ export default function Admin() {
               </div>
             ) : applications.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
-                No enquiries found.
+                No historical enquiries.
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -287,14 +294,13 @@ export default function Admin() {
                       <TableHead>Phone</TableHead>
                       <TableHead>Message</TableHead>
                       <TableHead>Submitted</TableHead>
-                      <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {applications.map((app) => {
                       const source = app.role || "Unknown";
-                      const badgeVariant = source.toLowerCase().includes("contact") ? "default" 
-                        : source.toLowerCase().includes("waitlist") ? "secondary" 
+                      const badgeVariant = source.toLowerCase().includes("contact") ? "default"
+                        : source.toLowerCase().includes("waitlist") ? "secondary"
                         : source.toLowerCase().includes("enterprise") ? "outline"
                         : "secondary";
                       return (
@@ -308,16 +314,6 @@ export default function Admin() {
                           <TableCell className="max-w-xs truncate">{app.help || "—"}</TableCell>
                           <TableCell>
                             {new Date(app.created_at).toLocaleDateString()}
-                          </TableCell>
-                          <TableCell>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => handleDeleteApplication(app.id)}
-                              className="text-destructive hover:text-destructive"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
                           </TableCell>
                         </TableRow>
                       );
