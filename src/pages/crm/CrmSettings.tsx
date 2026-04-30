@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import NotFound from "@/pages/NotFound";
-import { Users, ChevronRight } from "lucide-react";
+import { Users, ChevronRight, Plug } from "lucide-react";
 import { WorkspaceNameField } from "@/components/crm/settings/WorkspaceNameField";
 
 export default function CrmSettings() {
@@ -36,6 +36,20 @@ export default function CrmSettings() {
             <div className="text-sm font-medium">Team & roles</div>
             <p className="text-sm text-slate-500 mt-0.5">
               Invite teammates, change roles, and revoke access.
+            </p>
+          </div>
+          <ChevronRight className="size-4 text-slate-400" />
+        </Link>
+
+        <Link
+          to="/crm/settings/integration"
+          className="bg-white border border-slate-200 rounded-lg p-5 flex items-center gap-4 hover:border-slate-300 hover:shadow-sm transition"
+        >
+          <Plug className="size-5 text-slate-500" />
+          <div className="flex-1">
+            <div className="text-sm font-medium">Website integration</div>
+            <p className="text-sm text-slate-500 mt-0.5">
+              Set the default owner for website leads and rotate the ingest secret.
             </p>
           </div>
           <ChevronRight className="size-4 text-slate-400" />
