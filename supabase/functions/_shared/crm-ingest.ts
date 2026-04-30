@@ -1,7 +1,7 @@
 // Shared helper: post a website form submission to crm-ingest-website with HMAC.
 // Fail-soft: never throws. Returns { ok: boolean }.
 
-type FormType = "contact" | "pilot";
+type FormType = "website";
 
 interface IngestArgs {
   formType: FormType;

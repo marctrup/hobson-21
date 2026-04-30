@@ -11,7 +11,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-ingest-signature, x-idempotency-key",
 };
 
-type FormType = "contact" | "pilot";
+type FormType = "website";
 
 interface IngestPayload {
   form_type: FormType;
@@ -151,12 +151,12 @@ serve(async (req) => {
     if (existingClient) {
       clientId = existingClient.id;
     } else {
+      const hasCompany = !!body.contact.company?.trim();
       const { data: newClient, error: createErr } = await supabase
         .from("crm_clients")
         .insert({
           name: company,
-          client_type: "prospect",
-          segment: "unspecified",
+          client_type: hasCompany ? "business" : "individual",
           email,
           phone: body.contact.phone ?? null,
           primary_contact_name: name,
@@ -164,15 +164,14 @@ serve(async (req) => {
           primary_contact_phone: body.contact.phone ?? null,
           primary_contact_role: body.contact.role ?? null,
           owner_id: settings.default_owner_id,
-          form_source: body.form_type === "pilot" ? "pilot_application" : "contact_form",
+          form_source: "website_application",
           origin_metadata: body.payload,
-          pipeline_stage: "new_lead",
-          interest_level: "unknown",
+          pipeline_stage: "new_enquiry",
           status: "active",
-          priority: "normal",
+          priority: "medium",
           first_contact_date: new Date(body.submitted_at).toISOString().slice(0, 10),
           lead_source: "website",
-          lead_source_detail: body.form_type === "pilot" ? "Pilot application form" : "Contact form",
+          lead_source_detail: "Website application form",
         })
         .select("id")
         .single();
@@ -181,12 +180,8 @@ serve(async (req) => {
     }
 
     // Build communication body. Render payload as a readable summary.
-    const subject = body.form_type === "pilot"
-      ? `Pilot application from ${name}`
-      : `Contact message from ${name}`;
-    const summary = body.form_type === "pilot"
-      ? `Pilot application submitted via website by ${name} (${email}).`
-      : `Contact form submitted via website by ${name} (${email}).`;
+    const subject = `Website application from ${name}`;
+    const summary = `Website form submitted by ${name} (${email}).`;
 
     const lines: string[] = [];
     for (const [k, v] of Object.entries(body.payload)) {
