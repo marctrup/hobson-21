@@ -217,7 +217,8 @@ Deno.serve(async (req) => {
     return jsonResponse({ error: "Failed to create invitation" }, 500);
   }
 
-  const acceptUrl = `${APP_ORIGIN}/crm/accept-invite?token=${encodeURIComponent(rawToken)}`;
+  const appOrigin = getAppOrigin(req);
+  const acceptUrl = `${appOrigin}/crm/accept-invite?token=${encodeURIComponent(rawToken)}`;
 
   const sendResult = await sendInviteEmail(
     email,
