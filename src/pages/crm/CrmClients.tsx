@@ -88,7 +88,7 @@ export default function CrmClients() {
                 className={
                   "px-3 py-1.5 rounded-full text-xs font-medium border transition-colors " +
                   (active
-                    ? "bg-slate-900 text-white border-slate-900"
+                    ? "bg-primary/10 text-primary border-primary/30"
                     : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50")
                 }
                 aria-pressed={active}

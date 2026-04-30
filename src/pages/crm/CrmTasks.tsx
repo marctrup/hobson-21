@@ -170,7 +170,7 @@ export default function CrmTasks() {
               className={cn(
                 "text-xs px-2.5 py-1 rounded-full border transition-colors",
                 activeQuickView === qv
-                  ? "bg-slate-900 text-white border-slate-900"
+                  ? "bg-primary/10 text-primary border-primary/30"
                   : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50",
               )}
             >
