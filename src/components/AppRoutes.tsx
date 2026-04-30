@@ -48,6 +48,7 @@ const CrmClientDetail = lazy(() => import("../pages/crm/CrmClientDetail"));
 const CrmSettings = lazy(() => import("../pages/crm/CrmSettings"));
 const CrmSettingsTeam = lazy(() => import("../pages/crm/CrmSettingsTeam"));
 const CrmSettingsIntegration = lazy(() => import("../pages/crm/CrmSettingsIntegration"));
+const CrmSettingsIngestFailures = lazy(() => import("../pages/crm/CrmSettingsIngestFailures"));
 const CrmPipeline = lazy(() => import("../pages/crm/CrmPipeline"));
 const CrmCommunications = lazy(() => import("../pages/crm/CrmCommunications"));
 const CrmIssues = lazy(() => import("../pages/crm/CrmIssues"));
@@ -171,6 +172,7 @@ const AppContent = () => {
                 <Route path="settings" element={<CrmSettings />} />
                 <Route path="settings/team" element={<CrmSettingsTeam />} />
                 <Route path="settings/integration" element={<CrmSettingsIntegration />} />
+                <Route path="settings/ingest-failures" element={<CrmSettingsIngestFailures />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />
