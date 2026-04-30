@@ -110,10 +110,7 @@ export default function CrmClientNew() {
     staff_size_band: "",
     annual_revenue_band: "",
     property_count: "",
-    total_floor_area_sqft: "",
     tenure_mix: "",
-    estimated_annual_property_spend_gbp: "",
-    upcoming_lease_events_12m: "",
     subscription_status: "not_subscribed",
     subscription_plan: "",
     contracted_monthly_value_gbp: "",
@@ -125,8 +122,6 @@ export default function CrmClientNew() {
     interest_level: "warm",
     lead_source: "",
     lead_source_detail: "",
-    estimated_deal_value_gbp: "",
-    probability_to_close: "",
     expected_close_date: "",
     next_action: "",
     next_action_date: "",
@@ -181,12 +176,7 @@ export default function CrmClientNew() {
         staff_size_band: stringOrNull(form.staff_size_band),
         annual_revenue_band: stringOrNull(form.annual_revenue_band),
         property_count: numericOrNull(form.property_count),
-        total_floor_area_sqft: numericOrNull(form.total_floor_area_sqft),
         tenure_mix: stringOrNull(form.tenure_mix),
-        estimated_annual_property_spend_gbp: numericOrNull(
-          form.estimated_annual_property_spend_gbp,
-        ),
-        upcoming_lease_events_12m: numericOrNull(form.upcoming_lease_events_12m),
         subscription_status: form.subscription_status,
         subscription_plan: stringOrNull(form.subscription_plan),
         contracted_monthly_value_gbp: numericOrNull(form.contracted_monthly_value_gbp),
@@ -198,8 +188,6 @@ export default function CrmClientNew() {
         interest_level: form.interest_level,
         lead_source: stringOrNull(form.lead_source),
         lead_source_detail: stringOrNull(form.lead_source_detail),
-        estimated_deal_value_gbp: numericOrNull(form.estimated_deal_value_gbp),
-        probability_to_close: numericOrNull(form.probability_to_close),
         expected_close_date: dateOrNull(form.expected_close_date),
         next_action: stringOrNull(form.next_action),
         next_action_date: dateOrNull(form.next_action_date),
@@ -351,9 +339,6 @@ export default function CrmClientNew() {
           <Field label="Number of properties">
             <Input type="number" value={form.property_count} onChange={(e) => set("property_count", e.target.value)} />
           </Field>
-          <Field label="Total floor area (sq ft)">
-            <Input type="number" value={form.total_floor_area_sqft} onChange={(e) => set("total_floor_area_sqft", e.target.value)} />
-          </Field>
           <Field label="Tenure mix">
             <Select value={form.tenure_mix} onValueChange={(v) => set("tenure_mix", v)}>
               <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
@@ -361,12 +346,6 @@ export default function CrmClientNew() {
                 {TENURE_MIX.map((t) => <SelectItem key={t} value={t}>{TENURE_MIX_LABELS[t]}</SelectItem>)}
               </SelectContent>
             </Select>
-          </Field>
-          <Field label="Annual property spend (£)">
-            <Input type="number" value={form.estimated_annual_property_spend_gbp} onChange={(e) => set("estimated_annual_property_spend_gbp", e.target.value)} />
-          </Field>
-          <Field label="Lease events in next 12 months">
-            <Input type="number" value={form.upcoming_lease_events_12m} onChange={(e) => set("upcoming_lease_events_12m", e.target.value)} />
           </Field>
         </Section>
 
@@ -433,12 +412,6 @@ export default function CrmClientNew() {
           </Field>
           <Field label="Lead source detail">
             <Input value={form.lead_source_detail} onChange={(e) => set("lead_source_detail", e.target.value)} />
-          </Field>
-          <Field label="Estimated deal value (£)">
-            <Input type="number" value={form.estimated_deal_value_gbp} onChange={(e) => set("estimated_deal_value_gbp", e.target.value)} />
-          </Field>
-          <Field label="Probability to close (%)">
-            <Input type="number" min={0} max={100} value={form.probability_to_close} onChange={(e) => set("probability_to_close", e.target.value)} />
           </Field>
           <Field label="Expected close date">
             <Input type="date" value={form.expected_close_date} onChange={(e) => set("expected_close_date", e.target.value)} />
