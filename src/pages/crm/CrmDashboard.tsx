@@ -265,6 +265,33 @@ export default function CrmDashboard() {
           />
         </div>
 
+        {/* Row 3 — Pipeline health */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <PipelineValueCard userId={userId} />
+          <PipelineDistributionCard />
+        </div>
+
+        {/* Row 4 — Activity */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div className="lg:col-span-2">
+            <RecentCommunicationsCard />
+          </div>
+          <div className="lg:col-span-1">
+            <CommsByChannelCard />
+          </div>
+        </div>
+
+        {/* Row 5 — Attention needed */}
+        <div className="mt-8">
+          <StaleClientsCard />
+        </div>
+
+        {/* Row 6 — Inbound (placeholders) */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <PlaceholderCard variant="website_enquiries" />
+          <PlaceholderCard variant="outbound_emails" />
+        </div>
+
         <div className="mt-8 bg-white border border-slate-200 rounded-lg">
           <div className="px-4 py-3 border-b border-slate-200 flex items-center justify-between">
             <h2 className="font-medium">Recently updated clients</h2>
