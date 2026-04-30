@@ -70,7 +70,36 @@ export default function CrmClients() {
           </div>
         </div>
 
+        {/* Quick views */}
         <div className="mt-6 flex flex-wrap items-center gap-2">
+          {(
+            [
+              { key: "all", label: "All clients" },
+              { key: "active", label: "Active" },
+              { key: "on_hold", label: "On hold" },
+            ] as const
+          ).map((view) => {
+            const active = status === view.key;
+            return (
+              <button
+                key={view.key}
+                type="button"
+                onClick={() => setStatus(view.key)}
+                className={
+                  "px-3 py-1.5 rounded-full text-xs font-medium border transition-colors " +
+                  (active
+                    ? "bg-slate-900 text-white border-slate-900"
+                    : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50")
+                }
+                aria-pressed={active}
+              >
+                {view.label}
+              </button>
+            );
+          })}
+        </div>
+
+        <div className="mt-3 flex flex-wrap items-center gap-2">
           <div className="relative flex-1 min-w-[220px] max-w-sm">
             <Search className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
             <Input
