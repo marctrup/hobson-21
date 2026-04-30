@@ -298,33 +298,56 @@ const PanelBody = ({
         )}
 
         {/* Actions */}
-        {canDelete && (
-          <div className="pt-4 border-t border-slate-200">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline" size="sm" className="text-rose-600">
-                  <Trash2 className="size-4 mr-1" /> Delete
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Delete this communication?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This permanently removes the communication and all linked
-                    participants and attachments. This cannot be undone.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={onDelete}>
-                    Delete
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+        {(canWrite || canDelete) && (
+          <div className="pt-4 border-t border-slate-200 flex flex-wrap gap-2">
+            {canWrite && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIssueDialogOpen(true)}
+              >
+                <AlertCircle className="size-4 mr-1" /> Create issue from this
+              </Button>
+            )}
+            {canDelete && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" size="sm" className="text-rose-600">
+                    <Trash2 className="size-4 mr-1" /> Delete
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete this communication?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This permanently removes the communication and all linked
+                      participants and attachments. This cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={onDelete}>
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
           </div>
         )}
       </div>
+
+      {canWrite && (
+        <LogIssueDialog
+          open={issueDialogOpen}
+          onOpenChange={setIssueDialogOpen}
+          defaultClientId={c.client_id}
+          defaultCommunicationId={c.id}
+          defaultTitle={issuePrefill.title}
+          defaultDescription={issuePrefill.description}
+          defaultCategory="support"
+        />
+      )}
     </>
   );
 };
