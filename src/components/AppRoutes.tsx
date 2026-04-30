@@ -47,6 +47,7 @@ const CrmClientNew = lazy(() => import("../pages/crm/CrmClientNew"));
 const CrmClientDetail = lazy(() => import("../pages/crm/CrmClientDetail"));
 const CrmSettings = lazy(() => import("../pages/crm/CrmSettings"));
 const CrmSettingsTeam = lazy(() => import("../pages/crm/CrmSettingsTeam"));
+const CrmPipeline = lazy(() => import("../pages/crm/CrmPipeline"));
 const CrmAcceptInvite = lazy(() => import("../pages/crm/CrmAcceptInvite"));
 
 // Loading component
@@ -157,6 +158,7 @@ const AppContent = () => {
                 <Route path="clients" element={<CrmClients />} />
                 <Route path="clients/new" element={<CrmClientNew />} />
                 <Route path="clients/:id" element={<CrmClientDetail />} />
+                <Route path="pipeline" element={<CrmPipeline />} />
                 <Route path="settings" element={<CrmSettings />} />
                 <Route path="settings/team" element={<CrmSettingsTeam />} />
               </Route>
