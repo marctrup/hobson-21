@@ -1,9 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import type {
   CommChannel,
   CommDirection,
 } from "@/lib/crm/communicationsLabels";
+
+export const COMM_PAGE_SIZE = 100;
 
 export interface CommunicationListFilters {
   clientId?: string;
@@ -34,16 +36,20 @@ export interface CommunicationRow {
 }
 
 export const useCommunications = (filters: CommunicationListFilters) =>
-  useQuery({
+  useInfiniteQuery({
     queryKey: ["crm-communications", filters],
-    queryFn: async (): Promise<CommunicationRow[]> => {
+    initialPageParam: 0,
+    queryFn: async ({ pageParam }): Promise<CommunicationRow[]> => {
+      const from = pageParam as number;
+      const to = from + COMM_PAGE_SIZE - 1;
+
       let q = supabase
         .from("communications")
         .select(
           "id,client_id,channel,direction,subject,summary,occurred_at,is_important,needs_review,sentiment,logged_by,email_from,email_to",
         )
         .order("occurred_at", { ascending: false })
-        .limit(500);
+        .range(from, to);
 
       if (filters.clientId) q = q.eq("client_id", filters.clientId);
       if (filters.channels && filters.channels.length > 0) {
@@ -79,5 +85,10 @@ export const useCommunications = (filters: CommunicationListFilters) =>
       }
 
       return rows;
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      // If the last page was a full page, there might be more.
+      if (lastPage.length < COMM_PAGE_SIZE) return undefined;
+      return allPages.reduce((sum, p) => sum + p.length, 0);
     },
   });

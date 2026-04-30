@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CommunicationFilters } from "@/components/crm/communications/CommunicationFilters";
@@ -7,6 +7,7 @@ import { CommunicationSidePanel } from "@/components/crm/communications/Communic
 import { LogCommunicationDialog } from "@/components/crm/communications/LogCommunicationDialog";
 import {
   useCommunications,
+  COMM_PAGE_SIZE,
   type CommunicationListFilters,
 } from "@/hooks/crm/useCommunications";
 
@@ -24,10 +25,20 @@ export const ClientCommunicationsTab = ({ clientId, canWrite }: Props) => {
   const [logOpen, setLogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const { data: rows = [], isLoading } = useCommunications({
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useCommunications({
     ...filters,
     clientId,
   });
+  const rows = useMemo(
+    () => (data?.pages ?? []).flat(),
+    [data],
+  );
 
   return (
     <div className="space-y-4">
@@ -46,6 +57,18 @@ export const ClientCommunicationsTab = ({ clientId, canWrite }: Props) => {
         onSelect={setSelectedId}
       />
 
+      {hasNextPage && (
+        <div className="flex justify-center">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => fetchNextPage()}
+            disabled={isFetchingNextPage}
+          >
+            {isFetchingNextPage ? "Loading…" : `Load ${COMM_PAGE_SIZE} more`}
+          </Button>
+        </div>
+      )}
       <CommunicationSidePanel
         open={!!selectedId}
         onOpenChange={(o) => !o && setSelectedId(null)}

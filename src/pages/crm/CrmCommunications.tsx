@@ -9,6 +9,7 @@ import { CommunicationSidePanel } from "@/components/crm/communications/Communic
 import { LogCommunicationDialog } from "@/components/crm/communications/LogCommunicationDialog";
 import {
   useCommunications,
+  COMM_PAGE_SIZE,
   type CommunicationListFilters,
 } from "@/hooks/crm/useCommunications";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
@@ -27,7 +28,14 @@ export default function CrmCommunications() {
   const [logOpen, setLogOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const { data: rows = [], isLoading } = useCommunications(filters);
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useCommunications(filters);
+  const rows = useMemo(() => (data?.pages ?? []).flat(), [data]);
 
   const exportCsv = () => {
     const headers = [
@@ -88,7 +96,8 @@ export default function CrmCommunications() {
             </h1>
             <p className="text-sm text-slate-500 mt-1">
               Master timeline across every client. {total} record
-              {total === 1 ? "" : "s"}.
+              {total === 1 ? "" : "s"} loaded
+              {hasNextPage ? " (more available)" : ""}.
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -120,6 +129,19 @@ export default function CrmCommunications() {
             onSelect={setSelectedId}
           />
         </div>
+
+        {hasNextPage && (
+          <div className="mt-4 flex justify-center">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => fetchNextPage()}
+              disabled={isFetchingNextPage}
+            >
+              {isFetchingNextPage ? "Loading…" : `Load ${COMM_PAGE_SIZE} more`}
+            </Button>
+          </div>
+        )}
       </div>
 
       <CommunicationSidePanel

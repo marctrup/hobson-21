@@ -318,25 +318,23 @@ const PanelBody = ({
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const ParticipantLine = ({ p }: { p: any }) => {
   const kind = p.kind as ParticipantKind;
-  if (kind === "external") {
-    return (
-      <span>
-        {p.external_name}
-        {p.external_email && (
-          <span className="text-slate-500"> · {p.external_email}</span>
-        )}
-        <span className="text-slate-400 text-xs ml-1">(external)</span>
-      </span>
-    );
-  }
+  const name: string | null = p.display_name ?? null;
+  const email: string | null = p.display_email ?? p.external_email ?? null;
+  const kindLabel = PARTICIPANT_KIND_LABELS[kind];
+
   return (
     <span>
-      {/* IDs only — names live on the source tables; we keep this lean */}
-      <span className="text-slate-700">
-        {PARTICIPANT_KIND_LABELS[kind]}
-      </span>
-      {p.external_email && (
-        <span className="text-slate-500"> · {p.external_email}</span>
+      {name ? (
+        <span className="text-slate-800">{name}</span>
+      ) : (
+        <span className="text-slate-700">{kindLabel}</span>
+      )}
+      {email && <span className="text-slate-500"> · {email}</span>}
+      {kind === "external" && (
+        <span className="text-slate-400 text-xs ml-1">(external)</span>
+      )}
+      {name && kind !== "external" && (
+        <span className="text-slate-400 text-xs ml-1">({kindLabel})</span>
       )}
     </span>
   );
