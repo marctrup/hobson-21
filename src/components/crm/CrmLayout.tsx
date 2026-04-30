@@ -18,7 +18,16 @@ import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { cn } from "@/lib/utils";
 
 
-const NAV = [
+type NavItem = {
+  to: string;
+  label: string;
+  icon: typeof LayoutDashboard;
+  end?: boolean;
+  soon?: boolean;
+  adminOnly?: boolean;
+};
+
+const NAV: NavItem[] = [
   { to: "/crm", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/crm/clients", label: "Clients", icon: Users },
   { to: "/crm/pipeline", label: "Pipeline", icon: KanbanSquare, soon: true },
@@ -26,7 +35,7 @@ const NAV = [
   { to: "/crm/issues", label: "Issues", icon: AlertTriangle, soon: true },
   { to: "/crm/tasks", label: "Tasks", icon: CheckSquare, soon: true },
   { to: "/crm/reports", label: "Reports", icon: BarChart3, soon: true },
-  { to: "/crm/settings", label: "Settings", icon: Settings, soon: true },
+  { to: "/crm/settings", label: "Settings", icon: Settings, adminOnly: true },
 ];
 
 const ROLE_BADGE: Record<string, { label: string; cls: string }> = {

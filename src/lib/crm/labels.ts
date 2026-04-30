@@ -246,3 +246,21 @@ export const formatDateUK = (value: string | Date | null | undefined): string =>
     year: "numeric",
   });
 };
+
+export const formatDateTimeUK = (value: string | Date | null | undefined): string => {
+  if (!value) return "—";
+  const d = typeof value === "string" ? new Date(value) : value;
+  if (isNaN(d.getTime())) return "—";
+  return d.toLocaleString("en-GB", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+};
+
+export const formatSqft = (value: number | null | undefined): string => {
+  if (value === null || value === undefined) return "—";
+  return `${value.toLocaleString("en-GB")} sq ft`;
+};
