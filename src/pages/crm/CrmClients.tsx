@@ -20,7 +20,6 @@ import {
   CLIENT_STATUSES,
   CLIENT_STATUS_LABELS,
   formatDateUK,
-  formatGBP,
 } from "@/lib/crm/labels";
 import { StageBadge } from "@/components/crm/StageBadge";
 import { InterestBadge } from "@/components/crm/InterestBadge";

@@ -52,7 +52,7 @@ import {
   formatGBP,
   formatDateUK,
   formatDateTimeUK,
-  formatSqft,
+  
   SENIORITY_LABELS,
   DEPARTMENTS,
   DEPARTMENT_LABELS,
