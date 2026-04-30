@@ -129,14 +129,22 @@ serve(async (req) => {
     `;
 
     // Send confirmation email to the user
-    const confirmationResponse = await resend.emails.send({
-      from: "Hobson AI <noreply@hobsonschoice.ai>",
-      to: [email],
-      subject: "Thank you for contacting Hobson AI",
-      html: htmlTemplate,
-    });
-
-    console.log("Confirmation email sent successfully:", confirmationResponse);
+    const confirmationSubject = "Thank you for contacting Hobson AI";
+    let confirmationSent = true;
+    let confirmationError: string | null = null;
+    try {
+      const confirmationResponse = await resend.emails.send({
+        from: "Hobson AI <noreply@hobsonschoice.ai>",
+        to: [email],
+        subject: confirmationSubject,
+        html: htmlTemplate,
+      });
+      console.log("Confirmation email sent successfully:", confirmationResponse);
+    } catch (e: any) {
+      confirmationSent = false;
+      confirmationError = e?.message ?? "unknown";
+      console.error("Confirmation email failed:", e);
+    }
 
     // For team notification, escape user inputs
     const emailContent = `
@@ -160,6 +168,17 @@ Submitted at: ${new Date().toISOString()}
     });
 
     console.log("Notification email sent successfully:", notificationResponse);
+
+    // Forward to CRM (fail-soft)
+    await postToCrmIngest({
+      formType: 'contact',
+      contact: { name, email, phone: phone ?? null },
+      payload: {
+        name, email, phone: phone ?? null, reason,
+        client_ip: clientIP,
+      },
+      confirmationEmail: { sent: confirmationSent, subject: confirmationSubject, error: confirmationError },
+    });
 
     return new Response(
       JSON.stringify({ 
