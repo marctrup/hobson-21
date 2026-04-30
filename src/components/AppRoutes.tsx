@@ -45,6 +45,7 @@ const CrmDashboard = lazy(() => import("../pages/crm/CrmDashboard"));
 const CrmClients = lazy(() => import("../pages/crm/CrmClients"));
 const CrmClientNew = lazy(() => import("../pages/crm/CrmClientNew"));
 const CrmClientDetail = lazy(() => import("../pages/crm/CrmClientDetail"));
+const CrmSettings = lazy(() => import("../pages/crm/CrmSettings"));
 
 // Loading component
 const PageLoader = () => (
