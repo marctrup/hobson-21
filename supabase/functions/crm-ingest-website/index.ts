@@ -11,7 +11,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-ingest-signature, x-idempotency-key",
 };
 
-type FormType = "website";
+type FormType = "contact" | "pilot";
 
 interface IngestPayload {
   form_type: FormType;
@@ -136,9 +136,7 @@ serve(async (req) => {
 
     const email = body.contact.email.trim().toLowerCase();
     const name = body.contact.name?.trim() || email;
-    const company = body.contact.company?.trim() || null;
-    const clientType = company ? "business" : "individual";
-    const displayName = company ?? name;
+    const company = body.contact.company?.trim() || name;
 
     // Find existing client by email (case-insensitive). Otherwise create one.
     const { data: existingClient, error: lookupErr } = await supabase
@@ -156,8 +154,9 @@ serve(async (req) => {
       const { data: newClient, error: createErr } = await supabase
         .from("crm_clients")
         .insert({
-          name: displayName,
-          client_type: clientType,
+          name: company,
+          client_type: "prospect",
+          segment: "unspecified",
           email,
           phone: body.contact.phone ?? null,
           primary_contact_name: name,
@@ -165,14 +164,15 @@ serve(async (req) => {
           primary_contact_phone: body.contact.phone ?? null,
           primary_contact_role: body.contact.role ?? null,
           owner_id: settings.default_owner_id,
-          form_source: "website_application",
+          form_source: body.form_type === "pilot" ? "pilot_application" : "contact_form",
           origin_metadata: body.payload,
-          pipeline_stage: "new_enquiry",
+          pipeline_stage: "new_lead",
+          interest_level: "unknown",
           status: "active",
-          priority: "medium",
+          priority: "normal",
           first_contact_date: new Date(body.submitted_at).toISOString().slice(0, 10),
           lead_source: "website",
-          lead_source_detail: "Website application form",
+          lead_source_detail: body.form_type === "pilot" ? "Pilot application form" : "Contact form",
         })
         .select("id")
         .single();
@@ -181,8 +181,12 @@ serve(async (req) => {
     }
 
     // Build communication body. Render payload as a readable summary.
-    const subject = `Website enquiry from ${name}`;
-    const summary = `Website application submitted by ${name} (${email}).`;
+    const subject = body.form_type === "pilot"
+      ? `Pilot application from ${name}`
+      : `Contact message from ${name}`;
+    const summary = body.form_type === "pilot"
+      ? `Pilot application submitted via website by ${name} (${email}).`
+      : `Contact form submitted via website by ${name} (${email}).`;
 
     const lines: string[] = [];
     for (const [k, v] of Object.entries(body.payload)) {
