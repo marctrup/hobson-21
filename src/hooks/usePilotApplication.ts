@@ -50,39 +50,11 @@ export const usePilotApplication = () => {
     },
   });
 
-  const checkEmailExists = useCallback(async (email: string): Promise<boolean> => {
-    if (!email || !email.includes('@')) return false;
-    
-    setIsCheckingEmail(true);
-    try {
-      const { data, error } = await supabase
-        .from('pilot_applications')
-        .select('email')
-        .eq('email', email)
-        .single();
-      
-      if (error && error.code !== 'PGRST116') {
-        console.error('Error checking email:', error);
-        toast({
-          title: "Error",
-          description: "Failed to check email. Please try again.",
-          variant: "destructive",
-        });
-      }
-      
-      setIsCheckingEmail(false);
-      return !!data;
-    } catch (error) {
-      console.error('Unexpected error checking email:', error);
-      setIsCheckingEmail(false);
-      toast({
-        title: "Error",
-        description: "An unexpected error occurred. Please try again.",
-        variant: "destructive",
-      });
-      return false;
-    }
-  }, [toast]);
+  const checkEmailExists = useCallback(async (_email: string): Promise<boolean> => {
+    // Legacy duplicate-check disabled: pilot_applications table has been removed.
+    setIsCheckingEmail(false);
+    return false;
+  }, []);
 
   const handleEmailChange = useCallback(async (email: string): Promise<void> => {
     if (!email || !email.includes('@')) {

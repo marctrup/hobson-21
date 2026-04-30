@@ -365,39 +365,6 @@ export type Database = {
         }
         Relationships: []
       }
-      contact_messages_encrypted: {
-        Row: {
-          created_at: string
-          email_encrypted: string | null
-          email_hash: string | null
-          id: string
-          message_encrypted: string | null
-          name_encrypted: string | null
-          phone_encrypted: string | null
-          updated_at: string
-        }
-        Insert: {
-          created_at?: string
-          email_encrypted?: string | null
-          email_hash?: string | null
-          id?: string
-          message_encrypted?: string | null
-          name_encrypted?: string | null
-          phone_encrypted?: string | null
-          updated_at?: string
-        }
-        Update: {
-          created_at?: string
-          email_encrypted?: string | null
-          email_hash?: string | null
-          id?: string
-          message_encrypted?: string | null
-          name_encrypted?: string | null
-          phone_encrypted?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
       crm_activity_log: {
         Row: {
           action_type: string
@@ -1184,15 +1151,7 @@ export type Database = {
           status?: string
           subject?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "email_send_log_application_id_fkey"
-            columns: ["application_id"]
-            isOneToOne: false
-            referencedRelation: "pilot_applications"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       extraction_events: {
         Row: {
@@ -1547,51 +1506,6 @@ export type Database = {
         }
         Relationships: []
       }
-      pilot_applications: {
-        Row: {
-          business_types: string[] | null
-          company: string
-          created_at: string
-          email: string
-          help: string | null
-          id: string
-          name: string
-          phone: string | null
-          preferred_contact: string | null
-          role: string
-          updated_at: string
-          website: string | null
-        }
-        Insert: {
-          business_types?: string[] | null
-          company: string
-          created_at?: string
-          email: string
-          help?: string | null
-          id?: string
-          name: string
-          phone?: string | null
-          preferred_contact?: string | null
-          role: string
-          updated_at?: string
-          website?: string | null
-        }
-        Update: {
-          business_types?: string[] | null
-          company?: string
-          created_at?: string
-          email?: string
-          help?: string | null
-          id?: string
-          name?: string
-          phone?: string | null
-          preferred_contact?: string | null
-          role?: string
-          updated_at?: string
-          website?: string | null
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           created_at: string
@@ -1879,10 +1793,6 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      check_contact_email_exists: {
-        Args: { p_email: string }
-        Returns: boolean
-      }
       check_rate_limit: {
         Args: {
           p_action: string
@@ -1972,18 +1882,6 @@ export type Database = {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
       }
-      get_decrypted_contact_messages: {
-        Args: never
-        Returns: {
-          created_at: string
-          email: string
-          id: string
-          message: string
-          name: string
-          phone: string
-          updated_at: string
-        }[]
-      }
       get_safe_author_info: {
         Args: { author_user_id: string }
         Returns: {
@@ -2008,15 +1906,6 @@ export type Database = {
           _user_id: string
         }
         Returns: boolean
-      }
-      insert_encrypted_contact_message: {
-        Args: {
-          p_email: string
-          p_message: string
-          p_name: string
-          p_phone?: string
-        }
-        Returns: string
       }
       log_security_event: {
         Args: {

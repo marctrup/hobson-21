@@ -110,21 +110,6 @@ const ContactUs = () => {
       const result = await response.json();
 
       if (result.success) {
-        // Also save to pilot_applications as unified interest tracker
-        try {
-          const { supabase } = await import("@/integrations/supabase/client");
-          await supabase.from("pilot_applications").insert({
-            name: pendingFormData.name,
-            email: pendingFormData.email,
-            phone: pendingFormData.phone || null,
-            company: "—",
-            role: "Contact form",
-            help: pendingFormData.reason,
-          });
-        } catch (dbErr) {
-          console.error("Failed to log contact interest:", dbErr);
-        }
-
         toast({
           title: contactContent.success.title,
           description: contactContent.success.description,

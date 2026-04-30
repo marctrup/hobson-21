@@ -12,7 +12,6 @@ const LandingPageC = lazy(() => import("../pages/LandingPageC"));
 const EmailPreview = lazy(() => import("../pages/EmailPreview"));
 
 const Auth = lazy(() => import("../pages/Auth"));
-const Admin = lazy(() => import("../pages/Admin"));
 const NotFound = lazy(() => import("../pages/NotFound"));
 
 const ContactUs = lazy(() => import("../pages/ContactUs"));
@@ -149,7 +148,6 @@ const AppContent = () => {
               <Route path="/investor-summary" element={<Navigate to="/investment-opportunity" replace />} />
               
               <Route path="/auth" element={<Auth />} />
-              <Route path="/admin" element={<Admin />} />
               <Route path="/admin/faq-management" element={<FaqManagement />} />
               <Route path="/admin/glossary-management" element={<GlossaryManagement />} />
               <Route path="/admin/blog" element={<BlogManagement />} />

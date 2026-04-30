@@ -62,23 +62,10 @@ const LandingPageB = () => {
     },
   });
 
-  const checkEmailExists = useCallback(async (email: string) => {
-    if (!email || !email.includes('@')) return false;
-    
-    setIsCheckingEmail(true);
-    try {
-      const { data, error } = await supabase
-        .from('pilot_applications')
-        .select('email')
-        .eq('email', email)
-        .single();
-      
-      setIsCheckingEmail(false);
-      return !!data;
-    } catch (error) {
-      setIsCheckingEmail(false);
-      return false;
-    }
+  const checkEmailExists = useCallback(async (_email: string) => {
+    // Legacy duplicate-check disabled: pilot_applications table has been removed.
+    setIsCheckingEmail(false);
+    return false;
   }, []);
 
   const handleEmailChange = useCallback(async (email: string) => {
