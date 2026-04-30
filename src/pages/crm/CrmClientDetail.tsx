@@ -61,13 +61,15 @@ import {
   PLATFORM_ROLE_LABELS,
 } from "@/lib/crm/labels";
 import { cn } from "@/lib/utils";
+import { ClientCommunicationsTab } from "@/components/crm/communications/ClientCommunicationsTab";
 
-type TabKey = "overview" | "contacts" | "users" | "notes" | "activity";
+type TabKey = "overview" | "contacts" | "users" | "communications" | "notes" | "activity";
 
 const TABS: { key: TabKey; label: string }[] = [
   { key: "overview", label: "Overview" },
   { key: "contacts", label: "Contacts" },
   { key: "users", label: "Platform users" },
+  { key: "communications", label: "Communications" },
   { key: "notes", label: "Notes" },
   { key: "activity", label: "Activity" },
 ];
