@@ -2,7 +2,7 @@ import { Helmet } from "react-helmet-async";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Users, TrendingUp, AlertCircle, Activity } from "lucide-react";
-import { CrmLayout } from "@/components/crm/CrmLayout";
+
 import { supabase } from "@/integrations/supabase/client";
 import { formatDateUK } from "@/lib/crm/labels";
 import { StageBadge } from "@/components/crm/StageBadge";
@@ -59,7 +59,7 @@ export default function CrmDashboard() {
   });
 
   return (
-    <CrmLayout>
+    <>
       <Helmet>
         <title>CRM Dashboard | Hobson</title>
         <meta name="robots" content="noindex,nofollow" />
@@ -133,6 +133,6 @@ export default function CrmDashboard() {
           )}
         </div>
       </div>
-    </CrmLayout>
+    </>
   );
 }

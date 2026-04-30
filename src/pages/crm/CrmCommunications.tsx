@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Plus, Download } from "lucide-react";
-import { CrmLayout } from "@/components/crm/CrmLayout";
+
 import { Button } from "@/components/ui/button";
 import { CommunicationFilters } from "@/components/crm/communications/CommunicationFilters";
 import { CommunicationTimeline } from "@/components/crm/communications/CommunicationTimeline";
@@ -75,7 +75,7 @@ export default function CrmCommunications() {
   const total = useMemo(() => rows.length, [rows]);
 
   return (
-    <CrmLayout>
+    <>
       <Helmet>
         <title>Communications | CRM</title>
         <meta name="robots" content="noindex,nofollow" />
@@ -132,6 +132,6 @@ export default function CrmCommunications() {
         onOpenChange={setLogOpen}
         onLogged={(id) => setSelectedId(id)}
       />
-    </CrmLayout>
+    </>
   );
 }

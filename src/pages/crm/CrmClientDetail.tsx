@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, Star, Plus, Trash2, Mail, Phone, Globe, MapPin } from "lucide-react";
-import { CrmLayout } from "@/components/crm/CrmLayout";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -123,24 +123,16 @@ export default function CrmClientDetail() {
   });
 
   if (clientQ.isLoading) {
-    return (
-      <CrmLayout>
-        <div className="p-6 text-sm text-slate-500">Loading…</div>
-      </CrmLayout>
-    );
+    return <div className="p-6 text-sm text-slate-500">Loading…</div>;
   }
   if (clientQ.error || !clientQ.data) {
-    return (
-      <CrmLayout>
-        <div className="p-6 text-sm text-rose-600">Client not found.</div>
-      </CrmLayout>
-    );
+    return <div className="p-6 text-sm text-rose-600">Client not found.</div>;
   }
 
   const c = clientQ.data;
 
   return (
-    <CrmLayout>
+    <>
       <Helmet>
         <title>{c.name} | CRM</title>
         <meta name="robots" content="noindex,nofollow" />
@@ -242,7 +234,7 @@ export default function CrmClientDetail() {
           {tab === "activity" && <ActivityTab clientId={id} />}
         </div>
       </div>
-    </CrmLayout>
+    </>
   );
 }
 

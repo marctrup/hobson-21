@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
-import { CrmLayout } from "@/components/crm/CrmLayout";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -228,16 +228,14 @@ export default function CrmClientNew() {
 
   if (!canWrite) {
     return (
-      <CrmLayout>
-        <div className="p-6 text-sm text-slate-600">
-          You don't have permission to create clients.
-        </div>
-      </CrmLayout>
+      <div className="p-6 text-sm text-slate-600">
+        You don't have permission to create clients.
+      </div>
     );
   }
 
   return (
-    <CrmLayout>
+    <>
       <Helmet>
         <title>New client | CRM</title>
         <meta name="robots" content="noindex,nofollow" />
@@ -479,6 +477,6 @@ export default function CrmClientNew() {
           </Button>
         </div>
       </div>
-    </CrmLayout>
+    </>
   );
 }

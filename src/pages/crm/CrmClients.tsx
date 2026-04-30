@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
-import { CrmLayout } from "@/components/crm/CrmLayout";
+
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -55,7 +55,7 @@ export default function CrmClients() {
   });
 
   return (
-    <CrmLayout>
+    <>
       <Helmet>
         <title>Clients | CRM</title>
         <meta name="robots" content="noindex,nofollow" />
@@ -202,6 +202,6 @@ export default function CrmClients() {
           </table>
         </div>
       </div>
-    </CrmLayout>
+    </>
   );
 }
