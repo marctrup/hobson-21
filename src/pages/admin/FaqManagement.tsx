@@ -143,7 +143,7 @@ export default function FaqManagement() {
             description: "You need admin privileges to access this page.",
             variant: "destructive",
           });
-          navigate("/admin");
+          navigate("/");
           return;
         }
 
@@ -155,7 +155,7 @@ export default function FaqManagement() {
           description: error.message,
           variant: "destructive",
         });
-        navigate("/admin");
+        navigate("/");
       } finally {
         setCheckingAdmin(false);
       }

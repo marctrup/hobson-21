@@ -64,24 +64,9 @@ const LandingPageA = () => {
     },
   });
 
-  const checkEmailExists = async (email: string): Promise<boolean> => {
-    try {
-      const { data, error } = await supabase
-        .from('pilot_applications')
-        .select('email')
-        .eq('email', email)
-        .limit(1);
-
-      if (error) {
-        console.error('Error checking email:', error);
-        return false;
-      }
-
-      return data && data.length > 0;
-    } catch (error) {
-      console.error('Error checking email:', error);
-      return false;
-    }
+  const checkEmailExists = async (_email: string): Promise<boolean> => {
+    // Legacy duplicate-check disabled: pilot_applications table has been removed.
+    return false;
   };
 
   const handleEmailChange = async (email: string) => {

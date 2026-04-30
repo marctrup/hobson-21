@@ -101,7 +101,7 @@ export default function GlossaryManagement() {
             description: "You must be logged in as an admin to manage glossary terms.",
             variant: "destructive",
           });
-          navigate("/admin");
+          navigate("/");
           return;
         }
 
@@ -113,7 +113,7 @@ export default function GlossaryManagement() {
           description: error.message,
           variant: "destructive",
         });
-        navigate("/admin");
+        navigate("/");
       } finally {
         setCheckingAdmin(false);
       }

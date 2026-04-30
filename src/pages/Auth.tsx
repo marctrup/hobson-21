@@ -35,7 +35,7 @@ export default function Auth() {
         .single();
 
       if (data) {
-        navigate("/admin");
+        navigate("/crm");
       } else {
         navigate("/");
       }
