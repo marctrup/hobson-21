@@ -12,8 +12,42 @@ import {
 } from "../_shared/crm-auth.ts";
 
 const ALLOWED_ROLES = new Set(["admin", "crm_write", "crm_read"]);
-const APP_ORIGIN = "https://hobsonschoice.ai";
+const FALLBACK_APP_ORIGIN = "https://hobsonschoice.ai";
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
+
+// Strict whitelist for invite link origin.
+// - Exact match on production domains
+// - Single-level <slug>.lovable.app preview subdomains only
+// Anchored ^...$ so suffix attacks like "hobsonschoice.ai.evil.com" are rejected.
+const ALLOWED_EXACT_ORIGINS = new Set<string>([
+  "https://hobsonschoice.ai",
+  "https://www.hobsonschoice.ai",
+  "https://pilot.hobsonschoice.ai",
+  "https://app.hobsonschoice.ai",
+  "https://hobson-21.lovable.app",
+]);
+const LOVABLE_PREVIEW_RE = /^https:\/\/[a-z0-9-]+\.lovable\.app$/i;
+
+function isAllowedOrigin(origin: string | null): origin is string {
+  if (!origin) return false;
+  if (ALLOWED_EXACT_ORIGINS.has(origin)) return true;
+  return LOVABLE_PREVIEW_RE.test(origin);
+}
+
+function getAppOrigin(req: Request): string {
+  const origin = req.headers.get("origin");
+  if (isAllowedOrigin(origin)) return origin;
+  const referer = req.headers.get("referer");
+  if (referer) {
+    try {
+      const refOrigin = new URL(referer).origin;
+      if (isAllowedOrigin(refOrigin)) return refOrigin;
+    } catch {
+      /* ignore */
+    }
+  }
+  return FALLBACK_APP_ORIGIN;
+}
 
 interface InviteBody {
   email?: string;
@@ -183,7 +217,8 @@ Deno.serve(async (req) => {
     return jsonResponse({ error: "Failed to create invitation" }, 500);
   }
 
-  const acceptUrl = `${APP_ORIGIN}/crm/accept-invite?token=${encodeURIComponent(rawToken)}`;
+  const appOrigin = getAppOrigin(req);
+  const acceptUrl = `${appOrigin}/crm/accept-invite?token=${encodeURIComponent(rawToken)}`;
 
   const sendResult = await sendInviteEmail(
     email,
