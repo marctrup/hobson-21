@@ -51,6 +51,8 @@ import {
   SUBSCRIPTION_STATUS_LABELS,
   formatGBP,
   formatDateUK,
+  formatDateTimeUK,
+  formatSqft,
   SENIORITY_LABELS,
   DEPARTMENTS,
   DEPARTMENT_LABELS,
@@ -60,13 +62,14 @@ import {
 } from "@/lib/crm/labels";
 import { cn } from "@/lib/utils";
 
-type TabKey = "overview" | "contacts" | "users" | "notes";
+type TabKey = "overview" | "contacts" | "users" | "notes" | "activity";
 
 const TABS: { key: TabKey; label: string }[] = [
   { key: "overview", label: "Overview" },
   { key: "contacts", label: "Contacts" },
   { key: "users", label: "Platform users" },
   { key: "notes", label: "Notes" },
+  { key: "activity", label: "Activity" },
 ];
 
 export default function CrmClientDetail() {
@@ -233,6 +236,7 @@ export default function CrmClientDetail() {
           {tab === "contacts" && <ContactsTab clientId={id} canWrite={canWrite} />}
           {tab === "users" && <UsersTab clientId={id} canWrite={canWrite} />}
           {tab === "notes" && <NotesTab clientId={id} userId={user?.id} canWrite={canWrite} />}
+          {tab === "activity" && <ActivityTab clientId={id} />}
         </div>
       </div>
     </CrmLayout>
@@ -290,7 +294,7 @@ const OverviewTab = ({
 
       <Card title="Property profile">
         <Row label="Number of properties" value={c.property_count ?? "—"} />
-        <Row label="Total floor area" value={c.total_floor_area_sqft ? `${c.total_floor_area_sqft.toLocaleString("en-GB")} sq ft` : "—"} />
+        <Row label="Total floor area" value={formatSqft(c.total_floor_area_sqft)} />
         <Row label="Tenure mix" value={c.tenure_mix || "—"} />
         <Row label="Annual property spend" value={formatGBP(c.estimated_annual_property_spend_gbp)} />
         <Row label="Lease events (12m)" value={c.upcoming_lease_events_12m ?? "—"} />
