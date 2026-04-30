@@ -64,6 +64,7 @@ import { cn } from "@/lib/utils";
 import { ClientCommunicationsTab } from "@/components/crm/communications/ClientCommunicationsTab";
 import { ClientIssuesTab } from "@/components/crm/issues/ClientIssuesTab";
 import { ClientTasksTab } from "@/components/crm/tasks/ClientTasksTab";
+import { DeleteClientDialog } from "@/components/crm/DeleteClientDialog";
 
 type TabKey = "overview" | "contacts" | "users" | "communications" | "issues" | "tasks" | "notes" | "activity";
 
@@ -132,18 +133,6 @@ export default function CrmClientDetail() {
       toast({ title: "Save failed", description: e.message, variant: "destructive" }),
   });
 
-  const deleteClient = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.from("crm_clients").delete().eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      toast({ title: "Client deleted" });
-      navigate("/crm/clients");
-    },
-    onError: (e: Error) =>
-      toast({ title: "Delete failed", description: e.message, variant: "destructive" }),
-  });
 
   if (clientQ.isLoading) {
     return <div className="p-6 text-sm text-slate-500">Loading…</div>;
@@ -205,27 +194,11 @@ export default function CrmClientDetail() {
               <InterestBadge level={c.interest_level} />
             )}
             {isAdmin && (
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="text-rose-600">
-                    <Trash2 className="size-4" />
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Delete this client?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This permanently removes the client and all linked contacts, users, notes, and activity. This cannot be undone.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => deleteClient.mutate()}>
-                      Delete client
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <DeleteClientDialog
+                clientId={id}
+                clientName={c.name}
+                onDeleted={() => navigate("/crm/clients")}
+              />
             )}
           </div>
         </div>
