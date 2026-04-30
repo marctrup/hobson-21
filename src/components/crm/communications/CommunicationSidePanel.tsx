@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import DOMPurify from "dompurify";
-import { Download, Star, Trash2, X } from "lucide-react";
+import { AlertCircle, Download, Star, Trash2, X } from "lucide-react";
+import { LogIssueDialog } from "@/components/crm/issues/LogIssueDialog";
 import {
   Sheet,
   SheetContent,
@@ -89,6 +90,7 @@ export const CommunicationSidePanel = ({
           <PanelBody
             data={data}
             cleanHtml={cleanHtml}
+            canWrite={canWrite}
             canDelete={
               isAdmin ||
               (canWrite && data.communication.logged_by === user?.id)
@@ -110,6 +112,7 @@ export const CommunicationSidePanel = ({
 const PanelBody = ({
   data,
   cleanHtml,
+  canWrite,
   canDelete,
   onDelete,
   onClose,
@@ -117,12 +120,23 @@ const PanelBody = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: { communication: any; participants: any[]; attachments: any[] };
   cleanHtml: string | null;
+  canWrite: boolean;
   canDelete: boolean;
   onDelete: () => Promise<void>;
   onClose: () => void;
 }) => {
   const c = data.communication;
   const channel = c.channel as CommChannel;
+  const [issueDialogOpen, setIssueDialogOpen] = useState(false);
+
+  const issuePrefill = useMemo(() => {
+    const title =
+      (c.subject && c.subject.trim()) ||
+      (c.summary ? c.summary.split("\n")[0].slice(0, 200) : "") ||
+      "Issue from communication";
+    const description = c.summary || c.body_plain || "";
+    return { title, description };
+  }, [c.subject, c.summary, c.body_plain]);
 
   const grouped = useMemo(() => {
     const map = new Map<ParticipantRole, typeof data.participants>();
@@ -284,33 +298,56 @@ const PanelBody = ({
         )}
 
         {/* Actions */}
-        {canDelete && (
-          <div className="pt-4 border-t border-slate-200">
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button variant="outline" size="sm" className="text-rose-600">
-                  <Trash2 className="size-4 mr-1" /> Delete
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Delete this communication?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This permanently removes the communication and all linked
-                    participants and attachments. This cannot be undone.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={onDelete}>
-                    Delete
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+        {(canWrite || canDelete) && (
+          <div className="pt-4 border-t border-slate-200 flex flex-wrap gap-2">
+            {canWrite && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setIssueDialogOpen(true)}
+              >
+                <AlertCircle className="size-4 mr-1" /> Create issue from this
+              </Button>
+            )}
+            {canDelete && (
+              <AlertDialog>
+                <AlertDialogTrigger asChild>
+                  <Button variant="outline" size="sm" className="text-rose-600">
+                    <Trash2 className="size-4 mr-1" /> Delete
+                  </Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Delete this communication?</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This permanently removes the communication and all linked
+                      participants and attachments. This cannot be undone.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={onDelete}>
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            )}
           </div>
         )}
       </div>
+
+      {canWrite && (
+        <LogIssueDialog
+          open={issueDialogOpen}
+          onOpenChange={setIssueDialogOpen}
+          defaultClientId={c.client_id}
+          defaultCommunicationId={c.id}
+          defaultTitle={issuePrefill.title}
+          defaultDescription={issuePrefill.description}
+          defaultCategory="support"
+        />
+      )}
     </>
   );
 };
