@@ -37,6 +37,18 @@ Deno.serve(async (req) => {
   if (!userId) return jsonResponse({ error: "user_id is required" }, 400);
 
   const svc = serviceClient();
+
+  // Capture the user's existing CRM role (if any) for the audit log.
+  const { data: existingRows } = await svc
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .in("role", CRM_ROLES);
+  const oldRole =
+    existingRows && existingRows.length > 0
+      ? (existingRows[0] as { role: string }).role
+      : null;
+
   const { error } = await svc
     .from("user_roles")
     .delete()
@@ -54,6 +66,14 @@ Deno.serve(async (req) => {
       400,
     );
   }
+
+  // Audit: explicit actor (the admin performing the revocation).
+  await logRoleAction({
+    actorUserId: caller.userId,
+    action: "CRM_ROLE_REVOKED",
+    targetUserId: userId,
+    oldRole,
+  });
 
   return jsonResponse({ success: true });
 });
