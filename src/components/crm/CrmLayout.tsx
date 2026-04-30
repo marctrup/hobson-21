@@ -46,7 +46,7 @@ const ROLE_BADGE: Record<string, { label: string; cls: string }> = {
 
 export const CrmLayout = ({ children }: { children?: ReactNode }) => {
   const { user, signOut } = useAuth();
-  const { role, canWrite } = useCrmAccess();
+  const { role, isAdmin } = useCrmAccess();
   const navigate = useNavigate();
 
   const badge = role ? ROLE_BADGE[role] : null;
@@ -59,7 +59,7 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
           <span className="font-semibold tracking-tight">Hobson CRM</span>
         </div>
         <nav className="flex-1 px-2 py-3 space-y-1">
-          {NAV.map((item) => {
+          {NAV.filter((item) => !item.adminOnly || isAdmin).map((item) => {
             const Icon = item.icon;
             return (
               <NavLink
