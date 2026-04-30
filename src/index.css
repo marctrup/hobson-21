@@ -54,11 +54,14 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    /* Hobson brand colors */
-    --primary: 269 91% 52%;
+    /* Hobson brand colors — primary = #8B5CF6 (brand purple) */
+    --primary: 258 90% 66%;
     --primary-foreground: 0 0% 100%;
-    --primary-light: 269 75% 65%;
-    
+    --primary-light: 258 90% 78%;
+    /* Pale purple accent for subtle row/chip tints — use as bg-primary/10 too */
+    --primary-soft: 258 100% 97%;
+    --primary-soft-foreground: 258 60% 30%;
+
     /* Orange CTA brand color */
     --brand-orange: 25 95% 53%;
     --brand-orange-foreground: 0 0% 100%;
