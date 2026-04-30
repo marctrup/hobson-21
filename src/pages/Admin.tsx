@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Trash2 } from "lucide-react";
+import { Eye, EyeOff, ExternalLink } from "lucide-react";
 import PricingSettings from "@/components/admin/PricingSettings";
 
 
@@ -157,55 +157,7 @@ export default function Admin() {
     navigate("/");
   };
 
-  const handleDeleteApplication = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this application?")) return;
-    try {
-      const { error } = await supabase
-        .from("pilot_applications")
-        .delete()
-        .eq("id", id);
-      if (error) throw error;
-      setApplications(prev => prev.filter(app => app.id !== id));
-      toast({ title: "Deleted", description: "Application removed." });
-    } catch (error: any) {
-      console.error("Error deleting application:", error);
-      toast({ title: "Error", description: "Failed to delete application.", variant: "destructive" });
-    }
-  };
-
-  const exportToCSV = () => {
-    const headers = [
-      "Source",
-      "Name",
-      "Email",
-      "Phone",
-      "Message",
-      "Submitted Date"
-    ];
-
-    const csvData = applications.map(app => [
-      app.role || "Unknown",
-      app.name,
-      app.email,
-      app.phone || "",
-      app.help || "",
-      new Date(app.created_at).toLocaleDateString()
-    ]);
-
-    const csvContent = [headers, ...csvData]
-      .map(row => row.map(cell => `"${cell}"`).join(","))
-      .join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", `enquiries-${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // Legacy admin is now read-only (CRM cutover). Delete and CSV export removed.
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -304,14 +256,22 @@ export default function Admin() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
+        <div className="mb-6 rounded-lg border border-primary/30 bg-primary/5 p-4 flex items-start justify-between gap-4">
+          <div>
+            <p className="font-semibold text-foreground">This area is now read-only.</p>
+            <p className="text-sm text-muted-foreground mt-1">
+              All form submissions and email logs are managed from the CRM. The records below are kept for historical reference only.
+            </p>
+          </div>
+          <Button onClick={() => navigate("/crm/communications")} className="shrink-0">
+            Open CRM
+            <ExternalLink className="ml-2 h-4 w-4" />
+          </Button>
+        </div>
+
         <Card>
           <CardHeader>
-            <div className="flex justify-between items-center">
-              <CardTitle>Applications ({applications.length})</CardTitle>
-              <Button onClick={exportToCSV} variant="outline">
-                Export to CSV
-              </Button>
-            </div>
+            <CardTitle>Applications ({applications.length}) — Legacy</CardTitle>
           </CardHeader>
           <CardContent>
             {loadingApplications ? (
@@ -321,7 +281,7 @@ export default function Admin() {
               </div>
             ) : applications.length === 0 ? (
               <div className="text-center py-8 text-muted-foreground">
-                No enquiries found.
+                No historical enquiries.
               </div>
             ) : (
               <div className="overflow-x-auto">
@@ -334,14 +294,13 @@ export default function Admin() {
                       <TableHead>Phone</TableHead>
                       <TableHead>Message</TableHead>
                       <TableHead>Submitted</TableHead>
-                      <TableHead></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {applications.map((app) => {
                       const source = app.role || "Unknown";
-                      const badgeVariant = source.toLowerCase().includes("contact") ? "default" 
-                        : source.toLowerCase().includes("waitlist") ? "secondary" 
+                      const badgeVariant = source.toLowerCase().includes("contact") ? "default"
+                        : source.toLowerCase().includes("waitlist") ? "secondary"
                         : source.toLowerCase().includes("enterprise") ? "outline"
                         : "secondary";
                       return (
@@ -356,16 +315,6 @@ export default function Admin() {
                           <TableCell>
                             {new Date(app.created_at).toLocaleDateString()}
                           </TableCell>
-                          <TableCell>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              onClick={() => handleDeleteApplication(app.id)}
-                              className="text-destructive hover:text-destructive"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </Button>
-                          </TableCell>
                         </TableRow>
                       );
                     })}
@@ -378,7 +327,7 @@ export default function Admin() {
 
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle>Email Log ({emailLogs.length})</CardTitle>
+            <CardTitle>Email Log ({emailLogs.length}) — Legacy</CardTitle>
           </CardHeader>
           <CardContent>
             {loadingEmailLogs ? (
