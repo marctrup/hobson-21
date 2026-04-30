@@ -46,7 +46,7 @@ const ROLE_BADGE: Record<string, { label: string; cls: string }> = {
 
 export const CrmLayout = ({ children }: { children?: ReactNode }) => {
   const { user, signOut } = useAuth();
-  const { role, isAdmin } = useCrmAccess();
+  const { role, isAdmin, canWrite } = useCrmAccess();
   const navigate = useNavigate();
 
   const badge = role ? ROLE_BADGE[role] : null;
