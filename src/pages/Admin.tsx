@@ -327,7 +327,7 @@ export default function Admin() {
 
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle>Email Log ({emailLogs.length})</CardTitle>
+            <CardTitle>Email Log ({emailLogs.length}) — Legacy</CardTitle>
           </CardHeader>
           <CardContent>
             {loadingEmailLogs ? (
