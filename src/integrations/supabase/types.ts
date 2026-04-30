@@ -229,6 +229,394 @@ export type Database = {
         }
         Relationships: []
       }
+      crm_activity_log: {
+        Row: {
+          action_type: string
+          client_id: string | null
+          created_at: string
+          description: string | null
+          entity_id: string | null
+          entity_type: string
+          id: string
+          metadata: Json | null
+          user_id: string | null
+        }
+        Insert: {
+          action_type: string
+          client_id?: string | null
+          created_at?: string
+          description?: string | null
+          entity_id?: string | null
+          entity_type: string
+          id?: string
+          metadata?: Json | null
+          user_id?: string | null
+        }
+        Update: {
+          action_type?: string
+          client_id?: string | null
+          created_at?: string
+          description?: string | null
+          entity_id?: string | null
+          entity_type?: string
+          id?: string
+          metadata?: Json | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_activity_log_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_client_users: {
+        Row: {
+          client_id: string
+          created_at: string
+          department: string | null
+          email: string
+          first_seen_at: string | null
+          full_name: string
+          id: string
+          is_primary_admin: boolean
+          job_title: string | null
+          last_active_at: string | null
+          linkedin_url: string | null
+          notes: string | null
+          phone: string | null
+          platform_role: string
+          platform_user_id: string | null
+          seniority_level: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          department?: string | null
+          email: string
+          first_seen_at?: string | null
+          full_name: string
+          id?: string
+          is_primary_admin?: boolean
+          job_title?: string | null
+          last_active_at?: string | null
+          linkedin_url?: string | null
+          notes?: string | null
+          phone?: string | null
+          platform_role?: string
+          platform_user_id?: string | null
+          seniority_level?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          department?: string | null
+          email?: string
+          first_seen_at?: string | null
+          full_name?: string
+          id?: string
+          is_primary_admin?: boolean
+          job_title?: string | null
+          last_active_at?: string | null
+          linkedin_url?: string | null
+          notes?: string | null
+          phone?: string | null
+          platform_role?: string
+          platform_user_id?: string | null
+          seniority_level?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_client_users_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_clients: {
+        Row: {
+          address_line_1: string | null
+          address_line_2: string | null
+          annual_revenue_band: string | null
+          billing_cycle: string | null
+          city: string | null
+          client_type: string
+          compliance_focus: string[] | null
+          contract_end_date: string | null
+          contract_start_date: string | null
+          contracted_monthly_value_gbp: number | null
+          country: string | null
+          created_at: string
+          created_by: string | null
+          email: string | null
+          estimated_annual_property_spend_gbp: number | null
+          estimated_deal_value_gbp: number | null
+          expected_close_date: string | null
+          first_contact_date: string | null
+          form_source: string | null
+          geographic_spread: string[] | null
+          id: string
+          interest_level: string
+          last_contact_date: string | null
+          lead_source: string | null
+          lead_source_detail: string | null
+          licensed_user_seats: number | null
+          linkedin_url: string | null
+          name: string
+          next_action: string | null
+          next_action_date: string | null
+          origin_metadata: Json | null
+          owner_id: string | null
+          phone: string | null
+          pipeline_stage: string
+          postcode: string | null
+          primary_admin_user_id: string | null
+          primary_contact_email: string | null
+          primary_contact_name: string | null
+          primary_contact_phone: string | null
+          primary_contact_role: string | null
+          priority: string
+          probability_to_close: number | null
+          property_count: number | null
+          segment: string
+          staff_size_band: string | null
+          status: string
+          sub_sector: string | null
+          subscription_plan: string | null
+          subscription_status: string | null
+          tags: string[] | null
+          tech_stack: string[] | null
+          tenure_mix: string | null
+          total_floor_area_sqft: number | null
+          upcoming_lease_events_12m: number | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address_line_1?: string | null
+          address_line_2?: string | null
+          annual_revenue_band?: string | null
+          billing_cycle?: string | null
+          city?: string | null
+          client_type?: string
+          compliance_focus?: string[] | null
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          contracted_monthly_value_gbp?: number | null
+          country?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          estimated_annual_property_spend_gbp?: number | null
+          estimated_deal_value_gbp?: number | null
+          expected_close_date?: string | null
+          first_contact_date?: string | null
+          form_source?: string | null
+          geographic_spread?: string[] | null
+          id?: string
+          interest_level?: string
+          last_contact_date?: string | null
+          lead_source?: string | null
+          lead_source_detail?: string | null
+          licensed_user_seats?: number | null
+          linkedin_url?: string | null
+          name: string
+          next_action?: string | null
+          next_action_date?: string | null
+          origin_metadata?: Json | null
+          owner_id?: string | null
+          phone?: string | null
+          pipeline_stage?: string
+          postcode?: string | null
+          primary_admin_user_id?: string | null
+          primary_contact_email?: string | null
+          primary_contact_name?: string | null
+          primary_contact_phone?: string | null
+          primary_contact_role?: string | null
+          priority?: string
+          probability_to_close?: number | null
+          property_count?: number | null
+          segment?: string
+          staff_size_band?: string | null
+          status?: string
+          sub_sector?: string | null
+          subscription_plan?: string | null
+          subscription_status?: string | null
+          tags?: string[] | null
+          tech_stack?: string[] | null
+          tenure_mix?: string | null
+          total_floor_area_sqft?: number | null
+          upcoming_lease_events_12m?: number | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address_line_1?: string | null
+          address_line_2?: string | null
+          annual_revenue_band?: string | null
+          billing_cycle?: string | null
+          city?: string | null
+          client_type?: string
+          compliance_focus?: string[] | null
+          contract_end_date?: string | null
+          contract_start_date?: string | null
+          contracted_monthly_value_gbp?: number | null
+          country?: string | null
+          created_at?: string
+          created_by?: string | null
+          email?: string | null
+          estimated_annual_property_spend_gbp?: number | null
+          estimated_deal_value_gbp?: number | null
+          expected_close_date?: string | null
+          first_contact_date?: string | null
+          form_source?: string | null
+          geographic_spread?: string[] | null
+          id?: string
+          interest_level?: string
+          last_contact_date?: string | null
+          lead_source?: string | null
+          lead_source_detail?: string | null
+          licensed_user_seats?: number | null
+          linkedin_url?: string | null
+          name?: string
+          next_action?: string | null
+          next_action_date?: string | null
+          origin_metadata?: Json | null
+          owner_id?: string | null
+          phone?: string | null
+          pipeline_stage?: string
+          postcode?: string | null
+          primary_admin_user_id?: string | null
+          primary_contact_email?: string | null
+          primary_contact_name?: string | null
+          primary_contact_phone?: string | null
+          primary_contact_role?: string | null
+          priority?: string
+          probability_to_close?: number | null
+          property_count?: number | null
+          segment?: string
+          staff_size_band?: string | null
+          status?: string
+          sub_sector?: string | null
+          subscription_plan?: string | null
+          subscription_status?: string | null
+          tags?: string[] | null
+          tech_stack?: string[] | null
+          tenure_mix?: string | null
+          total_floor_area_sqft?: number | null
+          upcoming_lease_events_12m?: number | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_clients_primary_admin_fk"
+            columns: ["primary_admin_user_id"]
+            isOneToOne: false
+            referencedRelation: "crm_client_users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_contacts: {
+        Row: {
+          client_id: string
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          is_primary: boolean
+          job_title: string | null
+          linkedin_url: string | null
+          notes: string | null
+          phone: string | null
+          role_description: string | null
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          email?: string | null
+          full_name: string
+          id?: string
+          is_primary?: boolean
+          job_title?: string | null
+          linkedin_url?: string | null
+          notes?: string | null
+          phone?: string | null
+          role_description?: string | null
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          is_primary?: boolean
+          job_title?: string | null
+          linkedin_url?: string | null
+          notes?: string | null
+          phone?: string | null
+          role_description?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_contacts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      crm_notes: {
+        Row: {
+          client_id: string
+          content: string
+          created_at: string
+          created_by: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          content: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          content?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_notes_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       document_classification_settings: {
         Row: {
           created_at: string
@@ -1039,6 +1427,8 @@ export type Database = {
           user_id: string
         }[]
       }
+      has_crm_access: { Args: { _user_id: string }; Returns: boolean }
+      has_crm_write: { Args: { _user_id: string }; Returns: boolean }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
