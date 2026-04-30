@@ -10,7 +10,6 @@ import {
 import { ReportCard } from "./ReportCard";
 import { useLeadSourceMix } from "@/hooks/crm/reports/useLeadReports";
 import { downloadCsv } from "@/lib/crm/reportsExport";
-import { formatGBP } from "@/lib/crm/labels";
 
 const PALETTE = ["#3b82f6", "#10b981", "#f59e0b", "#a855f7", "#f43f5e", "#64748b", "#0ea5e9", "#22c55e"];
 
@@ -27,8 +26,8 @@ export const LeadSourceMixReport = () => {
       onExport={() =>
         downloadCsv(
           "lead-source-mix",
-          ["Source", "Count", "Weighted value (GBP)"],
-          rows.map((r) => [r.label, r.count, r.weighted_value]),
+          ["Source", "Count"],
+          rows.map((r) => [r.label, r.count]),
         )
       }
     >
@@ -45,13 +44,7 @@ export const LeadSourceMixReport = () => {
             tick={{ fontSize: 11 }}
             width={140}
           />
-          <Tooltip
-            formatter={(v: number, name) =>
-              name === "weighted_value"
-                ? [formatGBP(v), "Weighted value"]
-                : [`${v}`, "Count"]
-            }
-          />
+          <Tooltip formatter={(v: number) => [`${v}`, "Count"]} />
           <Bar dataKey="count" radius={[0, 4, 4, 0]}>
             {rows.map((r, i) => (
               <Cell key={r.key} fill={PALETTE[i % PALETTE.length]} />

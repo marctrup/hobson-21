@@ -77,7 +77,6 @@ export interface LeadSourceRow {
   key: string;
   label: string;
   count: number;
-  weighted_value: number;
 }
 
 export const useLeadSourceMix = () => {
@@ -92,9 +91,7 @@ export const useLeadSourceMix = () => {
     queryFn: async (): Promise<LeadSourceRow[]> => {
       let q = supabase
         .from("crm_clients")
-        .select(
-          "lead_source,estimated_deal_value_gbp,probability_to_close,owner_id,created_at",
-        )
+        .select("lead_source,owner_id,created_at")
         .gte("created_at", startDate.toISOString())
         .lt("created_at", endDate.toISOString())
         .limit(1000);
@@ -102,22 +99,16 @@ export const useLeadSourceMix = () => {
       const { data, error } = await q;
       if (error) throw error;
 
-      const map = new Map<string, { c: number; v: number }>();
+      const map = new Map<string, number>();
       for (const r of data ?? []) {
         const k = (r.lead_source as string) ?? "other";
-        const cur = map.get(k) ?? { c: 0, v: 0 };
-        const v = Number(r.estimated_deal_value_gbp ?? 0);
-        const p = Number(r.probability_to_close ?? 0);
-        cur.c += 1;
-        cur.v += (v * p) / 100;
-        map.set(k, cur);
+        map.set(k, (map.get(k) ?? 0) + 1);
       }
       return Array.from(map.entries())
-        .map(([k, v]) => ({
+        .map(([k, c]) => ({
           key: k,
           label: LEAD_SOURCE_LABELS[k] ?? k,
-          count: v.c,
-          weighted_value: Math.round(v.v),
+          count: c,
         }))
         .sort((a, b) => b.count - a.count);
     },
