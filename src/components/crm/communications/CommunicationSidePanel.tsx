@@ -112,6 +112,7 @@ export const CommunicationSidePanel = ({
 const PanelBody = ({
   data,
   cleanHtml,
+  canWrite,
   canDelete,
   onDelete,
   onClose,
@@ -119,12 +120,23 @@ const PanelBody = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: { communication: any; participants: any[]; attachments: any[] };
   cleanHtml: string | null;
+  canWrite: boolean;
   canDelete: boolean;
   onDelete: () => Promise<void>;
   onClose: () => void;
 }) => {
   const c = data.communication;
   const channel = c.channel as CommChannel;
+  const [issueDialogOpen, setIssueDialogOpen] = useState(false);
+
+  const issuePrefill = useMemo(() => {
+    const title =
+      (c.subject && c.subject.trim()) ||
+      (c.summary ? c.summary.split("\n")[0].slice(0, 200) : "") ||
+      "Issue from communication";
+    const description = c.summary || c.body_plain || "";
+    return { title, description };
+  }, [c.subject, c.summary, c.body_plain]);
 
   const grouped = useMemo(() => {
     const map = new Map<ParticipantRole, typeof data.participants>();
