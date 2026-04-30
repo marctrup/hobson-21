@@ -35,12 +35,14 @@ export const InterestModal = ({ open, onClose, source = "login-interest" }: Inte
     if (!first.trim() || !last.trim() || !email.trim()) return;
     setSubmitting(true);
     try {
+      const fullName = `${first.trim()} ${last.trim()}`;
       await supabase.functions.invoke('send-pilot-application', {
         body: {
-          name: `${first.trim()} ${last.trim()}`,
+          name: fullName,
           email: email.trim(),
           phone: phone.trim() || null,
-          company: company.trim() || "Not provided",
+          // Fall back to the person's name so the CRM client isn't named "Not provided".
+          company: company.trim() || fullName,
           role: "Not provided",
           source,
         }
