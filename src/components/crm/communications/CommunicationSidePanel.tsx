@@ -90,6 +90,7 @@ export const CommunicationSidePanel = ({
           <PanelBody
             data={data}
             cleanHtml={cleanHtml}
+            canWrite={canWrite}
             canDelete={
               isAdmin ||
               (canWrite && data.communication.logged_by === user?.id)
