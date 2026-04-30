@@ -166,6 +166,175 @@ export type Database = {
         }
         Relationships: []
       }
+      communication_attachments: {
+        Row: {
+          communication_id: string
+          created_at: string
+          file_name: string
+          id: string
+          mime_type: string | null
+          size_bytes: number | null
+          storage_path: string
+          uploaded_by: string | null
+        }
+        Insert: {
+          communication_id: string
+          created_at?: string
+          file_name: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          storage_path: string
+          uploaded_by?: string | null
+        }
+        Update: {
+          communication_id?: string
+          created_at?: string
+          file_name?: string
+          id?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          storage_path?: string
+          uploaded_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "communication_attachments_communication_id_fkey"
+            columns: ["communication_id"]
+            isOneToOne: false
+            referencedRelation: "communications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      communication_participants: {
+        Row: {
+          communication_id: string
+          contact_id: string | null
+          created_at: string
+          external_email: string | null
+          external_name: string | null
+          id: string
+          kind: Database["public"]["Enums"]["participant_kind"]
+          platform_user_id: string | null
+          role_in_comm: Database["public"]["Enums"]["participant_role"]
+          workspace_member_id: string | null
+        }
+        Insert: {
+          communication_id: string
+          contact_id?: string | null
+          created_at?: string
+          external_email?: string | null
+          external_name?: string | null
+          id?: string
+          kind: Database["public"]["Enums"]["participant_kind"]
+          platform_user_id?: string | null
+          role_in_comm: Database["public"]["Enums"]["participant_role"]
+          workspace_member_id?: string | null
+        }
+        Update: {
+          communication_id?: string
+          contact_id?: string | null
+          created_at?: string
+          external_email?: string | null
+          external_name?: string | null
+          id?: string
+          kind?: Database["public"]["Enums"]["participant_kind"]
+          platform_user_id?: string | null
+          role_in_comm?: Database["public"]["Enums"]["participant_role"]
+          workspace_member_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "communication_participants_communication_id_fkey"
+            columns: ["communication_id"]
+            isOneToOne: false
+            referencedRelation: "communications"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      communications: {
+        Row: {
+          body_html: string | null
+          body_plain: string | null
+          call_duration_seconds: number | null
+          channel: Database["public"]["Enums"]["comm_channel"]
+          client_id: string
+          created_at: string
+          direction: Database["public"]["Enums"]["comm_direction"]
+          email_cc: string[] | null
+          email_from: string | null
+          email_message_id: string | null
+          email_to: string[] | null
+          fts: unknown
+          id: string
+          is_important: boolean
+          linked_task_id: string | null
+          logged_by: string | null
+          meeting_location: string | null
+          needs_review: boolean
+          occurred_at: string
+          pending_follow_up_note: string | null
+          sentiment: Database["public"]["Enums"]["comm_sentiment"] | null
+          subject: string | null
+          summary: string | null
+          updated_at: string
+        }
+        Insert: {
+          body_html?: string | null
+          body_plain?: string | null
+          call_duration_seconds?: number | null
+          channel: Database["public"]["Enums"]["comm_channel"]
+          client_id: string
+          created_at?: string
+          direction: Database["public"]["Enums"]["comm_direction"]
+          email_cc?: string[] | null
+          email_from?: string | null
+          email_message_id?: string | null
+          email_to?: string[] | null
+          fts?: unknown
+          id?: string
+          is_important?: boolean
+          linked_task_id?: string | null
+          logged_by?: string | null
+          meeting_location?: string | null
+          needs_review?: boolean
+          occurred_at: string
+          pending_follow_up_note?: string | null
+          sentiment?: Database["public"]["Enums"]["comm_sentiment"] | null
+          subject?: string | null
+          summary?: string | null
+          updated_at?: string
+        }
+        Update: {
+          body_html?: string | null
+          body_plain?: string | null
+          call_duration_seconds?: number | null
+          channel?: Database["public"]["Enums"]["comm_channel"]
+          client_id?: string
+          created_at?: string
+          direction?: Database["public"]["Enums"]["comm_direction"]
+          email_cc?: string[] | null
+          email_from?: string | null
+          email_message_id?: string | null
+          email_to?: string[] | null
+          fts?: unknown
+          id?: string
+          is_important?: boolean
+          linked_task_id?: string | null
+          logged_by?: string | null
+          meeting_location?: string | null
+          needs_review?: boolean
+          occurred_at?: string
+          pending_follow_up_note?: string | null
+          sentiment?: Database["public"]["Enums"]["comm_sentiment"] | null
+          subject?: string | null
+          summary?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
@@ -1484,6 +1653,7 @@ export type Database = {
           user_id: string
         }[]
       }
+      crm_log_communication: { Args: { p_payload: Json }; Returns: string }
       crm_log_role_action: {
         Args: {
           p_action: string
@@ -1495,6 +1665,7 @@ export type Database = {
         }
         Returns: undefined
       }
+      crm_sanitise_email_html: { Args: { p_html: string }; Returns: string }
       get_current_user_role: {
         Args: never
         Returns: Database["public"]["Enums"]["app_role"]
@@ -1559,6 +1730,18 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "user" | "crm_write" | "crm_read"
+      comm_channel:
+        | "email"
+        | "call"
+        | "meeting"
+        | "video_call"
+        | "sms"
+        | "whatsapp"
+        | "linkedin_message"
+        | "letter"
+        | "other"
+      comm_direction: "inbound" | "outbound" | "internal"
+      comm_sentiment: "positive" | "neutral" | "negative"
       feature_request_category:
         | "feedback"
         | "feature-request"
@@ -1567,6 +1750,12 @@ export type Database = {
         | "bug-hunting"
         | "lovable-project"
         | "ama"
+      participant_kind:
+        | "contact"
+        | "platform_user"
+        | "workspace_member"
+        | "external"
+      participant_role: "to" | "from" | "cc" | "bcc" | "attendee" | "organiser"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -1695,6 +1884,19 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "user", "crm_write", "crm_read"],
+      comm_channel: [
+        "email",
+        "call",
+        "meeting",
+        "video_call",
+        "sms",
+        "whatsapp",
+        "linkedin_message",
+        "letter",
+        "other",
+      ],
+      comm_direction: ["inbound", "outbound", "internal"],
+      comm_sentiment: ["positive", "neutral", "negative"],
       feature_request_category: [
         "feedback",
         "feature-request",
@@ -1704,6 +1906,13 @@ export const Constants = {
         "lovable-project",
         "ama",
       ],
+      participant_kind: [
+        "contact",
+        "platform_user",
+        "workspace_member",
+        "external",
+      ],
+      participant_role: ["to", "from", "cc", "bcc", "attendee", "organiser"],
     },
   },
 } as const
