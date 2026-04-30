@@ -9,7 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff, Trash2 } from "lucide-react";
+import { Eye, EyeOff, ExternalLink } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import PricingSettings from "@/components/admin/PricingSettings";
 
 
@@ -157,55 +158,7 @@ export default function Admin() {
     navigate("/");
   };
 
-  const handleDeleteApplication = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this application?")) return;
-    try {
-      const { error } = await supabase
-        .from("pilot_applications")
-        .delete()
-        .eq("id", id);
-      if (error) throw error;
-      setApplications(prev => prev.filter(app => app.id !== id));
-      toast({ title: "Deleted", description: "Application removed." });
-    } catch (error: any) {
-      console.error("Error deleting application:", error);
-      toast({ title: "Error", description: "Failed to delete application.", variant: "destructive" });
-    }
-  };
-
-  const exportToCSV = () => {
-    const headers = [
-      "Source",
-      "Name",
-      "Email",
-      "Phone",
-      "Message",
-      "Submitted Date"
-    ];
-
-    const csvData = applications.map(app => [
-      app.role || "Unknown",
-      app.name,
-      app.email,
-      app.phone || "",
-      app.help || "",
-      new Date(app.created_at).toLocaleDateString()
-    ]);
-
-    const csvContent = [headers, ...csvData]
-      .map(row => row.map(cell => `"${cell}"`).join(","))
-      .join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    const url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", `enquiries-${new Date().toISOString().split('T')[0]}.csv`);
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+  // Legacy admin is now read-only (CRM cutover). Delete and CSV export removed.
 
   const handleUpdatePassword = async (e: React.FormEvent) => {
     e.preventDefault();
