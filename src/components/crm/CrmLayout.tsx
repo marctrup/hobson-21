@@ -35,7 +35,7 @@ const NAV: NavItem[] = [
   { to: "/crm/communications", label: "Communications", icon: MessageSquare },
   { to: "/crm/issues", label: "Issues", icon: AlertTriangle },
   { to: "/crm/tasks", label: "Tasks", icon: CheckSquare },
-  { to: "/crm/reports", label: "Reports", icon: BarChart3, soon: true },
+  { to: "/crm/reports", label: "Reports", icon: BarChart3 },
   { to: "/crm/settings", label: "Settings", icon: Settings, adminOnly: true },
 ];
 
