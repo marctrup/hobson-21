@@ -30,7 +30,7 @@ type NavItem = {
 const NAV: NavItem[] = [
   { to: "/crm", label: "Dashboard", icon: LayoutDashboard, end: true },
   { to: "/crm/clients", label: "Clients", icon: Users },
-  { to: "/crm/pipeline", label: "Pipeline", icon: KanbanSquare, soon: true },
+  { to: "/crm/pipeline", label: "Pipeline", icon: KanbanSquare },
   { to: "/crm/communications", label: "Communications", icon: MessageSquare, soon: true },
   { to: "/crm/issues", label: "Issues", icon: AlertTriangle, soon: true },
   { to: "/crm/tasks", label: "Tasks", icon: CheckSquare, soon: true },

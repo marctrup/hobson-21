@@ -659,6 +659,42 @@ export type Database = {
           },
         ]
       }
+      crm_pipeline_stages: {
+        Row: {
+          color: string
+          created_at: string
+          display_order: number
+          id: string
+          is_active: boolean
+          is_terminal: boolean
+          key: string
+          label: string
+          updated_at: string
+        }
+        Insert: {
+          color?: string
+          created_at?: string
+          display_order: number
+          id?: string
+          is_active?: boolean
+          is_terminal?: boolean
+          key: string
+          label: string
+          updated_at?: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          display_order?: number
+          id?: string
+          is_active?: boolean
+          is_terminal?: boolean
+          key?: string
+          label?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       document_classification_settings: {
         Row: {
           created_at: string
