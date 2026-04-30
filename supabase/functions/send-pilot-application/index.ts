@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { Resend } from "npm:resend@4.0.0";
 import { pilotApplicationSchema, escapeHtml } from '../_shared/validation.ts';
+import { postToCrmIngest } from '../_shared/crm-ingest.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -85,42 +86,9 @@ serve(async (req) => {
       }
     }
 
-    // Save to database and get the application ID
+    // Cutover: legacy pilot_applications writes are disabled.
+    // The CRM (crm-ingest-website) is now the system of record.
     const applicationId = crypto.randomUUID();
-    const { error: dbError } = await supabase
-      .from('pilot_applications')
-      .insert({
-        id: applicationId,
-        name,
-        company,
-        role,
-        email,
-        phone,
-        preferred_contact: preferredContact,
-        business_types: businessTypes,
-        website: formattedWebsite || null,
-        help
-      })
-
-    if (dbError) {
-      console.error('Database insert error:', dbError)
-      if (dbError.code === '23505') { // Unique constraint violation
-        return new Response(
-          JSON.stringify({ success: false, error: 'This email has already been used for a pilot application.' }),
-          {
-            headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-            status: 400,
-          },
-        )
-      }
-      return new Response(
-        JSON.stringify({ success: false, error: 'Unable to process your application. Please try again.' }),
-        {
-          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-          status: 500,
-        },
-      )
-    }
 
     // Parse name for React Email template (escape for security)
     const nameParts = name.split(' ');
@@ -241,6 +209,26 @@ Submitted at: ${new Date().toISOString()}
       subject: notificationSubject,
       status: notificationStatus,
       error_message: notificationError,
+    });
+
+    // Forward to CRM (fail-soft)
+    await postToCrmIngest({
+      formType: 'pilot',
+      idempotencyKey: applicationId,
+      contact: { name, email, phone: phone ?? null, company, role },
+      payload: {
+        name, company, role, email, phone: phone ?? null,
+        preferred_contact: preferredContact,
+        business_types: businessTypes,
+        website: formattedWebsite || null,
+        help: help ?? null,
+        client_ip: clientIP,
+      },
+      confirmationEmail: {
+        sent: confirmationStatus === 'sent',
+        subject: confirmationSubject,
+        error: confirmationError,
+      },
     });
 
     return new Response(

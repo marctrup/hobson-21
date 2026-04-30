@@ -63,3 +63,5 @@ verify_jwt = false
 
 [functions.crm-revoke-role]
 verify_jwt = false
+[functions.crm-ingest-website]
+verify_jwt = false

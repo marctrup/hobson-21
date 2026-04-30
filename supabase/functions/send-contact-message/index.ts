@@ -2,6 +2,7 @@ import { serve } from "https://deno.land/std@0.168.0/http/server.ts"
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { Resend } from "npm:resend@4.0.0";
 import { contactFormSchema, escapeHtml } from '../_shared/validation.ts';
+import { postToCrmIngest } from '../_shared/crm-ingest.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -76,76 +77,11 @@ serve(async (req) => {
     
     console.log('Processing contact message for:', email)
     
-    // Check if email already exists in pilot_applications (for cross-reference)
-    const { data: existingPilotApp, error: pilotCheckError } = await supabase
-      .from('pilot_applications')
-      .select('email')
-      .eq('email', email)
-      .maybeSingle()
-
-    console.log('Pilot application check result:', { existingPilotApp, pilotCheckError })
-
-    let emailExistsMessage = ''
-    if (existingPilotApp) {
-      emailExistsMessage = '\n\nNote: This email has previously submitted a pilot application.'
-    }
-
-    // Try encrypted insert first, fall back to plaintext if encryption fails
-    let isDuplicate = false;
-    let insertSuccess = false;
-
-    // Attempt encrypted storage via RPC
-    console.log('Attempting encrypted contact message insert for:', email)
-    const { data: contactId, error: encryptedError } = await supabase
-      .rpc('insert_encrypted_contact_message', {
-        p_name: name,
-        p_email: email,
-        p_phone: phone || null,
-        p_message: reason
-      })
-
-    if (encryptedError) {
-      if (encryptedError.code === '23505') {
-        console.log('Duplicate contact message detected')
-        isDuplicate = true;
-        insertSuccess = true;
-      } else {
-        console.warn('Encrypted insert failed, falling back to plaintext storage:', encryptedError.message)
-        
-        // Fallback: insert into plaintext contact_messages table (protected by admin-only SELECT RLS)
-        const { error: plaintextError } = await supabase
-          .from('contact_messages')
-          .insert({
-            name: name,
-            email: email,
-            phone: phone || null,
-            message: reason
-          })
-
-        if (plaintextError) {
-          if (plaintextError.code === '23505') {
-            console.log('Duplicate contact message detected (plaintext)')
-            isDuplicate = true;
-            insertSuccess = true;
-          } else {
-            console.error('Both encrypted and plaintext inserts failed:', plaintextError)
-            return new Response(
-              JSON.stringify({ success: false, error: 'Unable to process your request. Please try again.' }),
-              {
-                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-                status: 500,
-              },
-            )
-          }
-        } else {
-          console.log('Contact message saved to plaintext storage (fallback)')
-          insertSuccess = true;
-        }
-      }
-    } else {
-      console.log('Contact message saved with encryption')
-      insertSuccess = true;
-    }
+    // Cutover: legacy contact_messages_encrypted / contact_messages writes are disabled.
+    // The CRM (crm-ingest-website) is now the system of record.
+    const isDuplicate = false;
+    const existingPilotApp = null;
+    const emailExistsMessage = '';
 
     // Create HTML template with unsubscribe link (escape user input to prevent XSS)
     const safeName = escapeHtml(name)
@@ -193,14 +129,22 @@ serve(async (req) => {
     `;
 
     // Send confirmation email to the user
-    const confirmationResponse = await resend.emails.send({
-      from: "Hobson AI <noreply@hobsonschoice.ai>",
-      to: [email],
-      subject: "Thank you for contacting Hobson AI",
-      html: htmlTemplate,
-    });
-
-    console.log("Confirmation email sent successfully:", confirmationResponse);
+    const confirmationSubject = "Thank you for contacting Hobson AI";
+    let confirmationSent = true;
+    let confirmationError: string | null = null;
+    try {
+      const confirmationResponse = await resend.emails.send({
+        from: "Hobson AI <noreply@hobsonschoice.ai>",
+        to: [email],
+        subject: confirmationSubject,
+        html: htmlTemplate,
+      });
+      console.log("Confirmation email sent successfully:", confirmationResponse);
+    } catch (e: any) {
+      confirmationSent = false;
+      confirmationError = e?.message ?? "unknown";
+      console.error("Confirmation email failed:", e);
+    }
 
     // For team notification, escape user inputs
     const emailContent = `
@@ -224,6 +168,17 @@ Submitted at: ${new Date().toISOString()}
     });
 
     console.log("Notification email sent successfully:", notificationResponse);
+
+    // Forward to CRM (fail-soft)
+    await postToCrmIngest({
+      formType: 'contact',
+      contact: { name, email, phone: phone ?? null },
+      payload: {
+        name, email, phone: phone ?? null, reason,
+        client_ip: clientIP,
+      },
+      confirmationEmail: { sent: confirmationSent, subject: confirmationSubject, error: confirmationError },
+    });
 
     return new Response(
       JSON.stringify({ 
