@@ -24,11 +24,17 @@ import {
   type TaskStatus,
 } from "@/lib/crm/tasksLabels";
 import {
-  ISSUE_PRIORITY_WEIGHT,
   type IssuePriority,
   type IssueStatus,
 } from "@/lib/crm/issuesLabels";
 import { cn } from "@/lib/utils";
+
+const PRIORITY_WEIGHT: Record<IssuePriority, number> = {
+  urgent: 4,
+  high: 3,
+  medium: 2,
+  low: 1,
+};
 
 const SummaryCard = ({
   icon: Icon,
