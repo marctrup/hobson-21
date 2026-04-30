@@ -2,10 +2,8 @@ import { Helmet } from "react-helmet-async";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { ReportsFiltersProvider } from "@/components/crm/reports/ReportsFiltersContext";
 import { ReportsFilterBar } from "@/components/crm/reports/ReportsFilterBar";
-import { PipelineValueOverTimeReport } from "@/components/crm/reports/PipelineValueOverTimeReport";
 import { WonLostRatioReport } from "@/components/crm/reports/WonLostRatioReport";
 import { StageConversionFunnelReport } from "@/components/crm/reports/StageConversionFunnelReport";
-import { PipelineValueByStageReport } from "@/components/crm/reports/PipelineValueByStageReport";
 import { NewEnquiriesReport } from "@/components/crm/reports/NewEnquiriesReport";
 import { LeadSourceMixReport } from "@/components/crm/reports/LeadSourceMixReport";
 import { CommunicationsVolumeReport } from "@/components/crm/reports/CommunicationsVolumeReport";
@@ -46,10 +44,8 @@ export default function CrmReports() {
 
           <SectionTitle>Pipeline health</SectionTitle>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <PipelineValueOverTimeReport />
             <WonLostRatioReport />
             <StageConversionFunnelReport />
-            <PipelineValueByStageReport />
           </div>
 
           <SectionTitle>Lead acquisition</SectionTitle>

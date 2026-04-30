@@ -20,7 +20,6 @@ import {
   CLIENT_STATUSES,
   CLIENT_STATUS_LABELS,
   formatDateUK,
-  formatGBP,
 } from "@/lib/crm/labels";
 import { StageBadge } from "@/components/crm/StageBadge";
 import { InterestBadge } from "@/components/crm/InterestBadge";
@@ -37,7 +36,7 @@ export default function CrmClients() {
       let q = supabase
         .from("crm_clients")
         .select(
-          "id,name,segment,pipeline_stage,interest_level,status,last_contact_date,estimated_deal_value_gbp,owner_id",
+          "id,name,segment,pipeline_stage,interest_level,status,last_contact_date,owner_id",
         )
         .order("updated_at", { ascending: false });
 
@@ -145,20 +144,19 @@ export default function CrmClients() {
                 <th className="text-left px-4 py-2 font-medium">Segment</th>
                 <th className="text-left px-4 py-2 font-medium">Stage</th>
                 <th className="text-left px-4 py-2 font-medium">Interest</th>
-                <th className="text-left px-4 py-2 font-medium">Deal value</th>
                 <th className="text-left px-4 py-2 font-medium">Last contact</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
               {isLoading ? (
                 <tr>
-                  <td colSpan={6} className="p-6 text-center text-slate-500">
+                  <td colSpan={5} className="p-6 text-center text-slate-500">
                     Loading…
                   </td>
                 </tr>
               ) : !clients?.length ? (
                 <tr>
-                  <td colSpan={6} className="p-8 text-center text-slate-500">
+                  <td colSpan={5} className="p-8 text-center text-slate-500">
                     No clients match your filters.{" "}
                     <Link
                       to="/crm/clients/new"
@@ -188,9 +186,6 @@ export default function CrmClients() {
                     </td>
                     <td className="px-4 py-3">
                       <InterestBadge level={c.interest_level} />
-                    </td>
-                    <td className="px-4 py-3 text-slate-700">
-                      {formatGBP(c.estimated_deal_value_gbp)}
                     </td>
                     <td className="px-4 py-3 text-slate-500">
                       {formatDateUK(c.last_contact_date)}

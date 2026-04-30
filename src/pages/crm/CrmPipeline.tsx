@@ -30,7 +30,7 @@ import {
   stageColourClasses,
   type PipelineStage,
 } from "@/hooks/crm/usePipelineStages";
-import { formatGBP } from "@/lib/crm/labels";
+
 import { cn } from "@/lib/utils";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
@@ -41,7 +41,6 @@ interface PipelineClient {
   name: string;
   pipeline_stage: string;
   status: string;
-  estimated_deal_value_gbp: number | null;
   primary_contact_name: string | null;
   segment: string;
 }
@@ -64,7 +63,7 @@ export default function CrmPipeline() {
       const { data, error } = await supabase
         .from("crm_clients")
         .select(
-          "id,name,pipeline_stage,status,estimated_deal_value_gbp,primary_contact_name,segment",
+          "id,name,pipeline_stage,status,primary_contact_name,segment",
         )
         .order("updated_at", { ascending: false });
       if (error) throw error;
@@ -253,10 +252,6 @@ function KanbanColumn({
 }) {
   const { setNodeRef, isOver } = useDroppable({ id: stage.key });
   const colours = stageColourClasses(stage.color);
-  const total = clients.reduce(
-    (sum, c) => sum + (c.estimated_deal_value_gbp ?? 0),
-    0,
-  );
 
   return (
     <div
@@ -285,11 +280,6 @@ function KanbanColumn({
             {clients.length}
           </span>
         </div>
-        {total > 0 && (
-          <span className="text-[11px] text-slate-600 font-medium">
-            {formatGBP(total)}
-          </span>
-        )}
       </div>
       <div className="flex-1 p-2 space-y-2 min-h-[120px]">
         {clients.length === 0 ? (
@@ -402,11 +392,6 @@ function ClientCard({
       {client.primary_contact_name && (
         <div className="text-slate-500 mt-0.5 truncate">
           {client.primary_contact_name}
-        </div>
-      )}
-      {client.estimated_deal_value_gbp != null && (
-        <div className="text-slate-700 mt-1 font-medium">
-          {formatGBP(client.estimated_deal_value_gbp)}
         </div>
       )}
     </div>

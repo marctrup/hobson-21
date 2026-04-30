@@ -52,7 +52,7 @@ import {
   formatGBP,
   formatDateUK,
   formatDateTimeUK,
-  formatSqft,
+  
   SENIORITY_LABELS,
   DEPARTMENTS,
   DEPARTMENT_LABELS,
@@ -320,10 +320,7 @@ const OverviewTab = ({
 
       <Card title="Property profile">
         <Row label="Number of properties" value={c.property_count ?? "—"} />
-        <Row label="Total floor area" value={formatSqft(c.total_floor_area_sqft)} />
         <Row label="Tenure mix" value={c.tenure_mix || "—"} />
-        <Row label="Annual property spend" value={formatGBP(c.estimated_annual_property_spend_gbp)} />
-        <Row label="Lease events (12m)" value={c.upcoming_lease_events_12m ?? "—"} />
       </Card>
 
       <Card title="Subscription">
@@ -338,8 +335,6 @@ const OverviewTab = ({
       <Card title="Sales">
         <Row label="Pipeline stage" value={<StageBadge stage={c.pipeline_stage} />} />
         <Row label="Interest level" value={<InterestBadge level={c.interest_level} />} />
-        <Row label="Deal value" value={formatGBP(c.estimated_deal_value_gbp)} />
-        <Row label="Probability" value={c.probability_to_close != null ? `${c.probability_to_close}%` : "—"} />
         <Row label="Expected close" value={formatDateUK(c.expected_close_date)} />
         <Row label="Lead source" value={c.lead_source || "—"} />
         <Row label="Next action" value={c.next_action ? `${c.next_action}${c.next_action_date ? ` · ${formatDateUK(c.next_action_date)}` : ""}` : "—"} />
