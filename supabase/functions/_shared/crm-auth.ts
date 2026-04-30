@@ -77,6 +77,44 @@ export async function sha256Hex(input: string): Promise<string> {
     .join("");
 }
 
+export type CrmAuditAction =
+  | "CRM_ROLE_GRANTED"
+  | "CRM_ROLE_CHANGED"
+  | "CRM_ROLE_REVOKED"
+  | "CRM_INVITE_ACCEPTED";
+
+/**
+ * Records a CRM role action against security_audit_log with the acting
+ * admin's user_id explicitly set. Edge functions use the service-role key
+ * (no auth.uid() context), so without this the trigger-emitted audit row
+ * has actor=NULL. This RPC closes that gap.
+ *
+ * Best-effort: failures are logged but do not abort the caller.
+ */
+export async function logRoleAction(params: {
+  actorUserId: string;
+  action: CrmAuditAction;
+  targetUserId: string;
+  newRole?: string | null;
+  oldRole?: string | null;
+  metadata?: Record<string, unknown> | null;
+}): Promise<void> {
+  try {
+    const svc = serviceClient();
+    const { error } = await svc.rpc("crm_log_role_action", {
+      p_actor: params.actorUserId,
+      p_action: params.action,
+      p_target_user: params.targetUserId,
+      p_new_role: params.newRole ?? null,
+      p_old_role: params.oldRole ?? null,
+      p_metadata: params.metadata ?? null,
+    });
+    if (error) console.error("crm_log_role_action failed", error);
+  } catch (e) {
+    console.error("crm_log_role_action threw", e);
+  }
+}
+
 /** Generate a cryptographically random URL-safe token (43 chars, ~256 bits). */
 export function generateToken(): string {
   const bytes = new Uint8Array(32);

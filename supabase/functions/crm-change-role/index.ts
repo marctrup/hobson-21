@@ -7,6 +7,7 @@ import {
   getCaller,
   isAdmin,
   serviceClient,
+  logRoleAction,
 } from "../_shared/crm-auth.ts";
 
 const CRM_ROLES = ["admin", "crm_write", "crm_read"];
@@ -50,6 +51,17 @@ Deno.serve(async (req) => {
 
   const svc = serviceClient();
 
+  // Capture the user's existing CRM role (if any) for the audit log.
+  const { data: existingRows } = await svc
+    .from("user_roles")
+    .select("role")
+    .eq("user_id", userId)
+    .in("role", CRM_ROLES);
+  const oldRole =
+    existingRows && existingRows.length > 0
+      ? (existingRows[0] as { role: string }).role
+      : null;
+
   // Insert the new role first if it's not already present, then delete the others.
   // Doing it in this order means the prevent_zero_admins trigger still sees a
   // valid admin while we delete the old admin row (if the caller is changing
@@ -87,6 +99,15 @@ Deno.serve(async (req) => {
       400,
     );
   }
+
+  // Audit: explicit actor (the admin performing the change).
+  await logRoleAction({
+    actorUserId: caller.userId,
+    action: oldRole ? "CRM_ROLE_CHANGED" : "CRM_ROLE_GRANTED",
+    targetUserId: userId,
+    newRole,
+    oldRole,
+  });
 
   return jsonResponse({ success: true });
 });

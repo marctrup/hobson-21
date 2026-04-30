@@ -8,6 +8,7 @@ import {
   getCaller,
   serviceClient,
   sha256Hex,
+  logRoleAction,
 } from "../_shared/crm-auth.ts";
 
 interface AcceptBody {
@@ -131,6 +132,15 @@ Deno.serve(async (req) => {
   if (markErr) {
     console.warn("Could not mark invite accepted", markErr);
   }
+
+  // Audit: explicit actor (the accepting user themselves).
+  await logRoleAction({
+    actorUserId: caller.userId,
+    action: "CRM_INVITE_ACCEPTED",
+    targetUserId: caller.userId,
+    newRole: invite.role,
+    metadata: { invitation_id: invite.id, invited_email: invite.email },
+  });
 
   return jsonResponse({ success: true, role: invite.role });
 });
