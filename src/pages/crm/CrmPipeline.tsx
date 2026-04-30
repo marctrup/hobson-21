@@ -280,11 +280,6 @@ function KanbanColumn({
             {clients.length}
           </span>
         </div>
-        {total > 0 && (
-          <span className="text-[11px] text-slate-600 font-medium">
-            {formatGBP(total)}
-          </span>
-        )}
       </div>
       <div className="flex-1 p-2 space-y-2 min-h-[120px]">
         {clients.length === 0 ? (
