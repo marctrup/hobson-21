@@ -103,13 +103,13 @@ export default function CrmDashboard() {
       const { count: openCount } = await supabase
         .from("crm_issues")
         .select("*", { count: "exact", head: true })
-        .in("status", ["open", "in_progress", "blocked"]);
+        .in("status", ["open", "in_progress", "waiting_on_client"]);
 
       const { data: mine } = await supabase
         .from("crm_issues")
         .select("id, title, status, priority, due_date, client_id")
         .eq("assignee_id", userId!)
-        .in("status", ["open", "in_progress", "blocked"])
+        .in("status", ["open", "in_progress", "waiting_on_client"])
         .order("due_date", { ascending: true, nullsFirst: false })
         .limit(20);
 
@@ -128,8 +128,8 @@ export default function CrmDashboard() {
         const bd = b.due_date ? new Date(b.due_date).getTime() : Infinity;
         if (ad !== bd) return ad - bd;
         return (
-          ISSUE_PRIORITY_WEIGHT[b.priority] -
-          ISSUE_PRIORITY_WEIGHT[a.priority]
+          PRIORITY_WEIGHT[b.priority] -
+          PRIORITY_WEIGHT[a.priority]
         );
       });
 
