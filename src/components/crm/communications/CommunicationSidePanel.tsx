@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import DOMPurify from "dompurify";
-import { Download, Star, Trash2, X } from "lucide-react";
+import { AlertCircle, Download, Star, Trash2, X } from "lucide-react";
+import { LogIssueDialog } from "@/components/crm/issues/LogIssueDialog";
 import {
   Sheet,
   SheetContent,
