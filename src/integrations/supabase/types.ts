@@ -757,6 +757,60 @@ export type Database = {
           },
         ]
       }
+      crm_idempotency_keys: {
+        Row: {
+          created_at: string
+          key: string
+          result: Json | null
+          scope: string
+        }
+        Insert: {
+          created_at?: string
+          key: string
+          result?: Json | null
+          scope: string
+        }
+        Update: {
+          created_at?: string
+          key?: string
+          result?: Json | null
+          scope?: string
+        }
+        Relationships: []
+      }
+      crm_ingest_failures: {
+        Row: {
+          created_at: string
+          error_message: string | null
+          id: string
+          payload: Json
+          resolved_at: string | null
+          retry_count: number
+          source: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          payload: Json
+          resolved_at?: string | null
+          retry_count?: number
+          source: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          error_message?: string | null
+          id?: string
+          payload?: Json
+          resolved_at?: string | null
+          retry_count?: number
+          source?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       crm_invitations: {
         Row: {
           accepted_at: string | null
@@ -1032,6 +1086,39 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      crm_workspace_settings: {
+        Row: {
+          created_at: string
+          default_owner_id: string | null
+          id: string
+          singleton: boolean
+          updated_at: string
+          website_ingest_secret_hash: string | null
+          website_ingest_secret_rotated_at: string | null
+          website_system_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          default_owner_id?: string | null
+          id?: string
+          singleton?: boolean
+          updated_at?: string
+          website_ingest_secret_hash?: string | null
+          website_ingest_secret_rotated_at?: string | null
+          website_system_user_id?: string
+        }
+        Update: {
+          created_at?: string
+          default_owner_id?: string | null
+          id?: string
+          singleton?: boolean
+          updated_at?: string
+          website_ingest_secret_hash?: string | null
+          website_ingest_secret_rotated_at?: string | null
+          website_system_user_id?: string
+        }
+        Relationships: []
       }
       document_classification_settings: {
         Row: {
@@ -1909,6 +1996,7 @@ export type Database = {
         | "linkedin_message"
         | "letter"
         | "other"
+        | "website_form"
       comm_direction: "inbound" | "outbound" | "internal"
       comm_sentiment: "positive" | "neutral" | "negative"
       feature_request_category:
@@ -2080,6 +2168,7 @@ export const Constants = {
         "linkedin_message",
         "letter",
         "other",
+        "website_form",
       ],
       comm_direction: ["inbound", "outbound", "internal"],
       comm_sentiment: ["positive", "neutral", "negative"],
