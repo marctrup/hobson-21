@@ -33,7 +33,8 @@ import { PipelineDistributionCard } from "@/components/crm/dashboard/PipelineDis
 import { RecentCommunicationsCard } from "@/components/crm/dashboard/RecentCommunicationsCard";
 import { CommsByChannelCard } from "@/components/crm/dashboard/CommsByChannelCard";
 import { StaleClientsCard } from "@/components/crm/dashboard/StaleClientsCard";
-import { PlaceholderCard } from "@/components/crm/dashboard/PlaceholderCard";
+import { WebsiteEnquiriesCard } from "@/components/crm/dashboard/WebsiteEnquiriesCard";
+import { OutboundEmailsCard } from "@/components/crm/dashboard/OutboundEmailsCard";
 
 const PRIORITY_WEIGHT: Record<IssuePriority, number> = {
   urgent: 4,
@@ -286,10 +287,10 @@ export default function CrmDashboard() {
           <StaleClientsCard />
         </div>
 
-        {/* Row 6 — Inbound (placeholders) */}
+        {/* Row 6 — Inbound */}
         <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <PlaceholderCard variant="website_enquiries" />
-          <PlaceholderCard variant="outbound_emails" />
+          <WebsiteEnquiriesCard />
+          <OutboundEmailsCard />
         </div>
 
         <div className="mt-8 bg-white border border-slate-200 rounded-lg">
