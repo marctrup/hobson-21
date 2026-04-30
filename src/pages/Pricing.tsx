@@ -111,12 +111,15 @@ const Pricing = () => {
     if (!getStartedFirst.trim() || !getStartedLast.trim() || !getStartedEmail.trim()) return;
     setGetStartedSubmitting(true);
     try {
+      const fullName = `${getStartedFirst.trim()} ${getStartedLast.trim()}`;
       await supabase.functions.invoke('send-pilot-application', {
         body: {
-          name: `${getStartedFirst.trim()} ${getStartedLast.trim()}`,
+          name: fullName,
           email: getStartedEmail.trim(),
           phone: getStartedPhone.trim() || null,
-          company: getStartedCompany.trim() || "Not provided",
+          // If no company provided, fall back to the person's name so the CRM
+          // client record is named after them instead of the literal "Not provided".
+          company: getStartedCompany.trim() || fullName,
           role: "Not provided",
           source: "pricing-get-started",
         }
