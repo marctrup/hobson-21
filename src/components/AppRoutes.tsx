@@ -172,6 +172,7 @@ const AppContent = () => {
                 <Route path="settings" element={<CrmSettings />} />
                 <Route path="settings/team" element={<CrmSettingsTeam />} />
                 <Route path="settings/integration" element={<CrmSettingsIntegration />} />
+                <Route path="settings/ingest-failures" element={<CrmSettingsIngestFailures />} />
               </Route>
 
               <Route path="*" element={<NotFound />} />
