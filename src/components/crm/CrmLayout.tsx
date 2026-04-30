@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { cn } from "@/lib/utils";
+import hobsonOwl from "@/assets/hobson-owl.png";
 
 
 type NavItem = {
@@ -55,7 +56,12 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
     <div className="min-h-screen bg-slate-50 text-slate-900 flex">
       {/* Sidebar */}
       <aside className="w-60 shrink-0 bg-white border-r border-slate-200 flex flex-col">
-        <div className="h-14 flex items-center px-4 border-b border-slate-200">
+        <div className="h-14 flex items-center gap-2 px-4 border-b border-slate-200">
+          <img
+            src={hobsonOwl}
+            alt="Hobson"
+            className="h-8 w-8 object-contain shrink-0"
+          />
           <span className="font-semibold tracking-tight">Hobson CRM</span>
         </div>
         <nav className="flex-1 px-2 py-3 space-y-1">
@@ -70,8 +76,8 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
                   cn(
                     "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors",
                     isActive
-                      ? "bg-slate-900 text-white"
-                      : "text-slate-700 hover:bg-slate-100",
+                      ? "bg-primary text-primary-foreground"
+                      : "text-slate-700 hover:bg-primary/10 hover:text-primary",
                   )
                 }
               >

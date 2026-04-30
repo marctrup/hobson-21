@@ -4,6 +4,7 @@ import { Helmet } from "react-helmet-async";
 import { AuthForm } from "@/components/auth/AuthForm";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
+import hobsonOwl from "@/assets/hobson-owl.png";
 
 export default function Auth() {
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -70,11 +71,21 @@ export default function Auth() {
       <meta name="robots" content="noindex, nofollow" />
     </Helmet>
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
-      <AuthForm 
-        mode={mode} 
-        onToggleMode={handleToggleMode}
-        onSuccess={handleSuccess}
-      />
+      <div className="w-full max-w-md flex flex-col items-center">
+        <img
+          src={hobsonOwl}
+          alt="Hobson"
+          className="h-20 w-20 object-contain mb-3"
+        />
+        <div className="text-lg font-semibold tracking-tight mb-6">
+          Hobson CRM
+        </div>
+        <AuthForm
+          mode={mode}
+          onToggleMode={handleToggleMode}
+          onSuccess={handleSuccess}
+        />
+      </div>
     </div>
     </>
   );
