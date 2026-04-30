@@ -63,8 +63,9 @@ import {
 import { cn } from "@/lib/utils";
 import { ClientCommunicationsTab } from "@/components/crm/communications/ClientCommunicationsTab";
 import { ClientIssuesTab } from "@/components/crm/issues/ClientIssuesTab";
+import { ClientTasksTab } from "@/components/crm/tasks/ClientTasksTab";
 
-type TabKey = "overview" | "contacts" | "users" | "communications" | "issues" | "notes" | "activity";
+type TabKey = "overview" | "contacts" | "users" | "communications" | "issues" | "tasks" | "notes" | "activity";
 
 const TABS: { key: TabKey; label: string }[] = [
   { key: "overview", label: "Overview" },
@@ -72,6 +73,7 @@ const TABS: { key: TabKey; label: string }[] = [
   { key: "users", label: "Platform users" },
   { key: "communications", label: "Communications" },
   { key: "issues", label: "Issues" },
+  { key: "tasks", label: "Tasks" },
   { key: "notes", label: "Notes" },
   { key: "activity", label: "Activity" },
 ];
@@ -233,6 +235,7 @@ export default function CrmClientDetail() {
           {tab === "users" && <UsersTab clientId={id} canWrite={canWrite} />}
           {tab === "communications" && <ClientCommunicationsTab clientId={id} canWrite={canWrite} />}
           {tab === "issues" && <ClientIssuesTab clientId={id} canWrite={canWrite} />}
+          {tab === "tasks" && <ClientTasksTab clientId={id} canWrite={canWrite} />}
           {tab === "notes" && <NotesTab clientId={id} userId={user?.id} canWrite={canWrite} />}
           {tab === "activity" && <ActivityTab clientId={id} />}
         </div>
