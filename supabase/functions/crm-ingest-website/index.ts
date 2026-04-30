@@ -11,7 +11,7 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-ingest-signature, x-idempotency-key",
 };
 
-type FormType = "contact" | "pilot";
+type FormType = "website";
 
 interface IngestPayload {
   form_type: FormType;
