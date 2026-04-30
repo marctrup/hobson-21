@@ -17,7 +17,9 @@ const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 
 // Strict whitelist for invite link origin.
 // - Exact match on production domains
-// - Single-level <slug>.lovable.app preview subdomains only
+// - Single-level <slug>.lovable.app published subdomains
+// - Single-level <project-id>.lovableproject.com in-editor preview subdomains
+// - id-preview--<uuid>.lovable.app preview iframe subdomains (single label, hyphens allowed)
 // Anchored ^...$ so suffix attacks like "hobsonschoice.ai.evil.com" are rejected.
 const ALLOWED_EXACT_ORIGINS = new Set<string>([
   "https://hobsonschoice.ai",
@@ -26,12 +28,16 @@ const ALLOWED_EXACT_ORIGINS = new Set<string>([
   "https://app.hobsonschoice.ai",
   "https://hobson-21.lovable.app",
 ]);
-const LOVABLE_PREVIEW_RE = /^https:\/\/[a-z0-9-]+\.lovable\.app$/i;
+// Published preview: <slug>.lovable.app  (also matches id-preview--<uuid>.lovable.app
+// because hyphens are part of the [a-z0-9-]+ label and the regex is anchored).
+const LOVABLE_APP_RE = /^https:\/\/[a-z0-9-]+\.lovable\.app$/i;
+// In-editor preview iframe: <project-id>.lovableproject.com
+const LOVABLE_PROJECT_RE = /^https:\/\/[a-z0-9-]+\.lovableproject\.com$/i;
 
 function isAllowedOrigin(origin: string | null): origin is string {
   if (!origin) return false;
   if (ALLOWED_EXACT_ORIGINS.has(origin)) return true;
-  return LOVABLE_PREVIEW_RE.test(origin);
+  return LOVABLE_APP_RE.test(origin) || LOVABLE_PROJECT_RE.test(origin);
 }
 
 function getAppOrigin(req: Request): string {
