@@ -64,6 +64,7 @@ import { cn } from "@/lib/utils";
 import { ClientCommunicationsTab } from "@/components/crm/communications/ClientCommunicationsTab";
 import { ClientIssuesTab } from "@/components/crm/issues/ClientIssuesTab";
 import { ClientTasksTab } from "@/components/crm/tasks/ClientTasksTab";
+import { DeleteClientDialog } from "@/components/crm/DeleteClientDialog";
 
 type TabKey = "overview" | "contacts" | "users" | "communications" | "issues" | "tasks" | "notes" | "activity";
 
@@ -132,18 +133,6 @@ export default function CrmClientDetail() {
       toast({ title: "Save failed", description: e.message, variant: "destructive" }),
   });
 
-  const deleteClient = useMutation({
-    mutationFn: async () => {
-      const { error } = await supabase.from("crm_clients").delete().eq("id", id);
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      toast({ title: "Client deleted" });
-      navigate("/crm/clients");
-    },
-    onError: (e: Error) =>
-      toast({ title: "Delete failed", description: e.message, variant: "destructive" }),
-  });
 
   if (clientQ.isLoading) {
     return <div className="p-6 text-sm text-slate-500">Loading…</div>;
@@ -205,27 +194,11 @@ export default function CrmClientDetail() {
               <InterestBadge level={c.interest_level} />
             )}
             {isAdmin && (
-              <AlertDialog>
-                <AlertDialogTrigger asChild>
-                  <Button variant="outline" size="sm" className="text-rose-600">
-                    <Trash2 className="size-4" />
-                  </Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                  <AlertDialogHeader>
-                    <AlertDialogTitle>Delete this client?</AlertDialogTitle>
-                    <AlertDialogDescription>
-                      This permanently removes the client and all linked contacts, users, notes, and activity. This cannot be undone.
-                    </AlertDialogDescription>
-                  </AlertDialogHeader>
-                  <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => deleteClient.mutate()}>
-                      Delete client
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
+              <DeleteClientDialog
+                clientId={id}
+                clientName={c.name}
+                onDeleted={() => navigate("/crm/clients")}
+              />
             )}
           </div>
         </div>
@@ -250,7 +223,7 @@ export default function CrmClientDetail() {
 
         <div className="mt-6">
           {tab === "overview" && <OverviewTab client={c} canWrite={canWrite} onSave={(p) => updateClient.mutate(p)} />}
-          {tab === "contacts" && <ContactsTab clientId={id} canWrite={canWrite} />}
+          {tab === "contacts" && <ContactsTab clientId={id} canWrite={canWrite} isAdmin={isAdmin} />}
           {tab === "users" && <UsersTab clientId={id} canWrite={canWrite} />}
           {tab === "communications" && (
             <ClientCommunicationsTab
@@ -365,7 +338,7 @@ const OverviewTab = ({
 
 /* ----------------------------- Contacts tab ----------------------------- */
 
-const ContactsTab = ({ clientId, canWrite }: { clientId: string; canWrite: boolean }) => {
+const ContactsTab = ({ clientId, canWrite, isAdmin }: { clientId: string; canWrite: boolean; isAdmin: boolean }) => {
   const qc = useQueryClient();
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState({
@@ -416,11 +389,16 @@ const ContactsTab = ({ clientId, canWrite }: { clientId: string; canWrite: boole
   });
 
   const remove = useMutation({
-    mutationFn: async (id: string) => {
-      const { error } = await supabase.from("crm_contacts").delete().eq("id", id);
+    mutationFn: async (contactId: string) => {
+      const { error } = await supabase.rpc("crm_delete_contact", { p_contact_id: contactId });
       if (error) throw error;
     },
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["crm-contacts", clientId] }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["crm-contacts", clientId] });
+      toast({ title: "Contact deleted" });
+    },
+    onError: (e: Error) =>
+      toast({ title: "Delete failed", description: e.message, variant: "destructive" }),
   });
 
   return (
@@ -488,7 +466,7 @@ const ContactsTab = ({ clientId, canWrite }: { clientId: string; canWrite: boole
                 <th className="text-left px-4 py-2 font-medium">Job title</th>
                 <th className="text-left px-4 py-2 font-medium">Email</th>
                 <th className="text-left px-4 py-2 font-medium">Phone</th>
-                {canWrite && <th />}
+                {isAdmin && <th />}
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100">
@@ -505,15 +483,37 @@ const ContactsTab = ({ clientId, canWrite }: { clientId: string; canWrite: boole
                   <td className="px-4 py-2">{p.job_title ?? "—"}</td>
                   <td className="px-4 py-2">{p.email ?? "—"}</td>
                   <td className="px-4 py-2">{p.phone ?? "—"}</td>
-                  {canWrite && (
+                  {isAdmin && (
                     <td className="px-2 py-2 text-right">
-                      <button
-                        onClick={() => remove.mutate(p.id)}
-                        className="text-slate-400 hover:text-rose-600"
-                        title="Delete"
-                      >
-                        <Trash2 className="size-4" />
-                      </button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <button
+                            className="text-slate-400 hover:text-rose-600"
+                            title="Delete contact"
+                          >
+                            <Trash2 className="size-4" />
+                          </button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>Delete contact?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              This will permanently delete <strong>{p.full_name}</strong> and
+                              remove them from all communication participant records. This
+                              cannot be undone.
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => remove.mutate(p.id)}
+                              className="bg-rose-600 hover:bg-rose-700"
+                            >
+                              Delete
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
                     </td>
                   )}
                 </tr>

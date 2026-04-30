@@ -1811,7 +1811,22 @@ export type Database = {
         }
         Returns: boolean
       }
+      crm_delete_client: { Args: { p_client_id: string }; Returns: undefined }
+      crm_delete_contact: { Args: { p_contact_id: string }; Returns: undefined }
       crm_find_user_id_by_email: { Args: { p_email: string }; Returns: string }
+      crm_get_client_delete_preview: {
+        Args: { p_client_id: string }
+        Returns: {
+          attachments_count: number
+          client_name: string
+          communications_count: number
+          contacts_count: number
+          issue_comments_count: number
+          issues_count: number
+          notes_count: number
+          tasks_count: number
+        }[]
+      }
       crm_get_integration_settings: {
         Args: never
         Returns: {
