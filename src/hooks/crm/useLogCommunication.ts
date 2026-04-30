@@ -128,21 +128,40 @@ export const useDeleteCommunication = () => {
   const qc = useQueryClient();
   return useMutation({
     mutationFn: async (id: string) => {
-      // Best-effort cleanup of storage files first
+      // 1. Look up storage paths first (so we know what to clean up after).
+      //    Read failures are non-fatal — worst case we orphan files.
       const { data: atts } = await supabase
         .from("communication_attachments")
         .select("storage_path")
         .eq("communication_id", id);
-      if (atts && atts.length > 0) {
-        await supabase.storage
-          .from("crm-comm-attachments")
-          .remove(atts.map((a) => a.storage_path));
-      }
+
+      // 2. Delete the DB row. RLS gates this — if the user isn't allowed,
+      //    we throw and storage stays untouched.
       const { error } = await supabase
         .from("communications")
         .delete()
         .eq("id", id);
       if (error) throw error;
+
+      // 3. Best-effort storage cleanup. Failures are logged but swallowed
+      //    so a partial cleanup doesn't surface as a "delete failed" toast.
+      if (atts && atts.length > 0) {
+        try {
+          const { error: rmErr } = await supabase.storage
+            .from("crm-comm-attachments")
+            .remove(atts.map((a) => a.storage_path));
+          if (rmErr) {
+            // eslint-disable-next-line no-console
+            console.warn(
+              "[crm] communication deleted, but storage cleanup failed:",
+              rmErr.message,
+            );
+          }
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.warn("[crm] storage cleanup threw:", e);
+        }
+      }
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["crm-communications"] });
