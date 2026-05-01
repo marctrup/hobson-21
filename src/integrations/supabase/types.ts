@@ -517,8 +517,8 @@ export type Database = {
         Row: {
           address_line_1: string | null
           address_line_2: string | null
-          annual_revenue_band: string | null
           billing_cycle: string | null
+          champion_role: string | null
           city: string | null
           client_type: string
           compliance_focus: string[] | null
@@ -576,8 +576,8 @@ export type Database = {
         Insert: {
           address_line_1?: string | null
           address_line_2?: string | null
-          annual_revenue_band?: string | null
           billing_cycle?: string | null
+          champion_role?: string | null
           city?: string | null
           client_type?: string
           compliance_focus?: string[] | null
@@ -635,8 +635,8 @@ export type Database = {
         Update: {
           address_line_1?: string | null
           address_line_2?: string | null
-          annual_revenue_band?: string | null
           billing_cycle?: string | null
+          champion_role?: string | null
           city?: string | null
           client_type?: string
           compliance_focus?: string[] | null

@@ -49,6 +49,7 @@ import {
   CLIENT_STATUSES,
   CLIENT_STATUS_LABELS,
   SUBSCRIPTION_STATUS_LABELS,
+  CHAMPION_ROLE_LABELS,
   formatGBP,
   formatDateUK,
   formatDateTimeUK,
@@ -300,7 +301,12 @@ const OverviewTab = ({
       <Card title="Firmographics">
         <Row label="Type" value={c.client_type === "individual" ? "Individual" : "Business"} />
         <Row label="Staff size" value={c.staff_size_band || "—"} />
-        <Row label="Annual revenue" value={c.annual_revenue_band || "—"} />
+        {c.champion_role && (
+          <Row
+            label="Champion's role"
+            value={CHAMPION_ROLE_LABELS[c.champion_role as keyof typeof CHAMPION_ROLE_LABELS] ?? c.champion_role}
+          />
+        )}
       </Card>
 
       <Card title="Property profile">

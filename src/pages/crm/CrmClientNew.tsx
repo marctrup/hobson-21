@@ -32,7 +32,8 @@ import {
   PRIORITIES,
   PRIORITY_LABELS,
   STAFF_SIZE_BANDS,
-  REVENUE_BANDS,
+  CHAMPION_ROLES,
+  CHAMPION_ROLE_LABELS,
   TENURE_MIX,
   TENURE_MIX_LABELS,
   SUBSCRIPTION_STATUSES,
@@ -113,7 +114,7 @@ export default function CrmClientNew() {
     primary_contact_email: "",
     primary_contact_phone: "",
     staff_size_band: "",
-    annual_revenue_band: "",
+    champion_role: "",
     property_count: "",
     tenure_mix: "",
     subscription_status: "not_subscribed",
@@ -190,7 +191,7 @@ export default function CrmClientNew() {
         primary_contact_email: stringOrNull(form.primary_contact_email),
         primary_contact_phone: stringOrNull(form.primary_contact_phone),
         staff_size_band: stringOrNull(form.staff_size_band),
-        annual_revenue_band: stringOrNull(form.annual_revenue_band),
+        champion_role: stringOrNull(form.champion_role),
         property_count: numericOrNull(form.property_count),
         tenure_mix: stringOrNull(form.tenure_mix),
         subscription_status: form.subscription_status,
@@ -353,6 +354,18 @@ export default function CrmClientNew() {
           </div>
 
           <div>
+            <Label className="text-sm font-medium">Champion's role</Label>
+            <Select value={form.champion_role} onValueChange={(v) => set("champion_role", v)}>
+              <SelectTrigger className="mt-1 h-11"><SelectValue placeholder="—" /></SelectTrigger>
+              <SelectContent>
+                {CHAMPION_ROLES.map((r) => (
+                  <SelectItem key={r} value={r}>{CHAMPION_ROLE_LABELS[r]}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
             <Label className="text-sm font-medium">Notes</Label>
             <Textarea
               className="mt-1 min-h-[120px] text-base"
@@ -492,11 +505,13 @@ export default function CrmClientNew() {
               </SelectContent>
             </Select>
           </Field>
-          <Field label="Annual revenue">
-            <Select value={form.annual_revenue_band} onValueChange={(v) => set("annual_revenue_band", v)}>
+          <Field label="Champion's role">
+            <Select value={form.champion_role} onValueChange={(v) => set("champion_role", v)}>
               <SelectTrigger><SelectValue placeholder="—" /></SelectTrigger>
               <SelectContent>
-                {REVENUE_BANDS.map((s) => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                {CHAMPION_ROLES.map((r) => (
+                  <SelectItem key={r} value={r}>{CHAMPION_ROLE_LABELS[r]}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </Field>
