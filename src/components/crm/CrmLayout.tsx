@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
@@ -11,8 +11,10 @@ import {
   Settings,
   LogOut,
   Plus,
+  Menu,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useAuth } from "@/hooks/useAuth";
 import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { useWorkspaceName } from "@/hooks/crm/useWorkspaceName";
@@ -51,96 +53,119 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
   const { role, isAdmin, canWrite } = useCrmAccess();
   const { name: workspaceName } = useWorkspaceName();
   const navigate = useNavigate();
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const badge = role ? ROLE_BADGE[role] : null;
   const showWorkspaceSubtitle =
     workspaceName && workspaceName !== "Hobson CRM";
 
-  return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex">
-      {/* Sidebar */}
-      <aside className="w-60 shrink-0 bg-white border-r border-slate-200 flex flex-col">
-        <div className="h-14 flex items-center gap-2 px-4 border-b border-slate-200">
-          <img
-            src={hobsonOwl}
-            alt="Hobson"
-            className="h-8 w-8 object-contain shrink-0"
-          />
-          <div className="flex flex-col min-w-0">
-            <span className="font-semibold tracking-tight leading-tight">
-              Hobson CRM
-            </span>
-            {showWorkspaceSubtitle && (
-              <span
-                className="text-[11px] text-slate-500 leading-tight truncate"
-                title={workspaceName}
-              >
-                {workspaceName}
-              </span>
-            )}
-          </div>
-        </div>
-        <nav className="flex-1 px-2 py-3 space-y-1">
-          {NAV.filter((item) => !item.adminOnly || isAdmin).map((item) => {
-            const Icon = item.icon;
-            return (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.end}
-                className={({ isActive }) =>
-                  cn(
-                    "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors",
-                    isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-slate-700 hover:bg-primary/10 hover:text-primary",
-                  )
-                }
-              >
-                <Icon className="size-4" />
-                <span className="flex-1">{item.label}</span>
-                {item.soon && (
-                  <span className="text-[10px] uppercase tracking-wide text-slate-400">
-                    Soon
-                  </span>
-                )}
-              </NavLink>
-            );
-          })}
-        </nav>
-        <div className="border-t border-slate-200 p-3 text-xs text-slate-500">
-          <div className="truncate">{user?.email}</div>
-          {badge && (
+  const SidebarInner = ({ onNavigate }: { onNavigate?: () => void }) => (
+    <>
+      <div className="h-14 flex items-center gap-2 px-4 border-b border-slate-200">
+        <img
+          src={hobsonOwl}
+          alt="Hobson"
+          className="h-8 w-8 object-contain shrink-0"
+        />
+        <div className="flex flex-col min-w-0">
+          <span className="font-semibold tracking-tight leading-tight">
+            Hobson CRM
+          </span>
+          {showWorkspaceSubtitle && (
             <span
-              className={cn(
-                "inline-block mt-1 px-2 py-0.5 rounded-md border text-[10px] font-medium",
-                badge.cls,
-              )}
+              className="text-[11px] text-slate-500 leading-tight truncate"
+              title={workspaceName}
             >
-              {badge.label}
+              {workspaceName}
             </span>
           )}
-          <button
-            onClick={async () => {
-              await signOut();
-              navigate("/auth");
-            }}
-            className="mt-3 flex items-center gap-2 text-slate-600 hover:text-slate-900"
-          >
-            <LogOut className="size-3.5" /> Sign out
-          </button>
         </div>
+      </div>
+      <nav className="flex-1 px-2 py-3 space-y-1 overflow-y-auto">
+        {NAV.filter((item) => !item.adminOnly || isAdmin).map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.to}
+              to={item.to}
+              end={item.end}
+              onClick={onNavigate}
+              className={({ isActive }) =>
+                cn(
+                  "flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors min-h-[44px]",
+                  isActive
+                    ? "bg-primary text-primary-foreground"
+                    : "text-slate-700 hover:bg-primary/10 hover:text-primary",
+                )
+              }
+            >
+              <Icon className="size-4" />
+              <span className="flex-1">{item.label}</span>
+              {item.soon && (
+                <span className="text-[10px] uppercase tracking-wide text-slate-400">
+                  Soon
+                </span>
+              )}
+            </NavLink>
+          );
+        })}
+      </nav>
+      <div className="border-t border-slate-200 p-3 text-xs text-slate-500">
+        <div className="truncate">{user?.email}</div>
+        {badge && (
+          <span
+            className={cn(
+              "inline-block mt-1 px-2 py-0.5 rounded-md border text-[10px] font-medium",
+              badge.cls,
+            )}
+          >
+            {badge.label}
+          </span>
+        )}
+        <button
+          onClick={async () => {
+            onNavigate?.();
+            await signOut();
+            navigate("/auth");
+          }}
+          className="mt-3 flex items-center gap-2 text-slate-600 hover:text-slate-900"
+        >
+          <LogOut className="size-3.5" /> Sign out
+        </button>
+      </div>
+    </>
+  );
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex">
+      {/* Desktop sidebar */}
+      <aside className="hidden md:flex w-60 shrink-0 bg-white border-r border-slate-200 flex-col">
+        <SidebarInner />
       </aside>
+
+      {/* Mobile sidebar (Sheet) */}
+      <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+        <SheetContent side="left" className="p-0 w-64 flex flex-col">
+          <SidebarInner onNavigate={() => setMobileOpen(false)} />
+        </SheetContent>
+      </Sheet>
 
       {/* Main */}
       <div className="flex-1 flex flex-col min-w-0">
-        <header className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-6">
-          <div className="text-sm text-slate-500">Internal CRM · Hobson's Choice</div>
+        <header className="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-4 md:px-6 gap-2">
+          {/* Mobile: hamburger + brand */}
+          <div className="flex md:hidden items-center gap-2 min-w-0">
+            <SheetTriggerButton onClick={() => setMobileOpen(true)} />
+            <img src={hobsonOwl} alt="Hobson" className="h-7 w-7 object-contain shrink-0" />
+            <span className="font-semibold tracking-tight truncate">Hobson CRM</span>
+          </div>
+          {/* Desktop subtitle */}
+          <div className="hidden md:block text-sm text-slate-500">Internal CRM · Hobson's Choice</div>
           {canWrite && (
             <Button
               size="sm"
               onClick={() => navigate("/crm/clients/new")}
-              className="gap-1"
+              className="hidden md:inline-flex gap-1"
             >
               <Plus className="size-4" /> New client
             </Button>
@@ -151,3 +176,14 @@ export const CrmLayout = ({ children }: { children?: ReactNode }) => {
     </div>
   );
 };
+
+const SheetTriggerButton = ({ onClick }: { onClick: () => void }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    aria-label="Open navigation"
+    className="inline-flex items-center justify-center h-11 w-11 -ml-2 rounded-md text-slate-700 hover:bg-slate-100"
+  >
+    <Menu className="size-5" />
+  </button>
+);
