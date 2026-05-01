@@ -153,7 +153,12 @@ export default function CrmClientDetail() {
         <title>{c.name} | CRM</title>
         <meta name="robots" content="noindex,nofollow" />
       </Helmet>
-      <div className="p-6 max-w-7xl mx-auto">
+
+      {/* ============== Mobile basic view ============== */}
+      <MobileClientDetail clientId={id} client={c} />
+
+      {/* ============== Desktop view ============== */}
+      <div className="hidden md:block p-6 max-w-7xl mx-auto">
         <Link to="/crm/clients" className="inline-flex items-center gap-1 text-sm text-slate-600 hover:text-slate-900">
           <ArrowLeft className="size-4" /> Back to clients
         </Link>
