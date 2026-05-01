@@ -223,6 +223,19 @@ export default function CrmClientNew() {
         .select("id")
         .single();
       if (error) throw error;
+
+      // Persist sub-sector links (best-effort; surface errors via toast).
+      if (sectorHasSubSectors(form.segment) && subSectorIds.length > 0) {
+        try {
+          await syncClientSubSectors(data.id, subSectorIds);
+        } catch (e) {
+          toast({
+            title: "Client created, but sub-sectors couldn't be saved",
+            description: (e as Error).message,
+            variant: "destructive",
+          });
+        }
+      }
       return data;
     },
     onSuccess: (data) => {
@@ -280,7 +293,7 @@ export default function CrmClientNew() {
             </Select>
           </Field>
           <Field label="Segment">
-            <Select value={form.segment} onValueChange={(v) => set("segment", v)}>
+            <Select value={form.segment} onValueChange={onSectorChange}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
                 {Object.entries(SEGMENT_LABELS).map(([k, l]) => (
@@ -289,7 +302,16 @@ export default function CrmClientNew() {
               </SelectContent>
             </Select>
           </Field>
-          <Field label="Sub-sector">
+          {sectorHasSubSectors(form.segment) && (
+            <Field label="Sub-sectors">
+              <SubSectorMultiSelect
+                sector={form.segment}
+                value={subSectorIds}
+                onChange={setSubSectorIds}
+              />
+            </Field>
+          )}
+          <Field label="Sub-sector (free text)">
             <Input value={form.sub_sector} onChange={(e) => set("sub_sector", e.target.value)} />
           </Field>
           <Field label="Website">
