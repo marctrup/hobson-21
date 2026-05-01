@@ -21,6 +21,8 @@ import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { toast } from "@/hooks/use-toast";
 import {
   SEGMENT_LABELS,
+  SEGMENT_KEYS,
+  sectorHasSubSectors,
   PIPELINE_STAGES,
   PIPELINE_STAGE_LABELS,
   INTEREST_LEVELS,
@@ -40,8 +42,11 @@ import {
   BILLING_CYCLES,
   BILLING_CYCLE_LABELS,
 } from "@/lib/crm/labels";
+import { SubSectorMultiSelect } from "@/components/crm/SubSectorMultiSelect";
+import { useSubSectors } from "@/hooks/crm/useSubSectors";
+import { syncClientSubSectors } from "@/lib/crm/clientSubSectors";
 
-const SegmentKeys = ["property_asset_manager", "retail_operator", "hospitality", "corporate_occupier", "other"] as const;
+const SegmentKeys = SEGMENT_KEYS;
 
 const ClientSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(200),
@@ -131,9 +136,24 @@ export default function CrmClientNew() {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [subSectorIds, setSubSectorIds] = useState<string[]>([]);
+  const { data: allSubSectors } = useSubSectors();
 
   const set = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((f) => ({ ...f, [k]: v }));
+
+  // When sector changes, drop any selected sub-sectors that no longer apply.
+  const onSectorChange = (next: string) => {
+    set("segment", next);
+    if (!sectorHasSubSectors(next)) {
+      setSubSectorIds([]);
+      return;
+    }
+    const valid = new Set(
+      (allSubSectors ?? []).filter((s) => s.sector === next).map((s) => s.id),
+    );
+    setSubSectorIds((prev) => prev.filter((id) => valid.has(id)));
+  };
 
   const numericOrNull = (v: string) => {
     if (v === "" || v === null || v === undefined) return null;
@@ -203,6 +223,19 @@ export default function CrmClientNew() {
         .select("id")
         .single();
       if (error) throw error;
+
+      // Persist sub-sector links (best-effort; surface errors via toast).
+      if (sectorHasSubSectors(form.segment) && subSectorIds.length > 0) {
+        try {
+          await syncClientSubSectors(data.id, subSectorIds);
+        } catch (e) {
+          toast({
+            title: "Client created, but sub-sectors couldn't be saved",
+            description: (e as Error).message,
+            variant: "destructive",
+          });
+        }
+      }
       return data;
     },
     onSuccess: (data) => {
@@ -260,7 +293,7 @@ export default function CrmClientNew() {
             </Select>
           </Field>
           <Field label="Segment">
-            <Select value={form.segment} onValueChange={(v) => set("segment", v)}>
+            <Select value={form.segment} onValueChange={onSectorChange}>
               <SelectTrigger><SelectValue /></SelectTrigger>
               <SelectContent>
                 {Object.entries(SEGMENT_LABELS).map(([k, l]) => (
@@ -269,7 +302,16 @@ export default function CrmClientNew() {
               </SelectContent>
             </Select>
           </Field>
-          <Field label="Sub-sector">
+          {sectorHasSubSectors(form.segment) && (
+            <Field label="Sub-sectors">
+              <SubSectorMultiSelect
+                sector={form.segment}
+                value={subSectorIds}
+                onChange={setSubSectorIds}
+              />
+            </Field>
+          )}
+          <Field label="Sub-sector (free text)">
             <Input value={form.sub_sector} onChange={(e) => set("sub_sector", e.target.value)} />
           </Field>
           <Field label="Website">
