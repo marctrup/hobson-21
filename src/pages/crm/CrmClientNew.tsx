@@ -136,9 +136,24 @@ export default function CrmClientNew() {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [subSectorIds, setSubSectorIds] = useState<string[]>([]);
+  const { data: allSubSectors } = useSubSectors();
 
   const set = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) =>
     setForm((f) => ({ ...f, [k]: v }));
+
+  // When sector changes, drop any selected sub-sectors that no longer apply.
+  const onSectorChange = (next: string) => {
+    set("segment", next);
+    if (!sectorHasSubSectors(next)) {
+      setSubSectorIds([]);
+      return;
+    }
+    const valid = new Set(
+      (allSubSectors ?? []).filter((s) => s.sector === next).map((s) => s.id),
+    );
+    setSubSectorIds((prev) => prev.filter((id) => valid.has(id)));
+  };
 
   const numericOrNull = (v: string) => {
     if (v === "" || v === null || v === undefined) return null;
