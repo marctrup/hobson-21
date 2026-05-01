@@ -1034,3 +1034,106 @@ const ActivityTab = ({ clientId }: { clientId: string }) => {
     </div>
   );
 };
+
+/* ----------------------------- Mobile basic view ----------------------------- */
+
+const MobileClientDetail = ({ clientId, client }: { clientId: string; client: any }) => {
+  const { data: links } = useClientSubSectors(clientId);
+  const { data: all } = useSubSectors();
+  const subLabels = (all ?? [])
+    .filter((s) => (links ?? []).includes(s.id))
+    .sort((a, b) => a.sort_order - b.sort_order || a.label.localeCompare(b.label))
+    .map((s) => s.label);
+
+  const statusLabel = CLIENT_STATUS_LABELS[client.status] ?? client.status;
+  const stageLabel = PIPELINE_STAGE_LABELS[client.pipeline_stage] ?? client.pipeline_stage;
+
+  return (
+    <div className="md:hidden p-4 pb-24 max-w-xl mx-auto">
+      <Link to="/crm/clients" className="inline-flex items-center gap-1 text-sm text-slate-600 min-h-[44px]">
+        <ArrowLeft className="size-4" /> Back to clients
+      </Link>
+
+      <h1 className="mt-2 text-2xl font-semibold tracking-tight leading-tight">{client.name}</h1>
+
+      <div className="mt-2 flex flex-wrap items-center gap-2 text-sm text-slate-600">
+        <span>{SEGMENT_LABELS[client.segment] ?? client.segment ?? "—"}</span>
+        {statusLabel && (
+          <span className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700">
+            {statusLabel}
+          </span>
+        )}
+      </div>
+
+      {subLabels.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {subLabels.map((l) => (
+            <span
+              key={l}
+              className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700"
+            >
+              {l}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-5 bg-white border border-slate-200 rounded-lg divide-y divide-slate-100">
+        <div className="flex items-center justify-between px-4 py-3 text-sm">
+          <span className="text-slate-500">Pipeline stage</span>
+          <span className="text-slate-900 font-medium">{stageLabel}</span>
+        </div>
+        <div className="flex items-center justify-between px-4 py-3 text-sm">
+          <span className="text-slate-500">Last contact</span>
+          <span className="text-slate-900">{formatDateUK(client.last_contact_date)}</span>
+        </div>
+      </div>
+
+      <div className="mt-4 bg-white border border-slate-200 rounded-lg overflow-hidden">
+        <div className="px-4 py-2 border-b border-slate-200 text-sm font-medium">
+          Primary contact
+        </div>
+        <div className="divide-y divide-slate-100">
+          <div className="px-4 py-3 text-sm">
+            <div className="text-xs text-slate-500">Name</div>
+            <div className="mt-0.5 text-slate-900">{client.primary_contact_name || "—"}</div>
+          </div>
+          <div className="px-4 py-3 text-sm">
+            <div className="text-xs text-slate-500">Email</div>
+            <div className="mt-0.5">
+              {client.primary_contact_email ? (
+                <a
+                  href={`mailto:${client.primary_contact_email}`}
+                  className="text-primary underline break-all min-h-[44px] inline-flex items-center"
+                >
+                  {client.primary_contact_email}
+                </a>
+              ) : (
+                <span className="text-slate-900">—</span>
+              )}
+            </div>
+          </div>
+          <div className="px-4 py-3 text-sm">
+            <div className="text-xs text-slate-500">Phone</div>
+            <div className="mt-0.5">
+              {client.primary_contact_phone ? (
+                <a
+                  href={`tel:${client.primary_contact_phone}`}
+                  className="text-primary underline min-h-[44px] inline-flex items-center"
+                >
+                  {client.primary_contact_phone}
+                </a>
+              ) : (
+                <span className="text-slate-900">—</span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 px-4 py-3 text-sm text-slate-700">
+        Open this client on a larger screen to edit details, log communications and manage tasks.
+      </div>
+    </div>
+  );
+};
