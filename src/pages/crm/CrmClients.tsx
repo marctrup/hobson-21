@@ -44,6 +44,7 @@ export default function CrmClients() {
   const [subSectorIds, setSubSectorIds] = useState<string[]>([]);
   const navigate = useNavigate();
   const { canWrite } = useCrmAccess();
+  const { data: allSubSectors } = useSubSectors();
 
   // Reset selected sub-sectors when sector filter changes (other than "all").
   const onSectorChange = (next: string) => {
