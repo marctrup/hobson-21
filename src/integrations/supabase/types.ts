@@ -409,6 +409,39 @@ export type Database = {
           },
         ]
       }
+      crm_client_sub_sectors: {
+        Row: {
+          client_id: string
+          created_at: string
+          sub_sector_id: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          sub_sector_id: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          sub_sector_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "crm_client_sub_sectors_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "crm_clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "crm_client_sub_sectors_sub_sector_id_fkey"
+            columns: ["sub_sector_id"]
+            isOneToOne: false
+            referencedRelation: "crm_sub_sectors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       crm_client_users: {
         Row: {
           client_id: string
@@ -974,6 +1007,36 @@ export type Database = {
           is_terminal?: boolean
           key?: string
           label?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      crm_sub_sectors: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          label: string
+          sector: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          label: string
+          sector: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          label?: string
+          sector?: string
+          sort_order?: number
           updated_at?: string
         }
         Relationships: []
