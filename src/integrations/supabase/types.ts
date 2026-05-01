@@ -563,8 +563,7 @@ export type Database = {
           segment: string
           staff_size_band: string | null
           status: string
-          subscription_plan: string | null
-          subscription_status: string | null
+          subscription_tier: string | null
           tags: string[] | null
           tech_stack: string[] | null
           tenure_mix: string | null
@@ -622,8 +621,7 @@ export type Database = {
           segment?: string
           staff_size_band?: string | null
           status?: string
-          subscription_plan?: string | null
-          subscription_status?: string | null
+          subscription_tier?: string | null
           tags?: string[] | null
           tech_stack?: string[] | null
           tenure_mix?: string | null
@@ -681,8 +679,7 @@ export type Database = {
           segment?: string
           staff_size_band?: string | null
           status?: string
-          subscription_plan?: string | null
-          subscription_status?: string | null
+          subscription_tier?: string | null
           tags?: string[] | null
           tech_stack?: string[] | null
           tenure_mix?: string | null
