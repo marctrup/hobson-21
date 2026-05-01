@@ -98,19 +98,22 @@ export const PRIORITY_LABELS: Record<string, string> = {
   high: "High",
 };
 
-export const SUBSCRIPTION_STATUSES = [
-  "trial",
-  "active",
-  "paused",
-  "cancelled",
-  "not_subscribed",
+export const SUBSCRIPTION_TIERS = [
+  "free_pilot",
+  "tier_1",
+  "tier_2",
+  "tier_3",
+  "tier_4",
+  "custom_enterprise",
 ] as const;
-export const SUBSCRIPTION_STATUS_LABELS: Record<string, string> = {
-  trial: "Trial",
-  active: "Active",
-  paused: "Paused",
-  cancelled: "Cancelled",
-  not_subscribed: "Not subscribed",
+export type SubscriptionTier = (typeof SUBSCRIPTION_TIERS)[number];
+export const SUBSCRIPTION_TIER_LABELS: Record<SubscriptionTier, string> = {
+  free_pilot: "Free (pilot)",
+  tier_1: "Tier 1",
+  tier_2: "Tier 2",
+  tier_3: "Tier 3",
+  tier_4: "Tier 4",
+  custom_enterprise: "Custom enterprise",
 };
 
 export const LEAD_SOURCES = [

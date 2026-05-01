@@ -36,8 +36,8 @@ import {
   CHAMPION_ROLE_LABELS,
   TENURE_MIX,
   TENURE_MIX_LABELS,
-  SUBSCRIPTION_STATUSES,
-  SUBSCRIPTION_STATUS_LABELS,
+  SUBSCRIPTION_TIERS,
+  SUBSCRIPTION_TIER_LABELS,
   LEAD_SOURCES,
   LEAD_SOURCE_LABELS,
   BILLING_CYCLES,
@@ -117,8 +117,7 @@ export default function CrmClientNew() {
     champion_role: "",
     property_count: "",
     tenure_mix: "",
-    subscription_status: "not_subscribed",
-    subscription_plan: "",
+    subscription_tier: "",
     contracted_monthly_value_gbp: "",
     licensed_user_seats: "",
     billing_cycle: "",
@@ -194,8 +193,7 @@ export default function CrmClientNew() {
         champion_role: stringOrNull(form.champion_role),
         property_count: numericOrNull(form.property_count),
         tenure_mix: stringOrNull(form.tenure_mix),
-        subscription_status: form.subscription_status,
-        subscription_plan: stringOrNull(form.subscription_plan),
+        subscription_tier: stringOrNull(form.subscription_tier),
         contracted_monthly_value_gbp: numericOrNull(form.contracted_monthly_value_gbp),
         licensed_user_seats: numericOrNull(form.licensed_user_seats),
         billing_cycle: stringOrNull(form.billing_cycle),
@@ -532,18 +530,18 @@ export default function CrmClientNew() {
         </Section>
 
         <Section title="Subscription">
-          <Field label="Subscription status">
-            <Select value={form.subscription_status} onValueChange={(v) => set("subscription_status", v)}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+          <div className="md:col-span-2 -mt-1 mb-1 text-xs text-slate-500">
+            Contract details are typically only needed for Custom enterprise plans. Tier 1–4 customers can leave these blank.
+          </div>
+          <Field label="Plan">
+            <Select value={form.subscription_tier} onValueChange={(v) => set("subscription_tier", v)}>
+              <SelectTrigger><SelectValue placeholder="Select plan…" /></SelectTrigger>
               <SelectContent>
-                {SUBSCRIPTION_STATUSES.map((s) => (
-                  <SelectItem key={s} value={s}>{SUBSCRIPTION_STATUS_LABELS[s]}</SelectItem>
+                {SUBSCRIPTION_TIERS.map((t) => (
+                  <SelectItem key={t} value={t}>{SUBSCRIPTION_TIER_LABELS[t]}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
-          </Field>
-          <Field label="Plan">
-            <Input value={form.subscription_plan} onChange={(e) => set("subscription_plan", e.target.value)} placeholder="Starter / Pro / Enterprise" />
           </Field>
           <Field label="Monthly value (£)">
             <Input type="number" value={form.contracted_monthly_value_gbp} onChange={(e) => set("contracted_monthly_value_gbp", e.target.value)} />
