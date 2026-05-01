@@ -65,6 +65,10 @@ import { ClientCommunicationsTab } from "@/components/crm/communications/ClientC
 import { ClientIssuesTab } from "@/components/crm/issues/ClientIssuesTab";
 import { ClientTasksTab } from "@/components/crm/tasks/ClientTasksTab";
 import { DeleteClientDialog } from "@/components/crm/DeleteClientDialog";
+import { SubSectorMultiSelect } from "@/components/crm/SubSectorMultiSelect";
+import { useSubSectors, useClientSubSectors } from "@/hooks/crm/useSubSectors";
+import { syncClientSubSectors } from "@/lib/crm/clientSubSectors";
+import { sectorHasSubSectors, SEGMENT_KEYS } from "@/lib/crm/labels";
 
 type TabKey = "overview" | "contacts" | "users" | "communications" | "issues" | "tasks" | "notes" | "activity";
 
