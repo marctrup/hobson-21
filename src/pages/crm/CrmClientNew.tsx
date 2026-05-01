@@ -261,7 +261,132 @@ export default function CrmClientNew() {
         <title>New client | CRM</title>
         <meta name="robots" content="noindex,nofollow" />
       </Helmet>
-      <div className="p-6 max-w-5xl mx-auto space-y-6">
+
+      {/* ============== Mobile form ============== */}
+      <div className="md:hidden p-4 pb-28 max-w-xl mx-auto">
+        <h1 className="text-xl font-semibold tracking-tight">New client</h1>
+        <p className="text-sm text-slate-500 mt-1">
+          Just the basics. You can add more details later on desktop.
+        </p>
+
+        <div className="mt-5 space-y-4">
+          <div>
+            <Label className="text-sm font-medium">Name *</Label>
+            <Input
+              className="mt-1 h-11 text-base"
+              value={form.name}
+              onChange={(e) => set("name", e.target.value)}
+            />
+            {errors.name && <p className="text-xs text-rose-600 mt-1">{errors.name}</p>}
+          </div>
+
+          <div>
+            <Label className="text-sm font-medium">Type</Label>
+            <Select
+              value={form.client_type ?? undefined}
+              onValueChange={(v) => set("client_type", v as "business" | "individual")}
+            >
+              <SelectTrigger className="mt-1 h-11"><SelectValue placeholder="Business or individual?" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="business">Business</SelectItem>
+                <SelectItem value="individual">Individual</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div>
+            <Label className="text-sm font-medium">Segment</Label>
+            <Select value={form.segment ?? undefined} onValueChange={onSectorChange}>
+              <SelectTrigger className="mt-1 h-11"><SelectValue placeholder="Choose a sector" /></SelectTrigger>
+              <SelectContent>
+                {Object.entries(SEGMENT_LABELS).map(([k, l]) => (
+                  <SelectItem key={k} value={k}>{l}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {sectorHasSubSectors(form.segment) && (
+            <div>
+              <Label className="text-sm font-medium">Sub-sectors</Label>
+              <div className="mt-1">
+                <SubSectorMultiSelect
+                  sector={form.segment as string}
+                  value={subSectorIds}
+                  onChange={setSubSectorIds}
+                />
+              </div>
+            </div>
+          )}
+
+          <div>
+            <Label className="text-sm font-medium">Primary contact name</Label>
+            <Input
+              className="mt-1 h-11 text-base"
+              value={form.primary_contact_name}
+              onChange={(e) => set("primary_contact_name", e.target.value)}
+            />
+          </div>
+
+          <div>
+            <Label className="text-sm font-medium">Primary contact email</Label>
+            <Input
+              className="mt-1 h-11 text-base"
+              type="email"
+              inputMode="email"
+              autoCapitalize="none"
+              autoCorrect="off"
+              value={form.primary_contact_email}
+              onChange={(e) => set("primary_contact_email", e.target.value)}
+            />
+          </div>
+
+          <div>
+            <Label className="text-sm font-medium">Primary contact phone</Label>
+            <Input
+              className="mt-1 h-11 text-base"
+              type="tel"
+              inputMode="tel"
+              value={form.primary_contact_phone}
+              onChange={(e) => set("primary_contact_phone", e.target.value)}
+            />
+          </div>
+
+          <div>
+            <Label className="text-sm font-medium">Notes</Label>
+            <Textarea
+              className="mt-1 min-h-[120px] text-base"
+              value={form.next_action}
+              onChange={(e) => set("next_action", e.target.value)}
+              placeholder="Anything useful to remember…"
+            />
+          </div>
+        </div>
+
+        {/* Sticky create bar */}
+        <div
+          className="fixed bottom-0 inset-x-0 z-30 bg-white border-t border-slate-200 p-3 flex gap-2"
+          style={{ paddingBottom: "calc(0.75rem + env(safe-area-inset-bottom))" }}
+        >
+          <Button
+            variant="outline"
+            className="h-12"
+            onClick={() => navigate(-1)}
+          >
+            Cancel
+          </Button>
+          <Button
+            className="flex-1 h-12 text-base"
+            onClick={() => create.mutate()}
+            disabled={create.isPending}
+          >
+            {create.isPending ? "Saving…" : "Create client"}
+          </Button>
+        </div>
+      </div>
+
+      {/* ============== Desktop form ============== */}
+      <div className="hidden md:block p-6 max-w-5xl mx-auto space-y-6">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">New client</h1>
