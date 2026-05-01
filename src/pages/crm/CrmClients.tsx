@@ -309,6 +309,7 @@ export default function CrmClients() {
             </tbody>
           </table>
         </div>
+        </div>
       </div>
     </>
   );
