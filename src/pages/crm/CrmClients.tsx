@@ -114,16 +114,28 @@ export default function CrmClients() {
         <title>Clients | CRM</title>
         <meta name="robots" content="noindex,nofollow" />
       </Helmet>
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="p-4 md:p-6 max-w-7xl mx-auto">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Clients</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-slate-500 mt-1 hidden md:block">
               Every business and individual you work with.
             </p>
           </div>
         </div>
 
+        {/* ========== Mobile view ========== */}
+        <MobileClientsList
+          search={search}
+          setSearch={setSearch}
+          clients={clients ?? []}
+          isLoading={isLoading}
+          canWrite={canWrite}
+          onNew={() => navigate("/crm/clients/new")}
+        />
+
+        {/* ========== Desktop view ========== */}
+        <div className="hidden md:block">
         {/* Quick views */}
         <div className="mt-6 flex flex-wrap items-center gap-2">
           {(
