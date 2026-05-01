@@ -50,8 +50,8 @@ const SegmentKeys = SEGMENT_KEYS;
 
 const ClientSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(200),
-  client_type: z.enum(["business", "individual"]),
-  segment: z.enum(SegmentKeys),
+  client_type: z.enum(["business", "individual"]).nullable(),
+  segment: z.enum(SegmentKeys).nullable(),
   website: z.string().trim().max(300).optional().or(z.literal("")),
   email: z.string().trim().max(255).email("Invalid email").optional().or(z.literal("")),
   phone: z.string().trim().max(50).optional().or(z.literal("")),
@@ -98,8 +98,8 @@ export default function CrmClientNew() {
 
   const [form, setForm] = useState({
     name: "",
-    client_type: "business" as "business" | "individual",
-    segment: "other",
+    client_type: null as "business" | "individual" | null,
+    segment: null as string | null,
     website: "",
     email: "",
     phone: "",
@@ -132,7 +132,6 @@ export default function CrmClientNew() {
     next_action_date: "",
     status: "lead",
     priority: "medium",
-    sub_sector: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
