@@ -563,7 +563,6 @@ export type Database = {
           segment: string
           staff_size_band: string | null
           status: string
-          sub_sector: string | null
           subscription_plan: string | null
           subscription_status: string | null
           tags: string[] | null
@@ -623,7 +622,6 @@ export type Database = {
           segment?: string
           staff_size_band?: string | null
           status?: string
-          sub_sector?: string | null
           subscription_plan?: string | null
           subscription_status?: string | null
           tags?: string[] | null
@@ -683,7 +681,6 @@ export type Database = {
           segment?: string
           staff_size_band?: string | null
           status?: string
-          sub_sector?: string | null
           subscription_plan?: string | null
           subscription_status?: string | null
           tags?: string[] | null
