@@ -161,10 +161,11 @@ export default function CrmClientDetail() {
         <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">{c.name}</h1>
-            <div className="mt-1 flex items-center gap-2 text-sm text-slate-500">
+            <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-slate-500">
               <span>{SEGMENT_LABELS[c.segment] ?? c.segment}</span>
               {c.sub_sector && <span>· {c.sub_sector}</span>}
             </div>
+            <ClientSubSectorChips clientId={id} />
           </div>
           <div className="flex items-center gap-3">
             {canWrite ? (
