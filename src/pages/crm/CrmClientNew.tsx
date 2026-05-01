@@ -175,11 +175,8 @@ export default function CrmClientNew() {
       }
       setErrors({});
 
-      const payload = {
+      const payload: Record<string, unknown> = {
         name: form.name.trim(),
-        client_type: form.client_type,
-        segment: form.segment,
-        sub_sector: stringOrNull(form.sub_sector),
         website: stringOrNull(form.website),
         email: stringOrNull(form.email),
         phone: stringOrNull(form.phone),
@@ -215,6 +212,9 @@ export default function CrmClientNew() {
         owner_id: user?.id ?? null,
         created_by: user?.id ?? null,
       };
+      // Only include client_type/segment when explicitly chosen — otherwise let DB defaults apply.
+      if (form.client_type) payload.client_type = form.client_type;
+      if (form.segment) payload.segment = form.segment;
 
       const { data, error } = await supabase
         .from("crm_clients")
