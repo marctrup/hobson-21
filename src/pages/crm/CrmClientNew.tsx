@@ -50,8 +50,8 @@ const SegmentKeys = SEGMENT_KEYS;
 
 const ClientSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(200),
-  client_type: z.enum(["business", "individual"]),
-  segment: z.enum(SegmentKeys),
+  client_type: z.enum(["business", "individual"]).nullable(),
+  segment: z.enum(SegmentKeys).nullable(),
   website: z.string().trim().max(300).optional().or(z.literal("")),
   email: z.string().trim().max(255).email("Invalid email").optional().or(z.literal("")),
   phone: z.string().trim().max(50).optional().or(z.literal("")),
@@ -98,8 +98,8 @@ export default function CrmClientNew() {
 
   const [form, setForm] = useState({
     name: "",
-    client_type: "business" as "business" | "individual",
-    segment: "other",
+    client_type: null as "business" | "individual" | null,
+    segment: null as string | null,
     website: "",
     email: "",
     phone: "",
@@ -132,7 +132,6 @@ export default function CrmClientNew() {
     next_action_date: "",
     status: "lead",
     priority: "medium",
-    sub_sector: "",
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -176,11 +175,8 @@ export default function CrmClientNew() {
       }
       setErrors({});
 
-      const payload = {
+      const payload: Record<string, unknown> = {
         name: form.name.trim(),
-        client_type: form.client_type,
-        segment: form.segment,
-        sub_sector: stringOrNull(form.sub_sector),
         website: stringOrNull(form.website),
         email: stringOrNull(form.email),
         phone: stringOrNull(form.phone),
@@ -216,10 +212,14 @@ export default function CrmClientNew() {
         owner_id: user?.id ?? null,
         created_by: user?.id ?? null,
       };
+      // Only include client_type/segment when explicitly chosen — otherwise let DB defaults apply.
+      if (form.client_type) payload.client_type = form.client_type;
+      if (form.segment) payload.segment = form.segment;
 
       const { data, error } = await supabase
         .from("crm_clients")
-        .insert(payload)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .insert(payload as any)
         .select("id")
         .single();
       if (error) throw error;
@@ -284,8 +284,11 @@ export default function CrmClientNew() {
             <Input value={form.name} onChange={(e) => set("name", e.target.value)} />
           </Field>
           <Field label="Type">
-            <Select value={form.client_type} onValueChange={(v) => set("client_type", v as "business" | "individual")}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+            <Select
+              value={form.client_type ?? undefined}
+              onValueChange={(v) => set("client_type", v as "business" | "individual")}
+            >
+              <SelectTrigger><SelectValue placeholder="Business or individual?" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="business">Business</SelectItem>
                 <SelectItem value="individual">Individual</SelectItem>
@@ -293,8 +296,8 @@ export default function CrmClientNew() {
             </Select>
           </Field>
           <Field label="Segment">
-            <Select value={form.segment} onValueChange={onSectorChange}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+            <Select value={form.segment ?? undefined} onValueChange={onSectorChange}>
+              <SelectTrigger><SelectValue placeholder="Choose a sector" /></SelectTrigger>
               <SelectContent>
                 {Object.entries(SEGMENT_LABELS).map(([k, l]) => (
                   <SelectItem key={k} value={k}>{l}</SelectItem>
@@ -305,15 +308,12 @@ export default function CrmClientNew() {
           {sectorHasSubSectors(form.segment) && (
             <Field label="Sub-sectors">
               <SubSectorMultiSelect
-                sector={form.segment}
+                sector={form.segment as string}
                 value={subSectorIds}
                 onChange={setSubSectorIds}
               />
             </Field>
           )}
-          <Field label="Sub-sector (free text)">
-            <Input value={form.sub_sector} onChange={(e) => set("sub_sector", e.target.value)} />
-          </Field>
           <Field label="Website">
             <Input value={form.website} onChange={(e) => set("website", e.target.value)} placeholder="example.com" />
           </Field>

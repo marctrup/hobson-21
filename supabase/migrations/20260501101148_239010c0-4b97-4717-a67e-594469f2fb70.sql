@@ -1,0 +1,1 @@
+ALTER TABLE public.crm_clients DROP COLUMN sub_sector;
