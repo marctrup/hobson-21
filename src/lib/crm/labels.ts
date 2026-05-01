@@ -1,13 +1,33 @@
 // Centralised display labels and colour tokens for CRM enums.
 // Keep all enum -> human label mapping here so badges stay consistent.
 
+export const SEGMENT_KEYS = [
+  "property_asset_manager",
+  "retail_operator",
+  "hospitality",
+  "corporate_occupier",
+  "residential_occupier",
+  "other",
+] as const;
+export type SegmentKey = (typeof SEGMENT_KEYS)[number];
+
 export const SEGMENT_LABELS: Record<string, string> = {
-  property_asset_manager: "Property & asset manager",
-  retail_operator: "Retail operator",
-  hospitality: "Hospitality",
-  corporate_occupier: "Corporate occupier",
+  property_asset_manager: "Property and asset managers",
+  retail_operator: "Retail operators",
+  hospitality: "Hospitality businesses",
+  corporate_occupier: "Corporate occupiers",
+  residential_occupier: "Residential occupiers",
   other: "Other",
 };
+
+// Sectors that have sub-sector taxonomy. UI hides the sub-sector field for the rest.
+export const SECTORS_WITH_SUB_SECTORS: SegmentKey[] = [
+  "property_asset_manager",
+  "retail_operator",
+  "hospitality",
+];
+export const sectorHasSubSectors = (sector: string | null | undefined) =>
+  !!sector && (SECTORS_WITH_SUB_SECTORS as readonly string[]).includes(sector);
 
 export const PIPELINE_STAGES = [
   "new_enquiry",
