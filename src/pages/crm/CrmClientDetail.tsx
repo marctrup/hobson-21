@@ -275,6 +275,9 @@ const OverviewTab = ({
   const c = client;
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <div className="lg:col-span-2">
+        <SectorEditorCard client={c} canWrite={canWrite} onSave={onSave} />
+      </div>
       <Card title="Contact">
         <Row label="Website" value={c.website ? <a className="underline" href={c.website.startsWith("http") ? c.website : `https://${c.website}`} target="_blank" rel="noreferrer">{c.website}</a> : "—"} />
         <Row label="Email" value={c.email || "—"} />
@@ -338,6 +341,142 @@ const OverviewTab = ({
         </div>
       )}
     </div>
+  );
+};
+
+/* ----------------- Sub-sector chips (header) ----------------- */
+
+const ClientSubSectorChips = ({ clientId }: { clientId: string }) => {
+  const { data: links } = useClientSubSectors(clientId);
+  const { data: all } = useSubSectors();
+  if (!links?.length || !all?.length) return null;
+  const labels = all
+    .filter((s) => links.includes(s.id))
+    .sort((a, b) => a.sort_order - b.sort_order || a.label.localeCompare(b.label))
+    .map((s) => s.label);
+  if (!labels.length) return null;
+  return (
+    <div className="mt-2 flex flex-wrap gap-1.5">
+      {labels.map((l) => (
+        <span
+          key={l}
+          className="inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2 py-0.5 text-xs font-medium text-slate-700"
+        >
+          {l}
+        </span>
+      ))}
+    </div>
+  );
+};
+
+/* ----------------- Sector + sub-sectors editor (Overview tab) ----------------- */
+
+const SectorEditorCard = ({
+  client,
+  canWrite,
+  onSave,
+}: {
+  client: any;
+  canWrite: boolean;
+  onSave: (patch: Record<string, unknown>) => void;
+}) => {
+  const qc = useQueryClient();
+  const clientId = client.id as string;
+  const { data: links = [], isLoading: linksLoading } = useClientSubSectors(clientId);
+  const { data: allSubSectors } = useSubSectors();
+  const [draft, setDraft] = useState<string[] | null>(null);
+  const current = draft ?? links;
+  const dirty =
+    draft !== null &&
+    (draft.length !== links.length || draft.some((id) => !links.includes(id)));
+
+  const onSectorChange = (next: string) => {
+    onSave({ segment: next });
+    if (!sectorHasSubSectors(next)) {
+      void syncClientSubSectors(clientId, []).then(() => {
+        qc.invalidateQueries({ queryKey: ["crm-client-sub-sectors", clientId] });
+        setDraft(null);
+      });
+      return;
+    }
+    const validIds = new Set(
+      (allSubSectors ?? []).filter((s) => s.sector === next).map((s) => s.id),
+    );
+    const filtered = (draft ?? links).filter((id) => validIds.has(id));
+    setDraft(filtered);
+  };
+
+  const save = useMutation({
+    mutationFn: async () => {
+      if (draft === null) return;
+      await syncClientSubSectors(clientId, draft);
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["crm-client-sub-sectors", clientId] });
+      setDraft(null);
+      toast({ title: "Sub-sectors updated" });
+    },
+    onError: (e: Error) =>
+      toast({ title: "Save failed", description: e.message, variant: "destructive" }),
+  });
+
+  return (
+    <Card title="Sector & sub-sectors">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <Label className="text-xs font-medium text-slate-600">Sector</Label>
+          <div className="mt-1">
+            {canWrite ? (
+              <Select value={client.segment} onValueChange={onSectorChange}>
+                <SelectTrigger><SelectValue /></SelectTrigger>
+                <SelectContent>
+                  {SEGMENT_KEYS.map((k) => (
+                    <SelectItem key={k} value={k}>{SEGMENT_LABELS[k]}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            ) : (
+              <div className="text-sm text-slate-800">
+                {SEGMENT_LABELS[client.segment] ?? client.segment}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {sectorHasSubSectors(client.segment) && (
+          <div>
+            <Label className="text-xs font-medium text-slate-600">Sub-sectors</Label>
+            <div className="mt-1">
+              {canWrite ? (
+                <SubSectorMultiSelect
+                  sector={client.segment}
+                  value={current}
+                  onChange={(next) => setDraft(next)}
+                  disabled={linksLoading}
+                />
+              ) : (
+                <div className="text-sm text-slate-800">
+                  {(allSubSectors ?? [])
+                    .filter((s) => links.includes(s.id))
+                    .map((s) => s.label)
+                    .join(", ") || "—"}
+                </div>
+              )}
+            </div>
+            {canWrite && dirty && (
+              <div className="mt-2 flex justify-end gap-2">
+                <Button variant="outline" size="sm" onClick={() => setDraft(null)}>
+                  Cancel
+                </Button>
+                <Button size="sm" onClick={() => save.mutate()} disabled={save.isPending}>
+                  {save.isPending ? "Saving…" : "Save sub-sectors"}
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </Card>
   );
 };
 
