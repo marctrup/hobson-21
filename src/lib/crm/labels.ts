@@ -147,15 +147,39 @@ export const STAFF_SIZE_BANDS = [
   "1000+",
 ] as const;
 
-export const REVENUE_BANDS = [
-  "<£1M",
-  "£1M-£5M",
-  "£5M-£25M",
-  "£25M-£100M",
-  "£100M-£500M",
-  "£500M+",
-  "unknown",
+export const CHAMPION_ROLES = [
+  "ceo",
+  "cfo",
+  "coo",
+  "managing_director",
+  "director",
+  "head_of_property",
+  "asset_manager",
+  "property_manager",
+  "estates_manager",
+  "portfolio_manager",
+  "procurement",
+  "finance_director",
+  "general_counsel",
+  "other",
 ] as const;
+export type ChampionRole = (typeof CHAMPION_ROLES)[number];
+export const CHAMPION_ROLE_LABELS: Record<ChampionRole, string> = {
+  ceo: "CEO",
+  cfo: "CFO",
+  coo: "COO",
+  managing_director: "Managing Director",
+  director: "Director",
+  head_of_property: "Head of Property",
+  asset_manager: "Asset Manager",
+  property_manager: "Property Manager",
+  estates_manager: "Estates Manager",
+  portfolio_manager: "Portfolio Manager",
+  procurement: "Procurement / Head of Procurement",
+  finance_director: "Finance Director",
+  general_counsel: "General Counsel",
+  other: "Other",
+};
 
 export const TENURE_MIX = [
   "all_leasehold",
