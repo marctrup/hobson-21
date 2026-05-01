@@ -21,6 +21,8 @@ import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 import { toast } from "@/hooks/use-toast";
 import {
   SEGMENT_LABELS,
+  SEGMENT_KEYS,
+  sectorHasSubSectors,
   PIPELINE_STAGES,
   PIPELINE_STAGE_LABELS,
   INTEREST_LEVELS,
@@ -40,8 +42,11 @@ import {
   BILLING_CYCLES,
   BILLING_CYCLE_LABELS,
 } from "@/lib/crm/labels";
+import { SubSectorMultiSelect } from "@/components/crm/SubSectorMultiSelect";
+import { useSubSectors } from "@/hooks/crm/useSubSectors";
+import { syncClientSubSectors } from "@/lib/crm/clientSubSectors";
 
-const SegmentKeys = ["property_asset_manager", "retail_operator", "hospitality", "corporate_occupier", "other"] as const;
+const SegmentKeys = SEGMENT_KEYS;
 
 const ClientSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(200),
