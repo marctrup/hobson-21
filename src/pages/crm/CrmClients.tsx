@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Search, Plus } from "lucide-react";
+import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 
 import { Input } from "@/components/ui/input";
 import {
