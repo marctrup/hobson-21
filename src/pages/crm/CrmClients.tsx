@@ -1,8 +1,9 @@
 import { Helmet } from "react-helmet-async";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
-import { Search } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { Search, Plus } from "lucide-react";
+import { useCrmAccess } from "@/hooks/crm/useCrmAccess";
 
 import { Input } from "@/components/ui/input";
 import {
@@ -41,7 +42,8 @@ export default function CrmClients() {
   const [status, setStatus] = useState<string>("all");
   const [sector, setSector] = useState<string>("all");
   const [subSectorIds, setSubSectorIds] = useState<string[]>([]);
-
+  const navigate = useNavigate();
+  const { canWrite } = useCrmAccess();
   const { data: allSubSectors } = useSubSectors();
 
   // Reset selected sub-sectors when sector filter changes (other than "all").
@@ -112,16 +114,28 @@ export default function CrmClients() {
         <title>Clients | CRM</title>
         <meta name="robots" content="noindex,nofollow" />
       </Helmet>
-      <div className="p-6 max-w-7xl mx-auto">
+      <div className="p-4 md:p-6 max-w-7xl mx-auto">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-semibold tracking-tight">Clients</h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-slate-500 mt-1 hidden md:block">
               Every business and individual you work with.
             </p>
           </div>
         </div>
 
+        {/* ========== Mobile view ========== */}
+        <MobileClientsList
+          search={search}
+          setSearch={setSearch}
+          clients={clients ?? []}
+          isLoading={isLoading}
+          canWrite={canWrite}
+          onNew={() => navigate("/crm/clients/new")}
+        />
+
+        {/* ========== Desktop view ========== */}
+        <div className="hidden md:block">
         {/* Quick views */}
         <div className="mt-6 flex flex-wrap items-center gap-2">
           {(
@@ -295,6 +309,7 @@ export default function CrmClients() {
             </tbody>
           </table>
         </div>
+        </div>
       </div>
     </>
   );
@@ -398,5 +413,77 @@ function SubSectorFilter({ options, value, onChange, scopedToSector }: FilterPro
         )}
       </PopoverContent>
     </Popover>
+  );
+}
+
+/* ------------------------ Mobile clients list ------------------------ */
+
+interface MobileProps {
+  search: string;
+  setSearch: (v: string) => void;
+  clients: any[];
+  isLoading: boolean;
+  canWrite: boolean;
+  onNew: () => void;
+}
+
+function MobileClientsList({ search, setSearch, clients, isLoading, canWrite, onNew }: MobileProps) {
+  return (
+    <div className="md:hidden">
+      <div className="mt-3 relative">
+        <Search className="absolute left-2 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+        <Input
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search name or email"
+          className="pl-8 bg-white h-11"
+          type="search"
+        />
+      </div>
+
+      <div className="mt-3 bg-white border border-slate-200 rounded-lg overflow-hidden">
+        {isLoading ? (
+          <div className="p-6 text-center text-sm text-slate-500">Loading…</div>
+        ) : !clients.length ? (
+          <div className="p-6 text-center text-sm text-slate-500">No clients found.</div>
+        ) : (
+          <ul className="divide-y divide-slate-100">
+            {clients.map((c: any) => (
+              <li key={c.id}>
+                <Link
+                  to={`/crm/clients/${c.id}`}
+                  className="flex flex-col gap-1 px-4 py-3 min-h-[60px] active:bg-slate-50"
+                >
+                  <span className="font-medium text-base text-slate-900 leading-snug">
+                    {c.name}
+                  </span>
+                  <span className="text-xs text-slate-500">
+                    {SEGMENT_LABELS[c.segment] ?? c.segment ?? "—"}
+                    {c.status ? (
+                      <>
+                        <span className="mx-1.5 text-slate-300">•</span>
+                        {CLIENT_STATUS_LABELS[c.status] ?? c.status}
+                      </>
+                    ) : null}
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {canWrite && (
+        <button
+          type="button"
+          onClick={onNew}
+          aria-label="New client"
+          className="fixed bottom-5 right-5 z-30 inline-flex items-center justify-center h-14 w-14 rounded-full bg-primary text-primary-foreground shadow-lg hover:opacity-95 active:scale-95 transition"
+          style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+        >
+          <Plus className="size-6" />
+        </button>
+      )}
+    </div>
   );
 }
