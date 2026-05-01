@@ -48,7 +48,7 @@ import {
   INTEREST_LEVEL_LABELS,
   CLIENT_STATUSES,
   CLIENT_STATUS_LABELS,
-  SUBSCRIPTION_STATUS_LABELS,
+  SUBSCRIPTION_TIER_LABELS,
   CHAMPION_ROLE_LABELS,
   formatGBP,
   formatDateUK,
@@ -315,8 +315,7 @@ const OverviewTab = ({
       </Card>
 
       <Card title="Subscription">
-        <Row label="Status" value={SUBSCRIPTION_STATUS_LABELS[c.subscription_status] ?? c.subscription_status} />
-        <Row label="Plan" value={c.subscription_plan || "—"} />
+        <Row label="Plan" value={c.subscription_tier ? (SUBSCRIPTION_TIER_LABELS[c.subscription_tier as keyof typeof SUBSCRIPTION_TIER_LABELS] ?? c.subscription_tier) : "—"} />
         <Row label="Monthly value" value={formatGBP(c.contracted_monthly_value_gbp)} />
         <Row label="Licensed seats" value={c.licensed_user_seats ?? "—"} />
         <Row label="Billing cycle" value={c.billing_cycle || "—"} />
