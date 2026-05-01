@@ -218,7 +218,8 @@ export default function CrmClientNew() {
 
       const { data, error } = await supabase
         .from("crm_clients")
-        .insert(payload)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .insert(payload as any)
         .select("id")
         .single();
       if (error) throw error;
@@ -283,8 +284,11 @@ export default function CrmClientNew() {
             <Input value={form.name} onChange={(e) => set("name", e.target.value)} />
           </Field>
           <Field label="Type">
-            <Select value={form.client_type} onValueChange={(v) => set("client_type", v as "business" | "individual")}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+            <Select
+              value={form.client_type ?? undefined}
+              onValueChange={(v) => set("client_type", v as "business" | "individual")}
+            >
+              <SelectTrigger><SelectValue placeholder="Business or individual?" /></SelectTrigger>
               <SelectContent>
                 <SelectItem value="business">Business</SelectItem>
                 <SelectItem value="individual">Individual</SelectItem>
@@ -292,8 +296,8 @@ export default function CrmClientNew() {
             </Select>
           </Field>
           <Field label="Segment">
-            <Select value={form.segment} onValueChange={onSectorChange}>
-              <SelectTrigger><SelectValue /></SelectTrigger>
+            <Select value={form.segment ?? undefined} onValueChange={onSectorChange}>
+              <SelectTrigger><SelectValue placeholder="Choose a sector" /></SelectTrigger>
               <SelectContent>
                 {Object.entries(SEGMENT_LABELS).map(([k, l]) => (
                   <SelectItem key={k} value={k}>{l}</SelectItem>
@@ -304,15 +308,12 @@ export default function CrmClientNew() {
           {sectorHasSubSectors(form.segment) && (
             <Field label="Sub-sectors">
               <SubSectorMultiSelect
-                sector={form.segment}
+                sector={form.segment as string}
                 value={subSectorIds}
                 onChange={setSubSectorIds}
               />
             </Field>
           )}
-          <Field label="Sub-sector (free text)">
-            <Input value={form.sub_sector} onChange={(e) => set("sub_sector", e.target.value)} />
-          </Field>
           <Field label="Website">
             <Input value={form.website} onChange={(e) => set("website", e.target.value)} placeholder="example.com" />
           </Field>
