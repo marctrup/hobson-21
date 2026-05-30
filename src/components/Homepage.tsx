@@ -182,7 +182,10 @@ export const Homepage = () => {
                       );
                     })()}
                   </h1>
-                  <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}
+                  <p className="text-muted-foreground leading-relaxed text-lg sm:text-xl">{content.hero.subtitle}</p>
+                  <p className="text-base sm:text-lg leading-relaxed">
+                    <span className="text-muted-foreground">ChatGPT reads a lease.</span>{" "}
+                    <span className="text-primary font-medium">Hobson understands the unit.</span>
                   </p>
                   
                   <div className="flex flex-col gap-4 items-center lg:items-start">
