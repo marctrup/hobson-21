@@ -1,7 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Calendar, Clock, Tag, ArrowRight } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
+import { Calendar, Tag, ArrowRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { LazyImage } from "@/components/LazyImage";
@@ -28,7 +27,7 @@ interface BlogPostCardProps {
 }
 
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
-  const finalSlug = post.slug || '';
+  const finalSlug = encodeURIComponent((post.slug || '').trim());
   const href = `/blog/${finalSlug}`;
 
   return (
