@@ -1,7 +1,6 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Calendar, Clock, ArrowRight, Tag } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Calendar, ArrowRight, Tag } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { format } from "date-fns";
 import { LazyImage } from "@/components/LazyImage";
@@ -28,21 +27,14 @@ interface FeaturedPostProps {
 }
 
 export const FeaturedPost = ({ post }: FeaturedPostProps) => {
-  const navigate = useNavigate();
-  
-  // Use original slug without aggressive sanitization
-  const finalSlug = post.slug || '';
-    
-  const handleReadMore = () => {
-    
-    navigate(`/blog/${finalSlug}`);
-  };
+  const finalSlug = encodeURIComponent((post.slug || '').trim());
+  const href = `/blog/${finalSlug}`;
 
   return (
     <div>
       <Card className="overflow-hidden">
         <div className="grid md:grid-cols-4 gap-0">
-          <div className="aspect-[3/2] bg-muted">
+          <Link to={href} className="aspect-[3/2] bg-muted block">
             {post.featured_image_url ? (
                <LazyImage
                 src={post.featured_image_url}
@@ -58,7 +50,7 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
                 <Tag className="w-6 h-6 text-muted-foreground" />
               </div>
             )}
-          </div>
+          </Link>
           <CardContent className="md:col-span-3 p-4 flex flex-col justify-center">
             <div className="flex items-center gap-3 mb-2">
               <Badge className="text-xs bg-accent-amber/15 text-accent-amber border border-accent-amber/30 hover:bg-accent-amber/20">Featured</Badge>
@@ -67,16 +59,18 @@ export const FeaturedPost = ({ post }: FeaturedPostProps) => {
                 {post.published_at ? format(new Date(post.published_at), 'MMM dd') : 'Draft'}
               </div>
             </div>
-            <h2 className="text-xl font-bold mb-1 line-clamp-1">{post.title}</h2>
+            <h2 className="text-xl font-bold mb-1 line-clamp-1">
+              <Link to={href} className="hover:text-primary transition-colors">{post.title}</Link>
+            </h2>
             <p className="text-muted-foreground mb-2 text-sm line-clamp-1">{post.excerpt}</p>
             
             <div className="flex items-center justify-end mb-3">
-              <button
-                onClick={handleReadMore}
+              <Link
+                to={href}
                 className="inline-flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
               >
                 Read More <ArrowRight className="w-3 h-3" />
-              </button>
+              </Link>
             </div>
             
             {post.categories.length > 0 && (
