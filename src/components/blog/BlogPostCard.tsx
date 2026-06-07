@@ -28,20 +28,13 @@ interface BlogPostCardProps {
 }
 
 export const BlogPostCard = ({ post }: BlogPostCardProps) => {
-  const navigate = useNavigate();
-  
-  // Use original slug without aggressive sanitization
   const finalSlug = post.slug || '';
-    
-  const handleReadMore = () => {
-    
-    navigate(`/blog/${finalSlug}`);
-  };
+  const href = `/blog/${finalSlug}`;
 
   return (
     <Card className="overflow-hidden hover:shadow-md transition-shadow">
       <div className="grid md:grid-cols-4 gap-0">
-        <div className="aspect-[3/2] bg-muted">
+        <Link to={href} className="aspect-[3/2] bg-muted block">
           {post.featured_image_url ? (
             <LazyImage
               src={post.featured_image_url}
@@ -56,23 +49,25 @@ export const BlogPostCard = ({ post }: BlogPostCardProps) => {
               <Tag className="w-8 h-8 text-muted-foreground" />
             </div>
           )}
-        </div>
+        </Link>
         <div className="md:col-span-3 p-4 flex flex-col justify-center">
           <div className="flex items-center gap-2 mb-3 text-sm text-muted-foreground">
             <Calendar className="w-4 h-4" />
             {format(new Date(post.published_at), 'MMM dd')}
           </div>
           
-          <h3 className="text-lg font-semibold mb-1 line-clamp-2 leading-tight">{post.title}</h3>
+          <h3 className="text-lg font-semibold mb-1 line-clamp-2 leading-tight">
+            <Link to={href} className="hover:text-primary transition-colors">{post.title}</Link>
+          </h3>
           <p className="text-muted-foreground mb-2 text-sm line-clamp-2">{post.excerpt}</p>
           
           <div className="flex items-center justify-end mb-3">
-            <button
-              onClick={handleReadMore}
+            <Link
+              to={href}
               className="inline-flex items-center gap-2 px-4 py-2 text-sm border border-border rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
             >
               Read More <ArrowRight className="w-3 h-3" />
-            </button>
+            </Link>
           </div>
           
           {post.categories.length > 0 && (
