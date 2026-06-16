@@ -69,10 +69,11 @@ vi.mock("@/integrations/supabase/client", () => {
         signOut: () => Promise.resolve({ error: null }),
       },
       functions: { invoke: () => Promise.resolve({ data: null, error: null }) },
-      channel: () => ({
-        on: () => ({ subscribe: () => ({}) }),
-        subscribe: () => ({}),
-      }),
+      channel: () => {
+        const ch: any = { on: () => ch, subscribe: () => ch, unsubscribe: () => {} };
+        return ch;
+      },
+
       removeChannel: () => {},
     },
   };
