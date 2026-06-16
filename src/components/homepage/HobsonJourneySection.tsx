@@ -25,7 +25,7 @@ const stages = [
     title: "Act on Your Behalf",
     copy: "phase3",
     status: "Launching later this year",
-    statusClass: "bg-muted/40 text-muted-foreground border border-border",
+    statusClass: "bg-primary/10 text-primary/80 border border-primary/20",
     active: false,
     complete: false,
   },
