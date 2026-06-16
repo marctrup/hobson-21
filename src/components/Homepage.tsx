@@ -219,6 +219,12 @@ export const Homepage = () => {
             </div>
           </section>
 
+          {/* YouTube Explainer Video */}
+          <YouTubeVideoSection
+            videoId="MXutUHZFXIs"
+            title="Short Video Explaining our vision for Hobson"
+          />
+
           {/* Audience Strip */}
           <AudienceStrip />
 
