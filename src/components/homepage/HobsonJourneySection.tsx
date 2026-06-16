@@ -59,19 +59,6 @@ export const HobsonJourneySection = () => {
               Property obligations should manage themselves.
             </h2>
 
-            {/* Problem statement */}
-            <div className="mb-6">
-              <p className="text-lg text-foreground/70 leading-[1.8] font-light">
-                Software gave property professionals better filing cabinets.
-                <br />
-                It never gave them fewer things to do.
-              </p>
-              <p className="text-lg text-foreground/70 leading-[1.8] font-light mt-5">
-                A document stored is now a document understood.
-                <br />
-                A deadline filed is now a deadline managed.
-              </p>
-            </div>
 
             {/* Bridge line */}
             <p className="text-lg text-foreground/70 leading-[1.8] font-semibold mt-5">
