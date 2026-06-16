@@ -32,19 +32,34 @@ const palette = [
 
 export const AudienceStrip = () => {
   return (
-    <section className="py-12 sm:py-16 bg-muted/30">
+    <section className="py-12 sm:py-16 md:py-20 bg-muted/30" aria-labelledby="audience-heading">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-10 sm:mb-14">
+            <h2
+              id="audience-heading"
+              className="text-2xl sm:text-3xl md:text-4xl font-bold text-foreground mb-3"
+            >
+              Who can Benefit
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto">
+              Hobson is purpose-built for every organisation where property documents matter.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {audiences.map((item, i) => {
               const Icon = item.icon;
               const tone = palette[i % palette.length];
               return (
-                <div key={i} className="text-center space-y-3">
-                  <div className={`w-12 h-12 mx-auto rounded-xl ${tone.bg} flex items-center justify-center`}>
-                    <Icon className={`w-6 h-6 ${tone.icon}`} />
+                <div
+                  key={i}
+                  className="text-center space-y-4 p-6 rounded-xl bg-background border border-border/50 hover:border-border hover:shadow-md transition-all duration-300"
+                >
+                  <div className={`w-14 h-14 mx-auto rounded-xl ${tone.bg} flex items-center justify-center`}>
+                    <Icon className={`w-7 h-7 ${tone.icon}`} />
                   </div>
-                  <h3 className={`text-base font-semibold ${tone.heading}`}>{item.label}</h3>
+                  <h3 className={`text-lg font-semibold ${tone.heading}`}>{item.label}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
                 </div>
               );
