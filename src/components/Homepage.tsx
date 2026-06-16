@@ -194,14 +194,6 @@ export const Homepage = () => {
                       {content.hero.ctaButton}
                       <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
                     </Link>
-                    <div className="flex flex-col sm:flex-row gap-3">
-                      <Link to="/in-practice" className="text-muted-foreground hover:text-accent-teal font-medium text-sm inline-flex items-center gap-1.5 transition-colors">
-                        See Hobson in practice <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                      <Link to="/features" className="text-muted-foreground hover:text-accent-teal font-medium text-sm inline-flex items-center gap-1.5 transition-colors">
-                        See what Hobson does <ArrowRight className="h-3.5 w-3.5" />
-                      </Link>
-                    </div>
                   </div>
                   
                 </div>
