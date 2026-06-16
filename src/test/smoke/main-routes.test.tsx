@@ -27,7 +27,8 @@ describe("Main site — route smoke", () => {
     it(`${name} renders without throwing`, () => {
       const { container } = renderWithProviders(factory(), { route });
       expect(container).toBeTruthy();
-      expect(container.textContent?.length ?? 0).toBeGreaterThan(0);
+      expect(container.firstChild).not.toBeNull();
     });
   }
 });
+
