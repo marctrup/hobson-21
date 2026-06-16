@@ -237,50 +237,6 @@ export const Homepage = () => {
           {/* Mobile App Showcase */}
           <MobileShowcase />
 
-          {/* How It Works Section */}
-          <section className="py-12 sm:py-16 md:py-24 bg-muted/30">
-            <div className="container mx-auto px-4">
-              <div className="max-w-6xl mx-auto">
-                <div className="text-center mb-12 sm:mb-16">
-                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 text-foreground">{content.howItWorks.title}</h2>
-                  <p className="text-lg sm:text-xl text-muted-foreground">{content.howItWorks.subtitle}</p>
-                </div>
-
-                <div className="relative">
-                  {/* Line from circle 1 to circle 2 (purple → teal) */}
-                  <div className="hidden md:block absolute top-[2.5rem] sm:top-[3rem] h-[2px] bg-gradient-to-r from-primary/40 to-accent-teal/40" style={{ left: 'calc(16.67% + 2.5rem)', right: 'calc(50% + 2.5rem)' }}></div>
-                  {/* Line from circle 2 to circle 3 (teal → amber) */}
-                  <div className="hidden md:block absolute top-[2.5rem] sm:top-[3rem] h-[2px] bg-gradient-to-r from-accent-teal/40 to-accent-amber/50" style={{ left: 'calc(50% + 2.5rem)', right: 'calc(16.67% + 2.5rem)' }}></div>
-
-                  <div className="grid md:grid-cols-3 gap-8 sm:gap-10">
-                    {content.howItWorks.steps.map((step, index) => {
-                      const circleStyles = [
-                        "from-primary to-primary/70 text-primary-foreground",
-                        "from-accent-teal to-accent-teal/70 text-accent-teal-foreground",
-                        "from-accent-amber to-accent-amber/70 text-accent-amber-foreground",
-                      ];
-                      return (
-                        <div key={index} className="relative text-center group">
-                          <div className="relative mb-5 sm:mb-6">
-                            <div className={`w-20 h-20 sm:w-24 sm:h-24 mx-auto bg-gradient-to-br ${circleStyles[index % circleStyles.length]} rounded-full flex items-center justify-center text-xl sm:text-2xl font-bold shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                              {index + 1}
-                            </div>
-                          </div>
-                          <h3 className="text-lg sm:text-xl font-bold mb-2 sm:mb-3 text-foreground">{step.title}</h3>
-                          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-xs mx-auto">
-                            {step.description}
-                          </p>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Documents Hobson is trained on */}
-                <DocumentCategoriesAccordion />
-              </div>
-            </div>
-          </section>
 
 
           {/* Trust Strip */}
