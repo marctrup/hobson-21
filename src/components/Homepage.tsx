@@ -189,13 +189,6 @@ export const Homepage = () => {
                     <span className="text-primary font-medium">Hobson understands the unit.</span>
                   </p>
                   
-                  <div className="flex flex-col gap-4 items-center lg:items-start">
-                    <Link to="/pricing" className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 font-medium text-base px-7 py-3.5 shadow-md hover:shadow-lg hover:scale-[1.02] transition-all duration-200 group" id="homepage-hero-pricing-cta">
-                      {content.hero.ctaButton}
-                      <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" />
-                    </Link>
-                  </div>
-                  
                 </div>
 
                 {/* Right Container - Document to Insights Visualization */}
