@@ -170,7 +170,7 @@ const Pricing = () => {
         { text: "Action memory", ok: false },
       ],
       cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
-      muted: `Allowances reset on the billing cycle.`,
+      muted: null,
     },
     {
       tier: 2, seats: "2 seats", perSeat: "£82.50/seat", label: "Full platform",
