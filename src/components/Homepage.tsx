@@ -15,6 +15,7 @@ import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection
 import { AudienceStrip } from "@/components/homepage/AudienceStrip";
 import { TrustStrip } from "@/components/homepage/TrustStrip";
 import { DocumentCategoriesAccordion } from "@/components/homepage/DocumentCategoriesAccordion";
+import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
 
 import owlMascot from "@/assets/owl-mascot.png";
 import { structuredData } from "@/utils/seo-data";
@@ -217,6 +218,12 @@ export const Homepage = () => {
               </div>
             </div>
           </section>
+
+          {/* YouTube Explainer Video */}
+          <YouTubeVideoSection
+            videoId="MXutUHZFXIs"
+            title="Short Video Explaining our vision for Hobson"
+          />
 
           {/* Audience Strip */}
           <AudienceStrip />
