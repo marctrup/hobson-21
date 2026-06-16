@@ -169,7 +169,7 @@ const Pricing = () => {
         { text: "Workflow automation", ok: false },
         { text: "Action memory", ok: false },
       ],
-      cta: "Get started", ctaStyle: "solid" as const, waitlist: false,
+      cta: "Join the waitlist", ctaStyle: "outline" as const, waitlist: true,
       muted: `Allowances reset on the billing cycle.`,
     },
     {
@@ -370,9 +370,6 @@ const Pricing = () => {
                         <button onClick={openSignupModal} className="block w-full text-center py-3 rounded-lg text-sm font-semibold text-white transition-all hover:opacity-90" style={{ background: C.purple }}>
                           {tier.cta}
                         </button>
-                      )}
-                      {tier.tier === 1 && (
-                        <p className="text-xs text-center mt-2 font-medium" style={{ color: C.purple }}>Free 3-day trial — no card required</p>
                       )}
                     </div>
                   </div>
