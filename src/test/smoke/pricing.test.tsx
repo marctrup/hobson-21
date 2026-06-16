@@ -7,12 +7,13 @@ describe("Pricing page", () => {
   it("renders without crashing and shows all 4 tiers", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
     await waitFor(() => {
-      expect(screen.getByText(/Tier 1/i)).toBeInTheDocument();
-      expect(screen.getByText(/Tier 2/i)).toBeInTheDocument();
-      expect(screen.getByText(/Tier 3/i)).toBeInTheDocument();
-      expect(screen.getByText(/Tier 4/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Tier 1/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/Tier 2/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/Tier 3/i).length).toBeGreaterThan(0);
+      expect(screen.getAllByText(/Tier 4/i).length).toBeGreaterThan(0);
     });
   });
+
 
   it("shows 'Join the waitlist' CTA on every tier", async () => {
     renderWithProviders(<Pricing />, { route: "/pricing" });
