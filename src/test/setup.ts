@@ -23,21 +23,17 @@ class IO {
   disconnect() {}
   takeRecords() { return []; }
 }
-// @ts-expect-error test stub
-window.IntersectionObserver = IO;
-// @ts-expect-error test stub
-global.IntersectionObserver = IO;
+(window as any).IntersectionObserver = IO;
+(globalThis as any).IntersectionObserver = IO;
 
-// ResizeObserver stub
 class RO {
   observe() {}
   unobserve() {}
   disconnect() {}
 }
-// @ts-expect-error test stub
-window.ResizeObserver = RO;
-// @ts-expect-error test stub
-global.ResizeObserver = RO;
+(window as any).ResizeObserver = RO;
+(globalThis as any).ResizeObserver = RO;
+
 
 // scrollTo stub
 window.scrollTo = vi.fn() as unknown as typeof window.scrollTo;
