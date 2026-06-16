@@ -234,26 +234,6 @@ export const Homepage = () => {
           {/* Trust Strip */}
           <TrustStrip />
 
-          {/* CTA Section */}
-          <section className="py-12 sm:py-16 md:py-20" style={{ background: "linear-gradient(135deg, hsl(var(--accent-amber) / 0.08), hsl(var(--accent-teal) / 0.08))" }}>
-            <div className="container mx-auto px-4 text-center">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
-                {content.cta.title}
-              </h2>
-              <p className="text-lg sm:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto">
-                {content.cta.subtitle}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/pricing" className="inline-flex items-center justify-center rounded-md font-medium bg-primary text-primary-foreground hover:bg-primary/90 text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto transition-colors">
-                  {content.cta.button}
-                </Link>
-                <Link to="/pricing" className="inline-flex items-center justify-center rounded-md font-medium border border-input bg-background hover:bg-accent hover:text-accent-foreground text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 h-auto transition-colors">
-                  Join the waitlist for Tier 2
-                </Link>
-              </div>
-            </div>
-          </section>
-
           <PilotApplicationForm showForm={showPilotForm} setShowForm={setShowPilotForm} />
 
           {/* Footer */}
