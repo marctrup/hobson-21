@@ -14,7 +14,7 @@ import { PilotApplicationForm } from "@/components/homepage/PilotApplicationForm
 import { HobsonJourneySection } from "@/components/homepage/HobsonJourneySection";
 import { AudienceStrip } from "@/components/homepage/AudienceStrip";
 import { TrustStrip } from "@/components/homepage/TrustStrip";
-import { DocumentCategoriesAccordion } from "@/components/homepage/DocumentCategoriesAccordion";
+
 import { YouTubeVideoSection } from "@/components/homepage/YouTubeVideoSection";
 
 import owlMascot from "@/assets/owl-mascot.png";
