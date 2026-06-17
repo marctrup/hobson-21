@@ -279,7 +279,7 @@ const InPractice = () => {
               What Hobson is building next
             </h2>
             <p className="text-lg text-muted-foreground mb-10 max-w-3xl">
-              Phase 1 is live now. Here is what is coming.
+              Phase 1 is testing now. Here is what is coming.
             </p>
 
             <div className="grid md:grid-cols-2 gap-6">
