@@ -19,7 +19,7 @@ import FeaturesHero from "@/components/features/FeaturesHero";
 import FeaturesAnchorNav from "@/components/features/FeaturesAnchorNav";
 import FeatureGroupSection from "@/components/features/FeatureGroupSection";
 import FeaturesComingSoon from "@/components/features/FeaturesComingSoon";
-import FeaturesCTA from "@/components/features/FeaturesCTA";
+
 
 const documentIntelligenceFeatures = [
   {
@@ -168,7 +168,6 @@ const Features = () => {
         />
 
         <FeaturesComingSoon />
-        <FeaturesCTA />
       </main>
 
       <footer className="py-10 border-t bg-muted/30">
