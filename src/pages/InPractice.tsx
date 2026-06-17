@@ -143,7 +143,7 @@ const InPractice = () => {
               <span className="bg-gradient-to-r from-primary via-accent-teal via-accent-amber to-accent-rose bg-clip-text text-transparent">for you.</span>
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              Phase 1 of Hobson is live now. It reads your leases, compliance documents and property contracts — and makes every clause, obligation and date instantly queryable in plain English. No legal training required. No hours of manual review. Just answers.
+              Phase 1 of Hobson is testing now. It reads your leases, compliance documents and property contracts — and makes every clause, obligation and date instantly queryable in plain English. No legal training required. No hours of manual review. Just answers.
             </p>
           </div>
         </section>
