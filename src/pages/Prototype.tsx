@@ -897,7 +897,7 @@ const Prototype: React.FC = () => {
         <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
 
           {/* Returning-mode search lives at the top of the panel body */}
-          {view === "portfolio" && portfolioMode === "returning" && (
+          {((view === "portfolio" && portfolioMode === "returning") || view === "property") && (
             <ReturningSearchPanel
               query={searchQuery}
               setQuery={setSearchQuery}
