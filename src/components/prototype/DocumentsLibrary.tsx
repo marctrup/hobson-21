@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import owlReading from "@/assets/prototype/owl-reading.png";
 
 /* ---------------- Types ---------------- */
@@ -661,22 +661,91 @@ function DocViewer({ doc, onClose }: { doc: DocItem; onClose: () => void }) {
 
 /* ---------------- Main library ---------------- */
 
-export function DocumentsLibrary({ onClose }: { onClose: () => void }) {
+export type DocumentsScope = {
+  propertyId?: string;
+  unitId?: string;
+};
+
+const prefersReducedMotion = () =>
+  typeof window !== "undefined" &&
+  window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+export function DocumentsLibrary({
+  onClose,
+  initialScope,
+  onNavigatePortfolio,
+  onNavigateProperty,
+}: {
+  onClose: () => void;
+  initialScope?: DocumentsScope;
+  onNavigatePortfolio?: () => void;
+  onNavigateProperty?: (propertyId: string) => void;
+}) {
   const [mode, setMode] = useState<"tree" | "all">("tree");
   const [q, setQ] = useState("");
   const [family, setFamily] = useState<"all" | Family>("all");
   const [type, setType] = useState<"all" | DocType>("all");
   const [includeSuperseded, setIncludeSuperseded] = useState(false);
-  const [scope, setScope] = useState<"all" | string>("all"); // propertyId or "all"
+  const [scopeProperty, setScopeProperty] = useState<string | null>(initialScope?.propertyId ?? null);
+  const [scopeUnit, setScopeUnit] = useState<string | null>(initialScope?.unitId ?? null);
   const [viewing, setViewing] = useState<DocItem | null>(null);
   const [flash, setFlash] = useState<string | null>(null);
+
+  // resolved scope labels
+  const scopePropertyAsset = useMemo(
+    () => (scopeProperty ? ASSETS.find((a) => a.propertyId === scopeProperty) : null),
+    [scopeProperty]
+  );
+  const scopeUnitNode = useMemo(() => {
+    if (!scopePropertyAsset || !scopeUnit) return null;
+    return scopePropertyAsset.units.find((u) => u.id === scopeUnit) || null;
+  }, [scopePropertyAsset, scopeUnit]);
+
+  // streamed owl greeting (scope-aware)
+  const greeting = useMemo(() => {
+    if (scopePropertyAsset && scopeUnitNode) {
+      const unitLbl =
+        scopePropertyAsset.standalone
+          ? scopePropertyAsset.propertyName
+          : `${scopeUnitNode.label}, ${scopePropertyAsset.propertyName}`;
+      return `Here are the documents for ${unitLbl}. Browse, view or download whatever you need.`;
+    }
+    if (scopePropertyAsset) {
+      return `Here are the documents for ${scopePropertyAsset.propertyName}. Feel free to browse, view or download.`;
+    }
+    return "Here are your documents — browse, view or download anything across the estate.";
+  }, [scopePropertyAsset, scopeUnitNode]);
+
+  const reduced = prefersReducedMotion();
+  const [typed, setTyped] = useState(reduced ? greeting : "");
+  const [greetingDone, setGreetingDone] = useState(reduced);
+  useEffect(() => {
+    if (reduced) {
+      setTyped(greeting);
+      setGreetingDone(true);
+      return;
+    }
+    setTyped("");
+    setGreetingDone(false);
+    let i = 0;
+    const id = window.setInterval(() => {
+      i += 2;
+      setTyped(greeting.slice(0, i));
+      if (i >= greeting.length) {
+        window.clearInterval(id);
+        setGreetingDone(true);
+      }
+    }, 18);
+    return () => window.clearInterval(id);
+  }, [greeting, reduced]);
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     return DOCS.filter((d) => {
       if (family !== "all" && d.family !== family) return false;
       if (type !== "all" && d.type !== type) return false;
-      if (scope !== "all" && d.propertyId !== scope) return false;
+      if (scopeProperty && d.propertyId !== scopeProperty) return false;
+      if (scopeUnit && d.unitId !== scopeUnit) return false;
       if (!includeSuperseded && mode === "all" && d.status === "superseded") return false;
       if (needle) {
         const hay = [
@@ -687,7 +756,7 @@ export function DocumentsLibrary({ onClose }: { onClose: () => void }) {
       }
       return true;
     });
-  }, [q, family, type, scope, includeSuperseded, mode]);
+  }, [q, family, type, scopeProperty, scopeUnit, includeSuperseded, mode]);
 
   const chainsCount = useMemo(
     () => new Set(DOCS.filter((d) => d.family === "Tenancy").map((d) => d.chainId || d.id)).size,
@@ -701,20 +770,56 @@ export function DocumentsLibrary({ onClose }: { onClose: () => void }) {
     window.setTimeout(() => setFlash(null), 2500);
   };
 
+  const clearScope = () => { setScopeProperty(null); setScopeUnit(null); };
+  const clearUnitScope = () => setScopeUnit(null);
+
   return (
     <div className="absolute inset-0 z-[450] bg-white flex flex-col">
       {/* Top bar */}
       <header className="px-6 py-4 border-b border-slate-200 flex items-start gap-4">
         <img src={owlReading} alt="" aria-hidden className="w-10 h-10 object-contain shrink-0" />
         <div className="flex-1 min-w-0">
+          {/* Breadcrumb */}
+          <nav aria-label="Breadcrumb" className="text-[11px] text-slate-500 mb-1 flex items-center gap-1 flex-wrap">
+            <button
+              onClick={() => { onNavigatePortfolio?.(); }}
+              className="hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            >
+              Portfolio
+            </button>
+            {scopePropertyAsset && (
+              <>
+                <span aria-hidden>›</span>
+                <button
+                  onClick={() => { onNavigateProperty?.(scopePropertyAsset.propertyId); }}
+                  className="hover:text-[#7C3AED] focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+                >
+                  {scopePropertyAsset.propertyName}
+                </button>
+              </>
+            )}
+            {scopePropertyAsset && scopeUnitNode && !scopePropertyAsset.standalone && (
+              <>
+                <span aria-hidden>›</span>
+                <span>{scopeUnitNode.label}</span>
+              </>
+            )}
+            <span aria-hidden>›</span>
+            <span className="text-slate-700 font-medium">Documents</span>
+          </nav>
+
           <div className="flex items-center gap-3 flex-wrap">
             <h2 className="text-base font-semibold text-slate-900">Documents</h2>
             <span className="text-[12px] text-slate-500">
-              Portfolio · {DOCS.length} documents · {chainsCount} tenancy chains · {assetCount} asset records
+              {filtered.length} of {DOCS.length} documents · {chainsCount} tenancy chains · {assetCount} asset records
             </span>
           </div>
-          <p className="text-[12px] text-slate-500 mt-0.5">
-            Here are your documents — browse by property, or search across everything.
+          <p
+            className="text-[12px] text-slate-600 mt-1 min-h-[1.25rem]"
+            aria-live="polite"
+          >
+            {typed}
+            {!greetingDone && <span className="inline-block w-1 h-3 ml-0.5 bg-slate-400 align-middle animate-pulse" aria-hidden />}
           </p>
         </div>
         <button
@@ -727,6 +832,42 @@ export function DocumentsLibrary({ onClose }: { onClose: () => void }) {
           </svg>
         </button>
       </header>
+
+      {/* Scope chips */}
+      {(scopePropertyAsset || scopeUnitNode) && (
+        <div className="px-6 py-2 border-b border-slate-100 flex flex-wrap items-center gap-2 bg-[#FAF8FF]">
+          <span className="text-[11px] uppercase tracking-wide font-semibold text-slate-500">Scope</span>
+          {scopePropertyAsset && (
+            <button
+              onClick={clearScope}
+              className="inline-flex items-center gap-1.5 pl-2.5 pr-1.5 py-1 rounded-full bg-white border border-[#7C3AED]/30 text-[12px] text-[#5B21B6] font-medium hover:bg-[#EDE9FE] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+              aria-label={`Remove ${scopePropertyAsset.propertyName} scope`}
+            >
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+              {scopePropertyAsset.standalone && scopeUnitNode
+                ? scopePropertyAsset.propertyName
+                : scopePropertyAsset.propertyName}
+              {scopeUnitNode && !scopePropertyAsset.standalone && (
+                <span className="text-slate-500">› {scopeUnitNode.label}</span>
+              )}
+              <span className="ml-1 inline-flex items-center justify-center w-4 h-4 rounded-full hover:bg-[#7C3AED] hover:text-white" aria-hidden>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M6 6l12 12M18 6L6 18"/></svg>
+              </span>
+            </button>
+          )}
+          {scopePropertyAsset && scopeUnitNode && !scopePropertyAsset.standalone && (
+            <button
+              onClick={clearUnitScope}
+              className="text-[11px] text-slate-500 hover:text-[#5B21B6] underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+            >
+              widen to whole property
+            </button>
+          )}
+          <span className="text-[11px] text-slate-500 ml-1">
+            (remove to see the whole portfolio)
+          </span>
+        </div>
+      )}
 
       {/* Filters */}
       <div className="px-6 py-3 border-b border-slate-100 flex flex-wrap items-center gap-2">
@@ -759,14 +900,32 @@ export function DocumentsLibrary({ onClose }: { onClose: () => void }) {
         </select>
 
         <select
-          value={scope}
-          onChange={(e) => setScope(e.target.value)}
+          value={scopeProperty ?? "all"}
+          onChange={(e) => {
+            const v = e.target.value;
+            if (v === "all") { setScopeProperty(null); setScopeUnit(null); }
+            else { setScopeProperty(v); setScopeUnit(null); }
+          }}
           className="text-[12px] px-2.5 py-1.5 rounded-md border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
           aria-label="Filter by property"
         >
           <option value="all">All properties</option>
           {ASSETS.map((a) => (<option key={a.propertyId} value={a.propertyId}>{a.propertyName}</option>))}
         </select>
+
+        {scopePropertyAsset && !scopePropertyAsset.standalone && (
+          <select
+            value={scopeUnit ?? "all"}
+            onChange={(e) => setScopeUnit(e.target.value === "all" ? null : e.target.value)}
+            className="text-[12px] px-2.5 py-1.5 rounded-md border border-slate-200 bg-white text-slate-700 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+            aria-label="Filter by unit"
+          >
+            <option value="all">All units</option>
+            {scopePropertyAsset.units.map((u) => (
+              <option key={u.id} value={u.id}>{u.label}</option>
+            ))}
+          </select>
+        )}
 
         <label className="text-[12px] text-slate-700 flex items-center gap-1.5 px-2 py-1.5 rounded-md hover:bg-slate-50">
           <input
@@ -805,7 +964,7 @@ export function DocumentsLibrary({ onClose }: { onClose: () => void }) {
             includeSuperseded={includeSuperseded}
             onView={onView}
             onDownload={onDownload}
-            searchActive={q.trim().length > 0 || family !== "all" || type !== "all" || scope !== "all"}
+            searchActive={q.trim().length > 0 || family !== "all" || type !== "all" || !!scopeProperty || !!scopeUnit}
           />
         ) : (
           <FlatList
