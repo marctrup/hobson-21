@@ -715,10 +715,10 @@ const Prototype: React.FC = () => {
             <PropertyContent
               property={selectedProperty}
               onOpenUnit={goUnit}
-              onPreviewQuestion={(q) =>
-                setToast(`"${q}" is Property Intelligence — coming soon. Open a unit and I can answer it today.`) ||
-                window.setTimeout(() => setToast(null), 3500)
-              }
+              onPreviewQuestion={(q) => {
+                setToast(`"${q}" is Property Intelligence — coming soon. Open a unit and I can answer it today.`);
+                window.setTimeout(() => setToast(null), 3500);
+              }}
             />
           )}
 
