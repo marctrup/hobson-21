@@ -1012,8 +1012,17 @@ const Prototype: React.FC = () => {
               (u.tenant && u.tenant.toLowerCase().includes(q))
           );
         }).map((p) => p.id);
+      } else if (portfolioMode === "returning" && briefingChoice !== "browse") {
+        // Glow properties that have pending action cards (matching the urgency filter)
+        const pending = actionCards.filter(
+          (c) =>
+            c.approvalState === "pending" &&
+            (briefingChoice !== "urgent" || c.urgency === "now")
+        );
+        const ids = Array.from(new Set(pending.map((c) => c.propertyId)));
+        if (ids.length) matchIds = ids;
       }
-      return { pulse: "none", matchIds, hoverId: hoveredPropertyId };
+      return { pulse: "none", matchIds, hoverId: hoveredCardPropertyId ?? hoveredPropertyId };
     }
     if (view === "property" && selectedProperty) {
       // Units are NOT shown as map pins — the map only locates the building.
