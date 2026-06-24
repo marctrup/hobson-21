@@ -1003,6 +1003,7 @@ const Prototype: React.FC = () => {
     if (view === "portfolio") {
       const q = searchQuery.trim().toLowerCase();
       let matchIds: string[] | null = null;
+      let fadeNonMatches = false;
       if (q && portfolioMode === "returning") {
         matchIds = PROPERTIES.filter((p) => {
           if (p.name.toLowerCase().includes(q)) return true;
@@ -1013,8 +1014,10 @@ const Prototype: React.FC = () => {
               (u.tenant && u.tenant.toLowerCase().includes(q))
           );
         }).map((p) => p.id);
+        fadeNonMatches = true;
       } else if (portfolioMode === "returning" && briefingChoice !== "browse") {
-        // Glow properties that have pending action cards (matching the urgency filter)
+        // Glow properties that have pending action cards (matching the urgency filter).
+        // Do NOT fade the others — non-flagged pins stay full-colour and active.
         const pending = actionCards.filter(
           (c) =>
             c.approvalState === "pending" &&
@@ -1023,7 +1026,7 @@ const Prototype: React.FC = () => {
         const ids = Array.from(new Set(pending.map((c) => c.propertyId)));
         if (ids.length) matchIds = ids;
       }
-      return { pulse: "none", matchIds, hoverId: hoveredCardPropertyId ?? hoveredPropertyId };
+      return { pulse: "none", matchIds, fadeNonMatches, hoverId: hoveredCardPropertyId ?? hoveredPropertyId };
     }
     if (view === "property" && selectedProperty) {
       // Units are NOT shown as map pins — the map only locates the building.
