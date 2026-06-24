@@ -1800,6 +1800,12 @@ function StyleTag() {
       .animate-typing-bounce { animation: typingBounce 1.1s infinite ease-in-out; }
 
       .hp-marker { background: transparent !important; border: none !important; }
+      .leaflet-tooltip.hp-tooltip {
+        background: #1F2330; color: #fff; border: none; border-radius: 6px;
+        padding: 4px 8px; font-size: 11px; font-weight: 500; box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        white-space: nowrap;
+      }
+      .leaflet-tooltip.hp-tooltip::before { border-top-color: #1F2330; }
       .hp-pin {
         width: 28px; height: 38px; position: relative;
         filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
