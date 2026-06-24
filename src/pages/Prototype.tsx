@@ -3144,6 +3144,7 @@ function PropertyActions({
   propertyName,
   expandedCardId,
   setExpandedCardId,
+  carriedCardId,
   onOpenUnit,
   onApprove,
   onDefer,
@@ -3153,13 +3154,18 @@ function PropertyActions({
   propertyName: string;
   expandedCardId: string | null;
   setExpandedCardId: (id: string | null) => void;
+  carriedCardId?: string | null;
   onOpenUnit: (unitId: string, carryCardId?: string) => void;
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
 }) {
+  const sortCarried = (arr: ActionCard[]) =>
+    carriedCardId
+      ? [...arr].sort((a, b) => (a.id === carriedCardId ? -1 : b.id === carriedCardId ? 1 : 0))
+      : arr;
   const groups: { key: Urgency; cards: ActionCard[] }[] = (["now", "week", "watch"] as Urgency[])
-    .map((u) => ({ key: u, cards: cards.filter((c) => c.urgency === u) }))
+    .map((u) => ({ key: u, cards: sortCarried(cards.filter((c) => c.urgency === u)) }))
     .filter((g) => g.cards.length > 0);
   return (
     <section aria-label={`Actions for ${propertyName}`} className="space-y-2">
@@ -3172,18 +3178,19 @@ function PropertyActions({
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
           {g.cards.map((c) => (
-            <ActionCardItem
-              key={c.id}
-              card={c}
-              level="property"
-              expanded={expandedCardId === c.id}
-              onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
-              onHover={() => { /* no map hover at property level */ }}
-              onOpenUnit={c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
-              onApprove={() => onApprove(c.id)}
-              onDefer={() => onDefer(c.id)}
-              onDismiss={() => onDismiss(c.id)}
-            />
+            <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#7C3AED]/50 ring-offset-2 ring-offset-white" : ""}>
+              <ActionCardItem
+                card={c}
+                level="property"
+                expanded={expandedCardId === c.id}
+                onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+                onHover={() => { /* no map hover at property level */ }}
+                onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
+                onApprove={() => onApprove(c.id)}
+                onDefer={() => onDefer(c.id)}
+                onDismiss={() => onDismiss(c.id)}
+              />
+            </div>
           ))}
         </div>
       ))}
