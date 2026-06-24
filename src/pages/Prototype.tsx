@@ -4266,6 +4266,7 @@ function ActionCardItem({
   onDismiss,
   onManageAtProperty,
   onPerform,
+  onReview,
 }: {
   card: ActionCard;
   level: "portfolio" | "property" | "unit";
@@ -4279,6 +4280,7 @@ function ActionCardItem({
   onDismiss: () => void;
   onManageAtProperty?: () => void;
   onPerform?: () => void;
+  onReview?: () => void;
 }) {
   const isInferred = card.confidence === "inferred";
   // Property-anchored shown inside a unit = read-only context
