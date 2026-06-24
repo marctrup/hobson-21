@@ -1548,10 +1548,14 @@ const Prototype: React.FC = () => {
         {/* Composer */}
         <div className="px-5 pt-2 pb-4 border-t border-slate-100 bg-white">
           {view === "onboarding" && chipVisible && (
-            <div className="mb-1.5 flex items-center justify-end gap-1 text-[11px] text-slate-500">
-              Tap to send <span aria-hidden>↓</span>
+            <div className="mb-2 flex items-center justify-end gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#7C3AED] text-white text-[11px] font-semibold shadow-sm animate-[pulse_1.6s_ease-in-out_infinite]">
+                Press send to continue
+                <span aria-hidden className="animate-bounce">↓</span>
+              </span>
             </div>
           )}
+
           {view === "portfolio" && portfolioMode === "first" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
             <div className="mb-2 flex flex-col items-end gap-1.5">
               <span className="text-[11px] text-slate-500 flex items-center gap-1">
