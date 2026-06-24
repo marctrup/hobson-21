@@ -1430,7 +1430,7 @@ function PortfolioFirstVisit({
                       <div>
                         <div className="text-sm font-medium text-slate-900">{u.label}</div>
                         <div className="text-[11px] text-slate-500">
-                          {u.status === "Let" ? u.tenant : "Vacant"}
+                          {u.status === "Let" ? (u.tenant ?? "Let") : "Vacant"}
                         </div>
                       </div>
                       <span className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"}`}>
