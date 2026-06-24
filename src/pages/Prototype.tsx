@@ -3298,6 +3298,14 @@ function ActionCardItem({
               Open unit
             </button>
           )}
+          {!isInferred && onOpenProperty && (
+            <button
+              onClick={onOpenProperty}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Open property
+            </button>
+          )}
           <button
             onClick={onDefer}
             className="text-xs px-2.5 py-1.5 rounded-full text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
