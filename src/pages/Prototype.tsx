@@ -1729,6 +1729,18 @@ const Prototype: React.FC = () => {
             onNavigateProperty={(pid) => { setShowDocuments(false); goProperty(pid); }}
           />
         )}
+        {performingCardId && (() => {
+          const card = actionCards.find((c) => c.id === performingCardId);
+          if (!card) return null;
+          return (
+            <PerformWorkspace
+              card={card}
+              onCancel={cancelPerform}
+              onComplete={completePerform}
+              reducedMotion={reduced}
+            />
+          );
+        })()}
       </main>
     </div>
   );
