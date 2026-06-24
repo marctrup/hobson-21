@@ -225,13 +225,16 @@ const PROPERTIES: Property[] = [
 type Urgency = "now" | "week" | "watch";
 type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
 type ApprovalState = "pending" | "approved" | "deferred" | "dismissed";
+type AnchorLevel = "unit" | "property";
 
 type ActionCard = {
   id: string;
   propertyId: string;
-  unitId: string;
-  unitLabel: string;
+  unitId?: string;               // present for unit-anchored cards
+  unitLabel?: string;            // present for unit-anchored cards
   propertyName: string;
+  anchorLevel: AnchorLevel;      // where the action lives / who owns it
+  relevantUnitIds?: string[];    // for property-anchored: affected units (omitted = all units)
   triggerType: TriggerType;
   title: string;
   whyItMatters: string;          // confirmed/inferred prose, plain language
