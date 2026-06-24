@@ -4215,6 +4215,16 @@ function PerformWorkspace({
           )}
         </footer>
       )}
+      {isComplete && (
+        <footer className="border-t border-slate-200 px-5 py-3 bg-white flex justify-end">
+          <button
+            onClick={onCancel}
+            className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          >
+            Close
+          </button>
+        </footer>
+      )}
     </div>
   );
 }
