@@ -1150,7 +1150,7 @@ const Prototype: React.FC = () => {
             <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="white" />
           </svg>
         </div>
-        <RailItem icon="pin" label="Portfolio" active />
+        <RailItem icon="pin" label="Portfolio" active onClick={() => goPortfolio(false)} />
         <RailItem icon="doc" label="Documents" />
         <RailItem icon="chat" label="Chat History" />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
@@ -1465,14 +1465,17 @@ const Prototype: React.FC = () => {
 
 /* ---------------- Sub-components ---------------- */
 
-function RailItem({ icon, label, active }: { icon: "pin" | "doc" | "chat" | "gear"; label: string; active?: boolean }) {
+function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "chat" | "gear"; label: string; active?: boolean; onClick?: () => void }) {
   const stroke = active ? "#7C3AED" : "#64748B";
   return (
     <button
-      className={`w-12 flex flex-col items-center gap-0.5 py-2 rounded-lg transition ${
+      type="button"
+      onClick={onClick}
+      className={`w-12 flex flex-col items-center gap-0.5 py-2 rounded-lg transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 ${
         active ? "bg-[#F5F3FF]" : "hover:bg-slate-50"
       }`}
       aria-current={active ? "page" : undefined}
+      aria-label={label}
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         {icon === "pin" && (<><path d="M12 22s-7-6.5-7-12a7 7 0 1114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></>)}
@@ -1484,6 +1487,7 @@ function RailItem({ icon, label, active }: { icon: "pin" | "doc" | "chat" | "gea
     </button>
   );
 }
+
 
 function HobsonBubble({ text, owl, streaming }: { text: string; owl: OwlState; streaming?: boolean }) {
   return (
