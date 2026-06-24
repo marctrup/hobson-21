@@ -518,19 +518,21 @@ const Prototype: React.FC = () => {
       setHasVisited(true);
     }
 
-    if (portfolioMode === "first") {
-      const greet = `Welcome. Right now I learn at unit level — that's where your documents live, and it's how I build understanding. Want to open a property, or go straight to a unit?`;
-      setTyping(true);
-      const delay = reduced ? 200 : 450;
-      window.setTimeout(() => {
-        setTyping(false);
-        if (reduced) {
-          setMessages([{ id: "p-greet", role: "hobson", text: greet }]);
-        } else {
-          streamHobsonMessage(greet, () => {});
-        }
-      }, delay);
-    }
+    const greet =
+      portfolioMode === "first"
+        ? `Welcome. Right now I learn at unit level — that's where your documents live, and it's how I build understanding. Want to open a property, or go straight to a unit?`
+        : `You're in your portfolio. Search above, pick a property on the map, or jump straight into a unit — that's where I can answer questions today.`;
+    setTyping(true);
+    const delay = reduced ? 200 : 450;
+    window.setTimeout(() => {
+      setTyping(false);
+      if (reduced) {
+        setMessages([{ id: "p-greet", role: "hobson", text: greet }]);
+      } else {
+        streamHobsonMessage(greet, () => {});
+      }
+    }, delay);
+
   };
 
   const goProperty = (id: string) => {
@@ -896,7 +898,17 @@ const Prototype: React.FC = () => {
         {/* Body */}
         <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
 
-          {/* Returning-mode search lives at the top of the panel body */}
+          {/* Hobson messages render first so the greeting sits at the top */}
+          {messages.map((m) =>
+            m.role === "hobson" ? (
+              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} />
+            ) : (
+              <UserBubble key={m.id} text={m.text} />
+            )
+          )}
+          {typing && <TypingBubble owl={owl} />}
+
+          {/* Returning-mode search lives below the greeting */}
           {((view === "portfolio" && portfolioMode === "returning") || view === "property") && (
             <ReturningSearchPanel
               query={searchQuery}
@@ -910,14 +922,6 @@ const Prototype: React.FC = () => {
             />
           )}
 
-          {messages.map((m) =>
-            m.role === "hobson" ? (
-              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} />
-            ) : (
-              <UserBubble key={m.id} text={m.text} />
-            )
-          )}
-          {typing && <TypingBubble owl={owl} />}
 
           {/* Portfolio view — first visit (guided) */}
           {view === "portfolio" && portfolioMode === "first" && (
