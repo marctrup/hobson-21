@@ -3373,6 +3373,7 @@ function PortfolioBriefing({
               onApprove={() => onApprove(c.id)}
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
+              onPerform={onPerform ? () => onPerform(c.id) : undefined}
             />
           ))}
         </div>
