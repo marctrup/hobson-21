@@ -3292,8 +3292,9 @@ function PortfolioBriefing({
   onPerform?: (id: string) => void;
   onReview?: (id: string) => void;
 }) {
-  const pending = cards.filter((c) => c.approvalState === "pending");
+  const pending = cards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
   const urgent = pending.filter((c) => c.urgency === "now");
+
 
   // No pending — nothing to show in briefing
   if (pending.length === 0) {
@@ -3385,8 +3386,9 @@ function PortfolioBriefing({
     .map((u) => ({ key: u, cards: visible.filter((c) => c.urgency === u) }))
     .filter((g) => g.cards.length > 0);
 
-  const restCount = cards.filter((c) => c.approvalState === "pending").length - visible.length;
-  const archived = cards.filter((c) => c.approvalState !== "pending").length;
+  const restCount = pending.length - visible.length;
+  const archived = cards.filter((c) => c.approvalState === "approved" || c.approvalState === "deferred" || c.approvalState === "dismissed").length;
+
 
   return (
     <div className="space-y-3">
