@@ -370,7 +370,7 @@ function locationLabelForCard(card: ActionCard, level: "portfolio" | "property" 
 type Beat = {
   owl: OwlState;
   lines: string[];
-  chip: string;
+  prefill: string;
   mapAction:
     | "none"
     | "pulse-one"
@@ -385,55 +385,62 @@ const BEATS: Beat[] = [
     owl: "talking",
     lines: [
       `Hi ${FIRST_NAME}, I'm Hobson.`,
-      "Think of me as your property co-worker. I read your documents, connect your information, and make sure nothing gets missed.",
+      "Think of me as your property co-worker. I read your documents, connect your information, monitor your events, and help make sure nothing gets missed.",
+      "Today I'll show you how I learn — and why everything starts by gaining knowledge.",
     ],
-    chip: "Nice to meet you",
+    prefill: "How do you see my estate?",
     mapAction: "none",
   },
   {
     owl: "default",
     lines: [
-      "I see your whole estate as units — the spaces people occupy. An office, a shop, a warehouse, a flat.",
-      "Most of what matters — tenancies, deadlines, risk — starts at unit level.",
+      "I see your estate in three levels: Portfolio — your entire estate; Property — a building or site (optional); and Unit — an occupiable space.",
+      "A unit might be an office suite, a retail unit, a warehouse, a flat or a house.",
+      "Most tenancy and occupation information originates at unit level — so that's where I start.",
     ],
-    chip: "How do you learn it all?",
+    prefill: "So how do you learn it all?",
     mapAction: "pulse-one",
   },
   {
     owl: "reading",
     lines: [
-      "I learn by reading your documents — leases, rent reviews, compliance certificates.",
-      "Every document teaches me a little more about that unit.",
+      "I learn by reading your documents — and they come in two families.",
+      "Tenancy documents explain occupation and the tenancy: leases, variations, assignments, rent reviews.",
+      "Asset documents explain the asset itself: compliance records, reports, certificates.",
+      "Documents can belong to a property or a unit — I use both families to build my knowledge of the estate.",
     ],
-    chip: "Then what?",
+    prefill: "What happens once you've read them?",
     mapAction: "pulse-one-doc",
   },
   {
     owl: "default",
     lines: [
-      "Each unit I understand becomes knowledge.",
-      "Enough units, and I understand the whole property. Enough properties, and I understand your entire portfolio.",
+      "Tenancy documents plus asset documents become knowledge.",
+      "That knowledge builds up: Unit Intelligence first → then Property Intelligence → then Portfolio Intelligence.",
+      "Today we're validating my Unit knowledge. Property and Portfolio knowledge come next.",
     ],
-    chip: "What's it all for?",
+    prefill: "Why does this matter?",
     mapAction: "pulse-all",
   },
   {
     owl: "covering",
     lines: [
-      "Property people don't miss things because they lack knowledge.",
-      "They miss them because it's scattered across documents, buildings and deadlines. I'm here to change that.",
+      "Property people don't struggle because they lack knowledge.",
+      "They struggle because important information is scattered across documents, buildings and deadlines.",
+      "Things get missed. Risks get missed. Opportunities get missed.",
+      "We're building Hobson to help change that.",
     ],
-    chip: "I get it",
+    prefill: "So what will you do for me?",
     mapAction: "spread",
   },
   {
     owl: "talking",
     lines: [
       "Today, I answer your questions.",
-      "Soon, I'll handle the work — review the lease, prepare a summary, draft the next step — and bring it to you to approve.",
-      "Ready? Let's open your portfolio.",
+      "Tomorrow, I'll do the work — when a rent review is due I'll review the lease, review the history, prepare a summary, draft the instructions, and bring it to you for approval.",
+      "Understanding creates knowledge. Knowledge enables action. Action makes me your co-worker.",
     ],
-    chip: "Let's get started",
+    prefill: "Let's find a unit",
     mapAction: "check-one",
   },
 ];
@@ -836,6 +843,16 @@ const Prototype: React.FC = () => {
     setInput(pre);
   }, [view, selectedPropertyId, selectedUnitId]);
 
+  /* ----- pre-fill the next onboarding question into the chat box ----- */
+  useEffect(() => {
+    if (view !== "onboarding") return;
+    if (chipVisible) {
+      setInput(BEATS[beatIdx]?.prefill ?? "");
+    } else {
+      setInput("");
+    }
+  }, [view, chipVisible, beatIdx]);
+
   /* ----- onboarding line streaming ----- */
   useEffect(() => {
     if (view !== "onboarding") return;
@@ -885,14 +902,16 @@ const Prototype: React.FC = () => {
     setTimeout(step, 60);
   };
 
-  /* ----- chip click during onboarding ----- */
-  const advanceBeat = () => {
+  /* ----- send the pre-filled question during onboarding ----- */
+  const advanceBeat = (userText?: string) => {
     const beat = BEATS[beatIdx];
+    const text = (userText && userText.trim()) || beat.prefill;
     setMessages((m) => [
       ...m,
-      { id: `u-${Date.now()}`, role: "user", text: beat.chip },
+      { id: `u-${Date.now()}`, role: "user", text },
     ]);
     setChipVisible(false);
+    setInput("");
     if (beatIdx === BEATS.length - 1) {
       // go to portfolio
       setTimeout(() => goPortfolio(true), 350);
@@ -1304,7 +1323,7 @@ const Prototype: React.FC = () => {
                 onClick={replayOnboarding}
                 className="ml-2 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
               >
-                How Hobson works
+                Meet Hobson
               </button>
             )}
           </div>
@@ -1531,21 +1550,8 @@ const Prototype: React.FC = () => {
         {/* Composer */}
         <div className="px-5 pt-2 pb-4 border-t border-slate-100 bg-white">
           {view === "onboarding" && chipVisible && (
-            <div className="mb-2 flex flex-col items-end gap-1.5">
-              <span className="text-[11px] text-slate-500 flex items-center gap-1">
-                Tap to reply <span aria-hidden>↓</span>
-              </span>
-              <button
-                onClick={advanceBeat}
-                autoFocus
-                className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
-                  beatIdx === BEATS.length - 1
-                    ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm"
-                    : "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE] border border-[#DDD6FE]"
-                }`}
-              >
-                {BEATS[beatIdx]?.chip}
-              </button>
+            <div className="mb-1.5 flex items-center justify-end gap-1 text-[11px] text-slate-500">
+              Tap to send <span aria-hidden>↓</span>
             </div>
           )}
           {view === "portfolio" && portfolioMode === "first" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
@@ -1579,9 +1585,9 @@ const Prototype: React.FC = () => {
               </button>
             </div>
           )}
-          {view === "portfolio" || view === "property" || view === "unit" ? (
+          {(view === "onboarding" || view === "portfolio" || view === "property" || view === "unit") ? (
             <>
-              {view !== "unit" && (
+              {view !== "unit" && view !== "onboarding" && (
                 <div className="text-[11px] text-slate-400 mb-1 flex items-center gap-1">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                     <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
@@ -1595,7 +1601,10 @@ const Prototype: React.FC = () => {
                   e.preventDefault();
                   const q = input.trim();
                   if (!q) return;
-                  if (view === "unit") {
+                  if (view === "onboarding") {
+                    if (!chipVisible) return;
+                    advanceBeat(q);
+                  } else if (view === "unit") {
                     sendUnitQuestion(q);
                   } else if (isRentFlat2Question(q)) {
                     sendRentAnswer(q);
@@ -1605,7 +1614,7 @@ const Prototype: React.FC = () => {
                   }
                 }}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-full border bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition ${
-                  isRentFlat2Question(input) && !typing
+                  (view === "onboarding" && chipVisible) || (isRentFlat2Question(input) && !typing)
                     ? "border-[#7C3AED] ring-2 ring-[#7C3AED]/30 animate-[pulse_1.6s_ease-in-out_infinite]"
                     : "border-slate-200"
                 }`}
@@ -1613,18 +1622,25 @@ const Prototype: React.FC = () => {
                 <input
                   ref={inputRef}
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask Hobson…"
-                  className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+                  onChange={(e) => {
+                    if (view === "onboarding") return; // locked-but-sendable
+                    setInput(e.target.value);
+                  }}
+                  onClick={() => {
+                    if (view === "onboarding" && chipVisible) advanceBeat(input);
+                  }}
+                  readOnly={view === "onboarding"}
+                  placeholder={view === "onboarding" && !chipVisible ? "Hobson is talking…" : "Ask Hobson…"}
+                  className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400 cursor-text"
                   aria-label="Ask Hobson"
                 />
                 <button
                   type="submit"
                   className={`text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300 ${
-                    isRentFlat2Question(input) && !typing ? "animate-[pulse_1.6s_ease-in-out_infinite]" : ""
+                    (view === "onboarding" && chipVisible) || (isRentFlat2Question(input) && !typing) ? "animate-[pulse_1.6s_ease-in-out_infinite]" : ""
                   }`}
                   aria-label="Send"
-                  disabled={!input.trim()}
+                  disabled={!input.trim() || (view === "onboarding" && !chipVisible)}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M13 6l6 6-6 6"/>
