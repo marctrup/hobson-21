@@ -3008,9 +3008,23 @@ function ActionCardItem({
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
       className={`rounded-xl border bg-white p-3 transition ${
-        isInferred ? "border-amber-200" : "border-slate-200 hover:border-[#7C3AED]/40"
+        readOnly
+          ? "border-indigo-200 bg-indigo-50/30"
+          : isInferred ? "border-amber-200" : "border-slate-200 hover:border-[#7C3AED]/40"
       }`}
     >
+      <div className="flex flex-wrap items-center gap-1 mb-1.5">
+        <span className={`text-[10px] px-1.5 py-0.5 rounded border font-medium ${anchorChip.cls}`}>
+          {locationLabel}
+        </span>
+        <span className="text-[10px] text-slate-400">·</span>
+        <span className="text-[10px] uppercase tracking-wide text-slate-400 font-medium">{anchorChip.label}</span>
+        {readOnly && (
+          <span className="text-[10px] px-1.5 py-0.5 rounded border border-slate-200 bg-white text-slate-500 font-medium ml-auto">
+            Read-only here
+          </span>
+        )}
+      </div>
       <header className="flex items-start gap-2 mb-1.5">
         <span aria-hidden className="text-base leading-none mt-0.5">{TRIGGER_ICON[card.triggerType]}</span>
         <div className="flex-1 min-w-0">
@@ -3022,7 +3036,16 @@ function ActionCardItem({
       <p className="text-[12.5px] text-slate-700 leading-relaxed mb-1.5">{card.whyItMatters}</p>
       <p className="text-[12px] text-slate-500 leading-relaxed mb-2 italic">{card.hobsonPrepared}</p>
 
-      {!expanded && (
+      {readOnly ? (
+        <div className="flex flex-wrap items-center gap-1.5">
+          <button
+            onClick={onManageAtProperty}
+            className="text-xs px-3 py-1.5 rounded-full bg-white text-indigo-700 border border-indigo-300 hover:bg-indigo-50 transition focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          >
+            Manage at {card.propertyName} level →
+          </button>
+        </div>
+      ) : !expanded && (
         <div className="flex flex-wrap items-center gap-1.5">
           {!isInferred ? (
             <button
@@ -3031,7 +3054,7 @@ function ActionCardItem({
             >
               {card.proposedAction}
             </button>
-          ) : (
+          ) : onOpenUnit ? (
             <>
               <button
                 onClick={onOpenUnit}
@@ -3046,8 +3069,15 @@ function ActionCardItem({
                 Flag for review
               </button>
             </>
+          ) : (
+            <button
+              onClick={onDefer}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Flag for review
+            </button>
           )}
-          {!isInferred && (
+          {!isInferred && onOpenUnit && (
             <button
               onClick={onOpenUnit}
               className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
@@ -3070,7 +3100,7 @@ function ActionCardItem({
         </div>
       )}
 
-      {expanded && !isInferred && (
+      {!readOnly && expanded && !isInferred && (
         <div className="mt-2 rounded-lg border border-[#DDD6FE] bg-[#F5F3FF] p-2.5 space-y-2">
           <div>
             <div className="text-[10px] uppercase tracking-wide text-[#5B21B6] font-semibold mb-1">What I'll do</div>
