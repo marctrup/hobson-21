@@ -22,6 +22,7 @@ type OwlState = keyof typeof OWLS;
 /* ---------------- Data ---------------- */
 
 type ConfirmedEnding = "none" | "end_tenancy" | "replacement_chain" | "reversionary_started";
+type ChainSignal = "notice_to_vacate" | "surrender_notice" | "break_notice";
 
 type Unit = {
   id: string;
@@ -29,6 +30,9 @@ type Unit = {
   status: "Let" | "Vacant"; // Let = occupied; Vacant = confirmed ended (re-lettable)
   termEndDate?: string;     // ISO date of current term end (optional)
   confirmedEnding?: ConfirmedEnding; // proof a tenancy has ended
+  nextBreak?: string;       // ISO date
+  nextReview?: string;      // ISO date
+  chainSignals?: ChainSignal[];
   tenant?: string;
   rent?: string;
   leaseTo?: string;
@@ -40,15 +44,25 @@ type Unit = {
   lastRent?: string;
 };
 
-/** Derived tile state — keeps occupancy and term status as two independent facts. */
+type Confidence = "confirmed" | "inferred";
+
+type PanelItem = {
+  key: string;
+  label: string;
+  value?: string;
+  confidence: Confidence;
+  note?: string;
+};
+
 type UnitDerived = {
-  state: "let_clear" | "let_ending_soon" | "let_holding_over" | "vacant_confirmed";
-  daysToTermEnd: number | null;
-  termEndLabel: string | null;
+  items: PanelItem[];
+  hasAlert: boolean;
+  isVacantConfirmed: boolean;
+  isEndingInferred: boolean;
+  hasUpcomingBreakOrReview: boolean;
 };
 
 const TODAY = new Date("2026-06-24T00:00:00Z");
-const ENDING_SOON_WINDOW_DAYS = 90;
 
 function formatUkDate(iso?: string): string | null {
   if (!iso) return null;
@@ -57,37 +71,86 @@ function formatUkDate(iso?: string): string | null {
   return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 }
 
-function deriveUnit(u: Unit): UnitDerived {
-  const confirmed = u.confirmedEnding && u.confirmedEnding !== "none";
-  const isVacantConfirmed = u.status === "Vacant" || confirmed;
-  const termEndLabel = formatUkDate(u.termEndDate);
-  let daysToTermEnd: number | null = null;
-  if (u.termEndDate) {
-    const t = new Date(u.termEndDate + "T00:00:00Z").getTime();
-    daysToTermEnd = Math.round((t - TODAY.getTime()) / 86400000);
-  }
-  if (isVacantConfirmed) return { state: "vacant_confirmed", daysToTermEnd, termEndLabel };
-  if (daysToTermEnd !== null && daysToTermEnd < 0) {
-    return { state: "let_holding_over", daysToTermEnd, termEndLabel };
-  }
-  if (daysToTermEnd !== null && daysToTermEnd <= ENDING_SOON_WINDOW_DAYS) {
-    return { state: "let_ending_soon", daysToTermEnd, termEndLabel };
-  }
-  return { state: "let_clear", daysToTermEnd, termEndLabel };
+function isFuture(iso?: string): boolean {
+  if (!iso) return false;
+  return new Date(iso + "T00:00:00Z").getTime() > TODAY.getTime();
+}
+function isPast(iso?: string): boolean {
+  if (!iso) return false;
+  return new Date(iso + "T00:00:00Z").getTime() < TODAY.getTime();
 }
 
-function unitTooltip(u: Unit, d: UnitDerived): string {
-  switch (d.state) {
-    case "vacant_confirmed":
-      return "Vacant · tenancy confirmed ended — available to let";
-    case "let_holding_over":
-      return `Let · term ended ${d.termEndLabel ?? ""} — not confirmed vacated. Rent may still be due. Needs review.`;
-    case "let_ending_soon":
-      return `Let · term ends in ${d.daysToTermEnd} day${d.daysToTermEnd === 1 ? "" : "s"} — break/expiry approaching`;
-    case "let_clear":
-    default:
-      return d.termEndLabel ? `Let · term to ${d.termEndLabel}` : "Let";
+const CHAIN_SIGNAL_LABEL: Record<ChainSignal, string> = {
+  notice_to_vacate: "notice to vacate in chain",
+  surrender_notice: "surrender notice in chain",
+  break_notice: "break notice in chain",
+};
+
+function deriveUnit(u: Unit): UnitDerived {
+  const items: PanelItem[] = [];
+  const confirmedEnding = u.confirmedEnding && u.confirmedEnding !== "none";
+  const isVacantConfirmed = u.status === "Vacant" || !!confirmedEnding;
+  const termPassed = isPast(u.termEndDate);
+  const chain = u.chainSignals ?? [];
+
+  if (isVacantConfirmed) {
+    items.push({
+      key: "vacant",
+      label: "Vacant",
+      confidence: "confirmed",
+      note: "tenancy confirmed ended — available to let",
+    });
+  } else {
+    // Inferred endings (term passed OR a chain notice exists, with no confirmed ending)
+    if (termPassed) {
+      items.push({
+        key: "ending-term",
+        label: "Tenancy ending",
+        value: `term ended ${formatUkDate(u.termEndDate)}`,
+        confidence: "inferred",
+        note: "not confirmed vacated — rent may still be due. Needs checking.",
+      });
+    } else if (chain.length > 0) {
+      items.push({
+        key: "ending-chain",
+        label: "Tenancy ending",
+        value: CHAIN_SIGNAL_LABEL[chain[0]],
+        confidence: "inferred",
+        note: "signal only — not a confirmed ending. Rent may still be due. Needs checking.",
+      });
+    }
+
+    // Breaks and reviews are historical once term has passed
+    if (!termPassed) {
+      if (isFuture(u.nextBreak)) {
+        items.push({
+          key: "break",
+          label: "Next break",
+          value: formatUkDate(u.nextBreak) ?? "",
+          confidence: "confirmed",
+        });
+      }
+      if (isFuture(u.nextReview)) {
+        items.push({
+          key: "review",
+          label: "Next review",
+          value: formatUkDate(u.nextReview) ?? "",
+          confidence: "confirmed",
+        });
+      }
+    }
   }
+
+  const isEndingInferred = items.some((i) => i.key === "ending-term" || i.key === "ending-chain");
+  const hasUpcomingBreakOrReview = items.some((i) => i.key === "break" || i.key === "review");
+
+  return {
+    items,
+    hasAlert: items.length > 0,
+    isVacantConfirmed,
+    isEndingInferred,
+    hasUpcomingBreakOrReview,
+  };
 }
 
 type Property = {
@@ -117,11 +180,11 @@ const PROPERTIES: Property[] = [
       { id: "stanley-f3",  label: "Flat 3",  status: "Let", termEndDate: "2026-03-24", confirmedEnding: "none" },
       { id: "stanley-f4",  label: "Flat 4",  status: "Let", termEndDate: "2028-01-10" },
       { id: "stanley-f5",  label: "Flat 5",  status: "Let", termEndDate: "2026-08-30" },
-      { id: "stanley-f6",  label: "Flat 6",  status: "Let", termEndDate: "2027-11-02" },
+      { id: "stanley-f6",  label: "Flat 6",  status: "Let", termEndDate: "2027-11-02", nextBreak: "2027-05-02", nextReview: "2027-03-01" },
       { id: "stanley-f7",  label: "Flat 7",  status: "Let", termEndDate: "2025-12-01", confirmedEnding: "none" },
       { id: "stanley-f8",  label: "Flat 8",  status: "Vacant", confirmedEnding: "end_tenancy" },
       { id: "stanley-f9",  label: "Flat 9",  status: "Let", termEndDate: "2027-05-20" },
-      { id: "stanley-f10", label: "Flat 10", status: "Let", termEndDate: "2028-04-04" },
+      { id: "stanley-f10", label: "Flat 10", status: "Let", termEndDate: "2028-04-04", chainSignals: ["notice_to_vacate"] },
       { id: "stanley-f11", label: "Flat 11", status: "Let", termEndDate: "2027-02-18" },
       { id: "stanley-shop", label: "Shop",   status: "Vacant", confirmedEnding: "end_tenancy" },
     ],
@@ -1358,13 +1421,178 @@ function PortfolioContent({
   );
 }
 
-type UnitFilter = "all" | "let" | "vacant" | "ending_soon" | "needs_review" | "shops";
+type UnitFilter = "all" | "alerts" | "vacant" | "ending_inferred" | "break_review" | "shops";
 
 function unitSortKey(label: string): number {
   const lo = label.toLowerCase();
   if (lo.includes("shop")) return -1;
   const m = lo.match(/(\d+)/);
   return m ? parseInt(m[1], 10) : 999;
+}
+
+/** Confidence marker — solid filled tick for confirmed, dashed/hollow ring with "?" for inferred. */
+function ConfidenceMark({ confidence }: { confidence: Confidence }) {
+  if (confidence === "confirmed") {
+    return (
+      <span
+        className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700"
+        aria-label="Confirmed"
+      >
+        <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
+          <circle cx="12" cy="12" r="10" fill="currentColor" />
+          <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Confirmed
+      </span>
+    );
+  }
+  return (
+    <span
+      className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-amber-800"
+      aria-label="Inferred — needs checking"
+    >
+      <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden className="text-amber-700">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
+        <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="700" fill="currentColor">?</text>
+      </svg>
+      Inferred · needs checking
+    </span>
+  );
+}
+
+function UnitDetailPanel({ unit, derived }: { unit: Unit; derived: UnitDerived }) {
+  return (
+    <div role="dialog" aria-label={`${unit.label} status`} className="text-left">
+      <div className="text-[12px] font-semibold text-slate-900 mb-1.5">{unit.label}</div>
+      {derived.items.length === 0 ? (
+        <div className="text-[11px] text-slate-500">Let · nothing pending</div>
+      ) : (
+        <ul className="space-y-1.5">
+          {derived.items.map((it) => (
+            <li key={it.key} className="text-[11px] leading-snug">
+              <div className="flex items-baseline gap-1.5 flex-wrap">
+                <span className="font-medium text-slate-800">{it.label}</span>
+                {it.value && <span className="text-slate-600">— {it.value}</span>}
+              </div>
+              <div className="mt-0.5"><ConfidenceMark confidence={it.confidence} /></div>
+              {it.note && <div className="mt-0.5 text-[10.5px] text-slate-500">{it.note}</div>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function UnitTile({
+  unit,
+  derived,
+  tabIx,
+  onOpen,
+  scrollRef,
+}: {
+  unit: Unit;
+  derived: UnitDerived;
+  tabIx: 0 | -1;
+  onOpen: () => void;
+  scrollRef: React.RefObject<HTMLDivElement>;
+}) {
+  const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState<"below" | "above">("below");
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+  const popRef = useRef<HTMLDivElement | null>(null);
+
+  // Decide whether to flip to above when opening
+  useEffect(() => {
+    if (!open) return;
+    const btn = btnRef.current;
+    const scroller = scrollRef.current;
+    if (!btn || !scroller) return;
+    const br = btn.getBoundingClientRect();
+    const sr = scroller.getBoundingClientRect();
+    const spaceBelow = sr.bottom - br.bottom;
+    const spaceAbove = br.top - sr.top;
+    setPlacement(spaceBelow < 160 && spaceAbove > spaceBelow ? "above" : "below");
+  }, [open, scrollRef]);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      const t = e.target as Node;
+      if (btnRef.current?.contains(t) || popRef.current?.contains(t)) return;
+      setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const occupancyLabel = derived.isVacantConfirmed ? "Vacant (confirmed)" : "Let";
+  const alertSummary = derived.hasAlert
+    ? derived.items.map((i) => `${i.label}${i.value ? " " + i.value : ""} (${i.confidence})`).join("; ")
+    : "nothing pending";
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={(e) => {
+        // close if focus leaves the wrapper entirely
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
+      }}
+    >
+      <button
+        ref={btnRef}
+        data-uchip
+        tabIndex={tabIx}
+        onClick={(e) => {
+          // Single click on a flagged tile reveals the panel (mobile/keyboard);
+          // double-click or Enter still opens the unit. To keep behaviour simple,
+          // treat click as "open unit" — panel is shown on hover/focus.
+          void e;
+          onOpen();
+        }}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-label={`${unit.label}, ${occupancyLabel}. ${alertSummary}. Open unit.`}
+        className="relative w-full flex items-center justify-center px-2 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+      >
+        {derived.hasAlert && (
+          <span
+            aria-hidden
+            className="absolute top-1 right-1 inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-100 border border-amber-400 text-amber-700"
+            title="Has pending items — hover to view"
+          >
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L1 21h22L12 2zm0 6l7.5 13h-15L12 8zm-1 4v4h2v-4h-2zm0 5v2h2v-2h-2z" />
+            </svg>
+          </span>
+        )}
+        <span className="truncate max-w-full">{unit.label}</span>
+      </button>
+
+      {open && (
+        <div
+          ref={popRef}
+          role="tooltip"
+          className={`absolute left-1/2 -translate-x-1/2 z-20 w-56 p-2.5 rounded-md border border-slate-200 bg-white shadow-lg ${
+            placement === "above" ? "bottom-full mb-1.5" : "top-full mt-1.5"
+          }`}
+        >
+          <UnitDetailPanel unit={unit} derived={derived} />
+        </div>
+      )}
+    </div>
+  );
 }
 
 function PropertyContent({
@@ -1389,17 +1617,16 @@ function PropertyContent({
   }, [property.units]);
 
   const counts = useMemo(() => {
-    let let_ = 0, vacant = 0, endingSoon = 0, needsReview = 0;
+    let alerts = 0, vacant = 0, endingInferred = 0, breakReview = 0;
     property.units.forEach((u) => {
       const d = derivedByUnit.get(u.id)!;
-      if (d.state === "vacant_confirmed") vacant += 1;
-      else {
-        let_ += 1;
-        if (d.state === "let_ending_soon") endingSoon += 1;
-        if (d.state === "let_holding_over") needsReview += 1;
-      }
+      if (d.hasAlert) alerts += 1;
+      if (d.isVacantConfirmed) vacant += 1;
+      if (d.isEndingInferred) endingInferred += 1;
+      if (d.hasUpcomingBreakOrReview) breakReview += 1;
     });
-    return { let: let_, vacant, endingSoon, needsReview };
+    const let_ = property.units.length - vacant;
+    return { alerts, vacant, endingInferred, breakReview, let: let_ };
   }, [property.units, derivedByUnit]);
 
   const hasShops = property.units.some((u) => u.label.toLowerCase().includes("shop"));
@@ -1409,14 +1636,14 @@ function PropertyContent({
     return property.units
       .filter((u) => {
         const d = derivedByUnit.get(u.id)!;
-        if (quick === "let" && d.state === "vacant_confirmed") return false;
-        if (quick === "vacant" && d.state !== "vacant_confirmed") return false;
-        if (quick === "ending_soon" && d.state !== "let_ending_soon") return false;
-        if (quick === "needs_review" && d.state !== "let_holding_over") return false;
+        if (quick === "alerts" && !d.hasAlert) return false;
+        if (quick === "vacant" && !d.isVacantConfirmed) return false;
+        if (quick === "ending_inferred" && !d.isEndingInferred) return false;
+        if (quick === "break_review" && !d.hasUpcomingBreakOrReview) return false;
         if (quick === "shops" && !u.label.toLowerCase().includes("shop")) return false;
         if (!q) return true;
-        if (q === "vac") return d.state === "vacant_confirmed";
-        if (q === "let") return d.state !== "vacant_confirmed";
+        if (q === "vac") return d.isVacantConfirmed;
+        if (q === "let") return !d.isVacantConfirmed;
         return (
           u.label.toLowerCase().includes(q) ||
           (u.tenant ?? "").toLowerCase().includes(q)
@@ -1487,8 +1714,24 @@ function PropertyContent({
     <div className="space-y-3">
       <div className="text-[12px] text-slate-600">
         {property.units.length} units · {counts.let} Let · {counts.vacant} Vacant
-        {counts.needsReview > 0 && <> · <span className="text-amber-700 font-medium">{counts.needsReview} Need review</span></>}
-        {counts.endingSoon > 0 && <> · {counts.endingSoon} Ending soon</>}
+        {counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} with alerts</span></>}
+      </div>
+
+      <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
+        <span className="inline-flex items-center gap-1">
+          <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
+            <circle cx="12" cy="12" r="10" fill="currentColor" />
+            <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          Confirmed = known fact
+        </span>
+        <span className="inline-flex items-center gap-1">
+          <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-amber-700">
+            <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
+            <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="700" fill="currentColor">?</text>
+          </svg>
+          Inferred = signal Hobson spotted, needs checking
+        </span>
       </div>
 
       {property.units.length > 20 && (
@@ -1518,10 +1761,10 @@ function PropertyContent({
 
       <div className="flex flex-wrap gap-1.5">
         {quickBtn("all", `All (${property.units.length})`)}
-        {quickBtn("let", `Let (${counts.let})`)}
+        {counts.alerts > 0 && quickBtn("alerts", `Has alerts (${counts.alerts})`)}
         {quickBtn("vacant", `Vacant (${counts.vacant})`)}
-        {counts.endingSoon > 0 && quickBtn("ending_soon", `Ending soon (${counts.endingSoon})`)}
-        {counts.needsReview > 0 && quickBtn("needs_review", `Needs review (${counts.needsReview})`)}
+        {counts.endingInferred > 0 && quickBtn("ending_inferred", `Ending (inferred) (${counts.endingInferred})`)}
+        {counts.breakReview > 0 && quickBtn("break_review", `Break/review upcoming (${counts.breakReview})`)}
         {hasShops && quickBtn("shops", "Shops")}
       </div>
 
@@ -1553,42 +1796,18 @@ function PropertyContent({
                 {!isCollapsed && (
                   <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 pt-2">
                     {group.units.map((u) => {
-                      const tabIx = tileIndex === 0 ? 0 : -1;
+                      const tabIx: 0 | -1 = tileIndex === 0 ? 0 : -1;
                       tileIndex += 1;
                       const d = derivedByUnit.get(u.id)!;
-                      const dot =
-                        d.state === "vacant_confirmed" ? "bg-slate-400"
-                        : "bg-emerald-500";
-                      const flag =
-                        d.state === "let_ending_soon" ? { label: "Ending soon", short: "Soon" }
-                        : d.state === "let_holding_over" ? { label: "Term ended · unconfirmed", short: "Review" }
-                        : null;
-                      const tip = unitTooltip(u, d);
-                      const occupancyLabel = d.state === "vacant_confirmed" ? "Vacant (confirmed)" : "Let";
                       return (
-                        <button
+                        <UnitTile
                           key={u.id}
-                          data-uchip
-                          tabIndex={tabIx}
-                          onClick={() => onOpenUnit(u.id)}
-                          title={tip}
-                          aria-label={`${u.label}, ${occupancyLabel}${flag ? ", " + flag.label : ""}. Open unit.`}
-                          className="relative flex flex-col items-center justify-center gap-1 px-2 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
-                        >
-                          {flag && (
-                            <span
-                              aria-hidden
-                              className="absolute top-1 right-1 inline-flex items-center gap-0.5 px-1 py-[1px] rounded text-[8px] font-semibold uppercase tracking-wide bg-amber-100 text-amber-800 border border-amber-300"
-                            >
-                              <svg width="7" height="7" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                                <path d="M12 2L1 21h22L12 2zm0 6l7.5 13h-15L12 8zm-1 4v4h2v-4h-2zm0 5v2h2v-2h-2z" />
-                              </svg>
-                              {flag.short}
-                            </span>
-                          )}
-                          <span className="truncate max-w-full">{u.label}</span>
-                          <span className={`w-1.5 h-1.5 rounded-full ${dot}`} aria-hidden />
-                        </button>
+                          unit={u}
+                          derived={d}
+                          tabIx={tabIx}
+                          scrollRef={gridWrapRef}
+                          onOpen={() => onOpenUnit(u.id)}
+                        />
                       );
                     })}
                   </div>
