@@ -223,9 +223,11 @@ type MapHighlight = {
 function HobsonMap({
   onPropertyClick,
   highlight,
+  onPinHover,
 }: {
   onPropertyClick: (id: string) => void;
   highlight: MapHighlight;
+  onPinHover?: (id: string | null) => void;
 }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<L.Map | null>(null);
