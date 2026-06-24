@@ -248,11 +248,29 @@ type ActionCard = {
 
 const INITIAL_ACTION_CARDS: ActionCard[] = [
   {
+    id: "act-stanley-fra",
+    propertyId: "stanley",
+    propertyName: "Stanley House",
+    anchorLevel: "property",
+    // omitted relevantUnitIds = applies to every unit in the building
+    triggerType: "compliance",
+    title: "Fire Risk Assessment due — Stanley House",
+    whyItMatters: "Annual FRA on the building is due 12 July 2026 (confirmed from last year's certificate). Affects the whole property — every unit benefits from a current FRA.",
+    confidence: "confirmed",
+    hobsonPrepared: "I've drafted an instruction to your usual fire consultant with access notes and the previous report for reference.",
+    proposedAction: "Review & approve",
+    urgency: "week",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll email the instruction to the consultant, copy you, book a site visit window, and add the renewed certificate to the compliance calendar so cover never lapses.",
+  },
+  {
     id: "act-stanley-f8-review",
     propertyId: "stanley",
     unitId: "stanley-f8",
     unitLabel: "Flat 8",
     propertyName: "Stanley House",
+    anchorLevel: "unit",
     triggerType: "review",
     title: "Rent review due — Flat 8, Stanley House",
     whyItMatters: "Review date confirmed for March 2027 in the lease.",
@@ -270,6 +288,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "nugent-shop",
     unitLabel: "Shop",
     propertyName: "5 Nugent Terrace",
+    anchorLevel: "unit",
     triggerType: "compliance",
     title: "EPC expiring — Shop, 5 Nugent Terrace",
     whyItMatters: "Current EPC expires 18 August 2026 (confirmed from certificate on file).",
@@ -287,6 +306,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "stanley-f6",
     unitLabel: "Flat 6",
     propertyName: "Stanley House",
+    anchorLevel: "unit",
     triggerType: "break",
     title: "Break approaching — Flat 6, Stanley House",
     whyItMatters: "Tenant break on 2 May 2027, confirmed from the lease. Notice window opens November.",
@@ -304,6 +324,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "stanley-f3",
     unitLabel: "Flat 3",
     propertyName: "Stanley House",
+    anchorLevel: "unit",
     triggerType: "expiry",
     title: "Term ended — Flat 3, Stanley House",
     whyItMatters:
@@ -321,6 +342,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "nugent-f2",
     unitLabel: "Flat 2",
     propertyName: "5 Nugent Terrace",
+    anchorLevel: "unit",
     triggerType: "expiry",
     title: "Term ended — Flat 2, 5 Nugent Terrace",
     whyItMatters:
@@ -338,6 +360,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "stanley-f7",
     unitLabel: "Flat 7",
     propertyName: "Stanley House",
+    anchorLevel: "unit",
     triggerType: "expiry",
     title: "Term ended — Flat 7, Stanley House",
     whyItMatters:
@@ -350,6 +373,31 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     preparedDetail: "",
   },
 ];
+
+/** Selects the action cards relevant at a given vantage point. Same objects — no duplication. */
+function selectActionsForScope(
+  cards: ActionCard[],
+  scope: { level: "portfolio" } | { level: "property"; propertyId: string } | { level: "unit"; propertyId: string; unitId: string }
+): ActionCard[] {
+  if (scope.level === "portfolio") return cards;
+  if (scope.level === "property") return cards.filter((c) => c.propertyId === scope.propertyId);
+  // unit: this unit's own actions + property-anchored actions relevant to it
+  return cards.filter((c) => {
+    if (c.propertyId !== scope.propertyId) return false;
+    if (c.anchorLevel === "unit") return c.unitId === scope.unitId;
+    // property-anchored: relevant if relevantUnitIds omitted OR includes this unit
+    return !c.relevantUnitIds || c.relevantUnitIds.includes(scope.unitId);
+  });
+}
+
+/** Vantage-appropriate location label (e.g. "Flat 8" at property; "Property-wide" for property-anchored). */
+function locationLabelForCard(card: ActionCard, level: "portfolio" | "property" | "unit"): string {
+  if (card.anchorLevel === "property") return "Property-wide";
+  // unit-anchored
+  if (level === "portfolio") return `${card.unitLabel} · ${card.propertyName}`;
+  if (level === "property") return card.unitLabel ?? "Unit";
+  return card.unitLabel ?? "This unit";
+}
 
 
 
