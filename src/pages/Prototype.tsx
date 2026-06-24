@@ -913,11 +913,13 @@ const Prototype: React.FC = () => {
     void fromOnboarding;
 
     const pending = actionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
-    void pending;
+    const urgent = pending.filter((c) => c.urgency === "now");
 
-    const greetLines: string[] = [
-      `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`,
-    ];
+    const greetLines: string[] =
+      pending.length === 0
+        ? [`Morning, ${FIRST_NAME}. The estate's quiet — nothing needs you today. Tap a pin to wander in, or use the map search.`]
+        : [`Morning, ${FIRST_NAME}. ${pending.length} ${pending.length === 1 ? "thing needs" : "things need"} you${urgent.length ? `, and ${urgent.length === 1 ? "1 is" : `${urgent.length} are`} time-sensitive` : ""}.`];
+
 
 
 
@@ -1404,16 +1406,39 @@ const Prototype: React.FC = () => {
 
 
 
-          {/* Portfolio view (single guided state — returning launcher removed) */}
-          {view === "portfolio" && (
-            <PortfolioFirstVisit
-              showPropertyList={showPropertyList}
-              showUnitPicker={showUnitPicker}
-              onOpenProperty={goProperty}
-              onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
-              onPreviewQuestion={askPortfolioPreview}
+          {/* Portfolio view (single state) — intelligent action briefing */}
+          {view === "portfolio" && !typing && messages.length > 0 && (
+            <PortfolioBriefing
+              cards={actionCards}
+              choice={briefingChoice}
+              setChoice={setBriefingChoice}
+              expandedCardId={expandedCardId}
+              setExpandedCardId={setExpandedCardId}
+              onHoverCard={setHoveredCardPropertyId}
+              onOpenUnit={(propId, unitId, cardId) => goUnit(unitId, propId, cardId)}
+              onOpenProperty={(propId, cardId) => goProperty(propId, cardId)}
+              onApprove={(id) => {
+                const c = actionCards.find((x) => x.id === id);
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
+                setExpandedCardId(null);
+                if (c) {
+                  setActionToast(`Done — ${c.title} recorded.`);
+                  window.setTimeout(() => setActionToast(null), 3000);
+                }
+              }}
+              onDefer={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
+                setExpandedCardId(null);
+              }}
+              onDismiss={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
+                setExpandedCardId(null);
+              }}
+              onPerform={performCard}
+              onReview={reviewCard}
             />
           )}
+
 
 
 
