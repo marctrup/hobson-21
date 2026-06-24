@@ -3229,8 +3229,8 @@ function PortfolioBriefing({
     const chips: { label: string; value: "all" | "urgent" | "browse" }[] = [
       { label: `Show me what needs me (${pending.length})`, value: "all" },
       ...(urgent.length ? [{ label: `Just the urgent ${urgent.length === 1 ? "one" : `${urgent.length}`}`, value: "urgent" as const }] : []),
-      { label: "I'll browse", value: "browse" as const },
     ];
+
     return (
       <div className="flex flex-col items-end gap-1.5">
         <span className="text-[11px] text-slate-500 flex items-center gap-1">
@@ -3256,51 +3256,8 @@ function PortfolioBriefing({
     );
   }
 
-  if (choice === "browse") {
-    return (
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium">Properties</div>
-          <button
-            onClick={() => setChoice(null)}
-            className="text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
-          >
-            ← Back to briefing
-          </button>
-        </div>
-        <div className="space-y-1.5">
-          {PROPERTIES.map((p) => {
-            const hasAlert = pending.some((c) => c.propertyId === p.id);
-            return (
-              <button
-                key={p.id}
-                onClick={() => {
-                  if (p.standalone) onOpenUnit(p.id, p.units[0].id);
-                  else onOpenUnit(p.id, p.units[0].id); // open via unit; for non-standalone we still drill in via property
-                }}
-                onMouseEnter={() => onHoverCard(p.id)}
-                onMouseLeave={() => onHoverCard(null)}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
-              >
-                <div>
-                  <div className="text-sm font-medium text-slate-900 flex items-center gap-1.5">
-                    {p.name}
-                    {hasAlert && (
-                      <span className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-100 border border-amber-400 text-amber-700" aria-label="Has alerts">
-                        <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L1 21h22L12 2z"/></svg>
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-[11px] text-slate-500">{p.area} · {p.standalone ? "single unit" : `${p.units.length} units`}</div>
-                </div>
-                <span className="text-[#7C3AED] text-sm">→</span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    );
-  }
+  // "Browse" branch removed — property list no longer rendered at portfolio level
+
 
   const visible = choice === "urgent" ? urgent : pending;
   const groups: { key: Urgency; cards: ActionCard[] }[] = (["now", "week", "watch"] as Urgency[])
