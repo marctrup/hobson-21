@@ -1280,29 +1280,37 @@ function PropertyContent({
   return (
     <div className="space-y-3">
       <div>
+        <div className="text-base font-semibold text-slate-900">{property.name}</div>
+        <div className="text-[12px] text-slate-500">{property.address.replace(`${property.name} — `, "")} · {property.units.length} units</div>
+      </div>
+      <div>
         <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Units</div>
         <div className="space-y-1.5">
-          {property.units.map((u) => (
-            <button
-              key={u.id}
-              onClick={() => onOpenUnit(u.id)}
-              className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
-            >
-              <div>
-                <div className="text-sm font-medium text-slate-900">{u.label}</div>
-                <div className="text-[11px] text-slate-500">
-                  {u.status === "Let" ? `${u.tenant} · ${u.rent}` : `Vacant since ${u.vacantSince}`}
-                </div>
-              </div>
-              <span
-                className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${
-                  u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"
-                }`}
+          {property.units.map((u) => {
+            const subtitle =
+              u.status === "Let"
+                ? (u.tenant ? `${u.tenant}${u.rent ? ` · ${u.rent}` : ""}` : "Let")
+                : (u.vacantSince ? `Vacant since ${u.vacantSince}` : "Vacant");
+            return (
+              <button
+                key={u.id}
+                onClick={() => onOpenUnit(u.id)}
+                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
               >
-                {u.status}
-              </span>
-            </button>
-          ))}
+                <div>
+                  <div className="text-sm font-medium text-slate-900">{u.label}</div>
+                  <div className="text-[11px] text-slate-500">{subtitle}</div>
+                </div>
+                <span
+                  className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${
+                    u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"
+                  }`}
+                >
+                  {u.status}
+                </span>
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>
