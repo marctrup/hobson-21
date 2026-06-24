@@ -869,6 +869,37 @@ const Prototype: React.FC = () => {
               </button>
             </div>
           )}
+          {view === "portfolio" && portfolioMode === "first" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
+            <div className="mb-2 flex flex-col items-end gap-1.5">
+              <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                Tap to reply <span aria-hidden>↓</span>
+              </span>
+              <div className="flex gap-1.5 flex-wrap justify-end">
+                {["Browse properties", "Go straight to a unit"].map((label) => (
+                  <button
+                    key={label}
+                    onClick={() => handlePortfolioChip(label)}
+                    className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE] border border-[#DDD6FE] transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED]"
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {view === "portfolio" && portfolioMode === "first" && portfolioChip && (
+            <div className="mb-2 flex flex-col items-end gap-1.5">
+              <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                Tap to reply <span aria-hidden>↓</span>
+              </span>
+              <button
+                onClick={() => handlePortfolioChip(portfolioChip)}
+                className="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED]"
+              >
+                {portfolioChip}
+              </button>
+            </div>
+          )}
           {view !== "unit" ? (
             <LockedComposer view={view} />
           ) : (
