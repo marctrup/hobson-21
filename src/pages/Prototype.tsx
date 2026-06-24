@@ -728,8 +728,7 @@ const Prototype: React.FC = () => {
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [input, setInput] = useState("");
-  const [hasVisited, setHasVisited] = useState(false);
-  const [portfolioMode, setPortfolioMode] = useState<"first" | "returning">("first");
+  // Staged tour: every load starts at Meet Hobson. No returning-user state.
   const [searchQuery, setSearchQuery] = useState("");
   const [searchActiveIdx, setSearchActiveIdx] = useState(0);
   const [hoveredPropertyId, setHoveredPropertyId] = useState<string | null>(null);
