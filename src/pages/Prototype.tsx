@@ -39,86 +39,65 @@ type Unit = {
 type Property = {
   id: string;
   name: string;
-  area: string;
+  area: string;        // short label (e.g. "NW11") used in compact subtitles
+  address: string;     // full address line for hover / greeting
+  postcode: string;
   lat: number;
   lng: number;
   units: Unit[];
+  standalone?: boolean; // true = no Property layer; opens straight to its single unit
 };
 
 const PROPERTIES: Property[] = [
   {
     id: "stanley",
     name: "Stanley House",
-    area: "Marylebone, London",
-    lat: 51.5205,
-    lng: -0.1525,
+    area: "1115 Finchley Road, NW11",
+    address: "Stanley House — 1115 Finchley Road, London NW11",
+    postcode: "NW11",
+    lat: 51.583,
+    lng: -0.197,
     units: [
-      {
-        id: "stanley-gf",
-        label: "Ground Floor",
-        status: "Let",
-        tenant: "ABC Limited",
-        rent: "£48,000 p.a.",
-        leaseTo: "24 Mar 2029",
-        break: "24 Mar 2027",
-        review: "Mar 2027",
-        epc: "D",
-      },
-      {
-        id: "stanley-1f",
-        label: "First Floor",
-        status: "Let",
-        tenant: "XYZ Limited",
-        rent: "£52,000 p.a.",
-        leaseTo: "28 Sep 2031",
-        epc: "C",
-      },
-      {
-        id: "stanley-2f",
-        label: "Second Floor",
-        status: "Vacant",
-        vacantSince: "Jan 2026",
-        lastTenant: "Crompton & Co",
-        lastRent: "£45,000 p.a.",
-      },
+      { id: "stanley-f1",  label: "Flat 1",  status: "Let" },
+      { id: "stanley-f2",  label: "Flat 2",  status: "Let" },
+      { id: "stanley-f3",  label: "Flat 3",  status: "Let" },
+      { id: "stanley-f4",  label: "Flat 4",  status: "Let" },
+      { id: "stanley-f5",  label: "Flat 5",  status: "Let" },
+      { id: "stanley-f6",  label: "Flat 6",  status: "Let" },
+      { id: "stanley-f7",  label: "Flat 7",  status: "Let" },
+      { id: "stanley-f8",  label: "Flat 8",  status: "Vacant" },
+      { id: "stanley-f9",  label: "Flat 9",  status: "Let" },
+      { id: "stanley-f10", label: "Flat 10", status: "Let" },
+      { id: "stanley-f11", label: "Flat 11", status: "Let" },
+      { id: "stanley-shop", label: "Shop",   status: "Vacant" },
     ],
   },
   {
-    id: "kings",
-    name: "Kings Court",
-    area: "Holborn, London",
-    lat: 51.5174,
-    lng: -0.118,
+    id: "nugent",
+    name: "5 Nugent Terrace",
+    area: "NW8",
+    address: "5 Nugent Terrace, London NW8",
+    postcode: "NW8",
+    lat: 51.5325,
+    lng: -0.1787,
     units: [
-      {
-        id: "kings-a",
-        label: "Unit A",
-        status: "Let",
-        tenant: "Meridian Retail",
-        rent: "£61,000 p.a.",
-        leaseTo: "14 Jun 2030",
-        epc: "C",
-      },
-      { id: "kings-b", label: "Unit B", status: "Vacant", vacantSince: "Oct 2025" },
+      { id: "nugent-f1",   label: "Flat 1", status: "Let" },
+      { id: "nugent-f2",   label: "Flat 2", status: "Let" },
+      { id: "nugent-f3",   label: "Flat 3", status: "Vacant" },
+      { id: "nugent-shop", label: "Shop",   status: "Let" },
     ],
   },
   {
-    id: "camden",
-    name: "Camden Wharf",
-    area: "Camden, London",
-    lat: 51.5412,
-    lng: -0.1438,
+    id: "hamilton",
+    name: "32 Hamilton Gardens",
+    area: "NW8",
+    address: "32 Hamilton Gardens, London NW8",
+    postcode: "NW8",
+    lat: 51.5298,
+    lng: -0.1758,
+    standalone: true,
     units: [
-      {
-        id: "camden-w1",
-        label: "Warehouse 1",
-        status: "Let",
-        tenant: "Dockside Logistics",
-        rent: "£88,000 p.a.",
-        leaseTo: "01 Dec 2028",
-        epc: "B",
-      },
-      { id: "camden-w2", label: "Warehouse 2", status: "Vacant", vacantSince: "Aug 2025" },
+      { id: "hamilton-unit", label: "32 Hamilton Gardens", status: "Let" },
     ],
   },
 ];
