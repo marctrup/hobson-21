@@ -6,6 +6,7 @@ import owlTalking from "@/assets/prototype/owl-talking.png";
 import owlDefault from "@/assets/prototype/owl-default.png";
 import owlReading from "@/assets/prototype/owl-reading.png";
 import owlCovering from "@/assets/prototype/owl-covering.png";
+import { DocumentsLibrary } from "@/components/prototype/DocumentsLibrary";
 
 /* ---------------- Config ---------------- */
 
