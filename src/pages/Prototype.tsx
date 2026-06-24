@@ -777,6 +777,7 @@ const Prototype: React.FC = () => {
   const [hoveredCardPropertyId, setHoveredCardPropertyId] = useState<string | null>(null);
   const [actionToast, setActionToast] = useState<string | null>(null);
   const [showDocuments, setShowDocuments] = useState(false);
+  const [showWhatIveDone, setShowWhatIveDone] = useState(false);
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
 
@@ -1298,8 +1299,9 @@ const Prototype: React.FC = () => {
             <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="white" />
           </svg>
         </div>
-        <RailItem icon="pin" label="Portfolio" active={!showDocuments} onClick={() => { setShowDocuments(false); goPortfolio(false); }} />
-        <RailItem icon="doc" label="Documents" active={showDocuments} onClick={() => setShowDocuments(true)} />
+        <RailItem icon="pin" label="Portfolio" active={!showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
+        <RailItem icon="doc" label="Documents" active={showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />
+        <RailItem icon="clock" label={"What I've done"} active={showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />
         <RailItem icon="chat" label="Chat History" />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
           <button className="w-11 h-11 rounded-full bg-[#7C3AED] text-white grid place-items-center shadow-md hover:bg-[#6D28D9] transition" aria-label="New chat">
@@ -1729,6 +1731,16 @@ const Prototype: React.FC = () => {
             onNavigateProperty={(pid) => { setShowDocuments(false); goProperty(pid); }}
           />
         )}
+        {showWhatIveDone && (
+          <WhatIveDonePanel
+            actionCards={actionCards}
+            onClose={() => setShowWhatIveDone(false)}
+            onResume={(id) => { setShowWhatIveDone(false); performCard(id); }}
+            onOpenProperty={(pid) => { setShowWhatIveDone(false); goProperty(pid); }}
+            onOpenUnit={(uid, pid) => { setShowWhatIveDone(false); goUnit(uid, pid); }}
+            reducedMotion={reduced}
+          />
+        )}
         {performingCardId && (() => {
           const card = actionCards.find((c) => c.id === performingCardId);
           if (!card) return null;
@@ -1748,7 +1760,7 @@ const Prototype: React.FC = () => {
 
 /* ---------------- Sub-components ---------------- */
 
-function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "chat" | "gear"; label: string; active?: boolean; onClick?: () => void }) {
+function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "chat" | "gear" | "clock"; label: string; active?: boolean; onClick?: () => void }) {
   const stroke = active ? "#7C3AED" : "#64748B";
   return (
     <button
@@ -1764,9 +1776,10 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
         {icon === "pin" && (<><path d="M12 22s-7-6.5-7-12a7 7 0 1114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="10" r="2.5"/></>)}
         {icon === "doc" && (<><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6"/></>)}
         {icon === "chat" && (<><path d="M21 12a8 8 0 11-3-6.2L21 3v6h-6"/></>)}
+        {icon === "clock" && (<><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></>)}
         {icon === "gear" && (<><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 00.3 1.8l.1.1a2 2 0 11-2.8 2.8l-.1-.1a1.6 1.6 0 00-1.8-.3 1.6 1.6 0 00-1 1.5V21a2 2 0 11-4 0v-.1a1.6 1.6 0 00-1-1.5"/></>)}
       </svg>
-      <span className={`text-[10px] ${active ? "text-[#7C3AED] font-medium" : "text-slate-500"}`}>{label}</span>
+      <span className={`text-[10px] text-center leading-tight ${active ? "text-[#7C3AED] font-medium" : "text-slate-500"}`}>{label}</span>
     </button>
   );
 }
@@ -4186,6 +4199,416 @@ function StyleTag() {
         .hp-marker.is-hover .hp-pin, .hp-marker.is-hover .hp-cluster { transform: none !important; }
       }
     `}</style>
+  );
+}
+
+
+/* ---------------- What I've done panel ---------------- */
+
+type WorkLogEntry = {
+  id: string;
+  cardId?: string;
+  title: string;
+  propertyId?: string;
+  propertyName?: string;
+  unitId?: string;
+  unitLabel?: string;
+  when: string;            // human framing, e.g. "Yesterday, 4:12pm"
+  bucket: "Today" | "Yesterday" | "Last week" | "Earlier";
+  statusLabel: string;     // "Waiting on you", "Finished", "Paused — you deferred this", "2 of 4 steps complete"
+  statusKind: "waiting" | "in_progress" | "finished" | "paused";
+  narration: string;       // first-person recap paragraph
+  approvals: string[];     // "Approved by you — surveyor instructions"
+  flags: string[];         // unknowns honestly flagged
+  progressDone: number;
+  progressTotal: number;
+  dialogue: { role: "user" | "hobson"; text: string }[];
+  hasSummary?: boolean;
+};
+
+function buildWorkLog(actionCards: ActionCard[]): WorkLogEntry[] {
+  const f8 = actionCards.find((c) => c.id === "act-stanley-f8-review");
+  const f8State = f8?.approvalState ?? "pending";
+
+  // Dynamic Flat 8 rent review entry — reflects card state
+  let f8Entry: WorkLogEntry;
+  if (f8State === "approved") {
+    f8Entry = {
+      id: "log-stanley-f8-review",
+      cardId: "act-stanley-f8-review",
+      title: "Rent review — Flat 8, Stanley House",
+      propertyId: "stanley",
+      propertyName: "Stanley House",
+      unitId: "stanley-f8",
+      unitLabel: "Flat 8",
+      when: "Today, just now",
+      bucket: "Today",
+      statusLabel: "Finished",
+      statusKind: "finished",
+      narration:
+        "I prepared the rent review for Flat 8, Stanley House. I read the lease, confirmed the Open Market basis and the March 2027 date, and pulled comparable evidence from the last 12 months. You approved the surveyor instructions and the review notice — both are out and the file is updated.",
+      approvals: ["Approved by you — surveyor instructions", "Approved by you — review notice to tenant"],
+      flags: ["Notice period in the lease is ambiguous — I noted it on file so you have it next time."],
+      progressDone: 4,
+      progressTotal: 4,
+      hasSummary: true,
+      dialogue: [
+        { role: "user", text: "Perform" },
+        { role: "hobson", text: "I'll work through the Flat 8 rent review with you. First — the lease basis." },
+        { role: "hobson", text: "Open Market review, confirmed in clause 5.2. Review date 25 March 2027." },
+        { role: "user", text: "Approve — prepare review summary" },
+        { role: "hobson", text: "Done. I've pulled three comparables from the last 12 months and drafted surveyor instructions." },
+        { role: "user", text: "Approve surveyor instructions" },
+        { role: "hobson", text: "Sent. Drafting the review notice now — couldn't pin down the exact notice period, flagging that." },
+        { role: "user", text: "Approve review notice" },
+        { role: "hobson", text: "Notice prepared and recorded. I've saved everything to the Flat 8 file." },
+      ],
+    };
+  } else if (f8State === "in_progress") {
+    f8Entry = {
+      id: "log-stanley-f8-review",
+      cardId: "act-stanley-f8-review",
+      title: "Rent review — Flat 8, Stanley House",
+      propertyId: "stanley",
+      propertyName: "Stanley House",
+      unitId: "stanley-f8",
+      unitLabel: "Flat 8",
+      when: "Today, in progress",
+      bucket: "Today",
+      statusLabel: "Waiting on you — 2 of 4 steps complete",
+      statusKind: "waiting",
+      narration:
+        "I started the rent review for Flat 8, Stanley House. I read the lease, confirmed the Open Market basis and the March 2027 date, and pulled comparable evidence from the last 12 months. I've paused at the surveyor instructions for your approval. I couldn't confirm the notice period, so I've flagged that for you.",
+      approvals: [],
+      flags: ["Notice period in the lease is ambiguous — needs your eye before I send the notice."],
+      progressDone: 2,
+      progressTotal: 4,
+      dialogue: [
+        { role: "user", text: "Perform" },
+        { role: "hobson", text: "I'll work through the Flat 8 rent review with you. First — the lease basis." },
+        { role: "hobson", text: "Open Market review, confirmed in clause 5.2. Review date 25 March 2027." },
+        { role: "user", text: "Approve — prepare review summary" },
+        { role: "hobson", text: "Done. I've pulled three comparables and drafted surveyor instructions for you to approve." },
+      ],
+    };
+  } else {
+    f8Entry = {
+      id: "log-stanley-f8-review",
+      cardId: "act-stanley-f8-review",
+      title: "Rent review — Flat 8, Stanley House",
+      propertyId: "stanley",
+      propertyName: "Stanley House",
+      unitId: "stanley-f8",
+      unitLabel: "Flat 8",
+      when: "Today, ready when you are",
+      bucket: "Today",
+      statusLabel: "Waiting on you — not started",
+      statusKind: "waiting",
+      narration:
+        "I've prepared the rent review for Flat 8, Stanley House — lease read, basis and date confirmed, comparables pulled. It's ready for you to walk through with me whenever you have a minute.",
+      approvals: [],
+      flags: ["Notice period in the lease looks ambiguous — I'll flag it again when we get there."],
+      progressDone: 0,
+      progressTotal: 4,
+      dialogue: [
+        { role: "hobson", text: "Flat 8 rent review is ready to perform when you are." },
+      ],
+    };
+  }
+
+  const epcEntry: WorkLogEntry = {
+    id: "log-nugent-shop-epc",
+    cardId: "act-nugent-shop-epc",
+    title: "EPC instruction — Shop, 5 Nugent Terrace",
+    propertyId: "nugent",
+    propertyName: "5 Nugent Terrace",
+    unitId: "nugent-shop",
+    unitLabel: "Shop",
+    when: "Yesterday, 4:12pm",
+    bucket: "Yesterday",
+    statusLabel: "Finished",
+    statusKind: "finished",
+    narration:
+      "I drafted the EPC re-inspection instruction for the Shop at 5 Nugent Terrace, using your usual assessor and the previous rating for context. You approved it, I sent it, and I've put the re-inspection on the compliance calendar so the new certificate lands before the August expiry.",
+    approvals: ["Approved by you — assessor instruction"],
+    flags: [],
+    progressDone: 3,
+    progressTotal: 3,
+    hasSummary: true,
+    dialogue: [
+      { role: "user", text: "Perform" },
+      { role: "hobson", text: "EPC for the Shop expires 18 August. I've drafted the instruction to your usual assessor — want me to send?" },
+      { role: "user", text: "Approve" },
+      { role: "hobson", text: "Sent. I've copied you and added the re-inspection to the compliance calendar." },
+    ],
+  };
+
+  const breakEntry: WorkLogEntry = {
+    id: "log-stanley-f6-break",
+    cardId: "act-stanley-f6-break",
+    title: "Break review — Flat 6, Stanley House",
+    propertyId: "stanley",
+    propertyName: "Stanley House",
+    unitId: "stanley-f6",
+    unitLabel: "Flat 6",
+    when: "Last week, Tue 16 June",
+    bucket: "Last week",
+    statusLabel: "Paused — you deferred this",
+    statusKind: "paused",
+    narration:
+      "I prepared the break-review for Flat 6 — drafted the courtesy reminder for the tenant and a file note for you summarising the break terms. You deferred it; I'll bring it back closer to November when the notice window opens.",
+    approvals: [],
+    flags: [],
+    progressDone: 1,
+    progressTotal: 3,
+    dialogue: [
+      { role: "hobson", text: "Tenant break on 2 May 2027. I've drafted a courtesy reminder and a file note." },
+      { role: "user", text: "Defer" },
+      { role: "hobson", text: "No problem — I'll bring this back when the notice window opens in November." },
+    ],
+  };
+
+  // Waiting/in-progress first, then completed, then paused
+  const order = (e: WorkLogEntry) => ({ waiting: 0, in_progress: 1, finished: 2, paused: 3 }[e.statusKind]);
+  return [f8Entry, epcEntry, breakEntry].sort((a, b) => order(a) - order(b));
+}
+
+function WhatIveDonePanel({
+  actionCards,
+  onClose,
+  onResume,
+  onOpenProperty,
+  onOpenUnit,
+  reducedMotion,
+}: {
+  actionCards: ActionCard[];
+  onClose: () => void;
+  onResume: (cardId: string) => void;
+  onOpenProperty: (propertyId: string) => void;
+  onOpenUnit: (unitId: string, propertyId: string) => void;
+  reducedMotion: boolean;
+}) {
+  const entries = useMemo(() => buildWorkLog(actionCards), [actionCards]);
+  const [expandedId, setExpandedId] = useState<string | null>(entries[0]?.id ?? null);
+
+  const grouped: Record<string, WorkLogEntry[]> = {};
+  for (const e of entries) {
+    (grouped[e.bucket] ||= []).push(e);
+  }
+  const order: WorkLogEntry["bucket"][] = ["Today", "Yesterday", "Last week", "Earlier"];
+
+  return (
+    <div
+      className={`absolute inset-0 z-[600] bg-white flex flex-col ${reducedMotion ? "" : "animate-fade-in"}`}
+      role="region"
+      aria-label="What I've done"
+    >
+      <header className="border-b border-slate-200 px-6 py-4 flex items-start justify-between gap-3">
+        <div className="flex items-start gap-3">
+          <img src={owlDefault} alt="" aria-hidden className="w-10 h-10 object-contain mt-0.5" />
+          <div>
+            <h2 className="text-[17px] font-semibold text-slate-900 leading-tight">What I've done</h2>
+            <p className="text-[13px] text-slate-600 mt-0.5 max-w-xl">
+              Here's what I've been getting through for you — and what's still waiting on you. Open any one to see the conversation we had.
+            </p>
+          </div>
+        </div>
+        <button
+          onClick={onClose}
+          className="text-slate-500 hover:text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded-md p-1"
+          aria-label="Close"
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </header>
+
+      <div className="flex-1 overflow-y-auto px-6 py-5 bg-slate-50/40">
+        <div className="max-w-3xl mx-auto space-y-7">
+          {order.map((bucket) => {
+            const list = grouped[bucket];
+            if (!list || list.length === 0) return null;
+            return (
+              <section key={bucket} aria-labelledby={`bucket-${bucket}`}>
+                <h3 id={`bucket-${bucket}`} className="text-[11px] uppercase tracking-wide font-semibold text-slate-500 mb-2">
+                  {bucket}
+                </h3>
+                <ul className="space-y-3">
+                  {list.map((e) => (
+                    <li key={e.id}>
+                      <WorkLogCard
+                        entry={e}
+                        expanded={expandedId === e.id}
+                        onToggle={() => setExpandedId(expandedId === e.id ? null : e.id)}
+                        onResume={onResume}
+                        onOpenProperty={onOpenProperty}
+                        onOpenUnit={onOpenUnit}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function StatusPill({ kind, label }: { kind: WorkLogEntry["statusKind"]; label: string }) {
+  // Status by label + shape, not colour alone
+  const shape: Record<WorkLogEntry["statusKind"], { icon: React.ReactNode; cls: string }> = {
+    waiting: {
+      icon: <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>,
+      cls: "bg-amber-50 border-amber-300 text-amber-900",
+    },
+    in_progress: {
+      icon: <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M4 12a8 8 0 0114-5.3M20 12a8 8 0 01-14 5.3"/></svg>,
+      cls: "bg-sky-50 border-sky-300 text-sky-900",
+    },
+    finished: {
+      icon: <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 13l4 4L19 7"/></svg>,
+      cls: "bg-emerald-50 border-emerald-300 text-emerald-900",
+    },
+    paused: {
+      icon: <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M8 5v14M16 5v14"/></svg>,
+      cls: "bg-slate-100 border-slate-300 text-slate-700",
+    },
+  };
+  const s = shape[kind];
+  return (
+    <span className={`inline-flex items-center gap-1.5 text-[11px] font-medium px-2 py-0.5 rounded-full border ${s.cls}`}>
+      {s.icon}
+      {label}
+    </span>
+  );
+}
+
+function WorkLogCard({
+  entry,
+  expanded,
+  onToggle,
+  onResume,
+  onOpenProperty,
+  onOpenUnit,
+}: {
+  entry: WorkLogEntry;
+  expanded: boolean;
+  onToggle: () => void;
+  onResume: (cardId: string) => void;
+  onOpenProperty: (pid: string) => void;
+  onOpenUnit: (uid: string, pid: string) => void;
+}) {
+  const canResume = entry.statusKind === "waiting" || entry.statusKind === "in_progress" || entry.statusKind === "paused";
+  return (
+    <article className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
+      <div className="px-4 py-3.5">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <StatusPill kind={entry.statusKind} label={entry.statusLabel} />
+              <span className="text-[11px] text-slate-500">{entry.when}</span>
+            </div>
+            <h4 className="mt-1.5 text-[14px] font-semibold text-slate-900 leading-snug">{entry.title}</h4>
+            <p className="mt-1.5 text-[13px] text-slate-700 leading-relaxed">{entry.narration}</p>
+
+            {(entry.approvals.length > 0 || entry.flags.length > 0) && (
+              <ul className="mt-2 space-y-1 text-[12px]">
+                {entry.approvals.map((a, i) => (
+                  <li key={`a-${i}`} className="flex items-start gap-1.5 text-emerald-800">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0"><path d="M5 13l4 4L19 7"/></svg>
+                    <span>{a}</span>
+                  </li>
+                ))}
+                {entry.flags.map((f, i) => (
+                  <li key={`f-${i}`} className="flex items-start gap-1.5 text-amber-900">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="mt-0.5 shrink-0"><path d="M12 9v4M12 17h.01M10.3 3.86l-8.18 14.2A2 2 0 003.84 21h16.32a2 2 0 001.72-2.94L13.7 3.86a2 2 0 00-3.4 0z"/></svg>
+                    <span>Flagged — {f}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+
+            {entry.progressTotal > 0 && (
+              <div className="mt-2.5 flex items-center gap-2">
+                <div className="h-1.5 bg-slate-100 rounded-full flex-1 overflow-hidden">
+                  <div
+                    className={`h-full rounded-full ${entry.statusKind === "finished" ? "bg-emerald-500" : entry.statusKind === "paused" ? "bg-slate-400" : "bg-[#7C3AED]"}`}
+                    style={{ width: `${Math.round((entry.progressDone / entry.progressTotal) * 100)}%` }}
+                  />
+                </div>
+                <span className="text-[11px] text-slate-500 whitespace-nowrap">
+                  {entry.progressDone} of {entry.progressTotal} steps
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="mt-3 flex items-center gap-2 flex-wrap">
+          {canResume && entry.cardId && (
+            <button
+              onClick={() => onResume(entry.cardId!)}
+              className="text-[12px] font-medium px-3 py-1.5 rounded-lg bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              Resume
+            </button>
+          )}
+          {entry.hasSummary && (
+            <button
+              className="text-[12px] font-medium px-3 py-1.5 rounded-lg border border-slate-300 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+              onClick={() => { /* prepared output preview — placeholder for prototype */ }}
+            >
+              View summary
+            </button>
+          )}
+          {entry.unitId && entry.propertyId && (
+            <button
+              onClick={() => onOpenUnit(entry.unitId!, entry.propertyId!)}
+              className="text-[12px] font-medium px-3 py-1.5 rounded-lg border border-slate-300 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              Open {entry.unitLabel ?? "unit"}
+            </button>
+          )}
+          {entry.propertyId && !entry.unitId && (
+            <button
+              onClick={() => onOpenProperty(entry.propertyId!)}
+              className="text-[12px] font-medium px-3 py-1.5 rounded-lg border border-slate-300 text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+            >
+              Open property
+            </button>
+          )}
+          <button
+            onClick={onToggle}
+            aria-expanded={expanded}
+            className="ml-auto text-[12px] font-medium text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded px-1"
+          >
+            {expanded ? "Hide our conversation" : "Show our conversation"}
+          </button>
+        </div>
+      </div>
+
+      {expanded && (
+        <div className="border-t border-slate-100 bg-slate-50/60 px-4 py-3 space-y-2">
+          {entry.dialogue.map((d, i) =>
+            d.role === "user" ? (
+              <div key={i} className="flex justify-end">
+                <div className="max-w-[80%] bg-[#7C3AED] text-white text-[13px] leading-relaxed px-3 py-2 rounded-2xl rounded-br-md">
+                  {d.text}
+                </div>
+              </div>
+            ) : (
+              <div key={i} className="flex items-start gap-2">
+                <img src={owlDefault} alt="" aria-hidden className="w-6 h-6 object-contain mt-0.5" />
+                <div className="max-w-[80%] bg-white border border-slate-200 text-slate-800 text-[13px] leading-relaxed px-3 py-2 rounded-2xl rounded-bl-md">
+                  {d.text}
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      )}
+    </article>
   );
 }
 
