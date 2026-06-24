@@ -785,12 +785,15 @@ const Prototype: React.FC = () => {
     const arr: { label: string; onClick?: () => void }[] = [
       { label: "Portfolio", onClick: () => goPortfolio(false) },
     ];
-    if (selectedProperty)
+    if (selectedProperty && !selectedProperty.standalone)
       arr.push({
         label: selectedProperty.name,
         onClick: () => goProperty(selectedProperty.id),
       });
-    if (selectedUnit) arr.push({ label: selectedUnit.label });
+    if (selectedUnit) {
+      const label = selectedProperty?.standalone ? selectedProperty.name : selectedUnit.label;
+      arr.push({ label });
+    }
     return arr;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [view, selectedProperty, selectedUnit]);
