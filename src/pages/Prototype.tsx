@@ -1531,9 +1531,9 @@ function ReturningSearchPanel({
     return Array.from(map.entries());
   }, [results]);
 
-  const recents: { propertyId: string; unitId: string; label: string; tenant: string }[] = [
-    { propertyId: "stanley", unitId: "stanley-gf", label: "Ground Floor", tenant: "ABC Limited" },
-    { propertyId: "camden", unitId: "camden-w1", label: "Warehouse 1", tenant: "Dockside Logistics" },
+  const recents: { propertyId: string; unitId: string; label: string; sub: string }[] = [
+    { propertyId: "stanley", unitId: "stanley-f3", label: "Stanley House — Flat 3", sub: "1115 Finchley Road, NW11" },
+    { propertyId: "hamilton", unitId: "hamilton-unit", label: "32 Hamilton Gardens", sub: "NW8" },
   ];
 
   // flat index lookup for highlighting active row
