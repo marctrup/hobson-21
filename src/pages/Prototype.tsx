@@ -3973,6 +3973,8 @@ function buildPerformConfig(card: ActionCard): {
     headerTitle: `Rent review · ${card.unitLabel ?? "Flat 8"}, ${card.propertyName}`,
     headerSub: "Due: March 2027 (≈180 days)",
   };
+}
+
 
 function finalGateBeatIdx(card: ActionCard, beats: PerformBeat[]): number {
   // Per-card final unapproved gate.
