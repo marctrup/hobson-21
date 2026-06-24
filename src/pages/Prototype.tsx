@@ -3492,7 +3492,7 @@ function PropertyActions({
   );
 }
 
-const PERFORMABLE_CARD_IDS = new Set<string>(["act-stanley-f8-review"]);
+const PERFORMABLE_CARD_IDS = new Set<string>(["act-stanley-f8-review", "act-stanley-fra"]);
 
 /* ---------------- Perform workspace (PA-004) ---------------- */
 
