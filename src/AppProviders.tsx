@@ -24,7 +24,7 @@ const queryClient = new QueryClient({
 const ChatbotWrapper = () => {
   const location = useLocation();
   const [shouldLoad, setShouldLoad] = useState(false);
-  const hideChatbotRoutes = ['/investment-carousel', '/investor-summary'];
+  const hideChatbotRoutes = ['/investment-carousel', '/investor-summary', '/prototype'];
 
   useEffect(() => {
     // Defer chatbot loading until after initial paint + idle time
