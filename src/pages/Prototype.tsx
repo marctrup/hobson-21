@@ -689,7 +689,7 @@ const Prototype: React.FC = () => {
       };
     }
     return { pulse: "none" };
-  }, [view, beatIdx, selectedProperty, searchQuery, portfolioMode, hoveredPropertyId]);
+  }, [view, beatIdx, selectedProperty, selectedUnitId, searchQuery, portfolioMode, hoveredPropertyId]);
 
   /* ----- unit Q&A ----- */
   const answerForUnit = (q: string): string => {
