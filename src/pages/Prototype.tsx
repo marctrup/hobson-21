@@ -1617,17 +1617,16 @@ function PropertyContent({
   }, [property.units]);
 
   const counts = useMemo(() => {
-    let let_ = 0, vacant = 0, endingSoon = 0, needsReview = 0;
+    let alerts = 0, vacant = 0, endingInferred = 0, breakReview = 0;
     property.units.forEach((u) => {
       const d = derivedByUnit.get(u.id)!;
-      if (d.state === "vacant_confirmed") vacant += 1;
-      else {
-        let_ += 1;
-        if (d.state === "let_ending_soon") endingSoon += 1;
-        if (d.state === "let_holding_over") needsReview += 1;
-      }
+      if (d.hasAlert) alerts += 1;
+      if (d.isVacantConfirmed) vacant += 1;
+      if (d.isEndingInferred) endingInferred += 1;
+      if (d.hasUpcomingBreakOrReview) breakReview += 1;
     });
-    return { let: let_, vacant, endingSoon, needsReview };
+    const let_ = property.units.length - vacant;
+    return { alerts, vacant, endingInferred, breakReview, let: let_ };
   }, [property.units, derivedByUnit]);
 
   const hasShops = property.units.some((u) => u.label.toLowerCase().includes("shop"));
@@ -1637,14 +1636,14 @@ function PropertyContent({
     return property.units
       .filter((u) => {
         const d = derivedByUnit.get(u.id)!;
-        if (quick === "let" && d.state === "vacant_confirmed") return false;
-        if (quick === "vacant" && d.state !== "vacant_confirmed") return false;
-        if (quick === "ending_soon" && d.state !== "let_ending_soon") return false;
-        if (quick === "needs_review" && d.state !== "let_holding_over") return false;
+        if (quick === "alerts" && !d.hasAlert) return false;
+        if (quick === "vacant" && !d.isVacantConfirmed) return false;
+        if (quick === "ending_inferred" && !d.isEndingInferred) return false;
+        if (quick === "break_review" && !d.hasUpcomingBreakOrReview) return false;
         if (quick === "shops" && !u.label.toLowerCase().includes("shop")) return false;
         if (!q) return true;
-        if (q === "vac") return d.state === "vacant_confirmed";
-        if (q === "let") return d.state !== "vacant_confirmed";
+        if (q === "vac") return d.isVacantConfirmed;
+        if (q === "let") return !d.isVacantConfirmed;
         return (
           u.label.toLowerCase().includes(q) ||
           (u.tenant ?? "").toLowerCase().includes(q)
