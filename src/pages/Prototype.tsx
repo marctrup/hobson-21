@@ -1384,7 +1384,7 @@ const Prototype: React.FC = () => {
           {/* Hobson messages render first so the greeting sits at the top */}
           {messages.map((m) =>
             m.role === "hobson" ? (
-              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} />
+              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} rich={m.rich} onAskFollowUp={(q) => sendRentAnswer(q)} />
             ) : (
               <UserBubble key={m.id} text={m.text} />
             )
