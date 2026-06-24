@@ -2537,6 +2537,7 @@ function PropertyContent({
           onApprove={(id) => onApprove && onApprove(id)}
           onDefer={(id) => onDefer && onDefer(id)}
           onDismiss={(id) => onDismiss && onDismiss(id)}
+          onPerform={onPerform ? (id) => onPerform(id) : undefined}
         />
       )}
 
