@@ -548,7 +548,22 @@ const Prototype: React.FC = () => {
           return { pulse: "none" };
       }
     }
-    if (view === "portfolio") return { pulse: "none" };
+    if (view === "portfolio") {
+      const q = searchQuery.trim().toLowerCase();
+      let matchIds: string[] | null = null;
+      if (q && portfolioMode === "returning") {
+        matchIds = PROPERTIES.filter((p) => {
+          if (p.name.toLowerCase().includes(q)) return true;
+          if (p.area.toLowerCase().includes(q)) return true;
+          return p.units.some(
+            (u) =>
+              u.label.toLowerCase().includes(q) ||
+              (u.tenant && u.tenant.toLowerCase().includes(q))
+          );
+        }).map((p) => p.id);
+      }
+      return { pulse: "none", matchIds, hoverId: hoveredPropertyId };
+    }
     if (view === "property" && selectedProperty) {
       return {
         pulse: "none",
