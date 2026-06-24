@@ -729,6 +729,9 @@ const Prototype: React.FC = () => {
         {/* Header */}
         <header className="h-14 px-5 flex items-center justify-between border-b border-slate-100">
           <div className="flex items-center gap-2">
+            {view === "portfolio" && portfolioMode === "returning" && (
+              <img src={owlDefault} alt="" aria-hidden className="w-6 h-6 object-contain" />
+            )}
             <h1 className="font-semibold text-[15px] text-slate-900">Chat with Hobson</h1>
             {view !== "onboarding" && (
               <button
