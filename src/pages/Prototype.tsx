@@ -2941,10 +2941,11 @@ function PortfolioBriefing({
             <ActionCardItem
               key={c.id}
               card={c}
+              level="portfolio"
               expanded={expandedCardId === c.id}
               onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
               onHover={(on) => onHoverCard(on ? c.propertyId : null)}
-              onOpenUnit={() => onOpenUnit(c.propertyId, c.unitId)}
+              onOpenUnit={c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!) : undefined}
               onApprove={() => onApprove(c.id)}
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
