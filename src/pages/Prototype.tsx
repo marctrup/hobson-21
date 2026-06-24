@@ -1875,7 +1875,7 @@ function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: stri
       <div className="flex items-center gap-1 pt-1 border-t border-slate-100 text-[12px] text-slate-500">
         <button onClick={copyAll} className="px-2 py-1 rounded hover:bg-slate-100">Copy</button>
         <button onClick={() => showToast("Regenerating… (placeholder)")} className="px-2 py-1 rounded hover:bg-slate-100">Regenerate</button>
-        <button onClick={() => showToast("Diagnostic (placeholder)")} className="px-2 py-1 rounded hover:bg-slate-100">Diagnostic</button>
+        
         <button onClick={() => showToast("Thanks for the rating")} className="px-2 py-1 rounded hover:bg-slate-100">Rate this</button>
       </div>
       {toast && (
