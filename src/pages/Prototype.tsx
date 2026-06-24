@@ -719,6 +719,24 @@ const Prototype: React.FC = () => {
 
         {/* Composer */}
         <div className="px-5 pt-2 pb-4 border-t border-slate-100 bg-white">
+          {view === "onboarding" && chipVisible && (
+            <div className="mb-2 flex flex-col items-end gap-1.5">
+              <span className="text-[11px] text-slate-500 flex items-center gap-1">
+                Tap to reply <span aria-hidden>↓</span>
+              </span>
+              <button
+                onClick={advanceBeat}
+                autoFocus
+                className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
+                  beatIdx === BEATS.length - 1
+                    ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm"
+                    : "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE] border border-[#DDD6FE]"
+                }`}
+              >
+                {BEATS[beatIdx]?.chip}
+              </button>
+            </div>
+          )}
           {view !== "unit" ? (
             <LockedComposer view={view} />
           ) : (
