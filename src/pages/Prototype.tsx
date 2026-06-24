@@ -423,8 +423,7 @@ const BEATS: Beat[] = [
     owl: "default",
     lines: [
       "Seldom does a single document tell the whole story. I build understanding by drawing connections between them — a lease, the variation that altered its rent, the assignment that brought in a new tenant.",
-      "From those connections I form Unit Intelligence. The units, taken together, become my understanding of the Property; the properties, in turn, become my understanding of the Portfolio.",
-      "It is for this reason that nothing attaches to the portfolio directly: portfolio understanding is something I compose from beneath, rather than something handed to me from above.",
+      "From those connections I form Unit and Property Intelligence — and together they build Portfolio Intelligence.",
     ],
     prefill: "What does that allow you to do on my behalf?",
     mapAction: "pulse-all",
