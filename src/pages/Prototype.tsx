@@ -2205,11 +2205,25 @@ function PropertyContent({
         {counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} with alerts</span></>}
       </div>
 
+      {propertyActionCards.filter((c) => c.approvalState === "pending").length > 0 && (
+        <PropertyActions
+          cards={propertyActionCards.filter((c) => c.approvalState === "pending")}
+          propertyName={property.name}
+          expandedCardId={expandedCardId ?? null}
+          setExpandedCardId={(id) => setExpandedCardId && setExpandedCardId(id)}
+          onOpenUnit={(uid) => onOpenUnit(uid)}
+          onApprove={(id) => onApprove && onApprove(id)}
+          onDefer={(id) => onDefer && onDefer(id)}
+          onDismiss={(id) => onDismiss && onDismiss(id)}
+        />
+      )}
+
       <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
         <span className="inline-flex items-center gap-1">
           <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
             <circle cx="12" cy="12" r="10" fill="currentColor" />
             <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+
           </svg>
           Confirmed = known fact
         </span>
