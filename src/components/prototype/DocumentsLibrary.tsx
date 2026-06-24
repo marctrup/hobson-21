@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import owlReading from "@/assets/prototype/owl-reading.png";
 
 /* ---------------- Types ---------------- */
