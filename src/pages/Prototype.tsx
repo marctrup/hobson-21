@@ -3234,6 +3234,7 @@ function PortfolioBriefing({
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
+  onPerform?: (id: string) => void;
 }) {
   const pending = cards.filter((c) => c.approvalState === "pending");
   const urgent = pending.filter((c) => c.urgency === "now");
