@@ -481,7 +481,22 @@ const prefersReducedMotion = () =>
   window.matchMedia &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean };
+type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean; rich?: "rentFlat2" };
+
+const RENT_Q_PATTERNS = [
+  /^\s*rent\s*\??\s*$/i,
+  /^\s*rent\s+flat\s*2\s*$/i,
+  /^\s*rent\s+flat\s*2\s+nugent\s+terrace\s*$/i,
+  /^\s*what'?s?\s+the\s+current\s+rent\s*\??\s*$/i,
+  /^\s*current\s+rent\s+flat\s*2\s*$/i,
+];
+const isRentFlat2Question = (q: string) => RENT_Q_PATTERNS.some((re) => re.test(q));
+const rentPrefillFor = (view: string, propertyId: string | null, unitId: string | null): string => {
+  if (view === "unit" && unitId === "nugent-f2") return "rent?";
+  if (view === "property" && propertyId === "nugent") return "rent flat 2";
+  if (view === "portfolio") return "rent flat 2 Nugent Terrace";
+  return "";
+};
 
 /* ---------------- Map ---------------- */
 
@@ -813,6 +828,12 @@ const Prototype: React.FC = () => {
     if (el) el.scrollTop = el.scrollHeight;
   }, [messages, typing, chipVisible, view, selectedUnitId, selectedPropertyId]);
 
+  /* ----- pre-fill demo rent question per level ----- */
+  useEffect(() => {
+    const pre = rentPrefillFor(view, selectedPropertyId, selectedUnitId);
+    setInput(pre);
+  }, [view, selectedPropertyId, selectedUnitId]);
+
   /* ----- onboarding line streaming ----- */
   useEffect(() => {
     if (view !== "onboarding") return;
@@ -1126,8 +1147,42 @@ const Prototype: React.FC = () => {
     return placeholder;
   };
 
+  const sendRentAnswer = (q: string) => {
+    if (!q.trim()) return;
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
+    setInput("");
+    setTyping(true);
+    setOwl("reading");
+    const delay = reduced ? 200 : 900;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      const id = `rent-${Date.now()}`;
+      if (reduced) {
+        setMessages((m) => [...m, { id, role: "hobson", text: RENT_BODY_TEXT, rich: "rentFlat2" }]);
+        return;
+      }
+      // Stream the paragraph text inside a rich bubble, then settle.
+      setMessages((m) => [...m, { id, role: "hobson", text: "", streaming: true, rich: "rentFlat2" }]);
+      const words = RENT_BODY_TEXT.split(" ");
+      let i = 0;
+      const step = () => {
+        i += 1;
+        const partial = words.slice(0, i).join(" ");
+        setMessages((m) => m.map((x) => (x.id === id ? { ...x, text: partial } : x)));
+        if (i < words.length) {
+          setTimeout(step, 40 + Math.random() * 30);
+        } else {
+          setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
+        }
+      };
+      setTimeout(step, 60);
+    }, delay);
+  };
+
   const sendUnitQuestion = (q: string) => {
     if (!q.trim()) return;
+    if (isRentFlat2Question(q)) { sendRentAnswer(q); return; }
     setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
     setInput("");
     setTyping(true);
@@ -1369,7 +1424,7 @@ const Prototype: React.FC = () => {
           {/* Hobson messages render first so the greeting sits at the top */}
           {messages.map((m) =>
             m.role === "hobson" ? (
-              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} />
+              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} rich={m.rich} onAskFollowUp={(q) => sendRentAnswer(q)} />
             ) : (
               <UserBubble key={m.id} text={m.text} />
             )
@@ -1515,15 +1570,30 @@ const Prototype: React.FC = () => {
               </button>
             </div>
           )}
-          {view !== "unit" ? (
-            <LockedComposer view={view} />
-          ) : (
+          {view === "portfolio" || view === "property" || view === "unit" ? (
             <>
-              <div className="text-[11px] text-slate-400 mb-1">4 remaining</div>
+              {view !== "unit" && (
+                <div className="text-[11px] text-slate-400 mb-1 flex items-center gap-1">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                    <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
+                  </svg>
+                  Free typing locks here — the pre-filled question is the demo
+                </div>
+              )}
+              {view === "unit" && <div className="text-[11px] text-slate-400 mb-1">4 remaining</div>}
               <form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  sendUnitQuestion(input);
+                  const q = input.trim();
+                  if (!q) return;
+                  if (view === "unit") {
+                    sendUnitQuestion(q);
+                  } else if (isRentFlat2Question(q)) {
+                    sendRentAnswer(q);
+                  } else {
+                    setToast("Free typing is locked here — try the pre-filled question.");
+                    window.setTimeout(() => setToast(null), 2500);
+                  }
                 }}
                 className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition"
               >
@@ -1535,13 +1605,20 @@ const Prototype: React.FC = () => {
                   className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
                   aria-label="Ask Hobson"
                 />
-                <button type="button" className="text-slate-400 hover:text-slate-600" aria-label="Attach">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                    <path d="M21 12.5L12 21a5 5 0 01-7-7l9-9a3.5 3.5 0 015 5l-9 9a2 2 0 01-3-3l8-8"/>
+                <button
+                  type="submit"
+                  className="text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300"
+                  aria-label="Send"
+                  disabled={!input.trim()}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M5 12h14M13 6l6 6-6 6"/>
                   </svg>
                 </button>
               </form>
             </>
+          ) : (
+            <LockedComposer view={view} />
           )}
         </div>
       </section>
@@ -1650,7 +1727,36 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
 }
 
 
-function HobsonBubble({ text, owl, streaming }: { text: string; owl: OwlState; streaming?: boolean }) {
+function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void }) {
+  if (rich === "rentFlat2") {
+    return (
+      <div className="flex items-start gap-2">
+        <OwlAvatar state={owl} />
+        <div className="max-w-[560px] w-full bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="text-[12px]">
+              <span className="font-semibold text-slate-900">Hobson</span>
+              <span className="ml-2 italic text-slate-500">Thought for 4 seconds</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => downloadRentCsv()}
+              className="text-[12px] text-[#7C3AED] hover:underline inline-flex items-center gap-1"
+            >
+              ↓ Download as CSV
+            </button>
+          </div>
+          {!streaming && <RentFlat2Answer onAskFollowUp={onAskFollowUp} bodyText={text} />}
+          {streaming && (
+            <div className="text-sm text-slate-700">
+              {text}
+              <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex items-end gap-2">
       <OwlAvatar state={owl} />
@@ -1658,6 +1764,123 @@ function HobsonBubble({ text, owl, streaming }: { text: string; owl: OwlState; s
         {text}
         {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
       </div>
+    </div>
+  );
+}
+
+const RENT_BODY_TEXT =
+  "The current rent is set out in the tenancy paperwork and the later rent increase notice. The agreement also refers to annual reviews linked to RPI, with the notice saying the increase follows the agreed minimum adjustment.";
+
+function downloadRentCsv() {
+  const rows = [
+    ["Current Rent", "Effective From", "Reliable"],
+    ["£2,415 per month", "1 October 2025", "Yes"],
+  ];
+  const csv = rows.map((r) => r.map((c) => `"${c.replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "rent-flat-2-nugent-terrace.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: string) => void; bodyText: string }) {
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (s: string) => {
+    setToast(s);
+    window.setTimeout(() => setToast(null), 2200);
+  };
+  const related = [
+    "Would you like the original rent amount as well?",
+    "Do you want the source documents for this rent?",
+    "Shall I check how the increase was calculated?",
+  ];
+  const sources = [
+    "AST nt 2.pdf — referenced by the answer",
+    "rent increase 2025-2026 NT2.pdf — referenced by the answer",
+  ];
+  const docs = [
+    { name: "rent increase 2025-2026 NT2.pdf" },
+    { name: "AST nt 2.pdf" },
+  ];
+  const copyAll = async () => {
+    const text = `Current Rent: £2,415 per month\nEffective From: 1 October 2025\nReliable: Yes\n\n${bodyText}`;
+    try { await navigator.clipboard.writeText(text); showToast("Copied"); } catch { showToast("Copy failed"); }
+  };
+  return (
+    <div className="space-y-3">
+      <div className="overflow-hidden rounded-lg border border-slate-200">
+        <table className="w-full text-[13px]">
+          <thead className="bg-slate-50 text-slate-600">
+            <tr>
+              <th className="text-left font-medium px-3 py-2">Current Rent</th>
+              <th className="text-left font-medium px-3 py-2">Effective From</th>
+              <th className="text-left font-medium px-3 py-2">Reliable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-t border-slate-200">
+              <td className="px-3 py-2 font-semibold text-slate-900">£2,415 per month</td>
+              <td className="px-3 py-2 text-slate-700">1 October 2025</td>
+              <td className="px-3 py-2 text-emerald-700">✓ Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p className="text-slate-700">{bodyText}</p>
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1">Sources</div>
+        <ul className="list-disc pl-5 space-y-0.5 text-[13px] text-slate-700">
+          {sources.map((s) => <li key={s}>{s}</li>)}
+        </ul>
+      </div>
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1">Related questions</div>
+        <ul className="space-y-1">
+          {related.map((q) => (
+            <li key={q}>
+              <button
+                onClick={() => onAskFollowUp?.(q)}
+                className="text-left text-[13px] text-[#5B21B6] hover:underline"
+              >
+                • {q}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium">Related documents</div>
+          <span className="text-[9px] uppercase font-semibold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 tracking-wide">Beta</span>
+        </div>
+        <ul className="space-y-1">
+          {docs.map((d) => (
+            <li key={d.name}>
+              <button
+                onClick={() => showToast(`Opening ${d.name} (placeholder)`)}
+                className="w-full flex items-center gap-2 px-2 py-1.5 rounded border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] text-left transition"
+              >
+                <span aria-hidden className="w-5 h-5 rounded bg-rose-100 text-rose-700 text-[9px] font-bold grid place-items-center">PDF</span>
+                <span className="text-[13px] text-slate-800 truncate">{d.name}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="flex items-center gap-1 pt-1 border-t border-slate-100 text-[12px] text-slate-500">
+        <button onClick={copyAll} className="px-2 py-1 rounded hover:bg-slate-100">Copy</button>
+        <button onClick={() => showToast("Regenerating… (placeholder)")} className="px-2 py-1 rounded hover:bg-slate-100">Regenerate</button>
+        <button onClick={() => showToast("Diagnostic (placeholder)")} className="px-2 py-1 rounded hover:bg-slate-100">Diagnostic</button>
+        <button onClick={() => showToast("Thanks for the rating")} className="px-2 py-1 rounded hover:bg-slate-100">Rate this</button>
+      </div>
+      {toast && (
+        <div role="status" aria-live="polite" className="text-[11px] text-slate-500 italic">{toast}</div>
+      )}
     </div>
   );
 }
