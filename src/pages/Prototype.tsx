@@ -915,10 +915,20 @@ const Prototype: React.FC = () => {
     const pending = actionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
     const urgent = pending.filter((c) => c.urgency === "now");
 
+    const numberWord = (n: number) =>
+      ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"][n - 1] ?? String(n);
+    const mattersClause = pending.length === 1 ? "one matter I believe deserves" : "a few matters I believe deserve";
+    const urgentClause = urgent.length
+      ? urgent.length === 1
+        ? ", and one is time-sensitive"
+        : `, and ${numberWord(urgent.length)} are time-sensitive`
+      : "";
+
     const greetLines: string[] =
       pending.length === 0
-        ? [`Morning, ${FIRST_NAME}. The estate's quiet — nothing needs you today. Tap a pin to wander in, or use the map search.`]
-        : [`Morning, ${FIRST_NAME}. ${pending.length} ${pending.length === 1 ? "thing needs" : "things need"} you${urgent.length ? `, and ${urgent.length === 1 ? "1 is" : `${urgent.length} are`} time-sensitive` : ""}.`];
+        ? [`Good morning, ${FIRST_NAME}. Your estate is quiet today — nothing requires your attention.`]
+        : [`Good morning, ${FIRST_NAME}. Your estate is quiet for the most part — though there are ${mattersClause} your attention today${urgentClause}. Shall I take you through them?`];
+
 
 
 
