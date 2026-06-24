@@ -254,15 +254,15 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     anchorLevel: "property",
     // omitted relevantUnitIds = applies to every unit in the building
     triggerType: "compliance",
-    title: "Fire Risk Assessment due — Stanley House",
-    whyItMatters: "Annual FRA on the building is due 12 July 2026 (confirmed from last year's certificate). Affects the whole property — every unit benefits from a current FRA.",
+    title: "Fire alarm certification expiring — Stanley House",
+    whyItMatters: "Annual fire alarm certificate for the building expires 12 July 2026 (confirmed from last year's certificate). Covers the whole property — every occupied unit needs access notice for the engineer's visit.",
     confidence: "confirmed",
-    hobsonPrepared: "I've drafted an instruction to your usual fire consultant with access notes and the previous report for reference.",
+    hobsonPrepared: "I've drafted one instruction to your usual fire alarm engineer, plus access notices for every current tenant — one per occupied unit.",
     proposedAction: "Review & approve",
     urgency: "week",
     approvalState: "pending",
     preparedDetail:
-      "I'll email the instruction to the consultant, copy you, book a site visit window, and add the renewed certificate to the compliance calendar so cover never lapses.",
+      "I'll email the engineer with building access notes, send each current tenant their access notice naming their unit, copy you on everything, and add the renewed certificate to the compliance calendar.",
   },
   {
     id: "act-stanley-f8-review",
@@ -3492,7 +3492,7 @@ function PropertyActions({
   );
 }
 
-const PERFORMABLE_CARD_IDS = new Set<string>(["act-stanley-f8-review"]);
+const PERFORMABLE_CARD_IDS = new Set<string>(["act-stanley-f8-review", "act-stanley-fra"]);
 
 /* ---------------- Perform workspace (PA-004) ---------------- */
 
@@ -3694,6 +3694,271 @@ function buildPA004Beats(): PerformBeat[] {
   ];
 }
 
+/* ---------------- Perform workspace (PA-001 fire alarm) ---------------- */
+
+const PA001_STEPS: { key: string; label: string }[] = [
+  { key: "identify", label: "Identify" },
+  { key: "gather", label: "Gather parties" },
+  { key: "draft", label: "Draft notices" },
+  { key: "send", label: "Send" },
+  { key: "record", label: "Record" },
+];
+
+type FireAlarmTenant = {
+  unitId: string;
+  unitLabel: string;
+  tenantName: string | null; // null = no contact on file
+  email: string | null;
+};
+
+// Stanley House occupied units (Let). F8 and Shop are Vacant — excluded entirely.
+// F7 deliberately has no contact on file — flagged, not invented.
+const STANLEY_FIRE_ALARM_TENANTS: FireAlarmTenant[] = [
+  { unitId: "stanley-f1",  unitLabel: "Flat 1",  tenantName: "A. Whitcombe",   email: "a.whitcombe@example.com" },
+  { unitId: "stanley-f2",  unitLabel: "Flat 2",  tenantName: "R. Patel",       email: "r.patel@example.com" },
+  { unitId: "stanley-f3",  unitLabel: "Flat 3",  tenantName: "M. Lindqvist",   email: "m.lindqvist@example.com" },
+  { unitId: "stanley-f4",  unitLabel: "Flat 4",  tenantName: "J. & S. Okafor", email: "okafor.household@example.com" },
+  { unitId: "stanley-f5",  unitLabel: "Flat 5",  tenantName: "D. Aronsson",    email: "d.aronsson@example.com" },
+  { unitId: "stanley-f6",  unitLabel: "Flat 6",  tenantName: "K. Mendes",      email: "k.mendes@example.com" },
+  { unitId: "stanley-f7",  unitLabel: "Flat 7",  tenantName: null,             email: null },
+  { unitId: "stanley-f9",  unitLabel: "Flat 9",  tenantName: "P. Chaudhuri",   email: "p.chaudhuri@example.com" },
+  { unitId: "stanley-f10", unitLabel: "Flat 10", tenantName: "L. Hartmann",    email: "l.hartmann@example.com" },
+  { unitId: "stanley-f11", unitLabel: "Flat 11", tenantName: "T. Nguyen",      email: "t.nguyen@example.com" },
+];
+const STANLEY_VACANT_UNITS = ["Flat 8", "Shop"];
+
+const FIRE_ALARM_CONTRACTOR = {
+  name: "SafeGuard Fire & Alarm Ltd",
+  contact: "Stuart Reilly",
+  email: "stuart@safeguard-fa.co.uk",
+  phone: "020 7946 0118",
+};
+
+const FIRE_ALARM_VISIT_WINDOW = "Tue 7 – Thu 9 July 2026, between 9am and 1pm";
+
+function FireAlarmFinding() {
+  const occupied = STANLEY_FIRE_ALARM_TENANTS.length;
+  const withContact = STANLEY_FIRE_ALARM_TENANTS.filter((t) => t.email).length;
+  const missing = STANLEY_FIRE_ALARM_TENANTS.filter((t) => !t.email);
+  return (
+    <div className="rounded-lg border border-slate-200 bg-white p-3 space-y-2.5 text-[12.5px] text-slate-700">
+      <div>
+        <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Scope</div>
+        <p>Building-wide. The fire alarm system serves Stanley House as a whole — one inspection covers every unit.</p>
+      </div>
+      <div>
+        <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Due</div>
+        <p>Certificate expires 12 July 2026 — about 18 days away (confirmed from last year's certificate).</p>
+      </div>
+      <div>
+        <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Contractor</div>
+        <p>{FIRE_ALARM_CONTRACTOR.name} · {FIRE_ALARM_CONTRACTOR.contact} · {FIRE_ALARM_CONTRACTOR.email} · {FIRE_ALARM_CONTRACTOR.phone}</p>
+      </div>
+      <div>
+        <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold mb-0.5">Tenants to notify</div>
+        <p>
+          {occupied} occupied units across the building — I'll prepare an access notice for each current tenant.
+          {" "}{STANLEY_VACANT_UNITS.length > 0 && <>Vacant units excluded: {STANLEY_VACANT_UNITS.join(", ")}.</>}
+        </p>
+        {missing.length > 0 && (
+          <p className="mt-1 text-amber-800">
+            <span aria-hidden>⚠ </span>
+            {withContact} of {occupied} have a contact on file. Missing: {missing.map((m) => m.unitLabel).join(", ")} — I won't invent contacts; flagged for you.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function ContractorDraft() {
+  return (
+    <PreparedPreview
+      title="Contractor email (1)"
+      body={`To: ${FIRE_ALARM_CONTRACTOR.contact} <${FIRE_ALARM_CONTRACTOR.email}>\nSubject: Annual fire alarm inspection — Stanley House, 1115 Finchley Road, NW11\n\nHi ${FIRE_ALARM_CONTRACTOR.contact.split(" ")[0]},\n\nOur certificate for Stanley House expires on 12 July 2026. Please book the annual inspection within the window: ${FIRE_ALARM_VISIT_WINDOW}.\n\nBuilding access: main entrance on Finchley Road, concierge on the door 9am–5pm. 10 occupied units across Flats 1–11 plus the ground-floor Shop (currently vacant). We'll notify each tenant of the access window.\n\nThanks,\n[You]`}
+    />
+  );
+}
+
+function TenantNoticesGroup({ tenants }: { tenants: FireAlarmTenant[] }) {
+  const withContact = tenants.filter((t) => t.email);
+  const [openId, setOpenId] = useState<string | null>(null);
+  const [sharedWindow, setSharedWindow] = useState<string>(FIRE_ALARM_VISIT_WINDOW);
+  const [overrides, setOverrides] = useState<Record<string, string>>({});
+
+  return (
+    <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-2.5 text-[12px] text-slate-700">
+      <div className="text-[10px] uppercase tracking-wide text-emerald-800 font-semibold mb-1.5">
+        Prepared — Tenant access notices ({withContact.length}) · one per occupied unit
+      </div>
+
+      <div className="mb-2 bg-white border border-slate-200 rounded-md p-2">
+        <label className="block text-[10.5px] uppercase tracking-wide text-slate-500 font-semibold mb-1">
+          Shared edit — visit window (applies to all notices)
+        </label>
+        <input
+          type="text"
+          value={sharedWindow}
+          onChange={(e) => setSharedWindow(e.target.value)}
+          className="w-full text-[12px] px-2 py-1 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+          aria-label="Shared visit window"
+        />
+      </div>
+
+      <ul className="divide-y divide-emerald-200/70 bg-white border border-slate-200 rounded-md">
+        {withContact.map((t) => {
+          const isOpen = openId === t.unitId;
+          const body = overrides[t.unitId] ?? defaultTenantNoticeBody(t, sharedWindow);
+          return (
+            <li key={t.unitId}>
+              <button
+                type="button"
+                onClick={() => setOpenId(isOpen ? null : t.unitId)}
+                aria-expanded={isOpen}
+                className="w-full flex items-center justify-between gap-3 px-2.5 py-1.5 text-left hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded"
+              >
+                <span className="flex items-center gap-2 min-w-0">
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold" aria-hidden>✓</span>
+                  <span className="font-medium text-slate-800 truncate">{t.unitLabel}</span>
+                  <span className="text-slate-500 truncate">· {t.tenantName} · {t.email}</span>
+                </span>
+                <span className="text-[11px] text-[#7C3AED]">{isOpen ? "Hide" : "View / edit"}</span>
+              </button>
+              {isOpen && (
+                <div className="px-2.5 pb-2">
+                  <textarea
+                    value={body}
+                    onChange={(e) => setOverrides((o) => ({ ...o, [t.unitId]: e.target.value }))}
+                    rows={7}
+                    className="w-full text-[12px] font-mono px-2 py-1.5 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 whitespace-pre-wrap"
+                    aria-label={`Notice body for ${t.unitLabel}`}
+                  />
+                </div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+      <div className="mt-1.5 text-[10.5px] text-slate-500 italic">Drafts grouped for review · individual edits allowed · shared edits apply to all.</div>
+    </div>
+  );
+}
+
+function defaultTenantNoticeBody(t: FireAlarmTenant, window: string): string {
+  return `To: ${t.tenantName} <${t.email}>\nSubject: Access notice — annual fire alarm inspection, ${t.unitLabel}, Stanley House\n\nHi ${(t.tenantName ?? "").split(" ")[0] || "there"},\n\nWe're carrying out the annual fire alarm inspection at Stanley House. The engineer will need brief access to ${t.unitLabel} during the window: ${window}.\n\nThe visit takes around 15 minutes per unit. You don't need to be present if you're happy for the concierge to escort the engineer — just reply to let us know.\n\nThanks,\n[Your landlord]`;
+}
+
+function buildPA001Beats(): PerformBeat[] {
+  const withContact = STANLEY_FIRE_ALARM_TENANTS.filter((t) => t.email);
+  const missing = STANLEY_FIRE_ALARM_TENANTS.filter((t) => !t.email);
+  return [
+    {
+      id: "fa1",
+      stepKey: "identify",
+      text: `The fire alarm certificate for Stanley House expires on 12 July 2026 — about 18 days away. It covers the whole building. Want me to prepare the inspection?`,
+      gate: {
+        label: "How would you like to proceed?",
+        options: [
+          { label: "Prepare", kind: "approve", nextBeatIdx: 1 },
+          { label: "Defer", kind: "defer", nextBeatIdx: "exit" },
+          { label: "Cancel", kind: "cancel", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "fa2",
+      stepKey: "gather",
+      text: `Gathering the parties. Contractor on file: ${FIRE_ALARM_CONTRACTOR.name} (${FIRE_ALARM_CONTRACTOR.contact}).`,
+    },
+    {
+      id: "fa3",
+      stepKey: "gather",
+      text: `Stanley House has ${STANLEY_FIRE_ALARM_TENANTS.length} occupied units — I'll notify all current tenants about access. Vacant units (${STANLEY_VACANT_UNITS.join(", ")}) have no tenant to notify, so I'm skipping those.`,
+      flag: missing.length > 0
+        ? `I couldn't find access contacts for ${missing.map((m) => m.unitLabel).join(" and ")} — I'll draft for the ${withContact.length} I do have and flag the rest for you to handle separately.`
+        : undefined,
+    },
+    {
+      id: "fa4",
+      stepKey: "gather",
+      text: "Here's the building-wide finding.",
+      detail: <FireAlarmFinding />,
+      gate: {
+        label: "Shall I draft the contractor request and the tenant access notices?",
+        options: [
+          { label: "Draft them", kind: "approve", nextBeatIdx: 4 },
+          { label: "Defer", kind: "defer", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "fa5",
+      stepKey: "draft",
+      text: "Drafted — one contractor email, plus an access notice per occupied unit. Each notice names the unit and the same visit window.",
+      detail: (
+        <div className="space-y-2">
+          <ContractorDraft />
+          <TenantNoticesGroup tenants={STANLEY_FIRE_ALARM_TENANTS} />
+        </div>
+      ),
+      gate: {
+        label: `Send 1 contractor email and ${withContact.length} tenant notice${withContact.length === 1 ? "" : "s"}?`,
+        options: [
+          { label: `Send all (1 + ${withContact.length})`, kind: "approve", nextBeatIdx: 5 },
+          { label: "Modify drafts", kind: "modify", nextBeatIdx: 4 },
+          { label: "Defer", kind: "defer", nextBeatIdx: "exit" },
+        ],
+      },
+    },
+    {
+      id: "fa6",
+      stepKey: "send",
+      text: `Sent. Contractor request to ${FIRE_ALARM_CONTRACTOR.contact} at ${FIRE_ALARM_CONTRACTOR.name}; access notices to all ${withContact.length} current tenants (${withContact.map((t) => t.unitLabel).join(", ")}).`,
+      flag: missing.length > 0
+        ? `${missing.map((m) => m.unitLabel).join(", ")} still need access notice — no contact on file. Handle separately?`
+        : undefined,
+      gate: {
+        label: "Continue",
+        options: [{ label: "Continue", kind: "continue", nextBeatIdx: 6 }],
+      },
+    },
+    {
+      id: "fa7",
+      stepKey: "record",
+      text: `Recording against Stanley House: contractor instructed, ${withContact.length} tenants notified (with units), date sent today, approved by you. I'll set the next certificate alert so this doesn't re-trigger.`,
+      gate: {
+        label: "Record and finish",
+        options: [{ label: "Record & close", kind: "continue", nextBeatIdx: "complete" }],
+      },
+    },
+  ];
+}
+
+function buildPerformConfig(card: ActionCard): {
+  beats: PerformBeat[];
+  steps: { key: string; label: string }[];
+  headerKicker: string;
+  headerTitle: string;
+  headerSub: string;
+} {
+  if (card.id === "act-stanley-fra") {
+    return {
+      beats: buildPA001Beats(),
+      steps: PA001_STEPS,
+      headerKicker: "Performing action",
+      headerTitle: `Fire alarm certification · ${card.propertyName}`,
+      headerSub: "Building-wide · expires 12 July 2026 (≈18 days)",
+    };
+  }
+  return {
+    beats: buildPA004Beats(),
+    steps: PA004_STEPS,
+    headerKicker: "Performing action",
+    headerTitle: `Rent review · ${card.unitLabel ?? "Flat 8"}, ${card.propertyName}`,
+    headerSub: "Due: March 2027 (≈180 days)",
+  };
+}
+
 function PerformWorkspace({
   card,
   onCancel,
@@ -3705,7 +3970,7 @@ function PerformWorkspace({
   onComplete: (summary: string) => void;
   reducedMotion: boolean;
 }) {
-  const beats = useMemo(() => buildPA004Beats(), []);
+  const { beats, steps, headerKicker, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
   const [revealed, setRevealed] = useState<number>(0); // beats revealed (1-based count)
   const [streamingText, setStreamingText] = useState<string>("");
   const [streamingActive, setStreamingActive] = useState(false);
@@ -3765,16 +4030,16 @@ function PerformWorkspace({
     else setRevealed((r) => Math.min(r + 1, beats.length));
   };
 
-  const currentStepIdx = PA004_STEPS.findIndex((s) => s.key === currentBeat?.stepKey);
+  const currentStepIdx = steps.findIndex((s) => s.key === currentBeat?.stepKey);
 
   return (
-    <div className="absolute inset-0 z-[600] bg-white flex flex-col animate-fade-in">
+    <div className={`absolute inset-0 z-[600] bg-white flex flex-col ${reducedMotion ? "" : "animate-fade-in"}`}>
       {/* Header */}
       <header className="border-b border-slate-200 px-5 py-3 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold">Performing action</div>
-          <h2 className="text-[15px] font-semibold text-slate-900 leading-tight truncate">Rent review · {card.unitLabel ?? "Flat 8"}, {card.propertyName}</h2>
-          <div className="text-[12px] text-slate-500 mt-0.5">Due: March 2027 (≈180 days)</div>
+          <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold">{headerKicker}</div>
+          <h2 className="text-[15px] font-semibold text-slate-900 leading-tight truncate">{headerTitle}</h2>
+          <div className="text-[12px] text-slate-500 mt-0.5">{headerSub}</div>
         </div>
         <button
           onClick={onCancel}
@@ -3788,7 +4053,7 @@ function PerformWorkspace({
       {/* Progress rail */}
       <nav aria-label="Progress" className="px-5 py-2.5 border-b border-slate-100 bg-slate-50">
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px]">
-          {PA004_STEPS.map((s, i) => {
+          {steps.map((s, i) => {
             const isDone = completed.includes(s.key);
             const isCurrent = currentBeat?.stepKey === s.key;
             return (
@@ -3808,7 +4073,7 @@ function PerformWorkspace({
                   </span>
                   {s.label}
                 </span>
-                {i < PA004_STEPS.length - 1 && <span aria-hidden className="text-slate-300">→</span>}
+                {i < steps.length - 1 && <span aria-hidden className="text-slate-300">→</span>}
               </li>
             );
           })}
