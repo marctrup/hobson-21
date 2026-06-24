@@ -432,7 +432,7 @@ const BEATS: Beat[] = [
     lines: [
       "At present, I answer your questions and keep your information organised, connected and current.",
       "As my knowledge builds, I am able to do more for you. I shall read the documents, gather what is needed, and prepare the work — then bring it to you for approval. The decision is always yours; the preparation is mine.",
-      "That is what I am growing into: not another application, but a colleague who helps you attend to the work. I should now like to show you around — a few of the areas you may find helpful in your day.",
+      
     ],
     prefill: "Yes — please show me around.",
     mapAction: "check-one",
