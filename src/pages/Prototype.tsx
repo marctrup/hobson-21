@@ -4002,6 +4002,15 @@ function finalGateBeatIdx(card: ActionCard, beats: PerformBeat[]): number {
   return 0;
 }
 
+function reviewRecapText(card: ActionCard): string {
+  if (card.id === "act-stanley-fra") {
+    const n = STANLEY_FIRE_ALARM_TENANTS.filter((t) => t.email).length;
+    return `I've done the groundwork on the Stanley House fire alarm — confirmed it's due, found your contractor, and drafted access notices for all ${n} current tenants. It's ready to send — just needs your approval.`;
+  }
+  return "Here's what I've put together so far. Take a look at the final approval below — that's all that's left.";
+}
+
+
 function PerformWorkspace({
   card,
   mode = "perform",
