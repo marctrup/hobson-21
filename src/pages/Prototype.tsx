@@ -910,26 +910,15 @@ const Prototype: React.FC = () => {
     setExpandedCardId(null);
     setMessages([]);
 
-    if (fromOnboarding) {
-      localStorage.setItem("hobsonPrototype.hasVisited", "1");
-      setHasVisited(true);
-    }
+    void fromOnboarding;
 
     const pending = actionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
-    const urgent = pending.filter((c) => c.urgency === "now");
+    void pending;
 
-    const greetLines: string[] =
-      portfolioMode === "first"
-        ? [
-            `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`,
-          ]
-        : pending.length === 0
-        ? [
-            `Morning, ${FIRST_NAME}. The estate's quiet — nothing needs you today. Tap a pin to wander in, or use the map search.`,
-          ]
-        : [
-            `Morning, ${FIRST_NAME}. The estate's mostly quiet — ${pending.length} ${pending.length === 1 ? "thing needs" : "things need"} you${urgent.length ? `, and ${urgent.length === 1 ? "1 is" : `${urgent.length} are`} time-sensitive` : ""}.`,
-          ];
+    const greetLines: string[] = [
+      `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`,
+    ];
+
 
 
     setTyping(true);
