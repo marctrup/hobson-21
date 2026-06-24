@@ -1464,6 +1464,7 @@ const Prototype: React.FC = () => {
             {actionToast}
           </div>
         )}
+        {showDocuments && <DocumentsLibrary onClose={() => setShowDocuments(false)} />}
       </main>
     </div>
   );
