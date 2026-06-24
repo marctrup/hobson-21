@@ -4030,16 +4030,16 @@ function PerformWorkspace({
     else setRevealed((r) => Math.min(r + 1, beats.length));
   };
 
-  const currentStepIdx = PA004_STEPS.findIndex((s) => s.key === currentBeat?.stepKey);
+  const currentStepIdx = steps.findIndex((s) => s.key === currentBeat?.stepKey);
 
   return (
-    <div className="absolute inset-0 z-[600] bg-white flex flex-col animate-fade-in">
+    <div className={`absolute inset-0 z-[600] bg-white flex flex-col ${reducedMotion ? "" : "animate-fade-in"}`}>
       {/* Header */}
       <header className="border-b border-slate-200 px-5 py-3 flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold">Performing action</div>
-          <h2 className="text-[15px] font-semibold text-slate-900 leading-tight truncate">Rent review · {card.unitLabel ?? "Flat 8"}, {card.propertyName}</h2>
-          <div className="text-[12px] text-slate-500 mt-0.5">Due: March 2027 (≈180 days)</div>
+          <div className="text-[10px] uppercase tracking-wide text-slate-400 font-semibold">{headerKicker}</div>
+          <h2 className="text-[15px] font-semibold text-slate-900 leading-tight truncate">{headerTitle}</h2>
+          <div className="text-[12px] text-slate-500 mt-0.5">{headerSub}</div>
         </div>
         <button
           onClick={onCancel}
