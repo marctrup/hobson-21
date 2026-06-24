@@ -326,10 +326,48 @@ const Prototype: React.FC = () => {
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [input, setInput] = useState("");
+  const [hasVisited, setHasVisited] = useState(false);
+  const [portfolioMode, setPortfolioMode] = useState<"first" | "returning">("first");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchActiveIdx, setSearchActiveIdx] = useState(0);
+  const [hoveredPropertyId, setHoveredPropertyId] = useState<string | null>(null);
+  const [showUnitPicker, setShowUnitPicker] = useState(false);
+  const [showPropertyList, setShowPropertyList] = useState(false);
+  const [portfolioChip, setPortfolioChip] = useState<string | null>(null);
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const searchRef = useRef<HTMLInputElement | null>(null);
 
   const reduced = prefersReducedMotion();
+
+  // Mode detection on mount (query param or stored flag)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const returning = params.get("returning");
+    if (returning === "1") {
+      localStorage.setItem("hobsonPrototype.hasVisited", "1");
+      setHasVisited(true);
+      setPortfolioMode("returning");
+      setView("portfolio");
+      setMessages([]);
+      setOwl("default");
+      return;
+    }
+    if (returning === "0") {
+      localStorage.removeItem("hobsonPrototype.hasVisited");
+      setHasVisited(false);
+      return;
+    }
+    const visited = localStorage.getItem("hobsonPrototype.hasVisited") === "1";
+    setHasVisited(visited);
+    if (visited) {
+      setPortfolioMode("returning");
+      setView("portfolio");
+      setMessages([]);
+      setOwl("default");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const selectedProperty = useMemo(
     () => PROPERTIES.find((p) => p.id === selectedPropertyId) || null,
