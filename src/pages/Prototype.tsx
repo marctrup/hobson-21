@@ -260,7 +260,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     hobsonPrepared: "I've drafted one instruction to your usual fire alarm engineer, plus access notices for every current tenant — one per occupied unit.",
     proposedAction: "Review & approve",
     urgency: "week",
-    approvalState: "pending",
+    approvalState: "in_progress",
     preparedDetail:
       "I'll email the engineer with building access notes, send each current tenant their access notice naming their unit, copy you on everything, and add the renewed certificate to the compliance calendar.",
   },
@@ -780,11 +780,18 @@ const Prototype: React.FC = () => {
   const [showWhatIveDone, setShowWhatIveDone] = useState(false);
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
+  const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
 
   const performCard = (id: string) => {
+    setReviewingCardId(null);
     setPerformingCardId(id);
     setExpandedCardId(null);
-    setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "in_progress" } : x));
+    setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: x.approvalState === "approved" ? "approved" : "in_progress" } : x));
+  };
+  const reviewCard = (id: string) => {
+    setPerformingCardId(null);
+    setReviewingCardId(id);
+    setExpandedCardId(null);
   };
   const cancelPerform = () => {
     if (performingCardId) {
@@ -792,16 +799,22 @@ const Prototype: React.FC = () => {
     }
     setPerformingCardId(null);
   };
+  const cancelReview = () => {
+    // Review doesn't change state on exit — the work stays parked.
+    setReviewingCardId(null);
+  };
   const completePerform = (summary: string) => {
-    if (performingCardId) {
-      const card = actionCards.find((x) => x.id === performingCardId);
-      setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "approved" } : x));
+    const activeId = performingCardId ?? reviewingCardId;
+    if (activeId) {
+      const card = actionCards.find((x) => x.id === activeId);
+      setActionCards((arr) => arr.map((x) => x.id === activeId ? { ...x, approvalState: "approved" } : x));
       if (card) {
         setActionToast(`Done — ${card.title} · ${summary}`);
         window.setTimeout(() => setActionToast(null), 4500);
       }
     }
     setPerformingCardId(null);
+    setReviewingCardId(null);
   };
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -1439,6 +1452,7 @@ const Prototype: React.FC = () => {
                           setExpandedCardId(null);
                         }}
                         onPerform={() => performCard(c.id)}
+                        onReview={() => reviewCard(c.id)}
                       />
                       </div>
                     ))}
@@ -1503,6 +1517,7 @@ const Prototype: React.FC = () => {
                 setExpandedCardId(null);
               }}
               onPerform={performCard}
+              onReview={reviewCard}
             />
           )}
 
@@ -1536,6 +1551,7 @@ const Prototype: React.FC = () => {
                 setExpandedCardId(null);
               }}
               onPerform={performCard}
+              onReview={reviewCard}
             />
           )}
 
@@ -1741,13 +1757,16 @@ const Prototype: React.FC = () => {
             reducedMotion={reduced}
           />
         )}
-        {performingCardId && (() => {
-          const card = actionCards.find((c) => c.id === performingCardId);
+        {(performingCardId || reviewingCardId) && (() => {
+          const activeId = performingCardId ?? reviewingCardId!;
+          const card = actionCards.find((c) => c.id === activeId);
           if (!card) return null;
+          const mode: "perform" | "review" = performingCardId ? "perform" : "review";
           return (
             <PerformWorkspace
               card={card}
-              onCancel={cancelPerform}
+              mode={mode}
+              onCancel={mode === "perform" ? cancelPerform : cancelReview}
               onComplete={completePerform}
               reducedMotion={reduced}
             />
@@ -2428,6 +2447,7 @@ function PropertyContent({
   onDefer,
   onDismiss,
   onPerform,
+  onReview,
 }: {
   property: Property;
   propertyActionCards?: ActionCard[];
@@ -2440,6 +2460,7 @@ function PropertyContent({
   onDefer?: (id: string) => void;
   onDismiss?: (id: string) => void;
   onPerform?: (id: string) => void;
+  onReview?: (id: string) => void;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
@@ -2566,6 +2587,7 @@ function PropertyContent({
           onDefer={(id) => onDefer && onDefer(id)}
           onDismiss={(id) => onDismiss && onDismiss(id)}
           onPerform={onPerform ? (id) => onPerform(id) : undefined}
+          onReview={onReview ? (id) => onReview(id) : undefined}
         />
       )}
 
@@ -3254,6 +3276,7 @@ function PortfolioBriefing({
   onDefer,
   onDismiss,
   onPerform,
+  onReview,
 }: {
   cards: ActionCard[];
   choice: null | "all" | "urgent" | "browse";
@@ -3267,6 +3290,7 @@ function PortfolioBriefing({
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
   onPerform?: (id: string) => void;
+  onReview?: (id: string) => void;
 }) {
   const pending = cards.filter((c) => c.approvalState === "pending");
   const urgent = pending.filter((c) => c.urgency === "now");
@@ -3405,6 +3429,7 @@ function PortfolioBriefing({
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
               onPerform={onPerform ? () => onPerform(c.id) : undefined}
+              onReview={onReview ? () => onReview(c.id) : undefined}
             />
           ))}
         </div>
@@ -3441,6 +3466,7 @@ function PropertyActions({
   onDefer,
   onDismiss,
   onPerform,
+  onReview,
 }: {
   cards: ActionCard[];
   propertyName: string;
@@ -3452,6 +3478,7 @@ function PropertyActions({
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
   onPerform?: (id: string) => void;
+  onReview?: (id: string) => void;
 }) {
   const sortCarried = (arr: ActionCard[]) =>
     carriedCardId
@@ -3483,6 +3510,7 @@ function PropertyActions({
                 onDefer={() => onDefer(c.id)}
                 onDismiss={() => onDismiss(c.id)}
                 onPerform={onPerform ? () => onPerform(c.id) : undefined}
+                onReview={onReview ? () => onReview(c.id) : undefined}
               />
             </div>
           ))}
@@ -3959,30 +3987,101 @@ function buildPerformConfig(card: ActionCard): {
   };
 }
 
+
+function finalGateBeatIdx(card: ActionCard, beats: PerformBeat[]): number {
+  // Per-card final unapproved gate.
+  if (card.id === "act-stanley-fra") {
+    // PA-001 Gate B — "Send?" — beat id "fa5" (index 4)
+    const idx = beats.findIndex((b) => b.id === "fa5");
+    return idx >= 0 ? idx : 0;
+  }
+  // Default: the last beat with a gate.
+  for (let i = beats.length - 1; i >= 0; i--) {
+    if (beats[i].gate) return i;
+  }
+  return 0;
+}
+
+function reviewRecapText(card: ActionCard): string {
+  if (card.id === "act-stanley-fra") {
+    const n = STANLEY_FIRE_ALARM_TENANTS.filter((t) => t.email).length;
+    return `I've done the groundwork on the Stanley House fire alarm — confirmed it's due, found your contractor, and drafted access notices for all ${n} current tenants. It's ready to send — just needs your approval.`;
+  }
+  return "Here's what I've put together so far. Take a look at the final approval below — that's all that's left.";
+}
+
+
 function PerformWorkspace({
   card,
+  mode = "perform",
   onCancel,
   onComplete,
   reducedMotion,
 }: {
   card: ActionCard;
+  mode?: "perform" | "review";
   onCancel: () => void;
   onComplete: (summary: string) => void;
   reducedMotion: boolean;
 }) {
-  const { beats, steps, headerKicker, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
-  const [revealed, setRevealed] = useState<number>(0); // beats revealed (1-based count)
+  const { beats, steps, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
+  const isComplete = card.approvalState === "approved";
+  const initialRevealed = useMemo(() => {
+    if (mode === "review" && !isComplete) return finalGateBeatIdx(card, beats);
+    if (isComplete) return beats.length - 1;
+    return 0;
+  }, [mode, isComplete, card, beats]);
+  const initialCompleted = useMemo(() => {
+    if (mode === "review" || isComplete) {
+      const upto = initialRevealed;
+      return Array.from(new Set(beats.slice(0, upto).map((b) => b.stepKey)));
+    }
+    return [];
+  }, [mode, isComplete, beats, initialRevealed]);
+  const headerKicker =
+    isComplete ? "Recorded action" : mode === "review" ? "Reviewing prepared work" : "Performing action";
+
+  const [revealed, setRevealed] = useState<number>(initialRevealed);
   const [streamingText, setStreamingText] = useState<string>("");
   const [streamingActive, setStreamingActive] = useState(false);
   const [approvedActions, setApprovedActions] = useState<string[]>([]);
-  const [completed, setCompleted] = useState<string[]>([]); // step keys completed
+  const [completed, setCompleted] = useState<string[]>(initialCompleted);
+  const [recapOpen, setRecapOpen] = useState<boolean>(mode === "perform");
+  const recapNarration = useMemo(() => reviewRecapText(card), [card]);
+  const [recapStream, setRecapStream] = useState<string>("");
+  const [recapStreaming, setRecapStreaming] = useState<boolean>(mode === "review" && !isComplete);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
 
-  // Stream a beat's text into view
+  // Stream the colleague-tone recap when entering review mode.
+  useEffect(() => {
+    if (!(mode === "review" && !isComplete)) return;
+    if (reducedMotion) {
+      setRecapStream(recapNarration);
+      setRecapStreaming(false);
+      return;
+    }
+    setRecapStreaming(true);
+    setRecapStream("");
+    const words = recapNarration.split(" ");
+    let i = 0;
+    let cancelled = false;
+    const tick = () => {
+      if (cancelled) return;
+      i += 1;
+      setRecapStream(words.slice(0, i).join(" "));
+      if (i < words.length) setTimeout(tick, 32 + Math.random() * 28);
+      else setRecapStreaming(false);
+    };
+    const t = setTimeout(tick, 100);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, [mode, isComplete, recapNarration, reducedMotion]);
+
+  // Stream a beat's text into view (skip when entering at the parked gate or completed)
   useEffect(() => {
     if (revealed >= beats.length) return;
     const beat = beats[revealed];
-    if (reducedMotion) {
+    const skipStream = (mode === "review" || isComplete) && revealed === initialRevealed;
+    if (reducedMotion || skipStream) {
       setStreamingText(beat.text);
       setStreamingActive(false);
       return;
@@ -4001,7 +4100,7 @@ function PerformWorkspace({
     };
     const t = setTimeout(step, 120);
     return () => { cancelled = true; clearTimeout(t); };
-  }, [revealed, beats, reducedMotion]);
+  }, [revealed, beats, reducedMotion, mode, isComplete, initialRevealed]);
 
   useEffect(() => {
     const el = scrollerRef.current;
@@ -4082,9 +4181,42 @@ function PerformWorkspace({
 
       {/* Beats scroller */}
       <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-4 space-y-3 bg-white">
-        {previousBeats.map((b) => (
-          <BeatBubble key={b.id} beat={b} done />
-        ))}
+        {mode === "review" && !isComplete && (
+          <div className="flex items-start gap-2">
+            <OwlAvatar state={recapStreaming ? "talking" : "default"} />
+            <div className="inline-block max-w-[640px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+              {recapStream || (reducedMotion ? recapNarration : "")}
+              {recapStreaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+            </div>
+          </div>
+        )}
+        {(mode === "review" || isComplete) && previousBeats.length > 0 ? (
+          <div className="rounded-lg border border-slate-200 bg-slate-50">
+            <button
+              type="button"
+              onClick={() => setRecapOpen((o) => !o)}
+              aria-expanded={recapOpen}
+              className="w-full flex items-center justify-between gap-2 px-3 py-2 text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded-lg"
+            >
+              <span className="text-[12px] font-medium text-slate-700 inline-flex items-center gap-2">
+                <span aria-hidden className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">✓</span>
+                {isComplete
+                  ? `Recorded — ${previousBeats.length + 1} steps complete`
+                  : `Recap — ${previousBeats.length} steps already done, parked at the final approval`}
+              </span>
+              <span className="text-[11px] text-[#7C3AED]">{recapOpen ? "Hide details" : "Show details"}</span>
+            </button>
+            {recapOpen && (
+              <div className="px-3 pb-3 pt-1 space-y-3 border-t border-slate-200">
+                {previousBeats.map((b) => (
+                  <BeatBubble key={b.id} beat={b} done />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          previousBeats.map((b) => <BeatBubble key={b.id} beat={b} done />)
+        )}
         {currentBeat && (
           <BeatBubble
             beat={currentBeat}
@@ -4093,10 +4225,15 @@ function PerformWorkspace({
             done={false}
           />
         )}
+        {isComplete && (
+          <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-[12px] text-emerald-900">
+            This action is complete and recorded. Read-only summary above.
+          </div>
+        )}
       </div>
 
       {/* Gate */}
-      {currentBeat && !streamingActive && (
+      {currentBeat && !streamingActive && !isComplete && (
         <footer className="border-t border-slate-200 px-5 py-3 bg-white">
           {currentBeat.gate ? (
             <div className="space-y-2">
@@ -4133,6 +4270,16 @@ function PerformWorkspace({
               </button>
             </div>
           )}
+        </footer>
+      )}
+      {isComplete && (
+        <footer className="border-t border-slate-200 px-5 py-3 bg-white flex justify-end">
+          <button
+            onClick={onCancel}
+            className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+          >
+            Close
+          </button>
         </footer>
       )}
     </div>
@@ -4176,6 +4323,7 @@ function ActionCardItem({
   onDismiss,
   onManageAtProperty,
   onPerform,
+  onReview,
 }: {
   card: ActionCard;
   level: "portfolio" | "property" | "unit";
@@ -4189,6 +4337,7 @@ function ActionCardItem({
   onDismiss: () => void;
   onManageAtProperty?: () => void;
   onPerform?: () => void;
+  onReview?: () => void;
 }) {
   const isInferred = card.confidence === "inferred";
   // Property-anchored shown inside a unit = read-only context
@@ -4242,14 +4391,45 @@ function ActionCardItem({
         </div>
       ) : !expanded && (
         <div className="flex flex-wrap items-center gap-1.5">
-          {!isInferred ? (
-            <button
-              onClick={onToggleExpand}
-              className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
-            >
-              {card.proposedAction}
-            </button>
-          ) : onOpenUnit ? (
+          {!isInferred ? (() => {
+            const performable = PERFORMABLE_CARD_IDS.has(card.id);
+            const state = card.approvalState;
+            if (performable && onReview) {
+              const disabled = state === "pending";
+              const label = state === "approved" ? "View recorded outcome" : card.proposedAction;
+              const tip = disabled
+                ? "Nothing to review yet — Perform this first"
+                : state === "approved"
+                ? "Open the recorded outcome"
+                : "Jump to the final approval";
+              return (
+                <button
+                  onClick={disabled ? undefined : onReview}
+                  disabled={disabled}
+                  aria-disabled={disabled}
+                  title={tip}
+                  className={`text-xs px-3 py-1.5 rounded-full transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED] inline-flex items-center gap-1 ${
+                    disabled
+                      ? "bg-slate-100 text-slate-400 border border-slate-200 cursor-not-allowed opacity-60"
+                      : "bg-[#7C3AED] text-white hover:bg-[#6D28D9]"
+                  }`}
+                >
+                  {!disabled && (
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M5 13l4 4L19 7"/></svg>
+                  )}
+                  {label}
+                </button>
+              );
+            }
+            return (
+              <button
+                onClick={onToggleExpand}
+                className="text-xs px-3 py-1.5 rounded-full bg-[#7C3AED] text-white hover:bg-[#6D28D9] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]"
+              >
+                {card.proposedAction}
+              </button>
+            );
+          })() : onOpenUnit ? (
             <>
               <button
                 onClick={onOpenUnit}
@@ -4272,13 +4452,13 @@ function ActionCardItem({
               Flag for review
             </button>
           )}
-          {!isInferred && onPerform && PERFORMABLE_CARD_IDS.has(card.id) && (
+          {!isInferred && onPerform && PERFORMABLE_CARD_IDS.has(card.id) && card.approvalState !== "approved" && (
             <button
               onClick={onPerform}
               className="text-xs px-3 py-1.5 rounded-full bg-emerald-600 text-white hover:bg-emerald-700 transition focus:outline-none focus:ring-2 focus:ring-emerald-500 inline-flex items-center gap-1"
             >
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden><polygon points="6 4 20 12 6 20 6 4" /></svg>
-              Perform
+              {card.approvalState === "in_progress" ? "Resume" : "Perform"}
             </button>
           )}
           {!isInferred && onOpenUnit && (
