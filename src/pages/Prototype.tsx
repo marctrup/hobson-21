@@ -892,14 +892,16 @@ const Prototype: React.FC = () => {
     setTimeout(step, 60);
   };
 
-  /* ----- chip click during onboarding ----- */
-  const advanceBeat = () => {
+  /* ----- send the pre-filled question during onboarding ----- */
+  const advanceBeat = (userText?: string) => {
     const beat = BEATS[beatIdx];
+    const text = (userText && userText.trim()) || beat.prefill;
     setMessages((m) => [
       ...m,
-      { id: `u-${Date.now()}`, role: "user", text: beat.chip },
+      { id: `u-${Date.now()}`, role: "user", text },
     ]);
     setChipVisible(false);
+    setInput("");
     if (beatIdx === BEATS.length - 1) {
       // go to portfolio
       setTimeout(() => goPortfolio(true), 350);
