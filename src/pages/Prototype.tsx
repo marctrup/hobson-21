@@ -2263,7 +2263,7 @@ function PropertyContent({
           propertyName={property.name}
           expandedCardId={expandedCardId ?? null}
           setExpandedCardId={(id) => setExpandedCardId && setExpandedCardId(id)}
-          onOpenUnit={(uid) => onOpenUnit(uid)}
+          onOpenUnit={(uid, cardId) => onOpenUnit(uid, cardId)}
           onApprove={(id) => onApprove && onApprove(id)}
           onDefer={(id) => onDefer && onDefer(id)}
           onDismiss={(id) => onDismiss && onDismiss(id)}
