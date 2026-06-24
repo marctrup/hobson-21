@@ -4038,7 +4038,34 @@ function PerformWorkspace({
   const [approvedActions, setApprovedActions] = useState<string[]>([]);
   const [completed, setCompleted] = useState<string[]>(initialCompleted);
   const [recapOpen, setRecapOpen] = useState<boolean>(mode === "perform");
+  const recapNarration = useMemo(() => reviewRecapText(card), [card]);
+  const [recapStream, setRecapStream] = useState<string>("");
+  const [recapStreaming, setRecapStreaming] = useState<boolean>(mode === "review" && !isComplete);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
+
+  // Stream the colleague-tone recap when entering review mode.
+  useEffect(() => {
+    if (!(mode === "review" && !isComplete)) return;
+    if (reducedMotion) {
+      setRecapStream(recapNarration);
+      setRecapStreaming(false);
+      return;
+    }
+    setRecapStreaming(true);
+    setRecapStream("");
+    const words = recapNarration.split(" ");
+    let i = 0;
+    let cancelled = false;
+    const tick = () => {
+      if (cancelled) return;
+      i += 1;
+      setRecapStream(words.slice(0, i).join(" "));
+      if (i < words.length) setTimeout(tick, 32 + Math.random() * 28);
+      else setRecapStreaming(false);
+    };
+    const t = setTimeout(tick, 100);
+    return () => { cancelled = true; clearTimeout(t); };
+  }, [mode, isComplete, recapNarration, reducedMotion]);
 
   // Stream a beat's text into view (skip when entering at the parked gate or completed)
   useEffect(() => {
