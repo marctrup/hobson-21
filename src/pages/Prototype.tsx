@@ -1589,11 +1589,7 @@ const Prototype: React.FC = () => {
       <main className="relative flex-1 bg-slate-100">
         <div
           aria-hidden={view === "onboarding" ? true : undefined}
-          className={`absolute inset-0 ${view === "onboarding" ? "pointer-events-none" : ""}`}
-          style={{
-            filter: view === "onboarding" ? "grayscale(0.95) contrast(0.85) brightness(1.05)" : "none",
-            transition: reduced ? "none" : "filter 400ms ease-out",
-          }}
+          className={`absolute inset-0 ${view === "onboarding" ? "pointer-events-none pins-hidden" : ""} ${reduced ? "reduced-motion" : ""}`}
         >
           <HobsonMap
             onPropertyClick={(id) => {
@@ -1612,16 +1608,7 @@ const Prototype: React.FC = () => {
           />
         </div>
 
-        {/* Muted scrim during Meet Hobson */}
-        <div
-          aria-hidden
-          className="absolute inset-0 pointer-events-none z-[350]"
-          style={{
-            background: "rgba(241, 245, 249, 0.55)",
-            opacity: view === "onboarding" ? 1 : 0,
-            transition: reduced ? "none" : "opacity 400ms ease-out",
-          }}
-        />
+
 
         {/* Global map search — persistent on every level (hidden during Meet Hobson) */}
         {view !== "onboarding" && (
@@ -4464,6 +4451,14 @@ function StyleTag() {
   return (
     <style>{`
       .hobson-proto { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+      /* Meet Hobson: hide all property pins; on exit, drop them in. */
+      .hp-pin, .hp-cluster { transition: opacity .45s ease-out, transform .45s ease-out; }
+      .pins-hidden .hp-pin, .pins-hidden .hp-cluster {
+        opacity: 0; transform: translateY(-6px); pointer-events: none;
+      }
+      .reduced-motion .hp-pin, .reduced-motion .hp-cluster { transition: none; }
+
 
       @keyframes typingBounce {
         0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
