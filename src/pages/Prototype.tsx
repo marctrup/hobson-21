@@ -703,6 +703,11 @@ const Prototype: React.FC = () => {
   const [showUnitPicker, setShowUnitPicker] = useState(false);
   const [showPropertyList, setShowPropertyList] = useState(false);
   const [portfolioChip, setPortfolioChip] = useState<string | null>(null);
+  const [actionCards, setActionCards] = useState<ActionCard[]>(INITIAL_ACTION_CARDS);
+  const [briefingChoice, setBriefingChoice] = useState<null | "all" | "urgent" | "browse">(null);
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
+  const [hoveredCardPropertyId, setHoveredCardPropertyId] = useState<string | null>(null);
+  const [actionToast, setActionToast] = useState<string | null>(null);
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
