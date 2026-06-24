@@ -2447,6 +2447,7 @@ function PropertyContent({
   onDefer,
   onDismiss,
   onPerform,
+  onReview,
 }: {
   property: Property;
   propertyActionCards?: ActionCard[];
@@ -2459,6 +2460,7 @@ function PropertyContent({
   onDefer?: (id: string) => void;
   onDismiss?: (id: string) => void;
   onPerform?: (id: string) => void;
+  onReview?: (id: string) => void;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
