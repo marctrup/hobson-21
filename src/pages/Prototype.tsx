@@ -676,7 +676,17 @@ const Prototype: React.FC = () => {
     setSearchQuery("");
     const where = p.standalone ? p.address : `${p.name} — ${u.label}, ${p.postcode}`;
     const intro = `${where}. What would you like to know? (Unit details are placeholders for now — I'll learn the real answers once your documents are uploaded.)`;
-    setMessages([{ id: `unit-${unitId}`, role: "hobson", text: intro }]);
+    setMessages([]);
+    setTyping(true);
+    const delay = reduced ? 200 : 500;
+    window.setTimeout(() => {
+      setTyping(false);
+      if (reduced) {
+        setMessages([{ id: `unit-${unitId}`, role: "hobson", text: intro }]);
+      } else {
+        streamHobsonMessage(intro, () => {});
+      }
+    }, delay);
   };
 
   const replayOnboarding = () => {
