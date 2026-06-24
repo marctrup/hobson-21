@@ -1241,14 +1241,6 @@ const Prototype: React.FC = () => {
               <img src={owlDefault} alt="" aria-hidden className="w-6 h-6 object-contain" />
             )}
             <h1 className="font-semibold text-[15px] text-slate-900">Chat with Hobson</h1>
-            {view !== "onboarding" && (
-              <button
-                onClick={replayOnboarding}
-                className="ml-2 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
-              >
-                How Hobson works
-              </button>
-            )}
           </div>
           <div className="flex items-center gap-1 text-slate-400">
             <button className="p-1.5 hover:text-slate-700" aria-label="Expand">
