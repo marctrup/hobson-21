@@ -1787,7 +1787,7 @@ function MapSearch({
                         </div>
                         <div className="text-[11px] text-slate-500">
                           {r.type === "unit"
-                            ? r.unit.status === "Let" ? r.unit.tenant : "Vacant"
+                            ? `${r.property.standalone ? r.property.address : `${r.property.name} · ${r.property.postcode}`}`
                             : `${r.property.area} · ${r.property.units.length} units`}
                         </div>
                       </div>
