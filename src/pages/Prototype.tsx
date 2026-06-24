@@ -518,19 +518,21 @@ const Prototype: React.FC = () => {
       setHasVisited(true);
     }
 
-    if (portfolioMode === "first") {
-      const greet = `Welcome. Right now I learn at unit level — that's where your documents live, and it's how I build understanding. Want to open a property, or go straight to a unit?`;
-      setTyping(true);
-      const delay = reduced ? 200 : 450;
-      window.setTimeout(() => {
-        setTyping(false);
-        if (reduced) {
-          setMessages([{ id: "p-greet", role: "hobson", text: greet }]);
-        } else {
-          streamHobsonMessage(greet, () => {});
-        }
-      }, delay);
-    }
+    const greet =
+      portfolioMode === "first"
+        ? `Welcome. Right now I learn at unit level — that's where your documents live, and it's how I build understanding. Want to open a property, or go straight to a unit?`
+        : `You're in your portfolio. Search above, pick a property on the map, or jump straight into a unit — that's where I can answer questions today.`;
+    setTyping(true);
+    const delay = reduced ? 200 : 450;
+    window.setTimeout(() => {
+      setTyping(false);
+      if (reduced) {
+        setMessages([{ id: "p-greet", role: "hobson", text: greet }]);
+      } else {
+        streamHobsonMessage(greet, () => {});
+      }
+    }, delay);
+
   };
 
   const goProperty = (id: string) => {
