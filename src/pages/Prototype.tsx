@@ -4053,7 +4053,7 @@ function PerformWorkspace({
       {/* Progress rail */}
       <nav aria-label="Progress" className="px-5 py-2.5 border-b border-slate-100 bg-slate-50">
         <ol className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[11px]">
-          {PA004_STEPS.map((s, i) => {
+          {steps.map((s, i) => {
             const isDone = completed.includes(s.key);
             const isCurrent = currentBeat?.stepKey === s.key;
             return (
@@ -4073,7 +4073,7 @@ function PerformWorkspace({
                   </span>
                   {s.label}
                 </span>
-                {i < PA004_STEPS.length - 1 && <span aria-hidden className="text-slate-300">→</span>}
+                {i < steps.length - 1 && <span aria-hidden className="text-slate-300">→</span>}
               </li>
             );
           })}
