@@ -3242,19 +3242,21 @@ function PortfolioBriefing({
               key={c.value}
               onClick={() => setChoice(c.value)}
               autoFocus={i === 0}
-              className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
+              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
                 i === 0
-                  ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm"
+                  ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] animate-[pulse_1.6s_ease-in-out_infinite]"
                   : "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE] border border-[#DDD6FE]"
               }`}
             >
               {c.label}
+              {i === 0 && <span aria-hidden className="animate-bounce">↓</span>}
             </button>
           ))}
         </div>
       </div>
     );
   }
+
 
   // "Browse" branch removed — property list no longer rendered at portfolio level
 
