@@ -728,8 +728,7 @@ const Prototype: React.FC = () => {
   const [selectedUnitId, setSelectedUnitId] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [input, setInput] = useState("");
-  const [hasVisited, setHasVisited] = useState(false);
-  const [portfolioMode, setPortfolioMode] = useState<"first" | "returning">("first");
+  // Staged tour: every load starts at Meet Hobson. No returning-user state.
   const [searchQuery, setSearchQuery] = useState("");
   const [searchActiveIdx, setSearchActiveIdx] = useState(0);
   const [hoveredPropertyId, setHoveredPropertyId] = useState<string | null>(null);
@@ -786,35 +785,13 @@ const Prototype: React.FC = () => {
   const searchRef = useRef<HTMLInputElement | null>(null);
 
   const reduced = prefersReducedMotion();
-
-  // Mode detection on mount (query param or stored flag)
+  // Staged-tour reset: clear any legacy hasVisited flag so refreshes always land on Meet Hobson.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const returning = params.get("returning");
-    if (returning === "1") {
-      localStorage.setItem("hobsonPrototype.hasVisited", "1");
-      setHasVisited(true);
-      setPortfolioMode("returning");
-      setView("portfolio");
-      setMessages([]);
-      setOwl("default");
-      return;
-    }
-    if (returning === "0") {
+    try {
       localStorage.removeItem("hobsonPrototype.hasVisited");
-      setHasVisited(false);
-      return;
-    }
-    const visited = localStorage.getItem("hobsonPrototype.hasVisited") === "1";
-    setHasVisited(visited);
-    if (visited) {
-      setPortfolioMode("returning");
-      setView("portfolio");
-      setMessages([]);
-      setOwl("default");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    } catch {}
   }, []);
+
 
   const selectedProperty = useMemo(
     () => PROPERTIES.find((p) => p.id === selectedPropertyId) || null,
@@ -933,26 +910,15 @@ const Prototype: React.FC = () => {
     setExpandedCardId(null);
     setMessages([]);
 
-    if (fromOnboarding) {
-      localStorage.setItem("hobsonPrototype.hasVisited", "1");
-      setHasVisited(true);
-    }
+    void fromOnboarding;
 
     const pending = actionCards.filter((c) => c.approvalState === "pending" || c.approvalState === "in_progress");
-    const urgent = pending.filter((c) => c.urgency === "now");
+    void pending;
 
-    const greetLines: string[] =
-      portfolioMode === "first"
-        ? [
-            `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`,
-          ]
-        : pending.length === 0
-        ? [
-            `Morning, ${FIRST_NAME}. The estate's quiet — nothing needs you today. Tap a pin to wander in, or use the map search.`,
-          ]
-        : [
-            `Morning, ${FIRST_NAME}. The estate's mostly quiet — ${pending.length} ${pending.length === 1 ? "thing needs" : "things need"} you${urgent.length ? `, and ${urgent.length === 1 ? "1 is" : `${urgent.length} are`} time-sensitive` : ""}.`,
-          ];
+    const greetLines: string[] = [
+      `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`,
+    ];
+
 
 
     setTyping(true);
@@ -1104,33 +1070,13 @@ const Prototype: React.FC = () => {
       }
     }
     if (view === "portfolio") {
-      const q = searchQuery.trim().toLowerCase();
-      let matchIds: string[] | null = null;
-      let fadeNonMatches = false;
-      if (q && portfolioMode === "returning") {
-        matchIds = PROPERTIES.filter((p) => {
-          if (p.name.toLowerCase().includes(q)) return true;
-          if (p.area.toLowerCase().includes(q)) return true;
-          return p.units.some(
-            (u) =>
-              u.label.toLowerCase().includes(q) ||
-              (u.tenant && u.tenant.toLowerCase().includes(q))
-          );
-        }).map((p) => p.id);
-        fadeNonMatches = true;
-      } else if (portfolioMode === "returning" && briefingChoice !== "browse") {
-        // Glow properties that have pending action cards (matching the urgency filter).
-        // Do NOT fade the others — non-flagged pins stay full-colour and active.
-        const pending = actionCards.filter(
-          (c) =>
-            (c.approvalState === "pending" || c.approvalState === "in_progress") &&
-            (briefingChoice !== "urgent" || c.urgency === "now")
-        );
-        const ids = Array.from(new Set(pending.map((c) => c.propertyId)));
-        if (ids.length) matchIds = ids;
-      }
+      const matchIds: string[] | null = null;
+      const fadeNonMatches = false;
+      void searchQuery;
+      void briefingChoice;
       return { pulse: "none", matchIds, fadeNonMatches, hoverId: hoveredCardPropertyId ?? hoveredPropertyId };
     }
+
     if (view === "property" && selectedProperty) {
       // Units are NOT shown as map pins — the map only locates the building.
       return {
@@ -1151,7 +1097,7 @@ const Prototype: React.FC = () => {
       };
     }
     return { pulse: "none" };
-  }, [view, beatIdx, selectedProperty, selectedUnitId, searchQuery, portfolioMode, hoveredPropertyId, briefingChoice, actionCards, hoveredCardPropertyId]);
+  }, [view, beatIdx, selectedProperty, selectedUnitId, searchQuery, hoveredPropertyId, briefingChoice, actionCards, hoveredCardPropertyId]);
 
   /* ----- unit Q&A ----- */
   const answerForUnit = (q: string): string => {
@@ -1310,9 +1256,8 @@ const Prototype: React.FC = () => {
         {/* Header */}
         <header className="h-14 px-5 flex items-center justify-between border-b border-slate-100">
           <div className="flex items-center gap-2">
-            {view === "portfolio" && portfolioMode === "returning" && (
-              <img src={owlDefault} alt="" aria-hidden className="w-6 h-6 object-contain" />
-            )}
+            {/* Owl avatar removed with returning-user mode */}
+
             <h1 className="font-semibold text-[15px] text-slate-900">Chat with Hobson</h1>
             {view !== "onboarding" && (
               <button
@@ -1459,8 +1404,8 @@ const Prototype: React.FC = () => {
 
 
 
-          {/* Portfolio view — first visit (guided) */}
-          {view === "portfolio" && portfolioMode === "first" && (
+          {/* Portfolio view (single guided state — returning launcher removed) */}
+          {view === "portfolio" && (
             <PortfolioFirstVisit
               showPropertyList={showPropertyList}
               showUnitPicker={showUnitPicker}
@@ -1470,38 +1415,6 @@ const Prototype: React.FC = () => {
             />
           )}
 
-          {/* Portfolio view — returning: co-worker briefing */}
-          {view === "portfolio" && portfolioMode === "returning" && !typing && messages.length > 0 && (
-            <PortfolioBriefing
-              cards={actionCards}
-              choice={briefingChoice}
-              setChoice={setBriefingChoice}
-              expandedCardId={expandedCardId}
-              setExpandedCardId={setExpandedCardId}
-              onHoverCard={setHoveredCardPropertyId}
-              onOpenUnit={(propId, unitId, cardId) => goUnit(unitId, propId, cardId)}
-              onOpenProperty={(propId, cardId) => goProperty(propId, cardId)}
-              onApprove={(id) => {
-                const c = actionCards.find((x) => x.id === id);
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
-                setExpandedCardId(null);
-                if (c) {
-                  setActionToast(`Done — ${c.title} recorded.`);
-                  window.setTimeout(() => setActionToast(null), 3000);
-                }
-              }}
-              onDefer={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
-                setExpandedCardId(null);
-              }}
-              onDismiss={(id) => {
-                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
-                setExpandedCardId(null);
-              }}
-              onPerform={performCard}
-              onReview={reviewCard}
-            />
-          )}
 
 
 
@@ -1557,7 +1470,7 @@ const Prototype: React.FC = () => {
             </div>
           )}
 
-          {view === "portfolio" && portfolioMode === "first" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
+          {view === "portfolio" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
             <div className="mb-2 flex flex-col items-end gap-1.5">
               <span className="text-[11px] text-slate-500 flex items-center gap-1">
                 Tap to reply <span aria-hidden>↓</span>
@@ -1575,7 +1488,7 @@ const Prototype: React.FC = () => {
               </div>
             </div>
           )}
-          {view === "portfolio" && portfolioMode === "first" && portfolioChip && (
+          {view === "portfolio" && portfolioChip && (
             <div className="mb-2 flex flex-col items-end gap-1.5">
               <span className="text-[11px] text-slate-500 flex items-center gap-1">
                 Tap to reply <span aria-hidden>↓</span>
@@ -1680,8 +1593,8 @@ const Prototype: React.FC = () => {
             onPropertyClick={(id) => {
               const p = PROPERTIES.find((x) => x.id === id);
               if (!p) return;
-              // If single-unit property in returning mode, drill straight to unit
-              if (portfolioMode === "returning" && p.units.length === 1) {
+              // Single-unit property: drill straight to the unit
+              if (p.units.length === 1) {
                 goUnit(p.units[0].id, p.id);
               } else {
                 goProperty(id);
@@ -1713,7 +1626,7 @@ const Prototype: React.FC = () => {
             onOpenProperty={(id) => {
               const p = PROPERTIES.find((x) => x.id === id);
               if (!p) return;
-              if (portfolioMode === "returning" && p.units.length === 1) {
+              if (p.units.length === 1) {
                 goUnit(p.units[0].id, p.id);
               } else {
                 goProperty(id);
@@ -1732,12 +1645,8 @@ const Prototype: React.FC = () => {
         </div>
 
 
-        {/* Dev toggle */}
-        <div className="absolute bottom-4 left-4 z-[400] bg-white/90 rounded-md shadow-md text-[11px] font-medium flex overflow-hidden border border-slate-200">
-          <span className="px-2 py-1 text-slate-500">Dev:</span>
-          <a href="?returning=0" className="px-2 py-1 hover:bg-slate-100 border-l border-slate-200">First visit</a>
-          <a href="?returning=1" className="px-2 py-1 hover:bg-slate-100 border-l border-slate-200">Returning</a>
-        </div>
+        {/* Dev toggle removed: staged tour always starts at Meet Hobson */}
+
 
 
         {toast && (
