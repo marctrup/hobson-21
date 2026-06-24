@@ -225,13 +225,16 @@ const PROPERTIES: Property[] = [
 type Urgency = "now" | "week" | "watch";
 type TriggerType = "review" | "break" | "compliance" | "notice" | "expiry";
 type ApprovalState = "pending" | "approved" | "deferred" | "dismissed";
+type AnchorLevel = "unit" | "property";
 
 type ActionCard = {
   id: string;
   propertyId: string;
-  unitId: string;
-  unitLabel: string;
+  unitId?: string;               // present for unit-anchored cards
+  unitLabel?: string;            // present for unit-anchored cards
   propertyName: string;
+  anchorLevel: AnchorLevel;      // where the action lives / who owns it
+  relevantUnitIds?: string[];    // for property-anchored: affected units (omitted = all units)
   triggerType: TriggerType;
   title: string;
   whyItMatters: string;          // confirmed/inferred prose, plain language
@@ -245,11 +248,29 @@ type ActionCard = {
 
 const INITIAL_ACTION_CARDS: ActionCard[] = [
   {
+    id: "act-stanley-fra",
+    propertyId: "stanley",
+    propertyName: "Stanley House",
+    anchorLevel: "property",
+    // omitted relevantUnitIds = applies to every unit in the building
+    triggerType: "compliance",
+    title: "Fire Risk Assessment due — Stanley House",
+    whyItMatters: "Annual FRA on the building is due 12 July 2026 (confirmed from last year's certificate). Affects the whole property — every unit benefits from a current FRA.",
+    confidence: "confirmed",
+    hobsonPrepared: "I've drafted an instruction to your usual fire consultant with access notes and the previous report for reference.",
+    proposedAction: "Review & approve",
+    urgency: "week",
+    approvalState: "pending",
+    preparedDetail:
+      "I'll email the instruction to the consultant, copy you, book a site visit window, and add the renewed certificate to the compliance calendar so cover never lapses.",
+  },
+  {
     id: "act-stanley-f8-review",
     propertyId: "stanley",
     unitId: "stanley-f8",
     unitLabel: "Flat 8",
     propertyName: "Stanley House",
+    anchorLevel: "unit",
     triggerType: "review",
     title: "Rent review due — Flat 8, Stanley House",
     whyItMatters: "Review date confirmed for March 2027 in the lease.",
@@ -267,6 +288,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "nugent-shop",
     unitLabel: "Shop",
     propertyName: "5 Nugent Terrace",
+    anchorLevel: "unit",
     triggerType: "compliance",
     title: "EPC expiring — Shop, 5 Nugent Terrace",
     whyItMatters: "Current EPC expires 18 August 2026 (confirmed from certificate on file).",
@@ -284,6 +306,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "stanley-f6",
     unitLabel: "Flat 6",
     propertyName: "Stanley House",
+    anchorLevel: "unit",
     triggerType: "break",
     title: "Break approaching — Flat 6, Stanley House",
     whyItMatters: "Tenant break on 2 May 2027, confirmed from the lease. Notice window opens November.",
@@ -301,6 +324,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "stanley-f3",
     unitLabel: "Flat 3",
     propertyName: "Stanley House",
+    anchorLevel: "unit",
     triggerType: "expiry",
     title: "Term ended — Flat 3, Stanley House",
     whyItMatters:
@@ -318,6 +342,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "nugent-f2",
     unitLabel: "Flat 2",
     propertyName: "5 Nugent Terrace",
+    anchorLevel: "unit",
     triggerType: "expiry",
     title: "Term ended — Flat 2, 5 Nugent Terrace",
     whyItMatters:
@@ -335,6 +360,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     unitId: "stanley-f7",
     unitLabel: "Flat 7",
     propertyName: "Stanley House",
+    anchorLevel: "unit",
     triggerType: "expiry",
     title: "Term ended — Flat 7, Stanley House",
     whyItMatters:
@@ -347,6 +373,31 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     preparedDetail: "",
   },
 ];
+
+/** Selects the action cards relevant at a given vantage point. Same objects — no duplication. */
+function selectActionsForScope(
+  cards: ActionCard[],
+  scope: { level: "portfolio" } | { level: "property"; propertyId: string } | { level: "unit"; propertyId: string; unitId: string }
+): ActionCard[] {
+  if (scope.level === "portfolio") return cards;
+  if (scope.level === "property") return cards.filter((c) => c.propertyId === scope.propertyId);
+  // unit: this unit's own actions + property-anchored actions relevant to it
+  return cards.filter((c) => {
+    if (c.propertyId !== scope.propertyId) return false;
+    if (c.anchorLevel === "unit") return c.unitId === scope.unitId;
+    // property-anchored: relevant if relevantUnitIds omitted OR includes this unit
+    return !c.relevantUnitIds || c.relevantUnitIds.includes(scope.unitId);
+  });
+}
+
+/** Vantage-appropriate location label (e.g. "Flat 8" at property; "Property-wide" for property-anchored). */
+function locationLabelForCard(card: ActionCard, level: "portfolio" | "property" | "unit"): string {
+  if (card.anchorLevel === "property") return "Property-wide";
+  // unit-anchored
+  if (level === "portfolio") return `${card.unitLabel} · ${card.propertyName}`;
+  if (level === "property") return card.unitLabel ?? "Unit";
+  return card.unitLabel ?? "This unit";
+}
 
 
 
@@ -1240,8 +1291,17 @@ const Prototype: React.FC = () => {
         <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
 
           {/* Pinned alert briefing at the top of unit chat */}
-          {view === "unit" && selectedUnit && (
-            <PinnedAlertCard unit={selectedUnit} derived={deriveUnit(selectedUnit)} />
+          {view === "unit" && selectedUnit && selectedPropertyId && (
+            <PinnedAlertCard
+              unit={selectedUnit}
+              derived={deriveUnit(selectedUnit)}
+              propertyContextCards={selectActionsForScope(actionCards, {
+                level: "unit",
+                propertyId: selectedPropertyId,
+                unitId: selectedUnit.id,
+              }).filter((c) => c.anchorLevel === "property" && c.approvalState === "pending")}
+              onManageAtProperty={() => goProperty(selectedPropertyId)}
+            />
           )}
 
           {/* Hobson messages render first so the greeting sits at the top */}
@@ -1306,8 +1366,28 @@ const Prototype: React.FC = () => {
           {view === "property" && selectedProperty && (
             <PropertyContent
               property={selectedProperty}
+              propertyActionCards={selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
+              expandedCardId={expandedCardId}
+              setExpandedCardId={setExpandedCardId}
               onOpenUnit={(uid) => goUnit(uid, selectedProperty.id)}
               onPreviewQuestion={askPropertyPreview}
+              onApprove={(id) => {
+                const c = actionCards.find((x) => x.id === id);
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
+                setExpandedCardId(null);
+                if (c) {
+                  setActionToast(`Done — ${c.title} recorded.`);
+                  window.setTimeout(() => setActionToast(null), 3000);
+                }
+              }}
+              onDefer={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "deferred" } : x));
+                setExpandedCardId(null);
+              }}
+              onDismiss={(id) => {
+                setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "dismissed" } : x));
+                setExpandedCardId(null);
+              }}
             />
           )}
 
@@ -1802,34 +1882,78 @@ function answerUnitQuestion(q: string, unit: Unit, derived: UnitDerived): string
 }
 
 /** Persistent "What I've spotted" briefing card pinned at the top of the unit chat. */
-function PinnedAlertCard({ unit, derived }: { unit: Unit; derived: UnitDerived }) {
-  if (!derived.hasAlert) return null;
+function PinnedAlertCard({
+  unit,
+  derived,
+  propertyContextCards = [],
+  onManageAtProperty,
+}: {
+  unit: Unit;
+  derived: UnitDerived;
+  propertyContextCards?: ActionCard[];
+  onManageAtProperty?: () => void;
+}) {
+  if (!derived.hasAlert && propertyContextCards.length === 0) return null;
   return (
     <div
       role="region"
       aria-label={`Alerts for ${unit.label}`}
-      className="sticky top-0 z-10 -mx-5 px-5 py-2.5 bg-white/95 backdrop-blur border-b border-slate-200"
+      className="sticky top-0 z-10 -mx-5 px-5 py-2.5 bg-white/95 backdrop-blur border-b border-slate-200 space-y-2"
     >
-      <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-2.5">
-        <div className="flex items-center gap-1.5 mb-1.5">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="text-amber-700">
-            <path d="M12 2L1 21h22L12 2zm-1 6h2v8h-2V8zm0 9h2v2h-2v-2z" />
-          </svg>
-          <div className="text-[11px] uppercase tracking-wide font-semibold text-amber-800">What I've spotted</div>
+      {derived.hasAlert && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-2.5">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="text-amber-700">
+              <path d="M12 2L1 21h22L12 2zm-1 6h2v8h-2V8zm0 9h2v2h-2v-2z" />
+            </svg>
+            <div className="text-[11px] uppercase tracking-wide font-semibold text-amber-800">What I've spotted</div>
+          </div>
+          <ul className="space-y-1.5">
+            {derived.items.map((it) => (
+              <li key={it.key} className="text-[12px] leading-snug">
+                <div className="flex items-baseline gap-1.5 flex-wrap">
+                  <span className="font-medium text-slate-900">{it.label}</span>
+                  {it.value && <span className="text-slate-700">— {it.value}</span>}
+                  <ConfidenceMark confidence={it.confidence} />
+                </div>
+                {it.note && <div className="text-[11px] text-slate-600">{it.note}</div>}
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="space-y-1.5">
-          {derived.items.map((it) => (
-            <li key={it.key} className="text-[12px] leading-snug">
-              <div className="flex items-baseline gap-1.5 flex-wrap">
-                <span className="font-medium text-slate-900">{it.label}</span>
-                {it.value && <span className="text-slate-700">— {it.value}</span>}
-                <ConfidenceMark confidence={it.confidence} />
-              </div>
-              {it.note && <div className="text-[11px] text-slate-600">{it.note}</div>}
-            </li>
-          ))}
-        </ul>
-      </div>
+      )}
+      {propertyContextCards.length > 0 && (
+        <div className="rounded-lg border border-indigo-200 bg-indigo-50/40 p-2.5">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="text-indigo-700">
+              <path d="M3 3h18v4H3zM3 10h18v4H3zM3 17h18v4H3z" />
+            </svg>
+            <div className="text-[11px] uppercase tracking-wide font-semibold text-indigo-800">Property-wide (affects this unit)</div>
+            <span className="text-[10px] px-1.5 py-0.5 rounded border border-slate-200 bg-white text-slate-500 font-medium ml-auto">
+              Read-only here
+            </span>
+          </div>
+          <ul className="space-y-1.5">
+            {propertyContextCards.map((c) => (
+              <li key={c.id} className="text-[12px] leading-snug">
+                <div className="flex items-baseline gap-1.5 flex-wrap">
+                  <span className="font-medium text-slate-900">{c.title.replace(/ —.*$/, "")}</span>
+                  <ConfidenceMark confidence={c.confidence} />
+                </div>
+                <div className="text-[11px] text-slate-600">{c.whyItMatters}</div>
+              </li>
+            ))}
+          </ul>
+          {onManageAtProperty && (
+            <button
+              onClick={onManageAtProperty}
+              className="mt-1.5 text-[11px] text-indigo-700 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded"
+            >
+              Manage at property level →
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
@@ -1949,12 +2073,24 @@ function UnitTile({
 
 function PropertyContent({
   property,
+  propertyActionCards = [],
+  expandedCardId,
+  setExpandedCardId,
   onOpenUnit,
   onPreviewQuestion,
+  onApprove,
+  onDefer,
+  onDismiss,
 }: {
   property: Property;
+  propertyActionCards?: ActionCard[];
+  expandedCardId?: string | null;
+  setExpandedCardId?: (id: string | null) => void;
   onOpenUnit: (id: string) => void;
   onPreviewQuestion: (q: string) => void;
+  onApprove?: (id: string) => void;
+  onDefer?: (id: string) => void;
+  onDismiss?: (id: string) => void;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
@@ -2069,11 +2205,25 @@ function PropertyContent({
         {counts.alerts > 0 && <> · <span className="text-amber-700 font-medium">{counts.alerts} with alerts</span></>}
       </div>
 
+      {propertyActionCards.filter((c) => c.approvalState === "pending").length > 0 && (
+        <PropertyActions
+          cards={propertyActionCards.filter((c) => c.approvalState === "pending")}
+          propertyName={property.name}
+          expandedCardId={expandedCardId ?? null}
+          setExpandedCardId={(id) => setExpandedCardId && setExpandedCardId(id)}
+          onOpenUnit={(uid) => onOpenUnit(uid)}
+          onApprove={(id) => onApprove && onApprove(id)}
+          onDefer={(id) => onDefer && onDefer(id)}
+          onDismiss={(id) => onDismiss && onDismiss(id)}
+        />
+      )}
+
       <div className="text-[10.5px] text-slate-500 flex items-center gap-3 flex-wrap">
         <span className="inline-flex items-center gap-1">
           <svg width="10" height="10" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
             <circle cx="12" cy="12" r="10" fill="currentColor" />
             <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+
           </svg>
           Confirmed = known fact
         </span>
@@ -2890,10 +3040,11 @@ function PortfolioBriefing({
             <ActionCardItem
               key={c.id}
               card={c}
+              level="portfolio"
               expanded={expandedCardId === c.id}
               onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
               onHover={(on) => onHoverCard(on ? c.propertyId : null)}
-              onOpenUnit={() => onOpenUnit(c.propertyId, c.unitId)}
+              onOpenUnit={c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!) : undefined}
               onApprove={() => onApprove(c.id)}
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
@@ -2920,8 +3071,63 @@ function PortfolioBriefing({
   );
 }
 
+/* ---------- Property-level actions (same objects as portfolio briefing) ---------- */
+
+function PropertyActions({
+  cards,
+  propertyName,
+  expandedCardId,
+  setExpandedCardId,
+  onOpenUnit,
+  onApprove,
+  onDefer,
+  onDismiss,
+}: {
+  cards: ActionCard[];
+  propertyName: string;
+  expandedCardId: string | null;
+  setExpandedCardId: (id: string | null) => void;
+  onOpenUnit: (unitId: string) => void;
+  onApprove: (id: string) => void;
+  onDefer: (id: string) => void;
+  onDismiss: (id: string) => void;
+}) {
+  const groups: { key: Urgency; cards: ActionCard[] }[] = (["now", "week", "watch"] as Urgency[])
+    .map((u) => ({ key: u, cards: cards.filter((c) => c.urgency === u) }))
+    .filter((g) => g.cards.length > 0);
+  return (
+    <section aria-label={`Actions for ${propertyName}`} className="space-y-2">
+      <div className="flex items-center justify-between">
+        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">On this building's desk · {cards.length}</div>
+      </div>
+      {groups.map((g) => (
+        <div key={g.key} className="space-y-1.5">
+          <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-400">
+            {URGENCY_LABEL[g.key]} · {g.cards.length}
+          </div>
+          {g.cards.map((c) => (
+            <ActionCardItem
+              key={c.id}
+              card={c}
+              level="property"
+              expanded={expandedCardId === c.id}
+              onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+              onHover={() => { /* no map hover at property level */ }}
+              onOpenUnit={c.unitId ? () => onOpenUnit(c.unitId!) : undefined}
+              onApprove={() => onApprove(c.id)}
+              onDefer={() => onDefer(c.id)}
+              onDismiss={() => onDismiss(c.id)}
+            />
+          ))}
+        </div>
+      ))}
+    </section>
+  );
+}
+
 function ActionCardItem({
   card,
+  level,
   expanded,
   onToggleExpand,
   onHover,
@@ -2929,25 +3135,49 @@ function ActionCardItem({
   onApprove,
   onDefer,
   onDismiss,
+  onManageAtProperty,
 }: {
   card: ActionCard;
+  level: "portfolio" | "property" | "unit";
   expanded: boolean;
   onToggleExpand: () => void;
   onHover: (on: boolean) => void;
-  onOpenUnit: () => void;
+  onOpenUnit?: () => void;
   onApprove: () => void;
   onDefer: () => void;
   onDismiss: () => void;
+  onManageAtProperty?: () => void;
 }) {
   const isInferred = card.confidence === "inferred";
+  // Property-anchored shown inside a unit = read-only context
+  const readOnly = level === "unit" && card.anchorLevel === "property";
+  const locationLabel = locationLabelForCard(card, level);
+  const anchorChip =
+    card.anchorLevel === "property"
+      ? { label: "Property-anchored", cls: "bg-indigo-50 text-indigo-700 border-indigo-200" }
+      : { label: "Unit-anchored", cls: "bg-slate-50 text-slate-600 border-slate-200" };
   return (
     <article
       onMouseEnter={() => onHover(true)}
       onMouseLeave={() => onHover(false)}
       className={`rounded-xl border bg-white p-3 transition ${
-        isInferred ? "border-amber-200" : "border-slate-200 hover:border-[#7C3AED]/40"
+        readOnly
+          ? "border-indigo-200 bg-indigo-50/30"
+          : isInferred ? "border-amber-200" : "border-slate-200 hover:border-[#7C3AED]/40"
       }`}
     >
+      <div className="flex flex-wrap items-center gap-1 mb-1.5">
+        <span className={`text-[10px] px-1.5 py-0.5 rounded border font-medium ${anchorChip.cls}`}>
+          {locationLabel}
+        </span>
+        <span className="text-[10px] text-slate-400">·</span>
+        <span className="text-[10px] uppercase tracking-wide text-slate-400 font-medium">{anchorChip.label}</span>
+        {readOnly && (
+          <span className="text-[10px] px-1.5 py-0.5 rounded border border-slate-200 bg-white text-slate-500 font-medium ml-auto">
+            Read-only here
+          </span>
+        )}
+      </div>
       <header className="flex items-start gap-2 mb-1.5">
         <span aria-hidden className="text-base leading-none mt-0.5">{TRIGGER_ICON[card.triggerType]}</span>
         <div className="flex-1 min-w-0">
@@ -2959,7 +3189,16 @@ function ActionCardItem({
       <p className="text-[12.5px] text-slate-700 leading-relaxed mb-1.5">{card.whyItMatters}</p>
       <p className="text-[12px] text-slate-500 leading-relaxed mb-2 italic">{card.hobsonPrepared}</p>
 
-      {!expanded && (
+      {readOnly ? (
+        <div className="flex flex-wrap items-center gap-1.5">
+          <button
+            onClick={onManageAtProperty}
+            className="text-xs px-3 py-1.5 rounded-full bg-white text-indigo-700 border border-indigo-300 hover:bg-indigo-50 transition focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          >
+            Manage at {card.propertyName} level →
+          </button>
+        </div>
+      ) : !expanded && (
         <div className="flex flex-wrap items-center gap-1.5">
           {!isInferred ? (
             <button
@@ -2968,7 +3207,7 @@ function ActionCardItem({
             >
               {card.proposedAction}
             </button>
-          ) : (
+          ) : onOpenUnit ? (
             <>
               <button
                 onClick={onOpenUnit}
@@ -2983,8 +3222,15 @@ function ActionCardItem({
                 Flag for review
               </button>
             </>
+          ) : (
+            <button
+              onClick={onDefer}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Flag for review
+            </button>
           )}
-          {!isInferred && (
+          {!isInferred && onOpenUnit && (
             <button
               onClick={onOpenUnit}
               className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
@@ -3007,7 +3253,7 @@ function ActionCardItem({
         </div>
       )}
 
-      {expanded && !isInferred && (
+      {!readOnly && expanded && !isInferred && (
         <div className="mt-2 rounded-lg border border-[#DDD6FE] bg-[#F5F3FF] p-2.5 space-y-2">
           <div>
             <div className="text-[10px] uppercase tracking-wide text-[#5B21B6] font-semibold mb-1">What I'll do</div>
