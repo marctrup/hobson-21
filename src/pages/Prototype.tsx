@@ -1470,7 +1470,7 @@ const Prototype: React.FC = () => {
             </div>
           )}
 
-          {view === "portfolio" && portfolioMode === "first" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
+          {view === "portfolio" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
             <div className="mb-2 flex flex-col items-end gap-1.5">
               <span className="text-[11px] text-slate-500 flex items-center gap-1">
                 Tap to reply <span aria-hidden>↓</span>
@@ -1488,7 +1488,7 @@ const Prototype: React.FC = () => {
               </div>
             </div>
           )}
-          {view === "portfolio" && portfolioMode === "first" && portfolioChip && (
+          {view === "portfolio" && portfolioChip && (
             <div className="mb-2 flex flex-col items-end gap-1.5">
               <span className="text-[11px] text-slate-500 flex items-center gap-1">
                 Tap to reply <span aria-hidden>↓</span>
@@ -1594,7 +1594,7 @@ const Prototype: React.FC = () => {
               const p = PROPERTIES.find((x) => x.id === id);
               if (!p) return;
               // If single-unit property in returning mode, drill straight to unit
-              if (portfolioMode === "returning" && p.units.length === 1) {
+              if (p.units.length === 1) {
                 goUnit(p.units[0].id, p.id);
               } else {
                 goProperty(id);
@@ -1626,7 +1626,7 @@ const Prototype: React.FC = () => {
             onOpenProperty={(id) => {
               const p = PROPERTIES.find((x) => x.id === id);
               if (!p) return;
-              if (portfolioMode === "returning" && p.units.length === 1) {
+              if (p.units.length === 1) {
                 goUnit(p.units[0].id, p.id);
               } else {
                 goProperty(id);
