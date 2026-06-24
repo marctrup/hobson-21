@@ -3409,6 +3409,7 @@ function PropertyActions({
   onApprove,
   onDefer,
   onDismiss,
+  onPerform,
 }: {
   cards: ActionCard[];
   propertyName: string;
@@ -3419,6 +3420,7 @@ function PropertyActions({
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
+  onPerform?: (id: string) => void;
 }) {
   const sortCarried = (arr: ActionCard[]) =>
     carriedCardId
