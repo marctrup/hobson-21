@@ -492,14 +492,42 @@ const Prototype: React.FC = () => {
     setView("property");
     setSelectedPropertyId(id);
     setSelectedUnitId(null);
+    setOwl("talking");
+    setShowUnitPicker(false);
+    setShowPropertyList(false);
+    setPortfolioChip(null);
+    setSearchQuery("");
+    setMessages([]);
+    const greet = `This is ${p.name}, ${p.area} — ${p.units.length} units. I can take you into any one of them. Which would you like to open?`;
+    setTyping(true);
+    const delay = reduced ? 200 : 500;
+    window.setTimeout(() => {
+      setTyping(false);
+      if (reduced) {
+        setMessages([{ id: `prop-${id}`, role: "hobson", text: greet }]);
+      } else {
+        streamHobsonMessage(greet, () => {});
+      }
+    }, delay);
+  };
+
+  const askPropertyPreview = (q: string) => {
+    const p = selectedProperty;
+    if (!p) return;
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
+    setTyping(true);
     setOwl("default");
-    setMessages([
-      {
-        id: `prop-${id}`,
-        role: "hobson",
-        text: `${p.name} — ${p.units.length} units. I can answer questions about each one today.`,
-      },
-    ]);
+    const reply = `I can't answer for the whole building yet — I build that up from each unit first. Let's open one and I'll show you what I can already do.`;
+    const delay = reduced ? 200 : 700;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      if (reduced) {
+        setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: reply }]);
+      } else {
+        streamHobsonMessage(reply, () => {});
+      }
+    }, delay);
   };
 
   const goUnit = (unitId: string, propertyId?: string) => {
