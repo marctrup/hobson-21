@@ -1486,7 +1486,9 @@ function PropertyContent({
   return (
     <div className="space-y-3">
       <div className="text-[12px] text-slate-600">
-        {property.units.length} units · {letCount} Let · {vacantCount} Vacant
+        {property.units.length} units · {counts.let} Let · {counts.vacant} Vacant
+        {counts.needsReview > 0 && <> · <span className="text-amber-700 font-medium">{counts.needsReview} Need review</span></>}
+        {counts.endingSoon > 0 && <> · {counts.endingSoon} Ending soon</>}
       </div>
 
       {property.units.length > 20 && (
@@ -1516,8 +1518,10 @@ function PropertyContent({
 
       <div className="flex flex-wrap gap-1.5">
         {quickBtn("all", `All (${property.units.length})`)}
-        {quickBtn("let", `Let (${letCount})`)}
-        {quickBtn("vacant", `Vacant (${vacantCount})`)}
+        {quickBtn("let", `Let (${counts.let})`)}
+        {quickBtn("vacant", `Vacant (${counts.vacant})`)}
+        {counts.endingSoon > 0 && quickBtn("ending_soon", `Ending soon (${counts.endingSoon})`)}
+        {counts.needsReview > 0 && quickBtn("needs_review", `Needs review (${counts.needsReview})`)}
         {hasShops && quickBtn("shops", "Shops")}
       </div>
 
