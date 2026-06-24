@@ -1555,17 +1555,37 @@ function PropertyContent({
                     {group.units.map((u) => {
                       const tabIx = tileIndex === 0 ? 0 : -1;
                       tileIndex += 1;
-                      const dot = u.status === "Let" ? "bg-emerald-500" : "bg-amber-400";
+                      const d = derivedByUnit.get(u.id)!;
+                      const dot =
+                        d.state === "vacant_confirmed" ? "bg-slate-400"
+                        : "bg-emerald-500";
+                      const flag =
+                        d.state === "let_ending_soon" ? { label: "Ending soon", short: "Soon" }
+                        : d.state === "let_holding_over" ? { label: "Term ended · unconfirmed", short: "Review" }
+                        : null;
+                      const tip = unitTooltip(u, d);
+                      const occupancyLabel = d.state === "vacant_confirmed" ? "Vacant (confirmed)" : "Let";
                       return (
                         <button
                           key={u.id}
                           data-uchip
                           tabIndex={tabIx}
                           onClick={() => onOpenUnit(u.id)}
-                          title={u.tenant ? `${u.label} · ${u.tenant}` : u.label}
-                          aria-label={`${u.label}, ${u.status}. Open unit.`}
+                          title={tip}
+                          aria-label={`${u.label}, ${occupancyLabel}${flag ? ", " + flag.label : ""}. Open unit.`}
                           className="relative flex flex-col items-center justify-center gap-1 px-2 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
                         >
+                          {flag && (
+                            <span
+                              aria-hidden
+                              className="absolute top-1 right-1 inline-flex items-center gap-0.5 px-1 py-[1px] rounded text-[8px] font-semibold uppercase tracking-wide bg-amber-100 text-amber-800 border border-amber-300"
+                            >
+                              <svg width="7" height="7" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                                <path d="M12 2L1 21h22L12 2zm0 6l7.5 13h-15L12 8zm-1 4v4h2v-4h-2zm0 5v2h2v-2h-2z" />
+                              </svg>
+                              {flag.short}
+                            </span>
+                          )}
                           <span className="truncate max-w-full">{u.label}</span>
                           <span className={`w-1.5 h-1.5 rounded-full ${dot}`} aria-hidden />
                         </button>
