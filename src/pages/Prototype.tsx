@@ -1289,7 +1289,7 @@ const Prototype: React.FC = () => {
             <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="white" />
           </svg>
         </div>
-        <RailItem icon="pin" label="Portfolio" active={!showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
+        <RailItem icon="pin" label="Portfolio" active={view !== "onboarding" && !showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
         <RailItem icon="doc" label="Documents" active={showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />
         <RailItem icon="clock" label={"What I've done"} active={showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />
         <RailItem icon="chat" label="Chat History" />
