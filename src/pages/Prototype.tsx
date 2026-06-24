@@ -1421,7 +1421,7 @@ const Prototype: React.FC = () => {
               propertyActionCards={selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
-              onOpenUnit={(uid) => goUnit(uid, selectedProperty.id)}
+              onOpenUnit={(uid, cardId) => goUnit(uid, selectedProperty.id, cardId)}
               onPreviewQuestion={askPropertyPreview}
               onApprove={(id) => {
                 const c = actionCards.find((x) => x.id === id);
