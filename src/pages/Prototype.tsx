@@ -785,35 +785,13 @@ const Prototype: React.FC = () => {
   const searchRef = useRef<HTMLInputElement | null>(null);
 
   const reduced = prefersReducedMotion();
-
-  // Mode detection on mount (query param or stored flag)
+  // Staged-tour reset: clear any legacy hasVisited flag so refreshes always land on Meet Hobson.
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const returning = params.get("returning");
-    if (returning === "1") {
-      localStorage.setItem("hobsonPrototype.hasVisited", "1");
-      setHasVisited(true);
-      setPortfolioMode("returning");
-      setView("portfolio");
-      setMessages([]);
-      setOwl("default");
-      return;
-    }
-    if (returning === "0") {
+    try {
       localStorage.removeItem("hobsonPrototype.hasVisited");
-      setHasVisited(false);
-      return;
-    }
-    const visited = localStorage.getItem("hobsonPrototype.hasVisited") === "1";
-    setHasVisited(visited);
-    if (visited) {
-      setPortfolioMode("returning");
-      setView("portfolio");
-      setMessages([]);
-      setOwl("default");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    } catch {}
   }, []);
+
 
   const selectedProperty = useMemo(
     () => PROPERTIES.find((p) => p.id === selectedPropertyId) || null,
