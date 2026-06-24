@@ -1430,7 +1430,170 @@ function unitSortKey(label: string): number {
   return m ? parseInt(m[1], 10) : 999;
 }
 
-function PropertyContent({
+/** Confidence marker — solid filled tick for confirmed, dashed/hollow ring with "?" for inferred. */
+function ConfidenceMark({ confidence }: { confidence: Confidence }) {
+  if (confidence === "confirmed") {
+    return (
+      <span
+        className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-emerald-700"
+        aria-label="Confirmed"
+      >
+        <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden className="text-emerald-600">
+          <circle cx="12" cy="12" r="10" fill="currentColor" />
+          <path d="M7 12.5l3 3 7-7" stroke="white" strokeWidth="2.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+        Confirmed
+      </span>
+    );
+  }
+  return (
+    <span
+      className="inline-flex items-center gap-1 text-[10px] font-semibold uppercase tracking-wide text-amber-800"
+      aria-label="Inferred — needs checking"
+    >
+      <svg width="11" height="11" viewBox="0 0 24 24" aria-hidden className="text-amber-700">
+        <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="3 2" />
+        <text x="12" y="16" textAnchor="middle" fontSize="11" fontWeight="700" fill="currentColor">?</text>
+      </svg>
+      Inferred · needs checking
+    </span>
+  );
+}
+
+function UnitDetailPanel({ unit, derived }: { unit: Unit; derived: UnitDerived }) {
+  return (
+    <div role="dialog" aria-label={`${unit.label} status`} className="text-left">
+      <div className="text-[12px] font-semibold text-slate-900 mb-1.5">{unit.label}</div>
+      {derived.items.length === 0 ? (
+        <div className="text-[11px] text-slate-500">Let · nothing pending</div>
+      ) : (
+        <ul className="space-y-1.5">
+          {derived.items.map((it) => (
+            <li key={it.key} className="text-[11px] leading-snug">
+              <div className="flex items-baseline gap-1.5 flex-wrap">
+                <span className="font-medium text-slate-800">{it.label}</span>
+                {it.value && <span className="text-slate-600">— {it.value}</span>}
+              </div>
+              <div className="mt-0.5"><ConfidenceMark confidence={it.confidence} /></div>
+              {it.note && <div className="mt-0.5 text-[10.5px] text-slate-500">{it.note}</div>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+function UnitTile({
+  unit,
+  derived,
+  tabIx,
+  onOpen,
+  scrollRef,
+}: {
+  unit: Unit;
+  derived: UnitDerived;
+  tabIx: 0 | -1;
+  onOpen: () => void;
+  scrollRef: React.RefObject<HTMLDivElement>;
+}) {
+  const [open, setOpen] = useState(false);
+  const [placement, setPlacement] = useState<"below" | "above">("below");
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+  const popRef = useRef<HTMLDivElement | null>(null);
+
+  // Decide whether to flip to above when opening
+  useEffect(() => {
+    if (!open) return;
+    const btn = btnRef.current;
+    const scroller = scrollRef.current;
+    if (!btn || !scroller) return;
+    const br = btn.getBoundingClientRect();
+    const sr = scroller.getBoundingClientRect();
+    const spaceBelow = sr.bottom - br.bottom;
+    const spaceAbove = br.top - sr.top;
+    setPlacement(spaceBelow < 160 && spaceAbove > spaceBelow ? "above" : "below");
+  }, [open, scrollRef]);
+
+  // Close on outside click
+  useEffect(() => {
+    if (!open) return;
+    const onDoc = (e: MouseEvent) => {
+      const t = e.target as Node;
+      if (btnRef.current?.contains(t) || popRef.current?.contains(t)) return;
+      setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDoc);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDoc);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
+
+  const occupancyLabel = derived.isVacantConfirmed ? "Vacant (confirmed)" : "Let";
+  const alertSummary = derived.hasAlert
+    ? derived.items.map((i) => `${i.label}${i.value ? " " + i.value : ""} (${i.confidence})`).join("; ")
+    : "nothing pending";
+
+  return (
+    <div
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+      onFocus={() => setOpen(true)}
+      onBlur={(e) => {
+        // close if focus leaves the wrapper entirely
+        if (!e.currentTarget.contains(e.relatedTarget as Node)) setOpen(false);
+      }}
+    >
+      <button
+        ref={btnRef}
+        data-uchip
+        tabIndex={tabIx}
+        onClick={(e) => {
+          // Single click on a flagged tile reveals the panel (mobile/keyboard);
+          // double-click or Enter still opens the unit. To keep behaviour simple,
+          // treat click as "open unit" — panel is shown on hover/focus.
+          void e;
+          onOpen();
+        }}
+        aria-haspopup="dialog"
+        aria-expanded={open}
+        aria-label={`${unit.label}, ${occupancyLabel}. ${alertSummary}. Open unit.`}
+        className="relative w-full flex items-center justify-center px-2 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
+      >
+        {derived.hasAlert && (
+          <span
+            aria-hidden
+            className="absolute top-1 right-1 inline-flex items-center justify-center w-3.5 h-3.5 rounded-full bg-amber-100 border border-amber-400 text-amber-700"
+            title="Has pending items — hover to view"
+          >
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L1 21h22L12 2zm0 6l7.5 13h-15L12 8zm-1 4v4h2v-4h-2zm0 5v2h2v-2h-2z" />
+            </svg>
+          </span>
+        )}
+        <span className="truncate max-w-full">{unit.label}</span>
+      </button>
+
+      {open && (
+        <div
+          ref={popRef}
+          role="tooltip"
+          className={`absolute left-1/2 -translate-x-1/2 z-20 w-56 p-2.5 rounded-md border border-slate-200 bg-white shadow-lg ${
+            placement === "above" ? "bottom-full mb-1.5" : "top-full mt-1.5"
+          }`}
+        >
+          <UnitDetailPanel unit={unit} derived={derived} />
+        </div>
+      )}
+    </div>
+  );
+}
   property,
   onOpenUnit,
   onPreviewQuestion,
