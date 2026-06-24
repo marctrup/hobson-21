@@ -1484,6 +1484,124 @@ function UnitDetailPanel({ unit, derived }: { unit: Unit; derived: UnitDerived }
   );
 }
 
+/** Spoken lines Hobson uses when opening a unit — preserves confirmed/inferred wording. */
+function buildUnitOpeningLines(unit: Unit, derived: UnitDerived, propertyName: string): string[] {
+  const where = `${unit.label}, ${propertyName}`;
+  if (!derived.hasAlert) {
+    return [`Here's ${where} — nothing pending right now. What would you like to know?`];
+  }
+  const lines: string[] = [`Here's ${where}. A couple of things stood out.`];
+  const confirmed = derived.items.filter((i) => i.confidence === "confirmed");
+  const inferred = derived.items.filter((i) => i.confidence === "inferred");
+  confirmed.forEach((it) => {
+    if (it.key === "vacant") {
+      lines.push(`This unit is vacant — the tenancy is confirmed ended, so it's available to let.`);
+    } else if (it.key === "break") {
+      lines.push(`There's a break coming on ${it.value}.`);
+    } else if (it.key === "review") {
+      lines.push(`A rent review is due ${it.value}.`);
+    }
+  });
+  inferred.forEach((it) => {
+    if (it.key === "ending-term") {
+      lines.push(`The contractual ${it.value}, but I can't see a confirmed ending — so I'm treating this as still let, and rent may still be due. Worth checking whether they've actually vacated.`);
+    } else if (it.key === "ending-chain") {
+      lines.push(`I've spotted a ${it.value}, but that's a signal — not a confirmed ending. I'm still treating this as let; rent may still be due. Worth checking.`);
+    }
+  });
+  lines.push(`Want me to dig into any of these?`);
+  return lines;
+}
+
+/** Starter chips driven by the alert items; falls back to generic prompts when nothing's pending. */
+function buildUnitStarters(unit: Unit, derived: UnitDerived): string[] {
+  if (!derived.hasAlert) {
+    return unit.status === "Let"
+      ? ["When does the lease expire?", "Any compliance issues?", "Summarise this unit"]
+      : ["When did it become vacant?", "Who was the last tenant?", "Any compliance issues?"];
+  }
+  const chips: string[] = [];
+  if (derived.items.some((i) => i.key === "ending-term" || i.key === "ending-chain")) {
+    chips.push("Why do you think the tenancy is ending?");
+    chips.push("Is rent still due?");
+  }
+  if (derived.items.some((i) => i.key === "break")) chips.push("When's the break?");
+  if (derived.items.some((i) => i.key === "review")) chips.push("When's the review?");
+  if (derived.items.some((i) => i.key === "vacant")) {
+    chips.push("When did it become vacant?");
+    chips.push("Who was the last tenant?");
+  }
+  chips.push("Summarise this unit");
+  return chips;
+}
+
+/** Placeholder answer that preserves the confirmed/inferred distinction. */
+function answerUnitQuestion(q: string, unit: Unit, derived: UnitDerived): string {
+  const lo = q.toLowerCase();
+  const inferredEnding = derived.items.find((i) => i.key === "ending-term" || i.key === "ending-chain");
+  const breakItem = derived.items.find((i) => i.key === "break");
+  const reviewItem = derived.items.find((i) => i.key === "review");
+  if (lo.includes("why") && lo.includes("ending") && inferredEnding) {
+    return `I haven't confirmed it — it's a signal, not a fact. ${inferredEnding.value ? inferredEnding.value.charAt(0).toUpperCase() + inferredEnding.value.slice(1) + ", " : ""}and I can't see an End-Tenancy, replacement chain or reversionary lease in place. Until one of those exists I'm treating this as still let. Worth a human eye.`;
+  }
+  if (lo.includes("rent") && inferredEnding) {
+    return `I can't say rent has stopped. Because the ending isn't confirmed, the contractual rent may still be due — the term-end date alone doesn't switch it off. Please check before adjusting any ledger.`;
+  }
+  if (lo.includes("break") && breakItem) {
+    return `The next break is ${breakItem.value}. That one's confirmed from the lease.`;
+  }
+  if (lo.includes("review") && reviewItem) {
+    return `The next rent review is ${reviewItem.value}. That's confirmed from the lease.`;
+  }
+  if (lo.includes("vacant")) {
+    return derived.isVacantConfirmed
+      ? `Confirmed vacant — the tenancy has a confirmed ending, so it's available to let.`
+      : `I don't have a confirmed vacancy for this unit. ${inferredEnding ? "There is an inferred ending signal — needs checking — but until it's confirmed I treat the unit as still let." : "I'd treat it as still let unless there's evidence otherwise."}`;
+  }
+  if (lo.includes("summar")) {
+    const bits = derived.items.map((i) => `${i.label}${i.value ? " (" + i.value + ")" : ""} — ${i.confidence}`);
+    return bits.length
+      ? `${unit.label}: ${bits.join("; ")}. I'll keep confirmed and inferred items separate so you can act on the confirmed ones and check the inferred ones.`
+      : `${unit.label}: nothing pending right now.`;
+  }
+  return `I'll learn the real answer once your documents are uploaded. For now, the confirmed and inferred items above are what I'd act on.`;
+}
+
+/** Persistent "What I've spotted" briefing card pinned at the top of the unit chat. */
+function PinnedAlertCard({ unit, derived }: { unit: Unit; derived: UnitDerived }) {
+  if (!derived.hasAlert) return null;
+  return (
+    <div
+      role="region"
+      aria-label={`Alerts for ${unit.label}`}
+      className="sticky top-0 z-10 -mx-5 px-5 py-2.5 bg-white/95 backdrop-blur border-b border-slate-200"
+    >
+      <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-2.5">
+        <div className="flex items-center gap-1.5 mb-1.5">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="text-amber-700">
+            <path d="M12 2L1 21h22L12 2zm-1 6h2v8h-2V8zm0 9h2v2h-2v-2z" />
+          </svg>
+          <div className="text-[11px] uppercase tracking-wide font-semibold text-amber-800">What I've spotted</div>
+        </div>
+        <ul className="space-y-1.5">
+          {derived.items.map((it) => (
+            <li key={it.key} className="text-[12px] leading-snug">
+              <div className="flex items-baseline gap-1.5 flex-wrap">
+                <span className="font-medium text-slate-900">{it.label}</span>
+                {it.value && <span className="text-slate-700">— {it.value}</span>}
+                <ConfidenceMark confidence={it.confidence} />
+              </div>
+              {it.note && <div className="text-[11px] text-slate-600">{it.note}</div>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+
+
 function UnitTile({
   unit,
   derived,
