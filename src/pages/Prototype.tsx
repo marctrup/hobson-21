@@ -21,10 +21,14 @@ type OwlState = keyof typeof OWLS;
 
 /* ---------------- Data ---------------- */
 
+type ConfirmedEnding = "none" | "end_tenancy" | "replacement_chain" | "reversionary_started";
+
 type Unit = {
   id: string;
   label: string;
-  status: "Let" | "Vacant";
+  status: "Let" | "Vacant"; // Let = occupied; Vacant = confirmed ended (re-lettable)
+  termEndDate?: string;     // ISO date of current term end (optional)
+  confirmedEnding?: ConfirmedEnding; // proof a tenancy has ended
   tenant?: string;
   rent?: string;
   leaseTo?: string;
@@ -35,6 +39,56 @@ type Unit = {
   lastTenant?: string;
   lastRent?: string;
 };
+
+/** Derived tile state — keeps occupancy and term status as two independent facts. */
+type UnitDerived = {
+  state: "let_clear" | "let_ending_soon" | "let_holding_over" | "vacant_confirmed";
+  daysToTermEnd: number | null;
+  termEndLabel: string | null;
+};
+
+const TODAY = new Date("2026-06-24T00:00:00Z");
+const ENDING_SOON_WINDOW_DAYS = 90;
+
+function formatUkDate(iso?: string): string | null {
+  if (!iso) return null;
+  const d = new Date(iso + "T00:00:00Z");
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+}
+
+function deriveUnit(u: Unit): UnitDerived {
+  const confirmed = u.confirmedEnding && u.confirmedEnding !== "none";
+  const isVacantConfirmed = u.status === "Vacant" || confirmed;
+  const termEndLabel = formatUkDate(u.termEndDate);
+  let daysToTermEnd: number | null = null;
+  if (u.termEndDate) {
+    const t = new Date(u.termEndDate + "T00:00:00Z").getTime();
+    daysToTermEnd = Math.round((t - TODAY.getTime()) / 86400000);
+  }
+  if (isVacantConfirmed) return { state: "vacant_confirmed", daysToTermEnd, termEndLabel };
+  if (daysToTermEnd !== null && daysToTermEnd < 0) {
+    return { state: "let_holding_over", daysToTermEnd, termEndLabel };
+  }
+  if (daysToTermEnd !== null && daysToTermEnd <= ENDING_SOON_WINDOW_DAYS) {
+    return { state: "let_ending_soon", daysToTermEnd, termEndLabel };
+  }
+  return { state: "let_clear", daysToTermEnd, termEndLabel };
+}
+
+function unitTooltip(u: Unit, d: UnitDerived): string {
+  switch (d.state) {
+    case "vacant_confirmed":
+      return "Vacant · tenancy confirmed ended — available to let";
+    case "let_holding_over":
+      return `Let · term ended ${d.termEndLabel ?? ""} — not confirmed vacated. Rent may still be due. Needs review.`;
+    case "let_ending_soon":
+      return `Let · term ends in ${d.daysToTermEnd} day${d.daysToTermEnd === 1 ? "" : "s"} — break/expiry approaching`;
+    case "let_clear":
+    default:
+      return d.termEndLabel ? `Let · term to ${d.termEndLabel}` : "Let";
+  }
+}
 
 type Property = {
   id: string;
@@ -58,18 +112,18 @@ const PROPERTIES: Property[] = [
     lat: 51.583,
     lng: -0.197,
     units: [
-      { id: "stanley-f1",  label: "Flat 1",  status: "Let" },
-      { id: "stanley-f2",  label: "Flat 2",  status: "Let" },
-      { id: "stanley-f3",  label: "Flat 3",  status: "Let" },
-      { id: "stanley-f4",  label: "Flat 4",  status: "Let" },
-      { id: "stanley-f5",  label: "Flat 5",  status: "Let" },
-      { id: "stanley-f6",  label: "Flat 6",  status: "Let" },
-      { id: "stanley-f7",  label: "Flat 7",  status: "Let" },
-      { id: "stanley-f8",  label: "Flat 8",  status: "Vacant" },
-      { id: "stanley-f9",  label: "Flat 9",  status: "Let" },
-      { id: "stanley-f10", label: "Flat 10", status: "Let" },
-      { id: "stanley-f11", label: "Flat 11", status: "Let" },
-      { id: "stanley-shop", label: "Shop",   status: "Vacant" },
+      { id: "stanley-f1",  label: "Flat 1",  status: "Let", termEndDate: "2027-03-24" },
+      { id: "stanley-f2",  label: "Flat 2",  status: "Let", termEndDate: "2026-09-15" },
+      { id: "stanley-f3",  label: "Flat 3",  status: "Let", termEndDate: "2026-03-24", confirmedEnding: "none" },
+      { id: "stanley-f4",  label: "Flat 4",  status: "Let", termEndDate: "2028-01-10" },
+      { id: "stanley-f5",  label: "Flat 5",  status: "Let", termEndDate: "2026-08-30" },
+      { id: "stanley-f6",  label: "Flat 6",  status: "Let", termEndDate: "2027-11-02" },
+      { id: "stanley-f7",  label: "Flat 7",  status: "Let", termEndDate: "2025-12-01", confirmedEnding: "none" },
+      { id: "stanley-f8",  label: "Flat 8",  status: "Vacant", confirmedEnding: "end_tenancy" },
+      { id: "stanley-f9",  label: "Flat 9",  status: "Let", termEndDate: "2027-05-20" },
+      { id: "stanley-f10", label: "Flat 10", status: "Let", termEndDate: "2028-04-04" },
+      { id: "stanley-f11", label: "Flat 11", status: "Let", termEndDate: "2027-02-18" },
+      { id: "stanley-shop", label: "Shop",   status: "Vacant", confirmedEnding: "end_tenancy" },
     ],
   },
   {
@@ -81,10 +135,10 @@ const PROPERTIES: Property[] = [
     lat: 51.5325,
     lng: -0.1787,
     units: [
-      { id: "nugent-f1",   label: "Flat 1", status: "Let" },
-      { id: "nugent-f2",   label: "Flat 2", status: "Let" },
-      { id: "nugent-f3",   label: "Flat 3", status: "Vacant" },
-      { id: "nugent-shop", label: "Shop",   status: "Let" },
+      { id: "nugent-f1",   label: "Flat 1", status: "Let", termEndDate: "2027-07-10" },
+      { id: "nugent-f2",   label: "Flat 2", status: "Let", termEndDate: "2026-05-30", confirmedEnding: "none" },
+      { id: "nugent-f3",   label: "Flat 3", status: "Vacant", confirmedEnding: "end_tenancy" },
+      { id: "nugent-shop", label: "Shop",   status: "Let", termEndDate: "2026-08-20" },
     ],
   },
   {
@@ -1304,7 +1358,7 @@ function PortfolioContent({
   );
 }
 
-type UnitFilter = "all" | "let" | "vacant" | "shops";
+type UnitFilter = "all" | "let" | "vacant" | "ending_soon" | "needs_review" | "shops";
 
 function unitSortKey(label: string): number {
   const lo = label.toLowerCase();
@@ -1328,27 +1382,48 @@ function PropertyContent({
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const gridWrapRef = useRef<HTMLDivElement | null>(null);
 
-  const letCount = property.units.filter((u) => u.status === "Let").length;
-  const vacantCount = property.units.length - letCount;
+  const derivedByUnit = useMemo(() => {
+    const map = new Map<string, UnitDerived>();
+    property.units.forEach((u) => map.set(u.id, deriveUnit(u)));
+    return map;
+  }, [property.units]);
+
+  const counts = useMemo(() => {
+    let let_ = 0, vacant = 0, endingSoon = 0, needsReview = 0;
+    property.units.forEach((u) => {
+      const d = derivedByUnit.get(u.id)!;
+      if (d.state === "vacant_confirmed") vacant += 1;
+      else {
+        let_ += 1;
+        if (d.state === "let_ending_soon") endingSoon += 1;
+        if (d.state === "let_holding_over") needsReview += 1;
+      }
+    });
+    return { let: let_, vacant, endingSoon, needsReview };
+  }, [property.units, derivedByUnit]);
+
   const hasShops = property.units.some((u) => u.label.toLowerCase().includes("shop"));
 
   const filtered = useMemo(() => {
     const q = filter.trim().toLowerCase();
     return property.units
       .filter((u) => {
-        if (quick === "let" && u.status !== "Let") return false;
-        if (quick === "vacant" && u.status !== "Vacant") return false;
+        const d = derivedByUnit.get(u.id)!;
+        if (quick === "let" && d.state === "vacant_confirmed") return false;
+        if (quick === "vacant" && d.state !== "vacant_confirmed") return false;
+        if (quick === "ending_soon" && d.state !== "let_ending_soon") return false;
+        if (quick === "needs_review" && d.state !== "let_holding_over") return false;
         if (quick === "shops" && !u.label.toLowerCase().includes("shop")) return false;
         if (!q) return true;
-        if (q === "vac") return u.status === "Vacant";
-        if (q === "let") return u.status === "Let";
+        if (q === "vac") return d.state === "vacant_confirmed";
+        if (q === "let") return d.state !== "vacant_confirmed";
         return (
           u.label.toLowerCase().includes(q) ||
           (u.tenant ?? "").toLowerCase().includes(q)
         );
       })
       .sort((a, b) => unitSortKey(a.label) - unitSortKey(b.label));
-  }, [property.units, filter, quick]);
+  }, [property.units, derivedByUnit, filter, quick]);
 
   const grouped = useMemo(() => {
     const shops: Unit[] = [];
@@ -1411,7 +1486,9 @@ function PropertyContent({
   return (
     <div className="space-y-3">
       <div className="text-[12px] text-slate-600">
-        {property.units.length} units · {letCount} Let · {vacantCount} Vacant
+        {property.units.length} units · {counts.let} Let · {counts.vacant} Vacant
+        {counts.needsReview > 0 && <> · <span className="text-amber-700 font-medium">{counts.needsReview} Need review</span></>}
+        {counts.endingSoon > 0 && <> · {counts.endingSoon} Ending soon</>}
       </div>
 
       {property.units.length > 20 && (
@@ -1441,8 +1518,10 @@ function PropertyContent({
 
       <div className="flex flex-wrap gap-1.5">
         {quickBtn("all", `All (${property.units.length})`)}
-        {quickBtn("let", `Let (${letCount})`)}
-        {quickBtn("vacant", `Vacant (${vacantCount})`)}
+        {quickBtn("let", `Let (${counts.let})`)}
+        {quickBtn("vacant", `Vacant (${counts.vacant})`)}
+        {counts.endingSoon > 0 && quickBtn("ending_soon", `Ending soon (${counts.endingSoon})`)}
+        {counts.needsReview > 0 && quickBtn("needs_review", `Needs review (${counts.needsReview})`)}
         {hasShops && quickBtn("shops", "Shops")}
       </div>
 
@@ -1476,17 +1555,37 @@ function PropertyContent({
                     {group.units.map((u) => {
                       const tabIx = tileIndex === 0 ? 0 : -1;
                       tileIndex += 1;
-                      const dot = u.status === "Let" ? "bg-emerald-500" : "bg-amber-400";
+                      const d = derivedByUnit.get(u.id)!;
+                      const dot =
+                        d.state === "vacant_confirmed" ? "bg-slate-400"
+                        : "bg-emerald-500";
+                      const flag =
+                        d.state === "let_ending_soon" ? { label: "Ending soon", short: "Soon" }
+                        : d.state === "let_holding_over" ? { label: "Term ended · unconfirmed", short: "Review" }
+                        : null;
+                      const tip = unitTooltip(u, d);
+                      const occupancyLabel = d.state === "vacant_confirmed" ? "Vacant (confirmed)" : "Let";
                       return (
                         <button
                           key={u.id}
                           data-uchip
                           tabIndex={tabIx}
                           onClick={() => onOpenUnit(u.id)}
-                          title={u.tenant ? `${u.label} · ${u.tenant}` : u.label}
-                          aria-label={`${u.label}, ${u.status}. Open unit.`}
+                          title={tip}
+                          aria-label={`${u.label}, ${occupancyLabel}${flag ? ", " + flag.label : ""}. Open unit.`}
                           className="relative flex flex-col items-center justify-center gap-1 px-2 py-2.5 rounded-lg border border-slate-200 bg-white text-sm font-medium text-slate-800 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40"
                         >
+                          {flag && (
+                            <span
+                              aria-hidden
+                              className="absolute top-1 right-1 inline-flex items-center gap-0.5 px-1 py-[1px] rounded text-[8px] font-semibold uppercase tracking-wide bg-amber-100 text-amber-800 border border-amber-300"
+                            >
+                              <svg width="7" height="7" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                                <path d="M12 2L1 21h22L12 2zm0 6l7.5 13h-15L12 8zm-1 4v4h2v-4h-2zm0 5v2h2v-2h-2z" />
+                              </svg>
+                              {flag.short}
+                            </span>
+                          )}
                           <span className="truncate max-w-full">{u.label}</span>
                           <span className={`w-1.5 h-1.5 rounded-full ${dot}`} aria-hidden />
                         </button>
