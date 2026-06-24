@@ -843,6 +843,16 @@ const Prototype: React.FC = () => {
     setInput(pre);
   }, [view, selectedPropertyId, selectedUnitId]);
 
+  /* ----- pre-fill the next onboarding question into the chat box ----- */
+  useEffect(() => {
+    if (view !== "onboarding") return;
+    if (chipVisible) {
+      setInput(BEATS[beatIdx]?.prefill ?? "");
+    } else {
+      setInput("");
+    }
+  }, [view, chipVisible, beatIdx]);
+
   /* ----- onboarding line streaming ----- */
   useEffect(() => {
     if (view !== "onboarding") return;
