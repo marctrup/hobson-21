@@ -1753,6 +1753,21 @@ function StyleTag() {
         to { transform: scale(1); }
       }
       .hp-marker.is-fade { opacity: 0.25; transition: opacity .25s; }
+      .hp-unit-marker { background: transparent !important; border: none !important; }
+      .hp-unit {
+        padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
+        color: #1F2330; background: #fff; border: 1.5px solid #7C3AED;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+        white-space: nowrap; text-align: center;
+        transition: transform .15s, box-shadow .15s, background .15s;
+        cursor: pointer;
+      }
+      .hp-unit.is-vacant { border-color: #94a3b8; color: #475569; }
+      .hp-unit:hover { transform: scale(1.08); box-shadow: 0 3px 8px rgba(124,58,237,0.35); }
+      .hp-unit-marker.is-active .hp-unit {
+        background: #7C3AED; color: #fff; border-color: #7C3AED;
+        box-shadow: 0 0 0 4px rgba(124,58,237,0.25);
+      }
       .hp-marker.is-match .hp-pin,
       .hp-marker.is-match .hp-cluster {
         filter: drop-shadow(0 0 6px rgba(124,58,237,0.55));
