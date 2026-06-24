@@ -261,6 +261,8 @@ function HobsonMap({
       });
       const m = L.marker([p.lat, p.lng], { icon }).addTo(map);
       m.on("click", () => onPropertyClick(p.id));
+      m.on("mouseover", () => onPinHover?.(p.id));
+      m.on("mouseout", () => onPinHover?.(null));
       markersRef.current[p.id] = m;
     });
 
