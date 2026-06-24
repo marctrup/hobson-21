@@ -838,6 +838,8 @@ const Prototype: React.FC = () => {
     setShowUnitPicker(false);
     setShowPropertyList(false);
     setPortfolioChip(null);
+    setBriefingChoice(null);
+    setExpandedCardId(null);
     setMessages([]);
 
     if (fromOnboarding) {
@@ -845,22 +847,40 @@ const Prototype: React.FC = () => {
       setHasVisited(true);
     }
 
-    const greet =
+    const pending = actionCards.filter((c) => c.approvalState === "pending");
+    const urgent = pending.filter((c) => c.urgency === "now");
+
+    const greetLines: string[] =
       portfolioMode === "first"
-        ? `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`
-        : `Welcome back, ${FIRST_NAME}. You're at portfolio level. Today I answer questions at the unit level — click the search icon on the map to find a unit, or tap a pin to go straight there.`;
+        ? [
+            `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`,
+          ]
+        : pending.length === 0
+        ? [
+            `Morning, ${FIRST_NAME}. The estate's quiet — nothing needs you today. Tap a pin to wander in, or use the map search.`,
+          ]
+        : [
+            `Morning, ${FIRST_NAME}. The estate's mostly quiet — ${pending.length} ${pending.length === 1 ? "thing needs" : "things need"} you${urgent.length ? `, and ${urgent.length === 1 ? "1 is" : `${urgent.length} are`} time-sensitive` : ""}.`,
+            `Want to take them now, or just the urgent one?`,
+          ];
 
     setTyping(true);
     const delay = reduced ? 200 : 450;
-    window.setTimeout(() => {
-      setTyping(false);
-      if (reduced) {
-        setMessages([{ id: "p-greet", role: "hobson", text: greet }]);
-      } else {
-        streamHobsonMessage(greet, () => {});
-      }
-    }, delay);
-
+    const playLine = (i: number) => {
+      if (i >= greetLines.length) return;
+      setTyping(true);
+      const gap = i === 0 ? delay : (reduced ? 80 : 500);
+      window.setTimeout(() => {
+        setTyping(false);
+        if (reduced) {
+          setMessages((m) => [...m, { id: `p-greet-${i}`, role: "hobson", text: greetLines[i] }]);
+          playLine(i + 1);
+        } else {
+          streamHobsonMessage(greetLines[i], () => playLine(i + 1));
+        }
+      }, gap);
+    };
+    playLine(0);
   };
 
   const goProperty = (id: string) => {
