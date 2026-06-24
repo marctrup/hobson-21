@@ -1593,7 +1593,7 @@ const Prototype: React.FC = () => {
             onPropertyClick={(id) => {
               const p = PROPERTIES.find((x) => x.id === id);
               if (!p) return;
-              // If single-unit property in returning mode, drill straight to unit
+              // Single-unit property: drill straight to the unit
               if (p.units.length === 1) {
                 goUnit(p.units[0].id, p.id);
               } else {
