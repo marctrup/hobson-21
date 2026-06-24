@@ -897,7 +897,7 @@ const Prototype: React.FC = () => {
         <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
 
           {/* Returning-mode search lives at the top of the panel body */}
-          {view === "portfolio" && portfolioMode === "returning" && (
+          {((view === "portfolio" && portfolioMode === "returning") || view === "property") && (
             <ReturningSearchPanel
               query={searchQuery}
               setQuery={setSearchQuery}
@@ -1257,39 +1257,11 @@ function PropertyContent({
   onOpenUnit: (id: string) => void;
   onPreviewQuestion: (q: string) => void;
 }) {
-  const questions = [
-    "What is the rent roll?",
-    "Which units are vacant?",
-    "What compliance issues exist?",
-    "Which leases expire soon?",
-  ];
+  void onPreviewQuestion;
   return (
     <div className="space-y-3">
       <div>
-        <div className="flex items-center gap-2 mb-1 flex-wrap">
-          <h2 className="text-base font-semibold text-slate-900">{property.name} — Property Intelligence</h2>
-          <span className="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Coming soon</span>
-        </div>
-        <p className="text-sm text-slate-600">
-          Today I work unit by unit — that's where the documents and detail live. Once I understand every unit here, I'll be able to tell you about the whole building.
-        </p>
-      </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Preview questions</div>
-        <div className="flex flex-wrap gap-1.5">
-          {questions.map((q) => (
-            <button
-              key={q}
-              onClick={() => onPreviewQuestion(q)}
-              className="text-xs px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
-            >
-              {q}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5 mt-2">Units</div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Units</div>
         <div className="space-y-1.5">
           {property.units.map((u) => (
             <button
