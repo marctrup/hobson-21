@@ -207,6 +207,8 @@ type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: 
 
 /* ---------------- Map ---------------- */
 
+type UnitPin = { id: string; lat: number; lng: number; label: string; status: "Let" | "Vacant" };
+
 type MapHighlight = {
   pulse: "none" | "one" | "all";
   pulseId?: string;
@@ -218,20 +220,25 @@ type MapHighlight = {
   activeUnitPropertyId?: string | null;
   matchIds?: string[] | null;
   hoverId?: string | null;
+  unitPins?: UnitPin[] | null;
+  activeUnitId?: string | null;
 };
 
 function HobsonMap({
   onPropertyClick,
   highlight,
   onPinHover,
+  onUnitClick,
 }: {
   onPropertyClick: (id: string) => void;
   highlight: MapHighlight;
   onPinHover?: (id: string | null) => void;
+  onUnitClick?: (unitId: string) => void;
 }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<L.Map | null>(null);
   const markersRef = useRef<Record<string, L.Marker>>({});
+  const unitMarkersRef = useRef<Record<string, L.Marker>>({});
 
   useEffect(() => {
     if (!mapRef.current || mapInstance.current) return;
@@ -270,6 +277,7 @@ function HobsonMap({
       map.remove();
       mapInstance.current = null;
       markersRef.current = {};
+      unitMarkersRef.current = {};
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -306,6 +314,45 @@ function HobsonMap({
       map.flyTo([51.5174, -0.1278], 12, { duration: 0.8 });
     }
   }, [highlight]);
+
+  // Sync unit markers (property view)
+  useEffect(() => {
+    const map = mapInstance.current;
+    if (!map) return;
+    const wanted = highlight.unitPins ?? [];
+    const wantedIds = new Set(wanted.map((u) => u.id));
+
+    // remove stale
+    Object.entries(unitMarkersRef.current).forEach(([id, m]) => {
+      if (!wantedIds.has(id)) {
+        map.removeLayer(m);
+        delete unitMarkersRef.current[id];
+      }
+    });
+
+    // add new
+    wanted.forEach((u) => {
+      if (unitMarkersRef.current[u.id]) return;
+      const statusClass = u.status === "Let" ? "is-let" : "is-vacant";
+      const html = `<div class="hp-unit ${statusClass}" data-uid="${u.id}"><span>${u.label.replace(/[<>&]/g, "")}</span></div>`;
+      const icon = L.divIcon({
+        html,
+        className: "hp-unit-marker",
+        iconSize: [80, 22],
+        iconAnchor: [40, 11],
+      });
+      const m = L.marker([u.lat, u.lng], { icon, zIndexOffset: 500 }).addTo(map);
+      m.on("click", () => onUnitClick?.(u.id));
+      unitMarkersRef.current[u.id] = m;
+    });
+
+    // active highlight
+    Object.entries(unitMarkersRef.current).forEach(([id, m]) => {
+      const el = m.getElement();
+      if (!el) return;
+      el.classList.toggle("is-active", highlight.activeUnitId === id);
+    });
+  }, [highlight, onUnitClick]);
 
   return <div ref={mapRef} className="absolute inset-0" aria-label="London property map" />;
 }
@@ -492,14 +539,42 @@ const Prototype: React.FC = () => {
     setView("property");
     setSelectedPropertyId(id);
     setSelectedUnitId(null);
+    setOwl("talking");
+    setShowUnitPicker(false);
+    setShowPropertyList(false);
+    setPortfolioChip(null);
+    setSearchQuery("");
+    setMessages([]);
+    const greet = `This is ${p.name}, ${p.area} — ${p.units.length} units. I can take you into any one of them. Which would you like to open?`;
+    setTyping(true);
+    const delay = reduced ? 200 : 500;
+    window.setTimeout(() => {
+      setTyping(false);
+      if (reduced) {
+        setMessages([{ id: `prop-${id}`, role: "hobson", text: greet }]);
+      } else {
+        streamHobsonMessage(greet, () => {});
+      }
+    }, delay);
+  };
+
+  const askPropertyPreview = (q: string) => {
+    const p = selectedProperty;
+    if (!p) return;
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
+    setTyping(true);
     setOwl("default");
-    setMessages([
-      {
-        id: `prop-${id}`,
-        role: "hobson",
-        text: `${p.name} — ${p.units.length} units. I can answer questions about each one today.`,
-      },
-    ]);
+    const reply = `I can't answer for the whole building yet — I build that up from each unit first. Let's open one and I'll show you what I can already do.`;
+    const delay = reduced ? 200 : 700;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      if (reduced) {
+        setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: reply }]);
+      } else {
+        streamHobsonMessage(reply, () => {});
+      }
+    }, delay);
   };
 
   const goUnit = (unitId: string, propertyId?: string) => {
@@ -572,22 +647,49 @@ const Prototype: React.FC = () => {
       return { pulse: "none", matchIds, hoverId: hoveredPropertyId };
     }
     if (view === "property" && selectedProperty) {
+      const n = selectedProperty.units.length;
+      const radius = 0.0011;
+      const unitPins: UnitPin[] = selectedProperty.units.map((u, i) => {
+        const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+        return {
+          id: u.id,
+          lat: selectedProperty.lat + radius * Math.cos(angle),
+          lng: selectedProperty.lng + radius * Math.sin(angle) * 1.4,
+          label: u.label,
+          status: u.status,
+        };
+      });
       return {
         pulse: "none",
         dimExcept: selectedProperty.id,
-        focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 15 },
+        focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 16 },
+        unitPins,
       };
     }
     if (view === "unit" && selectedProperty) {
+      const n = selectedProperty.units.length;
+      const radius = 0.0011;
+      const unitPins: UnitPin[] = selectedProperty.units.map((u, i) => {
+        const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
+        return {
+          id: u.id,
+          lat: selectedProperty.lat + radius * Math.cos(angle),
+          lng: selectedProperty.lng + radius * Math.sin(angle) * 1.4,
+          label: u.label,
+          status: u.status,
+        };
+      });
       return {
         pulse: "none",
         dimExcept: selectedProperty.id,
         activeUnitPropertyId: selectedProperty.id,
         focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 16 },
+        unitPins,
+        activeUnitId: selectedUnitId,
       };
     }
     return { pulse: "none" };
-  }, [view, beatIdx, selectedProperty, searchQuery, portfolioMode, hoveredPropertyId]);
+  }, [view, beatIdx, selectedProperty, selectedUnitId, searchQuery, portfolioMode, hoveredPropertyId]);
 
   /* ----- unit Q&A ----- */
   const answerForUnit = (q: string): string => {
@@ -835,11 +937,8 @@ const Prototype: React.FC = () => {
           {view === "property" && selectedProperty && (
             <PropertyContent
               property={selectedProperty}
-              onOpenUnit={goUnit}
-              onPreviewQuestion={(q) => {
-                setToast(`"${q}" is Property Intelligence — coming soon. Open a unit and I can answer it today.`);
-                window.setTimeout(() => setToast(null), 3500);
-              }}
+              onOpenUnit={(uid) => goUnit(uid, selectedProperty.id)}
+              onPreviewQuestion={askPropertyPreview}
             />
           )}
 
@@ -948,6 +1047,7 @@ const Prototype: React.FC = () => {
             }
           }}
           onPinHover={setHoveredPropertyId}
+          onUnitClick={(uid) => selectedPropertyId && goUnit(uid, selectedPropertyId)}
           highlight={highlight}
         />
 
@@ -1161,20 +1261,20 @@ function PropertyContent({
   onPreviewQuestion: (q: string) => void;
 }) {
   const questions = [
-    "What's the WAULT?",
+    "What is the rent roll?",
     "Which units are vacant?",
-    "Total passing rent?",
-    "Upcoming events this year?",
+    "What compliance issues exist?",
+    "Which leases expire soon?",
   ];
   return (
     <div className="space-y-3">
       <div>
-        <div className="flex items-center gap-2 mb-1">
-          <h2 className="text-base font-semibold text-slate-900">{property.name}</h2>
-          <span className="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Property Intelligence — Coming soon</span>
+        <div className="flex items-center gap-2 mb-1 flex-wrap">
+          <h2 className="text-base font-semibold text-slate-900">{property.name} — Property Intelligence</h2>
+          <span className="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Coming soon</span>
         </div>
         <p className="text-sm text-slate-600">
-          Building-wide answers are on the way. Today, open a unit and I can answer in detail.
+          Today I work unit by unit — that's where the documents and detail live. Once I understand every unit here, I'll be able to tell you about the whole building.
         </p>
       </div>
       <div>
@@ -1653,6 +1753,21 @@ function StyleTag() {
         to { transform: scale(1); }
       }
       .hp-marker.is-fade { opacity: 0.25; transition: opacity .25s; }
+      .hp-unit-marker { background: transparent !important; border: none !important; }
+      .hp-unit {
+        padding: 3px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;
+        color: #1F2330; background: #fff; border: 1.5px solid #7C3AED;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+        white-space: nowrap; text-align: center;
+        transition: transform .15s, box-shadow .15s, background .15s;
+        cursor: pointer;
+      }
+      .hp-unit.is-vacant { border-color: #94a3b8; color: #475569; }
+      .hp-unit:hover { transform: scale(1.08); box-shadow: 0 3px 8px rgba(124,58,237,0.35); }
+      .hp-unit-marker.is-active .hp-unit {
+        background: #7C3AED; color: #fff; border-color: #7C3AED;
+        box-shadow: 0 0 0 4px rgba(124,58,237,0.25);
+      }
       .hp-marker.is-match .hp-pin,
       .hp-marker.is-match .hp-cluster {
         filter: drop-shadow(0 0 6px rgba(124,58,237,0.55));
