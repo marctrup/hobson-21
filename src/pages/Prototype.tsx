@@ -1323,7 +1323,7 @@ const Prototype: React.FC = () => {
                 onClick={replayOnboarding}
                 className="ml-2 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
               >
-                How Hobson works
+                Meet Hobson
               </button>
             )}
           </div>
