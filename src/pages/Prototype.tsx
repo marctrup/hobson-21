@@ -1059,11 +1059,6 @@ const Prototype: React.FC = () => {
           <a href="?returning=1" className="px-2 py-1 hover:bg-slate-100 border-l border-slate-200">Returning</a>
         </div>
 
-        {/* Map/Satellite toggle */}
-        <div className="absolute bottom-4 right-4 z-[400] bg-white rounded-md shadow-md text-xs font-medium flex">
-          <button className="px-3 py-1.5 bg-slate-900 text-white rounded-l-md">Map</button>
-          <button className="px-3 py-1.5 text-slate-600 rounded-r-md">Satellite</button>
-        </div>
 
         {toast && (
           <div className="absolute left-1/2 -translate-x-1/2 bottom-8 z-[500] bg-slate-900 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg max-w-md text-center">
