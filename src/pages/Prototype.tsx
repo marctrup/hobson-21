@@ -435,7 +435,7 @@ const BEATS: Beat[] = [
     owl: "talking",
     lines: [
       "At present, I answer your questions and keep your information organised, connected and current.",
-      "Understanding, however, exists so that I may act upon it. When a rent review falls due, or a certificate approaches expiry, I shall read the lease, gather what is required, prepare the work — and bring it to you for your approval. The decision remains yours; the preparation is mine.",
+      "My knowledge builds so that I can act on it. When a rent review falls due, or a certificate nears expiry, I shall read the lease, gather what is needed, and prepare the work — then bring it to you for approval. The decision is always yours; the preparation is mine.",
       "That is what I am growing into: not another application, but a colleague who helps you attend to the work. Shall we begin?",
     ],
     prefill: "Yes, let us begin.",
