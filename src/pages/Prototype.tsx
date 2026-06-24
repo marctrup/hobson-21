@@ -415,7 +415,7 @@ const BEATS: Beat[] = [
       "I read two families of document: those that describe the occupation, and those that describe the asset itself — the property and units.",
       
     ],
-    prefill: "How does your reading become understanding?",
+    prefill: "How does your reading become knowledge?",
     mapAction: "pulse-one-doc",
   },
   {
