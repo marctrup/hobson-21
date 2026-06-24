@@ -1452,6 +1452,12 @@ const Prototype: React.FC = () => {
             {toast}
           </div>
         )}
+
+        {actionToast && (
+          <div role="status" aria-live="polite" className="absolute left-1/2 -translate-x-1/2 bottom-20 z-[500] bg-emerald-700 text-white text-sm px-4 py-2.5 rounded-lg shadow-lg max-w-md text-center">
+            {actionToast}
+          </div>
+        )}
       </main>
     </div>
   );
