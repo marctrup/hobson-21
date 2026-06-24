@@ -405,8 +405,6 @@ const BEATS: Beat[] = [
     owl: "default",
     lines: [
       "I regard your portfolio as a collection of units — some gathered together under one roof as a Property, others standing on their own. The unit is the occupiable space, and it sits at the very heart of how I see your estate.",
-      "A unit may sit within a property or stand alone. Either way, it is where the substance resides: the tenancy, the rent, the obligations.",
-      "Properties serve to group units together. The unit, however, is my source of truth.",
     ],
     prefill: "And where do documents belong in that?",
     mapAction: "pulse-one",
