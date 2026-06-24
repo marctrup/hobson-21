@@ -520,8 +520,9 @@ const Prototype: React.FC = () => {
 
     const greet =
       portfolioMode === "first"
-        ? `Welcome. Right now I learn at unit level — that's where your documents live, and it's how I build understanding. Want to open a property, or go straight to a unit?`
-        : `You're in your portfolio. Search above, pick a property on the map, or jump straight into a unit — that's where I can answer questions today.`;
+        ? `Hi ${FIRST_NAME} — you're at portfolio level. Today I answer questions at the unit level, where your documents live. Click the search icon on the map to find a unit, or tap a pin to go straight there.`
+        : `Welcome back, ${FIRST_NAME}. You're at portfolio level. Today I answer questions at the unit level — click the search icon on the map to find a unit, or tap a pin to go straight there.`;
+
     setTyping(true);
     const delay = reduced ? 200 : 450;
     window.setTimeout(() => {
