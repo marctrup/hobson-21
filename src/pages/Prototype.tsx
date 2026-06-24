@@ -1668,38 +1668,61 @@ const Prototype: React.FC = () => {
 
       {/* Map */}
       <main className="relative flex-1 bg-slate-100">
-        <HobsonMap
-          onPropertyClick={(id) => {
-            const p = PROPERTIES.find((x) => x.id === id);
-            if (!p) return;
-            // If single-unit property in returning mode, drill straight to unit
-            if (portfolioMode === "returning" && p.units.length === 1) {
-              goUnit(p.units[0].id, p.id);
-            } else {
-              goProperty(id);
-            }
+        <div
+          aria-hidden={view === "onboarding" ? true : undefined}
+          className={`absolute inset-0 ${view === "onboarding" ? "pointer-events-none" : ""}`}
+          style={{
+            filter: view === "onboarding" ? "saturate(0.35) contrast(0.92) brightness(1.02)" : "none",
+            transition: reduced ? "none" : "filter 400ms ease-out",
           }}
-          onPinHover={setHoveredPropertyId}
-          onUnitClick={(uid) => selectedPropertyId && goUnit(uid, selectedPropertyId)}
-          highlight={highlight}
+        >
+          <HobsonMap
+            onPropertyClick={(id) => {
+              const p = PROPERTIES.find((x) => x.id === id);
+              if (!p) return;
+              // If single-unit property in returning mode, drill straight to unit
+              if (portfolioMode === "returning" && p.units.length === 1) {
+                goUnit(p.units[0].id, p.id);
+              } else {
+                goProperty(id);
+              }
+            }}
+            onPinHover={setHoveredPropertyId}
+            onUnitClick={(uid) => selectedPropertyId && goUnit(uid, selectedPropertyId)}
+            highlight={highlight}
+          />
+        </div>
+
+        {/* Muted scrim during Meet Hobson */}
+        <div
+          aria-hidden
+          className="absolute inset-0 pointer-events-none z-[350]"
+          style={{
+            background: "rgba(248, 250, 252, 0.32)",
+            opacity: view === "onboarding" ? 1 : 0,
+            transition: reduced ? "none" : "opacity 400ms ease-out",
+          }}
         />
 
-        {/* Global map search — persistent on every level */}
-        <MapSearch
-          query={searchQuery}
-          setQuery={setSearchQuery}
-          onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
-          onOpenProperty={(id) => {
-            const p = PROPERTIES.find((x) => x.id === id);
-            if (!p) return;
-            if (portfolioMode === "returning" && p.units.length === 1) {
-              goUnit(p.units[0].id, p.id);
-            } else {
-              goProperty(id);
-            }
-          }}
-          onHoverProperty={setHoveredPropertyId}
-        />
+        {/* Global map search — persistent on every level (hidden during Meet Hobson) */}
+        {view !== "onboarding" && (
+          <MapSearch
+            query={searchQuery}
+            setQuery={setSearchQuery}
+            onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+            onOpenProperty={(id) => {
+              const p = PROPERTIES.find((x) => x.id === id);
+              if (!p) return;
+              if (portfolioMode === "returning" && p.units.length === 1) {
+                goUnit(p.units[0].id, p.id);
+              } else {
+                goProperty(id);
+              }
+            }}
+            onHoverProperty={setHoveredPropertyId}
+          />
+        )}
+
 
 
         {/* Map/Satellite toggle */}
