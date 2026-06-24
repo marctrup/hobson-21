@@ -396,7 +396,7 @@ const BEATS: Beat[] = [
     lines: [
       "There is a distinction that underpins everything I do, so allow me to be clear about it.",
       "Your assets — your properties and the units within them — are what I seek to understand. Your documents are how I come to understand them.",
-      "A lease is not the same as the tenancy itself — it is the written record of it. I read your documents so that I can understand your actual properties and units.",
+      
     ],
     prefill: "How, then, do you see my portfolio?",
     mapAction: "none",
