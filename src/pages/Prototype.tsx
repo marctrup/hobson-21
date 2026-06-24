@@ -450,18 +450,20 @@ type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: 
 
 const RENT_Q_PATTERNS = [
   /^\s*rent\s*\??\s*$/i,
-  /^\s*rent\s+flat\s*2\s*$/i,
-  /^\s*rent\s+flat\s*2\s+nugent\s+terrace\s*$/i,
+  /^\s*rent\s+flat\s*2\s*\??\s*$/i,
+  /^\s*rent\s+flat\s*2\s+nugent\s+terrace\s*\??\s*$/i,
   /^\s*what'?s?\s+the\s+current\s+rent\s*\??\s*$/i,
-  /^\s*current\s+rent\s+flat\s*2\s*$/i,
+  /^\s*current\s+rent\s*\??\s*$/i,
+  /^\s*current\s+rent\s+flat\s*2\s*\??\s*$/i,
 ];
 const isRentFlat2Question = (q: string) => RENT_Q_PATTERNS.some((re) => re.test(q));
 const rentPrefillFor = (view: string, propertyId: string | null, unitId: string | null): string => {
-  if (view === "unit" && unitId === "nugent-f2") return "rent?";
-  if (view === "property" && propertyId === "nugent") return "rent flat 2";
-  if (view === "portfolio") return "rent flat 2 Nugent Terrace";
+  if (view === "unit" && unitId === "nugent-f2") return "Current Rent?";
+  if (view === "property" && propertyId === "nugent") return "rent flat 2?";
+  if (view === "portfolio") return "rent flat 2 Nugent Terrace?";
   return "";
 };
+
 
 /* ---------------- Map ---------------- */
 
