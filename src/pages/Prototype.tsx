@@ -1365,30 +1365,7 @@ function PortfolioFirstVisit({
   ];
   return (
     <div className="space-y-3">
-      <div>
-        <div className="flex items-center gap-2 mb-1">
-          <h2 className="text-base font-semibold text-slate-900">Portfolio Intelligence</h2>
-          <span className="text-[10px] uppercase tracking-wide bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded">Coming soon</span>
-        </div>
-        <p className="text-sm text-slate-600">
-          Today I learn at unit level — that's where your documents live. Portfolio insight comes later, once I understand enough units.
-        </p>
-      </div>
 
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Preview questions</div>
-        <div className="flex flex-wrap gap-1.5">
-          {questions.map((q) => (
-            <button
-              key={q}
-              onClick={() => onPreviewQuestion(q)}
-              className="text-xs px-3 py-1.5 rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50 hover:border-slate-300 transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
-            >
-              {q}
-            </button>
-          ))}
-        </div>
-      </div>
 
       {showPropertyList && (
         <div>
