@@ -1665,7 +1665,36 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
 }
 
 
-function HobsonBubble({ text, owl, streaming }: { text: string; owl: OwlState; streaming?: boolean }) {
+function HobsonBubble({ text, owl, streaming, rich, onAskFollowUp }: { text: string; owl: OwlState; streaming?: boolean; rich?: "rentFlat2"; onAskFollowUp?: (q: string) => void }) {
+  if (rich === "rentFlat2") {
+    return (
+      <div className="flex items-start gap-2">
+        <OwlAvatar state={owl} />
+        <div className="max-w-[560px] w-full bg-white border border-slate-200 text-[#1F2330] text-sm leading-relaxed px-4 py-3 rounded-2xl rounded-bl-md shadow-sm space-y-3">
+          <div className="flex items-center justify-between">
+            <div className="text-[12px]">
+              <span className="font-semibold text-slate-900">Hobson</span>
+              <span className="ml-2 italic text-slate-500">Thought for 4 seconds</span>
+            </div>
+            <button
+              type="button"
+              onClick={() => downloadRentCsv()}
+              className="text-[12px] text-[#7C3AED] hover:underline inline-flex items-center gap-1"
+            >
+              ↓ Download as CSV
+            </button>
+          </div>
+          {!streaming && <RentFlat2Answer onAskFollowUp={onAskFollowUp} bodyText={text} />}
+          {streaming && (
+            <div className="text-sm text-slate-700">
+              {text}
+              <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex items-end gap-2">
       <OwlAvatar state={owl} />
@@ -1673,6 +1702,123 @@ function HobsonBubble({ text, owl, streaming }: { text: string; owl: OwlState; s
         {text}
         {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
       </div>
+    </div>
+  );
+}
+
+const RENT_BODY_TEXT =
+  "The current rent is set out in the tenancy paperwork and the later rent increase notice. The agreement also refers to annual reviews linked to RPI, with the notice saying the increase follows the agreed minimum adjustment.";
+
+function downloadRentCsv() {
+  const rows = [
+    ["Current Rent", "Effective From", "Reliable"],
+    ["£2,415 per month", "1 October 2025", "Yes"],
+  ];
+  const csv = rows.map((r) => r.map((c) => `"${c.replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "rent-flat-2-nugent-terrace.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function RentFlat2Answer({ onAskFollowUp, bodyText }: { onAskFollowUp?: (q: string) => void; bodyText: string }) {
+  const [toast, setToast] = useState<string | null>(null);
+  const showToast = (s: string) => {
+    setToast(s);
+    window.setTimeout(() => setToast(null), 2200);
+  };
+  const related = [
+    "Would you like the original rent amount as well?",
+    "Do you want the source documents for this rent?",
+    "Shall I check how the increase was calculated?",
+  ];
+  const sources = [
+    "AST nt 2.pdf — referenced by the answer",
+    "rent increase 2025-2026 NT2.pdf — referenced by the answer",
+  ];
+  const docs = [
+    { name: "rent increase 2025-2026 NT2.pdf" },
+    { name: "AST nt 2.pdf" },
+  ];
+  const copyAll = async () => {
+    const text = `Current Rent: £2,415 per month\nEffective From: 1 October 2025\nReliable: Yes\n\n${bodyText}`;
+    try { await navigator.clipboard.writeText(text); showToast("Copied"); } catch { showToast("Copy failed"); }
+  };
+  return (
+    <div className="space-y-3">
+      <div className="overflow-hidden rounded-lg border border-slate-200">
+        <table className="w-full text-[13px]">
+          <thead className="bg-slate-50 text-slate-600">
+            <tr>
+              <th className="text-left font-medium px-3 py-2">Current Rent</th>
+              <th className="text-left font-medium px-3 py-2">Effective From</th>
+              <th className="text-left font-medium px-3 py-2">Reliable</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr className="border-t border-slate-200">
+              <td className="px-3 py-2 font-semibold text-slate-900">£2,415 per month</td>
+              <td className="px-3 py-2 text-slate-700">1 October 2025</td>
+              <td className="px-3 py-2 text-emerald-700">✓ Yes</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p className="text-slate-700">{bodyText}</p>
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1">Sources</div>
+        <ul className="list-disc pl-5 space-y-0.5 text-[13px] text-slate-700">
+          {sources.map((s) => <li key={s}>{s}</li>)}
+        </ul>
+      </div>
+      <div>
+        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1">Related questions</div>
+        <ul className="space-y-1">
+          {related.map((q) => (
+            <li key={q}>
+              <button
+                onClick={() => onAskFollowUp?.(q)}
+                className="text-left text-[13px] text-[#5B21B6] hover:underline"
+              >
+                • {q}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <div className="flex items-center gap-2 mb-1">
+          <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium">Related documents</div>
+          <span className="text-[9px] uppercase font-semibold px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 tracking-wide">Beta</span>
+        </div>
+        <ul className="space-y-1">
+          {docs.map((d) => (
+            <li key={d.name}>
+              <button
+                onClick={() => showToast(`Opening ${d.name} (placeholder)`)}
+                className="w-full flex items-center gap-2 px-2 py-1.5 rounded border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] text-left transition"
+              >
+                <span aria-hidden className="w-5 h-5 rounded bg-rose-100 text-rose-700 text-[9px] font-bold grid place-items-center">PDF</span>
+                <span className="text-[13px] text-slate-800 truncate">{d.name}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="flex items-center gap-1 pt-1 border-t border-slate-100 text-[12px] text-slate-500">
+        <button onClick={copyAll} className="px-2 py-1 rounded hover:bg-slate-100">Copy</button>
+        <button onClick={() => showToast("Regenerating… (placeholder)")} className="px-2 py-1 rounded hover:bg-slate-100">Regenerate</button>
+        <button onClick={() => showToast("Diagnostic (placeholder)")} className="px-2 py-1 rounded hover:bg-slate-100">Diagnostic</button>
+        <button onClick={() => showToast("Thanks for the rating")} className="px-2 py-1 rounded hover:bg-slate-100">Rate this</button>
+      </div>
+      {toast && (
+        <div role="status" aria-live="polite" className="text-[11px] text-slate-500 italic">{toast}</div>
+      )}
     </div>
   );
 }
