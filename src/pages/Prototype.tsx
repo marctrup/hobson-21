@@ -3229,8 +3229,8 @@ function PortfolioBriefing({
     const chips: { label: string; value: "all" | "urgent" | "browse" }[] = [
       { label: `Show me what needs me (${pending.length})`, value: "all" },
       ...(urgent.length ? [{ label: `Just the urgent ${urgent.length === 1 ? "one" : `${urgent.length}`}`, value: "urgent" as const }] : []),
-      { label: "I'll browse", value: "browse" as const },
     ];
+
     return (
       <div className="flex flex-col items-end gap-1.5">
         <span className="text-[11px] text-slate-500 flex items-center gap-1">
