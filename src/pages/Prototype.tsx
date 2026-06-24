@@ -3970,7 +3970,7 @@ function PerformWorkspace({
   onComplete: (summary: string) => void;
   reducedMotion: boolean;
 }) {
-  const beats = useMemo(() => buildPA004Beats(), []);
+  const { beats, steps, headerKicker, headerTitle, headerSub } = useMemo(() => buildPerformConfig(card), [card]);
   const [revealed, setRevealed] = useState<number>(0); // beats revealed (1-based count)
   const [streamingText, setStreamingText] = useState<string>("");
   const [streamingActive, setStreamingActive] = useState(false);
