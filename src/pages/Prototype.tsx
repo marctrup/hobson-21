@@ -1150,7 +1150,7 @@ const Prototype: React.FC = () => {
             <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="white" />
           </svg>
         </div>
-        <RailItem icon="pin" label="Portfolio" active />
+        <RailItem icon="pin" label="Portfolio" active onClick={() => goPortfolio(false)} />
         <RailItem icon="doc" label="Documents" />
         <RailItem icon="chat" label="Chat History" />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
