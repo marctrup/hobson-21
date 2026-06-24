@@ -388,7 +388,7 @@ const BEATS: Beat[] = [
       
       "If I may, I should like to explain how I work.",
     ],
-    prefill: "Please do",
+    prefill: "Go ahead",
     mapAction: "none",
   },
   {
