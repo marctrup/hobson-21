@@ -1754,13 +1754,16 @@ const Prototype: React.FC = () => {
             reducedMotion={reduced}
           />
         )}
-        {performingCardId && (() => {
-          const card = actionCards.find((c) => c.id === performingCardId);
+        {(performingCardId || reviewingCardId) && (() => {
+          const activeId = performingCardId ?? reviewingCardId!;
+          const card = actionCards.find((c) => c.id === activeId);
           if (!card) return null;
+          const mode: "perform" | "review" = performingCardId ? "perform" : "review";
           return (
             <PerformWorkspace
               card={card}
-              onCancel={cancelPerform}
+              mode={mode}
+              onCancel={mode === "perform" ? cancelPerform : cancelReview}
               onComplete={completePerform}
               reducedMotion={reduced}
             />
