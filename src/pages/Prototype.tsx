@@ -2956,6 +2956,7 @@ function PortfolioBriefing({
   setExpandedCardId,
   onHoverCard,
   onOpenUnit,
+  onOpenProperty,
   onApprove,
   onDefer,
   onDismiss,
@@ -2967,6 +2968,7 @@ function PortfolioBriefing({
   setExpandedCardId: (id: string | null) => void;
   onHoverCard: (propertyId: string | null) => void;
   onOpenUnit: (propertyId: string, unitId: string, carryCardId?: string) => void;
+  onOpenProperty: (propertyId: string, carryCardId?: string) => void;
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
