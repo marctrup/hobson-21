@@ -1645,12 +1645,8 @@ const Prototype: React.FC = () => {
         </div>
 
 
-        {/* Dev toggle */}
-        <div className="absolute bottom-4 left-4 z-[400] bg-white/90 rounded-md shadow-md text-[11px] font-medium flex overflow-hidden border border-slate-200">
-          <span className="px-2 py-1 text-slate-500">Dev:</span>
-          <a href="?returning=0" className="px-2 py-1 hover:bg-slate-100 border-l border-slate-200">First visit</a>
-          <a href="?returning=1" className="px-2 py-1 hover:bg-slate-100 border-l border-slate-200">Returning</a>
-        </div>
+        {/* Dev toggle removed: staged tour always starts at Meet Hobson */}
+
 
 
         {toast && (
