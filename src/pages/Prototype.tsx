@@ -460,15 +460,30 @@ const Prototype: React.FC = () => {
     setOwl("default");
     setChipVisible(false);
     setTyping(false);
-    setMessages([
-      {
-        id: "p-greet",
-        role: "hobson",
-        text: fromOnboarding
-          ? "Here's your portfolio. Open a property to see what I already know."
-          : "Welcome back. Open a property to drill in.",
-      },
-    ]);
+    setSearchQuery("");
+    setShowUnitPicker(false);
+    setShowPropertyList(false);
+    setPortfolioChip(null);
+    setMessages([]);
+
+    if (fromOnboarding) {
+      localStorage.setItem("hobsonPrototype.hasVisited", "1");
+      setHasVisited(true);
+    }
+
+    if (portfolioMode === "first") {
+      const greet = `Welcome. Right now I learn at unit level — that's where your documents live, and it's how I build understanding. Want to open a property, or go straight to a unit?`;
+      setTyping(true);
+      const delay = reduced ? 200 : 450;
+      window.setTimeout(() => {
+        setTyping(false);
+        if (reduced) {
+          setMessages([{ id: "p-greet", role: "hobson", text: greet }]);
+        } else {
+          streamHobsonMessage(greet, () => {});
+        }
+      }, delay);
+    }
   };
 
   const goProperty = (id: string) => {
