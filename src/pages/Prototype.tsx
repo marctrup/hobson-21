@@ -3071,6 +3071,60 @@ function PortfolioBriefing({
   );
 }
 
+/* ---------- Property-level actions (same objects as portfolio briefing) ---------- */
+
+function PropertyActions({
+  cards,
+  propertyName,
+  expandedCardId,
+  setExpandedCardId,
+  onOpenUnit,
+  onApprove,
+  onDefer,
+  onDismiss,
+}: {
+  cards: ActionCard[];
+  propertyName: string;
+  expandedCardId: string | null;
+  setExpandedCardId: (id: string | null) => void;
+  onOpenUnit: (unitId: string) => void;
+  onApprove: (id: string) => void;
+  onDefer: (id: string) => void;
+  onDismiss: (id: string) => void;
+}) {
+  const groups: { key: Urgency; cards: ActionCard[] }[] = (["now", "week", "watch"] as Urgency[])
+    .map((u) => ({ key: u, cards: cards.filter((c) => c.urgency === u) }))
+    .filter((g) => g.cards.length > 0);
+  return (
+    <section aria-label={`Actions for ${propertyName}`} className="space-y-2">
+      <div className="flex items-center justify-between">
+        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">On this building's desk · {cards.length}</div>
+      </div>
+      {groups.map((g) => (
+        <div key={g.key} className="space-y-1.5">
+          <div className="text-[10px] uppercase tracking-wide font-semibold text-slate-400">
+            {URGENCY_LABEL[g.key]} · {g.cards.length}
+          </div>
+          {g.cards.map((c) => (
+            <ActionCardItem
+              key={c.id}
+              card={c}
+              level="property"
+              expanded={expandedCardId === c.id}
+              onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+              onHover={() => { /* no map hover at property level */ }}
+              onOpenUnit={c.unitId ? () => onOpenUnit(c.unitId!) : undefined}
+              onApprove={() => onApprove(c.id)}
+              onDefer={() => onDefer(c.id)}
+              onDismiss={() => onDismiss(c.id)}
+            />
+          ))}
+        </div>
+      ))}
+    </section>
+  );
+}
+
 function ActionCardItem({
   card,
   level,
