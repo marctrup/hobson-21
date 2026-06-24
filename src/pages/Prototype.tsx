@@ -1452,6 +1452,7 @@ const Prototype: React.FC = () => {
                           setExpandedCardId(null);
                         }}
                         onPerform={() => performCard(c.id)}
+                        onReview={() => reviewCard(c.id)}
                       />
                       </div>
                     ))}
