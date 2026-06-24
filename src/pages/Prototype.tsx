@@ -207,6 +207,8 @@ type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: 
 
 /* ---------------- Map ---------------- */
 
+type UnitPin = { id: string; lat: number; lng: number; label: string; status: "Let" | "Vacant" };
+
 type MapHighlight = {
   pulse: "none" | "one" | "all";
   pulseId?: string;
@@ -218,6 +220,8 @@ type MapHighlight = {
   activeUnitPropertyId?: string | null;
   matchIds?: string[] | null;
   hoverId?: string | null;
+  unitPins?: UnitPin[] | null;
+  activeUnitId?: string | null;
 };
 
 function HobsonMap({
