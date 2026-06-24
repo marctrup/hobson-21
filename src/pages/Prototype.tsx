@@ -1550,21 +1550,8 @@ const Prototype: React.FC = () => {
         {/* Composer */}
         <div className="px-5 pt-2 pb-4 border-t border-slate-100 bg-white">
           {view === "onboarding" && chipVisible && (
-            <div className="mb-2 flex flex-col items-end gap-1.5">
-              <span className="text-[11px] text-slate-500 flex items-center gap-1">
-                Tap to reply <span aria-hidden>↓</span>
-              </span>
-              <button
-                onClick={advanceBeat}
-                autoFocus
-                className={`inline-flex items-center px-4 py-2 rounded-full text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#7C3AED] ${
-                  beatIdx === BEATS.length - 1
-                    ? "bg-[#7C3AED] text-white hover:bg-[#6D28D9] shadow-sm"
-                    : "bg-[#EDE9FE] text-[#5B21B6] hover:bg-[#DDD6FE] border border-[#DDD6FE]"
-                }`}
-              >
-                {BEATS[beatIdx]?.chip}
-              </button>
+            <div className="mb-1.5 flex items-center justify-end gap-1 text-[11px] text-slate-500">
+              Tap to send <span aria-hidden>↓</span>
             </div>
           )}
           {view === "portfolio" && portfolioMode === "first" && !chipVisible && messages.length > 0 && !portfolioChip && !showPropertyList && !showUnitPicker && (
@@ -1598,9 +1585,9 @@ const Prototype: React.FC = () => {
               </button>
             </div>
           )}
-          {view === "portfolio" || view === "property" || view === "unit" ? (
+          {(view === "onboarding" || view === "portfolio" || view === "property" || view === "unit") ? (
             <>
-              {view !== "unit" && (
+              {view !== "unit" && view !== "onboarding" && (
                 <div className="text-[11px] text-slate-400 mb-1 flex items-center gap-1">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
                     <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
@@ -1614,7 +1601,10 @@ const Prototype: React.FC = () => {
                   e.preventDefault();
                   const q = input.trim();
                   if (!q) return;
-                  if (view === "unit") {
+                  if (view === "onboarding") {
+                    if (!chipVisible) return;
+                    advanceBeat(q);
+                  } else if (view === "unit") {
                     sendUnitQuestion(q);
                   } else if (isRentFlat2Question(q)) {
                     sendRentAnswer(q);
@@ -1624,7 +1614,7 @@ const Prototype: React.FC = () => {
                   }
                 }}
                 className={`flex items-center gap-2 px-4 py-2.5 rounded-full border bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition ${
-                  isRentFlat2Question(input) && !typing
+                  (view === "onboarding" && chipVisible) || (isRentFlat2Question(input) && !typing)
                     ? "border-[#7C3AED] ring-2 ring-[#7C3AED]/30 animate-[pulse_1.6s_ease-in-out_infinite]"
                     : "border-slate-200"
                 }`}
@@ -1632,18 +1622,25 @@ const Prototype: React.FC = () => {
                 <input
                   ref={inputRef}
                   value={input}
-                  onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask Hobson…"
-                  className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+                  onChange={(e) => {
+                    if (view === "onboarding") return; // locked-but-sendable
+                    setInput(e.target.value);
+                  }}
+                  onClick={() => {
+                    if (view === "onboarding" && chipVisible) advanceBeat(input);
+                  }}
+                  readOnly={view === "onboarding"}
+                  placeholder={view === "onboarding" && !chipVisible ? "Hobson is talking…" : "Ask Hobson…"}
+                  className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400 cursor-text"
                   aria-label="Ask Hobson"
                 />
                 <button
                   type="submit"
                   className={`text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300 ${
-                    isRentFlat2Question(input) && !typing ? "animate-[pulse_1.6s_ease-in-out_infinite]" : ""
+                    (view === "onboarding" && chipVisible) || (isRentFlat2Question(input) && !typing) ? "animate-[pulse_1.6s_ease-in-out_infinite]" : ""
                   }`}
                   aria-label="Send"
-                  disabled={!input.trim()}
+                  disabled={!input.trim() || (view === "onboarding" && !chipVisible)}
                 >
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14M13 6l6 6-6 6"/>
