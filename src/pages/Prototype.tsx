@@ -1097,7 +1097,7 @@ const Prototype: React.FC = () => {
       };
     }
     return { pulse: "none" };
-  }, [view, beatIdx, selectedProperty, selectedUnitId, searchQuery, portfolioMode, hoveredPropertyId, briefingChoice, actionCards, hoveredCardPropertyId]);
+  }, [view, beatIdx, selectedProperty, selectedUnitId, searchQuery, hoveredPropertyId, briefingChoice, actionCards, hoveredCardPropertyId]);
 
   /* ----- unit Q&A ----- */
   const answerForUnit = (q: string): string => {
