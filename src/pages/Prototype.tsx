@@ -2960,7 +2960,7 @@ function PortfolioBriefing({
   expandedCardId: string | null;
   setExpandedCardId: (id: string | null) => void;
   onHoverCard: (propertyId: string | null) => void;
-  onOpenUnit: (propertyId: string, unitId: string) => void;
+  onOpenUnit: (propertyId: string, unitId: string, carryCardId?: string) => void;
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
