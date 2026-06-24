@@ -4176,7 +4176,7 @@ function PerformWorkspace({
       </div>
 
       {/* Gate */}
-      {currentBeat && !streamingActive && (
+      {currentBeat && !streamingActive && !isComplete && (
         <footer className="border-t border-slate-200 px-5 py-3 bg-white">
           {currentBeat.gate ? (
             <div className="space-y-2">
