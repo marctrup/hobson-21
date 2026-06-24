@@ -3222,6 +3222,7 @@ function PortfolioBriefing({
   onApprove,
   onDefer,
   onDismiss,
+  onPerform,
 }: {
   cards: ActionCard[];
   choice: null | "all" | "urgent" | "browse";
