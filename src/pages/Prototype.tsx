@@ -1090,22 +1090,23 @@ const Prototype: React.FC = () => {
           highlight={highlight}
         />
 
-        {/* Map search (portfolio only) */}
-        {view === "portfolio" && (
-          <MapSearch
-            onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
-            onOpenProperty={(id) => {
-              const p = PROPERTIES.find((x) => x.id === id);
-              if (!p) return;
-              if (portfolioMode === "returning" && p.units.length === 1) {
-                goUnit(p.units[0].id, p.id);
-              } else {
-                goProperty(id);
-              }
-            }}
-            onHoverProperty={setHoveredPropertyId}
-          />
-        )}
+        {/* Global map search — persistent on every level */}
+        <MapSearch
+          query={searchQuery}
+          setQuery={setSearchQuery}
+          onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+          onOpenProperty={(id) => {
+            const p = PROPERTIES.find((x) => x.id === id);
+            if (!p) return;
+            if (portfolioMode === "returning" && p.units.length === 1) {
+              goUnit(p.units[0].id, p.id);
+            } else {
+              goProperty(id);
+            }
+          }}
+          onHoverProperty={setHoveredPropertyId}
+        />
+
 
         {/* Map/Satellite toggle */}
         <div className="absolute bottom-4 right-4 z-[400] bg-white rounded-md shadow-md text-xs font-medium flex">
