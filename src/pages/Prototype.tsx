@@ -1952,10 +1952,8 @@ function PropertyContent({
 
 
 function UnitStarters({ unit, onAsk }: { unit: Unit; onAsk: (q: string) => void }) {
-  const qs =
-    unit.status === "Let"
-      ? ["When does the lease expire?", "Any compliance issues?", "Summarise the tenancy"]
-      : ["When did it become vacant?", "Who was the last tenant?", "Any compliance issues?"];
+  const derived = useMemo(() => deriveUnit(unit), [unit]);
+  const qs = useMemo(() => buildUnitStarters(unit, derived), [unit, derived]);
   return (
     <div>
       <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Try asking</div>
