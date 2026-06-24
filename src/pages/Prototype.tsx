@@ -228,14 +228,17 @@ function HobsonMap({
   onPropertyClick,
   highlight,
   onPinHover,
+  onUnitClick,
 }: {
   onPropertyClick: (id: string) => void;
   highlight: MapHighlight;
   onPinHover?: (id: string | null) => void;
+  onUnitClick?: (unitId: string) => void;
 }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<L.Map | null>(null);
   const markersRef = useRef<Record<string, L.Marker>>({});
+  const unitMarkersRef = useRef<Record<string, L.Marker>>({});
 
   useEffect(() => {
     if (!mapRef.current || mapInstance.current) return;
@@ -274,6 +277,7 @@ function HobsonMap({
       map.remove();
       mapInstance.current = null;
       markersRef.current = {};
+      unitMarkersRef.current = {};
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -310,6 +314,45 @@ function HobsonMap({
       map.flyTo([51.5174, -0.1278], 12, { duration: 0.8 });
     }
   }, [highlight]);
+
+  // Sync unit markers (property view)
+  useEffect(() => {
+    const map = mapInstance.current;
+    if (!map) return;
+    const wanted = highlight.unitPins ?? [];
+    const wantedIds = new Set(wanted.map((u) => u.id));
+
+    // remove stale
+    Object.entries(unitMarkersRef.current).forEach(([id, m]) => {
+      if (!wantedIds.has(id)) {
+        map.removeLayer(m);
+        delete unitMarkersRef.current[id];
+      }
+    });
+
+    // add new
+    wanted.forEach((u) => {
+      if (unitMarkersRef.current[u.id]) return;
+      const statusClass = u.status === "Let" ? "is-let" : "is-vacant";
+      const html = `<div class="hp-unit ${statusClass}" data-uid="${u.id}"><span>${u.label.replace(/[<>&]/g, "")}</span></div>`;
+      const icon = L.divIcon({
+        html,
+        className: "hp-unit-marker",
+        iconSize: [80, 22],
+        iconAnchor: [40, 11],
+      });
+      const m = L.marker([u.lat, u.lng], { icon, zIndexOffset: 500 }).addTo(map);
+      m.on("click", () => onUnitClick?.(u.id));
+      unitMarkersRef.current[u.id] = m;
+    });
+
+    // active highlight
+    Object.entries(unitMarkersRef.current).forEach(([id, m]) => {
+      const el = m.getElement();
+      if (!el) return;
+      el.classList.toggle("is-active", highlight.activeUnitId === id);
+    });
+  }, [highlight, onUnitClick]);
 
   return <div ref={mapRef} className="absolute inset-0" aria-label="London property map" />;
 }
