@@ -1574,8 +1574,15 @@ const Prototype: React.FC = () => {
               </button>
             </div>
           )}
-          {view !== "unit" ? (
+          {view === "onboarding" ? (
             <LockedComposer view={view} />
+          ) : view !== "unit" ? (
+            <ScriptedComposer
+              value={input}
+              onChange={setInput}
+              onSubmit={() => { if (input.trim()) sendRentDemo(input); }}
+              helper={view === "portfolio" ? "Demo question ready — hit send" : "Demo question ready — hit send"}
+            />
           ) : (
             <>
               <div className="text-[11px] text-slate-400 mb-1">4 remaining</div>
@@ -1594,9 +1601,9 @@ const Prototype: React.FC = () => {
                   className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
                   aria-label="Ask Hobson"
                 />
-                <button type="button" className="text-slate-400 hover:text-slate-600" aria-label="Attach">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-                    <path d="M21 12.5L12 21a5 5 0 01-7-7l9-9a3.5 3.5 0 015 5l-9 9a2 2 0 01-3-3l8-8"/>
+                <button type="submit" className="text-[#7C3AED] hover:text-[#6D28D9]" aria-label="Send">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>
                   </svg>
                 </button>
               </form>
