@@ -1716,17 +1716,45 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
 }
 
 
-function HobsonBubble({ text, owl, streaming }: { text: string; owl: OwlState; streaming?: boolean }) {
+function HobsonBubble({
+  text,
+  owl,
+  streaming,
+  rich,
+  thoughtSeconds,
+  onFollowUp,
+}: {
+  text: string;
+  owl: OwlState;
+  streaming?: boolean;
+  rich?: "rentFlat2";
+  thoughtSeconds?: number;
+  onFollowUp?: (q: string) => void;
+}) {
+  const wide = rich === "rentFlat2";
   return (
     <div className="flex items-end gap-2">
       <OwlAvatar state={owl} />
-      <div className="max-w-[340px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
-        {text}
-        {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+      <div className={`${wide ? "max-w-[400px] w-full" : "max-w-[340px]"} bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md`}>
+        {wide && (
+          <div className="flex items-center gap-2 mb-1.5 -mt-0.5">
+            <span className="text-[12px] font-semibold text-slate-900">Hobson</span>
+            <span className="text-[11px] italic text-slate-500">
+              Thought for {thoughtSeconds ?? 4} seconds
+            </span>
+          </div>
+        )}
+        {wide && !streaming && <RentDownloadCsvLink />}
+        <div>
+          {text}
+          {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
+        </div>
+        {wide && !streaming && <RentAnswerExtras onFollowUp={onFollowUp} />}
       </div>
     </div>
   );
 }
+
 
 function UserBubble({ text }: { text: string }) {
   return (
