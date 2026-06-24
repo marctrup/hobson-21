@@ -628,7 +628,7 @@ const Prototype: React.FC = () => {
     setPortfolioChip(null);
     setSearchQuery("");
     setMessages([]);
-    const greet = `This is ${p.name}, ${p.address.replace(`${p.name} — `, "")} — ${p.units.length} units. Which would you like to open?`;
+    const greet = `Here you are, ${FIRST_NAME} — ${p.name}, ${p.address.replace(`${p.name} — `, "")}. ${p.units.length} units. Pick one to open.`;
     setTyping(true);
     const delay = reduced ? 200 : 500;
     window.setTimeout(() => {
