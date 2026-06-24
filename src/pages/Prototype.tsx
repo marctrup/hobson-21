@@ -987,7 +987,7 @@ const Prototype: React.FC = () => {
     }, delay);
   };
 
-  const goUnit = (unitId: string, propertyId?: string) => {
+  const goUnit = (unitId: string, propertyId?: string, carryCardId?: string) => {
     const pid = propertyId ?? selectedPropertyId;
     const p = PROPERTIES.find((x) => x.id === pid);
     if (!p) return;
@@ -996,6 +996,7 @@ const Prototype: React.FC = () => {
     setSelectedPropertyId(p.id);
     setView("unit");
     setSelectedUnitId(unitId);
+    setCarriedCardId(carryCardId ?? null);
     setOwl("talking");
     setShowUnitPicker(false);
     setShowPropertyList(false);
@@ -1004,6 +1005,12 @@ const Prototype: React.FC = () => {
     const where = p.standalone ? p.address : `${p.name}`;
     const derived = deriveUnit(u);
     const lines = buildUnitOpeningLines(u, derived, where);
+    if (carryCardId) {
+      const card = actionCards.find((x) => x.id === carryCardId);
+      if (card) {
+        lines.unshift(`About that — ${card.title}. ${card.whyItMatters}`);
+      }
+    }
     setMessages([]);
     const playLine = (i: number) => {
       if (i >= lines.length) return;
