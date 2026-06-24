@@ -2399,6 +2399,7 @@ function PropertyContent({
   onApprove,
   onDefer,
   onDismiss,
+  onPerform,
 }: {
   property: Property;
   propertyActionCards?: ActionCard[];
@@ -2410,6 +2411,7 @@ function PropertyContent({
   onApprove?: (id: string) => void;
   onDefer?: (id: string) => void;
   onDismiss?: (id: string) => void;
+  onPerform?: (id: string) => void;
 }) {
   void onPreviewQuestion;
   const [filter, setFilter] = useState("");
