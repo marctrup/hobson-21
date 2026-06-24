@@ -903,7 +903,7 @@ const Prototype: React.FC = () => {
     setTimeout(() => {
       setTyping(false);
       setOwl("talking");
-      const ans = answerForUnit(q);
+      const ans = selectedUnit ? answerUnitQuestion(q, selectedUnit, deriveUnit(selectedUnit)) : answerForUnit(q);
       if (reduced) {
         setMessages((m) => [...m, { id: `a-${Date.now()}`, role: "hobson", text: ans }]);
       } else {
