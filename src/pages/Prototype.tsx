@@ -414,7 +414,7 @@ const BEATS: Beat[] = [
     lines: [
       "I read two families of document. Tenancy documents — leases, licences, assignments, variations, rent reviews — describe occupation: who is in possession, and upon what terms.",
       "Asset documents — energy certificates, fire risk assessments, valuations, compliance records — describe the building itself.",
-      "Either family may belong to a property or to a unit. What concerns me is not where a document is filed, but what it relates to.",
+      
     ],
     prefill: "How does your reading become understanding?",
     mapAction: "pulse-one-doc",
