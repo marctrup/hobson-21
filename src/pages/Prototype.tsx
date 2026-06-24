@@ -4452,6 +4452,14 @@ function StyleTag() {
     <style>{`
       .hobson-proto { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
 
+      /* Meet Hobson: hide all property pins; on exit, drop them in. */
+      .hp-pin, .hp-cluster { transition: opacity .45s ease-out, transform .45s ease-out; }
+      .pins-hidden .hp-pin, .pins-hidden .hp-cluster {
+        opacity: 0; transform: translateY(-6px); pointer-events: none;
+      }
+      .reduced-motion .hp-pin, .reduced-motion .hp-cluster { transition: none; }
+
+
       @keyframes typingBounce {
         0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
         30% { transform: translateY(-3px); opacity: 1; }
