@@ -780,11 +780,18 @@ const Prototype: React.FC = () => {
   const [showWhatIveDone, setShowWhatIveDone] = useState(false);
   const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
   const [performingCardId, setPerformingCardId] = useState<string | null>(null);
+  const [reviewingCardId, setReviewingCardId] = useState<string | null>(null);
 
   const performCard = (id: string) => {
+    setReviewingCardId(null);
     setPerformingCardId(id);
     setExpandedCardId(null);
-    setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "in_progress" } : x));
+    setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: x.approvalState === "approved" ? "approved" : "in_progress" } : x));
+  };
+  const reviewCard = (id: string) => {
+    setPerformingCardId(null);
+    setReviewingCardId(id);
+    setExpandedCardId(null);
   };
   const cancelPerform = () => {
     if (performingCardId) {
@@ -792,16 +799,22 @@ const Prototype: React.FC = () => {
     }
     setPerformingCardId(null);
   };
+  const cancelReview = () => {
+    // Review doesn't change state on exit — the work stays parked.
+    setReviewingCardId(null);
+  };
   const completePerform = (summary: string) => {
-    if (performingCardId) {
-      const card = actionCards.find((x) => x.id === performingCardId);
-      setActionCards((arr) => arr.map((x) => x.id === performingCardId ? { ...x, approvalState: "approved" } : x));
+    const activeId = performingCardId ?? reviewingCardId;
+    if (activeId) {
+      const card = actionCards.find((x) => x.id === activeId);
+      setActionCards((arr) => arr.map((x) => x.id === activeId ? { ...x, approvalState: "approved" } : x));
       if (card) {
         setActionToast(`Done — ${card.title} · ${summary}`);
         window.setTimeout(() => setActionToast(null), 4500);
       }
     }
     setPerformingCardId(null);
+    setReviewingCardId(null);
   };
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
