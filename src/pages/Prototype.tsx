@@ -299,7 +299,8 @@ function HobsonMap({
         duration: 0.8,
       });
     } else {
-      map.flyTo([51.5174, -0.1278], 12, { duration: 0.8 });
+      const bounds = L.latLngBounds(PROPERTIES.map((p) => [p.lat, p.lng] as [number, number]));
+      map.flyToBounds(bounds, { padding: [60, 60], maxZoom: 13, duration: 0.8 });
     }
   }, [highlight]);
 
