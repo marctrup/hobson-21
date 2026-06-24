@@ -1291,8 +1291,17 @@ const Prototype: React.FC = () => {
         <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
 
           {/* Pinned alert briefing at the top of unit chat */}
-          {view === "unit" && selectedUnit && (
-            <PinnedAlertCard unit={selectedUnit} derived={deriveUnit(selectedUnit)} />
+          {view === "unit" && selectedUnit && selectedPropertyId && (
+            <PinnedAlertCard
+              unit={selectedUnit}
+              derived={deriveUnit(selectedUnit)}
+              propertyContextCards={selectActionsForScope(actionCards, {
+                level: "unit",
+                propertyId: selectedPropertyId,
+                unitId: selectedUnit.id,
+              }).filter((c) => c.anchorLevel === "property" && c.approvalState === "pending")}
+              onManageAtProperty={() => goProperty(selectedPropertyId)}
+            />
           )}
 
           {/* Hobson messages render first so the greeting sits at the top */}
