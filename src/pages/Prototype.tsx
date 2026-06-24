@@ -398,7 +398,7 @@ const BEATS: Beat[] = [
       "Your assets — your properties and the units within them — are what I seek to understand. Your documents are how I come to understand them.",
       
     ],
-    prefill: "How, then, do you see my portfolio?",
+    prefill: "How, do you visualise my portfolio?",
     mapAction: "none",
   },
   {
