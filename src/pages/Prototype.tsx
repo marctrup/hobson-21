@@ -1299,8 +1299,9 @@ const Prototype: React.FC = () => {
             <path d="M12 2L22 12L12 22L2 12L12 2Z" fill="white" />
           </svg>
         </div>
-        <RailItem icon="pin" label="Portfolio" active={!showDocuments} onClick={() => { setShowDocuments(false); goPortfolio(false); }} />
-        <RailItem icon="doc" label="Documents" active={showDocuments} onClick={() => setShowDocuments(true)} />
+        <RailItem icon="pin" label="Portfolio" active={!showDocuments && !showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(false); goPortfolio(false); }} />
+        <RailItem icon="doc" label="Documents" active={showDocuments} onClick={() => { setShowWhatIveDone(false); setShowDocuments(true); }} />
+        <RailItem icon="clock" label={"What I've done"} active={showWhatIveDone} onClick={() => { setShowDocuments(false); setShowWhatIveDone(true); }} />
         <RailItem icon="chat" label="Chat History" />
         <div className="mt-auto flex flex-col items-center gap-3 pb-2">
           <button className="w-11 h-11 rounded-full bg-[#7C3AED] text-white grid place-items-center shadow-md hover:bg-[#6D28D9] transition" aria-label="New chat">
