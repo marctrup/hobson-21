@@ -283,7 +283,7 @@ function HobsonMap({
     Object.entries(markersRef.current).forEach(([id, m]) => {
       const el = m.getElement();
       if (!el) return;
-      el.classList.remove("is-pulse", "is-dim", "is-check", "has-doc", "is-spread");
+      el.classList.remove("is-pulse", "is-dim", "is-check", "has-doc", "is-spread", "is-match", "is-fade", "is-hover");
       if (highlight.pulse === "all") el.classList.add("is-pulse");
       if (highlight.pulse === "one" && highlight.pulseId === id) el.classList.add("is-pulse");
       if (highlight.showDoc && highlight.pulseId === id) el.classList.add("has-doc");
@@ -291,6 +291,11 @@ function HobsonMap({
       if (highlight.check && highlight.pulseId === id) el.classList.add("is-check");
       if (highlight.dimExcept && highlight.dimExcept !== id) el.classList.add("is-dim");
       if (highlight.activeUnitPropertyId === id) el.classList.add("is-pulse");
+      if (highlight.matchIds && highlight.matchIds.length) {
+        if (highlight.matchIds.includes(id)) el.classList.add("is-match");
+        else el.classList.add("is-fade");
+      }
+      if (highlight.hoverId === id) el.classList.add("is-hover");
     });
 
     if (highlight.focus) {
