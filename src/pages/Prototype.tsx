@@ -3190,6 +3190,7 @@ function ActionCardItem({
   onToggleExpand,
   onHover,
   onOpenUnit,
+  onOpenProperty,
   onApprove,
   onDefer,
   onDismiss,
@@ -3201,6 +3202,7 @@ function ActionCardItem({
   onToggleExpand: () => void;
   onHover: (on: boolean) => void;
   onOpenUnit?: () => void;
+  onOpenProperty?: () => void;
   onApprove: () => void;
   onDefer: () => void;
   onDismiss: () => void;
