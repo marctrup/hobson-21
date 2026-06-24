@@ -259,7 +259,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     confidence: "confirmed",
     hobsonPrepared: "I've drafted one instruction to your usual fire alarm engineer, plus access notices for every current tenant — one per occupied unit.",
     proposedAction: "Review & approve",
-    urgency: "week",
+    urgency: "now",
     approvalState: "in_progress",
     preparedDetail:
       "I'll email the engineer with building access notes, send each current tenant their access notice naming their unit, copy you on everything, and add the renewed certificate to the compliance calendar.",
@@ -295,7 +295,7 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     confidence: "confirmed",
     hobsonPrepared: "I've drafted an instruction to your usual assessor with access notes and the previous rating for reference.",
     proposedAction: "Review & approve",
-    urgency: "now",
+    urgency: "week",
     approvalState: "pending",
     preparedDetail:
       "I'll email the instruction to the assessor, copy you, and add the re-inspection to the compliance calendar so the new certificate lands before expiry.",
