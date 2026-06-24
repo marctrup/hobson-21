@@ -1141,8 +1141,42 @@ const Prototype: React.FC = () => {
     return placeholder;
   };
 
+  const sendRentAnswer = (q: string) => {
+    if (!q.trim()) return;
+    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
+    setInput("");
+    setTyping(true);
+    setOwl("reading");
+    const delay = reduced ? 200 : 900;
+    window.setTimeout(() => {
+      setTyping(false);
+      setOwl("talking");
+      const id = `rent-${Date.now()}`;
+      if (reduced) {
+        setMessages((m) => [...m, { id, role: "hobson", text: RENT_BODY_TEXT, rich: "rentFlat2" }]);
+        return;
+      }
+      // Stream the paragraph text inside a rich bubble, then settle.
+      setMessages((m) => [...m, { id, role: "hobson", text: "", streaming: true, rich: "rentFlat2" }]);
+      const words = RENT_BODY_TEXT.split(" ");
+      let i = 0;
+      const step = () => {
+        i += 1;
+        const partial = words.slice(0, i).join(" ");
+        setMessages((m) => m.map((x) => (x.id === id ? { ...x, text: partial } : x)));
+        if (i < words.length) {
+          setTimeout(step, 40 + Math.random() * 30);
+        } else {
+          setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
+        }
+      };
+      setTimeout(step, 60);
+    }, delay);
+  };
+
   const sendUnitQuestion = (q: string) => {
     if (!q.trim()) return;
+    if (isRentFlat2Question(q)) { sendRentAnswer(q); return; }
     setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
     setInput("");
     setTyping(true);
