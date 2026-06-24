@@ -1882,34 +1882,78 @@ function answerUnitQuestion(q: string, unit: Unit, derived: UnitDerived): string
 }
 
 /** Persistent "What I've spotted" briefing card pinned at the top of the unit chat. */
-function PinnedAlertCard({ unit, derived }: { unit: Unit; derived: UnitDerived }) {
-  if (!derived.hasAlert) return null;
+function PinnedAlertCard({
+  unit,
+  derived,
+  propertyContextCards = [],
+  onManageAtProperty,
+}: {
+  unit: Unit;
+  derived: UnitDerived;
+  propertyContextCards?: ActionCard[];
+  onManageAtProperty?: () => void;
+}) {
+  if (!derived.hasAlert && propertyContextCards.length === 0) return null;
   return (
     <div
       role="region"
       aria-label={`Alerts for ${unit.label}`}
-      className="sticky top-0 z-10 -mx-5 px-5 py-2.5 bg-white/95 backdrop-blur border-b border-slate-200"
+      className="sticky top-0 z-10 -mx-5 px-5 py-2.5 bg-white/95 backdrop-blur border-b border-slate-200 space-y-2"
     >
-      <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-2.5">
-        <div className="flex items-center gap-1.5 mb-1.5">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="text-amber-700">
-            <path d="M12 2L1 21h22L12 2zm-1 6h2v8h-2V8zm0 9h2v2h-2v-2z" />
-          </svg>
-          <div className="text-[11px] uppercase tracking-wide font-semibold text-amber-800">What I've spotted</div>
+      {derived.hasAlert && (
+        <div className="rounded-lg border border-amber-200 bg-amber-50/60 p-2.5">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="text-amber-700">
+              <path d="M12 2L1 21h22L12 2zm-1 6h2v8h-2V8zm0 9h2v2h-2v-2z" />
+            </svg>
+            <div className="text-[11px] uppercase tracking-wide font-semibold text-amber-800">What I've spotted</div>
+          </div>
+          <ul className="space-y-1.5">
+            {derived.items.map((it) => (
+              <li key={it.key} className="text-[12px] leading-snug">
+                <div className="flex items-baseline gap-1.5 flex-wrap">
+                  <span className="font-medium text-slate-900">{it.label}</span>
+                  {it.value && <span className="text-slate-700">— {it.value}</span>}
+                  <ConfidenceMark confidence={it.confidence} />
+                </div>
+                {it.note && <div className="text-[11px] text-slate-600">{it.note}</div>}
+              </li>
+            ))}
+          </ul>
         </div>
-        <ul className="space-y-1.5">
-          {derived.items.map((it) => (
-            <li key={it.key} className="text-[12px] leading-snug">
-              <div className="flex items-baseline gap-1.5 flex-wrap">
-                <span className="font-medium text-slate-900">{it.label}</span>
-                {it.value && <span className="text-slate-700">— {it.value}</span>}
-                <ConfidenceMark confidence={it.confidence} />
-              </div>
-              {it.note && <div className="text-[11px] text-slate-600">{it.note}</div>}
-            </li>
-          ))}
-        </ul>
-      </div>
+      )}
+      {propertyContextCards.length > 0 && (
+        <div className="rounded-lg border border-indigo-200 bg-indigo-50/40 p-2.5">
+          <div className="flex items-center gap-1.5 mb-1.5">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden className="text-indigo-700">
+              <path d="M3 3h18v4H3zM3 10h18v4H3zM3 17h18v4H3z" />
+            </svg>
+            <div className="text-[11px] uppercase tracking-wide font-semibold text-indigo-800">Property-wide (affects this unit)</div>
+            <span className="text-[10px] px-1.5 py-0.5 rounded border border-slate-200 bg-white text-slate-500 font-medium ml-auto">
+              Read-only here
+            </span>
+          </div>
+          <ul className="space-y-1.5">
+            {propertyContextCards.map((c) => (
+              <li key={c.id} className="text-[12px] leading-snug">
+                <div className="flex items-baseline gap-1.5 flex-wrap">
+                  <span className="font-medium text-slate-900">{c.title.replace(/ —.*$/, "")}</span>
+                  <ConfidenceMark confidence={c.confidence} />
+                </div>
+                <div className="text-[11px] text-slate-600">{c.whyItMatters}</div>
+              </li>
+            ))}
+          </ul>
+          {onManageAtProperty && (
+            <button
+              onClick={onManageAtProperty}
+              className="mt-1.5 text-[11px] text-indigo-700 hover:underline focus:outline-none focus:ring-2 focus:ring-indigo-400 rounded"
+            >
+              Manage at property level →
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
