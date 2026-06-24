@@ -384,7 +384,7 @@ const BEATS: Beat[] = [
   {
     owl: "talking",
     lines: [
-      `Good morning, ${FIRST_NAME}. I am Hobson — a colleague entrusted with helping you look after your estate.`,
+      `Good morning, ${FIRST_NAME}. I am Hobson — a colleague entrusted with helping you look after your portfolio.`,
       "The portfolio is yours, and so are the decisions; that will always be so. My role is to carry the work that surrounds those decisions, so that nothing of importance is overlooked — and to become more useful to you with each passing day.",
       "If I may, I should like to explain how I work.",
     ],
@@ -398,13 +398,13 @@ const BEATS: Beat[] = [
       "Your assets — your properties and the units within them — are what I come to understand. Your documents are how I learn of them; they are my reading.",
       "I am careful never to mistake the document for the thing it describes. I read in order to understand.",
     ],
-    prefill: "How, then, do you see my estate?",
+    prefill: "How, then, do you see my portfolio?",
     mapAction: "none",
   },
   {
     owl: "default",
     lines: [
-      "I regard your estate in three levels: the Portfolio above, Properties beneath it, and Units — the occupiable spaces — at its heart.",
+      "I regard your portfolio in three levels: the Portfolio above, Properties beneath it, and Units — the occupiable spaces — at its heart.",
       "A unit may sit within a property or stand alone. Either way, it is where the substance resides: the tenancy, the rent, the obligations.",
       "Properties serve to group units together. The unit, however, is my source of truth.",
     ],
