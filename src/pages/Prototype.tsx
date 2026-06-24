@@ -728,45 +728,22 @@ const Prototype: React.FC = () => {
       return { pulse: "none", matchIds, hoverId: hoveredPropertyId };
     }
     if (view === "property" && selectedProperty) {
-      const n = selectedProperty.units.length;
-      const radius = 0.0011;
-      const unitPins: UnitPin[] = selectedProperty.units.map((u, i) => {
-        const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
-        return {
-          id: u.id,
-          lat: selectedProperty.lat + radius * Math.cos(angle),
-          lng: selectedProperty.lng + radius * Math.sin(angle) * 1.4,
-          label: u.label,
-          status: u.status,
-        };
-      });
-      return {
-        pulse: "none",
-        dimExcept: selectedProperty.id,
-        focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 16 },
-        unitPins,
-      };
-    }
-    if (view === "unit" && selectedProperty) {
-      const n = selectedProperty.units.length;
-      const radius = 0.0011;
-      const unitPins: UnitPin[] = selectedProperty.units.map((u, i) => {
-        const angle = (i / n) * Math.PI * 2 - Math.PI / 2;
-        return {
-          id: u.id,
-          lat: selectedProperty.lat + radius * Math.cos(angle),
-          lng: selectedProperty.lng + radius * Math.sin(angle) * 1.4,
-          label: u.label,
-          status: u.status,
-        };
-      });
+      // Units are NOT shown as map pins — the map only locates the building.
       return {
         pulse: "none",
         dimExcept: selectedProperty.id,
         activeUnitPropertyId: selectedProperty.id,
-        focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 16 },
-        unitPins,
-        activeUnitId: selectedUnitId,
+        focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 17 },
+        unitPins: [],
+      };
+    }
+    if (view === "unit" && selectedProperty) {
+      return {
+        pulse: "none",
+        dimExcept: selectedProperty.id,
+        activeUnitPropertyId: selectedProperty.id,
+        focus: { lat: selectedProperty.lat, lng: selectedProperty.lng, zoom: 17 },
+        unitPins: [],
       };
     }
     return { pulse: "none" };
@@ -1327,6 +1304,27 @@ function PortfolioContent({
   );
 }
 
+type UnitFilter = "all" | "let" | "vacant" | "shops";
+
+function unitGroup(label: string): { key: string; sort: number } {
+  const lo = label.toLowerCase();
+  if (lo.includes("shop")) return { key: "Ground (Shop)", sort: 0 };
+  const m = lo.match(/flat\s*(\d+)/);
+  if (m) {
+    const n = parseInt(m[1], 10);
+    if (n <= 6) return { key: "Flats 1–6", sort: 1 };
+    return { key: "Flats 7–11", sort: 2 };
+  }
+  return { key: "Other", sort: 9 };
+}
+
+function unitSortKey(label: string): number {
+  const lo = label.toLowerCase();
+  if (lo.includes("shop")) return -1;
+  const m = lo.match(/(\d+)/);
+  return m ? parseInt(m[1], 10) : 999;
+}
+
 function PropertyContent({
   property,
   onOpenUnit,
@@ -1337,41 +1335,163 @@ function PropertyContent({
   onPreviewQuestion: (q: string) => void;
 }) {
   void onPreviewQuestion;
+  const [filter, setFilter] = useState("");
+  const [quick, setQuick] = useState<UnitFilter>("all");
+  const [visibleCount, setVisibleCount] = useState(50); // simple pagination for ~100-unit buildings
+  const scrollRef = useRef<HTMLDivElement | null>(null);
+
+  const letCount = property.units.filter((u) => u.status === "Let").length;
+  const vacantCount = property.units.length - letCount;
+  const hasShops = property.units.some((u) => u.label.toLowerCase().includes("shop"));
+
+  const filtered = useMemo(() => {
+    const q = filter.trim().toLowerCase();
+    return property.units
+      .filter((u) => {
+        if (quick === "let" && u.status !== "Let") return false;
+        if (quick === "vacant" && u.status !== "Vacant") return false;
+        if (quick === "shops" && !u.label.toLowerCase().includes("shop")) return false;
+        if (!q) return true;
+        return (
+          u.label.toLowerCase().includes(q) ||
+          (u.tenant ?? "").toLowerCase().includes(q)
+        );
+      })
+      .sort((a, b) => unitSortKey(a.label) - unitSortKey(b.label));
+  }, [property.units, filter, quick]);
+
+  const grouped = useMemo(() => {
+    const map = new Map<string, { sort: number; units: Unit[] }>();
+    filtered.slice(0, visibleCount).forEach((u) => {
+      const g = unitGroup(u.label);
+      const entry = map.get(g.key) ?? { sort: g.sort, units: [] };
+      entry.units.push(u);
+      map.set(g.key, entry);
+    });
+    return Array.from(map.entries())
+      .sort((a, b) => a[1].sort - b[1].sort)
+      .map(([key, v]) => ({ key, units: v.units }));
+  }, [filtered, visibleCount]);
+
+  useEffect(() => {
+    setVisibleCount(50);
+  }, [filter, quick, property.id]);
+
+  const onListScroll = () => {
+    const el = scrollRef.current;
+    if (!el) return;
+    if (el.scrollTop + el.clientHeight >= el.scrollHeight - 80) {
+      setVisibleCount((n) => (n < filtered.length ? Math.min(n + 50, filtered.length) : n));
+    }
+  };
+
+  const quickBtn = (key: UnitFilter, label: string) => (
+    <button
+      key={key}
+      onClick={() => setQuick(key)}
+      className={`text-[11px] px-2.5 py-1 rounded-full border transition focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30 ${
+        quick === key
+          ? "bg-[#7C3AED] text-white border-[#7C3AED]"
+          : "bg-white text-slate-600 border-slate-200 hover:border-slate-300"
+      }`}
+      aria-pressed={quick === key}
+    >
+      {label}
+    </button>
+  );
+
   return (
     <div className="space-y-3">
       <div>
         <div className="text-base font-semibold text-slate-900">{property.name}</div>
-        <div className="text-[12px] text-slate-500">{property.address.replace(`${property.name} — `, "")} · {property.units.length} units</div>
-      </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-400 font-medium mb-1.5">Units</div>
-        <div className="space-y-1.5">
-          {property.units.map((u) => {
-            const subtitle =
-              u.status === "Let"
-                ? (u.tenant ? `${u.tenant}${u.rent ? ` · ${u.rent}` : ""}` : "Let")
-                : (u.vacantSince ? `Vacant since ${u.vacantSince}` : "Vacant");
-            return (
-              <button
-                key={u.id}
-                onClick={() => onOpenUnit(u.id)}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
-              >
-                <div>
-                  <div className="text-sm font-medium text-slate-900">{u.label}</div>
-                  <div className="text-[11px] text-slate-500">{subtitle}</div>
-                </div>
-                <span
-                  className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${
-                    u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"
-                  }`}
-                >
-                  {u.status}
-                </span>
-              </button>
-            );
-          })}
+        <div className="text-[12px] text-slate-500">
+          {property.address.replace(`${property.name} — `, "")}
         </div>
+        <div className="text-[12px] text-slate-600 mt-0.5">
+          {property.units.length} units · {letCount} Let · {vacantCount} Vacant
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 px-3 py-2 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400">
+          <circle cx="11" cy="11" r="7" /><path d="M21 21l-4-4" />
+        </svg>
+        <input
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          placeholder="Filter units…"
+          className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
+          aria-label="Filter units by name or tenant"
+        />
+        {filter && (
+          <button
+            onClick={() => setFilter("")}
+            className="text-slate-400 hover:text-slate-700 text-base leading-none"
+            aria-label="Clear filter"
+          >
+            ×
+          </button>
+        )}
+      </div>
+
+      <div className="flex flex-wrap gap-1.5">
+        {quickBtn("all", `All (${property.units.length})`)}
+        {quickBtn("let", `Let (${letCount})`)}
+        {quickBtn("vacant", `Vacant (${vacantCount})`)}
+        {hasShops && quickBtn("shops", "Shops")}
+      </div>
+
+      <div
+        ref={scrollRef}
+        onScroll={onListScroll}
+        className="max-h-[420px] overflow-y-auto -mx-1 px-1"
+      >
+        {filtered.length === 0 ? (
+          <div className="text-[12px] text-slate-500 py-4 text-center">No units match.</div>
+        ) : (
+          grouped.map((group) => (
+            <div key={group.key} className="mb-2">
+              <div className="sticky top-0 z-[1] bg-white/95 backdrop-blur px-1 py-1 text-[10px] uppercase tracking-wide text-slate-400 font-medium border-b border-slate-100">
+                {group.key} · {group.units.length}
+              </div>
+              <div className="space-y-1 pt-1">
+                {group.units.map((u) => {
+                  const subtitle =
+                    u.status === "Let"
+                      ? (u.tenant ? `${u.tenant}${u.rent ? ` · ${u.rent}` : ""}` : "Let")
+                      : (u.vacantSince ? `Vacant since ${u.vacantSince}` : "Vacant");
+                  return (
+                    <button
+                      key={u.id}
+                      onClick={() => onOpenUnit(u.id)}
+                      className="w-full flex items-center justify-between px-3 py-2 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
+                    >
+                      <div className="min-w-0">
+                        <div className="text-sm font-medium text-slate-900 truncate">{u.label}</div>
+                        <div className="text-[11px] text-slate-500 truncate">{subtitle}</div>
+                      </div>
+                      <div className="flex items-center gap-2 shrink-0">
+                        <span
+                          className={`text-[10px] uppercase font-medium px-1.5 py-0.5 rounded ${
+                            u.status === "Let" ? "bg-emerald-50 text-emerald-700" : "bg-slate-100 text-slate-600"
+                          }`}
+                        >
+                          {u.status}
+                        </span>
+                        <span className="text-slate-400 text-sm" aria-hidden>›</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))
+        )}
+        {visibleCount < filtered.length && (
+          <div className="text-[11px] text-slate-400 text-center py-2">
+            Showing {Math.min(visibleCount, filtered.length)} of {filtered.length} · scroll to load more
+          </div>
+        )}
       </div>
     </div>
   );
