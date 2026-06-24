@@ -1432,6 +1432,7 @@ const Prototype: React.FC = () => {
               propertyActionCards={selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
+              carriedCardId={carriedCardId}
               onOpenUnit={(uid, cardId) => goUnit(uid, selectedProperty.id, cardId)}
               onPreviewQuestion={askPropertyPreview}
               onApprove={(id) => {
