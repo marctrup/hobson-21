@@ -1652,10 +1652,24 @@ function StyleTag() {
         from { transform: scale(0); }
         to { transform: scale(1); }
       }
+      .hp-marker.is-fade { opacity: 0.25; transition: opacity .25s; }
+      .hp-marker.is-match .hp-pin,
+      .hp-marker.is-match .hp-cluster {
+        filter: drop-shadow(0 0 6px rgba(124,58,237,0.55));
+        transform: scale(1.12);
+        transition: transform .2s, filter .2s;
+      }
+      .hp-marker.is-hover .hp-pin,
+      .hp-marker.is-hover .hp-cluster {
+        transform: scale(1.2);
+        transition: transform .15s;
+      }
       @media (prefers-reduced-motion: reduce) {
         .animate-typing-bounce, .hp-marker.is-pulse .hp-pin,
         .hp-marker.is-pulse .hp-cluster, .hp-marker.is-spread .hp-pin,
         .hp-marker.is-spread .hp-cluster { animation: none !important; }
+        .hp-marker.is-match .hp-pin, .hp-marker.is-match .hp-cluster,
+        .hp-marker.is-hover .hp-pin, .hp-marker.is-hover .hp-cluster { transform: none !important; }
       }
     `}</style>
   );
