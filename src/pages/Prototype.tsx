@@ -1638,8 +1638,8 @@ function ReturningSearchPanel({
                     className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg border border-slate-200 hover:border-[#7C3AED] hover:bg-[#F5F3FF] transition text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/30"
                   >
                     <div>
-                      <div className="text-sm font-medium text-slate-900">{r.label} — {r.tenant}</div>
-                      <div className="text-[11px] text-slate-500">{p?.name}</div>
+                      <div className="text-sm font-medium text-slate-900">{r.label}</div>
+                      <div className="text-[11px] text-slate-500">{r.sub}</div>
                     </div>
                     <span className="text-[#7C3AED] text-sm">→</span>
                   </button>
