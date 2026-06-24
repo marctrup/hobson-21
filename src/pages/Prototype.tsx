@@ -710,6 +710,7 @@ const Prototype: React.FC = () => {
   const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
   const [hoveredCardPropertyId, setHoveredCardPropertyId] = useState<string | null>(null);
   const [actionToast, setActionToast] = useState<string | null>(null);
+  const [showDocuments, setShowDocuments] = useState(false);
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
