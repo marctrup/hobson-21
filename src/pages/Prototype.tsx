@@ -394,7 +394,7 @@ const BEATS: Beat[] = [
   {
     owl: "default",
     lines: [
-      "There is a distinction that underpins everything I do, so allow me to be clear about it.",
+      
       "Your assets — your properties and the units within them — are what I seek to understand. Your documents are how I come to understand them.",
       
     ],
