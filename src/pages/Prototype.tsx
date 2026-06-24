@@ -3165,7 +3165,7 @@ function PropertyActions({
               expanded={expandedCardId === c.id}
               onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
               onHover={() => { /* no map hover at property level */ }}
-              onOpenUnit={c.unitId ? () => onOpenUnit(c.unitId!) : undefined}
+              onOpenUnit={c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
               onApprove={() => onApprove(c.id)}
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
