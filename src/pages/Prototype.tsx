@@ -1731,6 +1731,16 @@ const Prototype: React.FC = () => {
             onNavigateProperty={(pid) => { setShowDocuments(false); goProperty(pid); }}
           />
         )}
+        {showWhatIveDone && (
+          <WhatIveDonePanel
+            actionCards={actionCards}
+            onClose={() => setShowWhatIveDone(false)}
+            onResume={(id) => { setShowWhatIveDone(false); performCard(id); }}
+            onOpenProperty={(pid) => { setShowWhatIveDone(false); goProperty(pid); }}
+            onOpenUnit={(uid, pid) => { setShowWhatIveDone(false); goUnit(uid, pid); }}
+            reducedMotion={reduced}
+          />
+        )}
         {performingCardId && (() => {
           const card = actionCards.find((c) => c.id === performingCardId);
           if (!card) return null;
