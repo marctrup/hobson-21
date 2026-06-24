@@ -254,15 +254,15 @@ const INITIAL_ACTION_CARDS: ActionCard[] = [
     anchorLevel: "property",
     // omitted relevantUnitIds = applies to every unit in the building
     triggerType: "compliance",
-    title: "Fire Risk Assessment due — Stanley House",
-    whyItMatters: "Annual FRA on the building is due 12 July 2026 (confirmed from last year's certificate). Affects the whole property — every unit benefits from a current FRA.",
+    title: "Fire alarm certification expiring — Stanley House",
+    whyItMatters: "Annual fire alarm certificate for the building expires 12 July 2026 (confirmed from last year's certificate). Covers the whole property — every occupied unit needs access notice for the engineer's visit.",
     confidence: "confirmed",
-    hobsonPrepared: "I've drafted an instruction to your usual fire consultant with access notes and the previous report for reference.",
+    hobsonPrepared: "I've drafted one instruction to your usual fire alarm engineer, plus access notices for every current tenant — one per occupied unit.",
     proposedAction: "Review & approve",
     urgency: "week",
     approvalState: "pending",
     preparedDetail:
-      "I'll email the instruction to the consultant, copy you, book a site visit window, and add the renewed certificate to the compliance calendar so cover never lapses.",
+      "I'll email the engineer with building access notes, send each current tenant their access notice naming their unit, copy you on everything, and add the renewed certificate to the compliance calendar.",
   },
   {
     id: "act-stanley-f8-review",
