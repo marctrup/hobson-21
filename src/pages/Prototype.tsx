@@ -4133,9 +4133,33 @@ function PerformWorkspace({
 
       {/* Beats scroller */}
       <div ref={scrollerRef} className="flex-1 overflow-auto px-5 py-4 space-y-3 bg-white">
-        {previousBeats.map((b) => (
-          <BeatBubble key={b.id} beat={b} done />
-        ))}
+        {(mode === "review" || isComplete) && previousBeats.length > 0 ? (
+          <div className="rounded-lg border border-slate-200 bg-slate-50">
+            <button
+              type="button"
+              onClick={() => setRecapOpen((o) => !o)}
+              aria-expanded={recapOpen}
+              className="w-full flex items-center justify-between gap-2 px-3 py-2 text-left focus:outline-none focus:ring-2 focus:ring-[#7C3AED]/40 rounded-lg"
+            >
+              <span className="text-[12px] font-medium text-slate-700 inline-flex items-center gap-2">
+                <span aria-hidden className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold">✓</span>
+                {isComplete
+                  ? `Recorded — ${previousBeats.length + 1} steps complete`
+                  : `Recap — ${previousBeats.length} steps already done, parked at the final approval`}
+              </span>
+              <span className="text-[11px] text-[#7C3AED]">{recapOpen ? "Hide details" : "Show details"}</span>
+            </button>
+            {recapOpen && (
+              <div className="px-3 pb-3 pt-1 space-y-3 border-t border-slate-200">
+                {previousBeats.map((b) => (
+                  <BeatBubble key={b.id} beat={b} done />
+                ))}
+              </div>
+            )}
+          </div>
+        ) : (
+          previousBeats.map((b) => <BeatBubble key={b.id} beat={b} done />)
+        )}
         {currentBeat && (
           <BeatBubble
             beat={currentBeat}
@@ -4143,6 +4167,11 @@ function PerformWorkspace({
             streaming={streamingActive}
             done={false}
           />
+        )}
+        {isComplete && (
+          <div className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-[12px] text-emerald-900">
+            This action is complete and recorded. Read-only summary above.
+          </div>
         )}
       </div>
 
