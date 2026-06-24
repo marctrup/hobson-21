@@ -898,7 +898,17 @@ const Prototype: React.FC = () => {
         {/* Body */}
         <div ref={chatBodyRef} className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
 
-          {/* Returning-mode search lives at the top of the panel body */}
+          {/* Hobson messages render first so the greeting sits at the top */}
+          {messages.map((m) =>
+            m.role === "hobson" ? (
+              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} />
+            ) : (
+              <UserBubble key={m.id} text={m.text} />
+            )
+          )}
+          {typing && <TypingBubble owl={owl} />}
+
+          {/* Returning-mode search lives below the greeting */}
           {((view === "portfolio" && portfolioMode === "returning") || view === "property") && (
             <ReturningSearchPanel
               query={searchQuery}
@@ -912,14 +922,6 @@ const Prototype: React.FC = () => {
             />
           )}
 
-          {messages.map((m) =>
-            m.role === "hobson" ? (
-              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} />
-            ) : (
-              <UserBubble key={m.id} text={m.text} />
-            )
-          )}
-          {typing && <TypingBubble owl={owl} />}
 
           {/* Portfolio view — first visit (guided) */}
           {view === "portfolio" && portfolioMode === "first" && (
