@@ -2974,6 +2974,7 @@ function PortfolioBriefing({
 
 function ActionCardItem({
   card,
+  level,
   expanded,
   onToggleExpand,
   onHover,
@@ -2981,17 +2982,27 @@ function ActionCardItem({
   onApprove,
   onDefer,
   onDismiss,
+  onManageAtProperty,
 }: {
   card: ActionCard;
+  level: "portfolio" | "property" | "unit";
   expanded: boolean;
   onToggleExpand: () => void;
   onHover: (on: boolean) => void;
-  onOpenUnit: () => void;
+  onOpenUnit?: () => void;
   onApprove: () => void;
   onDefer: () => void;
   onDismiss: () => void;
+  onManageAtProperty?: () => void;
 }) {
   const isInferred = card.confidence === "inferred";
+  // Property-anchored shown inside a unit = read-only context
+  const readOnly = level === "unit" && card.anchorLevel === "property";
+  const locationLabel = locationLabelForCard(card, level);
+  const anchorChip =
+    card.anchorLevel === "property"
+      ? { label: "Property-anchored", cls: "bg-indigo-50 text-indigo-700 border-indigo-200" }
+      : { label: "Unit-anchored", cls: "bg-slate-50 text-slate-600 border-slate-200" };
   return (
     <article
       onMouseEnter={() => onHover(true)}
