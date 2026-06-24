@@ -3104,7 +3104,8 @@ function PortfolioBriefing({
               expanded={expandedCardId === c.id}
               onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
               onHover={(on) => onHoverCard(on ? c.propertyId : null)}
-              onOpenUnit={c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!, c.id) : undefined}
+              onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!, c.id) : undefined}
+              onOpenProperty={c.anchorLevel === "property" ? () => onOpenProperty(c.propertyId, c.id) : undefined}
               onApprove={() => onApprove(c.id)}
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
