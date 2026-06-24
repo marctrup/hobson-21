@@ -1744,16 +1744,17 @@ function HobsonBubble({
             </span>
           </div>
         )}
-        {wide && !streaming && <RentDownloadCsvLink />}
-        <div>
+        {wide && !streaming && <RentRichTop />}
+        <div className={wide ? "mt-1" : ""}>
           {text}
           {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
         </div>
-        {wide && !streaming && <RentAnswerExtras onFollowUp={onFollowUp} />}
+        {wide && !streaming && <RentRichBottom onFollowUp={onFollowUp} />}
       </div>
     </div>
   );
 }
+
 
 
 function UserBubble({ text }: { text: string }) {
