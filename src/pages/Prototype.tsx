@@ -502,17 +502,24 @@ const Prototype: React.FC = () => {
     ]);
   };
 
-  const goUnit = (unitId: string) => {
-    if (!selectedProperty) return;
-    const u = selectedProperty.units.find((x) => x.id === unitId);
+  const goUnit = (unitId: string, propertyId?: string) => {
+    const pid = propertyId ?? selectedPropertyId;
+    const p = PROPERTIES.find((x) => x.id === pid);
+    if (!p) return;
+    const u = p.units.find((x) => x.id === unitId);
     if (!u) return;
+    setSelectedPropertyId(p.id);
     setView("unit");
     setSelectedUnitId(unitId);
     setOwl("talking");
+    setShowUnitPicker(false);
+    setShowPropertyList(false);
+    setPortfolioChip(null);
+    setSearchQuery("");
     const intro =
       u.status === "Let"
-        ? `${selectedProperty.name} — ${u.label}, let to ${u.tenant}. What would you like to know?`
-        : `${selectedProperty.name} — ${u.label}, currently vacant. What would you like to check?`;
+        ? `${p.name} — ${u.label}, let to ${u.tenant}. What would you like to know?`
+        : `${p.name} — ${u.label}, currently vacant. What would you like to check?`;
     setMessages([{ id: `unit-${unitId}`, role: "hobson", text: intro }]);
   };
 
