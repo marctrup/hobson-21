@@ -216,6 +216,8 @@ type MapHighlight = {
   focus?: { lat: number; lng: number; zoom: number } | null;
   dimExcept?: string | null;
   activeUnitPropertyId?: string | null;
+  matchIds?: string[] | null;
+  hoverId?: string | null;
 };
 
 function HobsonMap({
