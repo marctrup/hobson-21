@@ -623,7 +623,7 @@ function HobsonMap({
       if (highlight.activeUnitPropertyId === id) el.classList.add("is-pulse");
       if (highlight.matchIds && highlight.matchIds.length) {
         if (highlight.matchIds.includes(id)) el.classList.add("is-match");
-        else el.classList.add("is-fade");
+        else if (highlight.fadeNonMatches) el.classList.add("is-fade");
       }
       if (highlight.hoverId === id) el.classList.add("is-hover");
     });
