@@ -762,6 +762,7 @@ const Prototype: React.FC = () => {
   const [hoveredCardPropertyId, setHoveredCardPropertyId] = useState<string | null>(null);
   const [actionToast, setActionToast] = useState<string | null>(null);
   const [showDocuments, setShowDocuments] = useState(false);
+  const [carriedCardId, setCarriedCardId] = useState<string | null>(null);
   const chatBodyRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const searchRef = useRef<HTMLInputElement | null>(null);
@@ -986,7 +987,7 @@ const Prototype: React.FC = () => {
     }, delay);
   };
 
-  const goUnit = (unitId: string, propertyId?: string) => {
+  const goUnit = (unitId: string, propertyId?: string, carryCardId?: string) => {
     const pid = propertyId ?? selectedPropertyId;
     const p = PROPERTIES.find((x) => x.id === pid);
     if (!p) return;
@@ -995,6 +996,7 @@ const Prototype: React.FC = () => {
     setSelectedPropertyId(p.id);
     setView("unit");
     setSelectedUnitId(unitId);
+    setCarriedCardId(carryCardId ?? null);
     setOwl("talking");
     setShowUnitPicker(false);
     setShowPropertyList(false);
@@ -1003,6 +1005,12 @@ const Prototype: React.FC = () => {
     const where = p.standalone ? p.address : `${p.name}`;
     const derived = deriveUnit(u);
     const lines = buildUnitOpeningLines(u, derived, where);
+    if (carryCardId) {
+      const card = actionCards.find((x) => x.id === carryCardId);
+      if (card) {
+        lines.unshift(`About that — ${card.title}. ${card.whyItMatters}`);
+      }
+    }
     setMessages([]);
     const playLine = (i: number) => {
       if (i >= lines.length) return;
@@ -1304,18 +1312,23 @@ const Prototype: React.FC = () => {
                 onManageAtProperty={() => goProperty(selectedPropertyId)}
               />
               {(() => {
-                const unitOwnCards = selectActionsForScope(actionCards, {
+                const unitOwnCardsRaw = selectActionsForScope(actionCards, {
                   level: "unit",
                   propertyId: selectedPropertyId,
                   unitId: selectedUnit.id,
                 }).filter((c) => c.anchorLevel === "unit" && c.approvalState === "pending");
-                if (unitOwnCards.length === 0) return null;
+                if (unitOwnCardsRaw.length === 0) return null;
+                // Carried card surfaces first
+                const unitOwnCards = carriedCardId
+                  ? [...unitOwnCardsRaw].sort((a, b) => (a.id === carriedCardId ? -1 : b.id === carriedCardId ? 1 : 0))
+                  : unitOwnCardsRaw;
                 return (
                   <section aria-label={`Actions for ${selectedUnit.label}`} className="space-y-2">
                     <div className="text-[11px] uppercase tracking-wide text-slate-500 font-semibold">
                       On this unit's desk · {unitOwnCards.length}
                     </div>
                     {unitOwnCards.map((c) => (
+                      <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#7C3AED]/50 ring-offset-2 ring-offset-white" : ""}>
                       <ActionCardItem
                         key={c.id}
                         card={c}
@@ -1341,6 +1354,7 @@ const Prototype: React.FC = () => {
                           setExpandedCardId(null);
                         }}
                       />
+                      </div>
                     ))}
                   </section>
                 );
@@ -1383,7 +1397,7 @@ const Prototype: React.FC = () => {
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
               onHoverCard={setHoveredCardPropertyId}
-              onOpenUnit={(propId, unitId) => goUnit(unitId, propId)}
+              onOpenUnit={(propId, unitId, cardId) => goUnit(unitId, propId, cardId)}
               onApprove={(id) => {
                 const c = actionCards.find((x) => x.id === id);
                 setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
@@ -1413,7 +1427,7 @@ const Prototype: React.FC = () => {
               propertyActionCards={selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
-              onOpenUnit={(uid) => goUnit(uid, selectedProperty.id)}
+              onOpenUnit={(uid, cardId) => goUnit(uid, selectedProperty.id, cardId)}
               onPreviewQuestion={askPropertyPreview}
               onApprove={(id) => {
                 const c = actionCards.find((x) => x.id === id);
@@ -2130,7 +2144,7 @@ function PropertyContent({
   propertyActionCards?: ActionCard[];
   expandedCardId?: string | null;
   setExpandedCardId?: (id: string | null) => void;
-  onOpenUnit: (id: string) => void;
+  onOpenUnit: (id: string, carryCardId?: string) => void;
   onPreviewQuestion: (q: string) => void;
   onApprove?: (id: string) => void;
   onDefer?: (id: string) => void;
@@ -2255,7 +2269,7 @@ function PropertyContent({
           propertyName={property.name}
           expandedCardId={expandedCardId ?? null}
           setExpandedCardId={(id) => setExpandedCardId && setExpandedCardId(id)}
-          onOpenUnit={(uid) => onOpenUnit(uid)}
+          onOpenUnit={(uid, cardId) => onOpenUnit(uid, cardId)}
           onApprove={(id) => onApprove && onApprove(id)}
           onDefer={(id) => onDefer && onDefer(id)}
           onDismiss={(id) => onDismiss && onDismiss(id)}
@@ -2952,7 +2966,7 @@ function PortfolioBriefing({
   expandedCardId: string | null;
   setExpandedCardId: (id: string | null) => void;
   onHoverCard: (propertyId: string | null) => void;
-  onOpenUnit: (propertyId: string, unitId: string) => void;
+  onOpenUnit: (propertyId: string, unitId: string, carryCardId?: string) => void;
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
@@ -3088,7 +3102,7 @@ function PortfolioBriefing({
               expanded={expandedCardId === c.id}
               onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
               onHover={(on) => onHoverCard(on ? c.propertyId : null)}
-              onOpenUnit={c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!) : undefined}
+              onOpenUnit={c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!, c.id) : undefined}
               onApprove={() => onApprove(c.id)}
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
@@ -3131,7 +3145,7 @@ function PropertyActions({
   propertyName: string;
   expandedCardId: string | null;
   setExpandedCardId: (id: string | null) => void;
-  onOpenUnit: (unitId: string) => void;
+  onOpenUnit: (unitId: string, carryCardId?: string) => void;
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
@@ -3157,7 +3171,7 @@ function PropertyActions({
               expanded={expandedCardId === c.id}
               onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
               onHover={() => { /* no map hover at property level */ }}
-              onOpenUnit={c.unitId ? () => onOpenUnit(c.unitId!) : undefined}
+              onOpenUnit={c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
               onApprove={() => onApprove(c.id)}
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
