@@ -938,24 +938,28 @@ const Prototype: React.FC = () => {
     playLine(0);
   };
 
-  const goProperty = (id: string) => {
+  const goProperty = (id: string, carryCardId?: string) => {
     const p = PROPERTIES.find((x) => x.id === id);
     if (!p) return;
     // Standalone "properties" (single independent unit) skip the Property layer entirely
     if (p.standalone) {
-      goUnit(p.units[0].id, p.id);
+      goUnit(p.units[0].id, p.id, carryCardId);
       return;
     }
     setView("property");
     setSelectedPropertyId(id);
     setSelectedUnitId(null);
+    setCarriedCardId(carryCardId ?? null);
     setOwl("talking");
     setShowUnitPicker(false);
     setShowPropertyList(false);
     setPortfolioChip(null);
     setSearchQuery("");
     setMessages([]);
-    const greet = `Here you are, ${FIRST_NAME} — ${p.name}, London ${p.postcode}. ${p.units.length} units. Pick one to open.`;
+    const carriedCard = carryCardId ? actionCards.find((x) => x.id === carryCardId) : null;
+    const greet = carriedCard
+      ? `Here's ${p.name}. ${carriedCard.title} is the one that needs you — and here's everything else on this building.`
+      : `Here you are, ${FIRST_NAME} — ${p.name}, London ${p.postcode}. ${p.units.length} units. Pick one to open.`;
     setTyping(true);
     const delay = reduced ? 200 : 500;
     window.setTimeout(() => {
@@ -1398,6 +1402,7 @@ const Prototype: React.FC = () => {
               setExpandedCardId={setExpandedCardId}
               onHoverCard={setHoveredCardPropertyId}
               onOpenUnit={(propId, unitId, cardId) => goUnit(unitId, propId, cardId)}
+              onOpenProperty={(propId, cardId) => goProperty(propId, cardId)}
               onApprove={(id) => {
                 const c = actionCards.find((x) => x.id === id);
                 setActionCards((arr) => arr.map((x) => x.id === id ? { ...x, approvalState: "approved" } : x));
@@ -1427,6 +1432,7 @@ const Prototype: React.FC = () => {
               propertyActionCards={selectActionsForScope(actionCards, { level: "property", propertyId: selectedProperty.id })}
               expandedCardId={expandedCardId}
               setExpandedCardId={setExpandedCardId}
+              carriedCardId={carriedCardId}
               onOpenUnit={(uid, cardId) => goUnit(uid, selectedProperty.id, cardId)}
               onPreviewQuestion={askPropertyPreview}
               onApprove={(id) => {
@@ -2134,6 +2140,7 @@ function PropertyContent({
   propertyActionCards = [],
   expandedCardId,
   setExpandedCardId,
+  carriedCardId,
   onOpenUnit,
   onPreviewQuestion,
   onApprove,
@@ -2144,6 +2151,7 @@ function PropertyContent({
   propertyActionCards?: ActionCard[];
   expandedCardId?: string | null;
   setExpandedCardId?: (id: string | null) => void;
+  carriedCardId?: string | null;
   onOpenUnit: (id: string, carryCardId?: string) => void;
   onPreviewQuestion: (q: string) => void;
   onApprove?: (id: string) => void;
@@ -2269,6 +2277,7 @@ function PropertyContent({
           propertyName={property.name}
           expandedCardId={expandedCardId ?? null}
           setExpandedCardId={(id) => setExpandedCardId && setExpandedCardId(id)}
+          carriedCardId={carriedCardId ?? null}
           onOpenUnit={(uid, cardId) => onOpenUnit(uid, cardId)}
           onApprove={(id) => onApprove && onApprove(id)}
           onDefer={(id) => onDefer && onDefer(id)}
@@ -2956,6 +2965,7 @@ function PortfolioBriefing({
   setExpandedCardId,
   onHoverCard,
   onOpenUnit,
+  onOpenProperty,
   onApprove,
   onDefer,
   onDismiss,
@@ -2967,6 +2977,7 @@ function PortfolioBriefing({
   setExpandedCardId: (id: string | null) => void;
   onHoverCard: (propertyId: string | null) => void;
   onOpenUnit: (propertyId: string, unitId: string, carryCardId?: string) => void;
+  onOpenProperty: (propertyId: string, carryCardId?: string) => void;
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
@@ -3102,7 +3113,8 @@ function PortfolioBriefing({
               expanded={expandedCardId === c.id}
               onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
               onHover={(on) => onHoverCard(on ? c.propertyId : null)}
-              onOpenUnit={c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!, c.id) : undefined}
+              onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.propertyId, c.unitId!, c.id) : undefined}
+              onOpenProperty={c.anchorLevel === "property" ? () => onOpenProperty(c.propertyId, c.id) : undefined}
               onApprove={() => onApprove(c.id)}
               onDefer={() => onDefer(c.id)}
               onDismiss={() => onDismiss(c.id)}
@@ -3136,6 +3148,7 @@ function PropertyActions({
   propertyName,
   expandedCardId,
   setExpandedCardId,
+  carriedCardId,
   onOpenUnit,
   onApprove,
   onDefer,
@@ -3145,13 +3158,18 @@ function PropertyActions({
   propertyName: string;
   expandedCardId: string | null;
   setExpandedCardId: (id: string | null) => void;
+  carriedCardId?: string | null;
   onOpenUnit: (unitId: string, carryCardId?: string) => void;
   onApprove: (id: string) => void;
   onDefer: (id: string) => void;
   onDismiss: (id: string) => void;
 }) {
+  const sortCarried = (arr: ActionCard[]) =>
+    carriedCardId
+      ? [...arr].sort((a, b) => (a.id === carriedCardId ? -1 : b.id === carriedCardId ? 1 : 0))
+      : arr;
   const groups: { key: Urgency; cards: ActionCard[] }[] = (["now", "week", "watch"] as Urgency[])
-    .map((u) => ({ key: u, cards: cards.filter((c) => c.urgency === u) }))
+    .map((u) => ({ key: u, cards: sortCarried(cards.filter((c) => c.urgency === u)) }))
     .filter((g) => g.cards.length > 0);
   return (
     <section aria-label={`Actions for ${propertyName}`} className="space-y-2">
@@ -3164,18 +3182,19 @@ function PropertyActions({
             {URGENCY_LABEL[g.key]} · {g.cards.length}
           </div>
           {g.cards.map((c) => (
-            <ActionCardItem
-              key={c.id}
-              card={c}
-              level="property"
-              expanded={expandedCardId === c.id}
-              onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
-              onHover={() => { /* no map hover at property level */ }}
-              onOpenUnit={c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
-              onApprove={() => onApprove(c.id)}
-              onDefer={() => onDefer(c.id)}
-              onDismiss={() => onDismiss(c.id)}
-            />
+            <div key={c.id} className={c.id === carriedCardId ? "rounded-xl ring-2 ring-[#7C3AED]/50 ring-offset-2 ring-offset-white" : ""}>
+              <ActionCardItem
+                card={c}
+                level="property"
+                expanded={expandedCardId === c.id}
+                onToggleExpand={() => setExpandedCardId(expandedCardId === c.id ? null : c.id)}
+                onHover={() => { /* no map hover at property level */ }}
+                onOpenUnit={c.anchorLevel === "unit" && c.unitId ? () => onOpenUnit(c.unitId!, c.id) : undefined}
+                onApprove={() => onApprove(c.id)}
+                onDefer={() => onDefer(c.id)}
+                onDismiss={() => onDismiss(c.id)}
+              />
+            </div>
           ))}
         </div>
       ))}
@@ -3190,6 +3209,7 @@ function ActionCardItem({
   onToggleExpand,
   onHover,
   onOpenUnit,
+  onOpenProperty,
   onApprove,
   onDefer,
   onDismiss,
@@ -3201,6 +3221,7 @@ function ActionCardItem({
   onToggleExpand: () => void;
   onHover: (on: boolean) => void;
   onOpenUnit?: () => void;
+  onOpenProperty?: () => void;
   onApprove: () => void;
   onDefer: () => void;
   onDismiss: () => void;
@@ -3294,6 +3315,14 @@ function ActionCardItem({
               className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
             >
               Open unit
+            </button>
+          )}
+          {!isInferred && onOpenProperty && (
+            <button
+              onClick={onOpenProperty}
+              className="text-xs px-3 py-1.5 rounded-full text-slate-600 border border-slate-200 hover:bg-slate-50 transition focus:outline-none focus:ring-2 focus:ring-slate-300"
+            >
+              Open property
             </button>
           )}
           <button
