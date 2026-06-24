@@ -481,7 +481,7 @@ const prefersReducedMotion = () =>
   window.matchMedia &&
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean; rich?: "rentFlat2"; thoughtSeconds?: number };
+type ChatMsg = { id: string; role: "hobson" | "user"; text: string; streaming?: boolean };
 
 /* ---------------- Map ---------------- */
 
@@ -1126,63 +1126,8 @@ const Prototype: React.FC = () => {
     return placeholder;
   };
 
-  const matchesRentDemo = (q: string): boolean => {
-    const s = q.trim().toLowerCase().replace(/[?.!,]+$/g, "").trim();
-    if (!s) return false;
-    if (s === "rent" || s === "rent?") return true;
-    if (s === "rent flat 2") return true;
-    if (s === "rent flat 2 nugent terrace") return true;
-    if (s === "current rent flat 2") return true;
-    if (s === "what's the current rent" || s === "what is the current rent") return true;
-    // forgiving: any string containing "rent" plus "flat 2" or just "rent" at unit-Flat-2 level
-    if (/\brent\b/.test(s) && /\bflat\s*2\b/.test(s)) return true;
-    if (/\brent\b/.test(s) && selectedUnit?.id === "nugent-f2") return true;
-    return false;
-  };
-
-  const streamRentAnswer = () => {
-    const paragraph =
-      "The current rent is set out in the tenancy paperwork and the later rent increase notice. The agreement also refers to annual reviews linked to RPI, with the notice saying the increase follows the agreed minimum adjustment.";
-    const id = `m-${Date.now()}-${Math.random()}`;
-    setMessages((m) => [
-      ...m,
-      { id, role: "hobson", text: "", streaming: true, rich: "rentFlat2", thoughtSeconds: 4 },
-    ]);
-    if (reduced) {
-      setMessages((m) => m.map((x) => (x.id === id ? { ...x, text: paragraph, streaming: false } : x)));
-      return;
-    }
-    const words = paragraph.split(" ");
-    let i = 0;
-    const step = () => {
-      i += 1;
-      const partial = words.slice(0, i).join(" ");
-      setMessages((m) => m.map((x) => (x.id === id ? { ...x, text: partial } : x)));
-      if (i < words.length) setTimeout(step, 45 + Math.random() * 35);
-      else setMessages((m) => m.map((x) => (x.id === id ? { ...x, streaming: false } : x)));
-    };
-    setTimeout(step, 60);
-  };
-
-  const sendRentDemo = (q: string) => {
-    setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
-    setInput("");
-    setTyping(true);
-    setOwl("reading");
-    const delay = reduced ? 200 : 900;
-    window.setTimeout(() => {
-      setTyping(false);
-      setOwl("talking");
-      streamRentAnswer();
-    }, delay);
-  };
-
   const sendUnitQuestion = (q: string) => {
     if (!q.trim()) return;
-    if (matchesRentDemo(q)) {
-      sendRentDemo(q);
-      return;
-    }
     setMessages((m) => [...m, { id: `u-${Date.now()}`, role: "user", text: q }]);
     setInput("");
     setTyping(true);
@@ -1199,18 +1144,6 @@ const Prototype: React.FC = () => {
       }
     }, delay);
   };
-
-  // Pre-fill the chat input with a level-appropriate scripted rent question.
-  // Deeper context = shorter question. User can hit send/Enter to ask it.
-  useEffect(() => {
-    if (view === "onboarding") return;
-    let prefill = "";
-    if (view === "portfolio" && portfolioMode === "returning") prefill = "rent flat 2 Nugent Terrace";
-    else if (view === "property") prefill = "rent flat 2";
-    else if (view === "unit") prefill = "rent?";
-    setInput(prefill);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [view, selectedPropertyId, selectedUnitId, portfolioMode]);
 
   const showRoadmapToast = (label: string) => {
     setToast(`"${label}" is Portfolio Intelligence — coming soon. Open a unit and I can answer it today.`);
@@ -1308,6 +1241,14 @@ const Prototype: React.FC = () => {
               <img src={owlDefault} alt="" aria-hidden className="w-6 h-6 object-contain" />
             )}
             <h1 className="font-semibold text-[15px] text-slate-900">Chat with Hobson</h1>
+            {view !== "onboarding" && (
+              <button
+                onClick={replayOnboarding}
+                className="ml-2 text-[11px] text-[#7C3AED] hover:underline focus:outline-none focus:ring-2 focus:ring-[#7C3AED] rounded"
+              >
+                How Hobson works
+              </button>
+            )}
           </div>
           <div className="flex items-center gap-1 text-slate-400">
             <button className="p-1.5 hover:text-slate-700" aria-label="Expand">
@@ -1428,7 +1369,7 @@ const Prototype: React.FC = () => {
           {/* Hobson messages render first so the greeting sits at the top */}
           {messages.map((m) =>
             m.role === "hobson" ? (
-              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} rich={m.rich} thoughtSeconds={m.thoughtSeconds} onFollowUp={(q) => { setInput(q); inputRef.current?.focus(); }} />
+              <HobsonBubble key={m.id} text={m.text} owl={owl} streaming={!!m.streaming} />
             ) : (
               <UserBubble key={m.id} text={m.text} />
             )
@@ -1574,15 +1515,8 @@ const Prototype: React.FC = () => {
               </button>
             </div>
           )}
-          {view === "onboarding" ? (
+          {view !== "unit" ? (
             <LockedComposer view={view} />
-          ) : view !== "unit" ? (
-            <ScriptedComposer
-              value={input}
-              onChange={setInput}
-              onSubmit={() => { if (input.trim()) sendRentDemo(input); }}
-              helper={view === "portfolio" ? "Demo question ready — hit send" : "Demo question ready — hit send"}
-            />
           ) : (
             <>
               <div className="text-[11px] text-slate-400 mb-1">4 remaining</div>
@@ -1601,9 +1535,9 @@ const Prototype: React.FC = () => {
                   className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400"
                   aria-label="Ask Hobson"
                 />
-                <button type="submit" className="text-[#7C3AED] hover:text-[#6D28D9]" aria-label="Send">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+                <button type="button" className="text-slate-400 hover:text-slate-600" aria-label="Attach">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                    <path d="M21 12.5L12 21a5 5 0 01-7-7l9-9a3.5 3.5 0 015 5l-9 9a2 2 0 01-3-3l8-8"/>
                   </svg>
                 </button>
               </form>
@@ -1716,46 +1650,17 @@ function RailItem({ icon, label, active, onClick }: { icon: "pin" | "doc" | "cha
 }
 
 
-function HobsonBubble({
-  text,
-  owl,
-  streaming,
-  rich,
-  thoughtSeconds,
-  onFollowUp,
-}: {
-  text: string;
-  owl: OwlState;
-  streaming?: boolean;
-  rich?: "rentFlat2";
-  thoughtSeconds?: number;
-  onFollowUp?: (q: string) => void;
-}) {
-  const wide = rich === "rentFlat2";
+function HobsonBubble({ text, owl, streaming }: { text: string; owl: OwlState; streaming?: boolean }) {
   return (
     <div className="flex items-end gap-2">
       <OwlAvatar state={owl} />
-      <div className={`${wide ? "max-w-[400px] w-full" : "max-w-[340px]"} bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md`}>
-        {wide && (
-          <div className="flex items-center gap-2 mb-1.5 -mt-0.5">
-            <span className="text-[12px] font-semibold text-slate-900">Hobson</span>
-            <span className="text-[11px] italic text-slate-500">
-              Thought for {thoughtSeconds ?? 4} seconds
-            </span>
-          </div>
-        )}
-        {wide && !streaming && <RentRichTop />}
-        <div className={wide ? "mt-1" : ""}>
-          {text}
-          {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
-        </div>
-        {wide && !streaming && <RentRichBottom onFollowUp={onFollowUp} />}
+      <div className="max-w-[340px] bg-[#EDE9FE] text-[#1F2330] text-sm leading-relaxed px-4 py-2.5 rounded-2xl rounded-bl-md">
+        {text}
+        {streaming && <span className="inline-block w-1.5 h-3.5 ml-0.5 bg-[#7C3AED] align-middle animate-pulse" />}
       </div>
     </div>
   );
 }
-
-
 
 function UserBubble({ text }: { text: string }) {
   return (
@@ -2529,170 +2434,6 @@ function LockedComposer({ view }: { view: View }) {
         <span className="text-[10px] uppercase tracking-wide text-slate-400 hidden sm:inline">{helper}</span>
       </div>
     </>
-  );
-}
-
-function ScriptedComposer({
-  value,
-  onChange,
-  onSubmit,
-  helper,
-}: {
-  value: string;
-  onChange: (v: string) => void;
-  onSubmit: () => void;
-  helper: string;
-}) {
-  return (
-    <>
-      <div className="text-[11px] text-slate-400 mb-1 flex items-center gap-1.5">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-          <rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/>
-        </svg>
-        <span>{helper}</span>
-      </div>
-      <form
-        onSubmit={(e) => { e.preventDefault(); onSubmit(); }}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-slate-200 bg-white focus-within:border-[#7C3AED] focus-within:ring-2 focus-within:ring-[#7C3AED]/20 transition"
-      >
-        <input
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder="Ask Hobson…"
-          className="flex-1 outline-none text-sm bg-transparent placeholder:text-slate-400 text-slate-700"
-          aria-label="Ask Hobson"
-        />
-        <button
-          type="submit"
-          className="text-[#7C3AED] hover:text-[#6D28D9] disabled:text-slate-300"
-          aria-label="Send"
-          disabled={!value.trim()}
-        >
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>
-          </svg>
-        </button>
-      </form>
-    </>
-  );
-}
-
-function RentRichTop() {
-  const csv = "Current Rent,Effective From,Reliable\n£2415 per month,1 October 2025,Yes\n";
-  const downloadCsv = () => {
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "rent-flat-2-nugent-terrace.csv";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-  return (
-    <div className="mb-2">
-      <button
-        type="button"
-        onClick={downloadCsv}
-        className="inline-flex items-center gap-1 text-[12px] text-[#7C3AED] hover:text-[#6D28D9] underline underline-offset-2 mb-2"
-      >
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-          <path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M5 21h14"/>
-        </svg>
-        Download as CSV
-      </button>
-      <div className="rounded-lg border border-[#DDD6FE] bg-white overflow-hidden">
-        <table className="w-full text-[12px]">
-          <thead className="bg-[#F5F3FF] text-slate-600">
-            <tr>
-              <th className="text-left font-medium px-2.5 py-1.5">Current Rent</th>
-              <th className="text-left font-medium px-2.5 py-1.5">Effective From</th>
-              <th className="text-left font-medium px-2.5 py-1.5">Reliable</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="border-t border-[#EDE9FE]">
-              <td className="px-2.5 py-1.5 font-medium text-slate-900">£2,415 per month</td>
-              <td className="px-2.5 py-1.5 text-slate-700">1 October 2025</td>
-              <td className="px-2.5 py-1.5 text-emerald-700">✓ Yes</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-function RentRichBottom({ onFollowUp }: { onFollowUp?: (q: string) => void }) {
-  const sources = [
-    "AST nt 2.pdf — referenced by the answer",
-    "rent increase 2025-2026 NT2.pdf — referenced by the answer",
-  ];
-  const related = [
-    "Would you like the original rent amount as well?",
-    "Do you want the source documents for this rent?",
-    "Shall I check how the increase was calculated?",
-  ];
-  const docs = ["rent increase 2025-2026 NT2.pdf", "AST nt 2.pdf"];
-  const openPdf = (name: string) => {
-    // Placeholder viewer
-    window.alert(`Opening ${name} (placeholder viewer).`);
-  };
-  return (
-    <div className="mt-3 space-y-3">
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-medium mb-1">Sources</div>
-        <ul className="list-disc pl-4 space-y-0.5 text-[12.5px] text-slate-700">
-          {sources.map((s) => <li key={s}>{s}</li>)}
-        </ul>
-      </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-medium mb-1">Related questions</div>
-        <ul className="space-y-1">
-          {related.map((q) => (
-            <li key={q}>
-              <button
-                type="button"
-                onClick={() => onFollowUp?.(q)}
-                className="text-left text-[12.5px] text-[#5B21B6] hover:text-[#7C3AED] underline underline-offset-2"
-              >
-                • {q}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div>
-        <div className="text-[11px] uppercase tracking-wide text-slate-500 font-medium mb-1 flex items-center gap-1.5">
-          Related documents
-          <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 font-semibold tracking-wider">BETA</span>
-        </div>
-        <ul className="space-y-1">
-          {docs.map((d) => (
-            <li key={d}>
-              <button
-                type="button"
-                onClick={() => openPdf(d)}
-                className="inline-flex items-center gap-1.5 text-[12.5px] text-slate-800 hover:text-[#7C3AED]"
-              >
-                <span className="inline-flex items-center justify-center w-4 h-5 rounded-sm bg-red-100 text-red-700 text-[8px] font-bold">PDF</span>
-                {d}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
-      <div className="flex items-center gap-3 pt-1 border-t border-[#DDD6FE] text-[11px] text-slate-500">
-        <button type="button" className="hover:text-[#7C3AED]" onClick={() => navigator.clipboard?.writeText("Current rent: £2,415 per month, effective 1 October 2025.")}>Copy</button>
-        <span aria-hidden>·</span>
-        <button type="button" className="hover:text-[#7C3AED]">Regenerate</button>
-        <span aria-hidden>·</span>
-        <button type="button" className="hover:text-[#7C3AED]">Diagnostic</button>
-        <span aria-hidden>·</span>
-        <button type="button" className="hover:text-[#7C3AED]">Rate this</button>
-      </div>
-    </div>
   );
 }
 
